@@ -1,10 +1,10 @@
-import { useBackend, useLocalState } from "tgui/backend";
-import { PRINTOUT, SecurityRecordsData, SecurityRecord } from "./types";
+import { useBackend, useLocalState } from 'tgui/backend';
+import { PRINTOUT, SecurityRecordsData, SecurityRecord } from './types';
 
 /** We need an active reference and this a pain to rewrite */
 export const getSecurityRecord = () => {
   const [selectedRecord] = useLocalState<SecurityRecord | undefined>(
-    "securityRecord",
+    'securityRecord',
     undefined,
   );
   if (!selectedRecord) return;
@@ -47,11 +47,11 @@ export const isRecordMatch = (record: GenericRecord, search: string) => {
 export const getDefaultPrintHeader = (printType: PRINTOUT) => {
   switch (printType) {
     case PRINTOUT.Rapsheet:
-      return "Record";
+      return 'Record';
     case PRINTOUT.Wanted:
-      return "WANTED";
+      return 'WANTED';
     case PRINTOUT.Missing:
-      return "MISSING";
+      return 'MISSING';
   }
 };
 

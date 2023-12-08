@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   LabeledList,
   Section,
@@ -9,14 +9,14 @@ import {
   Box,
   Tooltip,
   Button,
-} from "../components";
-import { Window } from "../layouts";
-import { capitalize } from "common/string";
-import { Design, MaterialMap } from "./Fabrication/Types";
-import { DesignBrowser } from "./Fabrication/DesignBrowser";
-import { BooleanLike, classes } from "common/react";
-import { MaterialCostSequence } from "./Fabrication/MaterialCostSequence";
-import { Material } from "./Fabrication/Types";
+} from '../components';
+import { Window } from '../layouts';
+import { capitalize } from 'common/string';
+import { Design, MaterialMap } from './Fabrication/Types';
+import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { BooleanLike, classes } from 'common/react';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { Material } from './Fabrication/Types';
 
 type AutolatheData = {
   materials: Material[];
@@ -65,9 +65,9 @@ export const Autolathe = (props) => {
                     }}
                   >
                     {materialtotal / SHEET_MATERIAL_AMOUNT +
-                      "/" +
+                      '/' +
                       materialsmax / SHEET_MATERIAL_AMOUNT +
-                      " sheets"}
+                      ' sheets'}
                   </ProgressBar>
                 </LabeledList.Item>
                 <LabeledList.Item>
@@ -81,16 +81,16 @@ export const Autolathe = (props) => {
                           >
                             <ProgressBar
                               style={{
-                                transform: "scaleX(-1) scaleY(1)",
+                                transform: 'scaleX(-1) scaleY(1)',
                               }}
                               value={materialsmax - material.amount}
                               maxValue={materialsmax}
                               backgroundColor={material.color}
                               color="black"
                             >
-                              <div style={{ transform: "scaleX(-1)" }}>
+                              <div style={{ transform: 'scaleX(-1)' }}>
                                 {material.amount / SHEET_MATERIAL_AMOUNT +
-                                  " sheets"}
+                                  ' sheets'}
                               </div>
                             </ProgressBar>
                           </LabeledList.Item>
@@ -158,12 +158,12 @@ const PrintButton = (props: PrintButtonProps) => {
     >
       <div
         className={classes([
-          "FabricatorRecipe__Button",
-          !canPrint && "FabricatorRecipe__Button--disabled",
+          'FabricatorRecipe__Button',
+          !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
-        color={"transparent"}
+        color={'transparent'}
         onClick={() =>
-          canPrint && act("make", { id: design.id, multiplier: quantity })
+          canPrint && act('make', { id: design.id, multiplier: quantity })
         }
       >
         &times;{quantity}
@@ -190,9 +190,9 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
       <Tooltip content={design.desc} position="right">
         <div
           className={classes([
-            "FabricatorRecipe__Button",
-            "FabricatorRecipe__Button--icon",
-            !canPrint && "FabricatorRecipe__Button--disabled",
+            'FabricatorRecipe__Button',
+            'FabricatorRecipe__Button--icon',
+            !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
         >
           <Icon name="question-circle" />
@@ -210,18 +210,18 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
       >
         <div
           className={classes([
-            "FabricatorRecipe__Title",
-            !canPrint && "FabricatorRecipe__Title--disabled",
+            'FabricatorRecipe__Title',
+            !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
           onClick={() =>
-            canPrint && act("make", { id: design.id, multiplier: 1 })
+            canPrint && act('make', { id: design.id, multiplier: 1 })
           }
         >
           <div className="FabricatorRecipe__Icon">
             <Box
-              width={"32px"}
-              height={"32px"}
-              className={classes(["design32x32", design.icon])}
+              width={'32px'}
+              height={'32px'}
+              className={classes(['design32x32', design.icon])}
             />
           </div>
           <div className="FabricatorRecipe__Label">{design.name}</div>
@@ -246,16 +246,16 @@ const AutolatheRecipe = (props: AutolatheRecipeProps) => {
 
       <div
         className={classes([
-          "FabricatorRecipe__Button",
-          !canPrint && "FabricatorRecipe__Button--disabled",
+          'FabricatorRecipe__Button',
+          !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
       >
         <Button.Input
-          content={"[Max: " + maxmult + "]"}
-          color={"transparent"}
+          content={'[Max: ' + maxmult + ']'}
+          color={'transparent'}
           maxValue={maxmult}
           onCommit={(_e, value: string) =>
-            act("make", {
+            act('make', {
               id: design.id,
               multiplier: value,
             })

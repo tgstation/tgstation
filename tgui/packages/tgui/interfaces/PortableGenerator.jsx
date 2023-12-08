@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,16 +6,16 @@ import {
   NoticeBox,
   ProgressBar,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const PortableGenerator = (props) => {
   const { act, data } = useBackend();
   const { stack_percent } = data;
   const stackPercentState =
-    (stack_percent > 50 && "good") ||
-    (stack_percent > 15 && "average") ||
-    "bad";
+    (stack_percent > 50 && 'good') ||
+    (stack_percent > 15 && 'average') ||
+    'bad';
   return (
     <Window width={450} height={340}>
       <Window.Content scrollable>
@@ -24,14 +24,14 @@ export const PortableGenerator = (props) => {
           <LabeledList>
             <LabeledList.Item label="Power switch">
               <Button
-                icon={data.active ? "power-off" : "times"}
-                onClick={() => act("toggle_power")}
+                icon={data.active ? 'power-off' : 'times'}
+                onClick={() => act('toggle_power')}
                 disabled={!data.ready_to_boot}
               >
-                {data.active ? "On" : "Off"}
+                {data.active ? 'On' : 'Off'}
               </Button>
             </LabeledList.Item>
-            <LabeledList.Item label={data.sheet_name + " sheets"}>
+            <LabeledList.Item label={data.sheet_name + ' sheets'}>
               <Box inline color={stackPercentState}>
                 {data.sheets}
               </Box>
@@ -40,7 +40,7 @@ export const PortableGenerator = (props) => {
                   ml={1}
                   icon="eject"
                   disabled={data.active}
-                  onClick={() => act("eject")}
+                  onClick={() => act('eject')}
                 >
                   Eject
                 </Button>
@@ -79,16 +79,16 @@ export const PortableGenerator = (props) => {
               {data.power_output}
             </LabeledList.Item>
             <LabeledList.Item label="Adjust output">
-              <Button icon="minus" onClick={() => act("lower_power")}>
+              <Button icon="minus" onClick={() => act('lower_power')}>
                 {data.power_generated}
               </Button>
-              <Button icon="plus" onClick={() => act("higher_power")}>
+              <Button icon="plus" onClick={() => act('higher_power')}>
                 {data.power_generated}
               </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Power available">
-              <Box inline color={!data.connected && "bad"}>
-                {data.connected ? data.power_available : "Unconnected"}
+              <Box inline color={!data.connected && 'bad'}>
+                {data.connected ? data.power_available : 'Unconnected'}
               </Box>
             </LabeledList.Item>
           </LabeledList>

@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   Section,
   Stack,
@@ -9,8 +9,8 @@ import {
   Flex,
   Divider,
   NoticeBox,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 const PacketInfo = (props) => {
   const { act, data } = useBackend();
@@ -23,14 +23,14 @@ const PacketInfo = (props) => {
           <Button
             icon="trash"
             color="red"
-            onClick={() => act("delete_packet", { ref: packet.ref })}
+            onClick={() => act('delete_packet', { ref: packet.ref })}
           />
         </Flex.Item>
       </Flex>
       <LabeledList>
         <LabeledList.Item label="Data Type">{packet.type}</LabeledList.Item>
         <LabeledList.Item label="Source">
-          {packet.source + (packet.job ? " (" + packet.job + ")" : "")}
+          {packet.source + (packet.job ? ' (' + packet.job + ')' : '')}
         </LabeledList.Item>
         <LabeledList.Item label="Class">{packet.race}</LabeledList.Item>
         <LabeledList.Item label="Contents">{packet.message}</LabeledList.Item>
@@ -53,7 +53,7 @@ const ServerScreen = (props) => {
             <Button
               content="Main Menu"
               icon="home"
-              onClick={() => act("return_home")}
+              onClick={() => act('return_home')}
             />
           }
         >
@@ -62,8 +62,8 @@ const ServerScreen = (props) => {
             <LabeledList.Item label="Server">{server.name}</LabeledList.Item>
             <LabeledList.Item label="Total Recorded Traffic">
               {server.traffic >= 1024
-                ? server.traffic / 1024 + " TB"
-                : server.traffic + " GB"}
+                ? server.traffic / 1024 + ' TB'
+                : server.traffic + ' GB'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -84,7 +84,7 @@ const ServerScreen = (props) => {
 const MainScreen = (props) => {
   const { act, data } = useBackend();
   const { servers, network } = data;
-  const [networkId, setNetworkId] = useLocalState("networkId", network);
+  const [networkId, setNetworkId] = useLocalState('networkId', network);
 
   return (
     <Stack fill vertical>
@@ -97,7 +97,7 @@ const MainScreen = (props) => {
           />
           <Button
             content="Scan"
-            onClick={() => act("scan_network", { network_id: networkId })}
+            onClick={() => act('scan_network', { network_id: networkId })}
           />
         </Section>
       </Stack.Item>
@@ -112,7 +112,7 @@ const MainScreen = (props) => {
               icon="trash"
               color="red"
               disabled={servers.length === 0}
-              onClick={() => act("clear_buffer")}
+              onClick={() => act('clear_buffer')}
             />
           }
         >
@@ -129,7 +129,7 @@ const MainScreen = (props) => {
                 <Table.Cell>
                   <Button
                     content={s.name}
-                    onClick={() => act("view_server", { server: s.ref })}
+                    onClick={() => act('view_server', { server: s.ref })}
                   />
                 </Table.Cell>
               </Table.Row>
@@ -149,7 +149,7 @@ export const ServerMonitor = (props) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
-            {error !== "" && <NoticeBox>{error}</NoticeBox>}
+            {error !== '' && <NoticeBox>{error}</NoticeBox>}
           </Stack.Item>
           <Stack.Item grow>
             {(screen === 0 && <MainScreen />) ||

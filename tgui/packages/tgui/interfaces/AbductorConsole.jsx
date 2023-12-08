@@ -1,10 +1,10 @@
-import { useBackend, useSharedState } from "../backend";
-import { Button, LabeledList, NoticeBox, Section, Tabs } from "../components";
-import { Window } from "../layouts";
-import { GenericUplink } from "./Uplink/GenericUplink";
+import { useBackend, useSharedState } from '../backend';
+import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
+import { Window } from '../layouts';
+import { GenericUplink } from './Uplink/GenericUplink';
 
 export const AbductorConsole = (props) => {
-  const [tab, setTab] = useSharedState("tab", 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   return (
     <Window theme="abductor" width={600} height={532}>
       <Window.Content scrollable>
@@ -77,7 +77,7 @@ const Abductsoft = (props) => {
         currency={`${credits} Credits`}
         categories={categoriesList}
         items={items}
-        handleBuy={(item) => act("buy", { name: item.name })}
+        handleBuy={(item) => act('buy', { name: item.name })}
       />
     </>
   );
@@ -99,17 +99,17 @@ const EmergencyTeleporter = (props) => {
           icon="exclamation-circle"
           content="Activate"
           color="bad"
-          onClick={() => act("teleporter_send")}
+          onClick={() => act('teleporter_send')}
         />
       }
     >
       <LabeledList>
         <LabeledList.Item label="Mark Retrieval">
           <Button
-            icon={gizmo ? "user-plus" : "user-slash"}
-            content={gizmo ? "Retrieve" : "No Mark"}
+            icon={gizmo ? 'user-plus' : 'user-slash'}
+            content={gizmo ? 'Retrieve' : 'No Mark'}
             disabled={!gizmo}
-            onClick={() => act("teleporter_retrieve")}
+            onClick={() => act('teleporter_retrieve')}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -130,25 +130,25 @@ const VestSettings = (props) => {
       title="Agent Vest Settings"
       buttons={
         <Button
-          icon={vest_lock ? "lock" : "unlock"}
-          content={vest_lock ? "Locked" : "Unlocked"}
-          onClick={() => act("toggle_vest")}
+          icon={vest_lock ? 'lock' : 'unlock'}
+          content={vest_lock ? 'Locked' : 'Unlocked'}
+          onClick={() => act('toggle_vest')}
         />
       }
     >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button
-            icon={vest_mode === 1 ? "eye-slash" : "fist-raised"}
-            content={vest_mode === 1 ? "Stealth" : "Combat"}
-            onClick={() => act("flip_vest")}
+            icon={vest_mode === 1 ? 'eye-slash' : 'fist-raised'}
+            content={vest_mode === 1 ? 'Stealth' : 'Combat'}
+            onClick={() => act('flip_vest')}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Disguise">
           <Button
             icon="user-secret"
             content="Select"
-            onClick={() => act("select_disguise")}
+            onClick={() => act('select_disguise')}
           />
         </LabeledList.Item>
       </LabeledList>

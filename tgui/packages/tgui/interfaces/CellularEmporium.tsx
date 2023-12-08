@@ -1,5 +1,5 @@
-import { BooleanLike } from "../../common/react";
-import { useBackend, useLocalState } from "../backend";
+import { BooleanLike } from '../../common/react';
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   Section,
@@ -9,8 +9,8 @@ import {
   LabeledList,
   Box,
   NoticeBox,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type typePath = string;
 
@@ -36,8 +36,8 @@ type Ability = {
 export const CellularEmporium = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
   const [searchAbilities, setSearchAbilities] = useLocalState(
-    "searchAbilities",
-    "",
+    'searchAbilities',
+    '',
   );
 
   const { can_readapt, genetic_points_count } = data;
@@ -47,11 +47,11 @@ export const CellularEmporium = (props) => {
         <Section
           fill
           scrollable
-          title={"Genetic Points"}
+          title={'Genetic Points'}
           buttons={
             <Stack>
               <Stack.Item fontSize="16px">
-                {genetic_points_count && genetic_points_count}{" "}
+                {genetic_points_count && genetic_points_count}{' '}
                 <Icon name="dna" color="#DD66DD" />
               </Stack.Item>
               <Stack.Item>
@@ -62,11 +62,11 @@ export const CellularEmporium = (props) => {
                   disabled={!can_readapt}
                   tooltip={
                     can_readapt
-                      ? "We readapt, un-evolving all evolved abilities \
-                    and refunding our genetic points."
-                      : "We cannot readapt until we absorb more DNA."
+                      ? 'We readapt, un-evolving all evolved abilities \
+                    and refunding our genetic points.'
+                      : 'We cannot readapt until we absorb more DNA.'
                   }
-                  onClick={() => act("readapt")}
+                  onClick={() => act('readapt')}
                 />
               </Stack.Item>
               <Stack.Item>
@@ -89,7 +89,7 @@ export const CellularEmporium = (props) => {
 
 const AbilityList = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
-  const [searchAbilities] = useLocalState("searchAbilities", "");
+  const [searchAbilities] = useLocalState('searchAbilities', '');
   const {
     abilities,
     owned_abilities,
@@ -119,9 +119,9 @@ const AbilityList = (props) => {
     return (
       <NoticeBox>
         {abilities.length === 0
-          ? "No abilities available to purchase. \
-        This is in error, contact your local hivemind today."
-          : "No abilities found."}
+          ? 'No abilities available to purchase. \
+        This is in error, contact your local hivemind today.'
+          : 'No abilities found.'}
       </NoticeBox>
     );
   } else {
@@ -140,14 +140,14 @@ const AbilityList = (props) => {
                     name="dna"
                     color={
                       owned_abilities.includes(ability.path)
-                        ? "#DD66DD"
-                        : "gray"
+                        ? '#DD66DD'
+                        : 'gray'
                     }
                   />
                 </Stack.Item>
                 <Stack.Item>
                   <Button
-                    content={"Evolve"}
+                    content={'Evolve'}
                     disabled={
                       owned_abilities.includes(ability.path) ||
                       ability.genetic_point_required > genetic_points_count ||
@@ -155,7 +155,7 @@ const AbilityList = (props) => {
                       ability.dna_required > dna_count
                     }
                     onClick={() =>
-                      act("evolve", {
+                      act('evolve', {
                         path: ability.path,
                       })
                     }

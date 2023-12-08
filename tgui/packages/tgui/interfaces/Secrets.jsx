@@ -1,5 +1,5 @@
-import { toFixed } from "common/math";
-import { useBackend, useLocalState } from "../backend";
+import { toFixed } from 'common/math';
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   Flex,
@@ -8,31 +8,31 @@ import {
   RoundGauge,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 const TAB2NAME = [
   {
-    title: "Debugging",
-    blurb: "Where useless shit goes to die",
+    title: 'Debugging',
+    blurb: 'Where useless shit goes to die',
     gauge: 5,
     component: () => DebuggingTab,
   },
   {
-    title: "Helpful",
-    blurb: "Where fuckwits put logging",
+    title: 'Helpful',
+    blurb: 'Where fuckwits put logging',
     gauge: 25,
     component: () => HelpfulTab,
   },
   {
-    title: "Fun",
+    title: 'Fun',
     blurb: 'How I ran an """event"""',
     gauge: 75,
     component: () => FunTab,
   },
   {
-    title: "Only Fun For You",
-    blurb: "How I spent my last day adminning",
+    title: 'Only Fun For You',
+    blurb: 'How I spent my last day adminning',
     gauge: 95,
     component: () => FunForYouTab,
   },
@@ -53,7 +53,7 @@ const DebuggingTab = (props) => {
           icon="question"
           fluid
           content="Change all maintenance doors to engie/brig access only"
-          onClick={() => act("maint_access_engiebrig")}
+          onClick={() => act('maint_access_engiebrig')}
         />
       </Stack.Item>
       <Stack.Item>
@@ -63,7 +63,7 @@ const DebuggingTab = (props) => {
           icon="question"
           fluid
           content="Change all maintenance doors to brig access only"
-          onClick={() => act("maint_access_brig")}
+          onClick={() => act('maint_access_brig')}
         />
       </Stack.Item>
       <Stack.Item>
@@ -73,7 +73,7 @@ const DebuggingTab = (props) => {
           icon="question"
           fluid
           content="Remove cap on security officers"
-          onClick={() => act("infinite_sec")}
+          onClick={() => act('infinite_sec')}
         />
       </Stack.Item>
     </Stack>
@@ -101,7 +101,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Cure all diseases"
-              onClick={() => act("clear_virus")}
+              onClick={() => act('clear_virus')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -110,7 +110,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Trigger Outbreak"
-              onClick={() => act("virus")}
+              onClick={() => act('virus')}
             />
           </Stack.Item>
         </Stack>
@@ -132,7 +132,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Break all lights"
-              onClick={() => act("blackout")}
+              onClick={() => act('blackout')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -141,7 +141,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Fix all lights"
-              onClick={() => act("whiteout")}
+              onClick={() => act('whiteout')}
             />
           </Stack.Item>
         </Stack>
@@ -154,7 +154,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="List Bombers"
-              onClick={() => act("list_bombers")}
+              onClick={() => act('list_bombers')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -163,7 +163,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="List Signalers"
-              onClick={() => act("list_signalers")}
+              onClick={() => act('list_signalers')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -172,7 +172,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="List laws"
-              onClick={() => act("list_lawchanges")}
+              onClick={() => act('list_lawchanges')}
             />
           </Stack.Item>
         </Stack>
@@ -185,7 +185,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Show Manifest"
-              onClick={() => act("manifest")}
+              onClick={() => act('manifest')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -194,7 +194,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Show DNA"
-              onClick={() => act("dna")}
+              onClick={() => act('dna')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -203,7 +203,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Show Fingerprints"
-              onClick={() => act("fingerprints")}
+              onClick={() => act('fingerprints')}
             />
           </Stack.Item>
         </Stack>
@@ -216,7 +216,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Toggle CTF"
-              onClick={() => act("ctfbutton")}
+              onClick={() => act('ctfbutton')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -225,7 +225,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Reset Thunderdome"
-              onClick={() => act("tdomereset")}
+              onClick={() => act('tdomereset')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -234,7 +234,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Set Nightshift"
-              onClick={() => act("night_shift_set")}
+              onClick={() => act('night_shift_set')}
             />
           </Stack.Item>
         </Stack>
@@ -247,7 +247,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Rename Station"
-              onClick={() => act("set_name")}
+              onClick={() => act('set_name')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -256,7 +256,7 @@ const HelpfulTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Default Station Name"
-              onClick={() => act("reset_name")}
+              onClick={() => act('reset_name')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -286,7 +286,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Make N.E.R.D."
-              onClick={() => act("makeNerd")}
+              onClick={() => act('makeNerd')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -295,7 +295,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="CTF Instagib Mode"
-              onClick={() => act("ctf_instagib")}
+              onClick={() => act('ctf_instagib')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -317,7 +317,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="All areas powered"
-              onClick={() => act("power")}
+              onClick={() => act('power')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -326,7 +326,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="All areas unpowered"
-              onClick={() => act("unpower")}
+              onClick={() => act('unpower')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -335,7 +335,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="recharge SMESs"
-              onClick={() => act("quickpower")}
+              onClick={() => act('quickpower')}
             />
           </Stack.Item>
         </Stack>
@@ -348,7 +348,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Anonymous Names"
-              onClick={() => act("anon_name")}
+              onClick={() => act('anon_name')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -366,7 +366,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="THERE CAN ONLY BE-"
-              onClick={() => act("onlyone")}
+              onClick={() => act('onlyone')}
             />
           </Stack.Item>
         </Stack>
@@ -379,7 +379,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Summon Guns"
-              onClick={() => act("guns")}
+              onClick={() => act('guns')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -388,7 +388,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Summon Magic"
-              onClick={() => act("magic")}
+              onClick={() => act('magic')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -397,7 +397,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Summon Events"
-              onClick={() => act("events")}
+              onClick={() => act('events')}
             />
           </Stack.Item>
         </Stack>
@@ -410,7 +410,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Egalitarian Station"
-              onClick={() => act("eagles")}
+              onClick={() => act('eagles')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -419,7 +419,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Ancap Station"
-              onClick={() => act("ancap")}
+              onClick={() => act('ancap')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -441,7 +441,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Custom Portal Storm"
-              onClick={() => act("customportal")}
+              onClick={() => act('customportal')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -450,7 +450,7 @@ const FunTab = (props) => {
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Change Bomb Cap"
-              onClick={() => act("changebombcap")}
+              onClick={() => act('changebombcap')}
             />
           </Stack.Item>
           <Stack.Item>
@@ -481,7 +481,7 @@ const FunForYouTab = (props) => {
                 icon="user-secret"
                 fluid
                 content="Everyone is the traitor"
-                onClick={() => act("traitor_all")}
+                onClick={() => act('traitor_all')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -492,7 +492,7 @@ const FunForYouTab = (props) => {
                 icon="brain"
                 fluid
                 content="Everyone gets brain damage"
-                onClick={() => act("massbraindamage")}
+                onClick={() => act('massbraindamage')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -507,7 +507,7 @@ const FunForYouTab = (props) => {
                 icon="hand-lizard"
                 fluid
                 content="Change everyone's species"
-                onClick={() => act("allspecies")}
+                onClick={() => act('allspecies')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -518,7 +518,7 @@ const FunForYouTab = (props) => {
                 icon="paw"
                 fluid
                 content="Change everyone to monkeys"
-                onClick={() => act("monkey")}
+                onClick={() => act('monkey')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -531,7 +531,7 @@ const FunForYouTab = (props) => {
             icon="fire"
             fluid
             content="The floor is lava! (DANGEROUS: extremely lame)"
-            onClick={() => act("floorlava")}
+            onClick={() => act('floorlava')}
           />
         </NoticeBox>
       </Stack.Item>
@@ -542,7 +542,7 @@ const FunForYouTab = (props) => {
             icon="fire"
             fluid
             content="Chinese Cartoons! (DANGEROUS: no going back, also fuck you)"
-            onClick={() => act("anime")}
+            onClick={() => act('anime')}
           />
         </NoticeBox>
       </Stack.Item>
@@ -555,7 +555,7 @@ const FunForYouTab = (props) => {
                 icon="cat"
                 fluid
                 content="Mass Purrbation"
-                onClick={() => act("masspurrbation")}
+                onClick={() => act('masspurrbation')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -566,7 +566,7 @@ const FunForYouTab = (props) => {
                 icon="user"
                 fluid
                 content="Cure Purrbation"
-                onClick={() => act("massremovepurrbation")}
+                onClick={() => act('massremovepurrbation')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -581,7 +581,7 @@ const FunForYouTab = (props) => {
                 icon="flushed"
                 fluid
                 content="Fully Immerse Everyone"
-                onClick={() => act("massimmerse")}
+                onClick={() => act('massimmerse')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -592,7 +592,7 @@ const FunForYouTab = (props) => {
                 icon="sync-alt"
                 fluid
                 content="Shatter the Immersion"
-                onClick={() => act("unmassimmerse")}
+                onClick={() => act('unmassimmerse')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -607,7 +607,7 @@ const FunForYouTab = (props) => {
                 icon="comment-slash"
                 fluid
                 content="Tower of Babel"
-                onClick={() => act("towerOfBabel")}
+                onClick={() => act('towerOfBabel')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -618,7 +618,7 @@ const FunForYouTab = (props) => {
                 icon="comment"
                 fluid
                 content="Undo Tower of Babel"
-                onClick={() => act("cureTowerOfBabel")}
+                onClick={() => act('cureTowerOfBabel')}
               />
             </NoticeBox>
           </Stack.Item>
@@ -631,7 +631,7 @@ const FunForYouTab = (props) => {
 export const Secrets = (props) => {
   const { act, data } = useBackend();
   const { is_debugger, is_funmin } = data;
-  const [tabIndex, setTabIndex] = useLocalState("tab-index", 2);
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 2);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window title="Secrets Panel" width={500} height={488} theme="admin">
@@ -646,13 +646,13 @@ export const Secrets = (props) => {
                     color="blue"
                     icon="address-card"
                     content="Admin Log"
-                    onClick={() => act("admin_log")}
+                    onClick={() => act('admin_log')}
                   />
                   <Button
                     color="blue"
                     icon="eye"
                     content="Show Admins"
-                    onClick={() => act("show_admins")}
+                    onClick={() => act('show_admins')}
                   />
                 </>
               }
@@ -716,7 +716,7 @@ export const Secrets = (props) => {
                           average: [100 * 0.25, 100 * 0.75],
                           bad: [100 * 0.75, 100],
                         }}
-                        format={(value) => toFixed(value) + "%"}
+                        format={(value) => toFixed(value) + '%'}
                       />
                     </LabeledControls.Item>
                   </LabeledControls>
@@ -738,7 +738,7 @@ export const Secrets = (props) => {
               fill={false}
               title={
                 TAB2NAME[tabIndex - 1].title +
-                " Or: " +
+                ' Or: ' +
                 TAB2NAME[tabIndex - 1].blurb
               }
             >

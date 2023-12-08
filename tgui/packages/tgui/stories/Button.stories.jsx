@@ -4,29 +4,29 @@
  * @license MIT
  */
 
-import { Box, Button, Section } from "../components";
+import { Box, Button, Section } from '../components';
 
 export const meta = {
-  title: "Button",
+  title: 'Button',
   render: () => <Story />,
 };
 
 const COLORS_SPECTRUM = [
-  "red",
-  "orange",
-  "yellow",
-  "olive",
-  "green",
-  "teal",
-  "blue",
-  "violet",
-  "purple",
-  "pink",
-  "brown",
-  "grey",
+  'red',
+  'orange',
+  'yellow',
+  'olive',
+  'green',
+  'teal',
+  'blue',
+  'violet',
+  'purple',
+  'pink',
+  'brown',
+  'grey',
 ];
 
-const COLORS_STATES = ["good", "average", "bad", "black", "white"];
+const COLORS_STATES = ['good', 'average', 'bad', 'black', 'white'];
 
 const Story = (props) => {
   return (

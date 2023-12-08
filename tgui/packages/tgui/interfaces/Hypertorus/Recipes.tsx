@@ -1,8 +1,8 @@
-import { Box, Button, Icon, Table, Tooltip } from "tgui/components";
-import { getGasColor, getGasLabel } from "tgui/constants";
+import { Box, Button, Icon, Table, Tooltip } from 'tgui/components';
+import { getGasColor, getGasLabel } from 'tgui/constants';
 
-import { HypertorusData } from ".";
-import { useBackend } from "tgui/backend";
+import { HypertorusData } from '.';
+import { useBackend } from 'tgui/backend';
 
 type Recipe = {
   param: string;
@@ -52,60 +52,60 @@ type RecipeProps = {
  */
 const recipe_effect_structure: Recipe[] = [
   {
-    param: "recipe_cooling_multiplier",
-    label: "Cooling",
-    icon: "snowflake-o",
+    param: 'recipe_cooling_multiplier',
+    label: 'Cooling',
+    icon: 'snowflake-o',
     scale: 3,
   },
   {
-    param: "recipe_heating_multiplier",
-    label: "Heating",
-    icon: "fire",
+    param: 'recipe_heating_multiplier',
+    label: 'Heating',
+    icon: 'fire',
     scale: 3,
   },
   {
-    param: "energy_loss_multiplier",
-    label: "Energy loss",
-    icon: "sun-o",
+    param: 'energy_loss_multiplier',
+    label: 'Energy loss',
+    icon: 'sun-o',
     scale: 3,
   },
   {
-    param: "fuel_consumption_multiplier",
-    label: "Fuel use",
-    icon: ["window-minimize", "arrow-down"],
+    param: 'fuel_consumption_multiplier',
+    label: 'Fuel use',
+    icon: ['window-minimize', 'arrow-down'],
     scale: 1.5,
   },
   {
-    param: "gas_production_multiplier",
-    label: "Production",
-    icon: ["window-minimize", "arrow-up"],
+    param: 'gas_production_multiplier',
+    label: 'Production',
+    icon: ['window-minimize', 'arrow-up'],
     scale: 1.5,
   },
   {
-    param: "temperature_multiplier",
-    label: "Max temperature",
-    icon: "thermometer-full",
+    param: 'temperature_multiplier',
+    label: 'Max temperature',
+    icon: 'thermometer-full',
     override_base: 0.85,
     scale: 1.15,
     tooltip: (v, d) =>
-      "Maximum: " + (d.baseMaximumTemperature * v).toExponential() + " K",
+      'Maximum: ' + (d.baseMaximumTemperature * v).toExponential() + ' K',
   },
 ];
 
 const effect_to_icon = (effect_value, effect_scale, base) => {
   if (effect_value === base) {
-    return "minus";
+    return 'minus';
   }
   if (effect_value > base) {
     if (effect_value > base * effect_scale) {
-      return "angle-double-up";
+      return 'angle-double-up';
     }
-    return "angle-up";
+    return 'angle-up';
   }
   if (effect_value < base / effect_scale) {
-    return "angle-double-down";
+    return 'angle-double-down';
   }
-  return "angle-down";
+  return 'angle-down';
 };
 
 const MemoRow = (props) => {
@@ -113,7 +113,7 @@ const MemoRow = (props) => {
   return (
     <Table.Row
       className={`hypertorus-recipes__row${
-        active ? " hypertorus-recipes__activerow" : ""
+        active ? ' hypertorus-recipes__activerow' : ''
       }`}
       {...rest}
     >
@@ -165,7 +165,7 @@ export const HypertorusRecipes = (props: RecipeProps) => {
             recipe_effect_structure.map(({ param, label, icon }) => (
               <Table.Cell key={param} color="label">
                 <Tooltip content={label}>
-                  {typeof icon === "string" ? (
+                  {typeof icon === 'string' ? (
                     <Icon className="hypertorus-recipes__icon" name={icon} />
                   ) : (
                     <Icon.Stack className="hypertorus-recipes__icon">
@@ -188,7 +188,7 @@ export const HypertorusRecipes = (props: RecipeProps) => {
               <MemoRow key={recipe.id} active={active}>
                 <Table.Cell>
                   <Button
-                    icon={recipe.id === selected ? "times" : "power-off"}
+                    icon={recipe.id === selected ? 'times' : 'power-off'}
                     disabled={!enableRecipeSelection}
                     key={recipe.id}
                     selected={recipe.id === selected}
@@ -210,7 +210,7 @@ export const HypertorusRecipes = (props: RecipeProps) => {
                     return (
                       <Table.Cell key={param}>
                         <Tooltip
-                          content={(tooltip || ((v) => "x" + v))(value, rest)}
+                          content={(tooltip || ((v) => 'x' + v))(value, rest)}
                         >
                           <Icon
                             className="hypertorus-recipes__icon"

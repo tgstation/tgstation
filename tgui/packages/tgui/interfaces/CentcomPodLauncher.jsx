@@ -1,10 +1,10 @@
-import { toFixed } from "common/math";
-import { classes } from "common/react";
-import { storage } from "common/storage";
-import { multiline } from "common/string";
-import { createUuid } from "common/uuid";
-import { Component, Fragment } from "react";
-import { useBackend, useLocalState } from "../backend";
+import { toFixed } from 'common/math';
+import { classes } from 'common/react';
+import { storage } from 'common/storage';
+import { multiline } from 'common/string';
+import { createUuid } from 'common/uuid';
+import { Component, Fragment } from 'react';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -16,15 +16,15 @@ import {
   NumberInput,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 const pod_grey = {
-  color: "grey",
+  color: 'grey',
 };
 
 const useCompact = () => {
-  const [compact, setCompact] = useLocalState("compact", false);
+  const [compact, setCompact] = useLocalState('compact', false);
   const toggleCompact = () => setCompact(!compact);
   return [compact, toggleCompact];
 };
@@ -99,332 +99,332 @@ const CentcomPodLauncherContent = (props) => {
 
 const TABPAGES = [
   {
-    title: "View Pod",
+    title: 'View Pod',
     component: () => TabPod,
   },
   {
-    title: "View Bay",
+    title: 'View Bay',
     component: () => TabBay,
   },
   {
-    title: "View Dropoff Location",
+    title: 'View Dropoff Location',
     component: () => TabDrop,
   },
 ];
 
 const REVERSE_OPTIONS = [
   {
-    title: "Mobs",
-    icon: "user",
+    title: 'Mobs',
+    icon: 'user',
   },
   {
-    title: "Unanchored\nObjects",
-    key: "Unanchored",
-    icon: "cube",
+    title: 'Unanchored\nObjects',
+    key: 'Unanchored',
+    icon: 'cube',
   },
   {
-    title: "Anchored\nObjects",
-    key: "Anchored",
-    icon: "anchor",
+    title: 'Anchored\nObjects',
+    key: 'Anchored',
+    icon: 'anchor',
   },
   {
-    title: "Under-Floor",
-    key: "Underfloor",
-    icon: "eye-slash",
+    title: 'Under-Floor',
+    key: 'Underfloor',
+    icon: 'eye-slash',
   },
   {
-    title: "Wall-Mounted",
-    key: "Wallmounted",
-    icon: "link",
+    title: 'Wall-Mounted',
+    key: 'Wallmounted',
+    icon: 'link',
   },
   {
-    title: "Floors",
-    icon: "border-all",
+    title: 'Floors',
+    icon: 'border-all',
   },
   {
-    title: "Walls",
-    icon: "square",
+    title: 'Walls',
+    icon: 'square',
   },
   {
-    title: "Mechs",
-    key: "Mecha",
-    icon: "truck",
+    title: 'Mechs',
+    key: 'Mecha',
+    icon: 'truck',
   },
 ];
 
 const DELAYS = [
   {
-    title: "Pre",
-    tooltip: "Time until pod gets to station",
+    title: 'Pre',
+    tooltip: 'Time until pod gets to station',
   },
   {
-    title: "Fall",
-    tooltip: "Duration of pods\nfalling animation",
+    title: 'Fall',
+    tooltip: 'Duration of pods\nfalling animation',
   },
   {
-    title: "Open",
-    tooltip: "Time it takes pod to open after landing",
+    title: 'Open',
+    tooltip: 'Time it takes pod to open after landing',
   },
   {
-    title: "Exit",
-    tooltip: "Time for pod to\nleave after opening",
+    title: 'Exit',
+    tooltip: 'Time for pod to\nleave after opening',
   },
 ];
 
 const REV_DELAYS = [
   {
-    title: "Pre",
-    tooltip: "Time until pod appears above dropoff point",
+    title: 'Pre',
+    tooltip: 'Time until pod appears above dropoff point',
   },
   {
-    title: "Fall",
-    tooltip: "Duration of pods\nfalling animation",
+    title: 'Fall',
+    tooltip: 'Duration of pods\nfalling animation',
   },
   {
-    title: "Open",
-    tooltip: "Time it takes pod to open after landing",
+    title: 'Open',
+    tooltip: 'Time it takes pod to open after landing',
   },
   {
-    title: "Exit",
-    tooltip: "Time for pod to\nleave after opening",
+    title: 'Exit',
+    tooltip: 'Time for pod to\nleave after opening',
   },
 ];
 
 const SOUNDS = [
   {
-    title: "Fall",
-    act: "fallingSound",
-    tooltip: "Plays while pod falls, timed\nto end when pod lands",
+    title: 'Fall',
+    act: 'fallingSound',
+    tooltip: 'Plays while pod falls, timed\nto end when pod lands',
   },
   {
-    title: "Land",
-    act: "landingSound",
-    tooltip: "Plays after pod lands",
+    title: 'Land',
+    act: 'landingSound',
+    tooltip: 'Plays after pod lands',
   },
   {
-    title: "Open",
-    act: "openingSound",
-    tooltip: "Plays when pod opens",
+    title: 'Open',
+    act: 'openingSound',
+    tooltip: 'Plays when pod opens',
   },
   {
-    title: "Exit",
-    act: "leavingSound",
-    tooltip: "Plays when pod leaves",
+    title: 'Exit',
+    act: 'leavingSound',
+    tooltip: 'Plays when pod leaves',
   },
 ];
 
 const STYLES = [
-  { title: "Standard" },
-  { title: "Advanced" },
-  { title: "Nanotrasen" },
-  { title: "Syndicate" },
-  { title: "Deathsquad" },
-  { title: "Cultist" },
-  { title: "Missile" },
-  { title: "Syndie Missile" },
-  { title: "Supply Box" },
-  { title: "Clown Pod" },
-  { title: "Fruit" },
-  { title: "Invisible" },
-  { title: "Gondola" },
-  { title: "Seethrough" },
+  { title: 'Standard' },
+  { title: 'Advanced' },
+  { title: 'Nanotrasen' },
+  { title: 'Syndicate' },
+  { title: 'Deathsquad' },
+  { title: 'Cultist' },
+  { title: 'Missile' },
+  { title: 'Syndie Missile' },
+  { title: 'Supply Box' },
+  { title: 'Clown Pod' },
+  { title: 'Fruit' },
+  { title: 'Invisible' },
+  { title: 'Gondola' },
+  { title: 'Seethrough' },
 ];
 
 const BAYS = [
-  { title: "1" },
-  { title: "2" },
-  { title: "3" },
-  { title: "4" },
-  { title: "ERT" },
+  { title: '1' },
+  { title: '2' },
+  { title: '3' },
+  { title: '4' },
+  { title: 'ERT' },
 ];
 
 const EFFECTS_LOAD = [
   {
-    title: "Launch All Turfs",
-    icon: "globe",
+    title: 'Launch All Turfs',
+    icon: 'globe',
     choiceNumber: 0,
-    selected: "launchChoice",
-    act: "launchAll",
+    selected: 'launchChoice',
+    act: 'launchAll',
   },
   {
-    title: "Launch Turf Ordered",
-    icon: "sort-amount-down-alt",
+    title: 'Launch Turf Ordered',
+    icon: 'sort-amount-down-alt',
     choiceNumber: 1,
-    selected: "launchChoice",
-    act: "launchOrdered",
+    selected: 'launchChoice',
+    act: 'launchOrdered',
   },
   {
-    title: "Pick Random Turf",
-    icon: "dice",
+    title: 'Pick Random Turf',
+    icon: 'dice',
     choiceNumber: 2,
-    selected: "launchChoice",
-    act: "launchRandomTurf",
+    selected: 'launchChoice',
+    act: 'launchRandomTurf',
   },
   {
     divider: 1,
   },
   {
-    title: "Launch Whole Turf",
-    icon: "expand",
+    title: 'Launch Whole Turf',
+    icon: 'expand',
     choiceNumber: 0,
-    selected: "launchRandomItem",
-    act: "launchWholeTurf",
+    selected: 'launchRandomItem',
+    act: 'launchWholeTurf',
   },
   {
-    title: "Pick Random Item",
-    icon: "dice",
+    title: 'Pick Random Item',
+    icon: 'dice',
     choiceNumber: 1,
-    selected: "launchRandomItem",
-    act: "launchRandomItem",
+    selected: 'launchRandomItem',
+    act: 'launchRandomItem',
   },
   {
     divider: 1,
   },
   {
-    title: "Clone",
-    icon: "clone",
-    soloSelected: "launchClone",
-    act: "launchClone",
+    title: 'Clone',
+    icon: 'clone',
+    soloSelected: 'launchClone',
+    act: 'launchClone',
   },
 ];
 
 const EFFECTS_NORMAL = [
   {
-    title: "Specific Target",
-    icon: "user-check",
-    soloSelected: "effectTarget",
-    act: "effectTarget",
+    title: 'Specific Target',
+    icon: 'user-check',
+    soloSelected: 'effectTarget',
+    act: 'effectTarget',
   },
   {
-    title: "Pod Stays",
-    icon: "hand-paper",
+    title: 'Pod Stays',
+    icon: 'hand-paper',
     choiceNumber: 0,
-    selected: "effectBluespace",
-    act: "effectBluespace",
+    selected: 'effectBluespace',
+    act: 'effectBluespace',
   },
   {
-    title: "Stealth",
-    icon: "user-ninja",
-    soloSelected: "effectStealth",
-    act: "effectStealth",
+    title: 'Stealth',
+    icon: 'user-ninja',
+    soloSelected: 'effectStealth',
+    act: 'effectStealth',
   },
   {
-    title: "Quiet",
-    icon: "volume-mute",
-    soloSelected: "effectQuiet",
-    act: "effectQuiet",
+    title: 'Quiet',
+    icon: 'volume-mute',
+    soloSelected: 'effectQuiet',
+    act: 'effectQuiet',
   },
   {
-    title: "Missile Mode",
-    icon: "rocket",
-    soloSelected: "effectMissile",
-    act: "effectMissile",
+    title: 'Missile Mode',
+    icon: 'rocket',
+    soloSelected: 'effectMissile',
+    act: 'effectMissile',
   },
   {
-    title: "Burst Launch",
-    icon: "certificate",
-    soloSelected: "effectBurst",
-    act: "effectBurst",
+    title: 'Burst Launch',
+    icon: 'certificate',
+    soloSelected: 'effectBurst',
+    act: 'effectBurst',
   },
   {
-    title: "Any Descent Angle",
-    icon: "ruler-combined",
-    soloSelected: "effectCircle",
-    act: "effectCircle",
+    title: 'Any Descent Angle',
+    icon: 'ruler-combined',
+    soloSelected: 'effectCircle',
+    act: 'effectCircle',
   },
   {
-    title: "No Ghost Alert\n(If you dont want to\nentertain bored ghosts)",
-    icon: "ghost",
+    title: 'No Ghost Alert\n(If you dont want to\nentertain bored ghosts)',
+    icon: 'ghost',
     choiceNumber: 0,
-    selected: "effectAnnounce",
-    act: "effectAnnounce",
+    selected: 'effectAnnounce',
+    act: 'effectAnnounce',
   },
 ];
 
 const EFFECTS_HARM = [
   {
-    title: "Explosion Custom",
-    icon: "bomb",
+    title: 'Explosion Custom',
+    icon: 'bomb',
     choiceNumber: 1,
-    selected: "explosionChoice",
-    act: "explosionCustom",
+    selected: 'explosionChoice',
+    act: 'explosionCustom',
   },
   {
-    title: "Adminbus Explosion\nWhat are they gonna do, ban you?",
-    icon: "bomb",
+    title: 'Adminbus Explosion\nWhat are they gonna do, ban you?',
+    icon: 'bomb',
     choiceNumber: 2,
-    selected: "explosionChoice",
-    act: "explosionBus",
+    selected: 'explosionChoice',
+    act: 'explosionBus',
   },
   {
     divider: 1,
   },
   {
-    title: "Custom Damage",
-    icon: "skull",
+    title: 'Custom Damage',
+    icon: 'skull',
     choiceNumber: 1,
-    selected: "damageChoice",
-    act: "damageCustom",
+    selected: 'damageChoice',
+    act: 'damageCustom',
   },
   {
-    title: "Gib",
-    icon: "skull-crossbones",
+    title: 'Gib',
+    icon: 'skull-crossbones',
     choiceNumber: 2,
-    selected: "damageChoice",
-    act: "damageGib",
+    selected: 'damageChoice',
+    act: 'damageGib',
   },
   {
     divider: 1,
   },
   {
-    title: "Projectile Cloud",
+    title: 'Projectile Cloud',
     details: true,
-    icon: "cloud-meatball",
-    soloSelected: "effectShrapnel",
-    act: "effectShrapnel",
+    icon: 'cloud-meatball',
+    soloSelected: 'effectShrapnel',
+    act: 'effectShrapnel',
   },
   {
-    title: "Stun",
-    icon: "sun",
-    soloSelected: "effectStun",
-    act: "effectStun",
+    title: 'Stun',
+    icon: 'sun',
+    soloSelected: 'effectStun',
+    act: 'effectStun',
   },
   {
-    title: "Delimb",
-    icon: "socks",
-    soloSelected: "effectLimb",
-    act: "effectLimb",
+    title: 'Delimb',
+    icon: 'socks',
+    soloSelected: 'effectLimb',
+    act: 'effectLimb',
   },
   {
-    title: "Yeet Organs",
-    icon: "book-dead",
-    soloSelected: "effectOrgans",
-    act: "effectOrgans",
+    title: 'Yeet Organs',
+    icon: 'book-dead',
+    soloSelected: 'effectOrgans',
+    act: 'effectOrgans',
   },
 ];
 
 const EFFECTS_ALL = [
   {
     list: EFFECTS_LOAD,
-    label: "Load From",
-    alt_label: "Load",
-    tooltipPosition: "right",
+    label: 'Load From',
+    alt_label: 'Load',
+    tooltipPosition: 'right',
   },
   {
     list: EFFECTS_NORMAL,
-    label: "Normal Effects",
-    tooltipPosition: "bottom",
+    label: 'Normal Effects',
+    tooltipPosition: 'bottom',
   },
   {
     list: EFFECTS_HARM,
-    label: "Harmful Effects",
-    tooltipPosition: "bottom",
+    label: 'Harmful Effects',
+    tooltipPosition: 'bottom',
   },
 ];
 
 const ViewTabHolder = (props) => {
   const { act, data } = useBackend();
-  const [tabPageIndex, setTabPageIndex] = useLocalState("tabPageIndex", 1);
+  const [tabPageIndex, setTabPageIndex] = useLocalState('tabPageIndex', 1);
   const { mapRef } = data;
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
@@ -442,7 +442,7 @@ const ViewTabHolder = (props) => {
               selected={2 === tabPageIndex}
               onClick={() => {
                 setTabPageIndex(2);
-                act("tabSwitch", { tabIndex: 2 });
+                act('tabSwitch', { tabIndex: 2 });
               }}
             />
           )}
@@ -454,7 +454,7 @@ const ViewTabHolder = (props) => {
             selected={0 === tabPageIndex}
             onClick={() => {
               setTabPageIndex(0);
-              act("tabSwitch", { tabIndex: 0 });
+              act('tabSwitch', { tabIndex: 0 });
             }}
           />
           <Button
@@ -465,7 +465,7 @@ const ViewTabHolder = (props) => {
             selected={1 === tabPageIndex}
             onClick={() => {
               setTabPageIndex(1);
-              act("tabSwitch", { tabIndex: 1 });
+              act('tabSwitch', { tabIndex: 1 });
             }}
           />
           <span style={pod_grey}>|</span>
@@ -477,8 +477,8 @@ const ViewTabHolder = (props) => {
               selected={data.renderLighting}
               tooltip="Render Lighting for the dropoff view"
               onClick={() => {
-                act("renderLighting");
-                act("refreshView");
+                act('renderLighting');
+                act('refreshView');
               }}
             />
           )}
@@ -489,7 +489,7 @@ const ViewTabHolder = (props) => {
             tooltip="Refresh view window in case it breaks"
             onClick={() => {
               setTabPageIndex(tabPageIndex);
-              act("refreshView");
+              act('refreshView');
             }}
           />
         </>
@@ -505,7 +505,7 @@ const ViewTabHolder = (props) => {
             params={{
               zoom: 0,
               id: mapRef,
-              type: "map",
+              type: 'map',
             }}
           />
         </Stack.Item>
@@ -531,13 +531,13 @@ const TabBay = (props) => {
       <Button
         content="Teleport"
         icon="street-view"
-        onClick={() => act("teleportCentcom")}
+        onClick={() => act('teleportCentcom')}
       />
       <Button
-        content={data.oldArea ? data.oldArea.substring(0, 17) : "Go Back"}
+        content={data.oldArea ? data.oldArea.substring(0, 17) : 'Go Back'}
         disabled={!data.oldArea}
         icon="undo-alt"
-        onClick={() => act("teleportBack")}
+        onClick={() => act('teleportBack')}
       />
     </>
   );
@@ -550,13 +550,13 @@ const TabDrop = (props) => {
       <Button
         content="Teleport"
         icon="street-view"
-        onClick={() => act("teleportDropoff")}
+        onClick={() => act('teleportDropoff')}
       />
       <Button
-        content={data.oldArea ? data.oldArea.substring(0, 17) : "Go Back"}
+        content={data.oldArea ? data.oldArea.substring(0, 17) : 'Go Back'}
         disabled={!data.oldArea}
         icon="undo-alt"
-        onClick={() => act("teleportBack")}
+        onClick={() => act('teleportBack')}
       />
     </>
   );
@@ -588,9 +588,9 @@ const PodStatusPage = (props) => {
                           effect.details
                             ? data.effectShrapnel
                               ? effect.title +
-                                "\n" +
+                                '\n' +
                                 data.shrapnelType +
-                                "\nMagnitude:" +
+                                '\nMagnitude:' +
                                 data.shrapnelMagnitude
                               : effect.title
                             : effect.title
@@ -609,11 +609,11 @@ const PodStatusPage = (props) => {
                             : act(effect.act)
                         }
                         style={{
-                          verticalAlign: "middle",
-                          marginLeft: j !== 0 ? "1px" : "0px",
+                          verticalAlign: 'middle',
+                          marginLeft: j !== 0 ? '1px' : '0px',
                           marginRight:
-                            j !== list.list.length - 1 ? "1px" : "0px",
-                          borderRadius: "5px",
+                            j !== list.list.length - 1 ? '1px' : '0px',
+                          borderRadius: '5px',
                         }}
                       />
                     )}
@@ -635,7 +635,7 @@ const PodStatusPage = (props) => {
                     icon="list-alt"
                     tooltip="Game Panel"
                     tooltipPosition="top-start"
-                    onClick={() => act("gamePanel")}
+                    onClick={() => act('gamePanel')}
                   />
                   <Button
                     inline
@@ -644,7 +644,7 @@ const PodStatusPage = (props) => {
                     icon="hammer"
                     tooltip="Build Mode"
                     tooltipPosition="top-start"
-                    onClick={() => act("buildMode")}
+                    onClick={() => act('buildMode')}
                   />
                   {(compact && (
                     <Button
@@ -656,7 +656,7 @@ const PodStatusPage = (props) => {
                       tooltipPosition="top-start"
                       onClick={() => {
                         toggleCompact();
-                        act("refreshView");
+                        act('refreshView');
                       }}
                     />
                   )) || (
@@ -682,7 +682,7 @@ const PodStatusPage = (props) => {
 
 const ReverseMenu = (props) => {
   const { act, data } = useBackend();
-  const [tabPageIndex, setTabPageIndex] = useLocalState("tabPageIndex", 1);
+  const [tabPageIndex, setTabPageIndex] = useLocalState('tabPageIndex', 1);
   return (
     <Section
       fill
@@ -690,7 +690,7 @@ const ReverseMenu = (props) => {
       title="Reverse"
       buttons={
         <Button
-          icon={data.effectReverse === 1 ? "toggle-on" : "toggle-off"}
+          icon={data.effectReverse === 1 ? 'toggle-on' : 'toggle-off'}
           selected={data.effectReverse}
           tooltip={multiline`
             Doesn't send items.
@@ -699,10 +699,10 @@ const ReverseMenu = (props) => {
             if none specified).`}
           tooltipPosition="top-start"
           onClick={() => {
-            act("effectReverse");
+            act('effectReverse');
             if (tabPageIndex === 2) {
               setTabPageIndex(1);
-              act("tabSwitch", { tabIndex: 1 });
+              act('tabSwitch', { tabIndex: 1 });
             }
           }}
         />
@@ -719,7 +719,7 @@ const ReverseMenu = (props) => {
                 Where reverse pods
                 go after landing`}
               tooltipPosition="bottom-end"
-              onClick={() => act("pickDropoffTurf")}
+              onClick={() => act('pickDropoffTurf')}
             />
             <Button
               inline
@@ -732,10 +732,10 @@ const ReverseMenu = (props) => {
                 selected bay.`}
               tooltipPosition="bottom"
               onClick={() => {
-                act("clearDropoffTurf");
+                act('clearDropoffTurf');
                 if (tabPageIndex === 2) {
                   setTabPageIndex(1);
-                  act("tabSwitch", { tabIndex: 1 });
+                  act('tabSwitch', { tabIndex: 1 });
                 }
               }}
             />
@@ -755,7 +755,7 @@ const ReverseMenu = (props) => {
                 }
                 tooltip={option.title}
                 onClick={() =>
-                  act("reverseOption", {
+                  act('reverseOption', {
                     reverseOption: option.key ? option.key : option.title,
                   })
                 }
@@ -785,13 +785,13 @@ class PresetsPage extends Component {
   }
 
   saveDataToPreset(id, data) {
-    storage.set("podlauncher_preset_" + id, data);
+    storage.set('podlauncher_preset_' + id, data);
   }
 
   async loadDataFromPreset(id) {
     const { act } = useBackend();
-    act("loadDataFromPreset", {
-      payload: await storage.get("podlauncher_preset_" + id),
+    act('loadDataFromPreset', {
+      payload: await storage.get('podlauncher_preset_' + id),
     });
   }
 
@@ -799,17 +799,17 @@ class PresetsPage extends Component {
     let { presets } = this.state;
     if (!presets) {
       presets = [];
-      presets.push("hi!");
+      presets.push('hi!');
     }
     const id = createUuid();
     const thing = { id, title: presetName, hue };
     presets.push(thing);
-    storage.set("podlauncher_presetlist", presets);
+    storage.set('podlauncher_presetlist', presets);
     this.saveDataToPreset(id, data);
   }
 
   async getPresets() {
-    let thing = await storage.get("podlauncher_presetlist");
+    let thing = await storage.get('podlauncher_presetlist');
     if (thing === undefined) {
       thing = [];
     }
@@ -824,15 +824,15 @@ class PresetsPage extends Component {
         break;
       }
     }
-    storage.set("podlauncher_presetlist", presets);
+    storage.set('podlauncher_presetlist', presets);
   }
   render() {
     const { presets } = this.state;
     const { act, data } = useBackend();
-    const [presetIndex, setSelectedPreset] = useLocalState("presetIndex", 0);
-    const [settingName, setEditingNameStatus] = useLocalState("settingName", 0);
-    const [newNameText, setText] = useLocalState("newNameText", "");
-    const [hue, setHue] = useLocalState("hue", 0);
+    const [presetIndex, setSelectedPreset] = useLocalState('presetIndex', 0);
+    const [settingName, setEditingNameStatus] = useLocalState('settingName', 0);
+    const [newNameText, setText] = useLocalState('newNameText', '');
+    const [hue, setHue] = useLocalState('hue', 0);
     return (
       <Section
         scrollable
@@ -895,7 +895,7 @@ class PresetsPage extends Component {
               icon="window-close"
               tooltip="Cancel"
               onClick={() => {
-                setText("");
+                setText('');
                 setEditingNameStatus(0);
               }}
             />
@@ -938,15 +938,15 @@ class PresetsPage extends Component {
                 style={
                   presetIndex === preset.id
                     ? {
-                        borderWidth: "1px",
-                        borderStyle: "solid",
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
                         borderColor: `hsl(${preset.hue}, 80%, 80%)`,
                       }
-                    : ""
+                    : ''
                 }
               />
             ))
-          : ""}
+          : ''}
         <span style={pod_grey}>
           <br />
           <br />
@@ -974,7 +974,7 @@ const LaunchPage = (props) => {
           LAUNCH
         </Box>
       }
-      onClick={() => act("giveLauncher")}
+      onClick={() => act('giveLauncher')}
     />
   );
 };
@@ -996,7 +996,7 @@ const StylePage = (props) => {
             Edit pod's
             name/desc.`}
           tooltipPosition="bottom-start"
-          onClick={() => act("effectName")}
+          onClick={() => act('effectName')}
         />
       }
     >
@@ -1008,26 +1008,26 @@ const StylePage = (props) => {
           tooltipPosition={
             i >= STYLES.length - 2
               ? i % 2 === 1
-                ? "top-start"
-                : "top-end"
+                ? 'top-start'
+                : 'top-end'
               : i % 2 === 1
-                ? "bottom-start"
-                : "bottom-end"
+                ? 'bottom-start'
+                : 'bottom-end'
           }
           tooltip={page.title}
           style={{
-            verticalAlign: "middle",
-            marginRight: "5px",
-            borderRadius: "20px",
+            verticalAlign: 'middle',
+            marginRight: '5px',
+            borderRadius: '20px',
           }}
           selected={data.styleChoice - 1 === i}
-          onClick={() => act("setStyle", { style: i })}
+          onClick={() => act('setStyle', { style: i })}
         >
           <Box
-            className={classes(["supplypods64x64", "pod_asset" + (i + 1)])}
+            className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
-              transform: "rotate(45deg) translate(-25%,-10%)",
-              pointerEvents: "none",
+              transform: 'rotate(45deg) translate(-25%,-10%)',
+              pointerEvents: 'none',
             }}
           />
         </Button>
@@ -1052,7 +1052,7 @@ const Bays = (props) => {
               Clears everything
               from the selected bay`}
             tooltipPosition="bottom-end"
-            onClick={() => act("clearBay")}
+            onClick={() => act('clearBay')}
           />
           <Button
             icon="question"
@@ -1075,8 +1075,8 @@ const Bays = (props) => {
           key={i}
           content={bay.title}
           tooltipPosition="bottom-end"
-          selected={data.bayNumber === "" + (i + 1)}
-          onClick={() => act("switchBay", { bayNumber: "" + (i + 1) })}
+          selected={data.bayNumber === '' + (i + 1)}
+          onClick={() => act('switchBay', { bayNumber: '' + (i + 1) })}
         />
       ))}
     </Section>
@@ -1098,10 +1098,10 @@ const Timing = (props) => {
             Reset all pod
             timings/delays`}
             tooltipPosition="bottom-end"
-            onClick={() => act("resetTiming")}
+            onClick={() => act('resetTiming')}
           />
           <Button
-            icon={data.custom_rev_delay === 1 ? "toggle-on" : "toggle-off"}
+            icon={data.custom_rev_delay === 1 ? 'toggle-on' : 'toggle-off'}
             selected={data.custom_rev_delay}
             disabled={!data.effectReverse}
             color="transparent"
@@ -1111,7 +1111,7 @@ const Timing = (props) => {
             normal delays, bottom set
             is reversing pod's delays`}
             tooltipPosition="bottom-end"
-            onClick={() => act("toggleRevDelays")}
+            onClick={() => act('toggleRevDelays')}
           />
         </>
       }
@@ -1123,7 +1123,7 @@ const Timing = (props) => {
           <DelayHelper delay_list={REV_DELAYS} reverse />
         </>
       )) ||
-        ""}
+        ''}
     </Section>
   );
 };
@@ -1136,7 +1136,7 @@ const DelayHelper = (props) => {
       {delay_list.map((delay, i) => (
         <LabeledControls.Item
           key={i}
-          label={data.custom_rev_delay ? "" : delay.title}
+          label={data.custom_rev_delay ? '' : delay.title}
         >
           <Knob
             inline
@@ -1145,17 +1145,17 @@ const DelayHelper = (props) => {
             value={(reverse ? data.rev_delays[i + 1] : data.delays[i + 1]) / 10}
             unclamped
             minValue={0}
-            unit={"s"}
+            unit={'s'}
             format={(value) => toFixed(value, 2)}
             maxValue={10}
             color={
               (reverse ? data.rev_delays[i + 1] : data.delays[i + 1]) / 10 > 10
-                ? "orange"
-                : "default"
+                ? 'orange'
+                : 'default'
             }
             onDrag={(e, value) => {
-              act("editTiming", {
-                timer: "" + (i + 1),
+              act('editTiming', {
+                timer: '' + (i + 1),
                 value: Math.max(value, 0),
                 reverse: reverse,
               });
@@ -1182,7 +1182,7 @@ const Sounds = (props) => {
             multiline`
             Sound Volume:` + data.soundVolume
           }
-          onClick={() => act("soundVolume")}
+          onClick={() => act('soundVolume')}
         />
       }
     >

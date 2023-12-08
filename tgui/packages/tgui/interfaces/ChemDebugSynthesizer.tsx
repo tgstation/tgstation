@@ -1,7 +1,7 @@
-import { Beaker, BeakerDisplay } from "./common/BeakerDisplay";
-import { useBackend } from "../backend";
-import { Button, NumberInput, Section } from "../components";
-import { Window } from "../layouts";
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+import { useBackend } from '../backend';
+import { Button, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   amount: number;
@@ -29,7 +29,7 @@ export const ChemDebugSynthesizer = (props) => {
                   step={1}
                   stepPixelSize={2}
                   onChange={(e, value) =>
-                    act("amount", {
+                    act('amount', {
                       amount: value,
                     })
                   }
@@ -42,7 +42,7 @@ export const ChemDebugSynthesizer = (props) => {
                   step={1}
                   stepPixelSize={2}
                   onChange={(e, value) =>
-                    act("purity", {
+                    act('purity', {
                       amount: value,
                     })
                   }
@@ -50,14 +50,14 @@ export const ChemDebugSynthesizer = (props) => {
                 <Button
                   icon="plus"
                   content="Input"
-                  onClick={() => act("input")}
+                  onClick={() => act('input')}
                 />
               </>
             ) : (
               <Button
                 icon="plus"
                 content="Create Beaker"
-                onClick={() => act("makecup")}
+                onClick={() => act('makecup')}
               />
             )
           }

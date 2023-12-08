@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "sass:map";
-@use "sass:color";
+@use 'sass:map';
+@use 'sass:color';
 
 html,
 body {
@@ -107,13 +107,13 @@ a.popt {
   color: #333;
 }
 
-.popup input[type="text"]:hover,
-.popup input[type="text"]:active,
-.popup input[type="text"]:focus {
+.popup input[type='text']:hover,
+.popup input[type='text']:active,
+.popup input[type='text']:focus {
   border-color: green;
 }
 
-.popup input[type="submit"] {
+.popup input[type='submit'] {
   padding: 5px 10px;
   background: #999;
   color: #ddd;
@@ -122,9 +122,9 @@ a.popt {
   font-weight: bold;
 }
 
-.popup input[type="submit"]:hover,
-.popup input[type="submit"]:focus,
-.popup input[type="submit"]:active {
+.popup input[type='submit']:hover,
+.popup input[type='submit']:focus,
+.popup input[type='submit']:active {
   background: #aaa;
   cursor: pointer;
 }
@@ -149,7 +149,7 @@ a.popt {
   text-align: center;
 }
 
-.highlightPopup input[type="text"] {
+.highlightPopup input[type='text'] {
   display: block;
   width: 215px;
   text-align: left;
@@ -753,20 +753,20 @@ h2.alert {
 }
 
 .sans {
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
 }
 
 .papyrus {
-  font-family: "Papyrus", cursive, sans-serif;
+  font-family: 'Papyrus', cursive, sans-serif;
 }
 
 .robot {
-  font-family: "Courier New", cursive, sans-serif;
+  font-family: 'Courier New', cursive, sans-serif;
 }
 
 .tape_recorder {
   color: #800000;
-  font-family: "Courier New", cursive, sans-serif;
+  font-family: 'Courier New', cursive, sans-serif;
 }
 
 .command_headset {
@@ -803,18 +803,18 @@ h2.alert {
 .clown {
   color: #ff69bf;
   font-size: 160%;
-  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
   font-weight: bold;
 }
 
 .singing {
-  font-family: "Trebuchet MS", cursive, sans-serif;
+  font-family: 'Trebuchet MS', cursive, sans-serif;
   font-style: italic;
 }
 
 .his_grace {
   color: #15d512;
-  font-family: "Courier New", cursive, sans-serif;
+  font-family: 'Courier New', cursive, sans-serif;
   font-style: italic;
 }
 
@@ -984,51 +984,51 @@ h2.alert {
 }
 
 $alert-stripe-colors: (
-  "default": #b3bfff,
-  "green": #adffad,
-  "blue": #b3bfff,
-  "pink": #ffb3df,
-  "yellow": #fff3b3,
-  "orange": #ffe2b3,
-  "red": #ffb3b3,
-  "purple": #fac2ff,
-  "grey": #e3e3e3,
+  'default': #b3bfff,
+  'green': #adffad,
+  'blue': #b3bfff,
+  'pink': #ffb3df,
+  'yellow': #fff3b3,
+  'orange': #ffe2b3,
+  'red': #ffb3b3,
+  'purple': #fac2ff,
+  'grey': #e3e3e3,
 );
 
 $alert-stripe-alternate-colors: (
-  "default": #bdc8ff,
-  "green": #bdffbd,
-  "blue": #bdc8ff,
-  "pink": #ffc2e5,
-  "yellow": #fff5c2,
-  "orange": #ffe8c2,
-  "red": #ffc2c2,
-  "purple": #fbd1ff,
-  "grey": #ebebeb,
+  'default': #bdc8ff,
+  'green': #bdffbd,
+  'blue': #bdc8ff,
+  'pink': #ffc2e5,
+  'yellow': #fff5c2,
+  'orange': #ffe8c2,
+  'red': #ffc2c2,
+  'purple': #fbd1ff,
+  'grey': #ebebeb,
 );
 
 $alert-major-header-colors: (
-  "default": #003061,
-  "green": #005229,
-  "blue": #003061,
-  "pink": #800033,
-  "yellow": #754900,
-  "orange": #823208,
-  "red": #800029,
-  "purple": #450d8c,
-  "grey": #800033,
+  'default': #003061,
+  'green': #005229,
+  'blue': #003061,
+  'pink': #800033,
+  'yellow': #754900,
+  'orange': #823208,
+  'red': #800029,
+  'purple': #450d8c,
+  'grey': #800033,
 );
 
 $alert-subheader-header-colors: (
-  "default": #6b0020,
-  "green": #6b0020,
-  "blue": #6b0020,
-  "pink": #002c85,
-  "yellow": #002c85,
-  "orange": #002c85,
-  "red": #002c85,
-  "purple": #002c85,
-  "grey": #002c85,
+  'default': #6b0020,
+  'green': #6b0020,
+  'blue': #6b0020,
+  'pink': #002c85,
+  'yellow': #002c85,
+  'orange': #002c85,
+  'red': #002c85,
+  'purple': #002c85,
+  'grey': #002c85,
 );
 
 $border-width: 4;

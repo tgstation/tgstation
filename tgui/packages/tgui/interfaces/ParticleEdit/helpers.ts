@@ -31,7 +31,7 @@ export const isStringArray = (value: any): value is string[] => {
   if (!Array.isArray(value)) {
     return false;
   }
-  return value.every((x) => typeof x === "string");
+  return value.every((x) => typeof x === 'string');
 };
 
 /** sets the "space" keys value on  an object, then returns that object*/
@@ -39,6 +39,6 @@ export const setGradientSpace = (
   gradient: (number | string)[],
   space: number,
 ) => {
-  gradient["space"] = space;
+  gradient['space'] = space;
   return gradient;
 };

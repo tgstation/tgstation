@@ -1,12 +1,12 @@
-import { map, sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { clamp } from "common/math";
-import { vecLength, vecSubtract } from "common/vector";
-import { useBackend } from "../backend";
-import { Box, Button, Icon, LabeledList, Section, Table } from "../components";
-import { Window } from "../layouts";
+import { map, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { clamp } from 'common/math';
+import { vecLength, vecSubtract } from 'common/vector';
+import { useBackend } from '../backend';
+import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
+import { Window } from '../layouts';
 
-const coordsToVec = (coords) => map(parseFloat)(coords.split(", "));
+const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
 
 export const Gps = (props) => {
   const { act, data } = useBackend();
@@ -39,9 +39,9 @@ export const Gps = (props) => {
           buttons={
             <Button
               icon="power-off"
-              content={power ? "On" : "Off"}
+              content={power ? 'On' : 'Off'}
               selected={power}
-              onClick={() => act("power")}
+              onClick={() => act('power')}
             />
           }
         >
@@ -50,23 +50,23 @@ export const Gps = (props) => {
               <Button
                 icon="pencil-alt"
                 content={tag}
-                onClick={() => act("rename")}
+                onClick={() => act('rename')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Scan Mode">
               <Button
-                icon={updating ? "unlock" : "lock"}
-                content={updating ? "AUTO" : "MANUAL"}
-                color={!updating && "bad"}
-                onClick={() => act("updating")}
+                icon={updating ? 'unlock' : 'lock'}
+                content={updating ? 'AUTO' : 'MANUAL'}
+                color={!updating && 'bad'}
+                onClick={() => act('updating')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Range">
               <Button
                 icon="sync"
-                content={globalmode ? "MAXIMUM" : "LOCAL"}
+                content={globalmode ? 'MAXIMUM' : 'LOCAL'}
                 selected={!globalmode}
-                onClick={() => act("globalmode")}
+                onClick={() => act('globalmode')}
               />
             </LabeledList.Item>
           </LabeledList>
@@ -108,7 +108,7 @@ export const Gps = (props) => {
                           rotation={signal.degrees}
                         />
                       )}
-                      {signal.dist !== undefined && signal.dist + "m"}
+                      {signal.dist !== undefined && signal.dist + 'm'}
                     </Table.Cell>
                     <Table.Cell collapsing>{signal.coords}</Table.Cell>
                   </Table.Row>

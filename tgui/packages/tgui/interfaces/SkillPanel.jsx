@@ -1,15 +1,15 @@
-import { useBackend } from "../backend";
-import { Box, Button, LabeledList, ProgressBar, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
+import { Window } from '../layouts';
 
 const skillgreen = {
-  color: "lightgreen",
-  fontWeight: "bold",
+  color: 'lightgreen',
+  fontWeight: 'bold',
 };
 
 const skillyellow = {
-  color: "#FFDB58",
-  fontWeight: "bold",
+  color: '#FFDB58',
+  fontWeight: 'bold',
 };
 
 export const SkillPanel = (props) => {
@@ -43,7 +43,7 @@ export const SkillPanel = (props) => {
                 <Button
                   content="Adjust Exp"
                   onClick={() =>
-                    act("adj_exp", {
+                    act('adj_exp', {
                       skill: skill.path,
                     })
                   }
@@ -51,7 +51,7 @@ export const SkillPanel = (props) => {
                 <Button
                   content="Set Exp"
                   onClick={() =>
-                    act("set_exp", {
+                    act('set_exp', {
                       skill: skill.path,
                     })
                   }
@@ -59,7 +59,7 @@ export const SkillPanel = (props) => {
                 <Button
                   content="Set Level"
                   onClick={() =>
-                    act("set_lvl", {
+                    act('set_lvl', {
                       skill: skill.path,
                     })
                   }

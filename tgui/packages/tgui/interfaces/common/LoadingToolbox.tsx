@@ -1,4 +1,4 @@
-import { Stack, Icon, Dimmer } from "../../components";
+import { Stack, Icon, Dimmer } from '../../components';
 
 /** Spinner that represents loading states.
  *

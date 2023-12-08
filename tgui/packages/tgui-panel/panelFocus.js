@@ -7,9 +7,9 @@
  * @license MIT
  */
 
-import { vecLength, vecSubtract } from "common/vector";
-import { canStealFocus, globalEvents } from "tgui/events";
-import { focusMap } from "tgui/focus";
+import { vecLength, vecSubtract } from 'common/vector';
+import { canStealFocus, globalEvents } from 'tgui/events';
+import { focusMap } from 'tgui/focus';
 
 // Empyrically determined number for the smallest possible
 // text you can select with the mouse.
@@ -20,13 +20,13 @@ const deferredFocusMap = () => setImmediate(() => focusMap());
 export const setupPanelFocusHacks = () => {
   let focusStolen = false;
   let clickStartPos = null;
-  window.addEventListener("focusin", (e) => {
+  window.addEventListener('focusin', (e) => {
     focusStolen = canStealFocus(e.target);
   });
-  window.addEventListener("mousedown", (e) => {
+  window.addEventListener('mousedown', (e) => {
     clickStartPos = [e.screenX, e.screenY];
   });
-  window.addEventListener("mouseup", (e) => {
+  window.addEventListener('mouseup', (e) => {
     if (clickStartPos) {
       const clickEndPos = [e.screenX, e.screenY];
       const dist = vecLength(vecSubtract(clickEndPos, clickStartPos));
@@ -38,7 +38,7 @@ export const setupPanelFocusHacks = () => {
       deferredFocusMap();
     }
   });
-  globalEvents.on("keydown", (key) => {
+  globalEvents.on('keydown', (key) => {
     if (key.isModifierKey()) {
       return;
     }

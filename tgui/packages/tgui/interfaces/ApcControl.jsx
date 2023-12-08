@@ -1,6 +1,6 @@
-import { map, sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { useBackend, useLocalState } from "../backend";
+import { map, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -10,9 +10,9 @@ import {
   Tabs,
   Stack,
   Section,
-} from "../components";
-import { Window } from "../layouts";
-import { AreaCharge, powerRank } from "./PowerMonitor";
+} from '../components';
+import { Window } from '../layouts';
+import { AreaCharge, powerRank } from './PowerMonitor';
 
 export const ApcControl = (props) => {
   const { data } = useBackend();
@@ -29,15 +29,15 @@ export const ApcControl = (props) => {
 const ApcLoggedOut = (props) => {
   const { act, data } = useBackend();
   const { emagged } = data;
-  const text = emagged === 1 ? "Open" : "Log In";
+  const text = emagged === 1 ? 'Open' : 'Log In';
   return (
     <Section>
       <Button
         icon="sign-in-alt"
-        color={emagged === 1 ? "" : "good"}
+        color={emagged === 1 ? '' : 'good'}
         content={text}
         fluid
-        onClick={() => act("log-in")}
+        onClick={() => act('log-in')}
       />
     </Section>
   );
@@ -46,7 +46,7 @@ const ApcLoggedOut = (props) => {
 const ApcLoggedIn = (props) => {
   const { act, data } = useBackend();
   const { restoring } = data;
-  const [tabIndex, setTabIndex] = useLocalState("tab-index", 1);
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
   return (
     <Box>
       <Tabs>
@@ -54,7 +54,7 @@ const ApcLoggedIn = (props) => {
           selected={tabIndex === 1}
           onClick={() => {
             setTabIndex(1);
-            act("check-apcs");
+            act('check-apcs');
           }}
         >
           APC Control Panel
@@ -63,7 +63,7 @@ const ApcLoggedIn = (props) => {
           selected={tabIndex === 2}
           onClick={() => {
             setTabIndex(2);
-            act("check-logs");
+            act('check-logs');
           }}
         >
           Log View Panel
@@ -72,7 +72,7 @@ const ApcLoggedIn = (props) => {
       {restoring === 1 && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin />
-          {" Resetting..."}
+          {' Resetting...'}
         </Dimmer>
       )}
       {tabIndex === 1 && (
@@ -103,7 +103,7 @@ const ApcLoggedIn = (props) => {
 const ControlPanel = (props) => {
   const { act, data } = useBackend();
   const { emagged, logging } = data;
-  const [sortByField, setSortByField] = useLocalState("sortByField", "name");
+  const [sortByField, setSortByField] = useLocalState('sortByField', 'name');
   return (
     <Stack justify="space-between">
       <Stack.Item>
@@ -111,19 +111,19 @@ const ControlPanel = (props) => {
           Sort by:
         </Box>
         <Button.Checkbox
-          checked={sortByField === "name"}
+          checked={sortByField === 'name'}
           content="Name"
-          onClick={() => setSortByField(sortByField !== "name" && "name")}
+          onClick={() => setSortByField(sortByField !== 'name' && 'name')}
         />
         <Button.Checkbox
-          checked={sortByField === "charge"}
+          checked={sortByField === 'charge'}
           content="Charge"
-          onClick={() => setSortByField(sortByField !== "charge" && "charge")}
+          onClick={() => setSortByField(sortByField !== 'charge' && 'charge')}
         />
         <Button.Checkbox
-          checked={sortByField === "draw"}
+          checked={sortByField === 'draw'}
           content="Draw"
-          onClick={() => setSortByField(sortByField !== "draw" && "draw")}
+          onClick={() => setSortByField(sortByField !== 'draw' && 'draw')}
         />
       </Stack.Item>
       <Stack.Item grow={1} />
@@ -131,13 +131,13 @@ const ControlPanel = (props) => {
         {emagged === 1 && (
           <>
             <Button
-              color={logging === 1 ? "bad" : "good"}
-              content={logging === 1 ? "Stop Logging" : "Restore Logging"}
-              onClick={() => act("toggle-logs")}
+              color={logging === 1 ? 'bad' : 'good'}
+              content={logging === 1 ? 'Stop Logging' : 'Restore Logging'}
+              onClick={() => act('toggle-logs')}
             />
             <Button
               content="Reset Console"
-              onClick={() => act("restore-console")}
+              onClick={() => act('restore-console')}
             />
           </>
         )}
@@ -145,7 +145,7 @@ const ControlPanel = (props) => {
           icon="sign-out-alt"
           color="bad"
           content="Log Out"
-          onClick={() => act("log-out")}
+          onClick={() => act('log-out')}
         />
       </Stack.Item>
     </Stack>
@@ -155,7 +155,7 @@ const ControlPanel = (props) => {
 const ApcControlScene = (props) => {
   const { data, act } = useBackend();
 
-  const [sortByField] = useLocalState("sortByField", "name");
+  const [sortByField] = useLocalState('sortByField', 'name');
 
   const apcs = flow([
     map((apc, i) => ({
@@ -163,9 +163,9 @@ const ApcControlScene = (props) => {
       // Generate a unique id
       id: apc.name + i,
     })),
-    sortByField === "name" && sortBy((apc) => apc.name),
-    sortByField === "charge" && sortBy((apc) => -apc.charge),
-    sortByField === "draw" &&
+    sortByField === 'name' && sortBy((apc) => apc.name),
+    sortByField === 'charge' && sortBy((apc) => -apc.charge),
+    sortByField === 'draw' &&
       sortBy(
         (apc) => -powerRank(apc.load),
         (apc) => -parseFloat(apc.load),
@@ -195,10 +195,10 @@ const ApcControlScene = (props) => {
           <tr key={apc.id} className="Table__row  candystripe">
             <td>
               <Button
-                icon={apc.operating ? "power-off" : "times"}
-                color={apc.operating ? "good" : "bad"}
+                icon={apc.operating ? 'power-off' : 'times'}
+                color={apc.operating ? 'good' : 'bad'}
                 onClick={() =>
-                  act("breaker", {
+                  act('breaker', {
                     ref: apc.ref,
                   })
                 }
@@ -207,7 +207,7 @@ const ApcControlScene = (props) => {
             <td>
               <Button
                 onClick={() =>
-                  act("access-apc", {
+                  act('access-apc', {
                     ref: apc.ref,
                   })
                 }
@@ -278,10 +278,10 @@ const AreaStatusColorButton = (props) => {
   const mode = Boolean(status & 1);
   return (
     <Button
-      icon={mode ? "sync" : "power-off"}
-      color={power ? "good" : "bad"}
+      icon={mode ? 'sync' : 'power-off'}
+      color={power ? 'good' : 'bad'}
       onClick={() =>
-        act("toggle-minor", {
+        act('toggle-minor', {
           type: target,
           value: statusChange(status),
           ref: apc.ref,

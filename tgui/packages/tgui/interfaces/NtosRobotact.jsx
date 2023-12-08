@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -9,8 +9,8 @@ import {
   Section,
   Slider,
   Tabs,
-} from "../components";
-import { NtosWindow } from "../layouts";
+} from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosRobotact = (props) => {
   return (
@@ -24,8 +24,8 @@ export const NtosRobotact = (props) => {
 
 export const NtosRobotactContent = (props) => {
   const { act, data } = useBackend();
-  const [tab_main, setTab_main] = useSharedState("tab_main", 1);
-  const [tab_sub, setTab_sub] = useSharedState("tab_sub", 1);
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
+  const [tab_sub, setTab_sub] = useSharedState('tab_sub', 1);
   const {
     charge,
     maxcharge,
@@ -52,7 +52,7 @@ export const NtosRobotactContent = (props) => {
   const borgLog = data.borgLog || [];
   const borgUpgrades = data.borgUpgrades || [];
   return (
-    <Flex direction={"column"}>
+    <Flex direction={'column'}>
       <Flex.Item position="relative" mb={1}>
         <Tabs>
           <Tabs.Tab
@@ -75,7 +75,7 @@ export const NtosRobotactContent = (props) => {
       </Flex.Item>
       {tab_main === 1 && (
         <>
-          <Flex direction={"row"}>
+          <Flex direction={'row'}>
             <Flex.Item width="30%">
               <Section title="Configuration" fill>
                 <LabeledList>
@@ -95,7 +95,7 @@ export const NtosRobotactContent = (props) => {
                 <Button
                   content="Power Alert"
                   disabled={charge}
-                  onClick={() => act("alertPower")}
+                  onClick={() => act('alertPower')}
                 />
                 <ProgressBar
                   value={charge / maxcharge}
@@ -127,7 +127,7 @@ export const NtosRobotactContent = (props) => {
                   maxValue={5}
                   minValue={1}
                   onChange={(e, value) =>
-                    act("lampIntensity", {
+                    act('lampIntensity', {
                       ref: value,
                     })
                   }
@@ -170,28 +170,28 @@ export const NtosRobotactContent = (props) => {
                     <LabeledList.Item label="Maintenance Cover">
                       <Button.Confirm
                         content="Unlock"
-                        disabled={cover === "UNLOCKED"}
-                        onClick={() => act("coverunlock")}
+                        disabled={cover === 'UNLOCKED'}
+                        onClick={() => act('coverunlock')}
                       />
                     </LabeledList.Item>
                     <LabeledList.Item label="Sensor Overlay">
                       <Button
                         content={sensors}
-                        onClick={() => act("toggleSensors")}
+                        onClick={() => act('toggleSensors')}
                       />
                     </LabeledList.Item>
                     <LabeledList.Item
-                      label={"Stored Photos (" + printerPictures + ")"}
+                      label={'Stored Photos (' + printerPictures + ')'}
                     >
                       <Button
                         content="View"
                         disabled={!printerPictures}
-                        onClick={() => act("viewImage")}
+                        onClick={() => act('viewImage')}
                       />
                       <Button
                         content="Print"
                         disabled={!printerPictures}
-                        onClick={() => act("printImage")}
+                        onClick={() => act('printImage')}
                       />
                     </LabeledList.Item>
                     <LabeledList.Item label="Printer Toner">
@@ -201,7 +201,7 @@ export const NtosRobotactContent = (props) => {
                       <LabeledList.Item label="Toggle Thrusters">
                         <Button
                           content={thrustersStatus}
-                          onClick={() => act("toggleThrusters")}
+                          onClick={() => act('toggleThrusters')}
                         />
                       </LabeledList.Item>
                     )}
@@ -210,7 +210,7 @@ export const NtosRobotactContent = (props) => {
                         <Button.Confirm
                           content="ACTIVATE"
                           color="red"
-                          onClick={() => act("selfDestruct")}
+                          onClick={() => act('selfDestruct')}
                         />
                       </LabeledList.Item>
                     )}
@@ -232,54 +232,54 @@ export const NtosRobotactContent = (props) => {
                     <LabeledList.Item
                       label="AI Connection"
                       color={
-                        wireAI === "FAULT"
-                          ? "red"
-                          : wireAI === "READY"
-                            ? "yellow"
-                            : "green"
+                        wireAI === 'FAULT'
+                          ? 'red'
+                          : wireAI === 'READY'
+                            ? 'yellow'
+                            : 'green'
                       }
                     >
                       {wireAI}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="LawSync"
-                      color={wireLaw === "FAULT" ? "red" : "green"}
+                      color={wireLaw === 'FAULT' ? 'red' : 'green'}
                     >
                       {wireLaw}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Camera"
                       color={
-                        wireCamera === "FAULT"
-                          ? "red"
-                          : wireCamera === "DISABLED"
-                            ? "yellow"
-                            : "green"
+                        wireCamera === 'FAULT'
+                          ? 'red'
+                          : wireCamera === 'DISABLED'
+                            ? 'yellow'
+                            : 'green'
                       }
                     >
                       {wireCamera}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Module Controller"
-                      color={wireModule === "FAULT" ? "red" : "green"}
+                      color={wireModule === 'FAULT' ? 'red' : 'green'}
                     >
                       {wireModule}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Motor Controller"
                       color={
-                        locomotion === "FAULT"
-                          ? "red"
-                          : locomotion === "DISABLED"
-                            ? "yellow"
-                            : "green"
+                        locomotion === 'FAULT'
+                          ? 'red'
+                          : locomotion === 'DISABLED'
+                            ? 'yellow'
+                            : 'green'
                       }
                     >
                       {locomotion}
                     </LabeledList.Item>
                     <LabeledList.Item
                       label="Maintenance Cover"
-                      color={cover === "UNLOCKED" ? "red" : "green"}
+                      color={cover === 'UNLOCKED' ? 'red' : 'green'}
                     >
                       {cover}
                     </LabeledList.Item>
@@ -297,9 +297,9 @@ export const NtosRobotactContent = (props) => {
                 <>
                   <Button
                     content="State Laws"
-                    onClick={() => act("lawstate")}
+                    onClick={() => act('lawstate')}
                   />
-                  <Button icon="volume-off" onClick={() => act("lawchannel")} />
+                  <Button icon="volume-off" onClick={() => act('lawchannel')} />
                 </>
               }
             >

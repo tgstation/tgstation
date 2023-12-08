@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -6,9 +6,9 @@ import {
   LabeledList,
   NumberInput,
   Section,
-} from "../components";
-import { capitalizeAll } from "common/string";
-import { Window } from "../layouts";
+} from '../components';
+import { capitalizeAll } from 'common/string';
+import { Window } from '../layouts';
 
 type Product = {
   ref: string;
@@ -42,7 +42,7 @@ export const ChemPress = (props) => {
     packaging_type,
   } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    "categoryName",
+    'categoryName',
     packaging_category,
   );
   const shownCategory =
@@ -73,7 +73,7 @@ export const ChemPress = (props) => {
                 step={1}
                 stepPixelSize={2}
                 onChange={(e, value) =>
-                  act("change_current_volume", {
+                  act('change_current_volume', {
                     volume: value,
                   })
                 }
@@ -84,7 +84,7 @@ export const ChemPress = (props) => {
                 value={product_name}
                 placeholder={product_name}
                 onChange={(e, value) =>
-                  act("change_product_name", {
+                  act('change_product_name', {
                     name: value,
                   })
                 }
@@ -97,7 +97,7 @@ export const ChemPress = (props) => {
                   selected={design.ref === packaging_type}
                   color="transparent"
                   onClick={() =>
-                    act("change_product", {
+                    act('change_product', {
                       ref: design.ref,
                     })
                   }
@@ -105,7 +105,7 @@ export const ChemPress = (props) => {
                   <Box
                     className={design.class_name}
                     style={{
-                      transform: "scale(1.5)",
+                      transform: 'scale(1.5)',
                     }}
                   />
                 </Button>

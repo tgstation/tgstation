@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -9,9 +9,9 @@ import {
   LabeledList,
   NoticeBox,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
-import { formatTime } from "../format";
+} from '../components';
+import { Window } from '../layouts';
+import { formatTime } from '../format';
 
 type SiteData = {
   name: string;
@@ -40,7 +40,7 @@ const ScanFailedModal = (props) => {
           <Box color="bad">SCAN FAILURE!</Box>
         </Stack.Item>
         <Stack.Item>
-          <Button content="Confirm" onClick={() => act("confirm_fail")} />
+          <Button content="Confirm" onClick={() => act('confirm_fail')} />
         </Stack.Item>
       </Stack>
     </Modal>
@@ -59,8 +59,8 @@ const ScanSelectionSection = (props) => {
   } = data;
   const site = site_data;
 
-  const point_cost = scan_power > 0 ? formatTime(point_scan_eta, "short") : "∞";
-  const deep_cost = scan_power > 0 ? formatTime(deep_scan_eta, "short") : "∞";
+  const point_cost = scan_power > 0 ? formatTime(point_scan_eta, 'short') : '∞';
+  const deep_cost = scan_power > 0 ? formatTime(deep_scan_eta, 'short') : '∞';
   const scan_available = !point_scan_complete || !deep_scan_complete;
   return (
     <Stack vertical fill>
@@ -71,14 +71,14 @@ const ScanSelectionSection = (props) => {
           buttons={
             <Button
               content="Back"
-              onClick={() => act("select_site", { site_ref: null })}
+              onClick={() => act('select_site', { site_ref: null })}
             />
           }
         >
           <LabeledList>
             <LabeledList.Item label="Name">{site.name}</LabeledList.Item>
             <LabeledList.Item label="Description">
-              {site.revealed ? site.description : "No Data"}
+              {site.revealed ? site.description : 'No Data'}
             </LabeledList.Item>
             <LabeledList.Item label="Distance">
               {site.distance}
@@ -107,7 +107,7 @@ const ScanSelectionSection = (props) => {
                   <Button
                     content="Scan"
                     disabled={scan_power <= 0}
-                    onClick={() => act("start_point_scan")}
+                    onClick={() => act('start_point_scan')}
                   />
                   <Box inline pl={3}>
                     Estimated Time: {point_cost}.
@@ -125,7 +125,7 @@ const ScanSelectionSection = (props) => {
                   <Button
                     content="Scan"
                     disabled={scan_power <= 0}
-                    onClick={() => act("start_deep_scan")}
+                    onClick={() => act('start_deep_scan')}
                   />
                   <Box inline pl={3}>
                     Estimated Time: {deep_cost}.
@@ -169,7 +169,7 @@ const ScanInProgressModal = (props) => {
             content="STOP SCAN"
             color="red"
             icon="times"
-            onClick={() => act("stop_scan")}
+            onClick={() => act('stop_scan')}
           />
         </LabeledList.Item>
       </LabeledList>
@@ -219,7 +219,7 @@ export const ExoscannerConsole = (props) => {
                       <Icon name="satellite-dish" size={3} />
                     </>
                   )) ||
-                    "No properly configured scanner arrays detected."}
+                    'No properly configured scanner arrays detected.'}
                 </Stack.Item>
               </Stack>
               <Section title="Special Scan Condtions">
@@ -245,7 +245,7 @@ export const ExoscannerConsole = (props) => {
                     <Button
                       icon="search"
                       disabled={!can_start_wide_scan}
-                      onClick={() => act("start_wide_scan")}
+                      onClick={() => act('start_wide_scan')}
                     >
                       Scan
                     </Button>
@@ -261,10 +261,10 @@ export const ExoscannerConsole = (props) => {
                       </BlockQuote>
                     </Stack.Item>
                     <Stack.Item>
-                      Cost estimate:{" "}
+                      Cost estimate:{' '}
                       {scan_power > 0
-                        ? formatTime(wide_scan_eta, "short")
-                        : "∞ minutes"}
+                        ? formatTime(wide_scan_eta, 'short')
+                        : '∞ minutes'}
                     </Stack.Item>
                   </Stack>
                 </Section>
@@ -277,7 +277,7 @@ export const ExoscannerConsole = (props) => {
                   buttons={
                     <Button
                       content="View Experiments"
-                      onClick={() => act("open_experiments")}
+                      onClick={() => act('open_experiments')}
                       icon="tasks"
                     />
                   }
@@ -288,7 +288,7 @@ export const ExoscannerConsole = (props) => {
                         <Button
                           content={site.name}
                           onClick={() =>
-                            act("select_site", { site_ref: site.ref })
+                            act('select_site', { site_ref: site.ref })
                           }
                         />
                       </Stack.Item>

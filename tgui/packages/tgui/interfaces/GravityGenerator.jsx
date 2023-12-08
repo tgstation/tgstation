@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,8 +6,8 @@ import {
   NoticeBox,
   ProgressBar,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const GravityGenerator = (props) => {
   const { data } = useBackend();
@@ -30,11 +30,11 @@ const GravityGeneratorContent = (props) => {
       <LabeledList>
         <LabeledList.Item label="Power">
           <Button
-            icon={breaker ? "power-off" : "times"}
-            content={breaker ? "On" : "Off"}
+            icon={breaker ? 'power-off' : 'times'}
+            content={breaker ? 'On' : 'Off'}
             selected={breaker}
             disabled={!operational}
-            onClick={() => act("gentoggle")}
+            onClick={() => act('gentoggle')}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Gravity Charge">

@@ -1,7 +1,7 @@
-import { map } from "common/collections";
-import { useBackend } from "../backend";
-import { Button, Section, Table } from "../components";
-import { NtosWindow } from "../layouts";
+import { map } from 'common/collections';
+import { useBackend } from '../backend';
+import { Button, Section, Table } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosCrewManifest = (props) => {
   const { act, data } = useBackend();
@@ -15,7 +15,7 @@ export const NtosCrewManifest = (props) => {
             <Button
               icon="print"
               content="Print"
-              onClick={() => act("PRG_print")}
+              onClick={() => act('PRG_print')}
             />
           }
         >

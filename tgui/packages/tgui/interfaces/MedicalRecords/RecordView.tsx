@@ -1,4 +1,4 @@
-import { NoteKeeper } from "./NoteKeeper";
+import { NoteKeeper } from './NoteKeeper';
 import {
   Stack,
   Section,
@@ -7,10 +7,10 @@ import {
   LabeledList,
   Button,
   RestrictedInput,
-} from "tgui/components";
-import { CharacterPreview } from "../common/CharacterPreview";
-import { getMedicalRecord, getQuirkStrings } from "./helpers";
-import { useBackend } from "../../backend";
+} from 'tgui/components';
+import { CharacterPreview } from '../common/CharacterPreview';
+import { getMedicalRecord, getQuirkStrings } from './helpers';
+import { useBackend } from '../../backend';
 import {
   PHYSICALSTATUS2COLOR,
   PHYSICALSTATUS2DESC,
@@ -18,9 +18,9 @@ import {
   MENTALSTATUS2COLOR,
   MENTALSTATUS2DESC,
   MENTALSTATUS2ICON,
-} from "./constants";
-import { MedicalRecordData } from "./types";
-import { EditableText } from "../common/EditableText";
+} from './constants';
+import { MedicalRecordData } from './types';
+import { EditableText } from '../common/EditableText';
 
 /** Views a selected record. */
 export const MedicalRecordView = (props) => {
@@ -71,7 +71,7 @@ export const MedicalRecordView = (props) => {
               content="Delete"
               icon="trash"
               disabled={!station_z}
-              onClick={() => act("expunge_record", { crew_ref: crew_ref })}
+              onClick={() => act('expunge_record', { crew_ref: crew_ref })}
               tooltip="Expunge record data."
             />
           }
@@ -92,8 +92,8 @@ export const MedicalRecordView = (props) => {
                 minValue={min_age}
                 maxValue={max_age}
                 onEnter={(event, value) =>
-                  act("edit_field", {
-                    field: "age",
+                  act('edit_field', {
+                    field: 'age',
                     ref: crew_ref,
                     value: value,
                   })
@@ -135,20 +135,20 @@ export const MedicalRecordView = (props) => {
                 const isSelected = button === physical_status;
                 return (
                   <Button
-                    color={isSelected ? PHYSICALSTATUS2COLOR[button] : "grey"}
-                    height={"1.75rem"}
+                    color={isSelected ? PHYSICALSTATUS2COLOR[button] : 'grey'}
+                    height={'1.75rem'}
                     icon={PHYSICALSTATUS2ICON[button]}
                     key={index}
                     onClick={() =>
-                      act("set_physical_status", {
+                      act('set_physical_status', {
                         crew_ref: crew_ref,
                         physical_status: button,
                       })
                     }
                     textAlign="center"
-                    tooltip={PHYSICALSTATUS2DESC[button] || ""}
+                    tooltip={PHYSICALSTATUS2DESC[button] || ''}
                     tooltipPosition="bottom-start"
-                    width={!isSelected ? "3.0rem" : 3.0}
+                    width={!isSelected ? '3.0rem' : 3.0}
                   >
                     {button[0]}
                   </Button>
@@ -165,20 +165,20 @@ export const MedicalRecordView = (props) => {
                 const isSelected = button === mental_status;
                 return (
                   <Button
-                    color={isSelected ? MENTALSTATUS2COLOR[button] : "grey"}
-                    height={"1.75rem"}
+                    color={isSelected ? MENTALSTATUS2COLOR[button] : 'grey'}
+                    height={'1.75rem'}
                     icon={MENTALSTATUS2ICON[button]}
                     key={index}
                     onClick={() =>
-                      act("set_mental_status", {
+                      act('set_mental_status', {
                         crew_ref: crew_ref,
                         mental_status: button,
                       })
                     }
                     textAlign="center"
-                    tooltip={MENTALSTATUS2DESC[button] || ""}
+                    tooltip={MENTALSTATUS2DESC[button] || ''}
                     tooltipPosition="bottom-start"
-                    width={!isSelected ? "3.0rem" : 3.0}
+                    width={!isSelected ? '3.0rem' : 3.0}
                   >
                     {button[0]}
                   </Button>

@@ -1,5 +1,5 @@
-import { multiline } from "common/string";
-import { useBackend, useLocalState } from "tgui/backend";
+import { multiline } from 'common/string';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   BlockQuote,
   Box,
@@ -10,9 +10,9 @@ import {
   Tabs,
   TextArea,
   Tooltip,
-} from "tgui/components";
-import { getMedicalRecord } from "./helpers";
-import { MedicalNote, MedicalRecordData } from "./types";
+} from 'tgui/components';
+import { getMedicalRecord } from './helpers';
+import { MedicalNote, MedicalRecordData } from './types';
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
 export const NoteKeeper = (props) => {
@@ -24,12 +24,12 @@ export const NoteKeeper = (props) => {
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
-  >("selectedNote", undefined);
+  >('selectedNote', undefined);
 
-  const [writing, setWriting] = useLocalState("note", false);
+  const [writing, setWriting] = useLocalState('note', false);
 
   const addNote = (event, value: string) => {
-    act("add_note", {
+    act('add_note', {
       crew_ref: crew_ref,
       content: value,
     });
@@ -38,7 +38,7 @@ export const NoteKeeper = (props) => {
 
   const deleteNote = () => {
     if (!selectedNote) return;
-    act("delete_note", {
+    act('delete_note', {
       crew_ref: crew_ref,
       note_ref: selectedNote.note_ref,
     });
@@ -87,8 +87,8 @@ const NoteTabs = (props) => {
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
-  >("selectedNote", undefined);
-  const [writing, setWriting] = useLocalState("note", false);
+  >('selectedNote', undefined);
+  const [writing, setWriting] = useLocalState('note', false);
 
   /** Selects or deselects a note. */
   const setNote = (note: MedicalNote) => {

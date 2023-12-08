@@ -73,7 +73,7 @@ export const createStore = <State, ActionType extends Action = AnyAction>(
 
   // This creates the initial store by causing each reducer to be called
   // with an undefined state
-  dispatch({ type: "@@INIT" } as ActionType);
+  dispatch({ type: '@@INIT' } as ActionType);
 
   return {
     dispatch,
@@ -97,7 +97,7 @@ export const applyMiddleware = (
 
       let dispatch: Dispatch = () => {
         throw new Error(
-          "Dispatching while constructing your middleware is not allowed.",
+          'Dispatching while constructing your middleware is not allowed.',
         );
       };
 
@@ -178,7 +178,7 @@ export const createAction = <TAction extends string>(
     if (prepare) {
       const prepared = prepare(...args);
       if (!prepared) {
-        throw new Error("prepare function did not return an object");
+        throw new Error('prepare function did not return an object');
       }
       action = { ...action, ...prepared };
     } else {

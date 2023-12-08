@@ -1,7 +1,7 @@
-import { toFixed } from "common/math";
-import { useBackend } from "../backend";
-import { Button, Flex, NoticeBox, Section, ProgressBar } from "../components";
-import { Window } from "../layouts";
+import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
+import { Button, Flex, NoticeBox, Section, ProgressBar } from '../components';
+import { Window } from '../layouts';
 
 type BorgHypoContext = {
   maxVolume: number;
@@ -48,26 +48,26 @@ const ReagentDisplay = (props) => {
       <Flex.Item grow>
         <ProgressBar value={reagent.volume / maxVolume}>
           <Flex>
-            <Flex.Item grow textAlign={"left"}>
+            <Flex.Item grow textAlign={'left'}>
               {reagent.name}
             </Flex.Item>
-            <Flex.Item>{toFixed(reagent.volume) + "u"}</Flex.Item>
+            <Flex.Item>{toFixed(reagent.volume) + 'u'}</Flex.Item>
           </Flex>
         </ProgressBar>
       </Flex.Item>
       <Flex.Item mx={1}>
         <Button
-          icon={"info-circle"}
-          textAlign={"center"}
+          icon={'info-circle'}
+          textAlign={'center'}
           tooltip={reagent.description}
         />
       </Flex.Item>
-      <Flex.Item textAlign={"right"}>
+      <Flex.Item textAlign={'right'}>
         <Button
-          icon={"syringe"}
-          color={reagent.name === selected ? "green" : "default"}
-          content={"Select"}
-          textAlign={"center"}
+          icon={'syringe'}
+          color={reagent.name === selected ? 'green' : 'default'}
+          content={'Select'}
+          textAlign={'center'}
           onClick={() => act(reagent.name)}
         />
       </Flex.Item>

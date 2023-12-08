@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Button, NoticeBox, Section, Table } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Button, NoticeBox, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   can_reclaim: BooleanLike;
@@ -27,7 +27,7 @@ export const GulagItemReclaimer = (props) => {
                       content="Retrieve Items"
                       disabled={!can_reclaim}
                       onClick={() =>
-                        act("release_items", {
+                        act('release_items', {
                           mobref: mob.mob,
                         })
                       }

@@ -1,8 +1,8 @@
-import { BooleanLike } from "common/react";
-import { multiline } from "common/string";
-import { useBackend } from "../backend";
-import { Button, Input, LabeledList, Section } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { multiline } from 'common/string';
+import { useBackend } from '../backend';
+import { Button, Input, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 const TOOLTIP_TEXT = multiline`
   %PERSON will be replaced with their name.
@@ -26,10 +26,10 @@ export const AutomatedAnnouncement = (props) => {
           title="Arrival Announcement"
           buttons={
             <Button
-              icon={arrivalToggle ? "power-off" : "times"}
+              icon={arrivalToggle ? 'power-off' : 'times'}
               selected={arrivalToggle}
-              content={arrivalToggle ? "On" : "Off"}
-              onClick={() => act("ArrivalToggle")}
+              content={arrivalToggle ? 'On' : 'Off'}
+              onClick={() => act('ArrivalToggle')}
             />
           }
         >
@@ -48,7 +48,7 @@ export const AutomatedAnnouncement = (props) => {
                 fluid
                 value={arrival}
                 onChange={(e, value) =>
-                  act("ArrivalText", {
+                  act('ArrivalText', {
                     newText: value,
                   })
                 }
@@ -60,10 +60,10 @@ export const AutomatedAnnouncement = (props) => {
           title="Departmental Head Announcement"
           buttons={
             <Button
-              icon={newheadToggle ? "power-off" : "times"}
+              icon={newheadToggle ? 'power-off' : 'times'}
               selected={newheadToggle}
-              content={newheadToggle ? "On" : "Off"}
-              onClick={() => act("NewheadToggle")}
+              content={newheadToggle ? 'On' : 'Off'}
+              onClick={() => act('NewheadToggle')}
             />
           }
         >
@@ -82,7 +82,7 @@ export const AutomatedAnnouncement = (props) => {
                 fluid
                 value={newhead}
                 onChange={(e, value) =>
-                  act("NewheadText", {
+                  act('NewheadText', {
                     newText: value,
                   })
                 }

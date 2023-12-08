@@ -1,8 +1,8 @@
-import { Fragment } from "react";
-import { resolveAsset } from "../assets";
-import { useBackend } from "../backend";
-import { Box, Button, Icon, Section } from "../components";
-import { Window } from "../layouts";
+import { Fragment } from 'react';
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
+import { Box, Button, Icon, Section } from '../components';
+import { Window } from '../layouts';
 
 export const Safe = (properties) => {
   const { act, data } = useBackend();
@@ -28,9 +28,9 @@ export const Safe = (properties) => {
             <Box
               as="img"
               className="Safe__dial"
-              src={resolveAsset("safe_dial.png")}
+              src={resolveAsset('safe_dial.png')}
               style={{
-                transform: "rotate(-" + 3.6 * dial + "deg)",
+                transform: 'rotate(-' + 3.6 * dial + 'deg)',
               }}
             />
           )}
@@ -48,11 +48,11 @@ const Dialer = (properties) => {
     return (
       <Button
         disabled={open || (right && !locked) || broken}
-        icon={"arrow-" + (right ? "right" : "left")}
-        content={(right ? "Right" : "Left") + " " + amount}
-        iconPosition={right ? "right" : "left"}
+        icon={'arrow-' + (right ? 'right' : 'left')}
+        content={(right ? 'Right' : 'Left') + ' ' + amount}
+        iconPosition={right ? 'right' : 'left'}
         onClick={() =>
-          act(!right ? "turnright" : "turnleft", {
+          act(!right ? 'turnright' : 'turnleft', {
             num: amount,
           })
         }
@@ -63,10 +63,10 @@ const Dialer = (properties) => {
     <Box className="Safe__dialer">
       <Button
         disabled={locked && !broken}
-        icon={open ? "lock" : "lock-open"}
-        content={open ? "Close" : "Open"}
+        icon={open ? 'lock' : 'lock-open'}
+        content={open ? 'Close' : 'Open'}
         mb="0.5rem"
-        onClick={() => act("open")}
+        onClick={() => act('open')}
       />
       <br />
       <Box position="absolute">
@@ -90,14 +90,14 @@ const Contents = (properties) => {
           <Button
             mb="0.5rem"
             onClick={() =>
-              act("retrieve", {
+              act('retrieve', {
                 index: index + 1,
               })
             }
           >
             <Box
               as="img"
-              src={item.sprite + ".png"}
+              src={item.sprite + '.png'}
               verticalAlign="middle"
               ml="-6px"
               mr="0.5rem"

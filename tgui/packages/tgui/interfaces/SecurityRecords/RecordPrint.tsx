@@ -1,11 +1,11 @@
-import { useBackend, useLocalState } from "tgui/backend";
-import { PRINTOUT, SecurityRecordsData } from "./types";
-import { Box, Button, Input, Section, Stack } from "tgui/components";
+import { useBackend, useLocalState } from 'tgui/backend';
+import { PRINTOUT, SecurityRecordsData } from './types';
+import { Box, Button, Input, Section, Stack } from 'tgui/components';
 import {
   getSecurityRecord,
   getDefaultPrintDescription,
   getDefaultPrintHeader,
-} from "./helpers";
+} from './helpers';
 
 /** Handles printing posters and rapsheets */
 export const RecordPrint = (props) => {
@@ -16,19 +16,19 @@ export const RecordPrint = (props) => {
   const innocent = !crimes?.length;
   const { act } = useBackend<SecurityRecordsData>();
 
-  const [open, setOpen] = useLocalState<boolean>("printOpen", true);
-  const [alias, setAlias] = useLocalState<string>("printAlias", name);
+  const [open, setOpen] = useLocalState<boolean>('printOpen', true);
+  const [alias, setAlias] = useLocalState<string>('printAlias', name);
 
   const [printType, setPrintType] = useLocalState<PRINTOUT>(
-    "printType",
+    'printType',
     PRINTOUT.Missing,
   );
-  const [header, setHeader] = useLocalState<string>("printHeader", "");
-  const [description, setDescription] = useLocalState<string>("printDesc", "");
+  const [header, setHeader] = useLocalState<string>('printHeader', '');
+  const [description, setDescription] = useLocalState<string>('printDesc', '');
 
   /** Prints the record and resets. */
   const printSheet = () => {
-    act("print_record", {
+    act('print_record', {
       alias: alias,
       crew_ref: crew_ref,
       desc: description,
@@ -40,9 +40,9 @@ export const RecordPrint = (props) => {
 
   /** Close everything and reset to blank. */
   const reset = () => {
-    setAlias("");
-    setHeader("");
-    setDescription("");
+    setAlias('');
+    setHeader('');
+    setDescription('');
     setPrintType(PRINTOUT.Missing);
     setOpen(false);
   };
@@ -50,13 +50,13 @@ export const RecordPrint = (props) => {
   /** Clears the value and sets it to default. */
   const clearField = (field: string) => {
     switch (field) {
-      case "alias":
+      case 'alias':
         setAlias(name);
         break;
-      case "header":
+      case 'header':
         setHeader(getDefaultPrintHeader(printType));
         break;
-      case "description":
+      case 'description':
         setDescription(getDefaultPrintDescription(name, printType));
         break;
     }
@@ -92,7 +92,7 @@ export const RecordPrint = (props) => {
             onClick={() => swapTabs(PRINTOUT.Rapsheet)}
             selected={printType === PRINTOUT.Rapsheet}
             tooltip={`Prints a standard paper with the record on it.${
-              innocent ? " (Requires crimes)" : ""
+              innocent ? ' (Requires crimes)' : ''
             }`}
             tooltipPosition="bottom"
           >
@@ -104,7 +104,7 @@ export const RecordPrint = (props) => {
             onClick={() => swapTabs(PRINTOUT.Wanted)}
             selected={printType === PRINTOUT.Wanted}
             tooltip={`Prints a poster with mugshot and crimes.${
-              innocent ? " (Requires crimes)" : ""
+              innocent ? ' (Requires crimes)' : ''
             }`}
             tooltipPosition="bottom"
           >
@@ -127,7 +127,7 @@ export const RecordPrint = (props) => {
           />
           <Button
             icon="sync"
-            onClick={() => clearField("header")}
+            onClick={() => clearField('header')}
             tooltip="Reset"
           />
         </Stack.Item>
@@ -141,7 +141,7 @@ export const RecordPrint = (props) => {
           />
           <Button
             icon="sync"
-            onClick={() => clearField("alias")}
+            onClick={() => clearField('alias')}
             tooltip="Reset"
           />
         </Stack.Item>
@@ -159,7 +159,7 @@ export const RecordPrint = (props) => {
             <Stack.Item>
               <Button
                 icon="sync"
-                onClick={() => clearField("description")}
+                onClick={() => clearField('description')}
                 tooltip="Reset"
               />
             </Stack.Item>

@@ -1,23 +1,23 @@
-import { useBackend } from "../backend";
-import { Button, LabeledList, ProgressBar, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Button, LabeledList, ProgressBar, Section } from '../components';
+import { Window } from '../layouts';
 
 export const DisposalUnit = (props) => {
   const { act, data } = useBackend();
   let stateColor;
   let stateText;
   if (data.full_pressure) {
-    stateColor = "good";
-    stateText = "Ready";
+    stateColor = 'good';
+    stateText = 'Ready';
   } else if (data.panel_open) {
-    stateColor = "bad";
-    stateText = "Power Disabled";
+    stateColor = 'bad';
+    stateText = 'Power Disabled';
   } else if (data.pressure_charging) {
-    stateColor = "average";
-    stateText = "Pressurizing";
+    stateColor = 'average';
+    stateText = 'Pressurizing';
   } else {
-    stateColor = "bad";
-    stateText = "Off";
+    stateColor = 'bad';
+    stateText = 'Off';
   }
   return (
     <Window width={300} height={180}>
@@ -32,10 +32,10 @@ export const DisposalUnit = (props) => {
             </LabeledList.Item>
             <LabeledList.Item label="Handle">
               <Button
-                icon={data.flush ? "toggle-on" : "toggle-off"}
+                icon={data.flush ? 'toggle-on' : 'toggle-off'}
                 disabled={data.isai || data.panel_open}
-                content={data.flush ? "Disengage" : "Engage"}
-                onClick={() => act(data.flush ? "handle-0" : "handle-1")}
+                content={data.flush ? 'Disengage' : 'Engage'}
+                onClick={() => act(data.flush ? 'handle-0' : 'handle-1')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Eject">
@@ -43,7 +43,7 @@ export const DisposalUnit = (props) => {
                 icon="sign-out-alt"
                 disabled={data.isai}
                 content="Eject Contents"
-                onClick={() => act("eject")}
+                onClick={() => act('eject')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Power">
@@ -52,7 +52,7 @@ export const DisposalUnit = (props) => {
                 disabled={data.panel_open}
                 selected={data.pressure_charging}
                 onClick={() =>
-                  act(data.pressure_charging ? "pump-0" : "pump-1")
+                  act(data.pressure_charging ? 'pump-0' : 'pump-1')
                 }
               />
             </LabeledList.Item>

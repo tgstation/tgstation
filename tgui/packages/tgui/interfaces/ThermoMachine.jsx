@@ -1,13 +1,13 @@
-import { toFixed } from "common/math";
-import { useBackend } from "../backend";
+import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Button,
   LabeledList,
   NumberInput,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const ThermoMachine = (props) => {
   const { act, data } = useBackend();
@@ -21,14 +21,14 @@ export const ThermoMachine = (props) => {
                 value={data.temperature}
                 format={(value) => toFixed(value, 2)}
               />
-              {" K"}
+              {' K'}
             </LabeledList.Item>
             <LabeledList.Item label="Pressure">
               <AnimatedNumber
                 value={data.pressure}
                 format={(value) => toFixed(value, 2)}
               />
-              {" kPa"}
+              {' kPa'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -36,10 +36,10 @@ export const ThermoMachine = (props) => {
           title="Controls"
           buttons={
             <Button
-              icon={data.on ? "power-off" : "times"}
-              content={data.on ? "On" : "Off"}
+              icon={data.on ? 'power-off' : 'times'}
+              content={data.on ? 'On' : 'Off'}
               selected={data.on}
-              onClick={() => act("power")}
+              onClick={() => act('power')}
             />
           }
         >
@@ -55,7 +55,7 @@ export const ThermoMachine = (props) => {
                 step={5}
                 stepPixelSize={3}
                 onDrag={(e, value) =>
-                  act("target", {
+                  act('target', {
                     target: value,
                   })
                 }
@@ -67,7 +67,7 @@ export const ThermoMachine = (props) => {
                 disabled={data.target === data.min}
                 title="Minimum temperature"
                 onClick={() =>
-                  act("target", {
+                  act('target', {
                     target: data.min,
                   })
                 }
@@ -77,7 +77,7 @@ export const ThermoMachine = (props) => {
                 disabled={data.target === data.initial}
                 title="Room Temperature"
                 onClick={() =>
-                  act("target", {
+                  act('target', {
                     target: data.initial,
                   })
                 }
@@ -87,7 +87,7 @@ export const ThermoMachine = (props) => {
                 disabled={data.target === data.max}
                 title="Maximum Temperature"
                 onClick={() =>
-                  act("target", {
+                  act('target', {
                     target: data.max,
                   })
                 }

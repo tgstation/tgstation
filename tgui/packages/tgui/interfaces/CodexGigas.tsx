@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Button, LabeledList, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   name: string;
@@ -8,49 +8,49 @@ type Data = {
 };
 
 const PREFIXES = [
-  "Dark",
-  "Hellish",
-  "Fallen",
-  "Fiery",
-  "Sinful",
-  "Blood",
-  "Fluffy",
+  'Dark',
+  'Hellish',
+  'Fallen',
+  'Fiery',
+  'Sinful',
+  'Blood',
+  'Fluffy',
 ] as const;
 
 const TITLES = [
-  "Lord",
-  "Prelate",
-  "Count",
-  "Viscount",
-  "Vizier",
-  "Elder",
-  "Adept",
+  'Lord',
+  'Prelate',
+  'Count',
+  'Viscount',
+  'Vizier',
+  'Elder',
+  'Adept',
 ] as const;
 
 const NAMES = [
-  "hal",
-  "ve",
-  "odr",
-  "neit",
-  "ci",
-  "quon",
-  "mya",
-  "folth",
-  "wren",
-  "geyr",
-  "hil",
-  "niet",
-  "twou",
-  "phi",
-  "coa",
+  'hal',
+  've',
+  'odr',
+  'neit',
+  'ci',
+  'quon',
+  'mya',
+  'folth',
+  'wren',
+  'geyr',
+  'hil',
+  'niet',
+  'twou',
+  'phi',
+  'coa',
 ] as const;
 
 const SUFFIXES = [
-  "the Red",
-  "the Soulless",
-  "the Master",
-  "the Lord of all things",
-  "Jr.",
+  'the Red',
+  'the Soulless',
+  'the Master',
+  'the Lord of all things',
+  'Jr.',
 ] as const;
 
 export const CodexGigas = (props) => {
@@ -71,7 +71,7 @@ export const CodexGigas = (props) => {
               <Button
                 content="Search"
                 disabled={currentSection < 4}
-                onClick={() => act("search")}
+                onClick={() => act('search')}
               />
             </LabeledList.Item>
           </LabeledList>
@@ -92,7 +92,7 @@ const Prefixes = (props) => {
           key={prefix.toLowerCase()}
           content={prefix}
           disabled={currentSection !== 1}
-          onClick={() => act(prefix + " ")}
+          onClick={() => act(prefix + ' ')}
         />
       ))}
     </LabeledList.Item>
@@ -146,7 +146,7 @@ const Suffixes = (props) => {
           key={suffix.toLowerCase()}
           content={suffix}
           disabled={currentSection !== 4}
-          onClick={() => act(" " + suffix)}
+          onClick={() => act(' ' + suffix)}
         />
       ))}
     </LabeledList.Item>

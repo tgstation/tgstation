@@ -1,5 +1,5 @@
-import { classes } from "common/react";
-import { sendAct, useBackend, useLocalState } from "../../backend";
+import { classes } from 'common/react';
+import { sendAct, useBackend, useLocalState } from '../../backend';
 import {
   Autofocus,
   Box,
@@ -9,25 +9,25 @@ import {
   Popper,
   Stack,
   TrackOutsideClicks,
-} from "../../components";
+} from '../../components';
 import {
   createSetPreference,
   PreferencesMenuData,
   RandomSetting,
   ServerData,
-} from "./data";
-import { CharacterPreview } from "../common/CharacterPreview";
-import { RandomizationButton } from "./RandomizationButton";
-import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
-import { MultiNameInput, NameInput } from "./names";
-import { Gender, GENDERS } from "./preferences/gender";
-import features from "./preferences/features";
+} from './data';
+import { CharacterPreview } from '../common/CharacterPreview';
+import { RandomizationButton } from './RandomizationButton';
+import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+import { MultiNameInput, NameInput } from './names';
+import { Gender, GENDERS } from './preferences/gender';
+import features from './preferences/features';
 import {
   FeatureChoicedServerData,
   FeatureValueInput,
-} from "./preferences/features/base";
-import { filterMap, sortBy } from "common/collections";
-import { useRandomToggleState } from "./useRandomToggleState";
+} from './preferences/features/base';
+import { filterMap, sortBy } from 'common/collections';
+import { useRandomToggleState } from './useRandomToggleState';
 
 const CLOTHING_CELL_SIZE = 48;
 const CLOTHING_SIDEBAR_ROWS = 9;
@@ -97,8 +97,8 @@ const ChoicedSelection = (props: {
   return (
     <Box
       style={{
-        background: "white",
-        padding: "5px",
+        background: 'white',
+        padding: '5px',
 
         height: `${
           CLOTHING_SELECTION_CELL_SIZE * CLOTHING_SELECTION_MULTIPLIER
@@ -124,10 +124,10 @@ const ChoicedSelection = (props: {
             <Stack.Item grow>
               <Box
                 style={{
-                  borderBottom: "1px solid #888",
-                  fontWeight: "bold",
-                  fontSize: "14px",
-                  textAlign: "center",
+                  borderBottom: '1px solid #888',
+                  fontWeight: 'bold',
+                  fontSize: '14px',
+                  textAlign: 'center',
                 }}
               >
                 Select {props.name.toLowerCase()}
@@ -151,7 +151,7 @@ const ChoicedSelection = (props: {
                     key={index}
                     basis={`${CLOTHING_SELECTION_CELL_SIZE}px`}
                     style={{
-                      padding: "5px",
+                      padding: '5px',
                     }}
                   >
                     <Button
@@ -168,9 +168,9 @@ const ChoicedSelection = (props: {
                     >
                       <Box
                         className={classes([
-                          "preferences32x32",
+                          'preferences32x32',
                           image,
-                          "centered-image",
+                          'centered-image',
                         ])}
                       />
                     </Button>
@@ -190,14 +190,14 @@ const GenderButton = (props: {
   gender: Gender;
 }) => {
   const [genderMenuOpen, setGenderMenuOpen] = useLocalState(
-    "genderMenuOpen",
+    'genderMenuOpen',
     false,
   );
 
   return (
     <Popper
       options={{
-        placement: "right-end",
+        placement: 'right-end',
       }}
       popperContent={
         genderMenuOpen ? (
@@ -271,7 +271,7 @@ const MainFeature = (props: {
   return (
     <Popper
       options={{
-        placement: "bottom-start",
+        placement: 'bottom-start',
       }}
       popperContent={
         isOpen ? (
@@ -314,14 +314,14 @@ const MainFeature = (props: {
       >
         <Box
           className={classes([
-            "preferences32x32",
+            'preferences32x32',
             catalog.icons![currentValue],
-            "centered-image",
+            'centered-image',
           ])}
           style={{
             transform: randomization
-              ? "translateX(-70%) translateY(-70%) scale(1.1)"
-              : "translateX(-50%) translateY(-50%) scale(1.3)",
+              ? 'translateX(-70%) translateY(-70%) scale(1.1)'
+              : 'translateX(-50%) translateY(-50%) scale(1.3)',
           }}
         />
 
@@ -330,8 +330,8 @@ const MainFeature = (props: {
             dropdownProps={{
               dropdownStyle: {
                 bottom: 0,
-                position: "absolute",
-                right: "1px",
+                position: 'absolute',
+                right: '1px',
               },
 
               onOpen: (event) => {
@@ -352,7 +352,7 @@ const MainFeature = (props: {
 
 const createSetRandomization =
   (act: typeof sendAct, preference: string) => (newSetting: RandomSetting) => {
-    act("set_random_preference", {
+    act('set_random_preference', {
       preference,
       value: newSetting,
     });
@@ -374,8 +374,8 @@ export const PreferenceList = (props: {
       basis="50%"
       grow
       style={{
-        background: "rgba(0, 0, 0, 0.5)",
-        padding: "4px",
+        background: 'rgba(0, 0, 0, 0.5)',
+        padding: '4px',
       }}
       overflowX="hidden"
       overflowY="auto"
@@ -464,9 +464,9 @@ export const MainPage = (props: { openSpecies: () => void }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const [currentClothingMenu, setCurrentClothingMenu] = useLocalState<
     string | null
-  >("currentClothingMenu", null);
+  >('currentClothingMenu', null);
   const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
-    "multiNameInputOpen",
+    'multiNameInputOpen',
     false,
   );
   const [randomToggleEnabled] = useRandomToggleState();
@@ -511,12 +511,12 @@ export const MainPage = (props: { openSpecies: () => void }) => {
         };
 
         if (randomBodyEnabled) {
-          nonContextualPreferences["random_species"] =
-            data.character_preferences.randomization["species"];
+          nonContextualPreferences['random_species'] =
+            data.character_preferences.randomization['species'];
         } else {
           // We can't use random_name/is_accessible because the
           // server doesn't know whether the random toggle is on.
-          delete nonContextualPreferences["random_name"];
+          delete nonContextualPreferences['random_name'];
         }
 
         return (
@@ -525,12 +525,12 @@ export const MainPage = (props: { openSpecies: () => void }) => {
               <MultiNameInput
                 handleClose={() => setMultiNameInputOpen(false)}
                 handleRandomizeName={(preference) =>
-                  act("randomize_name", {
+                  act('randomize_name', {
                     preference,
                   })
                 }
                 handleUpdateName={(nameType, value) =>
-                  act("set_preference", {
+                  act('set_preference', {
                     preference: nameType,
                     value,
                   })
@@ -547,9 +547,9 @@ export const MainPage = (props: { openSpecies: () => void }) => {
                       gender={data.character_preferences.misc.gender}
                       handleOpenSpecies={props.openSpecies}
                       handleRotate={() => {
-                        act("rotate");
+                        act('rotate');
                       }}
-                      setGender={createSetPreference(act, "gender")}
+                      setGender={createSetPreference(act, 'gender')}
                       showGender={
                         currentSpeciesData ? !!currentSpeciesData.sexes : true
                       }

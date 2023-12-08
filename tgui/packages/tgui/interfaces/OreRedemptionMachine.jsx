@@ -1,5 +1,5 @@
-import { createSearch, toTitleCase } from "common/string";
-import { useBackend, useLocalState, useSharedState } from "../backend";
+import { createSearch, toTitleCase } from 'common/string';
+import { useBackend, useLocalState, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -11,16 +11,16 @@ import {
   Icon,
   Section,
   LabeledList,
-} from "../components";
-import { Window } from "../layouts";
-import { formatSiUnit } from "../format";
+} from '../components';
+import { Window } from '../layouts';
+import { formatSiUnit } from '../format';
 
 export const OreRedemptionMachine = (props) => {
   const { act, data } = useBackend();
   const { disconnected, unclaimedPoints, materials, user } = data;
-  const [tab, setTab] = useSharedState("tab", 1);
-  const [searchItem, setSearchItem] = useLocalState("searchItem", "");
-  const [compact, setCompact] = useSharedState("compact", false);
+  const [tab, setTab] = useSharedState('tab', 1);
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
+  const [compact, setCompact] = useSharedState('compact', false);
   const search = createSearch(searchItem, (materials) => materials.name);
   const material_filtered =
     searchItem.length > 0
@@ -39,23 +39,23 @@ export const OreRedemptionMachine = (props) => {
                       name="id-card"
                       size={3}
                       mr={1}
-                      color={user ? "green" : "red"}
+                      color={user ? 'green' : 'red'}
                     />
                   </Stack.Item>
                   <Stack.Item>
                     <LabeledList>
                       <LabeledList.Item label="Name">
-                        {user?.name || "No Name Detected"}
+                        {user?.name || 'No Name Detected'}
                       </LabeledList.Item>
                       <LabeledList.Item label="Balance">
-                        {user?.cash || "No Balance Detected"}
+                        {user?.cash || 'No Balance Detected'}
                       </LabeledList.Item>
                     </LabeledList>
                   </Stack.Item>
                   <Stack.Item>
                     <Button
                       textAlign="center"
-                      color={compact ? "red" : "green"}
+                      color={compact ? 'red' : 'green'}
                       content="Compact"
                       onClick={() => setCompact(!compact)}
                     />
@@ -77,7 +77,7 @@ export const OreRedemptionMachine = (props) => {
                   content="Claim"
                   disabled={unclaimedPoints === 0 || disconnected}
                   tooltip={disconnected}
-                  onClick={() => act("Claim")}
+                  onClick={() => act('Claim')}
                 />
               </Box>
             </Stack.Item>
@@ -94,12 +94,12 @@ export const OreRedemptionMachine = (props) => {
             <Tabs.Tab
               icon="list"
               lineHeight="23px"
-              selected={tab === "material"}
+              selected={tab === 'material'}
               onClick={() => {
-                setTab("material");
+                setTab('material');
 
                 if (searchItem.length > 0) {
-                  setSearchItem("");
+                  setSearchItem('');
                 }
               }}
             >
@@ -108,12 +108,12 @@ export const OreRedemptionMachine = (props) => {
             <Tabs.Tab
               icon="list"
               lineHeight="23px"
-              selected={tab === "alloy"}
+              selected={tab === 'alloy'}
               onClick={() => {
-                setTab("alloy");
+                setTab('alloy');
 
                 if (searchItem.length > 0) {
-                  setSearchItem("");
+                  setSearchItem('');
                 }
               }}
             >
@@ -146,13 +146,13 @@ export const OreRedemptionMachine = (props) => {
                     key={material.id}
                     material={material}
                     onRelease={(amount) => {
-                      if (material.category === "material") {
-                        act("Release", {
+                      if (material.category === 'material') {
+                        act('Release', {
                           id: material.id,
                           sheets: amount,
                         });
                       } else {
-                        act("Smelt", {
+                        act('Smelt', {
                           id: material.id,
                           sheets: amount,
                         });
@@ -173,7 +173,7 @@ const MaterialRow = (props) => {
   const { data } = useBackend();
   const { material_icons } = data;
   const { material, onRelease } = props;
-  const [compact, setCompact] = useLocalState("compact", false);
+  const [compact, setCompact] = useLocalState('compact', false);
 
   const display = material_icons.find(
     (mat_icon) => mat_icon.id === material.id,
@@ -194,7 +194,7 @@ const MaterialRow = (props) => {
             height="18px"
             width="18px"
             style={{
-              verticalAlign: "middle",
+              verticalAlign: 'middle',
             }}
           />
         </Table.Cell>
@@ -202,32 +202,32 @@ const MaterialRow = (props) => {
       <Table.Cell>{toTitleCase(material.name)}</Table.Cell>
       <Table.Cell collapsing textAlign="left">
         <Box color="label">
-          {formatSiUnit(sheet_amounts, 0)}{" "}
-          {material.amount === 1 ? "sheet" : "sheets"}
+          {formatSiUnit(sheet_amounts, 0)}{' '}
+          {material.amount === 1 ? 'sheet' : 'sheets'}
         </Box>
       </Table.Cell>
       <Table.Cell collapsing textAlign="left">
         <Button
           content="x1"
           color="transparent"
-          tooltip={material.value ? material.value + " cr" : "No cost"}
+          tooltip={material.value ? material.value + ' cr' : 'No cost'}
           onClick={() => onRelease(1)}
         />
         <Button
-          content={"x" + print_amount}
+          content={'x' + print_amount}
           color="transparent"
           tooltip={
-            material.value ? material.value * print_amount + " cr" : "No cost"
+            material.value ? material.value * print_amount + ' cr' : 'No cost'
           }
           onClick={() => onRelease(print_amount)}
         />
         <Button.Input
           content={
-            "[Max: " +
+            '[Max: ' +
             (sheet_amounts < max_sheets ? sheet_amounts : max_sheets) +
-            "]"
+            ']'
           }
-          color={"transparent"}
+          color={'transparent'}
           maxValue={max_sheets}
           onCommit={(e, value) => {
             onRelease(value);

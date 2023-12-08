@@ -1,5 +1,5 @@
-import { Newscaster } from "./Newscaster";
-import { Window } from "../layouts";
+import { Newscaster } from './Newscaster';
+import { Window } from '../layouts';
 
 export const PhysicalNewscaster = () => {
   return (

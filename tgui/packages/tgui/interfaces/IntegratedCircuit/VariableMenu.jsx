@@ -6,21 +6,21 @@ import {
   Input,
   Dropdown,
   Icon,
-} from "../../components";
-import { Component } from "react";
-import { shallowDiffers } from "common/react";
+} from '../../components';
+import { Component } from 'react';
+import { shallowDiffers } from 'common/react';
 import {
   VARIABLE_ASSOC_LIST,
   VARIABLE_LIST,
   VARIABLE_NOT_A_LIST,
-} from "./constants";
+} from './constants';
 
 export class VariableMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      variable_name: "",
-      variable_type: "any",
+      variable_name: '',
+      variable_type: 'any',
     };
   }
 

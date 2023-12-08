@@ -1,4 +1,4 @@
-import { useBackend } from "../../backend";
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -7,7 +7,7 @@ import {
   Icon,
   LabeledList,
   Tooltip,
-} from "../../components";
+} from '../../components';
 
 export const RecipeLookup = (props) => {
   const { recipe, bookmarkedReactions } = props;
@@ -34,7 +34,7 @@ export const RecipeLookup = (props) => {
           ml={3}
           disabled={recipe.subReactIndex === 1}
           onClick={() =>
-            act("reduce_index", {
+            act('reduce_index', {
               id: recipe.name,
             })
           }
@@ -43,7 +43,7 @@ export const RecipeLookup = (props) => {
           icon="arrow-right"
           disabled={recipe.subReactIndex === recipe.subReactLen}
           onClick={() =>
-            act("increment_index", {
+            act('increment_index', {
               id: recipe.name,
             })
           }
@@ -55,7 +55,7 @@ export const RecipeLookup = (props) => {
             disabled={bookmarkedReactions.has(getReaction(recipe.id)[0])}
             onClick={() => {
               addBookmark(getReaction(recipe.id)[0]);
-              act("update_ui");
+              act('update_ui');
             }}
           />
         )}
@@ -67,9 +67,9 @@ export const RecipeLookup = (props) => {
               key={product.name}
               icon="vial"
               disabled={product.hasProduct}
-              content={product.ratio + "u " + product.name}
+              content={product.ratio + 'u ' + product.name}
               onClick={() =>
-                act("reagent_click", {
+                act('reagent_click', {
                   id: product.id,
                 })
               }
@@ -83,9 +83,9 @@ export const RecipeLookup = (props) => {
             <Button
               icon="vial"
               color={reactant.color}
-              content={reactant.ratio + "u " + reactant.name}
+              content={reactant.ratio + 'u ' + reactant.name}
               onClick={() =>
-                act("reagent_click", {
+                act('reagent_click', {
                   id: reactant.id,
                 })
               }
@@ -97,7 +97,7 @@ export const RecipeLookup = (props) => {
                 tooltip={reactant.tooltip}
                 tooltipPosition="right"
                 onClick={() =>
-                  act("find_reagent_reaction", {
+                  act('find_reagent_reaction', {
                     id: reactant.id,
                   })
                 }
@@ -114,11 +114,11 @@ export const RecipeLookup = (props) => {
                 <Button
                   icon="vial"
                   color={catalyst.color}
-                  content={catalyst.ratio + "u " + catalyst.name}
+                  content={catalyst.ratio + 'u ' + catalyst.name}
                   tooltip={catalyst.tooltip}
-                  tooltipPosition={"right"}
+                  tooltipPosition={'right'}
                   onClick={() =>
-                    act("reagent_click", {
+                    act('reagent_click', {
                       id: catalyst.id,
                     })
                   }
@@ -127,9 +127,9 @@ export const RecipeLookup = (props) => {
                 <Button
                   icon="vial"
                   color={catalyst.color}
-                  content={catalyst.ratio + "u " + catalyst.name}
+                  content={catalyst.ratio + 'u ' + catalyst.name}
                   onClick={() =>
-                    act("reagent_click", {
+                    act('reagent_click', {
                       id: catalyst.id,
                     })
                   }
@@ -155,7 +155,7 @@ export const RecipeLookup = (props) => {
           <LabeledList.Item label="Optimal pH range">
             <Box position="relative">
               <Tooltip content="If your reaction is kept within these bounds then the purity of your product will be 100%">
-                {recipe.lowerpH + "-" + recipe.upperpH}
+                {recipe.lowerpH + '-' + recipe.upperpH}
               </Tooltip>
             </Box>
           </LabeledList.Item>
@@ -184,14 +184,14 @@ export const RecipeLookup = (props) => {
           height="50px"
           position="relative"
           style={{
-            backgroundColor: "black",
+            backgroundColor: 'black',
           }}
         >
           <Chart.Line
             fillPositionedParent
             data={recipe.thermodynamics}
             strokeWidth={0}
-            fillColor={"#3cf072"}
+            fillColor={'#3cf072'}
           />
           {recipe.explosive && (
             <Chart.Line
@@ -203,7 +203,7 @@ export const RecipeLookup = (props) => {
               width="28px"
               data={recipe.explosive}
               strokeWidth={0}
-              fillColor={"#d92727"}
+              fillColor={'#d92727'}
             />
           )}
         </Box>
@@ -211,17 +211,17 @@ export const RecipeLookup = (props) => {
           <Tooltip
             content={
               recipe.isColdRecipe
-                ? "The temperature at which it is underheated, causing negative effects on the reaction."
-                : "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."
+                ? 'The temperature at which it is underheated, causing negative effects on the reaction.'
+                : 'The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate.'
             }
           >
             <Flex.Item
               position="relative"
-              textColor={recipe.isColdRecipe && "red"}
+              textColor={recipe.isColdRecipe && 'red'}
             >
               {recipe.isColdRecipe
-                ? recipe.explodeTemp + "K"
-                : recipe.tempMin + "K"}
+                ? recipe.explodeTemp + 'K'
+                : recipe.tempMin + 'K'}
             </Flex.Item>
           </Tooltip>
 
@@ -229,17 +229,17 @@ export const RecipeLookup = (props) => {
             <Tooltip
               content={
                 recipe.isColdRecipe
-                  ? "The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate."
-                  : "The temperature at which it is overheated, causing negative effects on the reaction."
+                  ? 'The minimum temperature needed for this reaction to start. Heating it up past this point will increase the reaction rate.'
+                  : 'The temperature at which it is overheated, causing negative effects on the reaction.'
               }
             >
               <Flex.Item
                 position="relative"
-                textColor={!recipe.isColdRecipe && "red"}
+                textColor={!recipe.isColdRecipe && 'red'}
               >
                 {recipe.isColdRecipe
-                  ? recipe.tempMin + "K"
-                  : recipe.explodeTemp + "K"}
+                  ? recipe.tempMin + 'K'
+                  : recipe.explodeTemp + 'K'}
               </Flex.Item>
             </Tooltip>
           )}
@@ -249,7 +249,7 @@ export const RecipeLookup = (props) => {
         <LabeledList>
           <LabeledList.Item label="Optimal rate">
             <Tooltip content="The fastest rate the reaction can go, in units per second. This is the plateu region shown in the rate profile above.">
-              <Box position="relative">{recipe.thermoUpper + "u/s"}</Box>
+              <Box position="relative">{recipe.thermoUpper + 'u/s'}</Box>
             </Tooltip>
           </LabeledList.Item>
         </LabeledList>

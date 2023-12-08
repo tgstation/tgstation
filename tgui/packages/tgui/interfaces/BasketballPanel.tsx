@@ -1,7 +1,7 @@
-import { multiline } from "../../common/string";
-import { useBackend } from "../backend";
-import { Button, NoticeBox, Stack, Section } from "../components";
-import { Window } from "../layouts";
+import { multiline } from '../../common/string';
+import { useBackend } from '../backend';
+import { Button, NoticeBox, Stack, Section } from '../components';
+import { Window } from '../layouts';
 
 type BasketballPanelData = {
   total_votes: number;
@@ -36,12 +36,12 @@ export const BasketballPanel = (props) => {
                     for the next.
                   `}
                     content="Sign Up"
-                    onClick={() => act("basketball_signup")}
+                    onClick={() => act('basketball_signup')}
                   />
                   <Button
                     icon="basketball"
                     disabled={!(data.total_votes >= data.players_min)}
-                    onClick={() => act("basketball_start")}
+                    onClick={() => act('basketball_start')}
                   >
                     Start
                   </Button>
@@ -63,7 +63,7 @@ export const BasketballPanel = (props) => {
                   <Stack.Item grow>{lobbyist.ckey}</Stack.Item>
                   <Stack.Item>Status:</Stack.Item>
                   <Stack.Item
-                    color={lobbyist.status === "Ready" ? "green" : "red"}
+                    color={lobbyist.status === 'Ready' ? 'green' : 'red'}
                   >
                     {lobbyist.status}
                   </Stack.Item>

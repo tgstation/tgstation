@@ -13,8 +13,8 @@ import {
   updateChatPage,
   updateMessageCount,
   changeScrollTracking,
-} from "./actions";
-import { canPageAcceptType, createMainPage } from "./model";
+} from './actions';
+import { canPageAcceptType, createMainPage } from './model';
 
 const mainPage = createMainPage();
 

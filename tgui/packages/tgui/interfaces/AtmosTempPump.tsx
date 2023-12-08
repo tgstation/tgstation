@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Button, LabeledList, NumberInput, Section } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   on: BooleanLike;
@@ -20,10 +20,10 @@ export const AtmosTempPump = (props) => {
           <LabeledList>
             <LabeledList.Item label="Power">
               <Button
-                icon={on ? "power-off" : "times"}
-                content={on ? "On" : "Off"}
+                icon={on ? 'power-off' : 'times'}
+                content={on ? 'On' : 'Off'}
                 selected={on}
-                onClick={() => act("power")}
+                onClick={() => act('power')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Heat transfer rate">
@@ -36,7 +36,7 @@ export const AtmosTempPump = (props) => {
                 maxValue={max_heat_transfer_rate}
                 step={1}
                 onChange={(e, value) =>
-                  act("rate", {
+                  act('rate', {
                     rate: value,
                   })
                 }
@@ -47,8 +47,8 @@ export const AtmosTempPump = (props) => {
                 content="Max"
                 disabled={rate === max_heat_transfer_rate}
                 onClick={() =>
-                  act("rate", {
-                    rate: "max",
+                  act('rate', {
+                    rate: 'max',
                   })
                 }
               />

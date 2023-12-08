@@ -4,18 +4,18 @@
  * @license MIT
  */
 
-import { useLocalState } from "../backend";
-import { Button, Section, Tabs } from "../components";
+import { useLocalState } from '../backend';
+import { Button, Section, Tabs } from '../components';
 
 export const meta = {
-  title: "Tabs",
+  title: 'Tabs',
   render: () => <Story />,
 };
 
-const TAB_RANGE = ["Tab #1", "Tab #2", "Tab #3", "Tab #4"];
+const TAB_RANGE = ['Tab #1', 'Tab #2', 'Tab #3', 'Tab #4'];
 
 const Story = (props) => {
-  const [tabProps, setTabProps] = useLocalState("tabProps", {});
+  const [tabProps, setTabProps] = useLocalState('tabProps', {});
   return (
     <>
       <Section>
@@ -102,19 +102,19 @@ const Story = (props) => {
 };
 
 const TabsPrefab = (props) => {
-  const [tabIndex, setTabIndex] = useLocalState("tabIndex", 0);
-  const [tabProps] = useLocalState("tabProps", {});
+  const [tabIndex, setTabIndex] = useLocalState('tabIndex', 0);
+  const [tabProps] = useLocalState('tabProps', {});
   return (
     <Tabs
       vertical={tabProps.vertical}
       fluid={tabProps.fluid}
-      textAlign={tabProps.centered && "center"}
+      textAlign={tabProps.centered && 'center'}
     >
       {TAB_RANGE.map((text, i) => (
         <Tabs.Tab
           key={i}
           selected={i === tabIndex}
-          icon={tabProps.icon && "info-circle"}
+          icon={tabProps.icon && 'info-circle'}
           leftSlot={
             tabProps.leftSlot && (
               <Button circular compact color="transparent" icon="times" />

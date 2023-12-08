@@ -5,13 +5,13 @@ import {
   NumberInput,
   ProgressBar,
   Section,
-} from "../components";
+} from '../components';
 
-import { BooleanLike } from "common/react";
-import { Window } from "../layouts";
-import { getGasColor } from "../constants";
-import { toFixed } from "common/math";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { Window } from '../layouts';
+import { getGasColor } from '../constants';
+import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
 
 type Data = {
   on: BooleanLike;
@@ -58,10 +58,10 @@ const Controls = (props) => {
       <LabeledList>
         <LabeledList.Item label="Power">
           <Button
-            icon={on ? "power-off" : "times"}
-            content={on ? "On" : "Off"}
+            icon={on ? 'power-off' : 'times'}
+            content={on ? 'On' : 'Off'}
             selected={on}
-            onClick={() => act("power")}
+            onClick={() => act('power')}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Recipe">
@@ -71,7 +71,7 @@ const Controls = (props) => {
               selected={id === selected}
               content={name}
               onClick={() =>
-                act("recipe", {
+                act('recipe', {
                   mode: id,
                 })
               }
@@ -87,7 +87,7 @@ const Controls = (props) => {
             minValue={0}
             maxValue={250}
             onDrag={(e, value) =>
-              act("gas_input", {
+              act('gas_input', {
                 gas_input: value,
               })
             }
@@ -132,7 +132,7 @@ const Requirements = (props) => {
               bad: [logScale(5000), Infinity],
             }}
           >
-            {toFixed(internal_temperature) + " K"}
+            {toFixed(internal_temperature) + ' K'}
           </ProgressBar>
         </LabeledList.Item>
       </LabeledList>
@@ -155,7 +155,7 @@ const Gases = (props) => {
               minValue={0}
               maxValue={1000}
             >
-              {toFixed(amount, 2) + " moles"}
+              {toFixed(amount, 2) + ' moles'}
             </ProgressBar>
           </LabeledList.Item>
         ))}

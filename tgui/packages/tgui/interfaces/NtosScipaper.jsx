@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   BlockQuote,
   Button,
@@ -14,9 +14,9 @@ import {
   NoticeBox,
   Tooltip,
   Icon,
-} from "../components";
-import { TableCell, TableRow } from "../components/Table";
-import { NtosWindow } from "../layouts";
+} from '../components';
+import { TableCell, TableRow } from '../components/Table';
+import { NtosWindow } from '../layouts';
 
 export const NtosScipaper = (props) => {
   return (
@@ -56,7 +56,7 @@ const PaperPublishing = (props) => {
               fluid
               value={title}
               onChange={(e, value) =>
-                act("rewrite", {
+                act('rewrite', {
                   title: value,
                 })
               }
@@ -67,13 +67,13 @@ const PaperPublishing = (props) => {
               fluid
               value={author}
               onChange={(e, value) =>
-                act("rewrite", {
+                act('rewrite', {
                   author: value,
                 })
               }
             />
-            <Button selected={etAlia} onClick={() => act("et_alia")}>
-              {"Multiple Authors"}
+            <Button selected={etAlia} onClick={() => act('et_alia')}>
+              {'Multiple Authors'}
             </Button>
           </LabeledList.Item>
           <LabeledList.Item label="Abstract">
@@ -81,7 +81,7 @@ const PaperPublishing = (props) => {
               fluid
               value={abstract}
               onChange={(e, value) =>
-                act("rewrite", {
+                act('rewrite', {
                   abstract: value,
                 })
               }
@@ -93,9 +93,9 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={Object.keys(fileList)}
-                  displayText={selectedFile ? selectedFile : "-"}
+                  displayText={selectedFile ? selectedFile : '-'}
                   onSelected={(ordfile_name) =>
-                    act("select_file", {
+                    act('select_file', {
                       selected_uid: fileList[ordfile_name],
                     })
                   }
@@ -117,9 +117,9 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={Object.keys(expList)}
-                  displayText={selectedExperiment ? selectedExperiment : "-"}
+                  displayText={selectedExperiment ? selectedExperiment : '-'}
                   onSelected={(experiment_name) =>
-                    act("select_experiment", {
+                    act('select_experiment', {
                       selected_expath: expList[experiment_name],
                     })
                   }
@@ -141,9 +141,9 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={allowedTiers.map((number) => String(number))}
-                  displayText={tier ? String(tier) : "-"}
+                  displayText={tier ? String(tier) : '-'}
                   onSelected={(new_tier) =>
-                    act("select_tier", {
+                    act('select_tier', {
                       selected_tier: Number(new_tier),
                     })
                   }
@@ -165,9 +165,9 @@ const PaperPublishing = (props) => {
                 <Dropdown
                   width="35rem"
                   options={Object.keys(allowedPartners)}
-                  displayText={selectedPartner ? selectedPartner : "-"}
+                  displayText={selectedPartner ? selectedPartner : '-'}
                   onSelected={(new_partner) =>
-                    act("select_partner", {
+                    act('select_partner', {
                       selected_partner: allowedPartners[new_partner],
                     })
                   }
@@ -194,7 +194,7 @@ const PaperPublishing = (props) => {
             >
               <Icon size={1.15} name="info-circle" />
             </Tooltip>
-            {" Cooperation: "}
+            {' Cooperation: '}
             <BlockQuote>{gains[coopIndex - 1]}</BlockQuote>
           </Stack.Item>
           <Stack.Item grow>
@@ -204,7 +204,7 @@ const PaperPublishing = (props) => {
             >
               <Icon size={1.15} name="info-circle" />
             </Tooltip>
-            {" Funding: "}
+            {' Funding: '}
             <BlockQuote>{gains[fundingIndex - 1]}</BlockQuote>
           </Stack.Item>
         </Stack>
@@ -213,7 +213,7 @@ const PaperPublishing = (props) => {
           icon="upload"
           textAlign="center"
           fluid
-          onClick={() => act("publish")}
+          onClick={() => act('publish')}
           content="Publish Paper"
         />
       </Section>
@@ -229,32 +229,32 @@ const PaperBrowser = (props) => {
   } else {
     return publishedPapers.map((paper) => (
       <Collapsible
-        key={String(paper["experimentName"] + paper["tier"])}
-        title={paper["title"]}
+        key={String(paper['experimentName'] + paper['tier'])}
+        title={paper['title']}
       >
         <Section>
           <LabeledList>
             <LabeledList.Item label="Topic">
-              {paper["experimentName"] + " - " + paper["tier"]}
+              {paper['experimentName'] + ' - ' + paper['tier']}
             </LabeledList.Item>
             <LabeledList.Item label="Author">
-              {paper["author"] + (paper.etAlia ? " et al." : "")}
+              {paper['author'] + (paper.etAlia ? ' et al.' : '')}
             </LabeledList.Item>
             <LabeledList.Item label="Partner">
-              {paper["partner"]}
+              {paper['partner']}
             </LabeledList.Item>
             <LabeledList.Item label="Yield">
               <LabeledList>
                 <LabeledList.Item label="Cooperation">
-                  {paper["gains"][coopIndex - 1]}
+                  {paper['gains'][coopIndex - 1]}
                 </LabeledList.Item>
                 <LabeledList.Item label="Funding">
-                  {paper["gains"][fundingIndex - 1]}
+                  {paper['gains'][fundingIndex - 1]}
                 </LabeledList.Item>
               </LabeledList>
             </LabeledList.Item>
             <LabeledList.Item label="Abstract">
-              {paper["abstract"]}
+              {paper['abstract']}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -274,13 +274,13 @@ const ExperimentBrowser = (props) => {
           <LabeledList.Item
             key={tier}
             label={
-              "Optimal " +
+              'Optimal ' +
               experiment.prefix +
-              " Amount - Tier " +
+              ' Amount - Tier ' +
               String(Number(tier) + 1)
             }
           >
-            {experiment.target[tier] + " " + experiment.suffix}
+            {experiment.target[tier] + ' ' + experiment.suffix}
           </LabeledList.Item>
         ))}
       </LabeledList>
@@ -300,7 +300,7 @@ const PartnersBrowser = (props) => {
   } = data;
   return partnersInformation.map((partner) => (
     <Section title={partner.name} key={partner.path}>
-      <Collapsible title={"Relations: " + relations[partner.path]}>
+      <Collapsible title={'Relations: ' + relations[partner.path]}>
         <LabeledList>
           <LabeledList.Item label="Description">
             {partner.flufftext}
@@ -309,10 +309,10 @@ const PartnersBrowser = (props) => {
             {relations[partner.path]}
           </LabeledList.Item>
           <LabeledList.Item label="Cooperation Bonus">
-            {partner.multipliers[coopIndex - 1] + "x"}
+            {partner.multipliers[coopIndex - 1] + 'x'}
           </LabeledList.Item>
           <LabeledList.Item label="Funding Bonus">
-            {partner.multipliers[fundingIndex - 1] + "x"}
+            {partner.multipliers[fundingIndex - 1] + 'x'}
           </LabeledList.Item>
           <LabeledList.Item label="Accepted Experiments">
             {partner.acceptedExperiments.map((experiment_name) => (
@@ -326,7 +326,7 @@ const PartnersBrowser = (props) => {
                   <TableCell>
                     {visibleNodes.includes(node.id)
                       ? node.name
-                      : "Unknown Technology"}
+                      : 'Unknown Technology'}
                   </TableCell>
                   <TableCell>
                     <Button
@@ -337,9 +337,9 @@ const PartnersBrowser = (props) => {
                         !purchaseableBoosts[partner.path].includes(node.id)
                       }
                       content="Purchase"
-                      tooltip={"Discount: " + node.discount}
+                      tooltip={'Discount: ' + node.discount}
                       onClick={() =>
-                        act("purchase_boost", {
+                        act('purchase_boost', {
                           purchased_boost: node.id,
                           boost_seller: partner.path,
                         })
@@ -370,42 +370,42 @@ export const NtosScipaperContent = (props) => {
         <Tabs.Tab
           selected={currentTab === 1}
           onClick={() =>
-            act("change_tab", {
+            act('change_tab', {
               new_tab: 1,
             })
           }
         >
-          {"Publish Papers"}
+          {'Publish Papers'}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 2}
           onClick={() =>
-            act("change_tab", {
+            act('change_tab', {
               new_tab: 2,
             })
           }
         >
-          {"View Previous Publications"}
+          {'View Previous Publications'}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 3}
           onClick={() =>
-            act("change_tab", {
+            act('change_tab', {
               new_tab: 3,
             })
           }
         >
-          {"View Available Experiments"}
+          {'View Available Experiments'}
         </Tabs.Tab>
         <Tabs.Tab
           selected={currentTab === 4}
           onClick={() =>
-            act("change_tab", {
+            act('change_tab', {
               new_tab: 4,
             })
           }
         >
-          {"View Scientific Partners"}
+          {'View Scientific Partners'}
         </Tabs.Tab>
       </Tabs>
       {currentTab === 1 && <PaperPublishing />}

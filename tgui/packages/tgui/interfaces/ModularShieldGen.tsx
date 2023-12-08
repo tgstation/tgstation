@@ -1,5 +1,5 @@
-import { useBackend } from "../backend";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
 import {
   Stack,
   Section,
@@ -7,8 +7,8 @@ import {
   Button,
   NumberInput,
   LabeledList,
-} from "../components";
-import { BooleanLike } from "common/react";
+} from '../components';
+import { BooleanLike } from 'common/react';
 
 type ModularShieldGenData = {
   max_strength: number;
@@ -46,7 +46,7 @@ export const ModularShieldGen = (props) => {
           <Stack.Item grow={2}>
             <Section
               title="Shield Strength"
-              color={recovering ? "red" : "white"}
+              color={recovering ? 'red' : 'white'}
             >
               <ProgressBar
                 title="Shield Strength"
@@ -101,7 +101,7 @@ export const ModularShieldGen = (props) => {
                     minValue={3}
                     maxValue={max_radius}
                     onChange={(e, value) =>
-                      act("set_radius", {
+                      act('set_radius', {
                         new_radius: value,
                       })
                     }
@@ -110,9 +110,9 @@ export const ModularShieldGen = (props) => {
                 <LabeledList.Item label="Limitations">
                   <Button
                     disabled={active}
-                    onClick={() => act("toggle_exterior")}
+                    onClick={() => act('toggle_exterior')}
                   >
-                    {exterior_only ? "External only" : "Internal & External"}
+                    {exterior_only ? 'External only' : 'Internal & External'}
                   </Button>
                 </LabeledList.Item>
               </LabeledList>
@@ -124,9 +124,9 @@ export const ModularShieldGen = (props) => {
                     bold={1}
                     disabled={recovering || initiating_field}
                     selected={active}
-                    content={active ? "On" : "Off"}
+                    content={active ? 'On' : 'Off'}
                     icon="power-off"
-                    onClick={() => act("toggle_shields")}
+                    onClick={() => act('toggle_shields')}
                   />
                 </LabeledList.Item>
               </LabeledList>

@@ -1,44 +1,44 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Box, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Section, Stack } from '../components';
+import { Window } from '../layouts';
 import {
   ObjectivePrintout,
   Objective,
   ReplaceObjectivesButton,
-} from "./common/Objectives";
+} from './common/Objectives';
 
 const teleportstyle = {
-  color: "yellow",
+  color: 'yellow',
 };
 
 const robestyle = {
-  color: "lightblue",
+  color: 'lightblue',
 };
 
 const destructionstyle = {
-  color: "red",
+  color: 'red',
 };
 
 const defensestyle = {
-  color: "orange",
+  color: 'orange',
 };
 
 const transportstyle = {
-  color: "yellow",
+  color: 'yellow',
 };
 
 const summonstyle = {
-  color: "cyan",
+  color: 'cyan',
 };
 
 const ritualstyle = {
-  color: "violet",
+  color: 'violet',
 };
 
 const grandritualstyle = {
-  fontWeight: "bold",
-  color: "#bd54e0",
+  fontWeight: 'bold',
+  color: '#bd54e0',
 };
 
 type GrandRitual = {
@@ -73,8 +73,8 @@ export const AntagInfoWizard = (props) => {
                     objectiveFollowup={
                       <ReplaceObjectivesButton
                         can_change_objective={can_change_objective}
-                        button_title={"Declare Personal Quest"}
-                        button_colour={"violet"}
+                        button_title={'Declare Personal Quest'}
+                        button_colour={'violet'}
                       />
                     }
                   />
@@ -163,7 +163,7 @@ const RitualPrintout = (props: { ritual: GrandRitual }) => {
   }
   return (
     <Box>
-      Alternately, complete the{" "}
+      Alternately, complete the{' '}
       <span style={grandritualstyle}>Grand Ritual </span>
       by invoking a ritual circle at several nexuses of power.
       <br />

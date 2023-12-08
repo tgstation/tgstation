@@ -1,6 +1,6 @@
-import { useLocalState, useBackend } from "tgui/backend";
-import { SECURETAB, Crime, SecurityRecordsData } from "./types";
-import { getSecurityRecord } from "./helpers";
+import { useLocalState, useBackend } from 'tgui/backend';
+import { SECURETAB, Crime, SecurityRecordsData } from './types';
+import { getSecurityRecord } from './helpers';
 import {
   BlockQuote,
   Box,
@@ -16,7 +16,7 @@ import {
   Tabs,
   TextArea,
   Tooltip,
-} from "tgui/components";
+} from 'tgui/components';
 
 /** Displays a list of crimes and allows to add new ones. */
 export const CrimeWatcher = (props) => {
@@ -25,7 +25,7 @@ export const CrimeWatcher = (props) => {
 
   const { crimes, citations } = foundRecord;
   const [selectedTab, setSelectedTab] = useLocalState<SECURETAB>(
-    "selectedTab",
+    'selectedTab',
     SECURETAB.Crimes,
   );
 
@@ -82,7 +82,7 @@ const CrimeList = (props) => {
       {!toDisplay.length ? (
         <Stack.Item>
           <NoticeBox>
-            No {tab === SECURETAB.Crimes ? "crimes" : "citations"} found.
+            No {tab === SECURETAB.Crimes ? 'crimes' : 'citations'} found.
           </NoticeBox>
         </Stack.Item>
       ) : (
@@ -101,13 +101,13 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
   const { act, data } = useBackend<SecurityRecordsData>();
   const { current_user, higher_access } = data;
   const { author, crime_ref, details, fine, name, paid, time, valid } = item;
-  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : "";
+  const showFine = !!fine && fine > 0 ? `: ${fine} cr` : '';
 
-  let collapsibleColor = "";
+  let collapsibleColor = '';
   if (!valid) {
-    collapsibleColor = "grey";
+    collapsibleColor = 'grey';
   } else if (fine && fine > 0) {
-    collapsibleColor = "average";
+    collapsibleColor = 'average';
   }
 
   let displayTitle = name;
@@ -123,8 +123,8 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
         <LabeledList>
           <LabeledList.Item label="Time">{time}</LabeledList.Item>
           <LabeledList.Item label="Author">{author}</LabeledList.Item>
-          <LabeledList.Item color={!valid ? "bad" : "good"} label="Status">
-            {!valid ? "Void" : "Active"}
+          <LabeledList.Item color={!valid ? 'bad' : 'good'} label="Status">
+            {!valid ? 'Void' : 'Active'}
           </LabeledList.Item>
           {fine && (
             <>
@@ -156,7 +156,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               disabled={!higher_access || !valid}
               icon="ban"
               onClick={() =>
-                act("invalidate_crime", {
+                act('invalidate_crime', {
                   crew_ref: crew_ref,
                   crime_ref: crime_ref,
                 })
@@ -171,7 +171,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               onEscape={() => setEditing(false)}
               onEnter={(event, value) => {
                 setEditing(false);
-                act("edit_crime", {
+                act('edit_crime', {
                   crew_ref: crew_ref,
                   crime_ref: crime_ref,
                   name: value,
@@ -186,7 +186,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
               onEscape={() => setEditing(false)}
               onEnter={(event, value) => {
                 setEditing(false);
-                act("edit_crime", {
+                act('edit_crime', {
                   crew_ref: crew_ref,
                   crime_ref: crime_ref,
                   description: value,
@@ -209,11 +209,11 @@ const CrimeAuthor = (props) => {
   const { crew_ref } = foundRecord;
   const { act } = useBackend<SecurityRecordsData>();
 
-  const [crimeName, setCrimeName] = useLocalState("crimeName", "");
-  const [crimeDetails, setCrimeDetails] = useLocalState("crimeDetails", "");
-  const [crimeFine, setCrimeFine] = useLocalState("crimeFine", 0);
+  const [crimeName, setCrimeName] = useLocalState('crimeName', '');
+  const [crimeDetails, setCrimeDetails] = useLocalState('crimeDetails', '');
+  const [crimeFine, setCrimeFine] = useLocalState('crimeFine', 0);
   const [selectedTab, setSelectedTab] = useLocalState<SECURETAB>(
-    "selectedTab",
+    'selectedTab',
     SECURETAB.Crimes,
   );
 
@@ -222,7 +222,7 @@ const CrimeAuthor = (props) => {
   /** Sends form to backend */
   const createCrime = () => {
     if (!crimeName) return;
-    act("add_crime", {
+    act('add_crime', {
       crew_ref: crew_ref,
       details: crimeDetails,
       fine: crimeFine,
@@ -233,9 +233,9 @@ const CrimeAuthor = (props) => {
 
   /** Resets form data since it persists.. */
   const reset = () => {
-    setCrimeDetails("");
+    setCrimeDetails('');
     setCrimeFine(0);
-    setCrimeName("");
+    setCrimeName('');
     setSelectedTab(crimeFine ? SECURETAB.Citations : SECURETAB.Crimes);
   };
 
@@ -275,7 +275,7 @@ const CrimeAuthor = (props) => {
           disabled={!nameMeetsReqs}
           icon="plus"
           onClick={createCrime}
-          tooltip={!nameMeetsReqs ? "Name must be at least 3 characters." : ""}
+          tooltip={!nameMeetsReqs ? 'Name must be at least 3 characters.' : ''}
         />
       </Stack.Item>
     </Stack>

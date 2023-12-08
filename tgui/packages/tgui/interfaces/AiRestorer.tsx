@@ -1,5 +1,5 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -7,8 +7,8 @@ import {
   NoticeBox,
   ProgressBar,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   AI_present: BooleanLike;
@@ -51,17 +51,17 @@ export const AiRestorerContent = (props) => {
         <Button
           fluid
           icon="eject"
-          content={AI_present ? name : "----------"}
+          content={AI_present ? name : '----------'}
           disabled={!AI_present}
-          onClick={() => act("PRG_eject")}
+          onClick={() => act('PRG_eject')}
         />
       )}
       {!!AI_present && (
         <Section
-          title={ejectable ? "System Status" : name}
+          title={ejectable ? 'System Status' : name}
           buttons={
-            <Box inline bold color={isDead ? "bad" : "good"}>
-              {isDead ? "Nonfunctional" : "Functional"}
+            <Box inline bold color={isDead ? 'bad' : 'good'}>
+              {isDead ? 'Nonfunctional' : 'Functional'}
             </Box>
           }
         >
@@ -90,7 +90,7 @@ export const AiRestorerContent = (props) => {
             content="Begin Reconstruction"
             disabled={restoring}
             mt={1}
-            onClick={() => act("PRG_beginReconstruction")}
+            onClick={() => act('PRG_beginReconstruction')}
           />
           <Section title="Laws">
             {laws.map((law) => (

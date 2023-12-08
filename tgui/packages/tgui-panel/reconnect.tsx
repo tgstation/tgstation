@@ -1,9 +1,9 @@
-import { Button } from "tgui/components";
+import { Button } from 'tgui/components';
 
 let url: string | null = null;
 
 setInterval(() => {
-  Byond.winget("", "url").then((currentUrl) => {
+  Byond.winget('', 'url').then((currentUrl) => {
     // Sometimes, for whatever reason, BYOND will give an IP with a :0 port.
     if (currentUrl && !currentUrl.match(/:0$/)) {
       url = currentUrl;
@@ -20,7 +20,7 @@ export const ReconnectButton = () => {
       <Button
         color="white"
         onClick={() => {
-          Byond.command(".reconnect");
+          Byond.command('.reconnect');
         }}
       >
         Reconnect
@@ -29,7 +29,7 @@ export const ReconnectButton = () => {
         color="white"
         onClick={() => {
           location.href = `byond://${url}`;
-          Byond.command(".quit");
+          Byond.command('.quit');
         }}
       >
         Relaunch game

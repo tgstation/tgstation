@@ -1,10 +1,10 @@
-import { sortBy } from "common/collections";
-import { classes } from "common/react";
-import { ReactNode } from "react";
-import { useSharedState } from "../../backend";
-import { Stack, Section, Icon, Dimmer } from "../../components";
-import { Design, MaterialMap } from "./Types";
-import { SearchBar } from "./SearchBar";
+import { sortBy } from 'common/collections';
+import { classes } from 'common/react';
+import { ReactNode } from 'react';
+import { useSharedState } from '../../backend';
+import { Stack, Section, Icon, Dimmer } from '../../components';
+import { Design, MaterialMap } from './Types';
+import { SearchBar } from './SearchBar';
 
 /**
  * A function that does nothing.
@@ -62,12 +62,12 @@ export type DesignBrowserProps<T extends Design = Design> = {
 /**
  * A meta-category that, when selected, renders all designs to the output.
  */
-const ALL_CATEGORY = "All Designs";
+const ALL_CATEGORY = 'All Designs';
 
 /**
  * A meta-category that collects all designs without a single category.
  */
-const UNCATEGORIZED = "/Uncategorized";
+const UNCATEGORIZED = '/Uncategorized';
 
 /**
  * A single category in the category tree.
@@ -128,11 +128,11 @@ export const DesignBrowser = <T extends Design = Design>(
   } = props;
 
   const [selectedCategory, setSelectedCategory] = useSharedState(
-    "selected_category",
+    'selected_category',
     ALL_CATEGORY,
   );
 
-  const [searchText, setSearchText] = useSharedState("search_text", "");
+  const [searchText, setSearchText] = useSharedState('search_text', '');
 
   const onCategorySelected = (newCategory: string) => {
     if (newCategory === selectedCategory) {
@@ -140,13 +140,13 @@ export const DesignBrowser = <T extends Design = Design>(
     }
 
     setSelectedCategory(newCategory);
-    setSearchText("");
+    setSearchText('');
   };
 
   // Build a root category from the designs.
   const root: Category<T> = {
     title: ALL_CATEGORY,
-    anchorKey: ALL_CATEGORY.replace(/ /g, ""),
+    anchorKey: ALL_CATEGORY.replace(/ /g, ''),
     descendants: {},
     children: [],
     subcategories: {},
@@ -166,7 +166,7 @@ export const DesignBrowser = <T extends Design = Design>(
       }
 
       // Categories are slash-delimited.
-      const nodes = category.split("/");
+      const nodes = category.split('/');
 
       // We always lead with a slash, so the first group is always empty.
       nodes.shift();
@@ -182,7 +182,7 @@ export const DesignBrowser = <T extends Design = Design>(
         if (!parent.subcategories[node]) {
           parent.subcategories[node] = {
             title: node,
-            anchorKey: node.replace(/ /g, ""),
+            anchorKey: node.replace(/ /g, ''),
             descendants: {},
             children: [],
             subcategories: {},
@@ -201,20 +201,20 @@ export const DesignBrowser = <T extends Design = Design>(
   return (
     <Stack fill>
       {/* Left Column */}
-      <Stack.Item width={"200px"}>
+      <Stack.Item width={'200px'}>
         <Section fill>
           <Stack vertical fill>
             <Stack.Item>
               <Section title="Categories" fitted />
             </Stack.Item>
             <Stack.Item grow>
-              <Section fill style={{ overflow: "auto" }}>
+              <Section fill style={{ overflow: 'auto' }}>
                 <div className="FabricatorTabs">
                   <div
                     className={classes([
-                      "FabricatorTabs__Tab",
+                      'FabricatorTabs__Tab',
                       selectedCategory === ALL_CATEGORY &&
-                        "FabricatorTabs__Tab--active",
+                        'FabricatorTabs__Tab--active',
                     ])}
                     onClick={() => onCategorySelected(ALL_CATEGORY)}
                   >
@@ -252,7 +252,7 @@ export const DesignBrowser = <T extends Design = Design>(
             searchText.length > 0
               ? `Results for "${searchText}"`
               : selectedCategory === ALL_CATEGORY
-                ? "All Designs"
+                ? 'All Designs'
                 : selectedCategory
           }
           fill
@@ -263,12 +263,12 @@ export const DesignBrowser = <T extends Design = Design>(
                 <SearchBar
                   searchText={searchText}
                   onSearchTextChanged={setSearchText}
-                  hint={"Search all designs..."}
+                  hint={'Search all designs...'}
                 />
               </Section>
             </Stack.Item>
             <Stack.Item grow>
-              <Section fill style={{ overflow: "auto" }}>
+              <Section fill style={{ overflow: 'auto' }}>
                 {searchText.length > 0 ? (
                   sortBy((design: T) => design.name)(
                     Object.values(root.descendants),
@@ -313,12 +313,12 @@ export const DesignBrowser = <T extends Design = Design>(
             {!!busy && (
               <Dimmer
                 style={{
-                  fontSize: "2em",
-                  textAlign: "center",
+                  fontSize: '2em',
+                  textAlign: 'center',
                 }}
               >
                 <Icon name="cog" spin />
-                {" Building items..."}
+                {' Building items...'}
               </Dimmer>
             )}
           </Stack>
@@ -348,11 +348,11 @@ const DesignBrowserTab = <T extends Design = Design>(
   return (
     <div
       className={classes([
-        "FabricatorTabs__Tab",
+        'FabricatorTabs__Tab',
         /** Only highlight top-level categories. */
         depth === 0 &&
           selectedCategory === category.title &&
-          "FabricatorTabs__Tab--active",
+          'FabricatorTabs__Tab--active',
       ])}
       onClick={
         depth === 0
@@ -368,7 +368,7 @@ const DesignBrowserTab = <T extends Design = Design>(
         <div className="FabricatorTabs__CategoryName">{category.title}</div>
         {depth === 0 && (
           /** Show recipe counts on top-level categories. */
-          <div className={"FabricatorTabs__CategoryCount"}>
+          <div className={'FabricatorTabs__CategoryCount'}>
             ({Object.entries(category.descendants).length})
           </div>
         )}

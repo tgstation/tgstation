@@ -1,11 +1,11 @@
-import { useLocalState } from "../../backend";
-import { Button, Modal, Section, Box } from "../../components";
-import { sanitizeText } from "../../sanitize";
-import hljs from "highlight.js/lib/core";
+import { useLocalState } from '../../backend';
+import { Button, Modal, Section, Box } from '../../components';
+import { sanitizeText } from '../../sanitize';
+import hljs from 'highlight.js/lib/core';
 
 export const ChunkViewModal = (props) => {
-  const [, setModal] = useLocalState("modal");
-  const [viewedChunk, setViewedChunk] = useLocalState("viewedChunk");
+  const [, setModal] = useLocalState('modal');
+  const [viewedChunk, setViewedChunk] = useLocalState('viewedChunk');
   return (
     <Modal
       height={`${window.innerHeight * 0.8}px`}
@@ -33,7 +33,7 @@ export const ChunkViewModal = (props) => {
           as="pre"
           dangerouslySetInnerHTML={{
             __html: hljs.highlight(sanitizeText(viewedChunk), {
-              language: "lua",
+              language: 'lua',
             }).value,
           }}
         />

@@ -1,8 +1,8 @@
-import { sortBy } from "common/collections";
-import { Beaker, BeakerDisplay } from "./common/BeakerDisplay";
-import { useBackend } from "../backend";
-import { Box, Button, Section } from "../components";
-import { Window } from "../layouts";
+import { sortBy } from 'common/collections';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+import { useBackend } from '../backend';
+import { Box, Button, Section } from '../components';
+import { Window } from '../layouts';
 
 type DispensableReagent = {
   title: string;
@@ -36,7 +36,7 @@ export const PortableChemMixer = (props) => {
               selected={amount === data.amount}
               content={amount}
               onClick={() =>
-                act("amount", {
+                act('amount', {
                   target: amount,
                 })
               }
@@ -51,9 +51,9 @@ export const PortableChemMixer = (props) => {
                 fluid
                 lineHeight={1.75}
                 content={`(${chemical.volume}) ${chemical.title}`}
-                tooltip={"pH: " + chemical.pH}
+                tooltip={'pH: ' + chemical.pH}
                 onClick={() =>
-                  act("dispense", {
+                  act('dispense', {
                     reagent: chemical.id,
                   })
                 }
@@ -68,7 +68,7 @@ export const PortableChemMixer = (props) => {
               key={amount}
               icon="minus"
               content={amount}
-              onClick={() => act("remove", { amount })}
+              onClick={() => act('remove', { amount })}
             />
           ))}
         >

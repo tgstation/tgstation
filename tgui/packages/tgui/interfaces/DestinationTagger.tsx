@@ -1,8 +1,8 @@
-import { flow } from "common/fp";
-import { map, sortBy } from "common/collections";
-import { useBackend } from "../backend";
-import { Window } from "../layouts";
-import { Stack, Section, Button } from "../components";
+import { flow } from 'common/fp';
+import { map, sortBy } from 'common/collections';
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
+import { Stack, Section, Button } from '../components';
 
 type DestinationTaggerData = {
   locations: string[];
@@ -47,7 +47,7 @@ export const DestinationTagger = (props) => {
               scrollable
               title={
                 !currentTag
-                  ? "Please Select A Location"
+                  ? 'Please Select A Location'
                   : `Current Destination: ${locations[currentTag - 1]}`
               }
             >
@@ -58,7 +58,7 @@ export const DestinationTagger = (props) => {
                     height={2}
                     key={location.sorting_id}
                     onClick={() =>
-                      act("change", { index: location.sorting_id })
+                      act('change', { index: location.sorting_id })
                     }
                     width={15}
                   >

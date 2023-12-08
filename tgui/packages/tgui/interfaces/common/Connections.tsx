@@ -1,11 +1,11 @@
-import { CSS_COLORS } from "../../constants";
-import { classes } from "../../../common/react";
+import { CSS_COLORS } from '../../constants';
+import { classes } from '../../../common/react';
 
 const SVG_CURVE_INTENSITY = 64;
 
 enum ConnectionStyle {
-  CURVE = "curve",
-  SUBWAY = "subway",
+  CURVE = 'curve',
+  SUBWAY = 'subway',
 }
 
 export type Position = {
@@ -31,10 +31,10 @@ export const Connections = (props: {
   zLayer?: number;
   lineWidth?: number;
 }) => {
-  const { connections, zLayer = -1, lineWidth = "2px" } = props;
+  const { connections, zLayer = -1, lineWidth = '2px' } = props;
 
   const isColorClass = (str) => {
-    if (typeof str === "string") {
+    if (typeof str === 'string') {
       return CSS_COLORS.includes(str);
     }
   };
@@ -44,8 +44,8 @@ export const Connections = (props: {
       width="100%"
       height="100%"
       style={{
-        position: "absolute",
-        pointerEvents: "none",
+        position: 'absolute',
+        pointerEvents: 'none',
         zIndex: zLayer,
       }}
     >
@@ -56,7 +56,7 @@ export const Connections = (props: {
           return;
         }
 
-        val.color = val.color || "blue";
+        val.color = val.color || 'blue';
         val.style = val.style || ConnectionStyle.CURVE;
 
         // Starting point

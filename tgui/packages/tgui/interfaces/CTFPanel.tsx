@@ -1,7 +1,7 @@
-import { BooleanLike } from "../../common/react";
-import { useBackend } from "../backend";
-import { Box, Button, Section, Flex, Stack } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from '../../common/react';
+import { useBackend } from '../backend';
+import { Box, Button, Section, Flex, Stack } from '../components';
+import { Window } from '../layouts';
 
 type CTFPanelData =
   | {
@@ -25,7 +25,7 @@ export const CTFPanel = (props) => {
   return (
     <Window title="CTF Panel" width={700} height={600}>
       <Window.Content scrollable>
-        {"teams" in data ? (
+        {'teams' in data ? (
           <Flex align="center" wrap="wrap" textAlign="center" m={-0.5}>
             {data.teams.map((team) => (
               <Flex.Item key={team.name} width="49%" m={0.5} mb={8}>
@@ -34,14 +34,14 @@ export const CTFPanel = (props) => {
                     <Stack.Item grow>
                       <Box>
                         <b>{team.team_size}</b> member
-                        {team.team_size === 1 ? "" : "s"}
+                        {team.team_size === 1 ? '' : 's'}
                       </Box>
                     </Stack.Item>
 
                     <Stack.Item grow>
                       <Box>
                         <b>{team.score}</b> point
-                        {team.score === 1 ? "" : "s"}
+                        {team.score === 1 ? '' : 's'}
                       </Box>
                     </Stack.Item>
                   </Stack>
@@ -52,7 +52,7 @@ export const CTFPanel = (props) => {
                     fluid={1}
                     color={team.color.toLowerCase()}
                     onClick={() =>
-                      act("jump", {
+                      act('jump', {
                         refs: team.refs,
                       })
                     }
@@ -64,7 +64,7 @@ export const CTFPanel = (props) => {
                     fluid={1}
                     color={team.color.toLowerCase()}
                     onClick={() =>
-                      act("join", {
+                      act('join', {
                         refs: team.refs,
                       })
                     }
@@ -88,16 +88,16 @@ export const CTFPanel = (props) => {
             <Stack.Item>
               <Button
                 fontSize="24px"
-                color={data.voted ? "bad" : "good"}
+                color={data.voted ? 'bad' : 'good'}
                 onClick={() => {
                   if (data.voted) {
-                    act("unvote");
+                    act('unvote');
                   } else {
-                    act("vote");
+                    act('vote');
                   }
                 }}
               >
-                {data.voted ? "Unvote for CTF" : "Vote for CTF"}
+                {data.voted ? 'Unvote for CTF' : 'Vote for CTF'}
               </Button>
             </Stack.Item>
           </Stack>

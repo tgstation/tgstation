@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -8,8 +8,8 @@ import {
   Section,
   Stack,
   Tabs,
-} from "../components";
-import { NtosWindow } from "../layouts";
+} from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosCyborgRemoteMonitor = (props) => {
   return (
@@ -24,23 +24,23 @@ export const NtosCyborgRemoteMonitor = (props) => {
 export const ProgressSwitch = (param) => {
   switch (param) {
     case -1:
-      return "_";
+      return '_';
     case 0:
-      return "Connecting";
+      return 'Connecting';
     case 25:
-      return "Starting Transfer";
+      return 'Starting Transfer';
     case 50:
-      return "Downloading";
+      return 'Downloading';
     case 75:
-      return "Downloading";
+      return 'Downloading';
     case 100:
-      return "Formatting";
+      return 'Formatting';
   }
 };
 
 export const NtosCyborgRemoteMonitorContent = (props) => {
   const { act, data } = useBackend();
-  const [tab_main, setTab_main] = useSharedState("tab_main", 1);
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const { card, cyborgs = [], DL_progress } = data;
   const storedlog = data.borglog || [];
 
@@ -90,7 +90,7 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                       color="blue"
                       disabled={!card}
                       onClick={() =>
-                        act("messagebot", {
+                        act('messagebot', {
                           ref: cyborg.ref,
                         })
                       }
@@ -102,53 +102,53 @@ export const NtosCyborgRemoteMonitorContent = (props) => {
                       <Box
                         color={
                           cyborg.status
-                            ? "bad"
+                            ? 'bad'
                             : cyborg.locked_down
-                              ? "average"
-                              : "good"
+                              ? 'average'
+                              : 'good'
                         }
                       >
                         {cyborg.status
-                          ? "Not Responding"
+                          ? 'Not Responding'
                           : cyborg.locked_down
-                            ? "Locked Down"
+                            ? 'Locked Down'
                             : cyborg.shell_discon
-                              ? "Nominal/Disconnected"
-                              : "Nominal"}
+                              ? 'Nominal/Disconnected'
+                              : 'Nominal'}
                       </Box>
                     </LabeledList.Item>
                     <LabeledList.Item label="Condition">
                       <Box
                         color={
                           cyborg.integ <= 25
-                            ? "bad"
+                            ? 'bad'
                             : cyborg.integ <= 75
-                              ? "average"
-                              : "good"
+                              ? 'average'
+                              : 'good'
                         }
                       >
                         {cyborg.integ === 0
-                          ? "Hard Fault"
+                          ? 'Hard Fault'
                           : cyborg.integ <= 25
-                            ? "Functionality Disrupted"
+                            ? 'Functionality Disrupted'
                             : cyborg.integ <= 75
-                              ? "Functionality Impaired"
-                              : "Operational"}
+                              ? 'Functionality Impaired'
+                              : 'Operational'}
                       </Box>
                     </LabeledList.Item>
                     <LabeledList.Item label="Charge">
                       <Box
                         color={
                           cyborg.charge <= 30
-                            ? "bad"
+                            ? 'bad'
                             : cyborg.charge <= 70
-                              ? "average"
-                              : "good"
+                              ? 'average'
+                              : 'good'
                         }
                       >
-                        {typeof cyborg.charge === "number"
-                          ? cyborg.charge + "%"
-                          : "Not Found"}
+                        {typeof cyborg.charge === 'number'
+                          ? cyborg.charge + '%'
+                          : 'Not Found'}
                       </Box>
                     </LabeledList.Item>
                     <LabeledList.Item label="Model">

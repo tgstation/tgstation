@@ -1,9 +1,9 @@
-import { filter, sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { toFixed } from "common/math";
-import { BooleanLike } from "common/react";
-import { multiline } from "common/string";
-import { useBackend } from "../backend";
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { multiline } from 'common/string';
+import { useBackend } from '../backend';
 import {
   Button,
   Divider,
@@ -13,9 +13,9 @@ import {
   Box,
   LabeledList,
   Stack,
-} from "../components";
-import { getGasColor } from "../constants";
-import { Window } from "../layouts";
+} from '../components';
+import { getGasColor } from '../constants';
+import { Window } from '../layouts';
 
 type Data = {
   on: BooleanLike;
@@ -36,7 +36,7 @@ type GasDisplayProps = {
   gasMax: number;
 };
 
-const mappedTopMargin = "2%";
+const mappedTopMargin = '2%';
 
 export const BluespaceSender = (props) => {
   const { act, data } = useBackend<Data>();
@@ -79,31 +79,31 @@ export const BluespaceSender = (props) => {
                 minValue={0}
                 maxValue={1}
                 onDrag={(e, value) =>
-                  act("rate", {
+                  act('rate', {
                     rate: value,
                   })
                 }
               />
               <Button
                 ml={0.5}
-                icon={on ? "power-off" : "times"}
-                content={on ? "On" : "Off"}
+                icon={on ? 'power-off' : 'times'}
+                content={on ? 'On' : 'Off'}
                 selected={on}
                 tooltipPosition="bottom-start"
                 tooltip="Will only take in gases while on."
-                onClick={() => act("power")}
+                onClick={() => act('power')}
               />
               <Button
                 ml={0.5}
                 content="Retrieve gases"
                 tooltipPosition="bottom-start"
                 tooltip="Will transfer any gases inside to the pipe."
-                onClick={() => act("retrieve")}
+                onClick={() => act('retrieve')}
               />
             </>
           }
         >
-          <Box>{"The vendors have made " + credits + " credits so far."}</Box>
+          <Box>{'The vendors have made ' + credits + ' credits so far.'}</Box>
           <Divider />
           <LabeledList>
             {gases.map((gas, index) => (
@@ -135,7 +135,7 @@ const GasDisplay = (props: GasDisplayProps) => {
             minValue={0}
             maxValue={100}
             onDrag={(event, value) =>
-              act("price", {
+              act('price', {
                 gas_price: value,
                 gas_type: id,
               })
@@ -151,7 +151,7 @@ const GasDisplay = (props: GasDisplayProps) => {
           />
         </Stack.Item>
         <Stack.Item color="label" grow={2}>
-          {toFixed(amount, 2) + " moles"}
+          {toFixed(amount, 2) + ' moles'}
         </Stack.Item>
       </Stack>
     </LabeledList.Item>

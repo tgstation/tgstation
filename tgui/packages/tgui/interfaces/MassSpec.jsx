@@ -1,5 +1,5 @@
-import { round } from "common/math";
-import { useBackend } from "../backend";
+import { round } from 'common/math';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,8 +8,8 @@ import {
   Section,
   Slider,
   Table,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const MassSpec = (props) => {
   const { act, data } = useBackend();
@@ -39,7 +39,7 @@ export const MassSpec = (props) => {
         {!!processing && (
           <Dimmer fontSize="32px">
             <Icon name="cog" spin={1} />
-            {" Purifying... " + round(eta) + "s"}
+            {' Purifying... ' + round(eta) + 's'}
           </Dimmer>
         )}
         <Section
@@ -51,13 +51,13 @@ export const MassSpec = (props) => {
               disabled={!!processing || !beaker1Contents.length || !beaker2}
               tooltip={
                 !beaker1Contents.length
-                  ? "Missing input reagents!"
+                  ? 'Missing input reagents!'
                   : !beaker2
-                    ? "Missing an output beaker!"
-                    : "Begin purifying"
+                    ? 'Missing an output beaker!'
+                    : 'Begin purifying'
               }
               tooltipPosition="left"
-              onClick={() => act("activate")}
+              onClick={() => act('activate')}
             />
           }
         >
@@ -88,7 +88,7 @@ export const MassSpec = (props) => {
                   icon="eject"
                   content="Eject"
                   disabled={!beaker1}
-                  onClick={() => act("eject1")}
+                  onClick={() => act('eject1')}
                 />
               </>
             )
@@ -96,7 +96,7 @@ export const MassSpec = (props) => {
         >
           <BeakerMassProfile loaded={!!beaker1} beaker={beaker1Contents} />
           {!!beaker1Contents.length && (
-            <Box>{"Eta of selection: " + round(eta) + " seconds"}</Box>
+            <Box>{'Eta of selection: ' + round(eta) + ' seconds'}</Box>
           )}
         </Section>
         <Section
@@ -113,7 +113,7 @@ export const MassSpec = (props) => {
                   icon="eject"
                   content="Eject"
                   disabled={!beaker2}
-                  onClick={() => act("eject2")}
+                  onClick={() => act('eject2')}
                 />
               </>
             )
@@ -164,25 +164,25 @@ const BeakerMassProfile = (props) => {
               <Table.Row key={reagent.name}>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? "green" : "default"}
+                  color={reagent.selected ? 'green' : 'default'}
                 >
                   {reagent.name}
                 </Table.Cell>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? "green" : "default"}
+                  color={reagent.selected ? 'green' : 'default'}
                 >
                   {reagent.volume}
                 </Table.Cell>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? "green" : "default"}
+                  color={reagent.selected ? 'green' : 'default'}
                 >
                   {reagent.mass}
                 </Table.Cell>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? "green" : "default"}
+                  color={reagent.selected ? 'green' : 'default'}
                 >
                   {`${reagent.purity}%`}
                 </Table.Cell>
@@ -299,14 +299,14 @@ const MassSpectroscopy = (props) => {
                 (upperRange / deltaRange) * 500
               },265`}
               opacity="0.2"
-              style={{ fill: "blue" }}
+              style={{ fill: 'blue' }}
             />
             <line
               x1={0}
               y1={265}
               x2={502}
               y2={264}
-              stroke={"white"}
+              stroke={'white'}
               stroke-width={3}
             />
             <line
@@ -314,7 +314,7 @@ const MassSpectroscopy = (props) => {
               y1={264}
               x2={501}
               y2={0}
-              stroke={"white"}
+              stroke={'white'}
               stroke-width={3}
             />
           </g>
@@ -322,46 +322,46 @@ const MassSpectroscopy = (props) => {
       </Box>
       <Box>
         <Slider
-          name={"Left slider"}
+          name={'Left slider'}
           position="relative"
           step={graphUpperRange / 400}
           height={17.2}
           format={(value) => round(value)}
-          width={(centerValue / graphUpperRange) * 400 + "px"}
+          width={(centerValue / graphUpperRange) * 400 + 'px'}
           value={lowerRange}
           minValue={graphLowerRange}
           maxValue={centerValue}
-          color={"invisible"}
+          color={'invisible'}
           onDrag={(e, value) =>
-            act("leftSlider", {
+            act('leftSlider', {
               value: value,
             })
           }
         >
-          {" "}
+          {' '}
         </Slider>
         <Slider
-          name={"Right slider"}
+          name={'Right slider'}
           position="absolute"
           height={17.2}
           format={(value) => round(value)}
           step={graphUpperRange / 400}
-          width={400 - (centerValue / graphUpperRange) * 400 + "px"}
+          width={400 - (centerValue / graphUpperRange) * 400 + 'px'}
           value={upperRange}
           minValue={centerValue}
           maxValue={graphUpperRange}
-          color={"invisible"}
+          color={'invisible'}
           onDrag={(e, value) =>
-            act("rightSlider", {
+            act('rightSlider', {
               value: value,
             })
           }
         >
-          {" "}
+          {' '}
         </Slider>
         <Box>
           <Slider
-            name={"Center slider"}
+            name={'Center slider'}
             position="relative"
             step={graphUpperRange / 400}
             mt={0.3}
@@ -369,17 +369,17 @@ const MassSpectroscopy = (props) => {
             value={centerValue}
             height={1.9}
             format={(value) => round(value)}
-            width={400 + "px"}
+            width={400 + 'px'}
             minValue={graphLowerRange + 1}
             maxValue={graphUpperRange - 1}
-            color={"invisible"}
+            color={'invisible'}
             onDrag={(e, value) =>
-              act("centerSlider", {
+              act('centerSlider', {
                 value: value,
               })
             }
           >
-            {" "}
+            {' '}
           </Slider>
         </Box>
       </Box>

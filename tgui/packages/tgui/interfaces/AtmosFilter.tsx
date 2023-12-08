@@ -1,9 +1,9 @@
-import { Button, LabeledList, NumberInput, Section } from "../components";
+import { Button, LabeledList, NumberInput, Section } from '../components';
 
-import { BooleanLike } from "common/react";
-import { Window } from "../layouts";
-import { useBackend } from "../backend";
-import { getGasLabel } from "../constants";
+import { BooleanLike } from 'common/react';
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
+import { getGasLabel } from '../constants';
 
 type Data = {
   filter_types: Filter[];
@@ -27,10 +27,10 @@ export const AtmosFilter = (props) => {
         <Section
           buttons={
             <Button
-              icon={on ? "power-off" : "times"}
-              content={on ? "On" : "Off"}
+              icon={on ? 'power-off' : 'times'}
+              content={on ? 'On' : 'Off'}
               selected={on}
-              onClick={() => act("power")}
+              onClick={() => act('power')}
             />
           }
           fill
@@ -46,7 +46,7 @@ export const AtmosFilter = (props) => {
                 minValue={0}
                 maxValue={max_rate}
                 onDrag={(_, value) =>
-                  act("rate", {
+                  act('rate', {
                     rate: value,
                   })
                 }
@@ -57,8 +57,8 @@ export const AtmosFilter = (props) => {
                 content="Max"
                 disabled={rate === max_rate}
                 onClick={() =>
-                  act("rate", {
-                    rate: "max",
+                  act('rate', {
+                    rate: 'max',
                   })
                 }
               />
@@ -67,10 +67,10 @@ export const AtmosFilter = (props) => {
               {filter_types.map(({ enabled, gas_id }, index) => (
                 <Button
                   key={index}
-                  icon={enabled ? "check-square-o" : "square-o"}
+                  icon={enabled ? 'check-square-o' : 'square-o'}
                   selected={enabled}
                   onClick={() =>
-                    act("toggle_filter", {
+                    act('toggle_filter', {
                       val: gas_id,
                     })
                   }

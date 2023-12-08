@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Box, Button, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Button, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   product_name: string;
@@ -35,7 +35,7 @@ export const Vendatray = (props) => {
               icon="cash-register"
               content="Register Tray"
               disabled={registered}
-              onClick={() => act("Register")}
+              onClick={() => act('Register')}
             />
           </>
         )}
@@ -52,26 +52,26 @@ const ProductInfo = (props) => {
   return (
     <>
       <Section fontSize="18px" align="center">
-        <b>{product_name ? product_name : "Empty"}</b>
+        <b>{product_name ? product_name : 'Empty'}</b>
         <Box fontSize="16px">
-          <i>{product_name ? product_cost : "N/A"} cr </i>
-          <Button icon="pen" onClick={() => act("Adjust")} />
+          <i>{product_name ? product_cost : 'N/A'} cr </i>
+          <Button icon="pen" onClick={() => act('Adjust')} />
         </Box>
       </Section>
       <>
         <Button
           fluid
           icon="window-restore"
-          content={tray_open ? "Open" : "Closed"}
+          content={tray_open ? 'Open' : 'Closed'}
           selected={tray_open}
-          onClick={() => act("Open")}
+          onClick={() => act('Open')}
         />
         <Button.Confirm
           fluid
           icon="money-bill-wave"
           content="Purchase Item"
           disabled={!product_name}
-          onClick={() => act("Buy")}
+          onClick={() => act('Buy')}
         />
       </>
     </>
@@ -92,7 +92,7 @@ const VendingImage = (props) => {
         height="96px"
         width="96px"
         style={{
-          verticalAlign: "middle",
+          verticalAlign: 'middle',
         }}
       />
     </Section>

@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,8 +8,8 @@ import {
   Modal,
   NoticeBox,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const Holopad = (props) => {
   const { act, data } = useBackend();
@@ -22,7 +22,7 @@ export const Holopad = (props) => {
             <Flex.Item mr={2} mt={2}>
               <Icon name="phone-alt" rotation={25} />
             </Flex.Item>
-            <Flex.Item mr={2}>{"Dialing..."}</Flex.Item>
+            <Flex.Item mr={2}>{'Dialing...'}</Flex.Item>
           </Flex>
           <Box mt={2} textAlign="center" fontSize="24px">
             <Button
@@ -30,7 +30,7 @@ export const Holopad = (props) => {
               icon="times"
               content="Hang Up"
               color="bad"
-              onClick={() => act("hang_up")}
+              onClick={() => act('hang_up')}
             />
           </Box>
         </Modal>
@@ -66,7 +66,7 @@ const HolopadContent = (props) => {
               on_cooldown ? "AI's Presence Requested" : "Request AI's Presence"
             }
             disabled={!on_network || on_cooldown}
-            onClick={() => act("AIrequest")}
+            onClick={() => act('AIrequest')}
           />
         }
       >
@@ -74,28 +74,28 @@ const HolopadContent = (props) => {
           <LabeledList.Item label="Communicator">
             <Button
               icon="phone-alt"
-              content={allowed ? "Connect To Holopad" : "Call Holopad"}
+              content={allowed ? 'Connect To Holopad' : 'Call Holopad'}
               disabled={!on_network}
-              onClick={() => act("holocall", { headcall: allowed })}
+              onClick={() => act('holocall', { headcall: allowed })}
             />
           </LabeledList.Item>
           {holo_calls.map((call) => {
             return (
               <LabeledList.Item
-                label={call.connected ? "Current Call" : "Incoming Call"}
+                label={call.connected ? 'Current Call' : 'Incoming Call'}
                 key={call.ref}
               >
                 <Button
-                  icon={call.connected ? "phone-slash" : "phone-alt"}
+                  icon={call.connected ? 'phone-slash' : 'phone-alt'}
                   content={
                     call.connected
-                      ? "Disconnect call from " + call.caller
-                      : "Answer call from " + call.caller
+                      ? 'Disconnect call from ' + call.caller
+                      : 'Answer call from ' + call.caller
                   }
-                  color={call.connected ? "bad" : "good"}
+                  color={call.connected ? 'bad' : 'good'}
                   disabled={!on_network}
                   onClick={() =>
-                    act(call.connected ? "disconnectcall" : "connectcall", {
+                    act(call.connected ? 'disconnectcall' : 'connectcall', {
                       holopad: call.ref,
                     })
                   }
@@ -109,7 +109,7 @@ const HolopadContent = (props) => {
                 icon="phone-slash"
                 content="Reject incoming call(s)"
                 color="bad"
-                onClick={() => act("rejectall")}
+                onClick={() => act('rejectall')}
               />
             </LabeledList.Item>
           )}
@@ -122,7 +122,7 @@ const HolopadContent = (props) => {
             icon="eject"
             content="Eject"
             disabled={!disk || replay_mode || record_mode}
-            onClick={() => act("disk_eject")}
+            onClick={() => act('disk_eject')}
           />
         }
       >
@@ -130,40 +130,40 @@ const HolopadContent = (props) => {
           <LabeledList>
             <LabeledList.Item label="Disk Player">
               <Button
-                icon={replay_mode ? "pause" : "play"}
-                content={replay_mode ? "Stop" : "Replay"}
+                icon={replay_mode ? 'pause' : 'play'}
+                content={replay_mode ? 'Stop' : 'Replay'}
                 selected={replay_mode}
                 disabled={record_mode || !disk_record}
-                onClick={() => act("replay_mode")}
+                onClick={() => act('replay_mode')}
               />
               <Button
-                icon={"sync"}
-                content={loop_mode ? "Looping" : "Loop"}
+                icon={'sync'}
+                content={loop_mode ? 'Looping' : 'Loop'}
                 selected={loop_mode}
                 disabled={record_mode || !disk_record}
-                onClick={() => act("loop_mode")}
+                onClick={() => act('loop_mode')}
               />
               <Button
                 icon="exchange-alt"
                 content="Change Offset"
                 disabled={!replay_mode}
-                onClick={() => act("offset")}
+                onClick={() => act('offset')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Recorder">
               <Button
-                icon={record_mode ? "pause" : "video"}
-                content={record_mode ? "End Recording" : "Record"}
+                icon={record_mode ? 'pause' : 'video'}
+                content={record_mode ? 'End Recording' : 'Record'}
                 selected={record_mode}
                 disabled={(disk_record && !record_mode) || replay_mode}
-                onClick={() => act("record_mode")}
+                onClick={() => act('record_mode')}
               />
               <Button
                 icon="trash"
                 content="Clear Recording"
                 color="bad"
                 disabled={!disk_record || replay_mode || record_mode}
-                onClick={() => act("record_clear")}
+                onClick={() => act('record_clear')}
               />
             </LabeledList.Item>
           </LabeledList>

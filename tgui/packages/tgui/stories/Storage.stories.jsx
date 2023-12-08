@@ -4,12 +4,12 @@
  * @license MIT
  */
 
-import { storage } from "common/storage";
-import { Button, LabeledList, NoticeBox, Section } from "../components";
-import { formatSiUnit } from "../format";
+import { storage } from 'common/storage';
+import { Button, LabeledList, NoticeBox, Section } from '../components';
+import { formatSiUnit } from '../format';
 
 export const meta = {
-  title: "Storage",
+  title: 'Storage',
   render: () => <Story />,
 };
 
@@ -37,7 +37,7 @@ const Story = (props) => {
           {localStorage.length}
         </LabeledList.Item>
         <LabeledList.Item label="Remaining space">
-          {formatSiUnit(localStorage.remainingSpace, 0, "B")}
+          {formatSiUnit(localStorage.remainingSpace, 0, 'B')}
         </LabeledList.Item>
       </LabeledList>
     </Section>

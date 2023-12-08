@@ -1,11 +1,11 @@
-import { useBackend } from "../../backend";
+import { useBackend } from '../../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
   LabeledList,
   Section,
-} from "../../components";
+} from '../../components';
 
 export const PortableBasicInfo = (props) => {
   const { act, data } = useBackend();
@@ -23,30 +23,30 @@ export const PortableBasicInfo = (props) => {
         title="Status"
         buttons={
           <Button
-            icon={on ? "power-off" : "times"}
-            content={on ? "On" : "Off"}
+            icon={on ? 'power-off' : 'times'}
+            content={on ? 'On' : 'Off'}
             selected={on}
-            onClick={() => act("power")}
+            onClick={() => act('power')}
           />
         }
       >
         <LabeledList>
           <LabeledList.Item label="Pressure">
             <AnimatedNumber value={pressure} />
-            {" kPa"}
+            {' kPa'}
           </LabeledList.Item>
-          <LabeledList.Item label="Port" color={connected ? "good" : "average"}>
-            {connected ? "Connected" : "Not Connected"}
+          <LabeledList.Item label="Port" color={connected ? 'good' : 'average'}>
+            {connected ? 'Connected' : 'Not Connected'}
           </LabeledList.Item>
           {!!hasHypernobCrystal && (
             <LabeledList.Item label="Reaction Suppression">
               <Button
-                icon={data.reactionSuppressionEnabled ? "snowflake" : "times"}
+                icon={data.reactionSuppressionEnabled ? 'snowflake' : 'times'}
                 content={
-                  data.reactionSuppressionEnabled ? "Enabled" : "Disabled"
+                  data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
                 }
                 selected={data.reactionSuppressionEnabled}
-                onClick={() => act("reaction_suppression")}
+                onClick={() => act('reaction_suppression')}
               />
             </LabeledList.Item>
           )}
@@ -60,7 +60,7 @@ export const PortableBasicInfo = (props) => {
             icon="eject"
             content="Eject"
             disabled={!holding}
-            onClick={() => act("eject")}
+            onClick={() => act('eject')}
           />
         }
       >
@@ -69,7 +69,7 @@ export const PortableBasicInfo = (props) => {
             <LabeledList.Item label="Label">{holding.name}</LabeledList.Item>
             <LabeledList.Item label="Pressure">
               <AnimatedNumber value={holding.pressure} />
-              {" kPa"}
+              {' kPa'}
             </LabeledList.Item>
           </LabeledList>
         ) : (

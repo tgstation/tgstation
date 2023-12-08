@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Button,
   Section,
@@ -6,8 +6,8 @@ import {
   BlockQuote,
   ProgressBar,
   AnimatedNumber,
-} from "../components";
-import { NtosWindow } from "../layouts";
+} from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosSkillTracker = (props) => {
   const { act, data } = useBackend();
@@ -46,7 +46,7 @@ export const NtosSkillTracker = (props) => {
                           %
                         </ProgressBar>
                       ) : (
-                        "—"
+                        '—'
                       )}
                     </Table.Cell>
                     <Table.Cell textAlign="center">
@@ -63,7 +63,7 @@ export const NtosSkillTracker = (props) => {
                           %
                         </ProgressBar>
                       ) : (
-                        "—"
+                        '—'
                       )}
                     </Table.Cell>
                   </Table.Row>
@@ -72,9 +72,9 @@ export const NtosSkillTracker = (props) => {
                       <Table.Cell textAlign="center" colspan="3">
                         <Button
                           icon="trophy"
-                          style={{ margin: "8px" }}
+                          style={{ margin: '8px' }}
                           onClick={() =>
-                            act("PRG_reward", { skill: skill.name })
+                            act('PRG_reward', { skill: skill.name })
                           }
                         >
                           Contact the Professional {skill.title} Association

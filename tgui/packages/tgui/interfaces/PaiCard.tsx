@@ -1,6 +1,6 @@
-import { decodeHtmlEntities } from "common/string";
-import { BooleanLike } from "../../common/react";
-import { useBackend } from "../backend";
+import { decodeHtmlEntities } from 'common/string';
+import { BooleanLike } from '../../common/react';
+import { useBackend } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -9,8 +9,8 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   candidates: ReadonlyArray<Candidate>;
@@ -68,7 +68,7 @@ const PaiDownload = (props) => {
               <Button
                 color="good"
                 icon="bell"
-                onClick={() => act("request")}
+                onClick={() => act('request')}
                 tooltip="Request more candidates from beyond."
               >
                 Request
@@ -101,7 +101,7 @@ const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
   return (
     <Section
       buttons={
-        <Button icon="save" onClick={() => act("download", { ckey })}>
+        <Button icon="save" onClick={() => act('download', { ckey })}>
           Download
         </Button>
       }
@@ -116,7 +116,7 @@ const CandidateDisplay = (props: { candidate: Candidate; index: number }) => {
           {name ? (
             <Box color="green">{name}</Box>
           ) : (
-            "None provided - name will be randomized."
+            'None provided - name will be randomized.'
           )}
         </Stack.Item>
         {!!description && (
@@ -164,14 +164,14 @@ const PaiOptions = (props) => {
       range,
     },
   } = data;
-  const suppliedLaws = laws[0] ? decodeHtmlEntities(laws[0]) : "None";
+  const suppliedLaws = laws[0] ? decodeHtmlEntities(laws[0]) : 'None';
 
   return (
     <Section fill scrollable title={`Settings: ${name.toUpperCase()}`}>
       <LabeledList>
         <LabeledList.Item label="Master">
           {master || (
-            <Button icon="dna" onClick={() => act("set_dna")}>
+            <Button icon="dna" onClick={() => act('set_dna')}>
               Imprint
             </Button>
           )}
@@ -186,8 +186,8 @@ const PaiOptions = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Holoform">
           <Button
-            icon={can_holo ? "toggle-on" : "toggle-off"}
-            onClick={() => act("toggle_holo")}
+            icon={can_holo ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggle_holo')}
             selected={can_holo}
           >
             Toggle
@@ -195,13 +195,13 @@ const PaiOptions = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Holoform Range">
           {emagged ? (
-            "∞"
+            '∞'
           ) : (
             <Stack>
               <Stack.Item>
                 <Button
                   icon="fa-circle-minus"
-                  onClick={() => act("decrease_range")}
+                  onClick={() => act('decrease_range')}
                   disabled={range === range_min}
                 />
               </Stack.Item>
@@ -209,7 +209,7 @@ const PaiOptions = (props) => {
               <Stack.Item>
                 <Button
                   icon="fa-circle-plus"
-                  onClick={() => act("increase_range")}
+                  onClick={() => act('increase_range')}
                   disabled={range === range_max}
                 />
               </Stack.Item>
@@ -218,8 +218,8 @@ const PaiOptions = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Transmit">
           <Button
-            icon={transmit ? "toggle-on" : "toggle-off"}
-            onClick={() => act("toggle_radio", { option: "transmit" })}
+            icon={transmit ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggle_radio', { option: 'transmit' })}
             selected={transmit}
           >
             Toggle
@@ -227,23 +227,23 @@ const PaiOptions = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Receive">
           <Button
-            icon={receive ? "toggle-on" : "toggle-off"}
-            onClick={() => act("toggle_radio", { option: "receive" })}
+            icon={receive ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggle_radio', { option: 'receive' })}
             selected={receive}
           >
             Toggle
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Troubleshoot">
-          <Button icon="comment" onClick={() => act("fix_speech")}>
+          <Button icon="comment" onClick={() => act('fix_speech')}>
             Fix Speech
           </Button>
-          <Button icon="edit" onClick={() => act("set_laws")}>
+          <Button icon="edit" onClick={() => act('set_laws')}>
             Set Laws
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Personality">
-          <Button icon="trash" onClick={() => act("wipe_pai")}>
+          <Button icon="trash" onClick={() => act('wipe_pai')}>
             Erase
           </Button>
         </LabeledList.Item>
@@ -253,7 +253,7 @@ const PaiOptions = (props) => {
           color="bad"
           icon="bug"
           mt={1}
-          onClick={() => act("reset_software")}
+          onClick={() => act('reset_software')}
         >
           Reset Software
         </Button>

@@ -1,5 +1,5 @@
-import { useBackend } from "../../backend";
-import { Button, Flex, NoticeBox } from "../../components";
+import { useBackend } from '../../backend';
+import { Button, Flex, NoticeBox } from '../../components';
 
 /**
  * This component by expects the following fields to be returned
@@ -20,8 +20,8 @@ export const InterfaceLockNoticeBox = (props) => {
   const {
     siliconUser = data.siliconUser,
     locked = data.locked,
-    onLockStatusChange = () => act("lock"),
-    accessText = "an ID card",
+    onLockStatusChange = () => act('lock'),
+    accessText = 'an ID card',
     preventLocking = data.preventLocking,
   } = props;
   // For silicon users
@@ -34,9 +34,9 @@ export const InterfaceLockNoticeBox = (props) => {
           <Flex.Item>
             <Button
               m={0}
-              color={locked ? "red" : "green"}
-              icon={locked ? "lock" : "unlock"}
-              content={locked ? "Locked" : "Unlocked"}
+              color={locked ? 'red' : 'green'}
+              icon={locked ? 'lock' : 'unlock'}
+              content={locked ? 'Locked' : 'Unlocked'}
               disabled={preventLocking}
               onClick={() => {
                 if (onLockStatusChange) {
@@ -52,7 +52,7 @@ export const InterfaceLockNoticeBox = (props) => {
   // For everyone else
   return (
     <NoticeBox>
-      Swipe {accessText} to {locked ? "unlock" : "lock"} this interface.
+      Swipe {accessText} to {locked ? 'unlock' : 'lock'} this interface.
     </NoticeBox>
   );
 };

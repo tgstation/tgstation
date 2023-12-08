@@ -1,12 +1,12 @@
-import { useBackend, useLocalState } from "../backend";
-import { Box, Flex, Icon, Table, Tabs, Tooltip } from "../components";
-import { Window } from "../layouts";
+import { useBackend, useLocalState } from '../backend';
+import { Box, Flex, Icon, Table, Tabs, Tooltip } from '../components';
+import { Window } from '../layouts';
 
 export const Achievements = (props) => {
   const { data } = useBackend();
   const { categories } = data;
   const [selectedCategory, setSelectedCategory] = useLocalState(
-    "category",
+    'category',
     categories[0],
   );
   const achievements = data.achievements.filter(
@@ -26,13 +26,13 @@ export const Achievements = (props) => {
             </Tabs.Tab>
           ))}
           <Tabs.Tab
-            selected={selectedCategory === "High Scores"}
-            onClick={() => setSelectedCategory("High Scores")}
+            selected={selectedCategory === 'High Scores'}
+            onClick={() => setSelectedCategory('High Scores')}
           >
             High Scores
           </Tabs.Tab>
         </Tabs>
-        {(selectedCategory === "High Scores" && <HighScoreTable />) || (
+        {(selectedCategory === 'High Scores' && <HighScoreTable />) || (
           <AchievementTable achievements={achievements} />
         )}
       </Window.Content>
@@ -71,12 +71,12 @@ const Achievement = (props) => {
         <h1>{name}</h1>
         {desc}
         {(score && (
-          <Box color={value > 0 ? "good" : "bad"}>
-            {value > 0 ? `Earned ${value} times` : "Locked"}
+          <Box color={value > 0 ? 'good' : 'bad'}>
+            {value > 0 ? `Earned ${value} times` : 'Locked'}
           </Box>
         )) || (
-          <Box color={value ? "good" : "bad"}>
-            {value ? "Unlocked" : "Locked"}
+          <Box color={value ? 'good' : 'bad'}>
+            {value ? 'Unlocked' : 'Locked'}
           </Box>
         )}
         {!!achieve_info && (
@@ -94,7 +94,7 @@ const Achievement = (props) => {
 const HighScoreTable = (props) => {
   const { data } = useBackend();
   const { highscore: highscores, user_ckey } = data;
-  const [highScoreIndex, setHighScoreIndex] = useLocalState("highscore", 0);
+  const [highScoreIndex, setHighScoreIndex] = useLocalState('highscore', 0);
   const highscore = highscores[highScoreIndex];
   if (!highscore) {
     return null;
@@ -131,7 +131,7 @@ const HighScoreTable = (props) => {
                 {i + 1}
               </Table.Cell>
               <Table.Cell
-                color={score.ckey === user_ckey && "green"}
+                color={score.ckey === user_ckey && 'green'}
                 textAlign="center"
               >
                 {i === 0 && <Icon name="crown" color="yellow" mr={2} />}

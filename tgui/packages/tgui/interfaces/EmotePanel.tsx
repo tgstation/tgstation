@@ -1,9 +1,9 @@
-import { useBackend, useLocalState } from "../backend";
-import { Window } from "../layouts";
-import { Button, Section, Flex, Icon, Box } from "../components";
-import { BooleanLike } from "../../common/react";
-import { SearchBar } from "./Fabrication/SearchBar";
-import { capitalizeFirst } from "../../common/string";
+import { useBackend, useLocalState } from '../backend';
+import { Window } from '../layouts';
+import { Button, Section, Flex, Icon, Box } from '../components';
+import { BooleanLike } from '../../common/react';
+import { SearchBar } from './Fabrication/SearchBar';
+import { capitalizeFirst } from '../../common/string';
 
 type Emote = {
   key: string;
@@ -24,44 +24,44 @@ export const EmotePanelContent = (props) => {
   const { emotes } = data;
 
   const [filterVisible, toggleVisualFilter] = useLocalState<boolean>(
-    "filterVisible",
+    'filterVisible',
     false,
   );
 
   const [filterAudible, toggleAudibleFilter] = useLocalState<boolean>(
-    "filterAudible",
+    'filterAudible',
     false,
   );
 
   const [filterSound, toggleSoundFilter] = useLocalState<boolean>(
-    "filterSound",
+    'filterSound',
     false,
   );
 
   const [filterHands, toggleHandsFilter] = useLocalState<boolean>(
-    "filterHands",
+    'filterHands',
     false,
   );
 
   const [filterUseParams, toggleUseParamsFilter] = useLocalState<boolean>(
-    "filterUseParams",
+    'filterUseParams',
     false,
   );
 
   const [useParams, toggleUseParams] = useLocalState<boolean>(
-    "useParams",
+    'useParams',
     false,
   );
 
-  const [searchText, setSearchText] = useLocalState<string>("search_text", "");
+  const [searchText, setSearchText] = useLocalState<string>('search_text', '');
 
   const [showNames, toggleShowNames] = useLocalState<boolean>(
-    "showNames",
+    'showNames',
     true,
   );
 
   const [showIcons, toggleShowIcons] = useLocalState<boolean>(
-    "showIcons",
+    'showIcons',
     false,
   );
 
@@ -122,7 +122,7 @@ export const EmotePanelContent = (props) => {
         <SearchBar
           searchText={searchText}
           onSearchTextChanged={setSearchText}
-          hint={"Search all emotes..."}
+          hint={'Search all emotes...'}
         />
       </Section>
       <Section
@@ -135,7 +135,7 @@ export const EmotePanelContent = (props) => {
           <Flex>
             <Flex.Item>
               <Button onClick={() => toggleShowNames(!showNames)}>
-                {showNames ? "Show Names" : "Show Keys"}
+                {showNames ? 'Show Names' : 'Show Keys'}
               </Button>
               <Button
                 selected={showIcons}
@@ -183,7 +183,7 @@ export const EmotePanelContent = (props) => {
                   key={emote.name}
                   tooltip={
                     showIcons ? (
-                      ""
+                      ''
                     ) : (
                       <EmoteIcons
                         visible={emote.visible}
@@ -196,7 +196,7 @@ export const EmotePanelContent = (props) => {
                     )
                   }
                   onClick={() =>
-                    act("play_emote", {
+                    act('play_emote', {
                       emote_key: emote.key,
                       use_params: useParams,
                     })
@@ -217,7 +217,7 @@ export const EmotePanelContent = (props) => {
                       margin={0}
                     />
                   ) : (
-                    ""
+                    ''
                   )}
                 </Button>
               ))}
@@ -236,31 +236,31 @@ const EmoteIcons = (props) => {
       <Icon
         name="eye"
         m={margin}
-        color={!visible ? "red" : ""}
+        color={!visible ? 'red' : ''}
         opacity={!visible ? 0.5 : 1}
       />
       <Icon
         name="comment"
         m={margin}
-        color={!audible ? "red" : ""}
+        color={!audible ? 'red' : ''}
         opacity={!audible ? 0.5 : 1}
       />
       <Icon
         name="volume-up"
         m={margin}
-        color={!sound ? "red" : ""}
+        color={!sound ? 'red' : ''}
         opacity={!sound ? 0.5 : 1}
       />
       <Icon
         name="hand-paper"
         m={margin}
-        color={!hands ? "red" : ""}
+        color={!hands ? 'red' : ''}
         opacity={!hands ? 0.5 : 1}
       />
       <Icon
         name="crosshairs"
         m={margin}
-        color={!use_params ? "red" : ""}
+        color={!use_params ? 'red' : ''}
         opacity={!use_params ? 0.5 : 1}
       />
     </Box>

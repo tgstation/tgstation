@@ -1,5 +1,5 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Box,
   ProgressBar,
@@ -7,8 +7,8 @@ import {
   Button,
   LabeledList,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   is_burning: BooleanLike;
@@ -46,7 +46,7 @@ export const ChemSeparator = (props) => {
                       !data.beaker ||
                       data.beaker_total_volume >= data.beaker_maximum_volume
                     }
-                    onClick={() => act("unload")}
+                    onClick={() => act('unload')}
                   />
                   {!data.is_burning ? (
                     <Button
@@ -61,7 +61,7 @@ export const ChemSeparator = (props) => {
                         !data.beaker ||
                         data.beaker_total_volume >= data.beaker_maximum_volume
                       }
-                      onClick={() => act("start")}
+                      onClick={() => act('start')}
                     />
                   ) : (
                     <Button
@@ -71,7 +71,7 @@ export const ChemSeparator = (props) => {
                       content="Stop"
                       icon="ban"
                       color="bad"
-                      onClick={() => act("stop")}
+                      onClick={() => act('stop')}
                     />
                   )}
                 </Box>
@@ -87,7 +87,7 @@ export const ChemSeparator = (props) => {
                 <Box
                   lineHeight={1.9}
                   style={{
-                    textShadow: "1px 1px 0 black",
+                    textShadow: '1px 1px 0 black',
                   }}
                 >
                   {`${Math.ceil(data.own_total_volume)} of ${
@@ -113,7 +113,7 @@ export const ChemSeparator = (props) => {
                         !data.beaker_total_volume ||
                         data.own_total_volume >= data.own_maximum_volume
                       }
-                      onClick={() => act("load")}
+                      onClick={() => act('load')}
                     />
                     <Button
                       width={6}
@@ -122,7 +122,7 @@ export const ChemSeparator = (props) => {
                       icon="eject"
                       content="Eject"
                       disabled={data.is_burning}
-                      onClick={() => act("eject")}
+                      onClick={() => act('eject')}
                     />
                   </Box>
                 }
@@ -137,7 +137,7 @@ export const ChemSeparator = (props) => {
                   <Box
                     lineHeight={1.9}
                     style={{
-                      textShadow: "1px 1px 0 black",
+                      textShadow: '1px 1px 0 black',
                     }}
                   >
                     {`${Math.ceil(data.beaker_total_volume)} of ${

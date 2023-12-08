@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "sass:color";
-@use "sass:map";
-@use "sass:meta";
+@use 'sass:color';
+@use 'sass:map';
+@use 'sass:meta';
 
 // Base colors
 $black: #000000 !default;
@@ -45,25 +45,25 @@ $fg-lightness: 10% !default;
 // Mappings of color names
 
 $_gen_map: (
-  "black": $black,
-  "white": $white,
-  "red": $red,
-  "orange": $orange,
-  "yellow": $yellow,
-  "olive": $olive,
-  "green": $green,
-  "teal": $teal,
-  "blue": $blue,
-  "violet": $violet,
-  "purple": $purple,
-  "pink": $pink,
-  "brown": $brown,
-  "grey": $grey,
-  "light-grey": $light-grey,
-  "good": $good,
-  "average": $average,
-  "bad": $bad,
-  "label": $label,
+  'black': $black,
+  'white': $white,
+  'red': $red,
+  'orange': $orange,
+  'yellow': $yellow,
+  'olive': $olive,
+  'green': $green,
+  'teal': $teal,
+  'blue': $blue,
+  'violet': $violet,
+  'purple': $purple,
+  'pink': $pink,
+  'brown': $brown,
+  'grey': $grey,
+  'light-grey': $light-grey,
+  'good': $good,
+  'average': $average,
+  'bad': $bad,
+  'label': $label,
 );
 
 // Foreground color names for which to generate a color map

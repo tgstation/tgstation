@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useLocalState } from "../backend";
+import { useLocalState } from '../backend';
 import {
   Box,
   DraggableControl,
@@ -15,16 +15,16 @@ import {
   NumberInput,
   Section,
   Slider,
-} from "../components";
+} from '../components';
 
 export const meta = {
-  title: "Input",
+  title: 'Input',
   render: () => <Story />,
 };
 
 const Story = (props) => {
-  const [number, setNumber] = useLocalState("number", 0);
-  const [text, setText] = useLocalState("text", "Sample text");
+  const [number, setNumber] = useLocalState('number', 0);
+  const [text, setText] = useLocalState('text', 'Sample text');
   return (
     <Section>
       <LabeledList>

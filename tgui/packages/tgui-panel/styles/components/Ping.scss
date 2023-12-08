@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "sass:math";
+@use 'sass:math';
 
 $border-color: rgba(140, 140, 140, 0.5) !default;
 
@@ -17,7 +17,7 @@ $border-color: rgba(140, 140, 140, 0.5) !default;
 }
 
 .Ping__indicator {
-  content: "";
+  content: '';
   position: absolute;
   top: 0.5em;
   left: 0.5em;

@@ -13,9 +13,9 @@ import {
   addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
-} from "./actions";
-import { createDefaultHighlightSetting } from "./model";
-import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from "./constants";
+} from './actions';
+import { createDefaultHighlightSetting } from './model';
+import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 
 const defaultHighlightSetting = createDefaultHighlightSetting();
 
@@ -24,11 +24,11 @@ const initialState = {
   fontSize: 13,
   fontFamily: FONTS[0],
   lineHeight: 1.2,
-  theme: "light",
+  theme: 'light',
   adminMusicVolume: 0.5,
   // Keep these two state vars for compatibility with other servers
-  highlightText: "",
-  highlightColor: "#ffdd44",
+  highlightText: '',
+  highlightColor: '#ffdd44',
   // END compatibility state vars
   highlightSettings: [defaultHighlightSetting.id],
   highlightSettingById: {
@@ -97,7 +97,7 @@ export const settingsReducer = (state = initialState, action) => {
       view: {
         ...state.view,
         visible: true,
-        activeTab: "chatPage",
+        activeTab: 'chatPage',
       },
     };
   }

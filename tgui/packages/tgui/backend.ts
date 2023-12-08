@@ -11,15 +11,15 @@
  * @license MIT
  */
 
-import { perf } from "common/perf";
-import { createAction } from "common/redux";
-import { setupDrag } from "./drag";
-import { globalEvents } from "./events";
-import { focusMap } from "./focus";
-import { createLogger } from "./logging";
-import { resumeRenderer, suspendRenderer } from "./renderer";
+import { perf } from 'common/perf';
+import { createAction } from 'common/redux';
+import { setupDrag } from './drag';
+import { globalEvents } from './events';
+import { focusMap } from './focus';
+import { createLogger } from './logging';
+import { resumeRenderer, suspendRenderer } from './renderer';
 
-const logger = createLogger("backend");
+const logger = createLogger('backend');
 
 export let globalStore;
 
@@ -27,12 +27,12 @@ export const setGlobalStore = (store) => {
   globalStore = store;
 };
 
-export const backendUpdate = createAction("backend/update");
-export const backendSetSharedState = createAction("backend/setSharedState");
-export const backendSuspendStart = createAction("backend/suspendStart");
+export const backendUpdate = createAction('backend/update');
+export const backendSetSharedState = createAction('backend/setSharedState');
+export const backendSuspendStart = createAction('backend/suspendStart');
 
 export const backendSuspendSuccess = () => ({
-  type: "backend/suspendSuccess",
+  type: 'backend/suspendSuccess',
   payload: {
     timestamp: Date.now(),
   },
@@ -50,7 +50,7 @@ const initialState = {
 export const backendReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
-  if (type === "backend/update") {
+  if (type === 'backend/update') {
     // Merge config
     const config = {
       ...state.config,
@@ -67,7 +67,7 @@ export const backendReducer = (state = initialState, action) => {
     if (payload.shared) {
       for (let key of Object.keys(payload.shared)) {
         const value = payload.shared[key];
-        if (value === "") {
+        if (value === '') {
           shared[key] = undefined;
         } else {
           shared[key] = JSON.parse(value);
@@ -84,7 +84,7 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
-  if (type === "backend/setSharedState") {
+  if (type === 'backend/setSharedState') {
     const { key, nextState } = payload;
     return {
       ...state,
@@ -95,14 +95,14 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
-  if (type === "backend/suspendStart") {
+  if (type === 'backend/suspendStart') {
     return {
       ...state,
       suspending: true,
     };
   }
 
-  if (type === "backend/suspendSuccess") {
+  if (type === 'backend/suspendSuccess') {
     const { timestamp } = payload;
     return {
       ...state,
@@ -110,7 +110,7 @@ export const backendReducer = (state = initialState, action) => {
       shared: {},
       config: {
         ...state.config,
-        title: "",
+        title: '',
         status: 1,
       },
       suspending: false,
@@ -129,57 +129,57 @@ export const backendMiddleware = (store) => {
     const { suspended } = selectBackend(store.getState());
     const { type, payload } = action;
 
-    if (type === "update") {
+    if (type === 'update') {
       store.dispatch(backendUpdate(payload));
       return;
     }
 
-    if (type === "suspend") {
+    if (type === 'suspend') {
       store.dispatch(backendSuspendSuccess());
       return;
     }
 
-    if (type === "ping") {
-      Byond.sendMessage("ping/reply");
+    if (type === 'ping') {
+      Byond.sendMessage('ping/reply');
       return;
     }
 
-    if (type === "byond/mousedown") {
-      globalEvents.emit("byond/mousedown");
+    if (type === 'byond/mousedown') {
+      globalEvents.emit('byond/mousedown');
     }
 
-    if (type === "byond/mouseup") {
-      globalEvents.emit("byond/mouseup");
+    if (type === 'byond/mouseup') {
+      globalEvents.emit('byond/mouseup');
     }
 
-    if (type === "byond/ctrldown") {
-      globalEvents.emit("byond/ctrldown");
+    if (type === 'byond/ctrldown') {
+      globalEvents.emit('byond/ctrldown');
     }
 
-    if (type === "byond/ctrlup") {
-      globalEvents.emit("byond/ctrlup");
+    if (type === 'byond/ctrlup') {
+      globalEvents.emit('byond/ctrlup');
     }
 
-    if (type === "backend/suspendStart" && !suspendInterval) {
+    if (type === 'backend/suspendStart' && !suspendInterval) {
       logger.log(`suspending (${Byond.windowId})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
-      const suspendFn = () => Byond.sendMessage("suspend");
+      const suspendFn = () => Byond.sendMessage('suspend');
       suspendFn();
       suspendInterval = setInterval(suspendFn, 2000);
     }
 
-    if (type === "backend/suspendSuccess") {
+    if (type === 'backend/suspendSuccess') {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
       Byond.winset(Byond.windowId, {
-        "is-visible": false,
+        'is-visible': false,
       });
       setImmediate(() => focusMap());
     }
 
-    if (type === "backend/update") {
+    if (type === 'backend/update') {
       const fancy = payload.config?.window?.fancy;
       // Initialize fancy state
       if (fancyState === undefined) {
@@ -187,19 +187,19 @@ export const backendMiddleware = (store) => {
       }
       // React to changes in fancy
       else if (fancyState !== fancy) {
-        logger.log("changing fancy mode to", fancy);
+        logger.log('changing fancy mode to', fancy);
         fancyState = fancy;
         Byond.winset(Byond.windowId, {
           titlebar: !fancy,
-          "can-resize": !fancy,
+          'can-resize': !fancy,
         });
       }
     }
 
     // Resume on incoming update
-    if (type === "backend/update" && suspended) {
+    if (type === 'backend/update' && suspended) {
       // Show the payload
-      logger.log("backend/update", payload);
+      logger.log('backend/update', payload);
       // Signal renderer that we have resumed
       resumeRenderer();
       // Setup drag
@@ -207,20 +207,20 @@ export const backendMiddleware = (store) => {
       // We schedule this for the next tick here because resizing and unhiding
       // during the same tick will flash with a white background.
       setImmediate(() => {
-        perf.mark("resume/start");
+        perf.mark('resume/start');
         // Doublecheck if we are not re-suspended.
         const { suspended } = selectBackend(store.getState());
         if (suspended) {
           return;
         }
         Byond.winset(Byond.windowId, {
-          "is-visible": true,
+          'is-visible': true,
         });
-        perf.mark("resume/finish");
-        if (process.env.NODE_ENV !== "production") {
+        perf.mark('resume/finish');
+        if (process.env.NODE_ENV !== 'production') {
           logger.log(
-            "visible in",
-            perf.measure("render/finish", "resume/finish"),
+            'visible in',
+            perf.measure('render/finish', 'resume/finish'),
           );
         }
       });
@@ -244,7 +244,7 @@ export const sendAct = (action: string, payload: object = {}) => {
     logger.error(`Payload for act() must be an object, got this:`, payload);
     return;
   }
-  Byond.sendMessage("act/" + action, payload);
+  Byond.sendMessage('act/' + action, payload);
 };
 
 type BackendState<TData> = {
@@ -331,7 +331,7 @@ export const useLocalState = <T>(
         backendSetSharedState({
           key,
           nextState:
-            typeof nextState === "function"
+            typeof nextState === 'function'
               ? nextState(sharedState)
               : nextState,
         }),
@@ -365,14 +365,14 @@ export const useSharedState = <T>(
     sharedState,
     (nextState) => {
       Byond.sendMessage({
-        type: "setSharedState",
+        type: 'setSharedState',
         key,
         value:
           JSON.stringify(
-            typeof nextState === "function"
+            typeof nextState === 'function'
               ? nextState(sharedState)
               : nextState,
-          ) || "",
+          ) || '',
       });
     },
   ];

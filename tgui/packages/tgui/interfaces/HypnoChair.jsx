@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Button, Icon, Input, LabeledList, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Button, Icon, Input, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 export const HypnoChair = (props) => {
   const { act, data } = useBackend();
@@ -16,24 +16,24 @@ export const HypnoChair = (props) => {
         <Section title="Occupant Information" textAlign="center">
           <LabeledList>
             <LabeledList.Item label="Name">
-              {data.occupant.name ? data.occupant.name : "No Occupant"}
+              {data.occupant.name ? data.occupant.name : 'No Occupant'}
             </LabeledList.Item>
             {!!data.occupied && (
               <LabeledList.Item
                 label="Status"
                 color={
                   data.occupant.stat === 0
-                    ? "good"
+                    ? 'good'
                     : data.occupant.stat === 1
-                      ? "average"
-                      : "bad"
+                      ? 'average'
+                      : 'bad'
                 }
               >
                 {data.occupant.stat === 0
-                  ? "Conscious"
+                  ? 'Conscious'
                   : data.occupant.stat === 1
-                    ? "Unconscious"
-                    : "Dead"}
+                    ? 'Unconscious'
+                    : 'Dead'}
               </LabeledList.Item>
             )}
           </LabeledList>
@@ -42,17 +42,17 @@ export const HypnoChair = (props) => {
           <LabeledList>
             <LabeledList.Item label="Door">
               <Button
-                icon={data.open ? "unlock" : "lock"}
-                color={data.open ? "default" : "red"}
-                content={data.open ? "Open" : "Closed"}
-                onClick={() => act("door")}
+                icon={data.open ? 'unlock' : 'lock'}
+                color={data.open ? 'default' : 'red'}
+                content={data.open ? 'Open' : 'Closed'}
+                onClick={() => act('door')}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Trigger Phrase">
               <Input
                 value={data.trigger}
                 onChange={(e, value) =>
-                  act("set_phrase", {
+                  act('set_phrase', {
                     phrase: value,
                   })
                 }
@@ -63,10 +63,10 @@ export const HypnoChair = (props) => {
                 icon="code-branch"
                 content={
                   data.interrogating
-                    ? "Interrupt Interrogation"
-                    : "Begin Enhanced Interrogation"
+                    ? 'Interrupt Interrogation'
+                    : 'Begin Enhanced Interrogation'
                 }
-                onClick={() => act("interrogate")}
+                onClick={() => act('interrogate')}
               />
               {data.interrogating === 1 && (
                 <Icon name="cog" color="orange" spin />

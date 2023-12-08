@@ -1,6 +1,6 @@
-import { map, sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { useBackend } from "../backend";
+import { map, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,9 +10,9 @@ import {
   Section,
   Stack,
   Table,
-} from "../components";
-import { Window } from "../layouts";
-import { PageSelect } from "./LibraryConsole";
+} from '../components';
+import { Window } from '../layouts';
+import { PageSelect } from './LibraryConsole';
 
 export const LibraryVisitor = (props) => {
   return (
@@ -49,7 +49,7 @@ const BookListing = (props) => {
           current_page={our_page}
           disabled={!can_db_request}
           call_on_change={(value) =>
-            act("switch_page", {
+            act('switch_page', {
               page: value,
             })
           }
@@ -86,11 +86,11 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={book_id}
-                placeholder={book_id === null ? "ID" : book_id}
+                placeholder={book_id === null ? 'ID' : book_id}
                 mt={0.5}
                 width="70px"
                 onChange={(e, value) =>
-                  act("set_search_id", {
+                  act('set_search_id', {
                     id: value,
                   })
                 }
@@ -101,7 +101,7 @@ const SearchAndDisplay = (props) => {
                 options={search_categories}
                 selected={category}
                 onSelected={(value) =>
-                  act("set_search_category", {
+                  act('set_search_category', {
                     category: value,
                   })
                 }
@@ -110,10 +110,10 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={title}
-                placeholder={title || "Title"}
+                placeholder={title || 'Title'}
                 mt={0.5}
                 onChange={(e, value) =>
-                  act("set_search_title", {
+                  act('set_search_title', {
                     title: value,
                   })
                 }
@@ -122,10 +122,10 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={author}
-                placeholder={author || "Author"}
+                placeholder={author || 'Author'}
                 mt={0.5}
                 onChange={(e, value) =>
-                  act("set_search_author", {
+                  act('set_search_author', {
                     author: value,
                   })
                 }
@@ -137,8 +137,8 @@ const SearchAndDisplay = (props) => {
           <Button
             disabled={!can_db_request}
             textAlign="right"
-            onClick={() => act("search")}
-            color={params_changed ? "good" : ""}
+            onClick={() => act('search')}
+            color={params_changed ? 'good' : ''}
             icon="book"
           >
             Search
@@ -146,7 +146,7 @@ const SearchAndDisplay = (props) => {
           <Button
             disabled={!can_db_request}
             textAlign="right"
-            onClick={() => act("clear_data")}
+            onClick={() => act('clear_data')}
             color="bad"
             icon="fire"
           >

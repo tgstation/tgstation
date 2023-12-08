@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { sendLogEntry } from "tgui-dev-server/link/client.cjs";
+import { sendLogEntry } from 'tgui-dev-server/link/client.cjs';
 
 const LEVEL_DEBUG = 0;
 const LEVEL_LOG = 1;
@@ -20,9 +20,9 @@ interface Logger {
   error: (...args: any[]) => void;
 }
 
-const log = (level: number, namespace = "Generic", ...args: any[]): void => {
+const log = (level: number, namespace = 'Generic', ...args: any[]): void => {
   // Send logs to a remote log collector
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     sendLogEntry(level, namespace, ...args);
   }
   // Send important logs to the backend
@@ -30,7 +30,7 @@ const log = (level: number, namespace = "Generic", ...args: any[]): void => {
     const logEntry =
       [namespace, ...args]
         .map((value) => {
-          if (typeof value === "string") {
+          if (typeof value === 'string') {
             return value;
           }
           if (value instanceof Error) {
@@ -39,11 +39,11 @@ const log = (level: number, namespace = "Generic", ...args: any[]): void => {
           return JSON.stringify(value);
         })
         .filter((value) => value)
-        .join(" ") +
-      "\nUser Agent: " +
+        .join(' ') +
+      '\nUser Agent: ' +
       navigator.userAgent;
     Byond.sendMessage({
-      type: "log",
+      type: 'log',
       ns: namespace,
       message: logEntry,
     });

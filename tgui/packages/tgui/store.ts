@@ -11,13 +11,13 @@ import {
   applyMiddleware,
   combineReducers,
   createStore,
-} from "common/redux";
-import { backendMiddleware, backendReducer } from "./backend";
-import { debugMiddleware, debugReducer, relayMiddleware } from "./debug";
+} from 'common/redux';
+import { backendMiddleware, backendReducer } from './backend';
+import { debugMiddleware, debugReducer, relayMiddleware } from './debug';
 
-import { assetMiddleware } from "./assets";
-import { createLogger } from "./logging";
-import { flow } from "common/fp";
+import { assetMiddleware } from './assets';
+import { createLogger } from './logging';
+import { flow } from 'common/fp';
 
 type ConfigureStoreOptions = {
   sideEffects?: boolean;
@@ -35,7 +35,7 @@ type StoreProviderProps = {
   children: any;
 };
 
-const logger = createLogger("store");
+const logger = createLogger('store');
 
 export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
   const { sideEffects = true, reducer, middleware } = options;
@@ -56,7 +56,7 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
         ...(middleware?.post || []),
       ];
 
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     // We are using two if statements because Webpack is capable of
     // removing this specific block as dead code.
     if (sideEffects) {
@@ -77,8 +77,8 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
 const loggingMiddleware: Middleware = (store) => (next) => (action) => {
   const { type } = action;
   logger.debug(
-    "action",
-    type === "update" || type === "backend/update" ? { type } : action,
+    'action',
+    type === 'update' || type === 'backend/update' ? { type } : action,
   );
   return next(action);
 };
@@ -90,18 +90,18 @@ const loggingMiddleware: Middleware = (store) => (next) => (action) => {
 const createStackAugmentor =
   (store: Store): StackAugmentor =>
   (stack, error) => {
-    error = error || new Error(stack.split("\n")[0]);
+    error = error || new Error(stack.split('\n')[0]);
     error.stack = error.stack || stack;
 
-    logger.log("FatalError:", error);
+    logger.log('FatalError:', error);
     const state = store.getState();
     const config = state?.backend?.config;
 
     return (
       stack +
-      "\nUser Agent: " +
+      '\nUser Agent: ' +
       navigator.userAgent +
-      "\nState: " +
+      '\nState: ' +
       JSON.stringify({
         ckey: config?.client?.ckey,
         interface: config?.interface,

@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Button, Section, Table, NoticeBox, Dimmer, Box } from "../components";
-import { NtosWindow } from "../layouts";
+import { useBackend } from '../backend';
+import { Button, Section, Table, NoticeBox, Dimmer, Box } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosJobManager = (props) => {
   return (
@@ -45,7 +45,7 @@ export const NtosJobManagerContent = (props) => {
                 disabled={slot.total <= 0}
                 checked={slot.total > 0 && prioritized.includes(slot.title)}
                 onClick={() =>
-                  act("PRG_priority", {
+                  act('PRG_priority', {
                     target: slot.title,
                   })
                 }
@@ -59,7 +59,7 @@ export const NtosJobManagerContent = (props) => {
                 content="Open"
                 disabled={!slot.status_open}
                 onClick={() =>
-                  act("PRG_open_job", {
+                  act('PRG_open_job', {
                     target: slot.title,
                   })
                 }
@@ -68,7 +68,7 @@ export const NtosJobManagerContent = (props) => {
                 content="Close"
                 disabled={!slot.status_close}
                 onClick={() =>
-                  act("PRG_close_job", {
+                  act('PRG_close_job', {
                     target: slot.title,
                   })
                 }

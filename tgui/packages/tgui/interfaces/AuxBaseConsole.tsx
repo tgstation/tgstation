@@ -1,8 +1,8 @@
-import { BooleanLike } from "common/react";
-import { useBackend, useLocalState } from "../backend";
-import { Button, NoticeBox, Section, Table, Tabs } from "../components";
-import { Window } from "../layouts";
-import { ShuttleConsoleContent } from "./ShuttleConsole";
+import { BooleanLike } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Button, NoticeBox, Section, Table, Tabs } from '../components';
+import { Window } from '../layouts';
+import { ShuttleConsoleContent } from './ShuttleConsole';
 
 type Data = {
   type: string;
@@ -21,15 +21,15 @@ type Turret = {
 };
 
 const STATUS_COLOR_KEYS = {
-  ERROR: "bad",
-  Disabled: "bad",
-  Firing: "average",
-  "All Clear": "good",
+  ERROR: 'bad',
+  Disabled: 'bad',
+  Firing: 'average',
+  'All Clear': 'good',
 } as const;
 
 export const AuxBaseConsole = (props) => {
   const { data } = useBackend<Data>();
-  const [tab, setTab] = useLocalState("tab", 1);
+  const [tab, setTab] = useLocalState('tab', 1);
   const { type, blind_drop, turrets = [] } = data;
 
   return (
@@ -45,7 +45,7 @@ export const AuxBaseConsole = (props) => {
             selected={tab === 1}
             onClick={() => setTab(1)}
           >
-            {type === "shuttle" ? "Shuttle Launch" : "Base Launch"}
+            {type === 'shuttle' ? 'Shuttle Launch' : 'Base Launch'}
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
@@ -71,13 +71,13 @@ export const AuxBaseConsoleContent = (props) => {
 
   return (
     <Section
-      title={"Turret Control"}
+      title={'Turret Control'}
       buttons={
         !!turrets.length && (
           <Button
             icon="power-off"
-            content={"Toggle Power"}
-            onClick={() => act("turrets_power")}
+            content={'Toggle Power'}
+            onClick={() => act('turrets_power')}
           />
         )
       }
@@ -98,7 +98,7 @@ export const AuxBaseConsoleContent = (props) => {
             <Table.Row key={turret.key}>
               <Table.Cell bold>{turret.name}</Table.Cell>
               <Table.Cell>{turret.integrity}%</Table.Cell>
-              <Table.Cell color={STATUS_COLOR_KEYS[turret.status] || "bad"}>
+              <Table.Cell color={STATUS_COLOR_KEYS[turret.status] || 'bad'}>
                 {turret.status}
               </Table.Cell>
               <Table.Cell>{turret.direction}</Table.Cell>
@@ -108,7 +108,7 @@ export const AuxBaseConsoleContent = (props) => {
                   icon="power-off"
                   content="Toggle"
                   onClick={() =>
-                    act("single_turret_power", {
+                    act('single_turret_power', {
                       single_turret_power: turret.ref,
                     })
                   }

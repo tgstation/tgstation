@@ -1,12 +1,12 @@
-import { useBackend } from "../../../../backend";
-import { Button, Stack } from "../../../../components";
-import { PreferencesMenuData, RandomSetting } from "../../data";
-import { RandomizationButton } from "../../RandomizationButton";
-import { useRandomToggleState } from "../../useRandomToggleState";
-import { CheckboxInput, Feature, FeatureToggle } from "./base";
+import { useBackend } from '../../../../backend';
+import { Button, Stack } from '../../../../components';
+import { PreferencesMenuData, RandomSetting } from '../../data';
+import { RandomizationButton } from '../../RandomizationButton';
+import { useRandomToggleState } from '../../useRandomToggleState';
+import { CheckboxInput, Feature, FeatureToggle } from './base';
 
 export const random_body: Feature<RandomSetting> = {
-  name: "Random body",
+  name: 'Random body',
   component: (props) => {
     const [randomToggle, setRandomToggle] = useRandomToggleState();
 
@@ -25,7 +25,7 @@ export const random_body: Feature<RandomSetting> = {
               <Button
                 color="green"
                 onClick={() => {
-                  props.act("randomize_character");
+                  props.act('randomize_character');
                   setRandomToggle(false);
                 }}
               >
@@ -50,12 +50,12 @@ export const random_body: Feature<RandomSetting> = {
 };
 
 export const random_hardcore: FeatureToggle = {
-  name: "Hardcore random",
+  name: 'Hardcore random',
   component: CheckboxInput,
 };
 
 export const random_name: Feature<RandomSetting> = {
-  name: "Random name",
+  name: 'Random name',
   component: (props) => {
     return (
       <RandomizationButton
@@ -67,17 +67,17 @@ export const random_name: Feature<RandomSetting> = {
 };
 
 export const random_species: Feature<RandomSetting> = {
-  name: "Random species",
+  name: 'Random species',
   component: (props) => {
     const { act, data } = useBackend<PreferencesMenuData>();
 
-    const species = data.character_preferences.randomization["species"];
+    const species = data.character_preferences.randomization['species'];
 
     return (
       <RandomizationButton
         setValue={(newValue) =>
-          act("set_random_preference", {
-            preference: "species",
+          act('set_random_preference', {
+            preference: 'species',
             value: newValue,
           })
         }

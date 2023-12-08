@@ -60,7 +60,7 @@ export const map: MapFunction =
       return collection.map(iterateeFn);
     }
 
-    if (typeof collection === "object") {
+    if (typeof collection === 'object') {
       return Object.entries(collection).map(([key, value]) => {
         return iterateeFn(value, key, collection);
       });
@@ -325,7 +325,7 @@ export const paginate = <T>(collection: T[], maxPerPage: number): T[][] => {
   return pages;
 };
 
-const isObject = (obj: unknown) => typeof obj === "object" && obj !== null;
+const isObject = (obj: unknown) => typeof obj === 'object' && obj !== null;
 
 // Does a deep merge of two objects. DO NOT FEED CIRCULAR OBJECTS!!
 export const deepMerge = (...objects: any[]): any => {

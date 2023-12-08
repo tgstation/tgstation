@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Collapsible,
@@ -6,10 +6,10 @@ import {
   LabeledList,
   Section,
   Stack,
-} from "../components";
-import { Objective } from "./common/Objectives";
+} from '../components';
+import { Objective } from './common/Objectives';
 
-import { Window } from "../layouts";
+import { Window } from '../layouts';
 
 type Data = {
   color: string;
@@ -19,7 +19,7 @@ type Data = {
   objectives: Objective[];
 };
 
-const BLOB_COLOR = "#556b2f";
+const BLOB_COLOR = '#556b2f';
 
 export const AntagInfoBlob = (props) => {
   return (
@@ -62,7 +62,7 @@ const Overview = (props) => {
       </Stack.Item>
       <Stack.Item>As the overmind, you can control the blob.</Stack.Item>
       <Stack.Item>
-        Your blob reagent is:{" "}
+        Your blob reagent is:{' '}
         <span
           style={{
             color,
@@ -72,26 +72,26 @@ const Overview = (props) => {
         </span>
       </Stack.Item>
       <Stack.Item>
-        The{" "}
+        The{' '}
         <span
           style={{
             color,
           }}
         >
           {name}
-        </span>{" "}
+        </span>{' '}
         reagent {description}
       </Stack.Item>
       {effects && (
         <Stack.Item>
-          The{" "}
+          The{' '}
           <span
             style={{
               color,
             }}
           >
             {name}
-          </span>{" "}
+          </span>{' '}
           reagent {effects}
         </Stack.Item>
       )}
@@ -192,7 +192,7 @@ const ObjectiveDisplay = (props) => {
       <LabeledList>
         {objectives.map(({ explanation }, index) => (
           <LabeledList.Item
-            color={color ?? "white"}
+            color={color ?? 'white'}
             key={index}
             label={(index + 1).toString()}
           >

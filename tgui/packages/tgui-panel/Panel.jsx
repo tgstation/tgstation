@@ -4,15 +4,15 @@
  * @license MIT
  */
 
-import { Button, Section, Stack } from "tgui/components";
-import { Pane } from "tgui/layouts";
-import { NowPlayingWidget, useAudio } from "./audio";
-import { ChatPanel, ChatTabs } from "./chat";
-import { useGame } from "./game";
-import { Notifications } from "./Notifications";
-import { PingIndicator } from "./ping";
-import { ReconnectButton } from "./reconnect";
-import { SettingsPanel, useSettings } from "./settings";
+import { Button, Section, Stack } from 'tgui/components';
+import { Pane } from 'tgui/layouts';
+import { NowPlayingWidget, useAudio } from './audio';
+import { ChatPanel, ChatTabs } from './chat';
+import { useGame } from './game';
+import { Notifications } from './Notifications';
+import { PingIndicator } from './ping';
+import { ReconnectButton } from './reconnect';
+import { SettingsPanel, useSettings } from './settings';
 
 export const Panel = (props) => {
   // IE8-10: Needs special treatment due to missing Flex support
@@ -22,8 +22,8 @@ export const Panel = (props) => {
   const audio = useAudio();
   const settings = useSettings();
   const game = useGame();
-  if (process.env.NODE_ENV !== "production") {
-    const { useDebug, KitchenSink } = require("tgui/debug");
+  if (process.env.NODE_ENV !== 'production') {
+    const { useDebug, KitchenSink } = require('tgui/debug');
     const debug = useDebug();
     if (debug.kitchenSink) {
       return <KitchenSink panel />;
@@ -53,10 +53,10 @@ export const Panel = (props) => {
               </Stack.Item>
               <Stack.Item>
                 <Button
-                  icon={settings.visible ? "times" : "cog"}
+                  icon={settings.visible ? 'times' : 'cog'}
                   selected={settings.visible}
                   tooltip={
-                    settings.visible ? "Close settings" : "Open settings"
+                    settings.visible ? 'Close settings' : 'Open settings'
                   }
                   tooltipPosition="bottom-start"
                   onClick={() => settings.toggle()}
@@ -110,9 +110,9 @@ const HoboPanel = (props) => {
       <Pane.Content scrollable>
         <Button
           style={{
-            position: "fixed",
-            top: "1em",
-            right: "2em",
+            position: 'fixed',
+            top: '1em',
+            right: '2em',
             zIndex: 1000,
           }}
           selected={settings.visible}

@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Box, Icon, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Icon, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   help_text: string;
@@ -10,40 +10,40 @@ const DEFAULT_HELP = `No information available! Ask for assistance if needed.`;
 
 const boxHelp = [
   {
-    color: "purple",
-    text: "Study the area and do what needs to be done to recover the crate. Pay close attention to domain information and context clues.",
-    icon: "search-location",
-    title: "Search",
+    color: 'purple',
+    text: 'Study the area and do what needs to be done to recover the crate. Pay close attention to domain information and context clues.',
+    icon: 'search-location',
+    title: 'Search',
   },
   {
-    color: "green",
-    text: "Bring the crate to the designated sending location in the safehouse. The area may seem out of place. Examine the safehouse to find it.",
-    icon: "boxes",
-    title: "Recover",
+    color: 'green',
+    text: 'Bring the crate to the designated sending location in the safehouse. The area may seem out of place. Examine the safehouse to find it.',
+    icon: 'boxes',
+    title: 'Recover',
   },
   {
-    color: "blue",
-    text: "The ladder represents the safest way to disconnect before the cache is recovered. Should your connection sever, the netpod offers limited resuscitation potential.",
-    icon: "plug",
-    title: "Disconnect",
+    color: 'blue',
+    text: 'The ladder represents the safest way to disconnect before the cache is recovered. Should your connection sever, the netpod offers limited resuscitation potential.',
+    icon: 'plug',
+    title: 'Disconnect',
   },
   {
-    color: "yellow",
-    text: "While connected, you are somewhat safe from environmental hazards and intrusions, but not completely. Pay close attention to alerts.",
-    icon: "id-badge",
-    title: "Security",
+    color: 'yellow',
+    text: 'While connected, you are somewhat safe from environmental hazards and intrusions, but not completely. Pay close attention to alerts.',
+    icon: 'id-badge',
+    title: 'Security',
   },
   {
-    color: "gold",
-    text: "Generating avatars costs tremendous bandwidth. Do not waste them.",
-    icon: "coins",
-    title: "Limited Attempts",
+    color: 'gold',
+    text: 'Generating avatars costs tremendous bandwidth. Do not waste them.',
+    icon: 'coins',
+    title: 'Limited Attempts',
   },
   {
-    color: "red",
-    text: "Remember that you are physically linked to this presence. You are a foreign body in a hostile environment. It will attempt to forcefully eject you.",
-    icon: "skull-crossbones",
-    title: "Realized Danger",
+    color: 'red',
+    text: 'Remember that you are physically linked to this presence. You are a foreign body in a hostile environment. It will attempt to forcefully eject you.',
+    icon: 'skull-crossbones',
+    title: 'Realized Danger',
   },
 ] as const;
 

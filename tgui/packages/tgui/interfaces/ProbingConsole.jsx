@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Button, LabeledList, NoticeBox, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Button, LabeledList, NoticeBox, Section } from '../components';
+import { Window } from '../layouts';
 
 export const ProbingConsole = (props) => {
   const { act, data } = useBackend();
@@ -19,9 +19,9 @@ export const ProbingConsole = (props) => {
           title="Scanner"
           buttons={
             <Button
-              icon={open ? "sign-out-alt" : "sign-in-alt"}
-              content={open ? "Close" : "Open"}
-              onClick={() => act("door")}
+              icon={open ? 'sign-out-alt' : 'sign-in-alt'}
+              content={open ? 'Close' : 'Open'}
+              onClick={() => act('door')}
             />
           }
         >
@@ -32,24 +32,24 @@ export const ProbingConsole = (props) => {
                 label="Status"
                 color={
                   occupant_status === 3
-                    ? "bad"
+                    ? 'bad'
                     : occupant_status === 2
-                      ? "average"
-                      : "good"
+                      ? 'average'
+                      : 'good'
                 }
               >
                 {occupant_status === 3
-                  ? "Deceased"
+                  ? 'Deceased'
                   : occupant_status === 2
-                    ? "Unconscious"
-                    : "Conscious"}
+                    ? 'Unconscious'
+                    : 'Conscious'}
               </LabeledList.Item>
               <LabeledList.Item label="Experiments">
                 <Button
                   icon="thermometer"
                   content="Probe"
                   onClick={() =>
-                    act("experiment", {
+                    act('experiment', {
                       experiment_type: 1,
                     })
                   }
@@ -58,7 +58,7 @@ export const ProbingConsole = (props) => {
                   icon="brain"
                   content="Dissect"
                   onClick={() =>
-                    act("experiment", {
+                    act('experiment', {
                       experiment_type: 2,
                     })
                   }
@@ -67,7 +67,7 @@ export const ProbingConsole = (props) => {
                   icon="search"
                   content="Analyze"
                   onClick={() =>
-                    act("experiment", {
+                    act('experiment', {
                       experiment_type: 3,
                     })
                   }

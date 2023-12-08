@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -8,8 +8,8 @@ import {
   Section,
   Stack,
   Tabs,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const DopplerArray = (props) => {
   const { act, data } = useBackend();
@@ -26,21 +26,21 @@ const DopplerArrayContent = (props) => {
   const { act, data } = useBackend();
   const { records = [], disk, storage } = data;
   const [activeRecordName, setActiveRecordName] = useSharedState(
-    "activeRecordrecord",
+    'activeRecordrecord',
     records[0]?.name,
   );
   const activeRecord = records.find((record) => {
     return record.name === activeRecordName;
   });
   const DopplerArrayFooter = (
-    <Section title={disk ? disk + " (" + storage + ")" : "No Disk Inserted"}>
+    <Section title={disk ? disk + ' (' + storage + ')' : 'No Disk Inserted'}>
       <Button
         textAlign="center"
         fluid
         icon="eject"
         content="Eject Disk"
         disabled={!disk}
-        onClick={() => act("eject_disk")}
+        onClick={() => act('eject_disk')}
       />
     </Section>
   );
@@ -72,7 +72,7 @@ const DopplerArrayContent = (props) => {
                     content="Delete"
                     color="bad"
                     onClick={() =>
-                      act("delete_record", {
+                      act('delete_record', {
                         ref: activeRecord.ref,
                       })
                     }
@@ -84,7 +84,7 @@ const DopplerArrayContent = (props) => {
                     tooltip="Save the record selected to an inserted data disk."
                     tooltipPosition="bottom"
                     onClick={() =>
-                      act("save_record", {
+                      act('save_record', {
                         ref: activeRecord.ref,
                       })
                     }
@@ -105,28 +105,28 @@ const DopplerArrayContent = (props) => {
                 <LabeledList.Item label="Epicenter Radius">
                   {activeRecord.factual_epicenter_radius}
                   {activeRecord.theory_epicenter_radius &&
-                    " (Theoretical: " +
+                    ' (Theoretical: ' +
                       activeRecord.theory_epicenter_radius +
-                      ")"}
+                      ')'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Outer Radius">
                   {activeRecord.factual_outer_radius}
                   {activeRecord.theory_outer_radius &&
-                    " (Theoretical: " + activeRecord.theory_outer_radius + ")"}
+                    ' (Theoretical: ' + activeRecord.theory_outer_radius + ')'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Shockwave Radius">
                   {activeRecord.factual_shockwave_radius}
                   {activeRecord.theory_shockwave_radius &&
-                    " (Theoretical: " +
+                    ' (Theoretical: ' +
                       activeRecord.theory_shockwave_radius +
-                      ")"}
+                      ')'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Possible Cause(s)">
                   {activeRecord.reaction_results.length
                     ? activeRecord.reaction_results.map((reaction_name) => (
                         <Box key={reaction_name}>{reaction_name}</Box>
                       ))
-                    : "No information available"}
+                    : 'No information available'}
                 </LabeledList.Item>
               </LabeledList>
             </Section>

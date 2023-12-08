@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { NoticeBox, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { NoticeBox, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   uppertext: string;

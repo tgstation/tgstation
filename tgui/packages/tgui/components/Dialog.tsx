@@ -3,8 +3,8 @@
  * @copyright 2022 raffclar
  * @license MIT
  */
-import { Box } from "./Box";
-import { Button } from "./Button";
+import { Box } from './Box';
+import { Button } from './Button';
 
 type DialogProps = {
   title: any;
@@ -18,7 +18,7 @@ export const Dialog = (props: DialogProps) => {
   const { title, onClose, children, width, height } = props;
   return (
     <div className="Dialog">
-      <Box className="Dialog__content" width={width || "370px"} height={height}>
+      <Box className="Dialog__content" width={width || '370px'} height={height}>
         <div className="Dialog__header">
           <div className="Dialog__title">{title}</div>
           <Box mr={2}>

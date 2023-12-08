@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { BooleanLike, classes } from "common/react";
-import { PropsWithChildren, ReactNode } from "react";
-import { Box, unit } from "./Box";
-import { Divider } from "./Divider";
-import { Tooltip } from "./Tooltip";
+import { BooleanLike, classes } from 'common/react';
+import { PropsWithChildren, ReactNode } from 'react';
+import { Box, unit } from './Box';
+import { Divider } from './Divider';
+import { Tooltip } from './Tooltip';
 
 export const LabeledList = (props: PropsWithChildren) => {
   const { children } = props;
@@ -35,21 +35,21 @@ const LabeledListItem = (props: LabeledListItemProps) => {
   const {
     className,
     label,
-    labelColor = "label",
+    labelColor = 'label',
     labelWrap,
     color,
     textAlign,
     buttons,
     content,
     children,
-    verticalAlign = "baseline",
+    verticalAlign = 'baseline',
     tooltip,
   } = props;
 
   let innerLabel;
   if (label) {
     innerLabel = label;
-    if (typeof label === "string") innerLabel += ":";
+    if (typeof label === 'string') innerLabel += ':';
   }
 
   if (tooltip !== undefined) {
@@ -58,7 +58,7 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         <Box
           as="span"
           style={{
-            borderBottom: "2px dotted rgba(255, 255, 255, 0.8)",
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
           }}
         >
           {innerLabel}
@@ -72,9 +72,9 @@ const LabeledListItem = (props: LabeledListItemProps) => {
       as="td"
       color={labelColor}
       className={classes([
-        "LabeledList__cell",
+        'LabeledList__cell',
         // Kinda flipped because we want nowrap as default. Cleaner CSS this way though.
-        !labelWrap && "LabeledList__label--nowrap",
+        !labelWrap && 'LabeledList__label--nowrap',
       ])}
       verticalAlign={verticalAlign}
     >
@@ -83,13 +83,13 @@ const LabeledListItem = (props: LabeledListItemProps) => {
   );
 
   return (
-    <tr className={classes(["LabeledList__row", className])}>
+    <tr className={classes(['LabeledList__row', className])}>
       {labelChild}
       <Box
         as="td"
         color={color}
         textAlign={textAlign}
-        className={classes(["LabeledList__cell", "LabeledList__content"])}
+        className={classes(['LabeledList__cell', 'LabeledList__content'])}
         colSpan={buttons ? undefined : 2}
         verticalAlign={verticalAlign}
       >

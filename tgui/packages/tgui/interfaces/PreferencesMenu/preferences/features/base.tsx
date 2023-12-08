@@ -1,8 +1,8 @@
-import { sortBy, sortStrings } from "common/collections";
-import { BooleanLike, classes } from "common/react";
-import { ComponentType, createElement, ReactNode } from "react";
+import { sortBy, sortStrings } from 'common/collections';
+import { BooleanLike, classes } from 'common/react';
+import { ComponentType, createElement, ReactNode } from 'react';
 
-import { sendAct, useBackend, useLocalState } from "../../../../backend";
+import { sendAct, useBackend, useLocalState } from '../../../../backend';
 import {
   Box,
   Button,
@@ -11,9 +11,9 @@ import {
   NumberInput,
   Slider,
   Stack,
-} from "../../../../components";
-import { createSetPreference, PreferencesMenuData } from "../../data";
-import { ServerPreferencesFetcher } from "../../ServerPreferencesFetcher";
+} from '../../../../components';
+import { createSetPreference, PreferencesMenuData } from '../../data';
+import { ServerPreferencesFetcher } from '../../ServerPreferencesFetcher';
 
 export const sortChoices = sortBy<[string, ReactNode]>(([name]) => name);
 
@@ -57,7 +57,7 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
   return (
     <Button
       onClick={() => {
-        props.act("set_color_preference", {
+        props.act('set_color_preference', {
           preference: props.featureId,
         });
       }}
@@ -66,16 +66,16 @@ export const FeatureColorInput = (props: FeatureValueProps<string>) => {
         <Stack.Item>
           <Box
             style={{
-              background: props.value.startsWith("#")
+              background: props.value.startsWith('#')
                 ? props.value
                 : `#${props.value}`,
-              border: "2px solid white",
-              boxSizing: "content-box",
-              height: "11px",
-              width: "11px",
+              border: '2px solid white',
+              boxSizing: 'content-box',
+              height: '11px',
+              width: '11px',
               ...(props.shrink
                 ? {
-                    margin: "1px",
+                    margin: '1px',
                   }
                 : {}),
             }}
@@ -254,9 +254,9 @@ export const FeatureIconnedDropdownInput = (
           <Stack>
             <Stack.Item>
               <Box
-                className={classes(["preferences32x32", icon])}
+                className={classes(['preferences32x32', icon])}
                 style={{
-                  transform: "scale(0.8)",
+                  transform: 'scale(0.8)',
                 }}
               />
             </Stack.Item>

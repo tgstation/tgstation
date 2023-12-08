@@ -1,7 +1,7 @@
-import { Flex } from "../../components";
-import { Design, MaterialMap } from "./Types";
-import { MaterialIcon } from "./MaterialIcon";
-import { formatSiUnit } from "../../format";
+import { Flex } from '../../components';
+import { Design, MaterialMap } from './Types';
+import { MaterialIcon } from './MaterialIcon';
+import { formatSiUnit } from '../../format';
 
 export type MaterialCostSequenceProps = {
   /**
@@ -70,10 +70,10 @@ export const MaterialCostSequence = (props: MaterialCostSequenceProps) => {
   }
 
   return (
-    <Flex wrap justify={justify ?? "space-around"} align={align ?? "center"}>
+    <Flex wrap justify={justify ?? 'space-around'} align={align ?? 'center'}>
       {Object.entries(costMap).map(([material, quantity]) => (
-        <Flex.Item key={material} style={{ padding: "0.25em" }}>
-          <Flex direction={"column"} align="center">
+        <Flex.Item key={material} style={{ padding: '0.25em' }}>
+          <Flex direction={'column'} align="center">
             <Flex.Item>
               <MaterialIcon
                 materialName={material}
@@ -85,10 +85,10 @@ export const MaterialCostSequence = (props: MaterialCostSequenceProps) => {
                 available && {
                   color:
                     (amount || 1) * quantity * 2 <= available[material]
-                      ? "#fff"
+                      ? '#fff'
                       : (amount || 1) * quantity <= available[material]
-                        ? "#f08f11"
-                        : "#db2828",
+                        ? '#f08f11'
+                        : '#db2828',
                 }
               }
             >

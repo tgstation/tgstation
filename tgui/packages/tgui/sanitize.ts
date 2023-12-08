@@ -2,54 +2,54 @@
  * Uses DOMPurify to purify/sanitise HTML.
  */
 
-import DOMPurify from "dompurify";
+import DOMPurify from 'dompurify';
 
 // Default values
 const defTag = [
-  "b",
-  "blockquote",
-  "br",
-  "center",
-  "code",
-  "dd",
-  "del",
-  "div",
-  "dl",
-  "dt",
-  "em",
-  "font",
-  "h1",
-  "h2",
-  "h3",
-  "h4",
-  "h5",
-  "h6",
-  "hr",
-  "i",
-  "ins",
-  "li",
-  "menu",
-  "ol",
-  "p",
-  "pre",
-  "span",
-  "strong",
-  "table",
-  "tbody",
-  "td",
-  "th",
-  "thead",
-  "tfoot",
-  "tr",
-  "u",
-  "ul",
+  'b',
+  'blockquote',
+  'br',
+  'center',
+  'code',
+  'dd',
+  'del',
+  'div',
+  'dl',
+  'dt',
+  'em',
+  'font',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'hr',
+  'i',
+  'ins',
+  'li',
+  'menu',
+  'ol',
+  'p',
+  'pre',
+  'span',
+  'strong',
+  'table',
+  'tbody',
+  'td',
+  'th',
+  'thead',
+  'tfoot',
+  'tr',
+  'u',
+  'ul',
 ];
 
 // Advanced HTML tags that we can trust admins (but not players) with
-const advTag = ["img"];
+const advTag = ['img'];
 
 // Background is here because it accepts image urls
-const defAttr = ["class", "style", "background"];
+const defAttr = ['class', 'style', 'background'];
 
 /**
  * Feed it a string and it should spit out a sanitized version.

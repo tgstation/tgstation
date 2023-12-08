@@ -1,11 +1,11 @@
-import { Stack } from "../../components";
-import { Window } from "../../layouts";
-import { KeybindingsPage } from "./KeybindingsPage";
-import { GamePreferencesPage } from "./GamePreferencesPage";
-import { PageButton } from "./PageButton";
-import { useBackend, useLocalState } from "../../backend";
-import { GamePreferencesSelectedPage, PreferencesMenuData } from "./data";
-import { exhaustiveCheck } from "common/exhaustive";
+import { Stack } from '../../components';
+import { Window } from '../../layouts';
+import { KeybindingsPage } from './KeybindingsPage';
+import { GamePreferencesPage } from './GamePreferencesPage';
+import { PageButton } from './PageButton';
+import { useBackend, useLocalState } from '../../backend';
+import { GamePreferencesSelectedPage, PreferencesMenuData } from './data';
+import { exhaustiveCheck } from 'common/exhaustive';
 
 export const GamePreferenceWindow = (props: {
   startingPage?: GamePreferencesSelectedPage;
@@ -13,7 +13,7 @@ export const GamePreferenceWindow = (props: {
   const { act, data } = useBackend<PreferencesMenuData>();
 
   const [currentPage, setCurrentPage] = useLocalState(
-    "currentPage",
+    'currentPage',
     props.startingPage ?? GamePreferencesSelectedPage.Settings,
   );
 

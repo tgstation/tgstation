@@ -1,8 +1,8 @@
-import { useBackend } from "../backend";
-import { Window } from "../layouts";
-import { LabeledList, Button } from "../components";
-import { AccessConfig } from "./common/AccessConfig";
-import { BooleanLike } from "common/react";
+import { useBackend } from '../backend';
+import { Window } from '../layouts';
+import { LabeledList, Button } from '../components';
+import { AccessConfig } from './common/AccessConfig';
+import { BooleanLike } from 'common/react';
 
 type Data = {
   oneAccess: BooleanLike;
@@ -20,9 +20,9 @@ export const CircuitAccessChecker = (props) => {
         <LabeledList>
           <LabeledList.Item label="Access Required">
             <Button
-              icon={oneAccess ? "unlock" : "lock"}
-              content={oneAccess ? "One" : "All"}
-              onClick={() => act("one_access")}
+              icon={oneAccess ? 'unlock' : 'lock'}
+              content={oneAccess ? 'One' : 'All'}
+              onClick={() => act('one_access')}
             />
           </LabeledList.Item>
         </LabeledList>
@@ -30,19 +30,19 @@ export const CircuitAccessChecker = (props) => {
           accesses={regions}
           selectedList={accesses}
           accessMod={(ref) =>
-            act("set", {
+            act('set', {
               access: ref,
             })
           }
-          grantAll={() => act("grant_all")}
-          denyAll={() => act("clear_all")}
+          grantAll={() => act('grant_all')}
+          denyAll={() => act('clear_all')}
           grantDep={(ref) =>
-            act("grant_region", {
+            act('grant_region', {
               region: ref,
             })
           }
           denyDep={(ref) =>
-            act("deny_region", {
+            act('deny_region', {
               region: ref,
             })
           }

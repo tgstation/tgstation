@@ -1,6 +1,6 @@
-import { Component } from "react";
-import { KeyEvent } from "../events";
-import { listenForKeyEvents } from "../hotkeys";
+import { Component } from 'react';
+import { KeyEvent } from '../events';
+import { listenForKeyEvents } from '../hotkeys';
 
 type KeyListenerProps = Partial<{
   onKey: (key: KeyEvent) => void;

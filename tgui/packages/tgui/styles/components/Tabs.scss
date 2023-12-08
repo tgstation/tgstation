@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "sass:color";
-@use "sass:math";
-@use "../base.scss";
-@use "../colors.scss";
+@use 'sass:color';
+@use 'sass:math';
+@use '../base.scss';
+@use '../colors.scss';
 
 $color-default: color.scale(
   colors.fg(colors.$primary),

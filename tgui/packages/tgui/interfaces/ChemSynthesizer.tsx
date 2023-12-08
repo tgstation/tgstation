@@ -1,7 +1,7 @@
-import { toFixed } from "common/math";
-import { useBackend } from "../backend";
-import { Box, Button, Section } from "../components";
-import { Window } from "../layouts";
+import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
+import { Box, Button, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   amount: number;
@@ -31,7 +31,7 @@ export const ChemSynthesizer = (props) => {
                 content={toFixed(possible_amount, 0)}
                 selected={possible_amount === amount}
                 onClick={() =>
-                  act("amount", {
+                  act('amount', {
                     target: possible_amount,
                   })
                 }
@@ -47,7 +47,7 @@ export const ChemSynthesizer = (props) => {
                 width="129px"
                 selected={chemical.id === current_reagent}
                 onClick={() =>
-                  act("select", {
+                  act('select', {
                     reagent: chemical.id,
                   })
                 }

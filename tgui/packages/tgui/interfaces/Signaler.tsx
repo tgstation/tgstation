@@ -1,7 +1,7 @@
-import { toFixed } from "common/math";
-import { useBackend } from "../backend";
-import { Button, Stack, NumberInput, Section } from "../components";
-import { Window } from "../layouts";
+import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
+import { Button, Stack, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   code: number;
@@ -26,8 +26,8 @@ export const SignalerContent = (props) => {
   const { act, data } = useBackend<Data>();
   const { code, frequency, cooldown, minFrequency, maxFrequency } = data;
 
-  const color = "rgba(13, 13, 213, 0.7)";
-  const backColor = "rgba(0, 0, 69, 0.5)";
+  const color = 'rgba(13, 13, 213, 0.7)';
+  const backColor = 'rgba(0, 0, 69, 0.5)';
   return (
     <Section>
       <Stack>
@@ -44,7 +44,7 @@ export const SignalerContent = (props) => {
             format={(value) => toFixed(value, 1)}
             width="80px"
             onDrag={(e, value) =>
-              act("freq", {
+              act('freq', {
                 freq: value,
               })
             }
@@ -56,8 +56,8 @@ export const SignalerContent = (props) => {
             icon="sync"
             content="Reset"
             onClick={() =>
-              act("reset", {
-                reset: "freq",
+              act('reset', {
+                reset: 'freq',
               })
             }
           />
@@ -77,7 +77,7 @@ export const SignalerContent = (props) => {
             value={code}
             width="80px"
             onDrag={(e, value) =>
-              act("code", {
+              act('code', {
                 code: value,
               })
             }
@@ -89,8 +89,8 @@ export const SignalerContent = (props) => {
             icon="sync"
             content="Reset"
             onClick={() =>
-              act("reset", {
-                reset: "code",
+              act('reset', {
+                reset: 'code',
               })
             }
           />
@@ -105,7 +105,7 @@ export const SignalerContent = (props) => {
             icon="arrow-up"
             content="Send Signal"
             textAlign="center"
-            onClick={() => act("signal")}
+            onClick={() => act('signal')}
           />
         </Stack.Item>
       </Stack>

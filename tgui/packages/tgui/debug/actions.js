@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { createAction } from "common/redux";
+import { createAction } from 'common/redux';
 
-export const toggleKitchenSink = createAction("debug/toggleKitchenSink");
-export const toggleDebugLayout = createAction("debug/toggleDebugLayout");
-export const openExternalBrowser = createAction("debug/openExternalBrowser");
+export const toggleKitchenSink = createAction('debug/toggleKitchenSink');
+export const toggleDebugLayout = createAction('debug/toggleDebugLayout');
+export const openExternalBrowser = createAction('debug/openExternalBrowser');

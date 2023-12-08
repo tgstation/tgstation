@@ -1,7 +1,7 @@
-import { decodeHtmlEntities } from "common/string";
-import { useBackend } from "../backend";
-import { Box, Button, LabeledList, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { decodeHtmlEntities } from 'common/string';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 export const EngravedMessage = (props) => {
   const { act, data } = useBackend();
@@ -29,13 +29,13 @@ export const EngravedMessage = (props) => {
               <Button
                 fluid
                 icon="arrow-up"
-                content={" " + num_likes}
+                content={' ' + num_likes}
                 disabled={is_creator}
                 selected={has_liked}
                 textAlign="center"
                 fontSize="16px"
                 lineHeight="24px"
-                onClick={() => act("like")}
+                onClick={() => act('like')}
               />
             </Stack.Item>
             <Stack.Item grow={1}>
@@ -47,20 +47,20 @@ export const EngravedMessage = (props) => {
                 textAlign="center"
                 fontSize="16px"
                 lineHeight="24px"
-                onClick={() => act("neutral")}
+                onClick={() => act('neutral')}
               />
             </Stack.Item>
             <Stack.Item grow={1.05}>
               <Button
                 fluid
                 icon="arrow-down"
-                content={" " + num_dislikes}
+                content={' ' + num_dislikes}
                 disabled={is_creator}
                 selected={has_disliked}
                 textAlign="center"
                 fontSize="16px"
                 lineHeight="24px"
-                onClick={() => act("dislike")}
+                onClick={() => act('dislike')}
               />
             </Stack.Item>
           </Stack>
@@ -78,7 +78,7 @@ export const EngravedMessage = (props) => {
                 icon="times"
                 content="Delete"
                 color="bad"
-                onClick={() => act("delete")}
+                onClick={() => act('delete')}
               />
             }
           >

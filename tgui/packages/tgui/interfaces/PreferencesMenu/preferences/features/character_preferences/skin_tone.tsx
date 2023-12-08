@@ -1,11 +1,11 @@
-import { sortBy } from "common/collections";
-import { Box, Stack } from "../../../../../components";
+import { sortBy } from 'common/collections';
+import { Box, Stack } from '../../../../../components';
 import {
   Feature,
   FeatureChoicedServerData,
   FeatureValueProps,
   StandardizedDropdown,
-} from "../base";
+} from '../base';
 
 type HexValue = {
   lightness: number;
@@ -13,7 +13,7 @@ type HexValue = {
 };
 
 type SkinToneServerData = FeatureChoicedServerData & {
-  display_names: NonNullable<FeatureChoicedServerData["display_names"]>;
+  display_names: NonNullable<FeatureChoicedServerData['display_names']>;
   to_hex: Record<string, HexValue>;
 };
 
@@ -22,7 +22,7 @@ const sortHexValues = sortBy<[string, HexValue]>(
 );
 
 export const skin_tone: Feature<string, string, SkinToneServerData> = {
-  name: "Skin tone",
+  name: 'Skin tone',
   component: (props: FeatureValueProps<string, string, SkinToneServerData>) => {
     const { handleSetValue, serverData, value } = props;
 
@@ -46,9 +46,9 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
                   <Box
                     style={{
                       background: hexColor.value,
-                      boxSizing: "content-box",
-                      height: "11px",
-                      width: "11px",
+                      boxSizing: 'content-box',
+                      height: '11px',
+                      width: '11px',
                     }}
                   />
                 </Stack.Item>

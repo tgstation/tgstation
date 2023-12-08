@@ -1,10 +1,10 @@
-import { sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { classes } from "common/react";
-import { useBackend, useLocalState } from "../backend";
-import { Box, Button, LabeledList, Section, Stack } from "../components";
-import { Window } from "../layouts";
-import { capitalize } from "common/string";
+import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Button, LabeledList, Section, Stack } from '../components';
+import { Window } from '../layouts';
+import { capitalize } from 'common/string';
 
 type FishingTips = {
   spots: string;
@@ -40,7 +40,7 @@ export const FishCatalog = (props) => {
     fish_info || [],
   );
   const [currentFish, setCurrentFish] = useLocalState<FishInfo | null>(
-    "currentFish",
+    'currentFish',
     null,
   );
   return (
@@ -71,7 +71,7 @@ export const FishCatalog = (props) => {
               title={
                 currentFish
                   ? capitalize(currentFish.name)
-                  : sponsored_by + " Fish Index"
+                  : sponsored_by + ' Fish Index'
               }
             >
               {currentFish && (
@@ -114,7 +114,7 @@ export const FishCatalog = (props) => {
                     </LabeledList>
                   </LabeledList.Item>
                   <LabeledList.Item label="Illustration">
-                    <Box className={classes(["fish32x32", currentFish.icon])} />
+                    <Box className={classes(['fish32x32', currentFish.icon])} />
                   </LabeledList.Item>
                 </LabeledList>
               )}

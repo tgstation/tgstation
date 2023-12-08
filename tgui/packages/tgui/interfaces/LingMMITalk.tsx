@@ -1,6 +1,6 @@
-import { useBackend, useLocalState } from "../backend";
-import { Button, ByondUi, Stack, TextArea } from "../components";
-import { Window } from "../layouts";
+import { useBackend, useLocalState } from '../backend';
+import { Button, ByondUi, Stack, TextArea } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   mmi_view: string;
@@ -8,7 +8,7 @@ type Data = {
 
 export const LingMMITalk = (props) => {
   const { data, act } = useBackend<Data>();
-  const [mmiMessage, setmmiMessage] = useLocalState<string>("textArea", "");
+  const [mmiMessage, setmmiMessage] = useLocalState<string>('textArea', '');
 
   return (
     <Window title="Decoy Brain MMI View" height={360} width={360}>
@@ -20,7 +20,7 @@ export const LingMMITalk = (props) => {
               height="240px"
               params={{
                 id: data.mmi_view,
-                type: "map",
+                type: 'map',
               }}
             />
           </Stack.Item>
@@ -39,8 +39,8 @@ export const LingMMITalk = (props) => {
                   textAlign="center"
                   content="Send"
                   onClick={() => {
-                    act("send_mmi_message", { message: mmiMessage });
-                    setmmiMessage("");
+                    act('send_mmi_message', { message: mmiMessage });
+                    setmmiMessage('');
                   }}
                 />
               </Stack.Item>

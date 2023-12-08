@@ -1,6 +1,6 @@
-import { sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { useBackend } from "../backend";
+import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -9,8 +9,8 @@ import {
   Knob,
   LabeledControls,
   LabeledList,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const Jukebox = (props) => {
   const { act, data } = useBackend();
@@ -23,10 +23,10 @@ export const Jukebox = (props) => {
           title="Song Player"
           buttons={
             <Button
-              icon={active ? "pause" : "play"}
-              content={active ? "Stop" : "Play"}
+              icon={active ? 'pause' : 'play'}
+              content={active ? 'Stop' : 'Play'}
               selected={active}
-              onClick={() => act("toggle")}
+              onClick={() => act('toggle')}
             />
           }
         >
@@ -37,20 +37,20 @@ export const Jukebox = (props) => {
                 width="240px"
                 options={songs.map((song) => song.name)}
                 disabled={active}
-                selected={track_selected || "Select a Track"}
+                selected={track_selected || 'Select a Track'}
                 onSelected={(value) =>
-                  act("select_track", {
+                  act('select_track', {
                     track: value,
                   })
                 }
               />
             </LabeledList.Item>
             <LabeledList.Item label="Track Length">
-              {track_selected ? track_length : "No Track Selected"}
+              {track_selected ? track_length : 'No Track Selected'}
             </LabeledList.Item>
             <LabeledList.Item label="Track Beat">
-              {track_selected ? track_beat : "No Track Selected"}
-              {track_beat === 1 ? " beat" : " beats"}
+              {track_selected ? track_beat : 'No Track Selected'}
+              {track_beat === 1 ? ' beat' : ' beats'}
             </LabeledList.Item>
           </LabeledList>
         </Section>
@@ -60,7 +60,7 @@ export const Jukebox = (props) => {
               <Box position="relative">
                 <Knob
                   size={3.2}
-                  color={volume >= 25 ? "red" : "green"}
+                  color={volume >= 25 ? 'red' : 'green'}
                   value={volume}
                   unit="%"
                   minValue={0}
@@ -69,7 +69,7 @@ export const Jukebox = (props) => {
                   stepPixelSize={1}
                   disabled={active}
                   onDrag={(e, value) =>
-                    act("set_volume", {
+                    act('set_volume', {
                       volume: value,
                     })
                   }
@@ -82,8 +82,8 @@ export const Jukebox = (props) => {
                   color="transparent"
                   icon="fast-backward"
                   onClick={() =>
-                    act("set_volume", {
-                      volume: "min",
+                    act('set_volume', {
+                      volume: 'min',
                     })
                   }
                 />
@@ -95,8 +95,8 @@ export const Jukebox = (props) => {
                   color="transparent"
                   icon="fast-forward"
                   onClick={() =>
-                    act("set_volume", {
-                      volume: "max",
+                    act('set_volume', {
+                      volume: 'max',
                     })
                   }
                 />
@@ -108,8 +108,8 @@ export const Jukebox = (props) => {
                   color="transparent"
                   icon="undo"
                   onClick={() =>
-                    act("set_volume", {
-                      volume: "reset",
+                    act('set_volume', {
+                      volume: 'reset',
                     })
                   }
                 />

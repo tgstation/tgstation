@@ -1,9 +1,9 @@
-import { useBackend } from "../backend";
-import { Section, Stack, Button, Modal } from "../components";
-import { Window } from "../layouts";
-import { BooleanLike } from "common/react";
-import { toTitleCase } from "common/string";
-import { formatMoney } from "../format";
+import { useBackend } from '../backend';
+import { Section, Stack, Button, Modal } from '../components';
+import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
+import { toTitleCase } from 'common/string';
+import { formatMoney } from '../format';
 
 type Material = {
   name: string;
@@ -53,13 +53,13 @@ export const MatMarket = (props) => {
               <Button
                 icon="dollar"
                 tooltip="Place order from cargo budget."
-                color={orderingPrive ? "" : "green"}
+                color={orderingPrive ? '' : 'green'}
                 content={
                   orderingPrive
-                    ? "Order via Cargo Budget?"
-                    : "Ordering via Cargo Budget"
+                    ? 'Order via Cargo Budget?'
+                    : 'Ordering via Cargo Budget'
                 }
-                onClick={() => act("toggle_budget")}
+                onClick={() => act('toggle_budget')}
               />
             )
           }
@@ -88,7 +88,7 @@ export const MatMarket = (props) => {
                   color="transparent"
                   content="Clear"
                   ml={66}
-                  onClick={() => act("clear")}
+                  onClick={() => act('clear')}
                 />
               </Stack.Item>
             </Stack>
@@ -100,7 +100,7 @@ export const MatMarket = (props) => {
               <Stack.Item width="75%">
                 <Stack>
                   <Stack.Item
-                    textColor={material.color ? material.color : "white"}
+                    textColor={material.color ? material.color : 'white'}
                     fontSize="125%"
                     width="15%"
                     pr="3%"
@@ -113,21 +113,21 @@ export const MatMarket = (props) => {
                   </Stack.Item>
 
                   <Stack.Item width="33%" ml={2}>
-                    <b>{material.quantity || "zero"}</b> sheets of{" "}
-                    <b>{material.name}</b> trading.{" "}
-                    {material.requested || "zero"} sheets ordered.
+                    <b>{material.quantity || 'zero'}</b> sheets of{' '}
+                    <b>{material.name}</b> trading.{' '}
+                    {material.requested || 'zero'} sheets ordered.
                   </Stack.Item>
                   <Stack.Item
                     width="40%"
                     color={
-                      material.trend === "up"
-                        ? "green"
-                        : material.trend === "down"
-                          ? "red"
-                          : "white"
+                      material.trend === 'up'
+                        ? 'green'
+                        : material.trend === 'down'
+                          ? 'red'
+                          : 'white'
                     }
                   >
-                    <b>{toTitleCase(material.name)}</b> is trending{" "}
+                    <b>{toTitleCase(material.name)}</b> is trending{' '}
                     <b>{material.trend}</b>.
                   </Stack.Item>
                 </Stack>
@@ -144,7 +144,7 @@ export const MatMarket = (props) => {
                   tooltip={material.price * 1}
                   content="Buy 1"
                   onClick={() =>
-                    act("buy", {
+                    act('buy', {
                       quantity: 1,
                       material: material.name,
                     })
@@ -161,7 +161,7 @@ export const MatMarket = (props) => {
                   tooltip={material.price * 5}
                   content="5"
                   onClick={() =>
-                    act("buy", {
+                    act('buy', {
                       quantity: 5,
                       material: material.name,
                     })
@@ -178,7 +178,7 @@ export const MatMarket = (props) => {
                   tooltip={material.price * 10}
                   content="10"
                   onClick={() =>
-                    act("buy", {
+                    act('buy', {
                       quantity: 10,
                       material: material.name,
                     })
@@ -195,7 +195,7 @@ export const MatMarket = (props) => {
                   tooltip={material.price * 25}
                   content="25"
                   onClick={() =>
-                    act("buy", {
+                    act('buy', {
                       quantity: 25,
                       material: material.name,
                     })
@@ -212,7 +212,7 @@ export const MatMarket = (props) => {
                   tooltip={material.price * 50}
                   content="50"
                   onClick={() =>
-                    act("buy", {
+                    act('buy', {
                       quantity: 50,
                       material: material.name,
                     })

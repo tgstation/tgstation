@@ -1,7 +1,7 @@
-import { useBackend } from "../backend";
-import { Button, LabeledList, NumberInput, Section } from "../components";
-import { Window } from "../layouts";
-import { PortableBasicInfo } from "./common/PortableAtmos";
+import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
+import { PortableBasicInfo } from './common/PortableAtmos';
 
 export const PortablePump = (props) => {
   const { act, data } = useBackend();
@@ -14,8 +14,8 @@ export const PortablePump = (props) => {
     minPressure,
     maxPressure,
   } = data;
-  const pump_or_port = connected ? "Port" : "Pump";
-  const area_or_tank = holding ? "Tank" : "Area";
+  const pump_or_port = connected ? 'Port' : 'Pump';
+  const area_or_tank = holding ? 'Tank' : 'Area';
   return (
     <Window width={300} height={340}>
       <Window.Content>
@@ -26,11 +26,11 @@ export const PortablePump = (props) => {
             <Button
               content={
                 direction
-                  ? area_or_tank + " → " + pump_or_port
-                  : pump_or_port + " → " + area_or_tank
+                  ? area_or_tank + ' → ' + pump_or_port
+                  : pump_or_port + ' → ' + area_or_tank
               }
-              color={!direction && !holding ? "caution" : null}
-              onClick={() => act("direction")}
+              color={!direction && !holding ? 'caution' : null}
+              onClick={() => act('direction')}
             />
           }
         >
@@ -44,7 +44,7 @@ export const PortablePump = (props) => {
                 maxValue={maxPressure}
                 step={10}
                 onChange={(e, value) =>
-                  act("pressure", {
+                  act('pressure', {
                     pressure: value,
                   })
                 }
@@ -55,8 +55,8 @@ export const PortablePump = (props) => {
                 icon="minus"
                 disabled={targetPressure === minPressure}
                 onClick={() =>
-                  act("pressure", {
-                    pressure: "min",
+                  act('pressure', {
+                    pressure: 'min',
                   })
                 }
               />
@@ -64,8 +64,8 @@ export const PortablePump = (props) => {
                 icon="sync"
                 disabled={targetPressure === defaultPressure}
                 onClick={() =>
-                  act("pressure", {
-                    pressure: "reset",
+                  act('pressure', {
+                    pressure: 'reset',
                   })
                 }
               />
@@ -73,8 +73,8 @@ export const PortablePump = (props) => {
                 icon="plus"
                 disabled={targetPressure === maxPressure}
                 onClick={() =>
-                  act("pressure", {
-                    pressure: "max",
+                  act('pressure', {
+                    pressure: 'max',
                   })
                 }
               />

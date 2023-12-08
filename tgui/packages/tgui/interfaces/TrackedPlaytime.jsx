@@ -1,7 +1,7 @@
-import { sortBy } from "common/collections";
-import { useBackend } from "../backend";
-import { Box, Button, Flex, ProgressBar, Section, Table } from "../components";
-import { Window } from "../layouts";
+import { sortBy } from 'common/collections';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, ProgressBar, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 const JOB_REPORT_MENU_FAIL_REASON_TRACKING_DISABLED = 1;
 const JOB_REPORT_MENU_FAIL_REASON_NO_RECORDS = 2;
@@ -16,7 +16,7 @@ const PlaytimeSection = (props) => {
   );
 
   if (!sortedPlaytimes.length) {
-    return "No recorded playtime hours for this section.";
+    return 'No recorded playtime hours for this section.';
   }
 
   const mostPlayed = sortedPlaytimes[0][1];
@@ -30,7 +30,7 @@ const PlaytimeSection = (props) => {
               collapsing
               p={0.5}
               style={{
-                verticalAlign: "middle",
+                verticalAlign: 'middle',
               }}
             >
               <Box align="right">{jobName}</Box>
@@ -94,7 +94,7 @@ export const TrackedPlaytime = (props) => {
                 !!isAdmin && (
                   <Button.Checkbox
                     checked={!!exemptStatus}
-                    onClick={() => act("toggle_exempt")}
+                    onClick={() => act('toggle_exempt')}
                   >
                     Job Playtime Exempt
                   </Button.Checkbox>

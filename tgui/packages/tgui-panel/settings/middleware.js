@@ -4,24 +4,24 @@
  * @license MIT
  */
 
-import { storage } from "common/storage";
-import { setClientTheme } from "../themes";
+import { storage } from 'common/storage';
+import { setClientTheme } from '../themes';
 import {
   loadSettings,
   updateSettings,
   addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
-} from "./actions";
-import { selectSettings } from "./selectors";
-import { FONTS_DISABLED } from "./constants";
+} from './actions';
+import { selectSettings } from './selectors';
+import { FONTS_DISABLED } from './constants';
 
 let overrideRule = null;
 let overrideFontFamily = null;
 let overrideFontSize = null;
 
 const updateGlobalOverrideRule = () => {
-  let fontFamily = "";
+  let fontFamily = '';
 
   if (overrideFontFamily !== null) {
     fontFamily = `font-family: ${overrideFontFamily} !important;`;
@@ -32,14 +32,14 @@ const updateGlobalOverrideRule = () => {
   }`;
 
   if (overrideRule === null) {
-    overrideRule = document.createElement("style");
-    document.querySelector("head").append(overrideRule);
+    overrideRule = document.createElement('style');
+    document.querySelector('head').append(overrideRule);
   }
 
   // no other way to force a CSS refresh other than to update its innerText
   overrideRule.innerText = constructedRule;
 
-  document.body.style.setProperty("font-size", overrideFontSize);
+  document.body.style.setProperty('font-size', overrideFontSize);
 };
 
 const setGlobalFontSize = (fontSize) => {
@@ -57,7 +57,7 @@ export const settingsMiddleware = (store) => {
     const { type, payload } = action;
     if (!initialized) {
       initialized = true;
-      storage.get("panel-settings").then((settings) => {
+      storage.get('panel-settings').then((settings) => {
         store.dispatch(loadSettings(settings));
       });
     }
@@ -81,7 +81,7 @@ export const settingsMiddleware = (store) => {
       setGlobalFontFamily(settings.fontFamily);
       updateGlobalOverrideRule();
       // Save settings to the web storage
-      storage.set("panel-settings", settings);
+      storage.set('panel-settings', settings);
       return;
     }
     return next(action);

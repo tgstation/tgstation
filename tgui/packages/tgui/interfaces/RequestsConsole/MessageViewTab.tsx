@@ -1,4 +1,4 @@
-import { useBackend } from "../../backend";
+import { useBackend } from '../../backend';
 import {
   BlockQuote,
   Button,
@@ -6,14 +6,14 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from "../../components";
-import { decodeHtmlEntities } from "common/string";
+} from '../../components';
+import { decodeHtmlEntities } from 'common/string';
 import {
   RequestMessage,
   RequestPriority,
   RequestsData,
   RequestType,
-} from "./types";
+} from './types';
 
 export const MessageViewTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -40,9 +40,9 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
       <Section
         title={
           message.request_type +
-          " from " +
+          ' from ' +
           message.sender_department +
-          ", " +
+          ', ' +
           message.received_time
         }
       >
@@ -66,10 +66,10 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
         </BlockQuote>
         <LabeledList>
           <LabeledList.Item label="Message Verified By">
-            {message.message_verified_by || "Not Verified"}
+            {message.message_verified_by || 'Not Verified'}
           </LabeledList.Item>
           <LabeledList.Item label="Message Stamped By">
-            {message.message_stamped_by || "Not Stamped"}
+            {message.message_stamped_by || 'Not Stamped'}
           </LabeledList.Item>
         </LabeledList>
         {message.request_type !== RequestType.ORE_UPDATE && (
@@ -78,7 +78,7 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
               icon="reply"
               content="Quick Reply"
               onClick={() => {
-                act("quick_reply", {
+                act('quick_reply', {
                   reply_recipient: message.sender_department,
                 });
               }}

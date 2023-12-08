@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Box, Button, Grid, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Button, Grid, Section } from '../components';
+import { Window } from '../layouts';
 
 export const EmergencyShuttleConsole = (props) => {
   const { act, data } = useBackend();
@@ -23,8 +23,8 @@ export const EmergencyShuttleConsole = (props) => {
             <Box inline bold>
               ENGINES:
             </Box>
-            <Box inline color={engines_started ? "good" : "average"} ml={1}>
-              {engines_started ? "Online" : "Idle"}
+            <Box inline color={engines_started ? 'good' : 'average'} ml={1}>
+              {engines_started ? 'Online' : 'Idle'}
             </Box>
           </Box>
           <Section
@@ -36,7 +36,7 @@ export const EmergencyShuttleConsole = (props) => {
                 content="Repeal All"
                 color="bad"
                 disabled={!enabled}
-                onClick={() => act("abort")}
+                onClick={() => act('abort')}
               />
             }
           >
@@ -48,7 +48,7 @@ export const EmergencyShuttleConsole = (props) => {
                   color="good"
                   content="AUTHORIZE"
                   disabled={!enabled}
-                  onClick={() => act("authorize")}
+                  onClick={() => act('authorize')}
                 />
               </Grid.Column>
               <Grid.Column>
@@ -57,7 +57,7 @@ export const EmergencyShuttleConsole = (props) => {
                   icon="minus"
                   content="REPEAL"
                   disabled={!enabled}
-                  onClick={() => act("repeal")}
+                  onClick={() => act('repeal')}
                 />
               </Grid.Column>
             </Grid>
@@ -66,8 +66,8 @@ export const EmergencyShuttleConsole = (props) => {
               level={3}
               minHeight="150px"
               buttons={
-                <Box inline bold color={emagged ? "bad" : "good"}>
-                  {emagged ? "ERROR" : "Remaining: " + authorizations_remaining}
+                <Box inline bold color={emagged ? 'bad' : 'good'}>
+                  {emagged ? 'ERROR' : 'Remaining: ' + authorizations_remaining}
                 </Box>
               }
             >

@@ -1,8 +1,8 @@
-import { filter, sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { BooleanLike, classes } from "common/react";
-import { createSearch } from "common/string";
-import { useBackend, useLocalState } from "../backend";
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { BooleanLike, classes } from 'common/react';
+import { createSearch } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   ByondUi,
@@ -10,8 +10,8 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   activeCamera: Camera & { status: BooleanLike };
@@ -65,7 +65,7 @@ const prevNextCamera = (
  *
  * Filters cameras, applies search terms and sorts the alphabetically.
  */
-const selectCameras = (cameras: Camera[], searchText = ""): Camera[] => {
+const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
   const testSearch = createSearch(searchText, (camera: Camera) => camera.name);
 
   return flow([
@@ -102,7 +102,7 @@ export const CameraContent = (props) => {
 
 const CameraSelector = (props) => {
   const { act, data } = useBackend<Data>();
-  const [searchText, setSearchText] = useLocalState("searchText", "");
+  const [searchText, setSearchText] = useLocalState('searchText', '');
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
 
@@ -126,16 +126,16 @@ const CameraSelector = (props) => {
               key={camera.ref}
               title={camera.name}
               className={classes([
-                "Button",
-                "Button--fluid",
-                "Button--color--transparent",
-                "Button--ellipsis",
+                'Button',
+                'Button--fluid',
+                'Button--color--transparent',
+                'Button--ellipsis',
                 activeCamera?.ref === camera.ref
-                  ? "Button--selected"
-                  : "candystripe",
+                  ? 'Button--selected'
+                  : 'candystripe',
               ])}
               onClick={() =>
-                act("switch_camera", {
+                act('switch_camera', {
                   camera: camera.ref,
                 })
               }
@@ -152,7 +152,7 @@ const CameraSelector = (props) => {
 const CameraControls = (props) => {
   const { act, data } = useBackend<Data>();
   const { activeCamera, can_spy, mapRef } = data;
-  const [searchText] = useLocalState("searchText", "");
+  const [searchText] = useLocalState('searchText', '');
 
   const cameras = selectCameras(data.cameras, searchText);
 
@@ -176,7 +176,7 @@ const CameraControls = (props) => {
                 <Button
                   icon="magnifying-glass"
                   tooltip="Track Person"
-                  onClick={() => act("start_tracking")}
+                  onClick={() => act('start_tracking')}
                 />
               )}
             </Stack.Item>
@@ -186,7 +186,7 @@ const CameraControls = (props) => {
                 icon="chevron-left"
                 disabled={!prevCamera}
                 onClick={() =>
-                  act("switch_camera", {
+                  act('switch_camera', {
                     camera: prevCamera,
                   })
                 }
@@ -198,7 +198,7 @@ const CameraControls = (props) => {
                 icon="chevron-right"
                 disabled={!nextCamera}
                 onClick={() =>
-                  act("switch_camera", {
+                  act('switch_camera', {
                     camera: nextCamera,
                   })
                 }
@@ -212,7 +212,7 @@ const CameraControls = (props) => {
             width="100%"
             params={{
               id: mapRef,
-              type: "map",
+              type: 'map',
             }}
           />
         </Stack.Item>

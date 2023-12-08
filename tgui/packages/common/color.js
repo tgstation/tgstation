@@ -69,7 +69,7 @@ Color.lerp = (c1, c2, n) =>
 Color.lookup = (value, colors = []) => {
   const len = colors.length;
   if (len < 2) {
-    throw new Error("Needs at least two colors!");
+    throw new Error('Needs at least two colors!');
   }
   const scaled = value * (len - 1);
   if (value < EPSILON) {

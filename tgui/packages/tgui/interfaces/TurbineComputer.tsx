@@ -1,5 +1,5 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Button,
   LabeledList,
@@ -8,8 +8,8 @@ import {
   Modal,
   ProgressBar,
   NumberInput,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type TurbineInfo = {
   connected: BooleanLike;
@@ -30,13 +30,13 @@ export const TurbineComputer = (props) => {
   const parts_not_connected = !data.parts_linked && (
     <Modal>
       <Box
-        style={{ margin: "auto" }}
+        style={{ margin: 'auto' }}
         width="200px"
         textAlign="center"
         minHeight="39px"
       >
         {
-          "Parts not connected, use a multitool on the core rotor before trying again"
+          'Parts not connected, use a multitool on the core rotor before trying again'
         }
       </Box>
     </Modal>
@@ -44,13 +44,13 @@ export const TurbineComputer = (props) => {
   const parts_not_ready = data.parts_linked && !data.parts_ready && (
     <Modal>
       <Box
-        style={{ margin: "auto" }}
+        style={{ margin: 'auto' }}
         width="200px"
         textAlign="center"
         minHeight="39px"
       >
         {
-          "Some parts have open maintenance hatchet, please close them before starting"
+          'Some parts have open maintenance hatchet, please close them before starting'
         }
       </Box>
     </Modal>
@@ -62,11 +62,11 @@ export const TurbineComputer = (props) => {
           title="Status"
           buttons={
             <Button
-              icon={data.active ? "power-off" : "times"}
-              content={data.active ? "Online" : "Offline"}
+              icon={data.active ? 'power-off' : 'times'}
+              content={data.active ? 'Online' : 'Offline'}
               selected={data.active}
               disabled={!!(data.rpm >= 1000) || !data.parts_linked}
-              onClick={() => act("toggle_power")}
+              onClick={() => act('toggle_power')}
             />
           }
         >
@@ -81,7 +81,7 @@ export const TurbineComputer = (props) => {
                 minValue={1}
                 maxValue={100}
                 onDrag={(e, value) =>
-                  act("regulate", {
+                  act('regulate', {
                     regulate: value * 0.01,
                   })
                 }

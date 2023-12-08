@@ -1,5 +1,5 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Tooltip,
   Box,
@@ -9,8 +9,8 @@ import {
   Button,
   LabeledList,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type IVDripData = {
   hasInternalStorage: BooleanLike;
@@ -69,7 +69,7 @@ export const IVDrip = (props) => {
                     align="center"
                     icon="angles-left"
                     onClick={() =>
-                      act("changeRate", {
+                      act('changeRate', {
                         rate: minTransferRate,
                       })
                     }
@@ -80,7 +80,7 @@ export const IVDrip = (props) => {
                     align="center"
                     icon="angles-right"
                     onClick={() =>
-                      act("changeRate", {
+                      act('changeRate', {
                         rate: maxTransferRate,
                       })
                     }
@@ -96,7 +96,7 @@ export const IVDrip = (props) => {
                 maxValue={maxTransferRate}
                 unit="units/sec."
                 onDrag={(e, value) =>
-                  act("changeRate", {
+                  act('changeRate', {
                     rate: value,
                   })
                 }
@@ -104,7 +104,7 @@ export const IVDrip = (props) => {
             </LabeledList.Item>
             <LabeledList.Item
               label="Direction"
-              color={!mode ? "bad" : ""}
+              color={!mode ? 'bad' : ''}
               buttons={
                 <Button
                   my={1}
@@ -112,18 +112,18 @@ export const IVDrip = (props) => {
                   lineHeight={2}
                   align="center"
                   disabled={!canDraw}
-                  color={!mode && "bad"}
-                  content={mode ? "Injecting" : "Draining"}
-                  icon={mode ? "syringe" : "droplet"}
-                  onClick={() => act("changeMode")}
+                  color={!mode && 'bad'}
+                  content={mode ? 'Injecting' : 'Draining'}
+                  icon={mode ? 'syringe' : 'droplet'}
+                  onClick={() => act('changeMode')}
                 />
               }
             >
               {mode
                 ? hasInternalStorage
-                  ? "Reagents from network"
-                  : "Reagents from container"
-                : "Blood into container"}
+                  ? 'Reagents from network'
+                  : 'Reagents from container'
+                : 'Blood into container'}
             </LabeledList.Item>
             {hasContainer || hasInternalStorage ? (
               <LabeledList.Item
@@ -138,7 +138,7 @@ export const IVDrip = (props) => {
                       align="center"
                       icon="eject"
                       content="Eject"
-                      onClick={() => act("eject")}
+                      onClick={() => act('eject')}
                     />
                   )
                 }
@@ -151,7 +151,7 @@ export const IVDrip = (props) => {
                 >
                   <span
                     style={{
-                      textShadow: "1px 1px 0 black",
+                      textShadow: '1px 1px 0 black',
                     }}
                   >
                     {`${containerCurrentVolume} of ${containerMaxVolume} units`}
@@ -177,11 +177,11 @@ export const IVDrip = (props) => {
                     align="center"
                     icon="ban"
                     content="Disconnect"
-                    onClick={() => act("detach")}
+                    onClick={() => act('detach')}
                   />
                 }
               >
-                <Box maxHeight={"45px"} overflow={"hidden"}>
+                <Box maxHeight={'45px'} overflow={'hidden'}>
                   {objectName}
                 </Box>
               </LabeledList.Item>

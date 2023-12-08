@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "sass:color";
-@use "../base.scss";
-@use "../colors.scss";
-@use "../functions.scss" as *;
+@use 'sass:color';
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
 
 // NoticeBox
 $background-color: #bb9b68 !default;

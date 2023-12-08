@@ -1,8 +1,8 @@
-import { paginate } from "common/collections";
-import { BooleanLike } from "common/react";
-import { useBackend, useLocalState } from "../backend";
-import { Stack, Button, Icon, Input, Section, Tabs } from "../components";
-import { Window } from "../layouts";
+import { paginate } from 'common/collections';
+import { BooleanLike } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Stack, Button, Icon, Input, Section, Tabs } from '../components';
+import { Window } from '../layouts';
 
 const CATEGORY_PAGE_ITEMS = 4;
 const EVENT_PAGE_ITEMS = 2;
@@ -80,9 +80,9 @@ export const ForceEvent = (props) => {
 };
 
 export const PanelOptions = (props) => {
-  const [searchQuery, setSearchQuery] = useLocalState("searchQuery", "");
+  const [searchQuery, setSearchQuery] = useLocalState('searchQuery', '');
 
-  const [announce, setAnnounce] = useLocalState("announce", true);
+  const [announce, setAnnounce] = useLocalState('announce', true);
 
   return (
     <Stack width="240px">
@@ -115,9 +115,9 @@ export const EventSection = (props) => {
   const { data, act } = useBackend<ForceEventData>();
   const { categories, events } = data;
 
-  const [category] = useLocalState("category", categories[0]);
-  const [searchQuery] = useLocalState("searchQuery", "");
-  const [announce] = useLocalState("announce", true);
+  const [category] = useLocalState('category', categories[0]);
+  const [searchQuery] = useLocalState('searchQuery', '');
+  const [announce] = useLocalState('announce', true);
 
   const preparedEvents = paginateEvents(
     events.filter((event) => {
@@ -134,7 +134,7 @@ export const EventSection = (props) => {
     EVENT_PAGE_ITEMS,
   );
 
-  const sectionTitle = searchQuery ? "Searching..." : category.name + " Events";
+  const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
 
   return (
     <Section scrollable fill title={sectionTitle} buttons={<PanelOptions />}>
@@ -149,14 +149,14 @@ export const EventSection = (props) => {
                     tooltip={
                       event.description +
                       (event.has_customization
-                        ? " Includes admin customization."
-                        : "")
+                        ? ' Includes admin customization.'
+                        : '')
                     }
                     fluid
-                    icon={event.has_customization ? "gear" : undefined}
+                    icon={event.has_customization ? 'gear' : undefined}
                     iconPosition="right"
                     onClick={() =>
-                      act("forceevent", {
+                      act('forceevent', {
                         type: event.type,
                         announce: announce,
                       })
@@ -178,7 +178,7 @@ export const EventTabs = (props) => {
   const { data } = useBackend<ForceEventData>();
   const { categories } = data;
 
-  const [category, setCategory] = useLocalState("category", categories[0]);
+  const [category, setCategory] = useLocalState('category', categories[0]);
 
   const layerCats = paginate(categories, CATEGORY_PAGE_ITEMS);
 

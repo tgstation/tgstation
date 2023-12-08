@@ -1,6 +1,6 @@
-import { BasicInput } from "./BasicInput";
-import { NumberInput, Button, Stack, Input, Dropdown } from "../../components";
-import { OPTION_DROPDOWN_LARGE_CHAR_AMOUNT } from "./constants";
+import { BasicInput } from './BasicInput';
+import { NumberInput, Button, Stack, Input, Dropdown } from '../../components';
+import { OPTION_DROPDOWN_LARGE_CHAR_AMOUNT } from './constants';
 
 export const FUNDAMENTAL_DATA_TYPES = {
   string: (props) => {
@@ -84,11 +84,11 @@ export const FUNDAMENTAL_DATA_TYPES = {
     return (
       <Dropdown
         className="IntegratedCircuit__BlueBorder"
-        color={"transparent"}
+        color={'transparent'}
         options={data}
         onSelected={setValue}
         displayText={value}
-        menuWidth={large ? "200px" : undefined}
+        menuWidth={large ? '200px' : undefined}
       />
     );
   },
@@ -99,7 +99,7 @@ export const FUNDAMENTAL_DATA_TYPES = {
         name={name}
         setValue={setValue}
         value={value}
-        defaultValue={""}
+        defaultValue={''}
       >
         <Stack>
           <Stack.Item>

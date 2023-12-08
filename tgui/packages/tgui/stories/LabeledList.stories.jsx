@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { Button, LabeledList } from "../components";
+import { Button, LabeledList } from '../components';
 
 export const meta = {
-  title: "LabeledList",
+  title: 'LabeledList',
   render: () => <Story />,
 };
 

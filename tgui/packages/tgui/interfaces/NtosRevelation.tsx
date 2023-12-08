@@ -1,7 +1,7 @@
-import { Section, Button, LabeledList } from "../components";
-import { useBackend } from "../backend";
-import { NtosWindow } from "../layouts";
-import { BooleanLike } from "common/react";
+import { Section, Button, LabeledList } from '../components';
+import { useBackend } from '../backend';
+import { NtosWindow } from '../layouts';
+import { BooleanLike } from 'common/react';
 
 type Data = {
   armed: BooleanLike;
@@ -19,7 +19,7 @@ export const NtosRevelation = (props) => {
             fluid
             content="Obfuscate Name..."
             onCommit={(_, value) =>
-              act("PRG_obfuscate", {
+              act('PRG_obfuscate', {
                 new_name: value,
               })
             }
@@ -30,9 +30,9 @@ export const NtosRevelation = (props) => {
               label="Payload Status"
               buttons={
                 <Button
-                  content={armed ? "ARMED" : "DISARMED"}
-                  color={armed ? "bad" : "average"}
-                  onClick={() => act("PRG_arm")}
+                  content={armed ? 'ARMED' : 'DISARMED'}
+                  color={armed ? 'bad' : 'average'}
+                  onClick={() => act('PRG_arm')}
                 />
               }
             />
@@ -44,7 +44,7 @@ export const NtosRevelation = (props) => {
             textAlign="center"
             color="bad"
             disabled={!armed}
-            onClick={() => act("PRG_activate")}
+            onClick={() => act('PRG_activate')}
           />
         </Section>
       </NtosWindow.Content>

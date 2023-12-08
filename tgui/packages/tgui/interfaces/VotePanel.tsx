@@ -1,4 +1,4 @@
-import { BooleanLike } from "common/react";
+import { BooleanLike } from 'common/react';
 import {
   Box,
   Icon,
@@ -8,9 +8,9 @@ import {
   NoticeBox,
   LabeledList,
   Collapsible,
-} from "../components";
-import { Window } from "../layouts";
-import { useBackend } from "../backend";
+} from '../components';
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
 
 enum VoteConfig {
   None = -1,
@@ -66,10 +66,10 @@ export const VotePanel = (props) => {
   /**
    * Adds the voting type to title if there is an ongoing vote.
    */
-  let windowTitle = "Vote";
+  let windowTitle = 'Vote';
   if (currentVote) {
     windowTitle +=
-      ": " +
+      ': ' +
       (currentVote.question || currentVote.vote.name).replace(/^\w/, (c) =>
         c.toUpperCase(),
       );
@@ -113,11 +113,11 @@ const VoteOptions = (props) => {
                   disabled={!user.isUpperAdmin}
                   content={
                     option.config === VoteConfig.Enabled
-                      ? "Enabled"
-                      : "Disabled"
+                      ? 'Enabled'
+                      : 'Disabled'
                   }
                   onClick={() =>
-                    act("toggleVote", {
+                    act('toggleVote', {
                       voteName: option.name,
                     })
                   }
@@ -128,7 +128,7 @@ const VoteOptions = (props) => {
                 tooltip={option.message}
                 content={option.name}
                 onClick={() =>
-                  act("callVote", {
+                  act('callVote', {
                     voteName: option.name,
                   })
                 }
@@ -152,7 +152,7 @@ const VotersList = (props) => {
     <Stack.Item>
       <Collapsible
         title={`View Voters${
-          data.voting.length ? `: ${data.voting.length}` : ""
+          data.voting.length ? `: ${data.voting.length}` : ''
         }`}
       >
         <Section height={8} fill scrollable>
@@ -192,7 +192,7 @@ const ChoicesPanel = (props) => {
                     <Button
                       disabled={user.singleSelection === choice.name}
                       onClick={() => {
-                        act("voteSingle", { voteOption: choice.name });
+                        act('voteSingle', { voteOption: choice.name });
                       }}
                     >
                       Vote
@@ -230,7 +230,7 @@ const ChoicesPanel = (props) => {
                   buttons={
                     <Button
                       onClick={() => {
-                        act("voteMulti", { voteOption: choice.name });
+                        act('voteMulti', { voteOption: choice.name });
                       }}
                     >
                       Vote
@@ -279,7 +279,7 @@ const TimePanel = (props) => {
             <Button
               color="red"
               disabled={!user.isLowerAdmin || !currentVote}
-              onClick={() => act("cancel")}
+              onClick={() => act('cancel')}
             >
               Cancel Vote
             </Button>

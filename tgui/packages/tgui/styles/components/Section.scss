@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "sass:color";
-@use "../base.scss";
-@use "../colors.scss";
-@use "../functions.scss";
+@use 'sass:color';
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss';
 
 $title-text-color: base.$color-fg !default;
 $background-color: base.$color-bg-section !default;

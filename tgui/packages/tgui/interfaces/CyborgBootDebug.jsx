@@ -1,7 +1,7 @@
-import { multiline } from "common/string";
-import { useBackend } from "../backend";
-import { Button, Input, LabeledList, Section } from "../components";
-import { Window } from "../layouts";
+import { multiline } from 'common/string';
+import { useBackend } from '../backend';
+import { Button, Input, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 const TOOLTIP_NAME = multiline`
   Enter a new name for this unit. Set to blank to reset to default,
@@ -53,9 +53,9 @@ export const CyborgBootDebug = (props) => {
             >
               <Input
                 fluid
-                value={designation || "Default Cyborg"}
+                value={designation || 'Default Cyborg'}
                 onChange={(e, value) =>
-                  act("rename", {
+                  act('rename', {
                     new_name: value,
                   })
                 }
@@ -72,10 +72,10 @@ export const CyborgBootDebug = (props) => {
               }
             >
               <Button
-                icon={locomotion ? "unlock" : "lock"}
-                content={locomotion ? "Free" : "Restricted"}
-                color={locomotion ? "good" : "bad"}
-                onClick={() => act("locomotion")}
+                icon={locomotion ? 'unlock' : 'lock'}
+                content={locomotion ? 'Free' : 'Restricted'}
+                color={locomotion ? 'good' : 'bad'}
+                onClick={() => act('locomotion')}
               />
             </LabeledList.Item>
             <LabeledList.Item
@@ -89,9 +89,9 @@ export const CyborgBootDebug = (props) => {
               }
             >
               <Button
-                icon={panel ? "lock" : "unlock"}
-                content={panel ? "Locked" : "Unlocked"}
-                onClick={() => act("panel")}
+                icon={panel ? 'lock' : 'unlock'}
+                content={panel ? 'Locked' : 'Unlocked'}
+                onClick={() => act('panel')}
               />
             </LabeledList.Item>
           </LabeledList>
@@ -109,9 +109,9 @@ export const CyborgBootDebug = (props) => {
               }
             >
               <Button
-                icon={aisync ? "unlock" : "lock"}
-                content={aisync ? "Open" : "Closed"}
-                onClick={() => act("aisync")}
+                icon={aisync ? 'unlock' : 'lock'}
+                content={aisync ? 'Open' : 'Closed'}
+                onClick={() => act('aisync')}
               />
             </LabeledList.Item>
             <LabeledList.Item
@@ -125,11 +125,11 @@ export const CyborgBootDebug = (props) => {
               }
             >
               <Button
-                icon={!aisync ? "times" : master ? "edit" : "sync"}
-                content={!aisync ? "None" : master || "Automatic"}
-                color={master ? "default" : "good"}
+                icon={!aisync ? 'times' : master ? 'edit' : 'sync'}
+                content={!aisync ? 'None' : master || 'Automatic'}
+                color={master ? 'default' : 'good'}
                 disabled={!aisync}
-                onClick={() => act("set_ai")}
+                onClick={() => act('set_ai')}
               />
             </LabeledList.Item>
             <LabeledList.Item
@@ -143,10 +143,10 @@ export const CyborgBootDebug = (props) => {
               }
             >
               <Button
-                icon={!aisync ? "lock" : lawsync ? "unlock" : "lock"}
-                content={!aisync ? "Closed" : lawsync ? "Open" : "Closed"}
+                icon={!aisync ? 'lock' : lawsync ? 'unlock' : 'lock'}
+                content={!aisync ? 'Closed' : lawsync ? 'Open' : 'Closed'}
                 disabled={!aisync}
-                onClick={() => act("lawsync")}
+                onClick={() => act('lawsync')}
               />
             </LabeledList.Item>
           </LabeledList>

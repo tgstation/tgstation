@@ -1,8 +1,8 @@
-import { BooleanLike, classes } from "common/react";
-import { resolveAsset } from "../assets";
-import { useBackend } from "../backend";
-import { Box, Button, Icon, NoticeBox, Section, Stack } from "../components";
-import { NtosWindow } from "../layouts";
+import { BooleanLike, classes } from 'common/react';
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
+import { Box, Button, Icon, NoticeBox, Section, Stack } from '../components';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   selected: string;
@@ -44,10 +44,10 @@ export const NtosRadarContent = (props) => {
       <Stack.Item
         style={{
           backgroundImage:
-            'url("' + resolveAsset("ntosradarbackground.png") + '")',
-          backgroundPosition: "center",
-          backgroundRepeat: "no-repeat",
-          top: "20px",
+            'url("' + resolveAsset('ntosradarbackground.png') + '")',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          top: '20px',
         }}
         position="relative"
         m={1.5}
@@ -70,10 +70,10 @@ const ObjectDisplay = (props) => {
       <Section>
         <Button
           icon="redo-alt"
-          content={scanning ? "Scanning..." : "Scan"}
+          content={scanning ? 'Scanning...' : 'Scan'}
           color="blue"
           disabled={scanning}
-          onClick={() => act("scan")}
+          onClick={() => act('scan')}
         />
         {!object.length && !scanning && <div>No trackable signals found</div>}
         {!scanning &&
@@ -82,14 +82,14 @@ const ObjectDisplay = (props) => {
               key={object.dev}
               title={object.name}
               className={classes([
-                "Button",
-                "Button--fluid",
-                "Button--color--transparent",
-                "Button--ellipsis",
-                object.ref === selected && "Button--selected",
+                'Button',
+                'Button--fluid',
+                'Button--color--transparent',
+                'Button--ellipsis',
+                object.ref === selected && 'Button--selected',
               ])}
               onClick={() => {
-                act("selecttarget", {
+                act('selecttarget', {
                   ref: object.ref,
                 });
               }}
@@ -141,8 +141,8 @@ const TargetDisplay = (props) => {
       position="absolute"
       size={2}
       color={target.color}
-      top={target.locy * 10 + 19 + "px"}
-      left={target.locx * 10 + 16 + "px"}
+      top={target.locy * 10 + 19 + 'px'}
+      left={target.locx * 10 + 16 + 'px'}
     />
   );
 };

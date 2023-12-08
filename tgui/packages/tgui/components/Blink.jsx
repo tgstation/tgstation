@@ -1,4 +1,4 @@
-import { Component } from "react";
+import { Component } from 'react';
 
 const DEFAULT_BLINKING_INTERVAL = 1000;
 const DEFAULT_BLINKING_TIME = 1000;
@@ -59,7 +59,7 @@ export class Blink extends Component {
     return (
       <span
         style={{
-          visibility: this.state.hidden ? "hidden" : "visible",
+          visibility: this.state.hidden ? 'hidden' : 'visible',
         }}
       >
         {props.children}

@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Box, Button, LabeledList, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section } from '../components';
+import { Window } from '../layouts';
 
 export const Teleporter = (props) => {
   const { act, data } = useBackend();
@@ -30,14 +30,14 @@ export const Teleporter = (props) => {
                 <LabeledList.Item label="Regime">
                   <Button
                     content={regime_set}
-                    onClick={() => act("regimeset")}
+                    onClick={() => act('regimeset')}
                   />
                 </LabeledList.Item>
                 <LabeledList.Item label="Target">
                   <Button
                     icon="edit"
                     content={target}
-                    onClick={() => act("settarget")}
+                    onClick={() => act('settarget')}
                   />
                 </LabeledList.Item>
                 <LabeledList.Item
@@ -46,7 +46,7 @@ export const Teleporter = (props) => {
                     <Button
                       icon="tools"
                       content="Calibrate"
-                      onClick={() => act("calibrate")}
+                      onClick={() => act('calibrate')}
                     />
                   }
                 >

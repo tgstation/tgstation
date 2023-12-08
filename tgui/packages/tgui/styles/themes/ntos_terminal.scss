@@ -3,54 +3,54 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "sass:color";
-@use "sass:meta";
+@use 'sass:color';
+@use 'sass:meta';
 
-@use "../colors.scss" with (
+@use '../colors.scss' with (
   $primary: #24e87e,
   $label: #24e87e,
   $good: rgba(36, 232, 127, 0.5),
   // $fg-map-keys: (),
   // $bg-map-keys: (),
 );
-@use "../base.scss" with (
+@use '../base.scss' with (
   $color-bg: #121b12,
   $color-bg-grad-spread: 0%
 );
 
 .theme-ntos_terminal {
   // Atomic classes
-  @include meta.load-css("../atomic/color.scss");
+  @include meta.load-css('../atomic/color.scss');
 
   // Components
   @include meta.load-css(
-    "../components/Button.scss",
+    '../components/Button.scss',
     $with: (
-      "color-default": rgba(0, 0, 0, 0),
-      "color-disabled": #4a6a4a,
-      "color-selected": rgba(36, 232, 127, 0.25)
+      'color-default': rgba(0, 0, 0, 0),
+      'color-disabled': #4a6a4a,
+      'color-selected': rgba(36, 232, 127, 0.25)
     )
   );
   @include meta.load-css(
-    "../components/Input.scss",
-    $with: ("border-color": colors.$primary)
+    '../components/Input.scss',
+    $with: ('border-color': colors.$primary)
   );
   @include meta.load-css(
-    "../components/ProgressBar.scss",
+    '../components/ProgressBar.scss',
     $with: (
-      "background-color": rgba(0, 0, 0, 0.5),
-      "color-default-fill": rgba(36, 232, 127, 0.5)
+      'background-color': rgba(0, 0, 0, 0.5),
+      'color-default-fill': rgba(36, 232, 127, 0.5)
     )
   );
-  @include meta.load-css("../components/Modal.scss");
-  @include meta.load-css("../components/Section.scss");
+  @include meta.load-css('../components/Modal.scss');
+  @include meta.load-css('../components/Section.scss');
 
   // Layouts
-  @include meta.load-css("../layouts/Layout.scss");
-  @include meta.load-css("../layouts/Window.scss");
+  @include meta.load-css('../layouts/Layout.scss');
+  @include meta.load-css('../layouts/Window.scss');
   @include meta.load-css(
-    "../layouts/TitleBar.scss",
-    $with: ("background-color": rgba(0, 97, 0, 0.25))
+    '../layouts/TitleBar.scss',
+    $with: ('background-color': rgba(0, 97, 0, 0.25))
   );
 
   .Layout__content {

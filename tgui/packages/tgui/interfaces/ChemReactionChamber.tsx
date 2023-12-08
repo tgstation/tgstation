@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -8,10 +8,10 @@ import {
   Section,
   RoundGauge,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
-import { round, toFixed } from "common/math";
-import { MixingData } from "./ChemMixingChamber";
+} from '../components';
+import { Window } from '../layouts';
+import { round, toFixed } from 'common/math';
+import { MixingData } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {
   ph: number;
@@ -23,7 +23,7 @@ export const ChemReactionChamber = (props) => {
   const { act, data } = useBackend<ReactingData>();
 
   const [reagentQuantity, setReagentQuantity] = useLocalState(
-    "reagentQuantity",
+    'reagentQuantity',
     1,
   );
 
@@ -46,7 +46,7 @@ export const ChemReactionChamber = (props) => {
               title="Conditions"
               buttons={
                 <Stack>
-                  <Stack.Item mt={0.3}>{"Target:"}</Stack.Item>
+                  <Stack.Item mt={0.3}>{'Target:'}</Stack.Item>
                   <Stack.Item>
                     <NumberInput
                       width="65px"
@@ -57,7 +57,7 @@ export const ChemReactionChamber = (props) => {
                       minValue={0}
                       maxValue={1000}
                       onDrag={(e, value) =>
-                        act("temperature", {
+                        act('temperature', {
                           target: value,
                         })
                       }
@@ -75,7 +75,7 @@ export const ChemReactionChamber = (props) => {
                     <Stack.Item grow>
                       <AnimatedNumber
                         value={temperature}
-                        format={(value) => toFixed(value) + " K"}
+                        format={(value) => toFixed(value) + ' K'}
                       />
                     </Stack.Item>
                     <Stack.Item grow>
@@ -106,7 +106,7 @@ export const ChemReactionChamber = (props) => {
                 </Stack.Item>
                 <Stack.Item>
                   <Stack fill>
-                    <Stack.Item textColor="label">{"ph:"}</Stack.Item>
+                    <Stack.Item textColor="label">{'ph:'}</Stack.Item>
                     <Stack.Item grow={15}>{ph}</Stack.Item>
                     <Stack.Item grow mt={1} mb={-0.5}>
                       <Button
@@ -135,17 +135,17 @@ export const ChemReactionChamber = (props) => {
               scrollable
               buttons={
                 (isReacting && (
-                  <Box inline bold color={"purple"}>
-                    {"Reacting"}
+                  <Box inline bold color={'purple'}>
+                    {'Reacting'}
                   </Box>
                 )) || (
                   <Box
                     fontSize="16px"
                     inline
                     bold
-                    color={emptying ? "bad" : "good"}
+                    color={emptying ? 'bad' : 'good'}
                   >
-                    {emptying ? "Emptying" : "Filling"}
+                    {emptying ? 'Emptying' : 'Filling'}
                   </Box>
                 )
               }
@@ -162,7 +162,7 @@ export const ChemReactionChamber = (props) => {
                         stepPixelSize={3}
                         width="39px"
                         onDrag={(e, value) =>
-                          act("acidic", {
+                          act('acidic', {
                             target: value,
                           })
                         }
@@ -177,7 +177,7 @@ export const ChemReactionChamber = (props) => {
                         stepPixelSize={3}
                         width="39px"
                         onDrag={(e, value) =>
-                          act("alkaline", {
+                          act('alkaline', {
                             target: value,
                           })
                         }
@@ -194,7 +194,7 @@ export const ChemReactionChamber = (props) => {
                         color="good"
                         icon="plus"
                         onClick={() =>
-                          act("add", {
+                          act('add', {
                             amount: reagentQuantity,
                           })
                         }
@@ -220,7 +220,7 @@ export const ChemReactionChamber = (props) => {
                       <Stack.Item key={reagent.name}>
                         <Stack fill>
                           <Stack.Item mt={0.25} textColor="label">
-                            {reagent.name + ":"}
+                            {reagent.name + ':'}
                           </Stack.Item>
                           <Stack.Item mt={0.25} grow>
                             {reagent.volume}
@@ -230,7 +230,7 @@ export const ChemReactionChamber = (props) => {
                               icon="minus"
                               color="bad"
                               onClick={() =>
-                                act("remove", {
+                                act('remove', {
                                   chem: reagent.name,
                                 })
                               }

@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Box, Section, Table, Tooltip } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Section, Table, Tooltip } from '../components';
+import { Window } from '../layouts';
 
 type BindingInfo = {
   name: string;
@@ -52,19 +52,19 @@ const addColorModifier = (
 };
 
 const processColorModifiers = (content: string): string | JSX.Element => {
-  const shifted = addColorModifier(content, shiftRegex, "#88f");
+  const shifted = addColorModifier(content, shiftRegex, '#88f');
 
   if (shifted) {
     return shifted;
   }
 
-  const ctrled = addColorModifier(content, ctrlRegex, "#8f8");
+  const ctrled = addColorModifier(content, ctrlRegex, '#8f8');
 
   if (ctrled) {
     return ctrled;
   }
 
-  const alted = addColorModifier(content, altRegex, "#fc4");
+  const alted = addColorModifier(content, altRegex, '#fc4');
 
   if (alted) {
     return alted;
@@ -73,15 +73,15 @@ const processColorModifiers = (content: string): string | JSX.Element => {
   // Fix the weirdly named keys
 
   return ` ${content}`
-    .replace("Northeast", "Page Up")
-    .replace("Southeast", "Page Down")
-    .replace("Northwest", "Home")
-    .replace("Southwest", "End")
-    .replace("North", "Up")
-    .replace("South", "Down")
-    .replace("East", "Right")
-    .replace("West", "Left")
-    .replace("Numpad", "Numpad ");
+    .replace('Northeast', 'Page Up')
+    .replace('Southeast', 'Page Down')
+    .replace('Northwest', 'Home')
+    .replace('Southwest', 'End')
+    .replace('North', 'Up')
+    .replace('South', 'Down')
+    .replace('East', 'Right')
+    .replace('West', 'Left')
+    .replace('Numpad', 'Numpad ');
 };
 
 const KeyBinding = (props: KeyBindingBoxProps) => (
@@ -109,7 +109,7 @@ export const HotkeysHelp = (props) => {
                 <Table.Cell bold textAlign="right" p={1}>
                   <KeyBinding keycode={hotkey.key} />
                 </Table.Cell>
-                <Table.Cell style={{ position: "relative" }}>
+                <Table.Cell style={{ position: 'relative' }}>
                   {hotkey.bindings.map((binding) =>
                     binding.desc ? (
                       <Tooltip

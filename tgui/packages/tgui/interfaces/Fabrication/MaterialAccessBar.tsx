@@ -1,10 +1,10 @@
-import { sortBy } from "common/collections";
-import { classes } from "common/react";
-import { useLocalState } from "../../backend";
-import { Flex, Button, Stack, AnimatedNumber } from "../../components";
-import { formatSiUnit } from "../../format";
-import { MaterialIcon } from "./MaterialIcon";
-import { Material } from "./Types";
+import { sortBy } from 'common/collections';
+import { classes } from 'common/react';
+import { useLocalState } from '../../backend';
+import { Flex, Button, Stack, AnimatedNumber } from '../../components';
+import { formatSiUnit } from '../../format';
+import { MaterialIcon } from './MaterialIcon';
+import { Material } from './Types';
 
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up
@@ -18,7 +18,7 @@ const MATERIAL_RARITY: Record<string, number> = {
   gold: 6,
   uranium: 7,
   diamond: 8,
-  "bluespace crystal": 9,
+  'bluespace crystal': 9,
   bananium: 10,
 };
 
@@ -92,12 +92,12 @@ const MaterialCounter = (props: MaterialCounterProps) => {
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}
       className={classes([
-        "MaterialDock",
-        hovering && "MaterialDock--active",
-        sheets < 1 && "MaterialDock--disabled",
+        'MaterialDock',
+        hovering && 'MaterialDock--active',
+        sheets < 1 && 'MaterialDock--disabled',
       ])}
     >
-      <Stack vertial direction={"column-reverse"}>
+      <Stack vertial direction={'column-reverse'}>
         <Flex
           direction="column"
           textAlign="center"
@@ -112,8 +112,8 @@ const MaterialCounter = (props: MaterialCounterProps) => {
           </Flex.Item>
         </Flex>
         {hovering && (
-          <div className={"MaterialDock__Dock"}>
-            <Flex vertical direction={"column-reverse"}>
+          <div className={'MaterialDock__Dock'}>
+            <Flex vertical direction={'column-reverse'}>
               <EjectButton
                 sheets={sheets}
                 amount={5}
@@ -154,10 +154,10 @@ const EjectButton = (props: EjectButtonProps) => {
   return (
     <Button
       fluid
-      color={"transparent"}
+      color={'transparent'}
       className={classes([
-        "Fabricator__PrintAmount",
-        amount > sheets && "Fabricator__PrintAmount--disabled",
+        'Fabricator__PrintAmount',
+        amount > sheets && 'Fabricator__PrintAmount--disabled',
       ])}
       onClick={() => onEject(amount)}
     >

@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -7,9 +7,9 @@ import {
   NumberInput,
   Section,
   Stack,
-} from "../components";
-import { NtosWindow } from "../layouts";
-import { AccessList } from "./common/AccessList";
+} from '../components';
+import { NtosWindow } from '../layouts';
+import { AccessList } from './common/AccessList';
 
 export const NtosCard = (props) => {
   return (
@@ -52,8 +52,8 @@ export const NtosCardContent = (props) => {
             <Button
               icon="question-circle"
               tooltip={
-                "Will attempt to apply all access for the template to the ID card.\n" +
-                "Does not use wildcards unless the template specifies them."
+                'Will attempt to apply all access for the template to the ID card.\n' +
+                'Does not use wildcards unless the template specifies them.'
               }
               tooltipPosition="left"
             />
@@ -80,11 +80,11 @@ export const NtosCardContent = (props) => {
                     content="Terminate Employment"
                     confirmContent="Fire Employee?"
                     color="bad"
-                    onClick={() => act("PRG_terminate")}
+                    onClick={() => act('PRG_terminate')}
                   />
                 }
                 accessMod={(ref, wildcard) =>
-                  act("PRG_access", {
+                  act('PRG_access', {
                     access_target: ref,
                     access_wildcard: wildcard,
                   })
@@ -112,21 +112,21 @@ const IdCardPage = (props) => {
 
   return (
     <Section
-      title={authenticatedUser ? "Modify ID" : "Login"}
+      title={authenticatedUser ? 'Modify ID' : 'Login'}
       buttons={
         <>
           <Button
             icon="print"
             content="Print"
             disabled={!has_id}
-            onClick={() => act("PRG_print")}
+            onClick={() => act('PRG_print')}
           />
           <Button
-            icon={authenticatedUser ? "sign-out-alt" : "sign-in-alt"}
-            content={authenticatedUser ? "Log Out" : "Log In"}
-            color={authenticatedUser ? "bad" : "good"}
+            icon={authenticatedUser ? 'sign-out-alt' : 'sign-in-alt'}
+            content={authenticatedUser ? 'Log Out' : 'Log In'}
+            color={authenticatedUser ? 'bad' : 'good'}
             onClick={() => {
-              act(authenticatedUser ? "PRG_logout" : "PRG_authenticate");
+              act(authenticatedUser ? 'PRG_logout' : 'PRG_authenticate');
             }}
           />
         </>
@@ -139,11 +139,11 @@ const IdCardPage = (props) => {
             ellipsis
             icon="eject"
             content={authIDName}
-            onClick={() => act("PRG_eject_id")}
+            onClick={() => act('PRG_eject_id')}
           />
         </Stack.Item>
         <Stack.Item width="100%" mt={1} ml={0}>
-          Login: {authenticatedUser || "-----"}
+          Login: {authenticatedUser || '-----'}
         </Stack.Item>
       </Stack>
       {!!(has_id && authenticatedUser) && (
@@ -155,7 +155,7 @@ const IdCardPage = (props) => {
                 width="100%"
                 value={id_owner}
                 onInput={(e, value) =>
-                  act("PRG_edit", {
+                  act('PRG_edit', {
                     name: value,
                   })
                 }
@@ -168,7 +168,7 @@ const IdCardPage = (props) => {
                 minValue={17}
                 maxValue={85}
                 onChange={(e, value) => {
-                  act("PRG_age", {
+                  act('PRG_age', {
                     id_age: value,
                   });
                 }}
@@ -183,7 +183,7 @@ const IdCardPage = (props) => {
                 mt={1}
                 value={id_rank}
                 onInput={(e, value) =>
-                  act("PRG_assign", {
+                  act('PRG_assign', {
                     assignment: value,
                   })
                 }
@@ -211,12 +211,12 @@ const TemplateDropdown = (props) => {
       <Stack.Item grow>
         <Dropdown
           width="100%"
-          displayText={"Select a template..."}
+          displayText={'Select a template...'}
           options={templateKeys.map((path) => {
             return templates[path];
           })}
           onSelected={(sel) =>
-            act("PRG_template", {
+            act('PRG_template', {
               name: sel,
             })
           }

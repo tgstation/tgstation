@@ -1,7 +1,7 @@
-import { useBackend, useLocalState } from "../backend";
-import { Box, LabeledList, Stack, Tabs, Tooltip } from "../components";
-import { Window } from "../layouts";
-import { getDangerLevel } from "./Uplink/calculateDangerLevel";
+import { useBackend, useLocalState } from '../backend';
+import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
+import { Window } from '../layouts';
+import { getDangerLevel } from './Uplink/calculateDangerLevel';
 
 type Objective = {
   name: string;
@@ -67,7 +67,7 @@ type SortingOption = {
 
 const sortingOptions: SortingOption[] = [
   {
-    name: "Minimum Progression",
+    name: 'Minimum Progression',
     sort: (a, b) => {
       if (a.progression_minimum < b.progression_minimum) {
         return -1;
@@ -78,7 +78,7 @@ const sortingOptions: SortingOption[] = [
     },
   },
   {
-    name: "Telecrystal Payout",
+    name: 'Telecrystal Payout',
     sort: (a, b) => {
       const telecrystalMeanA =
         (a.telecrystal_reward[0] + a.telecrystal_reward[1]) / 2;
@@ -93,7 +93,7 @@ const sortingOptions: SortingOption[] = [
     },
   },
   {
-    name: "Progression Payout",
+    name: 'Progression Payout',
     sort: (a, b) => {
       const progressionMeanA =
         (a.progression_reward[0] + a.progression_reward[1]) / 2;
@@ -108,7 +108,7 @@ const sortingOptions: SortingOption[] = [
     },
   },
   {
-    name: "Progression Payout + Min. Prog.",
+    name: 'Progression Payout + Min. Prog.',
     sort: (a, b) => {
       const progressionMeanA =
         (a.progression_reward[0] + a.progression_reward[1]) / 2 +
@@ -167,14 +167,14 @@ export const TraitorObjectiveDebug = (props) => {
     );
   }
   let objectivesToRender: Objective[] = [];
-  const [currentTab, setCurrentTab] = useLocalState("currentTab", "All");
+  const [currentTab, setCurrentTab] = useLocalState('currentTab', 'All');
   const [sortingFunc, setSortingFunc] = useLocalState(
-    "sortingFunc",
+    'sortingFunc',
     sortingOptions[0].name,
   );
   // true = ascending, false = descending
   const [sortDirection, setSortingDirection] = useLocalState(
-    "sortDirection",
+    'sortDirection',
     true,
   );
 
@@ -188,7 +188,7 @@ export const TraitorObjectiveDebug = (props) => {
 
   for (let index = 0; index < objective_data.length; index++) {
     const value = objective_data[index];
-    if (value.name !== currentTab && currentTab !== "All") {
+    if (value.name !== currentTab && currentTab !== 'All') {
       continue;
     }
     objectivesToRender = objectivesToRender.concat(
@@ -222,8 +222,8 @@ export const TraitorObjectiveDebug = (props) => {
             <Stack.Item>
               <Tabs height="100%" width="100%" fluid textAlign="center">
                 <Tabs.Tab
-                  selected={currentTab === "All"}
-                  onClick={() => setCurrentTab("All")}
+                  selected={currentTab === 'All'}
+                  onClick={() => setCurrentTab('All')}
                 >
                   All
                 </Tabs.Tab>
@@ -280,16 +280,16 @@ export const TraitorObjectiveDebug = (props) => {
                 content={
                   <Box>
                     <LabeledList>
-                      <LabeledList.Item label={"Key"}>
+                      <LabeledList.Item label={'Key'}>
                         {value.player}
                       </LabeledList.Item>
-                      <LabeledList.Item label={"Total PR"}>
+                      <LabeledList.Item label={'Total PR'}>
                         {Math.floor(value.progression_points / 600)} mins
                       </LabeledList.Item>
-                      <LabeledList.Item label={"Obj PR"}>
+                      <LabeledList.Item label={'Obj PR'}>
                         {Math.floor(
                           value.total_progression_from_objectives / 600,
-                        )}{" "}
+                        )}{' '}
                         mins
                       </LabeledList.Item>
                     </LabeledList>
@@ -361,7 +361,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
     (objective.progression_maximum / sizeLimit) * window.innerWidth
   }px`;
   if (objective.progression_maximum > sizeLimit) {
-    width = "100%";
+    width = '100%';
   }
   return (
     <Box
@@ -376,9 +376,9 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
       <Stack vertical width="100%">
         <Stack.Item
           style={{
-            textOverflow: "ellipsis",
-            whiteSpace: "nowrap",
-            overflow: "hidden",
+            textOverflow: 'ellipsis',
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
           }}
         >
           {objective.name}
@@ -405,7 +405,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
               (objective.progression_reward[1] / sizeLimit) * window.innerWidth
             }px`}
             style={{
-              whiteSpace: "nowrap",
+              whiteSpace: 'nowrap',
             }}
           >
             {objective.progression_reward[0] / 600}
@@ -420,7 +420,7 @@ const ObjectiveBox = (props: ObjectiveBoxProps) => {
             backgroundColor="red"
             width={`${objective.telecrystal_reward[1] * 10}px`}
             style={{
-              whiteSpace: "nowrap",
+              whiteSpace: 'nowrap',
             }}
           >
             {objective.telecrystal_reward[0]}

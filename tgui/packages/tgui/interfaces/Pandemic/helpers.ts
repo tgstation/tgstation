@@ -1,16 +1,16 @@
 /** Gives a color gradient based on the severity of the symptom. */
 export const getColor = (severity: number) => {
   if (severity <= -10) {
-    return "blue";
+    return 'blue';
   } else if (severity <= -5) {
-    return "darkturquoise";
+    return 'darkturquoise';
   } else if (severity <= 0) {
-    return "green";
+    return 'green';
   } else if (severity <= 7) {
-    return "yellow";
+    return 'yellow';
   } else if (severity <= 13) {
-    return "orange";
+    return 'orange';
   } else {
-    return "bad";
+    return 'bad';
   }
 };

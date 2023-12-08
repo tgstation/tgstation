@@ -1,5 +1,5 @@
-import { useBackend } from "../backend";
-import { UserDetails } from "./Vending";
+import { useBackend } from '../backend';
+import { UserDetails } from './Vending';
 import {
   BlockQuote,
   Box,
@@ -10,9 +10,9 @@ import {
   Section,
   Stack,
   TextArea,
-} from "../components";
-import { formatMoney } from "../format";
-import { Window } from "../layouts";
+} from '../components';
+import { formatMoney } from '../format';
+import { Window } from '../layouts';
 
 type Data = {
   accountName: string;
@@ -61,17 +61,17 @@ export const BountyBoardContent = (props) => {
     bountyText,
     user,
   } = data;
-  const color = "rgba(13, 13, 213, 0.7)";
-  const backColor = "rgba(50, 50, 170, 0.5)";
+  const color = 'rgba(13, 13, 213, 0.7)';
+  const backColor = 'rgba(50, 50, 170, 0.5)';
   return (
     <>
       <Section
-        title={"User Details"}
+        title={'User Details'}
         buttons={
           <Button
             icon="power-off"
             content="Reset Account"
-            onClick={() => act("clear")}
+            onClick={() => act('clear')}
           />
         }
       >
@@ -87,7 +87,7 @@ export const BountyBoardContent = (props) => {
                     {request.owner}
                   </Stack.Item>
                   <Stack.Item width="100px">
-                    {formatMoney(request.value) + " cr"}
+                    {formatMoney(request.value) + ' cr'}
                   </Stack.Item>
                   <Stack.Item>
                     <Button
@@ -96,7 +96,7 @@ export const BountyBoardContent = (props) => {
                       content="Apply"
                       disabled={request.owner === user.name}
                       onClick={() =>
-                        act("apply", {
+                        act('apply', {
                           request: request.acc_number,
                         })
                       }
@@ -107,7 +107,7 @@ export const BountyBoardContent = (props) => {
                       content="Delete"
                       color="red"
                       onClick={() =>
-                        act("deleteRequest", {
+                        act('deleteRequest', {
                           request: request.acc_number,
                         })
                       }
@@ -141,7 +141,7 @@ export const BountyBoardContent = (props) => {
                               icon="cash-register"
                               tooltip="Pay out to this applicant."
                               onClick={() =>
-                                act("payApplicant", {
+                                act('payApplicant', {
                                   applicant: applicant.requestee_id,
                                   request: request.acc_number,
                                 })
@@ -166,7 +166,7 @@ export const BountyBoardContent = (props) => {
                 backgroundColor="black"
                 textColor="white"
                 onChange={(e, value) =>
-                  act("bountyText", {
+                  act('bountyText', {
                     bountytext: value,
                   })
                 }
@@ -180,7 +180,7 @@ export const BountyBoardContent = (props) => {
                   value={bountyValue}
                   width="80px"
                   onChange={(e, value) =>
-                    act("bountyVal", {
+                    act('bountyVal', {
                       bountyval: value,
                     })
                   }
@@ -188,8 +188,8 @@ export const BountyBoardContent = (props) => {
                 <Button
                   icon="print"
                   content="Submit bounty"
-                  disabled={user.name === "Unknown"}
-                  onClick={() => act("createBounty")}
+                  disabled={user.name === 'Unknown'}
+                  onClick={() => act('createBounty')}
                 />
               </Box>
             </Section>

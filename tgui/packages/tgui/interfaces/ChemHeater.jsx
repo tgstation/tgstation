@@ -1,6 +1,6 @@
-import { round, toFixed } from "common/math";
-import { resolveAsset } from "../assets";
-import { useBackend } from "../backend";
+import { round, toFixed } from 'common/math';
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -12,10 +12,10 @@ import {
   RoundGauge,
   Section,
   Table,
-} from "../components";
-import { COLORS } from "../constants";
-import { Window } from "../layouts";
-import { BeakerContents } from "./common/BeakerContents";
+} from '../components';
+import { COLORS } from '../constants';
+import { Window } from '../layouts';
+import { BeakerContents } from './common/BeakerContents';
 
 export const ChemHeater = (props) => {
   const { act, data } = useBackend();
@@ -44,18 +44,18 @@ export const ChemHeater = (props) => {
           buttons={
             <Flex>
               <Button
-                icon={"question"}
+                icon={'question'}
                 selected={tutorialMessage}
-                content={"Help"}
+                content={'Help'}
                 left={-2}
-                tooltip={"Guides you through a tutorial reaction!"}
-                onClick={() => act("help")}
+                tooltip={'Guides you through a tutorial reaction!'}
+                onClick={() => act('help')}
               />
               <Button
-                icon={isActive ? "power-off" : "times"}
+                icon={isActive ? 'power-off' : 'times'}
                 selected={isActive}
-                content={isActive ? "On" : "Off"}
-                onClick={() => act("power")}
+                content={isActive ? 'On' : 'Off'}
+                onClick={() => act('power')}
               />
             </Flex>
           }
@@ -80,7 +80,7 @@ export const ChemHeater = (props) => {
                   minValue={1}
                   maxValue={10}
                   onDrag={(e, value) =>
-                    act("disp_vol", {
+                    act('disp_vol', {
                       target: value,
                     })
                   }
@@ -101,7 +101,7 @@ export const ChemHeater = (props) => {
                   minValue={0}
                   maxValue={1000}
                   onDrag={(e, value) =>
-                    act("temperature", {
+                    act('temperature', {
                       target: value,
                     })
                   }
@@ -112,12 +112,12 @@ export const ChemHeater = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <Button
-                  icon={"syringe"}
+                  icon={'syringe'}
                   disabled={!acidicBufferVol}
-                  tooltip={"Inject"}
-                  tooltipPosition={"left"}
+                  tooltip={'Inject'}
+                  tooltipPosition={'left'}
                   onClick={() =>
-                    act("acidBuffer", {
+                    act('acidBuffer', {
                       target: 1,
                     })
                   }
@@ -127,16 +127,16 @@ export const ChemHeater = (props) => {
                 color={COLORS.reagent.acidicbuffer}
                 textAlign="center"
               >
-                {acidicBufferVol + "u"}
+                {acidicBufferVol + 'u'}
               </Table.Cell>
               <Table.Cell>
                 <Button
-                  icon={"upload"}
-                  tooltip={"Draw all"}
-                  tooltipPosition={"top"}
+                  icon={'upload'}
+                  tooltip={'Draw all'}
+                  tooltipPosition={'top'}
                   disabled={acidicBufferVol === 100}
                   onClick={() =>
-                    act("acidBuffer", {
+                    act('acidBuffer', {
                       target: -100,
                     })
                   }
@@ -152,10 +152,10 @@ export const ChemHeater = (props) => {
                   {(isBeakerLoaded && (
                     <AnimatedNumber
                       value={currentTemp}
-                      format={(value) => toFixed(value) + " K"}
+                      format={(value) => toFixed(value) + ' K'}
                     />
                   )) ||
-                    "—"}
+                    '—'}
                 </Box>
               </Table.Cell>
               <Table.Cell collapsing color="label">
@@ -163,27 +163,27 @@ export const ChemHeater = (props) => {
               </Table.Cell>
               <Table.Cell>
                 <Button
-                  icon={"syringe"}
-                  tooltip={"Inject"}
-                  tooltipPosition={"left"}
+                  icon={'syringe'}
+                  tooltip={'Inject'}
+                  tooltipPosition={'left'}
                   disabled={!basicBufferVol}
                   onClick={() =>
-                    act("basicBuffer", {
+                    act('basicBuffer', {
                       target: 1,
                     })
                   }
                 />
               </Table.Cell>
               <Table.Cell color={COLORS.reagent.basicbuffer} textAlign="center">
-                {basicBufferVol + "u"}
+                {basicBufferVol + 'u'}
               </Table.Cell>
               <Table.Cell>
                 <Button
-                  icon={"upload"}
-                  tooltip={"Draw all"}
+                  icon={'upload'}
+                  tooltip={'Draw all'}
                   disabled={basicBufferVol === 100}
                   onClick={() =>
-                    act("basicBuffer", {
+                    act('basicBuffer', {
                       target: -100,
                     })
                   }
@@ -200,7 +200,7 @@ export const ChemHeater = (props) => {
                 <Flex.Item color="label">
                   <AnimatedNumber
                     value={currentpH}
-                    format={(value) => "pH: " + round(value, 3)}
+                    format={(value) => 'pH: ' + round(value, 3)}
                   />
                 </Flex.Item>
                 <Flex.Item>
@@ -210,8 +210,8 @@ export const ChemHeater = (props) => {
                     minValue={0}
                     maxValue={14}
                     alertAfter={isFlashing}
-                    content={"test"}
-                    format={() => ""}
+                    content={'test'}
+                    format={() => ''}
                     ranges={{
                       red: [-0.22, 1.5],
                       orange: [1.5, 3],
@@ -238,7 +238,7 @@ export const ChemHeater = (props) => {
                     Reaction
                   </Table.Cell>
                   <Table.Cell bold color="label">
-                    {upgradeLevel < 4 ? "Status" : "Reaction quality"}
+                    {upgradeLevel < 4 ? 'Status' : 'Reaction quality'}
                   </Table.Cell>
                   <Table.Cell bold color="label">
                     Target
@@ -246,16 +246,16 @@ export const ChemHeater = (props) => {
                 </Table.Row>
                 {activeReactions.map((reaction) => (
                   <Table.Row key="reactions">
-                    <Table.Cell width={"60px"} color={reaction.danger && "red"}>
+                    <Table.Cell width={'60px'} color={reaction.danger && 'red'}>
                       {reaction.name}
                     </Table.Cell>
-                    <Table.Cell width={"100px"} pr={"10px"}>
+                    <Table.Cell width={'100px'} pr={'10px'}>
                       {(upgradeLevel < 4 && (
                         <Icon
                           name={
-                            reaction.danger ? "exclamation-triangle" : "spinner"
+                            reaction.danger ? 'exclamation-triangle' : 'spinner'
                           }
-                          color={reaction.danger && "red"}
+                          color={reaction.danger && 'red'}
                           spin={!reaction.danger}
                           ml={2.5}
                         />
@@ -266,8 +266,8 @@ export const ChemHeater = (props) => {
                           minValue={0}
                           maxValue={1}
                           alertAfter={reaction.purityAlert}
-                          content={"test"}
-                          format={(value) => ""}
+                          content={'test'}
+                          format={(value) => ''}
                           ml={5}
                           ranges={{
                             red: [0, reaction.minPure],
@@ -278,21 +278,21 @@ export const ChemHeater = (props) => {
                         />
                       )}
                     </Table.Cell>
-                    <Table.Cell width={"70px"}>
+                    <Table.Cell width={'70px'}>
                       {(upgradeLevel > 2 && (
                         <ProgressBar
                           value={reaction.reactedVol}
                           minValue={0}
                           maxValue={reaction.targetVol}
-                          textAlign={"center"}
-                          icon={reaction.overheat && "thermometer-full"}
+                          textAlign={'center'}
+                          icon={reaction.overheat && 'thermometer-full'}
                           width={7}
-                          color={reaction.overheat ? "red" : "label"}
+                          color={reaction.overheat ? 'red' : 'label'}
                         >
                           {reaction.targetVol}u
                         </ProgressBar>
                       )) || (
-                        <Box color={reaction.danger && "red"} ml={2}>
+                        <Box color={reaction.danger && 'red'} ml={2}>
                           {reaction.targetVol}u
                         </Box>
                       )}
@@ -306,7 +306,7 @@ export const ChemHeater = (props) => {
         )}
         {tutorialMessage && (
           <Section title="Tutorial" preserveWhitespace>
-            <img src={resolveAsset("chem_help_advisor.gif")} width="30px" />
+            <img src={resolveAsset('chem_help_advisor.gif')} width="30px" />
             {tutorialMessage}
           </Section>
         )}
@@ -321,7 +321,7 @@ export const ChemHeater = (props) => {
                 <Button
                   icon="eject"
                   content="Eject"
-                  onClick={() => act("eject")}
+                  onClick={() => act('eject')}
                 />
               </>
             )

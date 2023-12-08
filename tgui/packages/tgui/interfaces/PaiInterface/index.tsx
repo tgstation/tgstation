@@ -1,14 +1,14 @@
-import { useLocalState } from "tgui/backend";
-import { Stack, Tabs } from "tgui/components";
-import { Window } from "tgui/layouts";
-import { PAI_TAB } from "./constants";
-import { AvailableDisplay } from "./Available";
-import { DirectiveDisplay } from "./Directives";
-import { InstalledDisplay } from "./Installed";
-import { SystemDisplay } from "./System";
+import { useLocalState } from 'tgui/backend';
+import { Stack, Tabs } from 'tgui/components';
+import { Window } from 'tgui/layouts';
+import { PAI_TAB } from './constants';
+import { AvailableDisplay } from './Available';
+import { DirectiveDisplay } from './Directives';
+import { InstalledDisplay } from './Installed';
+import { SystemDisplay } from './System';
 
 export const PaiInterface = (props) => {
-  const [tab] = useLocalState("tab", PAI_TAB.System);
+  const [tab] = useLocalState('tab', PAI_TAB.System);
 
   return (
     <Window title="pAI Software Interface v2.5" width={380} height={480}>
@@ -34,7 +34,7 @@ export const PaiInterface = (props) => {
  * and the buttons are on the bottom. Android!
  */
 const TabDisplay = (props) => {
-  const [tab, setTab] = useLocalState("tab", PAI_TAB.System);
+  const [tab, setTab] = useLocalState('tab', PAI_TAB.System);
 
   return (
     <Tabs fluid>

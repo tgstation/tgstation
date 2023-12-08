@@ -1,5 +1,5 @@
-import { capitalizeFirst, decodeHtmlEntities } from "common/string";
-import { useBackend } from "tgui/backend";
+import { capitalizeFirst, decodeHtmlEntities } from 'common/string';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Input,
@@ -7,9 +7,9 @@ import {
   Section,
   Stack,
   Tooltip,
-} from "tgui/components";
-import { getColor } from "./helpers";
-import { Data } from "./types";
+} from 'tgui/components';
+import { getColor } from './helpers';
+import { Data } from './types';
 
 /**
  * Displays info about the virus. Child elements display
@@ -48,9 +48,9 @@ const Info = (props) => {
         {can_rename ? (
           <Input
             placeholder="Input a name"
-            value={name === "Unknown" ? "" : name}
+            value={name === 'Unknown' ? '' : name}
             onChange={(_, value) =>
-              act("rename_disease", {
+              act('rename_disease', {
                 index: index,
                 name: value,
               })

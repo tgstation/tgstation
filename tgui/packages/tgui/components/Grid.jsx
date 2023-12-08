@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Table } from "./Table";
+import { Table } from './Table';
 
 /** @deprecated */
 export const Grid = (props) => {
@@ -22,7 +22,7 @@ export const GridColumn = (props) => {
   return (
     <Table.Cell
       style={{
-        width: size + "%",
+        width: size + '%',
         ...style,
       }}
       {...rest}

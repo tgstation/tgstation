@@ -1,5 +1,5 @@
-import { binaryInsertWith, sortBy } from "common/collections";
-import { useLocalState } from "../../backend";
+import { binaryInsertWith, sortBy } from 'common/collections';
+import { useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -11,9 +11,9 @@ import {
   Section,
   Stack,
   TrackOutsideClicks,
-} from "../../components";
-import { Name } from "./data";
-import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
+} from '../../components';
+import { Name } from './data';
+import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 type NameWithKey = {
   key: string;
@@ -32,7 +32,7 @@ export const MultiNameInput = (props: {
 }) => {
   const [currentlyEditingName, setCurrentlyEditingName] = useLocalState<
     string | null
-  >("currentlyEditingName", null);
+  >('currentlyEditingName', null);
 
   return (
     <ServerPreferencesFetcher
@@ -56,8 +56,8 @@ export const MultiNameInput = (props: {
         return (
           <Modal
             style={{
-              margin: "0 auto",
-              width: "40%",
+              margin: '0 auto',
+              width: '40%',
             }}
           >
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
@@ -159,7 +159,7 @@ export const NameInput = (props: {
 }) => {
   const [lastNameBeforeEdit, setLastNameBeforeEdit] = useLocalState<
     string | null
-  >("lastNameBeforeEdit", null);
+  >('lastNameBeforeEdit', null);
   const editing = lastNameBeforeEdit === props.name;
 
   const updateName = (e, value) => {
@@ -181,8 +181,8 @@ export const NameInput = (props: {
         <Stack.Item>
           <Icon
             style={{
-              color: "rgba(255, 255, 255, 0.5)",
-              fontSize: "17px",
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontSize: '17px',
             }}
             name="edit"
           />
@@ -207,12 +207,12 @@ export const NameInput = (props: {
 
           <Box
             style={{
-              borderBottom: "2px dotted rgba(255, 255, 255, 0.8)",
-              right: "50%",
-              transform: "translateX(50%)",
-              position: "absolute",
-              width: "90%",
-              bottom: "-1px",
+              borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+              right: '50%',
+              transform: 'translateX(50%)',
+              position: 'absolute',
+              width: '90%',
+              bottom: '-1px',
             }}
           />
         </Stack.Item>
@@ -227,12 +227,12 @@ export const NameInput = (props: {
                   tooltip="Alternate Names"
                   tooltipPosition="bottom"
                   style={{
-                    background: "rgba(0, 0, 0, 0.7)",
-                    position: "absolute",
-                    right: "2px",
-                    top: "50%",
-                    transform: "translateY(-50%)",
-                    width: "2%",
+                    background: 'rgba(0, 0, 0, 0.7)',
+                    position: 'absolute',
+                    right: '2px',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    width: '2%',
                   }}
                   onClick={(event) => {
                     props.openMultiNameInput();
@@ -246,9 +246,9 @@ export const NameInput = (props: {
                   <Icon
                     name="ellipsis-v"
                     style={{
-                      position: "relative",
-                      left: "1px",
-                      minWidth: "0px",
+                      position: 'relative',
+                      left: '1px',
+                      minWidth: '0px',
                     }}
                   />
                 </Button>

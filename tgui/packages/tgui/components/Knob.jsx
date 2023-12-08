@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { keyOfMatchingRange, scale } from "common/math";
-import { classes } from "common/react";
-import { computeBoxClassName, computeBoxProps } from "./Box";
-import { DraggableControl } from "./DraggableControl";
+import { keyOfMatchingRange, scale } from 'common/math';
+import { classes } from 'common/react';
+import { computeBoxClassName, computeBoxProps } from './Box';
+import { DraggableControl } from './DraggableControl';
 
 export const Knob = (props) => {
   const {
@@ -70,20 +70,20 @@ export const Knob = (props) => {
         );
         const scaledDisplayValue = scale(displayValue, minValue, maxValue);
         const effectiveColor =
-          color || keyOfMatchingRange(fillValue ?? value, ranges) || "default";
+          color || keyOfMatchingRange(fillValue ?? value, ranges) || 'default';
         const rotation = Math.min((scaledDisplayValue - 0.5) * 270, 225);
         return (
           <div
             className={classes([
-              "Knob",
-              "Knob--color--" + effectiveColor,
-              bipolar && "Knob--bipolar",
+              'Knob',
+              'Knob--color--' + effectiveColor,
+              bipolar && 'Knob--bipolar',
               className,
               computeBoxClassName(rest),
             ])}
             {...computeBoxProps({
               style: {
-                fontSize: size + "em",
+                fontSize: size + 'em',
                 ...style,
               },
               ...rest,

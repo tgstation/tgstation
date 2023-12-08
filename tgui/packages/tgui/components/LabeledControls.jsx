@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Flex } from "./Flex";
+import { Flex } from './Flex';
 
 export const LabeledControls = (props) => {
   const { children, wrap, ...rest } = props;

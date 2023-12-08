@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Button, LabeledList, ProgressBar, Section } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Button, LabeledList, ProgressBar, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   hasPowercell: BooleanLike;
@@ -26,20 +26,20 @@ export const Electrolyzer = (props) => {
                 icon="eject"
                 content="Eject Cell"
                 disabled={!hasPowercell || !open}
-                onClick={() => act("eject")}
+                onClick={() => act('eject')}
               />
               <Button
-                icon={on ? "power-off" : "times"}
-                content={on ? "On" : "Off"}
+                icon={on ? 'power-off' : 'times'}
+                content={on ? 'On' : 'Off'}
                 selected={on}
                 disabled={!hasPowercell && !anchored}
-                onClick={() => act("power")}
+                onClick={() => act('power')}
               />
             </>
           }
         >
           <LabeledList>
-            <LabeledList.Item label="Cell" color={!hasPowercell ? "bad" : ""}>
+            <LabeledList.Item label="Cell" color={!hasPowercell ? 'bad' : ''}>
               {(hasPowercell && (
                 <ProgressBar
                   value={powerLevel / 100}
@@ -50,7 +50,7 @@ export const Electrolyzer = (props) => {
                   }}
                 />
               )) ||
-                "None"}
+                'None'}
             </LabeledList.Item>
           </LabeledList>
         </Section>

@@ -8,7 +8,7 @@
  * @license MIT
  */
 
-import { map, reduce, zipWith } from "./collections";
+import { map, reduce, zipWith } from './collections';
 
 const ADD = (a, b) => a + b;
 const SUB = (a, b) => a - b;

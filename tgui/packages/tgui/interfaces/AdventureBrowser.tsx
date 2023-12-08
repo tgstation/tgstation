@@ -1,8 +1,8 @@
-import { useBackend, useLocalState } from "../backend";
-import { Button, Section, Box, NoticeBox, Table } from "../components";
-import { Window } from "../layouts";
-import { AdventureDataProvider, AdventureScreen } from "./ExodroneConsole";
-import { formatTime } from "../format";
+import { useBackend, useLocalState } from '../backend';
+import { Button, Section, Box, NoticeBox, Table } from '../components';
+import { Window } from '../layouts';
+import { AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
+import { formatTime } from '../format';
 
 type Adventure = {
   ref: string;
@@ -26,7 +26,7 @@ type AdventureBrowserData = AdventureDataProvider & {
 const AdventureList = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>();
   const [openAdventure, setOpenAdventure] = useLocalState<string | null>(
-    "openAdventure",
+    'openAdventure',
     null,
   );
 
@@ -46,7 +46,7 @@ const AdventureList = (props) => {
           <Table.Cell>
             <Button
               color="good"
-              onClick={() => act("play", { ref: adventure.ref })}
+              onClick={() => act('play', { ref: adventure.ref })}
               content="Play"
             />
           </Table.Cell>
@@ -61,7 +61,7 @@ const DebugPlayer = (props) => {
   return (
     <Section
       title="Playtest"
-      buttons={<Button onClick={() => act("end_play")}>End Playtest</Button>}
+      buttons={<Button onClick={() => act('end_play')}>End Playtest</Button>}
     >
       {data.delay_time > 0 ? (
         <Box>

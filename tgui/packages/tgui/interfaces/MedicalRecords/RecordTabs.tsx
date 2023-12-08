@@ -1,6 +1,6 @@
-import { filter, sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { useBackend, useLocalState } from "tgui/backend";
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Stack,
   Input,
@@ -10,10 +10,10 @@ import {
   Box,
   Icon,
   Button,
-} from "tgui/components";
-import { JOB2ICON } from "../common/JobToIcon";
-import { isRecordMatch } from "../SecurityRecords/helpers";
-import { MedicalRecord, MedicalRecordData } from "./types";
+} from 'tgui/components';
+import { JOB2ICON } from '../common/JobToIcon';
+import { isRecordMatch } from '../SecurityRecords/helpers';
+import { MedicalRecord, MedicalRecordData } from './types';
 
 /** Displays all found records. */
 export const MedicalRecordTabs = (props) => {
@@ -21,10 +21,10 @@ export const MedicalRecordTabs = (props) => {
   const { records = [], station_z } = data;
 
   const errorMessage = !records.length
-    ? "No records found."
-    : "No match. Refine your search.";
+    ? 'No records found.'
+    : 'No match. Refine your search.';
 
-  const [search, setSearch] = useLocalState("search", "");
+  const [search, setSearch] = useLocalState('search', '');
 
   const sorted: MedicalRecord[] = flow([
     filter((record: MedicalRecord) => isRecordMatch(record, search)),
@@ -69,7 +69,7 @@ export const MedicalRecordTabs = (props) => {
               content="Purge"
               icon="trash"
               disabled={!station_z}
-              onClick={() => act("purge_records")}
+              onClick={() => act('purge_records')}
               tooltip="Wipe all record data."
             />
           </Stack.Item>
@@ -83,7 +83,7 @@ export const MedicalRecordTabs = (props) => {
 const CrewTab = (props: { record: MedicalRecord }) => {
   const [selectedRecord, setSelectedRecord] = useLocalState<
     MedicalRecord | undefined
-  >("medicalRecord", undefined);
+  >('medicalRecord', undefined);
 
   const { act, data } = useBackend<MedicalRecordData>();
   const { assigned_view } = data;
@@ -96,7 +96,7 @@ const CrewTab = (props: { record: MedicalRecord }) => {
       setSelectedRecord(undefined);
     } else {
       setSelectedRecord(record);
-      act("view_record", { assigned_view: assigned_view, crew_ref: crew_ref });
+      act('view_record', { assigned_view: assigned_view, crew_ref: crew_ref });
     }
   };
 
@@ -108,7 +108,7 @@ const CrewTab = (props: { record: MedicalRecord }) => {
       selected={selectedRecord?.crew_ref === crew_ref}
     >
       <Box wrap>
-        <Icon name={JOB2ICON[rank] || "question"} /> {name}
+        <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>
   );

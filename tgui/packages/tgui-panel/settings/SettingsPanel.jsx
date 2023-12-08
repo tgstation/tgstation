@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { toFixed } from "common/math";
-import { useLocalState } from "tgui/backend";
-import { useDispatch, useSelector } from "tgui/backend";
+import { toFixed } from 'common/math';
+import { useLocalState } from 'tgui/backend';
+import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -21,24 +21,24 @@ import {
   Stack,
   Tabs,
   TextArea,
-} from "tgui/components";
-import { ChatPageSettings } from "../chat";
-import { rebuildChat, saveChatToDisk } from "../chat/actions";
-import { THEMES } from "../themes";
+} from 'tgui/components';
+import { ChatPageSettings } from '../chat';
+import { rebuildChat, saveChatToDisk } from '../chat/actions';
+import { THEMES } from '../themes';
 import {
   changeSettingsTab,
   updateSettings,
   addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
-} from "./actions";
-import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from "./constants";
+} from './actions';
+import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
 import {
   selectActiveTab,
   selectSettings,
   selectHighlightSettings,
   selectHighlightSettingById,
-} from "./selectors";
+} from './selectors';
 
 export const SettingsPanel = (props) => {
   const activeTab = useSelector(selectActiveTab);
@@ -67,9 +67,9 @@ export const SettingsPanel = (props) => {
         </Section>
       </Stack.Item>
       <Stack.Item grow={1} basis={0}>
-        {activeTab === "general" && <SettingsGeneral />}
-        {activeTab === "chatPage" && <ChatPageSettings />}
-        {activeTab === "textHighlight" && <TextHighlightSettings />}
+        {activeTab === 'general' && <SettingsGeneral />}
+        {activeTab === 'chatPage' && <ChatPageSettings />}
+        {activeTab === 'textHighlight' && <TextHighlightSettings />}
       </Stack.Item>
     </Stack>
   );
@@ -79,7 +79,7 @@ export const SettingsGeneral = (props) => {
   const { theme, fontFamily, fontSize, lineHeight } =
     useSelector(selectSettings);
   const dispatch = useDispatch();
-  const [freeFont, setFreeFont] = useLocalState("freeFont", false);
+  const [freeFont, setFreeFont] = useLocalState('freeFont', false);
   return (
     <Section>
       <LabeledList>
@@ -127,8 +127,8 @@ export const SettingsGeneral = (props) => {
             <Stack.Item>
               <Button
                 content="Custom font"
-                icon={freeFont ? "lock-open" : "lock"}
-                color={freeFont ? "good" : "bad"}
+                icon={freeFont ? 'lock-open' : 'lock'}
+                color={freeFont ? 'good' : 'bad'}
                 ml={1}
                 onClick={() => {
                   setFreeFont(!freeFont);
@@ -194,7 +194,7 @@ const TextHighlightSettings = (props) => {
             <TextHighlightSetting
               key={i}
               id={id}
-              mb={i + 1 === highlightSettings.length ? 0 : "10px"}
+              mb={i + 1 === highlightSettings.length ? 0 : '10px'}
             />
           ))}
           {highlightSettings.length < MAX_HIGHLIGHT_SETTINGS && (

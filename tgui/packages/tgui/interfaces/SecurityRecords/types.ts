@@ -1,4 +1,4 @@
-import { BooleanLike } from "common/react";
+import { BooleanLike } from 'common/react';
 
 export type SecurityRecordsData = {
   assigned_view: string;
@@ -45,7 +45,7 @@ export enum SECURETAB {
 }
 
 export enum PRINTOUT {
-  Missing = "missing",
-  Rapsheet = "rapsheet",
-  Wanted = "wanted",
+  Missing = 'missing',
+  Rapsheet = 'rapsheet',
+  Wanted = 'wanted',
 }

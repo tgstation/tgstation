@@ -5,9 +5,9 @@ import {
   Section,
   Stack,
   Tooltip,
-} from "tgui/components";
-import { getColor } from "./helpers";
-import { Threshold } from "./types";
+} from 'tgui/components';
+import { getColor } from './helpers';
+import { Threshold } from './types';
 
 /**
  * Similar to the virus info display.

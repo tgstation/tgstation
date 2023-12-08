@@ -1,7 +1,7 @@
-import { sortBy } from "../../common/collections";
-import { useBackend } from "../backend";
-import { Box, Button, LabeledList, Section, Table } from "../components";
-import { Window } from "../layouts";
+import { sortBy } from '../../common/collections';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 type FaxData = {
   faxes: FaxInfo[];
@@ -64,7 +64,7 @@ export const Fax = (props) => {
           title="Paper"
           buttons={
             <Button
-              onClick={() => act("remove")}
+              onClick={() => act('remove')}
               disabled={data.has_paper ? false : true}
             >
               Remove
@@ -94,7 +94,7 @@ export const Fax = (props) => {
                   disabled={!data.has_paper}
                   color={special.color}
                   onClick={() =>
-                    act("send_special", {
+                    act('send_special', {
                       id: special.fax_id,
                       name: special.fax_name,
                     })
@@ -108,9 +108,9 @@ export const Fax = (props) => {
                   key={fax.fax_id}
                   title={fax.fax_name}
                   disabled={!data.has_paper}
-                  color={fax.syndicate_network ? "red" : "blue"}
+                  color={fax.syndicate_network ? 'red' : 'blue'}
                   onClick={() =>
-                    act("send", {
+                    act('send', {
                       id: fax.fax_id,
                       name: fax.fax_name,
                     })
@@ -128,7 +128,7 @@ export const Fax = (props) => {
           title="History"
           buttons={
             <Button
-              onClick={() => act("history_clear")}
+              onClick={() => act('history_clear')}
               disabled={data.fax_history ? false : true}
             >
               Clear
@@ -143,7 +143,7 @@ export const Fax = (props) => {
                       {
                         <Box
                           color={
-                            history.history_type === "Send" ? "Green" : "Red"
+                            history.history_type === 'Send' ? 'Green' : 'Red'
                           }
                         >
                           {history.history_type}

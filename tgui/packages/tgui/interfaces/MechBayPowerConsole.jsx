@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Button,
@@ -6,8 +6,8 @@ import {
   NoticeBox,
   ProgressBar,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const MechBayPowerConsole = (props) => {
   const { act, data } = useBackend();
@@ -24,7 +24,7 @@ export const MechBayPowerConsole = (props) => {
             <Button
               icon="sync"
               content="Sync"
-              onClick={() => act("reconnect")}
+              onClick={() => act('reconnect')}
             />
           }
         >
@@ -59,7 +59,7 @@ export const MechBayPowerConsole = (props) => {
                     }}
                   >
                     <AnimatedNumber value={cell.charge} />
-                    {" / " + cell.maxcharge}
+                    {' / ' + cell.maxcharge}
                   </ProgressBar>
                 )}
             </LabeledList.Item>

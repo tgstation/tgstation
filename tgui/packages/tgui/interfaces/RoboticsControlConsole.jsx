@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -6,12 +6,12 @@ import {
   NoticeBox,
   Section,
   Tabs,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const RoboticsControlConsole = (props) => {
   const { act, data } = useBackend();
-  const [tab, setTab] = useSharedState("tab", 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const { can_hack, can_detonate, cyborgs = [], drones = [] } = data;
   return (
     <Window width={500} height={460}>
@@ -68,18 +68,18 @@ const Cyborgs = (props) => {
                 content="Hack"
                 color="bad"
                 onClick={() =>
-                  act("magbot", {
+                  act('magbot', {
                     ref: cyborg.ref,
                   })
                 }
               />
             )}
             <Button.Confirm
-              icon={cyborg.locked_down ? "unlock" : "lock"}
-              color={cyborg.locked_down ? "good" : "default"}
-              content={cyborg.locked_down ? "Release" : "Lockdown"}
+              icon={cyborg.locked_down ? 'unlock' : 'lock'}
+              color={cyborg.locked_down ? 'good' : 'default'}
+              content={cyborg.locked_down ? 'Release' : 'Lockdown'}
               onClick={() =>
-                act("stopbot", {
+                act('stopbot', {
                   ref: cyborg.ref,
                 })
               }
@@ -90,7 +90,7 @@ const Cyborgs = (props) => {
                 content="Detonate"
                 color="bad"
                 onClick={() =>
-                  act("killbot", {
+                  act('killbot', {
                     ref: cyborg.ref,
                   })
                 }
@@ -103,35 +103,35 @@ const Cyborgs = (props) => {
           <LabeledList.Item label="Status">
             <Box
               color={
-                cyborg.status ? "bad" : cyborg.locked_down ? "average" : "good"
+                cyborg.status ? 'bad' : cyborg.locked_down ? 'average' : 'good'
               }
             >
               {cyborg.status
-                ? "Not Responding"
+                ? 'Not Responding'
                 : cyborg.locked_down
-                  ? "Locked Down"
-                  : "Nominal"}
+                  ? 'Locked Down'
+                  : 'Nominal'}
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Charge">
             <Box
               color={
                 cyborg.charge <= 30
-                  ? "bad"
+                  ? 'bad'
                   : cyborg.charge <= 70
-                    ? "average"
-                    : "good"
+                    ? 'average'
+                    : 'good'
               }
             >
-              {typeof cyborg.charge === "number"
-                ? cyborg.charge + "%"
-                : "Not Found"}
+              {typeof cyborg.charge === 'number'
+                ? cyborg.charge + '%'
+                : 'Not Found'}
             </Box>
           </LabeledList.Item>
           <LabeledList.Item label="Model">{cyborg.module}</LabeledList.Item>
           <LabeledList.Item label="Master AI">
-            <Box color={cyborg.synchronization ? "default" : "average"}>
-              {cyborg.synchronization || "None"}
+            <Box color={cyborg.synchronization ? 'default' : 'average'}>
+              {cyborg.synchronization || 'None'}
             </Box>
           </LabeledList.Item>
         </LabeledList>
@@ -161,7 +161,7 @@ const Drones = (props) => {
             content="Detonate"
             color="bad"
             onClick={() =>
-              act("killdrone", {
+              act('killdrone', {
                 ref: drone.ref,
               })
             }
@@ -170,8 +170,8 @@ const Drones = (props) => {
       >
         <LabeledList>
           <LabeledList.Item label="Status">
-            <Box color={drone.status ? "bad" : "good"}>
-              {drone.status ? "Not Responding" : "Nominal"}
+            <Box color={drone.status ? 'bad' : 'good'}>
+              {drone.status ? 'Not Responding' : 'Nominal'}
             </Box>
           </LabeledList.Item>
         </LabeledList>

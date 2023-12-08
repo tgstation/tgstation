@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   Collapsible,
@@ -6,8 +6,8 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type LogViewerData = {
   round_id: number;
@@ -35,14 +35,14 @@ type LogEntryData = {
   data?: any[];
 };
 
-const CATEGORY_ALL = "all";
+const CATEGORY_ALL = 'all';
 
 export const LogViewer = (_: any) => {
   const { data, act } = useBackend<LogViewerData>();
 
   const [activeCategory, setActiveCategory] = useLocalState(
-    "activeCategory",
-    "",
+    'activeCategory',
+    '',
   );
 
   let viewerData: LogViewerCategoryData = {
@@ -69,7 +69,7 @@ export const LogViewer = (_: any) => {
     <Window width={720} height={720}>
       <Window.Content scrollable>
         <Section>
-          <Button icon="sync" onClick={() => act("refresh")} />
+          <Button icon="sync" onClick={() => act('refresh')} />
         </Section>
         <CategoryBar
           options={data.tree.enabled}
@@ -91,8 +91,8 @@ type CategoryBarProps = {
 const CategoryBar = (props: CategoryBarProps) => {
   const sorted = [...props.options].sort();
   const [categorySearch, setCategorySearch] = useLocalState(
-    "categorySearch",
-    "",
+    'categorySearch',
+    '',
   );
 
   return (
@@ -113,8 +113,8 @@ const CategoryBar = (props: CategoryBarProps) => {
         <Button
           textAlign="left"
           content="None"
-          selected={props.active === ""}
-          onClick={() => props.setActive("")}
+          selected={props.active === ''}
+          onClick={() => props.setActive('')}
         />
         <Button
           textAlign="left"
@@ -158,9 +158,9 @@ const validateRegExp = (str: string) => {
 };
 
 const CategoryViewer = (props: CategoryViewerProps) => {
-  const [search, setSearch] = useLocalState("search", "");
-  let [searchRegex, setSearchRegex] = useLocalState("searchRegex", false);
-  let [caseSensitive, setCaseSensitive] = useLocalState("caseSensitive", false);
+  const [search, setSearch] = useLocalState('search', '');
+  let [searchRegex, setSearchRegex] = useLocalState('searchRegex', false);
+  let [caseSensitive, setCaseSensitive] = useLocalState('caseSensitive', false);
   if (!search && searchRegex) {
     setSearchRegex(false);
     searchRegex = false;
@@ -175,7 +175,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
       title={`Category Viewer${
         props.activeCategory
           ? ` - ${props.activeCategory}[${props.data?.entry_count}]`
-          : " - Select a category"
+          : ' - Select a category'
       }`}
       buttons={
         <>
@@ -187,13 +187,13 @@ const CategoryViewer = (props: CategoryViewerProps) => {
             onChange={(_: any, value: string) => setSearch(value)}
           />
           <Button
-            icon={"code"}
+            icon={'code'}
             tooltip="RegEx Search"
             selected={searchRegex}
             onClick={() => setSearchRegex(!searchRegex)}
           />
           <Button
-            icon={"font"}
+            icon={'font'}
             selected={caseSensitive}
             tooltip="Case Sensitive"
             onClick={() => setCaseSensitive(!caseSensitive)}
@@ -203,7 +203,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
             tooltip="Clear Search"
             color="bad"
             onClick={() => {
-              setSearch("");
+              setSearch('');
               setSearchRegex(false);
             }}
           />
@@ -215,7 +215,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
           props.data?.entries.map((entry) => {
             if (search) {
               if (searchRegex) {
-                const regex = new RegExp(search, caseSensitive ? "g" : "gi");
+                const regex = new RegExp(search, caseSensitive ? 'g' : 'gi');
                 if (!regex.test(entry.message)) {
                   return null;
                 }

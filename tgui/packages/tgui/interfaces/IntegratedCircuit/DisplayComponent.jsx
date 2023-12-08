@@ -1,7 +1,7 @@
-import { Button, Stack, Box } from "../../components";
-import { Component, createRef } from "react";
-import { Port } from "./Port";
-import { noop } from "./constants";
+import { Button, Stack, Box } from '../../components';
+import { Component, createRef } from 'react';
+import { Port } from './Port';
+import { noop } from './constants';
 
 export class DisplayComponent extends Component {
   constructor(props) {
@@ -42,7 +42,7 @@ export class DisplayComponent extends Component {
       <Box {...rest}>
         <div ref={this.ref}>
           <Box
-            backgroundColor={component.color || "blue"}
+            backgroundColor={component.color || 'blue'}
             py={1}
             px={1}
             className="ObjectComponent__Titlebar"

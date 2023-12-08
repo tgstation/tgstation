@@ -1,5 +1,5 @@
-import { NtosWindow } from "../layouts";
-import { PowerMonitorContent } from "./PowerMonitor";
+import { NtosWindow } from '../layouts';
+import { PowerMonitorContent } from './PowerMonitor';
 
 export const NtosPowerMonitor = (props) => {
   return (

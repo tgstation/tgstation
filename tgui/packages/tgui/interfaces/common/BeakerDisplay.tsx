@@ -1,6 +1,6 @@
-import { BooleanLike } from "common/react";
-import { AnimatedNumber, Box, Button, LabeledList } from "../../components";
-import { useBackend } from "../../backend";
+import { BooleanLike } from 'common/react';
+import { AnimatedNumber, Box, Button, LabeledList } from '../../components';
+import { useBackend } from '../../backend';
 
 type BeakerReagent = {
   name: string;
@@ -33,7 +33,7 @@ export const BeakerDisplay = (props: BeakerProps) => {
         label="Beaker"
         buttons={
           !!beaker && (
-            <Button icon="eject" content="Eject" onClick={() => act("eject")} />
+            <Button icon="eject" content="Eject" onClick={() => act('eject')} />
           )
         }
       >
@@ -44,15 +44,15 @@ export const BeakerDisplay = (props: BeakerProps) => {
               {beaker.maxVolume} units
             </>
           )) ||
-          "No beaker"}
+          'No beaker'}
       </LabeledList.Item>
       <LabeledList.Item label="Contents">
         <Box color="label">
-          {(!beaker && "N/A") || (beakerContents.length === 0 && "Nothing")}
+          {(!beaker && 'N/A') || (beakerContents.length === 0 && 'Nothing')}
         </Box>
         {beakerContents.map((chemical) => (
           <Box key={chemical.name} color="label">
-            <AnimatedNumber initial={0} value={chemical.volume} /> units of{" "}
+            <AnimatedNumber initial={0} value={chemical.volume} /> units of{' '}
             {chemical.name}
           </Box>
         ))}

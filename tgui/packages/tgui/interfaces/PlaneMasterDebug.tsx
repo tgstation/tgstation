@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   InfinitePlane,
   Stack,
@@ -10,15 +10,15 @@ import {
   LabeledList,
   Tooltip,
   Slider,
-} from "../components";
-import { sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { classes, shallowDiffers } from "common/react";
-import { Component, createRef, RefObject } from "react";
-import { Window } from "../layouts";
-import { resolveAsset } from "../assets";
-import { MOUSE_BUTTON_LEFT, noop } from "./IntegratedCircuit/constants";
-import { Connection, Connections, Position } from "./common/Connections";
+} from '../components';
+import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { classes, shallowDiffers } from 'common/react';
+import { Component, createRef, RefObject } from 'react';
+import { Window } from '../layouts';
+import { resolveAsset } from '../assets';
+import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
+import { Connection, Connections, Position } from './common/Connections';
 
 enum ConnectionType {
   Relay,
@@ -126,9 +126,9 @@ type PlaneDebugData = {
 // Stolen wholesale from fontcode
 const textWidth = (text, font, fontsize) => {
   // default font height is 12 in tgui
-  font = fontsize + "x " + font;
-  const c = document.createElement("canvas");
-  const ctx = c.getContext("2d") as any;
+  font = fontsize + 'x ' + font;
+  const c = document.createElement('canvas');
+  const ctx = c.getContext('2d') as any;
   ctx.font = font;
   const width = ctx.measureText(text).width;
   return width;
@@ -204,13 +204,13 @@ const positionPlanes = (connectSources: AssocConnected) => {
   for (const ref of Object.keys(relay_info)) {
     let connection_source: Connected = relay_info[ref];
     connection_source.connect_type = ConnectionType.Relay;
-    connection_source.connect_color = "blue";
+    connection_source.connect_color = 'blue';
     connectSources[ref] = connection_source;
   }
   for (const ref of Object.keys(filter_connect)) {
     let connection_source: Connected = filter_connect[ref];
     connection_source.connect_type = ConnectionType.Filter;
-    connection_source.connect_color = "purple";
+    connection_source.connect_color = 'purple';
     connectSources[ref] = connection_source;
   }
 
@@ -297,7 +297,7 @@ const positionPlanes = (connectSources: AssocConnected) => {
       // We need to know how large node steps are for later
       plane.step_size = 19;
       plane.y = base_y;
-      const width = textWidth(plane.name, "", 16) + 30;
+      const width = textWidth(plane.name, '', 16) + 30;
       plane.size_x = width;
       plane.size_y = old_y - base_y;
       new_longest = Math.max(new_longest, width);
@@ -342,7 +342,7 @@ export class PlaneMasterDebug extends Component {
     event.preventDefault();
     if (connection.connect_type === ConnectionType.Relay) {
       // Close the connection
-      act("disconnect_relay", {
+      act('disconnect_relay', {
         source: connection.source_ref,
         target: connection.target_ref,
       });
@@ -359,7 +359,7 @@ export class PlaneMasterDebug extends Component {
     } else if (connection.connect_type === ConnectionType.Filter) {
       // Close the connection
       const filter = connection as Filter & Connected;
-      act("disconnect_filter", {
+      act('disconnect_filter', {
         target: filter.target_ref,
         name: filter.name,
       });
@@ -379,10 +379,10 @@ export class PlaneMasterDebug extends Component {
   render() {
     const { act, data } = useBackend<PlaneDebugData>();
     const { plane_info, mob_name } = data;
-    const [showAdd, setShowAdd] = useLocalState("showAdd", false);
+    const [showAdd, setShowAdd] = useLocalState('showAdd', false);
 
     const [connectSources, setConnectSouces] = useLocalState<AssocConnected>(
-      "connectionSources",
+      'connectionSources',
       {},
     );
 
@@ -403,16 +403,16 @@ export class PlaneMasterDebug extends Component {
     }
 
     return (
-      <Window width={1200} height={800} title={"Plane Debugging: " + mob_name}>
+      <Window width={1200} height={800} title={'Plane Debugging: ' + mob_name}>
         <Window.Content
           style={{
-            backgroundImage: "none",
+            backgroundImage: 'none',
           }}
         >
           <InfinitePlane
             width="100%"
             height="100%"
-            backgroundImage={resolveAsset("grid_background.png")}
+            backgroundImage={resolveAsset('grid_background.png')}
             imageWidth={900}
             initialLeft={800}
             initialTop={-740}
@@ -477,9 +477,9 @@ class PlaneMaster extends Component<PlaneMasterProps> {
       act = noop,
       ...rest
     } = this.props as PlaneMasterProps;
-    const [showAdd, setShowAdd] = useLocalState("showAdd", false);
-    const [currentPlane, setCurrentPlane] = useLocalState("currentPlane", {});
-    const [readPlane, setReadPlane] = useLocalState("readPlane", "");
+    const [showAdd, setShowAdd] = useLocalState('showAdd', false);
+    const [currentPlane, setCurrentPlane] = useLocalState('currentPlane', {});
+    const [readPlane, setReadPlane] = useLocalState('readPlane', '');
 
     // Assigned onto the ports
     const PortOptions = {
@@ -488,7 +488,7 @@ class PlaneMaster extends Component<PlaneMasterProps> {
     return (
       <Box position="absolute" left={`${x}px`} top={`${y}px`} {...rest}>
         <Box
-          backgroundColor={our_plane.intended_hidden ? "#191919" : "#000000"}
+          backgroundColor={our_plane.intended_hidden ? '#191919' : '#000000'}
           py={1}
           px={1}
           className="ObjectComponent__Titlebar"
@@ -504,8 +504,8 @@ class PlaneMaster extends Component<PlaneMasterProps> {
         <Box
           className={
             our_plane.intended_hidden
-              ? "ObjectComponent__Greyed_Content"
-              : "ObjectComponent__Content"
+              ? 'ObjectComponent__Greyed_Content'
+              : 'ObjectComponent__Content'
           }
           unselectable="on"
           py={1}
@@ -589,18 +589,18 @@ class Port extends Component<PortProps> {
     const { connection, isOutput, ...rest } = this.props as PortProps;
 
     return (
-      <Stack {...rest} justify={isOutput ? "flex-end" : "flex-start"}>
+      <Stack {...rest} justify={isOutput ? 'flex-end' : 'flex-start'}>
         <Stack.Item>
           <Box
-            className={classes(["ObjectComponent__Port"])}
+            className={classes(['ObjectComponent__Port'])}
             onMouseDown={this.handlePortMouseDown}
             textAlign="center"
           >
             <svg
               style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
               }}
               viewBox="0, 0, 100, 100"
             >
@@ -633,9 +633,9 @@ class Port extends Component<PortProps> {
 }
 
 const DrawAbovePlane = (props) => {
-  const [showAdd, setShowAdd] = useLocalState("showAdd", false);
-  const [showInfo, setShowInfo] = useLocalState("showInfo", false);
-  const [readPlane, setReadPlane] = useLocalState("readPlane", "");
+  const [showAdd, setShowAdd] = useLocalState('showAdd', false);
+  const [showInfo, setShowInfo] = useLocalState('showInfo', false);
+  const [readPlane, setReadPlane] = useLocalState('readPlane', '');
 
   const { act, data } = useBackend<PlaneDebugData>();
   // Plane groups don't use relays right now, because of a byond bug
@@ -664,7 +664,7 @@ const DrawAbovePlane = (props) => {
 const PlaneWindow = (props) => {
   const { data, act } = useBackend<PlaneDebugData>();
   const { plane_info } = data;
-  const [readPlane, setReadPlane] = useLocalState("readPlane", "");
+  const [readPlane, setReadPlane] = useLocalState('readPlane', '');
 
   const workingPlane: Plane = plane_info[readPlane];
 
@@ -680,7 +680,7 @@ const PlaneWindow = (props) => {
       height="100%"
       position="absolute"
       backgroundColor="#000000"
-      title={"Plane Master: " + workingPlane.name}
+      title={'Plane Master: ' + workingPlane.name}
       buttons={
         <>
           <ClosePlaneWindow />
@@ -742,7 +742,7 @@ const PlaneWindow = (props) => {
         <Button
           tooltip="Open this plane's VV menu"
           onClick={() =>
-            act("vv_plane", {
+            act('vv_plane', {
               edit: workingPlane.our_ref,
             })
           }
@@ -752,7 +752,7 @@ const PlaneWindow = (props) => {
         <Button
           tooltip="Apply and edit effects over the whole plane"
           onClick={() =>
-            act("edit_filters", {
+            act('edit_filters', {
               edit: workingPlane.our_ref,
             })
           }
@@ -762,7 +762,7 @@ const PlaneWindow = (props) => {
         <Button
           tooltip="Modify how different color components map to the final plane"
           onClick={() =>
-            act("edit_color_matrix", {
+            act('edit_color_matrix', {
               edit: workingPlane.our_ref,
             })
           }
@@ -776,13 +776,13 @@ const PlaneWindow = (props) => {
           step={1}
           stepPixelSize={1.9}
           onDrag={(e, value) =>
-            act("set_alpha", {
+            act('set_alpha', {
               edit: workingPlane.our_ref,
               alpha: value,
             })
           }
           onChange={(e, value) =>
-            act("set_alpha", {
+            act('set_alpha', {
               edit: workingPlane.our_ref,
               alpha: value,
             })
@@ -796,15 +796,15 @@ const PlaneWindow = (props) => {
 };
 
 const InfoButton = (props) => {
-  const [showInfo, setShowInfo] = useLocalState("showInfo", false);
+  const [showInfo, setShowInfo] = useLocalState('showInfo', false);
   const { no_position } = props;
   const foreign = has_foreign_mob();
 
   return (
     <Button
-      top={no_position ? "" : "30px"}
-      right={no_position ? "" : foreign ? "100px" : "76px"}
-      position={no_position ? "" : "absolute"}
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : foreign ? '100px' : '76px'}
+      position={no_position ? '' : 'absolute'}
       icon="exclamation"
       onClick={() => setShowInfo(true)}
       tooltip="Info about what this window is/why it exists"
@@ -821,12 +821,12 @@ const MobResetButton = (props): any => {
 
   return (
     <Button
-      top={no_position ? "" : "30px"}
-      right={no_position ? "" : "76px"}
-      position={no_position ? "" : "absolute"}
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : '76px'}
+      position={no_position ? '' : 'absolute'}
       color="bad"
       icon="power-off"
-      onClick={() => act("reset_mob")}
+      onClick={() => act('reset_mob')}
       tooltip="Reset our focused mob to your active mob"
     />
   );
@@ -839,14 +839,14 @@ const ToggleMirror = (props) => {
 
   return (
     <Button
-      top={no_position ? "" : "30px"}
-      right={no_position ? "" : "52px"}
-      position={no_position ? "" : "absolute"}
-      color={tracking_active ? "bad" : "good"}
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : '52px'}
+      position={no_position ? '' : 'absolute'}
+      color={tracking_active ? 'bad' : 'good'}
       icon="eye"
-      onClick={() => act("toggle_mirroring")}
+      onClick={() => act('toggle_mirroring')}
       tooltip={
-        (tracking_active ? "Disables" : "Enables") +
+        (tracking_active ? 'Disables' : 'Enables') +
         " seeing 'through' the edited mob's eyes, for debugging and such"
       }
     />
@@ -865,11 +865,11 @@ const VVButton = (props) => {
 
   return (
     <Button
-      top={no_position ? "" : "30px"}
-      right={no_position ? "" : "28px"}
-      position={no_position ? "" : "absolute"}
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : '28px'}
+      position={no_position ? '' : 'absolute'}
       icon="pen"
-      onClick={() => act("vv_mob")}
+      onClick={() => act('vv_mob')}
       tooltip="View the variables of our currently focused mob"
     />
   );
@@ -880,7 +880,7 @@ const GroupDropdown = (props) => {
   const { our_group, present_groups } = data;
 
   return (
-    <Box top={"30px"} left={"28px"} position={"absolute"}>
+    <Box top={'30px'} left={'28px'} position={'absolute'}>
       <Tooltip
         content="Plane masters are stored in groups, based off where they came from. MAIN is the main group, but if you open something that displays atoms in a new window, it'll show up here"
         position="right"
@@ -890,7 +890,7 @@ const GroupDropdown = (props) => {
           selected={our_group}
           displayText={our_group}
           onSelected={(value) =>
-            act("set_group", {
+            act('set_group', {
               target_group: value,
             })
           }
@@ -906,32 +906,32 @@ const RefreshButton = (props) => {
 
   return (
     <Button
-      top={no_position ? "" : "30px"}
-      right={no_position ? "" : "6px"}
-      position={no_position ? "" : "absolute"}
+      top={no_position ? '' : '30px'}
+      right={no_position ? '' : '6px'}
+      position={no_position ? '' : 'absolute'}
       icon="recycle"
-      onClick={() => act("refresh")}
+      onClick={() => act('refresh')}
       tooltip="Refreshes ALL plane masters. Kinda laggy, but useful"
     />
   );
 };
 
 const ClosePlaneWindow = (props) => {
-  const [readPlane, setReadPlane] = useLocalState("readPlane", "");
-  return <Button icon="times" onClick={() => setReadPlane("")} />;
+  const [readPlane, setReadPlane] = useLocalState('readPlane', '');
+  return <Button icon="times" onClick={() => setReadPlane('')} />;
 };
 
 const AddModal = (props) => {
   const { act, data } = useBackend<PlaneDebugData>();
   const { plane_info } = data;
 
-  const [showAdd, setShowAdd] = useLocalState("showAdd", false);
+  const [showAdd, setShowAdd] = useLocalState('showAdd', false);
   const [currentPlane, setCurrentPlane] = useLocalState<Plane>(
-    "currentPlane",
+    'currentPlane',
     {} as Plane,
   );
   const [currentTarget, setCurrentTarget] = useLocalState<Plane>(
-    "currentTarget",
+    'currentTarget',
     {} as Plane,
   );
 
@@ -942,10 +942,10 @@ const AddModal = (props) => {
 
   return (
     <Modal>
-      <Section fill title={"Add relay from " + currentPlane.name} pr="13px">
+      <Section fill title={'Add relay from ' + currentPlane.name} pr="13px">
         <Dropdown
           options={plane_options}
-          selected={currentTarget?.name || "planes"}
+          selected={currentTarget?.name || 'planes'}
           width="300px"
           onSelected={(value) => {
             setCurrentTarget(planes[plane_options.indexOf(value)]);
@@ -956,7 +956,7 @@ const AddModal = (props) => {
             <Button
               color="good"
               onClick={() => {
-                act("connect_relay", {
+                act('connect_relay', {
                   source: currentPlane.plane,
                   target: currentTarget.plane,
                 });
@@ -978,8 +978,8 @@ const AddModal = (props) => {
 };
 
 const InfoModal = (props) => {
-  const [showInfo, setShowInfo] = useLocalState("showInfo", false);
-  const pain = "";
+  const [showInfo, setShowInfo] = useLocalState('showInfo', false);
+  const pain = '';
   const display = {
     __html: pain,
   };
@@ -1018,7 +1018,7 @@ const InfoModal = (props) => {
         relays, and provides easy access to color matrix/filter/alpha/vv
         editing. <br />
         <br />
-        To start off with, each little circle represents a{" "}
+        To start off with, each little circle represents a{' '}
         <code>render_target</code> based connection.
         <br />
         Blue nodes are relays, so drawing one plane onto another. Purple ones
@@ -1036,7 +1036,7 @@ const InfoModal = (props) => {
         <br />
         Planes are aligned based off their initial setup. If you end up breaking
         things byond repair, or just want to reset things, you can hit the
-        recycle button in the top left to totally refresh your plane masters.{" "}
+        recycle button in the top left to totally refresh your plane masters.{' '}
         <br />
         <br />
         <h3>What is a plane master?</h3>
@@ -1045,7 +1045,7 @@ const InfoModal = (props) => {
         It is per client too, which makes it quite powerful. This is done using
         the <code>plane</code> variable of <code>/atom</code>. <br />
         <br />
-        We first create an atom with an appearance flag that contains{" "}
+        We first create an atom with an appearance flag that contains{' '}
         <code>PLANE_MASTER</code> and give it a <code>plane</code> value. <br />
         Then we mirror the same <code>plane</code> value on all the atoms we
         want to render in this group.
@@ -1080,11 +1080,11 @@ const InfoModal = (props) => {
         it to some <code>render_source</code>.<br />
         <br />
         If that <code>render_target</code> is preceeded by *, it will
-        <b>not</b> be drawn to the actual client view, and instead just relayed.{" "}
+        <b>not</b> be drawn to the actual client view, and instead just relayed.{' '}
         <br />
         <br />
         Ok so we can relay a plane master onto some other atom, but how do we
-        get it on another plane master? We can&apos;t just draw it with{" "}
+        get it on another plane master? We can&apos;t just draw it with{' '}
         <code>render_source</code>, since we might want to relay more then one
         plane master.
         <br />
@@ -1108,7 +1108,7 @@ const InfoModal = (props) => {
         <br />
         Can do more basic stuff too, setting a plane&apos;s color matrix can be
         quite powerful. <br />
-        Even just setting alpha to show and hide things can be quite useful.{" "}
+        Even just setting alpha to show and hide things can be quite useful.{' '}
         <br />
         <br />
         I won&apos;t get into every effect we do here, you can learn more about

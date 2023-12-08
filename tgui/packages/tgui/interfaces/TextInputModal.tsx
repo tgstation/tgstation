@@ -1,9 +1,9 @@
-import { Loader } from "./common/Loader";
-import { InputButtons } from "./common/InputButtons";
-import { useBackend, useLocalState } from "../backend";
-import { KEY_ENTER, KEY_ESCAPE } from "../../common/keycodes";
-import { Box, Section, Stack, TextArea } from "../components";
-import { Window } from "../layouts";
+import { Loader } from './common/Loader';
+import { InputButtons } from './common/InputButtons';
+import { useBackend, useLocalState } from '../backend';
+import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { Box, Section, Stack, TextArea } from '../components';
+import { Window } from '../layouts';
 
 type TextInputData = {
   large_buttons: boolean;
@@ -16,11 +16,11 @@ type TextInputData = {
 };
 
 export const sanitizeMultiline = (toSanitize: string) => {
-  return toSanitize.replace(/(\n|\r\n){3,}/, "\n\n");
+  return toSanitize.replace(/(\n|\r\n){3,}/, '\n\n');
 };
 
 export const removeAllSkiplines = (toSanitize: string) => {
-  return toSanitize.replace(/[\r\n]+/, "");
+  return toSanitize.replace(/[\r\n]+/, '');
 };
 
 export const TextInputModal = (props) => {
@@ -28,13 +28,13 @@ export const TextInputModal = (props) => {
   const {
     large_buttons,
     max_length,
-    message = "",
+    message = '',
     multiline,
     placeholder,
     timeout,
     title,
   } = data;
-  const [input, setInput] = useLocalState<string>("input", placeholder || "");
+  const [input, setInput] = useLocalState<string>('input', placeholder || '');
   const onType = (value: string) => {
     if (value === input) {
       return;
@@ -60,10 +60,10 @@ export const TextInputModal = (props) => {
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
           if (keyCode === KEY_ENTER && (!visualMultiline || !event.shiftKey)) {
-            act("submit", { entry: input });
+            act('submit', { entry: input });
           }
           if (keyCode === KEY_ESCAPE) {
-            act("cancel");
+            act('cancel');
           }
         }}
       >
@@ -100,15 +100,15 @@ const InputArea = (props) => {
     <TextArea
       autoFocus
       autoSelect
-      height={multiline || input.length >= 30 ? "100%" : "1.8rem"}
+      height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
-      onEscape={() => act("cancel")}
+      onEscape={() => act('cancel')}
       onEnter={(event) => {
         if (visualMultiline && event.shiftKey) {
           return;
         }
         event.preventDefault();
-        act("submit", { entry: input });
+        act('submit', { entry: input });
       }}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."

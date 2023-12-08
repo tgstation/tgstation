@@ -7,12 +7,12 @@ import {
   Modal,
   Tooltip,
   Icon,
-} from "../../components";
-import { Component, RefObject, createRef } from "react";
-import { NtMessage, NtMessenger, NtPicture } from "./types";
-import { BooleanLike } from "common/react";
-import { useBackend } from "../../backend";
-import { decodeHtmlEntities } from "common/string";
+} from '../../components';
+import { Component, RefObject, createRef } from 'react';
+import { NtMessage, NtMessenger, NtPicture } from './types';
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../../backend';
+import { decodeHtmlEntities } from 'common/string';
 
 type ChatScreenProps = {
   canReply: BooleanLike;
@@ -41,7 +41,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   scrollRef: RefObject<HTMLDivElement>;
 
   state: ChatScreenState = {
-    message: "",
+    message: '',
     selectingPhoto: false,
     canSend: true,
   };
@@ -85,7 +85,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
     this.tryClearReadTimeout();
 
-    act("PDA_saveMessageDraft", {
+    act('PDA_saveMessageDraft', {
       ref: this.props.chatRef,
       message: this.state.message,
     });
@@ -117,7 +117,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
   clearUnreads() {
     const { act } = useBackend();
 
-    act("PDA_clearUnreads", { ref: this.props.chatRef });
+    act('PDA_clearUnreads', { ref: this.props.chatRef });
   }
 
   scrollToBottom() {
@@ -131,14 +131,14 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
     const { isSilicon } = this.props;
     const { act } = useBackend();
     if (isSilicon) {
-      act("PDA_siliconSelectPhoto");
+      act('PDA_siliconSelectPhoto');
     } else {
       this.setState({ selectingPhoto: true });
     }
   }
 
   handleSendMessage() {
-    if (this.state.message === "") {
+    if (this.state.message === '') {
       return;
     }
 
@@ -147,12 +147,12 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
 
     let ref = chatRef ? chatRef : recipient.ref;
 
-    act("PDA_sendMessage", {
+    act('PDA_sendMessage', {
       ref: ref,
       message: this.state.message,
     });
 
-    this.setState({ message: "", canSend: false });
+    this.setState({ message: '', canSend: false });
     setTimeout(() => this.setState({ canSend: true }), SEND_COOLDOWN_MS);
   }
 
@@ -222,7 +222,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
             pt={1}
             selected={selectedPhoto === photo.path}
             onClick={() => {
-              act("PDA_selectPhoto", { uid: photo.uid });
+              act('PDA_selectPhoto', { uid: photo.uid });
               this.setState({ selectingPhoto: false });
             }}
           >
@@ -277,7 +277,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           </Stack.Item>
         </>
       ) : (
-        ""
+        ''
       );
 
       sendingBar = (
@@ -287,7 +287,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
               <Stack.Item>
                 <Button
                   pt={1}
-                  onClick={() => act("PDA_clearPhoto")}
+                  onClick={() => act('PDA_clearPhoto')}
                   tooltip="Remove attachment"
                   tooltipPosition="auto-end"
                 >
@@ -325,19 +325,19 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
           <Button
             icon="arrow-left"
             content="Back"
-            onClick={() => act("PDA_viewMessages", { ref: null })}
+            onClick={() => act('PDA_viewMessages', { ref: null })}
           />
           {chatRef && (
             <>
               <Button
                 icon="box-archive"
                 content="Close chat"
-                onClick={() => act("PDA_closeMessages", { ref: chatRef })}
+                onClick={() => act('PDA_closeMessages', { ref: chatRef })}
               />
               <Button.Confirm
                 icon="trash-can"
                 content="Delete chat"
-                onClick={() => act("PDA_clearMessages", { ref: chatRef })}
+                onClick={() => act('PDA_clearMessages', { ref: chatRef })}
               />
             </>
           )}
@@ -405,10 +405,10 @@ const ChatMessage = (props: ChatMessageProps) => {
   const displayMessage = decodeHtmlEntities(message);
 
   return (
-    <Box className={`NtosChatMessage${outgoing ? "_outgoing" : ""}`}>
+    <Box className={`NtosChatMessage${outgoing ? '_outgoing' : ''}`}>
       <Box className="NtosChatMessage__content">
         <Box as="span">{displayMessage}</Box>
-        <Tooltip content={timestamp} position={outgoing ? "left" : "right"}>
+        <Tooltip content={timestamp} position={outgoing ? 'left' : 'right'}>
           <Icon
             className="NtosChatMessage__timestamp"
             name="clock-o"

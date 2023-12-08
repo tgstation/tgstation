@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { map, zipWith } from "common/collections";
-import { Component, createRef, RefObject } from "react";
-import { Box, BoxProps } from "./Box";
+import { map, zipWith } from 'common/collections';
+import { Component, createRef, RefObject } from 'react';
+import { Box, BoxProps } from './Box';
 
 type Props = {
   data: number[][];
@@ -59,10 +59,10 @@ const normalizeData = (
 };
 
 const dataToPolylinePoints = (data) => {
-  let points = "";
+  let points = '';
   for (let i = 0; i < data.length; i++) {
     const point = data[i];
-    points += point[0] + "," + point[1] + " ";
+    points += point[0] + ',' + point[1] + ' ';
   }
   return points;
 };
@@ -82,12 +82,12 @@ class LineChart extends Component<Props> {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", this.handleResize);
+    window.addEventListener('resize', this.handleResize);
     this.handleResize();
   }
 
   componentWillUnmount() {
-    window.removeEventListener("resize", this.handleResize);
+    window.removeEventListener('resize', this.handleResize);
   }
 
   handleResize = () => {
@@ -105,8 +105,8 @@ class LineChart extends Component<Props> {
       data = [],
       rangeX,
       rangeY,
-      fillColor = "none",
-      strokeColor = "#ffffff",
+      fillColor = 'none',
+      strokeColor = '#ffffff',
       strokeWidth = 2,
       ...rest
     } = this.props;
@@ -122,7 +122,7 @@ class LineChart extends Component<Props> {
       normalized.push([-strokeWidth, first[1]]);
     }
     const points = dataToPolylinePoints(normalized);
-    const divProps = { ...rest, className: "", ref: this.ref };
+    const divProps = { ...rest, className: '', ref: this.ref };
 
     return (
       <Box position="relative" {...rest}>
@@ -131,12 +131,12 @@ class LineChart extends Component<Props> {
             viewBox={`0 0 ${viewBox[0]} ${viewBox[1]}`}
             preserveAspectRatio="none"
             style={{
-              position: "absolute",
+              position: 'absolute',
               top: 0,
               left: 0,
               right: 0,
               bottom: 0,
-              overflow: "hidden",
+              overflow: 'hidden',
             }}
           >
             <polyline

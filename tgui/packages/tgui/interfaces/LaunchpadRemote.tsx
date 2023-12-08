@@ -1,8 +1,8 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { NoticeBox } from "../components";
-import { Window } from "../layouts";
-import { LaunchpadControl } from "./LaunchpadConsole";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { NoticeBox } from '../components';
+import { Window } from '../layouts';
+import { LaunchpadControl } from './LaunchpadConsole';
 
 type Data = {
   has_pad: BooleanLike;

@@ -4,16 +4,16 @@
  * @license MIT
  */
 
-import DOMPurify from "dompurify";
-import { storage } from "common/storage";
+import DOMPurify from 'dompurify';
+import { storage } from 'common/storage';
 import {
   loadSettings,
   updateSettings,
   addHighlightSetting,
   removeHighlightSetting,
   updateHighlightSetting,
-} from "../settings/actions";
-import { selectSettings } from "../settings/selectors";
+} from '../settings/actions';
+import { selectSettings } from '../settings/selectors';
 import {
   addChatPage,
   changeChatPage,
@@ -24,14 +24,14 @@ import {
   saveChatToDisk,
   toggleAcceptedType,
   updateMessageCount,
-} from "./actions";
-import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from "./constants";
-import { createMessage, serializeMessage } from "./model";
-import { chatRenderer } from "./renderer";
-import { selectChat, selectCurrentChatPage } from "./selectors";
+} from './actions';
+import { MAX_PERSISTED_MESSAGES, MESSAGE_SAVE_INTERVAL } from './constants';
+import { createMessage, serializeMessage } from './model';
+import { chatRenderer } from './renderer';
+import { selectChat, selectCurrentChatPage } from './selectors';
 
 // List of blacklisted tags
-const FORBID_TAGS = ["a", "iframe", "link", "video"];
+const FORBID_TAGS = ['a', 'iframe', 'link', 'video'];
 
 const saveChatToStorage = async (store) => {
   const state = selectChat(store.getState());
@@ -42,14 +42,14 @@ const saveChatToStorage = async (store) => {
   const messages = chatRenderer.messages
     .slice(fromIndex)
     .map((message) => serializeMessage(message));
-  storage.set("chat-state", state);
-  storage.set("chat-messages", messages);
+  storage.set('chat-state', state);
+  storage.set('chat-messages', messages);
 };
 
 const loadChatFromStorage = async (store) => {
   const [state, messages] = await Promise.all([
-    storage.get("chat-state"),
-    storage.get("chat-messages"),
+    storage.get('chat-state'),
+    storage.get('chat-messages'),
   ]);
   // Discard incompatible versions
   if (state && state.version <= 4) {
@@ -67,7 +67,7 @@ const loadChatFromStorage = async (store) => {
     const batch = [
       ...messages,
       createMessage({
-        type: "internal/reconnected",
+        type: 'internal/reconnected',
       }),
     ];
     chatRenderer.processBatch(batch, {
@@ -82,7 +82,7 @@ export const chatMiddleware = (store) => {
   let loaded = false;
   const sequences = [];
   const sequences_requested = [];
-  chatRenderer.events.on("batchProcessed", (countByType) => {
+  chatRenderer.events.on('batchProcessed', (countByType) => {
     // Use this flag to workaround unread messages caused by
     // loading them from storage. Side effect of that, is that
     // message count can not be trusted, only unread count.
@@ -90,7 +90,7 @@ export const chatMiddleware = (store) => {
       store.dispatch(updateMessageCount(countByType));
     }
   });
-  chatRenderer.events.on("scrollTrackingChanged", (scrollTracking) => {
+  chatRenderer.events.on('scrollTrackingChanged', (scrollTracking) => {
     store.dispatch(changeScrollTracking(scrollTracking));
   });
   setInterval(() => {
@@ -102,7 +102,7 @@ export const chatMiddleware = (store) => {
       initialized = true;
       loadChatFromStorage(store);
     }
-    if (type === "chat/message") {
+    if (type === 'chat/message') {
       let payload_obj;
       try {
         payload_obj = JSON.parse(payload);
@@ -132,7 +132,7 @@ export const chatMiddleware = (store) => {
             requesting++
           ) {
             requested_sequences.push(requesting);
-            Byond.sendMessage("chat/resend", requesting);
+            Byond.sendMessage('chat/resend', requesting);
           }
         }
       }
@@ -180,7 +180,7 @@ export const chatMiddleware = (store) => {
 
       return;
     }
-    if (type === "roundrestart") {
+    if (type === 'roundrestart') {
       // Save chat as soon as possible
       saveChatToStorage(store);
       return next(action);

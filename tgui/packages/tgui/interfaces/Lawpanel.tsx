@@ -1,5 +1,5 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Button,
   Collapsible,
@@ -10,15 +10,15 @@ import {
   NoticeBox,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 const lawtype_to_color = {
-  inherent: "white",
-  supplied: "purple",
-  ion: "green",
-  hacked: "orange",
-  zeroth: "red",
+  inherent: 'white',
+  supplied: 'purple',
+  ion: 'green',
+  hacked: 'orange',
+  zeroth: 'red',
 } as const;
 
 const lawtype_to_tooltip = {
@@ -104,8 +104,8 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
         <>
           <LabeledList.Item
             key={index}
-            label={law.num >= 0 ? `${law.num}` : "?!$"}
-            color={lawtype_to_color[law.lawtype] || "pink"}
+            label={law.num >= 0 ? `${law.num}` : '?!$'}
+            color={lawtype_to_color[law.lawtype] || 'pink'}
             buttons={
               <Stack>
                 <Stack.Item>
@@ -117,7 +117,7 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                         that reason probably being "a bug".
                         Make an issue report with this please.`
                     }
-                    color={lawtype_to_color[law.lawtype] || "pink"}
+                    color={lawtype_to_color[law.lawtype] || 'pink'}
                   />
                 </Stack.Item>
                 <Stack.Item>
@@ -125,9 +125,9 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                     icon="trash"
                     confirmContent=""
                     confirmIcon="check"
-                    color={"red"}
+                    color={'red'}
                     onClick={() =>
-                      act("remove_law", {
+                      act('remove_law', {
                         ref: cyborg_ref,
                         law: law.law,
                         lawtype: law.lawtype,
@@ -138,10 +138,10 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                 <Stack.Item>
                   <Button
                     icon="pen-ruler"
-                    color={"green"}
-                    tooltip={"Edit the text of the law."}
+                    color={'green'}
+                    tooltip={'Edit the text of the law.'}
                     onClick={() =>
-                      act("edit_law_text", {
+                      act('edit_law_text', {
                         ref: cyborg_ref,
                         law: law.law,
                         lawtype: law.lawtype,
@@ -149,20 +149,20 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                     }
                   />
                 </Stack.Item>
-                {law.lawtype === "inherent" && (
+                {law.lawtype === 'inherent' && (
                   <>
                     <Stack.Item>
                       <Button
                         icon="arrow-up"
-                        color={"green"}
+                        color={'green'}
                         disabled={law.num === 1}
                         onClick={() =>
-                          act("move_law", {
+                          act('move_law', {
                             ref: cyborg_ref,
                             law: law.law,
                             // may seem confusing at a glance,
                             // but pressing up = actually moving it down.
-                            direction: "down",
+                            direction: 'down',
                           })
                         }
                       />
@@ -170,29 +170,29 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                     <Stack.Item>
                       <Button
                         icon="arrow-down"
-                        color={"green"}
-                        disabled={law.num === num_of_each_lawtype["inherent"]}
+                        color={'green'}
+                        disabled={law.num === num_of_each_lawtype['inherent']}
                         onClick={() =>
-                          act("move_law", {
+                          act('move_law', {
                             ref: cyborg_ref,
                             law: law.law,
                             // may seem confusing at a glance,
                             // but pressing down = actually moving it up.
-                            direction: "up",
+                            direction: 'up',
                           })
                         }
                       />
                     </Stack.Item>
                   </>
                 )}
-                {law.lawtype === "supplied" && (
+                {law.lawtype === 'supplied' && (
                   <Stack.Item>
                     <Button
                       icon="pen-to-square"
-                      color={"green"}
-                      tooltip={"Edit the priority of the law."}
+                      color={'green'}
+                      tooltip={'Edit the priority of the law.'}
                       onClick={() =>
-                        act("edit_law_prio", {
+                        act('edit_law_prio', {
                           ref: cyborg_ref,
                           law: law.law,
                         })
@@ -211,9 +211,9 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
       <LabeledList.Item label="???">
         <Button
           icon="plus"
-          color={"green"}
-          content={"Add Law"}
-          onClick={() => act("add_law", { ref: cyborg_ref })}
+          color={'green'}
+          content={'Add Law'}
+          onClick={() => act('add_law', { ref: cyborg_ref })}
         />
       </LabeledList.Item>
       <LabeledList.Divider />
@@ -229,7 +229,7 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
     <Flex>
       <Flex.Item grow>
         <Collapsible title={`${cyborg.borg_type}: ${cyborg.borg_name}`}>
-          <Section backgroundColor={"black"}>
+          <Section backgroundColor={'black'}>
             {cyborg.master_ai && !!cyborg.borg_synced && (
               <SyncedBorgDimmer master={cyborg.master_ai} />
             )}
@@ -243,7 +243,7 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
                     content={`This silicon has a null law datum. This isn't
                       supposed to ever happen! Issue report
                       and then click this this give them one.`}
-                    onClick={() => act("give_law_datum", { ref: cyborg.ref })}
+                    onClick={() => act('give_law_datum', { ref: cyborg.ref })}
                   />
                 ) : (
                   <LawPrintout lawset={cyborg.laws} cyborg_ref={cyborg.ref} />
@@ -254,23 +254,23 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
                   <Stack.Item>
                     <Button
                       icon="bullhorn"
-                      content={"Force State Laws"}
+                      content={'Force State Laws'}
                       tooltip={`Forces the silicon to state laws.
                         Only states inherent / core laws.`}
                       onClick={() =>
-                        act("force_state_laws", { ref: cyborg.ref })
+                        act('force_state_laws', { ref: cyborg.ref })
                       }
                     />
                   </Stack.Item>
                   <Stack.Item>
                     <Button
                       icon="message"
-                      content={"Privately Announce Laws"}
+                      content={'Privately Announce Laws'}
                       tooltip={`Displays all of the silicon's laws
                         in their chat box. Also shows to all
                         linked cyborgs for AIs.`}
                       onClick={() =>
-                        act("announce_law_changes", { ref: cyborg.ref })
+                        act('announce_law_changes', { ref: cyborg.ref })
                       }
                     />
                   </Stack.Item>
@@ -282,7 +282,7 @@ export const SiliconReadout = (props: { cyborg: Silicon }) => {
                         laws have been updated. Also displays the laws in chat
                         and alerts deadchat.`}
                       onClick={() =>
-                        act("laws_updated_alert", { ref: cyborg.ref })
+                        act('laws_updated_alert', { ref: cyborg.ref })
                       }
                     />
                   </Stack.Item>
@@ -311,7 +311,7 @@ export const Lawpanel = (props) => {
             <Button
               icon="robot"
               content="Logs"
-              onClick={() => act("lawchange_logs")}
+              onClick={() => act('lawchange_logs')}
             />
           }
         >

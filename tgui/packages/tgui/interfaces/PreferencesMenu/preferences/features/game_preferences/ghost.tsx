@@ -1,4 +1,4 @@
-import { multiline } from "common/string";
+import { multiline } from 'common/string';
 import {
   CheckboxInput,
   FeatureChoiced,
@@ -6,18 +6,18 @@ import {
   FeatureDropdownInput,
   FeatureToggle,
   FeatureValueProps,
-} from "../base";
-import { Box, Dropdown, Flex } from "../../../../../components";
-import { classes } from "common/react";
-import { ReactNode } from "react";
-import { binaryInsertWith } from "common/collections";
-import { useBackend } from "../../../../../backend";
-import { PreferencesMenuData } from "../../../data";
+} from '../base';
+import { Box, Dropdown, Flex } from '../../../../../components';
+import { classes } from 'common/react';
+import { ReactNode } from 'react';
+import { binaryInsertWith } from 'common/collections';
+import { useBackend } from '../../../../../backend';
+import { PreferencesMenuData } from '../../../data';
 
 export const ghost_accs: FeatureChoiced = {
-  name: "Ghost accessories",
-  category: "GHOST",
-  description: "Determines what adjustments your ghost will have.",
+  name: 'Ghost accessories',
+  category: 'GHOST',
+  description: 'Determines what adjustments your ghost will have.',
   component: FeatureDropdownInput,
 };
 
@@ -68,7 +68,7 @@ const GhostFormInput = (
     };
 
     // Put the default ghost on top
-    if (name === "ghost") {
+    if (name === 'ghost') {
       options.unshift(optionEntry);
     } else {
       options = insertGhostForm(options, optionEntry);
@@ -88,22 +88,22 @@ const GhostFormInput = (
 };
 
 export const ghost_form: FeatureChoiced = {
-  name: "Ghosts form",
-  category: "GHOST",
-  description: "The appearance of your ghost. Requires BYOND membership.",
+  name: 'Ghosts form',
+  category: 'GHOST',
+  description: 'The appearance of your ghost. Requires BYOND membership.',
   component: GhostFormInput,
 };
 
 export const ghost_hud: FeatureToggle = {
-  name: "Ghost HUD",
-  category: "GHOST",
-  description: "Enable HUD buttons for ghosts.",
+  name: 'Ghost HUD',
+  category: 'GHOST',
+  description: 'Enable HUD buttons for ghosts.',
   component: CheckboxInput,
 };
 
 export const ghost_orbit: FeatureChoiced = {
-  name: "Ghost orbit",
-  category: "GHOST",
+  name: 'Ghost orbit',
+  category: 'GHOST',
   description: multiline`
     The shape in which your ghost will orbit.
     Requires BYOND membership.
@@ -120,8 +120,8 @@ export const ghost_orbit: FeatureChoiced = {
 };
 
 export const ghost_others: FeatureChoiced = {
-  name: "Ghosts of others",
-  category: "GHOST",
+  name: 'Ghosts of others',
+  category: 'GHOST',
   description: multiline`
     Do you want the ghosts of others to show up as their own setting, as
     their default sprites, or always as the default white ghost?
@@ -130,15 +130,15 @@ export const ghost_others: FeatureChoiced = {
 };
 
 export const inquisitive_ghost: FeatureToggle = {
-  name: "Ghost inquisitiveness",
-  category: "GHOST",
-  description: "Clicking on something as a ghost will examine it.",
+  name: 'Ghost inquisitiveness',
+  category: 'GHOST',
+  description: 'Clicking on something as a ghost will examine it.',
   component: CheckboxInput,
 };
 
 export const ghost_roles: FeatureToggle = {
-  name: "Get ghost roles",
-  category: "GHOST",
+  name: 'Get ghost roles',
+  category: 'GHOST',
   description: multiline`
     If you de-select this, you will not get any ghost role pop-ups what-so-ever!
     Every single type of these pop-ups WILL be muted for you when you are

@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { resolveAsset } from "../assets";
-import { useBackend } from "../backend";
-import { Box, Button } from "../components";
-import { Window } from "./Window";
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
+import { Box, Button } from '../components';
+import { Window } from './Window';
 
 export const NtosWindow = (props) => {
   const { title, width = 575, height = 700, children } = props;
@@ -40,7 +40,7 @@ export const NtosWindow = (props) => {
               {PC_stationtime}
             </Box>
             <Box inline italic mr={2} opacity={0.33}>
-              {(PC_device_theme === "syndicate" && "Syndix") || "NtOS"}
+              {(PC_device_theme === 'syndicate' && 'Syndix') || 'NtOS'}
             </Box>
           </div>
           <div className="NtosHeader__right">
@@ -78,7 +78,7 @@ export const NtosWindow = (props) => {
                 icon="window-minimize-o"
                 tooltip="Minimize"
                 tooltipPosition="bottom"
-                onClick={() => act("PC_minimize")}
+                onClick={() => act('PC_minimize')}
               />
             )}
             {!!PC_showexitprogram && (
@@ -91,7 +91,7 @@ export const NtosWindow = (props) => {
                 icon="window-close-o"
                 tooltip="Close"
                 tooltipPosition="bottom-start"
-                onClick={() => act("PC_exit")}
+                onClick={() => act('PC_exit')}
               />
             )}
             {!PC_showexitprogram && (
@@ -104,7 +104,7 @@ export const NtosWindow = (props) => {
                 icon="power-off"
                 tooltip="Power off"
                 tooltipPosition="bottom-start"
-                onClick={() => act("PC_shutdown")}
+                onClick={() => act('PC_shutdown')}
               />
             )}
           </div>

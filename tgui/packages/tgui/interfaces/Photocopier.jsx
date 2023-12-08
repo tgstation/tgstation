@@ -1,5 +1,5 @@
-import { sortBy } from "common/collections";
-import { useBackend } from "../backend";
+import { sortBy } from 'common/collections';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,8 +8,8 @@ import {
   NumberInput,
   ProgressBar,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const Photocopier = (props) => {
   const { data } = useBackend();
@@ -71,7 +71,7 @@ const Toner = (props) => {
     <Section
       title="Toner"
       buttons={
-        <Button onClick={() => act("remove_toner")} icon="eject">
+        <Button onClick={() => act('remove_toner')} icon="eject">
           Eject
         </Button>
       }
@@ -111,7 +111,7 @@ const Options = (props) => {
             maxValue={10}
             value={num_copies}
             onDrag={(e, value) =>
-              act("set_copies", {
+              act('set_copies', {
                 num_copies: value,
               })
             }
@@ -122,7 +122,7 @@ const Options = (props) => {
             ml={0.2}
             icon="copy"
             textAlign="center"
-            onClick={() => act("make_copy")}
+            onClick={() => act('make_copy')}
           >
             Copy
           </Button>
@@ -134,10 +134,10 @@ const Options = (props) => {
             <Button
               fluid
               textAlign="center"
-              selected={color_mode === "Greyscale"}
+              selected={color_mode === 'Greyscale'}
               onClick={() =>
-                act("color_mode", {
-                  mode: "Greyscale",
+                act('color_mode', {
+                  mode: 'Greyscale',
                 })
               }
             >
@@ -148,10 +148,10 @@ const Options = (props) => {
             <Button
               fluid
               textAlign="center"
-              selected={color_mode === "Color"}
+              selected={color_mode === 'Color'}
               onClick={() =>
-                act("color_mode", {
-                  mode: "Color",
+                act('color_mode', {
+                  mode: 'Color',
                 })
               }
             >
@@ -165,7 +165,7 @@ const Options = (props) => {
         textAlign="center"
         icon="reply"
         fluid
-        onClick={() => act("remove")}
+        onClick={() => act('remove')}
       >
         Remove item
       </Button>
@@ -191,7 +191,7 @@ const Blanks = (props) => {
         options={categories}
         selected={selectedCategory}
         onSelected={(value) =>
-          act("choose_category", {
+          act('choose_category', {
             category: value,
           })
         }
@@ -202,7 +202,7 @@ const Blanks = (props) => {
             key={blank.code}
             title={blank.name}
             onClick={() =>
-              act("print_blank", {
+              act('print_blank', {
                 code: blank.code,
               })
             }
@@ -227,7 +227,7 @@ const AIOptions = (props) => {
           icon="images"
           textAlign="center"
           disabled={!can_AI_print}
-          onClick={() => act("ai_photo")}
+          onClick={() => act('ai_photo')}
         >
           Print photo from database
         </Button>

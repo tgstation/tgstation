@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Button, NoticeBox, Section, Table } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Button, NoticeBox, Section, Table } from '../components';
+import { Window } from '../layouts';
 
 type Item = {
   name: string;
@@ -26,10 +26,10 @@ export const SmartVend = (props) => {
           buttons={
             !!data.isdryer && (
               <Button
-                icon={data.drying ? "stop" : "tint"}
-                onClick={() => act("Dry")}
+                icon={data.drying ? 'stop' : 'tint'}
+                onClick={() => act('Dry')}
               >
-                {data.drying ? "Stop drying" : "Dry"}
+                {data.drying ? 'Stop drying' : 'Dry'}
               </Button>
             )
           }
@@ -42,7 +42,7 @@ export const SmartVend = (props) => {
                 <Table.Cell>Item</Table.Cell>
                 <Table.Cell collapsing />
                 <Table.Cell collapsing textAlign="center">
-                  {data.isdryer ? "Take" : "Dispense"}
+                  {data.isdryer ? 'Take' : 'Dispense'}
                 </Table.Cell>
               </Table.Row>
               {Object.values(contents).map((value, key) => (
@@ -56,7 +56,7 @@ export const SmartVend = (props) => {
                       content="One"
                       disabled={value.amount < 1}
                       onClick={() =>
-                        act("Release", {
+                        act('Release', {
                           name: value.name,
                           amount: 1,
                         })
@@ -66,7 +66,7 @@ export const SmartVend = (props) => {
                       content="Many"
                       disabled={value.amount <= 1}
                       onClick={() =>
-                        act("Release", {
+                        act('Release', {
                           name: value.name,
                         })
                       }

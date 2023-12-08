@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from "../backend";
-import { Window } from "../layouts";
+import { useBackend, useLocalState } from '../backend';
+import { Window } from '../layouts';
 import {
   BlockQuote,
   Button,
@@ -10,8 +10,8 @@ import {
   Section,
   Stack,
   Tabs,
-} from "../components";
-import { sortBy } from "common/collections";
+} from '../components';
+import { sortBy } from 'common/collections';
 
 type Data = {
   records: WarrantRecord[];
@@ -35,7 +35,7 @@ type Citation = {
 
 export const WarrantConsole = (props) => {
   const [selectedRecord] = useLocalState<WarrantRecord | undefined>(
-    "warrantRecord",
+    'warrantRecord',
     undefined,
   );
 
@@ -65,7 +65,7 @@ const RecordList = (props) => {
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     WarrantRecord | undefined
-  >("warrantRecord", undefined);
+  >('warrantRecord', undefined);
 
   const selectHandler = (record: WarrantRecord) => {
     if (selectedRecord?.crew_ref === record.crew_ref) {
@@ -80,7 +80,7 @@ const RecordList = (props) => {
       buttons={
         <Button
           icon="sync"
-          onClick={() => act("refresh")}
+          onClick={() => act('refresh')}
           tooltip="Refresh"
           tooltipPosition="bottom-start"
         />
@@ -143,7 +143,7 @@ const CitationManager = (props) => {
 
   const { crew_ref } = foundRecord;
 
-  const [paying, setPaying] = useLocalState("citationAmount", 5);
+  const [paying, setPaying] = useLocalState('citationAmount', 5);
 
   return (
     <Collapsible
@@ -152,7 +152,7 @@ const CitationManager = (props) => {
           disabled={fine <= 0}
           icon="print"
           onClick={() =>
-            act("print", { crew_ref: crew_ref, fine_ref: fine_ref })
+            act('print', { crew_ref: crew_ref, fine_ref: fine_ref })
           }
         >
           Print
@@ -180,7 +180,7 @@ const CitationManager = (props) => {
             <Button.Confirm
               content="Pay"
               onClick={() =>
-                act("pay", {
+                act('pay', {
                   amount: paying,
                   crew_ref: crew_ref,
                   fine_ref: fine_ref,
@@ -197,7 +197,7 @@ const CitationManager = (props) => {
 /** We need an active reference and this a pain to rewrite */
 export const getCurrentRecord = () => {
   const [selectedRecord] = useLocalState<WarrantRecord | undefined>(
-    "warrantRecord",
+    'warrantRecord',
     undefined,
   );
   if (!selectedRecord) return;
@@ -215,12 +215,12 @@ export const getCurrentRecord = () => {
 export const getFineColor = (fine: number) => {
   switch (true) {
     case fine > 700:
-      return "bad";
+      return 'bad';
     case fine > 300:
-      return "average";
+      return 'average';
     case fine === 0:
-      return "grey";
+      return 'grey';
     default:
-      return "";
+      return '';
   }
 };

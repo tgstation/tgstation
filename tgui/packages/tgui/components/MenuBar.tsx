@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { classes } from "common/react";
-import { Component, createRef, ReactNode, RefObject } from "react";
-import { Box } from "./Box";
-import { logger } from "../logging";
-import { Icon } from "./Icon";
+import { classes } from 'common/react';
+import { Component, createRef, ReactNode, RefObject } from 'react';
+import { Box } from './Box';
+import { logger } from '../logging';
+import { Icon } from './Icon';
 
 type MenuProps = {
   children: any;
@@ -39,18 +39,18 @@ class Menu extends Component<MenuProps> {
 
   // eslint-disable-next-line react/no-deprecated
   componentWillMount() {
-    window.addEventListener("click", this.handleClick);
+    window.addEventListener('click', this.handleClick);
   }
 
   componentWillUnmount() {
-    window.removeEventListener("click", this.handleClick);
+    window.removeEventListener('click', this.handleClick);
   }
 
   render() {
     const { width, children } = this.props;
     return (
       <div
-        className={"MenuBar__menu"}
+        className={'MenuBar__menu'}
         style={{
           width: width,
         }}
@@ -100,9 +100,9 @@ class MenuBarButton extends Component<MenuBarDropdownProps> {
       <div ref={this.menuRef}>
         <Box
           className={classes([
-            "MenuBar__MenuBarButton",
-            "MenuBar__font",
-            "MenuBar__hover",
+            'MenuBar__MenuBarButton',
+            'MenuBar__font',
+            'MenuBar__hover',
             className,
           ])}
           {...rest}
@@ -184,10 +184,10 @@ const MenuItemToggle = (props) => {
   return (
     <Box
       className={classes([
-        "MenuBar__font",
-        "MenuBar__MenuItem",
-        "MenuBar__MenuItemToggle",
-        "MenuBar__hover",
+        'MenuBar__font',
+        'MenuBar__MenuItem',
+        'MenuBar__MenuItemToggle',
+        'MenuBar__hover',
       ])}
       onClick={() => onClick(value)}
     >
@@ -206,9 +206,9 @@ const MenuItem = (props) => {
   return (
     <Box
       className={classes([
-        "MenuBar__font",
-        "MenuBar__MenuItem",
-        "MenuBar__hover",
+        'MenuBar__font',
+        'MenuBar__MenuItem',
+        'MenuBar__hover',
       ])}
       onClick={() => onClick(value)}
     >

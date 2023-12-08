@@ -4,23 +4,23 @@
  * @license MIT
  */
 
-import { Window } from "./layouts";
-import { useBackend } from "./backend";
-import { LoadingScreen } from "./interfaces/common/LoadingToolbox";
+import { Window } from './layouts';
+import { useBackend } from './backend';
+import { LoadingScreen } from './interfaces/common/LoadingToolbox';
 
-const requireInterface = require.context("./interfaces");
+const requireInterface = require.context('./interfaces');
 
 const routingError =
-  (type: "notFound" | "missingExport", name: string) => () => {
+  (type: 'notFound' | 'missingExport', name: string) => () => {
     return (
       <Window>
         <Window.Content scrollable>
-          {type === "notFound" && (
+          {type === 'notFound' && (
             <div>
               Interface <b>{name}</b> was not found.
             </div>
           )}
-          {type === "missingExport" && (
+          {type === 'missingExport' && (
             <div>
               Interface <b>{name}</b> is missing an export.
             </div>
@@ -59,10 +59,10 @@ export const getRoutedComponent = () => {
   if (config?.refreshing) {
     return RefreshingWindow;
   }
-  if (process.env.NODE_ENV !== "production") {
+  if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
     if (debug?.kitchenSink) {
-      return require("./debug").KitchenSink;
+      return require('./debug').KitchenSink;
     }
   }
   const name = config?.interface;
@@ -79,17 +79,17 @@ export const getRoutedComponent = () => {
     try {
       esModule = requireInterface(interfacePath);
     } catch (err) {
-      if (err.code !== "MODULE_NOT_FOUND") {
+      if (err.code !== 'MODULE_NOT_FOUND') {
         throw err;
       }
     }
   }
   if (!esModule) {
-    return routingError("notFound", name);
+    return routingError('notFound', name);
   }
   const Component = esModule[name];
   if (!Component) {
-    return routingError("missingExport", name);
+    return routingError('missingExport', name);
   }
   return Component;
 };

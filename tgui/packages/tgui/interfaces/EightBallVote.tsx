@@ -1,8 +1,8 @@
-import { useBackend } from "../backend";
-import { Box, Button, Grid, Section, NoticeBox } from "../components";
-import { toTitleCase } from "common/string";
-import { Window } from "../layouts";
-import { BooleanLike } from "common/react";
+import { useBackend } from '../backend';
+import { Box, Button, Grid, Section, NoticeBox } from '../components';
+import { toTitleCase } from 'common/string';
+import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
 
 type Data = {
   shaking: BooleanLike;
@@ -51,7 +51,7 @@ const EightBallVoteQuestion = (props) => {
               textAlign="center"
               mb={1}
               onClick={() =>
-                act("vote", {
+                act('vote', {
                   answer: answer.answer,
                 })
               }

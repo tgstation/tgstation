@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Box, Button, LabeledList, NoticeBox, Section } from "../components";
-import { NtosWindow } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosNetDos = (props) => {
   return (
@@ -25,20 +25,20 @@ export const NtosNetDosContent = (props) => {
           fluid
           content="Reset"
           textAlign="center"
-          onClick={() => act("PRG_reset")}
+          onClick={() => act('PRG_reset')}
         />
       </>
     );
   }
 
   const generate10String = (length) => {
-    let outString = "";
+    let outString = '';
     const factor = overload / capacity;
     while (outString.length < length) {
       if (Math.random() > factor) {
-        outString += "0";
+        outString += '0';
       } else {
-        outString += "1";
+        outString += '1';
       }
     }
     return outString;
@@ -72,7 +72,7 @@ export const NtosNetDosContent = (props) => {
               content={relay.id}
               selected={focus === relay.id}
               onClick={() =>
-                act("PRG_target_relay", {
+                act('PRG_target_relay', {
                   targid: relay.id,
                 })
               }
@@ -88,7 +88,7 @@ export const NtosNetDosContent = (props) => {
         textAlign="center"
         disabled={!focus}
         mt={1}
-        onClick={() => act("PRG_execute")}
+        onClick={() => act('PRG_execute')}
       />
     </Section>
   );

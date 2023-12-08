@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-const webpack = require("webpack");
-const path = require("path");
-const ExtractCssPlugin = require("mini-css-extract-plugin");
-const { createBabelConfig } = require("./babel.config.js");
+const webpack = require('webpack');
+const path = require('path');
+const ExtractCssPlugin = require('mini-css-extract-plugin');
+const { createBabelConfig } = require('./babel.config.js');
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -25,28 +25,28 @@ const createStats = (verbose) => ({
 });
 
 module.exports = (env = {}, argv) => {
-  const mode = argv.mode || "production";
+  const mode = argv.mode || 'production';
   const bench = env.TGUI_BENCH;
   const config = {
-    mode: mode === "production" ? "production" : "development",
+    mode: mode === 'production' ? 'production' : 'development',
     context: path.resolve(__dirname),
-    target: ["web", "es5", "browserslist:ie 11"],
+    target: ['web', 'es5', 'browserslist:ie 11'],
     entry: {
-      tgui: ["./packages/tgui-polyfill", "./packages/tgui"],
-      "tgui-panel": ["./packages/tgui-polyfill", "./packages/tgui-panel"],
-      "tgui-say": ["./packages/tgui-polyfill", "./packages/tgui-say"],
+      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
+      'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
+      'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
     },
     output: {
       path: argv.useTmpFolder
-        ? path.resolve(__dirname, "./public/.tmp")
-        : path.resolve(__dirname, "./public"),
-      filename: "[name].bundle.js",
-      chunkFilename: "[name].bundle.js",
+        ? path.resolve(__dirname, './public/.tmp')
+        : path.resolve(__dirname, './public'),
+      filename: '[name].bundle.js',
+      chunkFilename: '[name].bundle.js',
       chunkLoadTimeout: 15000,
-      publicPath: "/",
+      publicPath: '/',
     },
     resolve: {
-      extensions: [".tsx", ".ts", ".js", ".jsx"],
+      extensions: ['.tsx', '.ts', '.js', '.jsx'],
       alias: {},
     },
     module: {
@@ -55,7 +55,7 @@ module.exports = (env = {}, argv) => {
           test: /\.(js(x)?|cjs|ts(x)?)$/,
           use: [
             {
-              loader: require.resolve("babel-loader"),
+              loader: require.resolve('babel-loader'),
               options: createBabelConfig({
                 removeConsole: !bench,
               }),
@@ -72,13 +72,13 @@ module.exports = (env = {}, argv) => {
               },
             },
             {
-              loader: require.resolve("css-loader"),
+              loader: require.resolve('css-loader'),
               options: {
                 esModule: false,
               },
             },
             {
-              loader: require.resolve("sass-loader"),
+              loader: require.resolve('sass-loader'),
             },
           ],
         },
@@ -86,7 +86,7 @@ module.exports = (env = {}, argv) => {
           test: /\.(png|jpg|svg)$/,
           use: [
             {
-              loader: require.resolve("url-loader"),
+              loader: require.resolve('url-loader'),
               options: {
                 esModule: false,
               },
@@ -103,7 +103,7 @@ module.exports = (env = {}, argv) => {
     },
     devtool: false,
     cache: {
-      type: "filesystem",
+      type: 'filesystem',
       cacheLocation: path.resolve(__dirname, `.yarn/webpack/${mode}`),
       buildDependencies: {
         config: [__filename],
@@ -117,35 +117,35 @@ module.exports = (env = {}, argv) => {
         DEV_SERVER_IP: env.DEV_SERVER_IP || null,
       }),
       new ExtractCssPlugin({
-        filename: "[name].bundle.css",
-        chunkFilename: "[name].bundle.css",
+        filename: '[name].bundle.css',
+        chunkFilename: '[name].bundle.css',
       }),
     ],
   };
 
   if (bench) {
     config.entry = {
-      "tgui-bench": [
-        "./packages/tgui-polyfill",
-        "./packages/tgui-bench/entrypoint",
+      'tgui-bench': [
+        './packages/tgui-polyfill',
+        './packages/tgui-bench/entrypoint',
       ],
     };
   }
 
   // Production build specific options
-  if (mode === "production") {
-    const { EsbuildPlugin } = require("esbuild-loader");
+  if (mode === 'production') {
+    const { EsbuildPlugin } = require('esbuild-loader');
     config.optimization.minimizer = [
       new EsbuildPlugin({
-        target: "ie11",
+        target: 'ie11',
         css: true,
       }),
     ];
   }
 
   // Development build specific options
-  if (mode !== "production") {
-    config.devtool = "cheap-module-source-map";
+  if (mode !== 'production') {
+    config.devtool = 'cheap-module-source-map';
   }
 
   // Development server specific options
@@ -154,7 +154,7 @@ module.exports = (env = {}, argv) => {
       progress: false,
       quiet: false,
       noInfo: false,
-      clientLogLevel: "silent",
+      clientLogLevel: 'silent',
       stats: createStats(false),
     };
   }

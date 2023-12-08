@@ -1,6 +1,6 @@
-import { BooleanLike } from "common/react";
-import { formatPower } from "../format";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { formatPower } from '../format';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,8 +11,8 @@ import {
   Section,
   Stack,
   Icon,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   supply: number;
@@ -57,7 +57,7 @@ export const SolarControl = (props) => {
             position="relative"
             overflow="visible"
             height="64px"
-            backgroundColor={"black"}
+            backgroundColor={'black'}
           >
             <Chart.Line
               p={1}
@@ -101,15 +101,15 @@ export const SolarControl = (props) => {
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Solar panels"
-                  color={connected_panels > 0 ? "good" : "bad"}
+                  color={connected_panels > 0 ? 'good' : 'bad'}
                 >
                   {connected_panels}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Solar tracker"
-                  color={connected_tracker ? "good" : "bad"}
+                  color={connected_tracker ? 'good' : 'bad'}
                 >
-                  {connected_tracker ? "OK" : "N/A"}
+                  {connected_tracker ? 'OK' : 'N/A'}
                 </LabeledList.Item>
               </LabeledList>
             </Stack.Item>
@@ -121,7 +121,7 @@ export const SolarControl = (props) => {
             <Button
               icon="sync"
               content="Scan for new hardware"
-              onClick={() => act("refresh")}
+              onClick={() => act('refresh')}
             />
           }
         >
@@ -131,20 +131,20 @@ export const SolarControl = (props) => {
                 icon="times"
                 content="Off"
                 selected={tracking_state === 0}
-                onClick={() => act("tracking", { mode: 0 })}
+                onClick={() => act('tracking', { mode: 0 })}
               />
               <Button
                 icon="clock-o"
                 content="Timed"
                 selected={tracking_state === 1}
-                onClick={() => act("tracking", { mode: 1 })}
+                onClick={() => act('tracking', { mode: 1 })}
               />
               <Button
                 icon="sync"
                 content="Auto"
                 selected={tracking_state === 2}
                 disabled={!connected_tracker}
-                onClick={() => act("tracking", { mode: 2 })}
+                onClick={() => act('tracking', { mode: 2 })}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Azimuth">
@@ -158,7 +158,7 @@ export const SolarControl = (props) => {
                   minValue={-360}
                   maxValue={+720}
                   value={azimuth_current}
-                  onDrag={(e, value) => act("azimuth", { value })}
+                  onDrag={(e, value) => act('azimuth', { value })}
                 />
               )}
               {tracking_state === 1 && (
@@ -171,15 +171,15 @@ export const SolarControl = (props) => {
                   maxValue={max_rotation_rate + 0.01}
                   value={azimuth_rate}
                   format={(rate) => {
-                    const sign = Math.sign(rate) > 0 ? "+" : "-";
+                    const sign = Math.sign(rate) > 0 ? '+' : '-';
                     return sign + Math.abs(rate);
                   }}
-                  onDrag={(e, value) => act("azimuth_rate", { value })}
+                  onDrag={(e, value) => act('azimuth_rate', { value })}
                 />
               )}
               {tracking_state === 2 && (
                 <Box inline color="label" mt="3px">
-                  {azimuth_current + " °"} (auto)
+                  {azimuth_current + ' °'} (auto)
                 </Box>
               )}
             </LabeledList.Item>

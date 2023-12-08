@@ -1,13 +1,13 @@
-import { Button, Collapsible, Flex, Section, Stack } from "tgui/components";
-import { HypertorusSecondaryControls, HypertorusWasteRemove } from "./Controls";
+import { Button, Collapsible, Flex, Section, Stack } from 'tgui/components';
+import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 
-import { BooleanLike } from "common/react";
-import { HypertorusGases } from "./Gases";
-import { HypertorusParameters } from "./Parameters";
-import { HypertorusRecipes } from "./Recipes";
-import { HypertorusTemperatures } from "./Temperatures";
-import { Window } from "tgui/layouts";
-import { useBackend } from "tgui/backend";
+import { BooleanLike } from 'common/react';
+import { HypertorusGases } from './Gases';
+import { HypertorusParameters } from './Parameters';
+import { HypertorusRecipes } from './Recipes';
+import { HypertorusTemperatures } from './Temperatures';
+import { Window } from 'tgui/layouts';
+import { useBackend } from 'tgui/backend';
 
 export type HypertorusData = {
   start_power: number;
@@ -59,17 +59,17 @@ const HypertorusMainControls = (props) => {
     <Section>
       <Stack>
         <Stack.Item color="label" mb={1}>
-          {"Start power: "}
+          {'Start power: '}
           <Button
             disabled={power_level > 0}
-            icon={start_power ? "power-off" : "times"}
-            content={start_power ? "On" : "Off"}
+            icon={start_power ? 'power-off' : 'times'}
+            content={start_power ? 'On' : 'Off'}
             selected={start_power}
-            onClick={() => act("start_power")}
+            onClick={() => act('start_power')}
           />
         </Stack.Item>
         <Stack.Item color="label">
-          {"Start cooling: "}
+          {'Start cooling: '}
           <Button
             disabled={
               start_fuel === 1 ||
@@ -77,10 +77,10 @@ const HypertorusMainControls = (props) => {
               start_power === 0 ||
               (start_cooling && power_level > 0)
             }
-            icon={start_cooling ? "power-off" : "times"}
-            content={start_cooling ? "On" : "Off"}
+            icon={start_cooling ? 'power-off' : 'times'}
+            content={start_cooling ? 'On' : 'Off'}
             selected={start_cooling}
-            onClick={() => act("start_cooling")}
+            onClick={() => act('start_cooling')}
           />
         </Stack.Item>
       </Stack>
@@ -88,7 +88,7 @@ const HypertorusMainControls = (props) => {
         <HypertorusRecipes
           baseMaxTemperature={base_max_temperature}
           enableRecipeSelection={power_level === 0}
-          onRecipe={(id) => act("fuel", { mode: id })}
+          onRecipe={(id) => act('fuel', { mode: id })}
         />
       </Collapsible>
     </Section>

@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use "../base.scss";
-@use "../colors.scss";
-@use "../functions.scss" as *;
+@use '../base.scss';
+@use '../colors.scss';
+@use '../functions.scss' as *;
 
 $bg-map: colors.$bg-map !default;
 $fg-map: colors.$fg-map !default;
@@ -28,7 +28,7 @@ $inner-padding: 0.1em;
   // Adjusts a baseline in a way, that makes knob middle-aligned
   // when it flows with the text.
   &:after {
-    content: ".";
+    content: '.';
     color: transparent;
     line-height: 2.5em;
   }

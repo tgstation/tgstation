@@ -1,6 +1,6 @@
-import { flow } from "common/fp";
-import { filter, sortBy } from "common/collections";
-import { useBackend, useSharedState } from "../backend";
+import { flow } from 'common/fp';
+import { filter, sortBy } from 'common/collections';
+import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -15,9 +15,9 @@ import {
   Stack,
   Table,
   Tabs,
-} from "../components";
-import { formatMoney } from "../format";
-import { Window } from "../layouts";
+} from '../components';
+import { formatMoney } from '../format';
+import { Window } from '../layouts';
 
 export const Cargo = (props) => {
   return (
@@ -31,7 +31,7 @@ export const Cargo = (props) => {
 
 export const CargoContent = (props) => {
   const { data } = useBackend();
-  const [tab, setTab] = useSharedState("tab", "catalog");
+  const [tab, setTab] = useSharedState('tab', 'catalog');
   const { cart = [], requests = [], requestonly } = data;
   const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
   return (
@@ -41,16 +41,16 @@ export const CargoContent = (props) => {
         <Tabs>
           <Tabs.Tab
             icon="list"
-            selected={tab === "catalog"}
-            onClick={() => setTab("catalog")}
+            selected={tab === 'catalog'}
+            onClick={() => setTab('catalog')}
           >
             Catalog
           </Tabs.Tab>
           <Tabs.Tab
             icon="envelope"
-            textColor={tab !== "requests" && requests.length > 0 && "yellow"}
-            selected={tab === "requests"}
-            onClick={() => setTab("requests")}
+            textColor={tab !== 'requests' && requests.length > 0 && 'yellow'}
+            selected={tab === 'requests'}
+            onClick={() => setTab('requests')}
           >
             Requests ({requests.length})
           </Tabs.Tab>
@@ -58,16 +58,16 @@ export const CargoContent = (props) => {
             <>
               <Tabs.Tab
                 icon="shopping-cart"
-                textColor={tab !== "cart" && cart_length > 0 && "yellow"}
-                selected={tab === "cart"}
-                onClick={() => setTab("cart")}
+                textColor={tab !== 'cart' && cart_length > 0 && 'yellow'}
+                selected={tab === 'cart'}
+                onClick={() => setTab('cart')}
               >
                 Checkout ({cart_length})
               </Tabs.Tab>
               <Tabs.Tab
                 icon="question"
-                selected={tab === "help"}
-                onClick={() => setTab("help")}
+                selected={tab === 'help'}
+                onClick={() => setTab('help')}
               >
                 Help
               </Tabs.Tab>
@@ -75,10 +75,10 @@ export const CargoContent = (props) => {
           )}
         </Tabs>
       </Section>
-      {tab === "catalog" && <CargoCatalog />}
-      {tab === "requests" && <CargoRequests />}
-      {tab === "cart" && <CargoCart />}
-      {tab === "help" && <CargoHelp />}
+      {tab === 'catalog' && <CargoCatalog />}
+      {tab === 'requests' && <CargoRequests />}
+      {tab === 'cart' && <CargoCart />}
+      {tab === 'help' && <CargoHelp />}
     </Box>
   );
 };
@@ -107,7 +107,7 @@ const CargoStatus = (props) => {
             value={points}
             format={(value) => formatMoney(value)}
           />
-          {" credits"}
+          {' credits'}
         </Box>
       }
     >
@@ -115,15 +115,15 @@ const CargoStatus = (props) => {
         <LabeledList.Item label="Shuttle">
           {(docked && !requestonly && can_send && (
             <Button
-              color={(grocery && "orange") || "green"}
+              color={(grocery && 'orange') || 'green'}
               content={location}
               tooltip={
                 (grocery &&
-                  "The kitchen is waiting for their grocery supply delivery!") ||
-                ""
+                  'The kitchen is waiting for their grocery supply delivery!') ||
+                ''
               }
               tooltipPosition="right"
-              onClick={() => act("send")}
+              onClick={() => act('send')}
             />
           )) ||
             location}
@@ -135,7 +135,7 @@ const CargoStatus = (props) => {
               <Button
                 content="Loan Shuttle"
                 disabled={!(away && docked)}
-                onClick={() => act("loan")}
+                onClick={() => act('loan')}
               />
             )) || <Box color="bad">Loaned to Centcom</Box>}
           </LabeledList.Item>
@@ -178,14 +178,14 @@ export const CargoCatalog = (props) => {
   const { amount_by_name = [], max_order } = data;
 
   const [activeSupplyName, setActiveSupplyName] = useSharedState(
-    "supply",
+    'supply',
     supplies[0]?.name,
   );
 
-  const [searchText, setSearchText] = useSharedState("search_text", "");
+  const [searchText, setSearchText] = useSharedState('search_text', '');
 
   const activeSupply =
-    activeSupplyName === "search_results"
+    activeSupplyName === 'search_results'
       ? { packs: searchForSupplies(supplies, searchText) }
       : supplies.find((supply) => supply.name === activeSupplyName);
 
@@ -200,7 +200,7 @@ export const CargoCatalog = (props) => {
               ml={2}
               content="Buy Privately"
               checked={self_paid}
-              onClick={() => act("toggleprivate")}
+              onClick={() => act('toggleprivate')}
             />
           </>
         )
@@ -211,7 +211,7 @@ export const CargoCatalog = (props) => {
           <Tabs vertical>
             <Tabs.Tab
               key="search_results"
-              selected={activeSupplyName === "search_results"}
+              selected={activeSupplyName === 'search_results'}
             >
               <Stack align="baseline">
                 <Stack.Item>
@@ -229,8 +229,8 @@ export const CargoCatalog = (props) => {
 
                       if (value.length) {
                         // Start showing results
-                        setActiveSupplyName("search_results");
-                      } else if (activeSupplyName === "search_results") {
+                        setActiveSupplyName('search_results');
+                      } else if (activeSupplyName === 'search_results') {
                         // return to normal category
                         setActiveSupplyName(supplies[0]?.name);
                       }
@@ -253,7 +253,7 @@ export const CargoCatalog = (props) => {
                 selected={supply.name === activeSupplyName}
                 onClick={() => {
                   setActiveSupplyName(supply.name);
-                  setSearchText("");
+                  setSearchText('');
                 }}
               >
                 {supply.name} ({supply.packs.length})
@@ -266,16 +266,16 @@ export const CargoCatalog = (props) => {
             {activeSupply?.packs.map((pack) => {
               const tags = [];
               if (pack.small_item) {
-                tags.push("Small");
+                tags.push('Small');
               }
               if (pack.access) {
-                tags.push("Restricted");
+                tags.push('Restricted');
               }
               return (
                 <Table.Row key={pack.name} className="candystripe">
                   <Table.Cell>{pack.name}</Table.Cell>
                   <Table.Cell collapsing color="label" textAlign="right">
-                    {tags.join(", ")}
+                    {tags.join(', ')}
                   </Table.Cell>
                   <Table.Cell collapsing textAlign="right">
                     <Button
@@ -284,7 +284,7 @@ export const CargoCatalog = (props) => {
                       tooltipPosition="left"
                       disabled={(amount_by_name[pack.name] || 0) >= max_order}
                       onClick={() =>
-                        act("add", {
+                        act('add', {
                           id: pack.id,
                         })
                       }
@@ -294,7 +294,7 @@ export const CargoCatalog = (props) => {
                           ? Math.round(pack.cost * 1.1)
                           : pack.cost,
                       )}
-                      {" cr"}
+                      {' cr'}
                     </Button>
                   </Table.Cell>
                 </Table.Row>
@@ -321,7 +321,7 @@ const CargoRequests = (props) => {
             icon="times"
             content="Clear"
             color="transparent"
-            onClick={() => act("denyall")}
+            onClick={() => act('denyall')}
           />
         )
       }
@@ -350,7 +350,7 @@ const CargoRequests = (props) => {
                     icon="check"
                     color="good"
                     onClick={() =>
-                      act("approve", {
+                      act('approve', {
                         id: request.id,
                       })
                     }
@@ -359,7 +359,7 @@ const CargoRequests = (props) => {
                     icon="times"
                     color="bad"
                     onClick={() =>
-                      act("deny", {
+                      act('deny', {
                         id: request.id,
                       })
                     }
@@ -382,9 +382,9 @@ const CargoCartButtons = (props) => {
   return (
     <>
       <Box inline mx={1}>
-        {cart.length === 0 && "Cart is empty"}
-        {cart.length === 1 && "1 item"}
-        {cart.length >= 2 && cart.length + " items"}{" "}
+        {cart.length === 0 && 'Cart is empty'}
+        {cart.length === 1 && '1 item'}
+        {cart.length >= 2 && cart.length + ' items'}{' '}
         {total > 0 && `(${formatMoney(total)} cr)`}
       </Box>
       {!requestonly && !!can_send && !!can_approve_requests && (
@@ -392,7 +392,7 @@ const CargoCartButtons = (props) => {
           icon="times"
           color="transparent"
           content="Clear"
-          onClick={() => act("clear")}
+          onClick={() => act('clear')}
         />
       )}
     </>
@@ -447,7 +447,7 @@ const CargoCart = (props) => {
                     maxValue={max_order}
                     value={entry.amount}
                     onEnter={(e, value) =>
-                      act("modify", {
+                      act('modify', {
                         order_name: entry.object,
                         amount: value,
                       })
@@ -461,7 +461,7 @@ const CargoCart = (props) => {
                     icon="plus"
                     disabled={amount_by_name[entry.object] >= max_order}
                     onClick={() =>
-                      act("add_by_name", { order_name: entry.object })
+                      act('add_by_name', { order_name: entry.object })
                     }
                   />
                 )}
@@ -470,7 +470,7 @@ const CargoCart = (props) => {
                 {!!can_send && !!entry.can_be_cancelled && (
                   <Button
                     icon="minus"
-                    onClick={() => act("remove", { order_name: entry.object })}
+                    onClick={() => act('remove', { order_name: entry.object })}
                   />
                 )}
               </Table.Cell>
@@ -490,11 +490,11 @@ const CargoCart = (props) => {
             <Button
               color="green"
               style={{
-                lineHeight: "28px",
-                padding: "0 12px",
+                lineHeight: '28px',
+                padding: '0 12px',
               }}
               content="Confirm the order"
-              onClick={() => act("send")}
+              onClick={() => act('send')}
             />
           )) || <Box opacity={0.5}>Shuttle in {location}.</Box>}
         </Box>

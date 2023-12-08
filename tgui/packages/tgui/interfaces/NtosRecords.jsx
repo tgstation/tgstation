@@ -1,11 +1,11 @@
-import { createSearch } from "common/string";
-import { useBackend, useLocalState } from "../backend";
-import { Box, Icon, Input, Section } from "../components";
-import { NtosWindow } from "../layouts";
+import { createSearch } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Icon, Input, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosRecords = (props) => {
   const { act, data } = useBackend();
-  const [searchTerm, setSearchTerm] = useLocalState("search", "");
+  const [searchTerm, setSearchTerm] = useLocalState('search', '');
   const { mode, records } = data;
 
   const isMatchingSearchTerms = createSearch(searchTerm);
@@ -18,31 +18,31 @@ export const NtosRecords = (props) => {
         </Section>
         <Section>
           <Input
-            placeholder={"Filter results..."}
+            placeholder={'Filter results...'}
             value={searchTerm}
             fluid
             textAlign="center"
             onInput={(e, value) => setSearchTerm(value)}
           />
         </Section>
-        {mode === "security" &&
+        {mode === 'security' &&
           records.map((record) => (
             <Section
               key={record.id}
               hidden={
                 !(
-                  searchTerm === "" ||
+                  searchTerm === '' ||
                   isMatchingSearchTerms(
                     record.name +
-                      " " +
+                      ' ' +
                       record.rank +
-                      " " +
+                      ' ' +
                       record.species +
-                      " " +
+                      ' ' +
                       record.gender +
-                      " " +
+                      ' ' +
                       record.age +
-                      " " +
+                      ' ' +
                       record.fingerprint,
                   )
                 )
@@ -64,23 +64,23 @@ export const NtosRecords = (props) => {
               Fingerprint Hash: {record.fingerprint}
               <br />
               <br />
-              Criminal Status: {record.wanted || "DELETED"}
+              Criminal Status: {record.wanted || 'DELETED'}
             </Section>
           ))}
-        {mode === "medical" &&
+        {mode === 'medical' &&
           records.map((record) => (
             <Section
               key={record.id}
               hidden={
                 !(
-                  searchTerm === "" ||
+                  searchTerm === '' ||
                   isMatchingSearchTerms(
                     record.name +
-                      " " +
+                      ' ' +
                       record.bloodtype +
-                      " " +
+                      ' ' +
                       record.mental_status +
-                      " " +
+                      ' ' +
                       record.physical_status,
                   )
                 )

@@ -1,6 +1,6 @@
-import { BooleanLike } from "common/react";
-import { multiline } from "common/string";
-import { useBackend, useLocalState } from "../backend";
+import { BooleanLike } from 'common/react';
+import { multiline } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -12,16 +12,16 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
-import { ReactNode } from "react";
+} from '../components';
+import { Window } from '../layouts';
+import { ReactNode } from 'react';
 
 enum SpellCategory {
-  Offensive = "Offensive",
-  Defensive = "Defensive",
-  Mobility = "Mobility",
-  Assistance = "Assistance",
-  Rituals = "Rituals",
+  Offensive = 'Offensive',
+  Defensive = 'Defensive',
+  Mobility = 'Mobility',
+  Assistance = 'Assistance',
+  Rituals = 'Rituals',
 }
 
 type byondRef = string;
@@ -67,59 +67,59 @@ type TabType = {
 
 const TAB2NAME: TabType[] = [
   {
-    title: "Enscribed Name",
+    title: 'Enscribed Name',
     blurb:
       "This book answers only to its owner, and of course, must have one. The permanence of the pact between a spellbook and its owner ensures such a powerful artifact cannot fall into enemy hands, or be used in ways that break the Federation's rules such as bartering spells.",
     component: () => <EnscribedName />,
   },
   {
-    title: "Table of Contents",
+    title: 'Table of Contents',
     component: () => <TableOfContents />,
   },
   {
-    title: "Offensive",
-    blurb: "Spells and items geared towards debilitating and destroying.",
+    title: 'Offensive',
+    blurb: 'Spells and items geared towards debilitating and destroying.',
     scrollable: true,
   },
   {
-    title: "Defensive",
+    title: 'Defensive',
     blurb:
       "Spells and items geared towards improving your survivability or reducing foes' ability to attack.",
     scrollable: true,
   },
   {
-    title: "Mobility",
+    title: 'Mobility',
     blurb:
-      "Spells and items geared towards improving your ability to move. It is a good idea to take at least one.",
+      'Spells and items geared towards improving your ability to move. It is a good idea to take at least one.',
     scrollable: true,
   },
   {
-    title: "Assistance",
+    title: 'Assistance',
     blurb:
-      "Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilities.",
+      'Spells and items geared towards bringing in outside forces to aid you or improving upon your other items and abilities.',
     scrollable: true,
   },
   {
-    title: "Challenges",
+    title: 'Challenges',
     blurb:
-      "The Wizard Federation is looking for shows of power. Arming the station against you will increase the danger, but will grant you more charges for your spellbook.",
+      'The Wizard Federation is looking for shows of power. Arming the station against you will increase the danger, but will grant you more charges for your spellbook.',
     locked: true,
     scrollable: true,
   },
   {
-    title: "Rituals",
+    title: 'Rituals',
     blurb:
-      "These powerful spells change the very fabric of reality. Not always in your favour.",
+      'These powerful spells change the very fabric of reality. Not always in your favour.',
     scrollable: true,
   },
   {
-    title: "Loadouts",
+    title: 'Loadouts',
     blurb:
-      "The Wizard Federation accepts that sometimes, choosing is hard. You can choose from some approved wizard loadouts here.",
+      'The Wizard Federation accepts that sometimes, choosing is hard. You can choose from some approved wizard loadouts here.',
     component: () => <Loadouts />,
   },
   {
-    title: "Randomize",
+    title: 'Randomize',
     blurb:
       "If you didn't like the loadouts offered, you can embrace chaos. Not recommended for newer wizards.",
     component: () => <Randomize />,
@@ -127,15 +127,15 @@ const TAB2NAME: TabType[] = [
 ];
 
 enum Buywords {
-  Learn = "Learn",
-  Summon = "Summon",
-  Cast = "Cast",
+  Learn = 'Learn',
+  Summon = 'Summon',
+  Cast = 'Cast',
 }
 
 const BUYWORD2ICON = {
-  Learn: "plus",
-  Summon: "hat-wizard",
-  Cast: "meteor",
+  Learn: 'plus',
+  Summon: 'hat-wizard',
+  Cast: 'meteor',
 };
 
 const EnscribedName = (props) => {
@@ -158,10 +158,10 @@ const EnscribedName = (props) => {
   );
 };
 
-const lineHeightToc = "34.6px";
+const lineHeightToc = '34.6px';
 
 const TableOfContents = (props) => {
-  const [tabIndex, setTabIndex] = useLocalState("tab-index", 1);
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
   return (
     <Box textAlign="center">
       <Button
@@ -267,13 +267,13 @@ const PointLocked = (props) => {
           <Icon color="purple" name="dollar-sign" size={10} />
           <div
             style={{
-              background: "purple",
-              bottom: "60%",
-              left: "33%",
-              height: "10px",
-              position: "relative",
-              transform: "rotate(45deg)",
-              width: "150px",
+              background: 'purple',
+              bottom: '60%',
+              left: '33%',
+              height: '10px',
+              position: 'relative',
+              transform: 'rotate(45deg)',
+              width: '150px',
             }}
           />
         </Stack.Item>
@@ -310,7 +310,7 @@ const SingleLoadout = (props: WizardLoadout) => {
           icon={icon}
           content="Purchase Loadout"
           onClick={() =>
-            act("purchase_loadout", {
+            act('purchase_loadout', {
               id: loadoutId,
             })
           }
@@ -414,7 +414,7 @@ const Randomize = (props) => {
           fluid
           icon="dice-three"
           content="Semi-Randomize!"
-          onClick={() => act("semirandomize")}
+          onClick={() => act('semirandomize')}
         />
         <Divider />
       </Stack.Item>
@@ -432,7 +432,7 @@ const Randomize = (props) => {
             color="black"
             icon="dice"
             content="Full Random!"
-            onClick={() => act("randomize")}
+            onClick={() => act('randomize')}
           />
         </NoticeBox>
       </Stack.Item>
@@ -442,12 +442,12 @@ const Randomize = (props) => {
 
 const SearchSpells = (props) => {
   const { data } = useBackend<Data>();
-  const [spellSearch] = useLocalState("spell-search", "");
+  const [spellSearch] = useLocalState('spell-search', '');
   const { entries } = data;
 
   const filterEntryList = (entries: SpellEntry[]) => {
     const searchStatement = spellSearch.toLowerCase();
-    if (searchStatement === "robeless") {
+    if (searchStatement === 'robeless') {
       // Lets you just search for robeless spells, you're welcome mindswap-bros
       return entries.filter((entry) => !entry.requires_wizard_garb);
     }
@@ -505,13 +505,13 @@ const SpellTabDisplay = (props: {
       if (entry.times) {
         return `Cast ${entry.times} times.`;
       } else {
-        return "Not cast yet.";
+        return 'Not cast yet.';
       }
     } else {
       if (entry.cooldown) {
         return `${entry.cooldown}s Cooldown`;
       } else {
-        return "";
+        return '';
       }
     }
   };
@@ -533,12 +533,12 @@ const SpellTabDisplay = (props: {
                 <Button
                   mt={-0.8}
                   icon="tshirt"
-                  color={entry.requires_wizard_garb ? "bad" : "green"}
+                  color={entry.requires_wizard_garb ? 'bad' : 'green'}
                   tooltipPosition="bottom-start"
                   tooltip={
                     entry.requires_wizard_garb
-                      ? "Requires wizard garb."
-                      : "Can be cast without wizard garb."
+                      ? 'Requires wizard garb.'
+                      : 'Can be cast without wizard garb.'
                   }
                 />
               </Stack.Item>
@@ -554,13 +554,13 @@ const SpellTabDisplay = (props: {
                 <Button
                   fluid
                   textAlign="center"
-                  color={points >= entry.cost ? "green" : "bad"}
+                  color={points >= entry.cost ? 'green' : 'bad'}
                   disabled={points < entry.cost}
                   width={7}
                   icon={BUYWORD2ICON[entry.buyword]}
                   content={entry.buyword}
                   onClick={() =>
-                    act("purchase", {
+                    act('purchase', {
                       spellref: entry.ref,
                     })
                   }
@@ -573,7 +573,7 @@ const SpellTabDisplay = (props: {
                     icon="arrow-left"
                     content="Refund"
                     onClick={() =>
-                      act("refund", {
+                      act('refund', {
                         spellref: entry.ref,
                       })
                     }
@@ -616,14 +616,14 @@ const CategoryDisplay = (props: { ActiveCat: TabType }) => {
   );
 };
 
-const widthSection = "466px";
-const heightSection = "456px";
+const widthSection = '466px';
+const heightSection = '456px';
 
 export const Spellbook = (props) => {
   const { data } = useBackend<Data>();
   const { points } = data;
-  const [tabIndex, setTabIndex] = useLocalState("tab-index", 1);
-  const [spellSearch, setSpellSearch] = useLocalState("spell-search", "");
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [spellSearch, setSpellSearch] = useLocalState('spell-search', '');
   const ActiveCat = TAB2NAME[tabIndex - 1];
   const ActiveNextCat = TAB2NAME[tabIndex];
 
@@ -631,37 +631,37 @@ export const Spellbook = (props) => {
   const SelectSearchVerb = () => {
     let found = Math.random();
     if (found <= 0.03) {
-      return "Seeking";
+      return 'Seeking';
     }
     if (found <= 0.06) {
-      return "Contemplating";
+      return 'Contemplating';
     }
     if (found <= 0.09) {
-      return "Divining";
+      return 'Divining';
     }
     if (found <= 0.12) {
-      return "Scrying";
+      return 'Scrying';
     }
     if (found <= 0.15) {
-      return "Peeking";
+      return 'Peeking';
     }
     if (found <= 0.18) {
-      return "Pondering";
+      return 'Pondering';
     }
     if (found <= 0.21) {
-      return "Divining";
+      return 'Divining';
     }
     if (found <= 0.24) {
-      return "Gazing";
+      return 'Gazing';
     }
     if (found <= 0.27) {
-      return "Studying";
+      return 'Studying';
     }
     if (found <= 0.3) {
-      return "Reviewing";
+      return 'Reviewing';
     }
 
-    return "Searching";
+    return 'Searching';
   };
 
   const SelectedVerb = SelectSearchVerb();
@@ -683,7 +683,7 @@ export const Spellbook = (props) => {
                       <Button
                         content={`Stop ${SelectedVerb}`}
                         icon="arrow-rotate-left"
-                        onClick={() => setSpellSearch("")}
+                        onClick={() => setSpellSearch('')}
                       />
                     }
                   >
@@ -753,7 +753,7 @@ export const Spellbook = (props) => {
               <Stack>
                 <Stack.Item grow>
                   <ProgressBar value={points / 10}>
-                    {points + " points left to spend."}
+                    {points + ' points left to spend.'}
                   </ProgressBar>
                 </Stack.Item>
                 <Stack.Item>

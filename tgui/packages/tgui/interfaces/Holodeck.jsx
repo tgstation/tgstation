@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Button, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Button, Section } from '../components';
+import { Window } from '../layouts';
 
 export const Holodeck = (props) => {
   const { act, data } = useBackend();
@@ -14,12 +14,12 @@ export const Holodeck = (props) => {
           title="Default Programs"
           buttons={
             <Button
-              icon={emagged ? "unlock" : "lock"}
+              icon={emagged ? 'unlock' : 'lock'}
               content="Safeties"
               color="bad"
               disabled={!can_toggle_safety}
               selected={!emagged}
-              onClick={() => act("safety")}
+              onClick={() => act('safety')}
             />
           }
         >
@@ -31,7 +31,7 @@ export const Holodeck = (props) => {
               textAlign="center"
               selected={def_program.id === program}
               onClick={() =>
-                act("load_program", {
+                act('load_program', {
                   id: def_program.id,
                 })
               }
@@ -49,7 +49,7 @@ export const Holodeck = (props) => {
                 textAlign="center"
                 selected={emag_program.id === program}
                 onClick={() =>
-                  act("load_program", {
+                  act('load_program', {
                     id: emag_program.id,
                   })
                 }

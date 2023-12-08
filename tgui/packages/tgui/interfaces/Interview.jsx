@@ -4,9 +4,9 @@ import {
   Section,
   BlockQuote,
   NoticeBox,
-} from "../components";
-import { Window } from "../layouts";
-import { useBackend } from "../backend";
+} from '../components';
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
 
 export const Interview = (props) => {
   const { act, data } = useBackend();
@@ -22,9 +22,9 @@ export const Interview = (props) => {
 
   const rendered_status = (status) => {
     switch (status) {
-      case "interview_approved":
+      case 'interview_approved':
         return <NoticeBox success>This interview was approved.</NoticeBox>;
-      case "interview_denied":
+      case 'interview_denied':
         return <NoticeBox danger>This interview was denied.</NoticeBox>;
       default:
         return (
@@ -47,7 +47,7 @@ export const Interview = (props) => {
     for (let i = 1; i < parts.length; i += 2) {
       const match = link_decompose_regex.exec(parts[i]);
       parts[i] = (
-        <a key={"link" + i} href={match[2]}>
+        <a key={'link' + i} href={match[2]}>
           {match[1]}
         </a>
       );
@@ -59,7 +59,7 @@ export const Interview = (props) => {
     <Window
       width={500}
       height={600}
-      canClose={is_admin || status === "interview_approved"}
+      canClose={is_admin || status === 'interview_approved'}
     >
       <Window.Content scrollable>
         {(!read_only && (
@@ -73,26 +73,26 @@ export const Interview = (props) => {
           buttons={
             <span>
               <Button
-                content={read_only ? "Submitted" : "Submit"}
-                onClick={() => act("submit")}
+                content={read_only ? 'Submitted' : 'Submit'}
+                onClick={() => act('submit')}
                 disabled={read_only}
               />
-              {!!is_admin && status === "interview_pending" && (
+              {!!is_admin && status === 'interview_pending' && (
                 <span>
                   <Button
                     content="Admin PM"
                     enabled={connected}
-                    onClick={() => act("adminpm")}
+                    onClick={() => act('adminpm')}
                   />
                   <Button
                     content="Approve"
                     color="good"
-                    onClick={() => act("approve")}
+                    onClick={() => act('approve')}
                   />
                   <Button
                     content="Deny"
                     color="bad"
-                    onClick={() => act("deny")}
+                    onClick={() => act('deny')}
                   />
                 </span>
               )}
@@ -112,7 +112,7 @@ export const Interview = (props) => {
             <Section key={qidx} title={`Question ${qidx}`}>
               <p>{linkify_text(question)}</p>
               {((read_only || is_admin) && (
-                <BlockQuote>{response || "No response."}</BlockQuote>
+                <BlockQuote>{response || 'No response.'}</BlockQuote>
               )) || (
                 <TextArea
                   value={response}
@@ -122,7 +122,7 @@ export const Interview = (props) => {
                   placeholder="Write your response here, max of 500 characters."
                   onChange={(e, input) =>
                     input !== response &&
-                    act("update_answer", {
+                    act('update_answer', {
                       qidx: qidx,
                       answer: input,
                     })

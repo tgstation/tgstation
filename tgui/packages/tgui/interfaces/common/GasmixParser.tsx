@@ -1,4 +1,4 @@
-import { LabeledList, Box, Button } from "../../components";
+import { LabeledList, Box, Button } from '../../components';
 
 export type Gasmix = {
   name?: string;
@@ -39,7 +39,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
 
   return !total_moles ? (
     <Box nowrap italic mb="10px">
-      {"No Gas Detected!"}
+      {'No Gas Detected!'}
     </Box>
   ) : (
     <LabeledList {...rest}>
@@ -55,46 +55,46 @@ export const GasmixParser = (props: GasmixParserProps) => {
           key={gas[1]}
         >
           {gas[2].toFixed(2) +
-            " mol (" +
+            ' mol (' +
             ((gas[2] / total_moles) * 100).toFixed(2) +
-            " %)"}
+            ' %)'}
         </LabeledList.Item>
       ))}
       <LabeledList.Item
         label={
           temperatureOnClick ? (
             <Button
-              content={"Temperature"}
+              content={'Temperature'}
               onClick={() => temperatureOnClick()}
             />
           ) : (
-            "Temperature"
+            'Temperature'
           )
         }
       >
-        {(total_moles ? temperature.toFixed(2) : "-") + " K"}
+        {(total_moles ? temperature.toFixed(2) : '-') + ' K'}
       </LabeledList.Item>
       <LabeledList.Item
         label={
           volumeOnClick ? (
-            <Button content={"Volume"} onClick={() => volumeOnClick()} />
+            <Button content={'Volume'} onClick={() => volumeOnClick()} />
           ) : (
-            "Volume"
+            'Volume'
           )
         }
       >
-        {(total_moles ? volume.toFixed(2) : "-") + " L"}
+        {(total_moles ? volume.toFixed(2) : '-') + ' L'}
       </LabeledList.Item>
       <LabeledList.Item
         label={
           pressureOnClick ? (
-            <Button content={"Pressure"} onClick={() => pressureOnClick()} />
+            <Button content={'Pressure'} onClick={() => pressureOnClick()} />
           ) : (
-            "Pressure"
+            'Pressure'
           )
         }
       >
-        {(total_moles ? pressure.toFixed(2) : "-") + " kPa"}
+        {(total_moles ? pressure.toFixed(2) : '-') + ' kPa'}
       </LabeledList.Item>
       {detailedReactions ? (
         reactions.map((reaction) => (
@@ -129,7 +129,7 @@ export const GasmixParser = (props: GasmixParserProps) => {
                   <div key={reaction[1]}>{reaction[1]}</div>
                 ),
               )
-            : "No reactions detected"}
+            : 'No reactions detected'}
         </LabeledList.Item>
       )}
     </LabeledList>

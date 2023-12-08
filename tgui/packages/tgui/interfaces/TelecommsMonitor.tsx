@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   Section,
   Stack,
@@ -7,8 +7,8 @@ import {
   Table,
   LabeledList,
   NoticeBox,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 enum Screen {
   Main,
@@ -50,7 +50,7 @@ const MachineScreen = (props) => {
             <Button
               content="Main Menu"
               icon="home"
-              onClick={() => act("return_home")}
+              onClick={() => act('return_home')}
             />
           }
         >
@@ -77,7 +77,7 @@ const MachineScreen = (props) => {
                 <Table.Cell>
                   <Button
                     content={lm.name}
-                    onClick={() => act("view_machine", { id: lm.id })}
+                    onClick={() => act('view_machine', { id: lm.id })}
                   />
                 </Table.Cell>
               </Table.Row>
@@ -92,7 +92,7 @@ const MachineScreen = (props) => {
 const MainScreen = (props) => {
   const { act, data } = useBackend<Data>();
   const { machinery = [], network } = data;
-  const [networkId, setNetworkId] = useLocalState("networkId", network);
+  const [networkId, setNetworkId] = useLocalState('networkId', network);
 
   return (
     <Stack fill vertical>
@@ -105,7 +105,7 @@ const MainScreen = (props) => {
           />
           <Button
             content="Probe Network"
-            onClick={() => act("probe_network", { network_id: networkId })}
+            onClick={() => act('probe_network', { network_id: networkId })}
           />
         </Section>
       </Stack.Item>
@@ -120,7 +120,7 @@ const MainScreen = (props) => {
               icon="trash"
               color="red"
               disabled={machinery.length === 0}
-              onClick={() => act("flush_buffer")}
+              onClick={() => act('flush_buffer')}
             />
           }
         >
@@ -137,7 +137,7 @@ const MainScreen = (props) => {
                 <Table.Cell>
                   <Button
                     content={machine.name}
-                    onClick={() => act("view_machine", { id: machine.id })}
+                    onClick={() => act('view_machine', { id: machine.id })}
                   />
                 </Table.Cell>
               </Table.Row>

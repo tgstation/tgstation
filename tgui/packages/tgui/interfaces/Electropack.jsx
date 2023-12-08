@@ -1,7 +1,7 @@
-import { toFixed } from "common/math";
-import { useBackend } from "../backend";
-import { Button, LabeledList, NumberInput, Section } from "../components";
-import { Window } from "../layouts";
+import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
 export const Electropack = (props) => {
   const { act, data } = useBackend();
@@ -13,10 +13,10 @@ export const Electropack = (props) => {
           <LabeledList>
             <LabeledList.Item label="Power">
               <Button
-                icon={power ? "power-off" : "times"}
-                content={power ? "On" : "Off"}
+                icon={power ? 'power-off' : 'times'}
+                content={power ? 'On' : 'Off'}
                 selected={power}
-                onClick={() => act("power")}
+                onClick={() => act('power')}
               />
             </LabeledList.Item>
             <LabeledList.Item
@@ -26,8 +26,8 @@ export const Electropack = (props) => {
                   icon="sync"
                   content="Reset"
                   onClick={() =>
-                    act("reset", {
-                      reset: "freq",
+                    act('reset', {
+                      reset: 'freq',
                     })
                   }
                 />
@@ -44,7 +44,7 @@ export const Electropack = (props) => {
                 format={(value) => toFixed(value, 1)}
                 width="80px"
                 onDrag={(e, value) =>
-                  act("freq", {
+                  act('freq', {
                     freq: value,
                   })
                 }
@@ -57,8 +57,8 @@ export const Electropack = (props) => {
                   icon="sync"
                   content="Reset"
                   onClick={() =>
-                    act("reset", {
-                      reset: "code",
+                    act('reset', {
+                      reset: 'code',
                     })
                   }
                 />
@@ -73,7 +73,7 @@ export const Electropack = (props) => {
                 value={code}
                 width="80px"
                 onDrag={(e, value) =>
-                  act("code", {
+                  act('code', {
                     code: value,
                   })
                 }

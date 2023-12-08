@@ -1,4 +1,4 @@
-import { Component, createRef, PropsWithChildren } from "react";
+import { Component, createRef, PropsWithChildren } from 'react';
 
 type Props = {
   onOutsideClick: () => void;
@@ -12,11 +12,11 @@ export class TrackOutsideClicks extends Component<Props> {
 
     this.handleOutsideClick = this.handleOutsideClick.bind(this);
 
-    document.addEventListener("click", this.handleOutsideClick);
+    document.addEventListener('click', this.handleOutsideClick);
   }
 
   componentWillUnmount() {
-    document.removeEventListener("click", this.handleOutsideClick);
+    document.removeEventListener('click', this.handleOutsideClick);
   }
 
   handleOutsideClick(event: MouseEvent) {

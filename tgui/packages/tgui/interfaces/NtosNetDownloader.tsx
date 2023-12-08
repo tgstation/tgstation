@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { scale, toFixed } from "common/math";
-import { useBackend, useLocalState } from "../backend";
-import { createSearch } from "common/string";
+import { BooleanLike } from 'common/react';
+import { scale, toFixed } from 'common/math';
+import { useBackend, useLocalState } from '../backend';
+import { createSearch } from 'common/string';
 import {
   Box,
   Button,
@@ -13,10 +13,10 @@ import {
   ProgressBar,
   Section,
   Tabs,
-} from "../components";
-import { flow } from "common/fp";
-import { filter, sortBy } from "common/collections";
-import { NtosWindow } from "../layouts";
+} from '../components';
+import { flow } from 'common/fp';
+import { filter, sortBy } from 'common/collections';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   disk_size: number;
@@ -63,10 +63,10 @@ export const NtosNetDownloader = (props) => {
     scale(downloadcompletion, 0, downloadsize) * 100,
   );
   const [selectedCategory, setSelectedCategory] = useLocalState(
-    "category",
+    'category',
     categories[0],
   );
-  const [searchItem, setSearchItem] = useLocalState("searchItem", "");
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const search = createSearch<ProgramData>(
     searchItem,
     (program) => program.filedesc,
@@ -94,7 +94,7 @@ export const NtosNetDownloader = (props) => {
         {!!error && (
           <NoticeBox>
             <Box mb={1}>{error}</Box>
-            <Button content="Reset" onClick={() => act("PRG_reseterror")} />
+            <Button content="Reset" onClick={() => act('PRG_reseterror')} />
           </NoticeBox>
         )}
         <Section>
@@ -222,9 +222,9 @@ const Program = (props) => {
                   content="Download"
                   disabled={downloading}
                   tooltipPosition="left"
-                  tooltip={!!downloading && "Awaiting download completion..."}
+                  tooltip={!!downloading && 'Awaiting download completion...'}
                   onClick={() =>
-                    act("PRG_downloadfile", {
+                    act('PRG_downloadfile', {
                       filename: program.filename,
                     })
                   }
@@ -232,22 +232,22 @@ const Program = (props) => {
               )) || (
               <Button
                 bold
-                icon={program.installed ? "check" : "times"}
+                icon={program.installed ? 'check' : 'times'}
                 color={
                   program.installed
-                    ? "good"
+                    ? 'good'
                     : !program.compatible
-                      ? "bad"
-                      : "grey"
+                      ? 'bad'
+                      : 'grey'
                 }
                 content={
                   program.installed
-                    ? "Installed"
+                    ? 'Installed'
                     : !program.compatible
-                      ? "Incompatible"
+                      ? 'Incompatible'
                       : !program.access
-                        ? "No Access"
-                        : "No Space"
+                        ? 'No Access'
+                        : 'No Space'
                 }
               />
             )}

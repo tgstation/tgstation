@@ -1,11 +1,11 @@
-import { captureExternalLinks } from "./links";
+import { captureExternalLinks } from './links';
 
-describe("captureExternalLinks", () => {
+describe('captureExternalLinks', () => {
   let addEventListenerSpy;
   let clickHandler;
 
   beforeEach(() => {
-    addEventListenerSpy = jest.spyOn(document, "addEventListener");
+    addEventListenerSpy = jest.spyOn(document, 'addEventListener');
     captureExternalLinks();
     clickHandler = addEventListenerSpy.mock.calls[0][1];
   });
@@ -14,17 +14,17 @@ describe("captureExternalLinks", () => {
     addEventListenerSpy.mockRestore();
   });
 
-  it("should subscribe to document clicks", () => {
+  it('should subscribe to document clicks', () => {
     expect(addEventListenerSpy).toHaveBeenCalledWith(
-      "click",
+      'click',
       expect.any(Function),
     );
   });
 
-  it("should preventDefault and send a message when a non-BYOND external link is clicked", () => {
+  it('should preventDefault and send a message when a non-BYOND external link is clicked', () => {
     const externalLink = {
-      tagName: "A",
-      getAttribute: () => "https://example.com",
+      tagName: 'A',
+      getAttribute: () => 'https://example.com',
       parentElement: document.body,
     };
     const byond = { sendMessage: jest.fn() };
@@ -36,15 +36,15 @@ describe("captureExternalLinks", () => {
 
     expect(evt.preventDefault).toHaveBeenCalled();
     expect(byond.sendMessage).toHaveBeenCalledWith({
-      type: "openLink",
-      url: "https://example.com",
+      type: 'openLink',
+      url: 'https://example.com',
     });
   });
 
-  it("should not preventDefault or send a message when a BYOND link is clicked", () => {
+  it('should not preventDefault or send a message when a BYOND link is clicked', () => {
     const byondLink = {
-      tagName: "A",
-      getAttribute: () => "byond://server-address",
+      tagName: 'A',
+      getAttribute: () => 'byond://server-address',
       parentElement: document.body,
     };
     const byond = { sendMessage: jest.fn() };
@@ -58,10 +58,10 @@ describe("captureExternalLinks", () => {
     expect(byond.sendMessage).not.toHaveBeenCalled();
   });
 
-  it("should add https:// to www links", () => {
+  it('should add https:// to www links', () => {
     const wwwLink = {
-      tagName: "A",
-      getAttribute: () => "www.example.com",
+      tagName: 'A',
+      getAttribute: () => 'www.example.com',
       parentElement: document.body,
     };
     const byond = { sendMessage: jest.fn() };
@@ -72,8 +72,8 @@ describe("captureExternalLinks", () => {
     clickHandler(evt);
 
     expect(byond.sendMessage).toHaveBeenCalledWith({
-      type: "openLink",
-      url: "https://www.example.com",
+      type: 'openLink',
+      url: 'https://www.example.com',
     });
   });
 });

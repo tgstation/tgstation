@@ -8,12 +8,12 @@ import {
   NumberInput,
   Section,
   Tooltip,
-} from "tgui/components";
-import { HelpDummy, HoverHelp } from "./helpers";
+} from 'tgui/components';
+import { HelpDummy, HoverHelp } from './helpers';
 
-import { BooleanLike } from "common/react";
-import { HypertorusFilter } from ".";
-import { useBackend } from "tgui/backend";
+import { BooleanLike } from 'common/react';
+import { HypertorusFilter } from '.';
+import { useBackend } from 'tgui/backend';
 
 type ComboProps = {
   color?: string | BooleanLike;
@@ -143,7 +143,7 @@ export const HypertorusSecondaryControls = (props) => {
       <LabeledControls justify="space-around" wrap>
         <LabeledControls.Item label="Heating Conductor">
           <ComboKnob
-            color={heating_conductor > 50 && heat_output > 0 && "yellow"}
+            color={heating_conductor > 50 && heat_output > 0 && 'yellow'}
             value={heating_conductor}
             unit="J/cm"
             minValue={50}
@@ -182,7 +182,7 @@ export const HypertorusSecondaryControls = (props) => {
         </LabeledControls.Item>
         <LabeledControls.Item label="Current Damper">
           <ComboKnob
-            color={current_damper && "yellow"}
+            color={current_damper && 'yellow'}
             value={current_damper}
             unit="W"
             minValue={0}
@@ -210,8 +210,8 @@ export const HypertorusWasteRemove = (props) => {
             <>
               <HoverHelp
                 content={
-                  "Remove waste gases from Fusion," +
-                  " and any selected gases from the Moderator."
+                  'Remove waste gases from Fusion,' +
+                  ' and any selected gases from the Moderator.'
                 }
               />
               Waste remove:
@@ -219,10 +219,10 @@ export const HypertorusWasteRemove = (props) => {
           }
         >
           <Button
-            icon={waste_remove ? "power-off" : "times"}
-            content={waste_remove ? "On" : "Off"}
+            icon={waste_remove ? 'power-off' : 'times'}
+            content={waste_remove ? 'On' : 'Off'}
             selected={waste_remove}
-            onClick={() => act("waste_remove")}
+            onClick={() => act('waste_remove')}
           />
         </LabeledList.Item>
         <LabeledList.Item
@@ -240,7 +240,7 @@ export const HypertorusWasteRemove = (props) => {
             minValue={5}
             maxValue={200}
             onDrag={(e, value) =>
-              act("mod_filtering_rate", {
+              act('mod_filtering_rate', {
                 mod_filtering_rate: value,
               })
             }
@@ -259,7 +259,7 @@ export const HypertorusWasteRemove = (props) => {
               key={gas_id}
               checked={enabled}
               onClick={() =>
-                act("filter", {
+                act('filter', {
                   mode: gas_id,
                 })
               }

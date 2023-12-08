@@ -1,6 +1,6 @@
-import { toFixed } from "common/math";
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
+import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,15 +12,15 @@ import {
   RoundGauge,
   Section,
   Tooltip,
-} from "../components";
-import { formatSiUnit } from "../format";
-import { Window } from "../layouts";
+} from '../components';
+import { formatSiUnit } from '../format';
+import { Window } from '../layouts';
 
 const formatPressure = (value: number) => {
   if (value < 10000) {
-    return toFixed(value) + " kPa";
+    return toFixed(value) + ' kPa';
   }
-  return formatSiUnit(value * 1000, 1, "Pa");
+  return formatSiUnit(value * 1000, 1, 'Pa');
 };
 
 type HoldingTank = {
@@ -76,17 +76,17 @@ export const Canister = (props) => {
               buttons={
                 <>
                   <Button
-                    icon={shielding ? "power-off" : "times"}
-                    content={shielding ? "Shielding-ON" : "Shielding-OFF"}
+                    icon={shielding ? 'power-off' : 'times'}
+                    content={shielding ? 'Shielding-ON' : 'Shielding-OFF'}
                     selected={shielding}
-                    onClick={() => act("shielding")}
+                    onClick={() => act('shielding')}
                   />
                   <Button
                     icon="pencil-alt"
                     content="Relabel"
-                    onClick={() => act("relabel")}
+                    onClick={() => act('relabel')}
                   />
-                  <Button icon="palette" onClick={() => act("recolor")} />
+                  <Button icon="palette" onClick={() => act('recolor')} />
                 </>
               }
             >
@@ -110,7 +110,7 @@ export const Canister = (props) => {
                   <Box position="relative" left="-8px">
                     <Knob
                       size={1.25}
-                      color={!!valveOpen && "yellow"}
+                      color={!!valveOpen && 'yellow'}
                       value={releasePressure}
                       unit="kPa"
                       minValue={minReleasePressure}
@@ -118,7 +118,7 @@ export const Canister = (props) => {
                       step={5}
                       stepPixelSize={1}
                       onDrag={(e, value) =>
-                        act("pressure", {
+                        act('pressure', {
                           pressure: value,
                         })
                       }
@@ -131,7 +131,7 @@ export const Canister = (props) => {
                       color="transparent"
                       icon="fast-forward"
                       onClick={() =>
-                        act("pressure", {
+                        act('pressure', {
                           pressure: maxReleasePressure,
                         })
                       }
@@ -144,7 +144,7 @@ export const Canister = (props) => {
                       color="transparent"
                       icon="undo"
                       onClick={() =>
-                        act("pressure", {
+                        act('pressure', {
                           pressure: defaultReleasePressure,
                         })
                       }
@@ -158,22 +158,22 @@ export const Canister = (props) => {
                     lineHeight={2}
                     fontSize="11px"
                     color={
-                      valveOpen ? (holdingTank ? "caution" : "danger") : null
+                      valveOpen ? (holdingTank ? 'caution' : 'danger') : null
                     }
-                    content={valveOpen ? "Open" : "Closed"}
-                    onClick={() => act("valve")}
+                    content={valveOpen ? 'Open' : 'Closed'}
+                    onClick={() => act('valve')}
                   />
                 </LabeledControls.Item>
                 <LabeledControls.Item mr={1} label="Port">
                   <Tooltip
-                    content={portConnected ? "Connected" : "Disconnected"}
+                    content={portConnected ? 'Connected' : 'Disconnected'}
                     position="top"
                   >
                     <Box position="relative">
                       <Icon
                         size={1.25}
-                        name={portConnected ? "plug" : "times"}
-                        color={portConnected ? "good" : "bad"}
+                        name={portConnected ? 'plug' : 'times'}
+                        color={portConnected ? 'good' : 'bad'}
                       />
                     </Box>
                   </Tooltip>
@@ -183,17 +183,17 @@ export const Canister = (props) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Cell Charge">
-                  {cellCharge > 0 ? cellCharge + "%" : "Missing Cell"}
+                  {cellCharge > 0 ? cellCharge + '%' : 'Missing Cell'}
                 </LabeledList.Item>
                 {!!hasHypernobCrystal && (
                   <LabeledList.Item label="Reaction Suppression">
                     <Button
-                      icon={reactionSuppressionEnabled ? "snowflake" : "times"}
+                      icon={reactionSuppressionEnabled ? 'snowflake' : 'times'}
                       content={
-                        reactionSuppressionEnabled ? "Enabled" : "Disabled"
+                        reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
                       }
                       selected={reactionSuppressionEnabled}
-                      onClick={() => act("reaction_suppression")}
+                      onClick={() => act('reaction_suppression')}
                     />
                   </LabeledList.Item>
                 )}
@@ -208,9 +208,9 @@ export const Canister = (props) => {
                 !!holdingTank && (
                   <Button
                     icon="eject"
-                    color={valveOpen && "danger"}
+                    color={valveOpen && 'danger'}
                     content="Eject"
-                    onClick={() => act("eject")}
+                    onClick={() => act('eject')}
                   />
                 )
               }

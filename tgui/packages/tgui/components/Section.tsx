@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { BoxProps, computeBoxClassName, computeBoxProps } from "./Box";
-import { ReactNode, RefObject, createRef, useEffect } from "react";
-import { addScrollableNode, removeScrollableNode } from "../events";
-import { canRender, classes } from "common/react";
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
+import { ReactNode, RefObject, createRef, useEffect } from 'react';
+import { addScrollableNode, removeScrollableNode } from '../events';
+import { canRender, classes } from 'common/react';
 
 export type SectionProps = Partial<{
   buttons: ReactNode;
@@ -57,11 +57,11 @@ export const Section = (props: SectionProps) => {
   return (
     <div
       className={classes([
-        "Section",
-        fill && "Section--fill",
-        fitted && "Section--fitted",
-        scrollable && "Section--scrollable",
-        scrollableHorizontal && "Section--scrollableHorizontal",
+        'Section',
+        fill && 'Section--fill',
+        fitted && 'Section--fitted',
+        scrollable && 'Section--scrollable',
+        scrollableHorizontal && 'Section--scrollableHorizontal',
         className,
         computeBoxClassName(rest),
       ])}

@@ -1,29 +1,29 @@
-import { BooleanLike } from "common/react";
-import { multiline } from "common/string";
-import { useBackend, useLocalState } from "../backend";
-import { BlockQuote, Button, Dropdown, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { multiline } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 const weaponlist = [
-  "Fist Fight",
-  "Ceremonial Weapons",
-  "Melee Only",
-  "Any Weapons",
+  'Fist Fight',
+  'Ceremonial Weapons',
+  'Melee Only',
+  'Any Weapons',
 ];
 
-const stakelist = ["No Stakes", "Holy Match", "Money Match", "Your Soul"];
+const stakelist = ['No Stakes', 'Holy Match', 'Money Match', 'Your Soul'];
 
 const weaponblurb = [
-  "You will fight with your fists only. Any weapons will be considered a violation.",
-  "You can only fight with ceremonial weapons. You will be at a severe disadvantage without one!",
-  "You can fight with weapons, or fists if you have none. Ranged weapons are a violation.",
-  "You can fight with any and all weapons as you please. Try not to kill them, okay?",
+  'You will fight with your fists only. Any weapons will be considered a violation.',
+  'You can only fight with ceremonial weapons. You will be at a severe disadvantage without one!',
+  'You can fight with weapons, or fists if you have none. Ranged weapons are a violation.',
+  'You can fight with any and all weapons as you please. Try not to kill them, okay?',
 ];
 
 const stakesblurb = [
   "No stakes, just for fun. Who doesn't love some recreational sparring?",
   "A match for the chaplain's deity. The Chaplain suffers large consequences for failure, but advances their sect by winning.",
-  "A match with money on the line. Whomever wins takes all the money of whomever loses.",
+  'A match with money on the line. Whomever wins takes all the money of whomever loses.',
   "A lethal match with the loser's soul becoming under ownership of the winner.",
 ];
 
@@ -52,9 +52,9 @@ export const SparringContract = (props) => {
     no_chaplains,
     stakes_holy_match,
   } = data;
-  const [weapon, setWeapon] = useLocalState("weapon", set_weapon);
-  const [area, setArea] = useLocalState("area", set_area);
-  const [stakes, setStakes] = useLocalState("stakes", set_stakes);
+  const [weapon, setWeapon] = useLocalState('weapon', set_weapon);
+  const [area, setArea] = useLocalState('area', set_area);
+  const [stakes, setStakes] = useLocalState('stakes', set_stakes);
   return (
     <Window width={420} height={380}>
       <Window.Content>
@@ -143,16 +143,16 @@ export const SparringContract = (props) => {
             </Stack.Item>
             <Stack.Item grow>
               <Stack grow textAlign="center">
-                <Stack.Item fontSize={left_sign !== "none" && "14px"} grow>
-                  {(left_sign === "none" && (
+                <Stack.Item fontSize={left_sign !== 'none' && '14px'} grow>
+                  {(left_sign === 'none' && (
                     <Button
                       icon="pen"
                       onClick={() =>
-                        act("sign", {
+                        act('sign', {
                           weapon: weapon,
                           area: area,
                           stakes: stakes,
-                          sign_position: "left",
+                          sign_position: 'left',
                         })
                       }
                     >
@@ -162,12 +162,12 @@ export const SparringContract = (props) => {
                     left_sign}
                 </Stack.Item>
                 <Stack.Item fontSize="16px">VS</Stack.Item>
-                <Stack.Item fontSize={right_sign !== "none" && "14px"} grow>
-                  {(right_sign === "none" && (
+                <Stack.Item fontSize={right_sign !== 'none' && '14px'} grow>
+                  {(right_sign === 'none' && (
                     <Button
                       icon="pen"
                       onClick={() =>
-                        act("sign", {
+                        act('sign', {
                           weapon: weapon,
                           area: area,
                           stakes: stakes,
@@ -190,7 +190,7 @@ export const SparringContract = (props) => {
                       (no_chaplains && set_stakes === stakes_holy_match)
                     }
                     icon="fist-raised"
-                    onClick={() => act("fight")}
+                    onClick={() => act('fight')}
                   >
                     FIGHT!
                   </Button>
@@ -201,7 +201,7 @@ export const SparringContract = (props) => {
                       this button.
                     `}
                     icon="door-open"
-                    onClick={() => act("clear")}
+                    onClick={() => act('clear')}
                   >
                     Clear
                   </Button>
@@ -210,26 +210,26 @@ export const SparringContract = (props) => {
                   <Button
                     tooltip={
                       (in_area &&
-                        "Both participants are present in the " + area + ".") ||
-                      "Both participants need to be in the arena!"
+                        'Both participants are present in the ' + area + '.') ||
+                      'Both participants need to be in the arena!'
                     }
-                    color={(in_area && "green") || "red"}
+                    color={(in_area && 'green') || 'red'}
                     icon="ring"
                   >
                     Arena
                   </Button>
                   <Button
                     tooltip={
-                      (left_sign !== "none" &&
-                        right_sign !== "none" &&
-                        "Both signatures present, terms agreed upon.") ||
-                      "You need signatures from both fighters on the terms!"
+                      (left_sign !== 'none' &&
+                        right_sign !== 'none' &&
+                        'Both signatures present, terms agreed upon.') ||
+                      'You need signatures from both fighters on the terms!'
                     }
                     color={
-                      (left_sign !== "none" &&
-                        right_sign !== "none" &&
-                        "green") ||
-                      "red"
+                      (left_sign !== 'none' &&
+                        right_sign !== 'none' &&
+                        'green') ||
+                      'red'
                     }
                     icon="file-signature"
                   >
@@ -238,10 +238,10 @@ export const SparringContract = (props) => {
                   <Button
                     tooltip={
                       (!no_chaplains &&
-                        "At least one chaplain is present. Holy matches allowed.") ||
-                      "No chaplain present for this fight. No Holy Matches!"
+                        'At least one chaplain is present. Holy matches allowed.') ||
+                      'No chaplain present for this fight. No Holy Matches!'
                     }
-                    color={(!no_chaplains && "green") || "yellow"}
+                    color={(!no_chaplains && 'green') || 'yellow'}
                     icon="cross"
                   >
                     Chaplain

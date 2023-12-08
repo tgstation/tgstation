@@ -1,6 +1,6 @@
-import { useBackend, useSharedState } from "../backend";
-import { Window } from "../layouts";
-import { Button, Dropdown, Section, Stack } from "../components";
+import { useBackend, useSharedState } from '../backend';
+import { Window } from '../layouts';
+import { Button, Dropdown, Section, Stack } from '../components';
 
 export const PaintingMachine = (props) => {
   const { act, data } = useBackend();
@@ -8,12 +8,12 @@ export const PaintingMachine = (props) => {
   const { pdaTypes, cardTrims, hasPDA, pdaName, hasID, idName } = data;
 
   const [selectedPDA] = useSharedState(
-    "pdaSelection",
+    'pdaSelection',
     pdaTypes[Object.keys(pdaTypes)[0]],
   );
 
   const [selectedTrim] = useSharedState(
-    "trimSelection",
+    'trimSelection',
     cardTrims[Object.keys(cardTrims)[0]],
   );
 
@@ -29,7 +29,7 @@ export const PaintingMachine = (props) => {
                 content="Paint PDA"
                 confirmContent="Confirm?"
                 onClick={() =>
-                  act("trim_pda", {
+                  act('trim_pda', {
                     selection: selectedPDA,
                   })
                 }
@@ -39,7 +39,7 @@ export const PaintingMachine = (props) => {
                 content="Reset Imprint"
                 confirmContent="Confirm?"
                 onClick={() => {
-                  act("reset_pda");
+                  act('reset_pda');
                 }}
               />
             </>
@@ -48,8 +48,8 @@ export const PaintingMachine = (props) => {
           <Stack vertical>
             <Stack.Item height="100%">
               <EjectButton
-                name={pdaName || "-----"}
-                onClickEject={() => act("eject_pda")}
+                name={pdaName || '-----'}
+                onClickEject={() => act('eject_pda')}
               />
             </Stack.Item>
             <Stack.Item height="100%">
@@ -65,14 +65,14 @@ export const PaintingMachine = (props) => {
                 disabled={!hasID}
                 content="Reset ID Account"
                 confirmContent="Confirm?"
-                onClick={() => act("reset_card")}
+                onClick={() => act('reset_card')}
               />
               <Button.Confirm
                 disabled={!hasID}
                 content="Imprint ID Trim"
                 confirmContent="Confirm?"
                 onClick={(sel) =>
-                  act("trim_card", {
+                  act('trim_card', {
                     selection: selectedTrim,
                   })
                 }
@@ -80,8 +80,8 @@ export const PaintingMachine = (props) => {
               <Button
                 icon="question-circle"
                 tooltip={
-                  "WARNING: This is destructive" +
-                  " and will wipe ALL access on the card."
+                  'WARNING: This is destructive' +
+                  ' and will wipe ALL access on the card.'
                 }
                 tooltipPosition="left"
               />
@@ -91,8 +91,8 @@ export const PaintingMachine = (props) => {
           <Stack vertical>
             <Stack.Item height="100%">
               <EjectButton
-                name={idName || "-----"}
-                onClickEject={() => act("eject_card")}
+                name={idName || '-----'}
+                onClickEject={() => act('eject_card')}
               />
             </Stack.Item>
             <Stack.Item height="100%">

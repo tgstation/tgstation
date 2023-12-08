@@ -1,8 +1,8 @@
-import { Flex, LabeledControls, RoundGauge, Section } from "tgui/components";
+import { Flex, LabeledControls, RoundGauge, Section } from 'tgui/components';
 
-import { formatSiUnit } from "tgui/format";
-import { toFixed } from "common/math";
-import { useBackend } from "tgui/backend";
+import { formatSiUnit } from 'tgui/format';
+import { toFixed } from 'common/math';
+import { useBackend } from 'tgui/backend';
 
 type Data = {
   apc_energy: number;
@@ -131,7 +131,7 @@ export const HypertorusParameters = (props) => {
                 minValue={energy_minimum_exponent}
                 maxValue={30}
                 format={(v) =>
-                  formatSiUnit(10 ** v, energy_minimum_suffix, "J")
+                  formatSiUnit(10 ** v, energy_minimum_suffix, 'J')
                 }
                 ranges={{
                   black: [energy_minimum_exponent, 15],

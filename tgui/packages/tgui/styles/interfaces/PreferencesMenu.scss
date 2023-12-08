@@ -1,19 +1,19 @@
-@use "sass:color";
-@use "sass:map";
-@use "../components/Button.scss";
-@use "../colors.scss";
+@use 'sass:color';
+@use 'sass:map';
+@use '../components/Button.scss';
+@use '../colors.scss';
 
 $department_map: (
-  "Assistant": colors.$grey,
-  "Captain": colors.fg(colors.$blue),
-  "Cargo": colors.$brown,
-  "Command": colors.$yellow,
-  "Security": colors.$red,
-  "Engineering": #f1a839,
-  "Medical": colors.$teal,
-  "Science": colors.fg(colors.$purple),
-  "Service": colors.$green,
-  "Silicon": colors.$pink,
+  'Assistant': colors.$grey,
+  'Captain': colors.fg(colors.$blue),
+  'Cargo': colors.$brown,
+  'Command': colors.$yellow,
+  'Security': colors.$red,
+  'Engineering': #f1a839,
+  'Medical': colors.$teal,
+  'Science': colors.fg(colors.$purple),
+  'Service': colors.$green,
+  'Silicon': colors.$pink,
 );
 
 .PreferencesMenu {
@@ -172,7 +172,7 @@ $department_map: (
         border: 1px solid rgba(0, 0, 0, 0.3);
 
         &--off::after {
-          content: "";
+          content: '';
 
           background: rgba(0, 0, 0, 0.2);
           display: block;
@@ -208,9 +208,9 @@ $department_map: (
         transition: background-color 0.1s ease-in;
 
         $quality_map: (
-          "positive": colors.$green,
-          "neutral": colors.$white,
-          "negative": colors.$red,
+          'positive': colors.$green,
+          'neutral': colors.$white,
+          'negative': colors.$red,
         );
 
         @each $quality, $color-value in $quality_map {

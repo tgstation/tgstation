@@ -1,7 +1,7 @@
-import { Section, Dropdown, Input, Box, TextArea } from "../components";
-import { useBackend, useLocalState } from "../backend";
-import { Button } from "../components/Button";
-import { Window } from "../layouts";
+import { Section, Dropdown, Input, Box, TextArea } from '../components';
+import { useBackend, useLocalState } from '../backend';
+import { Button } from '../components/Button';
+import { Window } from '../layouts';
 
 export const AdminPDA = (props) => {
   return (
@@ -20,10 +20,10 @@ const ReceiverChoice = (props) => {
   const { users } = data;
   const receivers = Array.from(Object.values(users));
 
-  const [user, setUser] = useLocalState("user", "");
-  const [spam, setSpam] = useLocalState("spam", false);
+  const [user, setUser] = useLocalState('user', '');
+  const [spam, setSpam] = useLocalState('spam', false);
   const [showInvisible, setShowInvisible] = useLocalState(
-    "showInvisible",
+    'showInvisible',
     false,
   );
 
@@ -33,7 +33,7 @@ const ReceiverChoice = (props) => {
         <Dropdown
           disabled={spam}
           selected={user}
-          displayText={user ? users[user].username : "Pick a user..."}
+          displayText={user ? users[user].username : 'Pick a user...'}
           options={receivers
             .filter((rcvr) => showInvisible || !rcvr.invisible)
             .map((rcvr) => ({
@@ -66,8 +66,8 @@ const ReceiverChoice = (props) => {
 };
 
 const SenderInfo = (props) => {
-  const [name, setName] = useLocalState("name", "");
-  const [job, setJob] = useLocalState("job", "");
+  const [name, setName] = useLocalState('name', '');
+  const [job, setJob] = useLocalState('job', '');
 
   return (
     <Section title="From Who?" textAlign="center">
@@ -96,24 +96,24 @@ const SenderInfo = (props) => {
 const MessageInput = (props) => {
   const { act } = useBackend();
 
-  const [user, setUser] = useLocalState("user", "");
-  const [name, setName] = useLocalState("name", "");
-  const [job, setJob] = useLocalState("job", "");
-  const [messageText, setMessageText] = useLocalState("message", "");
-  const [spam, setSpam] = useLocalState("spam", false);
-  const [force, setForce] = useLocalState("force", false);
+  const [user, setUser] = useLocalState('user', '');
+  const [name, setName] = useLocalState('name', '');
+  const [job, setJob] = useLocalState('job', '');
+  const [messageText, setMessageText] = useLocalState('message', '');
+  const [spam, setSpam] = useLocalState('spam', false);
+  const [force, setForce] = useLocalState('force', false);
   const [showInvisible, setShowInvisible] = useLocalState(
-    "showInvisible",
+    'showInvisible',
     false,
   );
 
   const tooltipText = function (name, job, message, target) {
     let reasonList = [];
-    if (!target) reasonList.push("target");
-    if (!name) reasonList.push("name");
-    if (!job) reasonList.push("job");
-    if (!message) reasonList.push("message text");
-    return reasonList.join(", ");
+    if (!target) reasonList.push('target');
+    if (!name) reasonList.push('name');
+    if (!job) reasonList.push('job');
+    if (!message) reasonList.push('message text');
+    return reasonList.join(', ');
   };
 
   const blocked = !name || !job || !messageText;
@@ -136,22 +136,22 @@ const MessageInput = (props) => {
           checked={force}
           content="Force send the message?"
           tooltip={
-            "This will immediately broadcast the message, bypassing telecomms altogether."
+            'This will immediately broadcast the message, bypassing telecomms altogether.'
           }
           onClick={() => setForce(!force)}
         />
         <Button
           tooltip={
             blocked
-              ? "Fill in the following lines: " +
+              ? 'Fill in the following lines: ' +
                 tooltipText(name, job, messageText, spam || !!user)
-              : "Send message to user(s)"
+              : 'Send message to user(s)'
           }
           fluid
           disabled={blocked}
           icon="envelope-open-text"
           onClick={() =>
-            act("sendMessage", {
+            act('sendMessage', {
               name: name,
               job: job,
               ref: user,

@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend, useLocalState } from "../backend";
-import { TextArea, Stack, Button, NoticeBox, Input, Box } from "../components";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { TextArea, Stack, Button, NoticeBox, Input, Box } from '../components';
+import { Window } from '../layouts';
 
 type AdminhelpData = {
   adminCount: number;
@@ -19,21 +19,21 @@ export const Adminhelp = (props) => {
     urgentAhelpPromptMessage,
   } = data;
   const [requestForAdmin, setRequestForAdmin] = useLocalState(
-    "request_for_admin",
+    'request_for_admin',
     false,
   );
   const [currentlyInputting, setCurrentlyInputting] = useLocalState(
-    "confirm_request",
+    'confirm_request',
     false,
   );
-  const [ahelpMessage, setAhelpMessage] = useLocalState("ahelp_message", "");
+  const [ahelpMessage, setAhelpMessage] = useLocalState('ahelp_message', '');
 
-  const confirmationText = "alert admins";
+  const confirmationText = 'alert admins';
   return (
     <Window title="Create Adminhelp" theme="admin" height={300} width={500}>
       <Window.Content
         style={{
-          backgroundImage: "none",
+          backgroundImage: 'none',
         }}
       >
         <Stack vertical fill>
@@ -57,7 +57,7 @@ export const Adminhelp = (props) => {
                     fontFamily="arial"
                     backgroundColor="grey"
                     style={{
-                      fontStyle: "normal",
+                      fontStyle: 'normal',
                     }}
                   >
                     Input &apos;{confirmationText}&apos; to proceed.
@@ -84,12 +84,12 @@ export const Adminhelp = (props) => {
                         setCurrentlyInputting(true);
                       }
                     }}
-                    color={requestForAdmin ? "orange" : "blue"}
-                    icon={requestForAdmin ? "check-square-o" : "square-o"}
+                    color={requestForAdmin ? 'orange' : 'blue'}
+                    icon={requestForAdmin ? 'check-square-o' : 'square-o'}
                     disabled={bannedFromUrgentAhelp}
                     tooltip={
                       bannedFromUrgentAhelp
-                        ? "You are banned from using urgent ahelps."
+                        ? 'You are banned from using urgent ahelps.'
                         : null
                     }
                     fluid
@@ -106,7 +106,7 @@ export const Adminhelp = (props) => {
               content="Submit"
               textAlign="center"
               onClick={() =>
-                act("ahelp", {
+                act('ahelp', {
                   urgent: requestForAdmin,
                   message: ahelpMessage,
                 })

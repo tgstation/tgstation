@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { classes } from "common/react";
-import { useBackend, useLocalState } from "../backend";
-import { Window } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { classes } from 'common/react';
+import { useBackend, useLocalState } from '../backend';
+import { Window } from '../layouts';
 import {
   Box,
   Section,
@@ -13,7 +13,7 @@ import {
   Button,
   ProgressBar,
   Stack,
-} from "../components";
+} from '../components';
 
 type BiogeneratorData = {
   processing: BooleanLike;
@@ -59,7 +59,7 @@ export const Biogenerator = (props) => {
     categories,
   } = data;
   const [selectedCategory, setSelectedCategory] = useLocalState<string>(
-    "category",
+    'category',
     data.categories[0]?.name,
   );
   const items =
@@ -83,7 +83,7 @@ export const Biogenerator = (props) => {
                       iconSpin={processing ? 1 : 0}
                       content="Generate"
                       disabled={!can_process || processing}
-                      onClick={() => act("activate")}
+                      onClick={() => act('activate')}
                     />
                   }
                 >
@@ -96,7 +96,7 @@ export const Biogenerator = (props) => {
                     <Box
                       lineHeight={1.9}
                       style={{
-                        textShadow: "1px 1px 0 black",
+                        textShadow: '1px 1px 0 black',
                       }}
                     >
                       {`${parseFloat(biomass.toFixed(2))} units`}
@@ -113,7 +113,7 @@ export const Biogenerator = (props) => {
                         align="center"
                         icon="eject"
                         content="Eject"
-                        onClick={() => act("eject")}
+                        onClick={() => act('eject')}
                       />
                     }
                   >
@@ -127,7 +127,7 @@ export const Biogenerator = (props) => {
                       <Box
                         lineHeight={1.9}
                         style={{
-                          textShadow: "1px 1px 0 black",
+                          textShadow: '1px 1px 0 black',
                         }}
                       >
                         {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
@@ -159,7 +159,7 @@ export const Biogenerator = (props) => {
               ))}
             </Tabs>
           </Stack.Item>
-          <Stack.Item grow mt={"2px"}>
+          <Stack.Item grow mt={'2px'}>
             <Section fill scrollable>
               <Table>
                 <ItemList
@@ -184,7 +184,7 @@ const ItemList = (props) => {
   const { act } = useBackend();
   const items = props.items.map((item) => {
     const [amount, setAmount] = useLocalState(
-      "amount" + item.name,
+      'amount' + item.name,
       item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1,
     );
     const disabled =
@@ -209,11 +209,11 @@ const ItemList = (props) => {
     <Table.Row key={item.id}>
       <Table.Cell>
         <span
-          className={classes(["design32x32", item.id])}
+          className={classes(['design32x32', item.id])}
           style={{
-            verticalAlign: "middle",
+            verticalAlign: 'middle',
           }}
-        />{" "}
+        />{' '}
         <b>{item.name}</b>
       </Table.Cell>
       <Table.Cell collapsing>
@@ -229,10 +229,10 @@ const ItemList = (props) => {
         <Button
           fluid
           align="right"
-          content={parseFloat((item.cost * item.amount).toFixed(2)) + " BIO"}
+          content={parseFloat((item.cost * item.amount).toFixed(2)) + ' BIO'}
           disabled={item.disabled}
           onClick={() =>
-            act("create", {
+            act('create', {
               id: item.id,
               amount: item.amount,
             })

@@ -1,35 +1,35 @@
-import { useBackend, useLocalState } from "../backend";
-import { Section, Stack, Box, Tabs, Button, BlockQuote } from "../components";
-import { Window } from "../layouts";
-import { BooleanLike } from "common/react";
+import { useBackend, useLocalState } from '../backend';
+import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
+import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
 import {
   ObjectivePrintout,
   Objective,
   ReplaceObjectivesButton,
-} from "./common/Objectives";
+} from './common/Objectives';
 
 const hereticRed = {
-  color: "#e03c3c",
+  color: '#e03c3c',
 };
 
 const hereticBlue = {
-  fontWeight: "bold",
-  color: "#2185d0",
+  fontWeight: 'bold',
+  color: '#2185d0',
 };
 
 const hereticPurple = {
-  fontWeight: "bold",
-  color: "#bd54e0",
+  fontWeight: 'bold',
+  color: '#bd54e0',
 };
 
 const hereticGreen = {
-  fontWeight: "bold",
-  color: "#20b142",
+  fontWeight: 'bold',
+  color: '#20b142',
 };
 
 const hereticYellow = {
-  fontWeight: "bold",
-  color: "yellow",
+  fontWeight: 'bold',
+  color: 'yellow',
 };
 
 type Knowledge = {
@@ -77,17 +77,17 @@ const IntroductionSection = (props) => {
                   fill
                   titleMessage={
                     can_change_objective
-                      ? "In order to ascend, you have these tasks to fulfill"
-                      : "Use your dark knowledge to fulfil your personal goal"
+                      ? 'In order to ascend, you have these tasks to fulfill'
+                      : 'Use your dark knowledge to fulfil your personal goal'
                   }
                   objectives={objectives}
                   objectiveFollowup={
                     <ReplaceObjectivesButton
                       can_change_objective={can_change_objective}
-                      button_title={"Reject Ascension"}
-                      button_colour={"red"}
+                      button_title={'Reject Ascension'}
+                      button_colour={'red'}
                       button_tooltip={
-                        "Turn your back on the Mansus to accomplish a task of your choosing. Selecting this option will prevent you from ascending!"
+                        'Turn your back on the Mansus to accomplish a task of your choosing. Selecting this option will prevent you from ascending!'
                       }
                     />
                   }
@@ -161,7 +161,7 @@ const GuideSection = () => {
           <span style={hereticGreen}>transmutation rune</span> in critical or
           worse condition to&nbsp;
           <span style={hereticRed}>sacrifice</span> them for&nbsp;
-          <span style={hereticBlue}>knowledge points</span>. The Mansus{" "}
+          <span style={hereticBlue}>knowledge points</span>. The Mansus{' '}
           <b>ONLY</b> accepts targets pointed to by the&nbsp;
           <span style={hereticRed}>Living Heart</span>.
         </Stack.Item>
@@ -171,7 +171,7 @@ const GuideSection = () => {
           harder sacrifices.
         </Stack.Item>
         <Stack.Item>
-          - Accomplish all of your objectives to be able to learn the{" "}
+          - Accomplish all of your objectives to be able to learn the{' '}
           <span style={hereticYellow}>final ritual</span>. Complete the ritual
           to become all powerful!
         </Stack.Item>
@@ -202,7 +202,7 @@ const InformationSection = (props) => {
         <Stack.Item>
           You have <b>{charges || 0}</b>&nbsp;
           <span style={hereticBlue}>
-            knowledge point{charges !== 1 ? "s" : ""}
+            knowledge point{charges !== 1 ? 's' : ''}
           </span>
           .
         </Stack.Item>
@@ -224,7 +224,7 @@ const ResearchedKnowledge = (props) => {
     <Stack.Item grow>
       <Section title="Researched Knowledge" fill scrollable>
         <Stack vertical>
-          {(!learnedKnowledge.length && "None!") ||
+          {(!learnedKnowledge.length && 'None!') ||
             learnedKnowledge.map((learned) => (
               <Stack.Item key={learned.name}>
                 <Button
@@ -248,7 +248,7 @@ const KnowledgeShop = (props) => {
   return (
     <Stack.Item grow>
       <Section title="Potential Knowledge" fill scrollable>
-        {(!learnableKnowledge.length && "None!") ||
+        {(!learnableKnowledge.length && 'None!') ||
           learnableKnowledge.map((toLearn) => (
             <Stack.Item key={toLearn.name} mb={1}>
               <Button
@@ -258,11 +258,11 @@ const KnowledgeShop = (props) => {
                 content={`${toLearn.hereticPath} - ${
                   toLearn.cost > 0
                     ? `${toLearn.name}: ${toLearn.cost}
-                  point${toLearn.cost !== 1 ? "s" : ""}`
+                  point${toLearn.cost !== 1 ? 's' : ''}`
                     : toLearn.name
                 }`}
                 tooltip={toLearn.desc}
-                onClick={() => act("research", { path: toLearn.path })}
+                onClick={() => act('research', { path: toLearn.path })}
               />
               {!!toLearn.gainFlavor && (
                 <BlockQuote>
@@ -287,8 +287,8 @@ const ResearchInfo = (props) => {
           <Stack.Item fontSize="20px" textAlign="center">
             You have <b>{charges || 0}</b>&nbsp;
             <span style={hereticBlue}>
-              knowledge point{charges !== 1 ? "s" : ""}
-            </span>{" "}
+              knowledge point{charges !== 1 ? 's' : ''}
+            </span>{' '}
             to spend.
           </Stack.Item>
           <Stack.Item grow>
@@ -307,16 +307,16 @@ export const AntagInfoHeretic = (props) => {
   const { data } = useBackend<Info>();
   const { ascended } = data;
 
-  const [currentTab, setTab] = useLocalState("currentTab", 0);
+  const [currentTab, setTab] = useLocalState('currentTab', 0);
 
   return (
     <Window width={675} height={635}>
       <Window.Content
         style={{
-          backgroundImage: "none",
+          backgroundImage: 'none',
           background: ascended
-            ? "radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);"
-            : "radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);",
+            ? 'radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);'
+            : 'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
         }}
       >
         <Stack vertical fill>
@@ -330,7 +330,7 @@ export const AntagInfoHeretic = (props) => {
                 Information
               </Tabs.Tab>
               <Tabs.Tab
-                icon={currentTab === 1 ? "book-open" : "book"}
+                icon={currentTab === 1 ? 'book-open' : 'book'}
                 selected={currentTab === 1}
                 onClick={() => setTab(1)}
               >

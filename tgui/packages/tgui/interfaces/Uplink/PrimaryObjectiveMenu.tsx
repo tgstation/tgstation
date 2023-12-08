@@ -1,6 +1,6 @@
-import { useBackend } from "../../backend";
-import { Box, Button, Dimmer, Section, Stack } from "../../components";
-import { ObjectiveElement } from "./ObjectiveMenu";
+import { useBackend } from '../../backend';
+import { Box, Button, Dimmer, Section, Stack } from '../../components';
+import { ObjectiveElement } from './ObjectiveMenu';
 
 type PrimaryObjectiveMenuProps = {
   primary_objectives;
@@ -16,12 +16,12 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
       <Section>
         <Box mt={3} mb={3} bold fontSize={1.2} align="center" color="white">
           {
-            "Agent, your Primary Objectives are as follows. Complete these at all costs."
+            'Agent, your Primary Objectives are as follows. Complete these at all costs.'
           }
         </Box>
         <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
           {
-            "Completing Secondary Objectives may allow you to aquire additional equipment."
+            'Completing Secondary Objectives may allow you to aquire additional equipment.'
           }
         </Box>
       </Section>
@@ -29,9 +29,9 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
         <Dimmer>
           <Box
             color="red"
-            fontFamily={"Bahnschrift"}
+            fontFamily={'Bahnschrift'}
             fontSize={3}
-            align={"top"}
+            align={'top'}
             as="span"
           >
             PRIORITY MESSAGE
@@ -55,15 +55,15 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
             <Stack.Item key={index}>
               <ObjectiveElement
                 key={prim_obj.id}
-                name={prim_obj["task_name"]}
-                description={prim_obj["task_text"]}
+                name={prim_obj['task_name']}
+                description={prim_obj['task_text']}
                 dangerLevel={{
                   minutesLessThan: 0,
-                  title: "none",
+                  title: 'none',
                   gradient:
                     index === primary_objectives.length - 1
-                      ? "reputation-good"
-                      : "reputation-very-good",
+                      ? 'reputation-good'
+                      : 'reputation-very-good',
                 }}
                 telecrystalReward={0}
                 telecrystalPenalty={0}
@@ -81,11 +81,11 @@ export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
       {!!can_renegotiate && (
         <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
           <Button
-            content={"Renegotiate Contract"}
+            content={'Renegotiate Contract'}
             tooltip={
-              "Replace your existing primary objectives with a custom one. This action can only be performed once."
+              'Replace your existing primary objectives with a custom one. This action can only be performed once.'
             }
-            onClick={() => act("renegotiate_objectives")}
+            onClick={() => act('renegotiate_objectives')}
           />
         </Box>
       )}

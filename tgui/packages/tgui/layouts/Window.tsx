@@ -4,25 +4,25 @@
  * @license MIT
  */
 
-import { classes } from "common/react";
-import { decodeHtmlEntities, toTitleCase } from "common/string";
-import { backendSuspendStart, useBackend } from "../backend";
-import { Icon } from "../components";
-import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from "../constants";
-import { toggleKitchenSink } from "../debug/actions";
+import { classes } from 'common/react';
+import { decodeHtmlEntities, toTitleCase } from 'common/string';
+import { backendSuspendStart, useBackend } from '../backend';
+import { Icon } from '../components';
+import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
+import { toggleKitchenSink } from '../debug/actions';
 import {
   dragStartHandler,
   recallWindowGeometry,
   resizeStartHandler,
   setWindowKey,
-} from "../drag";
-import { createLogger } from "../logging";
-import { Layout } from "./Layout";
-import { globalStore } from "../backend";
-import { PropsWithChildren, ReactNode, useEffect } from "react";
-import { BoxProps } from "../components/Box";
+} from '../drag';
+import { createLogger } from '../logging';
+import { Layout } from './Layout';
+import { globalStore } from '../backend';
+import { PropsWithChildren, ReactNode, useEffect } from 'react';
+import { BoxProps } from '../components/Box';
 
-const logger = createLogger("Window");
+const logger = createLogger('Window');
 
 const DEFAULT_SIZE: [number, number] = [400, 600];
 
@@ -69,13 +69,13 @@ export const Window = (props: Props) => {
     };
 
     Byond.winset(Byond.windowId, {
-      "can-close": Boolean(canClose),
+      'can-close': Boolean(canClose),
     });
-    logger.log("mounting");
+    logger.log('mounting');
     updateGeometry();
 
     return () => {
-      logger.log("unmounting");
+      logger.log('unmounting');
     };
   }, [width, height]);
 
@@ -103,14 +103,14 @@ export const Window = (props: Props) => {
         fancy={fancy}
         onDragStart={dragStartHandler}
         onClose={() => {
-          logger.log("pressed close");
+          logger.log('pressed close');
           dispatch(backendSuspendStart());
         }}
         canClose={canClose}
       >
         {buttons}
       </TitleBar>
-      <div className={classes(["Window__rest", debugLayout && "debug-layout"])}>
+      <div className={classes(['Window__rest', debugLayout && 'debug-layout'])}>
         {!suspended && children}
         {showDimmer && <div className="Window__dimmer" />}
       </div>
@@ -148,7 +148,7 @@ const WindowContent = (props: ContentProps) => {
 
   return (
     <Layout.Content
-      className={classes(["Window__content", className])}
+      className={classes(['Window__content', className])}
       {...rest}
     >
       {(fitted && children) || (
@@ -163,12 +163,12 @@ Window.Content = WindowContent;
 const statusToColor = (status) => {
   switch (status) {
     case UI_INTERACTIVE:
-      return "good";
+      return 'good';
     case UI_UPDATE:
-      return "average";
+      return 'average';
     case UI_DISABLED:
     default:
-      return "bad";
+      return 'bad';
   }
 };
 
@@ -197,13 +197,13 @@ const TitleBar = (props: TitleBarProps) => {
   const dispatch = globalStore.dispatch;
 
   const finalTitle =
-    (typeof title === "string" &&
+    (typeof title === 'string' &&
       title === title.toLowerCase() &&
       toTitleCase(title)) ||
     title;
 
   return (
-    <div className={classes(["TitleBar", className])}>
+    <div className={classes(['TitleBar', className])}>
       {(status === undefined && (
         <Icon className="TitleBar__statusIcon" name="tools" opacity={0.5} />
       )) || (
@@ -221,7 +221,7 @@ const TitleBar = (props: TitleBarProps) => {
         {finalTitle}
         {!!children && <div className="TitleBar__buttons">{children}</div>}
       </div>
-      {process.env.NODE_ENV !== "production" && (
+      {process.env.NODE_ENV !== 'production' && (
         <div
           className="TitleBar__devBuildIndicator"
           onClick={() => dispatch(toggleKitchenSink())}

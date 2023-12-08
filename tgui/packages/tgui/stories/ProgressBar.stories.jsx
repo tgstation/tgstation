@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useLocalState } from "../backend";
+import { useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -12,16 +12,16 @@ import {
   LabeledList,
   ProgressBar,
   Section,
-} from "../components";
+} from '../components';
 
 export const meta = {
-  title: "ProgressBar",
+  title: 'ProgressBar',
   render: () => <Story />,
 };
 
 const Story = (props) => {
-  const [progress, setProgress] = useLocalState("progress", 0.5);
-  const [color, setColor] = useLocalState("color", "");
+  const [progress, setProgress] = useLocalState('progress', 0.5);
+  const [color, setColor] = useLocalState('color', '');
 
   const color_data = color
     ? { color: color }

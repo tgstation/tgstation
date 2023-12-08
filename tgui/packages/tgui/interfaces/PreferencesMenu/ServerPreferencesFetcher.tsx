@@ -1,7 +1,7 @@
-import { Component, ReactNode } from "react";
-import { resolveAsset } from "../../assets";
-import { fetchRetry } from "../../http";
-import { ServerData } from "./data";
+import { Component, ReactNode } from 'react';
+import { resolveAsset } from '../../assets';
+import { fetchRetry } from '../../http';
+import { ServerData } from './data';
 
 // Cache response so it's only sent once
 let fetchServerData: Promise<ServerData> | undefined;
@@ -24,7 +24,7 @@ export class ServerPreferencesFetcher extends Component<
 
   async populateServerData() {
     if (!fetchServerData) {
-      fetchServerData = fetchRetry(resolveAsset("preferences.json")).then(
+      fetchServerData = fetchRetry(resolveAsset('preferences.json')).then(
         (response) => response.json(),
       );
     }

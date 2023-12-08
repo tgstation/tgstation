@@ -1,10 +1,10 @@
-import { useBackend, useSharedState } from "../backend";
-import { Button, LabeledList, NoticeBox, Section, Tabs } from "../components";
-import { Window } from "../layouts";
+import { useBackend, useSharedState } from '../backend';
+import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
+import { Window } from '../layouts';
 
 export const Microscope = (props) => {
   const { act, data } = useBackend();
-  const [tab, setTab] = useSharedState("tab", 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const { has_dish, cell_lines = [], viruses = [] } = data;
   return (
     <Window>
@@ -16,7 +16,7 @@ export const Microscope = (props) => {
                 icon="eject"
                 content="Eject"
                 disabled={!has_dish}
-                onClick={() => act("eject_petridish")}
+                onClick={() => act('eject_petridish')}
               />
             </LabeledList.Item>
           </LabeledList>

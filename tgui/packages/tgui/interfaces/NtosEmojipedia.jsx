@@ -1,12 +1,12 @@
-import { classes } from "common/react";
-import { useBackend, useSharedState } from "../backend";
-import { Box, Button, Input, Section } from "../components";
-import { NtosWindow } from "../layouts";
+import { classes } from 'common/react';
+import { useBackend, useSharedState } from '../backend';
+import { Box, Button, Input, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosEmojipedia = (props) => {
   const { data } = useBackend();
   const { emoji_list } = data;
-  const [filter, updatefilter] = useSharedState("filter", "");
+  const [filter, updatefilter] = useSharedState('filter', '');
 
   let filtered_emoji_list = filter
     ? emoji_list.filter((emoji) => {
@@ -22,7 +22,7 @@ export const NtosEmojipedia = (props) => {
       <NtosWindow.Content scrollable>
         <Section
           // required: follow semantic versioning every time you touch this file
-          title={"Emojipedia V2.7.9" + (filter ? ` - ${filter}` : "")}
+          title={'Emojipedia V2.7.9' + (filter ? ` - ${filter}` : '')}
           buttons={
             <>
               <Input
@@ -32,7 +32,7 @@ export const NtosEmojipedia = (props) => {
                 onInput={(_, value) => updatefilter(value)}
               />
               <Button
-                tooltip={"Click on an emoji to copy its tag!"}
+                tooltip={'Click on an emoji to copy its tag!'}
                 tooltipPosition="bottom"
                 icon="circle-question"
               />
@@ -42,17 +42,17 @@ export const NtosEmojipedia = (props) => {
           {filtered_emoji_list.map((emoji) => (
             <Box
               key={emoji.name}
-              className={classes(["emojipedia16x16", emoji.name])}
+              className={classes(['emojipedia16x16', emoji.name])}
               as="img"
               m={0}
               title={emoji.name}
               onClick={() => {
                 new Promise((resolve, _) => {
-                  const input = document.createElement("input");
+                  const input = document.createElement('input');
                   input.value = emoji.name;
                   document.body.appendChild(input);
                   input.select();
-                  document.execCommand("copy");
+                  document.execCommand('copy');
                   document.body.removeChild(input);
                   resolve();
                 });

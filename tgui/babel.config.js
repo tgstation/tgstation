@@ -9,35 +9,35 @@ const createBabelConfig = (options) => {
   return {
     presets: [
       [
-        require.resolve("@babel/preset-typescript"),
+        require.resolve('@babel/preset-typescript'),
         {
           allowDeclareFields: true,
         },
       ],
       [
-        require.resolve("@babel/preset-env"),
+        require.resolve('@babel/preset-env'),
         {
-          modules: "commonjs",
-          useBuiltIns: "entry",
-          corejs: "3.3.2",
+          modules: 'commonjs',
+          useBuiltIns: 'entry',
+          corejs: '3.3.2',
           spec: false,
           loose: true,
           targets: [],
         },
       ],
-      [require.resolve("@babel/preset-react"), { runtime: "automatic" }],
+      [require.resolve('@babel/preset-react'), { runtime: 'automatic' }],
       ...presets,
     ].filter(Boolean),
     plugins: [
       [
-        require.resolve("@babel/plugin-transform-class-properties"),
+        require.resolve('@babel/plugin-transform-class-properties'),
         {
           loose: true,
         },
       ],
-      require.resolve("@babel/plugin-transform-jscript"),
-      removeConsole && require.resolve("babel-plugin-transform-remove-console"),
-      require.resolve("common/string.babel-plugin.cjs"),
+      require.resolve('@babel/plugin-transform-jscript'),
+      removeConsole && require.resolve('babel-plugin-transform-remove-console'),
+      require.resolve('common/string.babel-plugin.cjs'),
       ...plugins,
     ].filter(Boolean),
   };

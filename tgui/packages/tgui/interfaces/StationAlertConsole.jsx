@@ -1,8 +1,8 @@
-import { sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { useBackend } from "../backend";
-import { Button, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { useBackend } from '../backend';
+import { Button, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 export const StationAlertConsole = (props) => {
   const { data } = useBackend();
@@ -36,7 +36,7 @@ export const StationAlertConsoleContent = (props) => {
   return (
     <>
       {sortedAlarms.map((category) => (
-        <Section key={category.name} title={category.name + " Alarms"}>
+        <Section key={category.name} title={category.name + ' Alarms'}>
           <ul>
             {category.alerts.length === 0 && (
               <li className="color-good">Systems Nominal</li>
@@ -45,10 +45,10 @@ export const StationAlertConsoleContent = (props) => {
               <Stack key={alert.name} height="30px" align="baseline">
                 <Stack.Item grow>
                   <li className="color-average">
-                    {alert.name}{" "}
+                    {alert.name}{' '}
                     {!!cameraView && alert.sources > 1
-                      ? " (" + alert.sources + " sources)"
-                      : ""}
+                      ? ' (' + alert.sources + ' sources)'
+                      : ''}
                   </li>
                 </Stack.Item>
                 {!!cameraView && (
@@ -56,17 +56,17 @@ export const StationAlertConsoleContent = (props) => {
                     <Button
                       textAlign="center"
                       width="100px"
-                      icon={alert.cameras ? "video" : ""}
+                      icon={alert.cameras ? 'video' : ''}
                       disabled={!alert.cameras}
                       content={
                         alert.cameras === 1
-                          ? alert.cameras + " Camera"
+                          ? alert.cameras + ' Camera'
                           : alert.cameras > 1
-                            ? alert.cameras + " Cameras"
-                            : "No Camera"
+                            ? alert.cameras + ' Cameras'
+                            : 'No Camera'
                       }
                       onClick={() =>
-                        act("select_camera", {
+                        act('select_camera', {
                           alert: alert.ref,
                         })
                       }

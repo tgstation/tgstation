@@ -1,5 +1,5 @@
-import { Button } from "tgui/components";
-import { createRenderer } from "tgui/renderer";
+import { Button } from 'tgui/components';
+import { createRenderer } from 'tgui/renderer';
 
 const render = createRenderer();
 
@@ -39,7 +39,7 @@ export const ListOfButtonsWithIcons = () => {
   const nodes: JSX.Element[] = [];
   for (let i = 0; i < 100; i++) {
     const node = (
-      <Button key={i} icon={"arrow-left"}>
+      <Button key={i} icon={'arrow-left'}>
         Hello world! {i}
       </Button>
     );
@@ -52,7 +52,7 @@ export const ListOfButtonsWithTooltips = () => {
   const nodes: JSX.Element[] = [];
   for (let i = 0; i < 100; i++) {
     const node = (
-      <Button key={i} tooltip={"Hello world!"}>
+      <Button key={i} tooltip={'Hello world!'}>
         Hello world! {i}
       </Button>
     );

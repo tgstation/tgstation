@@ -5,13 +5,13 @@ import {
   Stack,
   Input,
   NoticeBox,
-} from "../../components";
-import { Component } from "react";
-import { shallowDiffers } from "common/react";
-import { fetchRetry } from "../../http";
-import { resolveAsset } from "../../assets";
-import { DisplayComponent } from "./DisplayComponent";
-import { DEFAULT_COMPONENT_MENU_LIMIT } from "./constants";
+} from '../../components';
+import { Component } from 'react';
+import { shallowDiffers } from 'common/react';
+import { fetchRetry } from '../../http';
+import { resolveAsset } from '../../assets';
+import { DisplayComponent } from './DisplayComponent';
+import { DEFAULT_COMPONENT_MENU_LIMIT } from './constants';
 
 // Cache response so it's only sent once
 let fetchServerData;
@@ -20,9 +20,9 @@ export class ComponentMenu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: "All",
+      selectedTab: 'All',
       currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
-      currentSearch: "",
+      currentSearch: '',
     };
   }
 
@@ -33,7 +33,7 @@ export class ComponentMenu extends Component {
   async populateServerData() {
     if (!fetchServerData) {
       fetchServerData = fetchRetry(
-        resolveAsset("circuit_components.json"),
+        resolveAsset('circuit_components.json'),
       ).then((response) => response.json());
     }
 
@@ -71,20 +71,20 @@ export class ComponentMenu extends Component {
       currentSearch,
     } = this.state;
 
-    const tabs = ["All"];
+    const tabs = ['All'];
     let shownComponents = componentData.filter((val) => {
       let shouldShow = showAll || components.includes(val.type);
       if (shouldShow) {
         if (!tabs.includes(val.category)) {
           tabs.push(val.category);
         }
-        if (currentSearch !== "") {
+        if (currentSearch !== '') {
           const result = val.name
             .toLowerCase()
             .includes(currentSearch.toLowerCase());
           return result !== false;
         }
-        return selectedTab === "All" || selectedTab === val.category;
+        return selectedTab === 'All' || selectedTab === val.category;
       }
       return false;
     });
@@ -115,7 +115,7 @@ export class ComponentMenu extends Component {
               onSelected={(value) =>
                 this.setState({
                   selectedTab: value,
-                  currentSearch: "",
+                  currentSearch: '',
                   currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
                 })
               }
@@ -132,7 +132,7 @@ export class ComponentMenu extends Component {
               onInput={(e, val) =>
                 this.setState({
                   currentSearch: val,
-                  selectedTab: "All",
+                  selectedTab: 'All',
                   currentLimit: DEFAULT_COMPONENT_MENU_LIMIT,
                 })
               }

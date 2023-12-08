@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Box, Button, NoticeBox, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Button, NoticeBox, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   details: string[];
@@ -64,7 +64,7 @@ const ColorBlindCategory = (props: Props) => {
             icon="eye"
             content="Select"
             onClick={() =>
-              act("set_matrix", {
+              act('set_matrix', {
                 name: category,
               })
             }
@@ -84,7 +84,7 @@ const ColorBlindCategory = (props: Props) => {
           icon="times"
           content="Clear"
           color="bad"
-          onClick={() => act("clear_matrix")}
+          onClick={() => act('clear_matrix')}
         />
       }
     >

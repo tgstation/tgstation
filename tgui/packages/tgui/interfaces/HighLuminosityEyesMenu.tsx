@@ -1,5 +1,5 @@
-import { BooleanLike } from "../../common/react";
-import { useBackend } from "../backend";
+import { BooleanLike } from '../../common/react';
+import { useBackend } from '../backend';
 import {
   Button,
   ColorBox,
@@ -7,8 +7,8 @@ import {
   LabeledList,
   NumberInput,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type EyeColorData = {
   mode: BooleanLike;
@@ -34,15 +34,15 @@ const LightColorDisplay = (props) => {
   const { lightColor } = data;
   return (
     <LabeledList.Item label="Color">
-      <ColorBox color={lightColor} />{" "}
+      <ColorBox color={lightColor} />{' '}
       <Button
         icon="palette"
-        onClick={() => act("pick_color", { to_update: ToUpdate.LightColor })}
+        onClick={() => act('pick_color', { to_update: ToUpdate.LightColor })}
         tooltip="Brings up a color pick window to change the light color."
       />
       <Button
         icon="dice"
-        onClick={() => act("random_color", { to_update: ToUpdate.LightColor })}
+        onClick={() => act('random_color', { to_update: ToUpdate.LightColor })}
         tooltip="Randomizes the light color."
       />
       <Input
@@ -50,7 +50,7 @@ const LightColorDisplay = (props) => {
         width={6}
         maxLength={7}
         onChange={(_, value) =>
-          act("enter_color", {
+          act('enter_color', {
             new_color: value,
             to_update: ToUpdate.LightColor,
           })
@@ -67,12 +67,12 @@ const RangeDisplay = (props) => {
     <LabeledList.Item label="Range">
       <Button
         icon="minus-square-o"
-        onClick={() => act("set_range", { new_range: range - 1 })}
+        onClick={() => act('set_range', { new_range: range - 1 })}
         tooltip="Reduces the light range."
       />
       <Button
         icon="plus-square-o"
-        onClick={() => act("set_range", { new_range: range + 1 })}
+        onClick={() => act('set_range', { new_range: range + 1 })}
         tooltip="Increases the light range."
       />
       <NumberInput
@@ -84,7 +84,7 @@ const RangeDisplay = (props) => {
         minValue={0}
         maxValue={5}
         onDrag={(e, value) =>
-          act("set_range", {
+          act('set_range', {
             new_range: value,
           })
         }
@@ -101,23 +101,23 @@ const EyeColorDisplay = (props) => {
       <LabeledList.Item label="Match Color">
         <Button.Checkbox
           checked={eyeColor.mode}
-          onClick={() => act("toggle_eye_color")}
+          onClick={() => act('toggle_eye_color')}
           tooltip="Toggles whether eyecolor matches the color of the light."
         />
       </LabeledList.Item>
       {!eyeColor.mode && (
         <>
           <LabeledList.Item label="Left Eye">
-            <ColorBox color={eyeColor.left} />{" "}
+            <ColorBox color={eyeColor.left} />{' '}
             <Button
               icon="palette"
-              onClick={() => act("pick_color", { to_update: ToUpdate.LeftEye })}
+              onClick={() => act('pick_color', { to_update: ToUpdate.LeftEye })}
               tooltip="Brings up a color pick window to change the light color."
             />
             <Button
               icon="dice"
               onClick={() =>
-                act("random_color", { to_update: ToUpdate.LeftEye })
+                act('random_color', { to_update: ToUpdate.LeftEye })
               }
               tooltip="Randomizes the eye color."
             />
@@ -126,7 +126,7 @@ const EyeColorDisplay = (props) => {
               width={6}
               maxLength={7}
               onChange={(_, value) =>
-                act("enter_color", {
+                act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.LeftEye,
                 })
@@ -134,18 +134,18 @@ const EyeColorDisplay = (props) => {
             />
           </LabeledList.Item>
           <LabeledList.Item label="Right Eye">
-            <ColorBox color={eyeColor.right} />{" "}
+            <ColorBox color={eyeColor.right} />{' '}
             <Button
               icon="palette"
               onClick={() =>
-                act("pick_color", { to_update: ToUpdate.RightEye })
+                act('pick_color', { to_update: ToUpdate.RightEye })
               }
               tooltip="Brings up a color pick window to change the light color."
             />
             <Button
               icon="dice"
               onClick={() =>
-                act("random_color", { to_update: ToUpdate.RightEye })
+                act('random_color', { to_update: ToUpdate.RightEye })
               }
               tooltip="Randomizes the eye color."
             />
@@ -154,7 +154,7 @@ const EyeColorDisplay = (props) => {
               width={6}
               maxLength={7}
               onChange={(_, value) =>
-                act("enter_color", {
+                act('enter_color', {
                   new_color: value,
                   to_update: ToUpdate.RightEye,
                 })

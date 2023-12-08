@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -7,8 +7,8 @@ import {
   Section,
   Stack,
   TextArea,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   announce_contents: string;
@@ -63,7 +63,7 @@ const CentComName = (props) => {
         selected={command_name}
         options={command_name_presets}
         onSelected={(value) =>
-          act("update_command_name", {
+          act('update_command_name', {
             updated_name: value,
           })
         }
@@ -75,7 +75,7 @@ const CentComName = (props) => {
           value={command_name}
           placeholder={command_name}
           onChange={(_, value) =>
-            act("update_command_name", {
+            act('update_command_name', {
               updated_name: value,
             })
           }
@@ -99,7 +99,7 @@ const SubHeader = (props) => {
         value={subheader}
         placeholder={subheader}
         onChange={(_, value) =>
-          act("set_subheader", {
+          act('set_subheader', {
             new_subheader: value,
           })
         }
@@ -120,7 +120,7 @@ const AnnouncementColor = (props) => {
         displayText={announcement_color}
         options={announcement_colors}
         onSelected={(value) =>
-          act("update_announcement_color", {
+          act('update_announcement_color', {
             updated_announcement_color: value,
           })
         }
@@ -141,7 +141,7 @@ const AnnouncementSound = (props) => {
         displayText={played_sound}
         options={announcer_sounds}
         onSelected={(value) =>
-          act("set_report_sound", {
+          act('set_report_sound', {
             picked_sound: value,
           })
         }
@@ -155,7 +155,7 @@ const ReportText = (props) => {
   const { act, data } = useBackend<Data>();
   const { announce_contents, print_report, command_report_content } = data;
   const [commandReport, setCommandReport] = useLocalState<string>(
-    "textArea",
+    'textArea',
     command_report_content,
   );
 
@@ -172,7 +172,7 @@ const ReportText = (props) => {
           <Button.Checkbox
             fluid
             checked={announce_contents}
-            onClick={() => act("toggle_announce")}
+            onClick={() => act('toggle_announce')}
           >
             Announce Contents
           </Button.Checkbox>
@@ -180,7 +180,7 @@ const ReportText = (props) => {
             fluid
             checked={print_report || !announce_contents}
             disabled={!announce_contents}
-            onClick={() => act("toggle_printing")}
+            onClick={() => act('toggle_printing')}
             tooltip={
               !announce_contents &&
               "Printing the report is required since we aren't announcing its contents."
@@ -196,7 +196,7 @@ const ReportText = (props) => {
             icon="check"
             textAlign="center"
             content="Submit Report"
-            onClick={() => act("submit_report", { report: commandReport })}
+            onClick={() => act('submit_report', { report: commandReport })}
           />
         </Stack.Item>
       </Stack>

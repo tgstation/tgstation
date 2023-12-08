@@ -1,5 +1,5 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
 
 export const MALF_AI_MECHANICAL_DESCRIPTION = multiline`
     With a law zero to complete your objectives at all costs, combine your
@@ -8,8 +8,8 @@ export const MALF_AI_MECHANICAL_DESCRIPTION = multiline`
   `;
 
 const MalfAI: Antagonist = {
-  key: "malfai",
-  name: "Malfunctioning AI",
+  key: 'malfai',
+  name: 'Malfunctioning AI',
   description: [MALF_AI_MECHANICAL_DESCRIPTION],
   category: Category.Roundstart,
 };

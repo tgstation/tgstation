@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { Box, Section, Stack } from "../components";
+import { Box, Section, Stack } from '../components';
 
 export const meta = {
-  title: "Stack",
+  title: 'Stack',
   render: () => <Story />,
 };
 

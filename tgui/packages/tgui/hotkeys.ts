@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import * as keycodes from "common/keycodes";
-import { globalEvents, KeyEvent } from "./events";
-import { createLogger } from "./logging";
+import * as keycodes from 'common/keycodes';
+import { globalEvents, KeyEvent } from './events';
+import { createLogger } from './logging';
 
-const logger = createLogger("hotkeys");
+const logger = createLogger('hotkeys');
 
 // BYOND macros, in `key: command` format.
 const byondMacros: Record<string, string> = {};
@@ -38,32 +38,32 @@ const keyListeners: ((key: KeyEvent) => void)[] = [];
  * Converts a browser keycode to BYOND keycode.
  */
 const keyCodeToByond = (keyCode: number) => {
-  if (keyCode === 16) return "Shift";
-  if (keyCode === 17) return "Ctrl";
-  if (keyCode === 18) return "Alt";
-  if (keyCode === 33) return "Northeast";
-  if (keyCode === 34) return "Southeast";
-  if (keyCode === 35) return "Southwest";
-  if (keyCode === 36) return "Northwest";
-  if (keyCode === 37) return "West";
-  if (keyCode === 38) return "North";
-  if (keyCode === 39) return "East";
-  if (keyCode === 40) return "South";
-  if (keyCode === 45) return "Insert";
-  if (keyCode === 46) return "Delete";
+  if (keyCode === 16) return 'Shift';
+  if (keyCode === 17) return 'Ctrl';
+  if (keyCode === 18) return 'Alt';
+  if (keyCode === 33) return 'Northeast';
+  if (keyCode === 34) return 'Southeast';
+  if (keyCode === 35) return 'Southwest';
+  if (keyCode === 36) return 'Northwest';
+  if (keyCode === 37) return 'West';
+  if (keyCode === 38) return 'North';
+  if (keyCode === 39) return 'East';
+  if (keyCode === 40) return 'South';
+  if (keyCode === 45) return 'Insert';
+  if (keyCode === 46) return 'Delete';
   // prettier-ignore
   if (keyCode >= 48 && keyCode <= 57 || keyCode >= 65 && keyCode <= 90) {
     return String.fromCharCode(keyCode);
   }
   if (keyCode >= 96 && keyCode <= 105) {
-    return "Numpad" + (keyCode - 96);
+    return 'Numpad' + (keyCode - 96);
   }
   if (keyCode >= 112 && keyCode <= 123) {
-    return "F" + (keyCode - 111);
+    return 'F' + (keyCode - 111);
   }
-  if (keyCode === 188) return ",";
-  if (keyCode === 189) return "-";
-  if (keyCode === 190) return ".";
+  if (keyCode === 188) return ',';
+  if (keyCode === 189) return '-';
+  if (keyCode === 190) return '.';
 };
 
 /**
@@ -73,12 +73,12 @@ const keyCodeToByond = (keyCode: number) => {
 const handlePassthrough = (key: KeyEvent) => {
   const keyString = String(key);
   // In addition to F5, support reloading with Ctrl+R and Ctrl+F5
-  if (keyString === "Ctrl+F5" || keyString === "Ctrl+R") {
+  if (keyString === 'Ctrl+F5' || keyString === 'Ctrl+R') {
     location.reload();
     return;
   }
   // Prevent passthrough on Ctrl+F
-  if (keyString === "Ctrl+F") {
+  if (keyString === 'Ctrl+F') {
     return;
   }
   // NOTE: Alt modifier is pretty bad and sticky in IE11.
@@ -97,7 +97,7 @@ const handlePassthrough = (key: KeyEvent) => {
   // Macro
   const macro = byondMacros[byondKeyCode];
   if (macro) {
-    logger.debug("macro", macro);
+    logger.debug('macro', macro);
     return Byond.command(macro);
   }
   // KeyDown
@@ -151,11 +151,11 @@ type ByondSkinMacro = {
 
 export const setupHotKeys = () => {
   // Read macros
-  Byond.winget("default.*").then((data: Record<string, string>) => {
+  Byond.winget('default.*').then((data: Record<string, string>) => {
     // Group each macro by ref
     const groupedByRef: Record<string, ByondSkinMacro> = {};
     for (let key of Object.keys(data)) {
-      const keyPath = key.split(".");
+      const keyPath = key.split('.');
       const ref = keyPath[1];
       const prop = keyPath[2];
       if (ref && prop) {
@@ -179,13 +179,13 @@ export const setupHotKeys = () => {
       const byondKeyName = unescape(macro.name);
       byondMacros[byondKeyName] = unescape(macro.command);
     }
-    logger.debug("loaded macros", byondMacros);
+    logger.debug('loaded macros', byondMacros);
   });
   // Setup event handlers
-  globalEvents.on("window-blur", () => {
+  globalEvents.on('window-blur', () => {
     releaseHeldKeys();
   });
-  globalEvents.on("key", (key: KeyEvent) => {
+  globalEvents.on('key', (key: KeyEvent) => {
     for (const keyListener of keyListeners) {
       keyListener(key);
     }

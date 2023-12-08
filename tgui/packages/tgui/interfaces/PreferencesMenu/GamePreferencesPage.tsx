@@ -1,11 +1,11 @@
-import { binaryInsertWith, sortBy } from "common/collections";
-import { ReactNode } from "react";
-import { useBackend } from "../../backend";
-import { Box, Flex, Tooltip } from "../../components";
-import { PreferencesMenuData } from "./data";
-import features from "./preferences/features";
-import { FeatureValueInput } from "./preferences/features/base";
-import { TabbedMenu } from "./TabbedMenu";
+import { binaryInsertWith, sortBy } from 'common/collections';
+import { ReactNode } from 'react';
+import { useBackend } from '../../backend';
+import { Box, Flex, Tooltip } from '../../components';
+import { PreferencesMenuData } from './data';
+import features from './preferences/features';
+import { FeatureValueInput } from './preferences/features/base';
+import { TabbedMenu } from './TabbedMenu';
 
 type PreferenceChild = {
   name: string;
@@ -35,7 +35,7 @@ export const GamePreferencesPage = (props) => {
         <Box
           as="span"
           style={{
-            borderBottom: "2px dotted rgba(255, 255, 255, 0.8)",
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
           }}
         >
           {nameInner}
@@ -83,7 +83,7 @@ export const GamePreferencesPage = (props) => {
       children: child,
     };
 
-    const category = feature?.category || "ERROR";
+    const category = feature?.category || 'ERROR';
 
     gamePreferences[category] = binaryInsertPreference(
       gamePreferences[category] || [],

@@ -1,7 +1,7 @@
-import { capitalizeAll } from "common/string";
-import { useBackend } from "tgui/backend";
-import { Button, LabeledList, Section, Stack } from "tgui/components";
-import { Window } from "tgui/layouts";
+import { capitalizeAll } from 'common/string';
+import { useBackend } from 'tgui/backend';
+import { Button, LabeledList, Section, Stack } from 'tgui/components';
+import { Window } from 'tgui/layouts';
 
 type SpawnersMenuContext = {
   spawners: spawner[];
@@ -38,7 +38,7 @@ export const SpawnersMenu = (props) => {
                       <Button
                         content="Jump"
                         onClick={() =>
-                          act("jump", {
+                          act('jump', {
                             name: spawner.name,
                           })
                         }
@@ -46,7 +46,7 @@ export const SpawnersMenu = (props) => {
                       <Button
                         content="Spawn"
                         onClick={() =>
-                          act("spawn", {
+                          act('spawn', {
                             name: spawner.name,
                           })
                         }
@@ -63,13 +63,13 @@ export const SpawnersMenu = (props) => {
                   ) : (
                     <div>
                       <LabeledList.Item label="Origin">
-                        {spawner.you_are_text || "Unknown"}
+                        {spawner.you_are_text || 'Unknown'}
                       </LabeledList.Item>
                       <LabeledList.Item label="Directives">
-                        {spawner.flavor_text || "None"}
+                        {spawner.flavor_text || 'None'}
                       </LabeledList.Item>
                       <LabeledList.Item color="bad" label="Conditions">
-                        {spawner.important_text || "None"}
+                        {spawner.important_text || 'None'}
                       </LabeledList.Item>
                     </div>
                   )}

@@ -1,10 +1,10 @@
-import { Button, Section } from "../components";
+import { Button, Section } from '../components';
 
-import { BooleanLike } from "common/react";
-import { PortableBasicInfo } from "./common/PortableAtmos";
-import { Window } from "../layouts";
-import { getGasLabel } from "../constants";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { PortableBasicInfo } from './common/PortableAtmos';
+import { Window } from '../layouts';
+import { getGasLabel } from '../constants';
+import { useBackend } from '../backend';
 
 type Data = {
   filterTypes: Filter[];
@@ -29,11 +29,11 @@ export const PortableScrubber = (props) => {
           {filterTypes.map((filter) => (
             <Button
               key={filter.id}
-              icon={filter.enabled ? "check-square-o" : "square-o"}
+              icon={filter.enabled ? 'check-square-o' : 'square-o'}
               content={getGasLabel(filter.gasId, filter.gasName)}
               selected={filter.enabled}
               onClick={() =>
-                act("toggle_filter", {
+                act('toggle_filter', {
                   val: filter.gasId,
                 })
               }

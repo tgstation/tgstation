@@ -1,9 +1,9 @@
-import { Window } from "tgui/layouts";
-import { useBackend } from "tgui/backend";
-import { Box, Button, Icon, NoticeBox, Stack } from "tgui/components";
-import { MedicalRecordTabs } from "./RecordTabs";
-import { MedicalRecordView } from "./RecordView";
-import { MedicalRecordData } from "./types";
+import { Window } from 'tgui/layouts';
+import { useBackend } from 'tgui/backend';
+import { Box, Button, Icon, NoticeBox, Stack } from 'tgui/components';
+import { MedicalRecordTabs } from './RecordTabs';
+import { MedicalRecordView } from './RecordView';
+import { MedicalRecordData } from './types';
 
 export const MedicalRecords = (props) => {
   const { data } = useBackend<MedicalRecordData>();
@@ -38,7 +38,7 @@ const UnauthorizedView = (props) => {
         <Stack.Item>
           <NoticeBox align="right">
             You are not logged in.
-            <Button ml={2} icon="lock-open" onClick={() => act("login")}>
+            <Button ml={2} icon="lock-open" onClick={() => act('login')}>
               Login
             </Button>
           </NoticeBox>
@@ -69,7 +69,7 @@ const AuthView = (props) => {
                 icon="lock"
                 color="good"
                 ml={2}
-                onClick={() => act("logout")}
+                onClick={() => act('logout')}
               >
                 Log Out
               </Button>

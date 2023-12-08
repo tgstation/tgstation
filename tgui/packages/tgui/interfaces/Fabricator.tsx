@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Stack,
   Section,
@@ -7,13 +7,13 @@ import {
   Box,
   Tooltip,
   Button,
-} from "../components";
-import { Window } from "../layouts";
-import { MaterialCostSequence } from "./Fabrication/MaterialCostSequence";
-import { MaterialAccessBar } from "./Fabrication/MaterialAccessBar";
-import { FabricatorData, Design, MaterialMap } from "./Fabrication/Types";
-import { classes } from "common/react";
-import { DesignBrowser } from "./Fabrication/DesignBrowser";
+} from '../components';
+import { Window } from '../layouts';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
+import { classes } from 'common/react';
+import { DesignBrowser } from './Fabrication/DesignBrowser';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
@@ -50,14 +50,14 @@ export const Fabricator = (props) => {
                 availableMaterials={data.materials ?? []}
                 SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                 onEjectRequested={(material, amount) =>
-                  act("remove_mat", { ref: material.ref, amount })
+                  act('remove_mat', { ref: material.ref, amount })
                 }
               />
             </Section>
           </Stack.Item>
         </Stack>
         {!!onHold && (
-          <Dimmer style={{ fontSize: "2em", textAlign: "center" }}>
+          <Dimmer style={{ fontSize: '2em', textAlign: 'center' }}>
             Mineral access is on hold, please contact the quartermaster.
           </Dimmer>
         )}
@@ -95,11 +95,11 @@ const PrintButton = (props: PrintButtonProps) => {
     >
       <div
         className={classes([
-          "FabricatorRecipe__Button",
-          !canPrint && "FabricatorRecipe__Button--disabled",
+          'FabricatorRecipe__Button',
+          !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
-        color={"transparent"}
-        onClick={() => act("build", { ref: design.id, amount: quantity })}
+        color={'transparent'}
+        onClick={() => act('build', { ref: design.id, amount: quantity })}
       >
         &times;{quantity}
       </div>
@@ -123,16 +123,16 @@ const CustomPrint = (props: CustomPrintProps) => {
   return (
     <div
       className={classes([
-        "FabricatorRecipe__Button",
-        !canPrint && "FabricatorRecipe__Button--disabled",
+        'FabricatorRecipe__Button',
+        !canPrint && 'FabricatorRecipe__Button--disabled',
       ])}
     >
       <Button.Input
-        content={"[Max: " + design.maxmult + "]"}
-        color={"transparent"}
+        content={'[Max: ' + design.maxmult + ']'}
+        color={'transparent'}
         maxValue={design.maxmult}
         onCommit={(_e, value: string) =>
-          act("build", {
+          act('build', {
             ref: design.id,
             amount: value,
           })
@@ -162,9 +162,9 @@ const Recipe = (props: RecipeProps) => {
       <Tooltip content={design.desc} position="right">
         <div
           className={classes([
-            "FabricatorRecipe__Button",
-            "FabricatorRecipe__Button--icon",
-            !canPrint && "FabricatorRecipe__Button--disabled",
+            'FabricatorRecipe__Button',
+            'FabricatorRecipe__Button--icon',
+            !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
         >
           <Icon name="question-circle" />
@@ -182,18 +182,18 @@ const Recipe = (props: RecipeProps) => {
       >
         <div
           className={classes([
-            "FabricatorRecipe__Title",
-            !canPrint && "FabricatorRecipe__Title--disabled",
+            'FabricatorRecipe__Title',
+            !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
           onClick={() =>
-            canPrint && act("build", { ref: design.id, amount: 1 })
+            canPrint && act('build', { ref: design.id, amount: 1 })
           }
         >
           <div className="FabricatorRecipe__Icon">
             <Box
-              width={"32px"}
-              height={"32px"}
-              className={classes(["design32x32", design.icon])}
+              width={'32px'}
+              height={'32px'}
+              className={classes(['design32x32', design.icon])}
             />
           </div>
           <div className="FabricatorRecipe__Label">{design.name}</div>

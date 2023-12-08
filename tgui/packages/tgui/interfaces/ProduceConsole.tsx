@@ -1,6 +1,6 @@
-import { BooleanLike } from "common/react";
-import { capitalize, createSearch } from "common/string";
-import { useBackend, useLocalState } from "../backend";
+import { BooleanLike } from 'common/react';
+import { capitalize, createSearch } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -12,8 +12,8 @@ import {
   Section,
   Stack,
   Tabs,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 const buttonWidth = 2;
 
@@ -65,11 +65,11 @@ const ShoppingTab = (props) => {
   const { data, act } = useBackend<Data>();
   const { credit_type, order_categories, order_datums, item_amts } = data;
   const [shopCategory, setShopCategory] = useLocalState(
-    "shopCategory",
+    'shopCategory',
     order_categories[0],
   );
-  const [condensed] = useLocalState("condensed", false);
-  const [searchItem, setSearchItem] = useLocalState("searchItem", "");
+  const [condensed] = useLocalState('condensed', false);
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const search = createSearch<OrderDatum>(
     searchItem,
     (order_datums) => order_datums.name,
@@ -91,7 +91,7 @@ const ShoppingTab = (props) => {
                 onClick={() => {
                   setShopCategory(category);
                   if (searchItem.length > 0) {
-                    setSearchItem("");
+                    setSearchItem('');
                   }
                 }}
               >
@@ -122,9 +122,9 @@ const ShoppingTab = (props) => {
                 <Stack>
                   <span
                     style={{
-                      verticalAlign: "middle",
+                      verticalAlign: 'middle',
                     }}
-                  />{" "}
+                  />{' '}
                   {!condensed && (
                     <Stack.Item>
                       <Box
@@ -133,7 +133,7 @@ const ShoppingTab = (props) => {
                         height="34px"
                         width="34px"
                         style={{
-                          verticalAlign: "middle",
+                          verticalAlign: 'middle',
                         }}
                       />
                     </Stack.Item>
@@ -151,13 +151,13 @@ const ShoppingTab = (props) => {
                   </Stack.Item>
                   <Stack.Item mt={-1.5} Align="right">
                     <Box fontSize="10px" color="label">
-                      {item.cost + credit_type + " per order."}
+                      {item.cost + credit_type + ' per order.'}
                     </Box>
                     <Button
                       icon="minus"
                       ml={2}
                       onClick={() =>
-                        act("remove_one", {
+                        act('remove_one', {
                           target: item.ref,
                         })
                       }
@@ -165,7 +165,7 @@ const ShoppingTab = (props) => {
                     <Button
                       icon="plus"
                       onClick={() =>
-                        act("add_one", {
+                        act('add_one', {
                           target: item.ref,
                         })
                       }
@@ -176,7 +176,7 @@ const ShoppingTab = (props) => {
                       minValue={0}
                       maxValue={20}
                       onChange={(e, value) =>
-                        act("cart_set", {
+                        act('cart_set', {
                           target: item.ref,
                           amt: value,
                         })
@@ -240,10 +240,10 @@ const CheckoutTab = (props) => {
                       <br />
                       <Box textAlign="right">
                         {item.name +
-                          " costs " +
+                          ' costs ' +
                           item.cost +
                           credit_type +
-                          " per order."}
+                          ' per order.'}
                       </Box>
                     </Stack.Item>
                     <Stack.Item mt={-0.5}>
@@ -253,7 +253,7 @@ const CheckoutTab = (props) => {
                         minValue={0}
                         maxValue={(item.cost > 10 && 50) || 10}
                         onChange={(e, value) =>
-                          act("cart_set", {
+                          act('cart_set', {
                             target: item.ref,
                             amt: value,
                           })
@@ -288,7 +288,7 @@ const CheckoutTab = (props) => {
                       : purchase_tooltip
                   }
                   tooltipPosition="top"
-                  onClick={() => act("purchase")}
+                  onClick={() => act('purchase')}
                 />
               </Stack.Item>
             )}
@@ -300,10 +300,10 @@ const CheckoutTab = (props) => {
                 content="Express"
                 disabled={total_cost <= 0}
                 tooltip={
-                  total_cost <= 0 ? "Order atleast 1 item" : express_tooltip
+                  total_cost <= 0 ? 'Order atleast 1 item' : express_tooltip
                 }
                 tooltipPosition="top-start"
-                onClick={() => act("express")}
+                onClick={() => act('express')}
               />
             </Stack.Item>
           </Stack>
@@ -331,8 +331,8 @@ const OrderSent = (props) => {
 export const ProduceConsole = (props) => {
   const { data } = useBackend<Data>();
   const { credit_type, points, off_cooldown, order_categories } = data;
-  const [tabIndex, setTabIndex] = useLocalState("tab-index", 1);
-  const [condensed, setCondensed] = useLocalState("condensed", false);
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [condensed, setCondensed] = useLocalState('condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>
@@ -372,8 +372,8 @@ export const ProduceConsole = (props) => {
               </Stack.Item>
               <Stack.Item textAlign="right">
                 <Button
-                  color={condensed ? "green" : "red"}
-                  content={condensed ? "Uncondense" : "Condense"}
+                  color={condensed ? 'green' : 'red'}
+                  content={condensed ? 'Uncondense' : 'Condense'}
                   onClick={() => setCondensed(!condensed)}
                 />
               </Stack.Item>

@@ -4,23 +4,23 @@
  * @license MIT
  */
 
-import { createAction } from "common/redux";
-import { createHighlightSetting } from "./model";
+import { createAction } from 'common/redux';
+import { createHighlightSetting } from './model';
 
-export const updateSettings = createAction("settings/update");
-export const loadSettings = createAction("settings/load");
-export const changeSettingsTab = createAction("settings/changeTab");
-export const toggleSettings = createAction("settings/toggle");
-export const openChatSettings = createAction("settings/openChatTab");
+export const updateSettings = createAction('settings/update');
+export const loadSettings = createAction('settings/load');
+export const changeSettingsTab = createAction('settings/changeTab');
+export const toggleSettings = createAction('settings/toggle');
+export const openChatSettings = createAction('settings/openChatTab');
 export const addHighlightSetting = createAction(
-  "settings/addHighlightSetting",
+  'settings/addHighlightSetting',
   () => ({
     payload: createHighlightSetting(),
   }),
 );
 export const removeHighlightSetting = createAction(
-  "settings/removeHighlightSetting",
+  'settings/removeHighlightSetting',
 );
 export const updateHighlightSetting = createAction(
-  "settings/updateHighlightSetting",
+  'settings/updateHighlightSetting',
 );

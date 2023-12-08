@@ -1,6 +1,6 @@
-import { createSearch } from "common/string";
-import { filter, map, reduce, sortBy } from "common/collections";
-import { useBackend, useLocalState } from "../backend";
+import { createSearch } from 'common/string';
+import { filter, map, reduce, sortBy } from 'common/collections';
+import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
@@ -9,10 +9,10 @@ import {
   Section,
   Collapsible,
   Table,
-} from "../components";
-import { Window } from "../layouts";
-import { clamp } from "common/math";
-import { flow } from "common/fp";
+} from '../components';
+import { Window } from '../layouts';
+import { clamp } from 'common/math';
+import { flow } from 'common/fp';
 
 type Recipe = {
   ref: unknown | null;
@@ -101,7 +101,7 @@ export const StackCrafting = (_props) => {
   const { data } = useBackend<StackCraftingProps>();
   const { amount, recipes = {} } = data;
 
-  const [searchText, setSearchText] = useLocalState("searchText", "");
+  const [searchText, setSearchText] = useLocalState('searchText', '');
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
@@ -111,7 +111,7 @@ export const StackCrafting = (_props) => {
     <Window width={400} height={height}>
       <Window.Content scrollable>
         <Section
-          title={"Amount: " + amount}
+          title={'Amount: ' + amount}
           buttons={
             <>
               Search
@@ -184,9 +184,9 @@ const Multipliers = (props: MultiplierProps) => {
     if (maxM >= multiplier) {
       finalResult.push(
         <Button
-          content={multiplier * recipe.res_amount + "x"}
+          content={multiplier * recipe.res_amount + 'x'}
           onClick={() =>
-            act("make", {
+            act('make', {
               ref: recipe.ref,
               multiplier: multiplier,
             })
@@ -199,9 +199,9 @@ const Multipliers = (props: MultiplierProps) => {
   if (multipliers.indexOf(maxM) === -1) {
     finalResult.push(
       <Button
-        content={maxM * recipe.res_amount + "x"}
+        content={maxM * recipe.res_amount + 'x'}
         onClick={() =>
-          act("make", {
+          act('make', {
             ref: recipe.ref,
             multiplier: maxM,
           })
@@ -222,8 +222,8 @@ const RecipeBox = (props: RecipeBoxProps) => {
 
   const { res_amount, max_res_amount, req_amount, ref } = recipe;
 
-  const resAmountLabel = res_amount > 1 ? `${res_amount}x ` : "";
-  const sheetSuffix = req_amount > 1 ? "s" : "";
+  const resAmountLabel = res_amount > 1 ? `${res_amount}x ` : '';
+  const sheetSuffix = req_amount > 1 ? 's' : '';
   const buttonName = `${resAmountLabel}${title} (${req_amount} sheet${sheetSuffix})`;
 
   const maxMultiplier = buildMultiplier(recipe, amount);
@@ -239,7 +239,7 @@ const RecipeBox = (props: RecipeBoxProps) => {
               icon="wrench"
               content={buttonName}
               onClick={() =>
-                act("make", {
+                act('make', {
                   ref: ref,
                   multiplier: 1,
                 })

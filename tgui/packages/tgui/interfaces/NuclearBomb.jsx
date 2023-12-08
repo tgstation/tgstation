@@ -1,7 +1,7 @@
-import { classes } from "common/react";
-import { useBackend } from "../backend";
-import { Box, Button, Flex, Grid, Icon } from "../components";
-import { Window } from "../layouts";
+import { classes } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Grid, Icon } from '../components';
+import { Window } from '../layouts';
 
 // This ui is so many manual overrides and !important tags
 // and hand made width sets that changing pretty much anything
@@ -10,9 +10,9 @@ import { Window } from "../layouts";
 export const NukeKeypad = (props) => {
   const { act } = useBackend();
   const keypadKeys = [
-    ["1", "4", "7", "C"],
-    ["2", "5", "8", "0"],
-    ["3", "6", "9", "E"],
+    ['1', '4', '7', 'C'],
+    ['2', '5', '8', '0'],
+    ['3', '6', '9', 'E'],
   ];
   return (
     <Box width="185px">
@@ -31,11 +31,11 @@ export const NukeKeypad = (props) => {
                 lineHeight={1.25}
                 width="55px"
                 className={classes([
-                  "NuclearBomb__Button",
-                  "NuclearBomb__Button--keypad",
-                  "NuclearBomb__Button--" + key,
+                  'NuclearBomb__Button',
+                  'NuclearBomb__Button--keypad',
+                  'NuclearBomb__Button--' + key,
                 ])}
-                onClick={() => act("keypad", { digit: key })}
+                onClick={() => act('keypad', { digit: key })}
               />
             ))}
           </Grid.Column>
@@ -70,7 +70,7 @@ export const NuclearBomb = (props) => {
                 mr="3px"
                 mt="3px"
                 className="NuclearBomb__Button NuclearBomb__Button--keypad"
-                onClick={() => act("eject_disk")}
+                onClick={() => act('eject_disk')}
               />
             </Flex.Item>
           </Flex>
@@ -89,7 +89,7 @@ export const NuclearBomb = (props) => {
                   lineHeight={1.1}
                   mb="6px"
                   className="NuclearBomb__Button NuclearBomb__Button--C"
-                  onClick={() => act("arm")}
+                  onClick={() => act('arm')}
                 />
                 <Button
                   fluid
@@ -99,7 +99,7 @@ export const NuclearBomb = (props) => {
                   fontSize="28px"
                   lineHeight={1.1}
                   className="NuclearBomb__Button NuclearBomb__Button--E"
-                  onClick={() => act("anchor")}
+                  onClick={() => act('anchor')}
                 />
                 <Box textAlign="center" color="#9C9987" fontSize="80px">
                   <Icon name="radiation" />

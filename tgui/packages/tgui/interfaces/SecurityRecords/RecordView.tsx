@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "tgui/backend";
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -8,14 +8,14 @@ import {
   Section,
   Stack,
   Table,
-} from "tgui/components";
-import { CharacterPreview } from "../common/CharacterPreview";
-import { EditableText } from "../common/EditableText";
-import { CrimeWatcher } from "./CrimeWatcher";
-import { RecordPrint } from "./RecordPrint";
-import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from "./constants";
-import { getSecurityRecord } from "./helpers";
-import { SecurityRecordsData } from "./types";
+} from 'tgui/components';
+import { CharacterPreview } from '../common/CharacterPreview';
+import { EditableText } from '../common/EditableText';
+import { CrimeWatcher } from './CrimeWatcher';
+import { RecordPrint } from './RecordPrint';
+import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
+import { getSecurityRecord } from './helpers';
+import { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
 export const SecurityRecordView = (props) => {
@@ -25,7 +25,7 @@ export const SecurityRecordView = (props) => {
   const { data } = useBackend<SecurityRecordsData>();
   const { assigned_view } = data;
 
-  const [open] = useLocalState<boolean>("printOpen", false);
+  const [open] = useLocalState<boolean>('printOpen', false);
 
   return (
     <Stack fill vertical>
@@ -50,7 +50,7 @@ const RecordInfo = (props) => {
 
   const { act, data } = useBackend<SecurityRecordsData>();
   const { available_statuses } = data;
-  const [open, setOpen] = useLocalState<boolean>("printOpen", false);
+  const [open, setOpen] = useLocalState<boolean>('printOpen', false);
 
   const { min_age, max_age } = data;
 
@@ -90,7 +90,7 @@ const RecordInfo = (props) => {
                 <Button.Confirm
                   content="Delete"
                   icon="trash"
-                  onClick={() => act("delete_record", { crew_ref: crew_ref })}
+                  onClick={() => act('delete_record', { crew_ref: crew_ref })}
                   tooltip="Delete record data."
                 />
               </Stack.Item>
@@ -110,18 +110,18 @@ const RecordInfo = (props) => {
                 const isSelected = button === wanted_status;
                 return (
                   <Button
-                    color={isSelected ? CRIMESTATUS2COLOR[button] : "grey"}
-                    disabled={button === "Arrest" && !hasValidCrimes}
-                    icon={isSelected ? "check" : ""}
+                    color={isSelected ? CRIMESTATUS2COLOR[button] : 'grey'}
+                    disabled={button === 'Arrest' && !hasValidCrimes}
+                    icon={isSelected ? 'check' : ''}
                     key={index}
                     onClick={() =>
-                      act("set_wanted", {
+                      act('set_wanted', {
                         crew_ref: crew_ref,
                         status: button,
                       })
                     }
-                    pl={!isSelected ? "1.8rem" : 1}
-                    tooltip={CRIMESTATUS2DESC[button] || ""}
+                    pl={!isSelected ? '1.8rem' : 1}
+                    tooltip={CRIMESTATUS2DESC[button] || ''}
                     tooltipPosition="bottom-start"
                   >
                     {button[0]}
@@ -151,9 +151,9 @@ const RecordInfo = (props) => {
                 minValue={min_age}
                 maxValue={max_age}
                 onEnter={(event, value) =>
-                  act("edit_field", {
+                  act('edit_field', {
                     crew_ref: crew_ref,
-                    field: "age",
+                    field: 'age',
                     value: value,
                   })
                 }

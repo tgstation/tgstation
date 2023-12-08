@@ -1,10 +1,10 @@
-import { useBackend, useLocalState } from "../../backend";
-import { Button, LabeledList, Section, Stack } from "../../components";
+import { useBackend, useLocalState } from '../../backend';
+import { Button, LabeledList, Section, Stack } from '../../components';
 
 export const TaskManager = (props) => {
   const { act, data } = useBackend();
-  const [, setToCall] = useLocalState("toCallTaskInfo");
-  const [, setModal] = useLocalState("modal");
+  const [, setToCall] = useLocalState('toCallTaskInfo');
+  const [, setModal] = useLocalState('modal');
   let { tasks } = data;
   tasks?.sort((a, b) => {
     if (a.status < b.status) {
@@ -15,8 +15,8 @@ export const TaskManager = (props) => {
       return 0;
     }
   });
-  const sleeps = tasks.filter((info) => info.status === "sleep");
-  const yields = tasks.filter((info) => info.status === "yield");
+  const sleeps = tasks.filter((info) => info.status === 'sleep');
+  const yields = tasks.filter((info) => info.status === 'yield');
   return (
     <Stack fill width="100%" justify="space-around">
       <Stack.Item grow="1" shrink="1">
@@ -27,7 +27,7 @@ export const TaskManager = (props) => {
                 <Button
                   color="red"
                   icon="window-close"
-                  onClick={() => act("killTask", { info: info })}
+                  onClick={() => act('killTask', { info: info })}
                 >
                   Kill
                 </Button>
@@ -44,10 +44,10 @@ export const TaskManager = (props) => {
                 <Button
                   onClick={() => {
                     setToCall({
-                      type: "resumeTask",
+                      type: 'resumeTask',
                       params: { index: info.index },
                     });
-                    setModal("call");
+                    setModal('call');
                   }}
                 >
                   Call
@@ -56,7 +56,7 @@ export const TaskManager = (props) => {
                   color="red"
                   icon="window-close"
                   onClick={() => {
-                    act("killTask", { info: info });
+                    act('killTask', { info: info });
                   }}
                 >
                   Kill

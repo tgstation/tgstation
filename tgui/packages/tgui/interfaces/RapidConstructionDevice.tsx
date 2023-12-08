@@ -1,9 +1,9 @@
-import { Window } from "../layouts";
-import { BooleanLike, classes } from "common/react";
-import { capitalizeAll } from "common/string";
-import { useBackend, useLocalState } from "../backend";
-import { LabeledList, Section, Button, Tabs, Stack, Box } from "../components";
-import { AirLockMainSection } from "./AirlockElectronics";
+import { Window } from '../layouts';
+import { BooleanLike, classes } from 'common/react';
+import { capitalizeAll } from 'common/string';
+import { useBackend, useLocalState } from '../backend';
+import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
+import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
   matterLeft: number;
@@ -43,10 +43,10 @@ export const SiloItem = (props) => {
   return (
     <LabeledList.Item label="Silo Link">
       <Button.Checkbox
-        content={silo_enabled ? "Silo Online" : "Silo Offline"}
+        content={silo_enabled ? 'Silo Online' : 'Silo Offline'}
         checked={silo_enabled}
         color="transparent"
-        onClick={() => act("toggle_silo")}
+        onClick={() => act('toggle_silo')}
       />
     </LabeledList.Item>
   );
@@ -63,7 +63,7 @@ const CategoryItem = (props) => {
           content={root}
           selected={selected_root === root}
           color="transparent"
-          onClick={() => act("root_category", { root_category: root })}
+          onClick={() => act('root_category', { root_category: root })}
         />
       ))}
     </LabeledList.Item>
@@ -78,7 +78,7 @@ export const InfoSection = (props) => {
     <Section>
       <LabeledList>
         <MatterItem />
-        {silo_upgraded ? <SiloItem /> : ""}
+        {silo_upgraded ? <SiloItem /> : ''}
         <CategoryItem />
       </LabeledList>
     </Section>
@@ -89,7 +89,7 @@ const DesignSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_design } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    "categoryName",
+    'categoryName',
     selected_category,
   );
   const shownCategory =
@@ -121,7 +121,7 @@ const DesignSection = (props) => {
             shownCategory.cat_name === selected_category
           }
           onClick={() =>
-            act("design", {
+            act('design', {
               category: shownCategory.cat_name,
               index: i + 1,
             })
@@ -131,14 +131,14 @@ const DesignSection = (props) => {
             inline
             verticalAlign="middle"
             mr="10px"
-            className={classes(["rcd-tgui32x32", design.icon])}
+            className={classes(['rcd-tgui32x32', design.icon])}
             style={{
               transform:
-                design.title === "full tile window" ||
-                design.title === "full tile reinforced window" ||
-                design.title === "catwalk"
-                  ? "scale(0.7)"
-                  : "scale(1.0)",
+                design.title === 'full tile window' ||
+                design.title === 'full tile reinforced window' ||
+                design.title === 'catwalk'
+                  ? 'scale(0.7)'
+                  : 'scale(1.0)',
             }}
           />
           <span>{capitalizeAll(design.title)}</span>
@@ -154,7 +154,7 @@ const ConfigureSection = (props) => {
 
   return (
     <Stack.Item grow>
-      {selected_root === "Airlock Access" ? (
+      {selected_root === 'Airlock Access' ? (
         <AirLockMainSection />
       ) : (
         <DesignSection />

@@ -1,19 +1,19 @@
-import { filter, sortBy } from "common/collections";
-import { flow } from "common/fp";
-import { toFixed } from "common/math";
-import { BooleanLike } from "common/react";
-import { multiline } from "common/string";
-import { useBackend } from "../backend";
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { multiline } from 'common/string';
+import { useBackend } from '../backend';
 import {
   Button,
   NumberInput,
   ProgressBar,
   Section,
   Stack,
-} from "../components";
-import { Table, TableCell, TableRow } from "../components/Table";
-import { getGasColor } from "../constants";
-import { Window } from "../layouts";
+} from '../components';
+import { Table, TableCell, TableRow } from '../components/Table';
+import { getGasColor } from '../constants';
+import { Window } from '../layouts';
 
 type Data = {
   bluespace_network_gases: Gas[];
@@ -70,14 +70,14 @@ export const BluespaceVendor = (props) => {
                     icon="plus"
                     content="Prepare Tank"
                     disabled={pumping || inserted_tank || !tank_amount}
-                    onClick={() => act("tank_prepare")}
+                    onClick={() => act('tank_prepare')}
                   />
                   <Button
                     ml={1}
                     icon="minus"
                     content="Remove Tank"
                     disabled={pumping || !inserted_tank}
-                    onClick={() => act("tank_expel")}
+                    onClick={() => act('tank_expel')}
                   />
                 </>
               }
@@ -92,7 +92,7 @@ export const BluespaceVendor = (props) => {
                     minValue={0}
                     maxValue={100}
                     onDrag={(e, value) =>
-                      act("pumping_rate", {
+                      act('pumping_rate', {
                         rate: value,
                       })
                     }
@@ -193,10 +193,10 @@ const GasDisplay = (props: GasDisplayProps) => {
           <Button
             icon="play"
             tooltipPosition="left"
-            tooltip={"Start adding " + name + "."}
+            tooltip={'Start adding ' + name + '.'}
             disabled={!inserted_tank}
             onClick={() =>
-              act("start_pumping", {
+              act('start_pumping', {
                 gas_id: id,
               })
             }
@@ -206,9 +206,9 @@ const GasDisplay = (props: GasDisplayProps) => {
             disabled={selected_gas !== id}
             icon="minus"
             tooltipPosition="left"
-            tooltip={"Stop adding " + name + "."}
+            tooltip={'Stop adding ' + name + '.'}
             onClick={() =>
-              act("stop_pumping", {
+              act('stop_pumping', {
                 gas_id: id,
               })
             }

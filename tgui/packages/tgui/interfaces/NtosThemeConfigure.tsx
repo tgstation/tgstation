@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Button, Flex } from "../components";
-import { NtosWindow } from "../layouts";
+import { useBackend } from '../backend';
+import { Button, Flex } from '../components';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   PC_device_theme: string;
@@ -33,7 +33,7 @@ export const NtosThemeConfigure = (props) => {
                 lineHeight="50px"
                 content={theme.theme_name}
                 onClick={() =>
-                  act("PRG_change_theme", {
+                  act('PRG_change_theme', {
                     selected_theme: theme.theme_name,
                   })
                 }

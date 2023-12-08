@@ -1,6 +1,6 @@
-import { BooleanLike } from "common/react";
-import { formatSiUnit } from "../format";
-import { useBackend, useLocalState } from "../backend";
+import { BooleanLike } from 'common/react';
+import { formatSiUnit } from '../format';
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   ColorBox,
@@ -17,8 +17,8 @@ import {
   AnimatedNumber,
   Dropdown,
   NoticeBox,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type MODsuitData = {
   // Static
@@ -172,7 +172,7 @@ const ConfigureNumberEntry = (props) => {
       stepPixelSize={5}
       width="39px"
       onChange={(e, value) =>
-        act("configure", {
+        act('configure', {
           key: name,
           value: value,
           ref: module_ref,
@@ -189,7 +189,7 @@ const ConfigureBoolEntry = (props) => {
     <Button.Checkbox
       checked={value}
       onClick={() =>
-        act("configure", {
+        act('configure', {
           key: name,
           value: !value,
           ref: module_ref,
@@ -207,7 +207,7 @@ const ConfigureColorEntry = (props) => {
       <Button
         icon="paint-brush"
         onClick={() =>
-          act("configure", {
+          act('configure', {
             key: name,
             ref: module_ref,
           })
@@ -226,7 +226,7 @@ const ConfigureListEntry = (props) => {
       displayText={value}
       options={values}
       onSelected={(value) =>
-        act("configure", {
+        act('configure', {
           key: name,
           value: value,
           ref: module_ref,
@@ -301,24 +301,24 @@ const ConfigureScreen = (props) => {
 const moduleTypeAction = (param) => {
   switch (param) {
     case 1:
-      return "Use";
+      return 'Use';
     case 2:
-      return "Toggle";
+      return 'Toggle';
     case 3:
-      return "Select";
+      return 'Select';
   }
 };
 
 const radiationLevels = (param) => {
   switch (param) {
     case 1:
-      return "Low";
+      return 'Low';
     case 2:
-      return "Medium";
+      return 'Medium';
     case 3:
-      return "High";
+      return 'High';
     case 4:
-      return "Extreme";
+      return 'Extreme';
   }
 };
 
@@ -342,10 +342,10 @@ const SuitStatusSection = (props) => {
   } = data.suit_status;
   const { display_time, shift_time, shift_id } = data.module_custom_status;
   const status = malfunctioning
-    ? "Malfunctioning"
+    ? 'Malfunctioning'
     : active
-      ? "Active"
-      : "Inactive";
+      ? 'Active'
+      : 'Inactive';
   const charge_percent = Math.round(
     (100 * cell_charge_current) / cell_charge_max,
   );
@@ -357,9 +357,9 @@ const SuitStatusSection = (props) => {
       buttons={
         <Button
           icon="power-off"
-          color={active ? "good" : "default"}
+          color={active ? 'good' : 'default'}
           content={status}
-          onClick={() => act("activate")}
+          onClick={() => act('activate')}
         />
       }
     >
@@ -373,48 +373,48 @@ const SuitStatusSection = (props) => {
               bad: [-Infinity, 0.3],
             }}
             style={{
-              textShadow: "1px 1px 0 black",
+              textShadow: '1px 1px 0 black',
             }}
           >
             {!core_name
-              ? "No Core Detected"
+              ? 'No Core Detected'
               : cell_charge_max === 1
-                ? "Power Cell Missing"
+                ? 'Power Cell Missing'
                 : cell_charge_current === 1e31
-                  ? "Infinite"
+                  ? 'Infinite'
                   : `${formatSiUnit(
                       cell_charge_current * 1000,
                       0,
-                      "J",
+                      'J',
                     )} of ${formatSiUnit(
                       cell_charge_max * 1000,
                       0,
-                      "J",
+                      'J',
                     )} (${charge_percent}%)`}
           </ProgressBar>
         </LabeledList.Item>
         <LabeledList.Item label="ID Lock">
           <Button
-            icon={locked ? "lock" : "lock-open"}
-            color={locked ? "good" : "default"}
-            content={locked ? "Locked" : "Unlocked"}
-            onClick={() => act("lock")}
+            icon={locked ? 'lock' : 'lock-open'}
+            color={locked ? 'good' : 'default'}
+            content={locked ? 'Locked' : 'Unlocked'}
+            onClick={() => act('lock')}
           />
         </LabeledList.Item>
         <LabeledList.Item label="MODLink">
           <Button
-            icon={"wifi"}
-            color={link_call ? "good" : "default"}
+            icon={'wifi'}
+            color={link_call ? 'good' : 'default'}
             disabled={!link_freq}
-            tooltip={link_freq ? "" : "Set a frequency with a multitool!"}
+            tooltip={link_freq ? '' : 'Set a frequency with a multitool!'}
             content={
               link_freq
                 ? link_call
-                  ? "Calling (" + link_call + ")"
-                  : "Call (" + link_id + ")"
-                : "Frequency Unset"
+                  ? 'Calling (' + link_call + ')'
+                  : 'Call (' + link_id + ')'
+                : 'Frequency Unset'
             }
-            onClick={() => act("call")}
+            onClick={() => act('call')}
           />
         </LabeledList.Item>
         {!!open && (
@@ -434,7 +434,7 @@ const SuitStatusSection = (props) => {
                 icon="eject"
                 content="Eject pAI"
                 disabled={is_ai}
-                onClick={() => act("eject_pai")}
+                onClick={() => act('eject_pai')}
               />
             )}
           </LabeledList.Item>
@@ -444,10 +444,10 @@ const SuitStatusSection = (props) => {
       {!!display_time && (
         <Section title="Operation" mt={2}>
           <LabeledList.Item label="Time">
-            {active ? shift_time : "00:00:00"}
+            {active ? shift_time : '00:00:00'}
           </LabeledList.Item>
           <LabeledList.Item label="Number">
-            {active && shift_id ? shift_id : "???"}
+            {active && shift_id ? shift_id : '???'}
           </LabeledList.Item>
         </Section>
       )}
@@ -460,23 +460,23 @@ const HardwareSection = (props) => {
   const { control, helmet, chestplate, gauntlets, boots } = data;
   const { ai_name, core_name } = data.suit_status;
   return (
-    <Section title="Hardware" style={{ textTransform: "capitalize" }}>
+    <Section title="Hardware" style={{ textTransform: 'capitalize' }}>
       <LabeledList>
         <LabeledList.Item label="AI Assistant">
-          {ai_name || "No AI Detected"}
+          {ai_name || 'No AI Detected'}
         </LabeledList.Item>
         <LabeledList.Item label="Core">
-          {core_name || "No Core Detected"}
+          {core_name || 'No Core Detected'}
         </LabeledList.Item>
         <LabeledList.Item label="Control Unit">{control}</LabeledList.Item>
-        <LabeledList.Item label="Helmet">{helmet || "None"}</LabeledList.Item>
+        <LabeledList.Item label="Helmet">{helmet || 'None'}</LabeledList.Item>
         <LabeledList.Item label="Chestplate">
-          {chestplate || "None"}
+          {chestplate || 'None'}
         </LabeledList.Item>
         <LabeledList.Item label="Gauntlets">
-          {gauntlets || "None"}
+          {gauntlets || 'None'}
         </LabeledList.Item>
-        <LabeledList.Item label="Boots">{boots || "None"}</LabeledList.Item>
+        <LabeledList.Item label="Boots">{boots || 'None'}</LabeledList.Item>
       </LabeledList>
     </Section>
   );
@@ -578,7 +578,7 @@ const UserStatusSection = (props) => {
         {background_radiation_level !== undefined && (
           <LabeledList.Item label="Radiation">
             {!active ? (
-              "Unknown"
+              'Unknown'
             ) : is_user_irradiated ? (
               <NoticeBox danger>User Irradiated</NoticeBox>
             ) : background_radiation_level ? (
@@ -608,11 +608,11 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Fingerprints">
             <Box
               style={{
-                wordBreak: "break-all",
-                wordWrap: "break-word",
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
-              {active ? dna_unique_identity : "???"}
+              {active ? dna_unique_identity : '???'}
             </Box>
           </LabeledList.Item>
         )}
@@ -620,11 +620,11 @@ const UserStatusSection = (props) => {
           <LabeledList.Item label="Enzymes">
             <Box
               style={{
-                wordBreak: "break-all",
-                wordWrap: "break-word",
+                wordBreak: 'break-all',
+                wordWrap: 'break-word',
               }}
             >
-              {active ? dna_unique_enzymes : "???"}
+              {active ? dna_unique_enzymes : '???'}
             </Box>
           </LabeledList.Item>
         )}
@@ -657,8 +657,8 @@ const ModuleSection = (props) => {
   const { complexity_max, module_info } = data;
   const { complexity } = data.suit_status;
   const [configureState, setConfigureState] = useLocalState(
-    "module_configuration",
-    "",
+    'module_configuration',
+    '',
   );
   return (
     <Section
@@ -711,13 +711,13 @@ const ModuleSection = (props) => {
               <Table.Row key={module.ref}>
                 <Table.Cell width={1}>
                   <Button
-                    onClick={() => act("select", { ref: module.ref })}
+                    onClick={() => act('select', { ref: module.ref })}
                     icon={
                       module.module_type === 3
                         ? module.module_active
-                          ? "check-square-o"
-                          : "square-o"
-                        : "power-off"
+                          ? 'check-square-o'
+                          : 'square-o'
+                        : 'power-off'
                     }
                     selected={module.module_active}
                     tooltip={moduleTypeAction(module.module_type)}
@@ -729,7 +729,7 @@ const ModuleSection = (props) => {
                   <Button
                     onClick={() =>
                       setConfigureState(
-                        configureState === module.ref ? "" : module.ref,
+                        configureState === module.ref ? '' : module.ref,
                       )
                     }
                     icon="cog"
@@ -741,7 +741,7 @@ const ModuleSection = (props) => {
                 </Table.Cell>
                 <Table.Cell width={1}>
                   <Button
-                    onClick={() => act("pin", { ref: module.ref })}
+                    onClick={() => act('pin', { ref: module.ref })}
                     icon="thumbtack"
                     selected={module.pinned}
                     tooltip="Pin"
@@ -752,7 +752,7 @@ const ModuleSection = (props) => {
                 <Table.Cell>
                   <Collapsible
                     title={module.module_name}
-                    color={module.module_active ? "green" : "default"}
+                    color={module.module_active ? 'green' : 'default'}
                   >
                     <Section mr={-19}>{module.description}</Section>
                   </Collapsible>

@@ -1,5 +1,5 @@
-import { resolveAsset } from "../assets";
-import { useBackend } from "../backend";
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -8,8 +8,8 @@ import {
   LabeledList,
   ProgressBar,
   Section,
-} from "../components";
-import { NtosWindow } from "../layouts";
+} from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosArcade = (props) => {
   const { act, data } = useBackend();
@@ -55,7 +55,7 @@ export const NtosArcade = (props) => {
                 <Box my={1} mx={4} />
                 <Section
                   backgroundColor={
-                    data.PauseState === 1 ? "#1b3622" : "#471915"
+                    data.PauseState === 1 ? '#1b3622' : '#471915'
                   }
                 >
                   {data.Status}
@@ -87,7 +87,7 @@ export const NtosArcade = (props) => {
               tooltip="Go in for the kill!"
               tooltipPosition="top"
               disabled={data.GameActive === 0 || data.PauseState === 1}
-              onClick={() => act("Attack")}
+              onClick={() => act('Attack')}
               content="Attack!"
             />
             <Button
@@ -95,7 +95,7 @@ export const NtosArcade = (props) => {
               tooltip="Heal yourself!"
               tooltipPosition="top"
               disabled={data.GameActive === 0 || data.PauseState === 1}
-              onClick={() => act("Heal")}
+              onClick={() => act('Heal')}
               content="Heal!"
             />
             <Button
@@ -103,7 +103,7 @@ export const NtosArcade = (props) => {
               tooltip="Recharge your magic!"
               tooltipPosition="top"
               disabled={data.GameActive === 0 || data.PauseState === 1}
-              onClick={() => act("Recharge_Power")}
+              onClick={() => act('Recharge_Power')}
               content="Recharge!"
             />
           </Box>
@@ -113,7 +113,7 @@ export const NtosArcade = (props) => {
               tooltip="One more game couldn't hurt."
               tooltipPosition="top"
               disabled={data.GameActive === 1}
-              onClick={() => act("Start_Game")}
+              onClick={() => act('Start_Game')}
               content="Begin Game"
             />
             <Button
@@ -121,11 +121,11 @@ export const NtosArcade = (props) => {
               tooltip="Claim at your local Arcade Computer for Prizes!"
               tooltipPosition="top"
               disabled={data.GameActive === 1}
-              onClick={() => act("Dispense_Tickets")}
+              onClick={() => act('Dispense_Tickets')}
               content="Claim Tickets"
             />
           </Box>
-          <Box color={data.TicketCount >= 1 ? "good" : "normal"}>
+          <Box color={data.TicketCount >= 1 ? 'good' : 'normal'}>
             Earned Tickets: {data.TicketCount}
           </Box>
         </Section>

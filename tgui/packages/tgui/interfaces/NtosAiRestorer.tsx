@@ -1,5 +1,5 @@
-import { NtosWindow } from "../layouts";
-import { AiRestorerContent } from "./AiRestorer";
+import { NtosWindow } from '../layouts';
+import { AiRestorerContent } from './AiRestorer';
 
 export const NtosAiRestorer = (props) => {
   return (

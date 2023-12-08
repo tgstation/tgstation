@@ -1,8 +1,8 @@
-import { multiline } from "common/string";
-import { resolveAsset } from "../assets";
-import { useBackend } from "../backend";
-import { BlockQuote, Box, Button, Icon, Section, Stack } from "../components";
-import { Window } from "../layouts";
+import { multiline } from 'common/string';
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, Icon, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 export const ApprenticeContract = (props) => {
   return (
@@ -77,8 +77,8 @@ const ApprenticeSelection = (props) => {
               <img
                 src={resolveAsset(assetName)}
                 style={{
-                  borderStyle: "solid",
-                  borderColor: "#7e90a7",
+                  borderStyle: 'solid',
+                  borderColor: '#7e90a7',
                 }}
               />
             </Stack.Item>
@@ -87,7 +87,7 @@ const ApprenticeSelection = (props) => {
                 textAlign="center"
                 fluid
                 onClick={() =>
-                  act("buy", {
+                  act('buy', {
                     school: schoolTitle,
                   })
                 }

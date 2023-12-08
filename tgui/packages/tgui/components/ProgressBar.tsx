@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { clamp01, scale, keyOfMatchingRange, toFixed } from "common/math";
-import { classes } from "common/react";
-import { BoxProps, computeBoxClassName, computeBoxProps } from "./Box";
-import { CSS_COLORS } from "../constants";
-import { PropsWithChildren } from "react";
+import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
+import { classes } from 'common/react';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
+import { CSS_COLORS } from '../constants';
+import { PropsWithChildren } from 'react';
 
 type Props = {
   value: number;
@@ -20,7 +20,7 @@ type Props = {
   maxValue: number;
   minValue: number;
   ranges: Record<string, [number, number]>;
-  style: Partial<HTMLDivElement["style"]>;
+  style: Partial<HTMLDivElement['style']>;
   title: string;
   width: string | number;
 }> &
@@ -42,23 +42,23 @@ export const ProgressBar = (props: Props) => {
   const hasContent = children !== undefined;
 
   const effectiveColor =
-    color || keyOfMatchingRange(value, ranges) || "default";
+    color || keyOfMatchingRange(value, ranges) || 'default';
 
   // We permit colors to be in hex format, rgb()/rgba() format,
   // a name for a color-<name> class, or a base CSS class.
   const outerProps = computeBoxProps(rest);
 
-  const outerClasses = ["ProgressBar", className, computeBoxClassName(rest)];
+  const outerClasses = ['ProgressBar', className, computeBoxClassName(rest)];
   const fillStyles = {
-    width: clamp01(scaledValue) * 100 + "%",
+    width: clamp01(scaledValue) * 100 + '%',
   };
-  if (CSS_COLORS.includes(effectiveColor) || effectiveColor === "default") {
+  if (CSS_COLORS.includes(effectiveColor) || effectiveColor === 'default') {
     // If the color is a color-<name> class, just use that.
-    outerClasses.push("ProgressBar--color--" + effectiveColor);
+    outerClasses.push('ProgressBar--color--' + effectiveColor);
   } else {
     // Otherwise, set styles directly.
     outerProps.style = { ...outerProps.style, borderColor: effectiveColor };
-    fillStyles["backgroundColor"] = effectiveColor;
+    fillStyles['backgroundColor'] = effectiveColor;
   }
 
   return (
@@ -68,7 +68,7 @@ export const ProgressBar = (props: Props) => {
         style={fillStyles}
       />
       <div className="ProgressBar__content">
-        {hasContent ? children : toFixed(scaledValue * 100) + "%"}
+        {hasContent ? children : toFixed(scaledValue * 100) + '%'}
       </div>
     </div>
   );

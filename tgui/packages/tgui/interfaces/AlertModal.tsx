@@ -1,5 +1,5 @@
-import { Loader } from "./common/Loader";
-import { useBackend, useLocalState } from "../backend";
+import { Loader } from './common/Loader';
+import { useBackend, useLocalState } from '../backend';
 import {
   KEY_ENTER,
   KEY_ESCAPE,
@@ -7,9 +7,9 @@ import {
   KEY_RIGHT,
   KEY_SPACE,
   KEY_TAB,
-} from "../../common/keycodes";
-import { Autofocus, Box, Button, Flex, Section, Stack } from "../components";
-import { Window } from "../layouts";
+} from '../../common/keycodes';
+import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 type AlertModalData = {
   autofocus: boolean;
@@ -30,11 +30,11 @@ export const AlertModal = (props) => {
     autofocus,
     buttons = [],
     large_buttons,
-    message = "",
+    message = '',
     timeout,
     title,
   } = data;
-  const [selected, setSelected] = useLocalState<number>("selected", 0);
+  const [selected, setSelected] = useLocalState<number>('selected', 0);
   // Dynamically sets window dimensions
   const windowHeight =
     115 +
@@ -62,9 +62,9 @@ export const AlertModal = (props) => {
            * allow keyboard navigation, override tab behavior
            */
           if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
-            act("choose", { choice: buttons[selected] });
+            act('choose', { choice: buttons[selected] });
           } else if (keyCode === KEY_ESCAPE) {
-            act("cancel");
+            act('cancel');
           } else if (keyCode === KEY_LEFT) {
             e.preventDefault();
             onKey(KEY_DECREMENT);
@@ -105,7 +105,7 @@ const ButtonDisplay = (props) => {
   return (
     <Flex
       align="center"
-      direction={!swapped_buttons ? "row-reverse" : "row"}
+      direction={!swapped_buttons ? 'row-reverse' : 'row'}
       fill
       justify="space-around"
       wrap
@@ -146,7 +146,7 @@ const AlertButton = (props) => {
     <Button
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
-      onClick={() => act("choose", { choice: button })}
+      onClick={() => act('choose', { choice: button })}
       m={0.5}
       pl={2}
       pr={2}

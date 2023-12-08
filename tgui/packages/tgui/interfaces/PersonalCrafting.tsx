@@ -1,8 +1,8 @@
-import { BooleanLike, classes } from "common/react";
-import { createSearch } from "common/string";
-import { flow } from "common/fp";
-import { filter, sortBy } from "common/collections";
-import { useBackend, useLocalState } from "../backend";
+import { BooleanLike, classes } from 'common/react';
+import { createSearch } from 'common/string';
+import { flow } from 'common/fp';
+import { filter, sortBy } from 'common/collections';
+import { useBackend, useLocalState } from '../backend';
 import {
   Divider,
   Button,
@@ -14,79 +14,79 @@ import {
   Icon,
   Tooltip,
   NoticeBox,
-} from "../components";
-import { Window } from "../layouts";
-import { Food } from "./PreferencesMenu/data";
+} from '../components';
+import { Window } from '../layouts';
+import { Food } from './PreferencesMenu/data';
 
 const TYPE_ICONS = {
-  "Can Make": "utensils",
-  [Food.Alcohol]: "wine-glass",
-  [Food.Breakfast]: "sun",
-  [Food.Bugs]: "bug",
-  [Food.Cloth]: "tshirt",
-  [Food.Dairy]: "cheese",
-  [Food.Fried]: "fire",
-  [Food.Fruit]: "apple-alt",
-  [Food.Gore]: "skull",
-  [Food.Grain]: "wheat-awn",
-  [Food.Gross]: "trash",
-  [Food.Junkfood]: "pizza-slice",
-  [Food.Meat]: "bacon",
-  [Food.Nuts]: "seedling",
-  [Food.Oranges]: "apple-alt",
-  [Food.Pineapple]: "apple-alt",
-  [Food.Raw]: "drumstick-bite",
-  [Food.Seafood]: "fish",
-  [Food.Stone]: "gem",
-  [Food.Sugar]: "candy-cane",
-  [Food.Toxic]: "biohazard",
-  [Food.Vegetables]: "carrot",
+  'Can Make': 'utensils',
+  [Food.Alcohol]: 'wine-glass',
+  [Food.Breakfast]: 'sun',
+  [Food.Bugs]: 'bug',
+  [Food.Cloth]: 'tshirt',
+  [Food.Dairy]: 'cheese',
+  [Food.Fried]: 'fire',
+  [Food.Fruit]: 'apple-alt',
+  [Food.Gore]: 'skull',
+  [Food.Grain]: 'wheat-awn',
+  [Food.Gross]: 'trash',
+  [Food.Junkfood]: 'pizza-slice',
+  [Food.Meat]: 'bacon',
+  [Food.Nuts]: 'seedling',
+  [Food.Oranges]: 'apple-alt',
+  [Food.Pineapple]: 'apple-alt',
+  [Food.Raw]: 'drumstick-bite',
+  [Food.Seafood]: 'fish',
+  [Food.Stone]: 'gem',
+  [Food.Sugar]: 'candy-cane',
+  [Food.Toxic]: 'biohazard',
+  [Food.Vegetables]: 'carrot',
 } as const;
 
 const CATEGORY_ICONS_CRAFTING = {
-  "Can Make": "hammer",
-  "Weapons Melee": "hand-fist",
-  "Weapons Ranged": "gun",
-  "Weapon Ammo": "box",
-  Robotics: "robot",
-  Misc: "shapes",
-  Tribal: "campground",
-  Clothing: "shirt",
-  Drinks: "wine-bottle",
-  Chemistry: "microscope",
-  Atmospherics: "fan",
-  Structures: "cube",
-  Tiles: "border-all",
-  Windows: "person-through-window",
-  Doors: "door-open",
-  Furniture: "chair",
-  Equipment: "calculator",
-  Containers: "briefcase",
-  Tools: "screwdriver-wrench",
-  Entertainment: "masks-theater",
-  "Blood Cult": "users",
+  'Can Make': 'hammer',
+  'Weapons Melee': 'hand-fist',
+  'Weapons Ranged': 'gun',
+  'Weapon Ammo': 'box',
+  Robotics: 'robot',
+  Misc: 'shapes',
+  Tribal: 'campground',
+  Clothing: 'shirt',
+  Drinks: 'wine-bottle',
+  Chemistry: 'microscope',
+  Atmospherics: 'fan',
+  Structures: 'cube',
+  Tiles: 'border-all',
+  Windows: 'person-through-window',
+  Doors: 'door-open',
+  Furniture: 'chair',
+  Equipment: 'calculator',
+  Containers: 'briefcase',
+  Tools: 'screwdriver-wrench',
+  Entertainment: 'masks-theater',
+  'Blood Cult': 'users',
 } as const;
 
 const CATEGORY_ICONS_COOKING = {
-  "Can Make": "utensils",
-  Breads: "bread-slice",
-  Burgers: "burger",
-  Cakes: "cake-candles",
-  "Egg-Based Food": "egg",
-  Frozen: "ice-cream",
-  "Lizard Food": "dragon",
-  Meats: "bacon",
-  "Mexican Food": "pepper-hot",
-  "Misc. Food": "shapes",
-  "Mothic Food": "shirt",
-  Pastries: "cookie",
-  Pies: "chart-pie",
-  Pizzas: "pizza-slice",
-  Salads: "leaf",
-  Sandwiches: "hotdog",
-  Seafood: "fish",
-  Soups: "mug-hot",
-  Spaghettis: "wheat-awn",
+  'Can Make': 'utensils',
+  Breads: 'bread-slice',
+  Burgers: 'burger',
+  Cakes: 'cake-candles',
+  'Egg-Based Food': 'egg',
+  Frozen: 'ice-cream',
+  'Lizard Food': 'dragon',
+  Meats: 'bacon',
+  'Mexican Food': 'pepper-hot',
+  'Misc. Food': 'shapes',
+  'Mothic Food': 'shirt',
+  Pastries: 'cookie',
+  Pies: 'chart-pie',
+  Pizzas: 'pizza-slice',
+  Salads: 'leaf',
+  Sandwiches: 'hotdog',
+  Seafood: 'fish',
+  Soups: 'mug-hot',
+  Spaghettis: 'wheat-awn',
 } as const;
 
 enum MODE {
@@ -167,30 +167,30 @@ export const PersonalCrafting = (props) => {
     craftability,
     diet,
   } = data;
-  const [searchText, setSearchText] = useLocalState("searchText", "");
-  const [pages, setPages] = useLocalState("pages", 1);
+  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [pages, setPages] = useLocalState('pages', 1);
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
   const [activeCategory, setCategory] = useLocalState<string>(
-    "category",
+    'category',
     Object.keys(craftability).length
-      ? "Can Make"
+      ? 'Can Make'
       : mode === MODE.cooking
         ? DEFAULT_CAT_COOKING
         : DEFAULT_CAT_CRAFTING,
   );
   const [activeType, setFoodType] = useLocalState(
-    "foodtype",
-    Object.keys(craftability).length ? "Can Make" : data.foodtypes[0],
+    'foodtype',
+    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
   const material_occurences = flow([
     sortBy<Material>((material) => -material.occurences),
   ])(data.material_occurences);
   const [activeMaterial, setMaterial] = useLocalState(
-    "material",
+    'material',
     material_occurences[0].atom_id,
   );
-  const [tabMode, setTabMode] = useLocalState("tabMode", 0);
+  const [tabMode, setTabMode] = useLocalState('tabMode', 0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
   let recipes = flow([
     filter<Recipe>(
@@ -202,19 +202,19 @@ export const PersonalCrafting = (props) => {
           // Is foodtype mode and the active type matches
           (tabMode === TABS.foodtype &&
             mode === MODE.cooking &&
-            ((activeType === "Can Make" && Boolean(craftability[recipe.ref])) ||
+            ((activeType === 'Can Make' && Boolean(craftability[recipe.ref])) ||
               recipe.foodtypes?.includes(activeType))) ||
           // Is material mode and the active material or catalysts match
           (tabMode === TABS.material &&
             Object.keys(recipe.reqs).includes(activeMaterial)) ||
           // Is category mode and the active categroy matches
           (tabMode === TABS.category &&
-            ((activeCategory === "Can Make" &&
+            ((activeCategory === 'Can Make' &&
               Boolean(craftability[recipe.ref])) ||
               recipe.category === activeCategory))),
     ),
     sortBy<Recipe>((recipe) => [
-      activeCategory === "Can Make"
+      activeCategory === 'Can Make'
         ? 99 - Object.keys(recipe.reqs).length
         : Number(craftability[recipe.ref]),
       recipe.name.toLowerCase(),
@@ -223,10 +223,10 @@ export const PersonalCrafting = (props) => {
   if (searchText.length > 0) {
     recipes = recipes.filter(searchName);
   }
-  const canMake = ["Can Make"];
+  const canMake = ['Can Make'];
   const categories = canMake
     .concat(data.categories.sort())
-    .filter((i) => (i === "Weaponry" ? true : i));
+    .filter((i) => (i === 'Weaponry' ? true : i));
   const foodtypes = canMake.concat(data.foodtypes.sort());
   const pageSize =
     searchText.length > 0
@@ -237,23 +237,23 @@ export const PersonalCrafting = (props) => {
         ? 60
         : 30;
   const displayLimit = pageSize * pages;
-  const content = document.getElementById("content");
+  const content = document.getElementById('content');
   const CATEGORY_ICONS =
     mode === MODE.cooking ? CATEGORY_ICONS_COOKING : CATEGORY_ICONS_CRAFTING;
   return (
     <Window width={700} height={720}>
       <Window.Content>
         <Stack fill>
-          <Stack.Item width={"200px"}>
+          <Stack.Item width={'200px'}>
             <Section fill>
-              <Stack fill vertical justify={"space-between"}>
+              <Stack fill vertical justify={'space-between'}>
                 <Stack.Item>
                   <Input
                     autoFocus
                     placeholder={
-                      "Search in " +
+                      'Search in ' +
                       data.recipes.length +
-                      (mode === MODE.cooking ? " recipes..." : " designs...")
+                      (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
                     onInput={(e, value) => {
@@ -275,7 +275,7 @@ export const PersonalCrafting = (props) => {
                         setPages(1);
                         setCategory(
                           Object.keys(craftability).length
-                            ? "Can Make"
+                            ? 'Can Make'
                             : data.categories[0],
                         );
                       }}
@@ -293,7 +293,7 @@ export const PersonalCrafting = (props) => {
                           setPages(1);
                           setFoodType(
                             Object.keys(craftability).length
-                              ? "Can Make"
+                              ? 'Can Make'
                               : data.foodtypes[0],
                           );
                         }}
@@ -312,12 +312,12 @@ export const PersonalCrafting = (props) => {
                         setMaterial(material_occurences[0].atom_id);
                       }}
                     >
-                      {mode === MODE.cooking ? "Ingredient" : "Material"}
+                      {mode === MODE.cooking ? 'Ingredient' : 'Material'}
                     </Tabs.Tab>
                   </Tabs>
                 </Stack.Item>
                 <Stack.Item grow m={-1}>
-                  <Box height={"100%"} p={1} style={{ overflowY: "auto" }}>
+                  <Box height={'100%'} p={1} style={{ overflowY: 'auto' }}>
                     <Tabs vertical>
                       {tabMode === TABS.foodtype &&
                         mode === MODE.cooking &&
@@ -334,7 +334,7 @@ export const PersonalCrafting = (props) => {
                                 content.scrollTop = 0;
                               }
                               if (searchText.length > 0) {
-                                setSearchText("");
+                                setSearchText('');
                               }
                             }}
                           >
@@ -360,7 +360,7 @@ export const PersonalCrafting = (props) => {
                                 content.scrollTop = 0;
                               }
                               if (searchText.length > 0) {
-                                setSearchText("");
+                                setSearchText('');
                               }
                             }}
                           >
@@ -385,7 +385,7 @@ export const PersonalCrafting = (props) => {
                                 content.scrollTop = 0;
                               }
                               if (searchText.length > 0) {
-                                setSearchText("");
+                                setSearchText('');
                               }
                             }}
                           >
@@ -393,22 +393,22 @@ export const PersonalCrafting = (props) => {
                               <Stack.Item width="14px" textAlign="center">
                                 <Icon
                                   color={
-                                    category === "Blood Cult"
-                                      ? "red"
-                                      : "default"
+                                    category === 'Blood Cult'
+                                      ? 'red'
+                                      : 'default'
                                   }
-                                  name={CATEGORY_ICONS[category] || "circle"}
+                                  name={CATEGORY_ICONS[category] || 'circle'}
                                 />
                               </Stack.Item>
                               <Stack.Item
                                 grow
                                 color={
-                                  category === "Blood Cult" ? "red" : "default"
+                                  category === 'Blood Cult' ? 'red' : 'default'
                                 }
                               >
                                 {category}
                               </Stack.Item>
-                              {category === "Can Make" && (
+                              {category === 'Can Make' && (
                                 <Stack.Item>
                                   {Object.keys(craftability).length}
                                 </Stack.Item>
@@ -426,14 +426,14 @@ export const PersonalCrafting = (props) => {
                     content="Can make only"
                     checked={display_craftable_only}
                     onClick={() => {
-                      act("toggle_recipes");
+                      act('toggle_recipes');
                     }}
                   />
                   <Button.Checkbox
                     fluid
                     content="Compact list"
                     checked={display_compact}
-                    onClick={() => act("toggle_compact")}
+                    onClick={() => act('toggle_compact')}
                   />
                 </Stack.Item>
                 {!forced_mode && (
@@ -448,8 +448,8 @@ export const PersonalCrafting = (props) => {
                           icon="hammer"
                           style={{
                             border:
-                              "2px solid " +
-                              (mode === MODE.crafting ? "#20b142" : "#333"),
+                              '2px solid ' +
+                              (mode === MODE.crafting ? '#20b142' : '#333'),
                           }}
                           onClick={() => {
                             if (mode === MODE.crafting) {
@@ -457,7 +457,7 @@ export const PersonalCrafting = (props) => {
                             }
                             setTabMode(TABS.category);
                             setCategory(DEFAULT_CAT_CRAFTING);
-                            act("toggle_mode");
+                            act('toggle_mode');
                           }}
                         />
                       </Stack.Item>
@@ -470,8 +470,8 @@ export const PersonalCrafting = (props) => {
                           icon="utensils"
                           style={{
                             border:
-                              "2px solid " +
-                              (mode === MODE.cooking ? "#20b142" : "#333"),
+                              '2px solid ' +
+                              (mode === MODE.cooking ? '#20b142' : '#333'),
                           }}
                           onClick={() => {
                             if (mode === MODE.cooking) {
@@ -479,7 +479,7 @@ export const PersonalCrafting = (props) => {
                             }
                             setTabMode(TABS.category);
                             setCategory(DEFAULT_CAT_COOKING);
-                            act("toggle_mode");
+                            act('toggle_mode');
                           }}
                         />
                       </Stack.Item>
@@ -492,11 +492,11 @@ export const PersonalCrafting = (props) => {
           <Stack.Item grow my={-1}>
             <Box
               id="content"
-              height={"100%"}
+              height={'100%'}
               pr={1}
               pt={1}
               mr={-1}
-              style={{ overflowY: "auto" }}
+              style={{ overflowY: 'auto' }}
             >
               {recipes.length > 0 ? (
                 recipes
@@ -534,10 +534,10 @@ export const PersonalCrafting = (props) => {
                 <Section
                   mb={2}
                   textAlign="center"
-                  style={{ cursor: "pointer" }}
+                  style={{ cursor: 'pointer' }}
                   onClick={() => setPages(pages + 1)}
                 >
-                  Load {Math.min(pageSize, recipes.length - displayLimit)}{" "}
+                  Load {Math.min(pageSize, recipes.length - displayLimit)}{' '}
                   more...
                 </Section>
               )}
@@ -563,8 +563,8 @@ const MaterialContent = (props) => {
           ml={-1.5}
           mr={-0.5}
           className={classes([
-            mode ? "cooking32x32" : "crafting32x32",
-            "a" + atom_id,
+            mode ? 'cooking32x32' : 'crafting32x32',
+            'a' + atom_id,
           ])}
         />
       </Stack.Item>
@@ -573,10 +573,10 @@ const MaterialContent = (props) => {
         lineHeight="32px"
         grow
         style={{
-          textTransform: "capitalize",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-          whiteSpace: "nowrap",
+          textTransform: 'capitalize',
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
+          whiteSpace: 'nowrap',
         }}
       >
         {name}
@@ -590,33 +590,33 @@ const MaterialContent = (props) => {
 
 const FoodtypeContent = (props) => {
   const { type, diet, craftableCount } = props;
-  let iconName = "",
-    iconColor = "";
+  let iconName = '',
+    iconColor = '';
 
   // We use iconName in the return to see if this went through.
-  if (type !== "Can Make" && diet) {
+  if (type !== 'Can Make' && diet) {
     if (diet.liked_food.includes(type)) {
-      iconName = "face-laugh-beam";
-      iconColor = "good";
+      iconName = 'face-laugh-beam';
+      iconColor = 'good';
     } else if (diet.disliked_food.includes(type)) {
-      iconName = "face-tired";
-      iconColor = "average";
+      iconName = 'face-tired';
+      iconColor = 'average';
     } else if (diet.toxic_food.includes(type)) {
-      iconName = "skull-crossbones";
-      iconColor = "bad";
+      iconName = 'skull-crossbones';
+      iconColor = 'bad';
     }
   }
 
   return (
     <Stack>
       <Stack.Item width="14px" textAlign="center">
-        <Icon name={TYPE_ICONS[type] || "circle"} />
+        <Icon name={TYPE_ICONS[type] || 'circle'} />
       </Stack.Item>
-      <Stack.Item grow style={{ textTransform: "capitalize" }}>
+      <Stack.Item grow style={{ textTransform: 'capitalize' }}>
         {type.toLowerCase()}
       </Stack.Item>
       <Stack.Item>
-        {type === "Can Make"
+        {type === 'Can Make'
           ? craftableCount
           : iconName && <Icon name={iconName} color={iconColor} />}
       </Stack.Item>
@@ -635,10 +635,10 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box mb={0.5} bold style={{ textTransform: "capitalize" }}>
+              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
-              <Box style={{ textTransform: "capitalize" }} color={"gray"}>
+              <Box style={{ textTransform: 'capitalize' }} color={'gray'}>
                 {Array.from(
                   Object.keys(item.reqs).map((atom_id) => {
                     const name = data.atom_data[(atom_id as any) - 1]?.name;
@@ -651,10 +651,10 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                         ? `${name}\xa0${amount}x`
                         : name;
                   }),
-                ).join(", ")}
+                ).join(', ')}
 
                 {item.chem_catalysts &&
-                  ", " +
+                  ', ' +
                     Object.keys(item.chem_catalysts)
                       .map((atom_id) => {
                         const name = data.atom_data[(atom_id as any) - 1]?.name;
@@ -667,23 +667,23 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                             ? `${name}\xa0${amount}x`
                             : name;
                       })
-                      .join(", ")}
+                      .join(', ')}
 
                 {item.tool_paths &&
-                  ", " +
+                  ', ' +
                     item.tool_paths
                       .map((item) => data.atom_data[(item as any) - 1]?.name)
-                      .join(", ")}
+                      .join(', ')}
                 {item.machinery &&
-                  ", " +
+                  ', ' +
                     item.machinery
                       .map((item) => data.atom_data[(item as any) - 1]?.name)
-                      .join(", ")}
+                      .join(', ')}
                 {item.structures &&
-                  ", " +
+                  ', ' +
                     item.structures
                       .map((item) => data.atom_data[(item as any) - 1]?.name)
-                      .join(", ")}
+                      .join(', ')}
               </Box>
             </Stack.Item>
             <Stack.Item>
@@ -691,7 +691,7 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                 <Box>
                   {!!item.tool_behaviors && (
                     <Tooltip
-                      content={"Tools: " + item.tool_behaviors.join(", ")}
+                      content={'Tools: ' + item.tool_behaviors.join(', ')}
                     >
                       <Icon p={1} name="screwdriver-wrench" />
                     </Tooltip>
@@ -704,14 +704,14 @@ const RecipeContentCompact = ({ item, craftable, busy, mode }) => {
                     disabled={!craftable || busy}
                     icon={
                       busy
-                        ? "circle-notch"
+                        ? 'circle-notch'
                         : mode === MODE.cooking
-                          ? "utensils"
-                          : "hammer"
+                          ? 'utensils'
+                          : 'hammer'
                     }
                     iconSpin={busy ? 1 : 0}
                     onClick={() =>
-                      act("make", {
+                      act('make', {
                         recipe: item.ref,
                       })
                     }
@@ -744,12 +744,12 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
     <Section>
       <Stack>
         <Stack.Item>
-          <Box width={"64px"} height={"64px"} mr={1}>
+          <Box width={'64px'} height={'64px'} mr={1}>
             <Box
               style={{
-                transform: "scale(1.5)",
+                transform: 'scale(1.5)',
               }}
-              m={"16px"}
+              m={'16px'}
               className={item.icon}
             />
           </Box>
@@ -757,16 +757,16 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow>
-              <Box mb={0.5} bold style={{ textTransform: "capitalize" }}>
+              <Box mb={0.5} bold style={{ textTransform: 'capitalize' }}>
                 {item.name}
               </Box>
-              {item.desc && <Box color={"gray"}>{item.desc}</Box>}
-              <Box style={{ textTransform: "capitalize" }}>
+              {item.desc && <Box color={'gray'}>{item.desc}</Box>}
+              <Box style={{ textTransform: 'capitalize' }}>
                 {item.reqs && (
                   <Box>
                     <GroupTitle
                       title={
-                        mode === MODE.cooking ? "Ingredients" : "Materials"
+                        mode === MODE.cooking ? 'Ingredients' : 'Materials'
                       }
                     />
                     {Object.keys(item.reqs).map((atom_id) => (
@@ -823,7 +823,7 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
               {!!item.steps?.length && (
                 <Box>
                   <GroupTitle title="Steps" />
-                  <ul style={{ paddingLeft: "20px" }}>
+                  <ul style={{ paddingLeft: '20px' }}>
                     {item.steps.map((step) => (
                       <li key={step}>{step}</li>
                     ))}
@@ -841,26 +841,26 @@ const RecipeContent = ({ item, craftable, busy, mode, diet }) => {
                   disabled={!craftable || busy}
                   icon={
                     busy
-                      ? "circle-notch"
+                      ? 'circle-notch'
                       : mode === MODE.cooking
-                        ? "utensils"
-                        : "hammer"
+                        ? 'utensils'
+                        : 'hammer'
                   }
                   iconSpin={busy ? 1 : 0}
                   onClick={() =>
-                    act("make", {
+                    act('make', {
                       recipe: item.ref,
                     })
                   }
                 />
               )}
               {!!item.complexity && (
-                <Box color={"gray"} width={"104px"} lineHeight={1.5} mt={1}>
+                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
                   Complexity: {item.complexity}
                 </Box>
               )}
               {item.foodtypes?.length > 0 && (
-                <Box color={"gray"} width={"104px"} lineHeight={1.5} mt={1}>
+                <Box color={'gray'} width={'104px'} lineHeight={1.5} mt={1}>
                   <Divider />
                   {item.foodtypes.map((foodtype) => (
                     <FoodtypeContent
@@ -892,8 +892,8 @@ const AtomContent = ({ atom_id, amount }) => {
         my={-1}
         mr={0.5}
         className={classes([
-          mode ? "cooking32x32" : "crafting32x32",
-          "a" + atom_id,
+          mode ? 'cooking32x32' : 'crafting32x32',
+          'a' + atom_id,
         ])}
       />
       <Box inline verticalAlign="middle">
@@ -912,7 +912,7 @@ const ToolContent = ({ tool }) => {
         inline
         my={-1}
         mr={0.5}
-        className={classes(["crafting32x32", tool.replace(/ /g, "")])}
+        className={classes(['crafting32x32', tool.replace(/ /g, '')])}
       />
       <Box inline verticalAlign="middle">
         {tool}
@@ -927,7 +927,7 @@ const GroupTitle = ({ title }) => {
       <Stack.Item grow>
         <Divider />
       </Stack.Item>
-      <Stack.Item color={"gray"}>{title}</Stack.Item>
+      <Stack.Item color={'gray'}>{title}</Stack.Item>
       <Stack.Item grow>
         <Divider />
       </Stack.Item>

@@ -1,19 +1,19 @@
-@use "sass:meta";
-@use "sass:color";
-@use "./colors.scss";
+@use 'sass:meta';
+@use 'sass:color';
+@use './colors.scss';
 
 // Core styles
-@include meta.load-css("~tgui/styles/reset.scss");
+@include meta.load-css('~tgui/styles/reset.scss');
 // Atomic styles
-@include meta.load-css("~tgui/styles/atomic/text.scss");
+@include meta.load-css('~tgui/styles/atomic/text.scss');
 // External styles
-@include meta.load-css("~tgui/styles/components/TextArea.scss");
+@include meta.load-css('~tgui/styles/components/TextArea.scss');
 // Local styles
-@include meta.load-css("./button.scss");
-@include meta.load-css("./content.scss");
-@include meta.load-css("./dragzone.scss");
-@include meta.load-css("./textarea.scss");
-@include meta.load-css("./window.scss");
+@include meta.load-css('./button.scss');
+@include meta.load-css('./content.scss');
+@include meta.load-css('./dragzone.scss');
+@include meta.load-css('./textarea.scss');
+@include meta.load-css('./window.scss');
 
 @keyframes gradient {
   0% {
@@ -59,7 +59,7 @@
       background-position: 0% 0%;
       background-size: 500% auto;
       bottom: 0px;
-      content: "";
+      content: '';
       height: 2px;
       left: 0px;
       position: absolute;

@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Section, Button } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Section, Button } from '../components';
+import { Window } from '../layouts';
 
 export const NotificationPreferences = (props) => {
   const { act, data } = useBackend();
@@ -24,10 +24,10 @@ export const NotificationPreferences = (props) => {
             <Button
               fluid
               key={ignore.key}
-              icon={ignore.enabled ? "times" : "check"}
+              icon={ignore.enabled ? 'times' : 'check'}
               content={ignore.desc}
-              color={ignore.enabled ? "bad" : "good"}
-              onClick={() => act("toggle_ignore", { key: ignore.key })}
+              color={ignore.enabled ? 'bad' : 'good'}
+              onClick={() => act('toggle_ignore', { key: ignore.key })}
             />
           ))}
         </Section>

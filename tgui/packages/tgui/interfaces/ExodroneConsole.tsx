@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -10,13 +10,13 @@ import {
   ProgressBar,
   Section,
   Stack,
-} from "../components";
-import { Window } from "../layouts";
-import { resolveAsset } from "../assets";
-import { formatTime } from "../format";
-import { capitalize } from "common/string";
-import nt_logo from "../assets/bg-nanotrasen.svg";
-import { Fragment } from "react";
+} from '../components';
+import { Window } from '../layouts';
+import { resolveAsset } from '../assets';
+import { formatTime } from '../format';
+import { capitalize } from 'common/string';
+import nt_logo from '../assets/bg-nanotrasen.svg';
+import { Fragment } from 'react';
 
 type ExplorationEventData = {
   name: string;
@@ -59,17 +59,17 @@ type SiteData = {
 };
 
 enum DroneStatusEnum {
-  Idle = "idle",
-  Travel = "travel",
-  Exploration = "exploration",
-  Adventure = "adventure",
-  Busy = "busy",
+  Idle = 'idle',
+  Travel = 'travel',
+  Exploration = 'exploration',
+  Adventure = 'adventure',
+  Busy = 'busy',
 }
 
 enum CargoType {
-  Tool = "tool",
-  Cargo = "cargo",
-  Empty = "empty",
+  Tool = 'tool',
+  Cargo = 'cargo',
+  Empty = 'empty',
 }
 
 type CargoData = {
@@ -163,7 +163,7 @@ export const ExodroneConsole = (props) => {
   const { signal_lost } = data;
 
   const [choosingTools, setChoosingTools] = useLocalState(
-    "choosingTools",
+    'choosingTools',
     false,
   );
 
@@ -187,14 +187,14 @@ const SignalLostModal = (props) => {
       width={30}
       height={22}
       p={0}
-      style={{ borderRadius: "5%" }}
+      style={{ borderRadius: '5%' }}
     >
       <img src={nt_logo} width={64} height={64} />
       <Box
         backgroundColor="black"
         textColor="red"
         fontSize={2}
-        style={{ borderRadius: "-10%" }}
+        style={{ borderRadius: '-10%' }}
       >
         CONNECTION LOST
       </Box>
@@ -207,8 +207,8 @@ const SignalLostModal = (props) => {
         <Button
           content="Confirm"
           color="danger"
-          style={{ border: "1px solid black" }}
-          onClick={() => act("confirm_signal_lost")}
+          style={{ border: '1px solid black' }}
+          onClick={() => act('confirm_signal_lost')}
         />
       </Box>
     </Modal>
@@ -238,11 +238,11 @@ const DroneSelectionSection = (props: {
                 <Stack.Item grow />
                 <Stack.Divider mr={1} />
                 <Stack.Item ml={0}>
-                  {(drone.controlled && "Controlled by another console.") || (
+                  {(drone.controlled && 'Controlled by another console.') || (
                     <Button
                       icon="plug"
                       onClick={() =>
-                        act("select_drone", { drone_ref: drone.ref })
+                        act('select_drone', { drone_ref: drone.ref })
                       }
                     >
                       Assume Control
@@ -264,7 +264,7 @@ const ToolSelectionModal = (props) => {
   const { all_tools = {} } = data;
 
   const [choosingTools, setChoosingTools] = useLocalState(
-    "choosingTools",
+    'choosingTools',
     false,
   );
 
@@ -281,7 +281,7 @@ const ToolSelectionModal = (props) => {
                   <Button
                     onClick={() => {
                       setChoosingTools(false);
-                      act("add_tool", { tool_type: tool_name });
+                      act('add_tool', { tool_type: tool_name });
                     }}
                     width={6}
                     height={6}
@@ -314,7 +314,7 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
   const cargo = props.cargo;
   const boxContents = (cargo) => {
     switch (cargo.type) {
-      case "tool": // Tool icon+Remove button if configurable
+      case 'tool': // Tool icon+Remove button if configurable
         return (
           <Stack direction="column">
             <Stack.Item grow>
@@ -337,7 +337,7 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
             {!!configurable && (
               <Stack.Item textAlign="right">
                 <Button
-                  onClick={() => act("remove_tool", { tool_type: cargo.name })}
+                  onClick={() => act('remove_tool', { tool_type: cargo.name })}
                   color="danger"
                   icon="minus"
                   tooltipPosition="right"
@@ -347,7 +347,7 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
             )}
           </Stack>
         );
-      case "cargo": // Jettison button.
+      case 'cargo': // Jettison button.
         return (
           <Stack direction="column">
             <Stack.Item>
@@ -364,7 +364,7 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
             </Stack.Item>
             <Stack.Item mt={-9.4} textAlign="right">
               <Button
-                onClick={() => act("jettison", { target_ref: cargo.ref })}
+                onClick={() => act('jettison', { target_ref: cargo.ref })}
                 color="danger"
                 icon="minus"
                 tooltipPosition="right"
@@ -373,15 +373,15 @@ const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
             </Stack.Item>
           </Stack>
         );
-      case "empty":
-        return "";
+      case 'empty':
+        return '';
     }
   };
   return (
     <Box
       width={5}
       height={5}
-      style={{ border: "2px solid black" }}
+      style={{ border: '2px solid black' }}
       textAlign="center"
     >
       {boxContents(cargo)}
@@ -393,7 +393,7 @@ const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
   const { act } = useBackend<ExodroneConsoleData>();
   const { cargo, configurable } = props.drone;
   const [choosingTools, setChoosingTools] = useLocalState(
-    "choosingTools",
+    'choosingTools',
     false,
   );
   return (
@@ -406,7 +406,7 @@ const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
                 fluid
                 icon="plug"
                 content="Disconnect"
-                onClick={() => act("end_control")}
+                onClick={() => act('end_control')}
               />
             </Stack.Item>
             <Stack.Divider />
@@ -416,7 +416,7 @@ const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
                 icon="bomb"
                 content="Self-Destruct"
                 color="bad"
-                onClick={() => act("self_destruct")}
+                onClick={() => act('self_destruct')}
               />
             </Stack.Item>
           </Stack>
@@ -509,8 +509,8 @@ const TravelTargetSelectionScreen = (props: {
   const { all_bands } = data;
   const { can_travel, travel_error, drone_travel_coefficent } = drone;
 
-  const site = "site" in drone ? drone.site : null;
-  const sites = "sites" in drone ? drone.sites : null;
+  const site = 'site' in drone ? drone.site : null;
+  const sites = 'sites' in drone ? drone.sites : null;
 
   const travel_cost = (target_site) => {
     if (site) {
@@ -523,17 +523,17 @@ const TravelTargetSelectionScreen = (props: {
     }
   };
   const [choosingTools, setChoosingTools] = useLocalState(
-    "choosingTools",
+    'choosingTools',
     false,
   );
   const [TravelDimmerShown, setTravelDimmerShown] = useLocalState(
-    "TravelDimmerShown",
+    'TravelDimmerShown',
     false,
   );
 
   const travel_to = (ref) => {
     setTravelDimmerShown(false);
-    act("start_travel", { target_site: ref });
+    act('start_travel', { target_site: ref });
   };
 
   const non_empty_bands = (dest: SiteData) => {
@@ -578,11 +578,11 @@ const TravelTargetSelectionScreen = (props: {
             title="Home"
             buttons={
               <Box>
-                ETA:{" "}
-                {formatTime(site.distance * drone_travel_coefficent, "short")}
+                ETA:{' '}
+                {formatTime(site.distance * drone_travel_coefficent, 'short')}
                 <Button
                   ml={1}
-                  content={can_travel ? "Launch!" : travel_error}
+                  content={can_travel ? 'Launch!' : travel_error}
                   onClick={() => travel_to(null)}
                   disabled={!can_travel}
                 />
@@ -596,10 +596,10 @@ const TravelTargetSelectionScreen = (props: {
             title={destination.name}
             buttons={
               <>
-                ETA: {formatTime(travel_cost(destination), "short")}
+                ETA: {formatTime(travel_cost(destination), 'short')}
                 <Button
                   ml={1}
-                  content={can_travel ? "Launch!" : travel_error}
+                  content={can_travel ? 'Launch!' : travel_error}
                   onClick={() => travel_to(destination.ref)}
                   disabled={!can_travel}
                 />
@@ -670,7 +670,7 @@ const ExplorationScreen = (props: { drone: DroneExploration & DroneData }) => {
   const { site } = drone;
 
   const [TravelDimmerShown, setTravelDimmerShown] = useLocalState(
-    "TravelDimmerShown",
+    'TravelDimmerShown',
     false,
   );
 
@@ -701,13 +701,13 @@ const ExplorationScreen = (props: { drone: DroneExploration & DroneData }) => {
           </LabeledList>
         </Stack.Item>
         <Stack.Item align="center" grow>
-          <Button content="Explore!" onClick={() => act("explore")} />
+          <Button content="Explore!" onClick={() => act('explore')} />
         </Stack.Item>
         {site.events.map((e) => (
           <Stack.Item align="center" key={site.ref} grow>
             <Button
               content={capitalize(e.name)}
-              onClick={() => act("explore_event", { target_event: e.ref })}
+              onClick={() => act('explore_event', { target_event: e.ref })}
             />
           </Stack.Item>
         ))}
@@ -758,14 +758,14 @@ const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
               <Button
                 content={event.action_text}
                 disabled={!event.action_enabled}
-                onClick={() => act("start_event")}
+                onClick={() => act('start_event')}
               />
             </Stack.Item>
             {!!event.skippable && (
               <Stack.Item mt={2}>
                 <Button
                   content={event.ignore_text}
-                  onClick={() => act("skip_event")}
+                  onClick={() => act('skip_event')}
                 />
               </Stack.Item>
             )}
@@ -820,7 +820,7 @@ export const AdventureScreen = (props: {
                     content={choice.text}
                     textAlign="center"
                     onClick={() =>
-                      act("adventure_choice", { choice: choice.key })
+                      act('adventure_choice', { choice: choice.key })
                     }
                   />
                 </Stack.Item>

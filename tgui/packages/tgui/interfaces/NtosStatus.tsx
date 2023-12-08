@@ -1,5 +1,5 @@
-import { NtosWindow } from "../layouts";
-import { StatusDisplayControls } from "./common/StatusDisplayControls";
+import { NtosWindow } from '../layouts';
+import { StatusDisplayControls } from './common/StatusDisplayControls';
 
 export const NtosStatus = () => {
   return (

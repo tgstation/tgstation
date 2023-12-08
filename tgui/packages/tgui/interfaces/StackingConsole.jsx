@@ -1,6 +1,6 @@
-import { useBackend } from "../backend";
-import { Box, Button, LabeledList, NoticeBox, Section } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
+import { Window } from '../layouts';
 
 export const StackingConsole = (props) => {
   const { act, data } = useBackend();
@@ -31,7 +31,7 @@ export const StackingConsoleContent = (props) => {
       <Section>
         <LabeledList>
           <LabeledList.Item label="Stacking Amount">
-            {stacking_amount || "Unknown"}
+            {stacking_amount || 'Unknown'}
           </LabeledList.Item>
           <LabeledList.Item
             label="Input"
@@ -40,14 +40,14 @@ export const StackingConsoleContent = (props) => {
                 icon="rotate"
                 content="Rotate"
                 onClick={() =>
-                  act("rotate", {
+                  act('rotate', {
                     input: 1,
                   })
                 }
               />
             }
           >
-            <Box style={{ textTransform: "capitalize" }}>{input_direction}</Box>
+            <Box style={{ textTransform: 'capitalize' }}>{input_direction}</Box>
           </LabeledList.Item>
           <LabeledList.Item
             label="Output"
@@ -56,14 +56,14 @@ export const StackingConsoleContent = (props) => {
                 icon="rotate"
                 content="Rotate"
                 onClick={() =>
-                  act("rotate", {
+                  act('rotate', {
                     input: 0,
                   })
                 }
               />
             }
           >
-            <Box style={{ textTransform: "capitalize" }}>
+            <Box style={{ textTransform: 'capitalize' }}>
               {output_direction}
             </Box>
           </LabeledList.Item>
@@ -83,14 +83,14 @@ export const StackingConsoleContent = (props) => {
                     icon="eject"
                     content="Release"
                     onClick={() =>
-                      act("release", {
+                      act('release', {
                         type: sheet.type,
                       })
                     }
                   />
                 }
               >
-                {sheet.amount || "Unknown"}
+                {sheet.amount || 'Unknown'}
               </LabeledList.Item>
             ))}
           </LabeledList>

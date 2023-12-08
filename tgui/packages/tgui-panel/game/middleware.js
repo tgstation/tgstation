@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { pingSoft, pingSuccess } from "../ping/actions";
-import { connectionLost, connectionRestored, roundRestarted } from "./actions";
-import { selectGame } from "./selectors";
-import { CONNECTION_LOST_AFTER } from "./constants";
+import { pingSoft, pingSuccess } from '../ping/actions';
+import { connectionLost, connectionRestored, roundRestarted } from './actions';
+import { selectGame } from './selectors';
+import { CONNECTION_LOST_AFTER } from './constants';
 
 const withTimestamp = (action) => ({
   ...action,

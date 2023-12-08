@@ -1,12 +1,12 @@
-import { useBackend, useLocalState } from "../../backend";
-import { Button, Modal, Section } from "../../components";
-import { ListMapper } from "./ListMapper";
+import { useBackend, useLocalState } from '../../backend';
+import { Button, Modal, Section } from '../../components';
+import { ListMapper } from './ListMapper';
 
 export const CallModal = (props) => {
   const { act, data } = useBackend();
   const { callArguments } = data;
-  const [, setModal] = useLocalState("modal");
-  const [toCall, setToCall] = useLocalState("toCallTaskInfo");
+  const [, setModal] = useLocalState('modal');
+  const [toCall, setToCall] = useLocalState('toCallTaskInfo');
   const { type, params } = toCall;
   return (
     <Modal
@@ -25,7 +25,7 @@ export const CallModal = (props) => {
             onClick={() => {
               setModal(null);
               setToCall(null);
-              act("clearArgs");
+              act('clearArgs');
             }}
           >
             Cancel

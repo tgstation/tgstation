@@ -1,10 +1,10 @@
-import { useBackend, useLocalState } from "../../backend";
-import { Button, Modal, Input, Section, Stack } from "../../components";
+import { useBackend, useLocalState } from '../../backend';
+import { Button, Modal, Input, Section, Stack } from '../../components';
 
 export const StateSelectModal = (props) => {
   const { act, data } = useBackend();
-  const [, setModal] = useLocalState("modal", "states");
-  const [input, setInput] = useLocalState("newStateName", "");
+  const [, setModal] = useLocalState('modal', 'states');
+  const [input, setInput] = useLocalState('newStateName', '');
   const { states } = data;
   return (
     <Modal
@@ -31,7 +31,7 @@ export const StateSelectModal = (props) => {
             key={i}
             onClick={() => {
               setModal(null);
-              act("switchState", { index: i + 1 });
+              act('switchState', { index: i + 1 });
             }}
           >
             {value}
@@ -53,7 +53,7 @@ export const StateSelectModal = (props) => {
               icon="plus"
               onClick={() => {
                 setModal(null);
-                act("newState", { name: input });
+                act('newState', { name: input });
               }}
             />
           </Stack.Item>

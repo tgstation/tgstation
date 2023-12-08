@@ -1,6 +1,6 @@
-import { Box, Button, Flex } from "../../components";
+import { Box, Button, Flex } from '../../components';
 
-import { useBackend } from "../../backend";
+import { useBackend } from '../../backend';
 
 type InputButtonsData = {
   large_buttons: boolean;
@@ -21,7 +21,7 @@ export const InputButtons = (props: InputButtonsProps) => {
       color="good"
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
-      onClick={() => act("submit", { entry: input })}
+      onClick={() => act('submit', { entry: input })}
       m={0.5}
       pl={2}
       pr={2}
@@ -30,7 +30,7 @@ export const InputButtons = (props: InputButtonsProps) => {
       tooltip={large_buttons && message}
       width={!large_buttons && 6}
     >
-      {large_buttons ? "SUBMIT" : "Submit"}
+      {large_buttons ? 'SUBMIT' : 'Submit'}
     </Button>
   );
   const cancelButton = (
@@ -38,7 +38,7 @@ export const InputButtons = (props: InputButtonsProps) => {
       color="bad"
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
-      onClick={() => act("cancel")}
+      onClick={() => act('cancel')}
       m={0.5}
       pl={2}
       pr={2}
@@ -46,14 +46,14 @@ export const InputButtons = (props: InputButtonsProps) => {
       textAlign="center"
       width={!large_buttons && 6}
     >
-      {large_buttons ? "CANCEL" : "Cancel"}
+      {large_buttons ? 'CANCEL' : 'Cancel'}
     </Button>
   );
 
   return (
     <Flex
       align="center"
-      direction={!swapped_buttons ? "row" : "row-reverse"}
+      direction={!swapped_buttons ? 'row' : 'row-reverse'}
       fill
       justify="space-around"
     >

@@ -5,11 +5,11 @@
  * @license MIT
  */
 
-import { classes } from "common/react";
-import { Component, createRef } from "react";
-import { Box } from "./Box";
-import { toInputValue } from "./Input";
-import { KEY_ENTER, KEY_ESCAPE, KEY_TAB } from "common/keycodes";
+import { classes } from 'common/react';
+import { Component, createRef } from 'react';
+import { Box } from './Box';
+import { toInputValue } from './Input';
+import { KEY_ENTER, KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
 
 export class TextArea extends Component {
   constructor(props) {
@@ -65,7 +65,7 @@ export class TextArea extends Component {
           onEnter(e, e.target.value);
         }
         if (this.props.selfClear) {
-          e.target.value = "";
+          e.target.value = '';
           e.target.blur();
         }
         return;
@@ -76,7 +76,7 @@ export class TextArea extends Component {
         }
         this.setEditing(false);
         if (this.props.selfClear) {
-          e.target.value = "";
+          e.target.value = '';
         } else {
           e.target.value = toInputValue(this.props.value);
           e.target.blur();
@@ -97,7 +97,7 @@ export class TextArea extends Component {
           const { value, selectionStart, selectionEnd } = e.target;
           e.target.value =
             value.substring(0, selectionStart) +
-            "\t" +
+            '\t' +
             value.substring(selectionEnd);
           e.target.selectionEnd = selectionStart + 1;
           if (onInput) {
@@ -154,7 +154,7 @@ export class TextArea extends Component {
     const prevValue = prevProps.value;
     const nextValue = this.props.value;
     const input = this.textareaRef.current;
-    if (input && typeof nextValue === "string" && prevValue !== nextValue) {
+    if (input && typeof nextValue === 'string' && prevValue !== nextValue) {
       input.value = toInputValue(nextValue);
     }
   }
@@ -192,9 +192,9 @@ export class TextArea extends Component {
     return (
       <Box
         className={classes([
-          "TextArea",
-          fluid && "TextArea--fluid",
-          noborder && "TextArea--noborder",
+          'TextArea',
+          fluid && 'TextArea--fluid',
+          noborder && 'TextArea--noborder',
           className,
         ])}
         {...rest}
@@ -203,8 +203,8 @@ export class TextArea extends Component {
           <Box position="absolute" width="100%" height="100%" overflow="hidden">
             <div
               className={classes([
-                "TextArea__textarea",
-                "TextArea__textarea_custom",
+                'TextArea__textarea',
+                'TextArea__textarea_custom',
               ])}
               style={{
                 transform: `translateY(-${scrolledAmount}px)`,
@@ -217,9 +217,9 @@ export class TextArea extends Component {
         <textarea
           ref={this.textareaRef}
           className={classes([
-            "TextArea__textarea",
-            scrollbar && "TextArea__textarea--scrollable",
-            nowrap && "TextArea__nowrap",
+            'TextArea__textarea',
+            scrollbar && 'TextArea__textarea--scrollable',
+            nowrap && 'TextArea__nowrap',
           ])}
           placeholder={placeholder}
           onChange={this.handleOnChange}
@@ -231,7 +231,7 @@ export class TextArea extends Component {
           onScroll={this.handleScroll}
           maxLength={maxLength}
           style={{
-            color: displayedValue ? "rgba(0, 0, 0, 0)" : "inherit",
+            color: displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
           }}
         />
       </Box>

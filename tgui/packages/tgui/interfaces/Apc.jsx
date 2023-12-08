@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,9 +6,9 @@ import {
   NoticeBox,
   ProgressBar,
   Section,
-} from "../components";
-import { Window } from "../layouts";
-import { InterfaceLockNoticeBox } from "./common/InterfaceLockNoticeBox";
+} from '../components';
+import { Window } from '../layouts';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 export const Apc = (props) => {
   return (
@@ -22,42 +22,42 @@ export const Apc = (props) => {
 
 const powerStatusMap = {
   2: {
-    color: "good",
-    externalPowerText: "External Power",
-    chargingText: "Fully Charged",
+    color: 'good',
+    externalPowerText: 'External Power',
+    chargingText: 'Fully Charged',
   },
   1: {
-    color: "average",
-    externalPowerText: "Low External Power",
-    chargingText: "Charging",
+    color: 'average',
+    externalPowerText: 'Low External Power',
+    chargingText: 'Charging',
   },
   0: {
-    color: "bad",
-    externalPowerText: "No External Power",
-    chargingText: "Not Charging",
+    color: 'bad',
+    externalPowerText: 'No External Power',
+    chargingText: 'Not Charging',
   },
 };
 
 const malfMap = {
   1: {
-    icon: "terminal",
-    content: "Override Programming",
-    action: "hack",
+    icon: 'terminal',
+    content: 'Override Programming',
+    action: 'hack',
   },
   2: {
-    icon: "caret-square-down",
-    content: "Shunt Core Process",
-    action: "occupy",
+    icon: 'caret-square-down',
+    content: 'Shunt Core Process',
+    action: 'occupy',
   },
   3: {
-    icon: "caret-square-left",
-    content: "Return to Main Core",
-    action: "deoccupy",
+    icon: 'caret-square-left',
+    content: 'Return to Main Core',
+    action: 'deoccupy',
   },
   4: {
-    icon: "caret-square-down",
-    content: "Shunt Core Process",
-    action: "occupy",
+    icon: 'caret-square-down',
+    content: 'Shunt Core Process',
+    action: 'occupy',
   },
 };
 
@@ -88,7 +88,7 @@ const ApcContent = (props) => {
           content="Reboot Now"
           tooltip="Force an interface reset."
           tooltipPosition="bottom"
-          onClick={() => act("reboot")}
+          onClick={() => act('reboot')}
         />
       </NoticeBox>
     );
@@ -106,11 +106,11 @@ const ApcContent = (props) => {
             color={externalPowerStatus.color}
             buttons={
               <Button
-                icon={data.isOperating ? "power-off" : "times"}
-                content={data.isOperating ? "On" : "Off"}
+                icon={data.isOperating ? 'power-off' : 'times'}
+                content={data.isOperating ? 'On' : 'Off'}
                 selected={data.isOperating && !locked}
                 disabled={locked}
-                onClick={() => act("breaker")}
+                onClick={() => act('breaker')}
               />
             }
           >
@@ -124,10 +124,10 @@ const ApcContent = (props) => {
             color={chargingStatus.color}
             buttons={
               <Button
-                icon={data.chargeMode ? "sync" : "times"}
-                content={data.chargeMode ? "Auto" : "Off"}
+                icon={data.chargeMode ? 'sync' : 'times'}
+                content={data.chargeMode ? 'Auto' : 'Off'}
                 disabled={locked}
-                onClick={() => act("charge")}
+                onClick={() => act('charge')}
               />
             }
           >
@@ -148,9 +148,9 @@ const ApcContent = (props) => {
                     <Box
                       inline
                       mx={2}
-                      color={channel.status >= 2 ? "good" : "bad"}
+                      color={channel.status >= 2 ? 'good' : 'bad'}
                     >
-                      {channel.status >= 2 ? "On" : "Off"}
+                      {channel.status >= 2 ? 'On' : 'Off'}
                     </Box>
                     <Button
                       icon="sync"
@@ -160,21 +160,21 @@ const ApcContent = (props) => {
                         (channel.status === 1 || channel.status === 3)
                       }
                       disabled={locked}
-                      onClick={() => act("channel", topicParams.auto)}
+                      onClick={() => act('channel', topicParams.auto)}
                     />
                     <Button
                       icon="power-off"
                       content="On"
                       selected={!locked && channel.status === 2}
                       disabled={locked}
-                      onClick={() => act("channel", topicParams.on)}
+                      onClick={() => act('channel', topicParams.on)}
                     />
                     <Button
                       icon="times"
                       content="Off"
                       selected={!locked && channel.status === 0}
                       disabled={locked}
-                      onClick={() => act("channel", topicParams.off)}
+                      onClick={() => act('channel', topicParams.off)}
                     />
                   </>
                 }
@@ -204,7 +204,7 @@ const ApcContent = (props) => {
               <Button
                 icon="lightbulb-o"
                 content="Overload"
-                onClick={() => act("overload")}
+                onClick={() => act('overload')}
               />
             </>
           )
@@ -216,10 +216,10 @@ const ApcContent = (props) => {
             buttons={
               <Button
                 tooltip="APC cover can be pried open with a crowbar."
-                icon={data.coverLocked ? "lock" : "unlock"}
-                content={data.coverLocked ? "Engaged" : "Disengaged"}
+                icon={data.coverLocked ? 'lock' : 'unlock'}
+                content={data.coverLocked ? 'Engaged' : 'Disengaged'}
                 disabled={locked}
-                onClick={() => act("cover")}
+                onClick={() => act('cover')}
               />
             }
           />
@@ -229,9 +229,9 @@ const ApcContent = (props) => {
               <Button
                 tooltip="Lights use internal power cell when there is no power available."
                 icon="lightbulb-o"
-                content={data.emergencyLights ? "Enabled" : "Disabled"}
+                content={data.emergencyLights ? 'Enabled' : 'Disabled'}
                 disabled={locked}
-                onClick={() => act("emergency_lighting")}
+                onClick={() => act('emergency_lighting')}
               />
             }
           />
@@ -241,9 +241,9 @@ const ApcContent = (props) => {
               <Button
                 tooltip="Dim lights to reduce power consumption."
                 icon="lightbulb-o"
-                content={data.nightshiftLights ? "Enabled" : "Disabled"}
+                content={data.nightshiftLights ? 'Enabled' : 'Disabled'}
                 disabled={data.disable_nightshift_toggle}
-                onClick={() => act("toggle_nightshift")}
+                onClick={() => act('toggle_nightshift')}
               />
             }
           />

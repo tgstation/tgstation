@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -7,8 +7,8 @@ import {
   Input,
   NoticeBox,
   Section,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const MechpadControl = (props) => {
   const { topLevel } = props;
@@ -21,7 +21,7 @@ export const MechpadControl = (props) => {
           value={pad_name}
           width="200px"
           onChange={(e, value) =>
-            act("rename", {
+            act('rename', {
               name: value,
             })
           }
@@ -33,7 +33,7 @@ export const MechpadControl = (props) => {
           icon="times"
           content="Remove"
           color="bad"
-          onClick={() => act("remove")}
+          onClick={() => act('remove')}
         />
       }
     >
@@ -46,10 +46,10 @@ export const MechpadControl = (props) => {
           fluid
           icon="upload"
           disabled={!pad_active}
-          content={mechonly ? "Launch (Mech Only)" : "Launch"}
-          color={mechonly ? "default" : "good"}
+          content={mechonly ? 'Launch (Mech Only)' : 'Launch'}
+          color={mechonly ? 'default' : 'good'}
           textAlign="center"
-          onClick={() => act("launch")}
+          onClick={() => act('launch')}
         />
       )}
     </Section>
@@ -77,7 +77,7 @@ export const MechpadConsole = (props) => {
                     selected={selected_id === mechpad.id}
                     color="transparent"
                     onClick={() =>
-                      act("select_pad", {
+                      act('select_pad', {
                         id: mechpad.id,
                       })
                     }

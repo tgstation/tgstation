@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { createLogger } from "tgui/logging";
+import { createLogger } from 'tgui/logging';
 
-const logger = createLogger("AudioPlayer");
+const logger = createLogger('AudioPlayer');
 
 export class AudioPlayer {
   constructor() {
@@ -15,8 +15,8 @@ export class AudioPlayer {
       return;
     }
     // Set up the HTMLAudioElement node
-    this.node = document.createElement("audio");
-    this.node.style.setProperty("display", "none");
+    this.node = document.createElement('audio');
+    this.node.style.setProperty('display', 'none');
     document.body.appendChild(this.node);
     // Set up other properties
     this.playing = false;
@@ -25,8 +25,8 @@ export class AudioPlayer {
     this.onPlaySubscribers = [];
     this.onStopSubscribers = [];
     // Listen for playback start events
-    this.node.addEventListener("canplaythrough", () => {
-      logger.log("canplaythrough");
+    this.node.addEventListener('canplaythrough', () => {
+      logger.log('canplaythrough');
       this.playing = true;
       this.node.playbackRate = this.options.pitch || 1;
       this.node.currentTime = this.options.start || 0;
@@ -37,14 +37,14 @@ export class AudioPlayer {
       }
     });
     // Listen for playback stop events
-    this.node.addEventListener("ended", () => {
-      logger.log("ended");
+    this.node.addEventListener('ended', () => {
+      logger.log('ended');
       this.stop();
     });
     // Listen for playback errors
-    this.node.addEventListener("error", (e) => {
+    this.node.addEventListener('error', (e) => {
       if (this.playing) {
-        logger.log("playback error", e.error);
+        logger.log('playback error', e.error);
         this.stop();
       }
     });
@@ -74,7 +74,7 @@ export class AudioPlayer {
     if (!this.node) {
       return;
     }
-    logger.log("playing", url, options);
+    logger.log('playing', url, options);
     this.options = options;
     this.node.src = url;
   }
@@ -88,9 +88,9 @@ export class AudioPlayer {
         subscriber();
       }
     }
-    logger.log("stopping");
+    logger.log('stopping');
     this.playing = false;
-    this.node.src = "";
+    this.node.src = '';
   }
 
   setVolume(volume) {

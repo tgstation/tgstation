@@ -1,10 +1,10 @@
-import { map } from "common/collections";
-import { useBackend, useLocalState } from "../backend";
-import { Button, Flex, LabeledList, Section, Table, Tabs } from "../components";
-import { Window } from "../layouts";
+import { map } from 'common/collections';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
+import { Window } from '../layouts';
 
 export const ShuttleManipulator = (props) => {
-  const [tab, setTab] = useLocalState("tab", 1);
+  const [tab, setTab] = useLocalState('tab', 1);
   return (
     <Window title="Shuttle Manipulator" width={800} height={600} theme="admin">
       <Window.Content scrollable>
@@ -40,8 +40,8 @@ export const ShuttleManipulatorStatus = (props) => {
                 content="JMP"
                 key={shuttle.id}
                 onClick={() =>
-                  act("jump_to", {
-                    type: "mobile",
+                  act('jump_to', {
+                    type: 'mobile',
                     id: shuttle.id,
                   })
                 }
@@ -53,7 +53,7 @@ export const ShuttleManipulatorStatus = (props) => {
                 key={shuttle.id}
                 disabled={!shuttle.can_fly}
                 onClick={() =>
-                  act("fly", {
+                  act('fly', {
                     id: shuttle.id,
                   })
                 }
@@ -72,7 +72,7 @@ export const ShuttleManipulatorStatus = (props) => {
                     key={shuttle.id}
                     disabled={!shuttle.can_fast_travel}
                     onClick={() =>
-                      act("fast_travel", {
+                      act('fast_travel', {
                         id: shuttle.id,
                       })
                     }
@@ -92,7 +92,7 @@ export const ShuttleManipulatorTemplates = (props) => {
   const templateObject = data.templates || {};
   const selected = data.selected || {};
   const [selectedTemplateId, setSelectedTemplateId] = useLocalState(
-    "templateId",
+    'templateId',
     Object.keys(templateObject)[0],
   );
   const actualTemplates = templateObject[selectedTemplateId]?.templates || [];
@@ -124,10 +124,10 @@ export const ShuttleManipulatorTemplates = (props) => {
                 key={actualTemplate.shuttle_id}
                 buttons={
                   <Button
-                    content={isSelected ? "Selected" : "Select"}
+                    content={isSelected ? 'Selected' : 'Select'}
                     selected={isSelected}
                     onClick={() =>
-                      act("select_template", {
+                      act('select_template', {
                         shuttle_id: actualTemplate.shuttle_id,
                       })
                     }
@@ -185,7 +185,7 @@ export const ShuttleManipulatorModification = (props) => {
           {existingShuttle ? (
             <Section
               level={2}
-              title={"Existing Shuttle: " + existingShuttle.name}
+              title={'Existing Shuttle: ' + existingShuttle.name}
             >
               <LabeledList>
                 <LabeledList.Item
@@ -194,8 +194,8 @@ export const ShuttleManipulatorModification = (props) => {
                     <Button
                       content="Jump To"
                       onClick={() =>
-                        act("jump_to", {
-                          type: "mobile",
+                        act('jump_to', {
+                          type: 'mobile',
                           id: existingShuttle.id,
                         })
                       }
@@ -215,7 +215,7 @@ export const ShuttleManipulatorModification = (props) => {
               content="Load"
               color="good"
               onClick={() =>
-                act("load", {
+                act('load', {
                   shuttle_id: selected.shuttle_id,
                 })
               }
@@ -223,7 +223,7 @@ export const ShuttleManipulatorModification = (props) => {
             <Button
               content="Preview"
               onClick={() =>
-                act("preview", {
+                act('preview', {
                   shuttle_id: selected.shuttle_id,
                 })
               }
@@ -232,7 +232,7 @@ export const ShuttleManipulatorModification = (props) => {
               content="Replace"
               color="bad"
               onClick={() =>
-                act("replace", {
+                act('replace', {
                   shuttle_id: selected.shuttle_id,
                 })
               }
@@ -240,7 +240,7 @@ export const ShuttleManipulatorModification = (props) => {
           </Section>
         </>
       ) : (
-        "No shuttle selected"
+        'No shuttle selected'
       )}
     </Section>
   );

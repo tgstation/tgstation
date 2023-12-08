@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,8 +8,8 @@ import {
   Section,
   NumberInput,
   Table,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   reflector_name: string;
@@ -32,7 +32,7 @@ export const Reflector = (props) => {
                       iconRotation={45}
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 315,
                         })
                       }
@@ -43,7 +43,7 @@ export const Reflector = (props) => {
                       icon="arrow-left"
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 270,
                         })
                       }
@@ -55,7 +55,7 @@ export const Reflector = (props) => {
                       iconRotation={-45}
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 225,
                         })
                       }
@@ -68,7 +68,7 @@ export const Reflector = (props) => {
                       icon="arrow-up"
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 0,
                         })
                       }
@@ -89,7 +89,7 @@ export const Reflector = (props) => {
                       icon="arrow-down"
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 180,
                         })
                       }
@@ -103,7 +103,7 @@ export const Reflector = (props) => {
                       iconRotation={-45}
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 45,
                         })
                       }
@@ -114,7 +114,7 @@ export const Reflector = (props) => {
                       icon="arrow-right"
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 90,
                         })
                       }
@@ -126,7 +126,7 @@ export const Reflector = (props) => {
                       iconRotation={45}
                       mb={1}
                       onClick={() =>
-                        act("rotate", {
+                        act('rotate', {
                           rotation_angle: 135,
                         })
                       }
@@ -148,7 +148,7 @@ export const Reflector = (props) => {
                     step={1}
                     stepPixelSize={1}
                     onDrag={(e, value) =>
-                      act("rotate", {
+                      act('rotate', {
                         rotation_angle: value,
                       })
                     }
@@ -164,7 +164,7 @@ export const Reflector = (props) => {
                       content="-5"
                       mb={1}
                       onClick={() =>
-                        act("calculate", {
+                        act('calculate', {
                           rotation_angle: -5,
                         })
                       }
@@ -177,7 +177,7 @@ export const Reflector = (props) => {
                       content="-10"
                       mb={1}
                       onClick={() =>
-                        act("calculate", {
+                        act('calculate', {
                           rotation_angle: -10,
                         })
                       }
@@ -190,7 +190,7 @@ export const Reflector = (props) => {
                       content="-15"
                       mb={1}
                       onClick={() =>
-                        act("calculate", {
+                        act('calculate', {
                           rotation_angle: -15,
                         })
                       }
@@ -206,7 +206,7 @@ export const Reflector = (props) => {
                       content="+5"
                       mb={1}
                       onClick={() =>
-                        act("calculate", {
+                        act('calculate', {
                           rotation_angle: 5,
                         })
                       }
@@ -220,7 +220,7 @@ export const Reflector = (props) => {
                       content="+10"
                       mb={1}
                       onClick={() =>
-                        act("calculate", {
+                        act('calculate', {
                           rotation_angle: 10,
                         })
                       }
@@ -234,7 +234,7 @@ export const Reflector = (props) => {
                       content="+15"
                       mb={1}
                       onClick={() =>
-                        act("calculate", {
+                        act('calculate', {
                           rotation_angle: 15,
                         })
                       }

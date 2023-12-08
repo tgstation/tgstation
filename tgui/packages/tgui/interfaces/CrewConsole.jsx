@@ -1,16 +1,16 @@
-import { sortBy } from "common/collections";
-import { useBackend } from "../backend";
-import { Box, Button, Section, Table, Icon } from "../components";
-import { COLORS } from "../constants";
-import { Window } from "../layouts";
+import { sortBy } from 'common/collections';
+import { useBackend } from '../backend';
+import { Box, Button, Section, Table, Icon } from '../components';
+import { COLORS } from '../constants';
+import { Window } from '../layouts';
 
 const HEALTH_COLOR_BY_LEVEL = [
-  "#17d568",
-  "#c4cf2d",
-  "#e67e22",
-  "#ed5100",
-  "#e74c3c",
-  "#801308",
+  '#17d568',
+  '#c4cf2d',
+  '#e67e22',
+  '#ed5100',
+  '#e74c3c',
+  '#801308',
 ];
 
 const STAT_LIVING = 0;
@@ -46,11 +46,11 @@ const jobToColor = (jobId) => {
 const statToIcon = (life_status) => {
   switch (life_status) {
     case STAT_LIVING:
-      return "heart";
+      return 'heart';
     case STAT_DEAD:
-      return "skull";
+      return 'skull';
   }
-  return "heartbeat";
+  return 'heartbeat';
 };
 
 const healthToAttribute = (oxy, tox, burn, brute, attributeList) => {
@@ -128,7 +128,7 @@ const CrewTableEntry = (props) => {
     <Table.Row className="candystripe">
       <Table.Cell bold={jobIsHead(ijob)} color={jobToColor(ijob)}>
         {name}
-        {assignment !== undefined ? ` (${assignment})` : ""}
+        {assignment !== undefined ? ` (${assignment})` : ''}
       </Table.Cell>
       <Table.Cell collapsing textAlign="center">
         {oxydam !== undefined ? (
@@ -153,17 +153,17 @@ const CrewTableEntry = (props) => {
         {oxydam !== undefined ? (
           <Box inline>
             <HealthStat type="oxy" value={oxydam} />
-            {"/"}
+            {'/'}
             <HealthStat type="toxin" value={toxdam} />
-            {"/"}
+            {'/'}
             <HealthStat type="burn" value={burndam} />
-            {"/"}
+            {'/'}
             <HealthStat type="brute" value={brutedam} />
           </Box>
         ) : life_status !== STAT_DEAD ? (
-          "Alive"
+          'Alive'
         ) : (
-          "Dead"
+          'Dead'
         )}
       </Table.Cell>
       <Table.Cell>
@@ -179,7 +179,7 @@ const CrewTableEntry = (props) => {
             content="Track"
             disabled={!can_track}
             onClick={() =>
-              act("select_person", {
+              act('select_person', {
                 name: name,
               })
             }

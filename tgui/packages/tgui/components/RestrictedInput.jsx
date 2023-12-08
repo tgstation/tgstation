@@ -1,8 +1,8 @@
-import { classes } from "common/react";
-import { clamp } from "common/math";
-import { Component, createRef } from "react";
-import { Box } from "./Box";
-import { KEY_ESCAPE, KEY_ENTER } from "common/keycodes";
+import { classes } from 'common/react';
+import { clamp } from 'common/math';
+import { Component, createRef } from 'react';
+import { Box } from './Box';
+import { KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
 
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 10000;
@@ -19,8 +19,8 @@ const getClampedNumber = (value, minValue, maxValue, allowFloats) => {
     return String(minimum);
   }
   let parsedValue = allowFloats
-    ? parseFloat(value.replace(/[^\-\d.]/g, ""))
-    : parseInt(value.replace(/[^\-\d]/g, ""), 10);
+    ? parseFloat(value.replace(/[^\-\d.]/g, ''))
+    : parseInt(value.replace(/[^\-\d]/g, ''), 10);
   if (isNaN(parsedValue)) {
     return String(minimum);
   } else {
@@ -153,9 +153,9 @@ export class RestrictedInput extends Component {
     return (
       <Box
         className={classes([
-          "Input",
-          fluid && "Input--fluid",
-          monospace && "Input--monospace",
+          'Input',
+          fluid && 'Input--fluid',
+          monospace && 'Input--monospace',
           className,
         ])}
         {...rest}

@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from "../../backend";
+import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -10,20 +10,20 @@ import {
   Stack,
   ProgressBar,
   NoticeBox,
-} from "../../components";
-import { Window } from "../../layouts";
-import { CallModal } from "./CallModal";
-import { ChunkViewModal } from "./ChunkViewModal";
-import { StateSelectModal } from "./StateSelectModal";
-import { ListMapper } from "./ListMapper";
-import { Log } from "./Log";
-import { TaskManager } from "./TaskManager";
-import { sanitizeText } from "../../sanitize";
-import { marked } from "marked";
-import { Component, createRef } from "react";
-import hljs from "highlight.js/lib/core";
-import lua from "highlight.js/lib/languages/lua";
-hljs.registerLanguage("lua", lua);
+} from '../../components';
+import { Window } from '../../layouts';
+import { CallModal } from './CallModal';
+import { ChunkViewModal } from './ChunkViewModal';
+import { StateSelectModal } from './StateSelectModal';
+import { ListMapper } from './ListMapper';
+import { Log } from './Log';
+import { TaskManager } from './TaskManager';
+import { sanitizeText } from '../../sanitize';
+import { marked } from 'marked';
+import { Component, createRef } from 'react';
+import hljs from 'highlight.js/lib/core';
+import lua from 'highlight.js/lib/languages/lua';
+hljs.registerLanguage('lua', lua);
 
 export class LuaEditor extends Component {
   constructor(props) {
@@ -31,8 +31,8 @@ export class LuaEditor extends Component {
     this.sectionRef = createRef();
     this.state = {
       showJumpToBottomButton: false,
-      activeTab: "tasks",
-      scriptInput: "",
+      activeTab: 'tasks',
+      scriptInput: '',
     };
 
     this.handleSectionScroll = () => {
@@ -53,7 +53,7 @@ export class LuaEditor extends Component {
       }
     };
 
-    window.addEventListener("resize", () =>
+    window.addEventListener('resize', () =>
       this.forceUpdate(this.handleSectionScroll),
     );
   }
@@ -62,8 +62,8 @@ export class LuaEditor extends Component {
     const { data } = useBackend();
     const { forceModal, forceViewChunk } = data;
     if (forceModal || forceViewChunk) {
-      const [, setModal] = useLocalState("modal");
-      const [, setViewedChunk] = useLocalState("viewedChunk");
+      const [, setModal] = useLocalState('modal');
+      const [, setViewedChunk] = useLocalState('viewedChunk');
       setModal(forceModal);
       setViewedChunk(forceViewChunk);
     }
@@ -113,13 +113,13 @@ export class LuaEditor extends Component {
     }
 
     const [modal, setModal] = useLocalState(
-      "modal",
-      noStateYet ? "states" : null,
+      'modal',
+      noStateYet ? 'states' : null,
     );
     const { activeTab, showJumpToBottomButton, scriptInput } = this.state;
     let tabContent;
     switch (activeTab) {
-      case "globals": {
+      case 'globals': {
         if (!globals) {
           tabContent = (
             <h1>
@@ -131,14 +131,14 @@ export class LuaEditor extends Component {
             <ListMapper
               list={globals}
               skipNulls
-              vvAct={(path) => act("vvGlobal", { indices: path })}
+              vvAct={(path) => act('vvGlobal', { indices: path })}
               callType="callFunction"
             />
           );
         }
         break;
       }
-      case "tasks": {
+      case 'tasks': {
         if (!tasks) {
           tabContent = (
             <h1>
@@ -151,7 +151,7 @@ export class LuaEditor extends Component {
         }
         break;
       }
-      case "log": {
+      case 'log': {
         tabContent = <Log />;
         break;
       }
@@ -159,7 +159,7 @@ export class LuaEditor extends Component {
     return (
       <Window width={1280} height={720}>
         <Window.Content>
-          <Button icon="file" onClick={() => setModal("states")}>
+          <Button icon="file" onClick={() => setModal('states')}>
             States
           </Button>
           {noStateYet ? (
@@ -188,7 +188,7 @@ export class LuaEditor extends Component {
                       >
                         Import
                       </Button.File>
-                      <Button onClick={() => setModal("documentation")}>
+                      <Button onClick={() => setModal('documentation')}>
                         Help
                       </Button>
                     </>
@@ -206,17 +206,17 @@ export class LuaEditor extends Component {
                     displayedValue={
                       <Box
                         style={{
-                          pointerEvents: "none",
+                          pointerEvents: 'none',
                         }}
                         dangerouslySetInnerHTML={{
                           __html: hljs.highlight(scriptInput, {
-                            language: "lua",
+                            language: 'lua',
                           }).value,
                         }}
                       />
                     }
                   />
-                  <Button onClick={() => act("runCode", { code: scriptInput })}>
+                  <Button onClick={() => act('runCode', { code: scriptInput })}>
                     Run
                   </Button>
                 </Section>
@@ -226,11 +226,11 @@ export class LuaEditor extends Component {
                   fill
                   pb="24px"
                   height={
-                    activeTab === "log"
+                    activeTab === 'log'
                       ? showJumpToBottomButton
-                        ? "calc(100% - 48px)"
-                        : "calc(100% - 32px)"
-                      : "100%"
+                        ? 'calc(100% - 48px)'
+                        : 'calc(100% - 32px)'
+                      : '100%'
                   }
                   width="100%"
                 >
@@ -239,24 +239,24 @@ export class LuaEditor extends Component {
                       <Tabs>
                         {!!showGlobalTable && (
                           <Tabs.Tab
-                            selected={activeTab === "globals"}
+                            selected={activeTab === 'globals'}
                             onClick={() => {
-                              this.setState({ activeTab: "globals" });
+                              this.setState({ activeTab: 'globals' });
                             }}
                           >
                             Globals
                           </Tabs.Tab>
                         )}
                         <Tabs.Tab
-                          selected={activeTab === "tasks"}
-                          onClick={() => this.setState({ activeTab: "tasks" })}
+                          selected={activeTab === 'tasks'}
+                          onClick={() => this.setState({ activeTab: 'tasks' })}
                         >
                           Tasks
                         </Tabs.Tab>
                         <Tabs.Tab
-                          selected={activeTab === "log"}
+                          selected={activeTab === 'log'}
                           onClick={() => {
-                            this.setState({ activeTab: "log" });
+                            this.setState({ activeTab: 'log' });
                             setTimeout(this.handleSectionScroll, 0);
                           }}
                         >
@@ -270,10 +270,10 @@ export class LuaEditor extends Component {
                         checked={showGlobalTable}
                         tooltip="WARNING: Displaying the global table can cause significant lag for the entire server, especially when there is a large number of global variables."
                         onClick={() => {
-                          if (showGlobalTable && activeTab === "globals") {
-                            this.setState({ activeTab: "tasks" });
+                          if (showGlobalTable && activeTab === 'globals') {
+                            this.setState({ activeTab: 'tasks' });
                           }
-                          act("toggleShowGlobalTable");
+                          act('toggleShowGlobalTable');
                         }}
                       >
                         Show Global Table
@@ -290,7 +290,7 @@ export class LuaEditor extends Component {
                   >
                     {tabContent}
                   </Section>
-                  {activeTab === "log" && (
+                  {activeTab === 'log' && (
                     <>
                       <Stack justify="space-between">
                         <Stack.Item width="25%">
@@ -300,7 +300,7 @@ export class LuaEditor extends Component {
                             icon="arrow-left"
                             disabled={page <= 0}
                             onClick={() => {
-                              act("previousPage");
+                              act('previousPage');
                             }}
                           />
                         </Stack.Item>
@@ -323,7 +323,7 @@ export class LuaEditor extends Component {
                             icon="arrow-right"
                             disabled={page >= pageCount - 1}
                             onClick={() => {
-                              act("nextPage");
+                              act('nextPage');
                             }}
                           />
                         </Stack.Item>
@@ -349,10 +349,10 @@ export class LuaEditor extends Component {
             </Stack>
           )}
         </Window.Content>
-        {modal === "states" && <StateSelectModal />}
-        {modal === "viewChunk" && <ChunkViewModal />}
-        {modal === "call" && <CallModal />}
-        {modal === "documentation" && (
+        {modal === 'states' && <StateSelectModal />}
+        {modal === 'viewChunk' && <ChunkViewModal />}
+        {modal === 'call' && <CallModal />}
+        {modal === 'documentation' && (
           <Modal>
             <Button
               color="red"
@@ -375,9 +375,9 @@ export class LuaEditor extends Component {
                     breaks: true,
                     smartypants: true,
                     smartLists: true,
-                    langPrefix: "hljs language-",
+                    langPrefix: 'hljs language-',
                     highlight: (code) => {
-                      return hljs.highlight(code, { language: "lua" }).value;
+                      return hljs.highlight(code, { language: 'lua' }).value;
                     },
                   }),
                 }}

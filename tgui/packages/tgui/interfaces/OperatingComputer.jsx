@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Button,
@@ -7,31 +7,31 @@ import {
   ProgressBar,
   Section,
   Tabs,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 const damageTypes = [
   {
-    label: "Brute",
-    type: "bruteLoss",
+    label: 'Brute',
+    type: 'bruteLoss',
   },
   {
-    label: "Burn",
-    type: "fireLoss",
+    label: 'Burn',
+    type: 'fireLoss',
   },
   {
-    label: "Toxin",
-    type: "toxLoss",
+    label: 'Toxin',
+    type: 'toxLoss',
   },
   {
-    label: "Respiratory",
-    type: "oxyLoss",
+    label: 'Respiratory',
+    type: 'oxyLoss',
   },
 ];
 
 export const OperatingComputer = (props) => {
   const { act } = useBackend();
-  const [tab, setTab] = useSharedState("tab", 1);
+  const [tab, setTab] = useSharedState('tab', 1);
 
   return (
     <Window width={350} height={470}>
@@ -43,7 +43,7 @@ export const OperatingComputer = (props) => {
           <Tabs.Tab selected={tab === 2} onClick={() => setTab(2)}>
             Surgery Procedures
           </Tabs.Tab>
-          <Tabs.Tab onClick={() => act("open_experiments")}>
+          <Tabs.Tab onClick={() => act('open_experiments')}>
             Experiments
           </Tabs.Tab>
         </Tabs>
@@ -69,14 +69,14 @@ const PatientStateView = (props) => {
               {patient.stat}
             </LabeledList.Item>
             <LabeledList.Item label="Blood Type">
-              {patient.blood_type || "Unable to determine blood type"}
+              {patient.blood_type || 'Unable to determine blood type'}
             </LabeledList.Item>
             <LabeledList.Item label="Health">
               <ProgressBar
                 value={patient.health}
                 minValue={patient.minHealth}
                 maxValue={patient.maxHealth}
-                color={patient.health >= 0 ? "good" : "average"}
+                color={patient.health >= 0 ? 'good' : 'average'}
               >
                 <AnimatedNumber value={patient.health} />
               </ProgressBar>
@@ -93,7 +93,7 @@ const PatientStateView = (props) => {
             ))}
           </LabeledList>
         ) : (
-          "No Patient Detected"
+          'No Patient Detected'
         )}
       </Section>
       {procedures.length === 0 && <Section>No Active Procedures</Section>}
@@ -141,7 +141,7 @@ const SurgeryProceduresView = (props) => {
       <Button
         icon="download"
         content="Sync Research Database"
-        onClick={() => act("sync")}
+        onClick={() => act('sync')}
       />
       {surgeries.map((surgery) => (
         <Section title={surgery.name} key={surgery.name} level={2}>

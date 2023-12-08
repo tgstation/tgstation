@@ -1,10 +1,10 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
-import { CHANGELING_MECHANICAL_DESCRIPTION } from "./changeling";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
+import { CHANGELING_MECHANICAL_DESCRIPTION } from './changeling';
 
 const ChangelingMidround: Antagonist = {
-  key: "changelingmidround",
-  name: "Space Changeling",
+  key: 'changelingmidround',
+  name: 'Space Changeling',
   description: [
     multiline`
     A midround changeling does not receive a crew identity, instead arriving

@@ -1,8 +1,8 @@
-import { Box, Flex, Icon, Section, Stack, Tooltip } from "tgui/components";
-import { HypertorusFuel } from ".";
+import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui/components';
+import { HypertorusFuel } from '.';
 
-import { to_exponential_if_big } from "./helpers";
-import { useBackend } from "tgui/backend";
+import { to_exponential_if_big } from './helpers';
+import { useBackend } from 'tgui/backend';
 
 type Data = {
   base_max_temperature: number;
@@ -53,11 +53,11 @@ const BarLabel = (props) => {
       <Box align="center">{label}</Box>
       {value > 0 ? (
         <>
-          <Box align="center">{to_exponential_if_big(value) + " K"}</Box>
+          <Box align="center">{to_exponential_if_big(value) + ' K'}</Box>
           <Box align="center">
             {delta === 0
-              ? "-"
-              : `${delta < 0 ? "" : "+"}${to_exponential_if_big(delta)} K/s`}
+              ? '-'
+              : `${delta < 0 ? '' : '+'}${to_exponential_if_big(delta)} K/s`}
           </Box>
         </>
       ) : (
@@ -158,7 +158,7 @@ export const HypertorusTemperatures = (props) => {
             name={icon}
           />
         )}
-        {to_exponential_if_big(value) + " K"}
+        {to_exponential_if_big(value) + ' K'}
       </Box>
     );
     return (

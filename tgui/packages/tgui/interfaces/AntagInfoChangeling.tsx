@@ -1,6 +1,6 @@
-import { BooleanLike } from "common/react";
-import { multiline } from "common/string";
-import { useBackend, useSharedState } from "../backend";
+import { BooleanLike } from 'common/react';
+import { multiline } from 'common/string';
+import { useBackend, useSharedState } from '../backend';
 import {
   Button,
   Dimmer,
@@ -8,47 +8,47 @@ import {
   Section,
   Stack,
   NoticeBox,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 import {
   ObjectivePrintout,
   Objective,
   ReplaceObjectivesButton,
-} from "./common/Objectives";
+} from './common/Objectives';
 
 const hivestyle = {
-  fontWeight: "bold",
-  color: "yellow",
+  fontWeight: 'bold',
+  color: 'yellow',
 };
 
 const absorbstyle = {
-  color: "red",
-  fontWeight: "bold",
+  color: 'red',
+  fontWeight: 'bold',
 };
 
 const revivestyle = {
-  color: "lightblue",
-  fontWeight: "bold",
+  color: 'lightblue',
+  fontWeight: 'bold',
 };
 
 const transformstyle = {
-  color: "orange",
-  fontWeight: "bold",
+  color: 'orange',
+  fontWeight: 'bold',
 };
 
 const storestyle = {
-  color: "lightgreen",
-  fontWeight: "bold",
+  color: 'lightgreen',
+  fontWeight: 'bold',
 };
 
 const hivemindstyle = {
-  color: "violet",
-  fontWeight: "bold",
+  color: 'violet',
+  fontWeight: 'bold',
 };
 
 const fallenstyle = {
-  color: "black",
-  fontWeight: "bold",
+  color: 'black',
+  fontWeight: 'bold',
 };
 
 type Memory = {
@@ -70,7 +70,7 @@ export const AntagInfoChangeling = (props) => {
     <Window width={720} height={750}>
       <Window.Content
         style={{
-          backgroundImage: "none",
+          backgroundImage: 'none',
         }}
       >
         <Stack vertical fill>
@@ -106,9 +106,9 @@ const HivemindSection = (props) => {
     <Section fill title="Hivemind">
       <Stack vertical fill>
         <Stack.Item textColor="label">
-          All Changelings, regardless of origin, are linked together by the{" "}
+          All Changelings, regardless of origin, are linked together by the{' '}
           <span style={hivemindstyle}>hivemind</span>. You may communicate to
-          other Changelings under your mental alias,{" "}
+          other Changelings under your mental alias,{' '}
           <span style={hivemindstyle}>{true_name}</span>, by starting a message
           with <span style={hivemindstyle}>:g</span>. Work together, and you
           will bring the station to new heights of terror.
@@ -117,7 +117,7 @@ const HivemindSection = (props) => {
           <NoticeBox danger>
             Other Changelings are strong allies, but some Changelings may betray
             you. Changelings grow in power greatly by absorbing their kind, and
-            getting absorbed by another Changeling will leave you as a{" "}
+            getting absorbed by another Changeling will leave you as a{' '}
             <span style={fallenstyle}>Fallen Changeling</span>. There is no
             greater humiliation.
           </NoticeBox>
@@ -147,8 +147,8 @@ const IntroductionSection = (props) => {
             objectiveFollowup={
               <ReplaceObjectivesButton
                 can_change_objective={can_change_objective}
-                button_title={"Evolve New Directives"}
-                button_colour={"green"}
+                button_title={'Evolve New Directives'}
+                button_colour={'green'}
               />
             }
           />
@@ -212,7 +212,7 @@ const MemoriesSection = (props) => {
   const { data } = useBackend<Info>();
   const { memories } = data;
   const [selectedMemory, setSelectedMemory] = useSharedState(
-    "memory",
+    'memory',
     (!!memories && memories[0]) || null,
   );
   const memoryMap = {};

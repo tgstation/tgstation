@@ -1,7 +1,7 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Box, Button, LabeledList, Section } from "../components";
-import { NtosWindow } from "../layouts";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section } from '../components';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   current_user: string;
@@ -34,16 +34,16 @@ const ShippingHub = (props) => {
         <Button
           icon="eject"
           content="Eject Id"
-          onClick={() => act("ejectid")}
+          onClick={() => act('ejectid')}
         />
       }
     >
       <LabeledList>
         <LabeledList.Item label="Current User">
-          {current_user || "N/A"}
+          {current_user || 'N/A'}
         </LabeledList.Item>
         <LabeledList.Item label="Inserted Card">
-          {card_owner || "N/A"}
+          {card_owner || 'N/A'}
         </LabeledList.Item>
         <LabeledList.Item label="Available Paper">{paperamt}</LabeledList.Item>
         <LabeledList.Item label="Profit on Sale">
@@ -67,7 +67,7 @@ const ShippingOptions = (props) => {
           tooltip="The currently ID card will become the current user."
           tooltipPosition="right"
           disabled={!has_id_slot}
-          onClick={() => act("selectid")}
+          onClick={() => act('selectid')}
           content="Set Current ID"
         />
       </Box>
@@ -77,7 +77,7 @@ const ShippingOptions = (props) => {
           tooltip="Print a barcode to use on a wrapped package."
           tooltipPosition="right"
           disabled={!current_user}
-          onClick={() => act("print")}
+          onClick={() => act('print')}
           content="Print Barcode"
         />
       </Box>
@@ -86,7 +86,7 @@ const ShippingOptions = (props) => {
           icon="tags"
           tooltip="Set how much profit you'd like on your package."
           tooltipPosition="right"
-          onClick={() => act("setsplit")}
+          onClick={() => act('setsplit')}
           content="Set Profit Margin"
         />
       </Box>
@@ -94,7 +94,7 @@ const ShippingOptions = (props) => {
         <Button
           icon="sync-alt"
           content="Reset ID"
-          onClick={() => act("resetid")}
+          onClick={() => act('resetid')}
         />
       </Box>
     </Section>

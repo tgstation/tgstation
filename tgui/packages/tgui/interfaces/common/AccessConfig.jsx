@@ -1,6 +1,6 @@
-import { sortBy } from "common/collections";
-import { Section, Button, Flex, Tabs, Grid } from "../../components";
-import { useLocalState } from "../../backend";
+import { sortBy } from 'common/collections';
+import { Section, Button, Flex, Tabs, Grid } from '../../components';
+import { useLocalState } from '../../backend';
 
 export const AccessConfig = (props) => {
   const {
@@ -13,7 +13,7 @@ export const AccessConfig = (props) => {
     denyDep,
   } = props;
   const [selectedAccessName, setSelectedAccessName] = useLocalState(
-    "accessName",
+    'accessName',
     accesses[0]?.name,
   );
   const selectedAccess = accesses.find(
@@ -122,15 +122,15 @@ export const AccessConfig = (props) => {
 
 const diffMap = {
   0: {
-    icon: "times-circle",
-    color: "bad",
+    icon: 'times-circle',
+    color: 'bad',
   },
   1: {
-    icon: "stop-circle",
+    icon: 'stop-circle',
     color: null,
   },
   2: {
-    icon: "check-circle",
-    color: "good",
+    icon: 'check-circle',
+    color: 'good',
   },
 };

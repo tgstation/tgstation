@@ -1,7 +1,7 @@
-import { toFixed } from "common/math";
-import { useBackend } from "../backend";
-import { LabeledList, NumberInput, Section } from "../components";
-import { Window } from "../layouts";
+import { toFixed } from 'common/math';
+import { useBackend } from '../backend';
+import { LabeledList, NumberInput, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   straight: number;
@@ -29,8 +29,8 @@ export const ChemSplitter = (props) => {
                 step={0.05}
                 stepPixelSize={4}
                 onChange={(e, value) =>
-                  act("set_amount", {
-                    target: "straight",
+                  act('set_amount', {
+                    target: 'straight',
                     amount: value,
                   })
                 }
@@ -47,8 +47,8 @@ export const ChemSplitter = (props) => {
                 step={0.05}
                 stepPixelSize={4}
                 onChange={(e, value) =>
-                  act("set_amount", {
-                    target: "side",
+                  act('set_amount', {
+                    target: 'side',
                     amount: value,
                   })
                 }

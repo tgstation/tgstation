@@ -1,8 +1,8 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
-import { Box, Flex } from "../components";
-import { Window } from "../layouts";
-import { NukeKeypad } from "./NuclearBomb";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Flex } from '../components';
+import { Window } from '../layouts';
+import { NukeKeypad } from './NuclearBomb';
 
 type Data = {
   input_code: string;
@@ -22,8 +22,8 @@ export const LockedSafe = (props) => {
             {input_code}
           </Box>
           <Box className="NuclearBomb__displayBox">
-            {!lock_code && "No password set."}
-            {!!lock_code && (!locked ? "Unlocked" : "Locked")}
+            {!lock_code && 'No password set.'}
+            {!!lock_code && (!locked ? 'Unlocked' : 'Locked')}
           </Box>
           <Flex ml="3px">
             <Flex.Item>

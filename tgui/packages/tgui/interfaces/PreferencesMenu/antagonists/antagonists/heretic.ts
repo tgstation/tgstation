@@ -1,5 +1,5 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
 
 export const HERETIC_MECHANICAL_DESCRIPTION = multiline`
       Find hidden influences and sacrifice crew members to gain magical
@@ -7,8 +7,8 @@ export const HERETIC_MECHANICAL_DESCRIPTION = multiline`
    `;
 
 const Heretic: Antagonist = {
-  key: "heretic",
-  name: "Heretic",
+  key: 'heretic',
+  name: 'Heretic',
   description: [
     multiline`
       Forgotten, devoured, gutted. Humanity has forgotten the eldritch forces

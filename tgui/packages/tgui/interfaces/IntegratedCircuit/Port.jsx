@@ -1,8 +1,8 @@
-import { Stack, Box } from "../../components";
-import { Component, createRef } from "react";
-import { DisplayName } from "./DisplayName";
-import { classes } from "common/react";
-import { noop } from "./constants";
+import { Stack, Box } from '../../components';
+import { Component, createRef } from 'react';
+import { DisplayName } from './DisplayName';
+import { classes } from 'common/react';
+import { noop } from './constants';
 
 export class Port extends Component {
   constructor(props) {
@@ -87,11 +87,11 @@ export class Port extends Component {
     }
 
     return (
-      <Stack {...rest} justify={isOutput ? "flex-end" : "flex-start"}>
+      <Stack {...rest} justify={isOutput ? 'flex-end' : 'flex-start'}>
         {!!isOutput && this.renderDisplayName()}
         <Stack.Item>
           <Box
-            className={classes(["ObjectComponent__Port"])}
+            className={classes(['ObjectComponent__Port'])}
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
@@ -99,9 +99,9 @@ export class Port extends Component {
           >
             <svg
               style={{
-                width: "100%",
-                height: "100%",
-                position: "absolute",
+                width: '100%',
+                height: '100%',
+                position: 'absolute',
               }}
               viewBox="0, 0, 100, 100"
             >

@@ -1,7 +1,7 @@
-import { useBackend, useLocalState } from "tgui/backend";
-import { Button, NoticeBox, Section, Stack } from "tgui/components";
-import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from "./constants";
-import { PaiData } from "./types";
+import { useBackend, useLocalState } from 'tgui/backend';
+import { Button, NoticeBox, Section, Stack } from 'tgui/components';
+import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from './constants';
+import { PaiData } from './types';
 
 /**
  * Renders two sections: A section of buttons and
@@ -25,7 +25,7 @@ export const InstalledDisplay = (props) => {
 const InstalledSoftware = (props) => {
   const { data } = useBackend<PaiData>();
   const { installed = [] } = data;
-  const [currentSelection, setCurrentSelection] = useLocalState("software", "");
+  const [currentSelection, setCurrentSelection] = useLocalState('software', '');
 
   return (
     <Section fill scrollable title="Installed Software">
@@ -46,8 +46,8 @@ const InstalledSoftware = (props) => {
 
 /** Software info for buttons clicked. */
 const InstalledInfo = (props) => {
-  const [currentSelection] = useLocalState("software", "");
-  const title = !currentSelection ? "Select a Program" : currentSelection;
+  const [currentSelection] = useLocalState('software', '');
+  const title = !currentSelection ? 'Select a Program' : currentSelection;
 
   return (
     <Section fill scrollable title={title}>
@@ -70,10 +70,10 @@ const InstalledInfo = (props) => {
 const SoftwareButtons = (props) => {
   const { act, data } = useBackend<PaiData>();
   const { door_jack, languages, master_name } = data;
-  const [currentSelection] = useLocalState("software", "");
+  const [currentSelection] = useLocalState('software', '');
 
   switch (currentSelection) {
-    case "Door Jack":
+    case 'Door Jack':
       return (
         <>
           <Button
@@ -102,7 +102,7 @@ const SoftwareButtons = (props) => {
           </Button>
         </>
       );
-    case "Host Scan":
+    case 'Host Scan':
       return (
         <>
           <Button
@@ -122,7 +122,7 @@ const SoftwareButtons = (props) => {
           </Button>
         </>
       );
-    case "Photography Module":
+    case 'Photography Module':
       return (
         <>
           <Button
@@ -148,14 +148,14 @@ const SoftwareButtons = (props) => {
           </Button>
         </>
       );
-    case "Universal Translator":
+    case 'Universal Translator':
       return (
         <Button
           icon="download"
           onClick={() => act(currentSelection)}
           disabled={!!languages}
         >
-          {!languages ? "Install" : "Installed"}
+          {!languages ? 'Install' : 'Installed'}
         </Button>
       );
     default:

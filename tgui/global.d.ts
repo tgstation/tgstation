@@ -6,17 +6,17 @@
 
 // Webpack asset modules.
 // Should match extensions used in webpack config.
-declare module "*.png" {
+declare module '*.png' {
   const content: string;
   export default content;
 }
 
-declare module "*.jpg" {
+declare module '*.jpg' {
   const content: string;
   export default content;
 }
 
-declare module "*.svg" {
+declare module '*.svg' {
   const content: string;
   export default content;
 }
@@ -122,7 +122,7 @@ type ByondType = {
    *
    * Returns a promise with a key-value object containing all properties.
    */
-  winget(id: string | null, propName: "*"): Promise<object>;
+  winget(id: string | null, propName: '*'): Promise<object>;
 
   /**
    * Retrieves an exactly one property of the BYOND skin element,

@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from "tgui/backend";
+import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Button,
   Collapsible,
@@ -12,10 +12,10 @@ import {
   Input,
   Section,
   Stack,
-} from "tgui/components";
-import { removeChatPage, toggleAcceptedType, updateChatPage } from "./actions";
-import { MESSAGE_TYPES } from "./constants";
-import { selectCurrentChatPage } from "./selectors";
+} from 'tgui/components';
+import { removeChatPage, toggleAcceptedType, updateChatPage } from './actions';
+import { MESSAGE_TYPES } from './constants';
+import { selectCurrentChatPage } from './selectors';
 
 export const ChatPageSettings = (props) => {
   const page = useSelector(selectCurrentChatPage);

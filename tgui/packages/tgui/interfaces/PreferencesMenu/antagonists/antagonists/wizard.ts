@@ -1,5 +1,5 @@
-import { Antagonist, Category } from "../base";
-import { multiline } from "common/string";
+import { Antagonist, Category } from '../base';
+import { multiline } from 'common/string';
 
 export const WIZARD_MECHANICAL_DESCRIPTION = multiline`
       Choose between a variety of powerful spells in order to cause chaos
@@ -7,8 +7,8 @@ export const WIZARD_MECHANICAL_DESCRIPTION = multiline`
     `;
 
 const Wizard: Antagonist = {
-  key: "wizard",
-  name: "Wizard",
+  key: 'wizard',
+  name: 'Wizard',
   description: [
     `"GREETINGS. WE'RE THE WIZARDS OF THE WIZARD'S FEDERATION."`,
     WIZARD_MECHANICAL_DESCRIPTION,

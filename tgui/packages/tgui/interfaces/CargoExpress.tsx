@@ -1,15 +1,15 @@
-import { BooleanLike } from "common/react";
-import { useBackend } from "../backend";
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
   LabeledList,
   Section,
-} from "../components";
-import { Window } from "../layouts";
-import { CargoCatalog } from "./Cargo";
-import { InterfaceLockNoticeBox } from "./common/InterfaceLockNoticeBox";
+} from '../components';
+import { Window } from '../layouts';
+import { CargoCatalog } from './Cargo';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 type Data = {
   locked: BooleanLike;
@@ -57,7 +57,7 @@ const CargoExpressContent = (props) => {
         buttons={
           <Box inline bold>
             <AnimatedNumber value={Math.round(points)} />
-            {" credits"}
+            {' credits'}
           </Box>
         }
       >
@@ -66,19 +66,19 @@ const CargoExpressContent = (props) => {
             <Button
               content="Cargo Bay"
               selected={!usingBeacon}
-              onClick={() => act("LZCargo")}
+              onClick={() => act('LZCargo')}
             />
             <Button
               selected={usingBeacon}
               disabled={!hasBeacon}
-              onClick={() => act("LZBeacon")}
+              onClick={() => act('LZBeacon')}
             >
               {beaconzone} ({beaconName})
             </Button>
             <Button
               content={printMsg}
               disabled={!canBuyBeacon}
-              onClick={() => act("printBeacon")}
+              onClick={() => act('printBeacon')}
             />
           </LabeledList.Item>
           <LabeledList.Item label="Notice">{message}</LabeledList.Item>

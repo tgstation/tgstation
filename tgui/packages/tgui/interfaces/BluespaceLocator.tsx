@@ -1,6 +1,6 @@
-import { useBackend, useLocalState } from "../backend";
-import { Icon, ProgressBar, Tabs } from "../components";
-import { Window } from "../layouts";
+import { useBackend, useLocalState } from '../backend';
+import { Icon, ProgressBar, Tabs } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   telebeacons: Trackable[];
@@ -26,27 +26,27 @@ const DIRECTION_TO_ICON = {
 } as const;
 
 export const BluespaceLocator = (props) => {
-  const [tab, setTab] = useLocalState("tab", "implant");
+  const [tab, setTab] = useLocalState('tab', 'implant');
 
   return (
     <Window width={300} height={300}>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
-            selected={tab === "implant"}
-            onClick={() => setTab("implant")}
+            selected={tab === 'implant'}
+            onClick={() => setTab('implant')}
           >
             Implants
           </Tabs.Tab>
           <Tabs.Tab
-            selected={tab === "beacon"}
-            onClick={() => setTab("beacon")}
+            selected={tab === 'beacon'}
+            onClick={() => setTab('beacon')}
           >
             Teleporter Beacons
           </Tabs.Tab>
         </Tabs>
-        {(tab === "beacon" && <TeleporterBeacons />) ||
-          (tab === "implant" && <TrackingImplants />)}
+        {(tab === 'beacon' && <TeleporterBeacons />) ||
+          (tab === 'implant' && <TrackingImplants />)}
       </Window.Content>
     </Window>
   );

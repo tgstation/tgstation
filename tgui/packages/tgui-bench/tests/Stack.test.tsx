@@ -1,5 +1,5 @@
-import { Stack } from "tgui/components";
-import { createRenderer } from "tgui/renderer";
+import { Stack } from 'tgui/components';
+import { createRenderer } from 'tgui/renderer';
 
 const render = createRenderer();
 

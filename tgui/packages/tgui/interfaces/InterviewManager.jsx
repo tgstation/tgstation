@@ -1,6 +1,6 @@
-import { Button, Section } from "../components";
-import { Window } from "../layouts";
-import { useBackend } from "../backend";
+import { Button, Section } from '../components';
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
 
 export const InterviewManager = (props) => {
   const { act, data } = useBackend();
@@ -8,12 +8,12 @@ export const InterviewManager = (props) => {
 
   const colorMap = (status) => {
     switch (status) {
-      case "interview_approved":
-        return "good";
-      case "interview_denied":
-        return "bad";
-      case "interview_pending":
-        return "average";
+      case 'interview_approved':
+        return 'good';
+      case 'interview_denied':
+        return 'bad';
+      case 'interview_pending':
+        return 'average';
     }
   };
 
@@ -24,9 +24,9 @@ export const InterviewManager = (props) => {
           {open_interviews.map(({ id, ckey, status, queued, disconnected }) => (
             <Button
               key={id}
-              content={ckey + (disconnected ? " (DC)" : "")}
-              color={queued ? "default" : colorMap(status)}
-              onClick={() => act("open", { id: id })}
+              content={ckey + (disconnected ? ' (DC)' : '')}
+              color={queued ? 'default' : colorMap(status)}
+              onClick={() => act('open', { id: id })}
             />
           ))}
         </Section>
@@ -34,9 +34,9 @@ export const InterviewManager = (props) => {
           {closed_interviews.map(({ id, ckey, status, disconnected }) => (
             <Button
               key={id}
-              content={ckey + (disconnected ? " (DC)" : "")}
+              content={ckey + (disconnected ? ' (DC)' : '')}
               color={colorMap(status)}
-              onClick={() => act("open", { id: id })}
+              onClick={() => act('open', { id: id })}
             />
           ))}
         </Section>

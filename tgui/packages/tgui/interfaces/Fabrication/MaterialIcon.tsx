@@ -1,57 +1,57 @@
-import { classes } from "common/react";
-import { Icon } from "../../components";
+import { classes } from 'common/react';
+import { Icon } from '../../components';
 
 const MATERIAL_ICONS: Record<string, [number, string][]> = {
   iron: [
-    [0, "sheet-metal"],
-    [17, "sheet-metal_2"],
-    [34, "sheet-metal_3"],
+    [0, 'sheet-metal'],
+    [17, 'sheet-metal_2'],
+    [34, 'sheet-metal_3'],
   ],
   glass: [
-    [0, "sheet-glass"],
-    [17, "sheet-glass_2"],
-    [34, "sheet-glass_3"],
+    [0, 'sheet-glass'],
+    [17, 'sheet-glass_2'],
+    [34, 'sheet-glass_3'],
   ],
   silver: [
-    [0, "sheet-silver"],
-    [17, "sheet-silver_2"],
-    [34, "sheet-silver_3"],
+    [0, 'sheet-silver'],
+    [17, 'sheet-silver_2'],
+    [34, 'sheet-silver_3'],
   ],
   gold: [
-    [0, "sheet-gold"],
-    [17, "sheet-gold_2"],
-    [34, "sheet-gold_3"],
+    [0, 'sheet-gold'],
+    [17, 'sheet-gold_2'],
+    [34, 'sheet-gold_3'],
   ],
   diamond: [
-    [0, "sheet-diamond"],
-    [17, "sheet-diamond_2"],
-    [34, "sheet-diamond_3"],
+    [0, 'sheet-diamond'],
+    [17, 'sheet-diamond_2'],
+    [34, 'sheet-diamond_3'],
   ],
   plasma: [
-    [0, "sheet-plasma"],
-    [17, "sheet-plasma_2"],
-    [34, "sheet-plasma_3"],
+    [0, 'sheet-plasma'],
+    [17, 'sheet-plasma_2'],
+    [34, 'sheet-plasma_3'],
   ],
   uranium: [
-    [0, "sheet-uranium"],
-    [17, "sheet-uranium_2"],
-    [34, "sheet-uranium_3"],
+    [0, 'sheet-uranium'],
+    [17, 'sheet-uranium_2'],
+    [34, 'sheet-uranium_3'],
   ],
   bananium: [
-    [0, "sheet-bananium"],
-    [17, "sheet-bananium_2"],
-    [34, "sheet-bananium_3"],
+    [0, 'sheet-bananium'],
+    [17, 'sheet-bananium_2'],
+    [34, 'sheet-bananium_3'],
   ],
   titanium: [
-    [0, "sheet-titanium"],
-    [17, "sheet-titanium_2"],
-    [34, "sheet-titanium_3"],
+    [0, 'sheet-titanium'],
+    [17, 'sheet-titanium_2'],
+    [34, 'sheet-titanium_3'],
   ],
-  "bluespace crystal": [[0, "bluespace_crystal"]],
+  'bluespace crystal': [[0, 'bluespace_crystal']],
   plastic: [
-    [0, "sheet-plastic"],
-    [17, "sheet-plastic_2"],
-    [34, "sheet-plastic_3"],
+    [0, 'sheet-plastic'],
+    [17, 'sheet-plastic_2'],
+    [34, 'sheet-plastic_3'],
   ],
 };
 
@@ -86,14 +86,14 @@ export const MaterialIcon = (props: MaterialIconProps) => {
   }
 
   return (
-    <div className={"FabricatorMaterialIcon"}>
+    <div className={'FabricatorMaterialIcon'}>
       {icons.map(([_, iconState], idx) => (
         <div
           key={idx}
           className={classes([
-            "FabricatorMaterialIcon__Icon",
-            idx === activeIdx && "FabricatorMaterialIcon__Icon--active",
-            "sheetmaterials32x32",
+            'FabricatorMaterialIcon__Icon',
+            idx === activeIdx && 'FabricatorMaterialIcon__Icon--active',
+            'sheetmaterials32x32',
             iconState,
           ])}
         />

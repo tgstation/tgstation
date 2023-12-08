@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { clamp01, keyOfMatchingRange, scale } from "common/math";
-import { classes } from "common/react";
-import { computeBoxClassName, computeBoxProps } from "./Box";
-import { DraggableControl } from "./DraggableControl";
+import { clamp01, keyOfMatchingRange, scale } from 'common/math';
+import { classes } from 'common/react';
+import { computeBoxClassName, computeBoxProps } from './Box';
+import { DraggableControl } from './DraggableControl';
 
 export const Slider = (props) => {
   const {
@@ -73,9 +73,9 @@ export const Slider = (props) => {
         return (
           <div
             className={classes([
-              "Slider",
-              "ProgressBar",
-              "ProgressBar--color--" + effectiveColor,
+              'Slider',
+              'ProgressBar',
+              'ProgressBar--color--' + effectiveColor,
               className,
               computeBoxClassName(rest),
             ])}
@@ -84,11 +84,11 @@ export const Slider = (props) => {
           >
             <div
               className={classes([
-                "ProgressBar__fill",
-                hasFillValue && "ProgressBar__fill--animated",
+                'ProgressBar__fill',
+                hasFillValue && 'ProgressBar__fill--animated',
               ])}
               style={{
-                width: clamp01(scaledFillValue) * 100 + "%",
+                width: clamp01(scaledFillValue) * 100 + '%',
                 opacity: 0.4,
               }}
             />
@@ -103,7 +103,7 @@ export const Slider = (props) => {
             <div
               className="Slider__cursorOffset"
               style={{
-                width: clamp01(scaledDisplayValue) * 100 + "%",
+                width: clamp01(scaledDisplayValue) * 100 + '%',
               }}
             >
               <div className="Slider__cursor" />

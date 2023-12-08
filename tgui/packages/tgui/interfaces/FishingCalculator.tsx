@@ -1,8 +1,8 @@
-import { round } from "common/math";
-import { useBackend, useLocalState } from "../backend";
-import { Button, Dropdown, Input, Stack, Table } from "../components";
-import { TableCell, TableRow } from "../components/Table";
-import { Window } from "../layouts";
+import { round } from 'common/math';
+import { useBackend, useLocalState } from '../backend';
+import { Button, Dropdown, Input, Stack, Table } from '../components';
+import { TableCell, TableRow } from '../components/Table';
+import { Window } from '../layouts';
 
 type FishCalculatorEntry = {
   result: string;
@@ -23,13 +23,13 @@ export const FishingCalculator = (props) => {
   const { act, data } = useBackend<FishingCalculatorData>();
 
   const [bait, setBait] = useLocalState<string>(
-    "bait",
-    "/obj/item/food/bait/worm",
+    'bait',
+    '/obj/item/food/bait/worm',
   );
-  const [spot, setSpot] = useLocalState<string>("spot", data.spot_types[0]);
-  const [rod, setRod] = useLocalState<string>("rod", data.rod_types[0]);
-  const [hook, setHook] = useLocalState<string>("hook", data.hook_types[0]);
-  const [line, setLine] = useLocalState<string>("line", data.line_types[0]);
+  const [spot, setSpot] = useLocalState<string>('spot', data.spot_types[0]);
+  const [rod, setRod] = useLocalState<string>('rod', data.rod_types[0]);
+  const [hook, setHook] = useLocalState<string>('hook', data.hook_types[0]);
+  const [line, setLine] = useLocalState<string>('line', data.line_types[0]);
 
   const weight_sum = data.info?.reduce((s, w) => s + w.weight, 0) || 1;
 
@@ -70,7 +70,7 @@ export const FishingCalculator = (props) => {
             />
             <Button
               onClick={() =>
-                act("recalc", {
+                act('recalc', {
                   rod: rod,
                   bait: bait,
                   hook: hook,

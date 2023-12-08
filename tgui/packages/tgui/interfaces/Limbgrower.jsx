@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from "../backend";
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -7,8 +7,8 @@ import {
   LabeledList,
   Section,
   Tabs,
-} from "../components";
-import { Window } from "../layouts";
+} from '../components';
+import { Window } from '../layouts';
 
 export const Limbgrower = (props) => {
   const { act, data } = useBackend();
@@ -19,7 +19,7 @@ export const Limbgrower = (props) => {
     categories = [],
     busy,
   } = data;
-  const [tab, setTab] = useSharedState("category", categories[0]?.name);
+  const [tab, setTab] = useSharedState('category', categories[0]?.name);
   const designList =
     categories.find((category) => category.name === tab)?.designs || [];
 
@@ -28,7 +28,7 @@ export const Limbgrower = (props) => {
       {!!busy && (
         <Dimmer fontSize="32px">
           <Icon name="cog" spin={1} />
-          {" Building..."}
+          {' Building...'}
         </Dimmer>
       )}
       <Window.Content scrollable>
@@ -48,7 +48,7 @@ export const Limbgrower = (props) => {
                     content="Remove Reagent"
                     color="bad"
                     onClick={() =>
-                      act("empty_reagent", {
+                      act('empty_reagent', {
                         reagent_type: reagent.reagent_type,
                       })
                     }
@@ -83,7 +83,7 @@ export const Limbgrower = (props) => {
                     content="Make"
                     color="good"
                     onClick={() =>
-                      act("make_limb", {
+                      act('make_limb', {
                         design_id: design.id,
                         active_tab: design.parent_category,
                       })

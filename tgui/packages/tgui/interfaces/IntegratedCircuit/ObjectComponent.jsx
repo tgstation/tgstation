@@ -1,8 +1,8 @@
-import { Box, Stack, Button } from "../../components";
-import { Component } from "react";
-import { shallowDiffers } from "../../../common/react";
-import { ABSOLUTE_Y_OFFSET, noop } from "./constants";
-import { Port } from "./Port";
+import { Box, Stack, Button } from '../../components';
+import { Component } from 'react';
+import { shallowDiffers } from '../../../common/react';
+import { ABSOLUTE_Y_OFFSET, noop } from './constants';
+import { Port } from './Port';
 
 export class ObjectComponent extends Component {
   constructor(props) {
@@ -28,23 +28,23 @@ export class ObjectComponent extends Component {
       dragPos: { x: x, y: y },
       startPos: { x: x, y: y },
     });
-    window.addEventListener("mousemove", this.handleDrag);
-    window.addEventListener("mouseup", this.handleStopDrag);
+    window.addEventListener('mousemove', this.handleDrag);
+    window.addEventListener('mouseup', this.handleStopDrag);
   }
 
   handleStopDrag(e) {
     const { dragPos } = this.state;
     const { index, act = () => _ } = this.props;
     if (dragPos) {
-      act("set_component_coordinates", {
+      act('set_component_coordinates', {
         component_id: index,
         rel_x: dragPos.x,
         rel_y: dragPos.y,
       });
     }
 
-    window.removeEventListener("mousemove", this.handleDrag);
-    window.removeEventListener("mouseup", this.handleStopDrag);
+    window.removeEventListener('mousemove', this.handleDrag);
+    window.removeEventListener('mouseup', this.handleStopDrag);
     this.setState({ isDragging: false });
   }
 
@@ -88,7 +88,7 @@ export class ObjectComponent extends Component {
       x,
       y,
       index,
-      color = "blue",
+      color = 'blue',
       removable,
       ui_buttons,
       locations,
@@ -145,7 +145,7 @@ export class ObjectComponent extends Component {
                     color="transparent"
                     compact
                     onClick={() =>
-                      act("perform_action", {
+                      act('perform_action', {
                         component_id: index,
                         action_name: ui_buttons[icon],
                       })
@@ -159,7 +159,7 @@ export class ObjectComponent extends Component {
                 icon="info"
                 compact
                 onClick={(e) =>
-                  act("set_examined_component", {
+                  act('set_examined_component', {
                     component_id: index,
                     x: e.pageX,
                     y: e.pageY + ABSOLUTE_Y_OFFSET,
@@ -174,7 +174,7 @@ export class ObjectComponent extends Component {
                   icon="times"
                   compact
                   onClick={() =>
-                    act("detach_component", { component_id: index })
+                    act('detach_component', { component_id: index })
                   }
                 />
               </Stack.Item>

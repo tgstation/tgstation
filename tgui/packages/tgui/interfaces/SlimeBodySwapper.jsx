@@ -1,17 +1,17 @@
-import { useBackend } from "../backend";
-import { Section, LabeledList, Button, Box } from "../components";
-import { Window } from "../layouts";
+import { useBackend } from '../backend';
+import { Section, LabeledList, Button, Box } from '../components';
+import { Window } from '../layouts';
 
 const statusMap = {
-  Dead: "bad",
-  Unconscious: "average",
-  Conscious: "good",
+  Dead: 'bad',
+  Unconscious: 'average',
+  Conscious: 'good',
 };
 
 const occupiedMap = {
-  owner: "You Are Here",
-  stranger: "Occupied",
-  available: "Swap",
+  owner: 'You Are Here',
+  stranger: 'Occupied',
+  available: 'Swap',
 };
 
 export const BodyEntry = (props) => {
@@ -27,8 +27,8 @@ export const BodyEntry = (props) => {
       buttons={
         <Button
           content={occupiedMap[body.occupied]}
-          selected={body.occupied === "owner"}
-          color={body.occupied === "stranger" && "bad"}
+          selected={body.occupied === 'owner'}
+          color={body.occupied === 'stranger' && 'bad'}
           onClick={() => swapFunc()}
         />
       }
@@ -55,7 +55,7 @@ export const SlimeBodySwapper = (props) => {
             <BodyEntry
               key={body.name}
               body={body}
-              swapFunc={() => act("swap", { ref: body.ref })}
+              swapFunc={() => act('swap', { ref: body.ref })}
             />
           ))}
         </Section>

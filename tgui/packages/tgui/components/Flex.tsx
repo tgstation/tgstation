@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { classes } from "common/react";
-import { BoxProps, computeBoxClassName, computeBoxProps, unit } from "./Box";
+import { classes } from 'common/react';
+import { BoxProps, computeBoxClassName, computeBoxProps, unit } from './Box';
 
 export type FlexProps = Partial<{
   align: string | boolean;
@@ -13,17 +13,17 @@ export type FlexProps = Partial<{
   inline: boolean;
   justify: string;
   scrollable: boolean;
-  style: Partial<HTMLDivElement["style"]>;
+  style: Partial<HTMLDivElement['style']>;
   wrap: string | boolean;
 }> &
   BoxProps;
 
 export const computeFlexClassName = (props: FlexProps) => {
   return classes([
-    "Flex",
-    props.inline && "Flex--inline",
-    Byond.IS_LTE_IE10 && "Flex--iefix",
-    Byond.IS_LTE_IE10 && props.direction === "column" && "Flex--iefix--column",
+    'Flex',
+    props.inline && 'Flex--inline',
+    Byond.IS_LTE_IE10 && 'Flex--iefix',
+    Byond.IS_LTE_IE10 && props.direction === 'column' && 'Flex--iefix--column',
     computeBoxClassName(props),
   ]);
 };
@@ -35,7 +35,7 @@ export const computeFlexProps = (props: FlexProps) => {
     style: {
       ...rest.style,
       flexDirection: direction,
-      flexWrap: wrap === true ? "wrap" : wrap,
+      flexWrap: wrap === true ? 'wrap' : wrap,
       alignItems: align,
       justifyContent: justify,
     },
@@ -60,13 +60,13 @@ export type FlexItemProps = BoxProps &
     shrink: number | boolean;
     basis: string | number;
     align: string | boolean;
-    style: Partial<HTMLDivElement["style"]>;
+    style: Partial<HTMLDivElement['style']>;
   }>;
 
 export const computeFlexItemClassName = (props: FlexItemProps) => {
   return classes([
-    "Flex__item",
-    Byond.IS_LTE_IE10 && "Flex__item--iefix",
+    'Flex__item',
+    Byond.IS_LTE_IE10 && 'Flex__item--iefix',
     computeBoxClassName(props),
   ]);
 };

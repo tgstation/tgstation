@@ -1,14 +1,14 @@
-import { useBackend, useSharedState } from "../../backend";
-import { Icon, Stack, Tabs } from "../../components";
-import { RequestsData, RequestTabs } from "./types";
-import { MessageViewTab } from "./MessageViewTab";
-import { MessageWriteTab } from "./MessageWriteTab";
-import { AnnouncementTab } from "./AnnouncementTab";
+import { useBackend, useSharedState } from '../../backend';
+import { Icon, Stack, Tabs } from '../../components';
+import { RequestsData, RequestTabs } from './types';
+import { MessageViewTab } from './MessageViewTab';
+import { MessageWriteTab } from './MessageWriteTab';
+import { AnnouncementTab } from './AnnouncementTab';
 
 export const RequestMainScreen = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { can_send_announcements } = data;
-  const [tab, setTab] = useSharedState("tab", 1);
+  const [tab, setTab] = useSharedState('tab', 1);
   return (
     <Stack.Item grow>
       <Stack vertical fill>
@@ -18,19 +18,19 @@ export const RequestMainScreen = (props) => {
               selected={tab === RequestTabs.MESSAGE_VIEW}
               onClick={() => {
                 setTab(RequestTabs.MESSAGE_VIEW);
-                act("clear_message_status");
-                act("clear_authentication");
+                act('clear_message_status');
+                act('clear_authentication');
               }}
             >
-              View Messages <Icon name={"envelope-open"} />
+              View Messages <Icon name={'envelope-open'} />
             </Tabs.Tab>
             <Tabs.Tab
               selected={tab === RequestTabs.MESSAGE_WRITE}
               onClick={() => {
                 if (tab === RequestTabs.MESSAGE_VIEW) {
-                  act("clear_message_status");
+                  act('clear_message_status');
                 } else if (tab !== RequestTabs.MESSAGE_WRITE) {
-                  act("clear_authentication");
+                  act('clear_authentication');
                 }
                 setTab(RequestTabs.MESSAGE_WRITE);
               }}
@@ -42,9 +42,9 @@ export const RequestMainScreen = (props) => {
                 selected={tab === RequestTabs.ANNOUNCE}
                 onClick={() => {
                   if (tab === RequestTabs.MESSAGE_VIEW) {
-                    act("clear_message_status");
+                    act('clear_message_status');
                   } else if (tab !== RequestTabs.ANNOUNCE) {
-                    act("clear_authentication");
+                    act('clear_authentication');
                   }
                   setTab(RequestTabs.ANNOUNCE);
                 }}

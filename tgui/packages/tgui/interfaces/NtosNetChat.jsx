@@ -1,4 +1,4 @@
-import { useBackend } from "../backend";
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -7,8 +7,8 @@ import {
   Input,
   Section,
   Stack,
-} from "../components";
-import { NtosWindow } from "../layouts";
+} from '../components';
+import { NtosWindow } from '../layouts';
 
 // byond defines for the program state
 const CLIENT_ONLINE = 2;
@@ -74,15 +74,15 @@ export const NtosNetChat = (props) => {
   });
   const client_color = (client) => {
     if (client.operator) {
-      return "green";
+      return 'green';
     }
     if (client.online) {
-      return "white";
+      return 'white';
     }
     if (client.away) {
-      return "yellow";
+      return 'yellow';
     } else {
-      return "label";
+      return 'label';
     }
   };
   // client from this computer!
@@ -99,7 +99,7 @@ export const NtosNetChat = (props) => {
                     fluid
                     content="New Channel..."
                     onCommit={(e, value) =>
-                      act("PRG_newchannel", {
+                      act('PRG_newchannel', {
                         new_channel_name: value,
                       })
                     }
@@ -112,7 +112,7 @@ export const NtosNetChat = (props) => {
                       selected={channel.id === active_channel}
                       color="transparent"
                       onClick={() =>
-                        act("PRG_joinchannel", {
+                        act('PRG_joinchannel', {
                           id: channel.id,
                         })
                       }
@@ -124,10 +124,10 @@ export const NtosNetChat = (props) => {
                   <Button.Input
                     fluid
                     mt={1}
-                    content={username + "..."}
+                    content={username + '...'}
                     currentValue={username}
                     onCommit={(e, value) =>
-                      act("PRG_changename", {
+                      act('PRG_changename', {
                         new_name: value,
                       })
                     }
@@ -136,9 +136,9 @@ export const NtosNetChat = (props) => {
                     <Button
                       fluid
                       bold
-                      content={"ADMIN MODE: " + (adminmode ? "ON" : "OFF")}
-                      color={adminmode ? "bad" : "good"}
-                      onClick={() => act("PRG_toggleadmin")}
+                      content={'ADMIN MODE: ' + (adminmode ? 'ON' : 'OFF')}
+                      color={adminmode ? 'bad' : 'good'}
+                      onClick={() => act('PRG_toggleadmin')}
                     />
                   )}
                 </Stack.Item>
@@ -172,17 +172,17 @@ export const NtosNetChat = (props) => {
               </Stack.Item>
               {!!in_channel && (
                 <Input
-                  backgroundColor={this_client && this_client.muted && "red"}
+                  backgroundColor={this_client && this_client.muted && 'red'}
                   height="22px"
                   placeholder={
-                    (this_client && this_client.muted && "You are muted!") ||
-                    "Message " + title
+                    (this_client && this_client.muted && 'You are muted!') ||
+                    'Message ' + title
                   }
                   fluid
                   selfClear
                   mt={1}
                   onEnter={(e, value) =>
-                    act("PRG_speak", {
+                    act('PRG_speak', {
                       message: value,
                     })
                   }
@@ -215,12 +215,12 @@ export const NtosNetChat = (props) => {
                                     compact
                                     icon="bullhorn"
                                     tooltip={
-                                      (!this_client?.muted && "Ping") ||
-                                      "You are muted!"
+                                      (!this_client?.muted && 'Ping') ||
+                                      'You are muted!'
                                     }
                                     tooltipPosition="left"
                                     onClick={() =>
-                                      act("PRG_ping_user", {
+                                      act('PRG_ping_user', {
                                         ref: client.ref,
                                       })
                                     }
@@ -231,19 +231,19 @@ export const NtosNetChat = (props) => {
                                     <Button
                                       compact
                                       icon={
-                                        (!client.muted && "volume-up") ||
-                                        "volume-mute"
+                                        (!client.muted && 'volume-up') ||
+                                        'volume-mute'
                                       }
                                       color={
-                                        (!client.muted && "green") || "red"
+                                        (!client.muted && 'green') || 'red'
                                       }
                                       tooltip={
-                                        (!client.muted && "Mute this User") ||
-                                        "Unmute this User"
+                                        (!client.muted && 'Mute this User') ||
+                                        'Unmute this User'
                                       }
                                       tooltipPosition="left"
                                       onClick={() =>
-                                        act("PRG_mute_user", {
+                                        act('PRG_mute_user', {
                                           ref: client.ref,
                                         })
                                       }
@@ -267,7 +267,7 @@ export const NtosNetChat = (props) => {
                             content="Save log..."
                             defaultValue="new_log"
                             onCommit={(e, value) =>
-                              act("PRG_savelog", {
+                              act('PRG_savelog', {
                                 log_name: value,
                               })
                             }
@@ -275,7 +275,7 @@ export const NtosNetChat = (props) => {
                           <Button.Confirm
                             fluid
                             content="Leave Channel"
-                            onClick={() => act("PRG_leavechannel")}
+                            onClick={() => act('PRG_leavechannel')}
                           />
                         </>
                       )}
@@ -285,14 +285,14 @@ export const NtosNetChat = (props) => {
                             fluid
                             disabled={strong}
                             content="Delete Channel"
-                            onClick={() => act("PRG_deletechannel")}
+                            onClick={() => act('PRG_deletechannel')}
                           />
                           <Button.Input
                             fluid
                             disabled={strong}
                             content="Rename Channel..."
                             onCommit={(e, value) =>
-                              act("PRG_renamechannel", {
+                              act('PRG_renamechannel', {
                                 new_name: value,
                               })
                             }
@@ -301,7 +301,7 @@ export const NtosNetChat = (props) => {
                             fluid
                             content="Set Password..."
                             onCommit={(e, value) =>
-                              act("PRG_setpassword", {
+                              act('PRG_setpassword', {
                                 new_password: value,
                               })
                             }

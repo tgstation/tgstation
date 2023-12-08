@@ -1,5 +1,5 @@
-import { Window } from "../layouts";
-import { useBackend } from "../backend";
+import { Window } from '../layouts';
+import { useBackend } from '../backend';
 import {
   Section,
   Box,
@@ -9,8 +9,8 @@ import {
   LabeledList,
   Table,
   Tooltip,
-} from "../components";
-import { sortBy } from "common/collections";
+} from '../components';
+import { sortBy } from 'common/collections';
 
 const ExperimentStages = (props) => {
   return (
@@ -28,14 +28,14 @@ const ExperimentStageRow = (props) => {
   // Determine completion based on type of stage
   let completion = false;
   switch (type) {
-    case "bool":
-    case "detail":
+    case 'bool':
+    case 'detail':
       completion = value;
       break;
-    case "integer":
+    case 'integer':
       completion = value === altValue;
       break;
-    case "float":
+    case 'float':
       completion = value >= 1;
       break;
   }
@@ -43,17 +43,17 @@ const ExperimentStageRow = (props) => {
   return (
     <Table.Row
       className={`ExperimentStage__StageContainer
-        ${completion ? "complete" : "incomplete"}`}
+        ${completion ? 'complete' : 'incomplete'}`}
     >
       <Table.Cell
         collapsing
         className={`ExperimentStage__Indicator ${type}`}
-        color={completion ? "good" : "bad"}
+        color={completion ? 'good' : 'bad'}
       >
-        {(type === "bool" && <Icon name={value ? "check" : "times"} />) ||
-          (type === "integer" && `${value}/${altValue}`) ||
-          (type === "float" && `${value * 100}%`) ||
-          (type === "detail" && "⤷")}
+        {(type === 'bool' && <Icon name={value ? 'check' : 'times'} />) ||
+          (type === 'integer' && `${value}/${altValue}`) ||
+          (type === 'float' && `${value * 100}%`) ||
+          (type === 'detail' && '⤷')}
       </Table.Cell>
       <Table.Cell className="ExperimentStage__Description">
         {description}
@@ -80,11 +80,11 @@ export const TechwebServer = (props) => {
           <Button
             onClick={() =>
               server.selected
-                ? act("clear_server")
-                : act("select_server", { ref: server.ref })
+                ? act('clear_server')
+                : act('select_server', { ref: server.ref })
             }
-            content={server.selected ? "Disconnect" : "Connect"}
-            backgroundColor={server.selected ? "good" : "rgba(0, 0, 0, 0.4)"}
+            content={server.selected ? 'Disconnect' : 'Connect'}
+            backgroundColor={server.selected ? 'good' : 'rgba(0, 0, 0, 0.4)'}
             className="ExperimentTechwebServer__ConnectButton"
           />
         </Flex.Item>
@@ -129,8 +129,8 @@ export const ExperimentConfigure = (props) => {
             <Section title="Servers">
               <Box>
                 {webs.size > 0
-                  ? "Please select a techweb to connect to..."
-                  : "Found no servers connected to a techweb!"}
+                  ? 'Please select a techweb to connect to...'
+                  : 'Found no servers connected to a techweb!'}
               </Box>
               {webs.size > 0 &&
                 Array.from(webs, ([techweb, techwebs]) => (
@@ -147,11 +147,11 @@ export const ExperimentConfigure = (props) => {
                 <Flex.Item mb={1}>
                   {(experiments.length &&
                     always_active &&
-                    "This device is configured to attempt to perform all available" +
-                      " experiments, so no further configuration is necessary.") ||
+                    'This device is configured to attempt to perform all available' +
+                      ' experiments, so no further configuration is necessary.') ||
                     (experiments.length &&
-                      "Select one of the following experiments...") ||
-                    "No experiments found on this web"}
+                      'Select one of the following experiments...') ||
+                    'No experiments found on this web'}
                 </Flex.Item>
                 <Flex.Item>
                   {experiments.map((exp, i) => {
@@ -166,7 +166,7 @@ export const ExperimentConfigure = (props) => {
               <Button
                 fluid
                 className="ExperimentConfigure__PerformExperiment"
-                onClick={() => act("start_experiment_callback")}
+                onClick={() => act('start_experiment_callback')}
                 disabled={!experiments.some((e) => e.selected)}
                 icon="flask"
               >
@@ -192,15 +192,15 @@ export const Experiment = (props) => {
         fluid
         onClick={() =>
           selected
-            ? act("clear_experiment")
-            : act("select_experiment", { ref: ref })
+            ? act('clear_experiment')
+            : act('select_experiment', { ref: ref })
         }
-        backgroundColor={selected ? "good" : "#40628a"}
+        backgroundColor={selected ? 'good' : '#40628a'}
         className="ExperimentConfigure__ExperimentName"
       >
         <Flex align="center" justify="space-between">
-          <Flex.Item color={"white"}>{name}</Flex.Item>
-          <Flex.Item color={"rgba(255, 255, 255, 0.5)"}>
+          <Flex.Item color={'white'}>{name}</Flex.Item>
+          <Flex.Item color={'rgba(255, 255, 255, 0.5)'}>
             <Box className="ExperimentConfigure__TagContainer">
               {tag}
               <Tooltip content={performance_hint} position="bottom-start">
@@ -211,7 +211,7 @@ export const Experiment = (props) => {
           </Flex.Item>
         </Flex>
       </Button>
-      <Box className={"ExperimentConfigure__ExperimentContent"}>
+      <Box className={'ExperimentConfigure__ExperimentContent'}>
         <Box mb={1}>{description}</Box>
         {props.children}
         <ExperimentStages>{progress}</ExperimentStages>
