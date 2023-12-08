@@ -591,3 +591,7 @@
 
 /obj/item/mod/module/shove_blocker/on_suit_deactivation(deleting = FALSE)
 	mod.wearer.remove_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_SHOVE_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
+
+/obj/item/mod/module/shove_blocker/locked
+	removable = FALSE
+	complexity = 0
