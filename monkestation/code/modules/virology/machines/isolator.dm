@@ -1,5 +1,6 @@
 /obj/machinery/disease2/isolator
 	name = "Pathogenic Isolator"
+	desc = "Takes a syringe of blood, and isolates the pathogens inside into a dish."
 	density = 1
 	anchored = 1
 	icon = 'monkestation/code/modules/virology/icons/virology.dmi'

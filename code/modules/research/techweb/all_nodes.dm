@@ -296,6 +296,7 @@
 		"swab",
 		"syringe",
 		"xlarge_beaker",
+		"vial",
 	)
 
 /datum/techweb_node/basic_circuitry
