@@ -163,7 +163,7 @@
 		addtimer(CALLBACK(src, PROC_REF(kill_mob), spawned_mob), 1 MINUTES)
 
 /datum/symptom/spawn/proc/kill_mob(mob/living/basic/mob)
-	visible_message(span_warning("The [mob] falls apart!"), span_warning("You fall apart"))
+	mob.visible_message(span_warning("The [mob] falls apart!"), span_warning("You fall apart"))
 	mob.death()
 
 /datum/symptom/spawn/roach
