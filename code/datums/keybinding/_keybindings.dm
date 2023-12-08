@@ -16,6 +16,11 @@
 	if(LAZYLEN(hotkey_keys) && !LAZYLEN(classic_keys))
 		classic_keys = hotkey_keys.Copy()
 
+	//MONKESTAITON EDIT - GOONIMIZATIONS
+	if(LAZYLEN(goon_keys) && !LAZYLEN(goon_keys))
+		goon_keys = hotkey_keys.Copy()
+	//MONKESTAITON EDIT - GOONIMIZATIONS
+
 /datum/keybinding/proc/down(client/user)
 	SHOULD_CALL_PARENT(TRUE)
 	return SEND_SIGNAL(user.mob, keybind_signal) & COMSIG_KB_ACTIVATED

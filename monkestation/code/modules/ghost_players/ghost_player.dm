@@ -48,7 +48,7 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 		linked_button = null
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
-	if(CAN_SUCCUMB(src))
+	if(stat > SOFT_CRIT)
 		if(dueling)
 			linked_button?.end_duel(src)
 		move_to_ghostspawn()

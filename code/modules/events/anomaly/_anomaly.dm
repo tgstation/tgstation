@@ -24,7 +24,7 @@
 		impact_area = get_area(spawn_location)
 	else
 		impact_area = placer.findValidArea()
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/anomaly/announce(fake)
 	priority_announce("Energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")

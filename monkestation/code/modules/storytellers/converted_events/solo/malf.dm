@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/malf
 	antag_datum = /datum/antagonist/malf_ai
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_ALIEN) //not exactly alien but close enough
 	antag_flag = ROLE_MALF
 	enemy_roles = list(
 		JOB_CHEMIST,
@@ -36,6 +36,7 @@
 /datum/round_event_control/antagonist/solo/malf/midround
 	name = "Malfunctioning AI Midround"
 	antag_flag = ROLE_MALF_MIDROUND
+	weight = 2
 
 /datum/round_event_control/antagonist/solo/malf/roundstart
 	name = "Roundstart Malf AI"

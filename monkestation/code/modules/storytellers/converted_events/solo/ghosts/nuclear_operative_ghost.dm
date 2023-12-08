@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/nuclear_operative
 	name = "Nuclear Assault"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL)
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	antag_datum = /datum/antagonist/nukeop
 	typepath = /datum/round_event/antagonist/solo/ghost/nuclear_operative
@@ -32,7 +32,7 @@
 	required_enemies = 5
 	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
-	roundstart = TRUE
+	roundstart = FALSE
 	earliest_start = 45 MINUTES
 	weight = 4
 	max_occurrences = 1
@@ -70,7 +70,7 @@
 	var/datum/antagonist/nukeop/new_op = new antag_datum()
 	antag_mind.add_antag_datum(new_op)
 
-
+//this might be able to be kept as just calling parent
 /datum/round_event/antagonist/solo/ghost/nuclear_operative/round_end_report()
 	var/result = nuke_team.get_result()
 	switch(result)

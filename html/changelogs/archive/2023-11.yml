@@ -106,3 +106,24 @@
   wraith-54321:
   - rscadd: Added teleporters to centcom
   - rscadd: added a firing range for ghosts on centcom
+2023-11-25:
+  KittyNoodle:
+  - rscadd: The Observer, a more roundstart focused storyteller that prefers to watch
+      idly
+  - rscadd: The Nobleman, a less destructive variant of warrior that lets pacifists
+      enjoy the game too.
+  - qol: No more lowpop kudzu spam
+  - balance: Jester and warrior are now highpop/midpop only.
+  - balance: Changed a lot of storyteller tags to make more sense
+  - code_imp: Modularizes a lot of storyteller code
+  KoboldCommando:
+  - rscadd: You can now sharpen mops!  Check the crafting menu
+2023-11-26:
+  Gboster-0:
+  - bugfix: The fax machine on tram is once again usable without opening QM's locker
+  lmenvs:
+  - rscadd: Clicking the Twitch icon in the menu will now allow you to link your Twitch
+      account to your ckey.  Twitch subs who link their account in this way have access
+      to donator items.
+  moocowswag:
+  - qol: Apc covers can now be repaired with a welder and replaced with an apc frame.

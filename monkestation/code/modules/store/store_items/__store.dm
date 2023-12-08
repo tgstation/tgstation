@@ -122,7 +122,7 @@ GLOBAL_LIST_EMPTY(all_store_datums)
 	var/list/all_selected_paths = list()
 	for(var/path in owner?.prefs?.loadout_list)
 		all_selected_paths += path
-	data["user_is_donator"] = !!(owner.patreon?.is_donator() || is_admin(owner))
+	data["user_is_donator"] = !!(owner.patreon?.is_donator() || owner.twitch?.is_donator() || is_admin(owner))
 	data["owned_items"] = user.client.prefs.inventory
 
 	data["total_coins"] = user.client.prefs.metacoins
