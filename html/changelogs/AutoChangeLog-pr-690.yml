@@ -1,0 +1,5 @@
+author: "Tractor Mann"
+delete-after: True
+changes:
+  - rscadd: "Added 10 songs to the jukebox!"
+  - rscadd: "Added 1 song to the hacked jukebox!"
