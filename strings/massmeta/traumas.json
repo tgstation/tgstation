@@ -1,0 +1,219 @@
+{
+    "brain_damage": [
+        "@pick(bug)",
+        "@pick(semicolon) @pick(admins) грифят ПОМГИЕТ!!!",
+        "@pick(semicolon)Я розавая вульпв",
+        "@pick(semicolon)ИИ заког 22 аткрывай",
+        "@pick(semicolon)шатыл зовитею",
+        "@pick(semicolon)я вошел в кристал и пропал?? @pick(bug)",
+        "@pick(semicolon)Н-НЯЯЯЯЯЯЯЯЯ~",
+        "@pick(semicolon)@pick(admins) @pick(create_verbs) @pick(create_nouns)???",
+        "@pick(semicolon)уву ><",
+        "@pick(semicolon)ии с боргами метакомят проверте",
+        "@pick(semicolon)чоо??????????? @pick(bug)",
+		"@pick(semicolon)КАК ЖЕ ЗАЕБАЛИ ХУЕСОСЫ КОТОРЫЙ ПРОВОЦИРУЮТ СБ РАДИ ПОПИЗДИТЬСЯ!!",
+        "ебало @pick(admins) претставили?",
+        "Мне пожалуйста @pick(powergame_tools), @pick(powergame_shoes), @pick(powergame_potions), @pick(powergame_acronym), @pick(powergame_animal), @pick(powergame_implant), @pick(powergame_hud), @pick(powergame_pump), @pick(powergame_tube), @pick(powergame_anti), @pick(powergame_ator), @pick(powergame_ammo)",
+        "да чо этот вашь @pick(random_gibberish) знгачит??????",
+		"калий потассиум вода",
+		"это убевает игровую атмосферу!",
+		"это жесткий абъюз механник который сводит на нет ролевой отыгрыш",
+		"вам нельзя назвывать этот закон, при конфликтах конфликтах законов приоритетнее будет этот закон",
+		"Уважаемые криворукие уроды!",
+		"как крафтеть бинокуляры???",
+		"аа))))))))))))))))))",
+		"УЭЭЭЭЭЭЭЭ))",
+		"@pick(servers) ваш мертвый сервре!! @pick(bug)",
+		"eto blyat rofl?? huli batong za odin ebasos fuki",
+		"А это валидное имя для моли?",
+		"ПРОКЛЯТИЕ 220!!!",
+		"МАМУ УКРАЛИ!!"
+    ],
+
+    "powergame_tools": [
+        "легендарные инструменты абдукторов",
+		"инженерные инструменты абдукторов",
+		"хирургические инструменты абдукторов",
+		"музыкальные инструменты абдукторов"
+    ],
+
+    "powergame_shoes": [
+		"джампбутсы",
+        "магбутсы",
+        "подкрадутсы"
+	],
+
+	"powergame_potions": [
+		"красное зелье",
+		"синее зелье",
+		"зелёное зелье",
+		"серое зелье",
+		"серобуромалиновое зелье",
+		"зелье против сноса",
+		"зелье против поноса"
+	],
+
+	"powergame_acronym": [
+		"РЦД",
+		"РПД",
+		"РПЦ",
+		"РКС",
+		"СВД"
+	],
+
+	"powergame_animal":[
+		"мур",
+		"мяу",
+		"гав",
+		"кря",
+		"хрю"
+	],
+
+	"powergame_implant": [
+		"х-рей имплант",
+		"у-рей имплант",
+		"z-рей имплант"
+	],
+
+	"powergame_hud": [
+		"СБ-худ",
+		"мед-худ",
+		"антаг-худ",
+		"админ-худ"
+	],
+
+	"powergame_pump": [
+		"помпу плюс",
+		"помпу минус",
+		"помпу умножение",
+		"помпу разделение"
+	],
+
+	"powergame_tube": [
+		"дыхательную трубку",
+		"выдыхательную трубку",
+		"вздыхательную трубку"
+	],
+
+	"powergame_anti": [
+		"антидроп",
+		"антистан",
+		"антисон"
+	],
+
+	"powergame_ator": [
+		"акселератор",
+		"иммолятор",
+		"элиминатор",
+		"антиантагоинатор",
+		"антиадминприебалсянатор"
+	],
+
+	"powergame_ammo": [
+		"пульсслаги",
+		"лазерслаги",
+		"тазерслаги"
+	],
+
+    "admins": [
+        "одмины",
+        "педали",
+        "пидали",
+        "говно на педаляъ"
+    ],
+
+    "random_gibberish": [
+        "Z",
+        "V",
+		"ГОЙДА",
+        "шкибиди"
+    ],
+
+    "servers": [
+        "масмета",
+        "мамета",
+        "ссмета",
+        "массмеит"
+    ],
+
+    "create_verbs": [
+        "дай",
+        "делай",
+        "мне сюда",
+        "меня"
+    ],
+
+    "create_nouns": [
+        "аптуктарами",
+        "антагум",
+        "прищельцам",
+        "блоп",
+        "ривинантом",
+        "кошмаром"
+    ],
+
+    "bug": [
+        "",
+        "накодил гавна!!!",
+        "хуйню накодлил??",
+        "не роабоает,/",
+		"тг кодер момен"
+    ],
+
+    "semicolon": [
+        "",
+        ";",
+        ".h"
+    ],
+
+    "god_foe": [
+		"BLASPHEMERS",
+		"PARASITES",
+		"PEASANTS",
+		"UNBELIEVERS",
+		"WEAKLINGS",
+        "HERETICS",
+        "INSECTS",
+        "MORTALS"
+    ],
+
+    "god_aggressive": [
+		"ALL WILL FALL BEFORE ME!",
+		"BURN, @pick(god_foe)!",
+		"DEATH TO @pick(god_foe)!",
+		"ENDLESS SUFFERING AWAITS YOU, @pick(god_foe).",
+        "BEGONE, @pick(god_foe)!",
+        "BLEED, @pick(god_foe)!",
+        "DIE, @pick(god_foe)!"
+    ],
+
+    "god_neutral": [
+		"BE HEALED, MORTALS. I AM FEELING MERCIFUL.",
+		"BEGONE, MORTALS.",
+		"DANCE FOR ME, LITTLE MORTALS.",
+		"HALT.",
+		"HONK...",
+		"MORTALS, SAY YOUR NAME",
+		"REST, MORTALS, TOMORROW IS A LONG DAY.",
+		"SEE THE TRUTH BEFORE YOU, MORTALS.",
+		"YOU MORTALS MAKE ME SICK.",
+		"YOU. STOP.",
+        "BE SILENT.",
+        "QUIET",
+        "STOP"
+    ],
+
+    "god_unstun": [
+		"GET UP, PRIEST.",
+		"GET UP. I HAVE NO TIME TO LOSE.",
+		"GET UP."
+    ],
+
+    "god_heal": [
+		"BE HEALED, PRIEST.",
+		"YOU SHALL SURVIVE THIS, MY PRIEST.",
+		"YOU WILL LIVE TO SEE ANOTHER DAY.",
+		"YOUR LIFE IS IMPORTANT. KEEP IT."
+    ]
+
+}

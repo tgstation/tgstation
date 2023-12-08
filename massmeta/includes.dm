@@ -111,5 +111,7 @@
 #include "code\modules\jobs\job_types\warden.dm"
 #include "game\objects\items\storage\garment.dm"
 #include "code\modules\hooch.dm"
+#include "code\__DEFINES\text.dm"
+#include "code\datums\brain_damage\mild.dm"
 //features
 #include "features\additional_circuit\includes.dm"
