@@ -1,21 +1,21 @@
 /*
+ *	Hello and welcome to sprite_accessories: For sprite accessories, such as hair,
+ *	facial hair, and possibly tattoos and stuff somewhere along the line. This file is
+ *	intended to be friendly for people with little to no actual coding experience.
+ *	The process of adding in new hairstyles has been made pain-free and easy to do.
+ *	Enjoy! - Doohl
+ *
+ *
+ *	Notice: This all gets automatically compiled in a list in dna.dm, so you do not
+ *	have to define any UI values for sprite accessories manually for hair and facial
+ *	hair. Just add in new hair types and the game will naturally adapt.
+ *
+ *	!!WARNING!!: changing existing hair information can be VERY hazardous to savefiles,
+ *	to the point where you may completely corrupt a server's savefiles. Please refrain
+ *	from doing this unless you absolutely know what you are doing, and have defined a
+ *	conversion in savefile.dm
+ */
 
-	Hello and welcome to sprite_accessories: For sprite accessories, such as hair,
-	facial hair, and possibly tattoos and stuff somewhere along the line. This file is
-	intended to be friendly for people with little to no actual coding experience.
-	The process of adding in new hairstyles has been made pain-free and easy to do.
-	Enjoy! - Doohl
-
-
-	Notice: This all gets automatically compiled in a list in dna.dm, so you do not
-	have to define any UI values for sprite accessories manually for hair and facial
-	hair. Just add in new hair types and the game will naturally adapt.
-
-	!!WARNING!!: changing existing hair information can be VERY hazardous to savefiles,
-	to the point where you may completely corrupt a server's savefiles. Please refrain
-	from doing this unless you absolutely know what you are doing, and have defined a
-	conversion in savefile.dm
-*/
 /proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
 	if(!istype(L))
 		L = list()
@@ -1772,6 +1772,10 @@
 /datum/sprite_accessory/tails/lizard/spikes
 	name = "Spikes"
 	icon_state = "spikes"
+
+/datum/sprite_accessory/tails/lizard/short
+	name = "Short"
+	icon_state = "short"
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
