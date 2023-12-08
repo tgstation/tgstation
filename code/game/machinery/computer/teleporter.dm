@@ -167,8 +167,8 @@
 				var/area/area = get_area(beacon)
 				targets[avoid_assoc_duplicate_keys(format_text(area.name), area_index)] = beacon
 
-		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_beacon_implants)
-			if (!tracking_beacon.imp_in || !isliving(tracking_beacon.loc))
+		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
+			if (isnull(tracking_beacon.imp_in) || !isliving(tracking_beacon.loc))
 				continue
 
 			var/mob/living/implanted = tracking_beacon.loc

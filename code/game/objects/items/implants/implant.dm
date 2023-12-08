@@ -110,6 +110,7 @@
 		log_combat(user, target, "implanted", "\a [name]")
 
 	SEND_SIGNAL(src, COMSIG_IMPLANT_IMPLANTED, target, user, silent, force)
+	GLOB.tracked_implants += src
 	return TRUE
 
 /**
@@ -132,12 +133,14 @@
 		human_source.sec_hud_set_implants()
 
 	SEND_SIGNAL(src, COMSIG_IMPLANT_REMOVED, source, silent, special)
+	GLOB.tracked_implants -= src
 	return TRUE
 
 /obj/item/implant/Destroy()
 	if(imp_in)
 		removed(imp_in)
 	return ..()
+
 /**
  * Gets implant specifications for the implant pad
  */
@@ -147,3 +150,68 @@
 /obj/item/implant/dropped(mob/user)
 	. = TRUE
 	..()
+
+/// Determines if the implant is visible on the implant management console.
+/// Note that this would only ever be called on implants currently inserted into a mob.
+/obj/item/implant/proc/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+	return FALSE
+
+/**
+ * Returns a list of information to show on the implant management console for this implant
+ *
+ * Unlike normal UI data, the keys of the list are shown on the UI itself, so they should be human readable.
+ */
+/obj/item/implant/proc/get_management_console_data()
+	RETURN_TYPE(/list)
+
+	var/list/info_shown = list()
+	info_shown["ID"] = imp_in.name
+	return info_shown
+
+/**
+ * Returns a list of "structs" that translate into buttons displayed on the implant management console
+ *
+ * The struct should have the following keys:
+ * * name - the name of the button, optional if button_icon is set
+ * * icon - the icon of the button, optional if button_name is set
+ * * color - the color of the button, optional
+ * * tooltip - the tooltip of the button, optional
+ * * action_key - the key that will be passed to handle_management_console_action when the button is clicked
+ * * action_params - optional, additional params passed when the button is clicked
+ */
+/obj/item/implant/proc/get_management_console_buttons()
+	SHOULD_CALL_PARENT(TRUE)
+	RETURN_TYPE(/list)
+
+	var/list/buttons = list()
+	UNTYPED_LIST_ADD(buttons, list(
+		"name" = "Self Destruct",
+		"color" = "bad",
+		"tooltip" = "Destoys the implant from within the user harmlessly.",
+		"action_key" = "self_destruct",
+	))
+	return buttons
+
+/**
+ * Handles a button click on the implant management console
+ *
+ * * user - the mob clicking the button
+ * * params - the params passed to the button, as if this were a ui_act handler.
+ * See params["implant_action"] for the action key passed to the button
+ * (which should correspond to a button returned by get_management_console_buttons)
+ * * console - the console the button was clicked on
+ */
+/obj/item/implant/proc/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner/management/console)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(params["implant_action"] == "self_destruct")
+		var/warning = tgui_alert(user, "Activation will harmlessly self-destruct this implant. Proceed?", "You sure?", list("Yes", "No"))
+		if(warning != "Yes" || QDELETED(src) || QDELETED(user) || QDELETED(console) || isnull(imp_in))
+			return TRUE
+		if(!console.is_operational || !user.can_perform_action(console, NEED_DEXTERITY|ALLOW_SILICON_REACH))
+			return TRUE
+
+		to_chat(imp_in, span_hear("You feel a tiny jolt from inside of you as one of your implants fizzles out."))
+		do_sparks(number = 2, cardinal_only = FALSE, source = imp_in)
+		deconstruct()
+		return TRUE

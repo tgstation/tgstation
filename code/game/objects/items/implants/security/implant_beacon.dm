@@ -1,6 +1,3 @@
-///List of all beacon implants currently in a mob.
-GLOBAL_LIST_EMPTY(tracked_beacon_implants)
-
 ///Essentially, just turns the implantee into a teleport beacon.
 /obj/item/implant/beacon
 	name = "beacon implant"
@@ -22,12 +19,20 @@ GLOBAL_LIST_EMPTY(tracked_beacon_implants)
 				Using this, you can teleport directly to whoever has this implant inside of them."}
 	return dat
 
-/obj/item/implant/beacon/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/tracked_implant, \
-		global_list = GLOB.tracked_beacon_implants, \
-	)
+/obj/item/implant/beacon/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+	return TRUE
+
+/obj/item/implant/beacon/get_management_console_data()
+	var/list/info_shown = ..()
+
+	var/area/destination_area = get_area(imp_in)
+	if(isnull(destination_area) || (destination_area.area_flags & NOTELEPORT))
+		info_shown["Status"] = "Implant carrier teleport signal cannot be reached!"
+	else
+		var/turf/turf_to_check = get_turf(imp_in)
+		info_shown["Status"] = "Implant carrier is in [is_safe_turf(turf_to_check, dense_atoms = TRUE) ? "a safe environment." : "a hazardous environment!"]"
+
+	return info_shown
 
 /obj/item/implanter/beacon
 	imp_type = /obj/item/implant/beacon
