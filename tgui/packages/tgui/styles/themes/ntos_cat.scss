@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+@use "sass:color";
+@use "sass:meta";
 //@use 'sass:map';
 
 //palette
@@ -17,56 +17,56 @@ $light-gray: #c3c3c3;
 $dark-gray: #858585;
 $scrollbar-color-multiplier: 0.5;
 
-@use '../colors.scss' with (
-   $primary: black,
-   $label: rgb(255, 132, 153),
-   $good: pink,
+@use "../colors.scss" with (
+  $primary: black,
+  $label: rgb(255, 132, 153),
+  $good: pink,
 
-   $bad: red,
-   // $fg-map-keys: (),
-   // $bg-map-keys: (),
- );
+  $bad: red,
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
+);
 
-@use '../base.scss' with (
-   $color-bg: orange,
-   $color-bg-grad-spread: 12%,
-   //$border-radius: 0,
- );
+@use "../base.scss" with (
+    $color-bg: orange,
+    $color-bg-grad-spread: 12%,
+    //$border-radius: 0,
+  );
 
 .theme-ntos_cat {
   // Atomic classes
-  @include meta.load-css('../atomic/color.scss', $with: ());
+  @include meta.load-css("../atomic/color.scss", $with: ());
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    "../components/Button.scss",
     $with: (
-      'color-default': pink,
-      'color-transparent-text': rgba(227, 240, 255, 0.75),
-      'color-disabled': #363636,
-      'color-selected': #465899,
-      'color-caution': #be6209
+      "color-default": pink,
+      "color-transparent-text": rgba(227, 240, 255, 0.75),
+      "color-disabled": #363636,
+      "color-selected": #465899,
+      "color-caution": #be6209
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('color-default-fill': rgb(255, 132, 153, 0.75))
+    "../components/ProgressBar.scss",
+    $with: ("color-default-fill": rgb(255, 132, 153, 0.75))
   );
   @include meta.load-css(
-    '../components/Section.scss',
-    $with: ('background-color': rgba(124, 62, 34, 0.75))
+    "../components/Section.scss",
+    $with: ("background-color": rgba(124, 62, 34, 0.75))
   );
   @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': rgba(255, 153, 0, 0.75))
+    "../components/Tooltip.scss",
+    $with: ("background-color": rgba(255, 153, 0, 0.75))
   );
 
   // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css("../layouts/Layout.scss");
+  @include meta.load-css("../layouts/Window.scss");
   @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': rgb(255, 132, 153, 0.75))
+    "../layouts/TitleBar.scss",
+    $with: ("background-color": rgb(255, 132, 153, 0.75))
   );
 
   .Section {
@@ -83,7 +83,7 @@ $scrollbar-color-multiplier: 0.5;
   }
 
   .Layout__content {
-    background-image: url('../../assets/bg-cat.svg');
+    background-image: url("../../assets/bg-cat.svg");
     background-size: 100%;
     background-repeat: no-repeat;
   }

@@ -1,8 +1,21 @@
-import { BooleanLike, classes } from 'common/react';
-import { capitalize } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, Section, Table, NumberInput, Tooltip, LabeledList, ColorBox, ProgressBar, Stack, Divider } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike, classes } from "common/react";
+import { capitalize } from "common/string";
+import { useBackend, useLocalState } from "../backend";
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Section,
+  Table,
+  NumberInput,
+  Tooltip,
+  LabeledList,
+  ColorBox,
+  ProgressBar,
+  Stack,
+  Divider,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   reagentAnalysisMode: BooleanLike;
@@ -89,7 +102,7 @@ const ChemMasterContent = (props) => {
     suggestedContainer,
   } = data;
 
-  const [itemCount, setItemCount] = useLocalState('itemCount', 1);
+  const [itemCount, setItemCount] = useLocalState("itemCount", 1);
 
   return (
     <Box>
@@ -105,18 +118,19 @@ const ChemMasterContent = (props) => {
               <Button
                 icon="eject"
                 content="Eject"
-                onClick={() => act('eject')}
+                onClick={() => act("eject")}
               />
             </Box>
           )
-        }>
+        }
+      >
         {!hasBeaker && (
-          <Box color="label" my={'4px'}>
+          <Box color="label" my={"4px"}>
             No beaker loaded.
           </Box>
         )}
         {!!hasBeaker && beakerCurrentVolume === 0 && (
-          <Box color="label" my={'4px'}>
+          <Box color="label" my={"4px"}>
             Beaker is empty.
           </Box>
         )}
@@ -139,15 +153,16 @@ const ChemMasterContent = (props) => {
               {` / ${bufferMaxVolume} units`}
             </Box>
             <Button
-              color={transferMode ? 'good' : 'bad'}
-              icon={transferMode ? 'exchange-alt' : 'trash'}
-              content={transferMode ? 'Moving reagents' : 'Destroying reagents'}
-              onClick={() => act('toggleTransferMode')}
+              color={transferMode ? "good" : "bad"}
+              icon={transferMode ? "exchange-alt" : "trash"}
+              content={transferMode ? "Moving reagents" : "Destroying reagents"}
+              onClick={() => act("toggleTransferMode")}
             />
           </>
-        }>
+        }
+      >
         {bufferContents.length === 0 && (
-          <Box color="label" my={'4px'}>
+          <Box color="label" my={"4px"}>
             Buffer is empty.
           </Box>
         )}
@@ -169,7 +184,7 @@ const ChemMasterContent = (props) => {
             (!isPrinting ? (
               <Box>
                 <NumberInput
-                  unit={'items'}
+                  unit={"items"}
                   step={1}
                   value={itemCount}
                   minValue={1}
@@ -183,8 +198,8 @@ const ChemMasterContent = (props) => {
                     Math.round(
                       Math.min(
                         selectedContainerVolume,
-                        bufferCurrentVolume / itemCount
-                      ) * 100
+                        bufferCurrentVolume / itemCount,
+                      ) * 100,
                     ) / 100
                   } u. each`}
                 </Box>
@@ -192,7 +207,7 @@ const ChemMasterContent = (props) => {
                   content="Print"
                   icon="flask"
                   onClick={() =>
-                    act('create', {
+                    act("create", {
                       itemCount: itemCount,
                     })
                   }
@@ -201,12 +216,14 @@ const ChemMasterContent = (props) => {
             ) : (
               <Button content="Printing..." icon="gear" iconSpin disabled />
             ))
-          }>
+          }
+        >
           {!!hasContainerSuggestion && (
             <Button.Checkbox
-              onClick={() => act('toggleContainerSuggestion')}
+              onClick={() => act("toggleContainerSuggestion")}
               checked={doSuggestContainer}
-              mb={1}>
+              mb={1}
+            >
               Guess container by main reagent in the buffer
             </Button.Checkbox>
           )}
@@ -224,7 +241,7 @@ const ChemMasterContent = (props) => {
                       category={category}
                       container={container}
                     />
-                  )
+                  ),
               )}
             </Box>
           ))}
@@ -238,19 +255,22 @@ const ChemMasterContent = (props) => {
               color="bad"
               icon="times"
               content="Stop"
-              onClick={() => act('stopPrinting')}
+              onClick={() => act("stopPrinting")}
             />
-          }>
+          }
+        >
           <ProgressBar
             value={printingProgress}
             minValue={0}
             maxValue={printingTotal}
-            color="good">
+            color="good"
+          >
             <Box
               lineHeight={1.9}
               style={{
-                textShadow: '1px 1px 0 black',
-              }}>
+                textShadow: "1px 1px 0 black",
+              }}
+            >
               {`Printing ${printingProgress} out of ${printingTotal}`}
             </Box>
           </ProgressBar>
@@ -276,7 +296,7 @@ const ReagentEntry = (props) => {
           content="1"
           disabled={isPrinting}
           onClick={() => {
-            act('transfer', {
+            act("transfer", {
               reagentRef: chemical.ref,
               amount: 1,
               target: transferTo,
@@ -287,7 +307,7 @@ const ReagentEntry = (props) => {
           content="5"
           disabled={isPrinting}
           onClick={() =>
-            act('transfer', {
+            act("transfer", {
               reagentRef: chemical.ref,
               amount: 5,
               target: transferTo,
@@ -298,7 +318,7 @@ const ReagentEntry = (props) => {
           content="10"
           disabled={isPrinting}
           onClick={() =>
-            act('transfer', {
+            act("transfer", {
               reagentRef: chemical.ref,
               amount: 10,
               target: transferTo,
@@ -309,7 +329,7 @@ const ReagentEntry = (props) => {
           content="All"
           disabled={isPrinting}
           onClick={() =>
-            act('transfer', {
+            act("transfer", {
               reagentRef: chemical.ref,
               amount: 1000,
               target: transferTo,
@@ -321,7 +341,7 @@ const ReagentEntry = (props) => {
           title="Custom amount"
           disabled={isPrinting}
           onClick={() =>
-            act('transfer', {
+            act("transfer", {
               reagentRef: chemical.ref,
               amount: -1,
               target: transferTo,
@@ -332,7 +352,7 @@ const ReagentEntry = (props) => {
           icon="question"
           title="Analyze"
           onClick={() =>
-            act('analyze', {
+            act("analyze", {
               reagentRef: chemical.ref,
             })
           }
@@ -345,30 +365,32 @@ const ReagentEntry = (props) => {
 const ContainerButton = ({ container, category }) => {
   const { act, data } = useBackend<Data>();
   const { isPrinting, selectedContainerRef } = data;
-  const isPillPatch = ['pills', 'patches'].includes(category.name);
+  const isPillPatch = ["pills", "patches"].includes(category.name);
   return (
     <Tooltip
       key={container.ref}
-      content={`${capitalize(container.name)}\xa0(${container.volume}u)`}>
+      content={`${capitalize(container.name)}\xa0(${container.volume}u)`}
+    >
       <Button
         overflow="hidden"
         color="transparent"
-        width={isPillPatch ? '32px' : '48px'}
-        height={isPillPatch ? '32px' : '48px'}
+        width={isPillPatch ? "32px" : "48px"}
+        height={isPillPatch ? "32px" : "48px"}
         selected={container.ref === selectedContainerRef}
         disabled={isPrinting}
         p={0}
         onClick={() => {
-          act('selectContainer', {
+          act("selectContainer", {
             ref: container.ref,
           });
-        }}>
+        }}
+      >
         <Box
-          m={isPillPatch ? '0' : '8px'}
+          m={isPillPatch ? "0" : "8px"}
           style={{
-            transform: 'scale(2)',
+            transform: "scale(2)",
           }}
-          className={classes(['chemmaster32x32', container.icon])}
+          className={classes(["chemmaster32x32", container.icon])}
         />
       </Button>
     </Tooltip>
@@ -389,7 +411,7 @@ const AnalysisResults = (props) => {
     addictionTypes,
   } = data.analysisData;
   const purityLevel =
-    purity <= 0.5 ? 'bad' : purity <= 0.75 ? 'average' : 'good'; // Color names
+    purity <= 0.5 ? "bad" : purity <= 0.75 ? "average" : "good"; // Color names
   return (
     <Section
       title="Analysis Results"
@@ -397,17 +419,19 @@ const AnalysisResults = (props) => {
         <Button
           icon="arrow-left"
           content="Back"
-          onClick={() => act('stopAnalysis')}
+          onClick={() => act("stopAnalysis")}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Name">{name}</LabeledList.Item>
         <LabeledList.Item label="Purity">
           <Box
             style={{
-              textTransform: 'capitalize',
+              textTransform: "capitalize",
             }}
-            color={purityLevel}>
+            color={purityLevel}
+          >
             {purityLevel}
           </Box>
         </LabeledList.Item>
@@ -422,10 +446,10 @@ const AnalysisResults = (props) => {
           {metaRate} units/second
         </LabeledList.Item>
         <LabeledList.Item label="Overdose Threshold">
-          {overdose > 0 ? `${overdose} units` : 'N/A'}
+          {overdose > 0 ? `${overdose} units` : "N/A"}
         </LabeledList.Item>
         <LabeledList.Item label="Addiction Types">
-          {addictionTypes.length ? addictionTypes.toString() : 'N/A'}
+          {addictionTypes.length ? addictionTypes.toString() : "N/A"}
         </LabeledList.Item>
       </LabeledList>
     </Section>
@@ -440,9 +464,10 @@ const GroupTitle = ({ title }) => {
       </Stack.Item>
       <Stack.Item
         style={{
-          textTransform: 'capitalize',
+          textTransform: "capitalize",
         }}
-        color={'gray'}>
+        color={"gray"}
+      >
         {title}
       </Stack.Item>
       <Stack.Item grow>

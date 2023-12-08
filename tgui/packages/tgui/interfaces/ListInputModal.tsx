@@ -1,9 +1,16 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
-import { Button, Input, Section, Stack } from '../components';
-import { useBackend, useLocalState } from '../backend';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
-import { Window } from '../layouts';
+import { Loader } from "./common/Loader";
+import { InputButtons } from "./common/InputButtons";
+import { Button, Input, Section, Stack } from "../components";
+import { useBackend, useLocalState } from "../backend";
+import {
+  KEY_A,
+  KEY_DOWN,
+  KEY_ESCAPE,
+  KEY_ENTER,
+  KEY_UP,
+  KEY_Z,
+} from "../../common/keycodes";
+import { Window } from "../layouts";
 
 type ListInputData = {
   init_value: string;
@@ -18,23 +25,23 @@ export const ListInputModal = (props) => {
   const { act, data } = useBackend<ListInputData>();
   const {
     items = [],
-    message = '',
+    message = "",
     init_value,
     large_buttons,
     timeout,
     title,
   } = data;
   const [selected, setSelected] = useLocalState<number>(
-    'selected',
-    items.indexOf(init_value)
+    "selected",
+    items.indexOf(init_value),
   );
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
-    'searchBarVisible',
-    items.length > 9
+    "searchBarVisible",
+    items.length > 9,
   );
   const [searchQuery, setSearchQuery] = useLocalState<string>(
-    'searchQuery',
-    ''
+    "searchQuery",
+    "",
   );
   // User presses up or down on keyboard
   // Simulates clicking an item
@@ -43,7 +50,7 @@ export const ListInputModal = (props) => {
     if (key === KEY_DOWN) {
       if (selected === null || selected === len) {
         setSelected(0);
-        document!.getElementById('0')?.scrollIntoView();
+        document!.getElementById("0")?.scrollIntoView();
       } else {
         setSelected(selected + 1);
         document!.getElementById((selected + 1).toString())?.scrollIntoView();
@@ -89,15 +96,15 @@ export const ListInputModal = (props) => {
     }
     setSearchQuery(query);
     setSelected(0);
-    document!.getElementById('0')?.scrollIntoView();
+    document!.getElementById("0")?.scrollIntoView();
   };
   // User presses the search button
   const onSearchBarToggle = () => {
     setSearchBarVisible(!searchBarVisible);
-    setSearchQuery('');
+    setSearchQuery("");
   };
-  const filteredItems = items.filter((item) =>
-    item?.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredItems = items.filter(
+    (item) => item?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
   // Dynamically changes the window height based on the message.
   const windowHeight =
@@ -119,7 +126,7 @@ export const ListInputModal = (props) => {
           }
           if (keyCode === KEY_ENTER) {
             event.preventDefault();
-            act('submit', { entry: filteredItems[selected] });
+            act("submit", { entry: filteredItems[selected] });
           }
           if (!searchBarVisible && keyCode >= KEY_A && keyCode <= KEY_Z) {
             event.preventDefault();
@@ -127,19 +134,20 @@ export const ListInputModal = (props) => {
           }
           if (keyCode === KEY_ESCAPE) {
             event.preventDefault();
-            act('cancel');
+            act("cancel");
           }
-        }}>
+        }}
+      >
         <Section
           buttons={
             <Button
               compact
-              icon={searchBarVisible ? 'search' : 'font'}
+              icon={searchBarVisible ? "search" : "font"}
               selected
               tooltip={
                 searchBarVisible
-                  ? 'Search Mode. Type to search or use arrow keys to select manually.'
-                  : 'Hotkey Mode. Type a letter to jump to the first match. Enter to select.'
+                  ? "Search Mode. Type to search or use arrow keys to select manually."
+                  : "Hotkey Mode. Type a letter to jump to the first match. Enter to select."
               }
               tooltipPosition="left"
               onClick={() => onSearchBarToggle()}
@@ -147,7 +155,8 @@ export const ListInputModal = (props) => {
           }
           className="ListInput__Section"
           fill
-          title={message}>
+          title={message}
+        >
           <Stack fill vertical>
             <Stack.Item grow>
               <ListDisplay
@@ -197,7 +206,7 @@ const ListDisplay = (props) => {
             onClick={() => onClick(index)}
             onDblClick={(event) => {
               event.preventDefault();
-              act('submit', { entry: filteredItems[selected] });
+              act("submit", { entry: filteredItems[selected] });
             }}
             onKeyDown={(event) => {
               const keyCode = window.event ? event.which : event.keyCode;
@@ -208,9 +217,10 @@ const ListDisplay = (props) => {
             }}
             selected={index === selected}
             style={{
-              'animation': 'none',
-              'transition': 'none',
-            }}>
+              animation: "none",
+              transition: "none",
+            }}
+          >
             {item.replace(/^\w/, (c) => c.toUpperCase())}
           </Button>
         );
@@ -234,7 +244,7 @@ const SearchBar = (props) => {
       fluid
       onEnter={(event) => {
         event.preventDefault();
-        act('submit', { entry: filteredItems[selected] });
+        act("submit", { entry: filteredItems[selected] });
       }}
       onInput={(_, value) => onSearch(value)}
       placeholder="Search..."

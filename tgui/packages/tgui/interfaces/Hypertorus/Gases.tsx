@@ -1,12 +1,19 @@
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui/components';
-import { HelpDummy, HoverHelp } from './helpers';
-import { HypertorusFuel, HypertorusGas } from '.';
-import { filter, sortBy } from 'common/collections';
-import { getGasColor, getGasLabel } from 'tgui/constants';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from "tgui/components";
+import { HelpDummy, HoverHelp } from "./helpers";
+import { HypertorusFuel, HypertorusGas } from ".";
+import { filter, sortBy } from "common/collections";
+import { getGasColor, getGasLabel } from "tgui/constants";
 
-import { flow } from 'common/fp';
-import { toFixed } from 'common/math';
-import { useBackend } from 'tgui/backend';
+import { flow } from "common/fp";
+import { toFixed } from "common/math";
+import { useBackend } from "tgui/backend";
 
 type GasListProps = {
   input_max: number;
@@ -40,20 +47,20 @@ type HypertorusData = {
 
 const moderator_gases_help = {
   plasma:
-    'Produces basic gases. Has a modest heat bonus to help kick start the early fusion process. When added in large quantities, its high heat capacity can help to slow down temperature changes to manageable speeds.',
-  bz: 'Produces intermediate gases at Fusion Level 3 or higher. Massively increases radiation, and induces hallucinations in bystanders.',
+    "Produces basic gases. Has a modest heat bonus to help kick start the early fusion process. When added in large quantities, its high heat capacity can help to slow down temperature changes to manageable speeds.",
+  bz: "Produces intermediate gases at Fusion Level 3 or higher. Massively increases radiation, and induces hallucinations in bystanders.",
   proto_nitrate:
-    'Produces advanced gases. Massively increases radiation, and accelerates the rate of temperature change. Make sure you have enough cooling.',
-  o2: 'When added in high quantities, rapidly purges iron content. Does not purge iron content fast enough to keep up with damage at high Fusion Levels.',
+    "Produces advanced gases. Massively increases radiation, and accelerates the rate of temperature change. Make sure you have enough cooling.",
+  o2: "When added in high quantities, rapidly purges iron content. Does not purge iron content fast enough to keep up with damage at high Fusion Levels.",
   healium:
-    'Directly heals a heavily damaged HFR core at high Fusion Levels, but is rapidly consumed in the process.',
+    "Directly heals a heavily damaged HFR core at high Fusion Levels, but is rapidly consumed in the process.",
   antinoblium:
-    'Provides huge amounts of energy and radiation. Can cause dangerous electrical storms even from a healthy HFR core when present in more than trace amounts. Wear appropriate electrical protection when handling.',
+    "Provides huge amounts of energy and radiation. Can cause dangerous electrical storms even from a healthy HFR core when present in more than trace amounts. Wear appropriate electrical protection when handling.",
   freon:
-    'Saps most forms of energy expression. Slows the rate of temperature change.',
+    "Saps most forms of energy expression. Slows the rate of temperature change.",
 } as const;
 
-const moderator_gases_sticky_order = ['plasma', 'bz', 'proto_nitrate'] as const;
+const moderator_gases_sticky_order = ["plasma", "bz", "proto_nitrate"] as const;
 
 const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
   const gases_by_id = {};
@@ -78,7 +85,7 @@ const GasList = (props: GasListProps) => {
     raw_gases = [],
     minimumScale,
     prepend,
-    rateHelp = '',
+    rateHelp = "",
     stickyGases,
   } = props;
   const { start_power, start_cooling } = data;
@@ -100,11 +107,12 @@ const GasList = (props: GasListProps) => {
             <HoverHelp content={rateHelp} />
             Injection control:
           </>
-        }>
+        }
+      >
         <Button
           disabled={start_power === 0 || start_cooling === 0}
-          icon={data[input_switch] ? 'power-off' : 'times'}
-          content={data[input_switch] ? 'On' : 'Off'}
+          icon={data[input_switch] ? "power-off" : "times"}
+          content={data[input_switch] ? "On" : "Off"}
           selected={data[input_switch]}
           onClick={() => act(input_switch)}
         />
@@ -130,13 +138,15 @@ const GasList = (props: GasListProps) => {
                 {labelPrefix}
                 {getGasLabel(gas.id)}:
               </>
-            }>
+            }
+          >
             <ProgressBar
               color={getGasColor(gas.id)}
               value={gas.amount}
               minValue={0}
-              maxValue={minimumScale}>
-              {toFixed(gas.amount, 2) + ' moles'}
+              maxValue={minimumScale}
+            >
+              {toFixed(gas.amount, 2) + " moles"}
             </ProgressBar>
           </LabeledList.Item>
         );
@@ -169,15 +179,15 @@ export const HypertorusGases = (props) => {
             minimumScale={500}
             prepend={() => <HelpDummy />}
             rateHelp={
-              'The rate at which new fuel is added from the fuel input port.' +
-              ' This rate affects the rate of production,' +
-              ' even when input is not active.'
+              "The rate at which new fuel is added from the fuel input port." +
+              " This rate affects the rate of production," +
+              " even when input is not active."
             }
             stickyGases={selected_fuel.requirements}
           />
         ) : (
           <Box align="center" color="red">
-            {'No recipe selected'}
+            {"No recipe selected"}
           </Box>
         )}
       </Section>
@@ -190,7 +200,7 @@ export const HypertorusGases = (props) => {
           raw_gases={moderator_gases}
           minimumScale={500}
           rateHelp={
-            'The rate at which new moderator gas is added from the moderator port.'
+            "The rate at which new moderator gas is added from the moderator port."
           }
           stickyGases={moderator_gases_sticky_order}
           prepend={(gas) =>

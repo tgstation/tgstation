@@ -1,9 +1,19 @@
-import { Window } from '../layouts';
-import { useBackend } from '../backend';
-import { Button, Collapsible, Icon, NoticeBox, ProgressBar, Section, Stack, Table, Tooltip } from '../components';
-import { BooleanLike } from 'common/react';
-import { LoadingScreen } from './common/LoadingToolbox';
-import { TableCell, TableRow } from '../components/Table';
+import { Window } from "../layouts";
+import { useBackend } from "../backend";
+import {
+  Button,
+  Collapsible,
+  Icon,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from "../components";
+import { BooleanLike } from "common/react";
+import { LoadingScreen } from "./common/LoadingToolbox";
+import { TableCell, TableRow } from "../components/Table";
 
 type Data =
   | {
@@ -65,13 +75,13 @@ const isConnected = (data: Data): data is Data & { connected: 1 } =>
 const getColor = (difficulty: number) => {
   switch (difficulty) {
     case Difficulty.Low:
-      return 'yellow';
+      return "yellow";
     case Difficulty.Medium:
-      return 'average';
+      return "average";
     case Difficulty.High:
-      return 'bad';
+      return "bad";
     default:
-      return '';
+      return "";
   }
 };
 
@@ -109,10 +119,10 @@ const AccessView = (props) => {
   let selected;
   if (generated_domain) {
     selected = randomized
-      ? '???'
+      ? "???"
       : sorted.find(({ id }) => id === generated_domain)?.name;
   } else {
-    selected = 'Nothing loaded';
+    selected = "Nothing loaded";
   }
 
   return (
@@ -126,9 +136,10 @@ const AccessView = (props) => {
                   !ready || occupants > 0 || points < 1 || !!generated_domain
                 }
                 icon="random"
-                onClick={() => act('random_domain')}
+                onClick={() => act("random_domain")}
                 mr={1}
-                tooltip="Get a random domain for more rewards. Weighted towards your current points. Minimum: 1 point.">
+                tooltip="Get a random domain for more rewards. Weighted towards your current points. Minimum: 1 point."
+              >
                 Randomize
               </Button>
               <Tooltip content="Accrued points for purchasing domains.">
@@ -139,7 +150,8 @@ const AccessView = (props) => {
           }
           fill
           scrollable
-          title="Virtual Domains">
+          title="Virtual Domains"
+        >
           {sorted.map((domain) => (
             <DomainEntry key={domain.id} domain={domain} />
           ))}
@@ -158,7 +170,7 @@ const AccessView = (props) => {
               <Button.Confirm
                 content="Stop Domain"
                 disabled={!ready || !generated_domain}
-                onClick={() => act('stop_domain')}
+                onClick={() => act("stop_domain")}
                 tooltip="Begins shutdown. Will notify anyone connected."
               />
             </Stack.Item>
@@ -184,14 +196,14 @@ const DomainEntry = (props: DomainEntryProps) => {
   const occupied = occupants > 0;
   let buttonIcon, buttonName;
   if (randomized) {
-    buttonIcon = '';
-    buttonName = '???';
+    buttonIcon = "";
+    buttonName = "???";
   } else if (current) {
-    buttonIcon = 'download';
-    buttonName = 'Deployed';
+    buttonIcon = "download";
+    buttonName = "Deployed";
   } else {
-    buttonIcon = 'coins';
-    buttonName = 'Deploy';
+    buttonIcon = "coins";
+    buttonName = "Deploy";
   }
 
   return (
@@ -200,8 +212,9 @@ const DomainEntry = (props: DomainEntryProps) => {
         <Button
           disabled={!!generated_domain || !ready || occupied || points < cost}
           icon={buttonIcon}
-          onClick={() => act('set_domain', { id })}
-          tooltip={!!generated_domain && 'Stop current domain first.'}>
+          onClick={() => act("set_domain", { id })}
+          tooltip={!!generated_domain && "Stop current domain first."}
+        >
           {buttonName}
         </Button>
       }
@@ -210,14 +223,15 @@ const DomainEntry = (props: DomainEntryProps) => {
         <>
           {name}
           {difficulty === Difficulty.High && <Icon name="skull" ml={1} />}
-          {!!is_modular && name !== '???' && <Icon name="cubes" ml={1} />}
+          {!!is_modular && name !== "???" && <Icon name="cubes" ml={1} />}
         </>
-      }>
+      }
+    >
       <Stack height={5}>
         <Stack.Item color="label" grow={4}>
           {desc}
-          {!!is_modular && ' (Modular)'}
-          {difficulty === Difficulty.High && ' (Hard)'}
+          {!!is_modular && " (Modular)"}
+          {difficulty === Difficulty.High && " (Hard)"}
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item grow>
@@ -265,19 +279,21 @@ const AvatarDisplay = (props) => {
           <Stack.Item>
             <Button
               icon="sync"
-              onClick={() => act('refresh')}
-              tooltip="Refresh avatar data.">
+              onClick={() => act("refresh")}
+              tooltip="Refresh avatar data."
+            >
               Refresh
             </Button>
           </Stack.Item>
         </Stack>
-      }>
+      }
+    >
       <Table>
         {avatars.map(({ health, name, pilot, brute, burn, tox, oxy }) => (
           <TableRow key={name}>
             <TableCell color="label">
-              {pilot} as{' '}
-              <span style={{ color: 'white' }}>&quot;{name}&quot;</span>
+              {pilot} as{" "}
+              <span style={{ color: "white" }}>&quot;{name}&quot;</span>
             </TableCell>
             <TableCell collapsing>
               <Stack>
@@ -287,19 +303,19 @@ const AvatarDisplay = (props) => {
                   </Stack.Item>
                 )}
                 <Stack.Item>
-                  <Icon color={brute > 50 ? 'bad' : 'gray'} name="tint" />
+                  <Icon color={brute > 50 ? "bad" : "gray"} name="tint" />
                 </Stack.Item>
                 <Stack.Item>
-                  <Icon color={burn > 50 ? 'average' : 'gray'} name="fire" />
+                  <Icon color={burn > 50 ? "average" : "gray"} name="fire" />
                 </Stack.Item>
                 <Stack.Item>
                   <Icon
-                    color={tox > 50 ? 'green' : 'gray'}
+                    color={tox > 50 ? "green" : "gray"}
                     name="skull-crossbones"
                   />
                 </Stack.Item>
                 <Stack.Item>
-                  <Icon color={oxy > 50 ? 'blue' : 'gray'} name="lungs" />
+                  <Icon color={oxy > 50 ? "blue" : "gray"} name="lungs" />
                 </Stack.Item>
               </Stack>
             </TableCell>
@@ -323,13 +339,13 @@ const AvatarDisplay = (props) => {
 };
 
 const DisplayDetails = (props: DisplayDetailsProps) => {
-  const { amount = 0, color, icon = 'star' } = props;
+  const { amount = 0, color, icon = "star" } = props;
 
   if (amount === 0) {
     return <TableCell color="label">None</TableCell>;
   }
 
-  if (typeof amount === 'string') {
+  if (typeof amount === "string") {
     return <TableCell color="label">{String(amount)}</TableCell>; // don't ask
   }
 

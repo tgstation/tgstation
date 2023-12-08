@@ -4,26 +4,26 @@
  * @license MIT
  */
 
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Section, Table } from '../components';
-import { Popper } from '../components/Popper';
-import { Window } from '../layouts';
+import { decodeHtmlEntities } from "common/string";
+import { useBackend, useLocalState } from "../backend";
+import { Button, Input, Section, Table } from "../components";
+import { Popper } from "../components/Popper";
+import { Window } from "../layouts";
 
 export const RequestManager = (props) => {
   const { act, data } = useBackend();
   const { requests } = data;
   const [filteredTypes, _] = useLocalState(
-    'filteredTypes',
+    "filteredTypes",
     Object.fromEntries(
-      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
-    )
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
+    ),
   );
-  const [searchText, setSearchText] = useLocalState('searchText');
+  const [searchText, setSearchText] = useLocalState("searchText");
 
   // Handle filtering
   let displayedRequests = requests.filter(
-    (request) => filteredTypes[request.req_type]
+    (request) => filteredTypes[request.req_type],
   );
   if (searchText) {
     const filterText = searchText.toLowerCase();
@@ -32,7 +32,7 @@ export const RequestManager = (props) => {
         decodeHtmlEntities(request.message)
           .toLowerCase()
           .includes(filterText) ||
-        request.owner_name.toLowerCase().includes(filterText)
+        request.owner_name.toLowerCase().includes(filterText),
     );
   }
 
@@ -46,19 +46,20 @@ export const RequestManager = (props) => {
               <Input
                 value={searchText}
                 onInput={(_, value) => setSearchText(value)}
-                placeholder={'Search...'}
+                placeholder={"Search..."}
                 mr={1}
               />
               <FilterPanel />
             </>
-          }>
+          }
+        >
           {displayedRequests.map((request) => (
             <div className="RequestManager__row" key={request.id}>
               <div className="RequestManager__rowContents">
                 <h2 className="RequestManager__header">
                   <span className="RequestManager__headerText">
                     {request.owner_name}
-                    {request.owner === null && ' [DC]'}
+                    {request.owner === null && " [DC]"}
                   </span>
                   <span className="RequestManager__timestamp">
                     {request.timestamp_str}
@@ -79,12 +80,12 @@ export const RequestManager = (props) => {
 };
 
 const displayTypeMap = {
-  'request_prayer': 'PRAYER',
-  'request_centcom': 'CENTCOM',
-  'request_syndicate': 'SYNDICATE',
-  'request_nuke': 'NUKE CODE',
-  'request_fax': 'FAX',
-  'request_internet_sound': 'INTERNET SOUND',
+  request_prayer: "PRAYER",
+  request_centcom: "CENTCOM",
+  request_syndicate: "SYNDICATE",
+  request_nuke: "NUKE CODE",
+  request_fax: "FAX",
+  request_internet_sound: "INTERNET SOUND",
 };
 
 const RequestType = (props) => {
@@ -103,26 +104,26 @@ const RequestControls = (props) => {
 
   return (
     <div className="RequestManager__controlsContainer">
-      <Button onClick={() => act('pp', { id: request.id })}>PP</Button>
-      <Button onClick={() => act('vv', { id: request.id })}>VV</Button>
-      <Button onClick={() => act('sm', { id: request.id })}>SM</Button>
-      <Button onClick={() => act('flw', { id: request.id })}>FLW</Button>
-      <Button onClick={() => act('tp', { id: request.id })}>TP</Button>
-      <Button onClick={() => act('logs', { id: request.id })}>LOGS</Button>
-      <Button onClick={() => act('smite', { id: request.id })}>SMITE</Button>
-      {request.req_type !== 'request_prayer' && (
-        <Button onClick={() => act('rply', { id: request.id })}>RPLY</Button>
+      <Button onClick={() => act("pp", { id: request.id })}>PP</Button>
+      <Button onClick={() => act("vv", { id: request.id })}>VV</Button>
+      <Button onClick={() => act("sm", { id: request.id })}>SM</Button>
+      <Button onClick={() => act("flw", { id: request.id })}>FLW</Button>
+      <Button onClick={() => act("tp", { id: request.id })}>TP</Button>
+      <Button onClick={() => act("logs", { id: request.id })}>LOGS</Button>
+      <Button onClick={() => act("smite", { id: request.id })}>SMITE</Button>
+      {request.req_type !== "request_prayer" && (
+        <Button onClick={() => act("rply", { id: request.id })}>RPLY</Button>
       )}
-      {request.req_type === 'request_nuke' && (
-        <Button onClick={() => act('setcode', { id: request.id })}>
+      {request.req_type === "request_nuke" && (
+        <Button onClick={() => act("setcode", { id: request.id })}>
           SETCODE
         </Button>
       )}
-      {request.req_type === 'request_fax' && (
-        <Button onClick={() => act('show', { id: request.id })}>SHOW</Button>
+      {request.req_type === "request_fax" && (
+        <Button onClick={() => act("show", { id: request.id })}>SHOW</Button>
       )}
-      {request.req_type === 'request_internet_sound' && (
-        <Button onClick={() => act('play', { id: request.id })}>PLAY</Button>
+      {request.req_type === "request_internet_sound" && (
+        <Button onClick={() => act("play", { id: request.id })}>PLAY</Button>
       )}
     </div>
   );
@@ -130,27 +131,28 @@ const RequestControls = (props) => {
 
 const FilterPanel = (props) => {
   const [filterVisible, setFilterVisible] = useLocalState(
-    'filterVisible',
-    false
+    "filterVisible",
+    false,
   );
   const [filteredTypes, setFilteredTypes] = useLocalState(
-    'filteredTypes',
+    "filteredTypes",
     Object.fromEntries(
-      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
-    )
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
+    ),
   );
 
   return (
     <Popper
       options={{
-        placement: 'bottom-start',
+        placement: "bottom-start",
       }}
       popperContent={
         <div
           className="RequestManager__filterPanel"
           style={{
-            display: filterVisible ? 'block' : 'none',
-          }}>
+            display: filterVisible ? "block" : "none",
+          }}
+        >
           <Table width="0">
             {Object.keys(displayTypeMap).map((type) => {
               return (
@@ -173,7 +175,8 @@ const FilterPanel = (props) => {
             })}
           </Table>
         </div>
-      }>
+      }
+    >
       <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
         Type Filter
       </Button>

@@ -1,16 +1,16 @@
-import { filter, map, sortBy, uniq } from 'common/collections';
-import { flow } from 'common/fp';
-import { createSearch } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, Input, Section, Stack, Tabs } from '../components';
-import { Window } from '../layouts';
+import { filter, map, sortBy, uniq } from "common/collections";
+import { flow } from "common/fp";
+import { createSearch } from "common/string";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Icon, Input, Section, Stack, Tabs } from "../components";
+import { Window } from "../layouts";
 
 // here's an important mental define:
 // custom outfits give a ref keyword instead of path
 const getOutfitKey = (outfit) => outfit.path || outfit.ref;
 
 const useOutfitTabs = (categories) => {
-  return useLocalState('selected-tab', categories[0]);
+  return useLocalState("selected-tab", categories[0]);
 };
 
 export const SelectEquipment = (props) => {
@@ -28,14 +28,14 @@ export const SelectEquipment = (props) => {
   // at least a 'Custom' tab so the button to create a new one pops up
   const categories = uniq([
     ...outfits.map((entry) => entry.category),
-    'Custom',
+    "Custom",
   ]);
   const [tab] = useOutfitTabs(categories);
 
-  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [searchText, setSearchText] = useLocalState("searchText", "");
   const searchFilter = createSearch(
     searchText,
-    (entry) => entry.name + entry.path
+    (entry) => entry.name + entry.path,
   );
 
   const visibleOutfits = flow([
@@ -44,7 +44,7 @@ export const SelectEquipment = (props) => {
     sortBy(
       (entry) => !entry.favorite,
       (entry) => !entry.priority,
-      (entry) => entry.name
+      (entry) => entry.name,
     ),
   ])(outfits);
 
@@ -110,7 +110,8 @@ const DisplayTabs = (props) => {
         <Tabs.Tab
           key={category}
           selected={tab === category}
-          onClick={() => setTab(category)}>
+          onClick={() => setTab(category)}
+        >
           {category}
         </Tabs.Tab>
       ))}
@@ -129,29 +130,30 @@ const OutfitDisplay = (props) => {
           key={getOutfitKey(entry)}
           fluid
           ellipsis
-          icon={entry.favorite && 'star'}
+          icon={entry.favorite && "star"}
           iconColor="gold"
           content={entry.name}
           title={entry.path || entry.name}
           selected={getOutfitKey(entry) === current_outfit}
           onClick={() =>
-            act('preview', {
+            act("preview", {
               path: getOutfitKey(entry),
             })
           }
           onDblClick={() =>
-            act('applyoutfit', {
+            act("applyoutfit", {
               path: getOutfitKey(entry),
             })
           }
         />
       ))}
-      {currentTab === 'Custom' && (
+      {currentTab === "Custom" && (
         <Button
           color="transparent"
           icon="plus"
           fluid
-          onClick={() => act('customoutfit')}>
+          onClick={() => act("customoutfit")}
+        >
           Create a custom outfit...
         </Button>
       )}
@@ -169,11 +171,11 @@ const CurrentlySelectedDisplay = (props) => {
         <Stack.Item>
           <Icon
             size={1.6}
-            name={entry.favorite ? 'star' : 'star-o'}
+            name={entry.favorite ? "star" : "star-o"}
             color="gold"
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: "pointer" }}
             onClick={() =>
-              act('togglefavorite', {
+              act("togglefavorite", {
                 path: entry.path,
               })
             }
@@ -185,10 +187,11 @@ const CurrentlySelectedDisplay = (props) => {
         <Box
           title={entry?.path}
           style={{
-            'overflow': 'hidden',
-            whiteSpace: 'nowrap',
-            textOverflow: 'ellipsis',
-          }}>
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            textOverflow: "ellipsis",
+          }}
+        >
           {entry?.name}
         </Box>
       </Stack.Item>
@@ -198,10 +201,11 @@ const CurrentlySelectedDisplay = (props) => {
           lineHeight={2}
           color="green"
           onClick={() =>
-            act('applyoutfit', {
+            act("applyoutfit", {
               path: current_outfit,
             })
-          }>
+          }
+        >
           Confirm
         </Button>
       </Stack.Item>

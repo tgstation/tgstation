@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   timing: BooleanLike;
@@ -22,47 +22,48 @@ export const BrigTimer = (props) => {
             <>
               <Button
                 icon="clock-o"
-                content={timing ? 'Stop' : 'Start'}
+                content={timing ? "Stop" : "Start"}
                 selected={timing}
-                onClick={() => act(timing ? 'stop' : 'start')}
+                onClick={() => act(timing ? "stop" : "start")}
               />
               <Button
                 icon="lightbulb-o"
-                content={flash_charging ? 'Recharging' : 'Flash'}
+                content={flash_charging ? "Recharging" : "Flash"}
                 disabled={flash_charging}
-                onClick={() => act('flash')}
+                onClick={() => act("flash")}
               />
             </>
-          }>
+          }
+        >
           <Button
             icon="fast-backward"
-            onClick={() => act('time', { adjust: -600 })}
+            onClick={() => act("time", { adjust: -600 })}
           />
           <Button
             icon="backward"
-            onClick={() => act('time', { adjust: -100 })}
-          />{' '}
-          {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}{' '}
-          <Button icon="forward" onClick={() => act('time', { adjust: 100 })} />
+            onClick={() => act("time", { adjust: -100 })}
+          />{" "}
+          {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}{" "}
+          <Button icon="forward" onClick={() => act("time", { adjust: 100 })} />
           <Button
             icon="fast-forward"
-            onClick={() => act('time', { adjust: 600 })}
+            onClick={() => act("time", { adjust: 600 })}
           />
           <br />
           <Button
             icon="hourglass-start"
             content="Short"
-            onClick={() => act('preset', { preset: 'short' })}
+            onClick={() => act("preset", { preset: "short" })}
           />
           <Button
             icon="hourglass-start"
             content="Medium"
-            onClick={() => act('preset', { preset: 'medium' })}
+            onClick={() => act("preset", { preset: "medium" })}
           />
           <Button
             icon="hourglass-start"
             content="Long"
-            onClick={() => act('preset', { preset: 'long' })}
+            onClick={() => act("preset", { preset: "long" })}
           />
         </Section>
       </Window.Content>

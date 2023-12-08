@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { Box } from '../components';
+import { Box } from "../components";
 
 export const BoxWithSampleText = (props) => {
   return (

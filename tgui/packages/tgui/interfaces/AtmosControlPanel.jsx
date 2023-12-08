@@ -1,8 +1,8 @@
-import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Table } from '../components';
-import { Window } from '../layouts';
+import { map, sortBy } from "common/collections";
+import { flow } from "common/fp";
+import { useBackend } from "../backend";
+import { Box, Button, Flex, Section, Table } from "../components";
+import { Window } from "../layouts";
 
 export const AtmosControlPanel = (props) => {
   const { act, data } = useBackend();
@@ -20,9 +20,10 @@ export const AtmosControlPanel = (props) => {
         <Flex justify="space-between" align="baseline">
           <Flex.Item>
             <Button
-              onClick={() => act('toggle-freeze')}
-              color={data.frozen === 1 ? 'good' : 'bad'}>
-              {data.frozen === 1 ? 'Freeze Subsystem' : 'Unfreeze Subsystem'}
+              onClick={() => act("toggle-freeze")}
+              color={data.frozen === 1 ? "good" : "bad"}
+            >
+              {data.frozen === 1 ? "Freeze Subsystem" : "Unfreeze Subsystem"}
             </Button>
           </Flex.Item>
           <Flex.Item>Fire Cnt: {data.fire_count}</Flex.Item>
@@ -33,14 +34,16 @@ export const AtmosControlPanel = (props) => {
           <Flex.Item>
             <Button.Checkbox
               checked={data.showing_user}
-              onClick={() => act('toggle_user_display')}>
+              onClick={() => act("toggle_user_display")}
+            >
               Personal View
             </Button.Checkbox>
           </Flex.Item>
           <Flex.Item>
             <Button.Checkbox
               checked={data.show_all}
-              onClick={() => act('toggle_show_all')}>
+              onClick={() => act("toggle_show_all")}
+            >
               Display all
             </Button.Checkbox>
           </Flex.Item>
@@ -56,7 +59,7 @@ export const AtmosControlPanel = (props) => {
                 <Table.Cell collapsing>Dismantle</Table.Cell>
                 <Table.Cell collapsing>Turfs</Table.Cell>
                 <Table.Cell collapsing>
-                  {data.display_max === 1 && 'Max Share'}
+                  {data.display_max === 1 && "Max Share"}
                 </Table.Cell>
                 <Table.Cell collapsing>Display</Table.Cell>
               </Table.Row>
@@ -66,7 +69,7 @@ export const AtmosControlPanel = (props) => {
                     <Button
                       content={group.area}
                       onClick={() =>
-                        act('move-to-target', {
+                        act("move-to-target", {
                           spot: group.jump_to,
                         })
                       }
@@ -80,7 +83,7 @@ export const AtmosControlPanel = (props) => {
                     <Button.Checkbox
                       checked={group.should_show}
                       onClick={() =>
-                        act('toggle_show_group', {
+                        act("toggle_show_group", {
                           group: group.group,
                         })
                       }

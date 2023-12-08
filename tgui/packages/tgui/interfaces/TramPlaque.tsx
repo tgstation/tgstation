@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { NoticeBox, Section, LabeledList, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { NoticeBox, Section, LabeledList, Stack } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   currentTram: Tram[];
@@ -23,20 +23,22 @@ export const TramPlaque = (props) => {
       title="Tram Information Plaque"
       width={600}
       height={360}
-      theme="dark">
+      theme="dark"
+    >
       <Window.Content>
         <NoticeBox info>SkyyTram Mk VI by Nakamura Engineering</NoticeBox>
         <Section
           title={
             currentTram.map((serialNumber) => serialNumber.serialNumber) +
-            ' - Constructed ' +
+            " - Constructed " +
             currentTram.map((serialNumber) => serialNumber.mfgDate)
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Distance Travelled">
               {currentTram.map(
-                (serialNumber) => serialNumber.distanceTravelled / 1000
-              )}{' '}
+                (serialNumber) => serialNumber.distanceTravelled / 1000,
+              )}{" "}
               km
             </LabeledList.Item>
             <LabeledList.Item label="Collisions">

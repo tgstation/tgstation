@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use '../base.scss';
-@use '../functions.scss' as *;
-@use './Input.scss';
+@use "sass:color";
+@use "../base.scss";
+@use "../functions.scss" as *;
+@use "./Input.scss";
 
 $text-color: Input.$text-color !default;
 $background-color: Input.$background-color !default;

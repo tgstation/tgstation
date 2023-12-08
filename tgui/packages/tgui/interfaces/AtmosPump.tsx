@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, LabeledList, NumberInput, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   on: BooleanLike;
@@ -22,10 +22,10 @@ export const AtmosPump = (props) => {
           <LabeledList>
             <LabeledList.Item label="Power">
               <Button
-                icon={on ? 'power-off' : 'times'}
-                content={on ? 'On' : 'Off'}
+                icon={on ? "power-off" : "times"}
+                content={on ? "On" : "Off"}
                 selected={on}
-                onClick={() => act('power')}
+                onClick={() => act("power")}
               />
             </LabeledList.Item>
             {max_rate ? (
@@ -38,7 +38,7 @@ export const AtmosPump = (props) => {
                   minValue={0}
                   maxValue={max_rate}
                   onChange={(_, value) =>
-                    act('rate', {
+                    act("rate", {
                       rate: value,
                     })
                   }
@@ -49,8 +49,8 @@ export const AtmosPump = (props) => {
                   content="Max"
                   disabled={rate === max_rate}
                   onClick={() =>
-                    act('rate', {
-                      rate: 'max',
+                    act("rate", {
+                      rate: "max",
                     })
                   }
                 />
@@ -66,7 +66,7 @@ export const AtmosPump = (props) => {
                   maxValue={max_pressure}
                   step={10}
                   onChange={(_, value) =>
-                    act('pressure', {
+                    act("pressure", {
                       pressure: value,
                     })
                   }
@@ -77,8 +77,8 @@ export const AtmosPump = (props) => {
                   content="Max"
                   disabled={pressure === max_pressure}
                   onClick={() =>
-                    act('pressure', {
-                      pressure: 'max',
+                    act("pressure", {
+                      pressure: "max",
                     })
                   }
                 />

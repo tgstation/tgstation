@@ -1,8 +1,20 @@
-import { map, sortBy } from 'common/collections';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Modal, Tabs, Box, Input, Flex, ProgressBar, Collapsible, Icon, Divider } from '../components';
-import { Window, NtosWindow } from '../layouts';
-import { Experiment } from './ExperimentConfigure';
+import { map, sortBy } from "common/collections";
+import { useBackend, useLocalState } from "../backend";
+import {
+  Button,
+  Section,
+  Modal,
+  Tabs,
+  Box,
+  Input,
+  Flex,
+  ProgressBar,
+  Collapsible,
+  Icon,
+  Divider,
+} from "../components";
+import { Window, NtosWindow } from "../layouts";
+import { Experiment } from "./ExperimentConfigure";
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
 // This is primarily necessary due to measures that are taken to reduce the size
@@ -40,7 +52,7 @@ const selectRemappedStaticData = (data) => {
     const [name, classes] = data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
       name: name,
-      class: classes.startsWith('design') ? classes : `design32x32 ${classes}`,
+      class: classes.startsWith("design") ? classes : `design32x32 ${classes}`,
     };
   }
 
@@ -74,7 +86,7 @@ const useRemappedBackend = () => {
 // Utility Functions
 
 const abbreviations = {
-  'General Research': 'Gen. Res.',
+  "General Research": "Gen. Res.",
 };
 const abbreviateName = (name) => abbreviations[name] ?? name;
 
@@ -99,7 +111,7 @@ const TechwebStart = (props) => {
         <div>
           <b>Console Locked</b>
         </div>
-        <Button icon="unlock" onClick={() => act('toggleLock')}>
+        <Button icon="unlock" onClick={() => act("toggleLock")}>
           Unlock
         </Button>
       </Modal>
@@ -140,8 +152,8 @@ export const TechwebContent = (props) => {
     d_disk,
     locked,
   } = data;
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
-  const [lastPoints, setLastPoints] = useLocalState('lastPoints', {});
+  const [techwebRoute, setTechwebRoute] = useLocalState("techwebRoute", null);
+  const [lastPoints, setLastPoints] = useLocalState("lastPoints", {});
 
   return (
     <Flex direction="column" className="Techweb__Viewport" height="100%">
@@ -163,15 +175,16 @@ export const TechwebContent = (props) => {
               Security protocols:
               <span
                 className={`Techweb__SecProtocol ${
-                  !!sec_protocols && 'engaged'
-                }`}>
-                {sec_protocols ? 'Engaged' : 'Disengaged'}
+                  !!sec_protocols && "engaged"
+                }`}
+              >
+                {sec_protocols ? "Engaged" : "Disengaged"}
               </span>
             </Box>
           </Flex.Item>
           <Flex.Item grow={1} />
           <Flex.Item>
-            <Button fluid onClick={() => act('toggleLock')} icon="lock">
+            <Button fluid onClick={() => act("toggleLock")} icon="lock">
               Lock Console
             </Button>
             {d_disk && (
@@ -179,8 +192,9 @@ export const TechwebContent = (props) => {
                 <Button
                   fluid
                   onClick={() =>
-                    setTechwebRoute({ route: 'disk', diskType: 'design' })
-                  }>
+                    setTechwebRoute({ route: "disk", diskType: "design" })
+                  }
+                >
                   Design Disk Inserted
                 </Button>
               </Flex.Item>
@@ -190,8 +204,9 @@ export const TechwebContent = (props) => {
                 <Button
                   fluid
                   onClick={() =>
-                    setTechwebRoute({ route: 'disk', diskType: 'tech' })
-                  }>
+                    setTechwebRoute({ route: "disk", diskType: "tech" })
+                  }
+                >
                   Tech Disk Inserted
                 </Button>
               </Flex.Item>
@@ -207,12 +222,12 @@ export const TechwebContent = (props) => {
 };
 
 const TechwebRouter = (props) => {
-  const [techwebRoute] = useLocalState('techwebRoute', null);
+  const [techwebRoute] = useLocalState("techwebRoute", null);
 
   const route = techwebRoute?.route;
   const RoutedComponent =
-    (route === 'details' && TechwebNodeDetail) ||
-    (route === 'disk' && TechwebDiskMenu) ||
+    (route === "details" && TechwebNodeDetail) ||
+    (route === "disk" && TechwebDiskMenu) ||
     TechwebOverview;
 
   return <RoutedComponent {...techwebRoute} />;
@@ -221,8 +236,8 @@ const TechwebRouter = (props) => {
 const TechwebOverview = (props) => {
   const { act, data } = useRemappedBackend();
   const { nodes, node_cache, design_cache } = data;
-  const [tabIndex, setTabIndex] = useLocalState('overviewTabIndex', 1);
-  const [searchText, setSearchText] = useLocalState('searchText');
+  const [tabIndex, setTabIndex] = useLocalState("overviewTabIndex", 1);
+  const [searchText, setSearchText] = useLocalState("searchText");
 
   // Only search when 3 or more characters have been input
   const searching = searchText && searchText.trim().length > 1;
@@ -235,7 +250,7 @@ const TechwebOverview = (props) => {
         n.name.toLowerCase().includes(searchText) ||
         n.description.toLowerCase().includes(searchText) ||
         n.design_ids.some((e) =>
-          design_cache[e].name.toLowerCase().includes(searchText)
+          design_cache[e].name.toLowerCase().includes(searchText),
         )
       );
     });
@@ -243,7 +258,7 @@ const TechwebOverview = (props) => {
     displayedNodes = sortBy((x) => node_cache[x.id].name)(
       tabIndex < 2
         ? nodes.filter((x) => x.tier === tabIndex)
-        : nodes.filter((x) => x.tier >= tabIndex)
+        : nodes.filter((x) => x.tier >= tabIndex),
     );
   }
 
@@ -263,32 +278,35 @@ const TechwebOverview = (props) => {
             <Tabs>
               <Tabs.Tab
                 selected={!searching && tabIndex === 0}
-                onClick={() => switchTab(0)}>
+                onClick={() => switchTab(0)}
+              >
                 Researched
               </Tabs.Tab>
               <Tabs.Tab
                 selected={!searching && tabIndex === 1}
-                onClick={() => switchTab(1)}>
+                onClick={() => switchTab(1)}
+              >
                 Available
               </Tabs.Tab>
               <Tabs.Tab
                 selected={!searching && tabIndex === 2}
-                onClick={() => switchTab(2)}>
+                onClick={() => switchTab(2)}
+              >
                 Future
               </Tabs.Tab>
               {!!searching && <Tabs.Tab selected>Search Results</Tabs.Tab>}
             </Tabs>
           </Flex.Item>
-          <Flex.Item align={'center'}>
+          <Flex.Item align={"center"}>
             <Input
               value={searchText}
               onInput={(e, value) => setSearchText(value)}
-              placeholder={'Search...'}
+              placeholder={"Search..."}
             />
           </Flex.Item>
         </Flex>
       </Flex.Item>
-      <Flex.Item className={'Techweb__OverviewNodes'} height="100%">
+      <Flex.Item className={"Techweb__OverviewNodes"} height="100%">
         {displayedNodes.map((n) => {
           return <TechNode node={n} key={n.id} />;
         })}
@@ -311,15 +329,15 @@ const TechwebDiskMenu = (props) => {
   const { act, data } = useRemappedBackend();
   const { diskType } = props;
   const { t_disk, d_disk } = data;
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
+  const [techwebRoute, setTechwebRoute] = useLocalState("techwebRoute", null);
 
   // Check for the disk actually being inserted
-  if ((diskType === 'design' && !d_disk) || (diskType === 'tech' && !t_disk)) {
+  if ((diskType === "design" && !d_disk) || (diskType === "tech" && !t_disk)) {
     return null;
   }
 
   const DiskContent =
-    (diskType === 'design' && TechwebDesignDisk) || TechwebTechDisk;
+    (diskType === "design" && TechwebDesignDisk) || TechwebTechDisk;
   return (
     <Flex direction="column" height="100%">
       <Flex.Item>
@@ -333,22 +351,24 @@ const TechwebDiskMenu = (props) => {
             </Tabs>
           </Flex.Item>
           <Flex.Item align="center">
-            {diskType === 'tech' && (
-              <Button icon="save" onClick={() => act('loadTech')}>
+            {diskType === "tech" && (
+              <Button icon="save" onClick={() => act("loadTech")}>
                 Web &rarr; Disk
               </Button>
             )}
             <Button
               icon="upload"
-              onClick={() => act('uploadDisk', { type: diskType })}>
+              onClick={() => act("uploadDisk", { type: diskType })}
+            >
               Disk &rarr; Web
             </Button>
             <Button
               icon="eject"
               onClick={() => {
-                act('ejectDisk', { type: diskType });
+                act("ejectDisk", { type: diskType });
                 setTechwebRoute(null);
-              }}>
+              }}
+            >
               Eject
             </Button>
             <Button icon="home" onClick={() => setTechwebRoute(null)}>
@@ -373,7 +393,7 @@ const TechwebDesignDisk = (props) => {
     <>
       {blueprints.map((x, i) => (
         <Section key={i} title={`Slot ${i + 1}`}>
-          {(x === null && 'Empty') || (
+          {(x === null && "Empty") || (
             <>
               Contains the design for <b>{design_cache[x].name}</b>:<br />
               <span
@@ -403,12 +423,12 @@ const TechNodeDetail = (props) => {
   const { node } = props;
   const { id } = node;
   const { prereq_ids, unlock_ids } = node_cache[id];
-  const [tabIndex, setTabIndex] = useLocalState('nodeDetailTabIndex', 0);
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
+  const [tabIndex, setTabIndex] = useLocalState("nodeDetailTabIndex", 0);
+  const [techwebRoute, setTechwebRoute] = useLocalState("techwebRoute", null);
 
   const prereqNodes = nodes.filter((x) => prereq_ids.includes(x.id));
   const complPrereq = prereq_ids.filter(
-    (x) => nodes.find((y) => y.id === x)?.tier === 0
+    (x) => nodes.find((y) => y.id === x)?.tier === 0,
   ).length;
   const unlockedNodes = nodes.filter((x) => unlock_ids.includes(x.id));
 
@@ -423,13 +443,15 @@ const TechNodeDetail = (props) => {
             <Tabs>
               <Tabs.Tab
                 selected={tabIndex === 0}
-                onClick={() => setTabIndex(0)}>
+                onClick={() => setTabIndex(0)}
+              >
                 Required ({complPrereq}/{prereqNodes.length})
               </Tabs.Tab>
               <Tabs.Tab
                 selected={tabIndex === 1}
                 disabled={unlockedNodes.length === 0}
-                onClick={() => setTabIndex(1)}>
+                onClick={() => setTabIndex(1)}
+              >
                 Unlocks ({unlockedNodes.length})
               </Tabs.Tab>
             </Tabs>
@@ -477,11 +499,11 @@ const TechNode = (props) => {
     required_experiments,
     discount_experiments,
   } = node_cache[id];
-  const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
-  const [tabIndex, setTabIndex] = useLocalState('nodeDetailTabIndex', 0);
+  const [techwebRoute, setTechwebRoute] = useLocalState("techwebRoute", null);
+  const [tabIndex, setTabIndex] = useLocalState("nodeDetailTabIndex", 0);
 
   const expcompl = required_experiments.filter(
-    (x) => experiments[x]?.completed
+    (x) => experiments[x]?.completed,
   ).length;
   const experimentProgress = (
     <ProgressBar
@@ -490,13 +512,14 @@ const TechNode = (props) => {
         average: [0.25, 0.5],
         bad: [-Infinity, 0.25],
       }}
-      value={expcompl / required_experiments.length}>
+      value={expcompl / required_experiments.length}
+    >
       Experiments ({expcompl}/{required_experiments.length})
     </ProgressBar>
   );
 
   const techcompl = prereq_ids.filter(
-    (x) => nodes.find((y) => y.id === x)?.tier === 0
+    (x) => nodes.find((y) => y.id === x)?.tier === 0,
   ).length;
   const techProgress = (
     <ProgressBar
@@ -505,7 +528,8 @@ const TechNode = (props) => {
         average: [0.25, 0.5],
         bad: [-Infinity, 0.25],
       }}
-      value={techcompl / prereq_ids.length}>
+      value={techcompl / prereq_ids.length}
+    >
       Tech ({techcompl}/{prereq_ids.length})
     </ProgressBar>
   );
@@ -529,9 +553,10 @@ const TechNode = (props) => {
               <Button
                 icon="tasks"
                 onClick={() => {
-                  setTechwebRoute({ route: 'details', selectedNode: id });
+                  setTechwebRoute({ route: "details", selectedNode: id });
                   setTabIndex(0);
-                }}>
+                }}
+              >
                 Details
               </Button>
             )}
@@ -539,13 +564,15 @@ const TechNode = (props) => {
               <Button
                 icon="lightbulb"
                 disabled={!can_unlock || tier > 1}
-                onClick={() => act('researchNode', { node_id: id })}>
+                onClick={() => act("researchNode", { node_id: id })}
+              >
                 Research
               </Button>
             )}
           </>
         )
-      }>
+      }
+    >
       {tier !== 0 && (
         <Flex className="Techweb__NodeProgress">
           {costs.map((k) => {
@@ -563,7 +590,8 @@ const TechNode = (props) => {
                     reqPts === 0
                       ? 1
                       : Math.min(1, (points[k.type] || 0) / reqPts)
-                  }>
+                  }
+                >
                   {abbreviateName(k.type)} ({nodeProg}/{reqPts})
                 </ProgressBar>
               </Flex.Item>
@@ -590,14 +618,15 @@ const TechNode = (props) => {
             key={id}
             className={`${design_cache[k].class} Techweb__DesignIcon`}
             tooltip={design_cache[k].name}
-            tooltipPosition={i % 15 < 7 ? 'right' : 'left'}
+            tooltipPosition={i % 15 < 7 ? "right" : "left"}
           />
         ))}
       </Box>
       {required_experiments.length > 0 && (
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
-          title="Required Experiments">
+          title="Required Experiments"
+        >
           {required_experiments.map((k, index) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
@@ -610,7 +639,8 @@ const TechNode = (props) => {
       {Object.keys(discount_experiments).length > 0 && (
         <Collapsible
           className="TechwebNodeExperimentsRequired"
-          title="Discount-Eligible Experiments">
+          title="Discount-Eligible Experiments"
+        >
           {Object.keys(discount_experiments).map((k, index) => {
             const thisExp = experiments[k];
             if (thisExp === null || thisExp === undefined) {
@@ -638,7 +668,8 @@ const LockedExperiment = (props) => {
         fluid
         backgroundColor="#40628a"
         className="ExperimentConfigure__ExperimentName"
-        disabled>
+        disabled
+      >
         <Flex align="center" justify="space-between">
           <Flex.Item color="rgba(0, 0, 0, 0.6)">
             <Icon name="lock" />
@@ -647,7 +678,7 @@ const LockedExperiment = (props) => {
           <Flex.Item color="rgba(0, 0, 0, 0.5)">???</Flex.Item>
         </Flex>
       </Button>
-      <Box className={'ExperimentConfigure__ExperimentContent'}>
+      <Box className={"ExperimentConfigure__ExperimentContent"}>
         This experiment has not been discovered yet, continue researching nodes
         in the tree to discover the contents of this experiment.
       </Box>

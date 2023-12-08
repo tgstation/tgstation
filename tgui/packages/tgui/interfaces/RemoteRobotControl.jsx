@@ -1,7 +1,7 @@
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
-import { Window } from '../layouts';
+import { decodeHtmlEntities } from "common/string";
+import { useBackend } from "../backend";
+import { Box, Button, NoticeBox, Section, LabeledList } from "../components";
+import { Window } from "../layouts";
 
 export const RemoteRobotControl = (props) => {
   return (
@@ -27,14 +27,14 @@ export const RemoteRobotControlContent = (props) => {
     return (
       <Section
         key={robot.ref}
-        title={robot.name + ' (' + robot.model + ')'}
+        title={robot.name + " (" + robot.model + ")"}
         buttons={
           <>
             <Button
               icon="tools"
               content="Interface"
               onClick={() =>
-                act('interface', {
+                act("interface", {
                   ref: robot.ref,
                 })
               }
@@ -43,32 +43,34 @@ export const RemoteRobotControlContent = (props) => {
               icon="phone-alt"
               content="Call"
               onClick={() =>
-                act('callbot', {
+                act("callbot", {
                   ref: robot.ref,
                 })
               }
             />
           </>
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Status">
             <Box
               inline
               color={
-                decodeHtmlEntities(robot.mode) === 'Inactive'
-                  ? 'bad'
-                  : decodeHtmlEntities(robot.mode) === 'Idle'
-                    ? 'average'
-                    : 'good'
-              }>
+                decodeHtmlEntities(robot.mode) === "Inactive"
+                  ? "bad"
+                  : decodeHtmlEntities(robot.mode) === "Idle"
+                    ? "average"
+                    : "good"
+              }
+            >
               {decodeHtmlEntities(robot.mode)}
-            </Box>{' '}
+            </Box>{" "}
             {(robot.hacked && (
               <Box inline color="bad">
                 (HACKED)
               </Box>
             )) ||
-              ''}
+              ""}
           </LabeledList.Item>
           <LabeledList.Item label="Location">{robot.location}</LabeledList.Item>
         </LabeledList>

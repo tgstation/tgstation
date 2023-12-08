@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { map } from 'common/collections';
+import { map } from "common/collections";
 
 export const selectChat = (state) => state.chat;
 

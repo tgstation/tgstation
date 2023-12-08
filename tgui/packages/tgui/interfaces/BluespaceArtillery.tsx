@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Box, Button, LabeledList, NoticeBox, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   connected: BooleanLike;
@@ -26,16 +26,17 @@ export const BluespaceArtillery = (props) => {
                 <Button
                   icon="crosshairs"
                   disabled={!unlocked}
-                  onClick={() => act('recalibrate')}
+                  onClick={() => act("recalibrate")}
                 />
-              }>
-              <Box color={target ? 'average' : 'bad'} fontSize="25px">
-                {target || 'No Target Set'}
+              }
+            >
+              <Box color={target ? "average" : "bad"} fontSize="25px">
+                {target || "No Target Set"}
               </Box>
             </Section>
             <Section>
               {unlocked ? (
-                <Box style={{ margin: 'auto' }}>
+                <Box style={{ margin: "auto" }}>
                   <Button
                     fluid
                     content="FIRE"
@@ -44,7 +45,7 @@ export const BluespaceArtillery = (props) => {
                     fontSize="30px"
                     textAlign="center"
                     lineHeight="46px"
-                    onClick={() => act('fire')}
+                    onClick={() => act("fire")}
                   />
                 </Box>
               ) : (
@@ -67,7 +68,7 @@ export const BluespaceArtillery = (props) => {
                 <Button
                   icon="wrench"
                   content="Complete Deployment"
-                  onClick={() => act('build')}
+                  onClick={() => act("build")}
                 />
               </LabeledList.Item>
             </LabeledList>

@@ -1,9 +1,9 @@
-import { Antagonist, Category } from '../base';
-import { multiline } from 'common/string';
+import { Antagonist, Category } from "../base";
+import { multiline } from "common/string";
 
 const ParadoxClone: Antagonist = {
-  key: 'paradoxclone',
-  name: 'Paradox Clone',
+  key: "paradoxclone",
+  name: "Paradox Clone",
   description: [
     multiline`
     A freak time-space anomaly has teleported you into another reality!

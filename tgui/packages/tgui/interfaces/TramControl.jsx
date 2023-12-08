@@ -1,33 +1,33 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Dimmer, Icon, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 const DEPARTMENT2COLOR = {
   // Station
-  Arrivals: 'black',
-  Service: 'olive',
-  Command: 'blue',
-  Security: 'red',
-  Medical: 'teal',
-  Engineering: 'yellow',
-  Cargo: 'brown',
-  Science: 'purple',
-  Departures: 'white',
+  Arrivals: "black",
+  Service: "olive",
+  Command: "blue",
+  Security: "red",
+  Medical: "teal",
+  Engineering: "yellow",
+  Cargo: "brown",
+  Science: "purple",
+  Departures: "white",
   // Hilbert Research Facility
-  Reception: 'white',
-  Botany: 'olive',
-  Chemistry: 'teal',
-  Processing: 'brown',
-  Xenobiology: 'purple',
-  Ordnance: 'yellow',
-  Office: 'red',
-  Dormitories: 'black',
+  Reception: "white",
+  Botany: "olive",
+  Chemistry: "teal",
+  Processing: "brown",
+  Xenobiology: "purple",
+  Ordnance: "yellow",
+  Office: "red",
+  Dormitories: "black",
 };
 
 const COLOR2BLURB = {
   blue: "This is the tram's current location.",
-  green: 'This is the selected destination.',
-  transparent: 'Click to set destination.',
+  green: "This is the selected destination.",
+  transparent: "Click to set destination.",
 };
 
 const marginNormal = 1;
@@ -58,7 +58,7 @@ export const TramControl = (props) => {
   const { act, data } = useBackend();
   const { broken, moving, destinations, tram_location } = data;
 
-  const [transitIndex, setTransitIndex] = useLocalState('transit-index', 1);
+  const [transitIndex, setTransitIndex] = useLocalState("transit-index", 1);
   const MovingTramDimmer = () => {
     return (
       <Dimmer>
@@ -76,10 +76,10 @@ export const TramControl = (props) => {
   const Destination = (props) => {
     const { dest } = props;
     const getDestColor = (dest) => {
-      if (!tram_location) return 'bad';
+      if (!tram_location) return "bad";
       const here = dest.name === tram_location;
       const selected = transitIndex === destinations.indexOf(dest);
-      return here ? 'blue' : selected ? 'green' : 'transparent';
+      return here ? "blue" : selected ? "green" : "transparent";
     };
     return (
       <Stack vertical>
@@ -93,7 +93,8 @@ export const TramControl = (props) => {
             width={4.9}
             tooltipPosition="top"
             tooltip={COLOR2BLURB[getDestColor(dest)]}
-            onClick={() => setTransitIndex(destinations.indexOf(dest))}>
+            onClick={() => setTransitIndex(destinations.indexOf(dest))}
+          >
             <Icon ml={-2.1} fontSize="60px" name="circle-o" />
           </Button>
           {(destinations.length - 1 !== destinations.indexOf(dest) && (
@@ -111,8 +112,8 @@ export const TramControl = (props) => {
                     tooltipPosition="bottom"
                     tooltip={dep}
                     style={{
-                      borderRadius: '5em',
-                      'border': '2px solid white',
+                      borderRadius: "5em",
+                      border: "2px solid white",
                     }}
                   />
                 </Stack.Item>
@@ -149,7 +150,7 @@ export const TramControl = (props) => {
                   disabled={tram_location === destinations[transitIndex].name}
                   content="Send Tram"
                   onClick={() =>
-                    act('send', {
+                    act("send", {
                       destination: destinations[transitIndex].id,
                     })
                   }

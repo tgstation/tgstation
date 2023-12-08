@@ -1,7 +1,14 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Stack, Section, Input, Button, Dropdown, NoticeBox } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  Stack,
+  Section,
+  Input,
+  Button,
+  Dropdown,
+  NoticeBox,
+} from "../components";
+import { Window } from "../layouts";
 
 type Port = {
   name: string;
@@ -41,7 +48,7 @@ export const ProcCallMenu = (props) => {
                     options={possible_types}
                     color={expected_output_color}
                     onSelected={(value) =>
-                      act('set_expected_output', { datatype: value })
+                      act("set_expected_output", { datatype: value })
                     }
                   />
                 </Stack.Item>
@@ -51,7 +58,7 @@ export const ProcCallMenu = (props) => {
                     content="Resolve Weakref"
                     textAlign="center"
                     checked={resolve_weakref}
-                    onClick={() => act('resolve_weakref')}
+                    onClick={() => act("resolve_weakref")}
                     fluid
                   />
                 </Stack.Item>
@@ -75,18 +82,18 @@ export const ProcCallMenu = (props) => {
                     datatype={val.datatype}
                     datatypeOptions={possible_types}
                     onRemove={() =>
-                      act('remove_argument', {
+                      act("remove_argument", {
                         index: index + 1,
                       })
                     }
                     onSetType={(type) =>
-                      act('set_argument_datatype', {
+                      act("set_argument_datatype", {
                         index: index + 1,
                         datatype: type,
                       })
                     }
                     onEnter={(e, value) =>
-                      act('rename_argument', {
+                      act("rename_argument", {
                         index: index + 1,
                         name: value,
                       })
@@ -99,7 +106,7 @@ export const ProcCallMenu = (props) => {
                     content="Add Argument"
                     color="good"
                     icon="plus"
-                    onClick={() => act('add_argument')}
+                    onClick={() => act("add_argument")}
                   />
                 </Stack.Item>
               </Stack>

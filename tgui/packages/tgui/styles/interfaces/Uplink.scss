@@ -6,12 +6,12 @@ $superGoodGradient: linear-gradient(to right, #9d9948, #777437, #9d9948);
 $bestGradient: linear-gradient(to right, #9d486b, #57283c, #9d486b);
 
 $_rep_map: (
-  'bad': $badGradient,
-  'normal': $normalGradient,
-  'good': $goodGradient,
-  'very-good': $veryGoodGradient,
-  'super-good': $superGoodGradient,
-  'best': $bestGradient,
+  "bad": $badGradient,
+  "normal": $normalGradient,
+  "good": $goodGradient,
+  "very-good": $veryGoodGradient,
+  "super-good": $superGoodGradient,
+  "best": $bestGradient,
 );
 
 @each $reputation-name, $gradient-value in $_rep_map {

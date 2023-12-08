@@ -1,7 +1,14 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, Divider, LabeledList, Flex, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  Divider,
+  LabeledList,
+  Flex,
+  Section,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   pen: string;
@@ -25,8 +32,9 @@ export const Clipboard = (props) => {
               <LabeledList.Item
                 label="Pen"
                 buttons={
-                  <Button icon="eject" onClick={() => act('remove_pen')} />
-                }>
+                  <Button icon="eject" onClick={() => act("remove_pen")} />
+                }
+              >
                 {pen}
               </LabeledList.Item>
             </LabeledList>
@@ -45,22 +53,23 @@ export const Clipboard = (props) => {
           <Flex
             color="black"
             backgroundColor="white"
-            style={{ padding: '2px 2px 0 2px' }}>
+            style={{ padding: "2px 2px 0 2px" }}
+          >
             <Flex.Item align="center" grow={1}>
               <Box align="center">{top_paper}</Box>
             </Flex.Item>
             <Flex.Item>
               <Button
-                icon={pen ? 'pen' : 'eye'}
-                onClick={() => act('edit_paper', { ref: top_paper_ref })}
+                icon={pen ? "pen" : "eye"}
+                onClick={() => act("edit_paper", { ref: top_paper_ref })}
               />
               <Button
                 icon="tag"
-                onClick={() => act('rename_paper', { ref: top_paper_ref })}
+                onClick={() => act("rename_paper", { ref: top_paper_ref })}
               />
               <Button
                 icon="eject"
-                onClick={() => act('remove_paper', { ref: top_paper_ref })}
+                onClick={() => act("remove_paper", { ref: top_paper_ref })}
               />
             </Flex.Item>
           </Flex>
@@ -77,14 +86,15 @@ export const Clipboard = (props) => {
             key={paper_ref[index]}
             color="black"
             backgroundColor="white"
-            style={{ padding: '2px 2px 0 2px' }}
-            mb={0.5}>
+            style={{ padding: "2px 2px 0 2px" }}
+            mb={0.5}
+          >
             <Flex.Item>
               <Button
                 icon="chevron-up"
                 color="transparent"
                 iconColor="black"
-                onClick={() => act('move_top_paper', { ref: paper_ref[index] })}
+                onClick={() => act("move_top_paper", { ref: paper_ref[index] })}
               />
             </Flex.Item>
             <Flex.Item align="center" grow={1}>
@@ -92,16 +102,16 @@ export const Clipboard = (props) => {
             </Flex.Item>
             <Flex.Item>
               <Button
-                icon={pen ? 'pen' : 'eye'}
-                onClick={() => act('edit_paper', { ref: paper_ref[index] })}
+                icon={pen ? "pen" : "eye"}
+                onClick={() => act("edit_paper", { ref: paper_ref[index] })}
               />
               <Button
                 icon="tag"
-                onClick={() => act('rename_paper', { ref: paper_ref[index] })}
+                onClick={() => act("rename_paper", { ref: paper_ref[index] })}
               />
               <Button
                 icon="eject"
-                onClick={() => act('remove_paper', { ref: paper_ref[index] })}
+                onClick={() => act("remove_paper", { ref: paper_ref[index] })}
               />
             </Flex.Item>
           </Flex>

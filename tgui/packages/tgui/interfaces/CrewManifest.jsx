@@ -1,15 +1,15 @@
-import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Icon, Section, Table, Tooltip } from '../components';
-import { Window } from '../layouts';
+import { classes } from "common/react";
+import { useBackend } from "../backend";
+import { Icon, Section, Table, Tooltip } from "../components";
+import { Window } from "../layouts";
 
 const commandJobs = [
-  'Head of Personnel',
-  'Head of Security',
-  'Chief Engineer',
-  'Research Director',
-  'Chief Medical Officer',
-  'Quartermaster',
+  "Head of Personnel",
+  "Head of Security",
+  "Chief Engineer",
+  "Research Director",
+  "Chief Medical Officer",
+  "Quartermaster",
 ];
 
 export const CrewManifest = (props) => {
@@ -22,43 +22,46 @@ export const CrewManifest = (props) => {
       <Window.Content scrollable>
         {Object.entries(manifest).map(([dept, crew]) => (
           <Section
-            className={'CrewManifest--' + dept}
+            className={"CrewManifest--" + dept}
             key={dept}
             title={
               dept +
-              (dept !== 'Misc'
+              (dept !== "Misc"
                 ? ` (${positions[dept].open} positions open)`
-                : '')
-            }>
+                : "")
+            }
+          >
             <Table>
               {Object.entries(crew).map(([crewIndex, crewMember]) => (
                 <Table.Row key={crewIndex}>
                   <Table.Cell
-                    className={'CrewManifest__Cell'}
+                    className={"CrewManifest__Cell"}
                     maxWidth="135px"
                     overflow="hidden"
-                    width="50%">
+                    width="50%"
+                  >
                     {crewMember.name}
                   </Table.Cell>
                   <Table.Cell
                     className={classes([
-                      'CrewManifest__Cell',
-                      'CrewManifest__Icons',
+                      "CrewManifest__Cell",
+                      "CrewManifest__Icons",
                     ])}
                     collapsing
                     minWidth="40px"
-                    width="40px">
+                    width="40px"
+                  >
                     {positions[dept].exceptions.includes(crewMember.rank) && (
                       <Tooltip content="No position limit" position="bottom">
                         <Icon className="CrewManifest__Icon" name="infinity" />
                       </Tooltip>
                     )}
-                    {crewMember.rank === 'Captain' && (
+                    {crewMember.rank === "Captain" && (
                       <Tooltip content="Captain" position="bottom">
                         <Icon
                           className={classes([
-                            'CrewManifest__Icon',
-                            'CrewManifest__Icon--Command',
+                            "CrewManifest__Icon",
+                            "CrewManifest__Icon--Command",
                           ])}
                           name="star"
                         />
@@ -68,9 +71,9 @@ export const CrewManifest = (props) => {
                       <Tooltip content="Member of command" position="bottom">
                         <Icon
                           className={classes([
-                            'CrewManifest__Icon',
-                            'CrewManifest__Icon--Command',
-                            'CrewManifest__Icon--Chevron',
+                            "CrewManifest__Icon",
+                            "CrewManifest__Icon--Command",
+                            "CrewManifest__Icon--Chevron",
                           ])}
                           name="chevron-up"
                         />
@@ -79,13 +82,14 @@ export const CrewManifest = (props) => {
                   </Table.Cell>
                   <Table.Cell
                     className={classes([
-                      'CrewManifest__Cell',
-                      'CrewManifest__Cell--Rank',
+                      "CrewManifest__Cell",
+                      "CrewManifest__Cell--Rank",
                     ])}
                     collapsing
                     maxWidth="135px"
                     overflow="hidden"
-                    width="50%">
+                    width="50%"
+                  >
                     {crewMember.rank}
                   </Table.Cell>
                 </Table.Row>

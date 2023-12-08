@@ -1,7 +1,7 @@
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend } from '../backend';
-import { Button, Table } from '../components';
-import { Window } from '../layouts';
+import { decodeHtmlEntities } from "common/string";
+import { useBackend } from "../backend";
+import { Button, Table } from "../components";
+import { Window } from "../layouts";
 
 export const TrophyAdminPanel = (props) => {
   const { act, data } = useBackend();
@@ -23,50 +23,53 @@ export const TrophyAdminPanel = (props) => {
               <Table.Row key={trophy.ref} className="candystripe">
                 <Table.Cell
                   style={{
-                    wordBreak: 'break-all',
-                    wordWrap: 'break-word',
-                    'color': !trophy.is_valid
-                      ? 'rgba(255, 0, 0, 0.5)'
-                      : 'inherit',
-                  }}>
+                    wordBreak: "break-all",
+                    wordWrap: "break-word",
+                    color: !trophy.is_valid
+                      ? "rgba(255, 0, 0, 0.5)"
+                      : "inherit",
+                  }}
+                >
                   {decodeHtmlEntities(trophy.path)}
                 </Table.Cell>
                 <Table.Cell>
                   <Button
                     icon="edit"
-                    tooltip={'Edit path'}
+                    tooltip={"Edit path"}
                     tooltipPosition="bottom"
-                    onClick={() => act('edit_path', { ref: trophy.ref })}
+                    onClick={() => act("edit_path", { ref: trophy.ref })}
                   />
                 </Table.Cell>
                 <Table.Cell
                   style={{
-                    wordBreak: 'break-all',
-                    wordWrap: 'break-word',
-                  }}>
+                    wordBreak: "break-all",
+                    wordWrap: "break-word",
+                  }}
+                >
                   {decodeHtmlEntities(trophy.message)}
                 </Table.Cell>
                 <Table.Cell>
                   <Button
                     icon="edit"
-                    tooltip={'Edit message'}
+                    tooltip={"Edit message"}
                     tooltipPosition="bottom"
-                    onClick={() => act('edit_message', { ref: trophy.ref })}
+                    onClick={() => act("edit_message", { ref: trophy.ref })}
                   />
                 </Table.Cell>
                 <Table.Cell
                   style={{
-                    wordBreak: 'break-all',
-                    wordWrap: 'break-word',
-                  }}>
+                    wordBreak: "break-all",
+                    wordWrap: "break-word",
+                  }}
+                >
                   {decodeHtmlEntities(trophy.placer_key)}
                 </Table.Cell>
                 <Table.Cell>
                   <Button
                     icon="trash"
-                    tooltip={'Delete trophy'}
+                    tooltip={"Delete trophy"}
                     tooltipPosition="bottom"
-                    onClick={() => act('delete', { ref: trophy.ref })}
+                    onClick={() => act("delete", { ref: trophy.ref })}
                   />
                 </Table.Cell>
               </Table.Row>

@@ -1,6 +1,18 @@
-import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Flex, Stack, Icon, Input, LabeledList, Section, Table, Divider } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  ColorBox,
+  Flex,
+  Stack,
+  Icon,
+  Input,
+  LabeledList,
+  Section,
+  Table,
+  Divider,
+} from "../components";
+import { Window } from "../layouts";
 
 type ColorEntry = {
   index: Number;
@@ -33,25 +45,25 @@ type GreyscaleMenuData = {
 };
 
 enum Direction {
-  North = 'north',
-  NorthEast = 'northeast',
-  East = 'east',
-  SouthEast = 'southeast',
-  South = 'south',
-  SouthWest = 'southwest',
-  West = 'west',
-  NorthWest = 'northwest',
+  North = "north",
+  NorthEast = "northeast",
+  East = "east",
+  SouthEast = "southeast",
+  South = "south",
+  SouthWest = "southwest",
+  West = "west",
+  NorthWest = "northwest",
 }
 
 const DirectionAbbreviation: Record<Direction, string> = {
-  [Direction.North]: 'N',
-  [Direction.NorthEast]: 'NE',
-  [Direction.East]: 'E',
-  [Direction.SouthEast]: 'SE',
-  [Direction.South]: 'S',
-  [Direction.SouthWest]: 'SW',
-  [Direction.West]: 'W',
-  [Direction.NorthWest]: 'NW',
+  [Direction.North]: "N",
+  [Direction.NorthEast]: "NE",
+  [Direction.East]: "E",
+  [Direction.SouthEast]: "SE",
+  [Direction.South]: "S",
+  [Direction.SouthWest]: "SW",
+  [Direction.West]: "W",
+  [Direction.NorthWest]: "NW",
 };
 
 const ConfigDisplay = (props) => {
@@ -60,11 +72,11 @@ const ConfigDisplay = (props) => {
     <Section title="Designs">
       <LabeledList>
         <LabeledList.Item label="Design Type">
-          <Button icon="cogs" onClick={() => act('select_config')} />
+          <Button icon="cogs" onClick={() => act("select_config")} />
           <Input
             value={data.greyscale_config}
             onChange={(_, value) =>
-              act('load_config_from_string', { config_string: value })
+              act("load_config_from_string", { config_string: value })
             }
           />
         </LabeledList.Item>
@@ -82,13 +94,13 @@ const ColorDisplay = (props) => {
         <LabeledList.Item label="Full Color String">
           <Button
             icon="dice"
-            onClick={() => act('random_all_colors')}
+            onClick={() => act("random_all_colors")}
             tooltip="Randomizes all color groups."
           />
           <Input
-            value={colors.map((item) => item.value).join('')}
+            value={colors.map((item) => item.value).join("")}
             onChange={(_, value) =>
-              act('recolor_from_string', { color_string: value })
+              act("recolor_from_string", { color_string: value })
             }
           />
         </LabeledList.Item>
@@ -96,23 +108,24 @@ const ColorDisplay = (props) => {
           <LabeledList.Item
             key={`colorgroup${item.index}${item.value}`}
             label={`Color Group ${item.index}`}
-            color={item.value}>
-            <ColorBox color={item.value} />{' '}
+            color={item.value}
+          >
+            <ColorBox color={item.value} />{" "}
             <Button
               icon="palette"
-              onClick={() => act('pick_color', { color_index: item.index })}
+              onClick={() => act("pick_color", { color_index: item.index })}
               tooltip="Brings up a color pick window to replace this color group."
             />
             <Button
               icon="dice"
-              onClick={() => act('random_color', { color_index: item.index })}
+              onClick={() => act("random_color", { color_index: item.index })}
               tooltip="Randomizes the color for this color group."
             />
             <Input
               value={item.value}
               width={7}
               onChange={(_, value) =>
-                act('recolor', { color_index: item.index, new_color: value })
+                act("recolor", { color_index: item.index, new_color: value })
               }
             />
           </LabeledList.Item>
@@ -161,7 +174,7 @@ const SingleDirection = (props) => {
         tooltip={`Sets the direction of the preview sprite to ${dir}`}
         disabled={`${dir}` === data.sprites_dir ? true : false}
         textAlign="center"
-        onClick={() => act('change_dir', { new_sprite_dir: dir })}
+        onClick={() => act("change_dir", { new_sprite_dir: dir })}
         lineHeight={3}
         m={-0.2}
         fluid
@@ -179,9 +192,9 @@ const IconStatesDisplay = (props) => {
           <Flex.Item key={item}>
             <Button
               mx={0.5}
-              content={item ? item : 'Blank State'}
+              content={item ? item : "Blank State"}
               disabled={item === data.icon_state}
-              onClick={() => act('select_icon_state', { new_icon_state: item })}
+              onClick={() => act("select_icon_state", { new_icon_state: item })}
             />
           </Flex.Item>
         ))}
@@ -263,7 +276,7 @@ const SingleSprite = (props) => {
       as="img"
       src={source}
       width="100%"
-      style={{ '-ms-interpolation-mode': 'nearest-neighbor' }}
+      style={{ "-ms-interpolation-mode": "nearest-neighbor" }}
     />
   );
 };
@@ -293,19 +306,19 @@ export const GreyscaleModifyMenu = (props) => {
                 }
                 tooltip="Continuously checks files for changes and reloads when necessary. WARNING: Very expensive"
                 selected={data.monitoring_files}
-                onClick={() => act('toggle_mass_refresh')}
+                onClick={() => act("toggle_mass_refresh")}
                 width={1.9}
                 mr={-0.2}
               />
               <Button
                 content="Refresh Icon File"
                 tooltip="Loads the json configuration and icon file fresh from disk. This is useful to avoid restarting the server to see changes. WARNING: Expensive"
-                onClick={() => act('refresh_file')}
+                onClick={() => act("refresh_file")}
               />
               <Button
                 content="Save Icon File"
                 tooltip="Saves the icon to a temp file in tmp/. This is useful if you want to use a generated icon elsewhere or just view a more accurate representation"
-                onClick={() => act('save_dmi')}
+                onClick={() => act("save_dmi")}
               />
             </Flex.Item>
           )}
@@ -314,14 +327,14 @@ export const GreyscaleModifyMenu = (props) => {
               content="Apply"
               tooltip="Applies changes made to the object this menu was created from."
               color="red"
-              onClick={() => act('apply')}
+              onClick={() => act("apply")}
             />
             <Button.Checkbox
               content="Full Preview"
               tooltip="Generates and displays the full sprite generation process instead of just the final output."
               disabled={!data.generate_full_preview && !data.unlocked}
               checked={data.generate_full_preview}
-              onClick={() => act('toggle_full_preview')}
+              onClick={() => act("toggle_full_preview")}
             />
           </Flex.Item>
         </Flex>

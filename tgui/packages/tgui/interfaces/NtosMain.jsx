@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, ColorBox, Stack, Section, Table } from '../components';
-import { NtosWindow } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, ColorBox, Stack, Section, Table } from "../components";
+import { NtosWindow } from "../layouts";
 
 export const NtosMain = (props) => {
   const { act, data } = useBackend();
@@ -17,20 +17,21 @@ export const NtosMain = (props) => {
     pai,
   } = data;
   const filtered_programs = programs.filter(
-    (program) => program.header_program
+    (program) => program.header_program,
   );
   return (
     <NtosWindow
       title={
-        (PC_device_theme === 'syndicate' && 'Syndix Main Menu') ||
-        'NtOS Main Menu'
+        (PC_device_theme === "syndicate" && "Syndix Main Menu") ||
+        "NtOS Main Menu"
       }
       width={400}
-      height={500}>
+      height={500}
+    >
       <NtosWindow.Content scrollable>
         {Boolean(
           removable_media.length ||
-            programs.some((program) => program.header_program)
+            programs.some((program) => program.header_program),
         ) && (
           <Section>
             <Stack>
@@ -40,7 +41,7 @@ export const NtosMain = (props) => {
                     content={app.desc}
                     icon={app.icon}
                     onClick={() =>
-                      act('PC_runprogram', {
+                      act("PC_runprogram", {
                         name: app.name,
                       })
                     }
@@ -55,7 +56,7 @@ export const NtosMain = (props) => {
                     fluid
                     icon="eject"
                     content={device}
-                    onClick={() => act('PC_Eject_Disk', { name: device })}
+                    onClick={() => act("PC_Eject_Disk", { name: device })}
                     disabled={!device}
                   />
                 </Stack.Item>
@@ -69,14 +70,14 @@ export const NtosMain = (props) => {
             <>
               {!!has_light && (
                 <>
-                  <Button onClick={() => act('PC_light_color')}>
+                  <Button onClick={() => act("PC_light_color")}>
                     <ColorBox color={comp_light_color} />
                   </Button>
                   <Button
                     icon="lightbulb"
-                    color={light_on ? 'good' : 'bad'}
+                    color={light_on ? "good" : "bad"}
                     selected={light_on}
-                    onClick={() => act('PC_toggle_light')}
+                    onClick={() => act("PC_toggle_light")}
                   />
                 </>
               )}
@@ -84,7 +85,7 @@ export const NtosMain = (props) => {
                 icon="eject"
                 content="Eject ID"
                 disabled={!proposed_login.IDInserted}
-                onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
+                onClick={() => act("PC_Eject_Disk", { name: "ID" })}
               />
               {!!show_imprint && (
                 <Button
@@ -95,27 +96,30 @@ export const NtosMain = (props) => {
                     (proposed_login.IDName === login.IDName &&
                       proposed_login.IDJob === login.IDJob)
                   }
-                  onClick={() => act('PC_Imprint_ID', { name: 'ID' })}
+                  onClick={() => act("PC_Imprint_ID", { name: "ID" })}
                 />
               )}
             </>
-          }>
+          }
+        >
           <Table>
             <Table.Row>
-              ID Name:{' '}
+              ID Name:{" "}
               {show_imprint
                 ? login.IDName +
-                ' ' +
-                (proposed_login.IDName ? '(' + proposed_login.IDName + ')' : '')
-                : proposed_login.IDName ?? ''}
+                  " " +
+                  (proposed_login.IDName
+                    ? "(" + proposed_login.IDName + ")"
+                    : "")
+                : proposed_login.IDName ?? ""}
             </Table.Row>
             <Table.Row>
-              Assignment:{' '}
+              Assignment:{" "}
               {show_imprint
                 ? login.IDJob +
-                ' ' +
-                (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
-                : proposed_login.IDJob ?? ''}
+                  " " +
+                  (proposed_login.IDJob ? "(" + proposed_login.IDJob + ")" : "")
+                : proposed_login.IDJob ?? ""}
             </Table.Row>
           </Table>
         </Section>
@@ -130,8 +134,8 @@ export const NtosMain = (props) => {
                     color="transparent"
                     content="Eject pAI"
                     onClick={() =>
-                      act('PC_Pai_Interact', {
-                        option: 'eject',
+                      act("PC_Pai_Interact", {
+                        option: "eject",
                       })
                     }
                   />
@@ -145,8 +149,8 @@ export const NtosMain = (props) => {
                     color="transparent"
                     content="Configure pAI"
                     onClick={() =>
-                      act('PC_Pai_Interact', {
-                        option: 'interact',
+                      act("PC_Pai_Interact", {
+                        option: "interact",
                       })
                     }
                   />
@@ -166,7 +170,7 @@ const ProgramsTable = (props) => {
   const { programs = [] } = data;
   // add the program filename to this list to have it excluded from the main menu program list table
   const filtered_programs = programs.filter(
-    (program) => !program.header_program
+    (program) => !program.header_program,
   );
 
   return (
@@ -177,11 +181,11 @@ const ProgramsTable = (props) => {
             <Table.Cell>
               <Button
                 fluid
-                color={program.alert ? 'yellow' : 'transparent'}
+                color={program.alert ? "yellow" : "transparent"}
                 icon={program.icon}
                 content={program.desc}
                 onClick={() =>
-                  act('PC_runprogram', {
+                  act("PC_runprogram", {
                     name: program.name,
                   })
                 }
@@ -195,7 +199,7 @@ const ProgramsTable = (props) => {
                   tooltip="Close program"
                   tooltipPosition="left"
                   onClick={() =>
-                    act('PC_killprogram', {
+                    act("PC_killprogram", {
                       name: program.name,
                     })
                   }

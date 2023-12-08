@@ -1,7 +1,14 @@
-import { capitalizeFirst } from 'common/string';
-import { useBackend } from 'tgui/backend';
-import { Button, LabeledList, NoticeBox, ProgressBar, Section, Stack } from 'tgui/components';
-import { Data } from './types';
+import { capitalizeFirst } from "common/string";
+import { useBackend } from "tgui/backend";
+import {
+  Button,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+} from "tgui/components";
+import { Data } from "./types";
 
 /** Displays loaded container info, if it exists */
 export const BeakerDisplay = (props) => {
@@ -38,22 +45,23 @@ export const BeakerDisplay = (props) => {
             content="Empty and Eject"
             color="bad"
             disabled={cant_empty}
-            onClick={() => act('empty_eject_beaker')}
+            onClick={() => act("empty_eject_beaker")}
           />
           <Button
             icon="trash"
             content="Empty"
             disabled={cant_empty}
-            onClick={() => act('empty_beaker')}
+            onClick={() => act("empty_beaker")}
           />
           <Button
             icon="eject"
             content="Eject"
             disabled={!has_beaker}
-            onClick={() => act('eject_beaker')}
+            onClick={() => act("eject_beaker")}
           />
         </>
-      }>
+      }
+    >
       {content}
     </Section>
   );
@@ -88,9 +96,9 @@ const Info = (props) => {
               minValue={0}
               maxValue={beaker.capacity}
               ranges={{
-                'good': [beaker.capacity * 0.85, beaker.capacity],
-                'average': [beaker.capacity * 0.25, beaker.capacity * 0.85],
-                'bad': [0, beaker.capacity * 0.25],
+                good: [beaker.capacity * 0.85, beaker.capacity],
+                average: [beaker.capacity * 0.25, beaker.capacity * 0.85],
+                bad: [0, beaker.capacity * 0.25],
               }}
             />
           </LabeledList.Item>
@@ -112,23 +120,24 @@ const Antibodies = (props) => {
     <LabeledList>
       <LabeledList.Item label="Antibodies">
         {!resistances.length
-          ? 'None'
+          ? "None"
           : resistances.map((resistance) => {
-            return (
-              <Button
-                key={resistance.name}
-                icon="eye-dropper"
-                disabled={!is_ready}
-                tooltip="Creates a vaccine bottle."
-                onClick={() =>
-                  act('create_vaccine_bottle', {
-                    index: resistance.id,
-                  })
-                }>
-                {`${resistance.name}`}
-              </Button>
-            );
-          })}
+              return (
+                <Button
+                  key={resistance.name}
+                  icon="eye-dropper"
+                  disabled={!is_ready}
+                  tooltip="Creates a vaccine bottle."
+                  onClick={() =>
+                    act("create_vaccine_bottle", {
+                      index: resistance.id,
+                    })
+                  }
+                >
+                  {`${resistance.name}`}
+                </Button>
+              );
+            })}
       </LabeledList.Item>
     </LabeledList>
   );

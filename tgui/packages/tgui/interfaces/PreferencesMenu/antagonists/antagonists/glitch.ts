@@ -1,9 +1,9 @@
-import { Antagonist, Category } from '../base';
-import { multiline } from 'common/string';
+import { Antagonist, Category } from "../base";
+import { multiline } from "common/string";
 
 const Glitch: Antagonist = {
-  key: 'glitch',
-  name: 'Glitch',
+  key: "glitch",
+  name: "Glitch",
   description: [
     multiline`
     The virtual domain is a dangerous place for bitrunners. Make it so.

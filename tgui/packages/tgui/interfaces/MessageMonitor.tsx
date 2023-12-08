@@ -1,7 +1,15 @@
-import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Input, Button, Table, NoticeBox, Box } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend, useLocalState } from "../backend";
+import {
+  Section,
+  Stack,
+  Input,
+  Button,
+  Table,
+  NoticeBox,
+  Box,
+} from "../components";
+import { Window } from "../layouts";
 
 enum Screen {
   Main,
@@ -53,9 +61,10 @@ const RequestLogsScreen = (props) => {
             <Button
               content="Main Menu"
               icon="home"
-              onClick={() => act('return_home')}
+              onClick={() => act("return_home")}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Delete</Table.Cell>
@@ -70,7 +79,7 @@ const RequestLogsScreen = (props) => {
                   <Button
                     icon="trash"
                     color="red"
-                    onClick={() => act('delete_request', { ref: request.ref })}
+                    onClick={() => act("delete_request", { ref: request.ref })}
                   />
                 </Table.Cell>
                 <Table.Cell>{request.message}</Table.Cell>
@@ -100,9 +109,10 @@ const MessageLogsScreen = (props) => {
             <Button
               content="Main Menu"
               icon="home"
-              onClick={() => act('return_home')}
+              onClick={() => act("return_home")}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Delete</Table.Cell>
@@ -116,7 +126,7 @@ const MessageLogsScreen = (props) => {
                   <Button
                     icon="trash"
                     color="red"
-                    onClick={() => act('delete_message', { ref: message.ref })}
+                    onClick={() => act("delete_message", { ref: message.ref })}
                   />
                 </Table.Cell>
                 <Table.Cell>{message.sender}</Table.Cell>
@@ -153,8 +163,8 @@ const MainScreenAuth = (props) => {
   const { act, data } = useBackend<Data>();
   const { status, is_malf, password } = data;
   const [auth_password, setPassword] = useLocalState(
-    'input_password',
-    password
+    "input_password",
+    password,
   );
   return (
     <>
@@ -166,14 +176,14 @@ const MainScreenAuth = (props) => {
             placeholder="Password"
           />
           <Button
-            content={'Logout'}
-            onClick={() => act('auth', { auth_password: auth_password })}
+            content={"Logout"}
+            onClick={() => act("auth", { auth_password: auth_password })}
           />
           <Button
-            icon={status ? 'power-off' : 'times'}
-            content={status ? 'ON' : 'OFF'}
-            color={status ? 'green' : 'red'}
-            onClick={() => act('turn_server')}
+            icon={status ? "power-off" : "times"}
+            content={status ? "ON" : "OFF"}
+            color={status ? "green" : "red"}
+            onClick={() => act("turn_server")}
           />
           {is_malf === 1 && (
             <Button
@@ -181,7 +191,7 @@ const MainScreenAuth = (props) => {
               content="Hack"
               color="red"
               disabled
-              onClick={() => act('hack')}
+              onClick={() => act("hack")}
             />
           )}
         </Section>
@@ -194,8 +204,8 @@ const MainScreenAuth = (props) => {
         <Table.Row>
           <Table.Cell>
             <Button
-              content={'View Message Logs'}
-              onClick={() => act('view_message_logs')}
+              content={"View Message Logs"}
+              onClick={() => act("view_message_logs")}
             />
           </Table.Cell>
           <Table.Cell>Shows all messages that have been sent</Table.Cell>
@@ -203,8 +213,8 @@ const MainScreenAuth = (props) => {
         <Table.Row>
           <Table.Cell>
             <Button
-              content={'View Request Console Logs'}
-              onClick={() => act('view_request_logs')}
+              content={"View Request Console Logs"}
+              onClick={() => act("view_request_logs")}
             />
           </Table.Cell>
           <Table.Cell>
@@ -214,8 +224,8 @@ const MainScreenAuth = (props) => {
         <Table.Row>
           <Table.Cell>
             <Button
-              content={'Clear Message Logs'}
-              onClick={() => act('clear_message_logs')}
+              content={"Clear Message Logs"}
+              onClick={() => act("clear_message_logs")}
             />
           </Table.Cell>
           <Table.Cell>Clears message logs</Table.Cell>
@@ -223,23 +233,23 @@ const MainScreenAuth = (props) => {
         <Table.Row>
           <Table.Cell>
             <Button
-              content={'Clear Request Console Logs'}
-              onClick={() => act('clear_request_logs')}
+              content={"Clear Request Console Logs"}
+              onClick={() => act("clear_request_logs")}
             />
           </Table.Cell>
           <Table.Cell>Clears request console logs</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
-            <Button content={'Set Custom Key'} onClick={() => act('set_key')} />
+            <Button content={"Set Custom Key"} onClick={() => act("set_key")} />
           </Table.Cell>
           <Table.Cell>Changes decryption key</Table.Cell>
         </Table.Row>
         <Table.Row>
           <Table.Cell>
             <Button
-              content={'Send Admin Message'}
-              onClick={() => act('send_fake_message')}
+              content={"Send Admin Message"}
+              onClick={() => act("send_fake_message")}
             />
           </Table.Cell>
           <Table.Cell>Sends a custom message to the user&apos;s PDA</Table.Cell>
@@ -253,8 +263,8 @@ const MainScreenNotAuth = (props) => {
   const { act, data } = useBackend<Data>();
   const { status, is_malf, password } = data;
   const [auth_password, setPassword] = useLocalState(
-    'input_password',
-    password
+    "input_password",
+    password,
   );
 
   return (
@@ -267,18 +277,18 @@ const MainScreenNotAuth = (props) => {
             placeholder="Password"
           />
           <Button
-            content={'Auth'}
-            onClick={() => act('auth', { auth_password: auth_password })}
+            content={"Auth"}
+            onClick={() => act("auth", { auth_password: auth_password })}
           />
           <Button
-            icon={status ? 'power-off' : 'times'}
-            content={status ? 'ON' : 'OFF'}
-            color={status ? 'green' : 'red'}
+            icon={status ? "power-off" : "times"}
+            content={status ? "ON" : "OFF"}
+            color={status ? "green" : "red"}
             disabled
-            onClick={() => act('turn_server')}
+            onClick={() => act("turn_server")}
           />
           {!!is_malf && (
-            <Button content="Hack" color="red" onClick={() => act('hack')} />
+            <Button content="Hack" color="red" onClick={() => act("hack")} />
           )}
         </Section>
       </Stack.Item>
@@ -292,8 +302,8 @@ const MainScreenNotAuth = (props) => {
             <Table.Row>
               <Table.Cell>
                 <Button
-                  content={'Link Server'}
-                  onClick={() => act('link_server')}
+                  content={"Link Server"}
+                  onClick={() => act("link_server")}
                 />
               </Table.Cell>
               <Table.Cell>Connects to the server</Table.Cell>
@@ -366,7 +376,7 @@ export const MessageMonitor = (props) => {
               <Stack.Item>
                 <Button
                   content="Connect to server"
-                  onClick={() => act('connect_server')}
+                  onClick={() => act("connect_server")}
                 />
               </Stack.Item>
             </>

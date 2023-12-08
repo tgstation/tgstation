@@ -1,7 +1,17 @@
-import { useBackend } from '../backend';
-import { Button, Input, LabeledList, Section, Table, NoticeBox, NumberInput, LabeledControls, Box } from '../components';
-import { RADIO_CHANNELS } from '../constants';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import {
+  Button,
+  Input,
+  LabeledList,
+  Section,
+  Table,
+  NoticeBox,
+  NumberInput,
+  LabeledControls,
+  Box,
+} from "../components";
+import { RADIO_CHANNELS } from "../constants";
+import { Window } from "../layouts";
 
 export const Telecomms = (props) => {
   const { act, data } = useBackend();
@@ -33,11 +43,11 @@ export const Telecomms = (props) => {
               label="Power"
               buttons={
                 <Button
-                  icon={toggled ? 'power-off' : 'times'}
-                  content={toggled ? 'On' : 'Off'}
-                  color={toggled ? 'good' : 'bad'}
+                  icon={toggled ? "power-off" : "times"}
+                  content={toggled ? "On" : "Off"}
+                  color={toggled ? "good" : "bad"}
                   disabled={!multitool}
-                  onClick={() => act('toggle')}
+                  onClick={() => act("toggle")}
                 />
               }
             />
@@ -47,7 +57,7 @@ export const Telecomms = (props) => {
                 <Input
                   width={13}
                   value={id}
-                  onChange={(e, value) => act('id', { value })}
+                  onChange={(e, value) => act("id", { value })}
                 />
               }
             />
@@ -57,8 +67,8 @@ export const Telecomms = (props) => {
                 <Input
                   width={10}
                   value={network}
-                  defaultValue={'tcommsat'}
-                  onChange={(e, value) => act('network', { value })}
+                  defaultValue={"tcommsat"}
+                  onChange={(e, value) => act("network", { value })}
                 />
               }
             />
@@ -66,9 +76,9 @@ export const Telecomms = (props) => {
               label="Prefabrication"
               buttons={
                 <Button
-                  icon={prefab ? 'check' : 'times'}
-                  content={prefab ? 'True' : 'False'}
-                  disabled={'True'}
+                  icon={prefab ? "check" : "times"}
+                  content={prefab ? "True" : "False"}
+                  disabled={"True"}
                 />
               }
             />
@@ -76,27 +86,28 @@ export const Telecomms = (props) => {
         </Section>
         {!!(toggled && multitool) && (
           <Box>
-            {type === 'bus' && (
+            {type === "bus" && (
               <Section title="Bus">
                 <Table>
                   <Table.Row>
                     <Table.Cell>Change Frequency:</Table.Cell>
                     <Table.Cell>
                       {RADIO_CHANNELS.find(
-                        (channel) => channel.freq === changefrequency
+                        (channel) => channel.freq === changefrequency,
                       ) && (
                         <Box
                           inline
                           color={
                             RADIO_CHANNELS.find(
-                              (channel) => channel.freq === changefrequency
+                              (channel) => channel.freq === changefrequency,
                             ).color
                           }
-                          ml={2}>
+                          ml={2}
+                        >
                           [
                           {
                             RADIO_CHANNELS.find(
-                              (channel) => channel.freq === changefrequency
+                              (channel) => channel.freq === changefrequency,
                             ).name
                           }
                           ]
@@ -111,30 +122,30 @@ export const Telecomms = (props) => {
                       minValue={minfreq / 10}
                       maxValue={maxfreq / 10}
                       value={changefrequency / 10}
-                      onChange={(e, value) => act('change_freq', { value })}
+                      onChange={(e, value) => act("change_freq", { value })}
                     />
                     <Button
-                      icon={'times'}
+                      icon={"times"}
                       disabled={changefrequency === 0}
-                      onClick={() => act('change_freq', { value: 10001 })}
+                      onClick={() => act("change_freq", { value: 10001 })}
                     />
                   </Table.Row>
                 </Table>
               </Section>
             )}
-            {type === 'relay' && (
+            {type === "relay" && (
               <Section title="Relay">
                 <Button
-                  content={'Receiving'}
-                  icon={receiving ? 'volume-up' : 'volume-mute'}
-                  color={receiving ? '' : 'bad'}
-                  onClick={() => act('receive')}
+                  content={"Receiving"}
+                  icon={receiving ? "volume-up" : "volume-mute"}
+                  color={receiving ? "" : "bad"}
+                  onClick={() => act("receive")}
                 />
                 <Button
-                  content={'Broadcasting'}
-                  icon={broadcasting ? 'microphone' : 'microphone-slash'}
-                  color={broadcasting ? '' : 'bad'}
-                  onClick={() => act('broadcast')}
+                  content={"Broadcasting"}
+                  icon={broadcasting ? "microphone" : "microphone-slash"}
+                  color={broadcasting ? "" : "bad"}
+                  onClick={() => act("broadcast")}
                 />
               </Section>
             )}
@@ -147,9 +158,9 @@ export const Telecomms = (props) => {
                     </Table.Cell>
                     {!!multitool && (
                       <Button
-                        icon={'times'}
+                        icon={"times"}
                         disabled={!multitool}
-                        onClick={() => act('unlink', { value: entry.index })}
+                        onClick={() => act("unlink", { value: entry.index })}
                       />
                     )}
                   </Table.Row>
@@ -163,22 +174,23 @@ export const Telecomms = (props) => {
                     <Table.Cell bold>{entry / 10} kHz</Table.Cell>
                     <Table.Cell>
                       {RADIO_CHANNELS.find(
-                        (channel) => channel.freq === entry
+                        (channel) => channel.freq === entry,
                       ) && (
                         <Box
                           inline
                           color={
                             RADIO_CHANNELS.find(
-                              (channel) => channel.freq === entry
+                              (channel) => channel.freq === entry,
                             ).color
                           }
-                          ml={2}>
+                          ml={2}
+                        >
                           [
                           {
                             RADIO_CHANNELS.find(
-                              (channel) => channel.freq === entry
+                              (channel) => channel.freq === entry,
                             ).name
-                          }{' '}
+                          }{" "}
                           ]
                         </Box>
                       )}
@@ -186,9 +198,9 @@ export const Telecomms = (props) => {
                     <Table.Cell />
                     {!!multitool && (
                       <Button
-                        icon={'times'}
+                        icon={"times"}
                         disabled={!multitool}
-                        onClick={() => act('delete', { value: entry })}
+                        onClick={() => act("delete", { value: entry })}
                       />
                     )}
                   </Table.Row>
@@ -198,20 +210,21 @@ export const Telecomms = (props) => {
                     <Table.Cell>Add Frequency</Table.Cell>
                     <Table.Cell>
                       {RADIO_CHANNELS.find(
-                        (channel) => channel.freq === frequency
+                        (channel) => channel.freq === frequency,
                       ) && (
                         <Box
                           inline
                           color={
                             RADIO_CHANNELS.find(
-                              (channel) => channel.freq === frequency
+                              (channel) => channel.freq === frequency,
                             ).color
                           }
-                          ml={2}>
+                          ml={2}
+                        >
                           [
                           {
                             RADIO_CHANNELS.find(
-                              (channel) => channel.freq === frequency
+                              (channel) => channel.freq === frequency,
                             ).name
                           }
                           ]
@@ -227,13 +240,13 @@ export const Telecomms = (props) => {
                         minValue={minfreq / 10}
                         maxValue={maxfreq / 10}
                         value={frequency / 10}
-                        onChange={(e, value) => act('tempfreq', { value })}
+                        onChange={(e, value) => act("tempfreq", { value })}
                       />
                     </Table.Cell>
                     <Button
-                      icon={'plus'}
+                      icon={"plus"}
                       disabled={!multitool}
-                      onClick={() => act('freq')}
+                      onClick={() => act("freq")}
                     />
                   </Table.Row>
                 )}
@@ -248,22 +261,22 @@ export const Telecomms = (props) => {
                 )}
                 <LabeledControls m={1}>
                   <Button
-                    icon={'plus'}
-                    content={'Add Machine'}
+                    icon={"plus"}
+                    content={"Add Machine"}
                     disabled={!multitool}
-                    onClick={() => act('buffer')}
+                    onClick={() => act("buffer")}
                   />
                   <Button
-                    icon={'link'}
-                    content={'Link'}
+                    icon={"link"}
+                    content={"Link"}
                     disabled={!multibuff}
-                    onClick={() => act('link')}
+                    onClick={() => act("link")}
                   />
                   <Button
-                    icon={'times'}
-                    content={'Flush'}
+                    icon={"times"}
+                    content={"Flush"}
                     disabled={!multibuff}
-                    onClick={() => act('flush')}
+                    onClick={() => act("flush")}
                   />
                 </LabeledControls>
               </Section>

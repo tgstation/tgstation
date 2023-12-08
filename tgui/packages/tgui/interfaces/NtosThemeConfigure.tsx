@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, Flex } from '../components';
-import { NtosWindow } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Flex } from "../components";
+import { NtosWindow } from "../layouts";
 
 type Data = {
   PC_device_theme: string;
@@ -23,7 +23,8 @@ export const NtosThemeConfigure = (props) => {
           grow
           direction="column"
           textAlign="center"
-          align-items="center">
+          align-items="center"
+        >
           {themes.map((theme) => (
             <Flex.Item key={theme} width="100%" grow={1}>
               <Button.Checkbox
@@ -32,7 +33,7 @@ export const NtosThemeConfigure = (props) => {
                 lineHeight="50px"
                 content={theme.theme_name}
                 onClick={() =>
-                  act('PRG_change_theme', {
+                  act("PRG_change_theme", {
                     selected_theme: theme.theme_name,
                   })
                 }

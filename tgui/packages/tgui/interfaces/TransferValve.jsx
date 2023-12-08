@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, LabeledList, Section } from "../components";
+import { Window } from "../layouts";
 
 export const TransferValve = (props) => {
   const { act, data } = useBackend();
@@ -12,10 +12,10 @@ export const TransferValve = (props) => {
           <LabeledList>
             <LabeledList.Item label="Valve Status">
               <Button
-                icon={valve ? 'unlock' : 'lock'}
-                content={valve ? 'Open' : 'Closed'}
+                icon={valve ? "unlock" : "lock"}
+                content={valve ? "Open" : "Closed"}
                 disabled={!tank_one || !tank_two}
-                onClick={() => act('toggle')}
+                onClick={() => act("toggle")}
               />
             </LabeledList.Item>
           </LabeledList>
@@ -25,19 +25,20 @@ export const TransferValve = (props) => {
           buttons={
             <Button
               content="Configure"
-              icon={'cog'}
+              icon={"cog"}
               disabled={!attached_device}
-              onClick={() => act('device')}
+              onClick={() => act("device")}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Attachment">
               {attached_device ? (
                 <Button
-                  icon={'eject'}
+                  icon={"eject"}
                   content={attached_device}
                   disabled={!attached_device}
-                  onClick={() => act('remove_device')}
+                  onClick={() => act("remove_device")}
                 />
               ) : (
                 <Box color="average">No Assembly</Box>
@@ -50,10 +51,10 @@ export const TransferValve = (props) => {
             <LabeledList.Item label="Attachment">
               {tank_one ? (
                 <Button
-                  icon={'eject'}
+                  icon={"eject"}
                   content={tank_one}
                   disabled={!tank_one}
-                  onClick={() => act('tankone')}
+                  onClick={() => act("tankone")}
                 />
               ) : (
                 <Box color="average">No Tank</Box>
@@ -66,10 +67,10 @@ export const TransferValve = (props) => {
             <LabeledList.Item label="Attachment">
               {tank_two ? (
                 <Button
-                  icon={'eject'}
+                  icon={"eject"}
                   content={tank_two}
                   disabled={!tank_two}
-                  onClick={() => act('tanktwo')}
+                  onClick={() => act("tanktwo")}
                 />
               ) : (
                 <Box color="average">No Tank</Box>

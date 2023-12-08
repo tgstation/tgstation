@@ -1,8 +1,15 @@
-import { BlockQuote, Collapsible, Modal, Section, Stack, Tabs } from '../components';
-import { useBackend } from '../backend';
-import { useLocalState } from '../backend';
-import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
+import {
+  BlockQuote,
+  Collapsible,
+  Modal,
+  Section,
+  Stack,
+  Tabs,
+} from "../components";
+import { useBackend } from "../backend";
+import { useLocalState } from "../backend";
+import { Window } from "../layouts";
+import { BooleanLike } from "common/react";
 
 type Data = {
   PlayerAccounts: PlayerAccount[];
@@ -31,7 +38,7 @@ enum SCREENS {
 }
 
 export const AccountingConsole = (props) => {
-  const [screenmode, setScreenmode] = useLocalState('tab_main', SCREENS.users);
+  const [screenmode, setScreenmode] = useLocalState("tab_main", SCREENS.users);
 
   return (
     <Window width={300} height={360}>
@@ -42,12 +49,14 @@ export const AccountingConsole = (props) => {
             <Tabs fluid textAlign="center">
               <Tabs.Tab
                 selected={screenmode === SCREENS.users}
-                onClick={() => setScreenmode(SCREENS.users)}>
+                onClick={() => setScreenmode(SCREENS.users)}
+              >
                 Users
               </Tabs.Tab>
               <Tabs.Tab
                 selected={screenmode === SCREENS.audit}
-                onClick={() => setScreenmode(SCREENS.audit)}>
+                onClick={() => setScreenmode(SCREENS.audit)}
+              >
                 Audit
               </Tabs.Tab>
             </Tabs>
@@ -72,10 +81,11 @@ const UsersScreen = (props) => {
         <Collapsible
           fill
           key={account.index}
-          title={account.name + ' the ' + account.job}>
+          title={account.name + " the " + account.job}
+        >
           <Stack vertical>
             <BlockQuote>
-              <Stack.Item textColor={'green'}>
+              <Stack.Item textColor={"green"}>
                 {account.balance} credit balance
               </Stack.Item>
               <Stack.Item>
@@ -97,7 +107,7 @@ const AuditScreen = (props) => {
     <Section fill scrollable>
       {AuditLog.map((purchase) => (
         <BlockQuote key={purchase.index} p={1}>
-          <b>{purchase.account}</b> spent <b>{purchase.cost}</b> cr at{' '}
+          <b>{purchase.account}</b> spent <b>{purchase.cost}</b> cr at{" "}
           <i>{purchase.vendor}.</i>
         </BlockQuote>
       ))}

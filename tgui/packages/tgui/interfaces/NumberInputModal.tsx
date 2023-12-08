@@ -1,9 +1,9 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
-import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, RestrictedInput, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { Loader } from "./common/Loader";
+import { InputButtons } from "./common/InputButtons";
+import { KEY_ENTER, KEY_ESCAPE } from "../../common/keycodes";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, RestrictedInput, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 type NumberInputData = {
   init_value: number;
@@ -18,8 +18,8 @@ type NumberInputData = {
 
 export const NumberInputModal = (props) => {
   const { act, data } = useBackend<NumberInputData>();
-  const { init_value, large_buttons, message = '', timeout, title } = data;
-  const [input, setInput] = useLocalState('input', init_value);
+  const { init_value, large_buttons, message = "", timeout, title } = data;
+  const [input, setInput] = useLocalState("input", init_value);
   const onChange = (value: number) => {
     if (value === input) {
       return;
@@ -45,12 +45,13 @@ export const NumberInputModal = (props) => {
         onKeyDown={(event) => {
           const keyCode = window.event ? event.which : event.keyCode;
           if (keyCode === KEY_ENTER) {
-            act('submit', { entry: input });
+            act("submit", { entry: input });
           }
           if (keyCode === KEY_ESCAPE) {
-            act('cancel');
+            act("cancel");
           }
-        }}>
+        }}
+      >
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow>
@@ -81,7 +82,7 @@ const InputArea = (props) => {
           disabled={input === min_value}
           icon="angle-double-left"
           onClick={() => onClick(min_value)}
-          tooltip={min_value ? `Min (${min_value})` : 'Min'}
+          tooltip={min_value ? `Min (${min_value})` : "Min"}
         />
       </Stack.Item>
       <Stack.Item grow>
@@ -93,7 +94,7 @@ const InputArea = (props) => {
           minValue={min_value}
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
-          onEnter={(_, value) => act('submit', { entry: value })}
+          onEnter={(_, value) => act("submit", { entry: value })}
           value={input}
         />
       </Stack.Item>
@@ -102,7 +103,7 @@ const InputArea = (props) => {
           disabled={input === max_value}
           icon="angle-double-right"
           onClick={() => onClick(max_value)}
-          tooltip={max_value ? `Max (${max_value})` : 'Max'}
+          tooltip={max_value ? `Max (${max_value})` : "Max"}
         />
       </Stack.Item>
       <Stack.Item>
@@ -110,7 +111,7 @@ const InputArea = (props) => {
           disabled={input === init_value}
           icon="redo"
           onClick={() => onClick(init_value)}
-          tooltip={init_value ? `Reset (${init_value})` : 'Reset'}
+          tooltip={init_value ? `Reset (${init_value})` : "Reset"}
         />
       </Stack.Item>
     </Stack>

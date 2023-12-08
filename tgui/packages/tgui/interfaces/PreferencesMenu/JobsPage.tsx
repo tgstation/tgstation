@@ -1,18 +1,24 @@
-import { sortBy } from 'common/collections';
-import { classes } from 'common/react';
-import { PropsWithChildren, ReactNode } from 'react';
-import { useBackend } from '../../backend';
-import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
-import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+import { sortBy } from "common/collections";
+import { classes } from "common/react";
+import { PropsWithChildren, ReactNode } from "react";
+import { useBackend } from "../../backend";
+import { Box, Button, Dropdown, Stack, Tooltip } from "../../components";
+import {
+  createSetPreference,
+  Job,
+  JoblessRole,
+  JobPriority,
+  PreferencesMenuData,
+} from "./data";
+import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 
 const sortJobs = (entries: [string, Job][], head?: string) =>
   sortBy<[string, Job]>(
     ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key
+    ([key, _]) => key,
   )(entries);
 
-const PRIORITY_BUTTON_SIZE = '18px';
+const PRIORITY_BUTTON_SIZE = "18px";
 
 const PriorityButton = (props: {
   name: string;
@@ -30,7 +36,7 @@ const PriorityButton = (props: {
           className,
           props.modifier && `${className}--${props.modifier}`,
         ])}
-        color={props.enabled ? props.color : 'white'}
+        color={props.enabled ? props.color : "white"}
         circular
         onClick={props.onClick}
         tooltip={props.name}
@@ -47,7 +53,7 @@ type CreateSetPriority = (priority: JobPriority | null) => () => void;
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
 const createCreateSetPriorityFromName = (
-  jobName: string
+  jobName: string,
 ): CreateSetPriority => {
   if (createSetPriorityCache[jobName] !== undefined) {
     return createSetPriorityCache[jobName];
@@ -64,7 +70,7 @@ const createCreateSetPriorityFromName = (
     const setPriority = () => {
       const { act } = useBackend<PreferencesMenuData>();
 
-      act('set_job_preference', {
+      act("set_job_preference", {
         job: jobName,
         level: priority,
       });
@@ -80,7 +86,7 @@ const createCreateSetPriorityFromName = (
 };
 
 const PriorityHeaders = () => {
-  const className = 'PreferencesMenu__Jobs__PriorityHeader';
+  const className = "PreferencesMenu__Jobs__PriorityHeader";
 
   return (
     <Stack>
@@ -107,11 +113,12 @@ const PriorityButtons = (props: {
   return (
     <Stack
       style={{
-        alignItems: 'center',
-        height: '100%',
-        justifyContent: 'flex-end',
-        paddingLeft: '0.3em',
-      }}>
+        alignItems: "center",
+        height: "100%",
+        justifyContent: "flex-end",
+        paddingLeft: "0.3em",
+      }}
+    >
       {isOverflow ? (
         <>
           <PriorityButton
@@ -195,7 +202,7 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
     rightSide = (
       <Stack align="center" height="100%" pr={1}>
         <Stack.Item grow textAlign="right">
-          <b>{daysLeft}</b> day{daysLeft === 1 ? '' : 's'} left
+          <b>{daysLeft}</b> day{daysLeft === 1 ? "" : "s"} left
         </Stack.Item>
       </Stack>
     );
@@ -225,8 +232,9 @@ const JobRow = (props: { className?: string; job: Job; name: string }) => {
             className="job-name"
             width="50%"
             style={{
-              paddingLeft: '0.3em',
-            }}>
+              paddingLeft: "0.3em",
+            }}
+          >
             {name}
           </Stack.Item>
         </Tooltip>
@@ -263,7 +271,7 @@ const Department = (props: { department: string } & PropsWithChildren) => {
 
         const jobsForDepartment = sortJobs(
           Object.entries(jobs).filter(([_, job]) => job.department === name),
-          department.head
+          department.head,
         );
 
         return (
@@ -274,7 +282,7 @@ const Department = (props: { department: string } & PropsWithChildren) => {
                   <JobRow
                     className={classes([
                       className,
-                      name === department.head && 'head',
+                      name === department.head && "head",
                     ])}
                     key={name}
                     job={job}
@@ -325,7 +333,7 @@ const JoblessRoleDropdown = (props) => {
       <Dropdown
         width="100%"
         selected={selected}
-        onSelected={createSetPreference(act, 'joblessrole')}
+        onSelected={createSetPreference(act, "joblessrole")}
         options={options}
         displayText={
           <Box pr={1}>

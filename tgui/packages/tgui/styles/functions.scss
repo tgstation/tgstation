@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:map';
-@use 'sass:math';
-@use 'sass:meta';
+@use "sass:color";
+@use "sass:map";
+@use "sass:math";
+@use "sass:meta";
 
 //  Type-casting
 // --------------------------------------------------------
@@ -17,7 +17,7 @@
     @error 'Could not convert `#{$value}` - must be `type-of number`';
     @return null;
   }
-  @if math.unit($value) == '%' {
+  @if math.unit($value) == "%" {
     @return math.div($value, 100%);
   }
   @return math.div($value, $value * 0 + 1);
@@ -41,9 +41,9 @@
 // 1 is pure white, 0 is pure black.
 @function luminance($color) {
   $colors: (
-    'red': color.red($color),
-    'green': color.green($color),
-    'blue': color.blue($color),
+    "red": color.red($color),
+    "green": color.green($color),
+    "blue": color.blue($color),
   );
 
   @each $name, $value in $colors {

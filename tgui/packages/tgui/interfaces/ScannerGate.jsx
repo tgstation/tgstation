@@ -1,68 +1,68 @@
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section } from '../components';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, LabeledList, Section } from "../components";
+import { InterfaceLockNoticeBox } from "./common/InterfaceLockNoticeBox";
+import { Window } from "../layouts";
 
 const DISEASE_THEASHOLD_LIST = [
-  'Positive',
-  'Harmless',
-  'Minor',
-  'Medium',
-  'Harmful',
-  'Dangerous',
-  'BIOHAZARD',
+  "Positive",
+  "Harmless",
+  "Minor",
+  "Medium",
+  "Harmful",
+  "Dangerous",
+  "BIOHAZARD",
 ];
 
 const TARGET_SPECIES_LIST = [
   {
-    name: 'Human',
-    value: 'human',
+    name: "Human",
+    value: "human",
   },
   {
-    name: 'Lizardperson',
-    value: 'lizard',
+    name: "Lizardperson",
+    value: "lizard",
   },
   {
-    name: 'Flyperson',
-    value: 'fly',
+    name: "Flyperson",
+    value: "fly",
   },
   {
-    name: 'Felinid',
-    value: 'felinid',
+    name: "Felinid",
+    value: "felinid",
   },
   {
-    name: 'Plasmaman',
-    value: 'plasma',
+    name: "Plasmaman",
+    value: "plasma",
   },
   {
-    name: 'Mothperson',
-    value: 'moth',
+    name: "Mothperson",
+    value: "moth",
   },
   {
-    name: 'Jellyperson',
-    value: 'jelly',
+    name: "Jellyperson",
+    value: "jelly",
   },
   {
-    name: 'Podperson',
-    value: 'pod',
+    name: "Podperson",
+    value: "pod",
   },
   {
-    name: 'Golem',
-    value: 'golem',
+    name: "Golem",
+    value: "golem",
   },
   {
-    name: 'Zombie',
-    value: 'zombie',
+    name: "Zombie",
+    value: "zombie",
   },
 ];
 
 const TARGET_NUTRITION_LIST = [
   {
-    name: 'Starving',
+    name: "Starving",
     value: 150,
   },
   {
-    name: 'Obese',
+    name: "Obese",
     value: 600,
   },
 ];
@@ -73,7 +73,7 @@ export const ScannerGate = (props) => {
     <Window width={400} height={300}>
       <Window.Content scrollable>
         <InterfaceLockNoticeBox
-          onLockedStatusChange={() => act('toggle_lock')}
+          onLockedStatusChange={() => act("toggle_lock")}
         />
         {!data.locked && <ScannerGateControl />}
       </Window.Content>
@@ -83,31 +83,31 @@ export const ScannerGate = (props) => {
 
 const SCANNER_GATE_ROUTES = {
   Off: {
-    title: 'Scanner Mode: Off',
+    title: "Scanner Mode: Off",
     component: () => ScannerGateOff,
   },
   Wanted: {
-    title: 'Scanner Mode: Wanted',
+    title: "Scanner Mode: Wanted",
     component: () => ScannerGateWanted,
   },
   Guns: {
-    title: 'Scanner Mode: Guns',
+    title: "Scanner Mode: Guns",
     component: () => ScannerGateGuns,
   },
   Mindshield: {
-    title: 'Scanner Mode: Mindshield',
+    title: "Scanner Mode: Mindshield",
     component: () => ScannerGateMindshield,
   },
   Disease: {
-    title: 'Scanner Mode: Disease',
+    title: "Scanner Mode: Disease",
     component: () => ScannerGateDisease,
   },
   Species: {
-    title: 'Scanner Mode: Species',
+    title: "Scanner Mode: Species",
     component: () => ScannerGateSpecies,
   },
   Nutrition: {
-    title: 'Scanner Mode: Nutrition',
+    title: "Scanner Mode: Nutrition",
     component: () => ScannerGateNutrition,
   },
 };
@@ -121,14 +121,15 @@ const ScannerGateControl = (props) => {
     <Section
       title={route.title}
       buttons={
-        scan_mode !== 'Off' && (
+        scan_mode !== "Off" && (
           <Button
             icon="arrow-left"
             content="back"
-            onClick={() => act('set_mode', { new_mode: 'Off' })}
+            onClick={() => act("set_mode", { new_mode: "Off" })}
           />
         )
-      }>
+      }
+    >
       <Component />
     </Section>
   );
@@ -142,27 +143,27 @@ const ScannerGateOff = (props) => {
       <Box>
         <Button
           content="Wanted"
-          onClick={() => act('set_mode', { new_mode: 'Wanted' })}
+          onClick={() => act("set_mode", { new_mode: "Wanted" })}
         />
         <Button
           content="Guns"
-          onClick={() => act('set_mode', { new_mode: 'Guns' })}
+          onClick={() => act("set_mode", { new_mode: "Guns" })}
         />
         <Button
           content="Mindshield"
-          onClick={() => act('set_mode', { new_mode: 'Mindshield' })}
+          onClick={() => act("set_mode", { new_mode: "Mindshield" })}
         />
         <Button
           content="Disease"
-          onClick={() => act('set_mode', { new_mode: 'Disease' })}
+          onClick={() => act("set_mode", { new_mode: "Disease" })}
         />
         <Button
           content="Species"
-          onClick={() => act('set_mode', { new_mode: 'Species' })}
+          onClick={() => act("set_mode", { new_mode: "Species" })}
         />
         <Button
           content="Nutrition"
-          onClick={() => act('set_mode', { new_mode: 'Nutrition' })}
+          onClick={() => act("set_mode", { new_mode: "Nutrition" })}
         />
       </Box>
     </>
@@ -175,7 +176,7 @@ const ScannerGateWanted = (props) => {
   return (
     <>
       <Box mb={2}>
-        Trigger if the person scanned {reverse ? 'does not have' : 'has'} any
+        Trigger if the person scanned {reverse ? "does not have" : "has"} any
         warrants for their arrest.
       </Box>
       <ScannerGateMode />
@@ -189,7 +190,7 @@ const ScannerGateGuns = (props) => {
   return (
     <>
       <Box mb={2}>
-        Trigger if the person scanned {reverse ? 'does not have' : 'has'} any
+        Trigger if the person scanned {reverse ? "does not have" : "has"} any
         guns.
       </Box>
       <ScannerGateMode />
@@ -203,7 +204,7 @@ const ScannerGateMindshield = (props) => {
   return (
     <>
       <Box mb={2}>
-        Trigger if the person scanned {reverse ? 'does not have' : 'has'} a
+        Trigger if the person scanned {reverse ? "does not have" : "has"} a
         mindshield.
       </Box>
       <ScannerGateMode />
@@ -217,7 +218,7 @@ const ScannerGateDisease = (props) => {
   return (
     <>
       <Box mb={2}>
-        Trigger if the person scanned {reverse ? 'does not have' : 'has'} a
+        Trigger if the person scanned {reverse ? "does not have" : "has"} a
         disease equal or worse than {disease_threshold}.
       </Box>
       <Box mb={2}>
@@ -227,7 +228,7 @@ const ScannerGateDisease = (props) => {
             checked={threshold === disease_threshold}
             content={threshold}
             onClick={() =>
-              act('set_disease_threshold', {
+              act("set_disease_threshold", {
                 new_threshold: threshold,
               })
             }
@@ -248,10 +249,10 @@ const ScannerGateSpecies = (props) => {
   return (
     <>
       <Box mb={2}>
-        Trigger if the person scanned is {reverse ? 'not' : ''} of the{' '}
+        Trigger if the person scanned is {reverse ? "not" : ""} of the{" "}
         {species.name} species.
-        {target_species === 'zombie' &&
-          ' All zombie types will be detected, including dormant zombies.'}
+        {target_species === "zombie" &&
+          " All zombie types will be detected, including dormant zombies."}
       </Box>
       <Box mb={2}>
         {TARGET_SPECIES_LIST.map((species) => (
@@ -260,7 +261,7 @@ const ScannerGateSpecies = (props) => {
             checked={species.value === target_species}
             content={species.name}
             onClick={() =>
-              act('set_target_species', {
+              act("set_target_species", {
                 new_species: species.value,
               })
             }
@@ -281,7 +282,7 @@ const ScannerGateNutrition = (props) => {
   return (
     <>
       <Box mb={2}>
-        Trigger if the person scanned {reverse ? 'does not have' : 'has'} the{' '}
+        Trigger if the person scanned {reverse ? "does not have" : "has"} the{" "}
         {nutrition.name} nutrition level.
       </Box>
       <Box mb={2}>
@@ -291,7 +292,7 @@ const ScannerGateNutrition = (props) => {
             checked={nutrition.value === target_nutrition}
             content={nutrition.name}
             onClick={() =>
-              act('set_target_nutrition', {
+              act("set_target_nutrition", {
                 new_nutrition: nutrition.name,
               })
             }
@@ -310,10 +311,10 @@ const ScannerGateMode = (props) => {
     <LabeledList>
       <LabeledList.Item label="Scanning Mode">
         <Button
-          content={reverse ? 'Inverted' : 'Default'}
-          icon={reverse ? 'random' : 'long-arrow-alt-right'}
-          onClick={() => act('toggle_reverse')}
-          color={reverse ? 'bad' : 'good'}
+          content={reverse ? "Inverted" : "Default"}
+          icon={reverse ? "random" : "long-arrow-alt-right"}
+          onClick={() => act("toggle_reverse")}
+          color={reverse ? "bad" : "good"}
         />
       </LabeledList.Item>
     </LabeledList>

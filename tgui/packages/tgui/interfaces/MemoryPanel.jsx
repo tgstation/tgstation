@@ -1,7 +1,7 @@
-import { useBackend } from '../backend';
-import { Button, Dimmer, Section, Stack } from '../components';
-import { multiline } from 'common/string';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Dimmer, Section, Stack } from "../components";
+import { multiline } from "common/string";
+import { Window } from "../layouts";
 
 const STORY_VALUE_KEY = -1;
 const STORY_VALUE_SHIT = 0;
@@ -60,7 +60,7 @@ const MemoryQuality = (props) => {
         icon="star"
         style={{
           background:
-            'linear-gradient(to right, #964B30, #D68B60, #B66B30, #D68B60, #964B30);',
+            "linear-gradient(to right, #964B30, #D68B60, #B66B30, #D68B60, #964B30);",
         }}
         tooltipPosition="right"
         tooltip={multiline`
@@ -76,7 +76,7 @@ const MemoryQuality = (props) => {
         icon="star"
         style={{
           background:
-            'linear-gradient(to right, #636363, #a3a3a3, #6e6e6e, #a3a3a3, #636363);',
+            "linear-gradient(to right, #636363, #a3a3a3, #6e6e6e, #a3a3a3, #636363);",
         }}
         tooltipPosition="right"
         tooltip={multiline`
@@ -92,7 +92,7 @@ const MemoryQuality = (props) => {
         icon="star"
         style={{
           background:
-            'linear-gradient(to right, #AA771C, #BCB68A, #B38728, #BCB68A, #AA771C);',
+            "linear-gradient(to right, #AA771C, #BCB68A, #B38728, #BCB68A, #AA771C);",
         }}
         tooltipPosition="right"
         tooltip={multiline`
@@ -108,7 +108,7 @@ const MemoryQuality = (props) => {
         icon="crown"
         style={{
           background:
-            'linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)',
+            "linear-gradient(to right, #56A5B3, #75D4E2, #56A5B3, #75D4E2, #56A5B3)",
         }}
         tooltipPosition="right"
         tooltip={multiline`

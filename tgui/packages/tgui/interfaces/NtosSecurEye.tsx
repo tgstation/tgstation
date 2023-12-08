@@ -1,5 +1,5 @@
-import { NtosWindow } from '../layouts';
-import { CameraContent } from './CameraConsole';
+import { NtosWindow } from "../layouts";
+import { CameraContent } from "./CameraConsole";
 
 export const NtosSecurEye = (props) => {
   return (

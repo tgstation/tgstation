@@ -1,10 +1,17 @@
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from "../components";
 
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
-import { getGasColor } from '../constants';
-import { toFixed } from 'common/math';
-import { useBackend } from '../backend';
+import { BooleanLike } from "common/react";
+import { Window } from "../layouts";
+import { getGasColor } from "../constants";
+import { toFixed } from "common/math";
+import { useBackend } from "../backend";
 
 type Data = {
   on: BooleanLike;
@@ -51,10 +58,10 @@ const Controls = (props) => {
       <LabeledList>
         <LabeledList.Item label="Power">
           <Button
-            icon={on ? 'power-off' : 'times'}
-            content={on ? 'On' : 'Off'}
+            icon={on ? "power-off" : "times"}
+            content={on ? "On" : "Off"}
             selected={on}
-            onClick={() => act('power')}
+            onClick={() => act("power")}
           />
         </LabeledList.Item>
         <LabeledList.Item label="Recipe">
@@ -64,7 +71,7 @@ const Controls = (props) => {
               selected={id === selected}
               content={name}
               onClick={() =>
-                act('recipe', {
+                act("recipe", {
                   mode: id,
                 })
               }
@@ -80,7 +87,7 @@ const Controls = (props) => {
             minValue={0}
             maxValue={250}
             onDrag={(e, value) =>
-              act('gas_input', {
+              act("gas_input", {
                 gas_input: value,
               })
             }
@@ -123,8 +130,9 @@ const Requirements = (props) => {
               good: [logScale(80), logScale(600)],
               average: [logScale(600), logScale(5000)],
               bad: [logScale(5000), Infinity],
-            }}>
-            {toFixed(internal_temperature) + ' K'}
+            }}
+          >
+            {toFixed(internal_temperature) + " K"}
           </ProgressBar>
         </LabeledList.Item>
       </LabeledList>
@@ -145,8 +153,9 @@ const Gases = (props) => {
               color={getGasColor(id)}
               value={amount}
               minValue={0}
-              maxValue={1000}>
-              {toFixed(amount, 2) + ' moles'}
+              maxValue={1000}
+            >
+              {toFixed(amount, 2) + " moles"}
             </ProgressBar>
           </LabeledList.Item>
         ))}

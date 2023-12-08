@@ -1,7 +1,7 @@
-import { useBackend } from '../backend';
-import { Divider, Section, Stack } from '../components';
-import { Window } from '../layouts';
-import { Objective } from './common/Objectives';
+import { useBackend } from "../backend";
+import { Divider, Section, Stack } from "../components";
+import { Window } from "../layouts";
+import { Objective } from "./common/Objectives";
 
 type Data = {
   antag_name: string;
@@ -10,10 +10,10 @@ type Data = {
 
 const textStyles = {
   variable: {
-    color: 'white',
+    color: "white",
   },
   danger: {
-    color: 'red',
+    color: "red",
   },
 } as const;
 
@@ -33,7 +33,7 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <Stack.Item mb={2}>
               <span style={textStyles.danger}>Bitrunning</span> is a crime. Your
-              mission: <span style={textStyles.variable}>Eliminate</span>{' '}
+              mission: <span style={textStyles.variable}>Eliminate</span>{" "}
               organic intruders to maintain the integrity of the system.
             </Stack.Item>
             <SpecificInfo />
@@ -42,14 +42,14 @@ export const AntagInfoGlitch = (props) => {
             </Stack.Item>
             <Divider />
             <Stack.Item>
-              const <span style={textStyles.variable}>TARGETS</span> ={' '}
+              const <span style={textStyles.variable}>TARGETS</span> ={" "}
             </Stack.Item>
             <Stack.Item>
               <span style={textStyles.variable}>system.</span>
               <span style={textStyles.danger}>INTRUDERS</span>;
             </Stack.Item>
             <Stack.Item>
-              while <span style={textStyles.variable}>TARGETS</span>.LIFE !={' '}
+              while <span style={textStyles.variable}>TARGETS</span>.LIFE !={" "}
               <span style={textStyles.variable}>stat.</span>DEAD
             </Stack.Item>
             <Stack.Item>
@@ -69,11 +69,11 @@ const SpecificInfo = (props) => {
   const { antag_name } = data;
 
   switch (antag_name) {
-    case 'Cyber Police':
+    case "Cyber Police":
       return (
         <>
           <Stack.Item mb={2}>
-            To assist your task, your program has been loaded with cutting edge{' '}
+            To assist your task, your program has been loaded with cutting edge{" "}
             <span style={textStyles.variable}>martial arts</span> skills.
           </Stack.Item>
           <Stack.Item grow>
@@ -82,11 +82,11 @@ const SpecificInfo = (props) => {
           </Stack.Item>
         </>
       );
-    case 'Cyber Tac':
+    case "Cyber Tac":
       return (
         <>
           <Stack.Item mb={2}>
-            You are an advanced combat unit. You have been outfitted with{' '}
+            You are an advanced combat unit. You have been outfitted with{" "}
             <span style={textStyles.variable}>lethal weaponry</span>.
           </Stack.Item>
           <Stack.Item grow>
@@ -95,10 +95,10 @@ const SpecificInfo = (props) => {
           </Stack.Item>
         </>
       );
-    case 'NetGuardian Prime':
+    case "NetGuardian Prime":
       return (
         <Stack.Item grow>
-          <span style={{ ...textStyles.danger, fontSize: '16px' }}>
+          <span style={{ ...textStyles.danger, fontSize: "16px" }}>
             ORGANIC LIFE MUST BE TERMINATED.
           </span>
         </Stack.Item>

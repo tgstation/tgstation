@@ -1,8 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
-import { round } from '../../common/math';
-import { BooleanLike, classes } from '../../common/react';
-import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from "../backend";
+import { round } from "../../common/math";
+import { BooleanLike, classes } from "../../common/react";
+import { Box, Button, Knob, Section, Slider, Stack, Tabs } from "../components";
+import { Window } from "../layouts";
 
 enum Direction {
   North = 1,
@@ -51,18 +51,18 @@ export const LightController = (props) => {
     category_ids,
   } = data;
   const [currentTemplate, setCurrentTemplate] = useLocalState<string>(
-    'currentTemplate',
-    default_id
+    "currentTemplate",
+    default_id,
   );
   const [currentCategory, setCurrentCategory] = useLocalState<string>(
-    'currentCategory',
-    default_category
+    "currentCategory",
+    default_category,
   );
 
   const category_keys = category_ids ? Object.keys(category_ids) : [];
 
   return (
-    <Window title={light_info.name + ': Lighting'} width={600} height={400}>
+    <Window title={light_info.name + ": Lighting"} width={600} height={400}>
       <Window.Content scrollable>
         <Stack fill>
           <Stack.Item>
@@ -72,7 +72,8 @@ export const LightController = (props) => {
                   <Tabs.Tab
                     key={category}
                     selected={currentCategory === category}
-                    onClick={() => setCurrentCategory(category)}>
+                    onClick={() => setCurrentCategory(category)}
+                  >
                     <Box fontSize="14px" bold textColor="#eee">
                       {category}
                     </Box>
@@ -84,15 +85,16 @@ export const LightController = (props) => {
                   <Tabs.Tab
                     key={id}
                     selected={currentTemplate === id}
-                    onClick={() => setCurrentTemplate(id)}>
+                    onClick={() => setCurrentTemplate(id)}
+                  >
                     <Box fontSize="14px" textColor="#cee">
                       {templates[id].light_info.name}
                     </Box>
                     <Box
                       ml={0.1}
                       className={classes([
-                        'lights32x32',
-                        'light_fantastic_' + id,
+                        "lights32x32",
+                        "light_fantastic_" + id,
                       ])}
                     />
                   </Tabs.Tab>
@@ -134,16 +136,17 @@ const LightControl = (props: LightControlProps) => {
                 icon="brush"
                 tooltip="Change light color"
                 textColor={info.color}
-                onClick={() => act('change_color')}>
+                onClick={() => act("change_color")}
+              >
                 {info.color}
               </Button>
               <Button
                 fontSize="16px"
-                color={on ? 'good' : 'bad'}
+                color={on ? "good" : "bad"}
                 icon="power-off"
                 tooltip="Enable/Disable the light"
                 onClick={() =>
-                  act('set_on', {
+                  act("set_on", {
                     value: !on,
                   })
                 }
@@ -153,7 +156,7 @@ const LightControl = (props: LightControlProps) => {
                 color="purple"
                 icon="handcuffs"
                 tooltip="Isolate this light for a bit"
-                onClick={() => act('isolate')}
+                onClick={() => act("isolate")}
               />
             </Stack.Item>
           </Stack>
@@ -180,7 +183,7 @@ const LightControl = (props: LightControlProps) => {
             minValue={0}
             maxValue={10}
             onChange={(e, value) =>
-              act('set_range', {
+              act("set_range", {
                 value: value,
               })
             }
@@ -195,7 +198,7 @@ const LightControl = (props: LightControlProps) => {
             maxValue={5}
             format={(value) => round(value, 2)}
             onChange={(e, value) =>
-              act('set_power', {
+              act("set_power", {
                 value: value,
               })
             }
@@ -238,7 +241,7 @@ const LightInfo = (props: LightInfoProps) => {
                 icon="upload"
                 tooltip="Use template"
                 onClick={() =>
-                  act('mirror_template', {
+                  act("mirror_template", {
                     id: light.id,
                   })
                 }
@@ -310,7 +313,7 @@ const DirectionButton = (props: DirectedButtonProps) => {
       icon={icon}
       selected={direction & dir}
       onClick={() =>
-        act('set_dir', {
+        act("set_dir", {
           value: dir,
         })
       }
@@ -333,7 +336,7 @@ const AngleSelect = (props) => {
       step={5}
       stepPixelSize={10}
       onChange={(e, value) =>
-        act('set_angle', {
+        act("set_angle", {
           value: value,
         })
       }

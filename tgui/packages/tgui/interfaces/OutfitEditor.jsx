@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, Icon, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 export const OutfitEditor = (props) => {
   const { act, data } = useBackend();
@@ -24,16 +24,17 @@ export const OutfitEditor = (props) => {
               <Stack.Item
                 grow={1}
                 style={{
-                  'overflow': 'hidden',
-                  whiteSpace: 'nowrap',
-                  textOverflow: 'ellipsis',
-                }}>
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                  textOverflow: "ellipsis",
+                }}
+              >
                 <Button
                   ml={0.5}
                   color="transparent"
                   icon="pencil-alt"
                   title="Rename this outfit"
-                  onClick={() => act('rename', {})}
+                  onClick={() => act("rename", {})}
                 />
                 {outfit.name}
               </Stack.Item>
@@ -48,22 +49,23 @@ export const OutfitEditor = (props) => {
                   icon="code"
                   tooltip="Edit this outfit on a VV window"
                   tooltipPosition="bottom-start"
-                  onClick={() => act('vv')}
+                  onClick={() => act("vv")}
                 />
                 <Button
-                  color={!saveable && 'bad'}
-                  icon={saveable ? 'save' : 'trash-alt'}
+                  color={!saveable && "bad"}
+                  icon={saveable ? "save" : "trash-alt"}
                   tooltip={
                     saveable
-                      ? 'Save this outfit to the custom outfit list'
-                      : 'Remove this outfit from the custom outfit list'
+                      ? "Save this outfit to the custom outfit list"
+                      : "Remove this outfit from the custom outfit list"
                   }
                   tooltipPosition="bottom-start"
-                  onClick={() => act(saveable ? 'save' : 'delete')}
+                  onClick={() => act(saveable ? "save" : "delete")}
                 />
               </Stack.Item>
             </Stack>
-          }>
+          }
+        >
           <Box textAlign="center">
             <Stack mb={2}>
               <OutfitSlot name="Headgear" icon="hard-hat" slot="head" />
@@ -127,7 +129,8 @@ const OutfitSlot = (props) => {
         height={2}
         bold
         // todo: intuitive way to clear items
-        onClick={(e) => act(e.ctrlKey ? 'ctrlClick' : 'click', { slot })}>
+        onClick={(e) => act(e.ctrlKey ? "ctrlClick" : "click", { slot })}
+      >
         <Icon name={icon} rotation={iconRot} />
         {name}
       </Button>
@@ -143,8 +146,8 @@ const OutfitSlot = (props) => {
               position="absolute"
               name="times"
               color="label"
-              style={{ cursor: 'pointer' }}
-              onClick={() => act('clear', { slot })}
+              style={{ cursor: "pointer" }}
+              onClick={() => act("clear", { slot })}
             />
           </>
         )}
@@ -152,12 +155,13 @@ const OutfitSlot = (props) => {
       <Box
         color="label"
         style={{
-          'overflow': 'hidden',
-          whiteSpace: 'nowrap',
-          textOverflow: 'ellipsis',
+          overflow: "hidden",
+          whiteSpace: "nowrap",
+          textOverflow: "ellipsis",
         }}
-        title={currItem?.path}>
-        {currItem?.name || 'Empty'}
+        title={currItem?.path}
+      >
+        {currItem?.name || "Empty"}
       </Box>
     </Stack.Item>
   );

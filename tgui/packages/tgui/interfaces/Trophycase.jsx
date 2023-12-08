@@ -1,7 +1,7 @@
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend } from '../backend';
-import { Icon, Box, Button, Dimmer, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { decodeHtmlEntities } from "common/string";
+import { useBackend } from "../backend";
+import { Icon, Box, Button, Dimmer, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 export const Trophycase = (props) => {
   const { act, data } = useBackend();
@@ -43,7 +43,7 @@ const HistorianPanel = (props) => {
         <Button
           icon="key"
           content="Insert key for historian mode"
-          onClick={() => act('insert_key')}
+          onClick={() => act("insert_key")}
         />
       )}
       {!!historian_mode && (
@@ -51,13 +51,13 @@ const HistorianPanel = (props) => {
           <Button
             icon="times"
             content="Lock historian mode"
-            onClick={() => act('lock')}
+            onClick={() => act("lock")}
           />
           <Button
             icon="pencil"
             content="Edit description"
             disabled={!has_showpiece || holographic_showpiece}
-            onClick={() => act('change_message')}
+            onClick={() => act("change_message")}
           />
         </div>
       )}
@@ -149,7 +149,7 @@ const ShowpieceName = (props) => {
       <b>
         {showpiece_name
           ? decodeHtmlEntities(showpiece_name)
-          : 'Under construction.'}
+          : "Under construction."}
       </b>
     </Section>
   );

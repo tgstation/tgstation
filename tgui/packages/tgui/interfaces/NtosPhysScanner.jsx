@@ -1,7 +1,7 @@
-import { useBackend } from '../backend';
-import { NtosWindow } from '../layouts';
-import { Section, Box } from '../components';
-import { sanitizeText } from '../sanitize';
+import { useBackend } from "../backend";
+import { NtosWindow } from "../layouts";
+import { Section, Box } from "../components";
+import { sanitizeText } from "../sanitize";
 
 export const NtosPhysScanner = (props) => {
   const { act, data } = useBackend();
@@ -23,7 +23,7 @@ export const NtosPhysScanner = (props) => {
             <br />
           </Box>
           <Box
-            style={{ whiteSpace: 'pre-line' }}
+            style={{ whiteSpace: "pre-line" }}
             dangerouslySetInnerHTML={textHtml}
           />
         </Section>

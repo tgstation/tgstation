@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   minutes: number;
@@ -22,19 +22,20 @@ export const Timer = (props) => {
           buttons={
             <>
               <Button
-                icon={'sync'}
-                content={loop ? 'Repeating' : 'Repeat'}
+                icon={"sync"}
+                content={loop ? "Repeating" : "Repeat"}
                 selected={loop}
-                onClick={() => act('repeat')}
+                onClick={() => act("repeat")}
               />
               <Button
-                icon={'clock-o'}
-                content={timing ? 'Stop' : 'Start'}
+                icon={"clock-o"}
+                content={timing ? "Stop" : "Start"}
                 selected={timing}
-                onClick={() => act('time')}
+                onClick={() => act("time")}
               />
             </>
-          }>
+          }
+        >
           <TimerContent />
         </Section>
       </Window.Content>
@@ -52,23 +53,23 @@ const TimerContent = (props) => {
       <Button
         icon="fast-backward"
         disabled={timing}
-        onClick={() => act('input', { adjust: -30 })}
+        onClick={() => act("input", { adjust: -30 })}
       />
       <Button
         icon="backward"
         disabled={timing}
-        onClick={() => act('input', { adjust: -1 })}
+        onClick={() => act("input", { adjust: -1 })}
       />
-      {String(minutes).padStart(2, '0')}:{String(seconds).padStart(2, '0')}{' '}
+      {String(minutes).padStart(2, "0")}:{String(seconds).padStart(2, "0")}{" "}
       <Button
         icon="forward"
         disabled={timing}
-        onClick={() => act('input', { adjust: 1 })}
+        onClick={() => act("input", { adjust: 1 })}
       />
       <Button
         icon="fast-forward"
         disabled={timing}
-        onClick={() => act('input', { adjust: 30 })}
+        onClick={() => act("input", { adjust: 30 })}
       />
     </>
   );

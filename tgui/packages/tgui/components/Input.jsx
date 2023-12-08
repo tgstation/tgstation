@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
-import { classes } from 'common/react';
-import { Component, createRef } from 'react';
-import { Box } from './Box';
+import { KEY_ENTER, KEY_ESCAPE } from "common/keycodes";
+import { classes } from "common/react";
+import { Component, createRef } from "react";
+import { Box } from "./Box";
 
 // prettier-ignore
 export const toInputValue = value => (
@@ -63,7 +63,7 @@ export class Input extends Component {
           onEnter(e, e.target.value);
         }
         if (this.props.selfClear) {
-          e.target.value = '';
+          e.target.value = "";
         } else {
           e.target.blur();
         }
@@ -133,12 +133,13 @@ export class Input extends Component {
     return (
       <Box
         className={classes([
-          'Input',
-          fluid && 'Input--fluid',
-          monospace && 'Input--monospace',
+          "Input",
+          fluid && "Input--fluid",
+          monospace && "Input--monospace",
           className,
         ])}
-        {...rest}>
+        {...rest}
+      >
         <div className="Input__baseline">.</div>
         <input
           ref={this.inputRef}

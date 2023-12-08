@@ -1,11 +1,25 @@
-import { useBackend } from '../../backend';
-import { Box, Button, Dimmer, Icon, LabeledList, Section, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { DnaConsoleEnzymes } from './DnaConsoleEnzymes';
-import { DnaConsoleSequencer } from './DnaConsoleSequencer';
-import { DnaConsoleStorage } from './DnaConsoleStorage';
-import { DnaScanner } from './DnaScanner';
-import { CONSOLE_MODE_ENZYMES, CONSOLE_MODE_FEATURES, CONSOLE_MODE_SEQUENCER, CONSOLE_MODE_STORAGE, STORAGE_MODE_CONSOLE } from './constants';
+import { useBackend } from "../../backend";
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  LabeledList,
+  Section,
+  Stack,
+} from "../../components";
+import { Window } from "../../layouts";
+import { DnaConsoleEnzymes } from "./DnaConsoleEnzymes";
+import { DnaConsoleSequencer } from "./DnaConsoleSequencer";
+import { DnaConsoleStorage } from "./DnaConsoleStorage";
+import { DnaScanner } from "./DnaScanner";
+import {
+  CONSOLE_MODE_ENZYMES,
+  CONSOLE_MODE_FEATURES,
+  CONSOLE_MODE_SEQUENCER,
+  CONSOLE_MODE_STORAGE,
+  STORAGE_MODE_CONSOLE,
+} from "./constants";
 
 export const DnaConsole = (props) => {
   const { data } = useBackend();
@@ -68,14 +82,15 @@ const DnaConsoleCommands = (props) => {
             Injector on cooldown ({injectorSeconds}s)
           </Box>
         )
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button
             content="Storage"
             selected={consoleMode === CONSOLE_MODE_STORAGE}
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 consoleMode: CONSOLE_MODE_STORAGE,
               })
             }
@@ -85,7 +100,7 @@ const DnaConsoleCommands = (props) => {
             disabled={!data.isViableSubject}
             selected={consoleMode === CONSOLE_MODE_SEQUENCER}
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 consoleMode: CONSOLE_MODE_SEQUENCER,
               })
             }
@@ -94,7 +109,7 @@ const DnaConsoleCommands = (props) => {
             content="Enzymes"
             selected={consoleMode === CONSOLE_MODE_ENZYMES}
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 consoleMode: CONSOLE_MODE_ENZYMES,
               })
             }
@@ -103,7 +118,7 @@ const DnaConsoleCommands = (props) => {
             content="Features"
             selected={consoleMode === CONSOLE_MODE_FEATURES}
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 consoleMode: CONSOLE_MODE_FEATURES,
               })
             }
@@ -115,8 +130,8 @@ const DnaConsoleCommands = (props) => {
               icon="eject"
               content="Eject"
               onClick={() => {
-                act('eject_disk');
-                act('set_view', {
+                act("eject_disk");
+                act("set_view", {
                   storageMode: STORAGE_MODE_CONSOLE,
                 });
               }}

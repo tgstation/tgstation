@@ -22,7 +22,7 @@ let lpMarkersByName = {};
  * Marks a certain spot in the code for later measurements.
  */
 const mark = (name, timestamp) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     if (supportsPerf && !timestamp) {
       hpMarkersByName[name] = performance.now();
     }
@@ -36,7 +36,7 @@ const mark = (name, timestamp) => {
  * Use logger.log() to print the measurement.
  */
 const measure = (markerNameA, markerNameB) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     let markerA = hpMarkersByName[markerNameA];
     let markerB = hpMarkersByName[markerNameB];
     if (!markerA || !markerB) {

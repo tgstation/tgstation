@@ -1,5 +1,5 @@
-import { NtosWindow } from '../layouts';
-import { Newscaster } from './Newscaster';
+import { NtosWindow } from "../layouts";
+import { Newscaster } from "./Newscaster";
 
 export const NtosNewscaster = () => {
   return (

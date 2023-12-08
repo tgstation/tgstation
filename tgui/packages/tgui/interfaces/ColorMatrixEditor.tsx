@@ -1,14 +1,21 @@
-import { useBackend } from '../backend';
-import { toFixed } from 'common/math';
-import { Box, Stack, Section, ByondUi, NumberInput, Button } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { toFixed } from "common/math";
+import {
+  Box,
+  Stack,
+  Section,
+  ByondUi,
+  NumberInput,
+  Button,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   mapRef: string;
   currentColor: string[];
 };
 
-const PREFIXES = ['r', 'g', 'b', 'a', 'c'] as const;
+const PREFIXES = ["r", "g", "b", "a", "c"] as const;
 
 export const ColorMatrixEditor = (props) => {
   const { act, data } = useBackend<Data>();
@@ -41,7 +48,7 @@ export const ColorMatrixEditor = (props) => {
                                 onDrag={(_, value) => {
                                   let retColor = currentColor;
                                   retColor[row * 4 + col] = value;
-                                  act('transition_color', {
+                                  act("transition_color", {
                                     color: retColor,
                                   });
                                 }}
@@ -59,7 +66,7 @@ export const ColorMatrixEditor = (props) => {
                 <Button.Confirm
                   content="Confirm"
                   confirmContent="Confirm?"
-                  onClick={() => act('confirm')}
+                  onClick={() => act("confirm")}
                 />
               </Stack.Item>
             </Stack>
@@ -69,7 +76,7 @@ export const ColorMatrixEditor = (props) => {
               height="100%"
               params={{
                 id: mapRef,
-                type: 'map',
+                type: "map",
               }}
             />
           </Stack.Item>

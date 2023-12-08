@@ -1,11 +1,20 @@
-import { Button, Icon, Input, NoticeBox, Section, Stack, Table, Tooltip } from '../components';
-import { TableCell, TableRow } from '../components/Table';
-import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import {
+  Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from "../components";
+import { TableCell, TableRow } from "../components/Table";
+import { createSearch, decodeHtmlEntities } from "common/string";
+import { useBackend, useLocalState } from "../backend";
 
-import { InputButtons } from './common/InputButtons';
-import { Loader } from './common/Loader';
-import { Window } from '../layouts';
+import { InputButtons } from "./common/InputButtons";
+import { Loader } from "./common/Loader";
+import { Window } from "../layouts";
 
 type Data = {
   items: string[];
@@ -28,11 +37,11 @@ export const CheckboxInput = (props) => {
     title,
   } = data;
 
-  const [selections, setSelections] = useLocalState<string[]>('selections', []);
+  const [selections, setSelections] = useLocalState<string[]>("selections", []);
 
   const [searchQuery, setSearchQuery] = useLocalState<string>(
-    'searchQuery',
-    ''
+    "searchQuery",
+    "",
   );
   const search = createSearch(searchQuery, (item: string) => item);
   const toDisplay = items.filter(search);
@@ -52,7 +61,7 @@ export const CheckboxInput = (props) => {
         <Stack fill vertical>
           <Stack.Item>
             <NoticeBox info textAlign="center">
-              {decodeHtmlEntities(message)}{' '}
+              {decodeHtmlEntities(message)}{" "}
               {min_checked > 0 && ` (Min: ${min_checked})`}
               {max_checked < 50 && ` (Max: ${max_checked})`}
             </NoticeBox>
@@ -70,7 +79,8 @@ export const CheckboxInput = (props) => {
                           !selections.includes(item)
                         }
                         fluid
-                        onClick={() => selectItem(item)}>
+                        onClick={() => selectItem(item)}
+                      >
                         {item}
                       </Button.Checkbox>
                     </TableCell>

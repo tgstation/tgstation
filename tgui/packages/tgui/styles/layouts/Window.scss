@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use '../base.scss';
-@use '../functions.scss' as *;
+@use "sass:color";
+@use "../base.scss";
+@use "../functions.scss" as *;
 
 .Window {
   position: fixed;
@@ -57,7 +57,7 @@
 
 .Layout__content--scrollable .Window__contentPadding:after {
   display: block;
-  content: '';
+  content: "";
   height: 0.5rem;
 }
 

@@ -1,6 +1,6 @@
-import { FeatureChoiced, FeatureDropdownInput } from '../base';
+import { FeatureChoiced, FeatureDropdownInput } from "../base";
 
 export const food_allergy: FeatureChoiced = {
-  name: 'Food Allergy',
+  name: "Food Allergy",
   component: FeatureDropdownInput,
 };

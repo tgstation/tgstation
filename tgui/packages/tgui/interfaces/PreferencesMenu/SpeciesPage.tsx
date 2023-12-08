@@ -1,48 +1,64 @@
-import { classes } from 'common/react';
-import { useBackend } from '../../backend';
-import { BlockQuote, Box, Button, Divider, Icon, Section, Stack, Tooltip } from '../../components';
-import { CharacterPreview } from '../common/CharacterPreview';
-import { createSetPreference, Food, Perk, PreferencesMenuData, ServerData, Species } from './data';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
+import { classes } from "common/react";
+import { useBackend } from "../../backend";
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Divider,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from "../../components";
+import { CharacterPreview } from "../common/CharacterPreview";
+import {
+  createSetPreference,
+  Food,
+  Perk,
+  PreferencesMenuData,
+  ServerData,
+  Species,
+} from "./data";
+import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
 
 const FOOD_ICONS = {
-  [Food.Bugs]: 'bug',
-  [Food.Cloth]: 'tshirt',
-  [Food.Dairy]: 'cheese',
-  [Food.Fried]: 'bacon',
-  [Food.Fruit]: 'apple-alt',
-  [Food.Gore]: 'skull',
-  [Food.Grain]: 'bread-slice',
-  [Food.Gross]: 'trash',
-  [Food.Junkfood]: 'pizza-slice',
-  [Food.Meat]: 'hamburger',
-  [Food.Nuts]: 'seedling',
-  [Food.Raw]: 'drumstick-bite',
-  [Food.Seafood]: 'fish',
-  [Food.Stone]: 'gem',
-  [Food.Sugar]: 'candy-cane',
-  [Food.Toxic]: 'biohazard',
-  [Food.Vegetables]: 'carrot',
+  [Food.Bugs]: "bug",
+  [Food.Cloth]: "tshirt",
+  [Food.Dairy]: "cheese",
+  [Food.Fried]: "bacon",
+  [Food.Fruit]: "apple-alt",
+  [Food.Gore]: "skull",
+  [Food.Grain]: "bread-slice",
+  [Food.Gross]: "trash",
+  [Food.Junkfood]: "pizza-slice",
+  [Food.Meat]: "hamburger",
+  [Food.Nuts]: "seedling",
+  [Food.Raw]: "drumstick-bite",
+  [Food.Seafood]: "fish",
+  [Food.Stone]: "gem",
+  [Food.Sugar]: "candy-cane",
+  [Food.Toxic]: "biohazard",
+  [Food.Vegetables]: "carrot",
 };
 
 const FOOD_NAMES: Record<keyof typeof FOOD_ICONS, string> = {
-  [Food.Bugs]: 'Bugs',
-  [Food.Cloth]: 'Clothing',
-  [Food.Dairy]: 'Dairy',
-  [Food.Fried]: 'Fried food',
-  [Food.Fruit]: 'Fruit',
-  [Food.Gore]: 'Gore',
-  [Food.Grain]: 'Grain',
-  [Food.Gross]: 'Gross food',
-  [Food.Junkfood]: 'Junk food',
-  [Food.Meat]: 'Meat',
-  [Food.Nuts]: 'Nuts',
-  [Food.Raw]: 'Raw',
-  [Food.Seafood]: 'Seafood',
-  [Food.Stone]: 'Rocks',
-  [Food.Sugar]: 'Sugar',
-  [Food.Toxic]: 'Toxic food',
-  [Food.Vegetables]: 'Vegetables',
+  [Food.Bugs]: "Bugs",
+  [Food.Cloth]: "Clothing",
+  [Food.Dairy]: "Dairy",
+  [Food.Fried]: "Fried food",
+  [Food.Fruit]: "Fruit",
+  [Food.Gore]: "Gore",
+  [Food.Grain]: "Grain",
+  [Food.Gross]: "Gross food",
+  [Food.Junkfood]: "Junk food",
+  [Food.Meat]: "Meat",
+  [Food.Nuts]: "Nuts",
+  [Food.Raw]: "Raw",
+  [Food.Seafood]: "Seafood",
+  [Food.Stone]: "Rocks",
+  [Food.Sugar]: "Sugar",
+  [Food.Toxic]: "Toxic food",
+  [Food.Vegetables]: "Vegetables",
 };
 
 const IGNORE_UNLESS_LIKED: Set<Food> = new Set([
@@ -81,10 +97,11 @@ const FoodList = (props: {
                 const foodName = FOOD_NAMES[food];
                 return foodName ? names.concat(foodName) : names;
               }, [])
-              .join(', ')}
+              .join(", ")}
           </Box>
         </Box>
-      }>
+      }
+    >
       <Stack ml={2}>
         {props.food.map((food) => {
           return (
@@ -105,7 +122,7 @@ const FoodList = (props: {
   );
 };
 
-const Diet = (props: { diet: Species['diet'] }) => {
+const Diet = (props: { diet: Species["diet"] }) => {
   if (!props.diet) {
     return null;
   }
@@ -156,7 +173,8 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
           <Divider />
           <Box>{perk.description}</Box>
         </Box>
-      }>
+      }
+    >
       <Box className={className} width="32px" height="32px">
         <Icon
           name={perk.ui_icon}
@@ -164,9 +182,9 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
           ml={0}
           mt={1}
           style={{
-            textAlign: 'center',
-            height: '100%',
-            width: '100%',
+            textAlign: "center",
+            height: "100%",
+            width: "100%",
           }}
         />
       </Box>
@@ -174,7 +192,7 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
   );
 };
 
-const SpeciesPerks = (props: { perks: Species['perks'] }) => {
+const SpeciesPerks = (props: { perks: Species["perks"] }) => {
   const { positive, negative, neutral } = props.perks;
 
   return (
@@ -216,19 +234,19 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
 
 const SpeciesPageInner = (props: {
   handleClose: () => void;
-  species: ServerData['species'];
+  species: ServerData["species"];
 }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const setSpecies = createSetPreference(act, 'species');
+  const setSpecies = createSetPreference(act, "species");
 
   let species: [string, Species][] = Object.entries(props.species).map(
     ([species, data]) => {
       return [species, data];
-    }
+    },
   );
 
   // Humans are always the top of the list
-  const humanIndex = species.findIndex(([species]) => species === 'human');
+  const humanIndex = species.findIndex(([species]) => species === "human");
   const swapWith = species[0];
   species[0] = species[humanIndex];
   species[humanIndex] = swapWith;
@@ -261,12 +279,13 @@ const SpeciesPageInner = (props: {
                     }
                     tooltip={species.name}
                     style={{
-                      display: 'block',
-                      height: '64px',
-                      width: '64px',
-                    }}>
+                      display: "block",
+                      height: "64px",
+                      width: "64px",
+                    }}
+                  >
                     <Box
-                      className={classes(['species64x64', species.icon])}
+                      className={classes(["species64x64", species.icon])}
                       ml={-1}
                     />
                   </Button>
@@ -288,7 +307,8 @@ const SpeciesPageInner = (props: {
                         currentSpecies.diet && (
                           <Diet diet={currentSpecies.diet} />
                         )
-                      }>
+                      }
+                    >
                       <Section title="Description">
                         {currentSpecies.desc}
                       </Section>

@@ -1,5 +1,5 @@
-import { useBackend, useSharedState } from '../../backend';
-import { Flex, Input, Section, Button } from '../../components';
+import { useBackend, useSharedState } from "../../backend";
+import { Flex, Input, Section, Button } from "../../components";
 
 type Data = {
   upperText: string;
@@ -16,12 +16,12 @@ export const StatusDisplayControls = (props) => {
   } = data;
 
   const [upperText, setUpperText] = useSharedState(
-    'statusUpperText',
-    initialUpper
+    "statusUpperText",
+    initialUpper,
   );
   const [lowerText, setLowerText] = useSharedState(
-    'statusLowerText',
-    initialLower
+    "statusLowerText",
+    initialLower,
   );
 
   return (
@@ -31,13 +31,13 @@ export const StatusDisplayControls = (props) => {
           icon="toggle-off"
           content="Off"
           color="bad"
-          onClick={() => act('setStatusPicture', { picture: 'blank' })}
+          onClick={() => act("setStatusPicture", { picture: "blank" })}
         />
         <Button
           icon="space-shuttle"
           content="Shuttle ETA / Off"
           color=""
-          onClick={() => act('setStatusPicture', { picture: 'shuttle' })}
+          onClick={() => act("setStatusPicture", { picture: "shuttle" })}
         />
       </Section>
 
@@ -45,31 +45,31 @@ export const StatusDisplayControls = (props) => {
         <Button
           icon="flag"
           content="Logo"
-          onClick={() => act('setStatusPicture', { picture: 'default' })}
+          onClick={() => act("setStatusPicture", { picture: "default" })}
         />
 
         <Button
           icon="exclamation"
           content="Security Alert Level"
-          onClick={() => act('setStatusPicture', { picture: 'currentalert' })}
+          onClick={() => act("setStatusPicture", { picture: "currentalert" })}
         />
 
         <Button
           icon="exclamation-triangle"
           content="Lockdown"
-          onClick={() => act('setStatusPicture', { picture: 'lockdown' })}
+          onClick={() => act("setStatusPicture", { picture: "lockdown" })}
         />
 
         <Button
           icon="biohazard"
           content="Biohazard"
-          onClick={() => act('setStatusPicture', { picture: 'biohazard' })}
+          onClick={() => act("setStatusPicture", { picture: "biohazard" })}
         />
 
         <Button
           icon="radiation"
           content="Radiation"
-          onClick={() => act('setStatusPicture', { picture: 'radiation' })}
+          onClick={() => act("setStatusPicture", { picture: "radiation" })}
         />
       </Section>
 
@@ -96,7 +96,7 @@ export const StatusDisplayControls = (props) => {
           <Flex.Item>
             <Button
               icon="comment-o"
-              onClick={() => act('setStatusMessage', { upperText, lowerText })}
+              onClick={() => act("setStatusMessage", { upperText, lowerText })}
               content="Send"
             />
           </Flex.Item>

@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { Box, Section } from '../components';
+import { Box, Section } from "../components";
 
 export const meta = {
-  title: 'Box',
+  title: "Box",
   render: () => <Story />,
 };
 

@@ -1,4 +1,4 @@
-import { BooleanLike } from 'common/react';
+import { BooleanLike } from "common/react";
 
 export type RequestsData = {
   authentication_data: AuthenticationData;
@@ -34,12 +34,12 @@ export type RequestMessage = {
 };
 
 export enum RequestType {
-  NONE = '',
-  ASSISTANCE = 'Assistance Request',
-  SUPPLIES = 'Supplies Request',
-  INFORMATION = 'Relay Information',
-  ORE_UPDATE = 'Ore Update',
-  REPLY = 'Reply',
+  NONE = "",
+  ASSISTANCE = "Assistance Request",
+  SUPPLIES = "Supplies Request",
+  INFORMATION = "Relay Information",
+  ORE_UPDATE = "Ore Update",
+  REPLY = "Reply",
 }
 
 export enum RequestPriority {

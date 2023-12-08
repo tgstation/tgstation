@@ -1,7 +1,15 @@
-import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Modal, Section, Stack, Tabs } from '../components';
-import { formatMoney } from '../format';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Modal,
+  Section,
+  Stack,
+  Tabs,
+} from "../components";
+import { formatMoney } from "../format";
+import { Window } from "../layouts";
 
 type Data = {
   categories: string[];
@@ -54,7 +62,7 @@ export const BlackMarketUplink = (props) => {
             <Box inline bold>
               <AnimatedNumber
                 value={money}
-                format={(value) => formatMoney(value) + ' cr'}
+                format={(value) => formatMoney(value) + " cr"}
               />
             </Box>
           }
@@ -65,10 +73,11 @@ export const BlackMarketUplink = (props) => {
               key={market.id}
               selected={market.id === viewing_market}
               onClick={() =>
-                act('set_market', {
+                act("set_market", {
                   market: market.id,
                 })
-              }>
+              }
+            >
               {market.name}
             </Tabs.Tab>
           ))}
@@ -82,10 +91,11 @@ export const BlackMarketUplink = (props) => {
                   mt={0.5}
                   selected={viewing_category === category}
                   onClick={() =>
-                    act('set_category', {
+                    act("set_category", {
                       category: category,
                     })
-                  }>
+                  }
+                >
                   {category}
                 </Tabs.Tab>
               ))}
@@ -99,15 +109,15 @@ export const BlackMarketUplink = (props) => {
                     {item.name}
                   </Stack.Item>
                   <Stack.Item color="label">
-                    {item.amount ? item.amount + ' in stock' : 'Out of stock'}
+                    {item.amount ? item.amount + " in stock" : "Out of stock"}
                   </Stack.Item>
-                  <Stack.Item>{formatMoney(item.cost) + ' cr'}</Stack.Item>
+                  <Stack.Item>{formatMoney(item.cost) + " cr"}</Stack.Item>
                   <Stack.Item>
                     <Button
                       content="Buy"
                       disabled={!item.amount || item.cost > money}
                       onClick={() =>
-                        act('select', {
+                        act("select", {
                           item: item.id,
                         })
                       }
@@ -141,7 +151,7 @@ const ShipmentSelector = (props) => {
     <Modal textAlign="center">
       <Stack mb={1}>
         {deliveryMethods.map((method) => {
-          if (method.name === 'LTSRBT' && !ltsrbt_built) {
+          if (method.name === "LTSRBT" && !ltsrbt_built) {
             return null;
           }
           return (
@@ -150,10 +160,10 @@ const ShipmentSelector = (props) => {
               <Box mt={1}>{method.description}</Box>
               <Button
                 mt={2}
-                content={formatMoney(method.price) + ' cr'}
+                content={formatMoney(method.price) + " cr"}
                 disabled={money < method.price}
                 onClick={() =>
-                  act('buy', {
+                  act("buy", {
                     method: method.name,
                   })
                 }
@@ -162,7 +172,7 @@ const ShipmentSelector = (props) => {
           );
         })}
       </Stack>
-      <Button content="Cancel" color="bad" onClick={() => act('cancel')} />
+      <Button content="Cancel" color="bad" onClick={() => act("cancel")} />
     </Modal>
   );
 };

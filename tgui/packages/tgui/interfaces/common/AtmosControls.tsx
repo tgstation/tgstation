@@ -1,8 +1,8 @@
-import { BooleanLike } from 'common/react';
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend } from '../../backend';
-import { Button, LabeledList, NumberInput, Section } from '../../components';
-import { getGasLabel } from '../../constants';
+import { BooleanLike } from "common/react";
+import { decodeHtmlEntities } from "common/string";
+import { useBackend } from "../../backend";
+import { Button, LabeledList, NumberInput, Section } from "../../components";
+import { getGasLabel } from "../../constants";
 
 export type VentProps = {
   refID: string;
@@ -56,12 +56,12 @@ export const Vent = (props: VentProps) => {
       buttons={
         <>
           <Button
-            icon={power ? 'power-off' : 'times'}
+            icon={power ? "power-off" : "times"}
             selected={power}
             disabled={integrity <= 0}
-            content={power ? 'On' : 'Off'}
+            content={power ? "On" : "Off"}
             onClick={() =>
-              act('power', {
+              act("power", {
                 ref: refID,
                 val: Number(!power),
               })
@@ -69,33 +69,35 @@ export const Vent = (props: VentProps) => {
           />
           <Button
             icon="gauge-high"
-            color={overclock ? 'green' : 'yellow'}
+            color={overclock ? "green" : "yellow"}
             disabled={integrity <= 0}
             onClick={() =>
-              act('overclock', {
+              act("overclock", {
                 ref: refID,
               })
             }
-            tooltip={`${overclock ? 'Disable' : 'Enable'} overclocking`}
+            tooltip={`${overclock ? "Disable" : "Enable"} overclocking`}
           />
         </>
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Integrity">
           <p
             title={
-              'Overclocking will allow the vent to overpower extreme pressure conditions. However, it will also cause the vent to become damaged over time and eventually fail. The lower the integrity, the less effective the vent will be when in normal operation.'
-            }>
+              "Overclocking will allow the vent to overpower extreme pressure conditions. However, it will also cause the vent to become damaged over time and eventually fail. The lower the integrity, the less effective the vent will be when in normal operation."
+            }
+          >
             Integrity: {(integrity * 100).toFixed(2)}%
           </p>
         </LabeledList.Item>
         <LabeledList.Item label="Mode">
           <Button
             icon="sign-in-alt"
-            content={direction ? 'Pressurizing' : 'Siphoning'}
-            color={!direction && 'danger'}
+            content={direction ? "Pressurizing" : "Siphoning"}
+            color={!direction && "danger"}
             onClick={() =>
-              act('direction', {
+              act("direction", {
                 ref: refID,
                 val: Number(!direction),
               })
@@ -108,7 +110,7 @@ export const Vent = (props: VentProps) => {
             content="Internal"
             selected={incheck}
             onClick={() =>
-              act('incheck', {
+              act("incheck", {
                 ref: refID,
                 val: checks,
               })
@@ -119,7 +121,7 @@ export const Vent = (props: VentProps) => {
             content="External"
             selected={excheck}
             onClick={() =>
-              act('excheck', {
+              act("excheck", {
                 ref: refID,
                 val: checks,
               })
@@ -136,7 +138,7 @@ export const Vent = (props: VentProps) => {
               step={10}
               maxValue={5066}
               onChange={(e, value) =>
-                act('set_internal_pressure', {
+                act("set_internal_pressure", {
                   ref: refID,
                   value,
                 })
@@ -147,7 +149,7 @@ export const Vent = (props: VentProps) => {
               disabled={intdefault}
               content="Reset"
               onClick={() =>
-                act('reset_internal_pressure', {
+                act("reset_internal_pressure", {
                   ref: refID,
                 })
               }
@@ -164,7 +166,7 @@ export const Vent = (props: VentProps) => {
               step={10}
               maxValue={5066}
               onChange={(e, value) =>
-                act('set_external_pressure', {
+                act("set_external_pressure", {
                   ref: refID,
                   value,
                 })
@@ -175,7 +177,7 @@ export const Vent = (props: VentProps) => {
               disabled={extdefault}
               content="Reset"
               onClick={() =>
-                act('reset_external_pressure', {
+                act("reset_external_pressure", {
                   ref: refID,
                 })
               }
@@ -195,36 +197,37 @@ export const Scrubber = (props: ScrubberProps) => {
       title={decodeHtmlEntities(long_name)}
       buttons={
         <Button
-          icon={power ? 'power-off' : 'times'}
-          content={power ? 'On' : 'Off'}
+          icon={power ? "power-off" : "times"}
+          content={power ? "On" : "Off"}
           selected={power}
           onClick={() =>
-            act('power', {
+            act("power", {
               ref: refID,
               val: Number(!power),
             })
           }
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button
-            icon={scrubbing ? 'filter' : 'sign-in-alt'}
-            color={scrubbing || 'danger'}
-            content={scrubbing ? 'Scrubbing' : 'Siphoning'}
+            icon={scrubbing ? "filter" : "sign-in-alt"}
+            color={scrubbing || "danger"}
+            content={scrubbing ? "Scrubbing" : "Siphoning"}
             onClick={() =>
-              act('scrubbing', {
+              act("scrubbing", {
                 ref: refID,
                 val: Number(!scrubbing),
               })
             }
           />
           <Button
-            icon={widenet ? 'expand' : 'compress'}
+            icon={widenet ? "expand" : "compress"}
             selected={widenet}
-            content={widenet ? 'Expanded range' : 'Normal range'}
+            content={widenet ? "Expanded range" : "Normal range"}
             onClick={() =>
-              act('widenet', {
+              act("widenet", {
                 ref: refID,
                 val: Number(!widenet),
               })
@@ -236,19 +239,19 @@ export const Scrubber = (props: ScrubberProps) => {
             filter_types.map((filter) => (
               <Button
                 key={filter.gas_id}
-                icon={filter.enabled ? 'check-square-o' : 'square-o'}
+                icon={filter.enabled ? "check-square-o" : "square-o"}
                 content={getGasLabel(filter.gas_id, filter.gas_name)}
                 title={filter.gas_name}
                 selected={filter.enabled}
                 onClick={() =>
-                  act('toggle_filter', {
+                  act("toggle_filter", {
                     ref: refID,
                     val: filter.gas_id,
                   })
                 }
               />
             ))) ||
-            'N/A'}
+            "N/A"}
         </LabeledList.Item>
       </LabeledList>
     </Section>

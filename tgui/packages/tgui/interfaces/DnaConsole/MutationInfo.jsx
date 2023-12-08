@@ -1,8 +1,21 @@
-import { filter, uniqBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { useBackend } from '../../backend';
-import { Box, Button, Divider, Dropdown, LabeledList, Stack } from '../../components';
-import { CHROMOSOME_NEVER, CHROMOSOME_NONE, CHROMOSOME_USED, MUT_COLORS, MUT_EXTRA } from './constants';
+import { filter, uniqBy } from "common/collections";
+import { flow } from "common/fp";
+import { useBackend } from "../../backend";
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  LabeledList,
+  Stack,
+} from "../../components";
+import {
+  CHROMOSOME_NEVER,
+  CHROMOSOME_NONE,
+  CHROMOSOME_USED,
+  MUT_COLORS,
+  MUT_EXTRA,
+} from "./constants";
 
 /**
  * The following predicate tests if two mutations are functionally
@@ -31,11 +44,11 @@ const ChromosomeInfo = (props) => {
           disabled={mutation.ValidStoredChromos.length === 0}
           selected={
             mutation.ValidStoredChromos.length === 0
-              ? 'No Suitable Chromosomes'
-              : 'Select a chromosome'
+              ? "No Suitable Chromosomes"
+              : "Select a chromosome"
           }
           onSelected={(e) =>
-            act('apply_chromo', {
+            act("apply_chromo", {
               chromo: e,
               mutref: mutation.ByondRef,
             })
@@ -97,7 +110,7 @@ export const MutationInfo = (props) => {
   if (!mutation) {
     return <Box color="label">Nothing to show.</Box>;
   }
-  if (mutation.Source === 'occupant' && !mutation.Discovered) {
+  if (mutation.Source === "occupant" && !mutation.Discovered) {
     return (
       <LabeledList>
         <LabeledList.Item label="Name">{mutation.Alias}</LabeledList.Item>
@@ -105,7 +118,7 @@ export const MutationInfo = (props) => {
     );
   }
   const savedToConsole = mutationStorage.find((x) =>
-    isSameMutation(x, mutation)
+    isSameMutation(x, mutation),
   );
   const savedToDisk = diskMutations.find((x) => isSameMutation(x, mutation));
   const combinedMutations = flow([
@@ -130,19 +143,19 @@ export const MutationInfo = (props) => {
       <Divider />
       <Stack vertical>
         <Stack.Item>
-          {mutation.Source === 'disk' && (
+          {mutation.Source === "disk" && (
             <MutationCombiner
               disabled={!hasDisk || diskCapacity <= 0 || diskReadOnly}
               mutations={combinedMutations}
               source={mutation}
             />
           )}
-          {mutation.Source === 'console' && (
+          {mutation.Source === "console" && (
             <MutationCombiner mutations={combinedMutations} source={mutation} />
           )}
         </Stack.Item>
         <Stack.Item>
-          {['occupant', 'disk', 'console'].includes(mutation.Source) && (
+          {["occupant", "disk", "console"].includes(mutation.Source) && (
             <Stack vertical>
               <Stack.Item>
                 <Dropdown
@@ -151,7 +164,7 @@ export const MutationInfo = (props) => {
                   disabled={advInjectors.length === 0 || !mutation.Active}
                   selected="Add to advanced injector"
                   onSelected={(value) =>
-                    act('add_advinj_mut', {
+                    act("add_advinj_mut", {
                       mutref: mutation.ByondRef,
                       advinj: value,
                       source: mutation.Source,
@@ -166,12 +179,13 @@ export const MutationInfo = (props) => {
                       icon="syringe"
                       disabled={!isInjectorReady || !mutation.Active}
                       onClick={() =>
-                        act('print_injector', {
+                        act("print_injector", {
                           mutref: mutation.ByondRef,
                           is_activator: 1,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       Print Activator
                     </Button>
                   </Stack.Item>
@@ -180,12 +194,13 @@ export const MutationInfo = (props) => {
                       icon="syringe"
                       disabled={!isInjectorReady || !mutation.Active}
                       onClick={() =>
-                        act('print_injector', {
+                        act("print_injector", {
                           mutref: mutation.ByondRef,
                           is_activator: 0,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       Print Mutator
                     </Button>
                   </Stack.Item>
@@ -194,11 +209,12 @@ export const MutationInfo = (props) => {
                       icon="syringe"
                       disabled={!mutation.Active || !isCrisprReady}
                       onClick={() =>
-                        act('crispr', {
+                        act("crispr", {
                           mutref: mutation.ByondRef,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       CRISPR [{crisprCharges}]
                     </Button>
                   </Stack.Item>
@@ -209,14 +225,14 @@ export const MutationInfo = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Stack>
-            {['disk', 'occupant'].includes(mutation.Source) && (
+            {["disk", "occupant"].includes(mutation.Source) && (
               <Stack.Item>
                 <Button
                   icon="save"
                   disabled={savedToConsole || !mutation.Active}
                   content="Save to Console"
                   onClick={() =>
-                    act('save_console', {
+                    act("save_console", {
                       mutref: mutation.ByondRef,
                       source: mutation.Source,
                     })
@@ -224,7 +240,7 @@ export const MutationInfo = (props) => {
                 />
               </Stack.Item>
             )}
-            {['console', 'occupant'].includes(mutation.Source) && (
+            {["console", "occupant"].includes(mutation.Source) && (
               <Stack.Item>
                 <Button
                   icon="save"
@@ -237,7 +253,7 @@ export const MutationInfo = (props) => {
                   }
                   content="Save to Disk"
                   onClick={() =>
-                    act('save_disk', {
+                    act("save_disk", {
                       mutref: mutation.ByondRef,
                       source: mutation.Source,
                     })
@@ -245,7 +261,7 @@ export const MutationInfo = (props) => {
                 />
               </Stack.Item>
             )}
-            {['console', 'disk', 'injector'].includes(mutation.Source) && (
+            {["console", "disk", "injector"].includes(mutation.Source) && (
               <Stack.Item>
                 <Button
                   icon="times"
@@ -260,12 +276,12 @@ export const MutationInfo = (props) => {
               </Stack.Item>
             )}
             {(mutation.Class === MUT_EXTRA ||
-              (!!mutation.Scrambled && mutation.Source === 'occupant')) && (
+              (!!mutation.Scrambled && mutation.Source === "occupant")) && (
               <Stack.Item>
                 <Button
                   content="Nullify"
                   onClick={() =>
-                    act('nullify', {
+                    act("nullify", {
                       mutref: mutation.ByondRef,
                     })
                   }
@@ -275,7 +291,7 @@ export const MutationInfo = (props) => {
           </Stack>
           <Divider />
           <ChromosomeInfo
-            disabled={mutation.Source !== 'occupant'}
+            disabled={mutation.Source !== "occupant"}
             mutation={mutation}
           />
         </Stack.Item>

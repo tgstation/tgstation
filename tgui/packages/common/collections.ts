@@ -32,12 +32,12 @@ export const filter =
   };
 
 type MapFunction = {
-  <T, U>(iterateeFn: (value: T, index: number, collection: T[]) => U): (
-    collection: T[]
-  ) => U[];
+  <T, U>(
+    iterateeFn: (value: T, index: number, collection: T[]) => U,
+  ): (collection: T[]) => U[];
 
   <T, U, K extends string | number>(
-    iterateeFn: (value: T, index: K, collection: Record<K, T>) => U
+    iterateeFn: (value: T, index: K, collection: Record<K, T>) => U,
   ): (collection: Record<K, T>) => U[];
 };
 
@@ -60,7 +60,7 @@ export const map: MapFunction =
       return collection.map(iterateeFn);
     }
 
-    if (typeof collection === 'object') {
+    if (typeof collection === "object") {
       return Object.entries(collection).map(([key, value]) => {
         return iterateeFn(value, key, collection);
       });
@@ -75,7 +75,7 @@ export const map: MapFunction =
  */
 export const filterMap = <T, U>(
   collection: T[],
-  iterateeFn: (value: T) => U | undefined
+  iterateeFn: (value: T) => U | undefined,
 ): U[] => {
   const finalCollection: U[] = [];
 
@@ -261,7 +261,7 @@ export const zipWith =
 const binarySearch = <T, U = unknown>(
   getKey: (value: T) => U,
   collection: readonly T[],
-  inserting: T
+  inserting: T,
 ): number => {
   if (collection.length === 0) {
     return 0;
@@ -325,7 +325,7 @@ export const paginate = <T>(collection: T[], maxPerPage: number): T[][] => {
   return pages;
 };
 
-const isObject = (obj: unknown) => typeof obj === 'object' && obj !== null;
+const isObject = (obj: unknown) => typeof obj === "object" && obj !== null;
 
 // Does a deep merge of two objects. DO NOT FEED CIRCULAR OBJECTS!!
 export const deepMerge = (...objects: any[]): any => {

@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, Section } from "../components";
+import { Window } from "../layouts";
 
 export const KeycardAuth = (props) => {
   const { act, data } = useBackend();
@@ -23,7 +23,7 @@ export const KeycardAuth = (props) => {
                     textAlign="center"
                     lineHeight="60px"
                     fluid
-                    onClick={() => act('auth_swipe')}
+                    onClick={() => act("auth_swipe")}
                     content="Authorize"
                   />
                 )}
@@ -33,26 +33,26 @@ export const KeycardAuth = (props) => {
                       icon="exclamation-triangle"
                       fluid
                       onClick={() => {
-                        return act('red_alert');
+                        return act("red_alert");
                       }}
                       content="Red Alert"
                     />
                     <Button
                       icon="wrench"
                       fluid
-                      onClick={() => act('emergency_maint')}
+                      onClick={() => act("emergency_maint")}
                       content="Emergency Maintenance Access"
                     />
                     <Button
                       icon="meteor"
                       fluid
-                      onClick={() => act('bsa_unlock')}
+                      onClick={() => act("bsa_unlock")}
                       content="Bluespace Artillery Unlock"
                     />
                     <Button
                       icon="key"
                       fluid
-                      onClick={() => act('give_janitor_access')}
+                      onClick={() => act("give_janitor_access")}
                       content="Grant Janitor Access"
                     />
                   </>

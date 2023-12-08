@@ -1,4 +1,10 @@
-import { Component, createRef, HTMLAttributes, PropsWithChildren, RefObject } from 'react';
+import {
+  Component,
+  createRef,
+  HTMLAttributes,
+  PropsWithChildren,
+  RefObject,
+} from "react";
 
 const DEFAULT_ACCEPTABLE_DIFFERENCE = 5;
 
@@ -24,7 +30,7 @@ export class FitText extends Component<Props, State> {
 
     this.resize = this.resize.bind(this);
 
-    window.addEventListener('resize', this.resize);
+    window.addEventListener("resize", this.resize);
   }
 
   componentDidUpdate(prevProps) {
@@ -34,7 +40,7 @@ export class FitText extends Component<Props, State> {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resize);
+    window.removeEventListener("resize", this.resize);
   }
 
   resize() {
@@ -81,10 +87,11 @@ export class FitText extends Component<Props, State> {
         ref={this.ref}
         style={{
           fontSize: `${this.state.fontSize}px`,
-          ...(typeof this.props.native?.style === 'object'
+          ...(typeof this.props.native?.style === "object"
             ? this.props.native.style
             : {}),
-        }}>
+        }}
+      >
         {this.props.children}
       </span>
     );

@@ -1,33 +1,41 @@
-import { useBackend } from '../backend';
-import { Box, Stack, Section, ByondUi, Slider, Flex, Button } from '../components';
-import { Window } from '../layouts';
-import { capitalize } from 'common/string';
+import { useBackend } from "../backend";
+import {
+  Box,
+  Stack,
+  Section,
+  ByondUi,
+  Slider,
+  Flex,
+  Button,
+} from "../components";
+import { Window } from "../layouts";
+import { capitalize } from "common/string";
 
 const colorToMatrix = (param) => {
   switch (param) {
-    case 'red':
+    case "red":
       return [
         1, 0, 0, 0, 0.25, 0.5, 0, 0, 0.25, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0,
       ];
-    case 'yellow':
+    case "yellow":
       return [
         0.5, 0.5, 0, 0, 0.5, 0.5, 0, 0, 0.25, 0.25, 0.5, 0, 0, 0, 0, 1, 0, 0, 0,
         0,
       ];
-    case 'green':
+    case "green":
       return [
         0.5, 0.25, 0, 0, 0, 1, 0, 0, 0, 0.25, 0.5, 0, 0, 0, 0, 1, 0, 0, 0, 0,
       ];
-    case 'teal':
+    case "teal":
       return [
         0.25, 0.25, 0.25, 0, 0, 0.5, 0.5, 0, 0, 0.5, 0.5, 0, 0, 0, 0, 1, 0, 0,
         0, 0,
       ];
-    case 'blue':
+    case "blue":
       return [
         0.25, 0, 0.25, 0, 0, 0.5, 0.25, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0,
       ];
-    case 'purple':
+    case "purple":
       return [
         0.5, 0, 0.5, 0, 0.25, 0.5, 0.25, 0, 0.5, 0, 0.5, 0, 0, 0, 0, 1, 0, 0, 0,
         0,
@@ -37,12 +45,12 @@ const colorToMatrix = (param) => {
 
 const displayText = (param) => {
   switch (param) {
-    case 'r':
-      return 'Red';
-    case 'g':
-      return 'Green';
-    case 'b':
-      return 'Blue';
+    case "r":
+      return "Red";
+    case "g":
+      return "Green";
+    case "b":
+      return "Blue";
   }
 };
 
@@ -56,8 +64,8 @@ export const MODpaint = (props) => {
     [ar, ag, ab, aa],
     [cr, cg, cb, ca],
   ] = currentColor;
-  const presets = ['red', 'yellow', 'green', 'teal', 'blue', 'purple'];
-  const prefixes = ['r', 'g', 'b'];
+  const presets = ["red", "yellow", "green", "teal", "blue", "purple"];
+  const prefixes = ["r", "g", "b"];
   return (
     <Window width={600} height={365}>
       <Window.Content>
@@ -66,7 +74,8 @@ export const MODpaint = (props) => {
             {[0, 1, 2].map((row) => (
               <Section
                 key={row}
-                title={`${displayText(prefixes[row])} turns to:`}>
+                title={`${displayText(prefixes[row])} turns to:`}
+              >
                 {[0, 1, 2].map((col) => (
                   <Flex key={col}>
                     <Flex.Item align="left" width="30%">
@@ -87,7 +96,7 @@ export const MODpaint = (props) => {
                         onDrag={(e, value) => {
                           let retColor = currentColor;
                           retColor[row * 4 + col] = value / 100;
-                          act('transition_color', { color: retColor });
+                          act("transition_color", { color: retColor });
                         }}
                       />
                     </Flex.Item>
@@ -108,7 +117,7 @@ export const MODpaint = (props) => {
                     tooltipPosition="top"
                     tooltip={capitalize(preset)}
                     onClick={() =>
-                      act('transition_color', { color: colorToMatrix(preset) })
+                      act("transition_color", { color: colorToMatrix(preset) })
                     }
                   />
                 ))}
@@ -130,7 +139,7 @@ export const MODpaint = (props) => {
                 color="good"
                 tooltipPosition="top"
                 tooltip="Confirm changes!"
-                onClick={() => act('confirm')}
+                onClick={() => act("confirm")}
               />
             </Section>
           </Stack.Item>
@@ -140,7 +149,7 @@ export const MODpaint = (props) => {
                 height="230px"
                 params={{
                   id: mapRef,
-                  type: 'map',
+                  type: "map",
                 }}
               />
             </Section>

@@ -9,12 +9,12 @@ const queue = [];
 const subscribers = [];
 
 const ensureConnection = () => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     if (!window.WebSocket) {
       return;
     }
     if (!socket || socket.readyState === WebSocket.CLOSED) {
-      const DEV_SERVER_IP = process.env.DEV_SERVER_IP || '127.0.0.1';
+      const DEV_SERVER_IP = process.env.DEV_SERVER_IP || "127.0.0.1";
       socket = new WebSocket(`ws://${DEV_SERVER_IP}:3000`);
       socket.onopen = () => {
         // Empty the message queue
@@ -33,7 +33,7 @@ const ensureConnection = () => {
   }
 };
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   window.onunload = () => socket && socket.close();
 }
 
@@ -45,12 +45,12 @@ const subscribe = (fn) => subscribers.push(fn);
 const serializeObject = (obj) => {
   let refs = [];
   const primitiveReviver = (value) => {
-    if (typeof value === 'number' && !Number.isFinite(value)) {
+    if (typeof value === "number" && !Number.isFinite(value)) {
       return {
         __number__: String(value),
       };
     }
-    if (typeof value === 'undefined') {
+    if (typeof value === "undefined") {
       return {
         __undefined__: true,
       };
@@ -58,13 +58,13 @@ const serializeObject = (obj) => {
     return value;
   };
   const objectReviver = (key, value) => {
-    if (typeof value === 'object') {
+    if (typeof value === "object") {
       if (value === null) {
         return value;
       }
       // Circular reference
       if (refs.includes(value)) {
-        return '[circular ref]';
+        return "[circular ref]";
       }
       refs.push(value);
       // Error object
@@ -93,7 +93,7 @@ const serializeObject = (obj) => {
 };
 
 const sendMessage = (msg) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     const json = serializeObject(msg);
     // Send message using WebSocket
     if (window.WebSocket) {
@@ -110,9 +110,9 @@ const sendMessage = (msg) => {
     }
     // Send message using plain HTTP request.
     else {
-      const DEV_SERVER_IP = process.env.DEV_SERVER_IP || '127.0.0.1';
+      const DEV_SERVER_IP = process.env.DEV_SERVER_IP || "127.0.0.1";
       const req = new XMLHttpRequest();
-      req.open('POST', `http://${DEV_SERVER_IP}:3001`, true);
+      req.open("POST", `http://${DEV_SERVER_IP}:3001`, true);
       req.timeout = 250;
       req.send(json);
     }
@@ -120,13 +120,13 @@ const sendMessage = (msg) => {
 };
 
 const sendLogEntry = (level, ns, ...args) => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== "production") {
     try {
       sendMessage({
-        type: 'log',
+        type: "log",
         payload: {
           level,
-          ns: ns || 'client',
+          ns: ns || "client",
           args,
         },
       });
@@ -143,14 +143,14 @@ const setupHotReloading = () => {
   ) {
     if (module.hot) {
       ensureConnection();
-      sendLogEntry(0, null, 'setting up hot reloading');
+      sendLogEntry(0, null, "setting up hot reloading");
       subscribe((msg) => {
         const { type } = msg;
-        sendLogEntry(0, null, 'received', type);
-        if (type === 'hotUpdate') {
+        sendLogEntry(0, null, "received", type);
+        if (type === "hotUpdate") {
           const status = module.hot.status();
-          if (status !== 'idle') {
-            sendLogEntry(0, null, 'hot reload status:', status);
+          if (status !== "idle") {
+            sendLogEntry(0, null, "hot reload status:", status);
             return;
           }
           module.hot
@@ -160,10 +160,10 @@ const setupHotReloading = () => {
               ignoreErrored: true,
             })
             .then((modules) => {
-              sendLogEntry(0, null, 'outdated modules', modules);
+              sendLogEntry(0, null, "outdated modules", modules);
             })
             .catch((err) => {
-              sendLogEntry(0, null, 'reload error', err);
+              sendLogEntry(0, null, "reload error", err);
             });
         }
       });

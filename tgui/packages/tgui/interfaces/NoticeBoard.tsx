@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Box, Button, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   allowed: BooleanLike;
@@ -27,19 +27,20 @@ export const NoticeBoard = (props) => {
               key={item.ref}
               color="black"
               backgroundColor="white"
-              style={{ padding: '2px 2px 0 2px' }}>
+              style={{ padding: "2px 2px 0 2px" }}
+            >
               <Stack.Item align="center" grow>
                 <Box align="center">{item.name}</Box>
               </Stack.Item>
               <Stack.Item>
                 <Button
                   icon="eye"
-                  onClick={() => act('examine', { ref: item.ref })}
+                  onClick={() => act("examine", { ref: item.ref })}
                 />
                 <Button
                   icon="eject"
                   disabled={!allowed}
-                  onClick={() => act('remove', { ref: item.ref })}
+                  onClick={() => act("remove", { ref: item.ref })}
                 />
               </Stack.Item>
             </Stack>

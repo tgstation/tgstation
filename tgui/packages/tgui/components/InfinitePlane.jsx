@@ -1,8 +1,8 @@
-import { computeBoxProps } from './Box';
-import { Stack } from './Stack';
-import { ProgressBar } from './ProgressBar';
-import { Button } from './Button';
-import { Component } from 'react';
+import { computeBoxProps } from "./Box";
+import { Stack } from "./Stack";
+import { ProgressBar } from "./ProgressBar";
+import { Button } from "./Button";
+import { Component } from "react";
 
 const ZOOM_MIN_VAL = 0.5;
 const ZOOM_MAX_VAL = 1.5;
@@ -35,19 +35,19 @@ export class InfinitePlane extends Component {
   }
 
   componentDidMount() {
-    window.addEventListener('mouseup', this.onMouseUp);
+    window.addEventListener("mouseup", this.onMouseUp);
 
-    window.addEventListener('mousedown', this.doOffsetMouse);
-    window.addEventListener('mousemove', this.doOffsetMouse);
-    window.addEventListener('mouseup', this.doOffsetMouse);
+    window.addEventListener("mousedown", this.doOffsetMouse);
+    window.addEventListener("mousemove", this.doOffsetMouse);
+    window.addEventListener("mouseup", this.doOffsetMouse);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('mouseup', this.onMouseUp);
+    window.removeEventListener("mouseup", this.onMouseUp);
 
-    window.removeEventListener('mousedown', this.doOffsetMouse);
-    window.removeEventListener('mousemove', this.doOffsetMouse);
-    window.removeEventListener('mouseup', this.doOffsetMouse);
+    window.removeEventListener("mousedown", this.doOffsetMouse);
+    window.removeEventListener("mousemove", this.doOffsetMouse);
+    window.removeEventListener("mouseup", this.doOffsetMouse);
   }
 
   doOffsetMouse(event) {
@@ -136,20 +136,21 @@ export class InfinitePlane extends Component {
           ...rest,
           style: {
             ...rest.style,
-            overflow: 'hidden',
-            position: 'relative',
+            overflow: "hidden",
+            position: "relative",
           },
-        })}>
+        })}
+      >
         <div
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           style={{
-            position: 'fixed',
-            height: '100%',
-            width: '100%',
+            position: "fixed",
+            height: "100%",
+            width: "100%",
             backgroundImage: `url("${backgroundImage}")`,
             backgroundPosition: `${finalLeft}px ${finalTop}px`,
-            backgroundRepeat: 'repeat',
+            backgroundRepeat: "repeat",
             backgroundSize: `${zoom * imageWidth}px`,
           }}
         />
@@ -157,12 +158,13 @@ export class InfinitePlane extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           style={{
-            position: 'fixed',
+            position: "fixed",
             transform: `translate(${finalLeft}px, ${finalTop}px) scale(${zoom})`,
-            transformOrigin: 'top left',
-            height: '100%',
-            width: '100%',
-          }}>
+            transformOrigin: "top left",
+            height: "100%",
+            width: "100%",
+          }}
+        >
           {children}
         </div>
 
@@ -174,7 +176,8 @@ export class InfinitePlane extends Component {
             <ProgressBar
               minValue={ZOOM_MIN_VAL}
               value={zoom}
-              maxValue={ZOOM_MAX_VAL}>
+              maxValue={ZOOM_MAX_VAL}
+            >
               {zoom}x
             </ProgressBar>
           </Stack.Item>

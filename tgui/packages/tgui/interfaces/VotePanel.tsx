@@ -1,7 +1,16 @@
-import { BooleanLike } from 'common/react';
-import { Box, Icon, Stack, Button, Section, NoticeBox, LabeledList, Collapsible } from '../components';
-import { Window } from '../layouts';
-import { useBackend } from '../backend';
+import { BooleanLike } from "common/react";
+import {
+  Box,
+  Icon,
+  Stack,
+  Button,
+  Section,
+  NoticeBox,
+  LabeledList,
+  Collapsible,
+} from "../components";
+import { Window } from "../layouts";
+import { useBackend } from "../backend";
 
 enum VoteConfig {
   None = -1,
@@ -57,12 +66,12 @@ export const VotePanel = (props) => {
   /**
    * Adds the voting type to title if there is an ongoing vote.
    */
-  let windowTitle = 'Vote';
+  let windowTitle = "Vote";
   if (currentVote) {
     windowTitle +=
-      ': ' +
+      ": " +
       (currentVote.question || currentVote.vote.name).replace(/^\w/, (c) =>
-        c.toUpperCase()
+        c.toUpperCase(),
       );
   }
 
@@ -104,11 +113,11 @@ const VoteOptions = (props) => {
                   disabled={!user.isUpperAdmin}
                   content={
                     option.config === VoteConfig.Enabled
-                      ? 'Enabled'
-                      : 'Disabled'
+                      ? "Enabled"
+                      : "Disabled"
                   }
                   onClick={() =>
-                    act('toggleVote', {
+                    act("toggleVote", {
                       voteName: option.name,
                     })
                   }
@@ -119,7 +128,7 @@ const VoteOptions = (props) => {
                 tooltip={option.message}
                 content={option.name}
                 onClick={() =>
-                  act('callVote', {
+                  act("callVote", {
                     voteName: option.name,
                   })
                 }
@@ -143,8 +152,9 @@ const VotersList = (props) => {
     <Stack.Item>
       <Collapsible
         title={`View Voters${
-          data.voting.length ? `: ${data.voting.length}` : ''
-        }`}>
+          data.voting.length ? `: ${data.voting.length}` : ""
+        }`}
+      >
         <Section height={8} fill scrollable>
           {data.voting.map((voter) => {
             return <Box key={voter}>{voter}</Box>;
@@ -182,11 +192,13 @@ const ChoicesPanel = (props) => {
                     <Button
                       disabled={user.singleSelection === choice.name}
                       onClick={() => {
-                        act('voteSingle', { voteOption: choice.name });
-                      }}>
+                        act("voteSingle", { voteOption: choice.name });
+                      }}
+                    >
                       Vote
                     </Button>
-                  }>
+                  }
+                >
                   {user.singleSelection &&
                     choice.name === user.singleSelection && (
                       <Icon
@@ -218,11 +230,13 @@ const ChoicesPanel = (props) => {
                   buttons={
                     <Button
                       onClick={() => {
-                        act('voteMulti', { voteOption: choice.name });
-                      }}>
+                        act("voteMulti", { voteOption: choice.name });
+                      }}
+                    >
                       Vote
                     </Button>
-                  }>
+                  }
+                >
                   {user.multiSelection &&
                   user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
                     <Icon
@@ -265,7 +279,8 @@ const TimePanel = (props) => {
             <Button
               color="red"
               disabled={!user.isLowerAdmin || !currentVote}
-              onClick={() => act('cancel')}>
+              onClick={() => act("cancel")}
+            >
               Cancel Vote
             </Button>
           )}

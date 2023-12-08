@@ -1,7 +1,13 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, ProgressBar, Section, AnimatedNumber } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  ProgressBar,
+  Section,
+  AnimatedNumber,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   enabled: BooleanLike;
@@ -30,17 +36,19 @@ export const NtnetRelay = (props) => {
             <Button
               icon="power-off"
               selected={enabled}
-              content={enabled ? 'ENABLED' : 'DISABLED'}
-              onClick={() => act('toggle')}
+              content={enabled ? "ENABLED" : "DISABLED"}
+              onClick={() => act("toggle")}
             />
-          }>
+          }
+        >
           {!dos_crashed ? (
             <ProgressBar
               value={dos_overload}
               minValue={0}
-              maxValue={dos_capacity}>
+              maxValue={dos_capacity}
+            >
               <AnimatedNumber value={dos_overload} /> GQ
-              {' / '}
+              {" / "}
               {dos_capacity} GQ
             </ProgressBar>
           ) : (
@@ -59,7 +67,7 @@ export const NtnetRelay = (props) => {
                 content="PURGE BUFFER"
                 mt={1}
                 color="bad"
-                onClick={() => act('restart')}
+                onClick={() => act("restart")}
               />
             </Box>
           )}

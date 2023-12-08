@@ -1,8 +1,8 @@
-import { perf } from 'common/perf';
-import { render } from 'react-dom';
-import { createLogger } from './logging';
+import { perf } from "common/perf";
+import { render } from "react-dom";
+import { createLogger } from "./logging";
 
-const logger = createLogger('renderer');
+const logger = createLogger("renderer");
 
 let reactRoot: any;
 let initialRender: string | boolean = true;
@@ -10,7 +10,7 @@ let suspended = false;
 
 // These functions are used purely for profiling.
 export const resumeRenderer = () => {
-  initialRender = initialRender || 'resumed';
+  initialRender = initialRender || "resumed";
   suspended = false;
 };
 
@@ -19,7 +19,7 @@ export const suspendRenderer = () => {
 };
 
 type CreateRenderer = <T extends unknown[] = [unknown]>(
-  getVNode?: (...args: T) => any
+  getVNode?: (...args: T) => any,
 ) => (...args: T) => void;
 
 // prettier-ignore

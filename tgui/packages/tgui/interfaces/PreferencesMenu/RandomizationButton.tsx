@@ -1,6 +1,6 @@
-import { Dropdown, Icon } from '../../components';
-import { RandomSetting } from './data';
-import { exhaustiveCheck } from 'common/exhaustive';
+import { Dropdown, Icon } from "../../components";
+import { RandomSetting } from "./data";
+import { exhaustiveCheck } from "common/exhaustive";
 
 export const RandomizationButton = (props: {
   dropdownProps?: Record<string, unknown>;
@@ -13,13 +13,13 @@ export const RandomizationButton = (props: {
 
   switch (value) {
     case RandomSetting.AntagOnly:
-      color = 'orange';
+      color = "orange";
       break;
     case RandomSetting.Disabled:
-      color = 'red';
+      color = "red";
       break;
     case RandomSetting.Enabled:
-      color = 'green';
+      color = "green";
       break;
     default:
       exhaustiveCheck(value);
@@ -33,17 +33,17 @@ export const RandomizationButton = (props: {
       displayText={<Icon name="dice-d20" mr="-0.25em" />}
       options={[
         {
-          displayText: 'Do not randomize',
+          displayText: "Do not randomize",
           value: RandomSetting.Disabled,
         },
 
         {
-          displayText: 'Always randomize',
+          displayText: "Always randomize",
           value: RandomSetting.Enabled,
         },
 
         {
-          displayText: 'Randomize when antagonist',
+          displayText: "Randomize when antagonist",
           value: RandomSetting.AntagOnly,
         },
       ]}

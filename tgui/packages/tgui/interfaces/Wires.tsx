@@ -1,7 +1,14 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   proper_name: string;
@@ -69,9 +76,9 @@ const WireMap = (props) => {
           buttons={
             <>
               <Button
-                content={wire.cut ? 'Mend' : 'Cut'}
+                content={wire.cut ? "Mend" : "Cut"}
                 onClick={() =>
-                  act('cut', {
+                  act("cut", {
                     wire: wire.color,
                   })
                 }
@@ -79,21 +86,22 @@ const WireMap = (props) => {
               <Button
                 content="Pulse"
                 onClick={() =>
-                  act('pulse', {
+                  act("pulse", {
                     wire: wire.color,
                   })
                 }
               />
               <Button
-                content={wire.attached ? 'Detach' : 'Attach'}
+                content={wire.attached ? "Detach" : "Attach"}
                 onClick={() =>
-                  act('attach', {
+                  act("attach", {
                     wire: wire.color,
                   })
                 }
               />
             </>
-          }>
+          }
+        >
           {!!wire.wire && <i>({wire.wire})</i>}
         </LabeledList.Item>
       ))}

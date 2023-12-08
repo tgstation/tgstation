@@ -1,8 +1,15 @@
-import { Loader } from './common/Loader';
-import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER, KEY_ESCAPE, KEY_LEFT, KEY_RIGHT, KEY_SPACE, KEY_TAB } from '../../common/keycodes';
-import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { Loader } from "./common/Loader";
+import { useBackend, useLocalState } from "../backend";
+import {
+  KEY_ENTER,
+  KEY_ESCAPE,
+  KEY_LEFT,
+  KEY_RIGHT,
+  KEY_SPACE,
+  KEY_TAB,
+} from "../../common/keycodes";
+import { Autofocus, Box, Button, Flex, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 type AlertModalData = {
   autofocus: boolean;
@@ -23,11 +30,11 @@ export const AlertModal = (props) => {
     autofocus,
     buttons = [],
     large_buttons,
-    message = '',
+    message = "",
     timeout,
     title,
   } = data;
-  const [selected, setSelected] = useLocalState<number>('selected', 0);
+  const [selected, setSelected] = useLocalState<number>("selected", 0);
   // Dynamically sets window dimensions
   const windowHeight =
     115 +
@@ -55,9 +62,9 @@ export const AlertModal = (props) => {
            * allow keyboard navigation, override tab behavior
            */
           if (keyCode === KEY_SPACE || keyCode === KEY_ENTER) {
-            act('choose', { choice: buttons[selected] });
+            act("choose", { choice: buttons[selected] });
           } else if (keyCode === KEY_ESCAPE) {
-            act('cancel');
+            act("cancel");
           } else if (keyCode === KEY_LEFT) {
             e.preventDefault();
             onKey(KEY_DECREMENT);
@@ -65,7 +72,8 @@ export const AlertModal = (props) => {
             e.preventDefault();
             onKey(KEY_INCREMENT);
           }
-        }}>
+        }}
+      >
         <Section fill>
           <Stack fill vertical>
             <Stack.Item grow m={1}>
@@ -97,10 +105,11 @@ const ButtonDisplay = (props) => {
   return (
     <Flex
       align="center"
-      direction={!swapped_buttons ? 'row-reverse' : 'row'}
+      direction={!swapped_buttons ? "row-reverse" : "row"}
       fill
       justify="space-around"
-      wrap>
+      wrap
+    >
       {buttons?.map((button, index) =>
         !!large_buttons && buttons.length < 3 ? (
           <Flex.Item grow key={index}>
@@ -118,7 +127,7 @@ const ButtonDisplay = (props) => {
               selected={selected === index}
             />
           </Flex.Item>
-        )
+        ),
       )}
     </Flex>
   );
@@ -137,14 +146,15 @@ const AlertButton = (props) => {
     <Button
       fluid={!!large_buttons}
       height={!!large_buttons && 2}
-      onClick={() => act('choose', { choice: button })}
+      onClick={() => act("choose", { choice: button })}
       m={0.5}
       pl={2}
       pr={2}
       pt={large_buttons ? 0.33 : 0}
       selected={selected}
       textAlign="center"
-      width={!large_buttons && buttonWidth}>
+      width={!large_buttons && buttonWidth}
+    >
       {!large_buttons ? button : button.toUpperCase()}
     </Button>
   );

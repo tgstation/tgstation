@@ -8,11 +8,11 @@
  * Helper for conditionally adding/removing classes in React
  */
 export const classes = (classNames: (string | BooleanLike)[]) => {
-  let className = '';
+  let className = "";
   for (let i = 0; i < classNames.length; i++) {
     const part = classNames[i];
-    if (typeof part === 'string') {
-      className += part + ' ';
+    if (typeof part === "string") {
+      className += part + " ";
     }
   }
   return className;
@@ -26,7 +26,7 @@ export const normalizeChildren = <T>(children: T | T[]) => {
   if (Array.isArray(children)) {
     return children.flat().filter((value) => value) as T[];
   }
-  if (typeof children === 'object') {
+  if (typeof children === "object") {
     return [children];
   }
   return [];

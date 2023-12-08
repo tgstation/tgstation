@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   cabinet_name: string;
@@ -13,15 +13,16 @@ export const FilingCabinet = (props) => {
   const { cabinet_name, contents, contents_ref } = data;
 
   return (
-    <Window title={cabinet_name || 'Filing Cabinet'} width={350} height={300}>
+    <Window title={cabinet_name || "Filing Cabinet"} width={350} height={300}>
       <Window.Content backgroundColor="#B88F3D" scrollable>
         {contents.map((object, index) => (
           <Stack
             key={contents_ref[index]}
             color="black"
             backgroundColor="white"
-            style={{ padding: '2px' }}
-            mb={0.5}>
+            style={{ padding: "2px" }}
+            mb={0.5}
+          >
             <Stack.Item align="center" grow={1}>
               <Box align="center">{object}</Box>
             </Stack.Item>
@@ -29,7 +30,7 @@ export const FilingCabinet = (props) => {
               <Button
                 icon="eject"
                 onClick={() =>
-                  act('remove_object', { ref: contents_ref[index] })
+                  act("remove_object", { ref: contents_ref[index] })
                 }
               />
             </Stack.Item>

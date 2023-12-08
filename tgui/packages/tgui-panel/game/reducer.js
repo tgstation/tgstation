@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { connectionLost } from './actions';
-import { connectionRestored } from './actions';
+import { connectionLost } from "./actions";
+import { connectionRestored } from "./actions";
 
 const initialState = {
   // TODO: This is where round info should be.
@@ -17,7 +17,7 @@ const initialState = {
 
 export const gameReducer = (state = initialState, action) => {
   const { type, payload, meta } = action;
-  if (type === 'roundrestart') {
+  if (type === "roundrestart") {
     return {
       ...state,
       roundRestartedAt: meta.now,

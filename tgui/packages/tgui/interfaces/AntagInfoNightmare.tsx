@@ -1,12 +1,12 @@
-import { BlockQuote, LabeledList, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { BlockQuote, LabeledList, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 const tipstyle = {
-  color: 'white',
+  color: "white",
 };
 
 const noticestyle = {
-  color: 'lightblue',
+  color: "lightblue",
 };
 
 export const AntagInfoNightmare = (props) => {

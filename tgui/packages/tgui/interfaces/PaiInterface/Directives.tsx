@@ -1,8 +1,8 @@
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend } from 'tgui/backend';
-import { BlockQuote, Box, LabeledList, Section, Stack } from 'tgui/components';
-import { DIRECTIVE_COMPREHENSION, DIRECTIVE_ORDER } from './constants';
-import { PaiData } from './types';
+import { decodeHtmlEntities } from "common/string";
+import { useBackend } from "tgui/backend";
+import { BlockQuote, Box, LabeledList, Section, Stack } from "tgui/components";
+import { DIRECTIVE_COMPREHENSION, DIRECTIVE_ORDER } from "./constants";
+import { PaiData } from "./types";
 
 /** Shows the hardcoded PAI info along with any supplied orders. */
 export const DirectiveDisplay = (props) => {
@@ -10,7 +10,7 @@ export const DirectiveDisplay = (props) => {
   const { directives = [], master_name } = data;
   const displayedLaw = directives?.length
     ? decodeHtmlEntities(directives[0])
-    : 'None.';
+    : "None.";
 
   return (
     <Stack fill vertical>
@@ -27,7 +27,7 @@ export const DirectiveDisplay = (props) => {
       <Stack.Item grow>
         <Section fill scrollable title="Directives">
           {!master_name ? (
-            'None.'
+            "None."
           ) : (
             <LabeledList>
               <LabeledList.Item label="Prime">

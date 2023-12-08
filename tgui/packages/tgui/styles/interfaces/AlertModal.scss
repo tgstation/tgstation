@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../colors.scss';
+@use "../colors.scss";
 
 .AlertModal__Message {
   text-align: center;
@@ -22,7 +22,9 @@
 
 .AlertModal__LoaderProgress {
   position: absolute;
-  transition: background-color 500ms ease-out, width 500ms ease-out;
+  transition:
+    background-color 500ms ease-out,
+    width 500ms ease-out;
   background-color: colors.bg(colors.$primary);
   height: 100%;
 }

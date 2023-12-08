@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
-import { useBackend } from '../backend';
-import { Box } from '../components';
-import { Layout } from './Layout';
+import { classes } from "common/react";
+import { useBackend } from "../backend";
+import { Box } from "../components";
+import { Layout } from "./Layout";
 
 export const Pane = (props, context) => {
   const { theme, children, className, ...rest } = props;
@@ -18,8 +18,8 @@ export const Pane = (props, context) => {
   }
 
   return (
-    <Layout className={classes(['Window', className])} theme={theme} {...rest}>
-      <Box fillPositionedParent className={debugLayout && 'debug-layout'}>
+    <Layout className={classes(["Window", className])} theme={theme} {...rest}>
+      <Box fillPositionedParent className={debugLayout && "debug-layout"}>
         {!suspended && children}
       </Box>
     </Layout>
@@ -30,8 +30,9 @@ const PaneContent = (props) => {
   const { className, fitted, children, ...rest } = props;
   return (
     <Layout.Content
-      className={classes(['Window__content', className])}
-      {...rest}>
+      className={classes(["Window__content", className])}
+      {...rest}
+    >
       {(fitted && children) || (
         <div className="Window__contentPadding">{children}</div>
       )}

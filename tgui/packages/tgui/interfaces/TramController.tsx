@@ -1,8 +1,16 @@
-import { useBackend, useLocalState } from '../backend';
-import { BooleanLike } from 'common/react';
-import { Stack, Section, LabeledList, ProgressBar, Button, NoticeBox, Dropdown } from '../components';
-import { toFixed } from 'common/math';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from "../backend";
+import { BooleanLike } from "common/react";
+import {
+  Stack,
+  Section,
+  LabeledList,
+  ProgressBar,
+  Button,
+  NoticeBox,
+  Dropdown,
+} from "../components";
+import { toFixed } from "common/math";
+import { Window } from "../layouts";
 
 type Data = {
   transportId: string;
@@ -54,8 +62,8 @@ export const TramController = (props) => {
   } = data;
 
   const [tripDestination, setTripDestination] = useLocalState(
-    'TramDestination',
-    ''
+    "TramDestination",
+    "",
   );
 
   return (
@@ -70,18 +78,21 @@ export const TramController = (props) => {
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Controller Queue"
-                  color={controllerActive ? 'blue' : 'good'}>
-                  {controllerActive ? 'Processing' : 'Ready'}
+                  color={controllerActive ? "blue" : "good"}
+                >
+                  {controllerActive ? "Processing" : "Ready"}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Mechanical Status"
-                  color={controllerOperational ? 'good' : 'bad'}>
-                  {controllerOperational ? 'Normal' : 'Fault'}
+                  color={controllerOperational ? "good" : "bad"}
+                >
+                  {controllerOperational ? "Normal" : "Fault"}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Processor Status"
-                  color={recoveryMode ? 'average' : 'good'}>
-                  {recoveryMode ? 'Overload' : 'Normal'}
+                  color={recoveryMode ? "average" : "good"}
+                >
+                  {recoveryMode ? "Overload" : "Normal"}
                 </LabeledList.Item>
                 <LabeledList.Item label="Processor Load">
                   <ProgressBar
@@ -105,8 +116,9 @@ export const TramController = (props) => {
                       average: [24, 28],
                       bad: [0.1, 24],
                       white: [-Infinity, 0],
-                    }}>
-                    {toFixed(currentSpeed * 2.25, 0) + ' km/h'}
+                    }}
+                  >
+                    {toFixed(currentSpeed * 2.25, 0) + " km/h"}
                   </ProgressBar>
                 </LabeledList.Item>
               </LabeledList>
@@ -114,16 +126,18 @@ export const TramController = (props) => {
             <Section title="Location Data">
               <LabeledList>
                 <LabeledList.Item label="Direction">
-                  {travelDirection === 4 ? 'Outbound' : 'Inbound'}
+                  {travelDirection === 4 ? "Outbound" : "Inbound"}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Idle Platform"
-                  color={controllerActive ? '' : 'blue'}>
+                  color={controllerActive ? "" : "blue"}
+                >
                   {idlePlatform}
                 </LabeledList.Item>
                 <LabeledList.Item
                   label="Destination Platform"
-                  color={controllerActive ? 'blue' : ''}>
+                  color={controllerActive ? "blue" : ""}
+                >
                   {destinationPlatform}
                 </LabeledList.Item>
               </LabeledList>
@@ -143,7 +157,8 @@ export const TramController = (props) => {
                 width="28%"
                 minHeight={2}
                 textAlign="center"
-                onClick={() => act('reset', {})}>
+                onClick={() => act("reset", {})}
+              >
                 Reset/Enable
               </Button>
               <Button
@@ -154,7 +169,8 @@ export const TramController = (props) => {
                 width="28%"
                 minHeight={2}
                 textAlign="center"
-                onClick={() => act('estop', {})}>
+                onClick={() => act("estop", {})}
+              >
                 E-Stop/Disable
               </Button>
               <Button
@@ -167,17 +183,18 @@ export const TramController = (props) => {
                 minHeight={2}
                 textAlign="center"
                 onClick={() =>
-                  act('dispatch', {
-                    'tripDestination': tripDestination,
+                  act("dispatch", {
+                    tripDestination: tripDestination,
                   })
-                }>
+                }
+              >
                 Start: Destination
               </Button>
               <Dropdown
                 width="98.5%"
                 options={destinations.map((id) => id.name)}
                 selected={tripDestination}
-                displayText={tripDestination || 'Pick a Destination'}
+                displayText={tripDestination || "Pick a Destination"}
                 onSelected={(value) => setTripDestination(value)}
               />
               <Button
@@ -188,7 +205,8 @@ export const TramController = (props) => {
                 width="25%"
                 minHeight={2}
                 textAlign="center"
-                onClick={() => act('dopen', {})}>
+                onClick={() => act("dopen", {})}
+              >
                 Open Doors
               </Button>
               <Button
@@ -199,74 +217,82 @@ export const TramController = (props) => {
                 width="25%"
                 minHeight={2}
                 textAlign="center"
-                onClick={() => act('dclose', {})}>
+                onClick={() => act("dclose", {})}
+              >
                 Close Doors
               </Button>
               <Button
                 icon="bars"
-                color={statusBS ? 'good' : 'bad'}
+                color={statusBS ? "good" : "bad"}
                 my={1}
                 lineHeight={2}
                 width="48%"
                 minHeight={2}
                 textAlign="center"
-                onClick={() => act('togglesensors', {})}>
+                onClick={() => act("togglesensors", {})}
+              >
                 Bypass Door Sensors
               </Button>
             </Section>
             <Section title="Operational">
               <Button
-                color={statusES ? 'red' : 'transparent'}
+                color={statusES ? "red" : "transparent"}
                 my={1}
                 lineHeight={2}
                 width="16%"
                 minHeight={2}
-                textAlign="center">
+                textAlign="center"
+              >
                 ESTOP
               </Button>
               <Button
-                color={statusSF ? 'yellow' : 'transparent'}
+                color={statusSF ? "yellow" : "transparent"}
                 my={1}
                 lineHeight={2}
                 width="16%"
                 minHeight={2}
-                textAlign="center">
+                textAlign="center"
+              >
                 FAULT
               </Button>
               <Button
-                color={statusCE ? 'teal' : 'transparent'}
+                color={statusCE ? "teal" : "transparent"}
                 my={1}
                 lineHeight={2}
                 width="16%"
                 minHeight={2}
-                textAlign="center">
+                textAlign="center"
+              >
                 COMMS
               </Button>
               <Button
-                color={statusPD ? 'blue' : 'transparent'}
+                color={statusPD ? "blue" : "transparent"}
                 my={1}
                 lineHeight={2}
                 width="16%"
                 minHeight={2}
-                textAlign="center">
+                textAlign="center"
+              >
                 RQST
               </Button>
               <Button
-                color={statusDR ? 'transparent' : 'blue'}
+                color={statusDR ? "transparent" : "blue"}
                 my={1}
                 lineHeight={2}
                 width="16%"
                 minHeight={2}
-                textAlign="center">
+                textAlign="center"
+              >
                 DOORS
               </Button>
               <Button
-                color={statusCL ? 'blue' : 'transparent'}
+                color={statusCL ? "blue" : "transparent"}
                 my={1}
                 lineHeight={2}
                 width="16%"
                 minHeight={2}
-                textAlign="center">
+                textAlign="center"
+              >
                 BUSY
               </Button>
             </Section>

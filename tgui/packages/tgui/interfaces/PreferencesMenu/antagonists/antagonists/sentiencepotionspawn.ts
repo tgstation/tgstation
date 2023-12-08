@@ -1,9 +1,9 @@
-import { Antagonist, Category } from '../base';
-import { multiline } from 'common/string';
+import { Antagonist, Category } from "../base";
+import { multiline } from "common/string";
 
 const SentientCreature: Antagonist = {
-  key: 'sentiencepotionspawn',
-  name: 'Sentient Creature',
+  key: "sentiencepotionspawn",
+  name: "Sentient Creature",
   description: [
     multiline`
 		Either by cosmic happenstance, or due to crew's shenanigans, you have been

@@ -1,6 +1,6 @@
-import './styles/main.scss';
-import { createRenderer } from 'tgui/renderer';
-import { TguiSay } from './TguiSay';
+import "./styles/main.scss";
+import { createRenderer } from "tgui/renderer";
+import { TguiSay } from "./TguiSay";
 
 const renderApp = createRenderer(() => {
   return <TguiSay />;
@@ -8,8 +8,8 @@ const renderApp = createRenderer(() => {
 
 const setupApp = () => {
   // Delay setup
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setupApp);
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setupApp);
     return;
   }
 

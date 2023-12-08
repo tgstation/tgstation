@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, Collapsible, Section, Table, NoticeBox } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, Collapsible, Section, Table, NoticeBox } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   server_connected: BooleanLike;
@@ -65,12 +65,12 @@ export const ServerControl = (props) => {
                   <Button
                     mt={1}
                     tooltip={server.server_details}
-                    color={server.server_disabled ? 'bad' : 'good'}
-                    content={server.server_disabled ? 'Offline' : 'Online'}
+                    color={server.server_disabled ? "bad" : "good"}
+                    content={server.server_disabled ? "Offline" : "Online"}
                     fluid
                     textAlign="center"
                     onClick={() =>
-                      act('lockdown_server', {
+                      act("lockdown_server", {
                         selected_server: server.server_ref,
                       })
                     }
@@ -95,18 +95,18 @@ export const ServerControl = (props) => {
                 <>
                   <Table.Row header key={console} className="candystripe" />
                   <Table.Cell>
-                    {' '}
-                    {console.console_name} - Location:{' '}
-                    {console.console_location}{' '}
+                    {" "}
+                    {console.console_name} - Location:{" "}
+                    {console.console_location}{" "}
                   </Table.Cell>
                   <Button
                     mt={1}
-                    color={console.console_locked ? 'bad' : 'good'}
-                    content={console.console_locked ? 'LOCKED' : 'UNLOCKED'}
+                    color={console.console_locked ? "bad" : "good"}
+                    content={console.console_locked ? "LOCKED" : "UNLOCKED"}
                     fluid
                     textAlign="center"
                     onClick={() =>
-                      act('lock_console', {
+                      act("lock_console", {
                         selected_console: console.console_ref,
                       })
                     }
@@ -135,7 +135,8 @@ export const ServerControl = (props) => {
                   <Table.Row
                     mt={1}
                     key={server_log.node_name}
-                    className="candystripe">
+                    className="candystripe"
+                  >
                     <Table.Cell>{server_log.node_name}</Table.Cell>
                     <Table.Cell>{server_log.node_cost}</Table.Cell>
                     <Table.Cell>{server_log.node_researcher}</Table.Cell>

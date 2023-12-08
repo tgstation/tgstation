@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, Icon, LabeledList, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Icon, LabeledList, Section } from "../components";
+import { Window } from "../layouts";
 
 export const ImplantChair = (props) => {
   const { act, data } = useBackend();
@@ -10,23 +10,24 @@ export const ImplantChair = (props) => {
         <Section title="Occupant Information" textAlign="center">
           <LabeledList>
             <LabeledList.Item label="Name">
-              {data.occupant.name || 'No Occupant'}
+              {data.occupant.name || "No Occupant"}
             </LabeledList.Item>
             {!!data.occupied && (
               <LabeledList.Item
                 label="Status"
                 color={
                   data.occupant.stat === 0
-                    ? 'good'
+                    ? "good"
                     : data.occupant.stat === 1
-                      ? 'average'
-                      : 'bad'
-                }>
+                      ? "average"
+                      : "bad"
+                }
+              >
                 {data.occupant.stat === 0
-                  ? 'Conscious'
+                  ? "Conscious"
                   : data.occupant.stat === 1
-                    ? 'Unconscious'
-                    : 'Dead'}
+                    ? "Unconscious"
+                    : "Dead"}
               </LabeledList.Item>
             )}
           </LabeledList>
@@ -35,19 +36,19 @@ export const ImplantChair = (props) => {
           <LabeledList>
             <LabeledList.Item label="Door">
               <Button
-                icon={data.open ? 'unlock' : 'lock'}
-                color={data.open ? 'default' : 'red'}
-                content={data.open ? 'Open' : 'Closed'}
-                onClick={() => act('door')}
+                icon={data.open ? "unlock" : "lock"}
+                color={data.open ? "default" : "red"}
+                content={data.open ? "Open" : "Closed"}
+                onClick={() => act("door")}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Implant Occupant">
               <Button
                 icon="code-branch"
                 content={
-                  data.ready ? data.special_name || 'Implant' : 'Recharging'
+                  data.ready ? data.special_name || "Implant" : "Recharging"
                 }
-                onClick={() => act('implant')}
+                onClick={() => act("implant")}
               />
               {data.ready === 0 && <Icon name="cog" color="orange" spin />}
             </LabeledList.Item>

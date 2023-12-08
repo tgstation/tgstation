@@ -1,19 +1,30 @@
-import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { capitalize } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dropdown, Input, NoticeBox, Section, Stack, Table, TextArea } from '../components';
-import { Window } from '../layouts';
-import { PageSelect } from './LibraryConsole';
+import { map, sortBy } from "common/collections";
+import { flow } from "common/fp";
+import { capitalize } from "common/string";
+import { useBackend, useLocalState } from "../backend";
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  TextArea,
+} from "../components";
+import { Window } from "../layouts";
+import { PageSelect } from "./LibraryConsole";
 
 export const LibraryAdmin = (props) => {
-  const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', null);
+  const [modifyMethod, setModifyMethod] = useLocalState("ModifyMethod", null);
   return (
     <Window
       title="Admin Library Console"
       theme="admin"
       width={800}
-      height={600}>
+      height={600}
+    >
       {modifyMethod ? <ModifyPage /> : <BookListing />}
     </Window>
   );
@@ -53,7 +64,7 @@ const BookListing = (props) => {
           current_page={our_page}
           disabled={!can_db_request}
           call_on_change={(value) =>
-            act('switch_page', {
+            act("switch_page", {
               page: value,
             })
           }
@@ -92,8 +103,8 @@ type DisplayData = {
 
 const SearchAndDisplay = (props) => {
   const { act, data } = useBackend<DisplayData>();
-  const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', '');
-  const [modifyTarget, setModifyTarget] = useLocalState('ModifyTarget', 0);
+  const [modifyMethod, setModifyMethod] = useLocalState("ModifyMethod", "");
+  const [modifyTarget, setModifyTarget] = useLocalState("ModifyTarget", 0);
   const {
     can_db_request,
     search_categories = [],
@@ -123,10 +134,10 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={book_id}
-                placeholder={book_id === null ? 'ID' : book_id}
+                placeholder={book_id === null ? "ID" : book_id}
                 width="70px"
                 onChange={(e, value) =>
-                  act('set_search_id', {
+                  act("set_search_id", {
                     id: value,
                   })
                 }
@@ -137,7 +148,7 @@ const SearchAndDisplay = (props) => {
                 options={search_categories}
                 selected={category}
                 onSelected={(value) =>
-                  act('set_search_category', {
+                  act("set_search_category", {
                     category: value,
                   })
                 }
@@ -146,10 +157,10 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={title}
-                placeholder={title || 'Title'}
+                placeholder={title || "Title"}
                 mt={0.5}
                 onChange={(e, value) =>
-                  act('set_search_title', {
+                  act("set_search_title", {
                     title: value,
                   })
                 }
@@ -158,10 +169,10 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={author}
-                placeholder={author || 'Author'}
+                placeholder={author || "Author"}
                 mt={0.5}
                 onChange={(e, value) =>
-                  act('set_search_author', {
+                  act("set_search_author", {
                     author: value,
                   })
                 }
@@ -170,10 +181,10 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={author_ckey}
-                placeholder={author_ckey || 'Ckey'}
+                placeholder={author_ckey || "Ckey"}
                 mt={0.5}
                 onChange={(e, value) =>
-                  act('set_search_ckey', {
+                  act("set_search_ckey", {
                     ckey: value,
                   })
                 }
@@ -187,34 +198,36 @@ const SearchAndDisplay = (props) => {
               <Button
                 disabled={!can_db_request}
                 textAlign="right"
-                onClick={() => act('refresh')}
-                color={params_changed ? 'good' : ''}
-                icon="rotate-right">
+                onClick={() => act("refresh")}
+                color={params_changed ? "good" : ""}
+                icon="rotate-right"
+              >
                 Refresh
               </Button>
               <Button
                 disabled={!can_db_request}
                 textAlign="right"
-                onClick={() => act('clear_data')}
+                onClick={() => act("clear_data")}
                 color="bad"
-                icon="fire">
+                icon="fire"
+              >
                 Reset Search
               </Button>
             </Stack.Item>
             <Stack.Item>
               <Button
                 textAlign="right"
-                onClick={() => act('toggle_raw')}
-                color={view_raw ? 'purple' : 'blue'}
-                icon={view_raw ? 'theater-masks' : 'glasses'}
-                content={view_raw ? 'Raw' : 'Normal'}
+                onClick={() => act("toggle_raw")}
+                color={view_raw ? "purple" : "blue"}
+                icon={view_raw ? "theater-masks" : "glasses"}
+                content={view_raw ? "Raw" : "Normal"}
               />
               <Button
                 textAlign="right"
-                onClick={() => act('toggle_deleted')}
-                color={show_deleted ? 'purple' : 'green'}
-                icon={show_deleted ? 'trash' : 'mountain-sun'}
-                content={show_deleted ? 'All' : 'Undeleted'}
+                onClick={() => act("toggle_deleted")}
+                color={show_deleted ? "purple" : "green"}
+                icon={show_deleted ? "trash" : "mountain-sun"}
+                content={show_deleted ? "All" : "Undeleted"}
               />
             </Stack.Item>
           </Stack>
@@ -234,11 +247,12 @@ const SearchAndDisplay = (props) => {
             <Table.Cell>
               <Button
                 onClick={() =>
-                  act('view_book', {
+                  act("view_book", {
                     book_id: book.id,
                   })
                 }
-                icon="book-reader">
+                icon="book-reader"
+              >
                 {book.id}
               </Button>
             </Table.Cell>
@@ -252,12 +266,13 @@ const SearchAndDisplay = (props) => {
                   onClick={() => {
                     setModifyTarget(book.id);
                     setModifyMethod(ModifyTypes.Restore);
-                    act('get_history', {
+                    act("get_history", {
                       book_id: book.id,
                     });
                   }}
                   icon="undo"
-                  color="blue">
+                  color="blue"
+                >
                   Restore
                 </Button>
               ) : (
@@ -265,12 +280,13 @@ const SearchAndDisplay = (props) => {
                   onClick={() => {
                     setModifyTarget(book.id);
                     setModifyMethod(ModifyTypes.Delete);
-                    act('get_history', {
+                    act("get_history", {
                       book_id: book.id,
                     });
                   }}
                   icon="hammer"
-                  color="violet">
+                  color="violet"
+                >
                   Delete
                 </Button>
               )}
@@ -283,8 +299,8 @@ const SearchAndDisplay = (props) => {
 };
 
 const ModifyTypes = {
-  Delete: 'delete',
-  Restore: 'restore',
+  Delete: "delete",
+  Restore: "restore",
 };
 
 type HistoryEntry = {
@@ -318,9 +334,9 @@ const ModifyPage = (props) => {
   const { act, data } = useBackend<ModalData>();
 
   const { can_db_request, view_raw, history } = data;
-  const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', '');
-  const [modifyTarget, setModifyTarget] = useLocalState('ModifyTarget', 0);
-  const [reason, setReason] = useLocalState('Reason', 'null');
+  const [modifyMethod, setModifyMethod] = useLocalState("ModifyMethod", "");
+  const [modifyTarget, setModifyTarget] = useLocalState("ModifyTarget", 0);
+  const [reason, setReason] = useLocalState("Reason", "null");
 
   const entries = history[modifyTarget.toString()]
     ? history[modifyTarget.toString()].sort((a, b) => b.id - a.id)
@@ -344,21 +360,22 @@ const ModifyPage = (props) => {
         <Stack.Item fontSize="17px">
           <Button
             onClick={() =>
-              act('view_book', {
+              act("view_book", {
                 book_id: modifyTarget,
               })
             }
-            icon="book-reader">
+            icon="book-reader"
+          >
             View
           </Button>
         </Stack.Item>
         <Stack.Item fontSize="17px">
           <Button
             textAlign="right"
-            onClick={() => act('toggle_raw')}
-            color={view_raw ? 'purple' : 'blue'}
-            icon={view_raw ? 'theater-masks' : 'glasses'}
-            content={view_raw ? 'Raw' : 'Normal'}
+            onClick={() => act("toggle_raw")}
+            color={view_raw ? "purple" : "blue"}
+            icon={view_raw ? "theater-masks" : "glasses"}
+            content={view_raw ? "Raw" : "Normal"}
           />
         </Stack.Item>
       </Stack>
@@ -381,19 +398,19 @@ const ModifyPage = (props) => {
             onClick={() => {
               switch (modifyMethod) {
                 case ModifyTypes.Delete:
-                  act('hide_book', {
+                  act("hide_book", {
                     book_id: modifyTarget,
                     delete_reason: reason,
                   });
                   break;
                 case ModifyTypes.Restore:
-                  act('unhide_book', {
+                  act("unhide_book", {
                     book_id: modifyTarget,
                     free_reason: reason,
                   });
                   break;
               }
-              setModifyMethod('');
+              setModifyMethod("");
               setModifyTarget(0);
             }}
             lineHeight={2}
@@ -406,7 +423,7 @@ const ModifyPage = (props) => {
             fontSize="18px"
             color="bad"
             onClick={() => {
-              setModifyMethod('');
+              setModifyMethod("");
               setModifyTarget(0);
             }}
             lineHeight={2}
@@ -428,7 +445,8 @@ const ModifyPage = (props) => {
         {entries.map((entry) => (
           <Table.Row
             key={entry.id}
-            backgroundColor={get_action_color(entry.action)}>
+            backgroundColor={get_action_color(entry.action)}
+          >
             <Table.Cell className="LibraryAdmin_RecordCell">
               {entry.id}
             </Table.Cell>
@@ -438,8 +456,9 @@ const ModifyPage = (props) => {
             <Table.Cell
               className="LibraryAdmin_RecordCell"
               style={{
-                whiteSpace: 'pre-wrap',
-              }}>
+                whiteSpace: "pre-wrap",
+              }}
+            >
               {entry.reason}
             </Table.Cell>
             <Table.Cell className="LibraryAdmin_RecordCell">
@@ -457,11 +476,11 @@ const ModifyPage = (props) => {
 
 const get_action_color = (reason: string) => {
   switch (reason) {
-    case 'deleted':
-      return 'rgba(255, 0, 0, 0.4)';
-    case 'undeleted':
-      return 'rgba(0, 120, 70, 0.4)';
+    case "deleted":
+      return "rgba(255, 0, 0, 0.4)";
+    case "undeleted":
+      return "rgba(0, 120, 70, 0.4)";
     default:
-      return 'rgba(0, 0, 0, 0.4)';
+      return "rgba(0, 0, 0, 0.4)";
   }
 };

@@ -1,7 +1,14 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   tankContents: Reagent[];
@@ -34,19 +41,21 @@ export const SmokeMachine = (props) => {
           title="Dispersal Tank"
           buttons={
             <Button
-              icon={active ? 'power-off' : 'times'}
+              icon={active ? "power-off" : "times"}
               selected={active}
-              content={active ? 'On' : 'Off'}
-              onClick={() => act('power')}
+              content={active ? "On" : "Off"}
+              onClick={() => act("power")}
             />
-          }>
+          }
+        >
           <ProgressBar
             value={tankCurrentVolume / tankMaxVolume}
             ranges={{
               bad: [-Infinity, 0.3],
-            }}>
+            }}
+          >
             <AnimatedNumber initial={0} value={tankCurrentVolume || 0} />
-            {' / ' + tankMaxVolume}
+            {" / " + tankMaxVolume}
           </ProgressBar>
           <Box mt={1}>
             <LabeledList>
@@ -58,7 +67,7 @@ export const SmokeMachine = (props) => {
                     icon="plus"
                     content={amount * 3}
                     disabled={maxSetting < amount}
-                    onClick={() => act('setting', { amount })}
+                    onClick={() => act("setting", { amount })}
                   />
                 ))}
               </LabeledList.Item>
@@ -68,11 +77,12 @@ export const SmokeMachine = (props) => {
         <Section
           title="Contents"
           buttons={
-            <Button icon="trash" content="Purge" onClick={() => act('purge')} />
-          }>
+            <Button icon="trash" content="Purge" onClick={() => act("purge")} />
+          }
+        >
           {tankContents.map((chemical) => (
             <Box key={chemical.name} color="label">
-              <AnimatedNumber initial={0} value={chemical.volume} /> units of{' '}
+              <AnimatedNumber initial={0} value={chemical.volume} /> units of{" "}
               {chemical.name}
             </Box>
           ))}

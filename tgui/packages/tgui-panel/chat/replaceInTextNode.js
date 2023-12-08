@@ -89,25 +89,25 @@ export const replaceInTextNode = (regex, words, createNode) => (node) => {
 
   if (words) {
     let i = 0;
-    let wordRegexStr = '(';
+    let wordRegexStr = "(";
     for (let word of words) {
       // Capture if the word is at the beginning, end, middle,
       // or by itself in a message
       wordRegexStr += `^${word}\\W|\\W${word}\\W|\\W${word}$|^${word}$`;
       // Make sure the last character for the expression is NOT '|'
       if (++i !== words.length) {
-        wordRegexStr += '|';
+        wordRegexStr += "|";
       }
     }
-    wordRegexStr += ')';
-    const wordRegex = new RegExp(wordRegexStr, 'gi');
+    wordRegexStr += ")";
+    const wordRegex = new RegExp(wordRegexStr, "gi");
     if (regex && nodes) {
       for (let a_node of nodes) {
         result = regexParseNode({
           node: a_node,
           regex: wordRegex,
           createNode: createNode,
-          captureAdjust: (str) => str.replace(/^\W|\W$/g, ''),
+          captureAdjust: (str) => str.replace(/^\W|\W$/g, ""),
         });
         n += result.n;
       }
@@ -116,7 +116,7 @@ export const replaceInTextNode = (regex, words, createNode) => (node) => {
         node: node,
         regex: wordRegex,
         createNode: createNode,
-        captureAdjust: (str) => str.replace(/^\W|\W$/g, ''),
+        captureAdjust: (str) => str.replace(/^\W|\W$/g, ""),
       });
       n += result.n;
     }
@@ -131,8 +131,8 @@ export const replaceInTextNode = (regex, words, createNode) => (node) => {
  * Default highlight node.
  */
 const createHighlightNode = (text) => {
-  const node = document.createElement('span');
-  node.setAttribute('style', 'background-color:#fd4;color:#000');
+  const node = document.createElement("span");
+  node.setAttribute("style", "background-color:#fd4;color:#000");
   node.textContent = text;
   return node;
 };
@@ -149,7 +149,7 @@ export const highlightNode = (
   node,
   regex,
   words,
-  createNode = createHighlightNode
+  createNode = createHighlightNode,
 ) => {
   if (!createNode) {
     createNode = createHighlightNode;
@@ -189,7 +189,7 @@ export const linkifyNode = (node) => {
     // Is a text node
     if (node.nodeType === 3) {
       n += linkifyTextNode(node);
-    } else if (tag !== 'a') {
+    } else if (tag !== "a") {
       n += linkifyNode(node);
     }
   }
@@ -197,7 +197,7 @@ export const linkifyNode = (node) => {
 };
 
 const linkifyTextNode = replaceInTextNode(URL_REGEX, null, (text) => {
-  const node = document.createElement('a');
+  const node = document.createElement("a");
   node.href = text;
   node.textContent = text;
   return node;

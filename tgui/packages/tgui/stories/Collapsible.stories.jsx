@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { Button, Collapsible, Section } from '../components';
-import { BoxWithSampleText } from './common';
+import { Button, Collapsible, Section } from "../components";
+import { BoxWithSampleText } from "./common";
 
 export const meta = {
-  title: 'Collapsible',
+  title: "Collapsible",
   render: () => <Story />,
 };
 

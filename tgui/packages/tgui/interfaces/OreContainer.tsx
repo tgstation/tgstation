@@ -1,7 +1,7 @@
-import { createSearch, toTitleCase } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, Stack, Flex, Section } from '../components';
-import { Window } from '../layouts';
+import { createSearch, toTitleCase } from "common/string";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Input, Stack, Flex, Section } from "../components";
+import { Window } from "../layouts";
 
 type Ores = {
   id: string;
@@ -22,7 +22,7 @@ type Data = {
 export const OreContainer = (props) => {
   const { act, data } = useBackend<Data>();
   const { ores = [] } = data;
-  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
+  const [searchItem, setSearchItem] = useLocalState("searchItem", "");
   const search = createSearch(searchItem, (ore: Ores) => ore.name);
   const ores_filtered =
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
@@ -66,7 +66,7 @@ export const OreContainer = (props) => {
                           content="Withdraw"
                           color="transparent"
                           onClick={() =>
-                            act('withdraw', {
+                            act("withdraw", {
                               reference: ore.id,
                             })
                           }
@@ -103,7 +103,7 @@ const RetrieveIcon = (props) => {
       height="64px"
       width="64px"
       style={{
-        verticalAlign: 'middle',
+        verticalAlign: "middle",
       }}
     />
   );
@@ -111,7 +111,7 @@ const RetrieveIcon = (props) => {
 
 const Orename = (props) => {
   const { ore_name } = props;
-  const return_name = ore_name.split(' ');
+  const return_name = ore_name.split(" ");
   if (return_name.length === 0) {
     return null;
   }

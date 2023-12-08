@@ -1,6 +1,14 @@
-import { BooleanLike } from 'common/react';
-import { useLocalState, useSharedState } from '../../backend';
-import { Box, Button, Input, Section, Tabs, NoticeBox, Stack } from '../../components';
+import { BooleanLike } from "common/react";
+import { useLocalState, useSharedState } from "../../backend";
+import {
+  Box,
+  Button,
+  Input,
+  Section,
+  Tabs,
+  NoticeBox,
+  Stack,
+} from "../../components";
 
 type GenericUplinkProps = {
   currency?: string | JSX.Element;
@@ -12,19 +20,19 @@ type GenericUplinkProps = {
 
 export const GenericUplink = (props: GenericUplinkProps) => {
   const {
-    currency = 'cr',
+    currency = "cr",
     categories,
 
     handleBuy,
   } = props;
-  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [searchText, setSearchText] = useLocalState("searchText", "");
   const [selectedCategory, setSelectedCategory] = useLocalState(
-    'category',
-    categories[0]
+    "category",
+    categories[0],
   );
   const [compactMode, setCompactMode] = useSharedState(
-    'compactModeUplink',
-    false
+    "compactModeUplink",
+    false,
   );
   let items = props.items.filter((value) => {
     if (searchText.length === 0) {
@@ -45,12 +53,13 @@ export const GenericUplink = (props: GenericUplinkProps) => {
             mx={1}
           />
           <Button
-            icon={compactMode ? 'list' : 'info'}
-            content={compactMode ? 'Compact' : 'Detailed'}
+            icon={compactMode ? "list" : "info"}
+            content={compactMode ? "Compact" : "Detailed"}
             onClick={() => setCompactMode(!compactMode)}
           />
         </>
-      }>
+      }
+    >
       <Stack>
         {searchText.length === 0 && (
           <Stack.Item mr={1}>
@@ -59,7 +68,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                 <Tabs.Tab
                   key={category}
                   selected={category === selectedCategory}
-                  onClick={() => setSelectedCategory(category)}>
+                  onClick={() => setSelectedCategory(category)}
+                >
                   {category}
                 </Tabs.Tab>
               ))}
@@ -70,8 +80,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
           {items.length === 0 && (
             <NoticeBox>
               {searchText.length === 0
-                ? 'No items in this category.'
-                : 'No results found.'}
+                ? "No items in this category."
+                : "No results found."}
             </NoticeBox>
           )}
           <ItemList
@@ -117,7 +127,8 @@ const ItemList = (props: ItemListProps) => {
                 disabled={item.disabled}
                 onClick={(e) => handleBuy(item)}
               />
-            }>
+            }
+          >
             {compactMode ? null : item.desc}
           </Section>
         </Stack.Item>

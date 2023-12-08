@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { NtosWindow } from '../layouts';
-import { Button, Box, NoticeBox, Stack } from '../components';
+import { useBackend } from "../backend";
+import { NtosWindow } from "../layouts";
+import { Button, Box, NoticeBox, Stack } from "../components";
 
 export const NtosCamera = (props) => {
   return (
@@ -31,7 +31,7 @@ export const NtosCameraContent = (props) => {
           fluid
           content="Print photo"
           disabled={paper_left === 0}
-          onClick={() => act('print_photo')}
+          onClick={() => act("print_photo")}
         />
       </Stack.Item>
       <Stack.Item>

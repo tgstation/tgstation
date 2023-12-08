@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { useDispatch, useSelector } from 'tgui/backend';
-import { updateSettings, toggleSettings } from './actions';
-import { selectSettings } from './selectors';
+import { useDispatch, useSelector } from "tgui/backend";
+import { updateSettings, toggleSettings } from "./actions";
+import { selectSettings } from "./selectors";
 
 export const useSettings = () => {
   const settings = useSelector(selectSettings);

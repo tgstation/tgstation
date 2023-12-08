@@ -1,13 +1,28 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { capitalizeFirst, multiline } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Button, Collapsible, Icon, Input, LabeledList, NoticeBox, Section, Stack } from 'tgui/components';
-import { Window } from 'tgui/layouts';
-import { JOB2ICON } from '../common/JobToIcon';
-import { ANTAG2COLOR } from './constants';
-import { getAntagCategories, getDisplayColor, getDisplayName, getMostRelevant, isJobOrNameMatch } from './helpers';
-import type { AntagGroup, Antagonist, Observable, OrbitData } from './types';
+import { filter, sortBy } from "common/collections";
+import { flow } from "common/fp";
+import { capitalizeFirst, multiline } from "common/string";
+import { useBackend, useLocalState } from "tgui/backend";
+import {
+  Button,
+  Collapsible,
+  Icon,
+  Input,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from "tgui/components";
+import { Window } from "tgui/layouts";
+import { JOB2ICON } from "../common/JobToIcon";
+import { ANTAG2COLOR } from "./constants";
+import {
+  getAntagCategories,
+  getDisplayColor,
+  getDisplayName,
+  getMostRelevant,
+  isJobOrNameMatch,
+} from "./helpers";
+import type { AntagGroup, Antagonist, Observable, OrbitData } from "./types";
 
 export const Orbit = (props) => {
   return (
@@ -42,13 +57,13 @@ const ObservableSearch = (props) => {
   } = data;
 
   const [autoObserve, setAutoObserve] = useLocalState<boolean>(
-    'autoObserve',
-    false
+    "autoObserve",
+    false,
   );
-  const [heatMap, setHeatMap] = useLocalState<boolean>('heatMap', false);
+  const [heatMap, setHeatMap] = useLocalState<boolean>("heatMap", false);
   const [searchQuery, setSearchQuery] = useLocalState<string>(
-    'searchQuery',
-    ''
+    "searchQuery",
+    "",
   );
 
   /** Gets a list of Observables, then filters the most relevant to orbit */
@@ -64,7 +79,7 @@ const ObservableSearch = (props) => {
     ]);
 
     if (mostRelevant !== undefined) {
-      act('orbit', {
+      act("orbit", {
         ref: mostRelevant.ref,
         auto_observe: autoObserve,
       });
@@ -91,7 +106,7 @@ const ObservableSearch = (props) => {
         <Stack.Item>
           <Button
             color="transparent"
-            icon={!heatMap ? 'heart' : 'ghost'}
+            icon={!heatMap ? "heart" : "ghost"}
             onClick={() => setHeatMap(!heatMap)}
             tooltip={multiline`Toggles between highlighting health or
             orbiters.`}
@@ -100,8 +115,8 @@ const ObservableSearch = (props) => {
         </Stack.Item>
         <Stack.Item>
           <Button
-            color={autoObserve ? 'good' : 'transparent'}
-            icon={autoObserve ? 'toggle-on' : 'toggle-off'}
+            color={autoObserve ? "good" : "transparent"}
+            icon={autoObserve ? "toggle-on" : "toggle-off"}
             onClick={() => setAutoObserve(!autoObserve)}
             tooltip={multiline`Toggle Auto-Observe. When active, you'll
             see the UI / full inventory of whoever you're orbiting. Neat!`}
@@ -112,7 +127,7 @@ const ObservableSearch = (props) => {
           <Button
             color="transparent"
             icon="sync-alt"
-            onClick={() => act('refresh')}
+            onClick={() => act("refresh")}
             tooltip="Refresh"
             tooltipPosition="bottom-start"
           />
@@ -150,7 +165,7 @@ const ObservableContent = (props) => {
       {collatedAntagonists?.map(([title, antagonists]) => {
         return (
           <ObservableSection
-            color={ANTAG2COLOR[title] || 'bad'}
+            color={ANTAG2COLOR[title] || "bad"}
             key={title}
             section={antagonists}
             title={title}
@@ -186,16 +201,16 @@ const ObservableSection = (props: {
     return null;
   }
 
-  const [searchQuery] = useLocalState<string>('searchQuery', '');
+  const [searchQuery] = useLocalState<string>("searchQuery", "");
 
   const filteredSection: Observable[] = flow([
     filter<Observable>((observable) =>
-      isJobOrNameMatch(observable, searchQuery)
+      isJobOrNameMatch(observable, searchQuery),
     ),
     sortBy<Observable>((observable) =>
       getDisplayName(observable.full_name, observable.name)
-        .replace(/^"/, '')
-        .toLowerCase()
+        .replace(/^"/, "")
+        .toLowerCase(),
     ),
   ])(section);
 
@@ -207,9 +222,10 @@ const ObservableSection = (props: {
     <Stack.Item>
       <Collapsible
         bold
-        color={color ?? 'grey'}
+        color={color ?? "grey"}
         open={!!color}
-        title={title + ` - (${filteredSection.length})`}>
+        title={title + ` - (${filteredSection.length})`}
+      >
         {filteredSection.map((poi, index) => {
           return <ObservableItem color={color} item={poi} key={index} />;
         })}
@@ -224,21 +240,22 @@ const ObservableItem = (props: { color?: string; item: Observable }) => {
   const { color, item } = props;
   const { extra, full_name, job, health, name, orbiters, ref } = item;
 
-  const [autoObserve] = useLocalState<boolean>('autoObserve', false);
-  const [heatMap] = useLocalState<boolean>('heatMap', false);
+  const [autoObserve] = useLocalState<boolean>("autoObserve", false);
+  const [heatMap] = useLocalState<boolean>("heatMap", false);
 
   return (
     <Button
       color={getDisplayColor(item, heatMap, color)}
       icon={(job && JOB2ICON[job]) || null}
-      onClick={() => act('orbit', { auto_observe: autoObserve, ref: ref })}
+      onClick={() => act("orbit", { auto_observe: autoObserve, ref: ref })}
       tooltip={(!!health || !!extra) && <ObservableTooltip item={item} />}
-      tooltipPosition="bottom-start">
+      tooltipPosition="bottom-start"
+    >
       {capitalizeFirst(getDisplayName(full_name, name))}
       {!!orbiters && (
         <>
-          {' '}
-          <Icon mr={0} name={'ghost'} />
+          {" "}
+          <Icon mr={0} name={"ghost"} />
           {orbiters}
         </>
       )}
@@ -251,12 +268,12 @@ const ObservableTooltip = (props: { item: Observable | Antagonist }) => {
   const { item } = props;
   const { extra, full_name, health, job } = item;
   let antag;
-  if ('antag' in item) {
+  if ("antag" in item) {
     antag = item.antag;
   }
 
-  const extraInfo = extra?.split(':');
-  const displayHealth = !!health && health >= 0 ? `${health}%` : 'Critical';
+  const extraInfo = extra?.split(":");
+  const displayHealth = !!health && health >= 0 ? `${health}%` : "Critical";
 
   return (
     <>

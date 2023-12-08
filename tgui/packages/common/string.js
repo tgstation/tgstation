@@ -10,15 +10,15 @@
 export const multiline = (str) => {
   if (Array.isArray(str)) {
     // Small stub to allow usage as a template tag
-    return multiline(str.join(''));
+    return multiline(str.join(""));
   }
-  const lines = str.split('\n');
+  const lines = str.split("\n");
   // Determine base indentation
   let minIndent;
   for (let line of lines) {
     for (let indent = 0; indent < line.length; indent++) {
       const char = line[indent];
-      if (char !== ' ') {
+      if (char !== " ") {
         if (minIndent === undefined || indent < minIndent) {
           minIndent = indent;
         }
@@ -33,7 +33,7 @@ export const multiline = (str) => {
   // from both ends.
   return lines
     .map((line) => line.substr(minIndent).trimRight())
-    .join('\n')
+    .join("\n")
     .trim();
 };
 
@@ -45,7 +45,7 @@ export const multiline = (str) => {
  * Example: createGlobPattern('*@domain')('user@domain') === true
  */
 export const createGlobPattern = (pattern) => {
-  const escapeString = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
+  const escapeString = (str) => str.replace(/[|\\{}()[\]^$+*?.]/g, "\\$&");
   // prettier-ignore
   const regex = new RegExp('^'
     + pattern.split(/\*+/).map(escapeString).join('.*')
@@ -124,11 +124,11 @@ export const toTitleCase = (str) => {
     return str.map(toTitleCase);
   }
   // Pass non-string
-  if (typeof str !== 'string') {
+  if (typeof str !== "string") {
     return str;
   }
   // Handle string
-  const WORDS_UPPER = ['Id', 'Tv'];
+  const WORDS_UPPER = ["Id", "Tv"];
   // prettier-ignore
   const WORDS_LOWER = [
     'A', 'An', 'And', 'As', 'At', 'But', 'By', 'For', 'For', 'From', 'In',
@@ -138,11 +138,11 @@ export const toTitleCase = (str) => {
     return str.charAt(0).toUpperCase() + str.substr(1).toLowerCase();
   });
   for (let word of WORDS_LOWER) {
-    const regex = new RegExp('\\s' + word + '\\s', 'g');
+    const regex = new RegExp("\\s" + word + "\\s", "g");
     currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
   for (let word of WORDS_UPPER) {
-    const regex = new RegExp('\\b' + word + '\\b', 'g');
+    const regex = new RegExp("\\b" + word + "\\b", "g");
     currentStr = currentStr.replace(regex, (str) => str.toLowerCase());
   }
   return currentStr;
@@ -160,11 +160,11 @@ export const decodeHtmlEntities = (str) => {
   }
   const translate_re = /&(nbsp|amp|quot|lt|gt|apos);/g;
   const translate = {
-    nbsp: ' ',
-    amp: '&',
+    nbsp: " ",
+    amp: "&",
     quot: '"',
-    lt: '<',
-    gt: '>',
+    lt: "<",
+    gt: ">",
     apos: "'",
   };
   // prettier-ignore

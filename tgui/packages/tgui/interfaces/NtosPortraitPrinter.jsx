@@ -1,19 +1,19 @@
-import { resolveAsset } from '../assets';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, NoticeBox, Section, Stack, Input } from '../components';
-import { NtosWindow } from '../layouts';
+import { resolveAsset } from "../assets";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, NoticeBox, Section, Stack, Input } from "../components";
+import { NtosWindow } from "../layouts";
 
 export const NtosPortraitPrinter = (props) => {
   const { act, data } = useBackend();
-  const [listIndex, setListIndex] = useLocalState('listIndex', 0);
+  const [listIndex, setListIndex] = useLocalState("listIndex", 0);
   const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
-  const current_portrait_title = got_paintings && paintings[listIndex]['title'];
+  const current_portrait_title = got_paintings && paintings[listIndex]["title"];
   const current_portrait_author =
-    got_paintings && 'By ' + paintings[listIndex]['creator'];
+    got_paintings && "By " + paintings[listIndex]["creator"];
   const current_portrait_asset_name =
-    got_paintings && 'paintings' + '_' + paintings[listIndex]['md5'];
-  const current_portrait_ratio = got_paintings && paintings[listIndex]['ratio'];
+    got_paintings && "paintings" + "_" + paintings[listIndex]["md5"];
+  const current_portrait_ratio = got_paintings && paintings[listIndex]["ratio"];
   return (
     <NtosWindow title="Art Galaxy" width={400} height={446}>
       <NtosWindow.Content>
@@ -25,7 +25,7 @@ export const NtosPortraitPrinter = (props) => {
                 placeholder="Search Paintings..."
                 value={search_string}
                 onChange={(e, value) => {
-                  act('search', {
+                  act("search", {
                     to_search: value,
                   });
                   setListIndex(0);
@@ -34,7 +34,7 @@ export const NtosPortraitPrinter = (props) => {
               <Button
                 content={search_mode}
                 onClick={() => {
-                  act('change_search_mode');
+                  act("change_search_mode");
                   if (search_string) {
                     setListIndex(0);
                   }
@@ -48,7 +48,8 @@ export const NtosPortraitPrinter = (props) => {
                 height="100%"
                 align="center"
                 justify="center"
-                direction="column">
+                direction="column"
+              >
                 {got_paintings ? (
                   <>
                     <Stack.Item>
@@ -58,7 +59,7 @@ export const NtosPortraitPrinter = (props) => {
                         height="128px"
                         width={`${Math.round(128 * current_portrait_ratio)}px`}
                         style={{
-                          verticalAlign: 'middle',
+                          verticalAlign: "middle",
                         }}
                       />
                     </Stack.Item>
@@ -100,8 +101,8 @@ export const NtosPortraitPrinter = (props) => {
                         content="Print Portrait"
                         disabled={!got_paintings}
                         onClick={() =>
-                          act('select', {
-                            selected: paintings[listIndex]['ref'],
+                          act("select", {
+                            selected: paintings[listIndex]["ref"],
                           })
                         }
                       />

@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use '../base.scss';
-@use '../functions.scss' as *;
+@use "../base.scss";
+@use "../functions.scss" as *;
 
 $text-color: base.$color-fg !default;
 $background-color: #0a0a0a !default;
@@ -64,5 +64,5 @@ $border-radius: base.$border-radius !default;
 }
 
 .Input--monospace .Input__input {
-  font-family: 'Consolas', monospace;
+  font-family: "Consolas", monospace;
 }

@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { canRender, classes } from 'common/react';
-import { PropsWithChildren, ReactNode } from 'react';
-import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { Icon } from './Icon';
+import { canRender, classes } from "common/react";
+import { PropsWithChildren, ReactNode } from "react";
+import { BoxProps, computeBoxClassName, computeBoxProps } from "./Box";
+import { Icon } from "./Icon";
 
 type Props = Partial<{
   className: string;
@@ -36,14 +36,15 @@ export const Tabs = (props: Props) => {
   return (
     <div
       className={classes([
-        'Tabs',
-        vertical ? 'Tabs--vertical' : 'Tabs--horizontal',
-        fill && 'Tabs--fill',
-        fluid && 'Tabs--fluid',
+        "Tabs",
+        vertical ? "Tabs--vertical" : "Tabs--horizontal",
+        fill && "Tabs--fill",
+        fluid && "Tabs--fluid",
         className,
         computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(rest)}>
+      {...computeBoxProps(rest)}
+    >
       {children}
     </div>
   );
@@ -64,14 +65,15 @@ const Tab = (props: TabProps) => {
   return (
     <div
       className={classes([
-        'Tab',
-        'Tabs__Tab',
-        'Tab--color--' + color,
-        selected && 'Tab--selected',
+        "Tab",
+        "Tabs__Tab",
+        "Tab--color--" + color,
+        selected && "Tab--selected",
         className,
         computeBoxClassName(rest),
       ])}
-      {...computeBoxProps(rest)}>
+      {...computeBoxProps(rest)}
+    >
       {(canRender(leftSlot) && <div className="Tab__left">{leftSlot}</div>) ||
         (!!icon && (
           <div className="Tab__left">

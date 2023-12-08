@@ -1,6 +1,6 @@
-import { sortBy } from 'common/collections';
-import { Section, Button, Flex, Tabs, Grid } from '../../components';
-import { useLocalState } from '../../backend';
+import { sortBy } from "common/collections";
+import { Section, Button, Flex, Tabs, Grid } from "../../components";
+import { useLocalState } from "../../backend";
 
 export const AccessConfig = (props) => {
   const {
@@ -13,14 +13,14 @@ export const AccessConfig = (props) => {
     denyDep,
   } = props;
   const [selectedAccessName, setSelectedAccessName] = useLocalState(
-    'accessName',
-    accesses[0]?.name
+    "accessName",
+    accesses[0]?.name,
   );
   const selectedAccess = accesses.find(
-    (access) => access.name === selectedAccessName
+    (access) => access.name === selectedAccessName,
   );
   const selectedAccessEntries = sortBy((entry) => entry.desc)(
-    selectedAccess?.accesses || []
+    selectedAccess?.accesses || [],
   );
 
   const checkAccessIcon = (accesses) => {
@@ -60,7 +60,8 @@ export const AccessConfig = (props) => {
             onClick={() => denyAll()}
           />
         </>
-      }>
+      }
+    >
       <Flex>
         <Flex.Item>
           <Tabs vertical>
@@ -75,7 +76,8 @@ export const AccessConfig = (props) => {
                   color={color}
                   icon={icon}
                   selected={access.name === selectedAccessName}
-                  onClick={() => setSelectedAccessName(access.name)}>
+                  onClick={() => setSelectedAccessName(access.name)}
+                >
                   {access.name}
                 </Tabs.Tab>
               );
@@ -120,15 +122,15 @@ export const AccessConfig = (props) => {
 
 const diffMap = {
   0: {
-    icon: 'times-circle',
-    color: 'bad',
+    icon: "times-circle",
+    color: "bad",
   },
   1: {
-    icon: 'stop-circle',
+    icon: "stop-circle",
     color: null,
   },
   2: {
-    icon: 'check-circle',
-    color: 'good',
+    icon: "check-circle",
+    color: "good",
   },
 };

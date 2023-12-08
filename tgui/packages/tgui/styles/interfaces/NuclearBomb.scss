@@ -1,6 +1,6 @@
-@use '../base.scss';
-@use '../colors.scss';
-@use '../functions.scss' as *;
+@use "../base.scss";
+@use "../colors.scss";
+@use "../functions.scss" as *;
 
 $color-danger: colors.bg(colors.$red) !default;
 $color-caution: colors.bg(colors.$yellow) !default;
@@ -57,7 +57,7 @@ $background-beige: #e8e4c9;
 }
 
 .NuclearBomb__NTIcon {
-  background-image: url('../assets/bg-nanotrasen.svg');
+  background-image: url("../assets/bg-nanotrasen.svg");
   background-size: 70%;
   background-position: center;
   background-repeat: no-repeat;

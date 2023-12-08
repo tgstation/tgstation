@@ -1,24 +1,32 @@
-import { classes } from 'common/react';
-import { resolveAsset } from '../../assets';
-import { useBackend } from '../../backend';
-import { Box, Button, Section, Stack } from '../../components';
-import { MutationInfo } from './MutationInfo';
-import { CLEAR_GENE, GENE_COLORS, MUT_NORMAL, NEXT_GENE, PREV_GENE, SUBJECT_DEAD, SUBJECT_TRANSFORMING } from './constants';
+import { classes } from "common/react";
+import { resolveAsset } from "../../assets";
+import { useBackend } from "../../backend";
+import { Box, Button, Section, Stack } from "../../components";
+import { MutationInfo } from "./MutationInfo";
+import {
+  CLEAR_GENE,
+  GENE_COLORS,
+  MUT_NORMAL,
+  NEXT_GENE,
+  PREV_GENE,
+  SUBJECT_DEAD,
+  SUBJECT_TRANSFORMING,
+} from "./constants";
 
 const GenomeImage = (props) => {
   const { url, selected, onClick } = props;
   let outline;
   if (selected) {
-    outline = '2px solid #22aa00';
+    outline = "2px solid #22aa00";
   }
   return (
     <Box
       as="img"
       src={url}
       style={{
-        width: '64px',
-        margin: '2px',
-        marginLeft: '4px',
+        width: "64px",
+        margin: "2px",
+        marginLeft: "4px",
         outline,
       }}
       onClick={onClick}
@@ -29,7 +37,7 @@ const GenomeImage = (props) => {
 const GeneCycler = (props) => {
   const { act } = useBackend();
   const { alias, gene, index, disabled, ...rest } = props;
-  const color = (disabled && GENE_COLORS['X']) || GENE_COLORS[gene];
+  const color = (disabled && GENE_COLORS["X"]) || GENE_COLORS[gene];
   return (
     <Button
       {...rest}
@@ -37,7 +45,7 @@ const GeneCycler = (props) => {
       onClick={(e) => {
         e.preventDefault();
         if (e.ctrlKey) {
-          act('pulse_gene', {
+          act("pulse_gene", {
             pos: index + 1,
             pulseAction: CLEAR_GENE,
             alias: alias,
@@ -45,7 +53,7 @@ const GeneCycler = (props) => {
           return;
         }
 
-        act('pulse_gene', {
+        act("pulse_gene", {
           pos: index + 1,
           pulseAction: NEXT_GENE,
           alias: alias,
@@ -56,12 +64,13 @@ const GeneCycler = (props) => {
       oncontextmenu={(e) => {
         e.preventDefault();
 
-        act('pulse_gene', {
+        act("pulse_gene", {
           pos: index + 1,
           pulseAction: PREV_GENE,
           alias: alias,
         });
-      }}>
+      }}
+    >
       {gene}
     </Button>
   );
@@ -91,8 +100,8 @@ const GenomeSequencer = (props) => {
         textAlign="center"
         disabled={!!mutation.Scrambled || mutation.Class !== MUT_NORMAL}
         className={
-          defaultSeq?.charAt(i) === 'X' && !mutation.Active
-            ? classes(['outline-solid', 'outline-color-orange'])
+          defaultSeq?.charAt(i) === "X" && !mutation.Active
+            ? classes(["outline-solid", "outline-color-orange"])
             : false
         }
         gene={gene}
@@ -130,7 +139,7 @@ const GenomeSequencer = (props) => {
           width="8px"
           height="2px"
           backgroundColor="label"
-        />
+        />,
       );
     }
 
@@ -153,26 +162,27 @@ export const DnaConsoleSequencer = (props) => {
   const { isJokerReady, isMonkey, jokerSeconds, subjectStatus } = data;
   const { sequencerMutation, jokerActive } = data.view;
   const mutation = mutations.find(
-    (mutation) => mutation.Alias === sequencerMutation
+    (mutation) => mutation.Alias === sequencerMutation,
   );
   return (
     <>
       <Stack mb={1}>
-        <Stack.Item width={(mutations.length <= 8 && '154px') || '174px'}>
+        <Stack.Item width={(mutations.length <= 8 && "154px") || "174px"}>
           <Section
             title="Sequences"
             height="214px"
-            overflowY={mutations.length > 8 && 'scroll'}>
+            overflowY={mutations.length > 8 && "scroll"}
+          >
             {mutations.map((mutation) => (
               <GenomeImage
                 key={mutation.Alias}
                 url={resolveAsset(mutation.Image)}
                 selected={mutation.Alias === sequencerMutation}
                 onClick={() => {
-                  act('set_view', {
+                  act("set_view", {
                     sequencerMutation: mutation.Alias,
                   });
-                  act('check_discovery', {
+                  act("check_discovery", {
                     alias: mutation.Alias,
                   });
                 }}
@@ -191,7 +201,7 @@ export const DnaConsoleSequencer = (props) => {
           Genetic sequence corrupted. Subject diagnostic report: DECEASED.
         </Section>
       )) ||
-        (isMonkey && mutation?.Name !== 'Monkified' && (
+        (isMonkey && mutation?.Name !== "Monkified" && (
           <Section color="bad">
             Genetic sequence corrupted. Subject diagnostic report: MONKEY.
           </Section>
@@ -217,8 +227,8 @@ export const DnaConsoleSequencer = (props) => {
                   <Button
                     content="Cancel Joker"
                     onClick={() =>
-                      act('set_view', {
-                        jokerActive: '',
+                      act("set_view", {
+                        jokerActive: "",
                       })
                     }
                   />
@@ -229,13 +239,14 @@ export const DnaConsoleSequencer = (props) => {
                   color="purple"
                   content="Use Joker"
                   onClick={() =>
-                    act('set_view', {
-                      jokerActive: '1',
+                    act("set_view", {
+                      jokerActive: "1",
                     })
                   }
                 />
               )
-            }>
+            }
+          >
             <GenomeSequencer mutation={mutation} />
           </Section>
         )}

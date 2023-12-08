@@ -4,27 +4,27 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
-import { Box, Button, ByondUi, Section } from '../components';
-import { logger } from '../logging';
+import { useLocalState } from "../backend";
+import { Box, Button, ByondUi, Section } from "../components";
+import { logger } from "../logging";
 
 export const meta = {
-  title: 'ByondUi',
+  title: "ByondUi",
   render: () => <Story />,
 };
 
 const Story = (props) => {
   const [code, setCode] = useLocalState(
-    'byondUiEvalCode',
-    `Byond.winset('${Byond.windowId}', {\n  'is-visible': true,\n})`
+    "byondUiEvalCode",
+    `Byond.winset('${Byond.windowId}', {\n  'is-visible': true,\n})`,
   );
   return (
     <>
       <Section title="Button">
         <ByondUi
           params={{
-            type: 'button',
-            text: 'Button',
+            type: "button",
+            text: "Button",
           }}
         />
       </Section>
@@ -36,9 +36,9 @@ const Story = (props) => {
             onClick={() =>
               setImmediate(() => {
                 try {
-                  const result = new Function('return (' + code + ')')();
+                  const result = new Function("return (" + code + ")")();
                   if (result && result.then) {
-                    logger.log('Promise');
+                    logger.log("Promise");
                     result.then(logger.log);
                   } else {
                     logger.log(result);
@@ -47,15 +47,18 @@ const Story = (props) => {
                   logger.log(err);
                 }
               })
-            }>
+            }
+          >
             Evaluate
           </Button>
-        }>
+        }
+      >
         <Box
           as="textarea"
           width="100%"
           height="10em"
-          onChange={(e) => setCode(e.target.value)}>
+          onChange={(e) => setCode(e.target.value)}
+        >
           {code}
         </Box>
       </Section>

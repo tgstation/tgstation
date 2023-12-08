@@ -1,39 +1,48 @@
-import { BooleanLike, classes } from 'common/react';
-import { multiline } from 'common/string';
-import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ColorBox, LabeledList, Section, Stack, Tabs, Table } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike, classes } from "common/react";
+import { multiline } from "common/string";
+import { capitalizeAll } from "common/string";
+import { useBackend, useLocalState } from "../backend";
+import {
+  Box,
+  Button,
+  ColorBox,
+  LabeledList,
+  Section,
+  Stack,
+  Tabs,
+  Table,
+} from "../components";
+import { Window } from "../layouts";
 
-const ROOT_CATEGORIES = ['Atmospherics', 'Disposals', 'Transit Tubes'];
+const ROOT_CATEGORIES = ["Atmospherics", "Disposals", "Transit Tubes"];
 
 export const ICON_BY_CATEGORY_NAME = {
-  'Atmospherics': 'wrench',
-  'Disposals': 'trash-alt',
-  'Transit Tubes': 'bus',
-  'Pipes': 'grip-lines',
-  'Binary': 'arrows-left-right',
-  'Disposal Pipes': 'grip-lines',
-  'Devices': 'microchip',
-  'Heat Exchange': 'thermometer-half',
-  'Station Equipment': 'microchip',
+  Atmospherics: "wrench",
+  Disposals: "trash-alt",
+  "Transit Tubes": "bus",
+  Pipes: "grip-lines",
+  Binary: "arrows-left-right",
+  "Disposal Pipes": "grip-lines",
+  Devices: "microchip",
+  "Heat Exchange": "thermometer-half",
+  "Station Equipment": "microchip",
 };
 
 const TOOLS = [
   {
-    name: 'Dispense',
+    name: "Dispense",
     bitmask: 1,
   },
   {
-    name: 'Connect',
+    name: "Connect",
     bitmask: 2,
   },
   {
-    name: 'Destroy',
+    name: "Destroy",
     bitmask: 4,
   },
   {
-    name: 'Reprogram',
+    name: "Reprogram",
     bitmask: 8,
   },
 ];
@@ -106,13 +115,13 @@ export const ColorItem = (props) => {
           height="20px"
           width="20px"
           style={{
-            'border':
-              '3px solid ' +
-              (colorName === selected_color ? '#20b142' : '#222'),
+            border:
+              "3px solid " +
+              (colorName === selected_color ? "#20b142" : "#222"),
           }}
           color={paint_colors[colorName]}
           onClick={() =>
-            act('color', {
+            act("color", {
               paint_color: colorName,
             })
           }
@@ -136,7 +145,7 @@ const ModeItem = (props) => {
           checked={mode & tool.bitmask}
           content={tool.name}
           onClick={() =>
-            act('mode', {
+            act("mode", {
               mode: tool.bitmask,
             })
           }
@@ -157,7 +166,8 @@ const CategoryItem = (props) => {
           selected={rootCategoryIndex === i}
           icon={ICON_BY_CATEGORY_NAME[categoryName]}
           color="transparent"
-          onClick={() => act('category', { category: i })}>
+          onClick={() => act("category", { category: i })}
+        >
           {categoryName}
         </Button>
       ))}
@@ -191,7 +201,7 @@ export const LayerSelect = (props) => {
           checked={layer === piping_layer}
           content={layer}
           onClick={() =>
-            act('piping_layer', {
+            act("piping_layer", {
               piping_layer: layer,
             })
           }
@@ -212,27 +222,28 @@ const PreviewSelect = (props) => {
           title={preview.dir_name}
           selected={preview.selected}
           style={{
-            width: '40px',
-            height: '40px',
+            width: "40px",
+            height: "40px",
             padding: 0,
           }}
           onClick={() => {
-            act('pipe_type', {
+            act("pipe_type", {
               pipe_type: props.pipe_type,
               category: props.category,
             });
-            act('setdir', {
+            act("setdir", {
               dir: preview.dir,
               flipped: preview.flipped,
             });
-          }}>
+          }}
+        >
           <Box
             className={classes([
-              'pipes32x32',
-              preview.dir + '-' + preview.icon_state,
+              "pipes32x32",
+              preview.dir + "-" + preview.icon_state,
             ])}
             style={{
-              transform: 'scale(1.5) translate(9.5%, 9.5%)',
+              transform: "scale(1.5) translate(9.5%, 9.5%)",
             }}
           />
         </Button>
@@ -245,8 +256,8 @@ const PipeTypeSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category
+    "categoryName",
+    selected_category,
   );
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
@@ -260,7 +271,8 @@ const PipeTypeSection = (props) => {
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -269,7 +281,8 @@ const PipeTypeSection = (props) => {
         {shownCategory?.recipes.map((recipe) => (
           <Table.Row
             key={recipe.pipe_index}
-            style={{ borderBottom: '1px solid #333' }}>
+            style={{ borderBottom: "1px solid #333" }}
+          >
             <Table.Cell collapsing py="2px" pb="1px">
               <PreviewSelect
                 previews={recipe.previews}
@@ -278,7 +291,7 @@ const PipeTypeSection = (props) => {
               />
             </Table.Cell>
             <Table.Cell />
-            <Table.Cell style={{ verticalAlign: 'middle' }}>
+            <Table.Cell style={{ verticalAlign: "middle" }}>
               {recipe.pipe_name}
             </Table.Cell>
           </Table.Row>
@@ -311,10 +324,10 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-up"
-                selected={init_directions['north']}
+                selected={init_directions["north"]}
                 onClick={() =>
-                  act('init_dir_setting', {
-                    dir_flag: 'north',
+                  act("init_dir_setting", {
+                    dir_flag: "north",
                   })
                 }
               />
@@ -326,24 +339,24 @@ export const SmartPipeBlockSection = (props) => {
             <Stack.Item>
               <Button
                 icon="arrow-left"
-                selected={init_directions['west']}
+                selected={init_directions["west"]}
                 onClick={() =>
-                  act('init_dir_setting', {
-                    dir_flag: 'west',
+                  act("init_dir_setting", {
+                    dir_flag: "west",
                   })
                 }
               />
             </Stack.Item>
             <Stack.Item>
-              <Button icon="circle" onClick={() => act('init_reset', {})} />
+              <Button icon="circle" onClick={() => act("init_reset", {})} />
             </Stack.Item>
             <Stack.Item>
               <Button
                 icon="arrow-right"
-                selected={init_directions['east']}
+                selected={init_directions["east"]}
                 onClick={() =>
-                  act('init_dir_setting', {
-                    dir_flag: 'east',
+                  act("init_dir_setting", {
+                    dir_flag: "east",
                   })
                 }
               />
@@ -353,10 +366,10 @@ export const SmartPipeBlockSection = (props) => {
         <Stack.Item>
           <Button
             icon="arrow-down"
-            selected={init_directions['south']}
+            selected={init_directions["south"]}
             onClick={() =>
-              act('init_dir_setting', {
-                dir_flag: 'south',
+              act("init_dir_setting", {
+                dir_flag: "south",
               })
             }
           />

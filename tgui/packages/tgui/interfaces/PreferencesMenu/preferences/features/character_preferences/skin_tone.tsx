@@ -1,6 +1,11 @@
-import { sortBy } from 'common/collections';
-import { Box, Stack } from '../../../../../components';
-import { Feature, FeatureChoicedServerData, FeatureValueProps, StandardizedDropdown } from '../base';
+import { sortBy } from "common/collections";
+import { Box, Stack } from "../../../../../components";
+import {
+  Feature,
+  FeatureChoicedServerData,
+  FeatureValueProps,
+  StandardizedDropdown,
+} from "../base";
 
 type HexValue = {
   lightness: number;
@@ -8,16 +13,16 @@ type HexValue = {
 };
 
 type SkinToneServerData = FeatureChoicedServerData & {
-  display_names: NonNullable<FeatureChoicedServerData['display_names']>;
+  display_names: NonNullable<FeatureChoicedServerData["display_names"]>;
   to_hex: Record<string, HexValue>;
 };
 
 const sortHexValues = sortBy<[string, HexValue]>(
-  ([_, hexValue]) => -hexValue.lightness
+  ([_, hexValue]) => -hexValue.lightness,
 );
 
 export const skin_tone: Feature<string, string, SkinToneServerData> = {
-  name: 'Skin tone',
+  name: "Skin tone",
   component: (props: FeatureValueProps<string, string, SkinToneServerData>) => {
     const { handleSetValue, serverData, value } = props;
 
@@ -28,7 +33,7 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
     return (
       <StandardizedDropdown
         choices={sortHexValues(Object.entries(serverData.to_hex)).map(
-          ([key]) => key
+          ([key]) => key,
         )}
         displayNames={Object.fromEntries(
           Object.entries(serverData.display_names).map(([key, displayName]) => {
@@ -41,9 +46,9 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
                   <Box
                     style={{
                       background: hexColor.value,
-                      boxSizing: 'content-box',
-                      height: '11px',
-                      width: '11px',
+                      boxSizing: "content-box",
+                      height: "11px",
+                      width: "11px",
                     }}
                   />
                 </Stack.Item>
@@ -51,7 +56,7 @@ export const skin_tone: Feature<string, string, SkinToneServerData> = {
                 <Stack.Item grow>{displayName}</Stack.Item>
               </Stack>,
             ];
-          })
+          }),
         )}
         onSetValue={handleSetValue}
         value={value}

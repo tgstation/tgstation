@@ -1,16 +1,19 @@
-import { Box, Button, Flex } from '../../components';
-import { FUNDAMENTAL_DATA_TYPES, DATATYPE_DISPLAY_HANDLERS } from './FundamentalTypes';
+import { Box, Button, Flex } from "../../components";
+import {
+  FUNDAMENTAL_DATA_TYPES,
+  DATATYPE_DISPLAY_HANDLERS,
+} from "./FundamentalTypes";
 
 export const DisplayName = (props) => {
   const { port, isOutput, componentId, portIndex, act, ...rest } = props;
 
-  const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || 'unknown'];
-  const TypeDisplayHandler = DATATYPE_DISPLAY_HANDLERS[port.type || 'unknown'];
+  const InputComponent = FUNDAMENTAL_DATA_TYPES[port.type || "unknown"];
+  const TypeDisplayHandler = DATATYPE_DISPLAY_HANDLERS[port.type || "unknown"];
 
   const hasInput =
     !isOutput &&
     !port.connected_to?.length &&
-    (componentId || port.type === 'option') &&
+    (componentId || port.type === "option") &&
     InputComponent;
 
   const displayType = TypeDisplayHandler ? TypeDisplayHandler(port) : port.type;
@@ -18,11 +21,11 @@ export const DisplayName = (props) => {
   return (
     <Box {...rest}>
       <Flex direction="column">
-        <Flex.Item textAlign={isOutput ? 'right' : 'left'}>
+        <Flex.Item textAlign={isOutput ? "right" : "left"}>
           {(hasInput && (
             <InputComponent
               setValue={(val, extraParams) =>
-                act('set_component_input', {
+                act("set_component_input", {
                   component_id: componentId,
                   port_id: portIndex,
                   input: val,
@@ -40,11 +43,12 @@ export const DisplayName = (props) => {
                 compact
                 color="transparent"
                 onClick={() =>
-                  act('get_component_value', {
+                  act("get_component_value", {
                     component_id: componentId,
                     port_id: portIndex,
                   })
-                }>
+                }
+              >
                 <Box color="white">{port.name}</Box>
               </Button>
             )) ||
@@ -54,8 +58,9 @@ export const DisplayName = (props) => {
           <Box
             fontSize={0.75}
             opacity={0.25}
-            textAlign={isOutput ? 'right' : 'left'}>
-            {displayType || 'unknown'}
+            textAlign={isOutput ? "right" : "left"}
+          >
+            {displayType || "unknown"}
           </Box>
         </Flex.Item>
       </Flex>

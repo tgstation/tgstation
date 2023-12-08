@@ -4,10 +4,14 @@
  * @license MIT
  */
 
-import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from 'common/keycodes';
-import { globalEvents } from '../events';
-import { acquireHotKey } from '../hotkeys';
-import { openExternalBrowser, toggleDebugLayout, toggleKitchenSink } from './actions';
+import { KEY_BACKSPACE, KEY_F10, KEY_F11, KEY_F12 } from "common/keycodes";
+import { globalEvents } from "../events";
+import { acquireHotKey } from "../hotkeys";
+import {
+  openExternalBrowser,
+  toggleDebugLayout,
+  toggleKitchenSink,
+} from "./actions";
 
 // prettier-ignore
 const relayedTypes = [
@@ -18,7 +22,7 @@ const relayedTypes = [
 export const debugMiddleware = (store) => {
   acquireHotKey(KEY_F11);
   acquireHotKey(KEY_F12);
-  globalEvents.on('keydown', (key) => {
+  globalEvents.on("keydown", (key) => {
     if (key.code === KEY_F11) {
       store.dispatch(toggleDebugLayout());
     }
@@ -41,12 +45,12 @@ export const debugMiddleware = (store) => {
 };
 
 export const relayMiddleware = (store) => {
-  const devServer = require('tgui-dev-server/link/client.cjs');
-  const externalBrowser = location.search === '?external';
+  const devServer = require("tgui-dev-server/link/client.cjs");
+  const externalBrowser = location.search === "?external";
   if (externalBrowser) {
     devServer.subscribe((msg) => {
       const { type, payload } = msg;
-      if (type === 'relay' && payload.windowId === Byond.windowId) {
+      if (type === "relay" && payload.windowId === Byond.windowId) {
         store.dispatch({
           ...payload.action,
           relayed: true,
@@ -55,7 +59,7 @@ export const relayMiddleware = (store) => {
     });
   } else {
     acquireHotKey(KEY_F10);
-    globalEvents.on('keydown', (key) => {
+    globalEvents.on("keydown", (key) => {
       if (key === KEY_F10) {
         store.dispatch(openExternalBrowser());
       }
@@ -64,12 +68,12 @@ export const relayMiddleware = (store) => {
   return (next) => (action) => {
     const { type, payload, relayed } = action;
     if (type === openExternalBrowser.type) {
-      window.open(location.href + '?external', '_blank');
+      window.open(location.href + "?external", "_blank");
       return;
     }
     if (relayedTypes.includes(type) && !relayed && !externalBrowser) {
       devServer.sendMessage({
-        type: 'relay',
+        type: "relay",
         payload: {
           windowId: Byond.windowId,
           action,

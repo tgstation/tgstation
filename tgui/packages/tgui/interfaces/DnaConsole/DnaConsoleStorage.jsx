@@ -1,9 +1,25 @@
-import { uniqBy } from 'common/collections';
-import { useBackend } from '../../backend';
-import { Box, Button, Collapsible, Stack, LabeledList, Section, Tabs } from '../../components';
-import { GeneticMakeupInfo } from './GeneticMakeupInfo';
-import { MutationInfo } from './MutationInfo';
-import { STORAGE_CONS_SUBMODE_CHROMOSOMES, STORAGE_CONS_SUBMODE_MUTATIONS, STORAGE_DISK_SUBMODE_ENZYMES, STORAGE_DISK_SUBMODE_MUTATIONS, STORAGE_MODE_ADVINJ, STORAGE_MODE_CONSOLE, STORAGE_MODE_DISK } from './constants';
+import { uniqBy } from "common/collections";
+import { useBackend } from "../../backend";
+import {
+  Box,
+  Button,
+  Collapsible,
+  Stack,
+  LabeledList,
+  Section,
+  Tabs,
+} from "../../components";
+import { GeneticMakeupInfo } from "./GeneticMakeupInfo";
+import { MutationInfo } from "./MutationInfo";
+import {
+  STORAGE_CONS_SUBMODE_CHROMOSOMES,
+  STORAGE_CONS_SUBMODE_MUTATIONS,
+  STORAGE_DISK_SUBMODE_ENZYMES,
+  STORAGE_DISK_SUBMODE_MUTATIONS,
+  STORAGE_MODE_ADVINJ,
+  STORAGE_MODE_CONSOLE,
+  STORAGE_MODE_DISK,
+} from "./constants";
 
 export const DnaConsoleStorage = (props) => {
   const { data, act } = useBackend();
@@ -33,8 +49,8 @@ export const DnaConsoleStorage = (props) => {
               icon="times"
               color="red"
               disabled={!diskHasMakeup}
-              content={'Delete'}
-              onClick={() => act('del_makeup_disk')}
+              content={"Delete"}
+              onClick={() => act("del_makeup_disk")}
             />
           </>
         )}
@@ -61,7 +77,7 @@ const DnaConsoleAdvancedInjectors = (props) => {
                 disabled={!isInjectorReady}
                 content="Print"
                 onClick={() =>
-                  act('print_adv_inj', {
+                  act("print_adv_inj", {
                     name: injector.name,
                   })
                 }
@@ -71,17 +87,18 @@ const DnaConsoleAdvancedInjectors = (props) => {
                 color="red"
                 icon="times"
                 onClick={() =>
-                  act('del_adv_inj', {
+                  act("del_adv_inj", {
                     name: injector.name,
                   })
                 }
               />
             </>
-          }>
+          }
+        >
           <StorageMutations
             mutations={injector.mutations}
             customMode={`advinj${advInjectors.findIndex(
-              (e) => injector.name === e.name
+              (e) => injector.name === e.name,
             )}`}
           />
         </Collapsible>
@@ -92,7 +109,7 @@ const DnaConsoleAdvancedInjectors = (props) => {
           content="Create new injector"
           disabled={advInjectors.length >= maxAdvInjectors}
           onCommit={(e, value) =>
-            act('new_adv_inj', {
+            act("new_adv_inj", {
               name: value,
             })
           }
@@ -115,7 +132,7 @@ const StorageButtons = (props) => {
             selected={storageConsSubMode === STORAGE_CONS_SUBMODE_MUTATIONS}
             content="Mutations"
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 storageConsSubMode: STORAGE_CONS_SUBMODE_MUTATIONS,
               })
             }
@@ -124,7 +141,7 @@ const StorageButtons = (props) => {
             selected={storageConsSubMode === STORAGE_CONS_SUBMODE_CHROMOSOMES}
             content="Chromosomes"
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 storageConsSubMode: STORAGE_CONS_SUBMODE_CHROMOSOMES,
               })
             }
@@ -137,7 +154,7 @@ const StorageButtons = (props) => {
             selected={storageDiskSubMode === STORAGE_CONS_SUBMODE_MUTATIONS}
             content="Mutations"
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 storageDiskSubMode: STORAGE_CONS_SUBMODE_MUTATIONS,
               })
             }
@@ -146,7 +163,7 @@ const StorageButtons = (props) => {
             selected={storageDiskSubMode === STORAGE_DISK_SUBMODE_ENZYMES}
             content="Enzymes"
             onClick={() =>
-              act('set_view', {
+              act("set_view", {
                 storageDiskSubMode: STORAGE_DISK_SUBMODE_ENZYMES,
               })
             }
@@ -158,7 +175,7 @@ const StorageButtons = (props) => {
         content="Console"
         selected={storageMode === STORAGE_MODE_CONSOLE}
         onClick={() =>
-          act('set_view', {
+          act("set_view", {
             storageMode: STORAGE_MODE_CONSOLE,
             storageConsSubMode:
               STORAGE_CONS_SUBMODE_MUTATIONS ?? storageConsSubMode,
@@ -170,7 +187,7 @@ const StorageButtons = (props) => {
         disabled={!hasDisk}
         selected={storageMode === STORAGE_MODE_DISK}
         onClick={() =>
-          act('set_view', {
+          act("set_view", {
             storageMode: STORAGE_MODE_DISK,
             storageDiskSubMode:
               STORAGE_DISK_SUBMODE_MUTATIONS ?? storageDiskSubMode,
@@ -181,7 +198,7 @@ const StorageButtons = (props) => {
         content="Adv. Injector"
         selected={storageMode === STORAGE_MODE_ADVINJ}
         onClick={() =>
-          act('set_view', {
+          act("set_view", {
             storageMode: STORAGE_MODE_ADVINJ,
           })
         }
@@ -208,10 +225,11 @@ const StorageChromosomes = (props) => {
                 key={chromo.Index}
                 selected={chromo.Name === chromoName}
                 onClick={() =>
-                  act('set_view', {
+                  act("set_view", {
                     storageChromoName: chromo.Name,
                   })
-                }>
+                }
+              >
                 {chromo.Name}
               </Tabs.Tab>
             ))}
@@ -237,9 +255,9 @@ const StorageChromosomes = (props) => {
               <Button
                 mt={2}
                 icon="eject"
-                content={'Eject Chromosome'}
+                content={"Eject Chromosome"}
                 onClick={() =>
-                  act('eject_chromo', {
+                  act("eject_chromo", {
                     chromo: chromo.Name,
                   })
                 }
@@ -253,13 +271,13 @@ const StorageChromosomes = (props) => {
 };
 
 const StorageMutations = (props) => {
-  const { customMode = '' } = props;
+  const { customMode = "" } = props;
   const { data, act } = useBackend();
   const mutations = props.mutations || [];
   const mode = data.view.storageMode + customMode;
   let mutationRef = data.view[`storage${mode}MutationRef`];
   let mutation = mutations.find(
-    (mutation) => mutation.ByondRef === mutationRef
+    (mutation) => mutation.ByondRef === mutationRef,
   );
   // If no mutation is selected but there are stored mutations, pick the first
   // mutation and set that as the currently showed one.
@@ -279,10 +297,11 @@ const StorageMutations = (props) => {
                 key={mutation.ByondRef}
                 selected={mutation.ByondRef === mutationRef}
                 onClick={() =>
-                  act('set_view', {
+                  act("set_view", {
                     [`storage${mode}MutationRef`]: mutation.ByondRef,
                   })
-                }>
+                }
+              >
                 {mutation.Name}
               </Tabs.Tab>
             ))}

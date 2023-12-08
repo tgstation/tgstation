@@ -1,4 +1,4 @@
-export const NULL_REF = '[0x0]';
+export const NULL_REF = "[0x0]";
 export const ABSOLUTE_Y_OFFSET = -32;
 
 export const MOUSE_BUTTON_LEFT = 0;

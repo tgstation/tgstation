@@ -1,25 +1,25 @@
-import { useBackend, useLocalState } from '../../backend';
-import { logger } from '../../logging';
-import { Box, Button, Divider } from '../../components';
-import { ListMapper } from './ListMapper';
+import { useBackend, useLocalState } from "../../backend";
+import { logger } from "../../logging";
+import { Box, Button, Divider } from "../../components";
+import { ListMapper } from "./ListMapper";
 
 export const Log = (props) => {
   const { act, data } = useBackend();
   const { stateLog } = data;
-  const [, setViewedChunk] = useLocalState('viewedChunk');
-  const [, setModal] = useLocalState('modal');
+  const [, setViewedChunk] = useLocalState("viewedChunk");
+  const [, setModal] = useLocalState("modal");
   // We only kvpify logs so that the return values are kvpified.
   const mappedLog = stateLog.map(({ value }) =>
-    Object.fromEntries(value.map(({ key, value }) => [key, value]))
+    Object.fromEntries(value.map(({ key, value }) => [key, value])),
   );
   return mappedLog.map((element, i) => {
     const { name, status, param, chunk, repeats } = element;
     let message;
     let messageColor;
     switch (status) {
-      case 'sleeping':
+      case "sleeping":
         if (chunk) {
-          messageColor = 'blue';
+          messageColor = "blue";
           message = (
             <>
               <b>{name}</b> slept.
@@ -27,13 +27,13 @@ export const Log = (props) => {
           );
         }
         break;
-      case 'yielded':
+      case "yielded":
         message = (
           <>
             <b>{name}</b> yielded
             {param.length
-              ? ` ${param.length} value${param.length > 1 ? 's' : ''}`
-              : ''}
+              ? ` ${param.length} value${param.length > 1 ? "s" : ""}`
+              : ""}
             .
             {param.length ? (
               <ListMapper
@@ -42,7 +42,7 @@ export const Log = (props) => {
                 name="Return Value"
                 collapsible
                 vvAct={(path) =>
-                  act('vvReturnValue', {
+                  act("vvReturnValue", {
                     entryIndex: i + 1,
                     tableIndices: path,
                   })
@@ -53,15 +53,15 @@ export const Log = (props) => {
             )}
           </>
         );
-        messageColor = 'yellow';
+        messageColor = "yellow";
         break;
-      case 'finished':
+      case "finished":
         message = (
           <>
             <b>{name}</b> returned
             {param.length
-              ? ` ${param.length} value${param.length > 1 ? 's' : ''}`
-              : ''}
+              ? ` ${param.length} value${param.length > 1 ? "s" : ""}`
+              : ""}
             .
             <Box color="default">
               {param.length ? (
@@ -71,7 +71,7 @@ export const Log = (props) => {
                   name="Return Value"
                   collapsible
                   vvAct={(path) =>
-                    act('vvReturnValue', {
+                    act("vvReturnValue", {
                       entryIndex: i + 1,
                       tableIndices: path,
                     })
@@ -83,18 +83,18 @@ export const Log = (props) => {
             </Box>
           </>
         );
-        messageColor = 'green';
+        messageColor = "green";
         break;
-      case 'errored':
-      case 'bad return':
+      case "errored":
+      case "bad return":
         message = (
           <>
             <b>{name}</b> errored with the message &quot;{param}&quot;
           </>
         );
-        messageColor = 'red';
+        messageColor = "red";
         break;
-      case 'print':
+      case "print":
         message = param;
         break;
       default:
@@ -110,8 +110,9 @@ export const Log = (props) => {
           <Button
             onClick={() => {
               setViewedChunk(chunk);
-              setModal('viewChunk');
-            }}>
+              setModal("viewChunk");
+            }}
+          >
             View Source
           </Button>
         </>
@@ -129,9 +130,10 @@ export const Log = (props) => {
             px="0.25rem"
             mt="0.25rem"
             style={{
-              borderRadius: '0.5em',
+              borderRadius: "0.5em",
             }}
-            backgroundColor={messageColor}>
+            backgroundColor={messageColor}
+          >
             x{repeats + 1}
           </Box>
         )}

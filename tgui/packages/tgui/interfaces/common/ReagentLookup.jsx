@@ -1,5 +1,5 @@
-import { useBackend } from '../../backend';
-import { Box, Button, Icon, LabeledList } from '../../components';
+import { useBackend } from "../../backend";
+import { Box, Button, Icon, LabeledList } from "../../components";
 
 export const ReagentLookup = (props) => {
   const { reagent } = props;
@@ -56,7 +56,7 @@ export const ReagentLookup = (props) => {
                 tooltipPosition="left"
                 content={reagent.impureReagent}
                 onClick={() =>
-                  act('reagent_click', {
+                  act("reagent_click", {
                     id: reagent.impureId,
                   })
                 }
@@ -71,7 +71,7 @@ export const ReagentLookup = (props) => {
                 tooltip="This reagent will convert into this when the purity is below the Inverse purity on consumption."
                 tooltipPosition="left"
                 onClick={() =>
-                  act('reagent_click', {
+                  act("reagent_click", {
                     id: reagent.inverseId,
                   })
                 }
@@ -86,7 +86,7 @@ export const ReagentLookup = (props) => {
                 tooltipPosition="left"
                 content={reagent.failedReagent}
                 onClick={() =>
-                  act('reagent_click', {
+                  act("reagent_click", {
                     id: reagent.failedId,
                   })
                 }
@@ -106,10 +106,10 @@ export const ReagentLookup = (props) => {
         <Button
           icon="flask"
           mt={2}
-          content={'Find associated reaction'}
+          content={"Find associated reaction"}
           color="purple"
           onClick={() =>
-            act('find_reagent_reaction', {
+            act("find_reagent_reaction", {
               id: reagent.id,
             })
           }

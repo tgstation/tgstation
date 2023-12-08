@@ -1,6 +1,6 @@
-import { useBackend } from '../../backend';
-import { Button, NoticeBox, Stack } from '../../components';
-import { RequestsData, RequestPriority } from './types';
+import { useBackend } from "../../backend";
+import { Button, NoticeBox, Stack } from "../../components";
+import { RequestsData, RequestPriority } from "./types";
 
 export const RequestsConsoleHeader = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -33,8 +33,8 @@ const EmergencyBox = (props) => {
               icon="shield"
               content="Call Security"
               onClick={() =>
-                act('set_emergency', {
-                  emergency: 'Security',
+                act("set_emergency", {
+                  emergency: "Security",
                 })
               }
             />
@@ -46,8 +46,8 @@ const EmergencyBox = (props) => {
               icon="screwdriver-wrench"
               content="Call Engineering"
               onClick={() =>
-                act('set_emergency', {
-                  emergency: 'Engineering',
+                act("set_emergency", {
+                  emergency: "Engineering",
                 })
               }
             />
@@ -59,8 +59,8 @@ const EmergencyBox = (props) => {
               icon="suitcase-medical"
               content="Call Medical"
               onClick={() =>
-                act('set_emergency', {
-                  emergency: 'Medical',
+                act("set_emergency", {
+                  emergency: "Medical",
                 })
               }
             />
@@ -73,7 +73,7 @@ const EmergencyBox = (props) => {
 
 const ErrorNoticeBox = (props) => {
   return (
-    <NoticeBox danger>{'Error occured while sending a message!'}</NoticeBox>
+    <NoticeBox danger>{"Error occured while sending a message!"}</NoticeBox>
   );
 };
 
@@ -82,10 +82,10 @@ const MessageNoticeBox = (props) => {
   const { new_message_priority } = data;
   return (
     <NoticeBox warning>
-      {'You have new unread '}
-      {new_message_priority === RequestPriority.HIGH && 'PRIORITY '}
-      {new_message_priority === RequestPriority.EXTREME && 'EXTREME PRIORITY '}
-      {'messages'}
+      {"You have new unread "}
+      {new_message_priority === RequestPriority.HIGH && "PRIORITY "}
+      {new_message_priority === RequestPriority.EXTREME && "EXTREME PRIORITY "}
+      {"messages"}
     </NoticeBox>
   );
 };

@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, Box, Section, NoticeBox } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   server_connected: BooleanLike;
@@ -64,16 +64,17 @@ export const DestructiveAnalyzer = (props) => {
             <Button
               icon="eject"
               tooltip="Ejects the item currently inside the machine."
-              onClick={() => act('eject_item')}
+              onClick={() => act("eject_item")}
             />
-          }>
+          }
+        >
           <Box
             as="img"
             src={`data:image/jpeg;base64,${item_icon}`}
             height="64px"
             width="64px"
             style={{
-              verticalAlign: 'middle',
+              verticalAlign: "middle",
             }}
           />
         </Section>
@@ -96,11 +97,11 @@ export const DestructiveAnalyzer = (props) => {
                 icon="hammer"
                 tooltip={
                   already_deconstructed
-                    ? 'This item item has already been deconstructed, and will not give any additional information.'
-                    : 'Destroys the object currently residing in the machine.'
+                    ? "This item item has already been deconstructed, and will not give any additional information."
+                    : "Destroys the object currently residing in the machine."
                 }
                 onClick={() =>
-                  act('deconstruct', { deconstruct_id: research_point_id })
+                  act("deconstruct", { deconstruct_id: research_point_id })
                 }
               />
             </>
@@ -114,11 +115,11 @@ export const DestructiveAnalyzer = (props) => {
               key={node.node_id}
               tooltip={
                 node.node_hidden
-                  ? 'Deconstructing this will allow you to research the node in question by making it visible to R&D consoles.'
-                  : 'This node has already been researched, and does not need to be deconstructed.'
+                  ? "Deconstructing this will allow you to research the node in question by making it visible to R&D consoles."
+                  : "This node has already been researched, and does not need to be deconstructed."
               }
               onClick={() =>
-                act('deconstruct', { deconstruct_id: node.node_id })
+                act("deconstruct", { deconstruct_id: node.node_id })
               }
             />
           ))}

@@ -1,7 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, Section, Stack } from '../components';
-import { Window } from '../layouts';
-import { logger } from '../logging';
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Input, Section, Stack } from "../components";
+import { Window } from "../layouts";
+import { logger } from "../logging";
 
 type Data = {
   comments: string;
@@ -21,7 +21,7 @@ alert pAI cards of your candidacy.`;
 export const PaiSubmit = (props) => {
   const { data } = useBackend<Data>();
   const { comments, description, name } = data;
-  const [input, setInput] = useLocalState<Data>('input', {
+  const [input, setInput] = useLocalState<Data>("input", {
     comments,
     description,
     name,
@@ -118,27 +118,30 @@ const ButtonsDisplay = (props) => {
       <Stack>
         <Stack.Item>
           <Button
-            onClick={() => act('save', { comments, description, name })}
-            tooltip="Saves your candidate data locally.">
+            onClick={() => act("save", { comments, description, name })}
+            tooltip="Saves your candidate data locally."
+          >
             SAVE
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
-            onClick={() => act('load')}
-            tooltip="Loads saved candidate data, if any.">
+            onClick={() => act("load")}
+            tooltip="Loads saved candidate data, if any."
+          >
             LOAD
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             onClick={() =>
-              act('submit', {
+              act("submit", {
                 comments,
                 description,
                 name,
               })
-            }>
+            }
+          >
             SUBMIT
           </Button>
         </Stack.Item>

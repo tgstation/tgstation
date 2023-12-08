@@ -1,7 +1,15 @@
-import { useBackend } from 'tgui/backend';
-import { Box, Button, Icon, ProgressBar, Section, Table, Tooltip } from 'tgui/components';
-import { SOFTWARE_DESC } from './constants';
-import { PaiData } from './types';
+import { useBackend } from "tgui/backend";
+import {
+  Box,
+  Button,
+  Icon,
+  ProgressBar,
+  Section,
+  Table,
+  Tooltip,
+} from "tgui/components";
+import { SOFTWARE_DESC } from "./constants";
+import { PaiData } from "./types";
 
 /**
  * Renders a list of available software and the ram with which to download it
@@ -12,7 +20,8 @@ export const AvailableDisplay = () => {
       buttons={<MemoryDisplay />}
       fill
       scrollable
-      title="Available Software">
+      title="Available Software"
+    >
       <SoftwareList />
     </Section>
   );
@@ -84,11 +93,11 @@ const ListItem = (props) => {
         <Box color="label">{name}</Box>
       </Table.Cell>
       <Table.Cell collapsible>
-        <Box color={ram < cost && 'bad'} textAlign="right">
-          {!purchased && cost}{' '}
+        <Box color={ram < cost && "bad"} textAlign="right">
+          {!purchased && cost}{" "}
           <Icon
-            color={purchased || ram >= cost ? 'purple' : 'bad'}
-            name={purchased ? 'check' : 'microchip'}
+            color={purchased || ram >= cost ? "purple" : "bad"}
+            name={purchased ? "check" : "microchip"}
           />
         </Box>
       </Table.Cell>
@@ -97,9 +106,10 @@ const ListItem = (props) => {
           fluid
           mb={0.5}
           disabled={ram < cost || purchased}
-          onClick={() => act('buy', { selection: name })}
+          onClick={() => act("buy", { selection: name })}
           tooltip={SOFTWARE_DESC[name]}
-          tooltipPosition="bottom-start">
+          tooltipPosition="bottom-start"
+        >
           <Icon ml={1} mr={-2} name="download" />
         </Button>
       </Table.Cell>

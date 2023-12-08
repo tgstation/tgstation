@@ -1,5 +1,5 @@
-import { Antagonist, Category } from '../base';
-import { multiline } from 'common/string';
+import { Antagonist, Category } from "../base";
+import { multiline } from "common/string";
 
 export const TRAITOR_MECHANICAL_DESCRIPTION = multiline`
       Start with an uplink to purchase your gear and take on your sinister
@@ -7,8 +7,8 @@ export const TRAITOR_MECHANICAL_DESCRIPTION = multiline`
    `;
 
 const Traitor: Antagonist = {
-  key: 'traitor',
-  name: 'Traitor',
+  key: "traitor",
+  name: "Traitor",
   description: [
     multiline`
       An unpaid debt. A score to be settled. Maybe you were just in the wrong

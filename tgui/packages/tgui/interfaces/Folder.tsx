@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   theme: string;
@@ -16,11 +16,12 @@ export const Folder = (props) => {
 
   return (
     <Window
-      title={folder_name || 'Folder'}
+      title={folder_name || "Folder"}
       theme={theme}
       width={400}
-      height={500}>
-      <Window.Content backgroundColor={bg_color || '#7f7f7f'} scrollable>
+      height={500}
+    >
+      <Window.Content backgroundColor={bg_color || "#7f7f7f"} scrollable>
         {!contents.length && (
           <Section>
             <Box color="lightgrey" align="center">
@@ -33,7 +34,8 @@ export const Folder = (props) => {
             key={contents_ref[index]}
             color="black"
             backgroundColor="white"
-            style={{ padding: '2px 2px 0 2px' }}>
+            style={{ padding: "2px 2px 0 2px" }}
+          >
             <Stack.Item align="center" grow>
               <Box align="center">{item}</Box>
             </Stack.Item>
@@ -41,12 +43,12 @@ export const Folder = (props) => {
               {
                 <Button
                   icon="search"
-                  onClick={() => act('examine', { ref: contents_ref[index] })}
+                  onClick={() => act("examine", { ref: contents_ref[index] })}
                 />
               }
               <Button
                 icon="eject"
-                onClick={() => act('remove', { ref: contents_ref[index] })}
+                onClick={() => act("remove", { ref: contents_ref[index] })}
               />
             </Stack.Item>
           </Stack>

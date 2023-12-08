@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Stack, Section, Input, Button, Dropdown } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Stack, Section, Input, Button, Dropdown } from "../components";
+import { Window } from "../layouts";
 
 export const CircuitModule = (props) => {
   const { act, data } = useBackend();
@@ -14,7 +14,7 @@ export const CircuitModule = (props) => {
               content="View Internal Circuit"
               textAlign="center"
               fluid
-              onClick={() => act('open_internal_circuit')}
+              onClick={() => act("open_internal_circuit")}
             />
           </Stack.Item>
           <Stack.Item>
@@ -29,19 +29,19 @@ export const CircuitModule = (props) => {
                         datatype={val.type}
                         datatypeOptions={global_port_types}
                         onRemove={() =>
-                          act('remove_input_port', {
+                          act("remove_input_port", {
                             port_id: index + 1,
                           })
                         }
                         onSetType={(type) =>
-                          act('set_port_type', {
+                          act("set_port_type", {
                             port_id: index + 1,
                             is_input: true,
                             port_type: type,
                           })
                         }
                         onEnter={(e, value) =>
-                          act('set_port_name', {
+                          act("set_port_name", {
                             port_id: index + 1,
                             is_input: true,
                             port_name: value,
@@ -55,7 +55,7 @@ export const CircuitModule = (props) => {
                         content="Add Input Port"
                         color="good"
                         icon="plus"
-                        onClick={() => act('add_input_port')}
+                        onClick={() => act("add_input_port")}
                       />
                     </Stack.Item>
                   </Stack>
@@ -71,19 +71,19 @@ export const CircuitModule = (props) => {
                         datatype={val.type}
                         datatypeOptions={global_port_types}
                         onRemove={() =>
-                          act('remove_output_port', {
+                          act("remove_output_port", {
                             port_id: index + 1,
                           })
                         }
                         onSetType={(type) =>
-                          act('set_port_type', {
+                          act("set_port_type", {
                             port_id: index + 1,
                             is_input: false,
                             port_type: type,
                           })
                         }
                         onEnter={(e, value) =>
-                          act('set_port_name', {
+                          act("set_port_name", {
                             port_id: index + 1,
                             is_input: false,
                             port_name: value,
@@ -97,7 +97,7 @@ export const CircuitModule = (props) => {
                         content="Add Output Port"
                         color="good"
                         icon="plus"
-                        onClick={() => act('add_output_port')}
+                        onClick={() => act("add_output_port")}
                       />
                     </Stack.Item>
                   </Stack>

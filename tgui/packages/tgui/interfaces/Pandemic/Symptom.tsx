@@ -1,6 +1,13 @@
-import { Collapsible, LabeledList, NoticeBox, Section, Stack, Tooltip } from 'tgui/components';
-import { getColor } from './helpers';
-import { Threshold } from './types';
+import {
+  Collapsible,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Tooltip,
+} from "tgui/components";
+import { getColor } from "./helpers";
+import { Threshold } from "./types";
 
 /**
  * Similar to the virus info display.

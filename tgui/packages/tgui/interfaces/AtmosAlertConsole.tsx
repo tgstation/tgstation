@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   priority: string[];
@@ -25,7 +25,7 @@ export const AtmosAlertConsole = (props) => {
                   icon="times"
                   content={alert}
                   color="bad"
-                  onClick={() => act('clear', { zone: alert })}
+                  onClick={() => act("clear", { zone: alert })}
                 />
               </li>
             ))}
@@ -38,7 +38,7 @@ export const AtmosAlertConsole = (props) => {
                   icon="times"
                   content={alert}
                   color="average"
-                  onClick={() => act('clear', { zone: alert })}
+                  onClick={() => act("clear", { zone: alert })}
                 />
               </li>
             ))}

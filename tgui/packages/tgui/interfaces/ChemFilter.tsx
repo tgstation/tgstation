@@ -1,7 +1,7 @@
-import { Fragment } from 'react';
-import { useBackend } from '../backend';
-import { Button, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { Fragment } from "react";
+import { useBackend } from "../backend";
+import { Button, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   left: string[];
@@ -29,12 +29,13 @@ export const ChemFilterPane = (props: Props) => {
           icon="plus"
           color={buttonColor}
           onClick={() =>
-            act('add', {
+            act("add", {
               which: titleKey,
             })
           }
         />
-      }>
+      }
+    >
       {list.map((filter) => (
         <Fragment key={filter}>
           <Button
@@ -42,7 +43,7 @@ export const ChemFilterPane = (props: Props) => {
             icon="minus"
             content={filter}
             onClick={() =>
-              act('remove', {
+              act("remove", {
                 which: titleKey,
                 reagent: filter,
               })

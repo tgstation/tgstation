@@ -1,29 +1,29 @@
-import { BooleanLike } from 'common/react';
-import { sendAct } from '../../backend';
-import { Gender } from './preferences/gender';
+import { BooleanLike } from "common/react";
+import { sendAct } from "../../backend";
+import { Gender } from "./preferences/gender";
 
 export enum Food {
-  Alcohol = 'ALCOHOL',
-  Breakfast = 'BREAKFAST',
-  Bugs = 'BUGS',
-  Cloth = 'CLOTH',
-  Dairy = 'DAIRY',
-  Fried = 'FRIED',
-  Fruit = 'FRUIT',
-  Gore = 'GORE',
-  Grain = 'GRAIN',
-  Gross = 'GROSS',
-  Junkfood = 'JUNKFOOD',
-  Meat = 'MEAT',
-  Nuts = 'NUTS',
-  Oranges = 'ORANGES',
-  Pineapple = 'PINEAPPLE',
-  Raw = 'RAW',
-  Seafood = 'SEAFOOD',
-  Stone = 'STONE',
-  Sugar = 'SUGAR',
-  Toxic = 'TOXIC',
-  Vegetables = 'VEGETABLES',
+  Alcohol = "ALCOHOL",
+  Breakfast = "BREAKFAST",
+  Bugs = "BUGS",
+  Cloth = "CLOTH",
+  Dairy = "DAIRY",
+  Fried = "FRIED",
+  Fruit = "FRUIT",
+  Gore = "GORE",
+  Grain = "GRAIN",
+  Gross = "GROSS",
+  Junkfood = "JUNKFOOD",
+  Meat = "MEAT",
+  Nuts = "NUTS",
+  Oranges = "ORANGES",
+  Pineapple = "PINEAPPLE",
+  Raw = "RAW",
+  Seafood = "SEAFOOD",
+  Stone = "STONE",
+  Sugar = "SUGAR",
+  Toxic = "TOXIC",
+  Vegetables = "VEGETABLES",
 }
 
 export enum JobPriority {
@@ -111,7 +111,7 @@ export enum GamePreferencesSelectedPage {
 
 export const createSetPreference =
   (act: typeof sendAct, preference: string) => (value: unknown) => {
-    act('set_preference', {
+    act("set_preference", {
       preference,
       value,
     });

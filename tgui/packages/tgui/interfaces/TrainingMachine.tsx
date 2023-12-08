@@ -1,7 +1,15 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, Divider, Knob, LabeledControls, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  Divider,
+  Knob,
+  LabeledControls,
+  Section,
+  Stack,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   movespeed: number;
@@ -37,7 +45,7 @@ const TrainingControls = (props) => {
           value={movespeed}
           minValue={1}
           maxValue={10}
-          onDrag={(_, value) => act('movespeed', { movespeed: value })}
+          onDrag={(_, value) => act("movespeed", { movespeed: value })}
         />
       </LabeledControls.Item>
       <LabeledControls.Item label="Range">
@@ -49,7 +57,7 @@ const TrainingControls = (props) => {
           value={range}
           minValue={1}
           maxValue={7}
-          onDrag={(_, value) => act('range', { range: value })}
+          onDrag={(_, value) => act("range", { range: value })}
         />
       </LabeledControls.Item>
       <Stack.Item>
@@ -61,10 +69,10 @@ const TrainingControls = (props) => {
           selected={moving}
           content={
             <Box bold fontSize="1.4em" lineHeight={3}>
-              {moving ? 'END' : 'BEGIN'}
+              {moving ? "END" : "BEGIN"}
             </Box>
           }
-          onClick={() => act('toggle')}
+          onClick={() => act("toggle")}
         />
       </Stack.Item>
     </LabeledControls>

@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Icon, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Icon, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 export const AntagInfoShade = (props) => {
   const { act, data } = useBackend();

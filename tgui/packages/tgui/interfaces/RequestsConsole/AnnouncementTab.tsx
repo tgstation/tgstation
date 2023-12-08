@@ -1,11 +1,11 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Button, NoticeBox, Section, TextArea } from '../../components';
-import { RequestsData } from './types';
+import { useBackend, useLocalState } from "../../backend";
+import { Button, NoticeBox, Section, TextArea } from "../../components";
+import { RequestsData } from "./types";
 
 export const AnnouncementTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { authentication_data, is_admin_ghost_ai } = data;
-  const [messageText, setMessageText] = useLocalState('messageText', '');
+  const [messageText, setMessageText] = useLocalState("messageText", "");
   return (
     <Section>
       <TextArea
@@ -38,16 +38,16 @@ export const AnnouncementTab = (props) => {
             ) {
               return;
             }
-            act('send_announcement', { message: messageText });
-            setMessageText('');
+            act("send_announcement", { message: messageText });
+            setMessageText("");
           }}
         />
         <Button
           icon="trash-can"
           content="Discard announcement"
           onClick={() => {
-            act('clear_authentication');
-            setMessageText('');
+            act("clear_authentication");
+            setMessageText("");
           }}
         />
       </Section>
@@ -61,8 +61,8 @@ const AuthenticationNoticeBox = (props) => {
   return (
     (!authentication_data.announcement_authenticated && !is_admin_ghost_ai && (
       <NoticeBox warning>
-        {'Swipe your card to authenticate yourself'}
+        {"Swipe your card to authenticate yourself"}
       </NoticeBox>
-    )) || <NoticeBox info>{'Succesfully authenticated'}</NoticeBox>
+    )) || <NoticeBox info>{"Succesfully authenticated"}</NoticeBox>
   );
 };

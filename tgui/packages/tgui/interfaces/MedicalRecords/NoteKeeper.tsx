@@ -1,8 +1,18 @@
-import { multiline } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { BlockQuote, Box, Button, Icon, LabeledList, Section, Tabs, TextArea, Tooltip } from 'tgui/components';
-import { getMedicalRecord } from './helpers';
-import { MedicalNote, MedicalRecordData } from './types';
+import { multiline } from "common/string";
+import { useBackend, useLocalState } from "tgui/backend";
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  Section,
+  Tabs,
+  TextArea,
+  Tooltip,
+} from "tgui/components";
+import { getMedicalRecord } from "./helpers";
+import { MedicalNote, MedicalRecordData } from "./types";
 
 /** Small section for adding notes. Passes a ref and note to Byond. */
 export const NoteKeeper = (props) => {
@@ -14,12 +24,12 @@ export const NoteKeeper = (props) => {
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
-  >('selectedNote', undefined);
+  >("selectedNote", undefined);
 
-  const [writing, setWriting] = useLocalState('note', false);
+  const [writing, setWriting] = useLocalState("note", false);
 
   const addNote = (event, value: string) => {
-    act('add_note', {
+    act("add_note", {
       crew_ref: crew_ref,
       content: value,
     });
@@ -28,7 +38,7 @@ export const NoteKeeper = (props) => {
 
   const deleteNote = () => {
     if (!selectedNote) return;
-    act('delete_note', {
+    act("delete_note", {
       crew_ref: crew_ref,
       note_ref: selectedNote.note_ref,
     });
@@ -51,9 +61,8 @@ export const NoteKeeper = (props) => {
           <LabeledList>
             <LabeledList.Item
               label="Author"
-              buttons={
-                <Button color="bad" icon="trash" onClick={deleteNote} />
-              }>
+              buttons={<Button color="bad" icon="trash" onClick={deleteNote} />}
+            >
               {selectedNote.author}
             </LabeledList.Item>
             <LabeledList.Item label="Time">
@@ -78,8 +87,8 @@ const NoteTabs = (props) => {
 
   const [selectedNote, setSelectedNote] = useLocalState<
     MedicalNote | undefined
-  >('selectedNote', undefined);
-  const [writing, setWriting] = useLocalState('note', false);
+  >("selectedNote", undefined);
+  const [writing, setWriting] = useLocalState("note", false);
 
   /** Selects or deselects a note. */
   const setNote = (note: MedicalNote) => {
@@ -103,13 +112,15 @@ const NoteTabs = (props) => {
           key={index}
           label={index + 1}
           onClick={() => setNote(note)}
-          selected={selectedNote?.note_ref === note.note_ref}>
+          selected={selectedNote?.note_ref === note.note_ref}
+        >
           {index + 1}
         </Tabs.Tab>
       ))}
       <Tooltip
         content={multiline`Add a new note. Press enter or escape to exit view.`}
-        position="bottom">
+        position="bottom"
+      >
         <Tabs.Tab onClick={composeNew} selected={writing}>
           <Icon name="plus" /> New
         </Tabs.Tab>

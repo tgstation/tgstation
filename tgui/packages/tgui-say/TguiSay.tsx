@@ -1,12 +1,12 @@
-import { Channel, ChannelIterator } from './ChannelIterator';
-import { ChatHistory } from './ChatHistory';
-import { Component, createRef, RefObject } from 'react';
-import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from './constants';
-import { byondMessages } from './timers';
-import { dragStartHandler } from 'tgui/drag';
-import { windowOpen, windowClose, windowSet } from './helpers';
-import { BooleanLike } from 'common/react';
-import { KEY } from 'common/keys';
+import { Channel, ChannelIterator } from "./ChannelIterator";
+import { ChatHistory } from "./ChatHistory";
+import { Component, createRef, RefObject } from "react";
+import { LINE_LENGTHS, RADIO_PREFIXES, WINDOW_SIZES } from "./constants";
+import { byondMessages } from "./timers";
+import { dragStartHandler } from "tgui/drag";
+import { windowOpen, windowClose, windowSet } from "./helpers";
+import { BooleanLike } from "common/react";
+import { KEY } from "common/keys";
 
 type ByondOpen = {
   channel: Channel;
@@ -45,7 +45,7 @@ export class TguiSay extends Component<{}, State> {
     this.maxLength = 1024;
     this.messages = byondMessages;
     this.state = {
-      buttonContent: '',
+      buttonContent: "",
       size: WINDOW_SIZES.small,
     };
 
@@ -65,9 +65,9 @@ export class TguiSay extends Component<{}, State> {
   }
 
   componentDidMount() {
-    Byond.subscribeTo('props', this.handleProps);
-    Byond.subscribeTo('force', this.handleForceSay);
-    Byond.subscribeTo('open', this.handleOpen);
+    Byond.subscribeTo("props", this.handleProps);
+    Byond.subscribeTo("force", this.handleForceSay);
+    Byond.subscribeTo("open", this.handleOpen);
   }
 
   handleArrowKeys(direction: KEY.Up | KEY.Down) {
@@ -88,7 +88,7 @@ export class TguiSay extends Component<{}, State> {
       }
     } else {
       const nextMessage =
-        this.chatHistory.getNewerMessage() || this.chatHistory.getTemp() || '';
+        this.chatHistory.getNewerMessage() || this.chatHistory.getTemp() || "";
 
       const buttonContent = this.chatHistory.isAtLatest()
         ? this.channelIterator.current()
@@ -137,12 +137,12 @@ export class TguiSay extends Component<{}, State> {
   }
 
   handleEnter() {
-    const prefix = this.currentPrefix ?? '';
+    const prefix = this.currentPrefix ?? "";
     const value = this.innerRef.current?.value;
 
     if (value?.length && value.length < this.maxLength) {
       this.chatHistory.add(value);
-      Byond.sendMessage('entry', {
+      Byond.sendMessage("entry", {
         channel: this.channelIterator.current(),
         entry: this.channelIterator.isSay() ? prefix + value : value,
       });
@@ -156,7 +156,7 @@ export class TguiSay extends Component<{}, State> {
     // Only force say if we're on a visible channel and have typed something
     if (!currentValue || !this.channelIterator.isVisible()) return;
 
-    const prefix = this.currentPrefix ?? '';
+    const prefix = this.currentPrefix ?? "";
     const grunt = this.channelIterator.isSay()
       ? prefix + currentValue
       : currentValue;
@@ -167,7 +167,7 @@ export class TguiSay extends Component<{}, State> {
 
   handleIncrementChannel() {
     // Binary talk is a special case, tell byond to show thinking indicators
-    if (this.channelIterator.isSay() && this.currentPrefix === ':b ') {
+    if (this.channelIterator.isSay() && this.currentPrefix === ":b ") {
       this.messages.channelIncrementMsg(true);
     }
 
@@ -187,7 +187,7 @@ export class TguiSay extends Component<{}, State> {
     const typed = this.innerRef.current?.value;
 
     // If we're typing, send the message
-    if (this.channelIterator.isVisible() && this.currentPrefix !== ':b ') {
+    if (this.channelIterator.isVisible() && this.currentPrefix !== ":b ") {
       this.messages.typingMsg();
     }
 
@@ -211,11 +211,11 @@ export class TguiSay extends Component<{}, State> {
     }
 
     // If we're in binary, hide the thinking indicator
-    if (prefix === ':b ') {
-      Byond.sendMessage('thinking', { visible: false });
+    if (prefix === ":b ") {
+      Byond.sendMessage("thinking", { visible: false });
     }
 
-    this.channelIterator.set('Say');
+    this.channelIterator.set("Say");
     this.currentPrefix = prefix;
     this.setState({ buttonContent: RADIO_PREFIXES[prefix] });
     this.setValue(typed.slice(3));
@@ -272,7 +272,7 @@ export class TguiSay extends Component<{}, State> {
   };
 
   reset() {
-    this.setValue('');
+    this.setValue("");
     this.setSize();
     this.setState({
       buttonContent: this.channelIterator.current(),
@@ -305,7 +305,7 @@ export class TguiSay extends Component<{}, State> {
 
   render() {
     const theme =
-      (this.lightMode && 'lightMode') ||
+      (this.lightMode && "lightMode") ||
       (this.currentPrefix && RADIO_PREFIXES[this.currentPrefix]) ||
       this.channelIterator.current();
 
@@ -318,7 +318,8 @@ export class TguiSay extends Component<{}, State> {
             <button
               className={`button button-${theme}`}
               onClick={this.handleIncrementChannel}
-              type="button">
+              type="button"
+            >
               {this.state.buttonContent}
             </button>
             <textarea
@@ -340,7 +341,7 @@ export class TguiSay extends Component<{}, State> {
 const Dragzone = ({ theme, position }: { theme: string; position: string }) => {
   // Horizontal or vertical?
   const location =
-    position === 'left' || position === 'right' ? 'vertical' : 'horizontal';
+    position === "left" || position === "right" ? "vertical" : "horizontal";
 
   return (
     <div

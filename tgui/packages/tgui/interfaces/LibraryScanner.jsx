@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, Stack, NoticeBox, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Stack, NoticeBox, Section } from "../components";
+import { Window } from "../layouts";
 
 export const LibraryScanner = (props) => {
   return (
@@ -30,8 +30,9 @@ const BookScanning = (props) => {
               fluid
               textAlign="center"
               icon="eject"
-              onClick={() => act('eject')}
-              disabled={!has_book}>
+              onClick={() => act("eject")}
+              disabled={!has_book}
+            >
               Eject Book
             </Button>
           </Stack.Item>
@@ -39,10 +40,11 @@ const BookScanning = (props) => {
             <Button
               fluid
               textAlign="center"
-              onClick={() => act('scan')}
+              onClick={() => act("scan")}
               color="good"
               icon="qrcode"
-              disabled={!has_book}>
+              disabled={!has_book}
+            >
               Scan Book
             </Button>
           </Stack.Item>
@@ -51,9 +53,10 @@ const BookScanning = (props) => {
               fluid
               textAlign="center"
               icon="fire"
-              onClick={() => act('clear')}
+              onClick={() => act("clear")}
               color="bad"
-              disabled={!has_cache}>
+              disabled={!has_cache}
+            >
               Clear Cache
             </Button>
           </Stack.Item>

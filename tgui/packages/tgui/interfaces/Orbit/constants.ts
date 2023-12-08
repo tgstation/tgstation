@@ -1,13 +1,13 @@
 export const ANTAG2COLOR = {
-  'Abductors': 'pink',
-  'Ash Walkers': 'olive',
-  'Biohazards': 'brown',
-  'Bounty Hunters': 'yellow',
-  'CentCom': 'teal',
-  'Digital Anomalies': 'teal',
-  'Emergency Response Team': 'teal',
-  'Escaped Fugitives': 'orange',
-  'Xenomorph Infestation': 'violet',
+  Abductors: "pink",
+  "Ash Walkers": "olive",
+  Biohazards: "brown",
+  "Bounty Hunters": "yellow",
+  CentCom: "teal",
+  "Digital Anomalies": "teal",
+  "Emergency Response Team": "teal",
+  "Escaped Fugitives": "orange",
+  "Xenomorph Infestation": "violet",
 } as const;
 
 export const THREAT = {

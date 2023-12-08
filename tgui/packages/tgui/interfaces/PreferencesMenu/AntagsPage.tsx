@@ -1,14 +1,22 @@
-import { binaryInsertWith } from 'common/collections';
-import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Flex, Section, Stack, Tooltip } from '../../components';
-import { Antagonist, Category } from './antagonists/base';
-import { PreferencesMenuData } from './data';
+import { binaryInsertWith } from "common/collections";
+import { classes } from "common/react";
+import { useBackend, useLocalState } from "../../backend";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Section,
+  Stack,
+  Tooltip,
+} from "../../components";
+import { Antagonist, Category } from "./antagonists/base";
+import { PreferencesMenuData } from "./data";
 
 const requireAntag = require.context(
-  './antagonists/antagonists',
+  "./antagonists/antagonists",
   false,
-  /.ts$/
+  /.ts$/,
 );
 
 const antagsByCategory = new Map<Category, Antagonist[]>();
@@ -30,17 +38,17 @@ for (const antagKey of requireAntag.keys()) {
 
   antagsByCategory.set(
     antag.category,
-    binaryInsertAntag(antagsByCategory.get(antag.category) || [], antag)
+    binaryInsertAntag(antagsByCategory.get(antag.category) || [], antag),
   );
 }
 
 const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const className = 'PreferencesMenu__Antags__antagSelection';
+  const className = "PreferencesMenu__Antags__antagSelection";
 
   const [predictedState, setPredictedState] = useLocalState(
-    'AntagSelection_predictedState',
-    new Set(data.selected_antags)
+    "AntagSelection_predictedState",
+    new Set(data.selected_antags),
   );
 
   const enableAntags = (antags: string[]) => {
@@ -52,7 +60,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
 
     setPredictedState(newState);
 
-    act('set_antags', {
+    act("set_antags", {
       antags,
       toggled: true,
     });
@@ -67,7 +75,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
 
     setPredictedState(newState);
 
-    act('set_antags', {
+    act("set_antags", {
       antags,
       toggled: false,
     });
@@ -88,7 +96,8 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
             Disable All
           </Button>
         </>
-      }>
+      }
+    >
       <Flex className={className} align="flex-end" wrap>
         {props.antagonists.map((antagonist) => {
           const isBanned =
@@ -103,21 +112,23 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
                 `${className}__antagonist`,
                 `${className}__antagonist--${
                   isBanned || daysLeft > 0
-                    ? 'banned'
+                    ? "banned"
                     : predictedState.has(antagonist.key)
-                      ? 'on'
-                      : 'off'
+                      ? "on"
+                      : "off"
                 }`,
               ])}
-              key={antagonist.key}>
+              key={antagonist.key}
+            >
               <Stack align="center" vertical>
                 <Stack.Item
                   style={{
-                    fontWeight: 'bold',
-                    marginTop: 'auto',
-                    maxWidth: '100px',
-                    textAlign: 'center',
-                  }}>
+                    fontWeight: "bold",
+                    marginTop: "auto",
+                    maxWidth: "100px",
+                    textAlign: "center",
+                  }}
+                >
                   {antagonist.name}
                 </Stack.Item>
 
@@ -127,19 +138,21 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
                       isBanned
                         ? `You are banned from ${antagonist.name}.`
                         : antagonist.description.map((text, index) => {
-                          return (
-                            <div key={antagonist.key + index}>
-                              {text}
-                              {index !== antagonist.description.length - 1 && (
-                                <Divider />
-                              )}
-                            </div>
-                          );
-                        })
+                            return (
+                              <div key={antagonist.key + index}>
+                                {text}
+                                {index !==
+                                  antagonist.description.length - 1 && (
+                                  <Divider />
+                                )}
+                              </div>
+                            );
+                          })
                     }
-                    position="bottom">
+                    position="bottom"
+                  >
                     <Box
-                      className={'antagonist-icon-parent'}
+                      className={"antagonist-icon-parent"}
                       onClick={() => {
                         if (isBanned) {
                           return;
@@ -150,12 +163,13 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
                         } else {
                           enableAntags([antagonist.key]);
                         }
-                      }}>
+                      }}
+                    >
                       <Box
                         className={classes([
-                          'antagonists96x96',
+                          "antagonists96x96",
                           antagonist.key,
-                          'antagonist-icon',
+                          "antagonist-icon",
                         ])}
                       />
 

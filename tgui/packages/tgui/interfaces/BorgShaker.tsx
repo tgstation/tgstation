@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, NoticeBox, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, NoticeBox, Section } from "../components";
+import { Window } from "../layouts";
 
 type BorgShakerContext = {
   minVolume: number;
@@ -28,14 +28,14 @@ export const BorgShaker = (props) => {
   return (
     <Window width={650} height={dynamicHeight} theme={theme}>
       <Window.Content>
-        <Section title={'Non-Alcoholic'}>
+        <Section title={"Non-Alcoholic"}>
           <ReagentDisplay
             reagents={sodas}
             selected={selectedReagent}
             minimum={minVolume}
           />
         </Section>
-        <Section title={'Alcoholic'}>
+        <Section title={"Alcoholic"}>
           <ReagentDisplay
             reagents={alcohols}
             selected={selectedReagent}
@@ -60,7 +60,7 @@ const ReagentDisplay = (props) => {
       width="150px"
       lineHeight={1.75}
       content={reagent.name}
-      color={reagent.name === selected ? 'green' : 'default'}
+      color={reagent.name === selected ? "green" : "default"}
       disabled={reagent.volume < minimum}
       onClick={() => act(reagent.name)}
     />

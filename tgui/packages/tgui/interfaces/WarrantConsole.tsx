@@ -1,7 +1,17 @@
-import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
-import { BlockQuote, Button, Collapsible, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Tabs } from '../components';
-import { sortBy } from 'common/collections';
+import { useBackend, useLocalState } from "../backend";
+import { Window } from "../layouts";
+import {
+  BlockQuote,
+  Button,
+  Collapsible,
+  LabeledList,
+  NoticeBox,
+  RestrictedInput,
+  Section,
+  Stack,
+  Tabs,
+} from "../components";
+import { sortBy } from "common/collections";
 
 type Data = {
   records: WarrantRecord[];
@@ -25,8 +35,8 @@ type Citation = {
 
 export const WarrantConsole = (props) => {
   const [selectedRecord] = useLocalState<WarrantRecord | undefined>(
-    'warrantRecord',
-    undefined
+    "warrantRecord",
+    undefined,
   );
 
   return (
@@ -55,7 +65,7 @@ const RecordList = (props) => {
 
   const [selectedRecord, setSelectedRecord] = useLocalState<
     WarrantRecord | undefined
-  >('warrantRecord', undefined);
+  >("warrantRecord", undefined);
 
   const selectHandler = (record: WarrantRecord) => {
     if (selectedRecord?.crew_ref === record.crew_ref) {
@@ -70,14 +80,15 @@ const RecordList = (props) => {
       buttons={
         <Button
           icon="sync"
-          onClick={() => act('refresh')}
+          onClick={() => act("refresh")}
           tooltip="Refresh"
           tooltipPosition="bottom-start"
         />
       }
       fill
       scrollable
-      title="Citations">
+      title="Citations"
+    >
       <Stack fill vertical>
         {!records?.length ? (
           <NoticeBox>No citations issued.</NoticeBox>
@@ -88,7 +99,8 @@ const RecordList = (props) => {
                 className="candystripe"
                 key={index}
                 onClick={() => selectHandler(record)}
-                selected={selectedRecord?.crew_ref === record.crew_ref}>
+                selected={selectedRecord?.crew_ref === record.crew_ref}
+              >
                 {record.crew_name}: {record.citations.length}
               </Tabs.Tab>
             ))}
@@ -131,7 +143,7 @@ const CitationManager = (props) => {
 
   const { crew_ref } = foundRecord;
 
-  const [paying, setPaying] = useLocalState('citationAmount', 5);
+  const [paying, setPaying] = useLocalState("citationAmount", 5);
 
   return (
     <Collapsible
@@ -140,13 +152,15 @@ const CitationManager = (props) => {
           disabled={fine <= 0}
           icon="print"
           onClick={() =>
-            act('print', { crew_ref: crew_ref, fine_ref: fine_ref })
-          }>
+            act("print", { crew_ref: crew_ref, fine_ref: fine_ref })
+          }
+        >
           Print
         </Button>
       }
       color={getFineColor(fine)}
-      title={fine_name}>
+      title={fine_name}
+    >
       <LabeledList>
         <LabeledList.Item label="Details">
           <BlockQuote>{details}</BlockQuote>
@@ -166,7 +180,7 @@ const CitationManager = (props) => {
             <Button.Confirm
               content="Pay"
               onClick={() =>
-                act('pay', {
+                act("pay", {
                   amount: paying,
                   crew_ref: crew_ref,
                   fine_ref: fine_ref,
@@ -183,14 +197,14 @@ const CitationManager = (props) => {
 /** We need an active reference and this a pain to rewrite */
 export const getCurrentRecord = () => {
   const [selectedRecord] = useLocalState<WarrantRecord | undefined>(
-    'warrantRecord',
-    undefined
+    "warrantRecord",
+    undefined,
   );
   if (!selectedRecord) return;
   const { data } = useBackend<Data>();
   const { records = [] } = data;
   const foundRecord = records.find(
-    (record) => record.crew_ref === selectedRecord.crew_ref
+    (record) => record.crew_ref === selectedRecord.crew_ref,
   );
   if (!foundRecord) return;
 
@@ -201,12 +215,12 @@ export const getCurrentRecord = () => {
 export const getFineColor = (fine: number) => {
   switch (true) {
     case fine > 700:
-      return 'bad';
+      return "bad";
     case fine > 300:
-      return 'average';
+      return "average";
     case fine === 0:
-      return 'grey';
+      return "grey";
     default:
-      return '';
+      return "";
   }
 };

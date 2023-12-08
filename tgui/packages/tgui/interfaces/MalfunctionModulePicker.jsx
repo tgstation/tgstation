@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import { GenericUplink } from './Uplink/GenericUplink';
+import { useBackend } from "../backend";
+import { Window } from "../layouts";
+import { GenericUplink } from "./Uplink/GenericUplink";
 
 export const MalfunctionModulePicker = (props) => {
   const { act, data } = useBackend();
@@ -31,7 +31,7 @@ export const MalfunctionModulePicker = (props) => {
           categories={categoriesList}
           items={items}
           currency={`${processingTime} PT`}
-          handleBuy={(item) => act('buy', { name: item.name })}
+          handleBuy={(item) => act("buy", { name: item.name })}
         />
       </Window.Content>
     </Window>

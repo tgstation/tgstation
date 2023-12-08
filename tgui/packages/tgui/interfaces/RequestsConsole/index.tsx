@@ -1,15 +1,15 @@
-import { useBackend } from '../../backend';
-import { Button, Stack } from '../../components';
-import { Window } from '../../layouts';
-import { RequestsData } from './types';
-import { RequestsConsoleHeader } from './RequestsConsoleHeader';
-import { RequestMainScreen } from './RequestsConsoleMainScreen';
+import { useBackend } from "../../backend";
+import { Button, Stack } from "../../components";
+import { Window } from "../../layouts";
+import { RequestsData } from "./types";
+import { RequestsConsoleHeader } from "./RequestsConsoleHeader";
+import { RequestMainScreen } from "./RequestsConsoleMainScreen";
 
 export const RequestsConsole = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { department } = data;
   return (
-    <Window title={department + ' Requests Console'} width={500} height={600}>
+    <Window title={department + " Requests Console"} width={500} height={600}>
       <Window.Content>
         <RequestsConsoleContent />
       </Window.Content>
@@ -36,9 +36,9 @@ const RequestsConsoleFooter = (props) => {
       <Button.Checkbox
         fluid
         checked={!silent}
-        content={'Speaker'}
+        content={"Speaker"}
         onClick={() => {
-          act('toggle_silent');
+          act("toggle_silent");
         }}
       />
     </Stack.Item>

@@ -1,13 +1,13 @@
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui/components';
-import { Data } from './types';
-import { SymptomDisplay } from './Symptom';
-import { VirusDisplay } from './Virus';
+import { useBackend, useLocalState } from "tgui/backend";
+import { Button, NoticeBox, Section, Stack, Tabs } from "tgui/components";
+import { Data } from "./types";
+import { SymptomDisplay } from "./Symptom";
+import { VirusDisplay } from "./Virus";
 
 export const SpecimenDisplay = (props) => {
   const { data } = useBackend<Data>();
   const { viruses = [] } = data;
-  const [tab, setTab] = useLocalState('tab', 0);
+  const [tab, setTab] = useLocalState("tab", 0);
   const virus = viruses[tab];
 
   return (
@@ -31,7 +31,7 @@ export const SpecimenDisplay = (props) => {
 const Buttons = (props) => {
   const { act, data } = useBackend<Data>();
   const { is_ready, viruses = [] } = data;
-  const [tab, setTab] = useLocalState('tab', 0);
+  const [tab, setTab] = useLocalState("tab", 0);
   const virus = viruses[tab];
 
   return (
@@ -44,7 +44,8 @@ const Buttons = (props) => {
                 <Tabs.Tab
                   selected={tab === index}
                   onClick={() => setTab(index)}
-                  key={index}>
+                  key={index}
+                >
                   {virus.name}
                 </Tabs.Tab>
               );
@@ -57,9 +58,9 @@ const Buttons = (props) => {
           icon="flask"
           content="Create culture bottle"
           disabled={!is_ready || !virus}
-          tooltip={virus ? '' : 'No virus culture found.'}
+          tooltip={virus ? "" : "No virus culture found."}
           onClick={() =>
-            act('create_culture_bottle', {
+            act("create_culture_bottle", {
               index: virus.index,
             })
           }

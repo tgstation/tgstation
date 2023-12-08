@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, ColorBox, Flex, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, ColorBox, Flex, Section } from "../components";
+import { Window } from "../layouts";
 
 type DecalInfo = {
   name: string;
@@ -31,7 +31,7 @@ type DecalPainterData = {
 };
 
 const filterBoxColor = (color: string) => {
-  if (!color.startsWith('#')) {
+  if (!color.startsWith("#")) {
     return color;
   }
 
@@ -43,12 +43,12 @@ export const DecalPainter = (props) => {
   const { act, data } = useBackend<DecalPainterData>();
 
   const custom_color_selected = !data.color_list.some(
-    (color) => color.color === data.current_color
+    (color) => color.color === data.current_color,
   );
   const supports_custom_color = !!data.supports_custom_color;
 
   // Handle custom color icon correctly
-  const preview_color = custom_color_selected ? 'custom' : data.current_color;
+  const preview_color = custom_color_selected ? "custom" : data.current_color;
 
   return (
     <Window width={550} height={400}>
@@ -60,10 +60,11 @@ export const DecalPainter = (props) => {
                 key={color.color}
                 selected={color.color === data.current_color}
                 onClick={() =>
-                  act('select color', {
+                  act("select color", {
                     color: color.color,
                   })
-                }>
+                }
+              >
                 <ColorBox color={filterBoxColor(color.color)} mr={0.5} />
                 {color.name}
               </Button>
@@ -72,7 +73,8 @@ export const DecalPainter = (props) => {
           {supports_custom_color && (
             <Button
               selected={custom_color_selected}
-              onClick={() => act('pick custom color')}>
+              onClick={() => act("pick custom color")}
+            >
               <ColorBox color={data.current_custom_color} mr={0.5} />
               Custom
             </Button>
@@ -82,7 +84,7 @@ export const DecalPainter = (props) => {
           <Flex direction="row" wrap="nowrap" align="fill" justify="fill">
             {data.decal_list.map((decal) => {
               const nondirectional = data.nondirectional_decals.includes(
-                decal.decal
+                decal.decal,
               );
 
               return nondirectional ? (
@@ -102,7 +104,8 @@ export const DecalPainter = (props) => {
                   direction="column"
                   wrap="nowrap"
                   align="fill"
-                  justify="fill">
+                  justify="fill"
+                >
                   {data.dir_list.map((dir) => {
                     const selected =
                       decal.decal === data.current_decal &&
@@ -141,7 +144,7 @@ const IconButton = (props: IconButtonParams) => {
   const { act, data } = useBackend<DecalPainterData>();
 
   const generateIconKey = (decal: string, dir: number, color: string) =>
-    `${data.icon_prefix} ${decal}_${dir}_${color.replace('#', '')}`;
+    `${data.icon_prefix} ${decal}_${dir}_${color.replace("#", "")}`;
 
   const icon = generateIconKey(props.decal, props.dir, props.color);
 
@@ -150,15 +153,16 @@ const IconButton = (props: IconButtonParams) => {
       tooltip={props.label}
       selected={props.selected}
       verticalAlignContent="middle"
-      m={'2px'}
+      m={"2px"}
       p={1}
       onClick={() =>
-        act('select decal', {
+        act("select decal", {
           decal: props.decal,
           dir: props.dir,
         })
-      }>
-      <div className={icon} style={{ display: 'block' }} />
+      }
+    >
+      <div className={icon} style={{ display: "block" }} />
     </Button>
   );
 };

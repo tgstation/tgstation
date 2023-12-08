@@ -1,8 +1,14 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { AnimatedNumber, Button, LabeledList, NoticeBox, Section } from '../components';
-import { formatMoney } from '../format';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  AnimatedNumber,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from "../components";
+import { formatMoney } from "../format";
+import { Window } from "../layouts";
 
 type Data = {
   current_balance: number;
@@ -18,23 +24,24 @@ export const BankMachine = (props) => {
     <Window width={350} height={155}>
       <Window.Content>
         <NoticeBox danger>Authorized personnel only</NoticeBox>
-        <Section title={station_name + ' Vault'}>
+        <Section title={station_name + " Vault"}>
           <LabeledList>
             <LabeledList.Item
               label="Current Balance"
               buttons={
                 <Button
-                  icon={siphoning ? 'times' : 'sync'}
-                  content={siphoning ? 'Stop Siphoning' : 'Siphon Credits'}
+                  icon={siphoning ? "times" : "sync"}
+                  content={siphoning ? "Stop Siphoning" : "Siphon Credits"}
                   selected={siphoning}
-                  onClick={() => act(siphoning ? 'halt' : 'siphon')}
+                  onClick={() => act(siphoning ? "halt" : "siphon")}
                 />
-              }>
+              }
+            >
               <AnimatedNumber
                 value={current_balance}
                 format={(value) => formatMoney(value)}
               />
-              {' cr'}
+              {" cr"}
             </LabeledList.Item>
           </LabeledList>
         </Section>

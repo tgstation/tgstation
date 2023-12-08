@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, LabeledList, Section } from "../components";
+import { Window } from "../layouts";
 
 export const LanguageMenu = (props) => {
   const { act, data } = useBackend();
@@ -26,13 +26,13 @@ export const LanguageMenu = (props) => {
                       <Button
                         content={
                           language.is_default
-                            ? 'Default Language'
-                            : 'Select as Default'
+                            ? "Default Language"
+                            : "Select as Default"
                         }
                         disabled={!language.can_speak}
                         selected={language.is_default}
                         onClick={() =>
-                          act('select_default', {
+                          act("select_default", {
                             language_name: language.name,
                           })
                         }
@@ -43,7 +43,7 @@ export const LanguageMenu = (props) => {
                         <Button
                           content="Grant"
                           onClick={() =>
-                            act('grant_language', {
+                            act("grant_language", {
                               language_name: language.name,
                             })
                           }
@@ -51,7 +51,7 @@ export const LanguageMenu = (props) => {
                         <Button
                           content="Remove"
                           onClick={() =>
-                            act('remove_language', {
+                            act("remove_language", {
                               language_name: language.name,
                             })
                           }
@@ -59,12 +59,13 @@ export const LanguageMenu = (props) => {
                       </>
                     )}
                   </>
-                }>
-                {language.desc} Key: ,{language.key}{' '}
+                }
+              >
+                {language.desc} Key: ,{language.key}{" "}
                 {language.can_understand
-                  ? 'Can understand.'
-                  : 'Cannot understand.'}{' '}
-                {language.can_speak ? 'Can speak.' : 'Cannot speak.'}
+                  ? "Can understand."
+                  : "Cannot understand."}{" "}
+                {language.can_speak ? "Can speak." : "Cannot speak."}
               </LabeledList.Item>
             ))}
           </LabeledList>
@@ -74,11 +75,12 @@ export const LanguageMenu = (props) => {
             title="Unknown Languages"
             buttons={
               <Button
-                content={'Omnitongue ' + (omnitongue ? 'Enabled' : 'Disabled')}
+                content={"Omnitongue " + (omnitongue ? "Enabled" : "Disabled")}
                 selected={omnitongue}
-                onClick={() => act('toggle_omnitongue')}
+                onClick={() => act("toggle_omnitongue")}
               />
-            }>
+            }
+          >
             <LabeledList>
               {unknown_languages.map((language) => (
                 <LabeledList.Item
@@ -88,15 +90,16 @@ export const LanguageMenu = (props) => {
                     <Button
                       content="Grant"
                       onClick={() =>
-                        act('grant_language', {
+                        act("grant_language", {
                           language_name: language.name,
                         })
                       }
                     />
-                  }>
-                  {language.desc} Key: ,{language.key}{' '}
-                  {!!language.shadow && '(gained from mob)'}{' '}
-                  {language.can_speak ? 'Can speak.' : 'Cannot speak.'}
+                  }
+                >
+                  {language.desc} Key: ,{language.key}{" "}
+                  {!!language.shadow && "(gained from mob)"}{" "}
+                  {language.can_speak ? "Can speak." : "Cannot speak."}
                 </LabeledList.Item>
               ))}
             </LabeledList>

@@ -1,17 +1,17 @@
-import { Component, createRef } from 'react';
-import { resolveAsset } from '../assets';
-import { Box } from './Box';
+import { Component, createRef } from "react";
+import { resolveAsset } from "../assets";
+import { Box } from "./Box";
 
 export enum BodyZone {
-  Head = 'head',
-  Chest = 'chest',
-  LeftArm = 'l_arm',
-  RightArm = 'r_arm',
-  LeftLeg = 'l_leg',
-  RightLeg = 'r_leg',
-  Eyes = 'eyes',
-  Mouth = 'mouth',
-  Groin = 'groin',
+  Head = "head",
+  Chest = "chest",
+  LeftArm = "l_arm",
+  RightArm = "r_arm",
+  LeftLeg = "l_leg",
+  RightLeg = "r_leg",
+  Eyes = "eyes",
+  Mouth = "mouth",
+  Groin = "groin",
 }
 
 const bodyZonePixelToZone = (x: number, y: number): BodyZone | null => {
@@ -75,7 +75,7 @@ export class BodyZoneSelector extends Component<
 
   render() {
     const { hoverZone } = this.state;
-    const { scale = 3, selectedZone, theme = 'midnight' } = this.props;
+    const { scale = 3, selectedZone, theme = "midnight" } = this.props;
 
     return (
       <div
@@ -83,8 +83,9 @@ export class BodyZoneSelector extends Component<
         style={{
           width: `${32 * scale}px`,
           height: `${32 * scale}px`,
-          position: 'relative',
-        }}>
+          position: "relative",
+        }}
+      >
         <Box
           as="img"
           src={resolveAsset(`body_zones.base_${theme}.png`)}
@@ -112,7 +113,7 @@ export class BodyZoneSelector extends Component<
             });
           }}
           style={{
-            position: 'absolute',
+            position: "absolute",
             width: `${32 * scale}px`,
             height: `${32 * scale}px`,
           }}
@@ -123,8 +124,8 @@ export class BodyZoneSelector extends Component<
             as="img"
             src={resolveAsset(`body_zones.${selectedZone}.png`)}
             style={{
-              pointerEvents: 'none',
-              position: 'absolute',
+              pointerEvents: "none",
+              position: "absolute",
               width: `${32 * scale}px`,
               height: `${32 * scale}px`,
             }}
@@ -137,8 +138,8 @@ export class BodyZoneSelector extends Component<
             src={resolveAsset(`body_zones.${hoverZone}.png`)}
             style={{
               opacity: 0.5,
-              pointerEvents: 'none',
-              position: 'absolute',
+              pointerEvents: "none",
+              position: "absolute",
               width: `${32 * scale}px`,
               height: `${32 * scale}px`,
             }}

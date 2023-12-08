@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, Section, LabeledList } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, Section, LabeledList } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   on: BooleanLike;
@@ -19,18 +19,18 @@ export const InfraredEmitter = (props) => {
           <LabeledList>
             <LabeledList.Item label="Status">
               <Button
-                icon={on ? 'power-off' : 'times'}
-                content={on ? 'On' : 'Off'}
+                icon={on ? "power-off" : "times"}
+                content={on ? "On" : "Off"}
                 selected={on}
-                onClick={() => act('power')}
+                onClick={() => act("power")}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Visibility">
               <Button
-                icon={visible ? 'eye' : 'eye-slash'}
-                content={visible ? 'Visible' : 'Invisible'}
+                icon={visible ? "eye" : "eye-slash"}
+                content={visible ? "Visible" : "Invisible"}
                 selected={visible}
-                onClick={() => act('visibility')}
+                onClick={() => act("visibility")}
               />
             </LabeledList.Item>
           </LabeledList>

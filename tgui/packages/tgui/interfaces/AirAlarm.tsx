@@ -1,10 +1,23 @@
-import { BooleanLike } from 'common/react';
-import { Fragment } from 'react';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, Modal, NumberInput, Section, Table } from '../components';
-import { Window } from '../layouts';
-import { Scrubber, ScrubberProps, Vent, VentProps } from './common/AtmosControls';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
+import { BooleanLike } from "common/react";
+import { Fragment } from "react";
+import { useBackend, useLocalState } from "../backend";
+import {
+  Box,
+  Button,
+  LabeledList,
+  Modal,
+  NumberInput,
+  Section,
+  Table,
+} from "../components";
+import { Window } from "../layouts";
+import {
+  Scrubber,
+  ScrubberProps,
+  Vent,
+  VentProps,
+} from "./common/AtmosControls";
+import { InterfaceLockNoticeBox } from "./common/InterfaceLockNoticeBox";
 
 type AirAlarmData = {
   locked: BooleanLike;
@@ -62,16 +75,16 @@ const AirAlarmStatus = (props) => {
   const { envData } = data;
   const dangerMap = {
     0: {
-      color: 'good',
-      localStatusText: 'Optimal',
+      color: "good",
+      localStatusText: "Optimal",
     },
     1: {
-      color: 'average',
-      localStatusText: 'Caution',
+      color: "average",
+      localStatusText: "Caution",
     },
     2: {
-      color: 'bad',
-      localStatusText: 'Danger (Internals Required)',
+      color: "bad",
+      localStatusText: "Danger (Internals Required)",
     },
   };
   const localStatus = dangerMap[data.dangerLevel] || dangerMap[0];
@@ -86,7 +99,8 @@ const AirAlarmStatus = (props) => {
                 <LabeledList.Item
                   key={entry.name}
                   label={entry.name}
-                  color={status.color}>
+                  color={status.color}
+                >
                   {entry.value}
                 </LabeledList.Item>
               );
@@ -96,10 +110,11 @@ const AirAlarmStatus = (props) => {
             </LabeledList.Item>
             <LabeledList.Item
               label="Area status"
-              color={data.atmosAlarm || data.fireAlarm ? 'bad' : 'good'}>
-              {(data.atmosAlarm && 'Atmosphere Alarm') ||
-                (data.fireAlarm && 'Fire Alarm') ||
-                'Nominal'}
+              color={data.atmosAlarm || data.fireAlarm ? "bad" : "good"}
+            >
+              {(data.atmosAlarm && "Atmosphere Alarm") ||
+                (data.fireAlarm && "Fire Alarm") ||
+                "Nominal"}
             </LabeledList.Item>
           </>
         )) || (
@@ -119,23 +134,23 @@ const AirAlarmStatus = (props) => {
 
 const AIR_ALARM_ROUTES = {
   home: {
-    title: 'Air Controls',
+    title: "Air Controls",
     component: () => AirAlarmControlHome,
   },
   vents: {
-    title: 'Vent Controls',
+    title: "Vent Controls",
     component: () => AirAlarmControlVents,
   },
   scrubbers: {
-    title: 'Scrubber Controls',
+    title: "Scrubber Controls",
     component: () => AirAlarmControlScrubbers,
   },
   modes: {
-    title: 'Operating Mode',
+    title: "Operating Mode",
     component: () => AirAlarmControlModes,
   },
   thresholds: {
-    title: 'Alarm Thresholds',
+    title: "Alarm Thresholds",
     component: () => AirAlarmControlThresholds,
   },
 } as const;
@@ -143,7 +158,7 @@ const AIR_ALARM_ROUTES = {
 type Screen = keyof typeof AIR_ALARM_ROUTES;
 
 const AirAlarmControl = (props) => {
-  const [screen, setScreen] = useLocalState<Screen>('screen', 'home');
+  const [screen, setScreen] = useLocalState<Screen>("screen", "home");
   const route = AIR_ALARM_ROUTES[screen] || AIR_ALARM_ROUTES.home;
   const Component = route.component();
   return (
@@ -154,10 +169,11 @@ const AirAlarmControl = (props) => {
           <Button
             icon="arrow-left"
             content="Back"
-            onClick={() => setScreen('home')}
+            onClick={() => setScreen("home")}
           />
         )
-      }>
+      }
+    >
       <Component />
     </Section>
   );
@@ -168,7 +184,7 @@ const AirAlarmControl = (props) => {
 
 const AirAlarmControlHome = (props) => {
   const { act, data } = useBackend<AirAlarmData>();
-  const [screen, setScreen] = useLocalState<Screen>('screen', 'home');
+  const [screen, setScreen] = useLocalState<Screen>("screen", "home");
   const {
     selectedModePath,
     panicSiphonPath,
@@ -181,18 +197,18 @@ const AirAlarmControlHome = (props) => {
   return (
     <>
       <Button
-        icon={atmosAlarm ? 'exclamation-triangle' : 'exclamation'}
-        color={atmosAlarm && 'caution'}
+        icon={atmosAlarm ? "exclamation-triangle" : "exclamation"}
+        color={atmosAlarm && "caution"}
         content="Area Atmosphere Alarm"
-        onClick={() => act(atmosAlarm ? 'reset' : 'alarm')}
+        onClick={() => act(atmosAlarm ? "reset" : "alarm")}
       />
       <Box mt={1} />
       <Button
-        icon={isPanicSiphoning ? 'exclamation-triangle' : 'exclamation'}
-        color={isPanicSiphoning && 'danger'}
+        icon={isPanicSiphoning ? "exclamation-triangle" : "exclamation"}
+        color={isPanicSiphoning && "danger"}
         content="Panic Siphon"
         onClick={() =>
-          act('mode', {
+          act("mode", {
             mode: isPanicSiphoning ? filteringPath : panicSiphonPath,
           })
         }
@@ -201,25 +217,25 @@ const AirAlarmControlHome = (props) => {
       <Button
         icon="sign-out-alt"
         content="Vent Controls"
-        onClick={() => setScreen('vents')}
+        onClick={() => setScreen("vents")}
       />
       <Box mt={1} />
       <Button
         icon="filter"
         content="Scrubber Controls"
-        onClick={() => setScreen('scrubbers')}
+        onClick={() => setScreen("scrubbers")}
       />
       <Box mt={1} />
       <Button
         icon="cog"
         content="Operating Mode"
-        onClick={() => setScreen('modes')}
+        onClick={() => setScreen("modes")}
       />
       <Box mt={1} />
       <Button
         icon="chart-bar"
         content="Alarm Thresholds"
-        onClick={() => setScreen('thresholds')}
+        onClick={() => setScreen("thresholds")}
       />
       {!!sensor && !!allowLinkChange && (
         <Box mt={1}>
@@ -227,7 +243,7 @@ const AirAlarmControlHome = (props) => {
             icon="link-slash"
             content="Disconnect Sensor"
             color="danger"
-            onClick={() => act('disconnect_sensor')}
+            onClick={() => act("disconnect_sensor")}
           />
         </Box>
       )}
@@ -286,13 +302,13 @@ const AirAlarmControlModes = (props) => {
         <Fragment key={mode.path}>
           <Button
             icon={
-              mode.path === selectedModePath ? 'check-square-o' : 'square-o'
+              mode.path === selectedModePath ? "check-square-o" : "square-o"
             }
             color={
-              mode.path === selectedModePath && (mode.danger ? 'red' : 'green')
+              mode.path === selectedModePath && (mode.danger ? "red" : "green")
             }
-            content={mode.name + ' - ' + mode.desc}
-            onClick={() => act('mode', { mode: mode.path })}
+            content={mode.name + " - " + mode.desc}
+            onClick={() => act("mode", { mode: mode.path })}
           />
           <Box mt={1} />
         </Fragment>
@@ -321,27 +337,29 @@ const EditingModal = (props: EditingModalProps) => {
   return (
     <Modal>
       <Section
-        title={'Threshold Value Editor'}
-        buttons={<Button onClick={() => finish()} icon="times" color="red" />}>
+        title={"Threshold Value Editor"}
+        buttons={<Button onClick={() => finish()} icon="times" color="red" />}
+      >
         <Box mb={1.5}>
           {`Editing the ${typeName.toLowerCase()} value for ${name.toLowerCase()}...`}
         </Box>
         {oldValue === -1 ? (
           <Button
             onClick={() =>
-              act('set_threshold', {
+              act("set_threshold", {
                 threshold: id,
                 threshold_type: type,
                 value: 0,
               })
-            }>
-            {'Enable'}
+            }
+          >
+            {"Enable"}
           </Button>
         ) : (
           <>
             <NumberInput
               onChange={(e, value) =>
-                act('set_threshold', {
+                act("set_threshold", {
                   threshold: id,
                   threshold_type: type,
                   value: value,
@@ -355,13 +373,14 @@ const EditingModal = (props: EditingModalProps) => {
             />
             <Button
               onClick={() =>
-                act('set_threshold', {
+                act("set_threshold", {
                   threshold: id,
                   threshold_type: type,
                   value: -1,
                 })
-              }>
-              {'Disable'}
+              }
+            >
+              {"Disable"}
             </Button>
           </>
         )}
@@ -374,8 +393,8 @@ const AirAlarmControlThresholds = (props) => {
   const { act, data } = useBackend<AirAlarmData>();
   const [activeModal, setActiveModal] = useLocalState<Omit<
     EditingModalProps,
-    'oldValue'
-  > | null>('tlvModal', null);
+    "oldValue"
+  > | null>("tlvModal", null);
   const { tlvSettings, thresholdTypeMap } = data;
   return (
     <>
@@ -406,16 +425,17 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['hazard_min'],
-                    typeVar: 'hazard_min',
-                    typeName: 'Minimum Hazard',
+                    type: thresholdTypeMap["hazard_min"],
+                    typeVar: "hazard_min",
+                    typeName: "Minimum Hazard",
                     unit: tlv.unit,
                     finish: () => setActiveModal(null),
                   })
-                }>
+                }
+              >
                 {tlv.hazard_min === -1
-                  ? 'Disabled'
-                  : tlv.hazard_min + ' ' + tlv.unit}
+                  ? "Disabled"
+                  : tlv.hazard_min + " " + tlv.unit}
               </Button>
             </Table.Cell>
             <Table.Cell>
@@ -425,16 +445,17 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['warning_min'],
-                    typeVar: 'warning_min',
-                    typeName: 'Minimum Warning',
+                    type: thresholdTypeMap["warning_min"],
+                    typeVar: "warning_min",
+                    typeName: "Minimum Warning",
                     unit: tlv.unit,
                     finish: () => setActiveModal(null),
                   })
-                }>
+                }
+              >
                 {tlv.warning_min === -1
-                  ? 'Disabled'
-                  : tlv.warning_min + ' ' + tlv.unit}
+                  ? "Disabled"
+                  : tlv.warning_min + " " + tlv.unit}
               </Button>
             </Table.Cell>
             <Table.Cell>
@@ -444,16 +465,17 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['warning_max'],
-                    typeVar: 'warning_max',
-                    typeName: 'Maximum Warning',
+                    type: thresholdTypeMap["warning_max"],
+                    typeVar: "warning_max",
+                    typeName: "Maximum Warning",
                     unit: tlv.unit,
                     finish: () => setActiveModal(null),
                   })
-                }>
+                }
+              >
                 {tlv.warning_max === -1
-                  ? 'Disabled'
-                  : tlv.warning_max + ' ' + tlv.unit}
+                  ? "Disabled"
+                  : tlv.warning_max + " " + tlv.unit}
               </Button>
             </Table.Cell>
             <Table.Cell>
@@ -463,16 +485,17 @@ const AirAlarmControlThresholds = (props) => {
                   setActiveModal({
                     id: tlv.id,
                     name: tlv.name,
-                    type: thresholdTypeMap['hazard_max'],
-                    typeVar: 'hazard_max',
-                    typeName: 'Maximum Hazard',
+                    type: thresholdTypeMap["hazard_max"],
+                    typeVar: "hazard_max",
+                    typeName: "Maximum Hazard",
                     unit: tlv.unit,
                     finish: () => setActiveModal(null),
                   })
-                }>
+                }
+              >
                 {tlv.hazard_max === -1
-                  ? 'Disabled'
-                  : tlv.hazard_max + ' ' + tlv.unit}
+                  ? "Disabled"
+                  : tlv.hazard_max + " " + tlv.unit}
               </Button>
             </Table.Cell>
             <Table.Cell>
@@ -481,9 +504,9 @@ const AirAlarmControlThresholds = (props) => {
                   color="green"
                   icon="sync"
                   onClick={() =>
-                    act('reset_threshold', {
+                    act("reset_threshold", {
                       threshold: tlv.id,
-                      threshold_type: thresholdTypeMap['all'],
+                      threshold_type: thresholdTypeMap["all"],
                     })
                   }
                 />
@@ -491,9 +514,9 @@ const AirAlarmControlThresholds = (props) => {
                   color="red"
                   icon="times"
                   onClick={() =>
-                    act('set_threshold', {
+                    act("set_threshold", {
                       threshold: tlv.id,
-                      threshold_type: thresholdTypeMap['all'],
+                      threshold_type: thresholdTypeMap["all"],
                       value: -1,
                     })
                   }

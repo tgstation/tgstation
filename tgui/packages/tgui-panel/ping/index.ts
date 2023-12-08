@@ -4,6 +4,6 @@
  * @license MIT
  */
 
-export { pingMiddleware } from './middleware';
-export { PingIndicator } from './PingIndicator';
-export { pingReducer } from './reducer';
+export { pingMiddleware } from "./middleware";
+export { PingIndicator } from "./PingIndicator";
+export { pingReducer } from "./reducer";

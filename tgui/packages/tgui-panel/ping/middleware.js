@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { pingFail, pingReply, pingSoft, pingSuccess } from './actions';
-import { PING_QUEUE_SIZE, PING_TIMEOUT } from './constants';
+import { pingFail, pingReply, pingSoft, pingSuccess } from "./actions";
+import { PING_QUEUE_SIZE, PING_TIMEOUT } from "./constants";
 
 export const pingMiddleware = (store) => {
   let initialized = false;
@@ -22,7 +22,7 @@ export const pingMiddleware = (store) => {
     }
     const ping = { index, sentAt: Date.now() };
     pings[index] = ping;
-    Byond.sendMessage('ping', { index });
+    Byond.sendMessage("ping", { index });
     index = (index + 1) % PING_QUEUE_SIZE;
   };
 

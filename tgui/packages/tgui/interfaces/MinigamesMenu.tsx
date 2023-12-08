@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Section, Stack } from "../components";
+import { Window } from "../layouts";
 
 export const MinigamesMenu = (props) => {
   const { act } = useBackend();
@@ -17,7 +17,7 @@ export const MinigamesMenu = (props) => {
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
-                onClick={() => act('ctf')}
+                onClick={() => act("ctf")}
               />
             </Stack.Item>
             <Stack.Item grow>
@@ -27,7 +27,7 @@ export const MinigamesMenu = (props) => {
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
-                onClick={() => act('mafia')}
+                onClick={() => act("mafia")}
               />
             </Stack.Item>
             <Stack.Item grow>
@@ -37,7 +37,7 @@ export const MinigamesMenu = (props) => {
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
-                onClick={() => act('basketball')}
+                onClick={() => act("basketball")}
               />
             </Stack.Item>
           </Stack>

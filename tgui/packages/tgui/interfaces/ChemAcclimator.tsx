@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, LabeledList, NumberInput, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   chem_temp: number;
@@ -45,7 +45,7 @@ export const ChemAcclimator = (props) => {
                 step={5}
                 stepPixelSize={2}
                 onChange={(e, value) =>
-                  act('set_target_temperature', {
+                  act("set_target_temperature", {
                     temperature: value,
                   })
                 }
@@ -60,7 +60,7 @@ export const ChemAcclimator = (props) => {
                 maxValue={target_temperature}
                 stepPixelSize={2}
                 onChange={(e, value) => {
-                  act('set_allowed_temperature_difference', {
+                  act("set_allowed_temperature_difference", {
                     temperature: value,
                   });
                 }}
@@ -73,11 +73,12 @@ export const ChemAcclimator = (props) => {
           buttons={
             <Button
               icon="power-off"
-              content={enabled ? 'On' : 'Off'}
+              content={enabled ? "On" : "Off"}
               selected={enabled}
-              onClick={() => act('toggle_power')}
+              onClick={() => act("toggle_power")}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Volume">
               <NumberInput
@@ -89,7 +90,7 @@ export const ChemAcclimator = (props) => {
                 step={2}
                 stepPixelSize={2}
                 onChange={(e, value) =>
-                  act('change_volume', {
+                  act("change_volume", {
                     volume: value,
                   })
                 }
@@ -99,7 +100,7 @@ export const ChemAcclimator = (props) => {
               {acclimate_state}
             </LabeledList.Item>
             <LabeledList.Item label="Current State">
-              {emptying ? 'Emptying' : 'Filling'}
+              {emptying ? "Emptying" : "Filling"}
             </LabeledList.Item>
           </LabeledList>
         </Section>

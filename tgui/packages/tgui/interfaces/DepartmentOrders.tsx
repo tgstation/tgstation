@@ -1,7 +1,17 @@
-import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Icon, NoticeBox, Section, Stack, Tabs, Tooltip } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend, useLocalState } from "../backend";
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
+} from "../components";
+import { Window } from "../layouts";
 
 // 15x crate value
 const COST_UPPER_BOUND = 3000;
@@ -28,13 +38,13 @@ type Info = {
 const CooldownEstimate = (props) => {
   const { cost } = props;
   const cooldownColor =
-    (cost > COST_UPPER_BOUND * 0.75 && 'red') ||
-    (cost > COST_UPPER_BOUND * 0.25 && 'orange') ||
-    'green';
+    (cost > COST_UPPER_BOUND * 0.75 && "red") ||
+    (cost > COST_UPPER_BOUND * 0.25 && "orange") ||
+    "green";
   const cooldownText =
-    (cost > COST_UPPER_BOUND * 0.75 && 'long') ||
-    (cost > COST_UPPER_BOUND * 0.25 && 'moderate') ||
-    'short';
+    (cost > COST_UPPER_BOUND * 0.75 && "long") ||
+    (cost > COST_UPPER_BOUND * 0.25 && "moderate") ||
+    "short";
   return (
     <Box as="span" textColor={cooldownColor}>
       {cooldownText} cooldown.
@@ -91,13 +101,14 @@ const CooldownDimmer = (props) => {
             lineHeight={2}
             tooltip={
               (!!can_override &&
-                'This action requires Head of Staff access!') ||
-              'Crate already shipped! No cancelling now!'
+                "This action requires Head of Staff access!") ||
+              "Crate already shipped! No cancelling now!"
             }
             fontSize="14px"
             color="red"
             disabled={!can_override}
-            onClick={() => act('override_order')}>
+            onClick={() => act("override_order")}
+          >
             <Box fontSize="22px">Override</Box>
           </Button>
         </Stack.Item>
@@ -109,7 +120,7 @@ const CooldownDimmer = (props) => {
 const DepartmentCatalog = (props) => {
   const { act, data } = useBackend<Info>();
   const { supplies } = data;
-  const [tabCategory, setTabCategory] = useLocalState('tabName', supplies[0]);
+  const [tabCategory, setTabCategory] = useLocalState("tabName", supplies[0]);
   return (
     <Stack vertical fill>
       <Stack.Item>
@@ -118,7 +129,8 @@ const DepartmentCatalog = (props) => {
             <Tabs.Tab
               key={cat.name}
               selected={tabCategory === cat}
-              onClick={() => setTabCategory(cat)}>
+              onClick={() => setTabCategory(cat)}
+            >
               {cat.name}
             </Tabs.Tab>
           ))}
@@ -135,8 +147,9 @@ const DepartmentCatalog = (props) => {
                       <Box
                         as="span"
                         style={{
-                          borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
-                        }}>
+                          borderBottom: "2px dotted rgba(255, 255, 255, 0.8)",
+                        }}
+                      >
                         {pack.name}
                       </Box>
                     </Tooltip>
@@ -146,10 +159,11 @@ const DepartmentCatalog = (props) => {
                     &ensp;
                     <Button
                       onClick={() =>
-                        act('order', {
+                        act("order", {
                           id: pack.id,
                         })
-                      }>
+                      }
+                    >
                       Order
                     </Button>
                   </Stack.Item>

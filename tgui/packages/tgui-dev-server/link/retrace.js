@@ -4,16 +4,16 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import { basename } from 'path';
-import { createLogger } from '../logging.js';
-import { require } from '../require.js';
-import { resolveGlob } from '../util.js';
+import fs from "fs";
+import { basename } from "path";
+import { createLogger } from "../logging.js";
+import { require } from "../require.js";
+import { resolveGlob } from "../util.js";
 
-const SourceMap = require('source-map');
-const { parse: parseStackTrace } = require('stacktrace-parser');
+const SourceMap = require("source-map");
+const { parse: parseStackTrace } = require("stacktrace-parser");
 
-const logger = createLogger('retrace');
+const logger = createLogger("retrace");
 
 const { SourceMapConsumer } = SourceMap;
 const sourceMaps = [];
@@ -25,12 +25,12 @@ export const loadSourceMaps = async (bundleDir) => {
     consumer.destroy();
   }
   // Load new sourcemaps
-  const paths = await resolveGlob(bundleDir, '*.map');
+  const paths = await resolveGlob(bundleDir, "*.map");
   for (let path of paths) {
     try {
-      const file = basename(path).replace('.map', '');
+      const file = basename(path).replace(".map", "");
       const consumer = await new SourceMapConsumer(
-        JSON.parse(fs.readFileSync(path, 'utf8'))
+        JSON.parse(fs.readFileSync(path, "utf8")),
       );
       sourceMaps.push({ file, consumer });
     } catch (err) {
@@ -41,8 +41,8 @@ export const loadSourceMaps = async (bundleDir) => {
 };
 
 export const retrace = (stack) => {
-  if (typeof stack !== 'string') {
-    logger.log('ERROR: Stack is not a string!', stack);
+  if (typeof stack !== "string") {
+    logger.log("ERROR: Stack is not a string!", stack);
     return stack;
   }
   const header = stack.split(/\n\s.*at/)[0];
@@ -79,10 +79,10 @@ export const retrace = (stack) => {
         return `  at ${methodName}`;
       }
       const compactPath = file
-        .replace(/^webpack:\/\/\/?/, './')
-        .replace(/.*node_modules\//, '');
+        .replace(/^webpack:\/\/\/?/, "./")
+        .replace(/.*node_modules\//, "");
       return `  at ${methodName} (${compactPath}:${lineNumber})`;
     })
-    .join('\n');
-  return header + '\n' + mappedStack;
+    .join("\n");
+  return header + "\n" + mappedStack;
 };

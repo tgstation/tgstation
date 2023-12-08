@@ -1,9 +1,9 @@
-import { classes } from 'common/react';
-import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Section, Tabs, Stack } from '../components';
-import { InfoSection } from './RapidConstructionDevice';
-import { Window } from '../layouts';
+import { classes } from "common/react";
+import { capitalizeAll } from "common/string";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Section, Tabs, Stack } from "../components";
+import { InfoSection } from "./RapidConstructionDevice";
+import { Window } from "../layouts";
 
 type Data = {
   selected_icon: string;
@@ -25,9 +25,9 @@ type Design = {
 };
 
 const ROTATION_MAP = {
-  north: 'rotateZ(-180deg)',
-  west: 'rotateZ(90deg)',
-  east: 'rotateZ(-90deg)',
+  north: "rotateZ(-180deg)",
+  west: "rotateZ(90deg)",
+  east: "rotateZ(-90deg)",
 } as const;
 
 const TilePreview = (props) => {
@@ -38,15 +38,16 @@ const TilePreview = (props) => {
     <Section
       backgroundColor="green"
       style={{
-        width: '50px',
-        height: '50px',
-      }}>
+        width: "50px",
+        height: "50px",
+      }}
+    >
       <Box
-        className={classes(['rtd32x32', selected_icon])}
+        className={classes(["rtd32x32", selected_icon])}
         style={{
           transform:
-            'scale(1.5) translate(9.5%, 9.5%) ' +
-            (ROTATION_MAP[selected_direction] || ''),
+            "scale(1.5) translate(9.5%, 9.5%) " +
+            (ROTATION_MAP[selected_direction] || ""),
         }}
       />
     </Section>
@@ -66,7 +67,7 @@ const DirectionSelect = (props) => {
               color="transparent"
               checked={dir === selected_direction}
               onClick={() =>
-                act('set_dir', {
+                act("set_dir", {
                   dir: dir,
                 })
               }
@@ -87,7 +88,7 @@ const TileRotateSection = (props) => {
         <TilePreview />
       </Stack.Item>
       <Stack.Item grow>
-        {selected_direction !== null ? <DirectionSelect /> : ''}
+        {selected_direction !== null ? <DirectionSelect /> : ""}
       </Stack.Item>
     </Stack>
   );
@@ -97,8 +98,8 @@ const TileDesignSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category
+    "categoryName",
+    selected_category,
   );
   const shownCategory =
     categories.find((category) => category.category_name === categoryName) ||
@@ -111,7 +112,8 @@ const TileDesignSection = (props) => {
             fluid
             key={category.category_name}
             selected={category.category_name === categoryName}
-            onClick={() => setCategoryName(category.category_name)}>
+            onClick={() => setCategoryName(category.category_name)}
+          >
             {category.category_name}
           </Tabs.Tab>
         ))}
@@ -127,21 +129,22 @@ const TileDesignSection = (props) => {
             shownCategory.category_name === selected_category
           }
           style={{
-            height: '35px',
+            height: "35px",
           }}
           onClick={() =>
-            act('recipe', {
+            act("recipe", {
               category_name: shownCategory.category_name,
               id: i + 1,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"
             mr="20px"
-            className={classes(['rtd32x32', recipe.icon])}
+            className={classes(["rtd32x32", recipe.icon])}
             style={{
-              transform: 'scale(1.2) translate(9.5%, 9.5%)',
+              transform: "scale(1.2) translate(9.5%, 9.5%)",
             }}
           />
           <span>{capitalizeAll(recipe.name)}</span>

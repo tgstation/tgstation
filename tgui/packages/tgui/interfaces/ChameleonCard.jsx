@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { AccessList } from './common/AccessList';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { AccessList } from "./common/AccessList";
+import { Window } from "../layouts";
 
 export const ChameleonCard = (props) => {
   const { act, data } = useBackend();
@@ -57,7 +57,7 @@ export const ChameleonCard = (props) => {
           accessFlagNames={accessFlagNames}
           showBasic={!!showBasic}
           accessMod={(ref, wildcard) =>
-            act('mod_access', {
+            act("mod_access", {
               access_target: ref,
               access_wildcard: wildcard,
             })

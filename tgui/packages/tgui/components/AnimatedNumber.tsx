@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { clamp, toFixed } from 'common/math';
-import { Component, createRef } from 'react';
+import { clamp, toFixed } from "common/math";
+import { Component, createRef } from "react";
 
 const isSafeNumber = (value: number) => {
   // prettier-ignore
@@ -174,7 +174,7 @@ export class AnimatedNumber extends Component<AnimatedNumberProps> {
       return format(this.currentValue);
     }
 
-    const fraction = String(value).split('.')[1];
+    const fraction = String(value).split(".")[1];
     const precision = fraction ? fraction.length : 0;
 
     return toFixed(currentValue, clamp(precision, 0, 8));

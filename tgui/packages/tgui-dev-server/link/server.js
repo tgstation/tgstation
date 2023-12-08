@@ -4,17 +4,17 @@
  * @license MIT
  */
 
-import http from 'http';
-import { inspect } from 'util';
-import { createLogger, directLog } from '../logging.js';
-import { require } from '../require.js';
-import { loadSourceMaps, retrace } from './retrace.js';
+import http from "http";
+import { inspect } from "util";
+import { createLogger, directLog } from "../logging.js";
+import { require } from "../require.js";
+import { loadSourceMaps, retrace } from "./retrace.js";
 
-const WebSocket = require('ws');
+const WebSocket = require("ws");
 
-const logger = createLogger('link');
+const logger = createLogger("link");
 
-const DEBUG = process.argv.includes('--debug');
+const DEBUG = process.argv.includes("--debug");
 
 export { loadSourceMaps };
 
@@ -22,7 +22,7 @@ export const setupLink = () => new LinkServer();
 
 class LinkServer {
   constructor() {
-    logger.log('setting up');
+    logger.log("setting up");
     this.wss = null;
     this.setupWebSocketLink();
     this.setupHttpLink();
@@ -32,14 +32,14 @@ class LinkServer {
   setupWebSocketLink() {
     const port = 3000;
     this.wss = new WebSocket.Server({ port });
-    this.wss.on('connection', (ws) => {
-      logger.log('client connected');
-      ws.on('message', (json) => {
+    this.wss.on("connection", (ws) => {
+      logger.log("client connected");
+      ws.on("message", (json) => {
         const msg = deserializeObject(json);
         this.handleLinkMessage(ws, msg);
       });
-      ws.on('close', () => {
-        logger.log('client disconnected');
+      ws.on("close", () => {
+        logger.log("client disconnected");
       });
     });
     logger.log(`listening on port ${port} (WebSocket)`);
@@ -49,19 +49,19 @@ class LinkServer {
   setupHttpLink() {
     const port = 3001;
     this.httpServer = http.createServer((req, res) => {
-      if (req.method === 'POST') {
-        let body = '';
-        req.on('data', (chunk) => {
+      if (req.method === "POST") {
+        let body = "";
+        req.on("data", (chunk) => {
           body += chunk.toString();
         });
-        req.on('end', () => {
+        req.on("end", () => {
           const msg = deserializeObject(body);
           this.handleLinkMessage(null, msg);
           res.end();
         });
         return;
       }
-      res.write('Hello');
+      res.write("Hello");
       res.end();
     });
     this.httpServer.listen(port);
@@ -70,7 +70,7 @@ class LinkServer {
 
   handleLinkMessage(ws, msg) {
     const { type, payload } = msg;
-    if (type === 'log') {
+    if (type === "log") {
       const { level, ns, args } = payload;
       // Skip debug messages
       if (level <= 0 && !DEBUG) {
@@ -89,7 +89,7 @@ class LinkServer {
       }));
       return;
     }
-    if (type === 'relay') {
+    if (type === "relay") {
       for (let client of this.wss.clients) {
         if (client === ws) {
           continue;
@@ -98,7 +98,7 @@ class LinkServer {
       }
       return;
     }
-    logger.log('unhandled message', msg);
+    logger.log("unhandled message", msg);
   }
 
   sendMessage(ws, msg) {
@@ -120,7 +120,7 @@ class LinkServer {
 
 const deserializeObject = (str) => {
   return JSON.parse(str, (key, value) => {
-    if (typeof value === 'object' && value !== null) {
+    if (typeof value === "object" && value !== null) {
       if (value.__undefined__) {
         // NOTE: You should not rely on deserialized object's undefined,
         // this is purely for inspection purposes.

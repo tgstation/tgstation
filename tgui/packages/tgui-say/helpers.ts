@@ -1,5 +1,5 @@
-import { Channel } from './ChannelIterator';
-import { WINDOW_SIZES } from './constants';
+import { Channel } from "./ChannelIterator";
+import { WINDOW_SIZES } from "./constants";
 
 /**
  * Once byond signals this via keystroke, it
@@ -7,7 +7,7 @@ import { WINDOW_SIZES } from './constants';
  */
 export const windowOpen = (channel: Channel) => {
   setWindowVisibility(true);
-  Byond.sendMessage('open', { channel });
+  Byond.sendMessage("open", { channel });
 };
 
 /**
@@ -16,10 +16,10 @@ export const windowOpen = (channel: Channel) => {
  */
 export const windowClose = () => {
   setWindowVisibility(false);
-  Byond.winset('map', {
+  Byond.winset("map", {
     focus: true,
   });
-  Byond.sendMessage('close');
+  Byond.sendMessage("close");
 };
 
 /**
@@ -28,19 +28,19 @@ export const windowClose = () => {
 export const windowSet = (size = WINDOW_SIZES.small) => {
   let sizeStr = `${WINDOW_SIZES.width}x${size}`;
 
-  Byond.winset('tgui_say.browser', {
+  Byond.winset("tgui_say.browser", {
     size: sizeStr,
   });
 
-  Byond.winset('tgui_say', {
+  Byond.winset("tgui_say", {
     size: sizeStr,
   });
 };
 
 /** Helper function to set window size and visibility */
 const setWindowVisibility = (visible: boolean) => {
-  Byond.winset('tgui_say', {
-    'is-visible': visible,
+  Byond.winset("tgui_say", {
+    "is-visible": visible,
     size: `${WINDOW_SIZES.width}x${WINDOW_SIZES.small}`,
   });
 };

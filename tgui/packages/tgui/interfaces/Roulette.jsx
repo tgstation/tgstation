@@ -1,16 +1,16 @@
-import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Grid, NumberInput, Table } from '../components';
-import { Window } from '../layouts';
+import { classes } from "common/react";
+import { useBackend, useLocalState } from "../backend";
+import { Box, Button, Grid, NumberInput, Table } from "../components";
+import { Window } from "../layouts";
 
 const getNumberColor = (number) => {
   const inRedOddRange =
     (number >= 1 && number <= 10) || (number >= 19 && number <= 28);
 
   if (number % 2 === 1) {
-    return inRedOddRange ? 'red' : 'black';
+    return inRedOddRange ? "red" : "black";
   }
-  return inRedOddRange ? 'black' : 'red';
+  return inRedOddRange ? "black" : "red";
 };
 
 export const RouletteNumberCell = (props) => {
@@ -18,8 +18,8 @@ export const RouletteNumberCell = (props) => {
     buttonClass = null,
     cellClass = null,
     color,
-    colspan = '1',
-    rowspan = '1',
+    colspan = "1",
+    rowspan = "1",
     text,
     value,
   } = props;
@@ -28,16 +28,18 @@ export const RouletteNumberCell = (props) => {
   return (
     <Table.Cell
       className={classes([
-        'Roulette__board-cell',
-        'Roulette__board-cell-number',
+        "Roulette__board-cell",
+        "Roulette__board-cell-number",
         cellClass,
       ])}
       colspan={colspan}
-      rowspan={rowspan}>
+      rowspan={rowspan}
+    >
       <Button
         color={color}
-        className={classes(['Roulette__board-button', buttonClass])}
-        onClick={() => act('ChangeBetType', { type: value })}>
+        className={classes(["Roulette__board-button", buttonClass])}
+        onClick={() => act("ChangeBetType", { type: value })}
+      >
         <span className="Roulette__board-button-text">{text}</span>
       </Button>
     </Table.Cell>
@@ -49,17 +51,17 @@ export const RouletteBoard = () => {
   const secondRow = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35];
   const thirdRow = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34];
   const fourthRow = {
-    's1-12': '1st 12',
-    's13-24': '2nd 12',
-    's25-36': '3rd 12',
+    "s1-12": "1st 12",
+    "s13-24": "2nd 12",
+    "s25-36": "3rd 12",
   };
   const fifthRow = [
-    { color: 'transparent', text: '1-18', value: 's1-18' },
-    { color: 'transparent', text: 'Even', value: 'even' },
-    { color: 'black', text: 'Black', value: 'black' },
-    { color: 'red', text: 'Red', value: 'red' },
-    { color: 'transparent', text: 'Odd', value: 'odd' },
-    { color: 'transparent', text: '19-36', value: 's19-36' },
+    { color: "transparent", text: "1-18", value: "s1-18" },
+    { color: "transparent", text: "Even", value: "even" },
+    { color: "black", text: "Black", value: "black" },
+    { color: "red", text: "Red", value: "red" },
+    { color: "transparent", text: "Odd", value: "odd" },
+    { color: "transparent", text: "19-36", value: "s19-36" },
   ];
 
   return (
@@ -151,11 +153,11 @@ export const RouletteBoard = () => {
 export const RouletteBetTable = (props) => {
   const { act, data } = useBackend();
 
-  const [customBet, setCustomBet] = useLocalState('customBet', 500);
+  const [customBet, setCustomBet] = useLocalState("customBet", 500);
 
   let { BetType } = data;
 
-  if (BetType.startsWith('s')) {
+  if (BetType.startsWith("s")) {
     BetType = BetType.substring(1, BetType.length);
   }
 
@@ -164,37 +166,41 @@ export const RouletteBetTable = (props) => {
       <Table.Row>
         <Table.Cell
           className={classes([
-            'Roulette',
-            'Roulette__lowertable--cell',
-            'Roulette__lowertable--header',
-          ])}>
+            "Roulette",
+            "Roulette__lowertable--cell",
+            "Roulette__lowertable--header",
+          ])}
+        >
           Last Spin:
         </Table.Cell>
         <Table.Cell
           className={classes([
-            'Roulette',
-            'Roulette__lowertable--cell',
-            'Roulette__lowertable--header',
-          ])}>
+            "Roulette",
+            "Roulette__lowertable--cell",
+            "Roulette__lowertable--header",
+          ])}
+        >
           Current Bet:
         </Table.Cell>
       </Table.Row>
       <Table.Row>
         <Table.Cell
           className={classes([
-            'Roulette',
-            'Roulette__lowertable--cell',
-            'Roulette__lowertable--spinresult',
-            'Roulette__lowertable--spinresult-' + getNumberColor(data.LastSpin),
-          ])}>
+            "Roulette",
+            "Roulette__lowertable--cell",
+            "Roulette__lowertable--spinresult",
+            "Roulette__lowertable--spinresult-" + getNumberColor(data.LastSpin),
+          ])}
+        >
           {data.LastSpin}
         </Table.Cell>
         <Table.Cell
           className={classes([
-            'Roulette',
-            'Roulette__lowertable--cell',
-            'Roulette__lowertable--betscell',
-          ])}>
+            "Roulette",
+            "Roulette__lowertable--cell",
+            "Roulette__lowertable--betscell",
+          ])}
+        >
           <Box bold mt={1} mb={1} fontSize="20px" textAlign="center">
             {data.BetAmount} cr on {BetType}
           </Box>
@@ -203,7 +209,7 @@ export const RouletteBetTable = (props) => {
               fluid
               content="Bet 10 cr"
               onClick={() =>
-                act('ChangeBetAmount', {
+                act("ChangeBetAmount", {
                   amount: 10,
                 })
               }
@@ -212,7 +218,7 @@ export const RouletteBetTable = (props) => {
               fluid
               content="Bet 50 cr"
               onClick={() =>
-                act('ChangeBetAmount', {
+                act("ChangeBetAmount", {
                   amount: 50,
                 })
               }
@@ -221,7 +227,7 @@ export const RouletteBetTable = (props) => {
               fluid
               content="Bet 100 cr"
               onClick={() =>
-                act('ChangeBetAmount', {
+                act("ChangeBetAmount", {
                   amount: 100,
                 })
               }
@@ -230,7 +236,7 @@ export const RouletteBetTable = (props) => {
               fluid
               content="Bet 500 cr"
               onClick={() =>
-                act('ChangeBetAmount', {
+                act("ChangeBetAmount", {
                   amount: 500,
                 })
               }
@@ -241,7 +247,7 @@ export const RouletteBetTable = (props) => {
                   fluid
                   content="Bet custom amount..."
                   onClick={() =>
-                    act('ChangeBetAmount', {
+                    act("ChangeBetAmount", {
                       amount: customBet,
                     })
                   }
@@ -275,17 +281,17 @@ export const RouletteBetTable = (props) => {
             House Balance:
           </Box>
           <Box inline>
-            {data.HouseBalance ? data.HouseBalance + ' cr' : 'None'}
+            {data.HouseBalance ? data.HouseBalance + " cr" : "None"}
           </Box>
         </Table.Cell>
         <Table.Cell className="Roulette__lowertable--cell">
           <Button
             fluid
-            content={data.IsAnchored ? 'Bolted' : 'Unbolted'}
+            content={data.IsAnchored ? "Bolted" : "Unbolted"}
             m={1}
             color="transparent"
             textAlign="center"
-            onClick={() => act('anchor')}
+            onClick={() => act("anchor")}
           />
         </Table.Cell>
       </Table.Row>

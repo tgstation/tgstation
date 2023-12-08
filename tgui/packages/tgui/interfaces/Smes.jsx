@@ -1,7 +1,15 @@
-import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from '../components';
-import { formatPower } from '../format';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Slider,
+} from "../components";
+import { formatPower } from "../format";
+import { Window } from "../layouts";
 
 // Common power multiplier
 const POWER_MUL = 1e3;
@@ -24,9 +32,9 @@ export const Smes = (props) => {
     outputUsed,
   } = data;
   const inputState =
-    (capacityPercent >= 100 && 'good') || (inputting && 'average') || 'bad';
+    (capacityPercent >= 100 && "good") || (inputting && "average") || "bad";
   const outputState =
-    (outputting && 'good') || (charge > 0 && 'average') || 'bad';
+    (outputting && "good") || (charge > 0 && "average") || "bad";
   return (
     <Window width={340} height={350}>
       <Window.Content>
@@ -46,16 +54,18 @@ export const Smes = (props) => {
               label="Charge Mode"
               buttons={
                 <Button
-                  icon={inputAttempt ? 'sync-alt' : 'times'}
+                  icon={inputAttempt ? "sync-alt" : "times"}
                   selected={inputAttempt}
-                  onClick={() => act('tryinput')}>
-                  {inputAttempt ? 'Auto' : 'Off'}
+                  onClick={() => act("tryinput")}
+                >
+                  {inputAttempt ? "Auto" : "Off"}
                 </Button>
-              }>
+              }
+            >
               <Box color={inputState}>
-                {(capacityPercent >= 100 && 'Fully Charged') ||
-                  (inputting && 'Charging') ||
-                  'Not Charging'}
+                {(capacityPercent >= 100 && "Fully Charged") ||
+                  (inputting && "Charging") ||
+                  "Not Charging"}
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Input">
@@ -65,8 +75,8 @@ export const Smes = (props) => {
                     icon="fast-backward"
                     disabled={inputLevel === 0}
                     onClick={() =>
-                      act('input', {
-                        target: 'min',
+                      act("input", {
+                        target: "min",
                       })
                     }
                   />
@@ -74,7 +84,7 @@ export const Smes = (props) => {
                     icon="backward"
                     disabled={inputLevel === 0}
                     onClick={() =>
-                      act('input', {
+                      act("input", {
                         adjust: -10000,
                       })
                     }
@@ -90,7 +100,7 @@ export const Smes = (props) => {
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
                     onDrag={(e, value) =>
-                      act('input', {
+                      act("input", {
                         target: value * POWER_MUL,
                       })
                     }
@@ -101,7 +111,7 @@ export const Smes = (props) => {
                     icon="forward"
                     disabled={inputLevel === inputLevelMax}
                     onClick={() =>
-                      act('input', {
+                      act("input", {
                         adjust: 10000,
                       })
                     }
@@ -110,8 +120,8 @@ export const Smes = (props) => {
                     icon="fast-forward"
                     disabled={inputLevel === inputLevelMax}
                     onClick={() =>
-                      act('input', {
-                        target: 'max',
+                      act("input", {
+                        target: "max",
                       })
                     }
                   />
@@ -129,18 +139,20 @@ export const Smes = (props) => {
               label="Output Mode"
               buttons={
                 <Button
-                  icon={outputAttempt ? 'power-off' : 'times'}
+                  icon={outputAttempt ? "power-off" : "times"}
                   selected={outputAttempt}
-                  onClick={() => act('tryoutput')}>
-                  {outputAttempt ? 'On' : 'Off'}
+                  onClick={() => act("tryoutput")}
+                >
+                  {outputAttempt ? "On" : "Off"}
                 </Button>
-              }>
+              }
+            >
               <Box color={outputState}>
                 {outputting
-                  ? 'Sending'
+                  ? "Sending"
                   : charge > 0
-                    ? 'Not Sending'
-                    : 'No Charge'}
+                    ? "Not Sending"
+                    : "No Charge"}
               </Box>
             </LabeledList.Item>
             <LabeledList.Item label="Target Output">
@@ -150,8 +162,8 @@ export const Smes = (props) => {
                     icon="fast-backward"
                     disabled={outputLevel === 0}
                     onClick={() =>
-                      act('output', {
-                        target: 'min',
+                      act("output", {
+                        target: "min",
                       })
                     }
                   />
@@ -159,7 +171,7 @@ export const Smes = (props) => {
                     icon="backward"
                     disabled={outputLevel === 0}
                     onClick={() =>
-                      act('output', {
+                      act("output", {
                         adjust: -10000,
                       })
                     }
@@ -174,7 +186,7 @@ export const Smes = (props) => {
                     stepPixelSize={4}
                     format={(value) => formatPower(value * POWER_MUL, 1)}
                     onDrag={(e, value) =>
-                      act('output', {
+                      act("output", {
                         target: value * POWER_MUL,
                       })
                     }
@@ -185,7 +197,7 @@ export const Smes = (props) => {
                     icon="forward"
                     disabled={outputLevel === outputLevelMax}
                     onClick={() =>
-                      act('output', {
+                      act("output", {
                         adjust: 10000,
                       })
                     }
@@ -194,8 +206,8 @@ export const Smes = (props) => {
                     icon="fast-forward"
                     disabled={outputLevel === outputLevelMax}
                     onClick={() =>
-                      act('output', {
-                        target: 'max',
+                      act("output", {
+                        target: "max",
                       })
                     }
                   />

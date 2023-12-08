@@ -1,7 +1,7 @@
-import { filter, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { HEALTH, THREAT } from './constants';
-import type { AntagGroup, Antagonist, Observable } from './types';
+import { filter, sortBy } from "common/collections";
+import { flow } from "common/fp";
+import { HEALTH, THREAT } from "./constants";
+import type { AntagGroup, Antagonist, Observable } from "./types";
 
 /** Return a map of strings with each antag in its antag_category */
 export const getAntagCategories = (antagonists: Antagonist[]) => {
@@ -18,7 +18,7 @@ export const getAntagCategories = (antagonists: Antagonist[]) => {
   });
 
   const sortedAntagonists = sortBy<AntagGroup>(([key]) => key)(
-    Object.entries(categories)
+    Object.entries(categories),
   );
 
   return sortedAntagonists;
@@ -31,7 +31,7 @@ export const getDisplayName = (full_name: string, name?: string) => {
   }
 
   if (
-    !full_name?.includes('[') ||
+    !full_name?.includes("[") ||
     full_name.match(/\(as /) ||
     full_name.match(/^Unknown/)
   ) {
@@ -44,13 +44,13 @@ export const getDisplayName = (full_name: string, name?: string) => {
 
 export const getMostRelevant = (
   searchQuery: string,
-  observables: Observable[][]
+  observables: Observable[][],
 ) => {
   /** Returns the most orbited observable that matches the search. */
   const mostRelevant: Observable = flow([
     // Filters out anything that doesn't match search
     filter<Observable>((observable) =>
-      isJobOrNameMatch(observable, searchQuery)
+      isJobOrNameMatch(observable, searchQuery),
     ),
     // Sorts descending by orbiters
     sortBy<Observable>((observable) => -(observable.orbiters || 0)),
@@ -64,11 +64,11 @@ export const getMostRelevant = (
 const getHealthColor = (health: number) => {
   switch (true) {
     case health > HEALTH.Good:
-      return 'good';
+      return "good";
     case health > HEALTH.Average:
-      return 'average';
+      return "average";
     default:
-      return 'bad';
+      return "bad";
   }
 };
 
@@ -76,13 +76,13 @@ const getHealthColor = (health: number) => {
 const getThreatColor = (orbiters = 0) => {
   switch (true) {
     case orbiters > THREAT.High:
-      return 'violet';
+      return "violet";
     case orbiters > THREAT.Medium:
-      return 'blue';
+      return "blue";
     case orbiters > THREAT.Low:
-      return 'teal';
+      return "teal";
     default:
-      return 'good';
+      return "good";
   }
 };
 
@@ -90,11 +90,11 @@ const getThreatColor = (orbiters = 0) => {
 export const getDisplayColor = (
   item: Observable,
   heatMap: boolean,
-  color?: string
+  color?: string,
 ) => {
   const { health, orbiters } = item;
-  if (typeof health !== 'number') {
-    return color ? 'good' : 'grey';
+  if (typeof health !== "number") {
+    return color ? "good" : "grey";
   }
   if (heatMap) {
     return getThreatColor(orbiters);
@@ -105,7 +105,7 @@ export const getDisplayColor = (
 /** Checks if a full name or job title matches the search. */
 export const isJobOrNameMatch = (
   observable: Observable,
-  searchQuery: string
+  searchQuery: string,
 ) => {
   if (!searchQuery) {
     return true;

@@ -1,6 +1,17 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Box, Dropdown, Button, Input, TextArea, Divider, NumberInput, Tooltip, Knob } from '../components';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from "../backend";
+import {
+  Section,
+  Box,
+  Dropdown,
+  Button,
+  Input,
+  TextArea,
+  Divider,
+  NumberInput,
+  Tooltip,
+  Knob,
+} from "../components";
+import { Window } from "../layouts";
 
 export const AdminFax = (props) => {
   return (
@@ -15,17 +26,17 @@ export const AdminFax = (props) => {
 export const FaxMainPanel = (props) => {
   const { act, data } = useBackend();
 
-  const [fax, setFax] = useLocalState('fax', '');
-  const [saved, setSaved] = useLocalState('saved', false);
-  const [paperName, setPaperName] = useLocalState('paperName', '');
-  const [fromWho, setFromWho] = useLocalState('fromWho', '');
-  const [rawText, setRawText] = useLocalState('rawText', '');
-  const [stamp, setStamp] = useLocalState('stampType', '');
-  const [stampCoordX, setStampCoordX] = useLocalState('stampCoordX', 0);
-  const [stampCoordY, setStampCoordY] = useLocalState('stampCoordY', 0);
-  const [stampAngle, setStampAngle] = useLocalState('stampAngle', 0);
-  if (stamp && data.stamps[0] !== 'None') {
-    data.stamps.unshift('None');
+  const [fax, setFax] = useLocalState("fax", "");
+  const [saved, setSaved] = useLocalState("saved", false);
+  const [paperName, setPaperName] = useLocalState("paperName", "");
+  const [fromWho, setFromWho] = useLocalState("fromWho", "");
+  const [rawText, setRawText] = useLocalState("rawText", "");
+  const [stamp, setStamp] = useLocalState("stampType", "");
+  const [stampCoordX, setStampCoordX] = useLocalState("stampCoordX", 0);
+  const [stampCoordY, setStampCoordY] = useLocalState("stampCoordY", 0);
+  const [stampAngle, setStampAngle] = useLocalState("stampAngle", 0);
+  if (stamp && data.stamps[0] !== "None") {
+    data.stamps.unshift("None");
   }
   return (
     <div className="faxmenu">
@@ -37,14 +48,16 @@ export const FaxMainPanel = (props) => {
               icon="arrow-up"
               disabled={!fax}
               onClick={() =>
-                act('follow', {
+                act("follow", {
                   faxName: fax,
                 })
-              }>
+              }
+            >
               Follow
             </Button>
           </Box>
-        }>
+        }
+      >
         <Box fontSize="13px">
           <Dropdown
             textAlign="center"
@@ -64,13 +77,15 @@ export const FaxMainPanel = (props) => {
             icon="eye"
             disabled={!saved}
             onClick={() =>
-              act('preview', {
+              act("preview", {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Preview
           </Button>
-        }>
+        }
+      >
         <Box fontSize="14px">
           <Input
             mb="5px"
@@ -83,13 +98,15 @@ export const FaxMainPanel = (props) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setPaperName('Nanotrasen Official Report')}>
+            onClick={() => setPaperName("Nanotrasen Official Report")}
+          >
             Nanotrasen
           </Button>
           <Button
             icon="s"
             width="49%"
-            onClick={() => setPaperName('Syndicate Report')}>
+            onClick={() => setPaperName("Syndicate Report")}
+          >
             Syndicate
           </Button>
         </Box>
@@ -109,10 +126,11 @@ export const FaxMainPanel = (props) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setFromWho('Nanotrasen')}>
+            onClick={() => setFromWho("Nanotrasen")}
+          >
             Nanotrasen
           </Button>
-          <Button icon="s" width="49%" onClick={() => setFromWho('Syndicate')}>
+          <Button icon="s" width="49%" onClick={() => setFromWho("Syndicate")}>
             Syndicate
           </Button>
         </Box>
@@ -134,8 +152,8 @@ export const FaxMainPanel = (props) => {
             options={data.stamps}
             selected="Choose stamp(optional)"
             onSelected={(v) => {
-              if (v === 'None') {
-                setStamp('');
+              if (v === "None") {
+                setStamp("");
                 data.stamps.shift();
               } else {
                 setStamp(v);
@@ -145,7 +163,7 @@ export const FaxMainPanel = (props) => {
           {stamp && (
             <Box textAlign="center">
               <h4>
-                X Coordinate:{' '}
+                X Coordinate:{" "}
                 <NumberInput
                   width="45px"
                   minValue={0}
@@ -156,7 +174,7 @@ export const FaxMainPanel = (props) => {
               </h4>
 
               <h4>
-                Y Coordinate:{' '}
+                Y Coordinate:{" "}
                 <NumberInput
                   width="45px"
                   minValue={0}
@@ -187,10 +205,11 @@ export const FaxMainPanel = (props) => {
             icon="paper-plane"
             mr="9px"
             onClick={() =>
-              act('send', {
+              act("send", {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Send
           </Button>
           <Button
@@ -199,7 +218,7 @@ export const FaxMainPanel = (props) => {
             color="green"
             onClick={() => {
               setSaved(true);
-              act('save', {
+              act("save", {
                 faxName: fax,
                 paperName: paperName,
                 rawText: rawText,
@@ -209,17 +228,19 @@ export const FaxMainPanel = (props) => {
                 stampAngle: stampAngle,
                 fromWho: fromWho,
               });
-            }}>
+            }}
+          >
             Save
           </Button>
           <Button
             disabled={!saved}
             icon="circle-plus"
             onClick={() =>
-              act('createPaper', {
+              act("createPaper", {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Create paper
           </Button>
         </Box>

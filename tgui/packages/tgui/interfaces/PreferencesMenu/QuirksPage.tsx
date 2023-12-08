@@ -1,24 +1,24 @@
-import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
-import { PreferencesMenuData, Quirk, RandomSetting, ServerData } from './data';
-import { useBackend, useLocalState } from '../../backend';
-import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
-import { filterMap } from 'common/collections';
-import { getRandomization, PreferenceList } from './MainPage';
-import { useRandomToggleState } from './useRandomToggleState';
+import { Box, Button, Icon, Popper, Stack, Tooltip } from "../../components";
+import { PreferencesMenuData, Quirk, RandomSetting, ServerData } from "./data";
+import { useBackend, useLocalState } from "../../backend";
+import { ServerPreferencesFetcher } from "./ServerPreferencesFetcher";
+import { filterMap } from "common/collections";
+import { getRandomization, PreferenceList } from "./MainPage";
+import { useRandomToggleState } from "./useRandomToggleState";
 
 const getValueClass = (value: number): string => {
   if (value > 0) {
-    return 'positive';
+    return "positive";
   } else if (value < 0) {
-    return 'negative';
+    return "negative";
   } else {
-    return 'neutral';
+    return "neutral";
   }
 };
 
 const getCorrespondingPreferences = (
   customization_options: string[],
-  relevant_preferences: Record<string, string>
+  relevant_preferences: Record<string, string>,
 ): Record<string, unknown> => {
   return Object.fromEntries(
     filterMap(Object.keys(relevant_preferences), (key) => {
@@ -27,7 +27,7 @@ const getCorrespondingPreferences = (
       }
 
       return [key, relevant_preferences[key]];
-    })
+    }),
   );
 };
 
@@ -36,7 +36,7 @@ const QuirkList = (props: {
     string,
     Quirk & {
       failTooltip?: string;
-    }
+    },
   ][];
   onClick: (quirkName: string, quirk: Quirk) => void;
   selected: boolean;
@@ -50,9 +50,9 @@ const QuirkList = (props: {
     <Box className="PreferencesMenu__Quirks__QuirkList">
       {props.quirks.map(([quirkKey, quirk]) => {
         const [customizationExpanded, setCustomizationExpanded] =
-          useLocalState<boolean>(quirk.name + ' customization', false);
+          useLocalState<boolean>(quirk.name + " customization", false);
 
-        const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
+        const className = "PreferencesMenu__Quirks__QuirkList__quirk";
 
         const hasExpandableCustomization =
           quirk.customizable &&
@@ -72,15 +72,17 @@ const QuirkList = (props: {
                 setCustomizationExpanded(false);
               }
               props.onClick(quirkKey, quirk);
-            }}>
+            }}
+          >
             <Stack fill>
               <Stack.Item
                 align="center"
                 style={{
-                  minWidth: '15%',
-                  maxWidth: '15%',
-                  textAlign: 'center',
-                }}>
+                  minWidth: "15%",
+                  maxWidth: "15%",
+                  textAlign: "center",
+                }}
+              >
                 <Icon color="#333" fontSize={3} name={quirk.icon} />
               </Stack.Item>
 
@@ -88,7 +90,7 @@ const QuirkList = (props: {
                 align="stretch"
                 ml={0}
                 style={{
-                  borderRight: '1px solid black',
+                  borderRight: "1px solid black",
                 }}
               />
 
@@ -97,20 +99,23 @@ const QuirkList = (props: {
                 ml={0}
                 style={{
                   // Fixes an IE bug for text overflowing in Flex boxes
-                  minWidth: '0%',
-                }}>
+                  minWidth: "0%",
+                }}
+              >
                 <Stack vertical fill>
                   <Stack.Item
                     className={`${className}--${getValueClass(quirk.value)}`}
                     style={{
-                      borderBottom: '1px solid black',
-                      padding: '2px',
-                    }}>
+                      borderBottom: "1px solid black",
+                      padding: "2px",
+                    }}
+                  >
                     <Stack
                       fill
                       style={{
-                        fontSize: '1.2em',
-                      }}>
+                        fontSize: "1.2em",
+                      }}
+                    >
                       <Stack.Item grow basis="content">
                         <b>{quirk.name}</b>
                       </Stack.Item>
@@ -126,13 +131,14 @@ const QuirkList = (props: {
                     basis="content"
                     mt={0}
                     style={{
-                      padding: '3px',
-                    }}>
+                      padding: "3px",
+                    }}
+                  >
                     {quirk.description}
                     {!!quirk.customizable && (
                       <Popper
                         options={{
-                          placement: 'bottom-end',
+                          placement: "bottom-end",
                         }}
                         popperContent={
                           <Box>
@@ -142,8 +148,9 @@ const QuirkList = (props: {
                                   mt="1px"
                                   style={{
                                     boxShadow:
-                                      '0px 4px 8px 3px rgba(0, 0, 0, 0.7)',
-                                  }}>
+                                      "0px 4px 8px 3px rgba(0, 0, 0, 0.7)",
+                                  }}
+                                >
                                   <Stack
                                     onClick={(e) => {
                                       e.stopPropagation();
@@ -151,23 +158,24 @@ const QuirkList = (props: {
                                     maxWidth="300px"
                                     backgroundColor="black"
                                     px="5px"
-                                    py="3px">
+                                    py="3px"
+                                  >
                                     <Stack.Item>
                                       <PreferenceList
                                         act={act}
                                         preferences={getCorrespondingPreferences(
                                           quirk.customization_options,
                                           data.character_preferences
-                                            .manually_rendered_features
+                                            .manually_rendered_features,
                                         )}
                                         randomizations={getRandomization(
                                           getCorrespondingPreferences(
                                             quirk.customization_options,
                                             data.character_preferences
-                                              .manually_rendered_features
+                                              .manually_rendered_features,
                                           ),
                                           props.serverData,
-                                          props.randomBodyEnabled
+                                          props.randomBodyEnabled,
                                         )}
                                         maxHeight="100px"
                                       />
@@ -176,7 +184,8 @@ const QuirkList = (props: {
                                 </Box>
                               )}
                           </Box>
-                        }>
+                        }
+                      >
                         {props.selected && (
                           <Button
                             selected={customizationExpanded}
@@ -188,7 +197,7 @@ const QuirkList = (props: {
                               setCustomizationExpanded(!customizationExpanded);
                             }}
                             style={{
-                              float: 'right',
+                              float: "right",
                             }}
                           />
                         )}
@@ -223,7 +232,8 @@ const StatDisplay = (props) => {
       color="black"
       fontSize="1.2em"
       px={3}
-      py={0.5}>
+      py={0.5}
+    >
       {props.children}
     </Box>
   );
@@ -240,7 +250,7 @@ export const QuirksPage = (props) => {
 
   const [selectedQuirks, setSelectedQuirks] = useLocalState(
     `selectedQuirks_${data.active_slot}`,
-    data.selected_quirks
+    data.selected_quirks,
   );
 
   return (
@@ -288,7 +298,7 @@ export const QuirksPage = (props) => {
             if (positiveQuirks >= maxPositiveQuirks) {
               return "You can't have any more positive quirks!";
             } else if (balance + quirk.value > 0) {
-              return 'You need a negative quirk to balance this out!';
+              return "You need a negative quirk to balance this out!";
             }
           }
 
@@ -318,7 +328,7 @@ export const QuirksPage = (props) => {
           const quirk = quirkInfo[quirkName];
 
           if (balance - quirk.value > 0) {
-            return 'You need to remove a positive quirk first!';
+            return "You need to remove a positive quirk first!";
           }
 
           return undefined;
@@ -354,7 +364,7 @@ export const QuirksPage = (props) => {
 
                       setSelectedQuirks(selectedQuirks.concat(quirkName));
 
-                      act('give_quirk', { quirk: quirk.name });
+                      act("give_quirk", { quirk: quirk.name });
                     }}
                     quirks={quirks
                       .filter(([quirkName, _]) => {
@@ -406,11 +416,11 @@ export const QuirksPage = (props) => {
 
                       setSelectedQuirks(
                         selectedQuirks.filter(
-                          (otherQuirk) => quirkName !== otherQuirk
-                        )
+                          (otherQuirk) => quirkName !== otherQuirk,
+                        ),
                       );
 
-                      act('remove_quirk', { quirk: quirk.name });
+                      act("remove_quirk", { quirk: quirk.name });
                     }}
                     quirks={quirks
                       .filter(([quirkName, _]) => {

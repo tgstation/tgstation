@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, Section, Table } from '../components';
-import { NtosWindow } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Section, Table } from "../components";
+import { NtosWindow } from "../layouts";
 
 export const NtosFileManager = (props) => {
   const { act, data } = useBackend();
@@ -12,16 +12,16 @@ export const NtosFileManager = (props) => {
           <FileTable
             files={files}
             usbconnected={usbconnected}
-            onUpload={(file) => act('PRG_copytousb', { name: file })}
-            onDelete={(file) => act('PRG_deletefile', { name: file })}
+            onUpload={(file) => act("PRG_copytousb", { name: file })}
+            onDelete={(file) => act("PRG_deletefile", { name: file })}
             onRename={(file, newName) =>
-              act('PRG_renamefile', {
+              act("PRG_renamefile", {
                 name: file,
                 new_name: newName,
               })
             }
-            onDuplicate={(file) => act('PRG_clone', { file: file })}
-            onToggleSilence={(file) => act('PRG_togglesilence', { name: file })}
+            onDuplicate={(file) => act("PRG_clone", { file: file })}
+            onToggleSilence={(file) => act("PRG_togglesilence", { name: file })}
           />
         </Section>
         {usbconnected && (
@@ -30,15 +30,15 @@ export const NtosFileManager = (props) => {
               usbmode
               files={usbfiles}
               usbconnected={usbconnected}
-              onUpload={(file) => act('PRG_copyfromusb', { name: file })}
-              onDelete={(file) => act('PRG_usbdeletefile', { name: file })}
+              onUpload={(file) => act("PRG_copyfromusb", { name: file })}
+              onDelete={(file) => act("PRG_usbdeletefile", { name: file })}
               onRename={(file, newName) =>
-                act('PRG_usbrenamefile', {
+                act("PRG_usbrenamefile", {
                   name: file,
                   new_name: newName,
                 })
               }
-              onDuplicate={(file) => act('PRG_clone', { file: file })}
+              onDuplicate={(file) => act("PRG_clone", { file: file })}
             />
           </Section>
         )}
@@ -84,9 +84,9 @@ const FileTable = (props) => {
           <Table.Cell collapsing>
             {!!file.alert_able && (
               <Button
-                icon={file.alert_silenced ? 'bell-slash' : 'bell'}
-                color={file.alert_silenced ? 'red' : 'default'}
-                tooltip={file.alert_silenced ? 'Unmute Alerts' : 'Mute Alerts'}
+                icon={file.alert_silenced ? "bell-slash" : "bell"}
+                color={file.alert_silenced ? "red" : "default"}
+                tooltip={file.alert_silenced ? "Unmute Alerts" : "Mute Alerts"}
                 onClick={() => onToggleSilence(file.name)}
               />
             )}

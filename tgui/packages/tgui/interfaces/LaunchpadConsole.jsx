@@ -1,6 +1,16 @@
-import { useBackend } from '../backend';
-import { Box, Button, Divider, Flex, Grid, Input, NoticeBox, NumberInput, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Grid,
+  Input,
+  NoticeBox,
+  NumberInput,
+  Section,
+} from "../components";
+import { Window } from "../layouts";
 
 const LaunchpadButtonPad = (props) => {
   const { act } = useBackend();
@@ -13,7 +23,7 @@ const LaunchpadButtonPad = (props) => {
           iconRotation={45}
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               x: -1,
               y: 1,
             })
@@ -24,7 +34,7 @@ const LaunchpadButtonPad = (props) => {
           icon="arrow-left"
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               x: -1,
             })
           }
@@ -35,7 +45,7 @@ const LaunchpadButtonPad = (props) => {
           iconRotation={45}
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               x: -1,
               y: -1,
             })
@@ -48,7 +58,7 @@ const LaunchpadButtonPad = (props) => {
           icon="arrow-up"
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               y: 1,
             })
           }
@@ -58,7 +68,7 @@ const LaunchpadButtonPad = (props) => {
           content="R"
           mb={1}
           onClick={() =>
-            act('set_pos', {
+            act("set_pos", {
               x: 0,
               y: 0,
             })
@@ -69,7 +79,7 @@ const LaunchpadButtonPad = (props) => {
           icon="arrow-down"
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               y: -1,
             })
           }
@@ -82,7 +92,7 @@ const LaunchpadButtonPad = (props) => {
           iconRotation={45}
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               x: 1,
               y: 1,
             })
@@ -93,7 +103,7 @@ const LaunchpadButtonPad = (props) => {
           icon="arrow-right"
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               x: 1,
             })
           }
@@ -104,7 +114,7 @@ const LaunchpadButtonPad = (props) => {
           iconRotation={45}
           mb={1}
           onClick={() =>
-            act('move_pos', {
+            act("move_pos", {
               x: 1,
               y: -1,
             })
@@ -126,7 +136,7 @@ export const LaunchpadControl = (props) => {
           value={pad_name}
           width="170px"
           onChange={(e, value) =>
-            act('rename', {
+            act("rename", {
               name: value,
             })
           }
@@ -138,9 +148,10 @@ export const LaunchpadControl = (props) => {
           icon="times"
           content="Remove"
           color="bad"
-          onClick={() => act('remove')}
+          onClick={() => act("remove")}
         />
-      }>
+      }
+    >
       <Grid>
         <Grid.Column>
           <Section title="Controls" level={2}>
@@ -164,7 +175,7 @@ export const LaunchpadControl = (props) => {
                   height="30px"
                   stepPixelSize={10}
                   onChange={(e, value) =>
-                    act('set_pos', {
+                    act("set_pos", {
                       x: value,
                     })
                   }
@@ -184,7 +195,7 @@ export const LaunchpadControl = (props) => {
                   width="90px"
                   height="30px"
                   onChange={(e, value) =>
-                    act('set_pos', {
+                    act("set_pos", {
                       y: value,
                     })
                   }
@@ -201,7 +212,7 @@ export const LaunchpadControl = (props) => {
             icon="upload"
             content="Launch"
             textAlign="center"
-            onClick={() => act('launch')}
+            onClick={() => act("launch")}
           />
         </Grid.Column>
         <Grid.Column>
@@ -210,7 +221,7 @@ export const LaunchpadControl = (props) => {
             icon="download"
             content="Pull"
             textAlign="center"
-            onClick={() => act('pull')}
+            onClick={() => act("pull")}
           />
         </Grid.Column>
       </Grid>
@@ -239,7 +250,7 @@ export const LaunchpadConsole = (props) => {
                     selected={selected_id === launchpad.id}
                     color="transparent"
                     onClick={() =>
-                      act('select_pad', {
+                      act("select_pad", {
                         id: launchpad.id,
                       })
                     }

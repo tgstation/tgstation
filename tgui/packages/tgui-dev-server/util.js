@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import fs from 'fs';
-import path from 'path';
-import { require } from './require.js';
+import fs from "fs";
+import path from "path";
+import { require } from "./require.js";
 
-const globPkg = require('glob');
+const globPkg = require("glob");
 
 export const resolvePath = path.resolve;
 

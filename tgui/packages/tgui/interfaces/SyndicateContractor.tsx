@@ -1,8 +1,18 @@
-import { BooleanLike } from 'common/react';
-import { FakeTerminal } from '../components/FakeTerminal';
-import { useBackend } from '../backend';
-import { Box, Button, Flex, Grid, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
-import { NtosWindow } from '../layouts';
+import { BooleanLike } from "common/react";
+import { FakeTerminal } from "../components/FakeTerminal";
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
+  Section,
+} from "../components";
+import { NtosWindow } from "../layouts";
 
 const CONTRACT_STATUS_INACTIVE = 1;
 const CONTRACT_STATUS_ACTIVE = 2;
@@ -53,56 +63,56 @@ export const SyndicateContractorContent = (props) => {
   const { error, logged_in, first_load, info_screen } = data;
 
   const terminalMessages = [
-    'Recording biometric data...',
-    'Analyzing embedded syndicate info...',
-    'STATUS CONFIRMED',
-    'Contacting syndicate database...',
-    'Awaiting response...',
-    'Awaiting response...',
-    'Awaiting response...',
-    'Awaiting response...',
-    'Awaiting response...',
-    'Awaiting response...',
-    'Response received, ack 4851234...',
-    'CONFIRM ACC ' + Math.round(Math.random() * 20000),
-    'Setting up private accounts...',
-    'CONTRACTOR ACCOUNT CREATED',
-    'Searching for available contracts...',
-    'Searching for available contracts...',
-    'Searching for available contracts...',
-    'Searching for available contracts...',
-    'CONTRACTS FOUND',
-    'WELCOME, AGENT',
+    "Recording biometric data...",
+    "Analyzing embedded syndicate info...",
+    "STATUS CONFIRMED",
+    "Contacting syndicate database...",
+    "Awaiting response...",
+    "Awaiting response...",
+    "Awaiting response...",
+    "Awaiting response...",
+    "Awaiting response...",
+    "Awaiting response...",
+    "Response received, ack 4851234...",
+    "CONFIRM ACC " + Math.round(Math.random() * 20000),
+    "Setting up private accounts...",
+    "CONTRACTOR ACCOUNT CREATED",
+    "Searching for available contracts...",
+    "Searching for available contracts...",
+    "Searching for available contracts...",
+    "Searching for available contracts...",
+    "CONTRACTS FOUND",
+    "WELCOME, AGENT",
   ];
 
   const infoEntries = [
-    'SyndTract v2.0',
-    '',
+    "SyndTract v2.0",
+    "",
     "We've identified potentional high-value targets that are",
-    'currently assigned to your mission area. They are believed',
-    'to hold valuable information which could be of immediate',
-    'importance to our organisation.',
-    '',
-    'Listed below are all of the contracts available to you. You',
-    'are to bring the specified target to the designated',
-    'drop-off, and contact us via this uplink. We will send',
-    'a specialised extraction unit to put the body into.',
-    '',
-    'We want targets alive - but we will sometimes pay slight',
+    "currently assigned to your mission area. They are believed",
+    "to hold valuable information which could be of immediate",
+    "importance to our organisation.",
+    "",
+    "Listed below are all of the contracts available to you. You",
+    "are to bring the specified target to the designated",
+    "drop-off, and contact us via this uplink. We will send",
+    "a specialised extraction unit to put the body into.",
+    "",
+    "We want targets alive - but we will sometimes pay slight",
     "amounts if they're not, you just won't receive the shown",
-    'bonus. You can redeem your payment through this uplink in',
-    'the form of raw telecrystals, which can be put into your',
-    'regular Syndicate uplink to purchase whatever you may need.',
-    'We provide you with these crystals the moment you send the',
-    'target up to us, which can be collected at anytime through',
-    'this system.',
-    '',
-    'Targets extracted will be ransomed back to the station once',
-    'their use to us is fulfilled, with us providing you a small',
-    'percentage cut. You may want to be mindful of them',
-    'identifying you when they come back. We provide you with',
-    'a standard contractor loadout, which will help cover your',
-    'identity.',
+    "bonus. You can redeem your payment through this uplink in",
+    "the form of raw telecrystals, which can be put into your",
+    "regular Syndicate uplink to purchase whatever you may need.",
+    "We provide you with these crystals the moment you send the",
+    "target up to us, which can be collected at anytime through",
+    "this system.",
+    "",
+    "Targets extracted will be ransomed back to the station once",
+    "their use to us is fulfilled, with us providing you a small",
+    "percentage cut. You may want to be mindful of them",
+    "identifying you when they come back. We provide you with",
+    "a standard contractor loadout, which will help cover your",
+    "identity.",
   ];
 
   const errorPane = !!error && (
@@ -115,7 +125,7 @@ export const SyndicateContractorContent = (props) => {
           <Box width="260px" textAlign="left" minHeight="80px">
             {error}
           </Box>
-          <Button content="Dismiss" onClick={() => act('PRG_clear_error')} />
+          <Button content="Dismiss" onClick={() => act("PRG_clear_error")} />
         </Flex.Item>
       </Flex>
     </Modal>
@@ -128,7 +138,7 @@ export const SyndicateContractorContent = (props) => {
           <Button
             content="REGISTER USER"
             color="transparent"
-            onClick={() => act('PRG_login')}
+            onClick={() => act("PRG_login")}
           />
         </Box>
         {!!error && <NoticeBox>{error}</NoticeBox>}
@@ -142,7 +152,7 @@ export const SyndicateContractorContent = (props) => {
         <FakeTerminal
           allMessages={terminalMessages}
           finishedTimeout={3000}
-          onFinished={() => act('PRG_set_first_load_finished')}
+          onFinished={() => act("PRG_set_first_load_finished")}
         />
       </Box>
     );
@@ -159,7 +169,7 @@ export const SyndicateContractorContent = (props) => {
           content="CONTINUE"
           color="transparent"
           textAlign="center"
-          onClick={() => act('PRG_toggle_info')}
+          onClick={() => act("PRG_toggle_info")}
         />
       </>
     );
@@ -188,10 +198,11 @@ export const StatusPane = (props) => {
             color="transparent"
             mb={0}
             ml={1}
-            onClick={() => act('PRG_toggle_info')}
+            onClick={() => act("PRG_toggle_info")}
           />
         </>
-      }>
+      }
+    >
       <Grid>
         <Grid.Column size={0.85}>
           <LabeledList>
@@ -201,9 +212,10 @@ export const StatusPane = (props) => {
                 <Button
                   content="Claim"
                   disabled={redeemable_tc <= 0}
-                  onClick={() => act('PRG_redeem_TC')}
+                  onClick={() => act("PRG_redeem_TC")}
                 />
-              }>
+              }
+            >
               {String(redeemable_tc)}
             </LabeledList.Item>
             <LabeledList.Item label="TC Earned">
@@ -237,9 +249,10 @@ const ContractsTab = (props) => {
           <Button
             content="Call Extraction"
             disabled={!ongoing_contract || extraction_enroute}
-            onClick={() => act('PRG_call_extraction')}
+            onClick={() => act("PRG_call_extraction")}
           />
-        }>
+        }
+      >
         {contracts.map((contract) => {
           if (ongoing_contract && contract.status !== CONTRACT_STATUS_ACTIVE) {
             return;
@@ -254,7 +267,7 @@ const ContractsTab = (props) => {
               title={
                 contract.target
                   ? `${contract.target} (${contract.target_rank})`
-                  : 'Invalid Target'
+                  : "Invalid Target"
               }
               buttons={
                 <>
@@ -262,17 +275,18 @@ const ContractsTab = (props) => {
                     {`${contract.payout} (+${contract.payout_bonus}) TC`}
                   </Box>
                   <Button
-                    content={active ? 'Abort' : 'Accept'}
+                    content={active ? "Abort" : "Accept"}
                     disabled={contract.extraction_enroute}
-                    color={active && 'bad'}
+                    color={active && "bad"}
                     onClick={() =>
-                      act('PRG_contract' + (active ? '_abort' : '-accept'), {
+                      act("PRG_contract" + (active ? "_abort" : "-accept"), {
                         contract_id: contract.id,
                       })
                     }
                   />
                 </>
-              }>
+              }
+            >
               <Grid>
                 <Grid.Column>{contract.message}</Grid.Column>
                 <Grid.Column size={0.5}>
@@ -289,7 +303,8 @@ const ContractsTab = (props) => {
       <Section
         title="Dropoff Locator"
         textAlign="center"
-        opacity={ongoing_contract ? 100 : 0}>
+        opacity={ongoing_contract ? 100 : 0}
+      >
         <Box bold>{dropoff_direction}</Box>
       </Section>
     </>

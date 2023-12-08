@@ -1,6 +1,12 @@
-import { useBackend } from '../backend';
-import { BlockQuote, Button, LabeledList, ProgressBar, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import {
+  BlockQuote,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from "../components";
+import { Window } from "../layouts";
 
 export const Intellicard = (props) => {
   const { act, data } = useBackend();
@@ -19,21 +25,22 @@ export const Intellicard = (props) => {
     <Window width={500} height={500}>
       <Window.Content scrollable>
         <Section
-          title={name || 'Empty Card'}
+          title={name || "Empty Card"}
           buttons={
             !!name && (
               <Button
                 icon="trash"
-                content={wiping ? 'Stop Wiping' : 'Wipe'}
+                content={wiping ? "Stop Wiping" : "Wipe"}
                 disabled={isDead}
-                onClick={() => act('wipe')}
+                onClick={() => act("wipe")}
               />
             )
-          }>
+          }
+        >
           {!!name && (
             <LabeledList>
-              <LabeledList.Item label="Status" color={offline ? 'bad' : 'good'}>
-                {offline ? 'Offline' : 'Operation'}
+              <LabeledList.Item label="Status" color={offline ? "bad" : "good"}>
+                {offline ? "Offline" : "Operation"}
               </LabeledList.Item>
               <LabeledList.Item label="Software Integrity">
                 <ProgressBar
@@ -52,13 +59,13 @@ export const Intellicard = (props) => {
                   icon="signal"
                   content="Wireless Activity"
                   selected={wireless}
-                  onClick={() => act('wireless')}
+                  onClick={() => act("wireless")}
                 />
                 <Button
                   icon="microphone"
                   content="Subspace Radio"
                   selected={radio}
-                  onClick={() => act('radio')}
+                  onClick={() => act("radio")}
                 />
               </LabeledList.Item>
               <LabeledList.Item label="Laws">

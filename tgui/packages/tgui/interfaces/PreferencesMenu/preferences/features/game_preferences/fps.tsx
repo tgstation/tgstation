@@ -1,5 +1,5 @@
-import { Dropdown, NumberInput, Stack } from '../../../../../components';
-import { Feature, FeatureNumericData, FeatureValueProps } from '../base';
+import { Dropdown, NumberInput, Stack } from "../../../../../components";
+import { Feature, FeatureNumericData, FeatureValueProps } from "../base";
 
 type FpsServerData = FeatureNumericData & {
   recommended_fps: number;
@@ -17,7 +17,7 @@ const FpsInput = (props: FeatureValueProps<number, number, FpsServerData>) => {
     <Stack fill>
       <Stack.Item basis="70%">
         <Dropdown
-          selected={props.value === -1 ? recommened : 'Custom'}
+          selected={props.value === -1 ? recommened : "Custom"}
           onSelected={(value) => {
             if (value === recommened) {
               handleSetValue(-1);
@@ -26,7 +26,7 @@ const FpsInput = (props: FeatureValueProps<number, number, FpsServerData>) => {
             }
           }}
           width="100%"
-          options={[recommened, 'Custom']}
+          options={[recommened, "Custom"]}
         />
       </Stack.Item>
 
@@ -47,7 +47,7 @@ const FpsInput = (props: FeatureValueProps<number, number, FpsServerData>) => {
 };
 
 export const clientfps: Feature<number, number, FpsServerData> = {
-  name: 'FPS',
-  category: 'GAMEPLAY',
+  name: "FPS",
+  category: "GAMEPLAY",
   component: FpsInput,
 };

@@ -12,27 +12,27 @@ const initialState = {
 
 export const audioReducer = (state = initialState, action) => {
   const { type, payload } = action;
-  if (type === 'audio/playing') {
+  if (type === "audio/playing") {
     return {
       ...state,
       visible: true,
       playing: true,
     };
   }
-  if (type === 'audio/stopped') {
+  if (type === "audio/stopped") {
     return {
       ...state,
       visible: false,
       playing: false,
     };
   }
-  if (type === 'audio/playMusic') {
+  if (type === "audio/playMusic") {
     return {
       ...state,
       meta: payload,
     };
   }
-  if (type === 'audio/stopMusic') {
+  if (type === "audio/stopMusic") {
     return {
       ...state,
       visible: false,
@@ -40,7 +40,7 @@ export const audioReducer = (state = initialState, action) => {
       meta: null,
     };
   }
-  if (type === 'audio/toggle') {
+  if (type === "audio/toggle") {
     return {
       ...state,
       visible: !state.visible,

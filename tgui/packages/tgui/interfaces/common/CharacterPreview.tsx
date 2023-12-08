@@ -1,4 +1,4 @@
-import { ByondUi } from '../../components';
+import { ByondUi } from "../../components";
 
 export const CharacterPreview = (props: { height: string; id: string }) => {
   return (
@@ -7,7 +7,7 @@ export const CharacterPreview = (props: { height: string; id: string }) => {
       height={props.height}
       params={{
         id: props.id,
-        type: 'map',
+        type: "map",
       }}
     />
   );

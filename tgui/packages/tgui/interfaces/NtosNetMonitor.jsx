@@ -1,10 +1,19 @@
-import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Icon, Section, Stack, Tabs } from '../components';
-import { NtosWindow } from '../layouts';
+import { useBackend, useSharedState } from "../backend";
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Icon,
+  Section,
+  Stack,
+  Tabs,
+} from "../components";
+import { NtosWindow } from "../layouts";
 
 export const NtosNetMonitor = (props) => {
   const { act, data } = useBackend();
-  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
+  const [tab_main, setTab_main] = useSharedState("tab_main", 1);
   const {
     ntnetrelays,
     idsalarm,
@@ -21,14 +30,16 @@ export const NtosNetMonitor = (props) => {
               icon="network-wired"
               lineHeight="23px"
               selected={tab_main === 1}
-              onClick={() => setTab_main(1)}>
+              onClick={() => setTab_main(1)}
+            >
               NtNet
             </Tabs.Tab>
             <Tabs.Tab
               icon="tablet"
               lineHeight="23px"
               selected={tab_main === 2}
-              onClick={() => setTab_main(2)}>
+              onClick={() => setTab_main(2)}
+            >
               Tablets ({tablets.length})
             </Tabs.Tab>
           </Tabs>
@@ -69,10 +80,10 @@ const MainPage = (props) => {
             title={relay.name}
             buttons={
               <Button.Confirm
-                color={relay.is_operational ? 'good' : 'bad'}
-                content={relay.is_operational ? 'ENABLED' : 'DISABLED'}
+                color={relay.is_operational ? "good" : "bad"}
+                content={relay.is_operational ? "ENABLED" : "DISABLED"}
                 onClick={() =>
-                  act('toggle_relay', {
+                  act("toggle_relay", {
                     ref: relay.ref,
                   })
                 }
@@ -97,16 +108,16 @@ const MainPage = (props) => {
             buttons={
               <>
                 <Button
-                  icon={idsstatus ? 'power-off' : 'times'}
-                  content={idsstatus ? 'ENABLED' : 'DISABLED'}
+                  icon={idsstatus ? "power-off" : "times"}
+                  content={idsstatus ? "ENABLED" : "DISABLED"}
                   selected={idsstatus}
-                  onClick={() => act('toggleIDS')}
+                  onClick={() => act("toggleIDS")}
                 />
                 <Button
                   icon="sync"
                   content="Reset"
                   color="bad"
-                  onClick={() => act('resetIDS')}
+                  onClick={() => act("resetIDS")}
                 />
               </>
             }
@@ -118,9 +129,10 @@ const MainPage = (props) => {
             <Button.Confirm
               icon="trash"
               content="Clear Logs"
-              onClick={() => act('purgelogs')}
+              onClick={() => act("purgelogs")}
             />
-          }>
+          }
+        >
           {ntnetlogs.map((log) => (
             <Box key={log.entry} className="candystripe">
               {log.entry}
@@ -155,15 +167,15 @@ const TabletPage = (props) => {
                 title={tablet.name}
                 buttons={
                   <Button.Confirm
-                    icon={tablet.enabled_spam ? 'unlock' : 'lock'}
-                    color={tablet.enabled_spam ? 'good' : 'default'}
+                    icon={tablet.enabled_spam ? "unlock" : "lock"}
+                    color={tablet.enabled_spam ? "good" : "default"}
                     content={
                       tablet.enabled_spam
-                        ? 'Restrict Mass PDA'
-                        : 'Allow Mass PDA'
+                        ? "Restrict Mass PDA"
+                        : "Allow Mass PDA"
                     }
                     onClick={() =>
-                      act('toggle_mass_pda', {
+                      act("toggle_mass_pda", {
                         ref: tablet.ref,
                       })
                     }

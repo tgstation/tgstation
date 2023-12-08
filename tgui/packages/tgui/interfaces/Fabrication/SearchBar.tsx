@@ -1,5 +1,5 @@
-import { Component } from 'react';
-import { Stack, Input, Icon } from '../../components';
+import { Component } from "react";
+import { Stack, Input, Icon } from "../../components";
 
 /**
  * The properties of a search bar.
@@ -43,7 +43,7 @@ export class SearchBar extends Component<SearchBarProps> {
         <Stack.Item grow>
           <Input
             fluid
-            placeholder={hint ? hint : 'Search for...'}
+            placeholder={hint ? hint : "Search for..."}
             onInput={(_e: unknown, v: string) => this.onInput(v)}
             value={searchText}
           />

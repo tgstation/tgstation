@@ -1,9 +1,9 @@
-import { Color } from 'common/color';
-import { multiline, decodeHtmlEntities } from 'common/string';
-import { Component, createRef, RefObject } from 'react';
-import { useBackend } from '../backend';
-import { Tooltip, Icon, Box, Button, Flex } from '../components';
-import { Window } from '../layouts';
+import { Color } from "common/color";
+import { multiline, decodeHtmlEntities } from "common/string";
+import { Component, createRef, RefObject } from "react";
+import { useBackend } from "../backend";
+import { Tooltip, Icon, Box, Button, Flex } from "../components";
+import { Window } from "../layouts";
 
 const LEFT_CLICK = 0;
 
@@ -79,7 +79,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
 
   prepareCanvas() {
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d');
+    const ctx = canvas.getContext("2d");
     const width = this.props.width || canvas.width || 360;
     const height = this.props.height || canvas.height || 360;
     const x_resolution = this.props.imageWidth || 36;
@@ -99,7 +99,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     this.modifiedElements = [];
 
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext("2d")!;
     for (let x = 0; x < this.baseImageData.length; x++) {
       const element = this.baseImageData[x];
       for (let y = 0; y < element.length; y++) {
@@ -107,7 +107,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
         ctx.fillStyle = color.toString();
         ctx.fillRect(x, y, 1, 1);
         if (this.is_grid_shown) {
-          ctx.strokeStyle = '#888888';
+          ctx.strokeStyle = "#888888";
           ctx.lineWidth = 0.05;
           ctx.strokeRect(x, y, 1, 1);
         }
@@ -148,11 +148,11 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     let p: PointData = { x, y, color: Color.fromHex(color) };
     this.modifiedElements.push(p);
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext("2d")!;
     ctx.fillStyle = color;
     ctx.fillRect(x, y, 1, 1);
     if (this.is_grid_shown) {
-      ctx.strokeStyle = '#888888';
+      ctx.strokeStyle = "#888888";
       ctx.lineWidth = 0.05;
       ctx.strokeRect(x, y, 1, 1);
     }
@@ -172,7 +172,7 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     }
     this.drawing = false;
     const canvas = this.canvasRef.current!;
-    const ctx = canvas.getContext('2d')!;
+    const ctx = canvas.getContext("2d")!;
     if (this.onCanvasModified !== undefined) {
       this.onCanvasModified(this.modifiedElements);
     }
@@ -206,7 +206,8 @@ class PaintCanvas extends Component<PaintCanvasProps> {
         onMouseMove={this.handleDrawing as any}
         onMouseUp={this.handleEndDrawing as any}
         onMouseOut={this.handleEndDrawing as any}
-        onContextMenu={this.handleDropper as any}>
+        onContextMenu={this.handleDropper as any}
+      >
         Canvas failed to render.
       </canvas>
     );
@@ -256,7 +257,8 @@ export const Canvas = (props) => {
         75 +
         (data.show_plaque ? average_plaque_height : 0) +
         (data.editable && data.paint_tool_palette ? palette_height : 0)
-      }>
+      }
+    >
       <Window.Content>
         <Flex align="start" direction="row">
           {!!data.paint_tool_palette && (
@@ -273,8 +275,9 @@ export const Canvas = (props) => {
                   palette at the bottom of the UI,
                   or input a new one with Right-Click.
                 `
-                    : '')
-                }>
+                    : "")
+                }
+              >
                 <Icon name="question-circle" color="blue" size={1.5} m={0.5} />
               </Tooltip>
             </Flex.Item>
@@ -284,8 +287,8 @@ export const Canvas = (props) => {
               <Button
                 title="Grid Toggle"
                 icon="th-large"
-                backgroundColor={data.show_grid ? 'green' : 'red'}
-                onClick={() => act('toggle_grid')}
+                backgroundColor={data.show_grid ? "green" : "red"}
+                onClick={() => act("toggle_grid")}
                 size={1.5}
                 m={0.5}
               />
@@ -302,10 +305,10 @@ export const Canvas = (props) => {
             drawing_color={data.paint_tool_color}
             show_grid={griddy}
             onCanvasModifiedHandler={(changed) =>
-              act('paint', { data: toMassPaintFormat(changed) })
+              act("paint", { data: toMassPaintFormat(changed) })
             }
             onCanvasDropperHandler={(x, y) =>
-              act('select_color_from_coords', { px: x, py: y })
+              act("select_color_from_coords", { px: x, py: y })
             }
             editable={data.editable}
             has_palette={!!data.paint_tool_palette}
@@ -318,20 +321,20 @@ export const Canvas = (props) => {
                     key={`${index}`}
                     backgroundColor={element.color}
                     style={{
-                      width: '24px',
-                      height: '24px',
-                      borderStyle: 'solid',
-                      borderColor: element.is_selected ? 'lightblue' : 'black',
-                      borderWidth: '2px',
+                      width: "24px",
+                      height: "24px",
+                      borderStyle: "solid",
+                      borderColor: element.is_selected ? "lightblue" : "black",
+                      borderWidth: "2px",
                     }}
                     onClick={() =>
-                      act('select_color', {
+                      act("select_color", {
                         selected_color: element.color,
                       })
                     }
                     onContextMenu={(e) => {
                       e.preventDefault();
-                      act('change_palette', {
+                      act("change_palette", {
                         color_index: index + 1,
                         old_color: element.color,
                       });
@@ -343,7 +346,7 @@ export const Canvas = (props) => {
             {!data.finalized && (
               <Flex.Item>
                 <Button.Confirm
-                  onClick={() => act('finalize')}
+                  onClick={() => act("finalize")}
                   content="Finalize"
                 />
               </Flex.Item>
@@ -356,7 +359,8 @@ export const Canvas = (props) => {
                 textColor="black"
                 textAlign="left"
                 backgroundColor="white"
-                style={{ borderStyle: 'inset' }}>
+                style={{ borderStyle: "inset" }}
+              >
                 <Box mb={1} fontSize="18px" bold>
                   {decodeHtmlEntities(data.name)}
                 </Box>
@@ -372,7 +376,7 @@ export const Canvas = (props) => {
                     icon="hand-holding-usd"
                     color="transparent"
                     iconColor="black"
-                    onClick={() => act('patronage')}
+                    onClick={() => act("patronage")}
                   />
                 </Box>
               </Flex.Item>

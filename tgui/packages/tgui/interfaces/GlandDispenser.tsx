@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   glands: Gland[];
@@ -30,10 +30,10 @@ export const GlandDispenser = (props) => {
               lineHeight="55px"
               icon="eject"
               backgroundColor={gland.color}
-              content={gland.amount || '0'}
+              content={gland.amount || "0"}
               disabled={!gland.amount}
               onClick={() =>
-                act('dispense', {
+                act("dispense", {
                   gland_id: gland.id,
                 })
               }

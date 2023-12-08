@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import { Box, Stack, Button, Section, Flex } from '../components';
+import { useBackend } from "../backend";
+import { Window } from "../layouts";
+import { Box, Stack, Button, Section, Flex } from "../components";
 
 type FishingRodData = {
   bait_name: string;
@@ -29,8 +29,8 @@ const FishingRodSlot = (props: FishingSlotProps) => {
       height="64px"
       src={`data:image/jpeg;base64,${icon}`}
       style={{
-        verticalAlign: 'middle',
-        objectFit: 'cover',
+        verticalAlign: "middle",
+        objectFit: "cover",
       }}
     />
   );
@@ -41,7 +41,8 @@ const FishingRodSlot = (props: FishingSlotProps) => {
         <Stack.Item grow>
           <Button
             fluid
-            onClick={() => act('slot_action', { slot: props.slot })}>
+            onClick={() => act("slot_action", { slot: props.slot })}
+          >
             <Flex>
               <Flex.Item>
                 {!!props.current_item_icon &&
@@ -49,7 +50,7 @@ const FishingRodSlot = (props: FishingSlotProps) => {
               </Flex.Item>
               <Flex.Item grow align="center">
                 <Box textAlign="center">
-                  {props.current_item_name ?? 'None'}
+                  {props.current_item_name ?? "None"}
                 </Box>
               </Flex.Item>
             </Flex>

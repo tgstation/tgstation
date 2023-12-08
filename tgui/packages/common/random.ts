@@ -1,4 +1,4 @@
-import { clamp } from './math';
+import { clamp } from "./math";
 
 /**
  * Returns random number between lowerBound exclusive and upperBound inclusive

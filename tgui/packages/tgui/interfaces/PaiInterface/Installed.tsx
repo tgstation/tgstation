@@ -1,7 +1,7 @@
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Button, NoticeBox, Section, Stack } from 'tgui/components';
-import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from './constants';
-import { PaiData } from './types';
+import { useBackend, useLocalState } from "tgui/backend";
+import { Button, NoticeBox, Section, Stack } from "tgui/components";
+import { DOOR_JACK, HOST_SCAN, PHOTO_MODE, SOFTWARE_DESC } from "./constants";
+import { PaiData } from "./types";
 
 /**
  * Renders two sections: A section of buttons and
@@ -25,7 +25,7 @@ export const InstalledDisplay = (props) => {
 const InstalledSoftware = (props) => {
   const { data } = useBackend<PaiData>();
   const { installed = [] } = data;
-  const [currentSelection, setCurrentSelection] = useLocalState('software', '');
+  const [currentSelection, setCurrentSelection] = useLocalState("software", "");
 
   return (
     <Section fill scrollable title="Installed Software">
@@ -46,8 +46,8 @@ const InstalledSoftware = (props) => {
 
 /** Software info for buttons clicked. */
 const InstalledInfo = (props) => {
-  const [currentSelection] = useLocalState('software', '');
-  const title = !currentSelection ? 'Select a Program' : currentSelection;
+  const [currentSelection] = useLocalState("software", "");
+  const title = !currentSelection ? "Select a Program" : currentSelection;
 
   return (
     <Section fill scrollable title={title}>
@@ -70,17 +70,18 @@ const InstalledInfo = (props) => {
 const SoftwareButtons = (props) => {
   const { act, data } = useBackend<PaiData>();
   const { door_jack, languages, master_name } = data;
-  const [currentSelection] = useLocalState('software', '');
+  const [currentSelection] = useLocalState("software", "");
 
   switch (currentSelection) {
-    case 'Door Jack':
+    case "Door Jack":
       return (
         <>
           <Button
             disabled={door_jack}
             icon="plug"
             onClick={() => act(currentSelection, { mode: DOOR_JACK.Cable })}
-            tooltip="Drops a cable. Insert into a compatible airlock.">
+            tooltip="Drops a cable. Insert into a compatible airlock."
+          >
             Extend Cable
           </Button>
           <Button
@@ -88,65 +89,73 @@ const SoftwareButtons = (props) => {
             disabled={!door_jack}
             icon="door-open"
             onClick={() => act(currentSelection, { mode: DOOR_JACK.Hack })}
-            tooltip="Begins overriding the airlock security protocols.">
+            tooltip="Begins overriding the airlock security protocols."
+          >
             Hack Door
           </Button>
           <Button
             disabled={!door_jack}
             icon="unlink"
-            onClick={() => act(currentSelection, { mode: DOOR_JACK.Cancel })}>
+            onClick={() => act(currentSelection, { mode: DOOR_JACK.Cancel })}
+          >
             Cancel
           </Button>
         </>
       );
-    case 'Host Scan':
+    case "Host Scan":
       return (
         <>
           <Button
             icon="hand-holding-heart"
             onClick={() => act(currentSelection, { mode: HOST_SCAN.Target })}
-            tooltip="Must be held or scooped up to scan.">
+            tooltip="Must be held or scooped up to scan."
+          >
             Scan Holder
           </Button>
           <Button
             disabled={!master_name}
             icon="user-cog"
             onClick={() => act(currentSelection, { mode: HOST_SCAN.Master })}
-            tooltip="Scans any bound masters.">
+            tooltip="Scans any bound masters."
+          >
             Scan Master
           </Button>
         </>
       );
-    case 'Photography Module':
+    case "Photography Module":
       return (
         <>
           <Button
             icon="camera-retro"
             onClick={() => act(currentSelection, { mode: PHOTO_MODE.Camera })}
-            tooltip="Toggles the camera. Click an area to take a photo.">
+            tooltip="Toggles the camera. Click an area to take a photo."
+          >
             Camera
           </Button>
           <Button
             icon="print"
             onClick={() => act(currentSelection, { mode: PHOTO_MODE.Printer })}
-            tooltip="Gives a list of stored photos.">
+            tooltip="Gives a list of stored photos."
+          >
             Printer
           </Button>
           <Button
             icon="search-plus"
             onClick={() => act(currentSelection, { mode: PHOTO_MODE.Zoom })}
-            tooltip="Adjusts zoom level on future photographs.">
+            tooltip="Adjusts zoom level on future photographs."
+          >
             Zoom
           </Button>
         </>
       );
-    case 'Universal Translator':
+    case "Universal Translator":
       return (
         <Button
           icon="download"
           onClick={() => act(currentSelection)}
-          disabled={!!languages}>
-          {!languages ? 'Install' : 'Installed'}
+          disabled={!!languages}
+        >
+          {!languages ? "Install" : "Installed"}
         </Button>
       );
     default:
@@ -154,7 +163,8 @@ const SoftwareButtons = (props) => {
         <Button
           icon="power-off"
           onClick={() => act(currentSelection)}
-          tooltip="Attempts to enable the module.">
+          tooltip="Attempts to enable the module."
+        >
           Toggle
         </Button>
       );

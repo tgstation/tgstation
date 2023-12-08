@@ -1,7 +1,17 @@
-import { toFixed } from 'common/math';
-import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
-import { Window } from '../layouts';
+import { toFixed } from "common/math";
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from "../components";
+import { Window } from "../layouts";
 
 export const InsertedSkillchip = (props) => {
   const { act, data } = useBackend();
@@ -32,19 +42,20 @@ export const InsertedSkillchip = (props) => {
           <Button
             icon="syringe"
             disabled={!implantable || !!working}
-            color={implantable ? 'good' : 'default'}
-            onClick={() => act('implant')}
+            color={implantable ? "good" : "default"}
+            onClick={() => act("implant")}
             content="Implant"
             tooltip={implantable_reason}
           />
           <Button
             icon="eject"
             disabled={!!working}
-            onClick={() => act('eject')}
+            onClick={() => act("eject")}
             content="Eject"
           />
         </>
-      }>
+      }
+    >
       <Stack fill align="center">
         <Stack.Item>
           <Icon m={1} size={3} name={skill_icon} />
@@ -61,14 +72,15 @@ export const InsertedSkillchip = (props) => {
               <Icon name="brain" width="15px" textAlign="center" /> {complexity}
             </LabeledList.Item>
             <LabeledList.Item label="Slot Size">
-              <Box color={slots_used + slot_use > slots_max && 'red'}>
+              <Box color={slots_used + slot_use > slots_max && "red"}>
                 <Icon name="save" width="15px" textAlign="center" /> {slot_use}
               </Box>
             </LabeledList.Item>
             {!!implantable_reason && (
               <LabeledList.Item
                 label="Error"
-                color={implantable ? 'good' : 'bad'}>
+                color={implantable ? "good" : "bad"}
+              >
                 {implantable_reason}
               </LabeledList.Item>
             )}
@@ -89,7 +101,7 @@ export const ImplantedSkillchips = (props) => {
 
   return (
     <Section title="Implanted Skillchips">
-      {!current.length && 'No skillchips detected.'}
+      {!current.length && "No skillchips detected."}
       {!!current.length && (
         <Table>
           <Table.Row header>
@@ -100,7 +112,7 @@ export const ImplantedSkillchips = (props) => {
                 icon="brain"
                 tooltip="Complexity"
                 tooltipPosition="top"
-                content={complexity_used + '/' + complexity_max}
+                content={complexity_used + "/" + complexity_max}
               />
             </Table.Cell>
             <Table.Cell textAlign="center">
@@ -109,7 +121,7 @@ export const ImplantedSkillchips = (props) => {
                 icon="save"
                 tooltip="Slot Size"
                 tooltipPosition="top"
-                content={slots_used + '/' + slots_max}
+                content={slots_used + "/" + slots_max}
               />
             </Table.Cell>
             <Table.Cell textAlign="center">
@@ -151,12 +163,13 @@ export const ImplantedSkillchips = (props) => {
               <Table.Cell
                 bold
                 color={
-                  (!!skill.active && 'good') ||
+                  (!!skill.active && "good") ||
                   (skill.complexity + complexity_used > complexity_max &&
-                    'bad') ||
-                  'grey'
+                    "bad") ||
+                  "grey"
                 }
-                textAlign="center">
+                textAlign="center"
+              >
                 {skill.complexity}
               </Table.Cell>
               <Table.Cell bold color="good" textAlign="center">
@@ -164,33 +177,33 @@ export const ImplantedSkillchips = (props) => {
               </Table.Cell>
               <Table.Cell textAlign="center">
                 <Icon
-                  name={skill.active ? 'check' : 'times'}
-                  color={skill.active ? 'good' : 'bad'}
+                  name={skill.active ? "check" : "times"}
+                  color={skill.active ? "good" : "bad"}
                 />
               </Table.Cell>
               <Table.Cell textAlign="center">
-                {(skill.cooldown > 0 && Math.ceil(skill.cooldown / 10) + 's') ||
-                  '0s'}
+                {(skill.cooldown > 0 && Math.ceil(skill.cooldown / 10) + "s") ||
+                  "0s"}
               </Table.Cell>
               <Table.Cell textAlign="center">
                 <Button
-                  onClick={() => act('remove', { 'ref': skill.ref })}
-                  icon={skill.removable ? 'eject' : 'trash'}
-                  color={skill.removable ? 'good' : 'bad'}
-                  tooltip={skill.removable ? 'Extract' : 'Destroy'}
+                  onClick={() => act("remove", { ref: skill.ref })}
+                  icon={skill.removable ? "eject" : "trash"}
+                  color={skill.removable ? "good" : "bad"}
+                  tooltip={skill.removable ? "Extract" : "Destroy"}
                   tooltipPosition="left"
                   disabled={skill.cooldown || working}
                 />
                 <Button
-                  onClick={() => act('toggle_activate', { 'ref': skill.ref })}
-                  icon={skill.active ? 'check-square-o' : 'square-o'}
-                  color={skill.active ? 'good' : 'default'}
+                  onClick={() => act("toggle_activate", { ref: skill.ref })}
+                  icon={skill.active ? "check-square-o" : "square-o"}
+                  color={skill.active ? "good" : "default"}
                   tooltip={
                     (!!skill.active_error &&
                       !skill.active &&
                       skill.active_error) ||
-                    (skill.active && 'Deactivate') ||
-                    'Activate'
+                    (skill.active && "Deactivate") ||
+                    "Activate"
                   }
                   tooltipPosition="left"
                   disabled={
@@ -212,14 +225,14 @@ export const ImplantedSkillchips = (props) => {
 export const TimeFormat = (props) => {
   const { value } = props;
 
-  const seconds = toFixed(Math.floor((value / 10) % 60)).padStart(2, '0');
+  const seconds = toFixed(Math.floor((value / 10) % 60)).padStart(2, "0");
   const minutes = toFixed(Math.floor((value / (10 * 60)) % 60)).padStart(
     2,
-    '0'
+    "0",
   );
   const hours = toFixed(Math.floor((value / (10 * 60 * 60)) % 24)).padStart(
     2,
-    '0'
+    "0",
   );
   const formattedValue = `${hours}:${minutes}:${seconds}`;
   return formattedValue;

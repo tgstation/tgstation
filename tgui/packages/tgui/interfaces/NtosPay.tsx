@@ -1,6 +1,17 @@
-import { NtosWindow } from '../layouts';
-import { useBackend } from '../backend';
-import { Stack, Section, Box, Button, Input, Table, Tooltip, NoticeBox, Divider, RestrictedInput } from '../components';
+import { NtosWindow } from "../layouts";
+import { useBackend } from "../backend";
+import {
+  Stack,
+  Section,
+  Box,
+  Button,
+  Input,
+  Table,
+  Tooltip,
+  NoticeBox,
+  Divider,
+  RestrictedInput,
+} from "../components";
 
 type Data = {
   name: string;
@@ -64,7 +75,7 @@ const Introduction = (props) => {
         <Table.Row>Hi, {name}.</Table.Row>
         <Table.Row>Your pay token is {owner_token}.</Table.Row>
         <Table.Row>
-          Account balance: {money} credit{money === 1 ? '' : 's'}
+          Account balance: {money} credit{money === 1 ? "" : "s"}
         </Table.Row>
       </Table>
     </Section>
@@ -83,7 +94,8 @@ const TransferSection = (props) => {
           <Box>
             <Tooltip
               content="Enter the pay token of the account you want to transfer credits to."
-              position="top">
+              position="top"
+            >
               <Input
                 placeholder="Pay Token"
                 width="190px"
@@ -93,7 +105,8 @@ const TransferSection = (props) => {
           </Box>
           <Tooltip
             content="Enter amount of credits to transfer."
-            position="top">
+            position="top"
+          >
             <RestrictedInput
               width="83px"
               minValue={1}
@@ -105,7 +118,7 @@ const TransferSection = (props) => {
           <Button
             content="Send credits"
             onClick={() =>
-              act('Transaction', {
+              act("Transaction", {
                 token: token,
                 amount: money_to_send,
               })
@@ -124,7 +137,7 @@ const TransferSection = (props) => {
             <Button
               content="Get it"
               onClick={() =>
-                act('GetPayToken', {
+                act("GetPayToken", {
                   wanted_name: name_to_token,
                 })
               }
@@ -151,9 +164,10 @@ const TransactionHistory = (props) => {
             <Table.Row
               key={log}
               className="candystripe"
-              color={log.adjusted_money < 1 ? 'red' : 'green'}>
+              color={log.adjusted_money < 1 ? "red" : "green"}
+            >
               <Table.Cell width="100px">
-                {log.adjusted_money > 1 ? '+' : ''}
+                {log.adjusted_money > 1 ? "+" : ""}
                 {log.adjusted_money}
               </Table.Cell>
               <Table.Cell textAlign="center">{log.reason}</Table.Cell>

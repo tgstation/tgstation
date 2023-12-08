@@ -1,23 +1,23 @@
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, LabeledList, ProgressBar, Section } from "../components";
+import { Window } from "../layouts";
 
 const damageTypes = [
   {
-    label: 'Brute',
-    type: 'bruteLoss',
+    label: "Brute",
+    type: "bruteLoss",
   },
   {
-    label: 'Burn',
-    type: 'fireLoss',
+    label: "Burn",
+    type: "fireLoss",
   },
   {
-    label: 'Toxin',
-    type: 'toxLoss',
+    label: "Toxin",
+    type: "toxLoss",
   },
   {
-    label: 'Oxygen',
-    type: 'oxyLoss',
+    label: "Oxygen",
+    type: "oxyLoss",
   },
 ];
 
@@ -40,7 +40,7 @@ export const Sleeper = (props) => {
     <Window width={310} height={465}>
       <Window.Content>
         <Section
-          title={occupant.name ? occupant.name : 'No Occupant'}
+          title={occupant.name ? occupant.name : "No Occupant"}
           minHeight="210px"
           buttons={
             !!occupant.stat && (
@@ -48,7 +48,8 @@ export const Sleeper = (props) => {
                 {occupant.stat}
               </Box>
             )
-          }>
+          }
+        >
           {!!occupied && (
             <>
               <ProgressBar
@@ -75,8 +76,9 @@ export const Sleeper = (props) => {
                 ))}
                 <LabeledList.Item
                   label="Brain"
-                  color={occupant.brainLoss ? 'bad' : 'good'}>
-                  {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
+                  color={occupant.brainLoss ? "bad" : "good"}
+                >
+                  {occupant.brainLoss ? "Abnormal" : "Healthy"}
                 </LabeledList.Item>
               </LabeledList>
             </>
@@ -87,11 +89,12 @@ export const Sleeper = (props) => {
           minHeight="205px"
           buttons={
             <Button
-              icon={open ? 'door-open' : 'door-closed'}
-              content={open ? 'Open' : 'Closed'}
-              onClick={() => act('door')}
+              icon={open ? "door-open" : "door-closed"}
+              content={open ? "Open" : "Closed"}
+              onClick={() => act("door")}
             />
-          }>
+          }
+        >
           {chems.map((chem) => (
             <Button
               key={chem.name}
@@ -100,7 +103,7 @@ export const Sleeper = (props) => {
               disabled={!occupied || !chem.allowed}
               width="140px"
               onClick={() =>
-                act('inject', {
+                act("inject", {
                   chem: chem.id,
                 })
               }

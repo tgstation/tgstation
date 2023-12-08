@@ -3,60 +3,60 @@
  * SPDX-License-Identifier: MIT
  */
 
-@use 'sass:color';
-@use 'sass:meta';
+@use "sass:color";
+@use "sass:meta";
 
 $light-gray: #c3c3c3;
 $dark-gray: #858585;
 $scrollbar-color-multiplier: 1;
 
-@use '../colors.scss' with (
-   $primary: #000000,
-   $good: #007c11,
-   $average: #f0ec11,
-   $bad: #db2828,
-   $label: #000000,
- );
-@use '../base.scss' with (
-   $color-bg: #008081,
-   $color-bg-grad-spread: 0%,
-   $border-radius: 0,
- );
+@use "../colors.scss" with (
+  $primary: #000000,
+  $good: #007c11,
+  $average: #f0ec11,
+  $bad: #db2828,
+  $label: #000000
+);
+@use "../base.scss" with (
+  $color-bg: #008081,
+  $color-bg-grad-spread: 0%,
+  $border-radius: 0
+);
 
 .theme-ntOS95 {
   // Atomic classes
-  @include meta.load-css('../atomic/color.scss');
+  @include meta.load-css("../atomic/color.scss");
 
   // Components
   @include meta.load-css(
-    '../components/Button.scss',
+    "../components/Button.scss",
     $with: (
-      'color-default': #e8e4c9,
-      'color-disabled': #707070,
-      'color-selected': #007c11,
-      'color-caution': #be6209,
-      'color-danger': #9d0808
+      "color-default": #e8e4c9,
+      "color-disabled": #707070,
+      "color-selected": #007c11,
+      "color-caution": #be6209,
+      "color-danger": #9d0808
     )
   );
   @include meta.load-css(
-    '../components/ProgressBar.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.5))
+    "../components/ProgressBar.scss",
+    $with: ("background-color": rgba(0, 0, 0, 0.5))
   );
   @include meta.load-css(
-    '../components/Section.scss',
-    $with: ('background-color': rgba(0, 0, 0, 0.4))
+    "../components/Section.scss",
+    $with: ("background-color": rgba(0, 0, 0, 0.4))
   );
 
   @include meta.load-css(
-    '../components/Tooltip.scss',
-    $with: ('background-color': #ecee9e)
+    "../components/Tooltip.scss",
+    $with: ("background-color": #ecee9e)
   );
   // Layouts
-  @include meta.load-css('../layouts/Layout.scss');
-  @include meta.load-css('../layouts/Window.scss');
+  @include meta.load-css("../layouts/Layout.scss");
+  @include meta.load-css("../layouts/Window.scss");
   @include meta.load-css(
-    '../layouts/TitleBar.scss',
-    $with: ('background-color': #000080)
+    "../layouts/TitleBar.scss",
+    $with: ("background-color": #000080)
   );
 
   .Button {

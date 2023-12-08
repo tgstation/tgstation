@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Input, Stack, Box, Button } from 'tgui/components';
+import { useBackend, useLocalState } from "tgui/backend";
+import { Input, Stack, Box, Button } from "tgui/components";
 
 type Props = {
   color?: string;
@@ -26,7 +26,7 @@ export const EditableText = (props: Props) => {
   const { act } = useBackend();
   const [editing, setEditing] = useLocalState<boolean>(
     `editing_${field}`,
-    false
+    false,
   );
 
   return editing ? (
@@ -38,7 +38,7 @@ export const EditableText = (props: Props) => {
       onEscape={() => setEditing(false)}
       onEnter={(event, value) => {
         setEditing(false);
-        act('edit_field', { field: field, ref: target_ref, value: value });
+        act("edit_field", { field: field, ref: target_ref, value: value });
       }}
       value={text}
     />
@@ -47,15 +47,16 @@ export const EditableText = (props: Props) => {
       <Stack.Item>
         <Box
           as="span"
-          color={!text ? 'grey' : color || 'white'}
+          color={!text ? "grey" : color || "white"}
           style={{
-            textDecoration: 'underline',
-            textDecorationColor: 'white',
-            textDecorationThickness: '1px',
-            textUnderlineOffset: '1px',
+            textDecoration: "underline",
+            textDecorationColor: "white",
+            textDecorationThickness: "1px",
+            textUnderlineOffset: "1px",
           }}
-          onClick={() => setEditing(true)}>
-          {!text ? '(none)' : text}
+          onClick={() => setEditing(true)}
+        >
+          {!text ? "(none)" : text}
         </Box>
       </Stack.Item>
       <Stack.Item>
@@ -64,7 +65,7 @@ export const EditableText = (props: Props) => {
           icon="backspace"
           ml={1}
           onClick={() =>
-            act('edit_field', { field: field, ref: target_ref, value: '' })
+            act("edit_field", { field: field, ref: target_ref, value: "" })
           }
           tooltip="Clear"
           tooltipPosition="bottom"

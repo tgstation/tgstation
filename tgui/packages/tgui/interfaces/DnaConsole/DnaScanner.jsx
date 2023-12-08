@@ -1,6 +1,19 @@
-import { useBackend } from '../../backend';
-import { Box, Button, Icon, LabeledList, ProgressBar, Section } from '../../components';
-import { SUBJECT_CONCIOUS, SUBJECT_DEAD, SUBJECT_SOFT_CRIT, SUBJECT_TRANSFORMING, SUBJECT_UNCONSCIOUS } from './constants';
+import { useBackend } from "../../backend";
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from "../../components";
+import {
+  SUBJECT_CONCIOUS,
+  SUBJECT_DEAD,
+  SUBJECT_SOFT_CRIT,
+  SUBJECT_TRANSFORMING,
+  SUBJECT_UNCONSCIOUS,
+} from "./constants";
 
 const DnaScannerButtons = (props) => {
   const { data, act } = useBackend();
@@ -18,7 +31,7 @@ const DnaScannerButtons = (props) => {
     return (
       <Button
         content="Connect Scanner"
-        onClick={() => act('connect_scanner')}
+        onClick={() => act("connect_scanner")}
       />
     );
   }
@@ -27,29 +40,30 @@ const DnaScannerButtons = (props) => {
       {!!hasDelayedAction && (
         <Button
           content="Cancel Delayed Action"
-          onClick={() => act('cancel_delay')}
+          onClick={() => act("cancel_delay")}
         />
       )}
       {!!isViableSubject && (
         <Button
           disabled={!isScrambleReady || isPulsing}
-          onClick={() => act('scramble_dna')}>
+          onClick={() => act("scramble_dna")}
+        >
           Scramble DNA
           {!isScrambleReady && ` (${scrambleSeconds}s)`}
         </Button>
       )}
       <Box inline mr={1} />
       <Button
-        icon={scannerLocked ? 'lock' : 'lock-open'}
-        color={scannerLocked && 'bad'}
+        icon={scannerLocked ? "lock" : "lock-open"}
+        color={scannerLocked && "bad"}
         disabled={scannerOpen}
-        content={scannerLocked ? 'Locked' : 'Unlocked'}
-        onClick={() => act('toggle_lock')}
+        content={scannerLocked ? "Locked" : "Unlocked"}
+        onClick={() => act("toggle_lock")}
       />
       <Button
         disabled={scannerLocked}
-        content={scannerOpen ? 'Close' : 'Open'}
-        onClick={() => act('toggle_door')}
+        content={scannerOpen ? "Close" : "Open"}
+        onClick={() => act("toggle_door")}
       />
     </>
   );
@@ -131,7 +145,8 @@ const DnaScannerContent = (props) => {
             good: [70, 101],
             average: [30, 70],
             bad: [-Infinity, 30],
-          }}>
+          }}
+        >
           {subjectHealth}%
         </ProgressBar>
       </LabeledList.Item>
@@ -145,7 +160,8 @@ const DnaScannerContent = (props) => {
             average: [30, 71],
             good: [0, 30],
             olive: [-Infinity, 0],
-          }}>
+          }}
+        >
           {subjectDamage}%
         </ProgressBar>
       </LabeledList.Item>

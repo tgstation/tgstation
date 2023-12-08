@@ -1,14 +1,27 @@
-import { useBackend } from '../../backend';
-import { Window } from '../../layouts';
-import { GenericUplink, Item } from './GenericUplink';
-import { Component, Fragment } from 'react';
-import { fetchRetry } from '../../http';
-import { resolveAsset } from '../../assets';
-import { BooleanLike } from 'common/react';
-import { Box, Tabs, Button, Stack, Section, Tooltip, Dimmer } from '../../components';
-import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
-import { Objective, ObjectiveMenu } from './ObjectiveMenu';
-import { calculateProgression, calculateDangerLevel, dangerDefault, dangerLevelsTooltip } from './calculateDangerLevel';
+import { useBackend } from "../../backend";
+import { Window } from "../../layouts";
+import { GenericUplink, Item } from "./GenericUplink";
+import { Component, Fragment } from "react";
+import { fetchRetry } from "../../http";
+import { resolveAsset } from "../../assets";
+import { BooleanLike } from "common/react";
+import {
+  Box,
+  Tabs,
+  Button,
+  Stack,
+  Section,
+  Tooltip,
+  Dimmer,
+} from "../../components";
+import { PrimaryObjectiveMenu } from "./PrimaryObjectiveMenu";
+import { Objective, ObjectiveMenu } from "./ObjectiveMenu";
+import {
+  calculateProgression,
+  calculateDangerLevel,
+  dangerDefault,
+  dangerLevelsTooltip,
+} from "./calculateDangerLevel";
 
 type UplinkItem = {
   id: string;
@@ -96,8 +109,8 @@ export class Uplink extends Component<{}, UplinkState> {
 
   async populateServerData() {
     if (!fetchServerData) {
-      fetchServerData = fetchRetry(resolveAsset('uplink.json')).then(
-        (response) => response.json()
+      fetchServerData = fetchRetry(resolveAsset("uplink.json")).then(
+        (response) => response.json(),
       );
     }
     const { data } = useBackend<UplinkData>();
@@ -146,7 +159,7 @@ export class Uplink extends Component<{}, UplinkState> {
     });
 
     uplinkData.categories = uplinkData.categories.filter((value) =>
-      availableCategories.includes(value)
+      availableCategories.includes(value),
     );
 
     this.setState({
@@ -231,7 +244,7 @@ export class Uplink extends Component<{}, UplinkState> {
                 </Box>
               </>
             ) : (
-              ''
+              ""
             )}
           </Box>
         ),
@@ -251,7 +264,7 @@ export class Uplink extends Component<{}, UplinkState> {
     // Clamp it down between 0 and 2
     progressionPercentage = Math.min(
       Math.max(progressionPercentage / progression_scaling_deviance, -1),
-      1
+      1,
     );
     // Round it and convert it into a percentage
     progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
@@ -283,15 +296,15 @@ export class Uplink extends Component<{}, UplinkState> {
                                 <Box>Your current level of threat.</Box> Threat
                                 determines
                                 {has_objectives
-                                  ? ' the severity of secondary objectives you get and '
-                                  : ' '}
+                                  ? " the severity of secondary objectives you get and "
+                                  : " "}
                                 what items you can purchase.&nbsp;
                                 <Box mt={0.5}>
                                   {/* A minute in deciseconds */}
-                                  Threat passively increases by{' '}
+                                  Threat passively increases by{" "}
                                   <Box color="green" as="span">
                                     {calculateProgression(
-                                      current_progression_scaling
+                                      current_progression_scaling,
                                     )}
                                   </Box>
                                   &nbsp;every minute
@@ -300,23 +313,24 @@ export class Uplink extends Component<{}, UplinkState> {
                                   <Box mt={0.5}>
                                     Because your threat level is
                                     {progressionPercentage < 0
-                                      ? ' ahead '
-                                      : ' behind '}
+                                      ? " ahead "
+                                      : " behind "}
                                     of where it should be, you are getting
                                     <Box
                                       as="span"
                                       color={
                                         progressionPercentage < 0
-                                          ? 'red'
-                                          : 'green'
+                                          ? "red"
+                                          : "green"
                                       }
                                       ml={1}
-                                      mr={1}>
+                                      mr={1}
+                                    >
                                       {progressionPercentage}%
                                     </Box>
                                     {progressionPercentage < 0
-                                      ? 'less'
-                                      : 'more'}{' '}
+                                      ? "less"
+                                      : "more"}{" "}
                                     threat every minute
                                   </Box>
                                 )}
@@ -325,7 +339,8 @@ export class Uplink extends Component<{}, UplinkState> {
                             </Box>
                           )) ||
                           "Your current threat level. You are a killing machine and don't need to improve your threat level."
-                        }>
+                        }
+                      >
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
@@ -349,19 +364,22 @@ export class Uplink extends Component<{}, UplinkState> {
                         <>
                           <Tabs.Tab
                             selected={currentTab === 0}
-                            onClick={() => this.setState({ currentTab: 0 })}>
+                            onClick={() => this.setState({ currentTab: 0 })}
+                          >
                             Primary Objectives
                           </Tabs.Tab>
                           <Tabs.Tab
                             selected={currentTab === 1}
-                            onClick={() => this.setState({ currentTab: 1 })}>
+                            onClick={() => this.setState({ currentTab: 1 })}
+                          >
                             Secondary Objectives
                           </Tabs.Tab>
                         </>
                       )}
                       <Tabs.Tab
                         selected={currentTab === 2 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 2 })}>
+                        onClick={() => this.setState({ currentTab: 2 })}
+                      >
                         Market
                       </Tabs.Tab>
                     </Tabs>
@@ -372,7 +390,7 @@ export class Uplink extends Component<{}, UplinkState> {
                         icon="times"
                         content="Lock"
                         color="transparent"
-                        onClick={() => act('lock')}
+                        onClick={() => act("lock")}
                       />
                     </Stack.Item>
                   )}
@@ -394,31 +412,31 @@ export class Uplink extends Component<{}, UplinkState> {
                     maximumActiveObjectives={maximum_active_objectives}
                     maximumPotentialObjectives={maximum_potential_objectives}
                     handleObjectiveAction={(objective, action) =>
-                      act('objective_act', {
+                      act("objective_act", {
                         check: objective.original_progression,
                         objective_action: action,
                         index: objective.id,
                       })
                     }
                     handleStartObjective={(objective) =>
-                      act('start_objective', {
+                      act("start_objective", {
                         check: objective.original_progression,
                         index: objective.id,
                       })
                     }
                     handleObjectiveAbort={(objective) =>
-                      act('objective_abort', {
+                      act("objective_abort", {
                         check: objective.original_progression,
                         index: objective.id,
                       })
                     }
                     handleObjectiveCompleted={(objective) =>
-                      act('finish_objective', {
+                      act("finish_objective", {
                         check: objective.original_progression,
                         index: objective.id,
                       })
                     }
-                    handleRequestObjectives={() => act('regenerate_objectives')}
+                    handleRequestObjectives={() => act("regenerate_objectives")}
                   />
                 )) || (
                   <Section>
@@ -429,9 +447,9 @@ export class Uplink extends Component<{}, UplinkState> {
                       handleBuy={(item) => {
                         const extraDataItem = item as Item<ItemExtraData>;
                         if (!extraDataItem.extraData?.ref) {
-                          act('buy', { path: item.id });
+                          act("buy", { path: item.id });
                         } else {
-                          act('buy', { ref: extraDataItem.extraData.ref });
+                          act("buy", { ref: extraDataItem.extraData.ref });
                         }
                       }}
                     />
@@ -439,10 +457,11 @@ export class Uplink extends Component<{}, UplinkState> {
                       <Dimmer>
                         <Box
                           color="red"
-                          fontFamily={'Bahnschrift'}
+                          fontFamily={"Bahnschrift"}
                           fontSize={3}
-                          align={'top'}
-                          as="span">
+                          align={"top"}
+                          as="span"
+                        >
                           SHOP LOCKED
                         </Box>
                       </Dimmer>

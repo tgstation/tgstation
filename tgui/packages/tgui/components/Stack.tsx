@@ -4,9 +4,16 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
-import { RefObject } from 'react';
-import { computeFlexClassName, computeFlexItemClassName, computeFlexItemProps, computeFlexProps, FlexItemProps, FlexProps } from './Flex';
+import { classes } from "common/react";
+import { RefObject } from "react";
+import {
+  computeFlexClassName,
+  computeFlexItemClassName,
+  computeFlexItemProps,
+  computeFlexProps,
+  FlexItemProps,
+  FlexProps,
+} from "./Flex";
 
 type Props = Partial<{
   vertical: boolean;
@@ -20,15 +27,15 @@ export const Stack = (props: Props) => {
   return (
     <div
       className={classes([
-        'Stack',
-        fill && 'Stack--fill',
-        vertical ? 'Stack--vertical' : 'Stack--horizontal',
-        zebra && 'Stack--zebra',
+        "Stack",
+        fill && "Stack--fill",
+        vertical ? "Stack--vertical" : "Stack--horizontal",
+        zebra && "Stack--zebra",
         className,
         computeFlexClassName(props),
       ])}
       {...computeFlexProps({
-        direction: vertical ? 'column' : 'row',
+        direction: vertical ? "column" : "row",
         ...rest,
       })}
     />
@@ -45,7 +52,7 @@ const StackItem = (props: StackItemProps) => {
   return (
     <div
       className={classes([
-        'Stack__item',
+        "Stack__item",
         className,
         computeFlexItemClassName(rest),
       ])}
@@ -67,9 +74,9 @@ const StackDivider = (props: StackDividerProps) => {
   return (
     <div
       className={classes([
-        'Stack__item',
-        'Stack__divider',
-        hidden && 'Stack__divider--hidden',
+        "Stack__item",
+        "Stack__divider",
+        hidden && "Stack__divider--hidden",
         className,
         computeFlexItemClassName(rest),
       ])}

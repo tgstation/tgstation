@@ -1,11 +1,21 @@
-import { multiline } from 'common/string';
-import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, Icon, LabeledList, ProgressBar, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { multiline } from "common/string";
+import { useBackend, useSharedState } from "../backend";
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+} from "../components";
+import { Window } from "../layouts";
 
 export const MedicalKiosk = (props) => {
   const { act, data } = useBackend();
-  const [scanIndex] = useSharedState('scanIndex');
+  const [scanIndex] = useSharedState("scanIndex");
   const { active_status_1, active_status_2, active_status_3, active_status_4 } =
     data;
   return (
@@ -66,14 +76,14 @@ export const MedicalKiosk = (props) => {
 const MedicalKioskScanButton = (props) => {
   const { index, name, description, icon } = props;
   const { act, data } = useBackend();
-  const [scanIndex, setScanIndex] = useSharedState('scanIndex');
+  const [scanIndex, setScanIndex] = useSharedState("scanIndex");
   const paid = data[`active_status_${index}`];
   return (
     <Stack align="baseline">
       <Stack.Item width="16px" textAlign="center">
         <Icon
-          name={paid ? 'check' : 'dollar-sign'}
-          color={paid ? 'green' : 'grey'}
+          name={paid ? "check" : "dollar-sign"}
+          color={paid ? "green" : "grey"}
         />
       </Stack.Item>
       <Stack.Item grow basis="content">
@@ -118,7 +128,7 @@ const MedicalKioskInstructions = (props) => {
         `}
         icon="sync"
         color="average"
-        onClick={() => act('clearTarget')}
+        onClick={() => act("clearTarget")}
         content="Reset Scanner"
       />
     </Section>

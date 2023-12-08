@@ -1,7 +1,14 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
-import { capitalizeAll } from 'common/string';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from "../backend";
+import {
+  Box,
+  Button,
+  Input,
+  LabeledList,
+  NumberInput,
+  Section,
+} from "../components";
+import { capitalizeAll } from "common/string";
+import { Window } from "../layouts";
 
 type Product = {
   ref: string;
@@ -35,8 +42,8 @@ export const ChemPress = (props) => {
     packaging_type,
   } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    packaging_category
+    "categoryName",
+    packaging_category,
   );
   const shownCategory =
     packaging_types.find((category) => category.cat_name === categoryName) ||
@@ -66,7 +73,7 @@ export const ChemPress = (props) => {
                 step={1}
                 stepPixelSize={2}
                 onChange={(e, value) =>
-                  act('change_current_volume', {
+                  act("change_current_volume", {
                     volume: value,
                   })
                 }
@@ -77,7 +84,7 @@ export const ChemPress = (props) => {
                 value={product_name}
                 placeholder={product_name}
                 onChange={(e, value) =>
-                  act('change_product_name', {
+                  act("change_product_name", {
                     name: value,
                   })
                 }
@@ -90,14 +97,15 @@ export const ChemPress = (props) => {
                   selected={design.ref === packaging_type}
                   color="transparent"
                   onClick={() =>
-                    act('change_product', {
+                    act("change_product", {
                       ref: design.ref,
                     })
-                  }>
+                  }
+                >
                   <Box
                     className={design.class_name}
                     style={{
-                      transform: 'scale(1.5)',
+                      transform: "scale(1.5)",
                     }}
                   />
                 </Button>

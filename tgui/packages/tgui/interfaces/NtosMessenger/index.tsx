@@ -1,12 +1,22 @@
-import { Box, Button, Icon, Section, Stack, Input, TextArea, Dimmer, Divider } from '../../components';
-import { useBackend, useLocalState } from '../../backend';
-import { createSearch } from 'common/string';
-import { BooleanLike } from 'common/react';
-import { NtosWindow } from '../../layouts';
+import {
+  Box,
+  Button,
+  Icon,
+  Section,
+  Stack,
+  Input,
+  TextArea,
+  Dimmer,
+  Divider,
+} from "../../components";
+import { useBackend, useLocalState } from "../../backend";
+import { createSearch } from "common/string";
+import { BooleanLike } from "common/react";
+import { NtosWindow } from "../../layouts";
 
-import { NtChat, NtMessenger, NtPicture } from './types';
-import { ChatScreen } from './ChatScreen';
-import { sortBy } from 'common/collections';
+import { NtChat, NtMessenger, NtPicture } from "./types";
+import { ChatScreen } from "./ChatScreen";
+import { sortBy } from "common/collections";
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -87,17 +97,17 @@ const ContactsScreen = (props: any) => {
     sending_virus,
   } = data;
 
-  const [searchUser, setSearchUser] = useLocalState('searchUser', '');
+  const [searchUser, setSearchUser] = useLocalState("searchUser", "");
 
   const sortByUnreads = sortBy<NtChat>((chat) => chat.unread_messages);
 
   const searchChatByName = createSearch(
     searchUser,
-    (chat: NtChat) => chat.recipient.name + chat.recipient.job
+    (chat: NtChat) => chat.recipient.name + chat.recipient.job,
   );
   const searchMessengerByName = createSearch(
     searchUser,
-    (messenger: NtMessenger) => messenger.name + messenger.job
+    (messenger: NtMessenger) => messenger.name + messenger.job,
   );
 
   const chatToButton = (chat: NtChat) => {
@@ -123,7 +133,7 @@ const ContactsScreen = (props: any) => {
   };
 
   const openChatsArray = sortByUnreads(Object.values(saved_chats)).filter(
-    searchChatByName
+    searchChatByName,
   );
 
   const filteredChatButtons = openChatsArray
@@ -134,7 +144,7 @@ const ContactsScreen = (props: any) => {
     .filter(
       ([ref, messenger]) =>
         openChatsArray.every((chat) => chat.recipient.ref !== ref) &&
-        searchMessengerByName(messenger)
+        searchMessengerByName(messenger),
     )
     .map(([_, messenger]) => messenger)
     .map(messengerToButton)
@@ -160,35 +170,35 @@ const ContactsScreen = (props: any) => {
                 icon="bell"
                 disabled={!alert_able}
                 content={
-                  alert_able && !alert_silenced ? 'Ringer: On' : 'Ringer: Off'
+                  alert_able && !alert_silenced ? "Ringer: On" : "Ringer: Off"
                 }
-                onClick={() => act('PDA_toggleAlerts')}
+                onClick={() => act("PDA_toggleAlerts")}
               />
               <Button
                 icon="address-card"
                 content={
                   sending_and_receiving
-                    ? 'Send / Receive: On'
-                    : 'Send / Receive: Off'
+                    ? "Send / Receive: On"
+                    : "Send / Receive: Off"
                 }
-                onClick={() => act('PDA_toggleSendingAndReceiving')}
+                onClick={() => act("PDA_toggleSendingAndReceiving")}
               />
               <Button
                 icon="bell"
                 content="Set Ringtone"
-                onClick={() => act('PDA_ringSet')}
+                onClick={() => act("PDA_ringSet")}
               />
               <Button
                 icon="sort"
-                content={`Sort by: ${sort_by_job ? 'Job' : 'Name'}`}
-                onClick={() => act('PDA_changeSortStyle')}
+                content={`Sort by: ${sort_by_job ? "Job" : "Name"}`}
+                onClick={() => act("PDA_changeSortStyle")}
               />
               {!!virus_attach && (
                 <Button
                   icon="bug"
                   color="bad"
-                  content={`Attach Virus: ${sending_virus ? 'Yes' : 'No'}`}
-                  onClick={() => act('PDA_toggleVirus')}
+                  content={`Attach Virus: ${sending_virus ? "Yes" : "No"}`}
+                  onClick={() => act("PDA_toggleVirus")}
                 />
               )}
             </Box>
@@ -268,16 +278,17 @@ const ChatButton = (props: ChatButtonProps) => {
   const hasUnreads = unreadMessages > 0;
   return (
     <Button
-      icon={hasUnreads && 'envelope'}
+      icon={hasUnreads && "envelope"}
       key={props.chatRef}
       fluid
       onClick={() => {
-        act('PDA_viewMessages', { ref: props.chatRef });
-      }}>
+        act("PDA_viewMessages", { ref: props.chatRef });
+      }}
+    >
       {hasUnreads &&
-        `[${unreadMessages <= 9 ? unreadMessages : '9+'} unread message${
-          unreadMessages !== 1 ? 's' : ''
-        }]`}{' '}
+        `[${unreadMessages <= 9 ? unreadMessages : "9+"} unread message${
+          unreadMessages !== 1 ? "s" : ""
+        }]`}{" "}
       {props.name}
     </Button>
   );
@@ -287,7 +298,7 @@ const SendToAllSection = (props) => {
   const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
-  const [message, setmessage] = useLocalState('everyoneMessage', '');
+  const [message, setmessage] = useLocalState("everyoneMessage", "");
 
   return (
     <>
@@ -300,13 +311,14 @@ const SendToAllSection = (props) => {
           <Stack.Item>
             <Button
               icon="arrow-right"
-              disabled={on_spam_cooldown || message === ''}
-              tooltip={on_spam_cooldown && 'Wait before sending more messages!'}
+              disabled={on_spam_cooldown || message === ""}
+              tooltip={on_spam_cooldown && "Wait before sending more messages!"}
               tooltipPosition="auto-start"
               onClick={() => {
-                act('PDA_sendEveryone', { message: message });
-                setmessage('');
-              }}>
+                act("PDA_sendEveryone", { message: message });
+                setmessage("");
+              }}
+            >
               Send
             </Button>
           </Stack.Item>

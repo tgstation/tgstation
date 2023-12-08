@@ -1,7 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { classes } from '../../common/react';
-import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
-import { Window } from '../layouts';
+import { useBackend, useLocalState } from "../backend";
+import { classes } from "../../common/react";
+import { Box, Button, Knob, Section, Slider, Stack, Tabs } from "../components";
+import { Window } from "../layouts";
 
 enum Direction {
   North = 1,
@@ -41,18 +41,18 @@ export const LightSpawn = (props) => {
   const { act, data } = useBackend<Data>();
   const { templates = [], default_id, default_category, category_ids } = data;
   const [currentTemplate, setCurrentTemplate] = useLocalState<string>(
-    'currentTemplate',
-    default_id
+    "currentTemplate",
+    default_id,
   );
   const [currentCategory, setCurrentCategory] = useLocalState<string>(
-    'currentCategory',
-    default_category
+    "currentCategory",
+    default_category,
   );
 
   const category_keys = category_ids ? Object.keys(category_ids) : [];
 
   return (
-    <Window title={'Light Spawn'} width={600} height={400}>
+    <Window title={"Light Spawn"} width={600} height={400}>
       <Window.Content scrollable>
         <Stack vertical>
           <Stack.Item>
@@ -65,7 +65,8 @@ export const LightSpawn = (props) => {
                     onClick={() => setCurrentCategory(category)}
                     fontSize="14px"
                     bold
-                    textColor="#eee">
+                    textColor="#eee"
+                  >
                     {category}
                   </Tabs.Tab>
                 ))}
@@ -75,13 +76,14 @@ export const LightSpawn = (props) => {
                   <Tabs.Tab
                     key={id}
                     selected={currentTemplate === id}
-                    onClick={() => setCurrentTemplate(id)}>
+                    onClick={() => setCurrentTemplate(id)}
+                  >
                     <Stack vertical>
                       <Stack.Item
                         align="center"
                         className={classes([
-                          'lights32x32',
-                          'light_fantastic_' + id,
+                          "lights32x32",
+                          "light_fantastic_" + id,
                         ])}
                       />
                       <Stack.Item fontSize="14px" textColor="#cee" nowrap>
@@ -111,8 +113,8 @@ const LightInfo = (props: LightInfoProps) => {
   const { light } = props;
   const { light_info } = light;
   const [workingDir, setWorkingDir] = useLocalState<number>(
-    'workingDir',
-    Direction.North
+    "workingDir",
+    Direction.North,
   );
   return (
     <Section>
@@ -150,7 +152,7 @@ const LightInfo = (props: LightInfoProps) => {
                 icon="wrench"
                 tooltip="Spawn template"
                 onClick={() =>
-                  act('spawn_template', {
+                  act("spawn_template", {
                     id: light.id,
                     dir: workingDir,
                   })
@@ -218,8 +220,8 @@ const DirectionButton = (props: DirectedButtonProps) => {
   const { act, data } = useBackend<Data>();
   const { dir, icon } = props;
   const [workingDir, setWorkingDir] = useLocalState<number>(
-    'workingDir',
-    Direction.North
+    "workingDir",
+    Direction.North,
   );
   return (
     <Button

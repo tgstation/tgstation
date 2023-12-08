@@ -1,6 +1,13 @@
-import { useBackend } from '../backend';
-import { Box, Button, ByondUi, NoticeBox, ProgressBar, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import {
+  Box,
+  Button,
+  ByondUi,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from "../components";
+import { Window } from "../layouts";
 
 export const Gateway = () => {
   return (
@@ -25,7 +32,7 @@ const GatewayContent = (props) => {
     return (
       <Section>
         <NoticeBox>No linked gateway</NoticeBox>
-        <Button fluid onClick={() => act('linkup')}>
+        <Button fluid onClick={() => act("linkup")}>
           Linkup
         </Button>
       </Section>
@@ -38,14 +45,15 @@ const GatewayContent = (props) => {
           height="320px"
           params={{
             id: gateway_mapkey,
-            type: 'map',
+            type: "map",
           }}
         />
         <Button
           mt="2px"
           textAlign="center"
           fluid
-          onClick={() => act('deactivate')}>
+          onClick={() => act("deactivate")}
+        >
           Deactivate
         </Button>
       </Section>
@@ -63,10 +71,11 @@ const GatewayContent = (props) => {
             <Button
               fluid
               onClick={() =>
-                act('activate', {
+                act("activate", {
                   destination: dest.ref,
                 })
-              }>
+              }
+            >
               Activate
             </Button>
           )) || (

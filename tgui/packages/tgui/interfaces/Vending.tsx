@@ -1,8 +1,17 @@
-import { classes } from 'common/react';
-import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
-import { Window } from 'tgui/layouts';
+import { classes } from "common/react";
+import { capitalizeAll } from "common/string";
+import { useBackend, useLocalState } from "tgui/backend";
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from "tgui/components";
+import { Window } from "tgui/layouts";
 
 type VendingData = {
   onstation: boolean;
@@ -73,8 +82,8 @@ export const Vending = (props) => {
   } = data;
 
   const [selectedCategory, setSelectedCategory] = useLocalState<string>(
-    'selectedCategory',
-    Object.keys(data.categories)[0]
+    "selectedCategory",
+    Object.keys(data.categories)[0],
   );
 
   let inventory: (ProductRecord | CustomInput)[];
@@ -96,13 +105,13 @@ export const Vending = (props) => {
   const filteredCategories = Object.fromEntries(
     Object.entries(data.categories).filter(([categoryName]) => {
       return inventory.find((product) => {
-        if ('category' in product) {
+        if ("category" in product) {
           return product.category === categoryName;
         } else {
           return false;
         }
       });
-    })
+    }),
   );
 
   return (
@@ -157,7 +166,7 @@ export const UserDetails = (props) => {
             <LabeledList>
               <LabeledList.Item label="User">{user.name}</LabeledList.Item>
               <LabeledList.Item label="Occupation">
-                {user.job || 'Unemployed'}
+                {user.job || "Unemployed"}
               </LabeledList.Item>
             </LabeledList>
           </Stack.Item>
@@ -193,15 +202,16 @@ const ProductDisplay = (props: {
         user && (
           <Box fontSize="16px" color="green">
             {(user && user.cash) || 0}
-            {displayed_currency_name}{' '}
+            {displayed_currency_name}{" "}
             <Icon name={displayed_currency_icon} color="gold" />
           </Box>
         )
-      }>
+      }
+    >
       <Table>
         {inventory
           .filter((product) => {
-            if ('category' in product) {
+            if ("category" in product) {
               return product.category === selectedCategory;
             } else {
               return true;
@@ -275,14 +285,14 @@ const ProductImage = (props) => {
     <img
       src={`data:image/jpeg;base64,${product.img}`}
       style={{
-        verticalAlign: 'middle',
+        verticalAlign: "middle",
       }}
     />
   ) : (
     <span
-      className={classes(['vending32x32', product.path])}
+      className={classes(["vending32x32", product.path])}
       style={{
-        verticalAlign: 'middle',
+        verticalAlign: "middle",
       }}
     />
   );
@@ -300,7 +310,7 @@ const ProductColorSelect = (props) => {
       icon="palette"
       tooltip="Change color"
       disabled={disabled}
-      onClick={() => act('select_colors', { ref: product.ref })}
+      onClick={() => act("select_colors", { ref: product.ref })}
     />
   );
 };
@@ -312,10 +322,11 @@ const ProductStock = (props) => {
   return (
     <Box
       color={
-        (remaining <= 0 && 'bad') ||
-        (!custom && remaining <= product.max_amount / 2 && 'average') ||
-        'good'
-      }>
+        (remaining <= 0 && "bad") ||
+        (!custom && remaining <= product.max_amount / 2 && "average") ||
+        "good"
+      }
+    >
       {remaining} left
     </Box>
   );
@@ -326,10 +337,10 @@ const ProductButton = (props) => {
   const { act, data } = useBackend<VendingData>();
   const { access, displayed_currency_name } = data;
   const { custom, discount, disabled, free, product, redPrice } = props;
-  const customPrice = access ? 'FREE' : product.price;
+  const customPrice = access ? "FREE" : product.price;
   let standardPrice = product.price;
   if (free) {
-    standardPrice = 'FREE';
+    standardPrice = "FREE";
   } else if (discount) {
     standardPrice = redPrice;
   }
@@ -338,10 +349,11 @@ const ProductButton = (props) => {
       fluid
       disabled={disabled}
       onClick={() =>
-        act('dispense', {
-          'item': product.name,
+        act("dispense", {
+          item: product.name,
         })
-      }>
+      }
+    >
       {customPrice}
       {!access && displayed_currency_name}
     </Button>
@@ -350,10 +362,11 @@ const ProductButton = (props) => {
       fluid
       disabled={disabled}
       onClick={() =>
-        act('vend', {
-          'ref': product.ref,
+        act("vend", {
+          ref: product.ref,
         })
-      }>
+      }
+    >
       {standardPrice}
       {!free && displayed_currency_name}
     </Button>
@@ -361,8 +374,8 @@ const ProductButton = (props) => {
 };
 
 const CATEGORY_COLORS = {
-  'Contraband': 'red',
-  'Premium': 'yellow',
+  Contraband: "red",
+  Premium: "yellow",
 };
 
 const CategorySelector = (props: {
@@ -382,7 +395,8 @@ const CategorySelector = (props: {
               selected={name === selectedCategory}
               color={CATEGORY_COLORS[name]}
               icon={category.icon}
-              onClick={() => onSelect(name)}>
+              onClick={() => onSelect(name)}
+            >
               {name}
             </Button>
           ))}

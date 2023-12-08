@@ -1,8 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
-import { Window } from '../layouts';
-import { multiline } from 'common/string';
-import { paginate, range } from 'common/collections';
+import { useBackend, useLocalState } from "../backend";
+import { BlockQuote, Box, Button, Section, Stack, Tabs } from "../components";
+import { Window } from "../layouts";
+import { multiline } from "common/string";
+import { paginate, range } from "common/collections";
 
 type Entry = {
   name: string;
@@ -32,39 +32,39 @@ const PAGE_HEIGHT = 30;
 
 const TIER2TIERDATA: TierData[] = [
   {
-    name: 'Lesser Mutant',
+    name: "Lesser Mutant",
     desc: multiline`
       Lesser Mutants usually have a smaller list of potential mutations, and
       do not have bonuses for infusing many organs. Common species, cosmetics,
       and things of that sort are here. Always available!
     `,
-    icon: 'circle-o',
+    icon: "circle-o",
   },
   {
-    name: 'Regular Mutant',
+    name: "Regular Mutant",
     desc: multiline`
       Regular Mutants all have bonuses for infusing DNA into yourself, and are
       common enough to find consistently in a shift. Always available!
     `,
-    icon: 'circle-half-stroke',
+    icon: "circle-half-stroke",
   },
   {
-    name: 'Greater Mutant',
+    name: "Greater Mutant",
     desc: multiline`
       Greater Mutants have stronger upsides and downsides along with their
       bonus, and are harder to find in a shift. Must be unlocked by first
       unlocking a DNA Mutant bonus of a lower tier.
     `,
-    icon: 'circle',
+    icon: "circle",
   },
   {
-    name: 'Abberation',
+    name: "Abberation",
     desc: multiline`
       We've been able to get stronger mutants out of vatgrown specimen,
       henceforth named "Abberations". Abberations have either strong utility
       purpose, anomalous qualities, or deadly capabilities.
     `,
-    icon: 'teeth',
+    icon: "teeth",
   },
 ];
 
@@ -73,11 +73,11 @@ export const InfuserBook = (props) => {
   const { entries } = data;
 
   const [bookPosition, setBookPosition] = useLocalState<BookPosition>(
-    'bookPosition',
+    "bookPosition",
     {
       chapter: 0,
       pageInChapter: 0,
-    }
+    },
   );
   const { chapter, pageInChapter } = bookPosition;
 
@@ -90,7 +90,7 @@ export const InfuserBook = (props) => {
       return;
     }
     setBookPosition({ chapter: newChapter, pageInChapter: 0 });
-    act('play_flip_sound'); // just so we can play a sound fx on page turn
+    act("play_flip_sound"); // just so we can play a sound fx on page turn
   };
 
   const setPage = (newPage) => {
@@ -115,15 +115,15 @@ export const InfuserBook = (props) => {
       newBookPosition.pageInChapter = newPage;
     }
     setBookPosition(newBookPosition);
-    act('play_flip_sound'); // just so we can play a sound fx on page turn
+    act("play_flip_sound"); // just so we can play a sound fx on page turn
   };
 
   const tabs = [
-    'Introduction',
-    'Tier 0 - Lesser Mutants',
-    'Tier 1 - Regular Mutants',
-    'Tier 2 - Greater Mutants',
-    'Tier 3 - Abberations - RESTRICTED',
+    "Introduction",
+    "Tier 0 - Lesser Mutants",
+    "Tier 1 - Regular Mutants",
+    "Tier 2 - Greater Mutants",
+    "Tier 3 - Abberations - RESTRICTED",
   ];
 
   const paginatedTabs = paginate(tabs, 3);
@@ -141,7 +141,7 @@ export const InfuserBook = (props) => {
                   const tabIndex = tabs.indexOf(tab);
                   const tabIcon = TIER2TIERDATA[tabIndex - 1]
                     ? TIER2TIERDATA[tabIndex - 1].icon
-                    : 'info';
+                    : "info";
                   return (
                     <Tabs.Tab
                       icon={tabIcon}
@@ -151,8 +151,9 @@ export const InfuserBook = (props) => {
                         tabIndex === 4
                           ? undefined
                           : () => switchChapter(tabIndex)
-                      }>
-                      <Box color={tabIndex === 4 && 'red'}>{tab}</Box>
+                      }
+                    >
+                      <Box color={tabIndex === 4 && "red"}>{tab}</Box>
                     </Tabs.Tab>
                   );
                 })}
@@ -181,10 +182,11 @@ export const InfuserBook = (props) => {
               </Stack.Item>
               <Stack.Item grow={2}>
                 <Button
-                  color={restrictedNext && 'black'}
+                  color={restrictedNext && "black"}
                   onClick={() => setPage(pageInChapter + 1)}
-                  fluid>
-                  {restrictedNext ? 'RESTRICTED' : 'Next Page'}
+                  fluid
+                >
+                  {restrictedNext ? "RESTRICTED" : "Next Page"}
                 </Button>
               </Stack.Item>
             </Stack>
@@ -205,7 +207,7 @@ export const InfuserInstructions = (props) => {
           yourself, mutating one of your organs into a genetic slurry that sits
           somewhere between being yours or the creature&apos;s. While this does
           bring you further away from being human, and gives a slew of...
-          unfortunate side effects, it also grants new capabilities.{' '}
+          unfortunate side effects, it also grants new capabilities.{" "}
           <b>
             Above all else, you have to understand that gene-mutants are usually
             very good at specific things, especially with their threshold
@@ -243,17 +245,18 @@ const InfuserEntry = (props: InfuserEntryProps) => {
   return (
     <Section
       fill
-      title={entry.name + ' Mutant'}
+      title={entry.name + " Mutant"}
       height={PAGE_HEIGHT}
       buttons={
         <Button tooltip={tierData.desc} icon={tierData.icon}>
           {tierData.name}
         </Button>
-      }>
+      }
+    >
       <Stack vertical fill>
         <Stack.Item>
           <BlockQuote>
-            {entry.desc}{' '}
+            {entry.desc}{" "}
             {entry.threshold_desc && (
               <>If a subject infuses with enough DNA, {entry.threshold_desc}</>
             )}
@@ -271,10 +274,10 @@ const InfuserEntry = (props: InfuserEntryProps) => {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
-          Created from infusing{' '}
-          <Box inline color={entry.name === 'Rejected' ? 'red' : 'green'}>
+          Created from infusing{" "}
+          <Box inline color={entry.name === "Rejected" ? "red" : "green"}>
             {entry.infuse_mob_name}
-          </Box>{' '}
+          </Box>{" "}
           DNA into a subject.
         </Stack.Item>
       </Stack>

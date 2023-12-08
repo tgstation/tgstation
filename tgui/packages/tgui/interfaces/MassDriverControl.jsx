@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Box, Button, Section, LabeledList, NumberInput } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Box, Button, Section, LabeledList, NumberInput } from "../components";
+import { Window } from "../layouts";
 
 export const MassDriverControl = (props) => {
   const { act, data } = useBackend();
@@ -13,33 +13,34 @@ export const MassDriverControl = (props) => {
             title="Auto Launch"
             buttons={
               <Button
-                icon={'clock-o'}
-                content={timing ? 'Stop' : 'Start'}
+                icon={"clock-o"}
+                content={timing ? "Stop" : "Start"}
                 selected={timing}
-                onClick={() => act('time')}
+                onClick={() => act("time")}
               />
-            }>
+            }
+          >
             <Button
               icon="fast-backward"
               disabled={timing}
-              onClick={() => act('input', { adjust: -30 })}
+              onClick={() => act("input", { adjust: -30 })}
             />
             <Button
               icon="backward"
               disabled={timing}
-              onClick={() => act('input', { adjust: -1 })}
-            />{' '}
-            {String(minutes).padStart(2, '0')}:
-            {String(seconds).padStart(2, '0')}{' '}
+              onClick={() => act("input", { adjust: -1 })}
+            />{" "}
+            {String(minutes).padStart(2, "0")}:
+            {String(seconds).padStart(2, "0")}{" "}
             <Button
               icon="forward"
               disabled={timing}
-              onClick={() => act('input', { adjust: 1 })}
+              onClick={() => act("input", { adjust: 1 })}
             />
             <Button
               icon="fast-forward"
               disabled={timing}
-              onClick={() => act('input', { adjust: 30 })}
+              onClick={() => act("input", { adjust: 30 })}
             />
           </Section>
         )}
@@ -47,12 +48,13 @@ export const MassDriverControl = (props) => {
           title="Controls"
           buttons={
             <Button
-              icon={'toggle-on'}
+              icon={"toggle-on"}
               content="Toggle Outer Door"
               disabled={timing || !poddoor}
-              onClick={() => act('door')}
+              onClick={() => act("door")}
             />
-          }>
+          }
+        >
           {(!!connected && (
             <>
               <LabeledList>
@@ -60,19 +62,20 @@ export const MassDriverControl = (props) => {
                   label="Power Level"
                   buttons={
                     <Button
-                      icon={'bomb'}
+                      icon={"bomb"}
                       content="Test Fire"
                       disabled={timing}
-                      onClick={() => act('driver_test')}
+                      onClick={() => act("driver_test")}
                     />
-                  }>
+                  }
+                >
                   <NumberInput
                     value={power}
                     width="40px"
                     minValue={0.25}
                     maxValue={16}
                     onChange={(e, value) => {
-                      return act('set_power', {
+                      return act("set_power", {
                         power: value,
                       });
                     }}
@@ -86,7 +89,7 @@ export const MassDriverControl = (props) => {
                 mt={1.5}
                 icon="arrow-up"
                 textAlign="center"
-                onClick={() => act('launch')}
+                onClick={() => act("launch")}
               />
             </>
           )) || <Box color="bad">No connected mass driver</Box>}

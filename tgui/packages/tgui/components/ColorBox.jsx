@@ -4,8 +4,8 @@
  * @license MIT
  */
 
-import { classes } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { classes } from "common/react";
+import { computeBoxClassName, computeBoxProps } from "./Box";
 
 export const ColorBox = (props) => {
   // prettier-ignore
@@ -17,13 +17,14 @@ export const ColorBox = (props) => {
     backgroundColor,
     ...rest
   } = props;
-  rest.color = content ? null : 'transparent';
+  rest.color = content ? null : "transparent";
   rest.backgroundColor = color || backgroundColor;
   return (
     <div
-      className={classes(['ColorBox', className, computeBoxClassName(rest)])}
-      {...computeBoxProps(rest)}>
-      {content || '.'}
+      className={classes(["ColorBox", className, computeBoxClassName(rest)])}
+      {...computeBoxProps(rest)}
+    >
+      {content || "."}
     </div>
   );
 };

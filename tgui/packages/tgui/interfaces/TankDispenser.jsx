@@ -1,6 +1,6 @@
-import { useBackend } from '../backend';
-import { Button, LabeledList, Section } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from "../backend";
+import { Button, LabeledList, Section } from "../components";
+import { Window } from "../layouts";
 
 export const TankDispenser = (props) => {
   const { act, data } = useBackend();
@@ -13,24 +13,26 @@ export const TankDispenser = (props) => {
               label="Plasma"
               buttons={
                 <Button
-                  icon={data.plasma ? 'square' : 'square-o'}
+                  icon={data.plasma ? "square" : "square-o"}
                   content="Dispense"
                   disabled={!data.plasma}
-                  onClick={() => act('plasma')}
+                  onClick={() => act("plasma")}
                 />
-              }>
+              }
+            >
               {data.plasma}
             </LabeledList.Item>
             <LabeledList.Item
               label="Oxygen"
               buttons={
                 <Button
-                  icon={data.oxygen ? 'square' : 'square-o'}
+                  icon={data.oxygen ? "square" : "square-o"}
                   content="Dispense"
                   disabled={!data.oxygen}
-                  onClick={() => act('oxygen')}
+                  onClick={() => act("oxygen")}
                 />
-              }>
+              }
+            >
               {data.oxygen}
             </LabeledList.Item>
           </LabeledList>

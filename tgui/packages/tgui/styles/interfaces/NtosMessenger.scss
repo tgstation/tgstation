@@ -1,8 +1,8 @@
-@use 'sass:color';
-@use 'sass:math';
-@use '../base';
-@use '../functions';
-@use '../colors';
+@use "sass:color";
+@use "sass:math";
+@use "../base";
+@use "../functions";
+@use "../colors";
 
 $msgcolor-outgoing: hsl(213, 50%, 35%);
 $msgcolor-incoming: hsl(213, 0%, 20%);

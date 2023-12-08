@@ -4,19 +4,19 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
-import { Button, Flex, Section } from '../components';
+import { useLocalState } from "../backend";
+import { Button, Flex, Section } from "../components";
 
 export const meta = {
-  title: 'Flex & Sections',
+  title: "Flex & Sections",
   render: () => <Story />,
 };
 
 const Story = (props) => {
-  const [grow, setGrow] = useLocalState('fs_grow', 1);
-  const [direction, setDirection] = useLocalState('fs_direction', 'column');
-  const [fill, setFill] = useLocalState('fs_fill', true);
-  const [hasTitle, setHasTitle] = useLocalState('fs_title', true);
+  const [grow, setGrow] = useLocalState("fs_grow", 1);
+  const [direction, setDirection] = useLocalState("fs_direction", "column");
+  const [fill, setFill] = useLocalState("fs_fill", true);
+  const [hasTitle, setHasTitle] = useLocalState("fs_title", true);
   return (
     <Flex height="100%" direction="column">
       <Flex.Item mb={1}>
@@ -24,8 +24,9 @@ const Story = (props) => {
           <Button
             fluid
             onClick={() =>
-              setDirection(direction === 'column' ? 'row' : 'column')
-            }>
+              setDirection(direction === "column" ? "row" : "column")
+            }
+          >
             {`Flex direction="${direction}"`}
           </Button>
           <Button fluid onClick={() => setGrow(Number(!grow))}>
@@ -37,7 +38,8 @@ const Story = (props) => {
           <Button
             fluid
             selected={hasTitle}
-            onClick={() => setHasTitle(!hasTitle)}>
+            onClick={() => setHasTitle(!hasTitle)}
+          >
             {`Section title`}
           </Button>
         </Section>
@@ -45,15 +47,16 @@ const Story = (props) => {
       <Flex.Item grow={1}>
         <Flex height="100%" direction={direction}>
           <Flex.Item
-            mr={direction === 'row' && 1}
-            mb={direction === 'column' && 1}
-            grow={grow}>
-            <Section title={hasTitle && 'Section 1'} fill={fill}>
+            mr={direction === "row" && 1}
+            mb={direction === "column" && 1}
+            grow={grow}
+          >
+            <Section title={hasTitle && "Section 1"} fill={fill}>
               Content
             </Section>
           </Flex.Item>
           <Flex.Item grow={grow}>
-            <Section title={hasTitle && 'Section 2'} fill={fill}>
+            <Section title={hasTitle && "Section 2"} fill={fill}>
               Content
             </Section>
           </Flex.Item>

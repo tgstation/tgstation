@@ -1,4 +1,4 @@
-import { debounce, throttle } from 'common/timer';
+import { debounce, throttle } from "common/timer";
 
 const SECONDS = 1000;
 
@@ -6,14 +6,14 @@ const SECONDS = 1000;
 export const byondMessages = {
   // Debounce: Prevents spamming the server
   channelIncrementMsg: debounce(
-    (visible: boolean) => Byond.sendMessage('thinking', { visible }),
-    0.4 * SECONDS
+    (visible: boolean) => Byond.sendMessage("thinking", { visible }),
+    0.4 * SECONDS,
   ),
   forceSayMsg: debounce(
-    (entry: string) => Byond.sendMessage('force', { entry, channel: 'Say' }),
+    (entry: string) => Byond.sendMessage("force", { entry, channel: "Say" }),
     1 * SECONDS,
-    true
+    true,
   ),
   // Throttle: Prevents spamming the server
-  typingMsg: throttle(() => Byond.sendMessage('typing'), 4 * SECONDS),
+  typingMsg: throttle(() => Byond.sendMessage("typing"), 4 * SECONDS),
 } as const;

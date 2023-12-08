@@ -1,15 +1,15 @@
-import { useBackend } from '../backend';
-import { Box, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { useBackend } from "../backend";
+import { Box, Section, Stack } from "../components";
+import { BooleanLike } from "common/react";
+import { Window } from "../layouts";
+import { ObjectivePrintout, Objective } from "./common/Objectives";
 
 const jauntstyle = {
-  color: 'lightblue',
+  color: "lightblue",
 };
 
 const injurestyle = {
-  color: 'yellow',
+  color: "yellow",
 };
 
 type Info = {
@@ -23,7 +23,7 @@ export const AntagInfoDemon = (props) => {
   const { fluff, objectives, explain_attack } = data;
   return (
     <Window width={620} height={356} theme="syndicate">
-      <Window.Content style={{ backgroundImage: 'none' }}>
+      <Window.Content style={{ backgroundImage: "none" }}>
         <Stack fill>
           <Stack.Item>
             <DemonRunes />
@@ -36,7 +36,8 @@ export const AntagInfoDemon = (props) => {
                     <Stack.Item
                       textAlign="center"
                       textColor="red"
-                      fontSize="20px">
+                      fontSize="20px"
+                    >
                       {fluff}
                     </Stack.Item>
                     <Stack.Item>

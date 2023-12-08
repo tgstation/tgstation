@@ -1,11 +1,11 @@
-import { createPopper, VirtualElement } from '@popperjs/core';
-import { classes } from 'common/react';
-import { Component, ReactNode } from 'react';
-import { findDOMNode, render } from 'react-dom';
-import { Box, BoxProps } from './Box';
-import { Button } from './Button';
-import { Icon } from './Icon';
-import { Stack } from './Stack';
+import { createPopper, VirtualElement } from "@popperjs/core";
+import { classes } from "common/react";
+import { Component, ReactNode } from "react";
+import { findDOMNode, render } from "react-dom";
+import { Box, BoxProps } from "./Box";
+import { Button } from "./Button";
+import { Icon } from "./Icon";
+import { Stack } from "./Stack";
 
 export interface DropdownEntry {
   displayText: string | number | ReactNode;
@@ -35,10 +35,10 @@ type DropdownUniqueProps = { options: string[] | DropdownEntry[] } & Partial<{
 export type DropdownProps = BoxProps & DropdownUniqueProps;
 
 const DEFAULT_OPTIONS = {
-  placement: 'left-start',
+  placement: "left-start",
   modifiers: [
     {
-      name: 'eventListeners',
+      name: "eventListeners",
       enabled: false,
     },
   ],
@@ -60,8 +60,8 @@ type DropdownState = {
   open: boolean;
 };
 
-const DROPDOWN_DEFAULT_CLASSNAMES = 'Layout Dropdown__menu';
-const DROPDOWN_SCROLL_CLASSNAMES = 'Layout Dropdown__menu-scroll';
+const DROPDOWN_DEFAULT_CLASSNAMES = "Layout Dropdown__menu";
+const DROPDOWN_SCROLL_CLASSNAMES = "Layout Dropdown__menu-scroll";
 
 export class Dropdown extends Component<DropdownProps, DropdownState> {
   static renderedMenu: HTMLDivElement | undefined;
@@ -99,7 +99,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   openMenu() {
     let renderedMenu = Dropdown.renderedMenu;
     if (renderedMenu === undefined) {
-      renderedMenu = document.createElement('div');
+      renderedMenu = document.createElement("div");
       renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
       document.body.appendChild(renderedMenu);
       Dropdown.renderedMenu = renderedMenu;
@@ -109,9 +109,9 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     Dropdown.currentOpenMenu = domNode;
 
     renderedMenu.scrollTop = 0;
-    renderedMenu.style.width = this.props.menuWidth || '10rem';
-    renderedMenu.style.opacity = '1';
-    renderedMenu.style.pointerEvents = 'auto';
+    renderedMenu.style.width = this.props.menuWidth || "10rem";
+    renderedMenu.style.opacity = "1";
+    renderedMenu.style.pointerEvents = "auto";
 
     // ie hack
     // ie has this bizarre behavior where focus just silently fails if the
@@ -131,8 +131,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     }
 
     Dropdown.currentOpenMenu = undefined;
-    Dropdown.renderedMenu!.style.opacity = '0';
-    Dropdown.renderedMenu!.style.pointerEvents = 'none';
+    Dropdown.renderedMenu!.style.opacity = "0";
+    Dropdown.renderedMenu!.style.pointerEvents = "none";
   }
 
   componentWillUnmount() {
@@ -155,7 +155,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     const ops = options.map((option) => {
       let value, displayText;
 
-      if (typeof option === 'string') {
+      if (typeof option === "string") {
         displayText = option;
         value = option;
       } else if (option !== null) {
@@ -167,32 +167,33 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
         <div
           key={value}
           className={classes([
-            'Dropdown__menuentry',
-            this.state.selected === value && 'selected',
+            "Dropdown__menuentry",
+            this.state.selected === value && "selected",
           ])}
           onClick={() => {
             this.setSelected(value);
-          }}>
+          }}
+        >
           {displayText}
         </div>
       );
     });
 
-    const to_render = ops.length ? ops : 'No Options Found';
+    const to_render = ops.length ? ops : "No Options Found";
 
     render(<div>{to_render}</div>, renderedMenu, () => {
       let singletonPopper = Dropdown.singletonPopper;
       if (singletonPopper === undefined) {
         singletonPopper = createPopper(Dropdown.virtualElement, renderedMenu!, {
           ...DEFAULT_OPTIONS,
-          placement: 'bottom-start',
+          placement: "bottom-start",
         });
 
         Dropdown.singletonPopper = singletonPopper;
       } else {
         singletonPopper.setOptions({
           ...DEFAULT_OPTIONS,
-          placement: 'bottom-start',
+          placement: "bottom-start",
         });
 
         singletonPopper.update();
@@ -208,11 +209,11 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     if (open) {
       setTimeout(() => {
         this.openMenu();
-        window.addEventListener('click', this.handleClick);
+        window.addEventListener("click", this.handleClick);
       });
     } else {
       this.closeMenu();
-      window.removeEventListener('click', this.handleClick);
+      window.removeEventListener("click", this.handleClick);
     }
   }
 
@@ -228,7 +229,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   }
 
   getOptionValue(option): string {
-    return typeof option === 'string' ? option : option.value;
+    return typeof option === "string" ? option : option.value;
   }
 
   getSelectedIndex(): number {
@@ -287,7 +288,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       iconRotation,
       iconSpin,
       clipSelectedText = true,
-      color = 'default',
+      color = "default",
       dropdownStyle,
       over,
       nochevron,
@@ -308,12 +309,12 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       <Stack fill>
         <Stack.Item width={width}>
           <Box
-            width={'100%'}
+            width={"100%"}
             className={classes([
-              'Dropdown__control',
-              'Button',
-              'Button--color--' + color,
-              disabled && 'Button--disabled',
+              "Dropdown__control",
+              "Button",
+              "Button--color--" + color,
+              disabled && "Button--disabled",
               className,
             ])}
             onClick={(event) => {
@@ -325,7 +326,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
                 onClick(event);
               }
             }}
-            {...rest}>
+            {...rest}
+          >
             {icon && (
               <Icon
                 name={icon}
@@ -337,22 +339,23 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
             <span
               className="Dropdown__selected-text"
               style={{
-                overflow: clipSelectedText ? 'hidden' : 'visible',
-              }}>
+                overflow: clipSelectedText ? "hidden" : "visible",
+              }}
+            >
               {displayText || this.state.selected}
             </span>
             {nochevron || (
               <span className="Dropdown__arrow-button">
-                <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
+                <Icon name={adjustedOpen ? "chevron-up" : "chevron-down"} />
               </span>
             )}
           </Box>
         </Stack.Item>
         {buttons && (
           <>
-            <Stack.Item height={'100%'}>
+            <Stack.Item height={"100%"}>
               <Button
-                height={'100%'}
+                height={"100%"}
                 icon="chevron-left"
                 disabled={disabled}
                 onClick={() => {
@@ -364,9 +367,9 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
                 }}
               />
             </Stack.Item>
-            <Stack.Item height={'100%'}>
+            <Stack.Item height={"100%"}>
               <Button
-                height={'100%'}
+                height={"100%"}
                 icon="chevron-right"
                 disabled={disabled}
                 onClick={() => {

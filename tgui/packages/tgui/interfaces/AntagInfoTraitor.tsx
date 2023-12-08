@@ -1,23 +1,23 @@
-import { useBackend } from '../backend';
-import { multiline } from 'common/string';
-import { BlockQuote, Button, Dimmer, Section, Stack } from '../components';
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { useBackend } from "../backend";
+import { multiline } from "common/string";
+import { BlockQuote, Button, Dimmer, Section, Stack } from "../components";
+import { BooleanLike } from "common/react";
+import { Window } from "../layouts";
+import { ObjectivePrintout, Objective } from "./common/Objectives";
 
 const allystyle = {
-  fontWeight: 'bold',
-  color: 'yellow',
+  fontWeight: "bold",
+  color: "yellow",
 };
 
 const badstyle = {
-  color: 'red',
-  fontWeight: 'bold',
+  color: "red",
+  fontWeight: "bold",
 };
 
 const goalstyle = {
-  color: 'lightblue',
-  fontWeight: 'bold',
+  color: "lightblue",
+  fontWeight: "bold",
 };
 
 type Info = {
@@ -68,10 +68,12 @@ const EmployerSection = (props) => {
             This is a gameplay suggestion for bored traitors.
             You don't have to follow it, unless you want some
             ideas for how to spend the round.`}
-          tooltipPosition="bottom-start">
+          tooltipPosition="bottom-start"
+        >
           Policy
         </Button>
-      }>
+      }
+    >
       <Stack vertical fill>
         <Stack.Item grow>
           <Stack vertical>
@@ -120,11 +122,11 @@ const UplinkSection = (props) => {
                 <br />
                 <span style={goalstyle}>
                   <b>{replacement_code}</b>
-                </span>{' '}
-                on frequency{' '}
+                </span>{" "}
+                on frequency{" "}
                 <span style={goalstyle}>
                   <b>{replacement_frequency}</b>
-                </span>{' '}
+                </span>{" "}
                 after synchronizing with the beacon.
               </Section>
             </Stack.Item>
@@ -151,19 +153,19 @@ const UplinkSection = (props) => {
       {(has_uplink && (
         <Section textAlign="Center">
           If you lose your uplink, you can craft a Syndicate Uplink Beacon and
-          then speak{' '}
+          then speak{" "}
           <span style={goalstyle}>
             <b>{replacement_code}</b>
-          </span>{' '}
-          on radio frequency{' '}
+          </span>{" "}
+          on radio frequency{" "}
           <span style={goalstyle}>
             <b>{replacement_frequency}</b>
-          </span>{' '}
+          </span>{" "}
           after synchronizing with the beacon.
         </Section>
       )) || (
         <Section>
-          {' '}
+          {" "}
           <br />
           <br />
         </Section>

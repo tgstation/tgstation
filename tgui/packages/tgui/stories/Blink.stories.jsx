@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { Blink, Section } from '../components';
+import { Blink, Section } from "../components";
 
 export const meta = {
-  title: 'Blink',
+  title: "Blink",
   render: () => <Story />,
 };
 

@@ -1,15 +1,15 @@
-import { Box, Flex } from '../../components';
+import { Box, Flex } from "../../components";
 
 export const calculateProgression = (progression_points: number) => {
   return Math.round(progression_points / 6) / 10;
 };
 
-const badGradient = 'reputation-bad';
-const normalGradient = 'reputation-normal';
-const goodGradient = 'reputation-good';
-const veryGoodGradient = 'reputation-very-good';
-const ultraGoodGradient = 'reputation-super-good';
-const bestGradient = 'reputation-best';
+const badGradient = "reputation-bad";
+const normalGradient = "reputation-normal";
+const goodGradient = "reputation-good";
+const veryGoodGradient = "reputation-very-good";
+const ultraGoodGradient = "reputation-super-good";
+const bestGradient = "reputation-best";
 
 export type Rank = {
   minutesLessThan: number;
@@ -20,52 +20,52 @@ export type Rank = {
 export const ranks: Rank[] = [
   {
     minutesLessThan: 5,
-    title: 'None',
+    title: "None",
     gradient: badGradient,
   },
   {
     minutesLessThan: 10,
-    title: 'Miniscule',
+    title: "Miniscule",
     gradient: normalGradient,
   },
   {
     minutesLessThan: 20,
-    title: 'Insignificant',
+    title: "Insignificant",
     gradient: normalGradient,
   },
   {
     minutesLessThan: 30,
-    title: 'Low',
+    title: "Low",
     gradient: goodGradient,
   },
   {
     minutesLessThan: 50,
-    title: 'Standard',
+    title: "Standard",
     gradient: goodGradient,
   },
   {
     minutesLessThan: 70,
-    title: 'Moderate',
+    title: "Moderate",
     gradient: veryGoodGradient,
   },
   {
     minutesLessThan: 90,
-    title: 'Significant',
+    title: "Significant",
     gradient: veryGoodGradient,
   },
   {
     minutesLessThan: 110,
-    title: 'High',
+    title: "High",
     gradient: ultraGoodGradient,
   },
   {
     minutesLessThan: 140,
-    title: 'Extreme',
+    title: "Extreme",
     gradient: ultraGoodGradient,
   },
   {
     minutesLessThan: -1,
-    title: 'Pinnacle',
+    title: "Pinnacle",
     gradient: bestGradient,
   },
 ];
@@ -90,11 +90,12 @@ export const dangerLevelsTooltip = (
               color="white"
               className={value.gradient}
               style={{
-                borderRadius: '5px',
-                display: 'inline-block',
+                borderRadius: "5px",
+                display: "inline-block",
               }}
               px={0.8}
-              py={0.6}>
+              py={0.6}
+            >
               {text}
             </Box>
           </Flex.Item>
@@ -119,7 +120,7 @@ export const getDangerLevel = (progression_points: number) => {
 
 export const calculateDangerLevel = (
   progression_points: number,
-  textOnly: boolean
+  textOnly: boolean,
 ) => {
   const minutes = progression_points / 600;
   const displayedProgression = calculateProgression(progression_points);
@@ -136,11 +137,12 @@ export const calculateDangerLevel = (
       color="white"
       className={dangerLevel.gradient}
       style={{
-        borderRadius: '5px',
-        display: 'inline-block',
+        borderRadius: "5px",
+        display: "inline-block",
       }}
       px={0.8}
-      py={0.6}>
+      py={0.6}
+    >
       {dangerLevel.title} ({displayedProgression})
     </Box>
   );

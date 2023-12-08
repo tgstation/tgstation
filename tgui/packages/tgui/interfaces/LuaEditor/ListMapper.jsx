@@ -1,10 +1,16 @@
-import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Collapsible, LabeledList, Section } from '../../components';
+import { useBackend, useLocalState } from "../../backend";
+import {
+  Box,
+  Button,
+  Collapsible,
+  LabeledList,
+  Section,
+} from "../../components";
 
-const RefRegex = RegExp('^.+ \\[0x[0-9a-fA-F]+]$');
-const FunctionRegex = RegExp('^function: 0x[0-9a-fA-F]+$');
+const RefRegex = RegExp("^.+ \\[0x[0-9a-fA-F]+]$");
+const FunctionRegex = RegExp("^function: 0x[0-9a-fA-F]+$");
 const UnconvertibleLuaValueRegex = RegExp(
-  '^(table|function|thread): 0x[0-9a-fA-F]+$'
+  "^(table|function|thread): 0x[0-9a-fA-F]+$",
 );
 
 export const ListMapper = (props) => {
@@ -22,8 +28,8 @@ export const ListMapper = (props) => {
     ...rest
   } = props;
 
-  const [, setToCall] = useLocalState('toCallTaskInfo');
-  const [, setModal] = useLocalState('modal');
+  const [, setToCall] = useLocalState("toCallTaskInfo");
+  const [, setModal] = useLocalState("modal");
 
   const ThingNode = (thing, path, overrideProps) => {
     if (Array.isArray(thing)) {
@@ -38,7 +44,7 @@ export const ListMapper = (props) => {
           {...overrideProps}
         />
       );
-    } else if (typeof thing === 'string') {
+    } else if (typeof thing === "string") {
       if (FunctionRegex.test(thing) && callType) {
         return (
           <Button
@@ -50,8 +56,9 @@ export const ListMapper = (props) => {
                   indices: path.map((v) => v.index),
                 },
               });
-              setModal('call');
-            }}>
+              setModal("call");
+            }}
+          >
             {thing.charAt(0).toUpperCase() + thing.substring(1)}
           </Button>
         );
@@ -76,9 +83,9 @@ export const ListMapper = (props) => {
   const ListMapperInner = (element, i) => {
     const { key, value } = element;
     const basePath = path ? path : [];
-    let keyPath = [...basePath, { index: i + 1, type: 'key' }];
-    let valuePath = [...basePath, { index: i + 1, type: 'value' }];
-    let entryPath = [...basePath, { index: i + 1, type: 'entry' }];
+    let keyPath = [...basePath, { index: i + 1, type: "key" }];
+    let valuePath = [...basePath, { index: i + 1, type: "value" }];
+    let entryPath = [...basePath, { index: i + 1, type: "entry" }];
 
     if (key === null && skipNulls) {
       return;
@@ -96,9 +103,9 @@ export const ListMapper = (props) => {
      * within the table are tables, threads, or userdata
      */
     const uniquelyIndexable =
-      (typeof key === 'string' &&
+      (typeof key === "string" &&
         !(UnconvertibleLuaValueRegex.test(key) || RefRegex.test(key))) ||
-      typeof key === 'number';
+      typeof key === "number";
     let valueNode = ThingNode(value, valuePath, {
       callType: uniquelyIndexable && callType,
     });
@@ -112,23 +119,24 @@ export const ListMapper = (props) => {
                 icon="arrow-up"
                 disabled={i === 0}
                 tooltip="Move Up"
-                onClick={() => act('moveArgUp', { path: entryPath })}
+                onClick={() => act("moveArgUp", { path: entryPath })}
               />
               <Button
                 icon="arrow-down"
                 disabled={i === list.length - 1}
                 tooltip="Move Down"
-                onClick={() => act('moveArgDown', { path: entryPath })}
+                onClick={() => act("moveArgDown", { path: entryPath })}
               />
               <Button
                 icon="window-close"
                 color="red"
                 tooltip="Remove"
-                onClick={() => act('removeArg', { path: entryPath })}
+                onClick={() => act("removeArg", { path: entryPath })}
               />
             </>
           )
-        }>
+        }
+      >
         {valueNode}
       </LabeledList.Item>
     );
@@ -141,7 +149,7 @@ export const ListMapper = (props) => {
         <Button
           icon="plus"
           tooltip="Add"
-          onClick={() => act('addArg', { path: path })}
+          onClick={() => act("addArg", { path: path })}
         />
       )}
     </>

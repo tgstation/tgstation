@@ -1,4 +1,4 @@
-import { LabeledList, Section } from '../../components';
+import { LabeledList, Section } from "../../components";
 
 export const GeneticMakeupInfo = (props) => {
   const { makeup } = props;
@@ -7,19 +7,19 @@ export const GeneticMakeupInfo = (props) => {
     <Section title="Enzyme Information">
       <LabeledList>
         <LabeledList.Item label="Name">
-          {makeup.name || 'None'}
+          {makeup.name || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Blood Type">
-          {makeup.blood_type || 'None'}
+          {makeup.blood_type || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Unique Enzyme">
-          {makeup.UE || 'None'}
+          {makeup.UE || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Unique Identifier">
-          {makeup.UI || 'None'}
+          {makeup.UI || "None"}
         </LabeledList.Item>
         <LabeledList.Item label="Unique Features">
-          {makeup.UF || 'None'}
+          {makeup.UF || "None"}
         </LabeledList.Item>
       </LabeledList>
     </Section>

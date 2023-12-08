@@ -1,7 +1,14 @@
-import { useBackend, useLocalState } from '../../backend';
-import { sortStrings } from 'common/collections';
-import { Box, Button, Dropdown, Section, Stack, TextArea } from '../../components';
-import { RequestsData, RequestType, RequestPriority } from './types';
+import { useBackend, useLocalState } from "../../backend";
+import { sortStrings } from "common/collections";
+import {
+  Box,
+  Button,
+  Dropdown,
+  Section,
+  Stack,
+  TextArea,
+} from "../../components";
+import { RequestsData, RequestType, RequestPriority } from "./types";
 
 export const MessageWriteTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -18,21 +25,21 @@ export const MessageWriteTab = (props) => {
   const sorted_information = sortStrings(information_consoles);
 
   const resetMessage = () => {
-    setMessageText('');
-    setRecipient('');
+    setMessageText("");
+    setRecipient("");
     setPriority(RequestPriority.NORMAL);
     setRequestType(RequestType.ASSISTANCE);
   };
-  const [messageText, setMessageText] = useLocalState('messageText', '');
+  const [messageText, setMessageText] = useLocalState("messageText", "");
   const [requestType, setRequestType] = useLocalState(
-    'requestType',
-    RequestType.ASSISTANCE
+    "requestType",
+    RequestType.ASSISTANCE,
   );
   const [priority, setPriority] = useLocalState(
-    'priority',
-    RequestPriority.NORMAL
+    "priority",
+    RequestPriority.NORMAL,
   );
-  const [recipient, setRecipient] = useLocalState('recipient', '');
+  const [recipient, setRecipient] = useLocalState("recipient", "");
   return (
     <Section>
       <Stack fill mb={2}>
@@ -43,7 +50,7 @@ export const MessageWriteTab = (props) => {
             content="Request Assistance"
             selected={requestType === RequestType.ASSISTANCE}
             onClick={() => {
-              setRecipient('');
+              setRecipient("");
               setRequestType(RequestType.ASSISTANCE);
             }}
           />
@@ -55,7 +62,7 @@ export const MessageWriteTab = (props) => {
             content="Request Supplies"
             selected={requestType === RequestType.SUPPLIES}
             onClick={() => {
-              setRecipient('');
+              setRecipient("");
               setRequestType(RequestType.SUPPLIES);
             }}
           />
@@ -67,7 +74,7 @@ export const MessageWriteTab = (props) => {
             content="Relay Information"
             selected={requestType === RequestType.INFORMATION}
             onClick={() => {
-              setRecipient('');
+              setRecipient("");
               setRequestType(RequestType.INFORMATION);
             }}
           />
@@ -79,7 +86,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_assistance}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            displayText={recipient || "Pick a Recipient"}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -88,7 +95,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_supply}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            displayText={recipient || "Pick a Recipient"}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -97,7 +104,7 @@ export const MessageWriteTab = (props) => {
             width="100%"
             options={sorted_information}
             selected={recipient}
-            displayText={recipient || 'Pick a Recipient'}
+            displayText={recipient || "Pick a Recipient"}
             onSelected={(value) => setRecipient(value)}
           />
         )}
@@ -157,7 +164,7 @@ export const MessageWriteTab = (props) => {
                   return;
                 }
 
-                act('send_message', {
+                act("send_message", {
                   message: messageText,
                   recipient: recipient,
                   request_type: requestType,
@@ -172,15 +179,15 @@ export const MessageWriteTab = (props) => {
               warning
               icon="id-card"
               content={
-                authentication_data.message_verified_by || 'Not verified'
+                authentication_data.message_verified_by || "Not verified"
               }
-              onClick={() => act('verify_id')}
+              onClick={() => act("verify_id")}
             />
             <Button
               warning
               icon="stamp"
-              content={authentication_data.message_stamped_by || 'Not stamped'}
-              onClick={() => act('stamp')}
+              content={authentication_data.message_stamped_by || "Not stamped"}
+              onClick={() => act("stamp")}
             />
           </Stack.Item>
         </Stack>
@@ -188,7 +195,7 @@ export const MessageWriteTab = (props) => {
           icon="trash-can"
           content="Discard message"
           onClick={() => {
-            act('clear_authentication');
+            act("clear_authentication");
             resetMessage();
           }}
         />

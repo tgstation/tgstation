@@ -1,7 +1,7 @@
-import { NtosWindow } from '../layouts';
-import { useBackend } from '../backend';
-import { NoticeBox } from '../components';
-import { MODsuitContent } from './MODsuit';
+import { NtosWindow } from "../layouts";
+import { useBackend } from "../backend";
+import { NoticeBox } from "../components";
+import { MODsuitContent } from "./MODsuit";
 
 export const NtosMODsuit = (props) => {
   const { data } = useBackend();

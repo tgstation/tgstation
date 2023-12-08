@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, LabeledList, NumberInput, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Button, LabeledList, NumberInput, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   on: BooleanLike;
@@ -28,10 +28,10 @@ export const AtmosMixer = (props) => {
           <LabeledList>
             <LabeledList.Item label="Power">
               <Button
-                icon={on ? 'power-off' : 'times'}
-                content={on ? 'On' : 'Off'}
+                icon={on ? "power-off" : "times"}
+                content={on ? "On" : "Off"}
                 selected={on}
-                onClick={() => act('power')}
+                onClick={() => act("power")}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Output Pressure">
@@ -44,7 +44,7 @@ export const AtmosMixer = (props) => {
                 maxValue={max_pressure}
                 step={10}
                 onChange={(e, value) =>
-                  act('pressure', {
+                  act("pressure", {
                     pressure: value,
                   })
                 }
@@ -55,8 +55,8 @@ export const AtmosMixer = (props) => {
                 content="Max"
                 disabled={set_pressure === max_pressure}
                 onClick={() =>
-                  act('pressure', {
-                    pressure: 'max',
+                  act("pressure", {
+                    pressure: "max",
                   })
                 }
               />
@@ -71,7 +71,7 @@ export const AtmosMixer = (props) => {
                 maxValue={100}
                 stepPixelSize={2}
                 onDrag={(e, value) =>
-                  act('node1', {
+                  act("node1", {
                     concentration: value,
                   })
                 }
@@ -87,7 +87,7 @@ export const AtmosMixer = (props) => {
                 maxValue={100}
                 stepPixelSize={2}
                 onDrag={(e, value) =>
-                  act('node2', {
+                  act("node2", {
                     concentration: value,
                   })
                 }

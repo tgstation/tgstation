@@ -1,14 +1,25 @@
-import { useBackend } from '../../backend';
-import { Box, Button, Collapsible, Dimmer, Divider, Icon, LabeledList, NumberInput, Section, Stack } from '../../components';
-import { GeneticMakeupInfo } from './GeneticMakeupInfo';
-import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
+import { useBackend } from "../../backend";
+import {
+  Box,
+  Button,
+  Collapsible,
+  Dimmer,
+  Divider,
+  Icon,
+  LabeledList,
+  NumberInput,
+  Section,
+  Stack,
+} from "../../components";
+import { GeneticMakeupInfo } from "./GeneticMakeupInfo";
+import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from "./constants";
 
 const GeneticMakeupBufferInfo = (props) => {
   const { index, makeup } = props;
   const { act, data } = useBackend();
   const { isViableSubject, hasDisk, diskReadOnly, isInjectorReady } = data;
   // Type of the action for applying makeup
-  const ACTION_MAKEUP_APPLY = isViableSubject ? 'makeup_apply' : 'makeup_delay';
+  const ACTION_MAKEUP_APPLY = isViableSubject ? "makeup_apply" : "makeup_delay";
   if (!makeup) {
     return <Box color="average">No stored subject data.</Box>;
   }
@@ -26,9 +37,9 @@ const GeneticMakeupBufferInfo = (props) => {
             disabled={!isInjectorReady}
             content="Print"
             onClick={() =>
-              act('makeup_injector', {
+              act("makeup_injector", {
                 index,
-                type: 'ue',
+                type: "ue",
               })
             }
           />
@@ -37,11 +48,12 @@ const GeneticMakeupBufferInfo = (props) => {
             onClick={() =>
               act(ACTION_MAKEUP_APPLY, {
                 index,
-                type: 'ue',
+                type: "ue",
               })
-            }>
+            }
+          >
             Transfer
-            {!isViableSubject && ' (Delayed)'}
+            {!isViableSubject && " (Delayed)"}
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Identity">
@@ -50,9 +62,9 @@ const GeneticMakeupBufferInfo = (props) => {
             disabled={!isInjectorReady}
             content="Print"
             onClick={() =>
-              act('makeup_injector', {
+              act("makeup_injector", {
                 index,
-                type: 'ui',
+                type: "ui",
               })
             }
           />
@@ -61,11 +73,12 @@ const GeneticMakeupBufferInfo = (props) => {
             onClick={() =>
               act(ACTION_MAKEUP_APPLY, {
                 index,
-                type: 'ui',
+                type: "ui",
               })
-            }>
+            }
+          >
             Transfer
-            {!isViableSubject && ' (Delayed)'}
+            {!isViableSubject && " (Delayed)"}
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Features">
@@ -74,9 +87,9 @@ const GeneticMakeupBufferInfo = (props) => {
             disabled={!isInjectorReady}
             content="Print"
             onClick={() =>
-              act('makeup_injector', {
+              act("makeup_injector", {
                 index,
-                type: 'uf',
+                type: "uf",
               })
             }
           />
@@ -85,11 +98,12 @@ const GeneticMakeupBufferInfo = (props) => {
             onClick={() =>
               act(ACTION_MAKEUP_APPLY, {
                 index,
-                type: 'uf',
+                type: "uf",
               })
-            }>
+            }
+          >
             Transfer
-            {!isViableSubject && ' (Delayed)'}
+            {!isViableSubject && " (Delayed)"}
           </Button>
         </LabeledList.Item>
         <LabeledList.Item label="Full Makeup">
@@ -98,9 +112,9 @@ const GeneticMakeupBufferInfo = (props) => {
             disabled={!isInjectorReady}
             content="Print"
             onClick={() =>
-              act('makeup_injector', {
+              act("makeup_injector", {
                 index,
-                type: 'mixed',
+                type: "mixed",
               })
             }
           />
@@ -109,11 +123,12 @@ const GeneticMakeupBufferInfo = (props) => {
             onClick={() =>
               act(ACTION_MAKEUP_APPLY, {
                 index,
-                type: 'mixed',
+                type: "mixed",
               })
-            }>
+            }
+          >
             Transfer
-            {!isViableSubject && ' (Delayed)'}
+            {!isViableSubject && " (Delayed)"}
           </Button>
         </LabeledList.Item>
         <LabeledList.Item>
@@ -122,7 +137,7 @@ const GeneticMakeupBufferInfo = (props) => {
             disabled={!hasDisk || diskReadOnly}
             content="Export To Disk"
             onClick={() =>
-              act('save_makeup_disk', {
+              act("save_makeup_disk", {
                 index,
               })
             }
@@ -157,7 +172,7 @@ const GeneticMakeupBuffers = (props) => {
                 disabled={!hasDisk || !diskHasMakeup}
                 content="Import from disk"
                 onClick={() =>
-                  act('load_makeup_disk', {
+                  act("load_makeup_disk", {
                     index: i,
                   })
                 }
@@ -167,7 +182,7 @@ const GeneticMakeupBuffers = (props) => {
               disabled={!isViableSubject}
               content="Save"
               onClick={() =>
-                act('save_makeup_console', {
+                act("save_makeup_console", {
                   index: i,
                 })
               }
@@ -178,13 +193,14 @@ const GeneticMakeupBuffers = (props) => {
               color="red"
               disabled={!makeup}
               onClick={() =>
-                act('del_makeup_console', {
+                act("del_makeup_console", {
                   index: i,
                 })
               }
             />
           </>
-        }>
+        }
+      >
         <GeneticMakeupBufferInfo index={i} makeup={makeup} />
       </Collapsible>
     );
@@ -241,7 +257,7 @@ const PulseBoard = (props) => {
         textAlign="center"
         content={char}
         onClick={() =>
-          act('makeup_pulse', {
+          act("makeup_pulse", {
             index: i + 1,
             type: type,
           })
@@ -262,7 +278,7 @@ const PulseBoard = (props) => {
     }
   }
   return (
-    <Section title={'Unique ' + name} minHeight="100%" position="relative">
+    <Section title={"Unique " + name} minHeight="100%" position="relative">
       <Box mx="-1px">{blocks}</Box>
     </Section>
   );
@@ -283,7 +299,7 @@ const PulseSettings = (props) => {
             minValue={1}
             maxValue={PULSE_STRENGTH_MAX}
             onDrag={(e, value) =>
-              act('set_pulse_strength', {
+              act("set_pulse_strength", {
                 val: value,
               })
             }
@@ -298,7 +314,7 @@ const PulseSettings = (props) => {
             minValue={1}
             maxValue={PULSE_DURATION_MAX}
             onDrag={(e, value) =>
-              act('set_pulse_duration', {
+              act("set_pulse_duration", {
                 val: value,
               })
             }

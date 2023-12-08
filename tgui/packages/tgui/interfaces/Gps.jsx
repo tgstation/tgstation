@@ -1,12 +1,12 @@
-import { map, sortBy } from 'common/collections';
-import { flow } from 'common/fp';
-import { clamp } from 'common/math';
-import { vecLength, vecSubtract } from 'common/vector';
-import { useBackend } from '../backend';
-import { Box, Button, Icon, LabeledList, Section, Table } from '../components';
-import { Window } from '../layouts';
+import { map, sortBy } from "common/collections";
+import { flow } from "common/fp";
+import { clamp } from "common/math";
+import { vecLength, vecSubtract } from "common/vector";
+import { useBackend } from "../backend";
+import { Box, Button, Icon, LabeledList, Section, Table } from "../components";
+import { Window } from "../layouts";
 
-const coordsToVec = (coords) => map(parseFloat)(coords.split(', '));
+const coordsToVec = (coords) => map(parseFloat)(coords.split(", "));
 
 export const Gps = (props) => {
   const { act, data } = useBackend();
@@ -19,8 +19,8 @@ export const Gps = (props) => {
         signal.dist &&
         Math.round(
           vecLength(
-            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords))
-          )
+            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords)),
+          ),
         );
       return { ...signal, dist, index };
     }),
@@ -28,7 +28,7 @@ export const Gps = (props) => {
       // Signals with distance metric go first
       (signal) => signal.dist === undefined,
       // Sort alphabetically
-      (signal) => signal.entrytag
+      (signal) => signal.entrytag,
     ),
   ])(data.signals || []);
   return (
@@ -39,33 +39,34 @@ export const Gps = (props) => {
           buttons={
             <Button
               icon="power-off"
-              content={power ? 'On' : 'Off'}
+              content={power ? "On" : "Off"}
               selected={power}
-              onClick={() => act('power')}
+              onClick={() => act("power")}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Tag">
               <Button
                 icon="pencil-alt"
                 content={tag}
-                onClick={() => act('rename')}
+                onClick={() => act("rename")}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Scan Mode">
               <Button
-                icon={updating ? 'unlock' : 'lock'}
-                content={updating ? 'AUTO' : 'MANUAL'}
-                color={!updating && 'bad'}
-                onClick={() => act('updating')}
+                icon={updating ? "unlock" : "lock"}
+                content={updating ? "AUTO" : "MANUAL"}
+                color={!updating && "bad"}
+                onClick={() => act("updating")}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Range">
               <Button
                 icon="sync"
-                content={globalmode ? 'MAXIMUM' : 'LOCAL'}
+                content={globalmode ? "MAXIMUM" : "LOCAL"}
                 selected={!globalmode}
-                onClick={() => act('globalmode')}
+                onClick={() => act("globalmode")}
               />
             </LabeledList.Item>
           </LabeledList>
@@ -87,7 +88,8 @@ export const Gps = (props) => {
                 {signals.map((signal) => (
                   <Table.Row
                     key={signal.entrytag + signal.coords + signal.index}
-                    className="candystripe">
+                    className="candystripe"
+                  >
                     <Table.Cell bold color="label">
                       {signal.entrytag}
                     </Table.Cell>
@@ -96,7 +98,8 @@ export const Gps = (props) => {
                       opacity={
                         signal.dist !== undefined &&
                         clamp(1.2 / Math.log(Math.E + signal.dist / 20), 0.4, 1)
-                      }>
+                      }
+                    >
                       {signal.degrees !== undefined && (
                         <Icon
                           mr={1}
@@ -105,7 +108,7 @@ export const Gps = (props) => {
                           rotation={signal.degrees}
                         />
                       )}
-                      {signal.dist !== undefined && signal.dist + 'm'}
+                      {signal.dist !== undefined && signal.dist + "m"}
                     </Table.Cell>
                     <Table.Cell collapsing>{signal.coords}</Table.Cell>
                   </Table.Row>

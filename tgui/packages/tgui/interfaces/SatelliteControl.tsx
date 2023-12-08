@@ -1,7 +1,7 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Box, Button, LabeledList, ProgressBar, Section } from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   satellites: Satellite[];
@@ -65,9 +65,9 @@ const SatelliteDisplay = (props) => {
           <Button.Checkbox
             key={satellite.id}
             checked={satellite.active}
-            content={'#' + satellite.id + ' ' + satellite.mode}
+            content={"#" + satellite.id + " " + satellite.mode}
             onClick={() =>
-              act('toggle', {
+              act("toggle", {
                 id: satellite.id,
               })
             }

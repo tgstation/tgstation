@@ -1,7 +1,14 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Button, Flex, Knob, NumberInput, LabeledControls, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  Button,
+  Flex,
+  Knob,
+  NumberInput,
+  LabeledControls,
+  Section,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   temperature: number;
@@ -43,7 +50,7 @@ export const Aquarium = (props) => {
                 step={1}
                 stepPixelSize={1}
                 onDrag={(_, value) =>
-                  act('temperature', {
+                  act("temperature", {
                     temperature: value,
                   })
                 }
@@ -57,7 +64,7 @@ export const Aquarium = (props) => {
                       fluid
                       content={f}
                       selected={fluid_type === f}
-                      onClick={() => act('fluid', { fluid: f })}
+                      onClick={() => act("fluid", { fluid: f })}
                     />
                   </Flex.Item>
                 ))}
@@ -65,9 +72,9 @@ export const Aquarium = (props) => {
             </LabeledControls.Item>
             <LabeledControls.Item label="Reproduction Prevention">
               <Button
-                content={allow_breeding ? 'Offline' : 'Online'}
+                content={allow_breeding ? "Offline" : "Online"}
                 selected={!allow_breeding}
-                onClick={() => act('allow_breeding')}
+                onClick={() => act("allow_breeding")}
               />
             </LabeledControls.Item>
             <LabeledControls.Item label="Feeding Interval">
@@ -78,7 +85,7 @@ export const Aquarium = (props) => {
                 maxValue={7}
                 unit="minutes"
                 onChange={(e, value) =>
-                  act('feeding_interval', {
+                  act("feeding_interval", {
                     feeding_interval: value,
                   })
                 }
@@ -91,7 +98,7 @@ export const Aquarium = (props) => {
             <Button
               key={movable.ref}
               content={movable.name}
-              onClick={() => act('remove', { ref: movable.ref })}
+              onClick={() => act("remove", { ref: movable.ref })}
             />
           ))}
         </Section>

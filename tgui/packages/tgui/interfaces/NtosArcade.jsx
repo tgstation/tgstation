@@ -1,7 +1,15 @@
-import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Grid, LabeledList, ProgressBar, Section } from '../components';
-import { NtosWindow } from '../layouts';
+import { resolveAsset } from "../assets";
+import { useBackend } from "../backend";
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Grid,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from "../components";
+import { NtosWindow } from "../layouts";
 
 export const NtosArcade = (props) => {
   const { act, data } = useBackend();
@@ -24,7 +32,8 @@ export const NtosArcade = (props) => {
                         good: [20, 31],
                         average: [10, 20],
                         bad: [-Infinity, 10],
-                      }}>
+                      }}
+                    >
                       {data.PlayerHitpoints}HP
                     </ProgressBar>
                   </LabeledList.Item>
@@ -37,7 +46,8 @@ export const NtosArcade = (props) => {
                         purple: [11, Infinity],
                         violet: [3, 11],
                         bad: [-Infinity, 3],
-                      }}>
+                      }}
+                    >
                       {data.PlayerMP}MP
                     </ProgressBar>
                   </LabeledList.Item>
@@ -45,8 +55,9 @@ export const NtosArcade = (props) => {
                 <Box my={1} mx={4} />
                 <Section
                   backgroundColor={
-                    data.PauseState === 1 ? '#1b3622' : '#471915'
-                  }>
+                    data.PauseState === 1 ? "#1b3622" : "#471915"
+                  }
+                >
                   {data.Status}
                 </Section>
               </Grid.Column>
@@ -59,7 +70,8 @@ export const NtosArcade = (props) => {
                     good: [30, Infinity],
                     average: [5, 30],
                     bad: [-Infinity, 5],
-                  }}>
+                  }}
+                >
                   <AnimatedNumber value={data.Hitpoints} />
                   HP
                 </ProgressBar>
@@ -75,7 +87,7 @@ export const NtosArcade = (props) => {
               tooltip="Go in for the kill!"
               tooltipPosition="top"
               disabled={data.GameActive === 0 || data.PauseState === 1}
-              onClick={() => act('Attack')}
+              onClick={() => act("Attack")}
               content="Attack!"
             />
             <Button
@@ -83,7 +95,7 @@ export const NtosArcade = (props) => {
               tooltip="Heal yourself!"
               tooltipPosition="top"
               disabled={data.GameActive === 0 || data.PauseState === 1}
-              onClick={() => act('Heal')}
+              onClick={() => act("Heal")}
               content="Heal!"
             />
             <Button
@@ -91,7 +103,7 @@ export const NtosArcade = (props) => {
               tooltip="Recharge your magic!"
               tooltipPosition="top"
               disabled={data.GameActive === 0 || data.PauseState === 1}
-              onClick={() => act('Recharge_Power')}
+              onClick={() => act("Recharge_Power")}
               content="Recharge!"
             />
           </Box>
@@ -101,7 +113,7 @@ export const NtosArcade = (props) => {
               tooltip="One more game couldn't hurt."
               tooltipPosition="top"
               disabled={data.GameActive === 1}
-              onClick={() => act('Start_Game')}
+              onClick={() => act("Start_Game")}
               content="Begin Game"
             />
             <Button
@@ -109,11 +121,11 @@ export const NtosArcade = (props) => {
               tooltip="Claim at your local Arcade Computer for Prizes!"
               tooltipPosition="top"
               disabled={data.GameActive === 1}
-              onClick={() => act('Dispense_Tickets')}
+              onClick={() => act("Dispense_Tickets")}
               content="Claim Tickets"
             />
           </Box>
-          <Box color={data.TicketCount >= 1 ? 'good' : 'normal'}>
+          <Box color={data.TicketCount >= 1 ? "good" : "normal"}>
             Earned Tickets: {data.TicketCount}
           </Box>
         </Section>

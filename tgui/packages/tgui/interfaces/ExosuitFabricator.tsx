@@ -1,12 +1,12 @@
-import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Icon } from '../components';
-import { Window } from '../layouts';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
-import { DesignBrowser } from './Fabrication/DesignBrowser';
-import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { Tooltip } from '../components';
-import { BooleanLike, classes } from 'common/react';
+import { useBackend } from "../backend";
+import { Box, Button, Section, Stack, Icon } from "../components";
+import { Window } from "../layouts";
+import { MaterialAccessBar } from "./Fabrication/MaterialAccessBar";
+import { Design, FabricatorData, MaterialMap } from "./Fabrication/Types";
+import { DesignBrowser } from "./Fabrication/DesignBrowser";
+import { MaterialCostSequence } from "./Fabrication/MaterialCostSequence";
+import { Tooltip } from "../components";
+import { BooleanLike, classes } from "common/react";
 
 type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
@@ -41,12 +41,13 @@ export const ExosuitFabricator = (props) => {
                   )}
                   categoryButtons={(category) => (
                     <Button
-                      color={'transparent'}
+                      color={"transparent"}
                       onClick={() => {
-                        act('build', {
+                        act("build", {
                           designs: category.children.map((design) => design.id),
                         });
-                      }}>
+                      }}
+                    >
                       Queue All
                     </Button>
                   )}
@@ -58,7 +59,7 @@ export const ExosuitFabricator = (props) => {
                     availableMaterials={materials}
                     SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                     onEjectRequested={(material, amount) => {
-                      act('remove_mat', { ref: material.ref, amount });
+                      act("remove_mat", { ref: material.ref, amount });
                     }}
                   />
                 </Section>
@@ -89,7 +90,7 @@ const Recipe = (props: RecipeProps) => {
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -97,10 +98,11 @@ const Recipe = (props: RecipeProps) => {
       <Tooltip content={design.desc} position="right">
         <div
           className={classes([
-            'FabricatorRecipe__Button',
-            'FabricatorRecipe__Button--icon',
-            !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+            "FabricatorRecipe__Button",
+            "FabricatorRecipe__Button--icon",
+            !canPrint && "FabricatorRecipe__Button--disabled",
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -113,48 +115,52 @@ const Recipe = (props: RecipeProps) => {
             SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
-        }>
+        }
+      >
         <div
           className={classes([
-            'FabricatorRecipe__Title',
-            !canPrint && 'FabricatorRecipe__Title--disabled',
+            "FabricatorRecipe__Title",
+            !canPrint && "FabricatorRecipe__Title--disabled",
           ])}
           onClick={() =>
-            canPrint && act('build', { designs: [design.id], now: true })
-          }>
+            canPrint && act("build", { designs: [design.id], now: true })
+          }
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
-              width={'32px'}
-              height={'32px'}
-              className={classes(['design32x32', design.icon])}
+              width={"32px"}
+              height={"32px"}
+              className={classes(["design32x32", design.icon])}
             />
           </div>
           <div className="FabricatorRecipe__Label">{design.name}</div>
         </div>
       </Tooltip>
 
-      <Tooltip content={'Add to Queue'} position="right">
+      <Tooltip content={"Add to Queue"} position="right">
         <div
           className={classes([
-            'FabricatorRecipe__Button',
-            'FabricatorRecipe__Button--icon',
-            !canPrint && 'FabricatorRecipe__Button--disabled',
+            "FabricatorRecipe__Button",
+            "FabricatorRecipe__Button--icon",
+            !canPrint && "FabricatorRecipe__Button--disabled",
           ])}
-          color={'transparent'}
-          onClick={() => act('build', { designs: [design.id] })}>
+          color={"transparent"}
+          onClick={() => act("build", { designs: [design.id] })}
+        >
           <Icon name="plus-circle" />
         </div>
       </Tooltip>
 
-      <Tooltip content={'Build Now'} position="right">
+      <Tooltip content={"Build Now"} position="right">
         <div
           className={classes([
-            'FabricatorRecipe__Button',
-            'FabricatorRecipe__Button--icon',
-            !canPrint && 'FabricatorRecipe__Button--disabled',
+            "FabricatorRecipe__Button",
+            "FabricatorRecipe__Button--icon",
+            !canPrint && "FabricatorRecipe__Button--disabled",
           ])}
-          color={'transparent'}
-          onClick={() => act('build', { designs: [design.id], now: true })}>
+          color={"transparent"}
+          onClick={() => act("build", { designs: [design.id], now: true })}
+        >
           <Icon name="play" />
         </div>
       </Tooltip>
@@ -203,25 +209,26 @@ const Queue = (props: QueueProps) => {
                   color="bad"
                   icon="minus-circle"
                   content="Clear Queue"
-                  onClick={() => act('clear_queue')}
+                  onClick={() => act("clear_queue")}
                 />
                 {(!!processing && (
                   <Button
                     disabled={!queue.length}
                     content="Stop"
                     icon="stop"
-                    onClick={() => act('stop_queue')}
+                    onClick={() => act("stop_queue")}
                   />
                 )) || (
                   <Button
                     disabled={!queue.length}
                     content="Build Queue"
                     icon="play"
-                    onClick={() => act('build_queue')}
+                    onClick={() => act("build_queue")}
                   />
                 )}
               </>
-            }>
+            }
+          >
             <MaterialCostSequence
               SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
               available={availableMaterials}
@@ -230,7 +237,7 @@ const Queue = (props: QueueProps) => {
           </Section>
         </Stack.Item>
         <Stack.Item grow>
-          <Section fill style={{ 'overflow': 'auto' }}>
+          <Section fill style={{ overflow: "auto" }}>
             <QueueList
               availableMaterials={availableMaterials}
               SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
@@ -286,18 +293,18 @@ const QueueList = (props: QueueListProps) => {
           <div key={entry.job.jobId} className="FabricatorRecipe">
             {!!entry.job.processing && (
               <div
-                className={'FabricatorRecipe__Progress'}
+                className={"FabricatorRecipe__Progress"}
                 style={{
                   width:
                     (entry.job.timeLeft /
                       (entry.design ? entry.design.constructionTime : 0)) *
                       100 +
-                    '%',
+                    "%",
                 }}
               />
             )}
             <Tooltip
-              position={'bottom'}
+              position={"bottom"}
               content={
                 <MaterialCostSequence
                   design={entry.design}
@@ -305,18 +312,20 @@ const QueueList = (props: QueueListProps) => {
                   SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                   available={availableMaterials}
                 />
-              }>
+              }
+            >
               <div
                 className={classes([
-                  'FabricatorRecipe__Title',
-                  !entry.canPrint && 'FabricatorRecipe__Title--disabled',
-                ])}>
+                  "FabricatorRecipe__Title",
+                  !entry.canPrint && "FabricatorRecipe__Title--disabled",
+                ])}
+              >
                 <div className="FabricatorRecipe__Icon">
                   <Box
-                    width={'32px'}
-                    height={'32px'}
+                    width={"32px"}
+                    height={"32px"}
                     className={classes([
-                      'design32x32',
+                      "design32x32",
                       entry.design && entry.design.icon,
                     ])}
                   />
@@ -330,15 +339,16 @@ const QueueList = (props: QueueListProps) => {
             {!entry.job.processing && (
               <div
                 className={classes([
-                  'FabricatorRecipe__Button',
-                  'FabricatorRecipe__Button--icon',
+                  "FabricatorRecipe__Button",
+                  "FabricatorRecipe__Button--icon",
                 ])}
                 onClick={() => {
-                  act('del_queue_part', {
+                  act("del_queue_part", {
                     index: entry.index + (queue[0]!.processing ? 0 : 1),
                   });
-                }}>
-                <Tooltip content={'Remove from Queue'}>
+                }}
+              >
+                <Tooltip content={"Remove from Queue"}>
                   <Icon name="minus-circle" />
                 </Tooltip>
               </div>

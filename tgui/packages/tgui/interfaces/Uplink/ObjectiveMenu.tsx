@@ -1,8 +1,22 @@
-import { BooleanLike, classes } from 'common/react';
-import { Component } from 'react';
-import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';
-import { calculateProgression, getDangerLevel, Rank } from './calculateDangerLevel';
-import { ObjectiveState } from './constants';
+import { BooleanLike, classes } from "common/react";
+import { Component } from "react";
+import {
+  Section,
+  Stack,
+  Box,
+  Button,
+  Flex,
+  Tooltip,
+  NoticeBox,
+  Dimmer,
+  Icon,
+} from "../../components";
+import {
+  calculateProgression,
+  getDangerLevel,
+  Rank,
+} from "./calculateDangerLevel";
+import { ObjectiveState } from "./constants";
 
 export type Objective = {
   id: number;
@@ -75,8 +89,8 @@ export class ObjectiveMenu extends Component<
         objectiveX: event.clientX,
         objectiveY: event.clientY,
       });
-      window.addEventListener('mouseup', this.handleMouseUp);
-      window.addEventListener('mousemove', this.handleMouseMove);
+      window.addEventListener("mouseup", this.handleMouseUp);
+      window.addEventListener("mousemove", this.handleMouseMove);
       event.stopPropagation();
       event.preventDefault();
 
@@ -89,8 +103,8 @@ export class ObjectiveMenu extends Component<
       return;
     }
 
-    window.removeEventListener('mouseup', this.handleMouseUp);
-    window.removeEventListener('mousemove', this.handleMouseMove);
+    window.removeEventListener("mouseup", this.handleMouseUp);
+    window.removeEventListener("mousemove", this.handleMouseMove);
     this.setState({
       draggingObjective: null,
     });
@@ -148,7 +162,8 @@ export class ObjectiveMenu extends Component<
                           <Box
                             color="label"
                             className="UplinkObjective__EmptyObjective"
-                            onMouseUp={this.handleObjectiveAdded}>
+                            onMouseUp={this.handleObjectiveAdded}
+                          >
                             <Stack textAlign="center" fill align="center">
                               <Stack.Item textAlign="center" width="100%">
                                 Empty Objective, drop objectives here to take
@@ -168,11 +183,11 @@ export class ObjectiveMenu extends Component<
                           handleObjectiveAction,
                           handleObjectiveCompleted,
                           handleObjectiveAbort,
-                          true
+                          true,
                         )}
                       </Stack.Item>
                     );
-                  }
+                  },
                 )}
               </Stack>
             </Section>
@@ -182,7 +197,8 @@ export class ObjectiveMenu extends Component<
               title="Potential Objectives"
               textAlign="center"
               fill
-              scrollable>
+              scrollable
+            >
               <Flex wrap="wrap" justify="space-evenly">
                 {potentialObjectives.map((objective) => {
                   return (
@@ -194,7 +210,8 @@ export class ObjectiveMenu extends Component<
                       mx="0.5%"
                       onMouseDown={(event) => {
                         this.handleObjectiveClick(event, objective);
-                      }}>
+                      }}
+                    >
                       {(objective.id !== draggingObjective?.id &&
                         ObjectiveFunction(
                           objective,
@@ -202,11 +219,11 @@ export class ObjectiveMenu extends Component<
                           undefined,
                           undefined,
                           undefined,
-                          true
+                          true,
                         )) || (
                         <Box
                           style={{
-                            border: '2px dashed black',
+                            border: "2px dashed black",
                           }}
                           width="100%"
                           height="100%"
@@ -230,7 +247,8 @@ export class ObjectiveMenu extends Component<
                         align="center"
                         height="100%"
                         width="100%"
-                        textAlign="center">
+                        textAlign="center"
+                      >
                         <Stack.Item width="100%">
                           <Button
                             content="Request More Objectives"
@@ -253,8 +271,9 @@ export class ObjectiveMenu extends Component<
             left={`${objectiveX - 180}px`}
             top={`${objectiveY}px`}
             style={{
-              pointerEvents: 'none',
-            }}>
+              pointerEvents: "none",
+            }}
+          >
             {ObjectiveFunction(draggingObjective, false)}
           </Box>
         )}
@@ -269,7 +288,7 @@ const ObjectiveFunction = (
   handleObjectiveAction?: (objective: Objective, action: string) => void,
   handleCompletion?: (objective: Objective) => void,
   handleAbort?: (objective: Objective) => void,
-  grow: boolean = false
+  grow: boolean = false,
 ) => {
   const dangerLevel = getDangerLevel(objective.progression_minimum);
   return (
@@ -371,13 +390,13 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
   let objectiveCompletionText;
   switch (objectiveState) {
     case ObjectiveState.Invalid:
-      objectiveCompletionText = 'Invalidated';
+      objectiveCompletionText = "Invalidated";
       break;
     case ObjectiveState.Completed:
-      objectiveCompletionText = 'Completed';
+      objectiveCompletionText = "Completed";
       break;
     case ObjectiveState.Failed:
-      objectiveCompletionText = 'Failed';
+      objectiveCompletionText = "Failed";
       break;
   }
 
@@ -385,18 +404,19 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
     Math.round((1 - progressionReward / originalProgression) * 1000) / 10;
 
   return (
-    <Flex height={grow ? '100%' : undefined} direction="column">
+    <Flex height={grow ? "100%" : undefined} direction="column">
       <Flex.Item grow={grow} basis="content">
         <Box
           className={classes([
-            'UplinkObjective__Titlebar',
+            "UplinkObjective__Titlebar",
             dangerLevel.gradient,
           ])}
           width="100%"
-          height="100%">
+          height="100%"
+        >
           <Stack>
             <Stack.Item grow={1}>
-              {name}{' '}
+              {name}{" "}
               {!objectiveFinished ? null : `- ${objectiveCompletionText}`}
             </Stack.Item>
             {canAbort && (
@@ -437,15 +457,16 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                 <Stack align="center" justify="center">
                   <Box
                     style={{
-                      border: '2px solid rgba(0, 0, 0, 0.5)',
-                      borderLeft: 'none',
-                      borderRight: 'none',
-                      borderBottom: objectiveFinished ? 'none' : undefined,
+                      border: "2px solid rgba(0, 0, 0, 0.5)",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      borderBottom: objectiveFinished ? "none" : undefined,
                     }}
                     className={dangerLevel.gradient}
                     py={0.5}
                     width="100%"
-                    textAlign="center">
+                    textAlign="center"
+                  >
                     {telecrystalReward} TC,
                     <Box ml={1} as="span">
                       {calculateProgression(progressionReward)} Threat Level
@@ -460,31 +481,34 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                                 color={
                                   progressionDiff > 0
                                     ? progressionDiff > 25
-                                      ? 'red'
-                                      : 'orange'
-                                    : 'green'
+                                      ? "red"
+                                      : "orange"
+                                    : "green"
                                 }
-                                as="span">
+                                as="span"
+                              >
                                 {Math.abs(progressionDiff)}%
                               </Box>
-                              {progressionDiff > 0 ? 'less' : 'more'} threat
+                              {progressionDiff > 0 ? "less" : "more"} threat
                               from this objective. This is because your threat
-                              level is{' '}
-                              {progressionDiff > 0 ? 'ahead ' : 'behind '}
+                              level is{" "}
+                              {progressionDiff > 0 ? "ahead " : "behind "}
                               where it normally should be at.
                             </Box>
-                          }>
+                          }
+                        >
                           <Box
                             ml={1}
                             color={
                               progressionDiff > 0
                                 ? progressionDiff > 35
-                                  ? 'red'
-                                  : 'orange'
-                                : 'green'
+                                  ? "red"
+                                  : "orange"
+                                : "green"
                             }
-                            as="span">
-                            ({progressionDiff > 0 ? '-' : '+'}
+                            as="span"
+                          >
+                            ({progressionDiff > 0 ? "-" : "+"}
                             {Math.abs(progressionDiff)}%)
                           </Box>
                         </Tooltip>
@@ -497,22 +521,23 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     inline
                     className={dangerLevel.gradient}
                     style={{
-                      borderRadius: '0',
-                      border: '2px solid rgba(0, 0, 0, 0.5)',
-                      borderLeft: 'none',
-                      borderRight: 'none',
+                      borderRadius: "0",
+                      border: "2px solid rgba(0, 0, 0, 0.5)",
+                      borderLeft: "none",
+                      borderRight: "none",
                     }}
                     position="relative"
                     width="100%"
                     textAlign="center"
-                    bold>
+                    bold
+                  >
                     <Box
                       width="100%"
                       height="100%"
                       backgroundColor={
                         objectiveFailed
-                          ? 'rgba(255, 0, 0, 0.1)'
-                          : 'rgba(0, 255, 0, 0.1)'
+                          ? "rgba(255, 0, 0, 0.1)"
+                          : "rgba(0, 255, 0, 0.1)"
                       }
                       position="absolute"
                       left={0}
@@ -520,11 +545,12 @@ export const ObjectiveElement = (props: ObjectiveElementProps) => {
                     />
                     <Button
                       onClick={handleCompletion}
-                      color={objectiveFailed ? 'bad' : 'good'}
+                      color={objectiveFailed ? "bad" : "good"}
                       style={{
-                        border: '1px solid rgba(0, 0, 0, 0.65)',
+                        border: "1px solid rgba(0, 0, 0, 0.65)",
                       }}
-                      my={1}>
+                      my={1}
+                    >
                       TURN IN
                     </Button>
                   </Box>

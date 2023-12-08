@@ -4,11 +4,11 @@
  * @license MIT
  */
 
-import { BlockQuote, Section } from '../components';
-import { BoxWithSampleText } from './common';
+import { BlockQuote, Section } from "../components";
+import { BoxWithSampleText } from "./common";
 
 export const meta = {
-  title: 'BlockQuote',
+  title: "BlockQuote",
   render: () => <Story />,
 };
 

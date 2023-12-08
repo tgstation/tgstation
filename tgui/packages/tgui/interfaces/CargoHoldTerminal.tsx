@@ -1,7 +1,13 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
-import { Window } from '../layouts';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  Section,
+} from "../components";
+import { Window } from "../layouts";
 
 type Data = {
   points: number;
@@ -31,23 +37,24 @@ export const CargoHoldTerminal = (props) => {
           buttons={
             <>
               <Button
-                icon={'sync'}
-                content={'Recalculate Value'}
+                icon={"sync"}
+                content={"Recalculate Value"}
                 disabled={!pad}
-                onClick={() => act('recalc')}
+                onClick={() => act("recalc")}
               />
               <Button
-                icon={sending ? 'times' : 'arrow-up'}
-                content={sending ? 'Stop Sending' : 'Send Goods'}
+                icon={sending ? "times" : "arrow-up"}
+                content={sending ? "Stop Sending" : "Send Goods"}
                 selected={sending}
                 disabled={!pad}
-                onClick={() => act(sending ? 'stop' : 'send')}
+                onClick={() => act(sending ? "stop" : "send")}
               />
             </>
-          }>
+          }
+        >
           <LabeledList>
-            <LabeledList.Item label="Status" color={pad ? 'good' : 'bad'}>
-              {pad ? 'Online' : 'Not Found'}
+            <LabeledList.Item label="Status" color={pad ? "good" : "bad"}>
+              {pad ? "Online" : "Not Found"}
             </LabeledList.Item>
             <LabeledList.Item label="Cargo Report">
               {status_report}

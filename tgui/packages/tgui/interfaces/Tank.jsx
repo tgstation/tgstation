@@ -1,14 +1,20 @@
-import { toFixed } from 'common/math';
-import { useBackend } from '../backend';
-import { Button, LabeledControls, NumberInput, RoundGauge, Section } from '../components';
-import { formatSiUnit } from '../format';
-import { Window } from '../layouts';
+import { toFixed } from "common/math";
+import { useBackend } from "../backend";
+import {
+  Button,
+  LabeledControls,
+  NumberInput,
+  RoundGauge,
+  Section,
+} from "../components";
+import { formatSiUnit } from "../format";
+import { Window } from "../layouts";
 
 const formatPressure = (value) => {
   if (value < 10000) {
-    return toFixed(value) + ' kPa';
+    return toFixed(value) + " kPa";
   }
-  return formatSiUnit(value * 1000, 1, 'Pa');
+  return formatSiUnit(value * 1000, 1, "Pa");
 };
 
 export const Tank = (props) => {
@@ -35,9 +41,9 @@ export const Tank = (props) => {
                 maxValue={fragmentPressure * 1.15}
                 alertAfter={leakPressure}
                 ranges={{
-                  'good': [0, leakPressure],
-                  'average': [leakPressure, fragmentPressure],
-                  'bad': [fragmentPressure, fragmentPressure * 1.15],
+                  good: [0, leakPressure],
+                  average: [leakPressure, fragmentPressure],
+                  bad: [fragmentPressure, fragmentPressure * 1.15],
                 }}
                 format={formatPressure}
                 size={2}
@@ -48,8 +54,8 @@ export const Tank = (props) => {
                 icon="fast-backward"
                 disabled={data.ReleasePressure === data.minReleasePressure}
                 onClick={() =>
-                  act('pressure', {
-                    pressure: 'min',
+                  act("pressure", {
+                    pressure: "min",
                   })
                 }
               />
@@ -61,7 +67,7 @@ export const Tank = (props) => {
                 minValue={data.minReleasePressure}
                 maxValue={data.maxReleasePressure}
                 onChange={(e, value) =>
-                  act('pressure', {
+                  act("pressure", {
                     pressure: value,
                   })
                 }
@@ -70,8 +76,8 @@ export const Tank = (props) => {
                 icon="fast-forward"
                 disabled={data.ReleasePressure === data.maxReleasePressure}
                 onClick={() =>
-                  act('pressure', {
-                    pressure: 'max',
+                  act("pressure", {
+                    pressure: "max",
                   })
                 }
               />
@@ -80,8 +86,8 @@ export const Tank = (props) => {
                 content=""
                 disabled={data.ReleasePressure === data.defaultReleasePressure}
                 onClick={() =>
-                  act('pressure', {
-                    pressure: 'reset',
+                  act("pressure", {
+                    pressure: "reset",
                   })
                 }
               />

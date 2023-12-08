@@ -7,17 +7,17 @@
 const inception = Date.now();
 
 // Runtime detection
-const isNode = process && process.release && process.release.name === 'node';
+const isNode = process && process.release && process.release.name === "node";
 let isChrome = false;
 try {
-  isChrome = window.navigator.userAgent.toLowerCase().includes('chrome');
+  isChrome = window.navigator.userAgent.toLowerCase().includes("chrome");
 } catch {}
 
 // Timestamping function
 const getTimestamp = () => {
   const timestamp = String(Date.now() - inception)
-    .padStart(4, '0')
-    .padStart(7, ' ');
+    .padStart(4, "0")
+    .padStart(7, " ");
   const seconds = timestamp.substr(0, timestamp.length - 3);
   const millis = timestamp.substr(-3);
   return `${seconds}.${millis}`;
@@ -27,9 +27,9 @@ const getPrefix = (() => {
   if (isNode) {
     // Escape sequences
     const ESC = {
-      dimmed: '\x1b[38;5;240m',
-      bright: '\x1b[37;1m',
-      reset: '\x1b[0m',
+      dimmed: "\x1b[38;5;240m",
+      bright: "\x1b[37;1m",
+      reset: "\x1b[0m",
     };
     return (ns) => [
       `${ESC.dimmed}${getTimestamp()} ${ESC.bright}${ns}${ESC.reset}`,
@@ -38,8 +38,8 @@ const getPrefix = (() => {
   if (isChrome) {
     // Styles
     const styles = {
-      dimmed: 'color: #888',
-      bright: 'font-weight: bold',
+      dimmed: "color: #888",
+      bright: "font-weight: bold",
     };
     return (ns) => [
       `%c${getTimestamp()}%c ${ns}`,

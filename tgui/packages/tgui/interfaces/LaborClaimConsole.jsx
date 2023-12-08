@@ -1,7 +1,7 @@
-import { toTitleCase } from 'common/string';
-import { useBackend } from '../backend';
-import { Box, Button, LabeledList, Section, Table } from '../components';
-import { Window } from '../layouts';
+import { toTitleCase } from "common/string";
+import { useBackend } from "../backend";
+import { Box, Button, LabeledList, Section, Table } from "../components";
+import { Window } from "../layouts";
 
 export const LaborClaimConsole = (props) => {
   const { act, data } = useBackend();
@@ -16,7 +16,7 @@ export const LaborClaimConsole = (props) => {
               <Button
                 content="Move shuttle"
                 disabled={!can_go_home}
-                onClick={() => act('move_shuttle')}
+                onClick={() => act("move_shuttle")}
               />
             </LabeledList.Item>
             <LabeledList.Item label="Points">{id_points}</LabeledList.Item>
@@ -26,9 +26,10 @@ export const LaborClaimConsole = (props) => {
                 <Button
                   content="Claim points"
                   disabled={!unclaimed_points}
-                  onClick={() => act('claim_points')}
+                  onClick={() => act("claim_points")}
                 />
-              }>
+              }
+            >
               {unclaimed_points}
             </LabeledList.Item>
           </LabeledList>

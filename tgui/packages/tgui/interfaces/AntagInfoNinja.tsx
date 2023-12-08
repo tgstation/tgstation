@@ -1,11 +1,15 @@
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Icon, Section, Stack } from '../components';
-import { Window } from '../layouts';
-import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
+import { BooleanLike } from "common/react";
+import { useBackend } from "../backend";
+import { Icon, Section, Stack } from "../components";
+import { Window } from "../layouts";
+import {
+  ObjectivePrintout,
+  Objective,
+  ReplaceObjectivesButton,
+} from "./common/Objectives";
 
 const ninja_emphasis = {
-  color: 'red',
+  color: "red",
 };
 
 type NinjaInfo = {
@@ -54,8 +58,8 @@ export const AntagInfoNinja = (props) => {
                 objectiveFollowup={
                   <ReplaceObjectivesButton
                     can_change_objective={can_change_objective}
-                    button_title={'Adapt Mission Parameters'}
-                    button_colour={'green'}
+                    button_title={"Adapt Mission Parameters"}
+                    button_colour={"green"}
                   />
                 }
               />

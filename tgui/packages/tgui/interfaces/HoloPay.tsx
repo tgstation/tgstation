@@ -1,7 +1,19 @@
-import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from 'tgui/components';
-import { Window } from 'tgui/layouts';
+import { decodeHtmlEntities } from "common/string";
+import { useBackend, useLocalState } from "tgui/backend";
+import {
+  Box,
+  Button,
+  Dropdown,
+  Icon,
+  NoticeBox,
+  RestrictedInput,
+  Section,
+  Stack,
+  Table,
+  TextArea,
+  Tooltip,
+} from "tgui/components";
+import { Window } from "tgui/layouts";
 
 type HoloPayData = {
   available_logos: string[];
@@ -23,7 +35,7 @@ of their respective owners.`;
 export const HoloPay = (props) => {
   const { data } = useBackend<HoloPayData>();
   const { owner } = data;
-  const [setupMode, setSetupMode] = useLocalState('setupMode', false);
+  const [setupMode, setSetupMode] = useLocalState("setupMode", false);
   // User clicked the "Setup" or "Done" button.
   const onClick = () => {
     setSetupMode(!setupMode);
@@ -106,7 +118,8 @@ const TerminalDisplay = (props) => {
         )
       }
       fill
-      title="Terminal">
+      title="Terminal"
+    >
       <Stack fill vertical>
         <Stack.Item align="center">
           <Icon color="good" name={shop_logo} size={5} />
@@ -124,13 +137,13 @@ const TerminalDisplay = (props) => {
               content={
                 <>
                   <Icon name="coins" />
-                  Pay {force_fee + ' cr'}
+                  Pay {force_fee + " cr"}
                 </>
               }
               disabled={cannot_pay}
               fluid
               height="2rem"
-              onClick={() => act('pay')}
+              onClick={() => act("pay")}
               pt={0.2}
               textAlign="center"
             />
@@ -145,7 +158,7 @@ const TerminalDisplay = (props) => {
               disabled={cannot_pay}
               fluid
               height="2rem"
-              onClick={() => act('pay')}
+              onClick={() => act("pay")}
               pt={0.2}
               textAlign="center"
             />
@@ -179,22 +192,24 @@ const SetupDisplay = (props) => {
         <Button
           icon="check"
           onClick={() => {
-            act('done');
+            act("done");
             onClick();
-          }}>
+          }}
+        >
           Done
         </Button>
       }
       fill
       scrollable
-      title="Settings">
+      title="Settings"
+    >
       <Stack fill vertical>
         <Stack.Item>
           <Box bold color="label">
             Shop Logo
           </Box>
           <Dropdown
-            onSelected={(value) => act('logo', { logo: value })}
+            onSelected={(value) => act("logo", { logo: value })}
             options={available_logos}
             selected={shop_logo}
             width="100%"
@@ -209,7 +224,7 @@ const SetupDisplay = (props) => {
             height="3rem"
             maxLength={42}
             onChange={(_, value) => {
-              value?.length > 3 && act('rename', { name: value });
+              value?.length > 3 && act("rename", { name: value });
             }}
             placeholder={decodeHtmlEntities(name)}
           />
@@ -222,7 +237,7 @@ const SetupDisplay = (props) => {
             <RestrictedInput
               fluid
               maxValue={max_fee}
-              onChange={(_, value) => act('fee', { amount: value })}
+              onChange={(_, value) => act("fee", { amount: value })}
               value={force_fee}
             />
           </Tooltip>

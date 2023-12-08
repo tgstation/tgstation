@@ -1,7 +1,14 @@
-import { createPopper } from '@popperjs/core';
-import { ArgumentsOf } from 'common/types';
-import { Component, CSSProperties, JSXElementConstructor, PropsWithChildren, ReactElement, RefObject } from 'react';
-import { findDOMNode, render } from 'react-dom';
+import { createPopper } from "@popperjs/core";
+import { ArgumentsOf } from "common/types";
+import {
+  Component,
+  CSSProperties,
+  JSXElementConstructor,
+  PropsWithChildren,
+  ReactElement,
+  RefObject,
+} from "react";
+import { findDOMNode, render } from "react-dom";
 
 type PopperProps = {
   popperContent: ReactElement<any, string | JSXElementConstructor<any>>;
@@ -25,7 +32,7 @@ export class Popper extends Component<PopperProps> {
   componentDidMount() {
     const { additionalStyles, options } = this.props;
 
-    this.renderedContent = document.createElement('div');
+    this.renderedContent = document.createElement("div");
 
     if (additionalStyles) {
       for (const [attribute, value] of Object.entries(additionalStyles)) {
@@ -54,7 +61,7 @@ export class Popper extends Component<PopperProps> {
       this.popperInstance = createPopper(
         domNode,
         this.renderedContent,
-        options
+        options,
       );
     });
   }

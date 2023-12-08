@@ -1,7 +1,7 @@
-import { Component } from 'react';
-import { useBackend } from '../backend';
-import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
-import { Window } from '../layouts';
+import { Component } from "react";
+import { useBackend } from "../backend";
+import { Box, Stack, Section, Input, Button, Dropdown } from "../components";
+import { Window } from "../layouts";
 
 type Response = {
   name: string;
@@ -37,7 +37,7 @@ export class CircuitSignalHandler extends Component<
   constructor(props) {
     super(props);
     this.state = {
-      signal_id: 'signal_id',
+      signal_id: "signal_id",
       responseList: [],
       parameterList: [],
       global: false,
@@ -110,10 +110,10 @@ export class CircuitSignalHandler extends Component<
                             // have a number->key assoc array here, so we have
                             // to explicitly cast it to a number[] type.
                             const bitflag_keys = Object.keys(
-                              this.bitflags
+                              this.bitflags,
                             ) as unknown as number[];
                             responseList.push({
-                              name: 'Response',
+                              name: "Response",
                               bitflag: bitflag_keys[responseList.length],
                             });
                             this.setState({ parameterList });
@@ -156,7 +156,7 @@ export class CircuitSignalHandler extends Component<
                           icon="plus"
                           onClick={() => {
                             parameterList.push({
-                              name: 'Parameter',
+                              name: "Parameter",
                               datatype: global_port_types[0],
                             });
                             this.setState({ parameterList });
@@ -174,7 +174,7 @@ export class CircuitSignalHandler extends Component<
                 textAlign="center"
                 fluid
                 onClick={() =>
-                  act('add_new_id', {
+                  act("add_new_id", {
                     signal_id: signal_id,
                     responses: responseList,
                     parameters: parameterList,

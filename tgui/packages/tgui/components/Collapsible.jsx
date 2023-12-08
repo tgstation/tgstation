@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { Component } from 'react';
-import { Box } from './Box';
-import { Button } from './Button';
+import { Component } from "react";
+import { Box } from "./Box";
+import { Button } from "./Button";
 
 export class Collapsible extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ export class Collapsible extends Component {
   render() {
     const { props } = this;
     const { open } = this.state;
-    const { children, color = 'default', title, buttons, ...rest } = props;
+    const { children, color = "default", title, buttons, ...rest } = props;
     return (
       <Box mb={1}>
         <div className="Table">
@@ -28,9 +28,10 @@ export class Collapsible extends Component {
             <Button
               fluid
               color={color}
-              icon={open ? 'chevron-down' : 'chevron-right'}
+              icon={open ? "chevron-down" : "chevron-right"}
               onClick={() => this.setState({ open: !open })}
-              {...rest}>
+              {...rest}
+            >
               {title}
             </Button>
           </div>

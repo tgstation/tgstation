@@ -4,10 +4,10 @@
  * @license MIT
  */
 
-import { Button, LabeledList } from '../components';
+import { Button, LabeledList } from "../components";
 
 export const meta = {
-  title: 'LabeledList',
+  title: "LabeledList",
   render: () => <Story />,
 };
 
@@ -34,13 +34,15 @@ const Story = (props) => {
         </LabeledList.Item>
         <LabeledList.Item
           labelWrap
-          label="Very very very very very very very very very very very very very long label with labelWrap">
+          label="Very very very very very very very very very very very very very long label with labelWrap"
+        >
           Entry 7
         </LabeledList.Item>
         <LabeledList.Item
           labelWrap
           verticalAlign="middle"
-          label="Very very very very very very very very very very very very very long label with labelWrap and verticalAlign">
+          label="Very very very very very very very very very very very very very long label with labelWrap and verticalAlign"
+        >
           Entry 8
         </LabeledList.Item>
       </LabeledList>

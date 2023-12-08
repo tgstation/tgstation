@@ -1,8 +1,15 @@
-import { capitalizeFirst, decodeHtmlEntities } from 'common/string';
-import { useBackend } from 'tgui/backend';
-import { Box, Input, LabeledList, Section, Stack, Tooltip } from 'tgui/components';
-import { getColor } from './helpers';
-import { Data } from './types';
+import { capitalizeFirst, decodeHtmlEntities } from "common/string";
+import { useBackend } from "tgui/backend";
+import {
+  Box,
+  Input,
+  LabeledList,
+  Section,
+  Stack,
+  Tooltip,
+} from "tgui/components";
+import { getColor } from "./helpers";
+import { Data } from "./types";
 
 /**
  * Displays info about the virus. Child elements display
@@ -41,9 +48,9 @@ const Info = (props) => {
         {can_rename ? (
           <Input
             placeholder="Input a name"
-            value={name === 'Unknown' ? '' : name}
+            value={name === "Unknown" ? "" : name}
             onChange={(_, value) =>
-              act('rename_disease', {
+              act("rename_disease", {
                 index: index,
                 name: value,
               })
@@ -94,7 +101,8 @@ const Traits = (props) => {
         <Tooltip content="Decides the spread type.">
           <LabeledList.Item
             color={getColor(transmission)}
-            label="Transmissibility">
+            label="Transmissibility"
+          >
             {transmission}
           </LabeledList.Item>
         </Tooltip>

@@ -4,12 +4,12 @@
  * @license MIT
  */
 
-import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from 'common/keycodes';
-import { classes } from 'common/react';
-import { Component, createRef } from 'react';
-import { Box, computeBoxClassName, computeBoxProps } from './Box';
-import { Icon } from './Icon';
-import { Tooltip } from './Tooltip';
+import { KEY_ENTER, KEY_ESCAPE, KEY_SPACE } from "common/keycodes";
+import { classes } from "common/react";
+import { Component, createRef } from "react";
+import { Box, computeBoxClassName, computeBoxProps } from "./Box";
+import { Icon } from "./Icon";
+import { Tooltip } from "./Tooltip";
 
 export const Button = (props) => {
   const {
@@ -45,26 +45,26 @@ export const Button = (props) => {
   let buttonContent = (
     <div
       className={classes([
-        'Button',
-        fluid && 'Button--fluid',
-        disabled && 'Button--disabled',
-        selected && 'Button--selected',
-        hasContent && 'Button--hasContent',
-        ellipsis && 'Button--ellipsis',
-        circular && 'Button--circular',
-        compact && 'Button--compact',
-        iconPosition && 'Button--iconPosition--' + iconPosition,
-        verticalAlignContent && 'Button--flex',
-        verticalAlignContent && fluid && 'Button--flex--fluid',
+        "Button",
+        fluid && "Button--fluid",
+        disabled && "Button--disabled",
+        selected && "Button--selected",
+        hasContent && "Button--hasContent",
+        ellipsis && "Button--ellipsis",
+        circular && "Button--circular",
+        compact && "Button--compact",
+        iconPosition && "Button--iconPosition--" + iconPosition,
+        verticalAlignContent && "Button--flex",
+        verticalAlignContent && fluid && "Button--flex--fluid",
         verticalAlignContent &&
-          'Button--verticalAlignContent--' + verticalAlignContent,
-        color && typeof color === 'string'
-          ? 'Button--color--' + color
-          : 'Button--color--default',
+          "Button--verticalAlignContent--" + verticalAlignContent,
+        color && typeof color === "string"
+          ? "Button--color--" + color
+          : "Button--color--default",
         className,
         computeBoxClassName(rest),
       ])}
-      tabIndex={!disabled && '0'}
+      tabIndex={!disabled && "0"}
       onKeyDown={(e) => {
         if (props.captureKeys === false) {
           return;
@@ -84,9 +84,10 @@ export const Button = (props) => {
           return;
         }
       }}
-      {...computeBoxProps(rest)}>
+      {...computeBoxProps(rest)}
+    >
       <div className="Button__content">
-        {icon && iconPosition !== 'right' && (
+        {icon && iconPosition !== "right" && (
           <Icon
             name={icon}
             color={iconColor}
@@ -96,7 +97,7 @@ export const Button = (props) => {
         )}
         {content}
         {children}
-        {icon && iconPosition === 'right' && (
+        {icon && iconPosition === "right" && (
           <Icon
             name={icon}
             color={iconColor}
@@ -124,7 +125,7 @@ export const ButtonCheckbox = (props) => {
   return (
     <Button
       color="transparent"
-      icon={checked ? 'check-square-o' : 'square-o'}
+      icon={checked ? "check-square-o" : "square-o"}
       selected={checked}
       {...rest}
     />
@@ -151,16 +152,16 @@ export class ButtonConfirm extends Component {
       clickedOnce,
     });
     if (clickedOnce) {
-      setTimeout(() => window.addEventListener('click', this.handleClick));
+      setTimeout(() => window.addEventListener("click", this.handleClick));
     } else {
-      window.removeEventListener('click', this.handleClick);
+      window.removeEventListener("click", this.handleClick);
     }
   }
 
   render() {
     const {
-      confirmContent = 'Confirm?',
-      confirmColor = 'bad',
+      confirmContent = "Confirm?",
+      confirmColor = "bad",
       confirmIcon,
       icon,
       color,
@@ -200,7 +201,7 @@ export class ButtonInput extends Component {
     if (this.inputRef) {
       const input = this.inputRef.current;
       if (inInput) {
-        input.value = this.props.currentValue || '';
+        input.value = this.props.currentValue || "";
         try {
           input.focus();
           input.select();
@@ -212,7 +213,7 @@ export class ButtonInput extends Component {
   commitResult(e) {
     if (this.inputRef) {
       const input = this.inputRef.current;
-      const hasValue = input.value !== '';
+      const hasValue = input.value !== "";
       if (hasValue) {
         this.props.onCommit(e, input.value);
         return;
@@ -234,7 +235,7 @@ export class ButtonInput extends Component {
       iconSpin,
       tooltip,
       tooltipPosition,
-      color = 'default',
+      color = "default",
       placeholder,
       maxLength,
       ...rest
@@ -243,20 +244,21 @@ export class ButtonInput extends Component {
     let buttonContent = (
       <Box
         className={classes([
-          'Button',
-          fluid && 'Button--fluid',
-          'Button--color--' + color,
+          "Button",
+          fluid && "Button--fluid",
+          "Button--color--" + color,
         ])}
         {...rest}
-        onClick={() => this.setInInput(true)}>
+        onClick={() => this.setInInput(true)}
+      >
         {icon && <Icon name={icon} rotation={iconRotation} spin={iconSpin} />}
         <div>{content}</div>
         <input
           ref={this.inputRef}
           className="NumberInput__input"
           style={{
-            display: !this.state.inInput ? 'none' : '',
-            textAlign: 'left',
+            display: !this.state.inInput ? "none" : "",
+            textAlign: "left",
           }}
           onBlur={(e) => {
             if (!this.state.inInput) {
