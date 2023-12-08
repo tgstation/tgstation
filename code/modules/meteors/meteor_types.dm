@@ -144,9 +144,9 @@
 			M.playsound_local(src.loc, null, 50, 1, random_frequency, 10, sound_to_use = meteor_sound)
 
 /**
- * Used to check if someone who has examined a meteor will recieve an award.
+ * Used to check if someone who has examined a meteor will receive an award.
  *
- * Checks the criteria to recieve the "examine a meteor" award.
+ * Checks the criteria to receive the "examine a meteor" award.
  * Admin spawned meteors will not grant the user an achievement.
  *
  * Arguments:

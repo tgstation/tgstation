@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "crafting food or any other items that require reagents will not leave behind blank reagents. That and properly updates the holder those reagents are stored in"

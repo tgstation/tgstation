@@ -37,27 +37,25 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ALLOW_DARK_PAINTS_1 (1<<9)
 /// Should this object be unpaintable?
 #define UNPAINTABLE_1 (1<<10)
-/// Is the thing currently spinning?
-#define IS_SPINNING_1 (1<<11)
 /// Is this atom on top of another atom, and as such has click priority?
-#define IS_ONTOP_1 (1<<12)
+#define IS_ONTOP_1 (1<<11)
 /// Is this atom immune to being dusted by the supermatter?
-#define SUPERMATTER_IGNORES_1 (1<<13)
+#define SUPERMATTER_IGNORES_1 (1<<12)
 /// If a turf can be made dirty at roundstart. This is also used in areas.
-#define CAN_BE_DIRTY_1 (1<<14)
+#define CAN_BE_DIRTY_1 (1<<13)
 /// Should we use the initial icon for display? Mostly used by overlay only objects
-#define HTML_USE_INITAL_ICON_1 (1<<15)
+#define HTML_USE_INITAL_ICON_1 (1<<14)
 /// Can players recolor this in-game via vendors (and maybe more if support is added)?
-#define IS_PLAYER_COLORABLE_1 (1<<16)
+#define IS_PLAYER_COLORABLE_1 (1<<15)
 /// Whether or not this atom has contextual screentips when hovered OVER
-#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<17)
+#define HAS_CONTEXTUAL_SCREENTIPS_1 (1<<16)
 /// Whether or not this atom is storing contents for a disassociated storage object
-#define HAS_DISASSOCIATED_STORAGE_1 (1<<18)
+#define HAS_DISASSOCIATED_STORAGE_1 (1<<17)
 /// If this atom has experienced a decal element "init finished" sourced appearance update
 /// We use this to ensure stacked decals don't double up appearance updates for no rasin
 /// Flag as an optimization, don't make this a trait without profiling
 /// Yes I know this is a stupid flag, no you can't take him from me
-#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<19)
+#define DECAL_INIT_UPDATE_EXPERIENCED_1 (1<<18)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
