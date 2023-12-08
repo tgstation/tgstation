@@ -52,7 +52,7 @@
 
 /datum/market_item/misc/shove_blocker
 	name = "MOD Bulwark Module"
-	desc = "You have no idea how much effort it took us to extract this module from that damn administrative MODsuit."
+	desc = "You have no idea how much effort it took us to extract this module from that damn safeguard MODsuit last shift."
 	price_min = CARGO_CRATE_VALUE * 4
 	price_max = CARGO_CRATE_VALUE * 5.75
 	stock_max = 1
