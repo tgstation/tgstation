@@ -157,14 +157,14 @@ const SpeciesPerk = (props: { className: string; perk: Perk }) => {
           <Box>{perk.description}</Box>
         </Box>
       }>
-      <Box class={className} width="32px" height="32px">
+      <Box className={className} width="32px" height="32px">
         <Icon
           name={perk.ui_icon}
           size={1.5}
           ml={0}
           mt={1}
           style={{
-            'text-align': 'center',
+            textAlign: 'center',
             height: '100%',
             width: '100%',
           }}
@@ -191,7 +191,7 @@ const SpeciesPerks = (props: { perks: Species['perks'] }) => {
         </Stack>
       </Stack.Item>
 
-      <Stack grow>
+      <Stack>
         {neutral.map((perk) => {
           return (
             <Stack.Item key={perk.name}>
@@ -276,7 +276,7 @@ const SpeciesPageInner = (props: {
           </Stack.Item>
 
           <Stack.Item grow>
-            <Box fill>
+            <Box>
               <Box>
                 <Stack fill>
                   <Stack.Item width="70%">

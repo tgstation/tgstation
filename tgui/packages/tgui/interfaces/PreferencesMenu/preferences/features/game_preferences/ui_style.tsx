@@ -25,7 +25,7 @@ const UIStyleInput = (
             <Box
               className={classes(['preferences64x32', icon])}
               style={{
-                'transform': 'scale(0.8)',
+                transform: 'scale(0.8)',
               }}
             />
           </Stack.Item>

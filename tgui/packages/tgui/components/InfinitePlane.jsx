@@ -2,7 +2,7 @@ import { computeBoxProps } from './Box';
 import { Stack } from './Stack';
 import { ProgressBar } from './ProgressBar';
 import { Button } from './Button';
-import { Component } from 'inferno';
+import { Component } from 'react';
 
 const ZOOM_MIN_VAL = 0.5;
 const ZOOM_MAX_VAL = 1.5;
@@ -10,8 +10,8 @@ const ZOOM_MAX_VAL = 1.5;
 const ZOOM_INCREMENT = 0.1;
 
 export class InfinitePlane extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       mouseDown: false,
@@ -144,24 +144,24 @@ export class InfinitePlane extends Component {
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           style={{
-            'position': 'fixed',
-            'height': '100%',
-            'width': '100%',
-            'background-image': `url("${backgroundImage}")`,
-            'background-position': `${finalLeft}px ${finalTop}px`,
-            'background-repeat': 'repeat',
-            'background-size': `${zoom * imageWidth}px`,
+            position: 'fixed',
+            height: '100%',
+            width: '100%',
+            backgroundImage: `url("${backgroundImage}")`,
+            backgroundPosition: `${finalLeft}px ${finalTop}px`,
+            backgroundRepeat: 'repeat',
+            backgroundSize: `${zoom * imageWidth}px`,
           }}
         />
         <div
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
           style={{
-            'position': 'fixed',
-            'transform': `translate(${finalLeft}px, ${finalTop}px) scale(${zoom})`,
-            'transform-origin': 'top left',
-            'height': '100%',
-            'width': '100%',
+            position: 'fixed',
+            transform: `translate(${finalLeft}px, ${finalTop}px) scale(${zoom})`,
+            transformOrigin: 'top left',
+            height: '100%',
+            width: '100%',
           }}>
           {children}
         </div>

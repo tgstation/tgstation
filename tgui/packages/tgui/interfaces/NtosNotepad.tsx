@@ -7,7 +7,7 @@
 import { NtosWindow } from '../layouts';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Section, TextArea, MenuBar, Divider } from '../components';
-import { Component, createRef, RefObject } from 'inferno';
+import { Component, createRef, RefObject } from 'react';
 import { createLogger } from '../logging';
 import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
 
@@ -28,7 +28,7 @@ const PartiallyUnderlined = (props: PartiallyUnderlinedProps) => {
   return (
     <>
       {start}
-      <span style={{ 'text-decoration': 'underline' }}>{underlined}</span>
+      <span style={{ textDecoration: 'underline' }}>{underlined}</span>
       {end}
     </>
   );
@@ -342,7 +342,7 @@ const AboutDialog = (props: AboutDialogProps) => {
           <span
             style={{
               'padding': '3rem 1rem 0.5rem 2rem',
-              'max-width': '35rem',
+              maxWidth: '35rem',
             }}>
             This product is licensed under the NT Corporation Terms to:
           </span>

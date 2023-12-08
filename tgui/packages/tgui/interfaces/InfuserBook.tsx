@@ -148,7 +148,9 @@ export const InfuserBook = (props) => {
                       key={tabIndex}
                       selected={chapter === tabIndex}
                       onClick={
-                        tabIndex === 4 ? null : () => switchChapter(tabIndex)
+                        tabIndex === 4
+                          ? undefined
+                          : () => switchChapter(tabIndex)
                       }>
                       <Box color={tabIndex === 4 && 'red'}>{tab}</Box>
                     </Tabs.Tab>

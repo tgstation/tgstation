@@ -466,8 +466,8 @@ const CargoCart = (props) => {
             <Button
               color="green"
               style={{
-                'line-height': '28px',
-                'padding': '0 12px',
+                lineHeight: '28px',
+                padding: '0 12px',
               }}
               content="Confirm the order"
               onClick={() => act('send')}

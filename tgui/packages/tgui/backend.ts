@@ -375,3 +375,11 @@ export const useSharedState = <T>(
     },
   ];
 };
+
+export const useDispatch = () => {
+  return globalStore.dispatch;
+};
+
+export const useSelector = (selector: (state: any) => any) => {
+  return selector(globalStore?.getState());
+};

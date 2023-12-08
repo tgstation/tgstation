@@ -129,7 +129,7 @@ export const Log = (props) => {
             px="0.25rem"
             mt="0.25rem"
             style={{
-              'border-radius': '0.5em',
+              borderRadius: '0.5em',
             }}
             backgroundColor={messageColor}>
             x{repeats + 1}

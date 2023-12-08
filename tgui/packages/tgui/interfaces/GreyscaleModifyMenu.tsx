@@ -203,22 +203,16 @@ const PreviewDisplay = (props) => {
             <Table.Cell>
               <Box
                 as="img"
-                src={data.sprites.finished}
                 m={0}
-                width="75%"
                 mx="10%"
-                style={{ '-ms-interpolation-mode': 'nearest-neighbor' }}
+                src={data.sprites.finished}
+                width="75%"
               />
             </Table.Cell>
           ) : (
             <Table.Cell>
-              <Box grow>
-                <Icon
-                  name="image"
-                  ml="25%"
-                  size={5}
-                  style={{ '-ms-interpolation-mode': 'nearest-neighbor' }}
-                />
+              <Box>
+                <Icon name="image" ml="25%" size={5} />
               </Box>
             </Table.Cell>
           )}

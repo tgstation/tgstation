@@ -6,7 +6,7 @@
  */
 
 import { classes } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { Box } from './Box';
 import { toInputValue } from './Input';
 import { KEY_ENTER, KEY_ESCAPE, KEY_TAB } from 'common/keycodes';
@@ -185,6 +185,7 @@ export class TextArea extends Component {
       displayedValue,
       ...boxProps
     } = this.props;
+
     // Box props
     const { className, fluid, nowrap, ...rest } = boxProps;
     const { scrolledAmount } = this.state;
@@ -205,7 +206,7 @@ export class TextArea extends Component {
                 'TextArea__textarea_custom',
               ])}
               style={{
-                'transform': `translateY(-${scrolledAmount}px)`,
+                transform: `translateY(-${scrolledAmount}px)`,
               }}>
               {displayedValue}
             </div>
@@ -228,7 +229,7 @@ export class TextArea extends Component {
           onScroll={this.handleScroll}
           maxLength={maxLength}
           style={{
-            'color': displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
+            color: displayedValue ? 'rgba(0, 0, 0, 0)' : 'inherit',
           }}
         />
       </Box>

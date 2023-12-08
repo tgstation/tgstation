@@ -5,7 +5,7 @@ import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
 import { capitalize } from 'common/string';
 import nt_logo from '../assets/bg-nanotrasen.svg';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 
 type ExplorationEventData = {
   name: string;
@@ -176,13 +176,13 @@ const SignalLostModal = (props) => {
       width={30}
       height={22}
       p={0}
-      style={{ 'border-radius': '5%' }}>
+      style={{ borderRadius: '5%' }}>
       <img src={nt_logo} width={64} height={64} />
       <Box
         backgroundColor="black"
         textColor="red"
         fontSize={2}
-        style={{ 'border-radius': '-10%' }}>
+        style={{ borderRadius: '-10%' }}>
         CONNECTION LOST
       </Box>
       <Box p={2} italic>
@@ -194,7 +194,7 @@ const SignalLostModal = (props) => {
         <Button
           content="Confirm"
           color="danger"
-          style={{ 'border': '1px solid black' }}
+          style={{ border: '1px solid black' }}
           onClick={() => act('confirm_signal_lost')}
         />
       </Box>
@@ -716,13 +716,11 @@ const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
         <Stack.Item>
           <Stack fill>
             <Stack.Item>
-              <img
+              <Box
+                as="img"
                 src={resolveAsset(event.image)}
                 height="125px"
                 width="250px"
-                style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                }}
               />
             </Stack.Item>
             <Stack.Item>
@@ -787,14 +785,7 @@ export const AdventureScreen = (props: {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
-          <img
-            src={imgSource}
-            height="100px"
-            width="200px"
-            style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-            }}
-          />
+          <Box as="img" src={imgSource} height="100px" width="200px" />
           <Stack vertical>
             <Stack.Divider />
             <Stack.Item grow />

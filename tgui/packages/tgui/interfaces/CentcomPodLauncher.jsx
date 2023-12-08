@@ -3,7 +3,7 @@ import { classes } from 'common/react';
 import { storage } from 'common/storage';
 import { multiline } from 'common/string';
 import { createUuid } from 'common/uuid';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, ByondUi, Divider, Input, Knob, LabeledControls, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -596,11 +596,11 @@ const PodStatusPage = (props) => {
                             : act(effect.act)
                         }
                         style={{
-                          'vertical-align': 'middle',
-                          'margin-left': j !== 0 ? '1px' : '0px',
-                          'margin-right':
+                          verticalAlign: 'middle',
+                          marginLeft: j !== 0 ? '1px' : '0px',
+                          marginRight:
                             j !== list.list.length - 1 ? '1px' : '0px',
-                          'border-radius': '5px',
+                          borderRadius: '5px',
                         }}
                       />
                     )}
@@ -755,8 +755,8 @@ const ReverseMenu = (props) => {
 };
 
 class PresetsPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       presets: [],
     };
@@ -923,9 +923,9 @@ class PresetsPage extends Component {
               style={
                 presetIndex === preset.id
                   ? {
-                    'border-width': '1px',
-                    'border-style': 'solid',
-                    'border-color': `hsl(${preset.hue}, 80%, 80%)`,
+                    borderWidth: '1px',
+                    borderStyle: 'solid',
+                    borderColor: `hsl(${preset.hue}, 80%, 80%)`,
                   }
                   : ''
               }
@@ -1000,17 +1000,17 @@ const StylePage = (props) => {
           }
           tooltip={page.title}
           style={{
-            'vertical-align': 'middle',
-            'margin-right': '5px',
-            'border-radius': '20px',
+            verticalAlign: 'middle',
+            marginRight: '5px',
+            borderRadius: '20px',
           }}
           selected={data.styleChoice - 1 === i}
           onClick={() => act('setStyle', { style: i })}>
           <Box
             className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
-              'transform': 'rotate(45deg) translate(-25%,-10%)',
-              'pointer-events': 'none',
+              transform: 'rotate(45deg) translate(-25%,-10%)',
+              pointerEvents: 'none',
             }}
           />
         </Button>

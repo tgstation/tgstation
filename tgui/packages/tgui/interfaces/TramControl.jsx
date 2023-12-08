@@ -111,7 +111,7 @@ export const TramControl = (props) => {
                     tooltipPosition="bottom"
                     tooltip={dep}
                     style={{
-                      'border-radius': '5em',
+                      borderRadius: '5em',
                       'border': '2px solid white',
                     }}
                   />

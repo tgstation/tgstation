@@ -83,7 +83,7 @@ export const Biogenerator = (props) => {
                     <Box
                       lineHeight={1.9}
                       style={{
-                        'text-shadow': '1px 1px 0 black',
+                        textShadow: '1px 1px 0 black',
                       }}>
                       {`${parseFloat(biomass.toFixed(2))} units`}
                     </Box>
@@ -111,7 +111,7 @@ export const Biogenerator = (props) => {
                       <Box
                         lineHeight={1.9}
                         style={{
-                          'text-shadow': '1px 1px 0 black',
+                          textShadow: '1px 1px 0 black',
                         }}>
                         {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
                       </Box>
@@ -193,7 +193,7 @@ const ItemList = (props) => {
         <span
           className={classes(['design32x32', item.id])}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />{' '}
         <b>{item.name}</b>

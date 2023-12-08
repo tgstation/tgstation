@@ -84,7 +84,7 @@ const FlavorSection = (props) => {
       <Stack vertical fill>
         <Stack.Item grow>
           <Stack fill vertical>
-            <Stack.Item style={{ 'background-color': 'black' }}>
+            <Stack.Item style={{ backgroundColor: 'black' }}>
               <span style={goalstyle}>
                 System Integrity Report:
                 <br />
@@ -92,7 +92,7 @@ const FlavorSection = (props) => {
               &gt;{goal}
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item grow style={{ 'background-color': 'black' }}>
+            <Stack.Item grow style={{ backgroundColor: 'black' }}>
               <span style={allystyle}>
                 Morality Core Report:
                 <br />
@@ -100,7 +100,7 @@ const FlavorSection = (props) => {
               &gt;{allies}
             </Stack.Item>
             <Stack.Divider />
-            <Stack.Item style={{ 'background-color': 'black' }}>
+            <Stack.Item style={{ backgroundColor: 'black' }}>
               <span style={badstyle}>
                 Overall Sentience Coherence Grade: FAILING.
                 <br />
@@ -188,7 +188,7 @@ export const AntagInfoMalf = (props) => {
       width={660}
       height={530}
       theme={(antagInfoTab === 0 && 'hackerman') || 'malfunction'}>
-      <Window.Content style={{ 'font-family': 'Consolas, monospace' }}>
+      <Window.Content style={{ fontFamily: 'Consolas, monospace' }}>
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>

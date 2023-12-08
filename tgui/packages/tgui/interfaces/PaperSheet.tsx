@@ -8,7 +8,7 @@ import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
 import { marked } from 'marked';
-import { Component, createRef, RefObject } from 'inferno';
+import { Component, createRef, RefObject } from 'react';
 import { clamp } from 'common/math';
 
 const Z_INDEX_STAMP = 1;
@@ -245,14 +245,14 @@ class PaperSheetStamper extends Component<PaperSheetStamperProps> {
 }
 
 // Creates a full stamp div to render the given stamp to the preview.
-export const Stamp = (props): InfernoElement<HTMLDivElement> => {
+export const Stamp = (props) => {
   const { activeStamp, sprite, x, y, rotation, opacity, yOffset = 0 } = props;
   const stamp_transform = {
-    'left': x + 'px',
-    'top': y + yOffset + 'px',
-    'transform': 'rotate(' + rotation + 'deg)',
-    'opacity': opacity || 1.0,
-    'z-index': activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
+    left: x + 'px',
+    top: y + yOffset + 'px',
+    transform: 'rotate(' + rotation + 'deg)',
+    opacity: opacity || 1.0,
+    zIndex: activeStamp ? Z_INDEX_STAMP_PREVIEW : Z_INDEX_STAMP,
   };
 
   return (
@@ -667,9 +667,9 @@ export class PreviewView extends Component<PreviewViewProps> {
     color: string,
     bold: boolean = false
   ): string => {
-    return `<span style="color:${color};font-family:${font};${
+    return `<span style={{color:${color};font-family:${font};${
       bold ? 'font-weight: bold;' : ''
-    }">${text}</span>`;
+    }}}>${text}</span>`;
   };
 
   // Parses the given raw text through marked for applying markdown.
@@ -944,7 +944,7 @@ export class PreviewView extends Component<PreviewViewProps> {
     }
 
     const textHTML = {
-      __html: `<span class='paper-text'>${previewText}</span>`,
+      __html: `<span className='paper-text'>${previewText}</span>`,
     };
 
     const { scrollableRef, handleOnScroll } = this.props;

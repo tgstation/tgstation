@@ -125,7 +125,7 @@ const CrewTableEntry = (props) => {
   } = sensor_data;
 
   return (
-    <Table.Row>
+    <Table.Row className="candystripe">
       <Table.Cell bold={jobIsHead(ijob)} color={jobToColor(ijob)}>
         {name}
         {assignment !== undefined ? ` (${assignment})` : ''}

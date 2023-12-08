@@ -1,4 +1,4 @@
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { resolveAsset } from '../assets';
 import { Box } from './Box';
 
@@ -112,10 +112,9 @@ export class BodyZoneSelector extends Component<
             });
           }}
           style={{
-            '-ms-interpolation-mode': 'nearest-neighbor',
-            'position': 'absolute',
-            'width': `${32 * scale}px`,
-            'height': `${32 * scale}px`,
+            position: 'absolute',
+            width: `${32 * scale}px`,
+            height: `${32 * scale}px`,
           }}
         />
 
@@ -124,11 +123,10 @@ export class BodyZoneSelector extends Component<
             as="img"
             src={resolveAsset(`body_zones.${selectedZone}.png`)}
             style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'pointer-events': 'none',
-              'position': 'absolute',
-              'width': `${32 * scale}px`,
-              'height': `${32 * scale}px`,
+              pointerEvents: 'none',
+              position: 'absolute',
+              width: `${32 * scale}px`,
+              height: `${32 * scale}px`,
             }}
           />
         )}
@@ -138,12 +136,11 @@ export class BodyZoneSelector extends Component<
             as="img"
             src={resolveAsset(`body_zones.${hoverZone}.png`)}
             style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-              'opacity': 0.5,
-              'pointer-events': 'none',
-              'position': 'absolute',
-              'width': `${32 * scale}px`,
-              'height': `${32 * scale}px`,
+              opacity: 0.5,
+              pointerEvents: 'none',
+              position: 'absolute',
+              width: `${32 * scale}px`,
+              height: `${32 * scale}px`,
             }}
           />
         )}

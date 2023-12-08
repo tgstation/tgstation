@@ -94,7 +94,7 @@ export const IVDrip = (props) => {
             </LabeledList.Item>
             <LabeledList.Item
               label="Direction"
-              color={!mode && 'bad'}
+              color={!mode ? 'bad' : ''}
               buttons={
                 <Button
                   my={1}
@@ -132,14 +132,13 @@ export const IVDrip = (props) => {
                   )
                 }>
                 <ProgressBar
-                  py={0.3}
                   value={containerCurrentVolume}
                   minValue={0}
                   maxValue={containerMaxVolume}
                   color={containerReagentColor}>
                   <span
                     style={{
-                      'text-shadow': '1px 1px 0 black',
+                      textShadow: '1px 1px 0 black',
                     }}>
                     {`${containerCurrentVolume} of ${containerMaxVolume} units`}
                   </span>

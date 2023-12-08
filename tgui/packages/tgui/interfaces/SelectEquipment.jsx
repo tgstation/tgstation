@@ -90,9 +90,6 @@ export const SelectEquipment = (props) => {
                     m={0}
                     src={`data:image/jpeg;base64,${icon64}`}
                     height="100%"
-                    style={{
-                      '-ms-interpolation-mode': 'nearest-neighbor',
-                    }}
                   />
                 </Section>
               </Stack.Item>
@@ -189,8 +186,8 @@ const CurrentlySelectedDisplay = (props) => {
           title={entry?.path}
           style={{
             'overflow': 'hidden',
-            'white-space': 'nowrap',
-            'text-overflow': 'ellipsis',
+            whiteSpace: 'nowrap',
+            textOverflow: 'ellipsis',
           }}>
           {entry?.name}
         </Box>

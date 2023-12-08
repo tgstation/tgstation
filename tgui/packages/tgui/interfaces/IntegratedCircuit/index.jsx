@@ -1,6 +1,6 @@
 import { useBackend } from '../../backend';
 import { Input, InfinitePlane, Stack, Box, Button } from '../../components';
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { Window } from '../../layouts';
 import { resolveAsset } from '../../assets';
 import { CircuitInfo } from './CircuitInfo';
@@ -12,8 +12,8 @@ import { VariableMenu } from './VariableMenu';
 import { ComponentMenu } from './ComponentMenu';
 
 export class IntegratedCircuit extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       locations: {},
       selectedPort: null,
@@ -505,7 +505,7 @@ export class IntegratedCircuit extends Component {
         }>
         <Window.Content
           style={{
-            'background-image': 'none',
+            backgroundImage: 'none',
           }}>
           <InfinitePlane
             width="100%"
@@ -565,8 +565,8 @@ export class IntegratedCircuit extends Component {
               minWidth="600px"
               width="50%"
               style={{
-                'border-radius': '0px 32px 0px 0px',
-                'background-color': 'rgba(0, 0, 0, 0.3)',
+                borderRadius: '0px 32px 0px 0px',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
                 '-ms-user-select': 'none',
               }}
               unselectable="on">
@@ -590,7 +590,7 @@ export class IntegratedCircuit extends Component {
                 handleMouseDownSetter={this.onVarClickedSetter}
                 handleMouseDownGetter={this.onVarClickedGetter}
                 style={{
-                  'border-radius': '0px 32px 0px 0px',
+                  borderRadius: '0px 32px 0px 0px',
                 }}
               />
             </Box>
@@ -603,7 +603,7 @@ export class IntegratedCircuit extends Component {
               height="100%"
               width="300px"
               style={{
-                'background-color': 'rgba(0, 0, 0, 0.3)',
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
                 '-ms-user-select': 'none',
               }}
               unselectable="on">

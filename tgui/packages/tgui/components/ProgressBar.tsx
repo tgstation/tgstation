@@ -5,11 +5,29 @@
  */
 
 import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
-import { classes, pureComponentHooks } from 'common/react';
-import { computeBoxClassName, computeBoxProps } from './Box';
+import { classes } from 'common/react';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { CSS_COLORS } from '../constants';
+import { PropsWithChildren } from 'react';
 
-export const ProgressBar = (props) => {
+type Props = {
+  value: number;
+} & Partial<{
+  backgroundColor: string;
+  className: string;
+  color: string;
+  height: string | number;
+  maxValue: number;
+  minValue: number;
+  ranges: Record<string, [number, number]>;
+  style: Partial<HTMLDivElement['style']>;
+  title: string;
+  width: string | number;
+}> &
+  Partial<BoxProps> &
+  PropsWithChildren;
+
+export const ProgressBar = (props: Props) => {
   const {
     className,
     value,
@@ -22,32 +40,25 @@ export const ProgressBar = (props) => {
   } = props;
   const scaledValue = scale(value, minValue, maxValue);
   const hasContent = children !== undefined;
-  // prettier-ignore
-  const effectiveColor = color
-    || keyOfMatchingRange(value, ranges)
-    || 'default';
+
+  const effectiveColor =
+    color || keyOfMatchingRange(value, ranges) || 'default';
 
   // We permit colors to be in hex format, rgb()/rgba() format,
   // a name for a color-<name> class, or a base CSS class.
   const outerProps = computeBoxProps(rest);
-  // prettier-ignore
-  const outerClasses = [
-    'ProgressBar',
-    className,
-    computeBoxClassName(rest),
-  ];
+
+  const outerClasses = ['ProgressBar', className, computeBoxClassName(rest)];
   const fillStyles = {
-    'width': clamp01(scaledValue) * 100 + '%',
+    width: clamp01(scaledValue) * 100 + '%',
   };
   if (CSS_COLORS.includes(effectiveColor) || effectiveColor === 'default') {
     // If the color is a color-<name> class, just use that.
     outerClasses.push('ProgressBar--color--' + effectiveColor);
   } else {
     // Otherwise, set styles directly.
-    // prettier-ignore
-    outerProps.style = (outerProps.style || "")
-      + `border-color: ${effectiveColor};`;
-    fillStyles['background-color'] = effectiveColor;
+    outerProps.style = { ...outerProps.style, borderColor: effectiveColor };
+    fillStyles['backgroundColor'] = effectiveColor;
   }
 
   return (
@@ -62,5 +73,3 @@ export const ProgressBar = (props) => {
     </div>
   );
 };
-
-ProgressBar.defaultHooks = pureComponentHooks;

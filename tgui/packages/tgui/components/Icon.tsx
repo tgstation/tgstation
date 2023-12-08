@@ -6,20 +6,19 @@
  * @license MIT
  */
 
-import { classes, pureComponentHooks } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { classes } from 'common/react';
+import { ReactNode } from 'react';
 import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 const FA_OUTLINE_REGEX = /-o$/;
 
-type IconPropsUnique = {
-  name: string;
-  size?: number;
-  spin?: boolean;
-  className?: string;
-  rotation?: number;
-  style?: string | CSSProperties;
-};
+type IconPropsUnique = { name: string } & Partial<{
+  size: number;
+  spin: boolean;
+  className: string;
+  rotation: number;
+  style: Partial<HTMLDivElement['style']>;
+}>;
 
 export type IconProps = IconPropsUnique & BoxProps;
 
@@ -31,7 +30,7 @@ export const Icon = (props: IconProps) => {
     if (!style) {
       style = {};
     }
-    style['font-size'] = size * 100 + '%';
+    style['fontSize'] = size * 100 + '%';
   }
   if (rotation) {
     if (!style) {
@@ -75,10 +74,8 @@ export const Icon = (props: IconProps) => {
   );
 };
 
-Icon.defaultHooks = pureComponentHooks;
-
 type IconStackUnique = {
-  children: InfernoNode;
+  children: ReactNode;
   className?: string;
 };
 
@@ -88,7 +85,7 @@ export const IconStack = (props: IconStackProps) => {
   const { className, children, ...rest } = props;
   return (
     <span
-      class={classes(['IconStack', className, computeBoxClassName(rest)])}
+      className={classes(['IconStack', className, computeBoxClassName(rest)])}
       {...computeBoxProps(rest)}>
       {children}
     </span>
