@@ -42,7 +42,7 @@
 
 /obj/item/food/cookie/sugar/spookycoffin/Initialize(mapload, seasonal_changes = FALSE)
 	// Changes default parameter of seasonal_changes to FALSE, pass to parent
-	return ..()
+	return ..(mapload, seasonal_changes)
 
 //spooky items
 
