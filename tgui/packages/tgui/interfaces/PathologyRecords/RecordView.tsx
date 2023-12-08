@@ -77,6 +77,13 @@ export const MedicalRecordView = (props, context) => {
   );
 };
 
+type Props = {
+  color?: string;
+  field: string;
+  target_ref: string;
+  text: string;
+};
+
 const EditableText = (props: Props, context) => {
   const { color, field, target_ref, text } = props;
   if (!field) return <> </>;
