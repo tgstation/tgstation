@@ -6,7 +6,7 @@ export const NtosSpectreMeter = (props) => {
   const { act, data } = useBackend();
   const { auto_mode, spook_value, on_cooldown } = data;
   return (
-    <NtosWindow width={400} height={200}>
+    <NtosWindow width={400} height={180}>
       <NtosWindow.Content>
         <Section title="Spectre-Meter">
           <Box>

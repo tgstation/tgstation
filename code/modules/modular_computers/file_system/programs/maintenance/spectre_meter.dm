@@ -7,7 +7,7 @@
 
 /datum/computer_file/program/maintenance/spectre_meter
 	filename = "spectre_meter"
-	filedesc = "Spectre Meter"
+	filedesc = "Spectre-Meter"
 	power_cell_use = PROGRAM_BASIC_CELL_USE * 2
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "A program used to somehow detect nearby spectral presence. Combine with the camera app to take photos of ghosts."
@@ -112,15 +112,15 @@
 /datum/looping_sound/spectre_meter
 	mid_sounds = /datum/looping_sound/geiger::mid_sounds
 	mid_length = 2
-	volume = 15
+	volume = 12
 	var/last_spook_value = 0
 
 /datum/looping_sound/spectre_meter/get_sound()
 	var/index = 1
 	switch(last_spook_value)
-		if(0 to 15)
+		if(0 to 14)
 			return null
-		if(15 to 40)
+		if(14 to 40)
 			index = 1
 		if(40 to 65)
 			index = 2
