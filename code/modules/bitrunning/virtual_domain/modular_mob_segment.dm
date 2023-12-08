@@ -72,6 +72,12 @@
 		/mob/living/basic/trooper/syndicate/melee,
 	)
 
+/datum/modular_mob_segment/abductor_agents
+	mobs = list(
+		/mob/living/basic/trooper/abductor/melee,
+		/mob/living/basic/trooper/abductor/ranged,
+	)
+
 /datum/modular_mob_segment/syndicate_elite
 	mobs = list(
 		/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
