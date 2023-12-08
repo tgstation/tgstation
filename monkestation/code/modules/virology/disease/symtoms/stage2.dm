@@ -267,9 +267,9 @@
 /datum/symptom/vitreous/activate(mob/living/carbon/human/H)
 	H.Shake(3, 3, 3 SECONDS)
 	if(ishuman(H))
-		addtimer(CALLBACK(src, PROC_REF(shatter)), 0.5 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(shatter), H), 0.5 SECONDS)
 
-/datum/symptom/vitreous/proc/shatter()
+/datum/symptom/vitreous/proc/shatter(mob/living/carbon/human/H)
 	var/obj/item/reagent_containers/glass_to_shatter = H.get_active_held_item()
 	var/obj/item/bodypart/check_arm = H.get_active_hand()
 	if(!glass_to_shatter)
