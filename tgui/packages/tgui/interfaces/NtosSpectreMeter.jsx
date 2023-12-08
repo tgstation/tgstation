@@ -37,12 +37,11 @@ export const NtosSpectreMeter = (props) => {
               purple: [100, Infinity],
             }}>
             <Box
-			  lineHeight={1.6}
-			  fontSize={1.5}
-			  textAlign="center"
-			  fontFamily="Comic Sans MS"
-			  fluid
-			>
+              lineHeight={1.6}
+              fontSize={1.5}
+              textAlign="center"
+              fontFamily="Comic Sans MS"
+              fluid>
               <Icon spin name="ghost" />
               {` Spookiness: ${spook_value}% `}
               <Icon spin name="ghost" />
