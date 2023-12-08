@@ -107,6 +107,8 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		sleep (1 SECONDS)
 	else
 		for (var/obj/effect/pathogen_cloud/core/other_C in src.loc)
+			if(other_C == src)
+				return
 			if (!other_C.moving)
 				for(var/datum/disease/advanced/V as anything in other_C.viruses)
 					if("[V.uniqueID]-[V.subID]" in id_list)
