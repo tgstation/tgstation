@@ -4994,6 +4994,7 @@
 #include "code\modules\modular_computers\file_system\programs\budgetordering.dm"
 #include "code\modules\modular_computers\file_system\programs\card.dm"
 #include "code\modules\modular_computers\file_system\programs\cargoship.dm"
+#include "code\modules\modular_computers\file_system\programs\coupon.dm"
 #include "code\modules\modular_computers\file_system\programs\crewmanifest.dm"
 #include "code\modules\modular_computers\file_system\programs\emojipedia.dm"
 #include "code\modules\modular_computers\file_system\programs\file_browser.dm"

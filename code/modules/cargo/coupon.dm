@@ -1,5 +1,3 @@
-#define COUPON_OMEN "omen"
-
 /obj/item/coupon
 	name = "coupon"
 	desc = "It doesn't matter if you didn't want it before, what matters now is that you've got a coupon for it!"
@@ -12,18 +10,14 @@
 	var/obj/machinery/computer/cargo/inserted_console
 
 /// Choose what our prize is :D
-/obj/item/coupon/proc/generate(rig_omen=FALSE)
-	discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
-	var/list/chances = list("0.10" = 4, "0.15" = 8, "0.20" = 10, "0.25" = 8, "0.50" = 4, COUPON_OMEN = 1)
-
-	if(rig_omen)
-		discount_pct_off = COUPON_OMEN
-	else
-		discount_pct_off = pick_weight(chances)
+/obj/item/coupon/proc/generate(discount, datum/supply_pack/discounted_pack)
+	src.discounted_pack = discounted_pack || pick(subtypesof(/datum/supply_pack/goody))
+	var/static/list/chances = list("0.10" = 4, "0.15" = 8, "0.20" = 10, "0.25" = 8, "0.50" = 4, COUPON_OMEN = 1)
+	discount_pct_off = discount || pick_weight(chances)
 
 	if(discount_pct_off != COUPON_OMEN)
 		discount_pct_off = text2num(discount_pct_off)
-		name = "coupon - [round(discount_pct_off * 100)]% off [initial(discounted_pack.name)]"
+		name = "coupon - [round(discount_pct_off * 100)]% off [initial(src.discounted_pack.name)]"
 		return
 
 	name = "coupon - fuck you"
@@ -71,5 +65,3 @@
 		LAZYREMOVE(inserted_console.loaded_coupons, src)
 		inserted_console = null
 	. = ..()
-
-#undef COUPON_OMEN

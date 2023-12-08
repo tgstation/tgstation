@@ -35,6 +35,8 @@
 	var/pay_token
 	///List with a transaction history for NT pay app
 	var/list/transaction_history = list()
+	///A lazylist of coupons redeemed with the Coupon Master pda app associated with this account.
+	var/list/redeemed_coupons
 
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname

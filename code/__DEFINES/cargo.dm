@@ -53,6 +53,9 @@
 /// Universal Scanner mode for using the price tagger.
 #define SCAN_PRICE_TAG 3
 
+///Used by coupons to define that they're cursed
+#define COUPON_OMEN "omen"
+
 GLOBAL_LIST_EMPTY(supplypod_loading_bays)
 
 GLOBAL_LIST_INIT(podstyles, list(\
