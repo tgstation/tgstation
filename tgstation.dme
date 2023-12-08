@@ -380,6 +380,7 @@
 #include "code\__DEFINES\dcs\signals\signals_mob\signals_mob_spawner.dm"
 #include "code\__DEFINES\research\anomalies.dm"
 #include "code\__DEFINES\research\research_categories.dm"
+#include "code\__DEFINES\~monkestation\_uplink.dm" //_ is to avoid conflicts, remove once no longer needed
 #include "code\__DEFINES\~monkestation\access.dm"
 #include "code\__DEFINES\~monkestation\ai.dm"
 #include "code\__DEFINES\~monkestation\antagonists.dm"
@@ -404,7 +405,6 @@
 #include "code\__DEFINES\~monkestation\status_effects.dm"
 #include "code\__DEFINES\~monkestation\storytellers.dm"
 #include "code\__DEFINES\~monkestation\traits.dm"
-#include "code\__DEFINES\~monkestation\uplink.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_atom.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_carbon.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_traitor.dm"
