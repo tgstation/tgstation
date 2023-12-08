@@ -404,6 +404,7 @@
 #include "code\__DEFINES\~monkestation\status_effects.dm"
 #include "code\__DEFINES\~monkestation\storytellers.dm"
 #include "code\__DEFINES\~monkestation\traits.dm"
+#include "code\__DEFINES\~monkestation\virology.dm" //out of order for conflict reasons, swap this and the line below
 #include "code\__DEFINES\~monkestation\uplink.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_atom.dm"
 #include "code\__DEFINES\~monkestation\dcs\signals\signals_carbon.dm"
