@@ -6596,7 +6596,7 @@
 #include "monkestation\code\modules\twitch_bits\events\skinny.dm"
 #include "monkestation\code\modules\uplink\uplink_items.dm"
 #include "monkestation\code\modules\uplink\uplink_items\badass.dm"
-#include "monkestation\code\modules\uplink\uplink_items\bundle.dm"
+#include "monkestation\code\modules\uplink\uplink_items\bundles.dm"
 #include "monkestation\code\modules\uplink\uplink_items\device_tools.dm"
 #include "monkestation\code\modules\uplink\uplink_items\explosive.dm"
 #include "monkestation\code\modules\uplink\uplink_items\job.dm"
