@@ -12,7 +12,7 @@
     "tgui:build": "BROWSERSLIST_IGNORE_OLD_DATA=true webpack",
     "tgui:dev": "node --experimental-modules packages/tgui-dev-server/index.js",
     "tgui:lint": "eslint packages --ext .js,.cjs,.ts,.tsx",
-    "tgui:prettier": "prettierx --check .",
+    "tgui:prettier": "prettier --check .",
     "tgui:sonar": "eslint packages --ext .js,.cjs,.ts,.tsx -c .eslintrc-sonar.yml",
     "tgui:test": "jest --watch",
     "tgui:test-simple": "CI=true jest --color",
