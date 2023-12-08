@@ -1,6 +1,3 @@
-///List of all tracking implants currently in a mob.
-GLOBAL_LIST_EMPTY(tracked_tracking_implants)
-
 /obj/item/implant/tracking
 	name = "tracking implant"
 	desc = "Track with this."
@@ -10,13 +7,6 @@ GLOBAL_LIST_EMPTY(tracked_tracking_implants)
 
 	///How long will the implant continue to function after death?
 	var/lifespan_postmortem = 10 MINUTES
-
-/obj/item/implant/tracking/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/tracked_implant, \
-		global_list = GLOB.tracked_tracking_implants, \
-	)
 
 /obj/item/implant/tracking/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -30,6 +20,44 @@ GLOBAL_LIST_EMPTY(tracked_tracking_implants)
 				a malfunction occurs thereby securing safety of subject. The implant will melt and
 				disintegrate into bio-safe elements.<BR>"}
 	return dat
+
+/obj/item/implant/tracking/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+	if(imp_in.stat == DEAD && imp_in.timeofdeath + lifespan_postmortem < world.time)
+		return FALSE
+	if(!is_valid_z_level(get_turf(console), get_turf(imp_in)))
+		return FALSE
+	return TRUE
+
+/obj/item/implant/tracking/get_management_console_data()
+	var/list/info_shown = ..()
+	info_shown["Location"] = get_area_name(imp_in, format_text = TRUE) || "Unknown"
+	return info_shown
+
+/obj/item/implant/tracking/get_management_console_buttons()
+	var/list/buttons = ..()
+	UNTYPED_LIST_ADD(buttons, list(
+		"name" = "Warn",
+		"color" = "average",
+		"tooltip" = "Sends a message directly to the target's brain.",
+		"action_key" = "warn",
+	))
+	return buttons
+
+/obj/item/implant/tracking/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner/management/console)
+	. = ..()
+	if(.)
+		return
+
+	if(params["implant_action"] == "warn")
+		var/warning = tgui_input_text(user, "What warning do you want to send to [imp_in.name]?", "Messaging")
+		if(!warning || QDELETED(src) || QDELETED(user) || QDELETED(console) || isnull(imp_in))
+			return TRUE
+		if(!console.is_operational || !user.can_perform_action(console, NEED_DEXTERITY|ALLOW_SILICON_REACH))
+			return TRUE
+
+		to_chat(imp_in, span_hear("You hear a voice in your head saying: '[warning]'"))
+		log_directed_talk(user, imp_in, warning, LOG_SAY, "implant message")
+		return TRUE
 
 /obj/item/implant/tracking/c38
 	name = "TRAC implant"

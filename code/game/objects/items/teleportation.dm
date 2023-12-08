@@ -72,7 +72,7 @@
 
 		var/list/track_implants = list()
 
-		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_tracking_implants)
+		for (var/obj/item/implant/beacon/tracking_beacon in GLOB.tracked_implants)
 			if (!tracking_beacon.imp_in || !isliving(tracking_beacon.loc))
 				continue
 			else
