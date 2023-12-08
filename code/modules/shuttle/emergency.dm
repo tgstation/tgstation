@@ -589,8 +589,9 @@
 				if(is_hijacked() || elimination_hijack())
 					// just double check
 					if(hijacker.mind)
+						var/datum/mind/hijacker_mind = hijacker.mind
 
-						var/destination = hijacker.mind.get_desired_hijack_destination()
+						var/destination = hijacker_mind.get_desired_hijack_destination()
 
 						// To add another destination, go to the _DEFINES\antagonists to name your desitnation and give it a number to define it.
 						// Remember to add it to your antagonist's hijack_location varible as well.
@@ -620,7 +621,7 @@
 								Contact shuttle supervisor for further assistance", "SYSTEM ERROR:", sound_override = 'sound/misc/announce_syndi.ogg')
 							else
 								stack_trace("get_desired_hijack_destination() returned a location that was unexpected.\
-								Check [survivor.mind.antag_datums] for hijack_location that are mistakenly inputted or unimplemeneted")
+								Check [hijacker_mind.antag_datums] for hijack_location that are mistakenly inputted or unimplemeneted")
 
 				dock_id(destination_dock)
 				mode = SHUTTLE_ENDGAME
