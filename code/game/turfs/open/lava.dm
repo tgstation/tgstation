@@ -49,6 +49,12 @@
 	if(!smoothing_flags)
 		update_appearance()
 
+
+/turf/open/lava/Destroy()
+	for(var/mob/living/leaving_mob in contents)
+		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	return ..()
+
 /turf/open/lava/update_overlays()
 	. = ..()
 	. += emissive_appearance(mask_icon, mask_state, src)
@@ -140,18 +146,13 @@
 	if(isliving(gone) && !islava(gone.loc))
 		REMOVE_TRAIT(gone, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
 
-/turf/open/lava/Destroy()
-	for(var/mob/living/leaving_mob in contents)
-		REMOVE_TRAIT(leaving_mob, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
-	return ..()
-
 /turf/open/lava/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(burn_stuff(AM))
 		START_PROCESSING(SSobj, src)
 
 /turf/open/lava/process(seconds_per_tick)
 	if(!burn_stuff(null, seconds_per_tick))
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /turf/open/lava/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if(the_rcd.mode == RCD_TURF && the_rcd.rcd_design_path == /turf/open/floor/plating/rcd)
@@ -217,9 +218,7 @@
 		return TRUE
 
 /turf/open/lava/proc/is_safe()
-	if(HAS_TRAIT(src, TRAIT_LAVA_STOPPED))
-		return TRUE
-	return FALSE
+	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED)
 
 ///Generic return value of the can_burn_stuff() proc. Does nothing.
 #define LAVA_BE_IGNORING 0
@@ -246,6 +245,8 @@
 		. = TRUE
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)
+	if(QDELETED(burn_target))
+		return LAVA_BE_IGNORING
 	if(burn_target.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) //you're flying over it.
 		return LAVA_BE_IGNORING
 
@@ -288,6 +289,9 @@
 #undef LAVA_BE_BURNING
 
 /turf/open/lava/proc/do_burn(atom/movable/burn_target, seconds_per_tick = 1)
+	if(QDELETED(burn_target))
+		return FALSE
+
 	. = TRUE
 	if(isobj(burn_target))
 		var/obj/burn_obj = burn_target
@@ -308,12 +312,10 @@
 
 	var/mob/living/burn_living = burn_target
 	ADD_TRAIT(burn_living, TRAIT_PERMANENTLY_ONFIRE, TURF_TRAIT)
+	burn_living.ignite_mob()
+	burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
 	burn_living.update_fire()
-
 	burn_living.adjustFireLoss(lava_damage * seconds_per_tick)
-	if(!QDELETED(burn_living)) //mobs turning into object corpses could get deleted here.
-		burn_living.adjust_fire_stacks(lava_firestacks * seconds_per_tick)
-		burn_living.ignite_mob()
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)
 	return HAS_TRAIT(src, TRAIT_LAVA_STOPPED) || HAS_TRAIT(crossing, immunity_trait ) || HAS_TRAIT(crossing, TRAIT_MOVE_FLYING)
