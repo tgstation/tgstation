@@ -15,7 +15,7 @@
 	invocation_type = INVOCATION_SHOUT
 	spell_requirements = NONE
 
-	aoe_radius = 7
+	aoe_radius = 5
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
 	var/list/stuff = list()

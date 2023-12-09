@@ -188,10 +188,9 @@
 	name = "The Last Act"
 	desc = "The ascension ritual of the Path of Moon. \
 		Bring 3 corpses with more than 50 brain damage to a transmutation rune to complete the ritual. \
-		When completed, you become a harbinger of madness, all your spells will get a lower cooldown \
-		and become stronger. You will also passivly release hallucinations, decrease sanity, and increase \
-		confusion. If their sanity is low they will start taking brain damage and go blind. 1/5th of the crew \
-		will aid you as acolytes and follow your command, they will all recieve moonlight amulettes."
+		When completed, you become a harbinger of madness gaining and aura of passive sanity decrease \
+		, confusion increase and if their sanity is low enough brain damage and blindness. \
+		1/5th of the crew will turn into acolytes and follow your command, they will all recieve moonlight amulettes."
 	gain_text = "We dived down towards the crowd, his soul splitting off in search of greater venture \
 		for where the Ringleader had started the parade, I shall continue it unto the suns demise \
 		WITNESS MY ASCENSION, THE MOON SMILES ONCE MORE AND FOREVER MORE IT SHALL!"
@@ -222,10 +221,12 @@
 		var/amount_of_lunatics = 0
 		if (isnull(crewmate.mind))
 			continue
-		if (IS_HERETIC_OR_MONSTER(crewmate)) // Heretics, lunatics and monsters shouldn't become lunatics
+		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
+		if (IS_HERETIC_OR_MONSTER(crewmate))
 			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
 			continue
-		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE)) // Mindshielded and anti-magic folks are immune against this effect
+		// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
+		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE))
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
 		if(amount_of_lunatics > length(GLOB.human_list) / 5)
@@ -236,22 +237,6 @@
 		var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
 		crewmate.put_in_active_hand(moon_amulette)
 		crewmate.emote("laugh")
-
-	// Spells get a lower cooldown
-	var/datum/action/cooldown/spell/pointed/moon_smile/smile = locate() in user.actions
-	if(smile)
-		smile.cooldown_time *= 0.66 // Lower cooldown
-		smile.cast_range +=6 // Longer cast range
-
-	var/datum/action/cooldown/spell/pointed/projectile/moon_parade/lunar_parade = locate() in user.actions
-	if(lunar_parade)
-		lunar_parade.cooldown_time *= 0.66 // Lower cooldown
-
-	var/datum/action/cooldown/spell/aoe/moon_ringleader/ringleader_rise = locate() in user.actions
-	if(ringleader_rise)
-		ringleader_rise.cooldown_time *= 0.66 // Lower cooldown
-		ringleader_rise.aoe_radius +=3 // Bigger AoE
-
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
