@@ -168,6 +168,7 @@ $bg-map: colors.$bg-map !default;
 .Button__content {
   display: block;
   align-self: stretch;
+  overflow: hidden;
 }
 
 .Button__text {

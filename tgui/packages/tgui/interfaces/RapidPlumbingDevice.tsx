@@ -54,7 +54,6 @@ const PlumbingTypeSection = (props) => {
         <Button
           key={index}
           fluid
-          ellipsis
           color="transparent"
           selected={recipe.name === selected_recipe}
           onClick={() =>

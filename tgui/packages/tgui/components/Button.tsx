@@ -7,25 +7,36 @@
 import { Placement } from '@popperjs/core';
 import { KEY } from 'common/keys';
 import { BooleanLike, classes } from 'common/react';
-import {
-  createRef,
-  PropsWithChildren,
-  ReactNode,
-  useEffect,
-  useState,
-} from 'react';
+import { createRef, ReactNode, useEffect, useState } from 'react';
 import { Box, BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
 import { Tooltip } from './Tooltip';
+
+/**
+ * Getting ellipses to work requires that you use:
+ * 1. A string rather than a node
+ * 2. A fixed width here or in a parent
+ * 3. Children prop rather than content
+ */
+type EllipsisUnion =
+  | {
+      ellipsis: true;
+      children: string;
+      /** @deprecated */
+      content?: never;
+    }
+  | Partial<{
+      ellipsis: undefined;
+      children: ReactNode;
+      /** @deprecated */
+      content: ReactNode;
+    }>;
 
 type Props = Partial<{
   captureKeys: boolean;
   circular: boolean;
   compact: boolean;
-  /** @deprecated */
-  content: ReactNode;
   disabled: BooleanLike;
-  ellipsis: boolean;
   fluid: boolean;
   icon: string | false;
   iconColor: string;
@@ -38,8 +49,8 @@ type Props = Partial<{
   tooltipPosition: string;
   verticalAlignContent: string;
 }> &
-  BoxProps &
-  PropsWithChildren;
+  EllipsisUnion &
+  BoxProps;
 
 /** Clickable button. Comes with variants. Read more in the documentation. */
 export const Button = (props: Props) => {
@@ -66,7 +77,8 @@ export const Button = (props: Props) => {
     verticalAlignContent,
     ...rest
   } = props;
-  const hasContent = !!content || !!children;
+
+  const toDisplay: ReactNode = content || children;
 
   let buttonContent = (
     <div
@@ -126,14 +138,16 @@ export const Button = (props: Props) => {
             spin={iconSpin}
           />
         )}
-        {hasContent && (
+        {!ellipsis ? (
+          toDisplay
+        ) : (
           <span
             className={classes([
               'Button__text',
               ellipsis && 'Button--ellipsis',
             ])}
           >
-            {content || children}
+            {toDisplay}
           </span>
         )}
         {icon && iconPosition === 'right' && (
@@ -188,7 +202,7 @@ type ConfirmProps = Partial<{
   icon: string;
   onClick: () => void;
 }> &
-  Props;
+  Omit<Props, 'content'>;
 
 /**  Requires user confirmation before triggering its action. */
 const ButtonConfirm = (props: ConfirmProps) => {
@@ -198,6 +212,7 @@ const ButtonConfirm = (props: ConfirmProps) => {
     confirmContent,
     confirmIcon,
     content,
+    children,
     icon,
     onClick = () => null,
     ...rest

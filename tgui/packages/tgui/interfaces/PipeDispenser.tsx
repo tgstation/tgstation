@@ -84,7 +84,6 @@ const PipeTypeSection = (props) => {
           key={recipe.pipe_index}
           fluid
           ellipsis
-          content={recipe.pipe_name}
           title={recipe.pipe_name}
           onClick={() =>
             act('pipe_type', {
@@ -93,7 +92,9 @@ const PipeTypeSection = (props) => {
               category: shownCategory.cat_name,
             })
           }
-        />
+        >
+          {recipe.pipe_name}
+        </Button>
       ))}
     </Section>
   );

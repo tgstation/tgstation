@@ -122,7 +122,6 @@ const TileDesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           color="transparent"
           selected={
             recipe.name === selected_recipe &&
