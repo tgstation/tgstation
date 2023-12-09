@@ -15,7 +15,7 @@
 		affected_mob.death()
 		return FALSE
 
-	switch(stage)
+	switch(round(multiplier))
 		if(1 to 2)
 			if(prob(1))
 				to_chat(affected_mob, span_warning("You feel [pick("discomfort", "pressure", "a burning sensation", "pain")] in your chest."))

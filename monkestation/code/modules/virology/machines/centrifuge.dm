@@ -377,7 +377,7 @@
 		if (istype(blood_viruses) && blood_viruses.len > 0)
 			var/list/pathogen_list = list()
 			for (var/datum/disease/advanced/D as anything  in blood_viruses)
-				if(!istpye(D))
+				if(!istype(D))
 					continue
 				var/pathogen_name = "Unknown [D.form]"
 				pathogen_list[pathogen_name] = D

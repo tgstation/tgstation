@@ -298,6 +298,7 @@
 	name = "Retrovirus"
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
 	max_multiplier = 4
+	stage = 4
 	badness = EFFECT_DANGER_ANNOYING
 
 /datum/symptom/retrovirus/activate(mob/living/carbon/affected_mob)
@@ -346,14 +347,15 @@
 	name = "The Rhumba Beat"
 	desc = "Chick Chicky Boom!"
 	max_multiplier = 5
+	stage = 4
 	badness = EFFECT_DANGER_DEADLY
 
 /datum/symptom/rhumba_beat/activate(mob/living/carbon/affected_mob)
 	if(ismouse(affected_mob))
 		affected_mob.gib()
 		return
-		
-	switch(multiplier)
+
+	switch(round(multiplier))
 		if(2)
 			if(prob(26))
 				affected_mob.adjustFireLoss(5, FALSE)

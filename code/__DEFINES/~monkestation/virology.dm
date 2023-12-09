@@ -43,3 +43,4 @@
 #define DISEASE_ROBOT "robot"
 #define DISEASE_COLD "cold"
 #define DISEASE_HEART "heart"
+#define DISEASE_TRAUMA "trauma"
