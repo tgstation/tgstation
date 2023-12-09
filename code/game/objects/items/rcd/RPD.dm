@@ -208,8 +208,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/pipe_layers = PIPE_LAYER(3)
 	///Are we laying multiple layers per click
 	var/multi_layer = FALSE
-	///Latest selected pipe layer
-	var/latest_pipe_layer = 3
 	///Layer for disposal ducts
 	var/ducting_layer = DUCT_LAYER_DEFAULT
 	///Stores the current device to spawn
@@ -267,9 +265,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/proc/get_active_pipe_layers()
 	var/list/layer_nums = list()
-	for(var/pipe_layer_number in 0 to 4)
-		if((2**(pipe_layer_number)) & pipe_layers)
-			layer_nums += (pipe_layer_number + 1)
+	for(var/pipe_layer_number in 1 to 5)
+		if(PIPE_LAYER(pipe_layer_number) & pipe_layers)
+			layer_nums += pipe_layer_number
 	return layer_nums
 
 /obj/item/pipe_dispenser/cyborg_unequip(mob/user)
@@ -323,7 +321,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		"category" = category,
 		"multi_layer" = multi_layer,
 		"pipe_layers" = pipe_layers,
-		"latest_pipe_layer" = latest_pipe_layer,
 		"ducting_layer" = ducting_layer,
 		"categories" = list(),
 		"selected_recipe" = recipe.name,
@@ -385,20 +382,24 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			p_dir = NORTH
 			playeffect = FALSE
 		if("pipe_layers")
+			var/selected_layers = text2num(params["pipe_layers"])
+			var/valid_layer = FALSE
+			for(var/pipe_layer_number in 1 to 5)
+				if(!(PIPE_LAYER(pipe_layer_number) & selected_layers))
+					continue
+				valid_layer = TRUE
+			if(!valid_layer)
+				return
 			if(multi_layer)
-				var/selected_layers = text2num(params["pipe_layers"])
-				pipe_layers ^= selected_layers
-				if(pipe_layers == 0)
-					pipe_layers = text2num(params["pipe_layers"])
+				if(pipe_layers != selected_layers)
+					pipe_layers ^= selected_layers
 			else
-				pipe_layers = text2num(params["pipe_layers"])
+				pipe_layers = selected_layers
 			playeffect = FALSE
 		if("toggle_multi_layer")
 			if(multi_layer)
 				pipe_layers = PIPE_LAYER(max(get_active_pipe_layers()))
 			multi_layer = !multi_layer
-		if("set_latest_pipe_layer")
-			latest_pipe_layer = text2num(params["latest_pipe_layer"])
 		if("ducting_layer")
 			ducting_layer = text2num(params["ducting_layer"])
 			playeffect = FALSE
@@ -441,9 +442,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/atom/attack_target = atom_to_attack
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
-	var/queued_p_type = recipe.id
-	var/queued_p_dir = p_dir
-	var/queued_p_flipped = p_flipped
+	var/queued_pipe_type = recipe.id
+	var/queued_pipe_dir = p_dir
+	var/queued_pipe_flipped = p_flipped
 
 	//Unwrench pipe before we build one over/paint it, but only if we're not already running a do_after on it already to prevent a potential runtime.
 	if((mode & DESTROY_MODE) && (upgrade_flags & RPD_UPGRADE_UNWRENCH) && istype(attack_target, /obj/machinery/atmospherics) && !(DOING_INTERACTION_WITH_TARGET(user, attack_target)))
@@ -546,7 +547,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					return
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, disposal_build_speed, target = attack_target))
-					var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_p_type, queued_p_dir, queued_p_flipped)
+					var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_pipe_type, queued_pipe_dir, queued_pipe_flipped)
 
 					if(!new_disposals_segment.can_place())
 						balloon_alert(user, "not enough room!")
@@ -577,18 +578,18 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, transit_build_speed, target = attack_target))
 					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-					if(queued_p_type == /obj/structure/c_transit_tube_pod)
+					if(queued_pipe_type == /obj/structure/c_transit_tube_pod)
 						var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(attack_target)
 						pod.add_fingerprint(usr)
 						if(mode & WRENCH_MODE)
 							pod.wrench_act(user, src)
 
 					else
-						var/obj/structure/c_transit_tube/tube = new queued_p_type(attack_target)
-						tube.setDir(queued_p_dir)
+						var/obj/structure/c_transit_tube/tube = new queued_pipe_type(attack_target)
+						tube.setDir(queued_pipe_dir)
 
-						if(queued_p_flipped)
-							tube.setDir(turn(queued_p_dir, 45 + ROTATION_FLIP))
+						if(queued_pipe_flipped)
+							tube.setDir(turn(queued_pipe_dir, 45 + ROTATION_FLIP))
 							tube.AfterRotation(user, ROTATION_FLIP)
 
 						tube.add_fingerprint(usr)
@@ -603,70 +604,64 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
 		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille))
-	if(istype(target_of_attack, /obj/machinery/atmospherics) && mode & BUILD_MODE)
+	if(istype(target_of_attack, /obj/machinery/atmospherics) && (mode & BUILD_MODE))
 		target_of_attack = get_turf(target_of_attack)
 	var/can_we_make_pipe = (isturf(target_of_attack) || is_type_in_typecache(target_of_attack, make_pipe_whitelist))
 	return can_we_make_pipe
 
 /obj/item/pipe_dispenser/proc/do_pipe_build(atom/atom_to_target, mob/user, params)
 	//So that changing the menu settings doesn't affect the pipes already being built.
-	var/queued_p_type = recipe.id
-	var/queued_p_dir = p_dir
-	var/queued_p_flipped = p_flipped
+	var/queued_pipe_type = recipe.id
+	var/queued_pipe_dir = p_dir
+	var/queued_pipe_flipped = p_flipped
 
 	var/can_make_pipe = check_can_make_pipe(atom_to_target)
 	var/list/pipe_layer_numbers = get_active_pipe_layers()
+	var/continued_build = FALSE
 	for(var/pipe_layer_num in 1 to length(pipe_layer_numbers))
-		var/continued_build = FALSE
 		var/layer_to_build = pipe_layer_numbers[pipe_layer_num]
+		if(layer_to_build != pipe_layer_numbers[1])
+			continued_build = TRUE
 		if(!layer_to_build)
 			continue
 		if(!can_make_pipe)
 			return
-		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-		if (recipe.type == /datum/pipe_info/meter)
-			if(continued_build || do_after(user, atmos_build_speed, target = atom_to_target))
-				playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-				var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(atom_to_target))
-				new_meter.setAttachLayer(layer_to_build)
-				if(mode & WRENCH_MODE)
-					new_meter.wrench_act(user, src)
-				continued_build = TRUE
+		playsound(get_turf(src), 'sound/machines/click.ogg', 50, vary = TRUE)
+		if(!continued_build && !do_after(user, atmos_build_speed, target = atom_to_target))
+			return
+		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == 5))
+			balloon_alert(user, "can't build on layer [layer_to_build]!")
+			if(multi_layer)
+				continue
+			return
+		playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+		if(recipe.type == /datum/pipe_info/meter)
+			var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(atom_to_target))
+			new_meter.setAttachLayer(layer_to_build)
+			if(mode & WRENCH_MODE)
+				new_meter.wrench_act(user, src)
 		else
-			if(recipe.all_layers == FALSE && (layer_to_build == 1 || layer_to_build == 5))
-				if(multi_layer)
-					continue
-				balloon_alert(user, "can't build on this layer!")
-				return
-			if(continued_build || do_after(user, atmos_build_speed, target = atom_to_target))
-				if(recipe.all_layers == FALSE && (layer_to_build == 1 || layer_to_build == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
-					if(multi_layer)
-						continue
-					balloon_alert(user, "can't build on this layer!")
-					return
-				playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-				var/obj/machinery/atmospherics/path = queued_p_type
-				var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
-				var/obj/item/pipe/pipe_type = new pipe_item_type(
-					get_turf(atom_to_target),
-					queued_p_type,
-					queued_p_dir,
-					null,
-					GLOB.pipe_paint_colors[paint_color],
-					ispath(queued_p_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
-				)
-				if(queued_p_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
-					var/obj/item/pipe/trinary/flippable/new_flippable_pipe = pipe_type
-					new_flippable_pipe.flipped = queued_p_flipped
+			var/obj/machinery/atmospherics/path = queued_pipe_type
+			var/pipe_item_type = initial(path.construction_type) || /obj/item/pipe
+			var/obj/item/pipe/pipe_type = new pipe_item_type(
+				get_turf(atom_to_target),
+				queued_pipe_type,
+				queued_pipe_dir,
+				null,
+				GLOB.pipe_paint_colors[paint_color],
+				ispath(queued_pipe_type, /obj/machinery/atmospherics/pipe/smart) ? p_init_dir : null,
+			)
+			if(queued_pipe_flipped && istype(pipe_type, /obj/item/pipe/trinary/flippable))
+				var/obj/item/pipe/trinary/flippable/new_flippable_pipe = pipe_type
+				new_flippable_pipe.flipped = queued_pipe_flipped
 
-				pipe_type.update()
-				pipe_type.add_fingerprint(usr)
-				pipe_type.set_piping_layer(layer_to_build)
-				if(ispath(queued_p_type, /obj/machinery/atmospherics) && !ispath(queued_p_type, /obj/machinery/atmospherics/pipe/color_adapter))
-					pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
-				if(mode & WRENCH_MODE)
-					pipe_type.wrench_act(user, src)
-				continued_build = TRUE
+			pipe_type.update()
+			pipe_type.add_fingerprint(usr)
+			pipe_type.set_piping_layer(layer_to_build)
+			if(ispath(queued_pipe_type, /obj/machinery/atmospherics) && !ispath(queued_pipe_type, /obj/machinery/atmospherics/pipe/color_adapter))
+				pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
+			if(mode & WRENCH_MODE)
+				pipe_type.wrench_act(user, src)
 
 /obj/item/pipe_dispenser/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/rpd_upgrade))
@@ -698,13 +693,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 
 	if(delta_y < 0)
-		pipe_layers = PIPE_LAYER(min(5, (get_active_pipe_layers()[1] + 1)))
+		pipe_layers = min(PIPE_LAYER(5), pipe_layers << 1)
 	else if(delta_y > 0)
-		pipe_layers = PIPE_LAYER(max(1, (get_active_pipe_layers()[1] - 1)))
+		pipe_layers = max(PIPE_LAYER(1), pipe_layers >> 1)
 	else //mice with side-scrolling wheels are apparently a thing and fuck this up
 		return
 	SStgui.update_uis(src)
-	balloon_alert(source_mob, "set pipe layer [get_active_pipe_layers()[1]]")
+	balloon_alert(source_mob, "set pipe layer to [get_active_pipe_layers()[1]]")
 
 
 /obj/item/rpd_upgrade
