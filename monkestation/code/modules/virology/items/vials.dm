@@ -1,8 +1,11 @@
 /obj/item/reagent_containers/cup/beaker/vial
 	name = "vial"
-	//icon = 'monkestation/code/modules/virology/icons/items.dmi'
+	icon = 'monkestation/code/modules/virology/icons/items.dmi'
 	desc = "A small glass vial. Can hold up to 25 units."
-	//icon_state = "vial"
+	icon_state = "vial"
+	inhand_icon_state = "beaker"
 	custom_materials = list(/datum/material/glass = 250)
 	volume = 25
 	possible_transfer_amounts = list(5,10,15,25)
+	fill_icon_thresholds = list(0, 1, 15, 25)
+	fill_icon = 'monkestation/code/modules/virology/icons/items.dmi'

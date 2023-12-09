@@ -11,3 +11,20 @@
 /datum/reagent/vaccine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	drinker.immune_system.ApplyVaccine(data["antigen"], 1, 30 MINUTES)
+
+/datum/reagent/vaccine/on_merge(list/mix_data)
+	if(data && mix_data)
+		if(data["antigen"] || mix_data["antigen"])
+			var/list/mix1 = data["antigen"]
+			var/list/mix2 = data["antigen"]
+
+			var/list/to_mix = list()
+
+			for(var/antigen in mix1)
+				to_mix |= antigen
+
+			for(var/antigen in mix2)
+				to_mix |= antigen
+
+			data["antigen"] = to_mix
+	return TRUE
