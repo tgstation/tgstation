@@ -1,3 +1,38 @@
+/datum/coupon_code
+	var/datum/supply_pack/discounted_pack
+	var/discount = 0.05
+	var/expires_in
+	var/printed = FALSE
+	var/timerid
+	var/datum/bank_account/associated_account
+
+/datum/coupon_code/New(discount, discounted_pack, expires_in)
+	..()
+	src.discounted_pack = discounted_pack
+	src.discount = discount
+	src.expires_in = expires_in
+
+/datum/coupon_code/Destroy()
+	if(associated_account)
+		associated_account.redeemed_coupons -= src
+		associated_account = null
+	return ..()
+
+/datum/coupon_code/proc/copy(datum/bank_account/account)
+	var/datum/coupon_code/copy = new(discount, discounted_pack, expires_in)
+	copy.associated_account = account
+	if(account)
+		LAZYADD(account.redeemed_coupons, src)
+	if(expires_in)
+		copy.timerid = QDEL_IN_STOPPABLE(copy, expires_in - world.time)
+
+/datum/coupon_code/proc/generate()
+	var/obj/item/coupon/coupon = new()
+	coupon.generate(discount, discounted_pack)
+	printed = TRUE
+	deltimer(timerid)
+	timerid = null
+
 /obj/item/coupon
 	name = "coupon"
 	desc = "It doesn't matter if you didn't want it before, what matters now is that you've got a coupon for it!"
@@ -16,7 +51,8 @@
 	discount_pct_off = discount || pick_weight(chances)
 
 	if(discount_pct_off != COUPON_OMEN)
-		discount_pct_off = text2num(discount_pct_off)
+		if(!discount) // the discount arg should be a number already, while the keys in the chances list cannot be numbers
+			discount_pct_off = text2num(discount_pct_off)
 		name = "coupon - [round(discount_pct_off * 100)]% off [initial(src.discounted_pack.name)]"
 		return
 

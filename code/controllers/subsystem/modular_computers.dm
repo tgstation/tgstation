@@ -24,7 +24,7 @@ SUBSYSTEM_DEF(modular_computers)
 	var/intrusion_detection_alarm = FALSE
 	var/next_picture_id = 0
 
-	///Lazylist of coupons used by the Coupon Master PDA app. e.g. "COUPONCODE25" = list(goody, goody name, discount, printed)
+	///Lazylist of coupons used by the Coupon Master PDA app. e.g. "COUPONCODE25" = coupon_code
 	var/list/discount_coupons
 	var/next_discount = 0
 
@@ -43,24 +43,28 @@ SUBSYSTEM_DEF(modular_computers)
 	if(isnull(announcement_system))
 		return
 
-	var/static/list/discounts = list("10" = 7, "15" = 16, "20" = 20, "25" = 16, "50" = 8, "75" = 1)
+	var/static/list/discounts = list("0.10" = 7, "0.15" = 16, "0.20" = 20, "0.25" = 16, "0.50" = 8, "0.75" = 1)
+	var/static/list/flash_discounts = list("0.30" = 3, "0.40" = 8, "0.50" = 8, "0.75" = 3)
 	var/static/regex/only_alphanumeric = regex("\[^a-zA-Z0-9]", "g")
 
 	var/datum/supply_pack/discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
 	var/pack_name = initial(discounted_pack.name)
-	var/chosen_discount = pick_weight(discounts)
+	var/chosen_discount
+	var/expires_in = 0
+	if(prob(75))
+		chosen_discount = text2num(pick_weight(discounts))
+	else
+		chosen_discount = text2num(pick_weight(flash_discounts))
+		expires_in = rand(2, 4)
 	var/coupon_code = "[uppertext(only_alphanumeric.Replace(pack_name, ""))][chosen_discount]"
 
 	///Was the exact same coupon already done? Well, too bad.
 	if(coupon_code in discount_coupons)
 		return
 
-	discount_coupons[coupon_code] = list(
-		"goody" = discounted_pack,
-		"goody_name" = pack_name,
-		"discount" = "0.[chosen_discount]",
-		"printed" = FALSE,
-	)
+	var/datum/coupon_code/coupon = new(chosen_discount, discounted_pack, expires_in ? world.time + expires_in MINUTES : 0)
+
+	discount_coupons[coupon_code] = coupon
 
 	///pda message code here
 	var/static/list/promo_messages = list(
@@ -92,7 +96,7 @@ SUBSYSTEM_DEF(modular_computers)
 	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
 		"fakename" = "Coupon Master Update",
 		"fakejob" = "Goodies Promotional System",
-		"message" = "[chosen_promo_message] [code_messages]: [coupon_code].",
+		"message" = "[chosen_promo_message] [code_messages]: [coupon_code][expires_in ? " (EXPIRES IN [expires_in] MINUTES)" : ""].",
 		"targets" = targets,
 		"automated" = TRUE,
 	))

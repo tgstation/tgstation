@@ -49,6 +49,7 @@
 /datum/bank_account/Destroy()
 	if(add_to_accounts)
 		SSeconomy.bank_accounts_by_id -= "[account_id]"
+	QDEL_LIST(redeemed_coupons)
 	return ..()
 
 /**

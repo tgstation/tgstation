@@ -1,0 +1,63 @@
+import { BooleanLike } from 'common/react';
+import { useBackend } from '../backend';
+import { Box, Input, NoticeBox, Section } from '../components';
+import { NtosWindow } from '../layouts';
+
+type Data = {
+  valid_id: BooleanLike;
+  redeemed_coupons: CouponData[];
+  printed_coupons: CouponData[];
+};
+
+type CouponData = {
+  goody: string;
+  discount: number;
+};
+
+export const NtosCouponMaster = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { valid_id, redeemed_coupons = [], printed_coupons = [] } = data;
+  return (
+    <NtosWindow width={400} height={500}>
+      <NtosWindow.Content>
+        {!valid_id && (
+          <NoticeBox danger>
+            No bank account detected. Insert a valid ID.
+          </NoticeBox>
+        )}
+        ||
+        {
+          <>
+            <Input
+              width={200}
+              fontSize={1.2}
+              placeholder="Insert your coupon code here"
+              onChange={(e, value) =>
+                act('redeem', {
+                  code: value,
+                })
+              }
+            />
+            <Section scrollable title="Redeemed Coupons" height={200}>
+              {redeemed_coupons.map((coupon, index) => (
+                <Box key={index} className="candystripe">
+                  {coupon.goody} ({coupon.discount}% OFF)
+                </Box>
+              ))}
+            </Section>
+            <Section scrollabe title="Printed Coupons">
+              {printed_coupons.map((coupon, index) => (
+                <Box key={index} className="candystripe">
+                  {coupon.goody} ({coupon.discount}% OFF)
+                </Box>
+              ))}
+            </Section>
+            <NoticeBox info>
+              You can print redeemed coupons at the nearest photocopier.
+            </NoticeBox>
+          </>
+        }
+      </NtosWindow.Content>
+    </NtosWindow>
+  );
+};
