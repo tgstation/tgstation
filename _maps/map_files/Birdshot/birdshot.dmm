@@ -12405,7 +12405,7 @@
 	pixel_x = 9;
 	pixel_y = 2
 	},
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /obj/machinery/ai_slipper{
 	uses = 10
 	},

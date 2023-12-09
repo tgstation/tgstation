@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Cryostylane and oxygen reaction now cools down temps. Other reactions with the `REACTION_HEAT_ARBITARY` flag also cools down temps correctly"

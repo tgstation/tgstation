@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "canisters don't disappear when their colours are changed"
-  - code_imp: "changed some vars into defines to save memory, removed unused/useless vars & added auto docs"
-  - code_imp: "converted UI to typescript. moved global canister list to its appropriate folder"
-  - refactor: "removed prototype canisters and optimized canisters as a whole."
