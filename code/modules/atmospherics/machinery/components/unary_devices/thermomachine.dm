@@ -207,8 +207,11 @@
 		balloon_alert(user, "anchor!")
 		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", tool))
-		change_pipe_connection(panel_open)
-		return ITEM_INTERACT_SUCCESS
+		update_appearance()
+		return TOOL_ACT_TOOLTYPE_SUCCESS
+
+/obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
+	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)
 	return crowbar_deconstruction_act(user, tool)
@@ -257,7 +260,8 @@
 		visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
 		return ITEM_INTERACT_SUCCESS
 	if(default_unfasten_wrench(user, tool))
-		return ITEM_INTERACT_SUCCESS
+		change_pipe_connection(!anchored)
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	return
 
 /obj/machinery/atmospherics/components/unary/thermomachine/ui_status(mob/user)

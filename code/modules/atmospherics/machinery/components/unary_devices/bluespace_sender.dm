@@ -110,8 +110,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	if(!anchored)
 		balloon_alert(user, "anchor!")
 		return ITEM_INTERACT_SUCCESS
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]", tool))
-		change_pipe_connection(panel_open)
+	if(default_deconstruction_screwdriver(user, "[base_icon_state]_open", "[base_icon_state]_off", tool))
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/crowbar_act(mob/living/user, obj/item/tool)
@@ -134,6 +133,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 		balloon_alert(user, "open panel!")
 		return
 	if(default_unfasten_wrench(user, tool))
+		change_pipe_connection(!anchored)
 		return ITEM_INTERACT_SUCCESS
 	return
 

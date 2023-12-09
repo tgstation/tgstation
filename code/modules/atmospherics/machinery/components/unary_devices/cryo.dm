@@ -479,7 +479,7 @@
 
 	if(!filled_pipe)
 		default_deconstruction_crowbar(tool)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 		
 	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
