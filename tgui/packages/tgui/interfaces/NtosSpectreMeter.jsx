@@ -35,13 +35,15 @@ export const NtosSpectreMeter = (props) => {
               average: [33, 66],
               bad: [66, 100],
               purple: [100, Infinity],
-            }}>
+            }}
+          >
             <Box
               lineHeight={1.6}
               fontSize={1.5}
               textAlign="center"
               fontFamily="Comic Sans MS"
-              fluid>
+              fluid
+            >
               <Icon spin name="ghost" />
               {` Spookiness: ${spook_value}% `}
               <Icon spin name="ghost" />
