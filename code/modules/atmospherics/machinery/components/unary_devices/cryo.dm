@@ -465,11 +465,17 @@
 	var/filled_pipe = FALSE
 	var/datum/gas_mixture/environment_air = loc.return_air()
 	var/datum/gas_mixture/inside_air = internal_connector.gas_connector.airs[1]
+	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
 	var/internal_pressure = 0
+
+	if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
+		var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
+		internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
 	
 	if(inside_air.total_moles() > 0)
 		filled_pipe = TRUE
-		internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
+		if(!node || internal_pressure > 0)
+			internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
 
 	if(!filled_pipe)
 		default_deconstruction_crowbar(tool)

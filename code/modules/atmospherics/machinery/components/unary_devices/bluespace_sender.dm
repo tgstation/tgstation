@@ -97,7 +97,7 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	bluespace_network.temperature = T20C
 	update_parents()
 
-/obj/machinery/atmospherics/components/unary/bluespace_sender/release_airs()
+/obj/machinery/atmospherics/components/unary/bluespace_sender/relocate_airs()
 	if(bluespace_network.total_moles() > 0)
 		airs[1].merge(bluespace_network)
 		airs[1].garbage_collect()
