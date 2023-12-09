@@ -27,7 +27,7 @@
 
 /obj/item/implant/chem/get_management_console_data()
 	var/list/info_shown = ..()
-	info_shown["Units"] = reagents.total_volume
+	info_shown["Volume"] = "[reagents.total_volume]u"
 	return info_shown
 
 /obj/item/implant/chem/get_management_console_buttons()

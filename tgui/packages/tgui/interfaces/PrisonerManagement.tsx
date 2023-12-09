@@ -1,6 +1,15 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { BooleanLike } from 'common/react';
-import { Button, Box, NoticeBox, LabeledList, Icon, Tabs, Stack, Section } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 type byondRef = string;
@@ -60,7 +69,8 @@ const ImplantDisplay = (props: { implant: ImplantInfo }) => {
                       implant_action: button.action_key,
                       ...button.action_params,
                     })
-                  }>
+                  }
+                >
                   {button.name}
                 </Button>
               ))}
@@ -73,27 +83,39 @@ const ImplantDisplay = (props: { implant: ImplantInfo }) => {
   );
 };
 
-const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
-  const implantsByCategory: Record<string, ImplantInfo[]> =
-    props.implants.reduce((acc, implant) => {
-      if (!acc[implant.category]) {
-        acc[implant.category] = [];
+// When given a list of implants, sorts them by category
+const sortImplants = (implants: ImplantInfo[]) => {
+  const implantsByCategory: Record<string, ImplantInfo[]> = implants.reduce(
+    (acc, implant) => {
+      if (implant.category in acc) {
+        acc[implant.category].push(implant);
+      } else {
+        acc[implant.category] = [implant];
       }
-      acc[implant.category].push(implant);
       return acc;
-    }, {});
+    },
+    {}
+  );
 
-  const [implantTab, setImplantTab] = useLocalState(
+  return implantsByCategory;
+};
+
+// Converts a category ("tracking implant") to a more readable format ("Tracking")
+// Does this by capitalizing the first letter of the first word and removing the rest
+const formatCategory = (category: string) => {
+  const firstWord = category.split(' ')[0];
+  return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
+};
+
+const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
+  const implantsByCategory: Record<string, ImplantInfo[]> = sortImplants(
+    props.implants
+  );
+
+  const [implantTab, setImplantTab] = useSharedState(
     'implantTab',
     Object.keys(implantsByCategory)[0]
   );
-
-  // Converts a category ("tracking implant") to a more readable format ("Tracking")
-  const formatCategory = (category: string) => {
-    return category
-      .split(' ')
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))[0];
-  };
 
   return (
     <Stack fill vertical>
@@ -103,17 +125,19 @@ const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
             <Tabs.Tab
               key={category}
               selected={implantTab === category}
-              onClick={() => setImplantTab(category)}>
+              onClick={() => setImplantTab(category)}
+            >
               {formatCategory(category)}
             </Tabs.Tab>
           ))}
         </Tabs>
       </Stack.Item>
       <Stack.Item>
-        {implantsByCategory[implantTab] &&
-          implantsByCategory[implantTab].map((implant) => (
-            <ImplantDisplay key={implant.ref} implant={implant} />
-          ))}
+        {(implantTab && implantsByCategory && implantsByCategory[implantTab]) ? (implantsByCategory[implantTab].map((implant) => (
+          <ImplantDisplay key={implant.ref} implant={implant} />
+        ))) : (
+          <NoticeBox>No implants detected.</NoticeBox>
+        )}
       </Stack.Item>
     </Stack>
   );
@@ -143,7 +167,11 @@ const IdShowcase = (props: { id: IDInfo | null }) => {
                 {id.points}
               </LabeledList.Item>
               <LabeledList.Item label="Goal">
-                <Button onClick={() => act('set_id_goal')} icon="info" mr={1} />
+                <Button
+                  onClick={() => act('set_id_goal')}
+                  icon="check"
+                  mr={1}
+                />
                 {id.goal}
               </LabeledList.Item>
             </>
@@ -189,7 +217,8 @@ const ManagementConsole = () => {
             icon="lock"
             color="good"
             ml={2}
-            onClick={() => act('logout')}>
+            onClick={() => act('logout')}
+          >
             Log Out
           </Button>
         </NoticeBox>

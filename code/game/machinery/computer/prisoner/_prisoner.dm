@@ -43,9 +43,10 @@
 		balloon_alert(user, "no id!")
 		return
 
-	contained_id.forceMove(drop_location())
 	if(!issilicon(user) && Adjacent(user))
 		user.put_in_hands(contained_id)
+	else
+		contained_id.forceMove(drop_location())
 
 	balloon_alert_to_viewers("id ejected")
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
