@@ -120,7 +120,7 @@
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
-/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -135,7 +135,7 @@
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	apply_tongue_effects()
 
-/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
+/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
 	temp_say_mod = ""
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
