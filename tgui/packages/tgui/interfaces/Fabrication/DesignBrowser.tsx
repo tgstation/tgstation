@@ -1,9 +1,10 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { ReactNode, useState } from 'react';
+import { ReactNode } from 'react';
 import { Stack, Section, Icon, Dimmer } from '../../components';
 import { Design, MaterialMap } from './Types';
 import { SearchBar } from './SearchBar';
+import { useSharedState } from '../../backend';
 
 /**
  * A function that does nothing.
@@ -126,9 +127,12 @@ export const DesignBrowser = <T extends Design = Design>(
     categoryButtons,
   } = props;
 
-  const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORY);
+  const [selectedCategory, setSelectedCategory] = useSharedState(
+    'selected_category',
+    ALL_CATEGORY,
+  );
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useSharedState('search_text', '');
 
   const onCategorySelected = (newCategory: string) => {
     if (newCategory === selectedCategory) {

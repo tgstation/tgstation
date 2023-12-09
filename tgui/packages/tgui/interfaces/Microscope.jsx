@@ -1,11 +1,10 @@
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 export const Microscope = (props) => {
   const { act, data } = useBackend();
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const { has_dish, cell_lines = [], viruses = [] } = data;
 
   return (
