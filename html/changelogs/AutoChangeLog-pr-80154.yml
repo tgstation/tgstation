@@ -1,4 +1,0 @@
-author: "TJatPBnJ"
-delete-after: True
-changes:
-  - bugfix: "Bolt action rifles no longer open their bolt when firing their last bullet."
