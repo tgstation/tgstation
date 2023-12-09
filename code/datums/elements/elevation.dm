@@ -100,9 +100,9 @@
 	if(!pixel_shift)
 		CRASH("attempted attaching /datum/element/elevation_core with a pixel_shift value of [isnull(pixel_shift) ? "null" : 0]")
 
-	RegisterSignal(target, COMSIG_ATOM_ENTERED, PROC_REF(on_entered))
+	RegisterSignal(target, COMSIG_ATOM_ABSTRACT_ENTERED, PROC_REF(on_entered))
 	RegisterSignal(target, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_initialized_on))
-	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(on_exited))
+	RegisterSignal(target, COMSIG_ATOM_ABSTRACT_EXITED, PROC_REF(on_exited))
 	RegisterSignal(target, COMSIG_TURF_RESET_ELEVATION, PROC_REF(on_reset_elevation))
 
 	src.pixel_shift = pixel_shift
@@ -120,9 +120,9 @@
 	 * it's necessary to clear them here.
 	 */
 	UnregisterSignal(source, list(
+		COMSIG_ATOM_ABSTRACT_ENTERED,
+		COMSIG_ATOM_ABSTRACT_EXITED,
 		COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON,
-		COMSIG_ATOM_ENTERED,
-		COMSIG_ATOM_EXITED,
 		COMSIG_TURF_RESET_ELEVATION,
 	))
 	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, REF(src))
@@ -136,6 +136,7 @@
 	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(entered))
 		var/elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0
 		elevate_mob(entered, elevate_time = elevate_time)
+		RegisterSignal(entered, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
 
 /datum/element/elevation_core/proc/on_initialized_on(turf/source, atom/movable/spawned)
 	SIGNAL_HANDLER
@@ -174,7 +175,7 @@
 		if(isvehicle(source.buckled))
 			animate(source.buckled, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 		else if(!isliving(source.buckled))
-			animate(source, pixel_z = -pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
+			animate(source, pixel_z = pixel_shift, time = ELEVATE_TIME, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 	if(!new_buckled)
 		return
 	if(isvehicle(new_buckled))

@@ -808,7 +808,7 @@
 		user.balloon_alert(user, "cell removed")
 		internal_cell.forceMove(drop_location())
 		internal_cell = null
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	else
 		user.balloon_alert(user, "no cell!")
 
@@ -817,29 +817,29 @@
 	tool.play_tool_sound(src, user, 20, volume=20)
 	deconstruct(TRUE)
 	user.balloon_alert(user, "disassembled")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/welder_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(atom_integrity == max_integrity)
 		to_chat(user, span_warning("\The [src] does not require repairs."))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	if(!tool.tool_start_check(user, amount=1))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing damage to \the [src]..."))
 	if(!tool.use_tool(src, user, 20, volume=50))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	atom_integrity = max_integrity
 	to_chat(user, span_notice("You repair \the [src]."))
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	remove_pai()
 	eject_aicard()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if (disassembled)
 			internal_cell?.forceMove(drop_location())
 			computer_id_slot?.forceMove(drop_location())

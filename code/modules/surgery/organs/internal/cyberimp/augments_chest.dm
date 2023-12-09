@@ -92,7 +92,7 @@
 	if(owner.stat == DEAD)
 		can_defib_owner = owner.can_defib()
 		if(can_defib_owner == DEFIB_POSSIBLE)
-			owner.notify_ghost_cloning("You are being revived by [src]!")
+			owner.notify_revival("You are being revived by [src]!")
 			owner.grab_ghost()
 	/// boolean that stands for if PHYSICAL damage being patched
 	var/body_damage_patched = FALSE

@@ -312,21 +312,21 @@
 /obj/machinery/microwave/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/crowbar_act(mob/living/user, obj/item/tool)
 	if(!default_deconstruction_crowbar(tool))
 		return
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/screwdriver_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/wirecutter_act(mob/living/user, obj/item/tool)
 	if(broken != REALLY_BROKEN)
-		return
+		return NONE
 
 	user.visible_message(
 		span_notice("[user] starts to fix part of [src]."),
@@ -334,7 +334,7 @@
 	)
 
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user] fixes part of [src]."),
@@ -342,11 +342,11 @@
 	)
 	broken = KINDA_BROKEN // Fix it a bit
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/microwave/welder_act(mob/living/user, obj/item/tool)
 	if(broken != KINDA_BROKEN)
-		return
+		return NONE
 
 	user.visible_message(
 		span_notice("[user] starts to fix part of [src]."),
@@ -354,7 +354,7 @@
 	)
 
 	if(!tool.use_tool(src, user, 2 SECONDS, amount = 1, volume = 50))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user] fixes [src]."),
@@ -362,21 +362,23 @@
 	)
 	broken = NOT_BROKEN
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/microwave/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/machinery/microwave/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	if(operating)
 		return
 	if(dirty >= MAX_MICROWAVE_DIRTINESS)
 		return
 
 	. = ..()
-	if(. & TOOL_ACT_MELEE_CHAIN_BLOCKING)
-		return
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 
 	if(panel_open && is_wire_tool(tool))
 		wires.interact(user)
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_SUCCESS
+
+	return .
 
 /obj/machinery/microwave/attackby(obj/item/item, mob/living/user, params)
 	if(operating)

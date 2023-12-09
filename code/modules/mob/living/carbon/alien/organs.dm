@@ -66,7 +66,6 @@
 			owner.adjustBruteLoss(-heal_amt * delta_time_capped)
 			owner.adjustFireLoss(-heal_amt * delta_time_capped)
 			owner.adjustOxyLoss(-heal_amt * delta_time_capped)
-			owner.adjustCloneLoss(-heal_amt * delta_time_capped)
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 

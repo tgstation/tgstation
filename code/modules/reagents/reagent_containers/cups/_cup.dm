@@ -167,34 +167,34 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
-		return
+		return TRUE
 
 	//Cooling method
 	if(istype(attacking_item, /obj/item/extinguisher))
 		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
-			return
+			return TRUE
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return
+			return TRUE
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
-		return
+		return TRUE
 
 	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
-			return
-		if(reagents.total_volume >= reagents.maximum_volume)
+			return TRUE
+		if(reagents.holder_full())
 			to_chat(user, span_notice("[src] is full."))
 		else
 			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
 			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
 			qdel(attacking_egg)
-		return
+		return TRUE
 
 	return ..()
 

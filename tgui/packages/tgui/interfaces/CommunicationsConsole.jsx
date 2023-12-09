@@ -1,7 +1,17 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Blink, Box, Button, Dimmer, Flex, Icon, Modal, Section, TextArea } from '../components';
+import {
+  Blink,
+  Box,
+  Button,
+  Dimmer,
+  Flex,
+  Icon,
+  Modal,
+  Section,
+  TextArea,
+} from '../components';
 import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
@@ -19,7 +29,7 @@ const EMAG_SHUTTLE_NOTICE =
 
 const sortShuttles = sortBy(
   (shuttle) => !shuttle.emagOnly,
-  (shuttle) => shuttle.initial_cost
+  (shuttle) => shuttle.initial_cost,
 );
 
 const AlertButton = (props) => {
@@ -167,7 +177,8 @@ const PageBuyingShuttle = (props) => {
               style={{
                 display: 'inline-block',
                 width: '70%',
-              }}>
+              }}
+            >
               {shuttle.name}
             </span>
           }
@@ -191,7 +202,8 @@ const PageBuyingShuttle = (props) => {
               }
               tooltipPosition="left"
             />
-          }>
+          }
+        >
           <Box>{shuttle.description}</Box>
           <Box color="teal" fontSize="10px" italic>
             Occupancy Limit: {shuttle.occupancy_limit}
@@ -254,19 +266,19 @@ const PageMain = (props) => {
 
   const [callingShuttle, setCallingShuttle] = useLocalState(
     'calling_shuttle',
-    false
+    false,
   );
   const [messagingAssociates, setMessagingAssociates] = useLocalState(
     'messaging_associates',
-    false
+    false,
   );
   const [messagingSector, setMessagingSector] = useLocalState(
     'messaing_sector',
-    null
+    null,
   );
   const [requestingNukeCodes, setRequestingNukeCodes] = useLocalState(
     'requesting_nuke_codes',
-    false
+    false,
   );
 
   const [
@@ -565,7 +577,7 @@ const PageMessages = (props) => {
         content="Back"
         onClick={() => act('setState', { state: STATE_MAIN })}
       />
-    </Section>
+    </Section>,
   );
 
   const messageElements = [];
@@ -585,10 +597,10 @@ const PageMessages = (props) => {
                 message.answered
                   ? undefined
                   : () =>
-                    act('answerMessage', {
-                      message: parseInt(messageIndex, 10) + 1,
-                      answer: answerIndex + 1,
-                    })
+                      act('answerMessage', {
+                        message: parseInt(messageIndex, 10) + 1,
+                        answer: answerIndex + 1,
+                      })
               }
             />
           ))}
@@ -615,11 +627,12 @@ const PageMessages = (props) => {
               })
             }
           />
-        }>
+        }
+      >
         <Box dangerouslySetInnerHTML={textHtml} />
 
         {answers}
-      </Section>
+      </Section>,
     );
   }
 

@@ -108,7 +108,7 @@
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
 	..()
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
 	. = ..()
@@ -256,7 +256,6 @@
 		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
-	var/clone_loss = patient.getCloneLoss()
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
 	if(LAZYLEN(patient.get_traumas()))
@@ -306,13 +305,13 @@
 	if (patient.has_status_effect(/datum/status_effect/hallucination))
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
-	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 200))  //Patient status checks.
+	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss) >= 200))  //Patient status checks.
 		patient_status = "Dead."
-	if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 80)
+	if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
 		patient_status = "Gravely Injured"
-	else if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 40)
+	else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 40)
 		patient_status = "Injured"
-	else if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 20)
+	else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 20)
 		patient_status = "Lightly Injured"
 	if(pandemonium || user.has_status_effect(/datum/status_effect/hallucination))
 		patient_status = pick(
@@ -346,7 +345,6 @@
 	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001) //then a random number is added, which is multiplied by chaos modifier.
 	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001) //That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
 	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001) //It's not the cleanest but it does make for a colorful window.
-	data["clone_health"] = round(clone_loss+(chaos_modifier * (rand(1,30))),0.001)
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))
 	data["patient_status"] = patient_status

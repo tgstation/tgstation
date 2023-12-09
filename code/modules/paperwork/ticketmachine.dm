@@ -40,7 +40,7 @@
 	return ..()
 
 /obj/machinery/ticket_machine/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/wallframe/ticket_machine(loc)
 	qdel(src)
 

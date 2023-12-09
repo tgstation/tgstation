@@ -457,10 +457,10 @@
 		if("purple")
 			saber_color = "red"
 		else
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 	balloon_alert(user, "changed to [saber_color]")
 	update_appearance(UPDATE_ICON)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/sword/vv_edit_var(vname, vval)
 	. = ..()
