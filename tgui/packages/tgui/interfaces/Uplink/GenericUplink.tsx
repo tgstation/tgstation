@@ -96,7 +96,6 @@ export type Item = {
   cost: JSX.Element | string;
   desc: JSX.Element | string;
   disabled: BooleanLike;
-  extraData?: any;
 };
 
 export type ItemListProps = {
