@@ -263,7 +263,7 @@
 		for (var/i = 1 to vials.len)
 			if(vials[i])
 				var/list/v_task = vial_task[i]
-				if (v_task[1])
+				if(v_task[1])
 					vial_task[i] = centrifuge_act(vials[i],vial_task[i])
 	else
 		use_power = 1
@@ -377,6 +377,8 @@
 		if (istype(blood_viruses) && blood_viruses.len > 0)
 			var/list/pathogen_list = list()
 			for (var/datum/disease/advanced/D as anything  in blood_viruses)
+				if(!istpye(D))
+					continue
 				var/pathogen_name = "Unknown [D.form]"
 				pathogen_list[pathogen_name] = D
 

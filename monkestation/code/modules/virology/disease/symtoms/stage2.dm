@@ -499,10 +499,7 @@
 		return
 
 	var/mob/living/carbon/human/H = mob
-	if(prob(33))
-		H.vomit(stun = FALSE)
-	else
-		H.vomit()
+	H.vomit(stun = FALSE)
 
 /datum/symptom/antitox
 	name = "Antioxidantisation Syndrome"
