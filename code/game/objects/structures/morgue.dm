@@ -52,7 +52,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		connected = new connected(src)
 		connected.connected = src
 	GLOB.bodycontainers += src
-	toggle_organ_decay(src)
 	register_context()
 
 /obj/structure/bodycontainer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -108,7 +107,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
 	if (!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 5)
-	toggle_organ_decay(src)
 	qdel(src)
 
 /obj/structure/bodycontainer/container_resist_act(mob/living/user)
@@ -135,7 +133,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 2)
 
 /obj/structure/bodycontainer/proc/open()
-	toggle_organ_decay(src)
 	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/roll.ogg', 5, TRUE)
 	var/turf/T = get_step(src, dir)
@@ -159,7 +156,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			else if(isdead(AM))
 				continue
 			AM.forceMove(src)
-	toggle_organ_decay(src)
 	update_appearance()
 
 /*
@@ -177,7 +173,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	/// Whether or not this morgue beeps to alert parameds of revivable corpses.
 	var/beeper = TRUE
 	/// The minimum time between beeps.
-	var/beep_cooldown = 5 SECONDS
+	var/beep_cooldown = 1 MINUTES
+	/// Whether this morgue tray has revivables or not
+	var/morgue_state = MORGUE_EMPTY
+	/// The tracked mobs inside this morgue tray
+	var/list/mob/living/stored_living = list()
 	/// The cooldown to prevent this from spamming beeps.
 	COOLDOWN_DECLARE(next_beep)
 
@@ -191,21 +191,66 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "[beeper ? "disable beeper" : "enable beeper"]"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/structure/bodycontainer/morgue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(!istype(arrived, /obj/structure/closet/body_bag))
+/obj/structure/bodycontainer/morgue/proc/update_morgue_status()
+	if(contents == 1)
+		morgue_state = MORGUE_EMPTY
 		return
-	var/obj/structure/closet/body_bag/arrived_bag = arrived
+
+	if(!length(stored_living))
+		morgue_state = MORGUE_NO_MOBS
+		return
+
+	if(obj_flags & EMAGGED)
+		morgue_state = MORGUE_ONLY_BRAINDEAD
+		return
+
+	for(var/mob/living/occupant as anything in compiled)
+		if(iscarbon(occupant))
+			var/mob/living/carbon/carbon_occupant = occupant
+			if(!carbon_occupant.can_defib_client())
+				continue
+		else
+			if(HAS_TRAIT(occupant, TRAIT_SUICIDED) || HAS_TRAIT(occupant, TRAIT_BADDNA) || (!key && !occupant.get_ghost(FALSE, TRUE)))
+				continue
+		morgue_state = MORGUE_HAS_REVIVABLE
+		if(beeper)
+			START_PROCESSING(SSobj, src)
+		return
+	morgue_state = MORGUE_ONLY_BRAINDEAD
+
+/obj/structure/bodycontainer/morgue/process(seconds_per_tick)
+	if(morgue_state != MORGUE_HAS_REVIVABLE)
+		return PROCESS_KILL
+
+	if(beeper && COOLDOWN_FINISHED(src, next_beep))
+		playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
+		update_morgue_status()
+		COOLDOWN_START(src, next_beep, beep_cooldown)
+
+
+/obj/structure/bodycontainer/morgue/proc/handle_bodybag_enter(obj/structure/closet/body_bag/arrived_bag)
 	if(!arrived_bag.tag_name)
 		return
 	name = "[initial(name)] - ([arrived_bag.tag_name])"
 	update_appearance(UPDATE_ICON)
+	var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
+
+/obj/structure/bodycontainer/morgue/proc/handle_bodybag_exit(obj/structure/closet/body_bag/exited_bag)
+	name = initial(name)
+	update_appearance(UPDATE_ICON)
+
+/obj/structure/bodycontainer/morgue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(istype(arrived, /obj/structure/closet/body_bag))
+		return handle_bodybag(arrived)
+
+	var/list/compiled = arrived.get_all_contents_type(/mob/living) // Search for mobs in all contents.
+	for(var/mob/living/target in compiled)
 
 /obj/structure/bodycontainer/morgue/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(istype(gone, /obj/structure/closet/body_bag))
-		name = initial(name)
-	update_appearance(UPDATE_ICON)
+		return handle_bodybag_exit(gone)
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
@@ -216,6 +261,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(!user.can_perform_action(src, (ALLOW_SILICON_REACH|ALLOW_RESTING)))
 		return
 	beeper = !beeper
+	update_morgue_status()
 	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
 
 /obj/structure/bodycontainer/morgue/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -231,27 +277,20 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		icon_state = "morgue0"
 		return ..()
 
-	if(contents.len == 1)  // Empty
+	if(morgue_state == MORGUE_EMPTY)  // Empty
 		icon_state = "morgue1"
 		return ..()
 
-	var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
-	if(!length(compiled)) // No mobs?
+	if(morgue_state == MORGUE_NO_MOBS) // No mobs?
 		icon_state = "morgue3"
 		return ..()
 
-	if(!(obj_flags & EMAGGED))
-		for(var/mob/living/occupant as anything in compiled)
-			var/mob/living/mob_occupant = get_mob_or_brainmob(occupant)
-			if(!mob_occupant.client || HAS_TRAIT(mob_occupant, TRAIT_SUICIDED) || HAS_TRAIT(mob_occupant, TRAIT_BADDNA))
-				continue
-			icon_state = "morgue4" // Revivable
-			if(mob_occupant.stat == DEAD && beeper && COOLDOWN_FINISHED(src, next_beep))
-				playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
-				COOLDOWN_START(src, next_beep, beep_cooldown)
-			return ..()
+	if(morgue_state == MORGUE_HAS_REVIVABLE)
+		icon_state = "morgue4" // Revivable
+		return ..()
 
-	icon_state = "morgue2" // Dead, brainded mob.
+	if(morgue_state == MORGUE_ONLY_BRAINDEAD)
+		icon_state = "morgue2" // Dead, brainded mob.
 	return ..()
 
 /obj/structure/bodycontainer/morgue/update_overlays()

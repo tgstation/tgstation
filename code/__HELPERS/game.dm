@@ -11,43 +11,6 @@
 		return null
 	return format_text ? format_text(checked_area.name) : checked_area.name
 
-/** toggle_organ_decay
- * inputs: first_object (object to start with)
- * outputs:
- * description: A pseudo-recursive loop based off of the recursive mob check, this check looks for any organs held
- *  within 'first_object', toggling their frozen flag. This check excludes items held within other safe organ
- *  storage units, so that only the lowest level of container dictates whether we do or don't decompose
- */
-/proc/toggle_organ_decay(atom/first_object)
-
-	var/list/processing_list = list(first_object)
-	var/list/processed_list = list()
-	var/index = 1
-	var/obj/item/organ/found_organ
-
-	while(index <= length(processing_list))
-
-		var/atom/object_to_check = processing_list[index]
-
-		if(isorgan(object_to_check))
-			found_organ = object_to_check
-			found_organ.organ_flags ^= ORGAN_FROZEN
-
-		else if(iscarbon(object_to_check))
-			var/mob/living/carbon/mob_to_check = object_to_check
-			for(var/organ in mob_to_check.organs)
-				found_organ = organ
-				found_organ.organ_flags ^= ORGAN_FROZEN
-
-		for(var/atom/contained_to_check in object_to_check) //objects held within other objects are added to the processing list, unless that object is something that can hold organs safely
-			if(!processed_list[contained_to_check] && !istype(contained_to_check, /obj/structure/closet/crate/freezer) && !istype(contained_to_check, /obj/structure/closet/secure_closet/freezer))
-				processing_list+= contained_to_check
-
-		index++
-		processed_list[object_to_check] = object_to_check
-
-	return
-
 ///Tries to move an atom to an adjacent turf, return TRUE if successful
 /proc/try_move_adjacent(atom/movable/atom_to_move, trydir)
 	var/turf/atom_turf = get_turf(atom_to_move)

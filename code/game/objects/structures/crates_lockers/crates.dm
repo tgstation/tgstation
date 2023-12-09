@@ -230,22 +230,6 @@
 	base_icon_state = "freezer"
 	paint_jobs = null
 
-/obj/structure/closet/crate/freezer/before_open(mob/living/user, force)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	toggle_organ_decay(src)
-	return TRUE
-
-/obj/structure/closet/crate/freezer/after_close(mob/living/user)
-	. = ..()
-	toggle_organ_decay(src)
-
-/obj/structure/closet/crate/freezer/Destroy()
-	toggle_organ_decay(src)
-	return ..()
-
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"
 	desc = "A freezer containing packs of blood."

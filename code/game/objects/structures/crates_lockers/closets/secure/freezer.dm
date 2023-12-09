@@ -9,25 +9,7 @@
 	var/jones = FALSE
 	paint_jobs = null
 
-/obj/structure/closet/secure_closet/freezer/before_open(mob/living/user, force)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	toggle_organ_decay(src)
-	return TRUE
-
-/obj/structure/closet/secure_closet/freezer/after_close(mob/living/user)
-	. = ..()
-	toggle_organ_decay(src)
-
-/obj/structure/closet/secure_closet/freezer/Destroy()
-	toggle_organ_decay(src)
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/Initialize(mapload)
-	. = ..()
-	toggle_organ_decay(src)
+	var/datum/gas_mixture/internal_air
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)
