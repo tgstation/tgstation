@@ -183,7 +183,7 @@ export const EmotePanelContent = (props) => {
                   key={emote.name}
                   tooltip={
                     showIcons ? (
-                      ''
+                      undefined
                     ) : (
                       <EmoteIcons
                         visible={emote.visible}

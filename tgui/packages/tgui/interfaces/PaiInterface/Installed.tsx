@@ -77,7 +77,7 @@ const SoftwareButtons = (props) => {
       return (
         <>
           <Button
-            disabled={door_jack}
+            disabled={!!door_jack}
             icon="plug"
             onClick={() => act(currentSelection, { mode: DOOR_JACK.Cable })}
             tooltip="Drops a cable. Insert into a compatible airlock."

@@ -76,7 +76,6 @@ export const Adminhelp = (props) => {
                 )) || (
                   <Button
                     mt={1}
-                    content="Alert admins?"
                     onClick={() => {
                       if (requestForAdmin) {
                         setRequestForAdmin(false);
@@ -90,11 +89,13 @@ export const Adminhelp = (props) => {
                     tooltip={
                       bannedFromUrgentAhelp
                         ? 'You are banned from using urgent ahelps.'
-                        : null
+                        : undefined
                     }
                     fluid
                     textAlign="center"
-                  />
+                  >
+                    Alert admins?
+                  </Button>
                 )}
               </NoticeBox>
             </Stack.Item>

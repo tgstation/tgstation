@@ -13,7 +13,7 @@ export const MinigamesMenu = (props) => {
             <Stack.Item grow>
               <Button
                 content="CTF"
-                fluid={1}
+                fluid
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
@@ -23,7 +23,7 @@ export const MinigamesMenu = (props) => {
             <Stack.Item grow>
               <Button
                 content="Mafia"
-                fluid={1}
+                fluid
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"
@@ -33,7 +33,7 @@ export const MinigamesMenu = (props) => {
             <Stack.Item grow>
               <Button
                 content="Basketball"
-                fluid={1}
+                fluid
                 fontSize={3}
                 textAlign="center"
                 lineHeight="3"

@@ -49,7 +49,7 @@ export const CTFPanel = (props) => {
                   <Button
                     content="Jump"
                     fontSize="18px"
-                    fluid={1}
+                    fluid
                     color={team.color.toLowerCase()}
                     onClick={() =>
                       act('jump', {
@@ -61,7 +61,7 @@ export const CTFPanel = (props) => {
                   <Button
                     content="Join"
                     fontSize="18px"
-                    fluid={1}
+                    fluid
                     color={team.color.toLowerCase()}
                     onClick={() =>
                       act('join', {
