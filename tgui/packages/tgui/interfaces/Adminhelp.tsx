@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import { TextArea, Stack, Button, NoticeBox, Input, Box } from '../components';
 import { Window } from '../layouts';
 
@@ -18,15 +19,9 @@ export const Adminhelp = (props) => {
     bannedFromUrgentAhelp,
     urgentAhelpPromptMessage,
   } = data;
-  const [requestForAdmin, setRequestForAdmin] = useLocalState(
-    'request_for_admin',
-    false,
-  );
-  const [currentlyInputting, setCurrentlyInputting] = useLocalState(
-    'confirm_request',
-    false,
-  );
-  const [ahelpMessage, setAhelpMessage] = useLocalState('ahelp_message', '');
+  const [requestForAdmin, setRequestForAdmin] = useState(false);
+  const [currentlyInputting, setCurrentlyInputting] = useState(false);
+  const [ahelpMessage, setAhelpMessage] = useState('');
 
   const confirmationText = 'alert admins';
   return (

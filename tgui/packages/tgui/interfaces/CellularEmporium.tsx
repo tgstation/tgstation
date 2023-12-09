@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { BooleanLike } from '../../common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Button,
   Section,
@@ -35,10 +36,7 @@ type Ability = {
 
 export const CellularEmporium = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
-  const [searchAbilities, setSearchAbilities] = useLocalState(
-    'searchAbilities',
-    '',
-  );
+  const [searchAbilities, setSearchAbilities] = useState('');
 
   const { can_readapt, genetic_points_count } = data;
   return (
@@ -80,16 +78,16 @@ export const CellularEmporium = (props) => {
             </Stack>
           }
         >
-          <AbilityList />
+          <AbilityList searchAbilities={searchAbilities} />
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
-const AbilityList = (props) => {
+const AbilityList = (props: { searchAbilities: string }) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
-  const [searchAbilities] = useLocalState('searchAbilities', '');
+  const { searchAbilities } = props;
   const {
     abilities,
     owned_abilities,
@@ -124,51 +122,49 @@ const AbilityList = (props) => {
           : 'No abilities found.'}
       </NoticeBox>
     );
-  } else {
-    return (
-      <LabeledList>
-        {filteredAbilities.map((ability) => (
-          <LabeledList.Item
-            key={ability.name}
-            className="candystripe"
-            label={ability.name}
-            buttons={
-              <Stack>
-                <Stack.Item>{ability.genetic_point_required}</Stack.Item>
-                <Stack.Item>
-                  <Icon
-                    name="dna"
-                    color={
-                      owned_abilities.includes(ability.path)
-                        ? '#DD66DD'
-                        : 'gray'
-                    }
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    content={'Evolve'}
-                    disabled={
-                      owned_abilities.includes(ability.path) ||
-                      ability.genetic_point_required > genetic_points_count ||
-                      ability.absorbs_required > absorb_count ||
-                      ability.dna_required > dna_count
-                    }
-                    onClick={() =>
-                      act('evolve', {
-                        path: ability.path,
-                      })
-                    }
-                  />
-                </Stack.Item>
-              </Stack>
-            }
-          >
-            {ability.desc}
-            <Box color="good">{ability.helptext}</Box>
-          </LabeledList.Item>
-        ))}
-      </LabeledList>
-    );
   }
+
+  return (
+    <LabeledList>
+      {filteredAbilities.map((ability) => (
+        <LabeledList.Item
+          key={ability.name}
+          className="candystripe"
+          label={ability.name}
+          buttons={
+            <Stack>
+              <Stack.Item>{ability.genetic_point_required}</Stack.Item>
+              <Stack.Item>
+                <Icon
+                  name="dna"
+                  color={
+                    owned_abilities.includes(ability.path) ? '#DD66DD' : 'gray'
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  content={'Evolve'}
+                  disabled={
+                    owned_abilities.includes(ability.path) ||
+                    ability.genetic_point_required > genetic_points_count ||
+                    ability.absorbs_required > absorb_count ||
+                    ability.dna_required > dna_count
+                  }
+                  onClick={() =>
+                    act('evolve', {
+                      path: ability.path,
+                    })
+                  }
+                />
+              </Stack.Item>
+            </Stack>
+          }
+        >
+          {ability.desc}
+          <Box color="good">{ability.helptext}</Box>
+        </LabeledList.Item>
+      ))}
+    </LabeledList>
+  );
 };

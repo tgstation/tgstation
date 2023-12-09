@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Section,
   Stack,
@@ -11,10 +11,12 @@ import {
   NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 const PacketInfo = (props) => {
   const { act, data } = useBackend();
   const { packet } = props;
+
   return (
     <Stack.Item>
       <Flex justify="space-between">
@@ -84,7 +86,7 @@ const ServerScreen = (props) => {
 const MainScreen = (props) => {
   const { act, data } = useBackend();
   const { servers, network } = data;
-  const [networkId, setNetworkId] = useLocalState('networkId', network);
+  const [networkId, setNetworkId] = useState(network);
 
   return (
     <Stack fill vertical>

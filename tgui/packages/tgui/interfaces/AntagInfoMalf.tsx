@@ -1,4 +1,4 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { multiline } from 'common/string';
 import { GenericUplink, Item } from './Uplink/GenericUplink';
 import { BlockQuote, Button, Section, Stack, Tabs } from '../components';
@@ -9,6 +9,7 @@ import {
   Objective,
   ReplaceObjectivesButton,
 } from './common/Objectives';
+import { useState } from 'react';
 
 const allystyle = {
   fontWeight: 'bold',
@@ -171,7 +172,7 @@ const CodewordsSection = (props) => {
 export const AntagInfoMalf = (props) => {
   const { act, data } = useBackend<Info>();
   const { processingTime, categories } = data;
-  const [antagInfoTab, setAntagInfoTab] = useLocalState('antagInfoTab', 0);
+  const [antagInfoTab, setAntagInfoTab] = useState(0);
   const categoriesList: string[] = [];
   const items: Item[] = [];
   for (let i = 0; i < categories.length; i++) {

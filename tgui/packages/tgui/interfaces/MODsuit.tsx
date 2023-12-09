@@ -1,6 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { formatSiUnit } from '../format';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Button,
   ColorBox,
@@ -19,6 +19,7 @@ import {
   NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 type MODsuitData = {
   // Static
@@ -656,10 +657,8 @@ const ModuleSection = (props) => {
   const { act, data } = useBackend<MODsuitData>();
   const { complexity_max, module_info } = data;
   const { complexity } = data.suit_status;
-  const [configureState, setConfigureState] = useLocalState(
-    'module_configuration',
-    '',
-  );
+  const [configureState, setConfigureState] = useState('');
+
   return (
     <Section
       title="Modules"

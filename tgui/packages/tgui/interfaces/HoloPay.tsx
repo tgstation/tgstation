@@ -1,5 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
+import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -35,7 +36,7 @@ of their respective owners.`;
 export const HoloPay = (props) => {
   const { data } = useBackend<HoloPayData>();
   const { owner } = data;
-  const [setupMode, setSetupMode] = useLocalState('setupMode', false);
+  const [setupMode, setSetupMode] = useState(false);
   // User clicked the "Setup" or "Done" button.
   const onClick = () => {
     setSetupMode(!setupMode);

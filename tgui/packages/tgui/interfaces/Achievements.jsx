@@ -1,6 +1,7 @@
 import { useBackend, useLocalState } from '../backend';
 import { Box, Flex, Icon, Table, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 export const Achievements = (props) => {
   const { data } = useBackend();
@@ -94,7 +95,7 @@ const Achievement = (props) => {
 const HighScoreTable = (props) => {
   const { data } = useBackend();
   const { highscore: highscores, user_ckey } = data;
-  const [highScoreIndex, setHighScoreIndex] = useLocalState('highscore', 0);
+  const [highScoreIndex, setHighScoreIndex] = useState(0);
   const highscore = highscores[highScoreIndex];
   if (!highscore) {
     return null;
