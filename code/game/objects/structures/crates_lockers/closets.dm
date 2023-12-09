@@ -74,6 +74,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/secure = FALSE
 	var/can_install_electronics = TRUE
 
+	var/is_maploaded = FALSE
+
 	var/contents_initialized = FALSE
 	/// is this closet locked by an exclusive id, i.e. your own personal locker
 	var/datum/weakref/id_card = null
@@ -137,8 +139,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		add_to_roundstart_list()
 
 	// if closed, any item at the crate's loc is put in the contents
-	if (mapload && !opened)
-		. = INITIALIZE_HINT_LATELOAD
+	if (mapload)
+		is_maploaded = TRUE
+	. = INITIALIZE_HINT_LATELOAD
 
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
@@ -156,12 +159,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
-	if(!opened)
+	if(!opened && is_maploaded)
 		take_contents()
 
 	if(sealed)
 		var/datum/gas_mixture/external_air = loc.return_air()
-		if(external_air)
+		if(external_air && is_maploaded)
 			internal_air = external_air.copy()
 		else
 			internal_air = new()
