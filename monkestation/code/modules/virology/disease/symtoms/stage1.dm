@@ -106,7 +106,7 @@
 
 /datum/symptom/bee_vomit/activate(mob/living/mob)
 	if(!ismouse(mob))
-		if (mob.reagents.get_reagent_amount(/datum/reagent/consumable/honey) < 10+multiplier*2)
+		if ((mob.reagents.get_reagent_amount(/datum/reagent/consumable/honey) < 5 + multiplier 0.5) && prob(multiplier * 3))
 			mob.reagents.add_reagent(/datum/reagent/consumable/honey, multiplier)
 
 	if(prob(4*multiplier))
