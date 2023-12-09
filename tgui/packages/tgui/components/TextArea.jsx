@@ -197,7 +197,8 @@ export class TextArea extends Component {
           noborder && 'TextArea--noborder',
           className,
         ])}
-        {...rest}>
+        {...rest}
+      >
         {!!displayedValue && (
           <Box position="absolute" width="100%" height="100%" overflow="hidden">
             <div
@@ -207,7 +208,8 @@ export class TextArea extends Component {
               ])}
               style={{
                 transform: `translateY(-${scrolledAmount}px)`,
-              }}>
+              }}
+            >
               {displayedValue}
             </div>
           </Box>

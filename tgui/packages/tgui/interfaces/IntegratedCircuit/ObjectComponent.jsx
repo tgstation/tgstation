@@ -125,12 +125,14 @@ export class ObjectComponent extends Component {
         onMouseDown={this.handleStartDrag}
         onMouseUp={this.handleStopDrag}
         onComponentWillUnmount={this.handleDrag}
-        {...rest}>
+        {...rest}
+      >
         <Box
           backgroundColor={color}
           py={1}
           px={1}
-          className="ObjectComponent__Titlebar">
+          className="ObjectComponent__Titlebar"
+        >
           <Stack>
             <Stack.Item grow={1} unselectable="on">
               {name}
@@ -183,7 +185,8 @@ export class ObjectComponent extends Component {
           className="ObjectComponent__Content"
           unselectable="on"
           py={1}
-          px={1}>
+          px={1}
+        >
           <Stack>
             <Stack.Item>
               <Stack vertical fill>

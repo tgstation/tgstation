@@ -25,7 +25,7 @@ export class ServerPreferencesFetcher extends Component<
   async populateServerData() {
     if (!fetchServerData) {
       fetchServerData = fetchRetry(resolveAsset('preferences.json')).then(
-        (response) => response.json()
+        (response) => response.json(),
       );
     }
 

@@ -149,7 +149,7 @@ export const highlightNode = (
   node,
   regex,
   words,
-  createNode = createHighlightNode
+  createNode = createHighlightNode,
 ) => {
   if (!createNode) {
     createNode = createHighlightNode;

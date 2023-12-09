@@ -36,7 +36,8 @@ export const AntagInfoDemon = (props) => {
                     <Stack.Item
                       textAlign="center"
                       textColor="red"
-                      fontSize="20px">
+                      fontSize="20px"
+                    >
                       {fluff}
                     </Stack.Item>
                     <Stack.Item>

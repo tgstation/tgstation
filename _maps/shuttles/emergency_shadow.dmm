@@ -991,7 +991,7 @@
 /turf/open/floor/eighties,
 /area/shuttle/escape)
 "RV" = (
-/mob/living/simple_animal/bot/cleanbot{
+/mob/living/basic/bot/cleanbot{
 	name = "Mopsy"
 	},
 /obj/machinery/holopad,

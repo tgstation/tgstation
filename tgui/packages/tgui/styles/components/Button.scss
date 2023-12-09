@@ -21,16 +21,22 @@ $bg-map: colors.$bg-map !default;
   $luminance: luminance($color);
   $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
 
-  transition: color 50ms, background-color 50ms;
+  transition:
+    color 50ms,
+    background-color 50ms;
   background-color: $color;
   color: $text-color;
 
   &:hover {
-    transition: color 0ms, background-color 0ms;
+    transition:
+      color 0ms,
+      background-color 0ms;
   }
 
   &:focus {
-    transition: color 100ms, background-color 100ms;
+    transition:
+      color 100ms,
+      background-color 100ms;
   }
 
   &:hover,

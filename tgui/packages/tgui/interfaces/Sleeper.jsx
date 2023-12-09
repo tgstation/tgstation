@@ -48,7 +48,8 @@ export const Sleeper = (props) => {
                 {occupant.stat}
               </Box>
             )
-          }>
+          }
+        >
           {!!occupied && (
             <>
               <ProgressBar
@@ -75,7 +76,8 @@ export const Sleeper = (props) => {
                 ))}
                 <LabeledList.Item
                   label="Brain"
-                  color={occupant.brainLoss ? 'bad' : 'good'}>
+                  color={occupant.brainLoss ? 'bad' : 'good'}
+                >
                   {occupant.brainLoss ? 'Abnormal' : 'Healthy'}
                 </LabeledList.Item>
               </LabeledList>
@@ -91,7 +93,8 @@ export const Sleeper = (props) => {
               content={open ? 'Open' : 'Closed'}
               onClick={() => act('door')}
             />
-          }>
+          }
+        >
           {chems.map((chem) => (
             <Button
               key={chem.name}

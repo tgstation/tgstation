@@ -139,7 +139,8 @@ export class InfinitePlane extends Component {
             overflow: 'hidden',
             position: 'relative',
           },
-        })}>
+        })}
+      >
         <div
           onMouseDown={this.handleMouseDown}
           onMouseMove={this.handleMouseMove}
@@ -162,7 +163,8 @@ export class InfinitePlane extends Component {
             transformOrigin: 'top left',
             height: '100%',
             width: '100%',
-          }}>
+          }}
+        >
           {children}
         </div>
 
@@ -174,7 +176,8 @@ export class InfinitePlane extends Component {
             <ProgressBar
               minValue={ZOOM_MIN_VAL}
               value={zoom}
-              maxValue={ZOOM_MAX_VAL}>
+              maxValue={ZOOM_MAX_VAL}
+            >
               {zoom}x
             </ProgressBar>
           </Stack.Item>

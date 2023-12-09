@@ -27,7 +27,8 @@ export const random_body: Feature<RandomSetting> = {
                 onClick={() => {
                   props.act('randomize_character');
                   setRandomToggle(false);
-                }}>
+                }}
+              >
                 Randomize
               </Button>
             </Stack.Item>

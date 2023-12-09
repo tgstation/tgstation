@@ -95,14 +95,16 @@ export class Port extends Component {
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
-            textAlign="center">
+            textAlign="center"
+          >
             <svg
               style={{
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
               }}
-              viewBox="0, 0, 100, 100">
+              viewBox="0, 0, 100, 100"
+            >
               {composite_types.map((compositeColor, index) => {
                 const radians = (2 * Math.PI) / composite_types.length;
                 const arcLength = radians * 50;

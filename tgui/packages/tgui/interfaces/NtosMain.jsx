@@ -17,7 +17,7 @@ export const NtosMain = (props) => {
     pai,
   } = data;
   const filtered_programs = programs.filter(
-    (program) => program.header_program
+    (program) => program.header_program,
   );
   return (
     <NtosWindow
@@ -26,11 +26,12 @@ export const NtosMain = (props) => {
         'NtOS Main Menu'
       }
       width={400}
-      height={500}>
+      height={500}
+    >
       <NtosWindow.Content scrollable>
         {Boolean(
           removable_media.length ||
-            programs.some((program) => program.header_program)
+            programs.some((program) => program.header_program),
         ) && (
           <Section>
             <Stack>
@@ -99,22 +100,25 @@ export const NtosMain = (props) => {
                 />
               )}
             </>
-          }>
+          }
+        >
           <Table>
             <Table.Row>
               ID Name:{' '}
               {show_imprint
                 ? login.IDName +
-                ' ' +
-                (proposed_login.IDName ? '(' + proposed_login.IDName + ')' : '')
+                  ' ' +
+                  (proposed_login.IDName
+                    ? '(' + proposed_login.IDName + ')'
+                    : '')
                 : proposed_login.IDName ?? ''}
             </Table.Row>
             <Table.Row>
               Assignment:{' '}
               {show_imprint
                 ? login.IDJob +
-                ' ' +
-                (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
+                  ' ' +
+                  (proposed_login.IDJob ? '(' + proposed_login.IDJob + ')' : '')
                 : proposed_login.IDJob ?? ''}
             </Table.Row>
           </Table>
@@ -166,7 +170,7 @@ const ProgramsTable = (props) => {
   const { programs = [] } = data;
   // add the program filename to this list to have it excluded from the main menu program list table
   const filtered_programs = programs.filter(
-    (program) => !program.header_program
+    (program) => !program.header_program,
   );
 
   return (

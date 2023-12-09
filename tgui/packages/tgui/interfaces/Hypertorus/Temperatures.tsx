@@ -133,7 +133,7 @@ export const HypertorusTemperatures = (props) => {
   const maxTemperature = Math.max(...temperatures);
   const minTemperature = Math.max(
     2.73,
-    Math.min(20, ...temperatures.filter((d) => d > 0))
+    Math.min(20, ...temperatures.filter((d) => d > 0)),
   );
 
   if (power_level === 6) {
@@ -165,7 +165,8 @@ export const HypertorusTemperatures = (props) => {
       (!!value || force) && (
         <Box
           className="hypertorus-temperatures__y-axis-tick-anchor"
-          top={`${height - y}px`}>
+          top={`${height - y}px`}
+        >
           <Box className="hypertorus-temperatures__y-axis-tick" />
           {tooltip ? <Tooltip content={tooltip}>{label}</Tooltip> : label}
         </Box>
@@ -232,7 +233,8 @@ export const HypertorusTemperatures = (props) => {
         <Flex
           overflowY="hidden"
           className="hypertorus-temperatures__chart"
-          justify="space-around">
+          justify="space-around"
+        >
           <TemperatureBar
             label="Fusion"
             value={internal_fusion_temperature}
