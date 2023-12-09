@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(job)
 /// Returns a list of jobs that we are allowed to fuck with during random events
 /datum/controller/subsystem/job/proc/get_valid_overflow_jobs()
 	var/static/list/overflow_jobs
-	if (length(overflow_jobs))
+	if (!isnull(overflow_jobs))
 		return overflow_jobs
 
 	overflow_jobs = list()

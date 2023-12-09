@@ -101,8 +101,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /// Update station trait lobby buttons for clients who joined before we initialised this subsystem
 /datum/controller/subsystem/processing/station/proc/display_lobby_traits()
 	for (var/mob/dead/new_player/player as anything in GLOB.new_player_list)
-		if (!istype(player.hud_used, /datum/hud/new_player))
-			continue
 		var/datum/hud/new_player/observer_hud = player.hud_used
+		if (!istype(observer_hud))
+			continue
 		observer_hud.add_station_trait_buttons()
 		observer_hud.show_hud(observer_hud.hud_version)
