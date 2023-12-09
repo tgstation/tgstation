@@ -103,14 +103,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
 
-	if(sealed)
-		var/datum/gas_mixture/external_air = loc.return_air()
-		if(external_air)
-			internal_air = external_air.copy()
-		else
-			internal_air = new()
-		START_PROCESSING(SSobj, src)
-
 	var/static/list/closet_paint_jobs
 	if(isnull(closet_paint_jobs))
 		closet_paint_jobs = list(
@@ -166,6 +158,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	. = ..()
 	if(!opened)
 		take_contents()
+
+	if(sealed)
+		var/datum/gas_mixture/external_air = loc.return_air()
+		if(external_air)
+			internal_air = external_air.copy()
+		else
+			internal_air = new()
+		START_PROCESSING(SSobj, src)
 
 /obj/structure/closet/return_air()
 	if(sealed)

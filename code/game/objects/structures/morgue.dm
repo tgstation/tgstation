@@ -194,6 +194,10 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 
 /obj/structure/bodycontainer/morgue/Initialize(mapload)
+	..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/structure/bodycontainer/morgue/LateInitialize()
 	. = ..()
 	var/datum/gas_mixture/external_air = loc.return_air()
 	if(external_air)
@@ -250,13 +254,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return
 
 	for(var/mob/living/occupant as anything in stored_living)
-		if(iscarbon(occupant))
-			var/mob/living/carbon/carbon_occupant = occupant
-			if(!carbon_occupant.can_defib_client())
-				continue
-		else
-			if(HAS_TRAIT(occupant, TRAIT_SUICIDED) || HAS_TRAIT(occupant, TRAIT_BADDNA) || (!occupant.key && !occupant.get_ghost(FALSE, TRUE)))
-				continue
+		if(occupant.stat == DEAD)
+			if(iscarbon(occupant))
+				var/mob/living/carbon/carbon_occupant = occupant
+				if(!carbon_occupant.can_defib_client())
+					continue
+			else
+				if(HAS_TRAIT(occupant, TRAIT_SUICIDED) || HAS_TRAIT(occupant, TRAIT_BADDNA) || (!occupant.key && !occupant.get_ghost(FALSE, TRUE)))
+					continue
 		morgue_state = MORGUE_HAS_REVIVABLE
 		return
 	morgue_state = MORGUE_ONLY_BRAINDEAD
