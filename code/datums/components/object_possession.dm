@@ -25,12 +25,18 @@
 	var/mob/user = parent
 	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 
-	RegisterSignal(parent, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, PROC_REF(on_move))
+	// we can expect to be possessed by either a nonliving or a living mob
+	RegisterSignals(parent, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE), PROC_REF(on_move))
 	RegisterSignals(parent, list(COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN), PROC_REF(end_possession))
 
 /datum/component/object_possession/Destroy()
 	cleanup_object_binding()
-	UnregisterSignal(parent, list(COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, COMSIG_MOB_GHOSTIZED, COMSIG_KB_ADMIN_AGHOST_DOWN))
+	UnregisterSignal(parent, list(
+		COMSIG_KB_ADMIN_AGHOST_DOWN,
+		COMSIG_MOB_CLIENT_PRE_LIVING_MOVE,
+		COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE,
+		COMSIG_MOB_GHOSTIZED,
+	))
 
 	var/mob/user = parent
 	var/atom/movable/screen/alert/alert_to_clear = screen_alert_ref?.resolve()
@@ -95,11 +101,11 @@
  *
  * Has no sanity other than checking the possed obj's density. this means it effectively has incorporeal movement, making it only good for badminnery.
  *
- * We always want to return `COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE` here regardless
+ * We always want to return `COMPONENT_MOVABLE_BLOCK_PRE_MOVE` here regardless
  */
 /datum/component/object_possession/proc/on_move(datum/source, new_loc, direct)
 	SIGNAL_HANDLER
-	. = COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE
+	. = COMPONENT_MOVABLE_BLOCK_PRE_MOVE // both signals that invoke this are explicitly tied to listen for this define as the return value
 
 	if(QDELETED(possessed))
 		return .
