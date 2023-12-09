@@ -561,6 +561,23 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	. = ..()
 	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_PLANE_LAYER)
 
+/**
+ * Handles emissive overlays that want to sit above frills
+ */
+#warn currently unused, added under the assumption it will be useful. if it's still unused on merge remove it and its emissive layer
+/atom/movable/screen/plane_master/emissive_frills
+	name = "Emissive Frills"
+	documentation = "Holds HIGH that will be used to mask the lighting plane later on. Behaves the exact same as the emissive plane, but it renders ABOVE the frills blocker."
+	plane = EMISSIVE_FRILL_PLANE_LAYER
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list()
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_relay_to(GET_NEW_PLANE(EMISSIVE_RENDER_PLATE, offset), relay_layer = EMISSIVE_PLANE_LAYER)
+
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"
 	documentation = "Holds pipecrawl images generated during well, pipecrawling.\
