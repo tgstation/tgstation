@@ -1,4 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - refactor: "TGUI V5: The UI has had its entire engine replaced with React v18.2. This might cause obvious or laughably broken UIs in places you wouldn't expect. Please report any issues you find to the repo!"
