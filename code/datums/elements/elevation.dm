@@ -128,7 +128,7 @@
 	))
 	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, REF(src))
 	for(var/mob/living/living in source)
-		if(!HAS_TRAIT(living, TRAIT_ON_ELEVATED_SURFACE))
+		if(!HAS_TRAIT_FROM(living, TRAIT_ON_ELEVATED_SURFACE, REF(src)))
 			continue
 		REMOVE_TRAIT(living, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		elevate_mob(living, -pixel_shift)
