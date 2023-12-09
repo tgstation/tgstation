@@ -42,7 +42,7 @@ type UplinkItem = {
 };
 
 type UplinkData = {
-telecrystals: number;
+  telecrystals: number;
   progression_points: number;
   lockable: BooleanLike;
   current_expected_progression: number;
