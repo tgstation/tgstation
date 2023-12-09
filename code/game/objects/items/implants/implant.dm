@@ -65,17 +65,16 @@
 		return FALSE
 
 	var/security_implants = 0 //Used to track how many implants with the "security" flag are in the user.
-	for(var/obj/item/implant/other_implant in target.implants)
+	for(var/obj/item/implant/other_implant as anything in target.implants)
 		var/flags = SEND_SIGNAL(other_implant, COMSIG_IMPLANT_OTHER, args, src)
 		if(flags & COMPONENT_STOP_IMPLANTING)
 			UNSETEMPTY(target.implants)
 			return FALSE
-		if(!force)
-			if(other_implant.implant_flags & IMPLANT_TYPE_SECURITY)
-				security_implants++
-				if(security_implants >= SECURITY_IMPLANT_CAP) //We've found too many security implants in this mob, and will reject implantation by normal means
-					balloon_alert(user, "too many security implants!")
-					return FALSE
+		if(!force && (other_implant.implant_flags & IMPLANT_TYPE_SECURITY))
+			security_implants++
+			if(security_implants >= SECURITY_IMPLANT_CAP) //We've found too many security implants in this mob, and will reject implantation by normal means
+				balloon_alert(user, "too many security implants!")
+				return FALSE
 		if(flags & COMPONENT_DELETE_NEW_IMPLANT)
 			UNSETEMPTY(target.implants)
 			qdel(src)
