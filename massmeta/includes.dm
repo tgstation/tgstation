@@ -78,6 +78,7 @@
 #include "code\modules\reagents\chemistry\reagents\nitrium.dm"
 #include "code\game\objects\items\maintenance_loot.dm"
 #include "code\modules\mob\living\simple_animal\hostile\megafauna\colossus.dm"
+#include "code\modules\mob\living\basic\space_fauna\space_dragon\space_dragon.dm"
 #include "code\datums\components\crafting\weapon_ammo.dm"
 #include "code\modules\ammunition\ballistic\shotgun.dm"
 #include "code\modules\projectiles\projectile\bullets\shotgun.dm"
