@@ -337,7 +337,7 @@
 	name = "Exosuit Materials 2: Excessive Damage Test"
 	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
 	possible_types = list(/obj/structure/mecha_wreckage)
-	total_requirement = 2
+	total_requirement = 1
 
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs
