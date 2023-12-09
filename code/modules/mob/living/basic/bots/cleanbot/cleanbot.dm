@@ -139,7 +139,7 @@
 	generate_ai_keys()
 	AddComponent(/datum/component/obeys_commands, pet_commands)
 	AddComponent(/datum/component/cleaner, \
-		base_cleaning_duration = 1 SECONDS, \
+		base_cleaning_duration = 2 SECONDS, \
 		pre_clean_callback = CALLBACK(src, PROC_REF(update_bot_mode), BOT_CLEANING), \
 		on_cleaned_callback = CALLBACK(src, PROC_REF(update_bot_mode), BOT_IDLE), \
 	)
