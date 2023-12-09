@@ -32,6 +32,7 @@
 	printed = TRUE
 	deltimer(timerid)
 	timerid = null
+	return coupon
 
 /obj/item/coupon
 	name = "coupon"

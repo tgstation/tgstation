@@ -64,7 +64,7 @@
 				"Congratulations!",
 				"Bye Bye~.",
 			)
-			user_id.registered_account.bank_card_talk("Coupon [code] redeemed. [goodbye]", TRUE)
+			user_id.registered_account.bank_card_talk("Coupon [code] redeemed. [pick(goodbye)]", TRUE)
 			//Well, guess you're redeeming something else too.
 			if(prob(40) && computer.used_capacity < computer.max_capacity)
 				var/datum/computer_file/warez = new()
@@ -93,6 +93,7 @@
 		computer.balloon_alert(user, "no coupon available!")
 		return TRUE
 	copier.do_copies(CALLBACK(src, PROC_REF(print_coupon), user_id.registered_account), user, COUPON_PAPER_USE, COUPON_TONER_USE, num_coupons)
+	return TRUE
 
 /datum/computer_file/program/coupon/proc/print_coupon(datum/bank_account/account)
 	var/datum/coupon_code/coupon

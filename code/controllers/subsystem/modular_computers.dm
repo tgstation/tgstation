@@ -56,7 +56,7 @@ SUBSYSTEM_DEF(modular_computers)
 	else
 		chosen_discount = text2num(pick_weight(flash_discounts))
 		expires_in = rand(2, 4)
-	var/coupon_code = "[uppertext(only_alphanumeric.Replace(pack_name, ""))][chosen_discount]"
+	var/coupon_code = "[uppertext(only_alphanumeric.Replace(pack_name, ""))][chosen_discount*100]"
 
 	///Was the exact same coupon already done? Well, too bad.
 	if(coupon_code in discount_coupons)
@@ -89,19 +89,21 @@ SUBSYSTEM_DEF(modular_computers)
 	var/list/targets = list()
 	for (var/messenger_ref in GLOB.pda_messengers)
 		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
-		if(messenger?.computer && (locate(/datum/computer_file/program/coupon) in messenger.computer))
+		if(locate(/datum/computer_file/program/coupon) in messenger?.computer.stored_files)
 			targets += messenger
 
-	var/chosen_promo_message = replacetext(replacetext(pick(promo_messages), "%GOODY", pack_name), "%DISCOUNT", "[chosen_discount]%")
-	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
-		"fakename" = "Coupon Master Update",
-		"fakejob" = "Goodies Promotional System",
-		"message" = "[chosen_promo_message] [code_messages]: [coupon_code][expires_in ? " (EXPIRES IN [expires_in] MINUTES)" : ""].",
-		"targets" = targets,
-		"automated" = TRUE,
-	))
+	if(length(targets))
+		var/chosen_promo_message = replacetext(replacetext(pick(promo_messages), "%GOODY", pack_name), "%DISCOUNT", "[chosen_discount*100]%")
+		var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
+			"fakename" = "Coupon Master Update",
+			"fakejob" = "Goodies Promotional System",
+			"message" = "[chosen_promo_message] [code_messages]: [coupon_code][expires_in ? " (EXPIRES IN [expires_in] MINUTES)" : ""].",
+			"targets" = targets,
+			"automated" = TRUE,
+		))
 
-	signal.send_to_receivers()
+		signal.send_to_receivers()
+
 	next_discount = world.time + rand(3, 5) MINUTES
 
 
