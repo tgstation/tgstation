@@ -6,8 +6,8 @@
 	data = list(
 		"antigen" = list(),
 		)
+	metabolization_rate = 1
 
 /datum/reagent/vaccine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	if(..())
-		return 1
-	drinker.immune_system.ApplyVaccine(data["antigen"])
+	. = ..()
+	drinker.immune_system.ApplyVaccine(data["antigen"], 1, 30 MINUTES)

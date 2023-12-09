@@ -119,9 +119,15 @@
 					antibodies[A] = min(antibodies[A] + 1, 100)
 
 
-/datum/immune_system/proc/ApplyVaccine(list/antigen)
+/datum/immune_system/proc/ApplyVaccine(list/antigen, amount = 1, decay = 0)
 	if (overloaded)
 		return
 
 	for (var/A in antigen)
-		antibodies[A] = min(antibodies[A] + 20, 100)
+		antibodies[A] = min(antibodies[A] + 10 * amount, 100)
+	if(decay)
+		addtimer(CALLBACK(src, PROC_REF(decay_vaccine), antigen, amount), decay)
+
+/datum/immune_system/proc/decay_vaccine(list/antigens, amount = 1)
+	for (var/A in antigens)
+		antibodies[A] = max(antibodies[A] - 8 * amount, 10)

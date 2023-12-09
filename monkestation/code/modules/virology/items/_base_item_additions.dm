@@ -1,5 +1,9 @@
+
 GLOBAL_LIST_INIT(infected_items, list())
 
+/obj/item
+	//how sterile an item is, not used for much atm
+	var/sterility = 0
 /obj/item
 	var/list/viruses = list()
 
