@@ -171,6 +171,7 @@
 	if(!opened)
 		return
 	. += "inducer-[cell ? "bat" : "nobat"]"
+
 /obj/item/inducer/empty
 	cell_type = null
 	opened = TRUE
