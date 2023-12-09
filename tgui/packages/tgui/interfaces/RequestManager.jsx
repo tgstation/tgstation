@@ -16,14 +16,14 @@ export const RequestManager = (props) => {
   const [filteredTypes, _] = useLocalState(
     'filteredTypes',
     Object.fromEntries(
-      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
-    )
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
+    ),
   );
   const [searchText, setSearchText] = useLocalState('searchText');
 
   // Handle filtering
   let displayedRequests = requests.filter(
-    (request) => filteredTypes[request.req_type]
+    (request) => filteredTypes[request.req_type],
   );
   if (searchText) {
     const filterText = searchText.toLowerCase();
@@ -32,7 +32,7 @@ export const RequestManager = (props) => {
         decodeHtmlEntities(request.message)
           .toLowerCase()
           .includes(filterText) ||
-        request.owner_name.toLowerCase().includes(filterText)
+        request.owner_name.toLowerCase().includes(filterText),
     );
   }
 
@@ -51,7 +51,8 @@ export const RequestManager = (props) => {
               />
               <FilterPanel />
             </>
-          }>
+          }
+        >
           {displayedRequests.map((request) => (
             <div className="RequestManager__row" key={request.id}>
               <div className="RequestManager__rowContents">
@@ -79,12 +80,12 @@ export const RequestManager = (props) => {
 };
 
 const displayTypeMap = {
-  'request_prayer': 'PRAYER',
-  'request_centcom': 'CENTCOM',
-  'request_syndicate': 'SYNDICATE',
-  'request_nuke': 'NUKE CODE',
-  'request_fax': 'FAX',
-  'request_internet_sound': 'INTERNET SOUND',
+  request_prayer: 'PRAYER',
+  request_centcom: 'CENTCOM',
+  request_syndicate: 'SYNDICATE',
+  request_nuke: 'NUKE CODE',
+  request_fax: 'FAX',
+  request_internet_sound: 'INTERNET SOUND',
 };
 
 const RequestType = (props) => {
@@ -131,13 +132,13 @@ const RequestControls = (props) => {
 const FilterPanel = (props) => {
   const [filterVisible, setFilterVisible] = useLocalState(
     'filterVisible',
-    false
+    false,
   );
   const [filteredTypes, setFilteredTypes] = useLocalState(
     'filteredTypes',
     Object.fromEntries(
-      Object.entries(displayTypeMap).map(([type, _]) => [type, true])
-    )
+      Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
+    ),
   );
 
   return (
@@ -150,7 +151,8 @@ const FilterPanel = (props) => {
           className="RequestManager__filterPanel"
           style={{
             display: filterVisible ? 'block' : 'none',
-          }}>
+          }}
+        >
           <Table width="0">
             {Object.keys(displayTypeMap).map((type) => {
               return (
@@ -173,7 +175,8 @@ const FilterPanel = (props) => {
             })}
           </Table>
         </div>
-      }>
+      }
+    >
       <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
         Type Filter
       </Button>

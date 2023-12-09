@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Input, Button, Table, NoticeBox, Box } from '../components';
+import {
+  Section,
+  Stack,
+  Input,
+  Button,
+  Table,
+  NoticeBox,
+  Box,
+} from '../components';
 import { Window } from '../layouts';
 
 enum Screen {
@@ -55,7 +63,8 @@ const RequestLogsScreen = (props) => {
               icon="home"
               onClick={() => act('return_home')}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Delete</Table.Cell>
@@ -102,7 +111,8 @@ const MessageLogsScreen = (props) => {
               icon="home"
               onClick={() => act('return_home')}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Delete</Table.Cell>
@@ -154,7 +164,7 @@ const MainScreenAuth = (props) => {
   const { status, is_malf, password } = data;
   const [auth_password, setPassword] = useLocalState(
     'input_password',
-    password
+    password,
   );
   return (
     <>
@@ -254,7 +264,7 @@ const MainScreenNotAuth = (props) => {
   const { status, is_malf, password } = data;
   const [auth_password, setPassword] = useLocalState(
     'input_password',
-    password
+    password,
   );
 
   return (

@@ -2,7 +2,7 @@
 	name = "binoculars"
 	desc = "Used for long-distance surveillance."
 	inhand_icon_state = "binoculars"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "binoculars"
 	worn_icon_state = "binoculars"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'

@@ -63,7 +63,6 @@
 		COMSIG_CARBON_LIMB_DAMAGED,
 		COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,
 		COMSIG_LIVING_ADJUST_BURN_DAMAGE,
-		COMSIG_LIVING_ADJUST_CLONE_DAMAGE,
 		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_ADJUST_OXY_DAMAGE,
 		COMSIG_LIVING_ADJUST_STAMINA_DAMAGE,
@@ -188,8 +187,6 @@
 			back.adjustToxLoss(amount, forced = forced)
 		if(OXY) // If all segments are suffocating we pile damage backwards until our ass starts dying forwards
 			back.adjustOxyLoss(amount, forced = forced)
-		if(CLONE)
-			back.adjustCloneLoss(amount, forced = forced)
 	return COMPONENT_IGNORE_CHANGE
 
 /// Special handling for if damage is delegated to a mob's limbs instead of its overall damage

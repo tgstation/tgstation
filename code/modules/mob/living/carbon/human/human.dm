@@ -66,17 +66,6 @@
 
 	return ..()
 
-/mob/living/carbon/human/ZImpactDamage(turf/T, levels)
-	if(stat != CONSCIOUS || levels > 1) // you're not The One
-		return ..()
-	var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
-	if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed
-		visible_message(span_danger("[src] makes a hard landing on [T] but remains unharmed from the fall."), \
-						span_userdanger("You brace for the fall. You make a hard landing on [T] but remain unharmed."))
-		Knockdown(levels * 40)
-		return
-	return ..()
-
 /mob/living/carbon/human/prepare_data_huds()
 	//Update med hud images...
 	..()
@@ -745,6 +734,7 @@
 	VV_DROPDOWN_OPTION(VV_HK_SET_SPECIES, "Set Species")
 	VV_DROPDOWN_OPTION(VV_HK_PURRBATION, "Toggle Purrbation")
 	VV_DROPDOWN_OPTION(VV_HK_APPLY_DNA_INFUSION, "Apply DNA Infusion")
+	VV_DROPDOWN_OPTION(VV_HK_TURN_INTO_MMI, "Turn into MMI")
 
 /mob/living/carbon/human/vv_do_topic(list/href_list)
 	. = ..()
@@ -840,6 +830,32 @@
 		else
 			to_chat(usr, "Failed to apply DNA Infusion to [src].")
 			log_admin("[key_name(usr)] failed to apply a DNA Infusion to [key_name(src)].")
+
+	if(href_list[VV_HK_TURN_INTO_MMI])
+		if(!check_rights(R_DEBUG))
+			return
+
+		var/result = input(usr, "This will delete the mob, are you sure?", "Turn into MMI") in list("Yes", "No")
+		if(result != "Yes")
+			return
+
+		var/obj/item/organ/internal/brain/target_brain = get_organ_slot(ORGAN_SLOT_BRAIN)
+
+		if(isnull(target_brain))
+			to_chat(usr, "This mob has no brain to insert into an MMI.")
+			return
+
+		var/obj/item/mmi/new_mmi = new(get_turf(src))
+
+		target_brain.Remove(src)
+		new_mmi.force_brain_into(target_brain)
+
+		to_chat(usr, "Turned [src] into an MMI.")
+		log_admin("[key_name(usr)] turned [key_name_and_tag(src)] into an MMI.")
+
+		qdel(src)
+
+
 
 /mob/living/carbon/human/limb_attack_self()
 	var/obj/item/bodypart/arm = hand_bodyparts[active_hand_index]

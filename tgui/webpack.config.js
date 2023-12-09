@@ -32,7 +32,7 @@ module.exports = (env = {}, argv) => {
     context: path.resolve(__dirname),
     target: ['web', 'es5', 'browserslist:ie 11'],
     entry: {
-      'tgui': ['./packages/tgui-polyfill', './packages/tgui'],
+      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
       'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
       'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
     },

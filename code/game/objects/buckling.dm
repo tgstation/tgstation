@@ -28,17 +28,17 @@
 			if(user_unbuckle_mob(buckled_mobs[1],user))
 				return TRUE
 
-/atom/movable/attackby(obj/item/attacking_item, mob/user, params)
-	if(!can_buckle || !istype(attacking_item, /obj/item/riding_offhand) || !user.Adjacent(src))
+/atom/movable/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(!can_buckle || !istype(tool, /obj/item/riding_offhand) || !user.Adjacent(src))
 		return ..()
 
-	var/obj/item/riding_offhand/riding_item = attacking_item
+	var/obj/item/riding_offhand/riding_item = tool
 	var/mob/living/carried_mob = riding_item.rider
 	if(carried_mob == user) //Piggyback user.
-		return
+		return ITEM_INTERACT_BLOCKING
 	user.unbuckle_mob(carried_mob)
 	carried_mob.forceMove(get_turf(src))
-	return mouse_buckle_handling(carried_mob, user)
+	return mouse_buckle_handling(carried_mob, user) ? ITEM_INTERACT_SUCCESS: ITEM_INTERACT_BLOCKING
 
 //literally just the above extension of attack_hand(), but for silicons instead (with an adjacency check, since attack_robot() being called doesn't mean that you're adjacent to something)
 /atom/movable/attack_robot(mob/living/user)

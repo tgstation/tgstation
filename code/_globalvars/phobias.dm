@@ -74,7 +74,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/pet/penguin,
 		/mob/living/simple_animal/bot/secbot,
 	)),
-	"doctors" = typecacheof(list(/mob/living/simple_animal/bot/medbot)),
+	"doctors" = typecacheof(list(/mob/living/basic/bot/medbot)),
 	"heresy" = typecacheof(list(
 		/mob/living/basic/heretic_summon,
 	)),

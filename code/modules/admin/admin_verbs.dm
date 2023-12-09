@@ -169,7 +169,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	return list(
 	#ifdef TESTING /* Keep these at the top to not make the list look fugly */
 	/client/proc/check_missing_sprites,
-	/client/proc/run_dynamic_simulations,
 	#endif
 	/proc/machine_upgrade,
 	/datum/admins/proc/create_or_modify_area,
@@ -222,7 +221,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/run_empty_query,
 	/client/proc/SDQL2_query,
 	/client/proc/set_dynex_scale,
-	/client/proc/spawn_as_mmi,
 	/client/proc/spawn_debug_full_crew,
 	/client/proc/test_cardpack_distribution,
 	/client/proc/test_movable_UI,
@@ -356,18 +354,21 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Invisimin"
 	set category = "Admin.Game"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
+
 	if(isnull(holder) || isnull(mob))
 		return
-	if(mob.invisimin)
+
+	if(HAS_TRAIT(mob, TRAIT_INVISIMIN))
+		REMOVE_TRAIT(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
 		mob.add_to_all_human_data_huds()
-		mob.invisimin = FALSE
 		mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
-		to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
-	else
-		mob.remove_from_all_data_huds()
-		mob.invisimin = TRUE
-		mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
-		to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
+		to_chat(mob, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
+		return
+
+	ADD_TRAIT(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+	mob.remove_from_all_data_huds()
+	mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+	to_chat(mob, span_adminnotice(span_bold("Invisimin on. You are now as invisible as a ghost.")), confidential = TRUE)
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"
@@ -1190,17 +1191,3 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
 
-/client/proc/spawn_as_mmi(mob/living/carbon/human/target in GLOB.human_list)
-	set category = "Debug"
-	set name = "Turn target into MMI"
-	set desc = "Turns something into an MMI, must be used on humans"
-	if(!check_rights(R_DEBUG))
-		return
-	if(!ishuman(target))
-		return
-
-	var/obj/item/mmi/new_mmi = new(target.loc)
-	var/obj/item/organ/internal/brain/target_brain = target.get_organ_slot(ORGAN_SLOT_BRAIN)
-	target_brain.Remove(target)
-	new_mmi.attackby(target_brain,target)
-	qdel(target)

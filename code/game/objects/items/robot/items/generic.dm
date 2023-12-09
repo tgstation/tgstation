@@ -308,7 +308,7 @@
 /obj/item/harmalarm
 	name = "\improper Sonic Harm Prevention Tool"
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "megaphone"
 	/// Harm alarm cooldown
 	COOLDOWN_DECLARE(alarm_cooldown)
