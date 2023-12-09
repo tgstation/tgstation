@@ -99,7 +99,7 @@
 
 /mob/living/simple_animal/bot/cleanbot/Initialize(mapload, obj/item/reagent_containers/cup/bucket/bucket_obj)
 	if(!bucket_obj)
-		bucket_obj = new /obj/item/reagent_containers/cup/bucket/consistent
+		bucket_obj = new /obj/item/reagent_containers/cup/bucket
 	bucket_obj.forceMove(src)
 
 	. = ..()
@@ -122,7 +122,6 @@
 		if(build_bucket && build_bucket != arrived)
 			qdel(build_bucket)
 		build_bucket = arrived
-		set_greyscale(build_bucket.greyscale_colors)
 	return ..()
 
 /mob/living/simple_animal/bot/cleanbot/Exited(atom/movable/gone, direction)
