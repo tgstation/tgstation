@@ -106,7 +106,7 @@
 	update_parents()
 
 /obj/machinery/atmospherics/components/on_deconstruction()
-	release_airs()
+	relocate_airs()
 	return ..()
 
 /obj/machinery/atmospherics/components/rebuild_pipes()
@@ -235,12 +235,16 @@
 	var/unsafe_wrenching = FALSE
 	var/filled_pipe = FALSE
 	var/datum/gas_mixture/environment_air = loc.return_air()
-
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/inside_air = airs[i]
 		if(inside_air.total_moles() > 0 || internal_pressure)
 			filled_pipe = TRUE
-			internal_pressure = internal_pressure > airs[i].return_pressure() ? internal_pressure : airs[i].return_pressure()
+		if(!nodes[i])
+			internal_pressure = internal_pressure > airs[i].return_pressure() ? internal_pressure : airs[i].return_pressure()	
+			continue
+		if(istype(nodes[i], /obj/machinery/atmospherics/components/unary/portables_connector))
+			if(!portable_device_connected(i))
+				internal_pressure = internal_pressure > airs[i].return_pressure() ? internal_pressure : airs[i].return_pressure()
 
 	if(!filled_pipe)
 		default_deconstruction_crowbar(tool)
@@ -330,14 +334,17 @@
 /**
  * Handles air relocation to the pipe network/environment
  */
-/obj/machinery/atmospherics/components/proc/release_airs(datum/gas_mixture/to_release)
+/obj/machinery/atmospherics/components/proc/relocate_airs(datum/gas_mixture/to_release)
 	var/turf/T = get_turf(src)
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/air = airs[i]
-		if(!to_release)
-			to_release = air
+		if(!nodes[i] || (istype(nodes[i], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(i)))
+			if(!to_release)
+				to_release = air
+				continue
+			to_release.merge(air)
 			continue
-		to_release.merge(air)
-		continue
+		var/datum/gas_mixture/parents_air = parents[i].air
+		parents_air.merge(air)
 	if(to_release)
 		T.assume_air(to_release)
