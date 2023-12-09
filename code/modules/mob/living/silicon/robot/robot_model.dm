@@ -664,6 +664,7 @@
 		/obj/item/circular_saw,
 		/obj/item/bonesetter,
 		/obj/item/blood_filter,
+		/obj/item/autopsy_scanner,
 		/obj/item/extinguisher/mini,
 		/obj/item/emergency_bed/silicon,
 		/obj/item/borg/cyborghug/medical,
