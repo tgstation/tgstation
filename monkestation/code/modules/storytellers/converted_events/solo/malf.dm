@@ -15,7 +15,8 @@
 	maximum_antags = 1
 	exclusive_roles = list(JOB_AI)
 	required_enemies = 4
-	weight = 4
+	min_players = 35
+	weight = 3
 	max_occurrences = 1
 
 /datum/round_event_control/antagonist/solo/malf/trim_candidates(list/candidates)
