@@ -27,6 +27,8 @@
 
 /datum/ai_planning_subtree/reside_in_home/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
+	if(QDELETED(living_pawn))
+		return
 
 	if(controller.blackboard_key_exists(BB_CAT_HOME))
 		controller.queue_behavior(/datum/ai_behavior/enter_cat_home, BB_CAT_HOME)
@@ -86,7 +88,7 @@
 
 /datum/ai_planning_subtree/territorial_struggle/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(living_pawn.gender != MALE || !SPT_PROB(hostility_chance, seconds_per_tick))
+	if(QDELETED(living_pawn) || living_pawn.gender != MALE || !SPT_PROB(hostility_chance, seconds_per_tick))
 		return
 	if(controller.blackboard_key_exists(BB_TRESSPASSER_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/territorial_struggle, BB_TRESSPASSER_TARGET, BB_HOSTILE_MEOWS)
