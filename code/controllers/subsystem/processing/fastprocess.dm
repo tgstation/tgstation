@@ -8,3 +8,8 @@ PROCESSING_SUBSYSTEM_DEF(actualfastprocess)
 	wait = 0.1 SECONDS
 	priority = FIRE_PRIORITY_TICKER
 	stat_tag = "AFP"
+
+PROCESSING_SUBSYSTEM_DEF(pathogen_processing)
+	name = "Pathogen Cloud Processing"
+	wait = 1 SECONDS
+	stat_tag = "SP"
