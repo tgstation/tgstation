@@ -130,7 +130,12 @@
 		qdel(src)
 		return
 
-	forceMove(drop_loc)
+	if(move_to_floor)
+		if(!drop_loc) // drop_loc = null happens when a "dummy human" used for rendering icons on prefs screen gets its limbs replaced.
+			qdel(src)
+			return
+		forceMove(drop_loc)
+
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, special, dismembered)
 
 /**
