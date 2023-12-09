@@ -17,6 +17,20 @@
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
 
+/datum/station_trait/mail_blocked
+	name = "Postal workers strike"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 2
+	show_in_report = TRUE
+	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
+
+/datum/station_trait/mail_blocked/on_round_start()
+	///This is either a holiday or sunday... well then, let's flip the situation.
+	if(SSeconomy.mail_blocked)
+		name = "Postal system overtime"
+		report_message = "Despite being a day off, the postal system is working overtime today. Mail will be delivered this shift."
+	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
+
 ///A negative trait that reduces the amount of products available from vending machines throughout the station.
 /datum/station_trait/vending_shortage
 	name = "Vending products shortage"
