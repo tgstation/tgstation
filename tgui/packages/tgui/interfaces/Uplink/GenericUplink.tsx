@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
 import { useLocalState, useSharedState } from '../../backend';
-import { Box, Button, Input, Section, Tabs, NoticeBox, Stack } from '../../components';
+import {
+  Box,
+  Button,
+  Input,
+  Section,
+  Tabs,
+  NoticeBox,
+  Stack,
+} from '../../components';
 
 type GenericUplinkProps = {
   currency?: string | JSX.Element;
@@ -20,11 +28,11 @@ export const GenericUplink = (props: GenericUplinkProps) => {
   const [searchText, setSearchText] = useLocalState('searchText', '');
   const [selectedCategory, setSelectedCategory] = useLocalState(
     'category',
-    categories[0]
+    categories[0],
   );
   const [compactMode, setCompactMode] = useSharedState(
     'compactModeUplink',
-    false
+    false,
   );
   let items = props.items.filter((value) => {
     if (searchText.length === 0) {
@@ -50,7 +58,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
             onClick={() => setCompactMode(!compactMode)}
           />
         </>
-      }>
+      }
+    >
       <Stack>
         {searchText.length === 0 && (
           <Stack.Item mr={1}>
@@ -59,7 +68,8 @@ export const GenericUplink = (props: GenericUplinkProps) => {
                 <Tabs.Tab
                   key={category}
                   selected={category === selectedCategory}
-                  onClick={() => setSelectedCategory(category)}>
+                  onClick={() => setSelectedCategory(category)}
+                >
                   {category}
                 </Tabs.Tab>
               ))}
@@ -117,7 +127,8 @@ const ItemList = (props: ItemListProps) => {
                 disabled={item.disabled}
                 onClick={(e) => handleBuy(item)}
               />
-            }>
+            }
+          >
             {compactMode ? null : item.desc}
           </Section>
         </Stack.Item>

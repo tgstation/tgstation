@@ -195,10 +195,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			paying_for_this = spawning_order.paying_account
 			if(spawning_order.pack.goody)
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
-			var/reciever_message = "Cargo order #[spawning_order.id] has shipped."
+			var/receiver_message = "Cargo order #[spawning_order.id] has shipped."
 			if(spawning_order.charge_on_purchase)
-				reciever_message += " [price] credits have been charged to your bank account"
-			paying_for_this.bank_card_talk(reciever_message)
+				receiver_message += " [price] credits have been charged to your bank account"
+			paying_for_this.bank_card_talk(receiver_message)
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /*
 	Generates a box of mail depending on our exports and imports.
 	Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
-	Then, fills the mail crate with mail, by picking applicable crew who can recieve mail at the time to sending.
+	Then, fills the mail crate with mail, by picking applicable crew who can receive mail at the time to sending.
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
 	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.

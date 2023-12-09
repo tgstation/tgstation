@@ -98,7 +98,7 @@
 	var/datum/admin_help/recipient_ticket = recipient?.current_ticket
 	// Any past interactions with the recipient ticket
 	var/datum/admin_help/recipient_interactions = recipient_ticket?.ticket_interactions
-	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first recieves a response
+	// Any opening interactions with the recipient ticket, IE: interactions started before the ticket first receives a response
 	var/datum/admin_help/opening_interactions = recipient_ticket?.opening_responders
 	// Our recipient's admin holder, if one exists
 	var/datum/admins/recipient_holder = recipient?.holder

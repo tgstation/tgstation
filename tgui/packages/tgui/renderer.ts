@@ -1,5 +1,5 @@
 import { perf } from 'common/perf';
-import { render } from 'inferno';
+import { render } from 'react-dom';
 import { createLogger } from './logging';
 
 const logger = createLogger('renderer');
@@ -19,7 +19,7 @@ export const suspendRenderer = () => {
 };
 
 type CreateRenderer = <T extends unknown[] = [unknown]>(
-  getVNode?: (...args: T) => any
+  getVNode?: (...args: T) => any,
 ) => (...args: T) => void;
 
 // prettier-ignore

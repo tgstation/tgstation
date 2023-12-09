@@ -1,4 +1,4 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, Icon, Section } from '../components';
@@ -30,7 +30,7 @@ export const Safe = (properties) => {
               className="Safe__dial"
               src={resolveAsset('safe_dial.png')}
               style={{
-                'transform': 'rotate(-' + 3.6 * dial + 'deg)',
+                transform: 'rotate(-' + 3.6 * dial + 'deg)',
               }}
             />
           )}
@@ -93,7 +93,8 @@ const Contents = (properties) => {
               act('retrieve', {
                 index: index + 1,
               })
-            }>
+            }
+          >
             <Box
               as="img"
               src={item.sprite + '.png'}
@@ -114,7 +115,8 @@ const Help = (properties) => {
   return (
     <Section
       className="Safe__help"
-      title="Safe opening instructions (because you all keep forgetting)">
+      title="Safe opening instructions (because you all keep forgetting)"
+    >
       <Box>
         1. Turn the dial left to the first number.
         <br />

@@ -217,18 +217,6 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 	autolathe_exportable = FALSE
 
-/datum/design/decloner
-	name = "Decloner Part Kit (Lethal)"
-	desc = "Your opponent will bubble into a messy pile of goop."
-	id = "decloner"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 5)
-	build_path = /obj/item/weaponcrafting/gunkit/decloner
-	category = list(
-		RND_CATEGORY_WEAPONS + RND_SUBCATEGORY_WEAPONS_KITS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
-	autolathe_exportable = FALSE
 
 /datum/design/rapidsyringe
 	name = "Rapid Syringe Gun"
