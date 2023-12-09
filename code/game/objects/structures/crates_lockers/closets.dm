@@ -104,7 +104,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	. = ..()
 
 	if(sealed)
-		internal_air = new(air_volume)
+		var/datum/gas_mixture/external_air = loc.return_air()
+		if(external_air)
+			internal_air = external_air.copy()
+		else
+			internal_air = new()
 		START_PROCESSING(SSobj, src)
 
 	var/static/list/closet_paint_jobs

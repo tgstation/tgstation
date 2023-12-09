@@ -238,6 +238,8 @@
 /obj/structure/closet/crate/freezer/process_internal_air(seconds_per_tick)
 	if(opened)
 		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
 		// The internal air won't cool down the external air when the freezer is opened.
 		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
 		return ..()

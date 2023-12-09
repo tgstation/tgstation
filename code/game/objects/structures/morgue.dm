@@ -195,10 +195,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 /obj/structure/bodycontainer/morgue/Initialize(mapload)
 	. = ..()
-	internal_air = new()
+	var/datum/gas_mixture/external_air = loc.return_air()
+	if(external_air)
+		internal_air = external_air.copy()
+	else
+		internal_air = new()
 	START_PROCESSING(SSobj, src)
 
-/obj/structure/closet/return_air()
+/obj/structure/bodycontainer/morgue/return_air()
 	return internal_air
 
 /obj/structure/bodycontainer/morgue/process(seconds_per_tick)
@@ -210,9 +214,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 
 	if(!connected || connected.loc != src)
 		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
 		// The internal air won't cool down the external air when the freezer is opened.
 		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
-		return ..()
+		current_exposed_air.equalize(internal_air)
 	else
 		if(internal_air.temperature <= minimum_temperature)
 			return
@@ -230,7 +236,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bodycontainer/morgue/proc/update_morgue_status()
-	if(contents <= 1)
+	if(length(contents) <= 1)
 		morgue_state = MORGUE_EMPTY
 		return
 
@@ -252,8 +258,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			if(HAS_TRAIT(occupant, TRAIT_SUICIDED) || HAS_TRAIT(occupant, TRAIT_BADDNA) || (!occupant.key && !occupant.get_ghost(FALSE, TRUE)))
 				continue
 		morgue_state = MORGUE_HAS_REVIVABLE
-		if(beeper)
-			START_PROCESSING(SSobj, src)
 		return
 	morgue_state = MORGUE_ONLY_BRAINDEAD
 
@@ -271,6 +275,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	. = ..()
 	if(istype(arrived, /obj/structure/closet/body_bag))
 		return handle_bodybag_enter(arrived)
+
+/obj/structure/bodycontainer/morgue/close()
+	. = ..()
 	update_morgue_status()
 	update_appearance(UPDATE_ICON_STATE)
 
@@ -278,8 +285,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	. = ..()
 	if(istype(gone, /obj/structure/closet/body_bag))
 		return handle_bodybag_exit(gone)
+
+/obj/structure/bodycontainer/morgue/open()
+	. = ..()
 	update_morgue_status()
-	update_appearance(UPDATE_ICON_STATE)]
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
