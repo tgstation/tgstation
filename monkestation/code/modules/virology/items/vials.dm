@@ -7,5 +7,5 @@
 	custom_materials = list(/datum/material/glass = 250)
 	volume = 25
 	possible_transfer_amounts = list(5,10,15,25)
-	fill_icon_thresholds = list(0, 1, 15, 25)
+	fill_icon_thresholds = list(0, 1, 5, 10, 15, 20, 25)
 	fill_icon = 'monkestation/code/modules/virology/icons/items.dmi'
