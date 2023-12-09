@@ -135,7 +135,6 @@
 					/obj/item/reagent_containers/cup/bottle/cold,
 					/obj/item/reagent_containers/cup/bottle/random_virus = 4,
 					/obj/item/reagent_containers/cup/bottle/fake_gbs,
-					/obj/item/reagent_containers/cup/bottle/magnitis,
 					/obj/item/reagent_containers/cup/bottle/brainrot,
 					/obj/item/reagent_containers/cup/bottle/anxiety,
 					/obj/item/storage/box/syringes,
