@@ -18,7 +18,7 @@
 /datum/supply_pack/imports/wt550
 	name = "WT-550 Autorifle Crate"
 	desc = "A proper ballistic option for a proper ballistic officer."
-	cost = CARGO_CRATE_VALUE * 30
+	cost = CARGO_CRATE_VALUE * 21
 	contains = list(
 		/obj/item/gun/ballistic/automatic/wt550/no_mag = 2,
 		/obj/item/ammo_box/magazine/wt550m9/wtrub = 4,

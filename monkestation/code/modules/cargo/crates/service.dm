@@ -20,11 +20,18 @@
 /datum/supply_pack/service/birthday
 	name = "Birthday Bash Pack"
 	desc = "This is for that corgi, isn't it..."
-	cost = CARGO_CRATE_VALUE * 15
+	cost = CARGO_CRATE_VALUE * 5
 	contains = list(/obj/item/toy/balloon = 5,
 					/obj/item/reagent_containers/spray/chemsprayer/party = 3,
 					/obj/item/clothing/head/costume/party = 5,
 					/obj/item/food/cake/birthday,
 					/obj/item/plate/small = 5,
-					/obj/item/a_gift/anything)
+					/obj/item/a_gift/recursive)
 	crate_name = "Birthday Crate"
+
+/datum/supply_pack/service/jukebox
+	name = "Jukebox Beacon Crate"
+	desc = "Last one stolen? Broken? Burnt down in an insurance scam? then this crate is for you. Contains one Jukebox Beacon."
+	cost = CARGO_CRATE_VALUE * 20 //the crew shouldnt be able to just buy 15 jukeboxes all playing among us at the same time
+	contains = list(/obj/item/choice_beacon/jukebox)
+	crate_name = "jukebox beacon crate"

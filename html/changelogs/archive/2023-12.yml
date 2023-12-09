@@ -1,0 +1,85 @@
+2023-12-04:
+  san7890:
+  - bugfix: 'The Holy Hand Grenade''s effect on revealing a revenant had its duration
+      accidentally nerfed, it is now back to 10 seconds. fix: Revenant midrounds should
+      now properly run.'
+  - bugfix: Revenant harvesting should now let you actually pass the final do_after
+      so you can harvest that sweet essence.
+2023-12-05:
+  FeudeyTF nikothedude zxaber:
+  - code_imp: Updated the UI of the console for viewing message logs and console for
+      view server communications
+  - rscadd: 'New malf ability: Remote safety overrides. Allows the AI to remotely
+      emag things it has access to.'
+  - code_imp: emag_act() now returns a boolean designating it's success in emagging
+  - code_imp: All instances of emag_act() now have the proper arguments
+  - qol: Most usecases of emagging now have some kind of feedback, and existing feedback
+      has been sanity checked and converted to balloon alerts.
+  - rscadd: 'New malf module: Remote vendor tipping. Allows you to remotely tip a
+      vendor in any of the 8 directions. Goofy and okay for assassinations on unaware
+      enemies!'
+  - rscadd: 'New malf module: Core rolling. Allows you to roll around, crushing anything
+      you fall on with a satisfying splat.'
+  - code_imp: Vendor tipping is now a /atom/movable proc, allowing anything to fall
+      over and crush you.
+  - code_imp: All take_damage() overrides now use the correct arguments
+  - image: turf_analysis.dmi's red_arrow now has orthogonal directions
+  - balance: Vendors now are far less likely to gib your head or make you parapalegic
+  - balance: Vendors now respect armor when they crush you
+  - bugfix: You can no longer break the game by AI rolling in a card or APC
+  - qol: AI Roll now doesnt require you to click the exact turf to move you
+  - qol: AI roll cooldown and roll time is now a variable, making it possible for
+      AIs to become terrifying catamari damacy balls
+  - balance: Malf Ability "Robotics Factory" can now be purchased multiple times.
+  dwasint:
+  - bugfix: bone fracture surgery works again
+  wraith-54321:
+  - bugfix: no more fun for you
+2023-12-06:
+  DexeeXI:
+  - rscadd: added holodeck and supporting equipment
+  - qol: adjusted cameras everywhere to give ai better vision where it should have
+      it while removing some parts where they shouldn't (like in shitters)
+  - rscdel: toilets next to the pharmacy are removed
+  - rscadd: there are now 3 ore boxes next to mining office
+  - rscadd: mixed wardrobes are scattered about the station
+  - rscadd: a few more smoke machines are added in around the station
+  - rscadd: landmarks for hangover station trait starts are now added all over the
+      station.
+  - rscadd: generic_maintenance_event landmarks now actually exist across the station
+      in order to allow for certain antagonists to appear on Oshan.
+  - rscadd: a few more blob start positions are added.
+  - bugfix: the crematorium in the chapel now has a start switch.
+  - rscdel: prison wing on the mining map now has 0 roundstart prisoner locations
+      because it doesn't matter.
+  - rscadd: prison wing now has weight machines
+  - rscadd: prison wing now has ore boxes
+  - rscadd: miner elevator to station now has ore boxes.
+  - qol: ATMOS turbine now has dedicated fuel mix piping as an option. Looks jank
+      but it works!
+  - balance: Paper Wizard Robes' magic spell on a longer cooldown.
+  - bugfix: fixed wires to the dj booth on Tram
+  - bugfix: changed some of the maints next to science to proper maints so you are
+      protected from radstorms
+  - rscdel: removed a zapper that somehow got in the GODDAMN WALLS on Meta
+  - bugfix: fixed the area below the tram on right hand side to properly not give
+      rad protection in certain areas
+  - qol: moved all nanites related equipment to the redesignated Circuits Lab on Metastation
+  - qol: made the Circuits Lab on Metastation look a tad nicer than what it would
+      have been
+  - qol: moved all nanites related equipment to the Experiments Lab on Icebox
+  - rscdel: removed a maintenance space to make room for nanites equipment on Icebox.
+      associated maints loot was moved to other parts of maints on Icebox
+  - rscdel: removed the mass spec machine from all maps as it is unused in our codebase.
+  Tractor Mann:
+  - rscadd: Cargo may now order jukeboxes!
+2023-12-07:
+  KittyNoodle:
+  - balance: the gift is the gift is the gift is the gift is the gift...
+  - balance: autorifles now cost 4200cr
+  - balance: birthday crates now cost 1000cr
+  - bugfix: cargo can no longer buy freon to summon infinite money
+2023-12-09:
+  Tractor Mann:
+  - rscadd: Added 10 songs to the jukebox!
+  - rscadd: Added 1 song to the hacked jukebox!

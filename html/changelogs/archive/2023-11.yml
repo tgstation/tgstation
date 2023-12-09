@@ -127,3 +127,96 @@
       to donator items.
   moocowswag:
   - qol: Apc covers can now be repaired with a welder and replaced with an apc frame.
+2023-11-27:
+  KoboldCommando:
+  - bugfix: Some lurid posters have been 1984'd
+  MomoBerri:
+  - qol: more radiation shutter directionals
+  lmenvs:
+  - rscadd: Twitch subs and Patrons at Assistant tier and above can enjoy a 25 monkecoin
+      bonus at round end.  These bonuses do stack if you are both subbed and a patron,
+      AND they both are affected by monkecoin multipliers.
+  - rscadd: Kon Chieko's Donator rewards! Thank you!!
+2023-11-28:
+  DexeeXI:
+  - rscadd: missing floor near investigations. no more weird stuff happening by sec.
+  - rscadd: missing ATMOS stuff for departures. now we have scrubbers and vents! holy
+      shit!
+  - rscdel: removed acidic/basic buffer from chem storage
+  - rscdel: 'removed a redundant navigation marker
+
+      Delta Station:'
+  - qol: 'fixed the firelocks by Engineering
+
+      Icebox'
+  - qol: Adjusted the Secure Art Exhibit so the large paintings don't spawn in a very
+      weird manner, breaking the 4th wall.
+  - rscdel: 'removed acidic/basic buffer from chem storage
+
+      Metastation'
+  - rscdel: 'removed acidic/basic buffer from chem storage
+
+      Oshan'
+  - qol: Stationwide, ATMOS should now be implemented in its entirety, or as close
+      as one can get without extensive testing using dozens of live subjects.
+  - qol: ARTSCI lab rearranged for ease of use.
+  - rscadd: EXP LAB area where ARTSCI is done. Has its own APC and Air Alarm if anything
+      were to wrong
+  - rscadd: Missing wiring going up to various APCs added in. Areas affected by this
+      include the Barkeep's Backroom, Fitness Rooms and the Med/Sci Security Post.
+  - rscdel: removed a NanoChem Plus machine from behind a PHARMACY sign
+  - rscadd: Organ Smartfridge is now available between the OR and Central Medbay
+  - rscadd: Chem Smartfridge is now available in Medbay Central.
+  - qol: Adjusted a large number of objects in Medbay Central.
+  - rscdel: Removed one of the showers and the Scanner Machines in Medbay Central
+      to reduce unnecessary clutter and traffic.
+  - qol: Adjusted the front door of Medbay Central to make it easier to maintain isolation
+      of the primary treatment area and public areas.
+  - qol: Pharmacy had some machines moved around to be in better reach of where the
+      chemists will usually be
+  - qol: 'Bridge broken up into two distinct areas: the Bridge and Conference Room.
+      APCs and Air Alarms split as such as well'
+  - rscdel: Removed OP gamer gear from more spots on the map
+  - rscdel: Paired down the Warden's office to comply with Space Law.
+  - qol: Artsci has taken over the "Science Storage" room.
+  - rscdel: Because of the aformentioned takeover by Artsci, the Ordinance lab is
+      effectively removed. A future actual major edit (substantial structure/flow
+      change) will eventually re-add the Ordinance lab with all of its bells and whistles.
+  - rscadd: Firelocks and Fire Alarms to compartmentalize some parts of the main station
+      loop in the event of the inevitable plasma fire.
+  - rscadd: Signs! You asked, I got some up for some extra visual identification.
+  - qol: Adjusted some of the permissions on some doors across the station to better
+      align with who should be there and who should not be.
+  - qol: Changed the disposal tube transit between main and aux into a Bluespace Pod
+      system instead. Fewer instant broken bones!
+  - bugfix: Medbay shutters should work. Someone forgot to code it!
+  KoboldCommando:
+  - bugfix: cyborgs should no longer go invisible upon changing model
+  - bugfix: the expand module for cyborgs should once again work properly
+2023-11-30:
+  Ghommie, Jacquerel, Melbert, Rhials, Distributivgesetz, Hypernoblium, Gboster:
+  - bugfix: Hypernoblium - Fixes a selection window in the game rock-paper-scissors
+      with death.
+  - rscadd: Distributivgesetz - Add an achievement for saving a cascading engine from
+      the final countdown.
+  - code_imp: Distributivgesetz - Moved some job-related achievements from the misc
+      category to the jobs category.
+  - rscadd: Rhials - The roundend report will now read out any achievements ("cheevos"
+      as you may know them) earned by players over the course of the round.
+  - balance: Melbert - The "Long Shift" achievement is now feasibly obtainable, and
+      admins can no longer trigger it unknowingly
+  - rscadd: Jacquerel - You can now earn an achievement for completing the Grand Ritual.
+  - bugfix: Jacquerel - Summon Magic and Summon Guns work again
+  - rscadd: Ghommie - Added a score award that counts how many achievements you've
+      unlocked so far.
+  - rscadd: Ghommie - Added an Indebted negative quirk to the game, which gives the
+      holder's bank account a debt averaging at 15000 credits (with a variation of
+      1250 cr) and forces 75% of all earnings towards solving it. A little prize awaits
+      those who actually extinguish it.
+  - qol: Ghommie - The Achievements UI now shows how many people have unlocked a given
+      achievement.
+  - bugfix: Ghommie - The "Skills" Category for achievements should no longer be hidden.
+  - bugfix: Ghommie - The "Unlocked Achievements" score will now be properly saved
+      at the end of the round the first time it's loaded.
+  - sound: Ghommie - Unlocking an achievement now plays a sound by default. You can
+      change it in the Sound category of the game preferences.

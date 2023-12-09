@@ -4854,5 +4854,115 @@
 	"secret": false,
 	"lobby": true,
 	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/lp8vn9.mp3",
+	"title": "Happy Xmas (War Is Over) (Ultimate Mix)",
+	"duration": 2150,
+	"artist": "John Lennon",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/3fl6fa.mp3",
+	"title": "Grandma Got Run-over by a Reindeer",
+	"duration": 2090,
+	"artist": "The Irish Rovers",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/2k0ssn.mp3",
+	"title": "We Wish You a Merry Christmas",
+	"duration": 990,
+	"artist": "Love to Sing",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/0uzqey.mp3",
+	"title": "Santa Claus Is Coming To Town",
+	"duration": 1340,
+	"artist": "Frank Sinatra",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/7pqtlw.mp3",
+	"title": "Frosty The Snowman",
+	"duration": 1370,
+	"artist": "Gene Autry",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/fpjke2.mp3",
+	"title": "Collective Christmas",
+	"duration": 3520,
+	"artist": "Anyone Can Cook",
+	"genre": "Holiday",
+	"secret": true,
+	"lobby": false,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/1s6mgh.mp3",
+	"title": "Last Christmas",
+	"duration": 2630,
+	"artist": "WHAM!",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/kzqr6q.mp3",
+	"title": "Jingle Bell Rock",
+	"duration": 1310,
+	"artist": "Bobbly Helms",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/bldhla.mp3",
+	"title": "Christmas Eve / Sarajevo (Timeless Version)",
+	"duration": 2230,
+	"artist": "Trans-Siberian Orchestra",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/3zshxc.mp3",
+	"title": "Wizards in Winter",
+	"duration": 1850,
+	"artist": "Trans-Siberian Orchestra",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/3fkihg.mp3",
+	"title": "All I Want For Christmas Is You",
+	"duration": 2350,
+	"artist": "Mariah Carey",
+	"genre": "Holiday",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
 	}
 	]

@@ -246,13 +246,13 @@
  * * strongman - the suplexer of the rod.
  */
 /obj/effect/immovablerod/proc/suplex_rod(mob/living/strongman)
-	if(!can_suplex) //monkestation edit
-		strongman.visible_message( //monkestation edit
-		span_boldwarning("[src] overpowers [strongman]!"), //monkestation edit
-		span_warning("You feel [src] overpowering you!") //monkestation edit
-		) //monkestation edit
-		return FALSE //monkestation edit
-	strongman.client?.give_award(/datum/award/achievement/misc/feat_of_strength, strongman)
+	if(!can_suplex) // MONKEYSTATION EDIT ADDITION PR #9 - not strong enough
+		strongman.visible_message(
+		span_boldwarning("[src] overpowers [strongman]!"),
+		span_warning("You feel [src] overpowering you!")
+		)
+		return FALSE
+	strongman.client?.give_award(/datum/award/achievement/jobs/feat_of_strength, strongman)
 	strongman.visible_message(
 		span_boldwarning("[strongman] suplexes [src] into the ground!"),
 		span_warning("You suplex [src] into the ground!")
