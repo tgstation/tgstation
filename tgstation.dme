@@ -1104,6 +1104,7 @@
 #include "code\datums\components\multiple_lives.dm"
 #include "code\datums\components\mutant_hands.dm"
 #include "code\datums\components\nuclear_bomb_operator.dm"
+#include "code\datums\components\object_possession.dm"
 #include "code\datums\components\omen.dm"
 #include "code\datums\components\on_hit_effect.dm"
 #include "code\datums\components\onwear_mood.dm"
