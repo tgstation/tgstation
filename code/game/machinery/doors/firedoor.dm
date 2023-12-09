@@ -90,6 +90,24 @@
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_power_loss))
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/door/firedoor/setDir(new_dir)
+	. = ..()
+	update_layering()
+
+/obj/machinery/door/firedoor/proc/update_layering()
+	switch(dir)
+		if(NORTH)
+			layer = BELOW_OPEN_DOOR_LAYER
+			closingLayer = CLOSED_FIREDOOR_LAYER
+		else
+			layer = ABOVE_MOB_LAYER
+			closingLayer = ABOVE_MOB_LAYER
+
+/obj/machinery/door/firedoor/set_init_door_layer()
+	update_layering()
+	if(density)
+		layer = closingLayer
+
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
