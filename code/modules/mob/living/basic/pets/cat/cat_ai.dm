@@ -165,6 +165,8 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/hunt_mice/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
+	if(QDELETED(living_pawn))
+		return
 	var/list/items_we_carry = typecache_filter_list(living_pawn, controller.blackboard[BB_HUNTABLE_PREY])
 	if(length(items_we_carry))
 		return
