@@ -260,12 +260,6 @@
 	name = "Flu virion culture bottle"
 	desc = "A small bottle. Contains H13N1 flu virion culture in synthblood medium."
 	spawned_disease = /datum/disease/advance/flu
-
-/obj/item/reagent_containers/cup/bottle/retrovirus
-	name = "Retrovirus culture bottle"
-	desc = "A small bottle. Contains a retrovirus culture in a synthblood medium."
-	spawned_disease = /datum/disease/dna_retrovirus
-
 /obj/item/reagent_containers/cup/bottle/gbs
 	name = "GBS culture bottle"
 	desc = "A small bottle. Contains Gravitokinetic Bipotential SADS+ culture in synthblood medium."//Or simply - General BullShit
@@ -282,16 +276,6 @@
 	desc = "A small bottle. Contains Cryptococcus Cosmosis culture in synthblood medium."
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/brainrot
-
-/obj/item/reagent_containers/cup/bottle/magnitis
-	name = "Magnitis culture bottle"
-	desc = "A small bottle. Contains a small dosage of Fukkos Miracos."
-	spawned_disease = /datum/disease/magnitis
-
-/obj/item/reagent_containers/cup/bottle/wizarditis
-	name = "Wizarditis culture bottle"
-	desc = "A small bottle. Contains a sample of Rincewindus Vulgaris."
-	spawned_disease = /datum/disease/wizarditis
 
 /obj/item/reagent_containers/cup/bottle/anxiety
 	name = "Severe Anxiety culture bottle"

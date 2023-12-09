@@ -26,7 +26,7 @@
 		return FALSE
 	for(var/datum/disease/advanced/D as anything in diseases)
 		if("[disease.uniqueID]-[disease.subID]" == "[D.uniqueID]-[D.subID]") // child ids are for pathogenic mutations and aren't accounted for as thats fucked.
-			return
+			return FALSE
 
 	if(immune_system && !immune_system.CanInfect(disease))
 		return FALSE
@@ -47,6 +47,7 @@
 		log_virus("[key_name(src)] was infected by virus: [D.admin_details()] at [loc_name(loc)]")
 
 		D.AddToGoggleView(src)
+	return TRUE
 
 /mob/dead/new_player/proc/DiseaseCarrierCheck(mob/living/carbon/human/H)
 	if(world.time < SSautotransfer.starttime + 30 MINUTES)

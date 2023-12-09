@@ -229,10 +229,6 @@
 		animate(filter, alpha = 200, time = 2 SECONDS, loop = -1)
 		animate(alpha = 60, time = 2 SECONDS)
 
-	var/datum/disease/parrot_possession/on_possession = new /datum/disease/parrot_possession
-	on_possession.set_parrot(src)
-	possessed_human.ForceContractDisease(on_possession, make_copy = FALSE, del_on_fail = TRUE)
-
 #undef POLY_DEFAULT
 #undef POLY_LONGEST_SURVIVAL
 #undef POLY_BEATING_DEATHSTREAK

@@ -42,3 +42,4 @@
 #define DISEASE_MORPH "morph"
 #define DISEASE_ROBOT "robot"
 #define DISEASE_COLD "cold"
+#define DISEASE_HEART "heart"

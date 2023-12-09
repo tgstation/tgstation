@@ -557,3 +557,15 @@
 	if(prob(25))
 		to_chat(mob, span_warning("[pick("You're having difficulty breathing.", "Your breathing becomes heavy.")]"))
 	mob.adjustOxyLoss(rand(2, 3) * multiplier)
+
+/datum/symptom/disfiguration
+	name = "Disfiguration"
+	desc = "The virus liquefies facial muscles, disfiguring the host."
+	max_count = 1
+
+/datum/symptom/disfiguration/activate(mob/living/carbon/mob)
+	ADD_TRAIT(mob, TRAIT_DISFIGURED, DISEASE_TRAIT)
+	mob.visible_message(span_warning("[mob]'s face appears to cave in!"), span_notice("You feel your face crumple and cave in!"))
+
+/datum/symptom/disfiguration/deactivate(mob/living/carbon/mob)
+	REMOVE_TRAIT(mob, TRAIT_DISFIGURED, DISEASE_TRAIT)

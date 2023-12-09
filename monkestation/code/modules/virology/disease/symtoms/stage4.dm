@@ -293,3 +293,88 @@
 	name = "Mothification"
 	desc = "Turns you into a Moth."
 	new_species = /datum/species/moth
+
+/datum/symptom/retrovirus
+	name = "Retrovirus"
+	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
+	max_multiplier = 4
+	badness = EFFECT_DANGER_ANNOYING
+
+/datum/symptom/retrovirus/activate(mob/living/carbon/affected_mob)
+	if(!iscarbon(affected_mob))
+		return
+	switch(max_multiplier)
+		if(1)
+			if(prob(4))
+				to_chat(affected_mob, span_danger("Your head hurts."))
+			if(prob(4.5))
+				to_chat(affected_mob, span_danger("You feel a tingling sensation in your chest."))
+			if(prob(4.5))
+				to_chat(affected_mob, span_danger("You feel angry."))
+		if(2)
+			if(prob(4))
+				to_chat(affected_mob, span_danger("Your skin feels loose."))
+			if(prob(5))
+				to_chat(affected_mob, span_danger("You feel very strange."))
+			if(prob(2))
+				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head!"))
+				affected_mob.Unconscious(40)
+			if(prob(2))
+				to_chat(affected_mob, span_danger("Your stomach churns."))
+		if(3)
+			if(prob(5))
+				to_chat(affected_mob, span_danger("Your entire body vibrates."))
+			if(prob(19))
+				switch(rand(1,3))
+					if(1)
+						scramble_dna(affected_mob, 1, 0, 0, rand(15,45))
+					if(2)
+						scramble_dna(affected_mob, 0, 1, 0, rand(15,45))
+					if(3)
+						scramble_dna(affected_mob, 0, 0, 1, rand(15,45))
+		if(4)
+			if(prob(37))
+				switch(rand(1,3))
+					if(1)
+						scramble_dna(affected_mob, 1, 0, 0, rand(50,75))
+					if(2)
+						scramble_dna(affected_mob, 0, 1, 0, rand(50,75))
+					if(3)
+						scramble_dna(affected_mob, 0, 0, 1, rand(50,75))
+
+/datum/symptom/rhumba_beat
+	name = "The Rhumba Beat"
+	desc = "Chick Chicky Boom!"
+	max_multiplier = 5
+	badness = EFFECT_DANGER_DEADLY
+
+/datum/symptom/rhumba_beat/activate(mob/living/carbon/affected_mob)
+	if(ismouse(affected_mob))
+		affected_mob.gib()
+		return
+		
+	switch(multiplier)
+		if(2)
+			if(prob(26))
+				affected_mob.adjustFireLoss(5, FALSE)
+			if(prob(0.5))
+				to_chat(affected_mob, span_danger("You feel strange..."))
+		if(3)
+			if(prob(2.5))
+				to_chat(affected_mob, span_danger("You feel the urge to dance..."))
+			else if(prob(2.5))
+				affected_mob.emote("gasp")
+			else if(prob(5))
+				to_chat(affected_mob, span_danger("You feel the need to chick chicky boom..."))
+		if(4)
+			if(prob(10))
+				if(prob(50))
+					affected_mob.adjust_fire_stacks(2)
+					affected_mob.ignite_mob()
+				else
+					affected_mob.emote("gasp")
+					to_chat(affected_mob, span_danger("You feel a burning beat inside..."))
+		if(5)
+			to_chat(affected_mob, span_danger("Your body is unable to contain the Rhumba Beat..."))
+			if(prob(29))
+				explosion(affected_mob, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src) // This is equivalent to a lvl 1 fireball
