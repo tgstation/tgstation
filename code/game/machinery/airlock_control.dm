@@ -8,13 +8,6 @@
 
 /obj/machinery/door/airlock/Initialize(mapload)
 	. = ..()
-	var/icon_text = "[icon]"
-	icon_text = replacetext(icon_text, "icons/obj/doors/airlocks/", "")
-	icon_text = splittext(icon_text, "/").Join("\n")
-	maptext = icon_text
-	maptext_x = -32 / 2
-	maptext_width = 32 * 2
-	maptext_height = 32 * 2
 	RegisterSignal(SSdcs, COMSIG_GLOB_GREY_TIDE, PROC_REF(grey_tide))
 
 /// Forces the airlock to unbolt and open
