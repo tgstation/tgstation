@@ -17,7 +17,6 @@
 	bot_type = CLEAN_BOT
 	hackables = "cleaning software"
 	additional_access = /datum/id_trim/job/janitor
-	greyscale_config = /datum/greyscale_config/buckets_cleanbot
 	possessed_message = "You are a cleanbot! Clean the station to the best of your ability!"
 	ai_controller = /datum/ai_controller/basic_controller/bot/cleanbot
 	///the bucket used to build us.
@@ -147,7 +146,7 @@
 
 	GLOB.janitor_devices += src
 
-	var/obj/item/reagent_containers/cup/bucket/consistent/bucket_obj = new
+	var/obj/item/reagent_containers/cup/bucket/bucket_obj = new
 	bucket_obj.forceMove(src)
 
 	var/obj/item/mop/new_mop = new
@@ -166,7 +165,6 @@
 	. = ..()
 	if(istype(arrived, /obj/item/reagent_containers/cup/bucket) && isnull(build_bucket))
 		build_bucket = arrived
-		set_greyscale(build_bucket.greyscale_colors)
 		return
 
 	if(istype(arrived, /obj/item/mop) && isnull(our_mop))
