@@ -278,6 +278,7 @@
 	overlays += moon_insanity_overlay
 
 /datum/status_effect/moon_converted/on_remove()
+	// Span warning and unconscious so they realize they aren't evil anymore
 	to_chat(owner, span_warning("Your mind is cleared from the effect of the manus, your alligiences are as they were before"))
 	REMOVE_TRAIT(owner, TRAIT_MUTE, REF(src))
 	owner.AdjustUnconscious(5 SECONDS, ignore_canstun = FALSE)

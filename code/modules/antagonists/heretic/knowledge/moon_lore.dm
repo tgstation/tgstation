@@ -71,7 +71,8 @@
 
 /datum/heretic_knowledge/spell/moon_smile
 	name = "Smile of the moon"
-	desc = "Grants you Smile of the moon, a ranged spell muting, blinding and deafening the target for a short duartion."
+	desc = "Grants you Smile of the moon, a ranged spell muting, blinding and deafening the target for a\
+		duration based on their sanity."
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,

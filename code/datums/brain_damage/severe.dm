@@ -435,7 +435,7 @@
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
 	var/atom/tile = get_turf(owner)
-	// Examining a painting should stop this effect
+	// Examining a painting should stop this effect to give counterplay
 	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
 		return
 

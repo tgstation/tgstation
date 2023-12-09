@@ -27,7 +27,7 @@
 
 /datum/action/cooldown/spell/pointed/moon_smile/cast(mob/living/carbon/human/cast_on)
 	. = ..()
-	/// The duration of most of these effects
+	/// The duration of these effects are based on sanity, mainly for flavor but also to make it a weaker alpha strike
 	var/moon_smile_duration = (150 - cast_on.mob_mood.sanity) / 10
 	if(cast_on.can_block_magic(antimagic_flags))
 		to_chat(cast_on, span_notice("The moon turns, its smile no longer set on you."))
