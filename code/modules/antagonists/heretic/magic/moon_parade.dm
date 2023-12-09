@@ -48,11 +48,9 @@
 	var/mob/living/caster = firer
 	var/mob/living/victim = A
 
-	// The caster shouldn't hit themselves
 	if(caster == victim)
 		return PROJECTILE_PIERCE_PHASE
 
-	// Also shouldn't hit any heretic monsters we are masters over OR any lunatics we have
 	if(!caster.mind)
 		return PROJECTILE_PIERCE_HIT
 
@@ -64,7 +62,7 @@
 	if(lunatic?.ascended_heretic == caster.mind)
 		return PROJECTILE_PIERCE_PHASE
 
-	// Anti-magic destroys the projectile
+	// Anti-magic destroys the projectile for consistency and counterplay
 	if(victim.can_block_magic(MAGIC_RESISTANCE))
 		visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
@@ -74,10 +72,8 @@
 	. = ..()
 	var/mob/living/victim = target
 
-	//Registers a signal that triggers when the client sends an input to move
 	RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move), override=TRUE)
 
-	//Leashes them to the source projectile with them being able to move maximum 1 tile away from it
 	victim.AddComponent(/datum/component/leash, src, distance = 1)
 	victim.balloon_alert(victim,"you feel unable to move away from the parade!")
 	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
@@ -86,11 +82,10 @@
 	//Lowers sanity
 	victim.mob_mood.set_sanity(victim.mob_mood.sanity - 20)
 
-	// The victim got hit, add them to our mobs_hit list. Weakref to prevent qdeleting them
+	// Uses weakref to prevent qdeleting them
 	mobs_hit |= WEAKREF(victim)
 
 /obj/projectile/moon_parade/Destroy()
-	// Unregister the signal blocking movement on those we hit
 	for(var/datum/weakref/mob_ref in mobs_hit)
 		var/mob/living/real_mob = mob_ref.resolve()
 		UnregisterSignal(real_mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
@@ -98,7 +93,8 @@
 	soundloop.stop()
 	return ..()
 
-// This signal blocks movement by returning COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE when they are attempting to move
+// Blocks movement in order to make it appear like the character is transfixed to the projectile and wandering after it
+// Coded this way because its a simple way to hold the illusion compared to other methods
 /obj/projectile/moon_parade/proc/moon_block_move(datum/source)
 	SIGNAL_HANDLER
 	return COMSIG_MOB_CLIENT_BLOCK_PRE_LIVING_MOVE

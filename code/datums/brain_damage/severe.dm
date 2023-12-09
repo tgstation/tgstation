@@ -410,7 +410,7 @@
 	var/scratch_damage = 0.5
 
 /datum/brain_trauma/severe/eldritch_beauty/on_life(seconds_per_tick, times_fired)
-	// If they don't have a jumpsuit, return. They are encouraged to remove their jumpsuit to avoid damage.
+	// Jumpsuits ruin the "perfection" of the body
 	if(!owner.get_item_by_slot(ITEM_SLOT_ICLOTHING))
 		return
 
@@ -435,7 +435,7 @@
 
 /datum/brain_trauma/severe/rusting/on_life(seconds_per_tick, times_fired)
 	var/atom/tile = get_turf(owner)
-	// If they have the special mood event for rusted climb they don't start randomly rusting tiles beneath them
+	// Examining a painting should stop this effect
 	if(HAS_TRAIT(owner, TRAIT_ELDRITCH_PAINTING_EXAMINE))
 		return
 

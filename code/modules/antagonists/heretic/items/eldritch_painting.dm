@@ -36,7 +36,7 @@
 	QDEL_NULL(painting_proximity_sensor)
 	qdel(src)
 
-// On examine eldritch paintings give a trait showing you have examined them
+// On examine eldritch paintings give a trait so their effects can not be spammed
 /obj/structure/sign/painting/eldritch/examine(mob/living/carbon/user)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_ELDRITCH_PAINTING_EXAMINE))
@@ -100,7 +100,7 @@
 		examiner.add_mood_event("respite_eldritch_hunger", /datum/mood_event/eldritch_painting/desire_examine)
 		return
 
-	// A list made of the organs and bodyparts the heretic possess
+	// A list made of the organs and bodyparts the heretic can get
 	var/static/list/random_bodypart_or_organ = list(
 		/obj/item/organ/internal/brain,
 		/obj/item/organ/internal/lungs,
@@ -192,8 +192,6 @@
 
 	to_chat(examiner, "Your imperfections shed and you are restored.")
 	examiner.reagents.add_reagent(reagents_to_add, 5)
-
-
 
 // Climb over the rusted mountain, gives a brain trauma causing the person to randomly rust tiles beneath them
 /obj/item/wallframe/painting/eldritch/rust

@@ -91,12 +91,8 @@
 	// We decrement the values of to determine if enough of each key is present.
 	var/list/requirements_list = ritual.required_atoms.Copy()
 	var/list/banned_atom_types = ritual.banned_atom_types.Copy()
-	// A copy of our optional list
-	var/list/optional_list = ritual.optional_atoms.Copy()
 	// A list of all atoms we've selected to use in this recipe.
 	var/list/selected_atoms = list()
-	// A list of all our optional atoms, used later for a check
-	var/list/optional_selected_atoms = list()
 
 	// Do the snowflake check to see if we can continue or not.
 	// selected_atoms is passed and can be modified by this proc.
@@ -131,36 +127,6 @@
 			// Otherwise, just add the mark down the item as fulfilled x1
 			else
 				requirements_list[req_type]--
-
-		//If we have anything in optional_list
-		if(length(optional_list))
-			// Go through all of our optional atoms
-			for(var/optional_type in optional_list)
-				// We already have enough of this type, skip
-				if(optional_list [optional_type] <= 0)
-					continue
-				// If optional_type is a list of types, check all of them for one match.
-				if(islist(optional_type))
-					if(!(is_type_in_list(nearby_atom, optional_type)))
-						continue
-				else if(!istype(nearby_atom, optional_type))
-					continue
-				// if list has items, check if the strict type is banned.
-				if(length(banned_atom_types))
-					if(nearby_atom.type in banned_atom_types)
-						continue
-				// This item is a valid type. Add it to our selected atoms list.
-				selected_atoms |= nearby_atom
-				// Since its an optional atom, also add it to our optional_selected_atoms list.
-				optional_selected_atoms |= nearby_atom
-				// If it's a stack, we gotta see if it has more than one inside,
-				// as our requirements may want more than one item of a stack
-				if(isstack(nearby_atom))
-					var/obj/item/stack/picked_stack = nearby_atom
-					optional_list [optional_type] -= picked_stack.amount // Can go negative, but doesn't matter. Negative = fulfilled
-				// Otherwise, just add the mark down the item as fulfilled x1
-				else
-					optional_list [optional_type]--
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
@@ -210,7 +176,7 @@
 	// (Note: on_finished_recipe may sleep in the case of some rituals like summons, which expect ghost candidates.)
 	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual. The result has already been spawned by this point.
 	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
-	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc, optional_selected_atoms)
+	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
 
 	if(ritual_result)
 		ritual.cleanup_atoms(selected_atoms)

@@ -84,8 +84,3 @@
 			user.log_message("made [target] insane.", LOG_GAME)
 			hit.log_message("was driven insane by [user]")
 	. = ..()
-
-// Functionally identical but deals more sanity damage
-/obj/item/clothing/neck/heretic_focus/moon_amulette/upgraded
-	name = "Shining Moonlight Amulette"
-	sanity_damage = 40

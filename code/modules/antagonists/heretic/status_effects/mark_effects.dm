@@ -276,7 +276,7 @@
 	RegisterSignal (owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_damaged))
 	return TRUE
 
-/// Signal proc for [COMSIG_MOB_APPLY_DAMAGE], being damaged past a threshold will remove the PACIFISM trait
+/// Checks for damage so the heretic can't just attack them with another weapon whilst they are unable to fight back
 /datum/status_effect/eldritch/moon/proc/on_damaged(datum/source, damage, damagetype)
 	SIGNAL_HANDLER
 

@@ -29,10 +29,6 @@
 	var/list/required_atoms
 	/// Paired with above. If set, the resulting spawned atoms upon ritual completion.
 	var/list/result_atoms = list()
-	/// If set this allows the heretic to add additional atoms to get different results than when only using required atoms
-	var/list/optional_atoms = list()
-	/// If set this makes the optional atoms give a different result
-	var/list/optional_result_atoms = list()
 	/// If set, required_atoms checks for these *exact* types and doesn't allow them to be ingredients.
 	var/list/banned_atom_types = list()
 	/// Cost of knowledge in knowledge points
@@ -141,22 +137,15 @@
  * * user - the mob who did the ritual
  * * selected_atoms - an list of atoms chosen as a part of this ritual.
  * * loc - the turf the ritual's occuring on
- * * optional_selected_atoms - an list of optional atoms chosen as part of this ritual.
  *
  * Returns: TRUE, if the ritual should cleanup afterwards, or FALSE, to avoid calling cleanup after.
  */
-/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc, list/optional_selected_atoms)
+/datum/heretic_knowledge/proc/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	if(!length(result_atoms))
 		return FALSE
 
-	// List comparison
-	if(length(optional_selected_atoms))
-		if(length(optional_selected_atoms) == length(optional_atoms))
-			for(var/optional_result in optional_result_atoms)
-				new optional_result(loc)
-	else
-		for(var/result in result_atoms)
-			new result(loc)
+	for(var/result in result_atoms)
+		new result(loc)
 	return TRUE
 
 /**
@@ -192,15 +181,6 @@
 					continue
 				how_much_to_use = min(required_atoms[requirement], sac_stack.amount)
 				break
-			// Same as above, but with an additional to check to see if we actually got the optional_result atoms
-			if(length(optional_atoms & selected_atoms) == length(optional_atoms))
-				for(var/optional in optional_atoms)
-					if(!istype(sacrificed, optional) && !islist(optional))
-						continue
-					if(islist(optional) && !is_type_in_list(sacrificed, optional))
-						continue
-					how_much_to_use = min(optional_atoms[optional], sac_stack.amount)
-					break
 			sac_stack.use(how_much_to_use)
 			continue
 
