@@ -327,6 +327,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(name != initial(name))
 		. += "[base_icon_state]_label"
 
+#undef MORGUE_EMPTY
+#undef MORGUE_NO_MOBS
+#undef MORGUE_ONLY_BRAINDEAD
+#undef MORGUE_HAS_REVIVABLE
+
 /*
  * Crematorium
  */
