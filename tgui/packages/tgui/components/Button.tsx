@@ -143,8 +143,8 @@ export const Button = (props: Props) => {
         ) : (
           <span
             className={classes([
-              'Button__text',
-              ellipsis && 'Button--ellipsis',
+              'Button--ellipsis',
+              icon && 'Button__textMargin',
             ])}
           >
             {toDisplay}
