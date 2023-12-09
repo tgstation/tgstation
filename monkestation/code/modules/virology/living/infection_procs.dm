@@ -100,7 +100,8 @@
 /mob/living/proc/breath_airborne_diseases_from_clouds()
 	for(var/turf/T in range(1, src))
 		var/sanity = 0
-		for((var/obj/effect/pathogen_cloud/cloud in T.contents) && sanity < 10)
+		while(sanity < 10)
+		for(var/obj/effect/pathogen_cloud/cloud in T.contents)
 			sanity++ //anything more than 10 and you aint getting air really
 			if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
 				if (Adjacent(cloud))

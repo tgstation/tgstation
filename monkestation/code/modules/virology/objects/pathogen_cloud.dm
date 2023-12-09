@@ -86,14 +86,17 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		strength += V.infectionchance
 	strength = round(strength/viruses.len)
 	var/list/possible_turfs = list()
-	for (var/turf/T in range(max(0,(strength/20)-1),loc))//stronger viruses can reach turfs further away.
+	for (var/turf/open/T in range(max(0,(strength/20)-1),loc))//stronger viruses can reach turfs further away.
+		if(isclosedturf(T))
+			continue
 		possible_turfs += T
 	target = pick(possible_turfs)
 
 
 /obj/effect/pathogen_cloud/core/process(seconds_per_tick)
 	. = ..()
-	if (src.loc != target)
+	var/turf/open/turf = get_turf(src)
+	if (turf != target)
 		//If we come across other pathogenic clouds, we absorb their diseases that we don't have, then delete those clouds
 		//This should prevent mobs breathing in hundreds of clouds at once
 		for (var/obj/effect/pathogen_cloud/other_C in src.loc)
@@ -112,7 +115,8 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		C.moving = FALSE
 
 		if (prob(75))
-			step_towards(src,target)
+			if(!step_towards(src,target)) // we hit a wall and our momentum is shattered
+				moving = FALSE
 		else
 			step_rand(src)
 		next_process = world.time + 1 SECONDS
