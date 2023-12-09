@@ -272,12 +272,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(istype(arrived, /obj/structure/closet/body_bag))
 		return handle_bodybag_enter(arrived)
 	update_morgue_status()
+	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/bodycontainer/morgue/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(istype(gone, /obj/structure/closet/body_bag))
 		return handle_bodybag_exit(gone)
 	update_morgue_status()
+	update_appearance(UPDATE_ICON_STATE)]
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
@@ -288,7 +290,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	if(!user.can_perform_action(src, (ALLOW_SILICON_REACH|ALLOW_RESTING)))
 		return
 	beeper = !beeper
-	update_morgue_status()
 	to_chat(user, span_notice("You turn the speaker function [beeper ? "on" : "off"]."))
 
 /obj/structure/bodycontainer/morgue/emag_act(mob/user, obj/item/card/emag/emag_card)
