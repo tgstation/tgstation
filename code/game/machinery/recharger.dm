@@ -103,22 +103,22 @@
 /obj/machinery/recharger/wrench_act(mob/living/user, obj/item/tool)
 	if(charging)
 		to_chat(user, span_notice("Remove the charging item first!"))
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	set_anchored(!anchored)
 	power_change()
 	to_chat(user, span_notice("You [anchored ? "attached" : "detached"] [src]."))
 	tool.play_tool_sound(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/recharger/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!anchored || charging)
-		return TOOL_ACT_SIGNAL_BLOCKING
+		return ITEM_INTERACT_BLOCKING
 	. = default_deconstruction_screwdriver(user, base_icon_state, base_icon_state, tool)
 	if(.)
 		update_appearance()
 
 /obj/machinery/recharger/crowbar_act(mob/living/user, obj/item/tool)
-	return (!anchored || charging) ? TOOL_ACT_SIGNAL_BLOCKING : default_deconstruction_crowbar(tool)
+	return (!anchored || charging) ? ITEM_INTERACT_BLOCKING : default_deconstruction_crowbar(tool)
 
 /obj/machinery/recharger/attack_hand(mob/user, list/modifiers)
 	. = ..()

@@ -65,7 +65,7 @@
 /datum/component/torn_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
 	INVOKE_ASYNC(src, PROC_REF(try_repair), source, user, tool)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Fix us up
 /datum/component/torn_wall/proc/try_repair(atom/source, mob/user, obj/item/tool)
@@ -78,7 +78,7 @@
 		qdel(src)
 		return
 	source.update_appearance(UPDATE_ICON)
-	source.tool_act(user, tool, TOOL_WELDER, is_right_clicking = FALSE) // Keep going
+	try_repair(source, user, tool) // Keep going
 
 /// Give them a hint
 /datum/component/torn_wall/proc/on_examined(atom/source, mob/user, list/examine_list)

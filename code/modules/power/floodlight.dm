@@ -261,7 +261,7 @@
 		connect_to_network()
 	else
 		disconnect_from_network()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/floodlight/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
