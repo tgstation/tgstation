@@ -418,8 +418,8 @@
 			return TRUE
 		return ..()
 
-	if(vampire_charging_capable && istype(item, /obj/item/modular_computer/pda) && ingredients.len > 0)
-		balloon_alert(user, "max 1 pda!")
+	if(vampire_charging_capable && istype(item, /obj/item/modular_computer) && ingredients.len > 0)
+		balloon_alert(user, "max 1 device!")
 		return FALSE
 
 	if(istype(item, /obj/item/storage))
@@ -577,7 +577,7 @@
 
 	if(cell_powered && cell?.charge < TIER_1_CELL_CHARGE_RATE * efficiency)
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
-		balloon_alert(cooker, "replace cell!")
+		balloon_alert(cooker, "no power draw!")
 		return
 
 	if(cooker && HAS_TRAIT(cooker, TRAIT_CURSED) && prob(7))
@@ -593,7 +593,7 @@
 	for(var/atom/movable/potential_fooditem as anything in ingredients)
 		if(IS_EDIBLE(potential_fooditem))
 			non_food_ingedients--
-		if(istype(potential_fooditem, /obj/item/modular_computer/pda) && prob(75))
+		if(istype(potential_fooditem, /obj/item/modular_computer) && prob(75))
 			pda_failure = TRUE
 			notify_ghosts(
 				"[cooker] has overheated their PDA!",
@@ -610,11 +610,13 @@
 	start(cooker)
 
 /obj/machinery/microwave/proc/wzhzhzh()
+	if(cell_powered && !isnull(cell))
+		if(!cell.use(TIER_1_CELL_CHARGE_RATE * efficiency))
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+			return
+
 	visible_message(span_notice("\The [src] turns on."), null, span_hear("You hear a microwave humming."))
 	operating = TRUE
-	if(cell_powered && !isnull(cell))
-		cell.use(TIER_1_CELL_CHARGE_RATE * efficiency)
-
 	set_light(l_range = 1.5, l_power = 1.2, l_on = TRUE)
 	soundloop.start()
 	update_appearance()
@@ -764,7 +766,7 @@
  * * cooker - The mob that initiated the cook cycle, can be null if no apparent mob triggered it (such as via emp)
  */
 /obj/machinery/microwave/proc/vampire(mob/cooker)
-	var/obj/item/modular_computer/pda/vampire_pda = LAZYACCESS(ingredients, 1)
+	var/obj/item/modular_computer/vampire_pda = LAZYACCESS(ingredients, 1)
 	if(isnull(vampire_pda))
 		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 		after_finish_loop()
@@ -796,7 +798,7 @@
 
 	// We should only be charging PDAs
 	for(var/atom/movable/potential_item as anything in ingredients)
-		if(!istype(potential_item, /obj/item/modular_computer/pda))
+		if(!istype(potential_item, /obj/item/modular_computer))
 			balloon_alert(cooker, "pda only!")
 			playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
 			eject()
@@ -817,7 +819,7 @@
 		pre_fail()
 		return
 
-	if(!vampire_charge_amount || !length(ingredients) || (!isnull(cell) && !cell.charge) || vampire_charge_amount < 25)
+	if(!vampire_charge_amount || !length(ingredients) || isnull(cell) || !cell.charge || vampire_charge_amount < 25)
 		vampire_cell = null
 		charge_loop_finish(cooker)
 		return
