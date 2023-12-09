@@ -354,7 +354,6 @@ export const useLocalState = <T>(
  * @param context React context.
  * @param key Key which uniquely identifies this state in Redux store.
  * @param initialState Initializes your global variable with this value.
- * @deprecated Don't use this. This is a poor UX when others can frantically change your screen. If you want this experience, send the state to the server and let the server send it to everyone else.
  */
 export const useSharedState = <T>(
   key: string,

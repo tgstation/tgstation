@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -11,7 +11,6 @@ import {
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const ALIGNMENT2COLOR = {
   good: 'yellow',
@@ -21,7 +20,7 @@ const ALIGNMENT2COLOR = {
 
 export const ReligiousTool = (props) => {
   const { act, data } = useBackend();
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const { sects, alignment, toolname } = data;
 
   return (

@@ -1,5 +1,5 @@
 import { createSearch, toTitleCase } from 'common/string';
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -19,7 +19,7 @@ import { useState } from 'react';
 export const OreRedemptionMachine = (props) => {
   const { act, data } = useBackend();
   const { disconnected, unclaimedPoints, materials, user } = data;
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const [searchItem, setSearchItem] = useState('');
   const [compact, setCompact] = useState(false);
   const search = createSearch(searchItem, (materials) => materials.name);

@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -10,11 +10,10 @@ import {
   Tabs,
 } from '../components';
 import { NtosWindow } from '../layouts';
-import { useState } from 'react';
 
 export const NtosNetMonitor = (props) => {
   const { act, data } = useBackend();
-  const [tab_main, setTab_main] = useState(1);
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const {
     ntnetrelays,
     idsalarm,

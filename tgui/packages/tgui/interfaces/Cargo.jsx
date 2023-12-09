@@ -1,6 +1,6 @@
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -18,7 +18,6 @@ import {
 } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 export const Cargo = (props) => {
   return (
@@ -32,7 +31,7 @@ export const Cargo = (props) => {
 
 export const CargoContent = (props) => {
   const { data } = useBackend();
-  const [tab, setTab] = useState('catalog');
+  const [tab, setTab] = useSharedState('tab', 'catalog');
   const { cart = [], requests = [], requestonly } = data;
   const cart_length = cart.reduce((total, entry) => total + entry.amount, 0);
 
@@ -100,6 +99,7 @@ const CargoStatus = (props) => {
     requestonly,
     can_send,
   } = data;
+
   return (
     <Section
       title={department}
@@ -179,9 +179,12 @@ export const CargoCatalog = (props) => {
   const supplies = Object.values(data.supplies);
   const { amount_by_name = [], max_order } = data;
 
-  const [activeSupplyName, setActiveSupplyName] = useState(supplies[0]?.name);
+  const [activeSupplyName, setActiveSupplyName] = useSharedState(
+    'supply',
+    supplies[0]?.name,
+  );
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useSharedState('search_text', '');
 
   const activeSupply =
     activeSupplyName === 'search_results'

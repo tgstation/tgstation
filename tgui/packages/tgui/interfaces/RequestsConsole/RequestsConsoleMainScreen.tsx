@@ -1,15 +1,14 @@
-import { useBackend } from '../../backend';
+import { useBackend, useSharedState } from '../../backend';
 import { Icon, Stack, Tabs } from '../../components';
 import { RequestsData, RequestTabs } from './types';
 import { MessageViewTab } from './MessageViewTab';
 import { MessageWriteTab } from './MessageWriteTab';
 import { AnnouncementTab } from './AnnouncementTab';
-import { useState } from 'react';
 
 export const RequestMainScreen = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { can_send_announcements } = data;
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useSharedState('tab', RequestTabs.MESSAGE_VIEW);
 
   return (
     <Stack.Item grow>

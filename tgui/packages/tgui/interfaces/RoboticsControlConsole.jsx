@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -8,11 +8,10 @@ import {
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 export const RoboticsControlConsole = (props) => {
   const { act, data } = useBackend();
-  const [tab, setTab] = useState(1);
+  const [tab, setTab] = useSharedState('tab', 1);
   const { can_hack, can_detonate, cyborgs = [], drones = [] } = data;
 
   return (

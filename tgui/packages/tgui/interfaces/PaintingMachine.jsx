@@ -1,16 +1,21 @@
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { Button, Dropdown, Section, Stack } from '../components';
-import { useState } from 'react';
 
 export const PaintingMachine = (props) => {
   const { act, data } = useBackend();
 
   const { pdaTypes, cardTrims, hasPDA, pdaName, hasID, idName } = data;
 
-  const [selectedPDA] = useState(pdaTypes[Object.keys(pdaTypes)[0]]);
+  const [selectedPDA] = useSharedState(
+    'pdaSelection',
+    pdaTypes[Object.keys(pdaTypes)[0]],
+  );
 
-  const [selectedTrim] = useState(cardTrims[Object.keys(cardTrims)[0]]);
+  const [selectedTrim] = useSharedState(
+    'trimSelection',
+    cardTrims[Object.keys(cardTrims)[0]],
+  );
 
   return (
     <Window width={500} height={620}>
@@ -48,7 +53,7 @@ export const PaintingMachine = (props) => {
               />
             </Stack.Item>
             <Stack.Item height="100%">
-              <PainterDropdown options={pdaTypes} />
+              <PainterDropdown stateKey="pdaSelection" options={pdaTypes} />
             </Stack.Item>
           </Stack>
         </Section>
@@ -115,9 +120,10 @@ export const EjectButton = (props) => {
 };
 
 export const PainterDropdown = (props) => {
-  const { options } = props;
+  const { stateKey, options } = props;
 
-  const [selectedOption, setSelectedOption] = useState(
+  const [selectedOption, setSelectedOption] = useSharedState(
+    stateKey,
     options[Object.keys(options)[0]],
   );
 

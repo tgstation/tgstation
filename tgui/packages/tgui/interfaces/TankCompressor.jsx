@@ -1,4 +1,4 @@
-import { useBackend } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import {
   Box,
   Button,
@@ -15,10 +15,8 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
-import { useState } from 'react';
 
 export const TankCompressor = (props) => {
-  const { act, data } = useBackend();
   return (
     <Window title="Tank Compressor" width={650} height={550}>
       <Window.Content>
@@ -31,7 +29,7 @@ export const TankCompressor = (props) => {
 const TankCompressorContent = (props) => {
   const { act, data } = useBackend();
   const { disk, storage } = data;
-  const [currentTab, changeTab] = useState(1);
+  const [currentTab, changeTab] = useSharedState('compressorTab', 1);
 
   return (
     <Stack vertical fill>
@@ -71,7 +69,7 @@ const TankCompressorContent = (props) => {
 
 const AlertBoxes = (props) => {
   const { text_content, icon_name, icon_break, color, active } = props;
-  const { act, data } = useBackend();
+
   return (
     <Box
       bold
@@ -109,6 +107,7 @@ const TankCompressorControls = (props) => {
   } = data;
   const pressure = tankPresent ? tankPressure : lastPressure;
   const usingLastData = !!(lastPressure && !tankPresent);
+
   return (
     <>
       <Stack.Item>
@@ -262,7 +261,10 @@ const TankCompressorControls = (props) => {
 const TankCompressorRecords = (props) => {
   const { act, data } = useBackend();
   const { records = [], disk } = data;
-  const [activeRecordRef, setActiveRecordRef] = useState(records[0]?.ref);
+  const [activeRecordRef, setActiveRecordRef] = useSharedState(
+    'recordRef',
+    records[0]?.ref,
+  );
   const activeRecord =
     !!activeRecordRef &&
     records.find((record) => activeRecordRef === record.ref);
