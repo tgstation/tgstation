@@ -106,6 +106,10 @@
 	for(var/atom/movable/AM in range(radius_range, a))
 		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
 			continue
+		if(isitem(AM))
+			var/obj/item/item = AM
+			if(item.item_flags & ABSTRACT) //let's not tempt fate, shall we?
+				continue
 		. += AM
 
 /datum/component/personal_crafting/proc/get_surroundings(atom/a, list/blacklist=null)
