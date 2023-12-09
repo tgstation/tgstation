@@ -651,17 +651,17 @@ LINEN BINS
 		return FALSE
 	if(amount)
 		to_chat(user, span_warning("The [src] must be empty first!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(tool.use_tool(src, user, 0.5 SECONDS, volume=50))
 		to_chat(user, span_notice("You disassemble the [src]."))
 		new /obj/item/stack/rods(loc, 2)
 		qdel(src)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/bedsheetbin/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/bedsheet))

@@ -10,13 +10,13 @@ export const getQuirkStrings = (string: string) => {
 export const getMedicalRecord = () => {
   const [selectedRecord] = useLocalState<MedicalRecord | undefined>(
     'medicalRecord',
-    undefined
+    undefined,
   );
   if (!selectedRecord) return;
   const { data } = useBackend<MedicalRecordData>();
   const { records = [] } = data;
   const foundRecord = records.find(
-    (record) => record.crew_ref === selectedRecord.crew_ref
+    (record) => record.crew_ref === selectedRecord.crew_ref,
   );
   if (!foundRecord) return;
 

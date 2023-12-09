@@ -593,7 +593,7 @@
 /obj/item/nullrod/hypertool
 	name = "hypertool"
 	desc = "A tool so powerful even you cannot perfectly use it."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/weapons/club.dmi'
 	icon_state = "hypertool"
 	inhand_icon_state = "hypertool"
 	worn_icon_state = "hypertool"

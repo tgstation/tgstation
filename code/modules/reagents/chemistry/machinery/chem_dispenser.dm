@@ -386,18 +386,18 @@
 /obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_dispenser/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_dispenser/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
 	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())

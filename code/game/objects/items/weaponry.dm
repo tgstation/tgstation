@@ -413,7 +413,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "red_phone"
 	force = 3
 	throwforce = 2

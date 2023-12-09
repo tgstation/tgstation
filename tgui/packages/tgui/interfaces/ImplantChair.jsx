@@ -21,7 +21,8 @@ export const ImplantChair = (props) => {
                     : data.occupant.stat === 1
                       ? 'average'
                       : 'bad'
-                }>
+                }
+              >
                 {data.occupant.stat === 0
                   ? 'Conscious'
                   : data.occupant.stat === 1

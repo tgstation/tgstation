@@ -7,10 +7,10 @@ export const Achievements = (props) => {
   const { categories } = data;
   const [selectedCategory, setSelectedCategory] = useLocalState(
     'category',
-    categories[0]
+    categories[0],
   );
   const achievements = data.achievements.filter(
-    (x) => x.category === selectedCategory
+    (x) => x.category === selectedCategory,
   );
   return (
     <Window title="Achievements" width={540} height={680}>
@@ -20,13 +20,15 @@ export const Achievements = (props) => {
             <Tabs.Tab
               key={category}
               selected={selectedCategory === category}
-              onClick={() => setSelectedCategory(category)}>
+              onClick={() => setSelectedCategory(category)}
+            >
               {category}
             </Tabs.Tab>
           ))}
           <Tabs.Tab
             selected={selectedCategory === 'High Scores'}
-            onClick={() => setSelectedCategory('High Scores')}>
+            onClick={() => setSelectedCategory('High Scores')}
+          >
             High Scores
           </Tabs.Tab>
         </Tabs>
@@ -109,7 +111,8 @@ const HighScoreTable = (props) => {
             <Tabs.Tab
               key={highscore.name}
               selected={highScoreIndex === i}
-              onClick={() => setHighScoreIndex(i)}>
+              onClick={() => setHighScoreIndex(i)}
+            >
               {highscore.name}
             </Tabs.Tab>
           ))}
@@ -129,7 +132,8 @@ const HighScoreTable = (props) => {
               </Table.Cell>
               <Table.Cell
                 color={score.ckey === user_ckey && 'green'}
-                textAlign="center">
+                textAlign="center"
+              >
                 {i === 0 && <Icon name="crown" color="yellow" mr={2} />}
                 {score.ckey}
                 {i === 0 && <Icon name="crown" color="yellow" ml={2} />}

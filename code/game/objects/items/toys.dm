@@ -457,10 +457,10 @@
 		if("purple")
 			saber_color = "red"
 		else
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 	balloon_alert(user, "changed to [saber_color]")
 	update_appearance(UPDATE_ICON)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/sword/vv_edit_var(vname, vval)
 	. = ..()
@@ -855,7 +855,7 @@
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0

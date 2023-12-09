@@ -19,8 +19,8 @@ export const Gps = (props) => {
         signal.dist &&
         Math.round(
           vecLength(
-            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords))
-          )
+            vecSubtract(coordsToVec(currentCoords), coordsToVec(signal.coords)),
+          ),
         );
       return { ...signal, dist, index };
     }),
@@ -28,7 +28,7 @@ export const Gps = (props) => {
       // Signals with distance metric go first
       (signal) => signal.dist === undefined,
       // Sort alphabetically
-      (signal) => signal.entrytag
+      (signal) => signal.entrytag,
     ),
   ])(data.signals || []);
   return (
@@ -43,7 +43,8 @@ export const Gps = (props) => {
               selected={power}
               onClick={() => act('power')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Tag">
               <Button
@@ -87,7 +88,8 @@ export const Gps = (props) => {
                 {signals.map((signal) => (
                   <Table.Row
                     key={signal.entrytag + signal.coords + signal.index}
-                    className="candystripe">
+                    className="candystripe"
+                  >
                     <Table.Cell bold color="label">
                       {signal.entrytag}
                     </Table.Cell>
@@ -96,7 +98,8 @@ export const Gps = (props) => {
                       opacity={
                         signal.dist !== undefined &&
                         clamp(1.2 / Math.log(Math.E + signal.dist / 20), 0.4, 1)
-                      }>
+                      }
+                    >
                       {signal.degrees !== undefined && (
                         <Icon
                           mr={1}

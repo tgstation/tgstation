@@ -1,18 +1,20 @@
 {
   "private": true,
   "name": "tgui",
-  "version": "4.4.0",
+  "version": "5.0.0",
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "@types/marked": "^4.0.8",
+    "@types/react": "^18.2.39",
+    "@types/react-dom": "^18.2.17",
     "common": "workspace:*",
     "dateformat": "^4.6.2",
     "dompurify": "^2.4.4",
     "highlight.js": "^11.9.0",
-    "inferno": "^7.4.11",
-    "inferno-vnode-flags": "^7.4.11",
     "js-yaml": "^4.1.0",
     "marked": "^4.2.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "tgui-dev-server": "workspace:*",
     "tgui-polyfill": "workspace:*"
   }

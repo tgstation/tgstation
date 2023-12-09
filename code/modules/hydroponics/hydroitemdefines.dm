@@ -2,7 +2,7 @@
 /obj/item/plant_analyzer
 	name = "plant analyzer"
 	desc = "A scanner used to evaluate a plant's various areas of growth, and genetic traits. Comes with a growth scanning mode and a chemical scanning mode."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "hydro"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "plantanalyzer"

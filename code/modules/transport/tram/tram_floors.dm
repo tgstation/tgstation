@@ -242,7 +242,7 @@
 			secured = TRUE
 			to_chat(user, span_notice("The tile is securely screwed in place."))
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/thermoplastic/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	. = ..()
@@ -260,12 +260,12 @@
 			user.put_in_hands(pulled_tile)
 			qdel(src)
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/thermoplastic/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
@@ -274,7 +274,7 @@
 		atom_integrity = max_integrity
 		to_chat(user, span_notice("You repair [src]."))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/thermoplastic
 	name = "thermoplastic tram tile"

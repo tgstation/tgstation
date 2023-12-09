@@ -359,11 +359,11 @@
 	#endif
 
 	//Apply thermal output of reaction to beaker
-	if(reaction.reaction_flags & REACTION_HEAT_ARBITARY)
-		holder.chem_temp += clamp((reaction.thermic_constant * total_step_added * thermic_mod), 0, CHEMICAL_MAXIMUM_TEMPERATURE) //old method - for every bit added, the whole temperature is adjusted
-	else //Standard mechanics
-		var/heat_energy = reaction.thermic_constant * total_step_added * thermic_mod * SPECIFIC_HEAT_DEFAULT
-		holder.adjust_thermal_energy(heat_energy, 0, CHEMICAL_MAXIMUM_TEMPERATURE) //heat is relative to the beaker conditions
+	var/heat_energy = reaction.thermic_constant * total_step_added * thermic_mod
+	if(reaction.reaction_flags & REACTION_HEAT_ARBITARY) //old method - for every bit added, the whole temperature is adjusted
+		holder.set_temperature(clamp(holder.chem_temp + heat_energy, 0, CHEMICAL_MAXIMUM_TEMPERATURE))
+	else //Standard mechanics - heat is relative to the beaker conditions
+		holder.adjust_thermal_energy(heat_energy * SPECIFIC_HEAT_DEFAULT, 0, CHEMICAL_MAXIMUM_TEMPERATURE)
 
 	//Give a chance of sounds
 	if(prob(5))

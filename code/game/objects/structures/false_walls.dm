@@ -73,14 +73,14 @@
 
 /obj/structure/falsewall/update_icon_state()
 	if(opening)
-		icon = fake_icon
+		icon = initial(icon)
 		icon_state = "[base_icon_state]-[density ? "opening" : "closing"]"
 		return ..()
 	if(density)
-		icon = initial(icon)
+		icon = fake_icon
 		icon_state = "[base_icon_state]-[smoothing_junction]"
 	else
-		icon = fake_icon
+		icon = initial(icon)
 		icon_state = "[base_icon_state]-open"
 	return ..()
 
@@ -91,11 +91,11 @@
 		qdel(src)
 	return T
 
-/obj/structure/falsewall/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	if(!opening)
+/obj/structure/falsewall/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(!opening || !tool.tool_behaviour)
 		return ..()
 	to_chat(user, span_warning("You must wait until the door has stopped moving!"))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/structure/falsewall/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!density)
@@ -104,19 +104,19 @@
 	var/turf/loc_turf = get_turf(src)
 	if(loc_turf.density)
 		to_chat(user, span_warning("[src] is blocked!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!isfloorturf(loc_turf))
 		to_chat(user, span_warning("[src] bolts must be tightened on the floor!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.visible_message(span_notice("[user] tightens some bolts on the wall."), span_notice("You tighten the bolts on the wall."))
 	ChangeToWall()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/falsewall/welder_act(mob/living/user, obj/item/tool)
 	if(tool.use_tool(src, user, 0 SECONDS, volume=50))
 		dismantle(user, TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return
 
 /obj/structure/falsewall/attackby(obj/item/W, mob/user, params)

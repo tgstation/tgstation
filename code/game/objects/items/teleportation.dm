@@ -13,7 +13,7 @@
 /obj/item/locator
 	name = "bluespace locator"
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/temp = null
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -100,7 +100,7 @@
 /obj/item/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology. One of the buttons opens a portal, the other re-opens your last destination."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "hand_tele"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -317,7 +317,7 @@
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
 	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL

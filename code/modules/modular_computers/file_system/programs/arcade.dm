@@ -3,7 +3,6 @@
 	filedesc = "Donksoft Micro Arcade"
 	program_open_overlay = "arcade"
 	extended_desc = "This port of the classic game 'Outbomb Cuban Pete', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
-	requires_ntnet = FALSE
 	downloader_category = PROGRAM_CATEGORY_GAMES
 	size = 6
 	tgui_id = "NtosArcade"
@@ -29,9 +28,8 @@
 	filename = "dsarcadeez"
 	filedesc = "Donksoft Micro Arcade Ez"
 	filetype = "MNT"
-	unique_copy = TRUE
+	program_flags = PROGRAM_UNIQUE_COPY
 	extended_desc = "Some sort of fan-made conversion of the classic game 'Outbomb Cuban Pete'. This one has you fight the weaker 'George Melon' instead."
-	available_on_ntnet = FALSE
 	boss_hp = 40
 	boss_mp = 10
 	player_hp = 35

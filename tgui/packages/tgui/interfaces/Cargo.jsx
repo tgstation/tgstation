@@ -1,7 +1,21 @@
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
 import { useBackend, useSharedState } from '../backend';
-import { AnimatedNumber, Box, Button, Flex, Icon, Input, RestrictedInput, LabeledList, NoticeBox, Section, Stack, Table, Tabs } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Input,
+  RestrictedInput,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+} from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -28,14 +42,16 @@ export const CargoContent = (props) => {
           <Tabs.Tab
             icon="list"
             selected={tab === 'catalog'}
-            onClick={() => setTab('catalog')}>
+            onClick={() => setTab('catalog')}
+          >
             Catalog
           </Tabs.Tab>
           <Tabs.Tab
             icon="envelope"
             textColor={tab !== 'requests' && requests.length > 0 && 'yellow'}
             selected={tab === 'requests'}
-            onClick={() => setTab('requests')}>
+            onClick={() => setTab('requests')}
+          >
             Requests ({requests.length})
           </Tabs.Tab>
           {!requestonly && (
@@ -44,13 +60,15 @@ export const CargoContent = (props) => {
                 icon="shopping-cart"
                 textColor={tab !== 'cart' && cart_length > 0 && 'yellow'}
                 selected={tab === 'cart'}
-                onClick={() => setTab('cart')}>
+                onClick={() => setTab('cart')}
+              >
                 Checkout ({cart_length})
               </Tabs.Tab>
               <Tabs.Tab
                 icon="question"
                 selected={tab === 'help'}
-                onClick={() => setTab('help')}>
+                onClick={() => setTab('help')}
+              >
                 Help
               </Tabs.Tab>
             </>
@@ -91,7 +109,8 @@ const CargoStatus = (props) => {
           />
           {' credits'}
         </Box>
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Shuttle">
           {(docked && !requestonly && can_send && (
@@ -142,7 +161,7 @@ const searchForSupplies = (supplies, search) => {
     filter(
       (pack) =>
         pack.name?.toLowerCase().includes(search.toLowerCase()) ||
-        pack.desc?.toLowerCase().includes(search.toLowerCase())
+        pack.desc?.toLowerCase().includes(search.toLowerCase()),
     ),
     sortBy((pack) => pack.name),
     (packs) => packs.slice(0, 25),
@@ -160,7 +179,7 @@ export const CargoCatalog = (props) => {
 
   const [activeSupplyName, setActiveSupplyName] = useSharedState(
     'supply',
-    supplies[0]?.name
+    supplies[0]?.name,
   );
 
   const [searchText, setSearchText] = useSharedState('search_text', '');
@@ -185,13 +204,15 @@ export const CargoCatalog = (props) => {
             />
           </>
         )
-      }>
+      }
+    >
       <Flex>
         <Flex.Item ml={-1} mr={1}>
           <Tabs vertical>
             <Tabs.Tab
               key="search_results"
-              selected={activeSupplyName === 'search_results'}>
+              selected={activeSupplyName === 'search_results'}
+            >
               <Stack align="baseline">
                 <Stack.Item>
                   <Icon name="search" />
@@ -233,7 +254,8 @@ export const CargoCatalog = (props) => {
                 onClick={() => {
                   setActiveSupplyName(supply.name);
                   setSearchText('');
-                }}>
+                }}
+              >
                 {supply.name} ({supply.packs.length})
               </Tabs.Tab>
             ))}
@@ -265,11 +287,12 @@ export const CargoCatalog = (props) => {
                         act('add', {
                           id: pack.id,
                         })
-                      }>
+                      }
+                    >
                       {formatMoney(
                         (self_paid && !pack.goody) || app_cost
                           ? Math.round(pack.cost * 1.1)
-                          : pack.cost
+                          : pack.cost,
                       )}
                       {' cr'}
                     </Button>
@@ -301,7 +324,8 @@ const CargoRequests = (props) => {
             onClick={() => act('denyall')}
           />
         )
-      }>
+      }
+    >
       {requests.length === 0 && <Box color="good">No Requests</Box>}
       {requests.length > 0 && (
         <Table>
@@ -466,8 +490,8 @@ const CargoCart = (props) => {
             <Button
               color="green"
               style={{
-                'line-height': '28px',
-                'padding': '0 12px',
+                lineHeight: '28px',
+                padding: '0 12px',
               }}
               content="Confirm the order"
               onClick={() => act('send')}

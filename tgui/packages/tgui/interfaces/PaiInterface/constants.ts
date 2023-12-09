@@ -24,17 +24,17 @@ export enum HOST_SCAN {
 }
 
 export const ICON_MAP = {
-  'angry': 'angry',
-  'cat': 'cat',
+  angry: 'angry',
+  cat: 'cat',
   'extremely-happy': 'grin-beam',
-  'face': 'grin-alt',
-  'happy': 'smile',
-  'laugh': 'grin-tears',
-  'null': 'meh',
-  'off': 'meh-blank',
-  'sad': 'sad-cry',
-  'sunglasses': 'sun',
-  'what': 'frown-open',
+  face: 'grin-alt',
+  happy: 'smile',
+  laugh: 'grin-tears',
+  null: 'meh',
+  off: 'meh-blank',
+  sad: 'sad-cry',
+  sunglasses: 'sun',
+  what: 'frown-open',
 } as const;
 
 export enum PHOTO_MODE {
@@ -60,7 +60,7 @@ export const SOFTWARE_DESC = {
   'Medical HUD': `Allows you to view medical status using an overlay HUD.`,
   'Music Synthesizer': `Synthesizes instruments, plays sounds and imported
     songs.`,
-  'Newscaster': `A tool that allows you to broadcast news to other crew
+  Newscaster: `A tool that allows you to broadcast news to other crew
     members.`,
   'Photography Module': `A portable camera module. Engage, then click to shoot.
     Includes a printer and lenses.`,

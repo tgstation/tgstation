@@ -12,7 +12,7 @@
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "A program used to somehow detect nearby spectral presence. Combine with the camera app to take photos of ghosts."
 	size = 7
-	usage_flags = PROGRAM_LAPTOP|PROGRAM_PDA
+	can_run_on_flags = PROGRAM_LAPTOP|PROGRAM_PDA
 	tgui_id = "NtosSpectreMeter"
 	program_icon = "ghost"
 	program_open_overlay = "spectre_meter_0"

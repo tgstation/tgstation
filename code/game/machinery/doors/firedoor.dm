@@ -495,17 +495,17 @@
 
 	if(boltslocked)
 		to_chat(user, span_notice("There are screws locking the bolts in place!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	tool.play_tool_sound(src)
 	user.visible_message(span_notice("[user] starts undoing [src]'s bolts..."), \
 		span_notice("You start unfastening [src]'s floor bolts..."))
 	if(!tool.use_tool(src, user, DEFAULT_STEP_TIME))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	playsound(get_turf(src), 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]'s bolts."), \
 		span_notice("You undo [src]'s floor bolts."))
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/firedoor/screwdriver_act(mob/living/user, obj/item/tool)
 	if(operating || !welded)
@@ -514,7 +514,7 @@
 				span_notice("You [boltslocked ? "unlock" : "lock"] [src]'s floor bolts."))
 	tool.play_tool_sound(src)
 	boltslocked = !boltslocked
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/firedoor/try_to_activate_door(mob/user, access_bypass = FALSE)
 	return

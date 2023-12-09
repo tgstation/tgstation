@@ -153,7 +153,7 @@
 /obj/structure/tram/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
@@ -161,7 +161,7 @@
 		atom_integrity = max_integrity
 		to_chat(user, span_notice("You repair [src]."))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tram/attackby_secondary(obj/item/tool, mob/user, params)
 	switch(state)
@@ -596,7 +596,7 @@
 			deploy_spoiler()
 
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing [src]..."))
 	if(!tool.use_tool(src, user, 4 SECONDS, volume = 50))
@@ -604,7 +604,7 @@
 	atom_integrity = max_integrity
 	to_chat(user, span_notice("You repair [src]."))
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/tram/spoiler/update_overlays()
 	. = ..()

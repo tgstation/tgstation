@@ -6,7 +6,7 @@
 
 import { shallowDiffers } from 'common/react';
 import { debounce } from 'common/timer';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { createLogger } from '../logging';
 import { computeBoxProps } from './Box';
 
@@ -92,20 +92,12 @@ export class ByondUi extends Component {
   }
 
   componentDidMount() {
-    // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     window.addEventListener('resize', this.handleResize);
     this.componentDidUpdate();
     this.handleResize();
   }
 
   componentDidUpdate() {
-    // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     const { params = {} } = this.props;
     const box = getBoundingBox(this.containerRef.current);
     logger.debug('bounding box', box);
@@ -118,10 +110,6 @@ export class ByondUi extends Component {
   }
 
   componentWillUnmount() {
-    // IE8: It probably works, but fuck you anyway.
-    if (Byond.IS_LTE_IE10) {
-      return;
-    }
     window.removeEventListener('resize', this.handleResize);
     this.byondUiElement.unmount();
   }
@@ -131,7 +119,7 @@ export class ByondUi extends Component {
     return (
       <div ref={this.containerRef} {...computeBoxProps(rest)}>
         {/* Filler */}
-        <div style={{ 'min-height': '22px' }} />
+        <div style={{ minHeight: '22px' }} />
       </div>
     );
   }
