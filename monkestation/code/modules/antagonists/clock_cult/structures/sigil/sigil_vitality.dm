@@ -12,10 +12,7 @@
 
 
 /obj/structure/destructible/clockwork/sigil/vitality/can_affect(mob/living/affected_mob)
-	if(affected_mob.stat == DEAD && !IS_CLOCK(affected_mob))
-		return FALSE
-
-	if(HAS_TRAIT(affected_mob, TRAIT_NODEATH) || HAS_TRAIT(affected_mob, TRAIT_NO_SOUL))
+	if((HAS_TRAIT(affected_mob, TRAIT_HUSK) && !IS_CLOCK(affected_mob)) || HAS_TRAIT(affected_mob, TRAIT_NODEATH) || HAS_TRAIT(affected_mob, TRAIT_NO_SOUL))
 		return FALSE
 
 	if(!ishuman(affected_mob))
