@@ -87,7 +87,7 @@ export const Button = (props: Props) => {
         fluid && 'Button--fluid',
         disabled && 'Button--disabled',
         selected && 'Button--selected',
-        !!children && 'Button--hasContent',
+        !!toDisplay && 'Button--hasContent',
         circular && 'Button--circular',
         compact && 'Button--compact',
         iconPosition && 'Button--iconPosition--' + iconPosition,
