@@ -1247,7 +1247,6 @@
 #include "code\datums\diseases\tuberculosis.dm"
 #include "code\datums\diseases\advance\advance.dm"
 #include "code\datums\diseases\advance\presets.dm"
-#include "code\datums\diseases\advance\symptoms\disfiguration.dm"
 #include "code\datums\diseases\advance\symptoms\dizzy.dm"
 #include "code\datums\diseases\advance\symptoms\fever.dm"
 #include "code\datums\diseases\advance\symptoms\fire.dm"
