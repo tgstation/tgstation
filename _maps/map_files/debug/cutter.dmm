@@ -1163,6 +1163,21 @@
 /obj/machinery/door/window/right/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
+"vR" = (
+/obj/effect/turf_decal/door_threshold{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/threshold{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/threshold{
+	dir = 8
+	},
+/obj/machinery/door/airlock/silver{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/misc/testroom)
 "vU" = (
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
@@ -1968,8 +1983,34 @@
 /obj/machinery/button/door/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
+"MC" = (
+/obj/effect/turf_decal/door_threshold{
+	dir = 4
+	},
+/obj/effect/turf_decal/stripes/threshold{
+	dir = 8
+	},
+/obj/effect/turf_decal/stripes/threshold{
+	dir = 4
+	},
+/obj/machinery/door/airlock/silver{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/misc/testroom)
 "MD" = (
 /obj/machinery/requests_console/auto_name/directional/south,
+/turf/open/floor/iron,
+/area/misc/testroom)
+"MH" = (
+/obj/effect/turf_decal/door_threshold,
+/obj/effect/turf_decal/stripes/threshold,
+/obj/effect/turf_decal/stripes/threshold{
+	dir = 1
+	},
+/obj/machinery/door/airlock/silver{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "MN" = (
@@ -2585,6 +2626,17 @@
 /area/misc/testroom)
 "ZV" = (
 /obj/structure/urinal/directional/north,
+/turf/open/floor/iron,
+/area/misc/testroom)
+"ZY" = (
+/obj/effect/turf_decal/stripes/threshold{
+	dir = 1
+	},
+/obj/effect/turf_decal/door_threshold,
+/obj/effect/turf_decal/stripes/threshold,
+/obj/machinery/door/airlock/silver{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 
@@ -52108,9 +52160,9 @@ oL
 at
 oL
 rq
-rq
-rq
-rq
+oL
+vR
+oL
 rq
 rq
 rq
@@ -52365,9 +52417,9 @@ oL
 at
 oL
 rq
+MH
 rq
-rq
-rq
+ZY
 rq
 rq
 rq
@@ -52622,9 +52674,9 @@ oL
 at
 oL
 rq
-rq
-rq
-rq
+oL
+MC
+oL
 rq
 rq
 rq
