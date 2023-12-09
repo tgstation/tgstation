@@ -536,7 +536,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		if(ispath(material_drop) && material_drop_amount)
 			new material_drop(loc, material_drop_amount)
 		if (secure)
@@ -553,7 +553,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		bust_open()
 
 /obj/structure/closet/CheckParts(list/parts_list)

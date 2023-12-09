@@ -1,38 +1,71 @@
 import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, Knob, LabeledControls, LabeledList, RoundGauge, Section, Tooltip } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  Knob,
+  LabeledControls,
+  LabeledList,
+  RoundGauge,
+  Section,
+  Tooltip,
+} from '../components';
 import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
-const formatPressure = (value) => {
+const formatPressure = (value: number) => {
   if (value < 10000) {
     return toFixed(value) + ' kPa';
   }
   return formatSiUnit(value * 1000, 1, 'Pa');
 };
 
+type HoldingTank = {
+  name: string;
+  tankPressure: number;
+};
+
+type Data = {
+  portConnected: BooleanLike;
+  tankPressure: number;
+  releasePressure: number;
+  defaultReleasePressure: number;
+  minReleasePressure: number;
+  maxReleasePressure: number;
+  hasHypernobCrystal: BooleanLike;
+  cellCharge: number;
+  pressureLimit: number;
+  valveOpen: BooleanLike;
+  holdingTank: HoldingTank;
+  holdingTankLeakPressure: number;
+  holdingTankFragPressure: number;
+  shielding: BooleanLike;
+  reactionSuppressionEnabled: BooleanLike;
+};
+
 export const Canister = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
-    portConnected,
+    shielding,
+    holdingTank,
+    pressureLimit,
+    valveOpen,
     tankPressure,
     releasePressure,
     defaultReleasePressure,
     minReleasePressure,
     maxReleasePressure,
+    portConnected,
+    cellCharge,
     hasHypernobCrystal,
     reactionSuppressionEnabled,
-    hasCell,
-    cellCharge,
-    pressureLimit,
-    valveOpen,
-    isPrototype,
-    hasHoldingTank,
-    holdingTank,
-    holdingTankLeakPressure,
     holdingTankFragPressure,
-    restricted,
+    holdingTankLeakPressure,
   } = data;
+
   return (
     <Window width={350} height={335}>
       <Window.Content>
@@ -42,19 +75,10 @@ export const Canister = (props) => {
               title="Canister"
               buttons={
                 <>
-                  {!!isPrototype && (
-                    <Button
-                      mr={1}
-                      icon={restricted ? 'lock' : 'unlock'}
-                      color="caution"
-                      content={restricted ? 'Engineering' : 'Public'}
-                      onClick={() => act('restricted')}
-                    />
-                  )}
                   <Button
-                    icon={data.shielding ? 'power-off' : 'times'}
-                    content={data.shielding ? 'Shielding-ON' : 'Shielding-OFF'}
-                    selected={data.shielding}
+                    icon={shielding ? 'power-off' : 'times'}
+                    content={shielding ? 'Shielding-ON' : 'Shielding-OFF'}
+                    selected={shielding}
                     onClick={() => act('shielding')}
                   />
                   <Button
@@ -64,7 +88,8 @@ export const Canister = (props) => {
                   />
                   <Button icon="palette" onClick={() => act('recolor')} />
                 </>
-              }>
+              }
+            >
               <LabeledControls>
                 <LabeledControls.Item minWidth="66px" label="Pressure">
                   <RoundGauge
@@ -74,9 +99,9 @@ export const Canister = (props) => {
                     maxValue={pressureLimit}
                     alertAfter={pressureLimit * 0.7}
                     ranges={{
-                      'good': [0, pressureLimit * 0.7],
-                      'average': [pressureLimit * 0.7, pressureLimit * 0.85],
-                      'bad': [pressureLimit * 0.85, pressureLimit],
+                      good: [0, pressureLimit * 0.7],
+                      average: [pressureLimit * 0.7, pressureLimit * 0.85],
+                      bad: [pressureLimit * 0.85, pressureLimit],
                     }}
                     format={formatPressure}
                   />
@@ -133,7 +158,7 @@ export const Canister = (props) => {
                     lineHeight={2}
                     fontSize="11px"
                     color={
-                      valveOpen ? (hasHoldingTank ? 'caution' : 'danger') : null
+                      valveOpen ? (holdingTank ? 'caution' : 'danger') : null
                     }
                     content={valveOpen ? 'Open' : 'Closed'}
                     onClick={() => act('valve')}
@@ -142,7 +167,8 @@ export const Canister = (props) => {
                 <LabeledControls.Item mr={1} label="Port">
                   <Tooltip
                     content={portConnected ? 'Connected' : 'Disconnected'}
-                    position="top">
+                    position="top"
+                  >
                     <Box position="relative">
                       <Icon
                         size={1.25}
@@ -157,18 +183,16 @@ export const Canister = (props) => {
             <Section>
               <LabeledList>
                 <LabeledList.Item label="Cell Charge">
-                  {hasCell ? cellCharge + '%' : 'Missing Cell'}
+                  {cellCharge > 0 ? cellCharge + '%' : 'Missing Cell'}
                 </LabeledList.Item>
                 {!!hasHypernobCrystal && (
                   <LabeledList.Item label="Reaction Suppression">
                     <Button
-                      icon={
-                        data.reactionSuppressionEnabled ? 'snowflake' : 'times'
-                      }
+                      icon={reactionSuppressionEnabled ? 'snowflake' : 'times'}
                       content={
-                        data.reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
+                        reactionSuppressionEnabled ? 'Enabled' : 'Disabled'
                       }
-                      selected={data.reactionSuppressionEnabled}
+                      selected={reactionSuppressionEnabled}
                       onClick={() => act('reaction_suppression')}
                     />
                   </LabeledList.Item>
@@ -181,7 +205,7 @@ export const Canister = (props) => {
               height="100%"
               title="Holding Tank"
               buttons={
-                !!hasHoldingTank && (
+                !!holdingTank && (
                   <Button
                     icon="eject"
                     color={valveOpen && 'danger'}
@@ -189,8 +213,9 @@ export const Canister = (props) => {
                     onClick={() => act('eject')}
                   />
                 )
-              }>
-              {!!hasHoldingTank && (
+              }
+            >
+              {!!holdingTank && (
                 <LabeledList>
                   <LabeledList.Item label="Label">
                     {holdingTank.name}
@@ -202,12 +227,12 @@ export const Canister = (props) => {
                       maxValue={holdingTankFragPressure * 1.15}
                       alertAfter={holdingTankLeakPressure}
                       ranges={{
-                        'good': [0, holdingTankLeakPressure],
-                        'average': [
+                        good: [0, holdingTankLeakPressure],
+                        average: [
                           holdingTankLeakPressure,
                           holdingTankFragPressure,
                         ],
-                        'bad': [
+                        bad: [
                           holdingTankFragPressure,
                           holdingTankFragPressure * 1.15,
                         ],
@@ -218,7 +243,7 @@ export const Canister = (props) => {
                   </LabeledList.Item>
                 </LabeledList>
               )}
-              {!hasHoldingTank && <Box color="average">No Holding Tank</Box>}
+              {!holdingTank && <Box color="average">No Holding Tank</Box>}
             </Section>
           </Flex.Item>
         </Flex>

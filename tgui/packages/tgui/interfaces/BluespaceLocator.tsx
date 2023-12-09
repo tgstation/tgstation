@@ -34,12 +34,14 @@ export const BluespaceLocator = (props) => {
         <Tabs>
           <Tabs.Tab
             selected={tab === 'implant'}
-            onClick={() => setTab('implant')}>
+            onClick={() => setTab('implant')}
+          >
             Implants
           </Tabs.Tab>
           <Tabs.Tab
             selected={tab === 'beacon'}
-            onClick={() => setTab('beacon')}>
+            onClick={() => setTab('beacon')}
+          >
             Teleporter Beacons
           </Tabs.Tab>
         </Tabs>
@@ -101,7 +103,8 @@ const SignalLocator = (props) => {
         red: [0, trackingrange / 3],
         yellow: [trackingrange / 3, 2 * (trackingrange / 3)],
         green: [2 * (trackingrange / 3), trackingrange],
-      }}>
+      }}
+    >
       {name}
       <Icon ml={2} name="arrow-up" rotation={direction} />
     </ProgressBar>

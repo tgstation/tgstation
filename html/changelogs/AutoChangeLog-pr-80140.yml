@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Eggs don't leave behind their shells when cracked into a soup pot. Cups end their attack chain early when dealing with specific items"

@@ -36,7 +36,8 @@ const ShippingHub = (props) => {
           content="Eject Id"
           onClick={() => act('ejectid')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Current User">
           {current_user || 'N/A'}

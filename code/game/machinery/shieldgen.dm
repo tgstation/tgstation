@@ -436,12 +436,11 @@
 
 
 /obj/machinery/power/shieldwallgen/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	. |= default_unfasten_wrench(user, tool, time = 0)
-	var/turf/T = get_turf(src)
-	update_cable_icons_on_turf(T)
-	if(. == SUCCESSFUL_UNFASTEN && anchored)
+	var/unfasten_result = default_unfasten_wrench(user, tool, time = 0)
+	update_cable_icons_on_turf(get_turf(src))
+	if(unfasten_result == SUCCESSFUL_UNFASTEN && anchored)
 		connect_to_network()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/shieldwallgen/screwdriver_act(mob/user, obj/item/tool)
 	if(!panel_open && locked)
@@ -465,9 +464,9 @@
 			balloon_alert(user, "malfunctioning!")
 		else
 			balloon_alert(user, "no access!")
-		
+
 		return
-	
+
 	add_fingerprint(user)
 	if(is_wire_tool(W) && panel_open)
 		wires.interact(user)

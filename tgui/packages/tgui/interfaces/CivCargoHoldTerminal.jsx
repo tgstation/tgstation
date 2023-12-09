@@ -1,5 +1,12 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const CivCargoHoldTerminal = (props) => {
@@ -47,7 +54,8 @@ export const CivCargoHoldTerminal = (props) => {
                     onClick={() => act('eject')}
                   />
                 </>
-              }>
+              }
+            >
               <LabeledList>
                 <LabeledList.Item label="Status" color={pad ? 'good' : 'bad'}>
                   {pad ? 'Online' : 'Not Found'}
@@ -97,7 +105,8 @@ const BountyPickBox = (props) => {
             fluid
             color="green"
             content={id_bounty_names[0]}
-            onClick={() => act('pick', { 'value': 1 })}>
+            onClick={() => act('pick', { value: 1 })}
+          >
             <Box fontSize="14px">Payout: {id_bounty_values[0]} cr</Box>
           </Button>
         </Flex.Item>
@@ -106,7 +115,8 @@ const BountyPickBox = (props) => {
             fluid
             color="green"
             content={id_bounty_names[1]}
-            onClick={() => act('pick', { 'value': 2 })}>
+            onClick={() => act('pick', { value: 2 })}
+          >
             <Box fontSize="14px">Payout: {id_bounty_values[1]} cr</Box>
           </Button>
         </Flex.Item>
@@ -115,7 +125,8 @@ const BountyPickBox = (props) => {
             fluid
             color="green"
             content={id_bounty_names[2]}
-            onClick={() => act('pick', { 'value': 3 })}>
+            onClick={() => act('pick', { value: 3 })}
+          >
             <Box fontSize="14px">Payout: {id_bounty_values[2]} cr</Box>
           </Button>
         </Flex.Item>

@@ -23,7 +23,8 @@ export const NtosThemeConfigure = (props) => {
           grow
           direction="column"
           textAlign="center"
-          align-items="center">
+          align-items="center"
+        >
           {themes.map((theme) => (
             <Flex.Item key={theme} width="100%" grow={1}>
               <Button.Checkbox

@@ -5,8 +5,7 @@
 	extended_desc = "This program allows downloads of software from official NT repositories"
 	undeletable = TRUE
 	size = 4
-	requires_ntnet = TRUE
-	available_on_ntnet = FALSE
+	program_flags = PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetDownloader"
 	program_icon = "download"
 
@@ -46,7 +45,7 @@
 		return FALSE
 
 	// Attempting to download antag only program, but without having emagged/syndicate computer. No.
-	if(PRG.available_on_syndinet && !(computer.obj_flags & EMAGGED))
+	if((PRG.program_flags & PROGRAM_ON_SYNDINET_STORE) && !(computer.obj_flags & EMAGGED))
 		return FALSE
 
 	if(!computer || !computer.can_store_file(PRG))
@@ -136,11 +135,8 @@
 	data["emagged"] = (computer.obj_flags & EMAGGED)
 
 	var/list/repo = SSmodular_computers.available_antag_software | SSmodular_computers.available_station_software
-	var/list/program_categories = list()
 
 	for(var/datum/computer_file/program/programs as anything in repo)
-		if(!(programs.downloader_category in program_categories))
-			program_categories.Add(programs.downloader_category)
 		data["programs"] += list(list(
 			"icon" = programs.program_icon,
 			"filename" = programs.filename,
@@ -151,10 +147,10 @@
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
 			"access" = programs.can_run(user, downloading = TRUE, access = access),
-			"verifiedsource" = programs.available_on_ntnet,
+			"verifiedsource" = !!(programs.program_flags & PROGRAM_ON_NTNET_STORE),
 		))
 
-	data["categories"] = show_categories & program_categories
+	data["categories"] = show_categories
 
 	return data
 

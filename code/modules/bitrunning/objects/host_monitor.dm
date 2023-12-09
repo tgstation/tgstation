@@ -4,7 +4,7 @@
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
 	desc = "A complex electronic that will analyze the connection health between host and avatar."
 	obj_flags = CONDUCTS_ELECTRICITY
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "host_monitor"
 	inhand_icon_state = "electronic"
 	item_flags = NOBLUDGEON

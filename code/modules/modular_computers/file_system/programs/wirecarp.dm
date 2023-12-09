@@ -5,9 +5,8 @@
 	program_open_overlay = "comm_monitor"
 	extended_desc = "This program monitors stationwide NTNet network, provides access to logging systems, and allows for configuration changes"
 	size = 12
-	requires_ntnet = TRUE
 	run_access = list(ACCESS_NETWORK) //NETWORK CONTROL IS A MORE SECURE PROGRAM.
-	available_on_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetMonitor"
 	program_icon = "network-wired"
 

@@ -134,7 +134,7 @@
 	return ..()
 
 /obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
-	if (cpu && !user.combat_mode && !(flags_1 & NODECONSTRUCT_1))
+	if (cpu && !user.combat_mode && !(obj_flags & NO_DECONSTRUCTION))
 		return cpu.attackby(W, user)
 	return ..()
 

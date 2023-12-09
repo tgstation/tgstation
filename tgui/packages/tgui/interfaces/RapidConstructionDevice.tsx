@@ -90,7 +90,7 @@ const DesignSection = (props) => {
   const { categories = [], selected_category, selected_design } = data;
   const [categoryName, setCategoryName] = useLocalState(
     'categoryName',
-    selected_category
+    selected_category,
   );
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
@@ -103,7 +103,8 @@ const DesignSection = (props) => {
             fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -124,7 +125,8 @@ const DesignSection = (props) => {
               category: shownCategory.cat_name,
               index: i + 1,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"
