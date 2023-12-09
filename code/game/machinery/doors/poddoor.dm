@@ -143,18 +143,38 @@
 		return FALSE
 	return ..()
 
-/obj/machinery/door/poddoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("opening", src)
-			playsound(src, animation_sound, 50, TRUE)
-		if("closing")
-			flick("closing", src)
-			playsound(src, animation_sound, 50, TRUE)
-
 /obj/machinery/door/poddoor/update_icon_state()
 	. = ..()
-	icon_state = density ? "closed" : "open"
+	if(animation)
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open_top"
+
+/obj/machinery/door/poddoor/update_overlays()
+	. = ..()
+	var/mutable_appearance/lower = get_lower_overlay()
+	if(lower)
+		. += lower
+
+/obj/machinery/door/poddoor/proc/get_lower_overlay()
+	if(!density)
+		// If we're open we layer the bit below us "above" any mobs so they can walk through
+		return mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+	return
+
+/obj/machinery/door/poddoor/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.8 SECONDS
+		if("closing")
+			return 0.8 SECONDS
+
+/obj/machinery/door/poddoor/animation_effects(animation)
+	switch(animation)
+		if("opening")
+			playsound(src, animation_sound, 50, TRUE)
+		if("closing")
+			playsound(src, animation_sound, 50, TRUE)
 
 /obj/machinery/door/poddoor/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
 	if(density & !(resistance_flags & INDESTRUCTIBLE))
@@ -176,7 +196,7 @@
 		return ..()
 
 /obj/machinery/door/poddoor/preopen
-	icon_state = "open"
+	icon_state = "open_map"
 	density = FALSE
 	opacity = FALSE
 

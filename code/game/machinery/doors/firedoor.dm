@@ -599,16 +599,21 @@
 	if(active)
 		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
-/obj/machinery/door/firedoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("[base_icon_state]_opening", src)
-		if("closing")
-			flick("[base_icon_state]_closing", src)
-
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+	if(animation)
+		icon_state = "[base_icon_state]_[animation]"
+	else
+		icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+
+/obj/machinery/door/firedoor/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.8 SECONDS
+		if("closing")
+			return 0.8 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()

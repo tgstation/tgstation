@@ -613,7 +613,8 @@
 			. += floorlight
 	update_greyscale()
 
-/obj/machinery/door/airlock/do_animate(animation)
+// I HATE AIRLOCKS AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
+/obj/machinery/door/airlock/run_animation(animation)
 	switch(animation)
 		if("opening")
 			update_icon(ALL, AIRLOCK_OPENING)

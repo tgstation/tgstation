@@ -62,7 +62,7 @@
 	switch(command)
 		if("open")
 			playsound(src, 'sound/machines/tramopen.ogg', vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-			do_animate("opening")
+			run_animation("opening")
 			icon_state ="[base_state]open"
 			sleep(7 DECISECONDS)
 			set_density(FALSE)
@@ -73,7 +73,7 @@
 				playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 				sleep(6 DECISECONDS)
 			playsound(src, 'sound/machines/tramclose.ogg', vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
-			do_animate("closing")
+			run_animation("closing")
 			icon_state = base_state
 			sleep(19 DECISECONDS)
 			if((obj_flags & EMAGGED) || malfunctioning)

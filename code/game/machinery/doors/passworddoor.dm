@@ -59,22 +59,36 @@
 		if(access_bypass || ask_for_pass(user))
 			open()
 		else
-			do_animate("deny")
+			run_animation("deny")
 
 /obj/machinery/door/password/update_icon_state()
 	. = ..()
-	icon_state = density ? "closed" : "open"
+	//Deny animation would be nice to have.
+	if(animation && animation != "deny")
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open"
 
-/obj/machinery/door/password/do_animate(animation)
+/obj/machinery/door/poddoor/update_overlays()
+	. = ..()
+	if(!density)
+		// If we're open we layer the bit below us "above" any mobs so they can walk through
+		. += mutable_appearance(icon, "open_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+
+/obj/machinery/door/password/animation_delay(animation)
 	switch(animation)
 		if("opening")
-			flick("opening", src)
+			return 0.8 SECONDS
+		if("closing")
+			return 0.8 SECONDS
+
+/obj/machinery/door/password/animation_effects(animation)
+	switch(animation)
+		if("opening")
 			playsound(src, door_open, 50, TRUE)
 		if("closing")
-			flick("closing", src)
 			playsound(src, door_close, 50, TRUE)
 		if("deny")
-			//Deny animation would be nice to have.
 			playsound(src, door_deny, 30, TRUE)
 
 /obj/machinery/door/password/proc/ask_for_pass(mob/user)
