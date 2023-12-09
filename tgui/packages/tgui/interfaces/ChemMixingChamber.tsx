@@ -1,5 +1,12 @@
 import { useBackend, useLocalState } from '../backend';
-import { AnimatedNumber, Box, Button, NumberInput, Section, Stack } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  NumberInput,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 import { round, toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
@@ -17,18 +24,13 @@ export type MixingData = {
   isReacting: BooleanLike;
 };
 
-export const ChemMixingChamber = (props, context) => {
-  const { act, data } = useBackend<MixingData>(context);
+export const ChemMixingChamber = (props) => {
+  const { act, data } = useBackend<MixingData>();
 
-  const [reagentName, setReagentName] = useLocalState(
-    context,
-    'reagentName',
-    ''
-  );
+  const [reagentName, setReagentName] = useLocalState('reagentName', '');
   const [reagentQuantity, setReagentQuantity] = useLocalState(
-    context,
     'reagentQuantity',
-    1
+    1,
   );
 
   const { emptying, temperature, targetTemp, isReacting } = data;
@@ -60,7 +62,8 @@ export const ChemMixingChamber = (props, context) => {
                     />
                   </Stack.Item>
                 </Stack>
-              }>
+              }
+            >
               <Stack vertical>
                 <Stack.Item>
                   <Stack fill>
@@ -93,11 +96,13 @@ export const ChemMixingChamber = (props, context) => {
                     fontSize="16px"
                     inline
                     bold
-                    color={emptying ? 'bad' : 'good'}>
+                    color={emptying ? 'bad' : 'good'}
+                  >
                     {emptying ? 'Emptying' : 'Filling'}
                   </Box>
                 )
-              }>
+              }
+            >
               <Stack vertical fill>
                 <Stack.Item>
                   <Stack fill>

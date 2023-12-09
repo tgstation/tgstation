@@ -26,6 +26,8 @@
 		impact_area = placer.findValidArea()
 
 /datum/round_event/anomaly/announce(fake)
+	if(isnull(impact_area))
+		impact_area = placer.findValidArea()
 	priority_announce("Energetic flux wave detected on [ANOMALY_ANNOUNCE_DANGEROUS_TEXT] [impact_area.name].", "Anomaly Alert")
 
 /datum/round_event/anomaly/start()
@@ -52,4 +54,4 @@
 
 /datum/event_admin_setup/set_location/anomaly/apply_to_event(datum/round_event/anomaly/event)
 	event.spawn_location = chosen_turf
-	
+

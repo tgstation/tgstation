@@ -5,8 +5,8 @@ import { MedicalRecordTabs } from './RecordTabs';
 import { MedicalRecordView } from './RecordView';
 import { MedicalRecordData } from './types';
 
-export const MedicalRecords = (props, context) => {
-  const { data } = useBackend<MedicalRecordData>(context);
+export const MedicalRecords = (props) => {
+  const { data } = useBackend<MedicalRecordData>();
   const { authenticated } = data;
 
   return (
@@ -20,8 +20,8 @@ export const MedicalRecords = (props, context) => {
   );
 };
 
-const UnauthorizedView = (props, context) => {
-  const { act } = useBackend<MedicalRecordData>(context);
+const UnauthorizedView = (props) => {
+  const { act } = useBackend<MedicalRecordData>();
 
   return (
     <Stack.Item grow>
@@ -48,8 +48,8 @@ const UnauthorizedView = (props, context) => {
   );
 };
 
-const AuthView = (props, context) => {
-  const { act } = useBackend<MedicalRecordData>(context);
+const AuthView = (props) => {
+  const { act } = useBackend<MedicalRecordData>();
 
   return (
     <>
@@ -69,7 +69,8 @@ const AuthView = (props, context) => {
                 icon="lock"
                 color="good"
                 ml={2}
-                onClick={() => act('logout')}>
+                onClick={() => act('logout')}
+              >
                 Log Out
               </Button>
             </NoticeBox>

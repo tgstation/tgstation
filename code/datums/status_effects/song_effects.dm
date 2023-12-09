@@ -34,3 +34,22 @@
 
 /datum/status_effect/song/antimagic/get_examine_text()
 	return span_notice("[owner.p_They()] seem[owner.p_s()] to be covered in a dull, grey aura.")
+
+/datum/status_effect/song/light
+	id = "light_song"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 1 MINUTES
+	aura_desc = "bright"
+	/// lighting object that makes owner glow
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/song/light/on_apply()
+	mob_light_obj = owner.mob_light(3, color = LIGHT_COLOR_DIM_YELLOW)
+	playsound(owner, 'sound/weapons/fwoosh.ogg', 75, FALSE)
+	return TRUE
+
+/datum/status_effect/song/light/on_remove()
+	QDEL_NULL(mob_light_obj)
+
+/datum/status_effect/song/light_song/get_examine_text()
+	return span_notice("[owner.p_They()] seem[owner.p_s()] to be covered in a glowing aura.")

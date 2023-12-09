@@ -1,14 +1,20 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Collapsible, LabeledList, Section } from '../../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  LabeledList,
+  Section,
+} from '../../components';
 
 const RefRegex = RegExp('^.+ \\[0x[0-9a-fA-F]+]$');
 const FunctionRegex = RegExp('^function: 0x[0-9a-fA-F]+$');
 const UnconvertibleLuaValueRegex = RegExp(
-  '^(table|function|thread): 0x[0-9a-fA-F]+$'
+  '^(table|function|thread): 0x[0-9a-fA-F]+$',
 );
 
-export const ListMapper = (props, context) => {
-  const { act } = useBackend(context);
+export const ListMapper = (props) => {
+  const { act } = useBackend();
 
   const {
     list,
@@ -22,8 +28,8 @@ export const ListMapper = (props, context) => {
     ...rest
   } = props;
 
-  const [, setToCall] = useLocalState(context, 'toCallTaskInfo');
-  const [, setModal] = useLocalState(context, 'modal');
+  const [, setToCall] = useLocalState('toCallTaskInfo');
+  const [, setModal] = useLocalState('modal');
 
   const ThingNode = (thing, path, overrideProps) => {
     if (Array.isArray(thing)) {
@@ -51,7 +57,8 @@ export const ListMapper = (props, context) => {
                 },
               });
               setModal('call');
-            }}>
+            }}
+          >
             {thing.charAt(0).toUpperCase() + thing.substring(1)}
           </Button>
         );
@@ -128,7 +135,8 @@ export const ListMapper = (props, context) => {
               />
             </>
           )
-        }>
+        }
+      >
         {valueNode}
       </LabeledList.Item>
     );

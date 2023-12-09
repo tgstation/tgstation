@@ -616,7 +616,6 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
-	var/cellular_damage = FALSE
 	threshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",
 		"Resistance 7" = "Increases healing speed.",
@@ -628,8 +627,6 @@
 		return
 	if(A.totalResistance() >= 7)
 		power = 2
-	if(A.totalTransmittable() >= 6)
-		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
 	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0
@@ -637,12 +634,7 @@
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 
-	var/need_mob_update = FALSE
-	if(cellular_damage)
-		need_mob_update += M.adjustCloneLoss(-heal_amt * 0.5, updating_health = FALSE)
-
-	need_mob_update += M.adjustToxLoss(-(2 * heal_amt), updating_health = FALSE)
-	if(need_mob_update)
+	if(M.adjustToxLoss(-(2 * heal_amt), updating_health = FALSE))
 		M.updatehealth()
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)

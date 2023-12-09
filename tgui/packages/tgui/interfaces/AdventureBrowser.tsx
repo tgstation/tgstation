@@ -23,12 +23,11 @@ type AdventureBrowserData = AdventureDataProvider & {
   delay_message: string;
 };
 
-const AdventureList = (props, context) => {
-  const { data, act } = useBackend<AdventureBrowserData>(context);
+const AdventureList = (props) => {
+  const { data, act } = useBackend<AdventureBrowserData>();
   const [openAdventure, setOpenAdventure] = useLocalState<string | null>(
-    context,
     'openAdventure',
-    null
+    null,
   );
 
   return (
@@ -57,12 +56,13 @@ const AdventureList = (props, context) => {
   );
 };
 
-const DebugPlayer = (props, context) => {
-  const { data, act } = useBackend<AdventureBrowserData>(context);
+const DebugPlayer = (props) => {
+  const { data, act } = useBackend<AdventureBrowserData>();
   return (
     <Section
       title="Playtest"
-      buttons={<Button onClick={() => act('end_play')}>End Playtest</Button>}>
+      buttons={<Button onClick={() => act('end_play')}>End Playtest</Button>}
+    >
       {data.delay_time > 0 ? (
         <Box>
           DELAY {formatTime(data.delay_time)} / {data.delay_message}
@@ -79,8 +79,8 @@ const DebugPlayer = (props, context) => {
   );
 };
 
-export const AdventureBrowser = (props, context) => {
-  const { data } = useBackend<AdventureBrowserData>(context);
+export const AdventureBrowser = (props) => {
+  const { data } = useBackend<AdventureBrowserData>();
 
   return (
     <Window width={600} height={400} title="Adventure Overview">

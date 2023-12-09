@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const ProbingConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ProbingConsole = (props) => {
+  const { act, data } = useBackend();
   const { open, feedback, occupant, occupant_name, occupant_status } = data;
   return (
     <Window width={330} height={207} theme="abductor">
@@ -23,7 +23,8 @@ export const ProbingConsole = (props, context) => {
               content={open ? 'Close' : 'Open'}
               onClick={() => act('door')}
             />
-          }>
+          }
+        >
           {(occupant && (
             <LabeledList>
               <LabeledList.Item label="Name">{occupant_name}</LabeledList.Item>
@@ -35,7 +36,8 @@ export const ProbingConsole = (props, context) => {
                     : occupant_status === 2
                       ? 'average'
                       : 'good'
-                }>
+                }
+              >
                 {occupant_status === 3
                   ? 'Deceased'
                   : occupant_status === 2

@@ -12,15 +12,11 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props, context) => {
-  const [grow, setGrow] = useLocalState(context, 'fs_grow', 1);
-  const [direction, setDirection] = useLocalState(
-    context,
-    'fs_direction',
-    'column'
-  );
-  const [fill, setFill] = useLocalState(context, 'fs_fill', true);
-  const [hasTitle, setHasTitle] = useLocalState(context, 'fs_title', true);
+const Story = (props) => {
+  const [grow, setGrow] = useLocalState('fs_grow', 1);
+  const [direction, setDirection] = useLocalState('fs_direction', 'column');
+  const [fill, setFill] = useLocalState('fs_fill', true);
+  const [hasTitle, setHasTitle] = useLocalState('fs_title', true);
   return (
     <Flex height="100%" direction="column">
       <Flex.Item mb={1}>
@@ -29,7 +25,8 @@ const Story = (props, context) => {
             fluid
             onClick={() =>
               setDirection(direction === 'column' ? 'row' : 'column')
-            }>
+            }
+          >
             {`Flex direction="${direction}"`}
           </Button>
           <Button fluid onClick={() => setGrow(Number(!grow))}>
@@ -41,7 +38,8 @@ const Story = (props, context) => {
           <Button
             fluid
             selected={hasTitle}
-            onClick={() => setHasTitle(!hasTitle)}>
+            onClick={() => setHasTitle(!hasTitle)}
+          >
             {`Section title`}
           </Button>
         </Section>
@@ -51,7 +49,8 @@ const Story = (props, context) => {
           <Flex.Item
             mr={direction === 'row' && 1}
             mb={direction === 'column' && 1}
-            grow={grow}>
+            grow={grow}
+          >
             <Section title={hasTitle && 'Section 1'} fill={fill}>
               Content
             </Section>

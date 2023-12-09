@@ -13,8 +13,8 @@ type BasketballPanelData = {
   }[];
 };
 
-export const BasketballPanel = (props, context) => {
-  const { act, data } = useBackend<BasketballPanelData>(context);
+export const BasketballPanel = (props) => {
+  const { act, data } = useBackend<BasketballPanelData>();
 
   return (
     <Window title="Basketball" width={650} height={580}>
@@ -41,11 +41,13 @@ export const BasketballPanel = (props, context) => {
                   <Button
                     icon="basketball"
                     disabled={!(data.total_votes >= data.players_min)}
-                    onClick={() => act('basketball_start')}>
+                    onClick={() => act('basketball_start')}
+                  >
                     Start
                   </Button>
                 </>
-              }>
+              }
+            >
               <NoticeBox info>
                 The lobby has {data.total_votes} players signed up. The minigame
                 is for {data.players_min} to {data.players_max} players.
@@ -56,11 +58,13 @@ export const BasketballPanel = (props, context) => {
                   key={lobbyist.ckey}
                   className="candystripe"
                   p={1}
-                  align="baseline">
+                  align="baseline"
+                >
                   <Stack.Item grow>{lobbyist.ckey}</Stack.Item>
                   <Stack.Item>Status:</Stack.Item>
                   <Stack.Item
-                    color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
+                    color={lobbyist.status === 'Ready' ? 'green' : 'red'}
+                  >
                     {lobbyist.status}
                   </Stack.Item>
                 </Stack>

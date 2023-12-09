@@ -554,8 +554,8 @@
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
-/datum/transport_controller/linear/tram/proc/register_collision()
-	tram_registration.collisions += 1
+/datum/transport_controller/linear/tram/proc/register_collision(points = 1)
+	tram_registration.collisions += points
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 /datum/transport_controller/linear/tram/proc/power_lost()
@@ -697,7 +697,7 @@
 
 /obj/machinery/transport/tram_controller/hilbert
 	configured_transport_id = HILBERT_LINE_1
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = NO_DECONSTRUCTION
 
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
@@ -848,7 +848,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	var/turf/drop_location = find_obstruction_free_location(1, src)

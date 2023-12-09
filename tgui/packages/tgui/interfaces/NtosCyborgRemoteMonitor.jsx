@@ -1,8 +1,17 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, ProgressBar, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosCyborgRemoteMonitor = (props, context) => {
+export const NtosCyborgRemoteMonitor = (props) => {
   return (
     <NtosWindow width={600} height={800}>
       <NtosWindow.Content>
@@ -29,9 +38,9 @@ export const ProgressSwitch = (param) => {
   }
 };
 
-export const NtosCyborgRemoteMonitorContent = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tab_main, setTab_main] = useSharedState(context, 'tab_main', 1);
+export const NtosCyborgRemoteMonitorContent = (props) => {
+  const { act, data } = useBackend();
+  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const { card, cyborgs = [], DL_progress } = data;
   const storedlog = data.borglog || [];
 
@@ -47,14 +56,16 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
             icon="robot"
             lineHeight="23px"
             selected={tab_main === 1}
-            onClick={() => setTab_main(1)}>
+            onClick={() => setTab_main(1)}
+          >
             Cyborgs
           </Tabs.Tab>
           <Tabs.Tab
             icon="clipboard"
             lineHeight="23px"
             selected={tab_main === 2}
-            onClick={() => setTab_main(2)}>
+            onClick={() => setTab_main(2)}
+          >
             Stored Log File
           </Tabs.Tab>
         </Tabs>
@@ -84,7 +95,8 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                         })
                       }
                     />
-                  }>
+                  }
+                >
                   <LabeledList>
                     <LabeledList.Item label="Status">
                       <Box
@@ -94,7 +106,8 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                             : cyborg.locked_down
                               ? 'average'
                               : 'good'
-                        }>
+                        }
+                      >
                         {cyborg.status
                           ? 'Not Responding'
                           : cyborg.locked_down
@@ -112,7 +125,8 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                             : cyborg.integ <= 75
                               ? 'average'
                               : 'good'
-                        }>
+                        }
+                      >
                         {cyborg.integ === 0
                           ? 'Hard Fault'
                           : cyborg.integ <= 25
@@ -130,7 +144,8 @@ export const NtosCyborgRemoteMonitorContent = (props, context) => {
                             : cyborg.charge <= 70
                               ? 'average'
                               : 'good'
-                        }>
+                        }
+                      >
                         {typeof cyborg.charge === 'number'
                           ? cyborg.charge + '%'
                           : 'Not Found'}

@@ -1,6 +1,15 @@
 import { BooleanLike } from '../../common/react';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Icon, Input, Stack, LabeledList, Box, NoticeBox } from '../components';
+import {
+  Button,
+  Section,
+  Icon,
+  Input,
+  Stack,
+  LabeledList,
+  Box,
+  NoticeBox,
+} from '../components';
 import { Window } from '../layouts';
 
 type typePath = string;
@@ -24,12 +33,11 @@ type Ability = {
   dna_required: number; // Checks against dna_count
 };
 
-export const CellularEmporium = (props, context) => {
-  const { act, data } = useBackend<CellularEmporiumContext>(context);
+export const CellularEmporium = (props) => {
+  const { act, data } = useBackend<CellularEmporiumContext>();
   const [searchAbilities, setSearchAbilities] = useLocalState(
-    context,
     'searchAbilities',
-    ''
+    '',
   );
 
   const { can_readapt, genetic_points_count } = data;
@@ -70,7 +78,8 @@ export const CellularEmporium = (props, context) => {
                 />
               </Stack.Item>
             </Stack>
-          }>
+          }
+        >
           <AbilityList />
         </Section>
       </Window.Content>
@@ -78,9 +87,9 @@ export const CellularEmporium = (props, context) => {
   );
 };
 
-const AbilityList = (props, context) => {
-  const { act, data } = useBackend<CellularEmporiumContext>(context);
-  const [searchAbilities] = useLocalState(context, 'searchAbilities', '');
+const AbilityList = (props) => {
+  const { act, data } = useBackend<CellularEmporiumContext>();
+  const [searchAbilities] = useLocalState('searchAbilities', '');
   const {
     abilities,
     owned_abilities,
@@ -93,12 +102,18 @@ const AbilityList = (props, context) => {
     searchAbilities.length <= 1
       ? abilities
       : abilities.filter((ability) => {
-        return (
-          ability.name.toLowerCase().includes(searchAbilities.toLowerCase()) ||
-          ability.desc.toLowerCase().includes(searchAbilities.toLowerCase()) ||
-          ability.helptext.toLowerCase().includes(searchAbilities.toLowerCase())
-        );
-      });
+          return (
+            ability.name
+              .toLowerCase()
+              .includes(searchAbilities.toLowerCase()) ||
+            ability.desc
+              .toLowerCase()
+              .includes(searchAbilities.toLowerCase()) ||
+            ability.helptext
+              .toLowerCase()
+              .includes(searchAbilities.toLowerCase())
+          );
+        });
 
   if (filteredAbilities.length === 0) {
     return (
@@ -147,7 +162,8 @@ const AbilityList = (props, context) => {
                   />
                 </Stack.Item>
               </Stack>
-            }>
+            }
+          >
             {ability.desc}
             <Box color="good">{ability.helptext}</Box>
           </LabeledList.Item>

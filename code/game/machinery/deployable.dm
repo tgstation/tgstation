@@ -18,7 +18,7 @@
 	var/bar_material = METAL
 
 /obj/structure/barricade/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		make_debris()
 	qdel(src)
 
@@ -93,7 +93,7 @@
 	tool.play_tool_sound(src)
 	new /obj/item/stack/sheet/mineral/wood(get_turf(src), drop_amount)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/barricade/wooden/crude
 	name = "crude plank barricade"
@@ -129,6 +129,7 @@
 /obj/structure/barricade/sandbags/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/barricade/security
 	name = "security barrier"

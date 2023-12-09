@@ -14,8 +14,8 @@ export const meta = {
 
 const TAB_RANGE = ['Tab #1', 'Tab #2', 'Tab #3', 'Tab #4'];
 
-const Story = (props, context) => {
-  const [tabProps, setTabProps] = useLocalState(context, 'tabProps', {});
+const Story = (props) => {
+  const [tabProps, setTabProps] = useLocalState('tabProps', {});
   return (
     <>
       <Section>
@@ -101,14 +101,15 @@ const Story = (props, context) => {
   );
 };
 
-const TabsPrefab = (props, context) => {
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tabIndex', 0);
-  const [tabProps] = useLocalState(context, 'tabProps', {});
+const TabsPrefab = (props) => {
+  const [tabIndex, setTabIndex] = useLocalState('tabIndex', 0);
+  const [tabProps] = useLocalState('tabProps', {});
   return (
     <Tabs
       vertical={tabProps.vertical}
       fluid={tabProps.fluid}
-      textAlign={tabProps.centered && 'center'}>
+      textAlign={tabProps.centered && 'center'}
+    >
       {TAB_RANGE.map((text, i) => (
         <Tabs.Tab
           key={i}
@@ -124,7 +125,8 @@ const TabsPrefab = (props, context) => {
               <Button circular compact color="transparent" icon="times" />
             )
           }
-          onClick={() => setTabIndex(i)}>
+          onClick={() => setTabIndex(i)}
+        >
           {text}
         </Tabs.Tab>
       ))}

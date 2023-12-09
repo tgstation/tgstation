@@ -75,7 +75,7 @@
 		span_notice("[user] prepares to shock [target]'s brain with [tool]."),
 		span_notice("[user] prepares to shock [target]'s brain with [tool]."),
 	)
-	target.notify_ghost_cloning("Someone is trying to zap your brain.", source = target)
+	target.notify_revival("Someone is trying to zap your brain.", source = target)
 
 /datum/surgery_step/revive/play_preop_sound(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	if(istype(tool, /obj/item/shockpaddles))

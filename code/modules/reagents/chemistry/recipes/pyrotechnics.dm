@@ -488,7 +488,7 @@
 	determin_ph_range = 0
 	temp_exponent_factor = 1
 	ph_exponent_factor = 1
-	thermic_constant = -50 //This is the part that cools things down now
+	thermic_constant = -5 //This is the part that cools things down now
 	H_ion_release = 0
 	rate_up_lim = 4
 	purity_min = 0.15
@@ -503,7 +503,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.chem_temp += 10*created_volume
+	holder.expose_temperature(holder.chem_temp + (10 * created_volume), 1)
 
 /datum/chemical_reaction/pyrosium
 	results = list(/datum/reagent/pyrosium = 3)
@@ -516,8 +516,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.chem_temp = 20 // also cools the fuck down
-	return
+	holder.expose_temperature(20, 1) // also cools the fuck down
 
 /datum/chemical_reaction/teslium
 	results = list(/datum/reagent/teslium = 3)

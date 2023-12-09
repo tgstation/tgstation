@@ -33,8 +33,8 @@ const sortDestinations = (locations: string[]): DestinationInfo[] => {
   ])(locations);
 };
 
-export const DestinationTagger = (props, context) => {
-  const { act, data } = useBackend<DestinationTaggerData>(context);
+export const DestinationTagger = (props) => {
+  const { act, data } = useBackend<DestinationTaggerData>();
   const { locations, currentTag } = data;
 
   return (
@@ -49,7 +49,8 @@ export const DestinationTagger = (props, context) => {
                 !currentTag
                   ? 'Please Select A Location'
                   : `Current Destination: ${locations[currentTag - 1]}`
-              }>
+              }
+            >
               {sortDestinations(locations).map((location) => {
                 return (
                   <Button.Checkbox
@@ -59,7 +60,8 @@ export const DestinationTagger = (props, context) => {
                     onClick={() =>
                       act('change', { index: location.sorting_id })
                     }
-                    width={15}>
+                    width={15}
+                  >
                     {location.name}
                   </Button.Checkbox>
                 );

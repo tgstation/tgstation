@@ -3,9 +3,9 @@ import { useBackend, useLocalState } from '../backend';
 import { Button, Flex, NoticeBox, Section, Input } from '../components';
 import { Window } from '../layouts';
 
-export const PortraitPicker = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [listIndex, setListIndex] = useLocalState(context, 'listIndex', 0);
+export const PortraitPicker = (props) => {
+  const { act, data } = useBackend();
+  const [listIndex, setListIndex] = useLocalState('listIndex', 0);
   const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex]['title'];
@@ -47,7 +47,8 @@ export const PortraitPicker = (props, context) => {
                 height="100%"
                 align="center"
                 justify="center"
-                direction="column">
+                direction="column"
+              >
                 {got_paintings ? (
                   <>
                     <Flex.Item>
@@ -56,8 +57,7 @@ export const PortraitPicker = (props, context) => {
                         height="128px"
                         width="128px"
                         style={{
-                          'vertical-align': 'middle',
-                          '-ms-interpolation-mode': 'nearest-neighbor',
+                          verticalAlign: 'middle',
                         }}
                       />
                     </Flex.Item>

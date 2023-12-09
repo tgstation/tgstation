@@ -167,34 +167,34 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
-		return
+		return TRUE
 
 	//Cooling method
 	if(istype(attacking_item, /obj/item/extinguisher))
 		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
-			return
+			return TRUE
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return
+			return TRUE
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
-		return
+		return TRUE
 
 	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
-			return
-		if(reagents.total_volume >= reagents.maximum_volume)
+			return TRUE
+		if(reagents.holder_full())
 			to_chat(user, span_notice("[src] is full."))
 		else
 			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
 			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
 			qdel(attacking_egg)
-		return
+		return TRUE
 
 	return ..()
 
@@ -375,15 +375,21 @@
 		ITEM_SLOT_DEX_STORAGE
 	)
 
+	/// Should this bucket randomize its colors?
+	var/randomize_colors = TRUE
+
 /datum/armor/cup_bucket
 	melee = 10
 	fire = 75
 	acid = 50
 
 /obj/item/reagent_containers/cup/bucket/Initialize(mapload, vol)
-	if(greyscale_colors == initial(greyscale_colors))
+	if (randomize_colors && greyscale_colors == initial(greyscale_colors))
 		set_greyscale(pick(list("#0085e5", COLOR_OFF_WHITE, COLOR_ORANGE_BROWN, COLOR_SERVICE_LIME, COLOR_MOSTLY_PURE_ORANGE, COLOR_FADED_PINK, COLOR_RED, COLOR_YELLOW, COLOR_VIOLET, COLOR_WEBSAFE_DARK_GRAY)))
 	return ..()
+
+/obj/item/reagent_containers/cup/bucket/consistent
+	randomize_colors = FALSE
 
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"

@@ -1,11 +1,22 @@
 import { useBackend, useLocalState } from '../backend';
-import { BlockQuote, Box, Button, Dimmer, Icon, LabeledList, Modal, ProgressBar, Section, Stack } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  LabeledList,
+  Modal,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
 import { capitalize } from 'common/string';
 import nt_logo from '../assets/bg-nanotrasen.svg';
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 
 type ExplorationEventData = {
   name: string;
@@ -147,14 +158,13 @@ type ToolData = {
   icon: string;
 };
 
-export const ExodroneConsole = (props, context) => {
-  const { data } = useBackend<ExodroneConsoleData>(context);
+export const ExodroneConsole = (props) => {
+  const { data } = useBackend<ExodroneConsoleData>();
   const { signal_lost } = data;
 
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
-    false
+    false,
   );
 
   return (
@@ -168,8 +178,8 @@ export const ExodroneConsole = (props, context) => {
   );
 };
 
-const SignalLostModal = (props, context) => {
-  const { act } = useBackend(context);
+const SignalLostModal = (props) => {
+  const { act } = useBackend();
   return (
     <Modal
       backgroundColor="red"
@@ -177,13 +187,15 @@ const SignalLostModal = (props, context) => {
       width={30}
       height={22}
       p={0}
-      style={{ 'border-radius': '5%' }}>
+      style={{ borderRadius: '5%' }}
+    >
       <img src={nt_logo} width={64} height={64} />
       <Box
         backgroundColor="black"
         textColor="red"
         fontSize={2}
-        style={{ 'border-radius': '-10%' }}>
+        style={{ borderRadius: '-10%' }}
+      >
         CONNECTION LOST
       </Box>
       <Box p={2} italic>
@@ -195,7 +207,7 @@ const SignalLostModal = (props, context) => {
         <Button
           content="Confirm"
           color="danger"
-          style={{ 'border': '1px solid black' }}
+          style={{ border: '1px solid black' }}
           onClick={() => act('confirm_signal_lost')}
         />
       </Box>
@@ -203,13 +215,10 @@ const SignalLostModal = (props, context) => {
   );
 };
 
-const DroneSelectionSection = (
-  props: {
-    all_drones: Array<DroneBasicData>;
-  },
-  context
-) => {
-  const { act } = useBackend<ExodroneConsoleData>(context);
+const DroneSelectionSection = (props: {
+  all_drones: Array<DroneBasicData>;
+}) => {
+  const { act } = useBackend<ExodroneConsoleData>();
   const { all_drones } = props;
 
   return (
@@ -233,8 +242,9 @@ const DroneSelectionSection = (
                     <Button
                       icon="plug"
                       onClick={() =>
-                        act('select_drone', { 'drone_ref': drone.ref })
-                      }>
+                        act('select_drone', { drone_ref: drone.ref })
+                      }
+                    >
                       Assume Control
                     </Button>
                   )}
@@ -249,14 +259,13 @@ const DroneSelectionSection = (
   );
 };
 
-const ToolSelectionModal = (props, context) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+const ToolSelectionModal = (props) => {
+  const { act, data } = useBackend<ExodroneConsoleData>();
   const { all_tools = {} } = data;
 
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
-    false
+    false,
   );
 
   const toolData = Object.keys(all_tools);
@@ -276,7 +285,8 @@ const ToolSelectionModal = (props, context) => {
                     }}
                     width={6}
                     height={6}
-                    tooltip={all_tools[tool_name].description}>
+                    tooltip={all_tools[tool_name].description}
+                  >
                     <Stack vertical>
                       <Stack.Item>{capitalize(tool_name)}</Stack.Item>
                       <Stack.Item ml={2.5}>
@@ -297,14 +307,8 @@ const ToolSelectionModal = (props, context) => {
   );
 };
 
-const EquipmentBox = (
-  props: {
-    cargo: CargoData;
-    drone: DroneData;
-  },
-  context
-) => {
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+const EquipmentBox = (props: { cargo: CargoData; drone: DroneData }) => {
+  const { act, data } = useBackend<ExodroneConsoleData>();
   const { all_tools = {} } = data;
   const { configurable } = props.drone;
   const cargo = props.cargo;
@@ -319,7 +323,8 @@ const EquipmentBox = (
                 width={4.7}
                 tooltip={capitalize(cargo.name)}
                 tooltipPosition="right"
-                color="transparent">
+                color="transparent"
+              >
                 <Icon
                   color="white"
                   name={all_tools[cargo.name].icon}
@@ -352,7 +357,8 @@ const EquipmentBox = (
                 width={4.7}
                 tooltip={capitalize(cargo.name)}
                 tooltipPosition="right"
-                color="transparent">
+                color="transparent"
+              >
                 <Icon color="white" name="box" size={3} pl={2.2} pt={2} />
               </Button>
             </Stack.Item>
@@ -376,24 +382,19 @@ const EquipmentBox = (
       width={5}
       height={5}
       style={{ border: '2px solid black' }}
-      textAlign="center">
+      textAlign="center"
+    >
       {boxContents(cargo)}
     </Box>
   );
 };
 
-const EquipmentGrid = (
-  props: {
-    drone: ActiveDrone & DroneData;
-  },
-  context
-) => {
-  const { act } = useBackend<ExodroneConsoleData>(context);
+const EquipmentGrid = (props: { drone: ActiveDrone & DroneData }) => {
+  const { act } = useBackend<ExodroneConsoleData>();
   const { cargo, configurable } = props.drone;
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
-    false
+    false,
   );
   return (
     <Stack vertical fill>
@@ -453,13 +454,10 @@ const EquipmentGrid = (
   );
 };
 
-const DroneStatus = (
-  props: {
-    drone_integrity: number;
-    drone_max_integrity: number;
-  },
-  context
-) => {
+const DroneStatus = (props: {
+  drone_integrity: number;
+  drone_max_integrity: number;
+}) => {
   const { drone_integrity, drone_max_integrity } = props;
 
   return (
@@ -501,15 +499,12 @@ const NoSiteDimmer = () => {
   );
 };
 
-const TravelTargetSelectionScreen = (
-  props: {
-    drone: (DroneExploration | DroneIdle | DroneTravel) & DroneData;
-    showCancelButton?: boolean;
-  },
-  context
-) => {
+const TravelTargetSelectionScreen = (props: {
+  drone: (DroneExploration | DroneIdle | DroneTravel) & DroneData;
+  showCancelButton?: boolean;
+}) => {
   // List of sites and eta travel times to each
-  const { act, data } = useBackend<ExodroneConsoleData>(context);
+  const { act, data } = useBackend<ExodroneConsoleData>();
   const { drone } = props;
   const { all_bands } = data;
   const { can_travel, travel_error, drone_travel_coefficent } = drone;
@@ -528,19 +523,17 @@ const TravelTargetSelectionScreen = (
     }
   };
   const [choosingTools, setChoosingTools] = useLocalState(
-    context,
     'choosingTools',
-    false
+    false,
   );
   const [TravelDimmerShown, setTravelDimmerShown] = useLocalState(
-    context,
     'TravelDimmerShown',
-    false
+    false,
   );
 
   const travel_to = (ref) => {
     setTravelDimmerShown(false);
-    act('start_travel', { 'target_site': ref });
+    act('start_travel', { target_site: ref });
   };
 
   const non_empty_bands = (dest: SiteData) => {
@@ -576,7 +569,8 @@ const TravelTargetSelectionScreen = (
               />
             </Box>
           </>
-        }>
+        }
+      >
         {sites && !sites.length && !choosingTools && <NoSiteDimmer />}
         {site && (
           <Section
@@ -610,7 +604,8 @@ const TravelTargetSelectionScreen = (
                   disabled={!can_travel}
                 />
               </>
-            }>
+            }
+          >
             <LabeledList>
               <LabeledList.Item label="Location">
                 {destination.coordinates}
@@ -632,12 +627,7 @@ const TravelTargetSelectionScreen = (
   );
 };
 
-const TravelDimmer = (
-  props: {
-    drone: DroneTravel;
-  },
-  context
-) => {
+const TravelDimmer = (props: { drone: DroneTravel }) => {
   const { travel_time_left } = props.drone;
   return (
     <Section fill>
@@ -674,20 +664,14 @@ const TimeoutScreen = (props: { drone: DroneBusy }) => {
   );
 };
 
-const ExplorationScreen = (
-  props: {
-    drone: DroneExploration & DroneData;
-  },
-  context
-) => {
-  const { act } = useBackend(context);
+const ExplorationScreen = (props: { drone: DroneExploration & DroneData }) => {
+  const { act } = useBackend();
   const { drone } = props;
   const { site } = drone;
 
   const [TravelDimmerShown, setTravelDimmerShown] = useLocalState(
-    context,
     'TravelDimmerShown',
-    false
+    false,
   );
 
   if (TravelDimmerShown) {
@@ -702,7 +686,8 @@ const ExplorationScreen = (
           drone_integrity={drone.drone_integrity}
           drone_max_integrity={drone.drone_max_integrity}
         />
-      }>
+      }
+    >
       <Stack vertical fill>
         <Stack.Item grow>
           <LabeledList>
@@ -734,14 +719,8 @@ const ExplorationScreen = (
   );
 };
 
-const EventScreen = (
-  props: {
-    drone: DroneData;
-    event: FullEventData;
-  },
-  context
-) => {
-  const { act } = useBackend(context);
+const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
+  const { act } = useBackend();
   const { drone, event } = props;
 
   return (
@@ -753,18 +732,17 @@ const EventScreen = (
           drone_integrity={drone.drone_integrity}
           drone_max_integrity={drone.drone_max_integrity}
         />
-      }>
+      }
+    >
       <Stack vertical fill textAlign="center">
         <Stack.Item>
           <Stack fill>
             <Stack.Item>
-              <img
+              <Box
+                as="img"
                 src={resolveAsset(event.image)}
                 height="125px"
                 width="250px"
-                style={{
-                  '-ms-interpolation-mode': 'nearest-neighbor',
-                }}
               />
             </Stack.Item>
             <Stack.Item>
@@ -799,16 +777,13 @@ const EventScreen = (
   );
 };
 
-export const AdventureScreen = (
-  props: {
-    adventure_data: AdventureData;
-    drone_integrity: number;
-    drone_max_integrity: number;
-    hide_status?: boolean;
-  },
-  context
-) => {
-  const { act } = useBackend(context);
+export const AdventureScreen = (props: {
+  adventure_data: AdventureData;
+  drone_integrity: number;
+  drone_max_integrity: number;
+  hide_status?: boolean;
+}) => {
+  const { act } = useBackend();
   const { adventure_data, drone_integrity, drone_max_integrity } = props;
   const rawData = adventure_data.raw_image;
   const imgSource = rawData ? rawData : resolveAsset(adventure_data.image);
@@ -823,7 +798,8 @@ export const AdventureScreen = (
             drone_max_integrity={drone_max_integrity}
           />
         )
-      }>
+      }
+    >
       <Stack>
         <Stack.Item>
           <BlockQuote preserveWhitespace>
@@ -832,14 +808,7 @@ export const AdventureScreen = (
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
-          <img
-            src={imgSource}
-            height="100px"
-            width="200px"
-            style={{
-              '-ms-interpolation-mode': 'nearest-neighbor',
-            }}
-          />
+          <Box as="img" src={imgSource} height="100px" width="200px" />
           <Stack vertical>
             <Stack.Divider />
             <Stack.Item grow />
@@ -890,8 +859,8 @@ const DroneScreen = (props: { drone: ActiveDrone & DroneData }) => {
   }
 };
 
-const ExodroneConsoleContent = (props, context) => {
-  const { data } = useBackend<ExodroneConsoleData>(context);
+const ExodroneConsoleContent = (props) => {
+  const { data } = useBackend<ExodroneConsoleData>();
 
   if (!data.drone) {
     return <DroneSelectionSection all_drones={data.all_drones} />;

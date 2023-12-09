@@ -18,7 +18,7 @@
 	///The original owner of this tail
 	var/original_owner //Yay, snowflake code!
 
-/obj/item/organ/external/tail/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/tail/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(.)
 		RegisterSignal(receiver, COMSIG_ORGAN_WAG_TAIL, PROC_REF(wag))
@@ -32,14 +32,11 @@
 		else if(type in receiver.dna.species.external_organs)
 			receiver.add_mood_event("wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
-/obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/tail/on_mob_remove(mob/living/carbon/organ_owner, special)
+	. = ..()
+
 	if(wag_flags & WAG_WAGGING)
 		wag(organ_owner, start = FALSE)
-
-	return ..()
-
-/obj/item/organ/external/tail/on_remove(mob/living/carbon/organ_owner, special)
-	. = ..()
 
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
@@ -136,13 +133,13 @@
 	///A reference to the paired_spines, since for some fucking reason tail spines are tied to the spines themselves.
 	var/obj/item/organ/external/spines/paired_spines
 
-/obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/tail/lizard/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(.)
-		paired_spines = ownerlimb.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
+		paired_spines = bodypart_owner.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 		paired_spines?.paired_tail = src
 
-/obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/tail/lizard/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	if(paired_spines)
 		paired_spines.paired_tail = null

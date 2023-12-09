@@ -2,7 +2,7 @@ import { sortBy } from 'common/collections';
 import { Section, Button, Flex, Tabs, Grid } from '../../components';
 import { useLocalState } from '../../backend';
 
-export const AccessConfig = (props, context) => {
+export const AccessConfig = (props) => {
   const {
     accesses = [],
     selectedList = [],
@@ -13,15 +13,14 @@ export const AccessConfig = (props, context) => {
     denyDep,
   } = props;
   const [selectedAccessName, setSelectedAccessName] = useLocalState(
-    context,
     'accessName',
-    accesses[0]?.name
+    accesses[0]?.name,
   );
   const selectedAccess = accesses.find(
-    (access) => access.name === selectedAccessName
+    (access) => access.name === selectedAccessName,
   );
   const selectedAccessEntries = sortBy((entry) => entry.desc)(
-    selectedAccess?.accesses || []
+    selectedAccess?.accesses || [],
   );
 
   const checkAccessIcon = (accesses) => {
@@ -61,7 +60,8 @@ export const AccessConfig = (props, context) => {
             onClick={() => denyAll()}
           />
         </>
-      }>
+      }
+    >
       <Flex>
         <Flex.Item>
           <Tabs vertical>
@@ -76,7 +76,8 @@ export const AccessConfig = (props, context) => {
                   color={color}
                   icon={icon}
                   selected={access.name === selectedAccessName}
-                  onClick={() => setSelectedAccessName(access.name)}>
+                  onClick={() => setSelectedAccessName(access.name)}
+                >
                   {access.name}
                 </Tabs.Tab>
               );

@@ -25,11 +25,11 @@ type PaintingData = {
   medium: string | null;
 };
 
-export const PaintingAdminPanel = (props, context) => {
-  const { act, data } = useBackend<PaintingAdminPanelData>(context);
+export const PaintingAdminPanel = (props) => {
+  const { act, data } = useBackend<PaintingAdminPanelData>();
   const [chosenPaintingRef, setChosenPaintingRef] = useLocalState<
     string | null
-  >(context, 'chosenPainting', null);
+  >('chosenPainting', null);
   const { paintings } = data;
   const chosenPainting = paintings.find((p) => p.ref === chosenPaintingRef);
   return (
@@ -40,20 +40,20 @@ export const PaintingAdminPanel = (props, context) => {
             title="Painting Information"
             buttons={
               <Button onClick={() => setChosenPaintingRef(null)}>Close</Button>
-            }>
+            }
+          >
             <img
               src={resolveAsset(`paintings_${chosenPainting.md5}`)}
               height="96px"
               width="96px"
               style={{
-                'vertical-align': 'middle',
-                '-ms-interpolation-mode': 'nearest-neighbor',
+                verticalAlign: 'middle',
               }}
             />
             <LabeledList>
               <LabeledList.Item label="md5" content={chosenPainting.md5} />
               <LabeledList.Item label="title">
-                <Box inline style={{ 'word-break': 'break-all' }}>
+                <Box inline style={{ wordBreak: 'break-all' }}>
                   {decodeHtmlEntities(chosenPainting.title)}
                 </Box>
                 <Button
@@ -128,11 +128,13 @@ export const PaintingAdminPanel = (props, context) => {
                 onClick={() => {
                   setChosenPaintingRef(null);
                   act('delete', { ref: chosenPainting.ref });
-                }}>
+                }}
+              >
                 Delete
               </Button.Confirm>
               <Button
-                onClick={() => act('dumpit', { ref: chosenPainting.ref })}>
+                onClick={() => act('dumpit', { ref: chosenPainting.ref })}
+              >
                 Reset Patronage
               </Button>
             </Section>
@@ -148,7 +150,7 @@ export const PaintingAdminPanel = (props, context) => {
             </Table.Row>
             {paintings.map((painting) => (
               <Table.Row key={painting.ref} className="candystripe">
-                <Table.Cell style={{ 'word-break': 'break-all' }}>
+                <Table.Cell style={{ wordBreak: 'break-all' }}>
                   {decodeHtmlEntities(painting.title)}
                 </Table.Cell>
                 <Table.Cell>{painting.creator_ckey}</Table.Cell>
@@ -158,8 +160,7 @@ export const PaintingAdminPanel = (props, context) => {
                     height="36px"
                     width="36px"
                     style={{
-                      'vertical-align': 'middle',
-                      '-ms-interpolation-mode': 'nearest-neighbor',
+                      verticalAlign: 'middle',
                     }}
                   />
                 </Table.Cell>

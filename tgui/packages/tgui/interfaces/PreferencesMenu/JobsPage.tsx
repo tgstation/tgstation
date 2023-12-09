@@ -1,15 +1,21 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { InfernoNode, SFC } from 'inferno';
+import { PropsWithChildren, ReactNode } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Button, Dropdown, Stack, Tooltip } from '../../components';
-import { createSetPreference, Job, JoblessRole, JobPriority, PreferencesMenuData } from './data';
+import {
+  createSetPreference,
+  Job,
+  JoblessRole,
+  JobPriority,
+  PreferencesMenuData,
+} from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
 const sortJobs = (entries: [string, Job][], head?: string) =>
   sortBy<[string, Job]>(
     ([key, _]) => (key === head ? -1 : 1),
-    ([key, _]) => key
+    ([key, _]) => key,
   )(entries);
 
 const PRIORITY_BUTTON_SIZE = '18px';
@@ -47,8 +53,7 @@ type CreateSetPriority = (priority: JobPriority | null) => () => void;
 const createSetPriorityCache: Record<string, CreateSetPriority> = {};
 
 const createCreateSetPriorityFromName = (
-  context,
-  jobName: string
+  jobName: string,
 ): CreateSetPriority => {
   if (createSetPriorityCache[jobName] !== undefined) {
     return createSetPriorityCache[jobName];
@@ -63,7 +68,7 @@ const createCreateSetPriorityFromName = (
     }
 
     const setPriority = () => {
-      const { act } = useBackend<PreferencesMenuData>(context);
+      const { act } = useBackend<PreferencesMenuData>();
 
       act('set_job_preference', {
         job: jobName,
@@ -108,11 +113,12 @@ const PriorityButtons = (props: {
   return (
     <Stack
       style={{
-        'align-items': 'center',
-        'height': '100%',
-        'justify-content': 'flex-end',
-        'padding-left': '0.3em',
-      }}>
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'flex-end',
+        paddingLeft: '0.3em',
+      }}
+    >
       {isOverflow ? (
         <>
           <PriorityButton
@@ -166,27 +172,20 @@ const PriorityButtons = (props: {
   );
 };
 
-const JobRow = (
-  props: {
-    className?: string;
-    job: Job;
-    name: string;
-  },
-  context
-) => {
-  const { data } = useBackend<PreferencesMenuData>(context);
+const JobRow = (props: { className?: string; job: Job; name: string }) => {
+  const { data } = useBackend<PreferencesMenuData>();
   const { className, job, name } = props;
 
   const isOverflow = data.overflow_role === name;
   const priority = data.job_preferences[name];
 
-  const createSetPriority = createCreateSetPriorityFromName(context, name);
+  const createSetPriority = createCreateSetPriorityFromName(name);
 
   const experienceNeeded =
     data.job_required_experience && data.job_required_experience[name];
   const daysLeft = data.job_days_left ? data.job_days_left[name] : 0;
 
-  let rightSide: InfernoNode;
+  let rightSide: ReactNode;
 
   if (experienceNeeded) {
     const { experience_type, required_playtime } = experienceNeeded;
@@ -226,20 +225,16 @@ const JobRow = (
   }
 
   return (
-    <Stack.Item
-      className={className}
-      height="100%"
-      style={{
-        'margin-top': 0,
-      }}>
+    <Stack.Item className={className} height="100%" mt={0}>
       <Stack fill align="center">
         <Tooltip content={job.description} position="bottom-start">
           <Stack.Item
             className="job-name"
             width="50%"
             style={{
-              'padding-left': '0.3em',
-            }}>
+              paddingLeft: '0.3em',
+            }}
+          >
             {name}
           </Stack.Item>
         </Tooltip>
@@ -252,7 +247,7 @@ const JobRow = (
   );
 };
 
-const Department: SFC<{ department: string }> = (props) => {
+const Department = (props: { department: string } & PropsWithChildren) => {
   const { children, department: name } = props;
   const className = `PreferencesMenu__Jobs__departments--${name}`;
 
@@ -276,7 +271,7 @@ const Department: SFC<{ department: string }> = (props) => {
 
         const jobsForDepartment = sortJobs(
           Object.entries(jobs).filter(([_, job]) => job.department === name),
-          department.head
+          department.head,
         );
 
         return (
@@ -314,8 +309,8 @@ const Gap = (props: { amount: number }) => {
   return <Box height={`calc(${props.amount}px + 0.2em)`} />;
 };
 
-const JoblessRoleDropdown = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+const JoblessRoleDropdown = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
   const selected = data.character_preferences.misc.joblessrole;
 
   const options = [

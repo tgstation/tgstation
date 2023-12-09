@@ -3,7 +3,14 @@ import { flow } from 'common/fp';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Button, ByondUi, Input, NoticeBox, Section, Stack } from '../components';
+import {
+  Button,
+  ByondUi,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -25,7 +32,7 @@ type Camera = {
  */
 const prevNextCamera = (
   cameras: Camera[],
-  activeCamera: Camera & { status: BooleanLike }
+  activeCamera: Camera & { status: BooleanLike },
 ) => {
   if (!activeCamera || cameras.length < 2) {
     return [];
@@ -70,7 +77,7 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
   ])(cameras);
 };
 
-export const CameraConsole = (props, context) => {
+export const CameraConsole = (props) => {
   return (
     <Window width={850} height={708}>
       <Window.Content>
@@ -80,7 +87,7 @@ export const CameraConsole = (props, context) => {
   );
 };
 
-export const CameraContent = (props, context) => {
+export const CameraContent = (props) => {
   return (
     <Stack fill>
       <Stack.Item grow>
@@ -93,9 +100,9 @@ export const CameraContent = (props, context) => {
   );
 };
 
-const CameraSelector = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+const CameraSelector = (props) => {
+  const { act, data } = useBackend<Data>();
+  const [searchText, setSearchText] = useLocalState('searchText', '');
   const { activeCamera } = data;
   const cameras = selectCameras(data.cameras, searchText);
 
@@ -131,7 +138,8 @@ const CameraSelector = (props, context) => {
                 act('switch_camera', {
                   camera: camera.ref,
                 })
-              }>
+              }
+            >
               {camera.name}
             </div>
           ))}
@@ -141,10 +149,10 @@ const CameraSelector = (props, context) => {
   );
 };
 
-const CameraControls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CameraControls = (props) => {
+  const { act, data } = useBackend<Data>();
   const { activeCamera, can_spy, mapRef } = data;
-  const [searchText] = useLocalState(context, 'searchText', '');
+  const [searchText] = useLocalState('searchText', '');
 
   const cameras = selectCameras(data.cameras, searchText);
 

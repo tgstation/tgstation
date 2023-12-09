@@ -1,5 +1,16 @@
 import { useBackend } from '../../backend';
-import { Icon, NumberInput, ProgressBar, Box, Button, Section, Stack, LabeledList, NoticeBox, Collapsible } from '../../components';
+import {
+  Icon,
+  NumberInput,
+  ProgressBar,
+  Box,
+  Button,
+  Section,
+  Stack,
+  LabeledList,
+  NoticeBox,
+  Collapsible,
+} from '../../components';
 import { MainData, MechModule } from './data';
 import { classes } from 'common/react';
 import { toFixed } from 'common/math';
@@ -40,14 +51,14 @@ const moduleSlotLabel = (param) => {
   }
 };
 
-export const ModulesPane = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+export const ModulesPane = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { modules, selected_module_index, weapons_safety } = data;
   return (
     <Section
       title="Equipment"
       fill
-      style={{ 'overflow-y': 'auto' }}
+      style={{ overflowY: 'auto' }}
       buttons={
         <Button
           icon={!weapons_safety ? 'triangle-exclamation' : 'helmet-safety'}
@@ -59,7 +70,8 @@ export const ModulesPane = (props, context) => {
               : 'Safety Protocols Enabled'
           }
         />
-      }>
+      }
+    >
       <Stack>
         <Stack.Item>
           {modules.map((module, i) =>
@@ -70,7 +82,8 @@ export const ModulesPane = (props, context) => {
                 pr="8px"
                 fluid
                 key={i}
-                color="transparent">
+                color="transparent"
+              >
                 <Stack>
                   <Stack.Item width="32px" height="32px" textAlign="center">
                     <Icon
@@ -83,10 +96,11 @@ export const ModulesPane = (props, context) => {
                   <Stack.Item
                     lineHeight="32px"
                     style={{
-                      'text-transform': 'capitalize',
-                      'overflow': 'hidden',
-                      'text-overflow': 'ellipsis',
-                    }}>
+                      textTransform: 'capitalize',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
                     {`${moduleSlotLabel(module.slot)} Slot`}
                   </Stack.Item>
                 </Stack>
@@ -103,7 +117,8 @@ export const ModulesPane = (props, context) => {
                   act('select_module', {
                     index: i,
                   })
-                }>
+                }
+              >
                 <Stack>
                   <Stack.Item lineHeight="0">
                     <Box
@@ -113,15 +128,16 @@ export const ModulesPane = (props, context) => {
                   <Stack.Item
                     lineHeight="32px"
                     style={{
-                      'text-transform': 'capitalize',
-                      'overflow': 'hidden',
-                      'text-overflow': 'ellipsis',
-                    }}>
+                      textTransform: 'capitalize',
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
                     {module.name}
                   </Stack.Item>
                 </Stack>
               </Button>
-            )
+            ),
           )}
         </Stack.Item>
         <Stack.Item grow pl={1}>
@@ -134,8 +150,8 @@ export const ModulesPane = (props, context) => {
   );
 };
 
-export const ModuleDetails = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+export const ModuleDetails = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { slot, name, desc, icon, detachable, ref, snowflake } = props.module;
   return (
     <Box>
@@ -144,7 +160,7 @@ export const ModuleDetails = (props, context) => {
           <Stack.Item>
             <Stack>
               <Stack.Item grow>
-                <h2 style={{ 'text-transform': 'capitalize' }}>{name}</h2>
+                <h2 style={{ textTransform: 'capitalize' }}>{name}</h2>
                 <Box italic opacity={0.5}>
                   {moduleSlotLabel(slot)}
                 </Box>
@@ -190,8 +206,8 @@ export const ModuleDetails = (props, context) => {
   );
 };
 
-const ModuleDetailsBasic = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const ModuleDetailsBasic = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { power_level, weapons_safety } = data;
   const {
     ref,
@@ -220,7 +236,8 @@ const ModuleDetailsBasic = (props, context) => {
                 })
               }
             />
-          }>
+          }
+        >
           <ProgressBar
             ranges={{
               good: [0.75, Infinity],
@@ -292,7 +309,7 @@ const MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC = 'ballistic_weapon_snowflake';
 const MECHA_SNOWFLAKE_ID_GENERATOR = 'generator_snowflake';
 const MECHA_SNOWFLAKE_ID_CLAW = 'lawclaw_snowflake';
 
-export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
+export const ModuleDetailsExtra = (props: { module: MechModule }) => {
   const module = props.module;
   switch (module.snowflake.snowflake_id) {
     case MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC:
@@ -316,8 +333,8 @@ export const ModuleDetailsExtra = (props: { module: MechModule }, context) => {
   }
 };
 
-const SnowflakeWeaponBallistic = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeWeaponBallistic = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const {
     projectiles,
@@ -346,11 +363,13 @@ const SnowflakeWeaponBallistic = (props, context) => {
                   ref: ref,
                   gear_action: 'reload',
                 })
-              }>
+              }
+            >
               Reload
             </Button>
           )
-        }>
+        }
+      >
         <ProgressBar value={projectiles / max_magazine}>
           {`${projectiles} of ${max_magazine}`}
         </ProgressBar>
@@ -367,8 +386,8 @@ const SnowflakeWeaponBallistic = (props, context) => {
   );
 };
 
-const SnowflakeSleeper = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeSleeper = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { patient } = props.module.snowflake;
   return !patient ? (
@@ -388,7 +407,8 @@ const SnowflakeSleeper = (props, context) => {
               })
             }
           />
-        }>
+        }
+      >
         {patient.patientname}
       </LabeledList.Item>
       <LabeledList.Item label={'Health'}>
@@ -420,8 +440,8 @@ const SnowflakeSleeper = (props, context) => {
   );
 };
 
-const SnowflakeSyringe = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeSyringe = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { power_level, weapons_safety } = data;
   const { ref, energy_per_use, equip_cooldown } = props.module;
   const { mode, syringe, max_syringe, reagents, total_reagents } =
@@ -464,8 +484,8 @@ const SnowflakeSyringe = (props, context) => {
   );
 };
 
-const SnowflakeMode = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeMode = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { mode, mode_label } = props.module.snowflake;
   return (
@@ -483,8 +503,8 @@ const SnowflakeMode = (props, context) => {
   );
 };
 
-const SnowflakeRadio = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeRadio = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { microphone, speaker, minFrequency, maxFrequency, frequency } =
     props.module.snowflake;
@@ -499,7 +519,8 @@ const SnowflakeRadio = (props, context) => {
             })
           }
           selected={microphone}
-          icon={microphone ? 'microphone' : 'microphone-slash'}>
+          icon={microphone ? 'microphone' : 'microphone-slash'}
+        >
           {(microphone ? 'En' : 'Dis') + 'abled'}
         </Button>
       </LabeledList.Item>
@@ -512,7 +533,8 @@ const SnowflakeRadio = (props, context) => {
             })
           }
           selected={speaker}
-          icon={speaker ? 'volume-up' : 'volume-mute'}>
+          icon={speaker ? 'volume-up' : 'volume-mute'}
+        >
           {(speaker ? 'En' : 'Dis') + 'abled'}
         </Button>
       </LabeledList.Item>
@@ -539,8 +561,8 @@ const SnowflakeRadio = (props, context) => {
   );
 };
 
-const SnowflakeAirTank = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeAirTank = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { cabin_sealed, one_atmosphere } = data;
   const { ref, integrity, active } = props.module;
   const {
@@ -574,7 +596,8 @@ const SnowflakeAirTank = (props, context) => {
                   })
                 }
               />
-            }>
+            }
+          >
             <ProgressBar
               ranges={{
                 good: [0.75, Infinity],
@@ -606,7 +629,8 @@ const SnowflakeAirTank = (props, context) => {
             }
             selected={active}
           />
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Automation">
             <Button
@@ -658,7 +682,8 @@ const SnowflakeAirTank = (props, context) => {
                 color="transparent"
                 tooltip="Park above atmospherics connector port to connect inernal air tank with a gas network."
               />
-            }>
+            }
+          >
             <Button
               onClick={() =>
                 act('equip_act', {
@@ -666,7 +691,8 @@ const SnowflakeAirTank = (props, context) => {
                   gear_action: 'toggle_port',
                 })
               }
-              selected={port_connected}>
+              selected={port_connected}
+            >
               {port_connected ? 'Connected' : 'Disconnected'}
             </Button>
           </LabeledList.Item>
@@ -686,7 +712,8 @@ const SnowflakeAirTank = (props, context) => {
               })
             }
           />
-        }>
+        }
+      >
         <LabeledList.Item label="Direction">
           <Button
             content={tank_pump_direction ? 'Area → Tank' : 'Tank → Area'}
@@ -747,8 +774,8 @@ const SnowflakeAirTank = (props, context) => {
   );
 };
 
-const SnowflakeOrebox = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeOrebox = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { contents } = props.module.snowflake;
   return (
@@ -766,7 +793,8 @@ const SnowflakeOrebox = (props, context) => {
           }
           disabled={!Object.keys(contents).length}
         />
-      }>
+      }
+    >
       {Object.keys(contents).length ? (
         Object.keys(contents).map((item, i) => (
           <Stack key={i}>
@@ -782,10 +810,11 @@ const SnowflakeOrebox = (props, context) => {
             <Stack.Item
               lineHeight="24px"
               style={{
-                'text-transform': 'capitalize',
-                'overflow': 'hidden',
-                'text-overflow': 'ellipsis',
-              }}>
+                textTransform: 'capitalize',
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+              }}
+            >
               {`${contents[item].amount}x ${contents[item].name}`}
             </Stack.Item>
           </Stack>
@@ -797,15 +826,16 @@ const SnowflakeOrebox = (props, context) => {
   );
 };
 
-const SnowflakeCargo = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeCargo = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { cargo, cargo_capacity } = props.module.snowflake;
   return (
     <Box>
       <Section
         title="Contents"
-        buttons={`${cargo.length} of ${cargo_capacity}`}>
+        buttons={`${cargo.length} of ${cargo_capacity}`}
+      >
         {!cargo.length ? (
           <NoticeBox info>Compartment is empty</NoticeBox>
         ) : (
@@ -823,8 +853,9 @@ const SnowflakeCargo = (props, context) => {
                 })
               }
               style={{
-                'text-transform': 'capitalize',
-              }}>
+                textTransform: 'capitalize',
+              }}
+            >
               {item.name}
             </Button>
           ))
@@ -834,8 +865,8 @@ const SnowflakeCargo = (props, context) => {
   );
 };
 
-const SnowflakeExtinguisher = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeExtinguisher = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { reagents, total_reagents, reagents_required } =
     props.module.snowflake;
@@ -854,7 +885,8 @@ const SnowflakeExtinguisher = (props, context) => {
               })
             }
           />
-        }>
+        }
+      >
         <ProgressBar value={reagents} minValue={0} maxValue={total_reagents}>
           {reagents}
         </ProgressBar>
@@ -877,8 +909,8 @@ const SnowflakeExtinguisher = (props, context) => {
   );
 };
 
-const SnowflakeGeneraor = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeGeneraor = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { sheet_material_amount } = data;
   const { ref, active, name } = props.module;
   const { fuel } = props.module.snowflake;
@@ -891,8 +923,8 @@ const SnowflakeGeneraor = (props, context) => {
   );
 };
 
-const SnowflakeLawClaw = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeLawClaw = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { autocuff } = props.module.snowflake;
   return (

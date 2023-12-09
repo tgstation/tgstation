@@ -1,9 +1,16 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import {
+  AnimatedNumber,
+  Button,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
-export const MechBayPowerConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const MechBayPowerConsole = (props) => {
+  const { act, data } = useBackend();
   const { recharge_port } = data;
   const mech = recharge_port && recharge_port.mech;
   const cell = mech && mech.cell;
@@ -19,7 +26,8 @@ export const MechBayPowerConsole = (props, context) => {
               content="Sync"
               onClick={() => act('reconnect')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Integrity">
               {(!recharge_port && (
@@ -48,7 +56,8 @@ export const MechBayPowerConsole = (props, context) => {
                       good: [0.7, Infinity],
                       average: [0.3, 0.7],
                       bad: [-Infinity, 0.3],
-                    }}>
+                    }}
+                  >
                     <AnimatedNumber value={cell.charge} />
                     {' / ' + cell.maxcharge}
                   </ProgressBar>

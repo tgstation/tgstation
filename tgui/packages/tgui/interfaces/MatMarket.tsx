@@ -24,8 +24,8 @@ type Data = {
   CARGO_CRATE_VALUE: number;
 };
 
-export const MatMarket = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const MatMarket = (props) => {
+  const { act, data } = useBackend<Data>();
 
   const {
     orderingPrive,
@@ -62,7 +62,8 @@ export const MatMarket = (props, context) => {
                 onClick={() => act('toggle_budget')}
               />
             )
-          }>
+          }
+        >
           Buy orders for material sheets placed here will be ordered on the next
           cargo shipment.
           <br /> <br />
@@ -102,7 +103,8 @@ export const MatMarket = (props, context) => {
                     textColor={material.color ? material.color : 'white'}
                     fontSize="125%"
                     width="15%"
-                    pr="3%">
+                    pr="3%"
+                  >
                     {toTitleCase(material.name)}
                   </Stack.Item>
 
@@ -123,7 +125,8 @@ export const MatMarket = (props, context) => {
                         : material.trend === 'down'
                           ? 'red'
                           : 'white'
-                    }>
+                    }
+                  >
                     <b>{toTitleCase(material.name)}</b> is trending{' '}
                     <b>{material.trend}</b>.
                   </Stack.Item>
@@ -227,7 +230,7 @@ export const MatMarket = (props, context) => {
   );
 };
 
-const MarketCrashModal = (props, context) => {
+const MarketCrashModal = (props) => {
   return (
     <Modal textAlign="center" mr={1.5}>
       ATTENTION! THE MARKET HAS CRASHED

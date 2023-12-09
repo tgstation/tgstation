@@ -17,8 +17,8 @@ type Filter = {
   gas_id: string;
 };
 
-export const AtmosFilter = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosFilter = (props) => {
+  const { act, data } = useBackend<Data>();
   const { filter_types = [], on, rate, max_rate } = data;
 
   return (
@@ -34,7 +34,8 @@ export const AtmosFilter = (props, context) => {
             />
           }
           fill
-          title="Gas Filter">
+          title="Gas Filter"
+        >
           <LabeledList>
             <LabeledList.Item label="Transfer Rate">
               <NumberInput
@@ -72,7 +73,8 @@ export const AtmosFilter = (props, context) => {
                     act('toggle_filter', {
                       val: gas_id,
                     })
-                  }>
+                  }
+                >
                   {getGasLabel(gas_id)}
                 </Button>
               ))}

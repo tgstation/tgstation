@@ -1941,7 +1941,7 @@
 "mJ" = (
 /obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/device.dmi';
+	icon = 'icons/obj/devices/tracker.dmi';
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
@@ -5120,7 +5120,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "HP" = (
-/mob/living/simple_animal/pet/cat/space{
+/mob/living/basic/pet/cat/space{
 	desc = "With survival instincts like these, it's no wonder cats survived to the 26th century.";
 	name = "Jones"
 	},

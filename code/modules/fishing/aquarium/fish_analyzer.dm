@@ -1,13 +1,13 @@
 ///An item that can be used to gather information on the fish, such as but not limited to: health, hunger and traits.
 /obj/item/fish_analyzer
 	name = "fish analyzer"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "fish_analyzer_map"
 	base_icon_state = "fish_analyzer"
 	inhand_icon_state = "fish_analyzer"
 	worn_icon_state = "fish_analyzer"
 	desc = "A fish-shaped scanner used to monitor fish's status and evolutionary traits."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3

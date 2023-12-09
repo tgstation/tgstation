@@ -1,0 +1,2 @@
+output_name = "ice_turf"
+template = "bitmask/diagonal_32x32.toml"

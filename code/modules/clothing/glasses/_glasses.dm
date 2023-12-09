@@ -22,12 +22,6 @@
 	var/list/color_cutoffs = null
 	/// The current hud icons
 	var/list/icon/current = list()
-// Potentially replace glass_color_type with a setup that colors lighting by dropping segments of different componets
-// Like the current idea, but applied without the mass cutoff (maybe? somehow?)
-// That or just a light color to the lighting plane, that'd work too
-// Enough to make it visible but not so much that it's a pain
-
-// That, or just make stuff that uses lighting_cutoff have colored offsets and all, like you were planning
 	/// Colors your vision when worn
 	var/glass_colour_type
 	/// Whether or not vision coloring is forcing
@@ -428,7 +422,7 @@
 	name = "suspicious contact lens case"
 	desc = "A sinister red case that contains two shiny black contact lenses."
 	w_class = WEIGHT_CLASS_TINY
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "contacts"
 
 /obj/item/syndicate_contacts/attack_self(mob/user, modifiers)

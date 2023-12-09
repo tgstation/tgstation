@@ -2,7 +2,17 @@ import { BooleanLike, classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, Tabs, TextArea } from '../components';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Flex,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+  TextArea,
+} from '../components';
 import { Window } from '../layouts';
 import { formatTime } from '../format';
 
@@ -54,14 +64,10 @@ type MafiaData = {
   player_voted_up: BooleanLike;
 };
 
-export const MafiaPanelData = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+export const MafiaPanelData = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { phase, roleinfo, admin_controls, messages, player_voted_up } = data;
-  const [mafia_tab, setMafiaMode] = useLocalState(
-    context,
-    'mafia_tab',
-    'Role list'
-  );
+  const [mafia_tab, setMafiaMode] = useLocalState('mafia_tab', 'Role list');
 
   if (phase === 'No Game') {
     return (
@@ -115,7 +121,8 @@ export const MafiaPanelData = (props, context) => {
                       <Tabs.Tab
                         align="center"
                         selected={mafia_tab === 'Role list'}
-                        onClick={() => setMafiaMode('Role list')}>
+                        onClick={() => setMafiaMode('Role list')}
+                      >
                         Role list
                         <Button
                           color="transparent"
@@ -130,7 +137,8 @@ export const MafiaPanelData = (props, context) => {
                       <Tabs.Tab
                         align="center"
                         selected={mafia_tab === 'Notes'}
-                        onClick={() => setMafiaMode('Notes')}>
+                        onClick={() => setMafiaMode('Notes')}
+                      >
                         Notes
                         <Button
                           color="transparent"
@@ -156,15 +164,16 @@ export const MafiaPanelData = (props, context) => {
   );
 };
 
-export const MafiaPanel = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+export const MafiaPanel = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { roleinfo } = data;
   return (
     <Window
       title="Mafia"
       theme={roleinfo && roleinfo.role_theme}
       width={900}
-      height={600}>
+      height={600}
+    >
       <Window.Content>
         <MafiaPanelData />
       </Window.Content>
@@ -172,10 +181,10 @@ export const MafiaPanel = (props, context) => {
   );
 };
 
-const MafiaChat = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaChat = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { messages } = data;
-  const [message_to_send, setMessagingBox] = useLocalState(context, 'Chat', '');
+  const [message_to_send, setMessagingBox] = useLocalState('Chat', '');
   return (
     <Stack vertical fill>
       {!!messages && (
@@ -216,8 +225,8 @@ const MafiaChat = (props, context) => {
   );
 };
 
-const MafiaLobby = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaLobby = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { lobbydata = [], is_observer } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
@@ -252,7 +261,8 @@ const MafiaLobby = (props, context) => {
             onClick={() => act('vote_to_start')}
           />
         </>
-      }>
+      }
+    >
       <NoticeBox info textAlign="center">
         The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
         valid players signed up.
@@ -269,7 +279,8 @@ const MafiaLobby = (props, context) => {
           key={lobbyist.name}
           className="candystripe"
           p={1}
-          align="baseline">
+          align="baseline"
+        >
           <Stack.Item grow>
             {!is_observer ? 'Unknown Player' : lobbyist.name}
           </Stack.Item>
@@ -283,8 +294,8 @@ const MafiaLobby = (props, context) => {
   );
 };
 
-const MafiaRole = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaRole = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { phase, turn, roleinfo, timeleft } = data;
   return (
     <Section
@@ -295,14 +306,16 @@ const MafiaRole = (props, context) => {
       buttons={
         <Box
           style={{
-            'font-family': 'Consolas, monospace',
-            'font-size': '14px',
-            'line-height': 1.5,
-            'font-weight': 'bold',
-          }}>
+            fontFamily: 'Consolas, monospace',
+            fontSize: '14px',
+            lineHeight: 1.5,
+            fontWeight: 'bold',
+          }}
+        >
           {formatTime(timeleft)}
         </Box>
-      }>
+      }
+    >
       <Stack align="center">
         <Stack.Item grow>
           <Box bold>You are the {roleinfo.role}</Box>
@@ -312,15 +325,15 @@ const MafiaRole = (props, context) => {
           <Box
             className={classes(['mafia32x32', roleinfo.revealed_icon])}
             style={{
-              'transform': 'scale(2) translate(0px, 10%)',
-              'vertical-align': 'middle',
+              transform: 'scale(2) translate(0px, 10%)',
+              verticalAlign: 'middle',
             }}
           />
           <Box
             className={classes(['mafia32x32', roleinfo.hud_icon])}
             style={{
-              'transform': 'scale(2) translate(-5px, -5px)',
-              'vertical-align': 'middle',
+              transform: 'scale(2) translate(-5px, -5px)',
+              verticalAlign: 'middle',
             }}
           />
         </Stack.Item>
@@ -329,8 +342,8 @@ const MafiaRole = (props, context) => {
   );
 };
 
-const MafiaListOfRoles = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaListOfRoles = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { all_roles } = data;
   return (
     <Section fill>
@@ -358,14 +371,10 @@ const MafiaListOfRoles = (props, context) => {
   );
 };
 
-const MafiaNotesTab = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaNotesTab = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { user_notes } = data;
-  const [note_message, setNotesMessage] = useLocalState(
-    context,
-    'Notes',
-    user_notes
-  );
+  const [note_message, setNotesMessage] = useLocalState('Notes', user_notes);
   return (
     <Section grow fill>
       <TextArea
@@ -400,8 +409,8 @@ const MafiaNotesTab = (props, context) => {
   );
 };
 
-const MafiaJudgement = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaJudgement = (props) => {
+  const { act, data } = useBackend();
   return (
     <Section title="Judgement">
       <Flex>
@@ -428,8 +437,8 @@ const MafiaJudgement = (props, context) => {
   );
 };
 
-const MafiaPlayers = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaPlayers = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { players = [], person_voted_up_ref } = data;
   return (
     <Section fill scrollable title="Players">
@@ -442,7 +451,8 @@ const MafiaPlayers = (props, context) => {
                 color={!player.alive && 'red'}
                 backgroundColor={
                   player.ref === person_voted_up_ref ? 'yellow' : null
-                }>
+                }
+              >
                 {player.name}
                 {(!!player.is_you && ' (YOU)') ||
                   (!!player.role_revealed && ' - ' + player.role_revealed)}
@@ -461,7 +471,8 @@ const MafiaPlayers = (props, context) => {
                         action_ref: action.ref,
                         target: player.ref,
                       })
-                    }>
+                    }
+                  >
                     {action.name}
                   </Button>
                 ))}
@@ -474,8 +485,8 @@ const MafiaPlayers = (props, context) => {
   );
 };
 
-const MafiaAdmin = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaAdmin = (props) => {
+  const { act, data } = useBackend();
   return (
     <Collapsible title="ADMIN CONTROLS" color="red">
       <Section>

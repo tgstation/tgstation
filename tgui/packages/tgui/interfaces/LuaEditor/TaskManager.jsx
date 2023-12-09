@@ -1,10 +1,10 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section, Stack } from '../../components';
 
-export const TaskManager = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [, setToCall] = useLocalState(context, 'toCallTaskInfo');
-  const [, setModal] = useLocalState(context, 'modal');
+export const TaskManager = (props) => {
+  const { act, data } = useBackend();
+  const [, setToCall] = useLocalState('toCallTaskInfo');
+  const [, setModal] = useLocalState('modal');
   let { tasks } = data;
   tasks?.sort((a, b) => {
     if (a.status < b.status) {
@@ -27,7 +27,8 @@ export const TaskManager = (props, context) => {
                 <Button
                   color="red"
                   icon="window-close"
-                  onClick={() => act('killTask', { info: info })}>
+                  onClick={() => act('killTask', { info: info })}
+                >
                   Kill
                 </Button>
               </LabeledList.Item>
@@ -47,7 +48,8 @@ export const TaskManager = (props, context) => {
                       params: { index: info.index },
                     });
                     setModal('call');
-                  }}>
+                  }}
+                >
                   Call
                 </Button>
                 <Button
@@ -55,7 +57,8 @@ export const TaskManager = (props, context) => {
                   icon="window-close"
                   onClick={() => {
                     act('killTask', { info: info });
-                  }}>
+                  }}
+                >
                   Kill
                 </Button>
               </LabeledList.Item>

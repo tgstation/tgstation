@@ -469,8 +469,9 @@
 	if(!.)
 		return
 
-	if(href_list[VV_HK_ADD_FANTASY_AFFIX] && check_rights(R_FUN))
-
+	if(href_list[VV_HK_ADD_FANTASY_AFFIX])
+		if(!check_rights(R_FUN))
+			return
 		//gathering all affixes that make sense for this item
 		var/list/prefixes = list()
 		var/list/suffixes = list()
@@ -483,13 +484,11 @@
 					prefixes[affix_choice.name] = affix_choice
 				else
 					suffixes[affix_choice.name] = affix_choice
-
 		//making it more presentable here
 		var/list/affixes = list("---PREFIXES---")
 		affixes.Add(prefixes)
 		affixes.Add("---SUFFIXES---")
 		affixes.Add(suffixes)
-
 		//admin picks, cleanup the ones we didn't do and handle chosen
 		var/picked_affix_name = tgui_input_list(usr, "Affix to add to [src]", "Enchant [src]", affixes)
 		if(isnull(picked_affix_name))
@@ -503,7 +502,6 @@
 			fantasy_quality++
 		else
 			fantasy_quality--
-
 		//name gets changed by the component so i want to store it for feedback later
 		var/before_name = name
 		//naming these vars that i'm putting into the fantasy component to make it more readable
@@ -513,7 +511,6 @@
 		if(AddComponent(/datum/component/fantasy, fantasy_quality, list(affix), canFail, announce) == COMPONENT_INCOMPATIBLE)
 			to_chat(usr, span_warning("Fantasy component not compatible with [src]."))
 			CRASH("fantasy component incompatible with object of type: [type]")
-
 		to_chat(usr, span_notice("[before_name] now has [picked_affix_name]!"))
 		log_admin("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]")
 		message_admins(span_notice("[key_name(usr)] has added [picked_affix_name] fantasy affix to [before_name]"))

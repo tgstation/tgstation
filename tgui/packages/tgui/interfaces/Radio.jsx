@@ -5,8 +5,8 @@ import { Box, Button, LabeledList, NumberInput, Section } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';
 
-export const Radio = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Radio = (props) => {
+  const { act, data } = useBackend();
   const {
     freqlock,
     frequency,
@@ -20,7 +20,7 @@ export const Radio = (props, context) => {
     subspaceSwitchable,
   } = data;
   const tunedChannel = RADIO_CHANNELS.find(
-    (channel) => channel.freq === frequency
+    (channel) => channel.freq === frequency,
   );
   const channels = map((value, key) => ({
     name: key,

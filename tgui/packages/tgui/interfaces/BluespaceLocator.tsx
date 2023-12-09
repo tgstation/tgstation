@@ -25,8 +25,8 @@ const DIRECTION_TO_ICON = {
   northwest: 315,
 } as const;
 
-export const BluespaceLocator = (props, context) => {
-  const [tab, setTab] = useLocalState(context, 'tab', 'implant');
+export const BluespaceLocator = (props) => {
+  const [tab, setTab] = useLocalState('tab', 'implant');
 
   return (
     <Window width={300} height={300}>
@@ -34,12 +34,14 @@ export const BluespaceLocator = (props, context) => {
         <Tabs>
           <Tabs.Tab
             selected={tab === 'implant'}
-            onClick={() => setTab('implant')}>
+            onClick={() => setTab('implant')}
+          >
             Implants
           </Tabs.Tab>
           <Tabs.Tab
             selected={tab === 'beacon'}
-            onClick={() => setTab('beacon')}>
+            onClick={() => setTab('beacon')}
+          >
             Teleporter Beacons
           </Tabs.Tab>
         </Tabs>
@@ -50,8 +52,8 @@ export const BluespaceLocator = (props, context) => {
   );
 };
 
-const TeleporterBeacons = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TeleporterBeacons = (props) => {
+  const { data } = useBackend<Data>();
   const { telebeacons } = data;
 
   return (
@@ -68,8 +70,8 @@ const TeleporterBeacons = (props, context) => {
   );
 };
 
-const TrackingImplants = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TrackingImplants = (props) => {
+  const { data } = useBackend<Data>();
   const { trackimplants } = data;
 
   return (
@@ -86,8 +88,8 @@ const TrackingImplants = (props, context) => {
   );
 };
 
-const SignalLocator = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const SignalLocator = (props) => {
+  const { data } = useBackend<Data>();
   const { trackingrange } = data;
   const { name, direction, distance } = props;
 
@@ -101,7 +103,8 @@ const SignalLocator = (props, context) => {
         red: [0, trackingrange / 3],
         yellow: [trackingrange / 3, 2 * (trackingrange / 3)],
         green: [2 * (trackingrange / 3), trackingrange],
-      }}>
+      }}
+    >
       {name}
       <Icon ml={2} name="arrow-up" rotation={direction} />
     </ProgressBar>

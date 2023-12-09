@@ -86,6 +86,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 /datum/dna/Destroy()
 	if(iscarbon(holder))
 		var/mob/living/carbon/cholder = holder
+		remove_all_mutations() // mutations hold a reference to the dna
 		if(cholder.dna == src)
 			cholder.dna = null
 	holder = null
@@ -524,7 +525,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(icon_update)
 		update_body(is_creating = TRUE)
 		update_mutations_overlay()// no lizard with human hulk overlay please.
-
 
 /mob/proc/has_dna()
 	return

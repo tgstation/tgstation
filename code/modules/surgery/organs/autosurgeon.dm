@@ -2,7 +2,7 @@
 	name = "autosurgeon"
 	desc = "A device that automatically inserts an implant, skillchip or organ into the user without the hassle of extensive surgery. \
 		It has a slot to insert implants or organs and a screwdriver slot for removing accidentally added items."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "autosurgeon"
 	inhand_icon_state = "nothing"
 	w_class = WEIGHT_CLASS_SMALL

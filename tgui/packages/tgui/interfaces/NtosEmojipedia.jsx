@@ -3,15 +3,15 @@ import { useBackend, useSharedState } from '../backend';
 import { Box, Button, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
 
-export const NtosEmojipedia = (props, context) => {
-  const { data } = useBackend(context);
+export const NtosEmojipedia = (props) => {
+  const { data } = useBackend();
   const { emoji_list } = data;
-  const [filter, updatefilter] = useSharedState(context, 'filter', '');
+  const [filter, updatefilter] = useSharedState('filter', '');
 
   let filtered_emoji_list = filter
     ? emoji_list.filter((emoji) => {
-      return emoji.name.toLowerCase().includes(filter.toLowerCase());
-    })
+        return emoji.name.toLowerCase().includes(filter.toLowerCase());
+      })
     : emoji_list;
   if (filtered_emoji_list.length === 0) {
     filtered_emoji_list = emoji_list;
@@ -37,7 +37,8 @@ export const NtosEmojipedia = (props, context) => {
                 icon="circle-question"
               />
             </>
-          }>
+          }
+        >
           {filtered_emoji_list.map((emoji) => (
             <Box
               key={emoji.name}
@@ -45,9 +46,6 @@ export const NtosEmojipedia = (props, context) => {
               as="img"
               m={0}
               title={emoji.name}
-              style={{
-                '-ms-interpolation-mode': 'nearest-neighbor',
-              }}
               onClick={() => {
                 new Promise((resolve, _) => {
                   const input = document.createElement('input');
@@ -58,7 +56,8 @@ export const NtosEmojipedia = (props, context) => {
                   document.body.removeChild(input);
                   resolve();
                 });
-              }}>
+              }}
+            >
               {emoji.name}
             </Box>
           ))}

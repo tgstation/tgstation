@@ -1,31 +1,30 @@
 import { useBackend, useLocalState } from 'tgui/backend';
 import { PRINTOUT, SecurityRecordsData } from './types';
 import { Box, Button, Input, Section, Stack } from 'tgui/components';
-import { getSecurityRecord, getDefaultPrintDescription, getDefaultPrintHeader } from './helpers';
+import {
+  getSecurityRecord,
+  getDefaultPrintDescription,
+  getDefaultPrintHeader,
+} from './helpers';
 
 /** Handles printing posters and rapsheets */
-export const RecordPrint = (props, context) => {
-  const foundRecord = getSecurityRecord(context);
+export const RecordPrint = (props) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <> </>;
 
   const { crew_ref, crimes, name } = foundRecord;
   const innocent = !crimes?.length;
-  const { act } = useBackend<SecurityRecordsData>(context);
+  const { act } = useBackend<SecurityRecordsData>();
 
-  const [open, setOpen] = useLocalState<boolean>(context, 'printOpen', true);
-  const [alias, setAlias] = useLocalState<string>(context, 'printAlias', name);
+  const [open, setOpen] = useLocalState<boolean>('printOpen', true);
+  const [alias, setAlias] = useLocalState<string>('printAlias', name);
 
   const [printType, setPrintType] = useLocalState<PRINTOUT>(
-    context,
     'printType',
-    PRINTOUT.Missing
+    PRINTOUT.Missing,
   );
-  const [header, setHeader] = useLocalState<string>(context, 'printHeader', '');
-  const [description, setDescription] = useLocalState<string>(
-    context,
-    'printDesc',
-    ''
-  );
+  const [header, setHeader] = useLocalState<string>('printHeader', '');
+  const [description, setDescription] = useLocalState<string>('printDesc', '');
 
   /** Prints the record and resets. */
   const printSheet = () => {
@@ -83,7 +82,8 @@ export const RecordPrint = (props, context) => {
             onClick={() => swapTabs(PRINTOUT.Missing)}
             selected={printType === PRINTOUT.Missing}
             tooltip="Prints a poster with mugshot and description."
-            tooltipPosition="bottom">
+            tooltipPosition="bottom"
+          >
             Missing
           </Button>
           <Button
@@ -94,7 +94,8 @@ export const RecordPrint = (props, context) => {
             tooltip={`Prints a standard paper with the record on it.${
               innocent ? ' (Requires crimes)' : ''
             }`}
-            tooltipPosition="bottom">
+            tooltipPosition="bottom"
+          >
             Rapsheet
           </Button>
           <Button
@@ -105,7 +106,8 @@ export const RecordPrint = (props, context) => {
             tooltip={`Prints a poster with mugshot and crimes.${
               innocent ? ' (Requires crimes)' : ''
             }`}
-            tooltipPosition="bottom">
+            tooltipPosition="bottom"
+          >
             Wanted
           </Button>
           <Button color="bad" icon="times" onClick={reset} />
@@ -113,7 +115,8 @@ export const RecordPrint = (props, context) => {
       }
       fill
       scrollable
-      title="Print Record">
+      title="Print Record"
+    >
       <Stack color="label" fill vertical>
         <Stack.Item>
           <Box>Enter a Header:</Box>

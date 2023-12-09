@@ -54,15 +54,11 @@ const BrokenTramDimmer = () => {
   );
 };
 
-export const TramControl = (props, context) => {
-  const { act, data } = useBackend(context);
+export const TramControl = (props) => {
+  const { act, data } = useBackend();
   const { broken, moving, destinations, tram_location } = data;
 
-  const [transitIndex, setTransitIndex] = useLocalState(
-    context,
-    'transit-index',
-    1
-  );
+  const [transitIndex, setTransitIndex] = useLocalState('transit-index', 1);
   const MovingTramDimmer = () => {
     return (
       <Dimmer>
@@ -97,7 +93,8 @@ export const TramControl = (props, context) => {
             width={4.9}
             tooltipPosition="top"
             tooltip={COLOR2BLURB[getDestColor(dest)]}
-            onClick={() => setTransitIndex(destinations.indexOf(dest))}>
+            onClick={() => setTransitIndex(destinations.indexOf(dest))}
+          >
             <Icon ml={-2.1} fontSize="60px" name="circle-o" />
           </Button>
           {(destinations.length - 1 !== destinations.indexOf(dest) && (
@@ -115,8 +112,8 @@ export const TramControl = (props, context) => {
                     tooltipPosition="bottom"
                     tooltip={dep}
                     style={{
-                      'border-radius': '5em',
-                      'border': '2px solid white',
+                      borderRadius: '5em',
+                      border: '2px solid white',
                     }}
                   />
                 </Stack.Item>

@@ -1,10 +1,17 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
-export const RoboticsControlConsole = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+export const RoboticsControlConsole = (props) => {
+  const { act, data } = useBackend();
+  const [tab, setTab] = useSharedState('tab', 1);
   const { can_hack, can_detonate, cyborgs = [], drones = [] } = data;
   return (
     <Window width={500} height={460}>
@@ -14,14 +21,16 @@ export const RoboticsControlConsole = (props, context) => {
             icon="list"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             Cyborgs ({cyborgs.length})
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Drones ({drones.length})
           </Tabs.Tab>
         </Tabs>
@@ -38,9 +47,9 @@ export const RoboticsControlConsole = (props, context) => {
   );
 };
 
-const Cyborgs = (props, context) => {
+const Cyborgs = (props) => {
   const { cyborgs, can_hack, can_detonate } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   if (!cyborgs.length) {
     return (
       <NoticeBox>No cyborg units detected within access parameters</NoticeBox>
@@ -88,13 +97,15 @@ const Cyborgs = (props, context) => {
               />
             )}
           </>
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Status">
             <Box
               color={
                 cyborg.status ? 'bad' : cyborg.locked_down ? 'average' : 'good'
-              }>
+              }
+            >
               {cyborg.status
                 ? 'Not Responding'
                 : cyborg.locked_down
@@ -110,7 +121,8 @@ const Cyborgs = (props, context) => {
                   : cyborg.charge <= 70
                     ? 'average'
                     : 'good'
-              }>
+              }
+            >
               {typeof cyborg.charge === 'number'
                 ? cyborg.charge + '%'
                 : 'Not Found'}
@@ -128,9 +140,9 @@ const Cyborgs = (props, context) => {
   });
 };
 
-const Drones = (props, context) => {
+const Drones = (props) => {
   const { drones } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
 
   if (!drones.length) {
     return (
@@ -154,7 +166,8 @@ const Drones = (props, context) => {
               })
             }
           />
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Status">
             <Box color={drone.status ? 'bad' : 'good'}>

@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, Flex, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const GhostPoolProtection = (props, context) => {
-  const { act, data } = useBackend(context);
+export const GhostPoolProtection = (props) => {
+  const { act, data } = useBackend();
   const {
     events_or_midrounds,
     spawners,
@@ -16,7 +16,8 @@ export const GhostPoolProtection = (props, context) => {
       title="Ghost Pool Protection"
       width={400}
       height={270}
-      theme="admin">
+      theme="admin"
+    >
       <Window.Content>
         <Flex grow={1} height="100%">
           <Section
@@ -36,7 +37,8 @@ export const GhostPoolProtection = (props, context) => {
                   onClick={() => act('no_roles')}
                 />
               </>
-            }>
+            }
+          >
             <NoticeBox danger>
               For people creating a sneaky event: If you toggle Station Created
               Sentience, people may catch on that admins have disabled roles for

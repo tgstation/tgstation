@@ -3,7 +3,7 @@ import { useBackend } from '../backend';
 import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
 import { Window } from '../layouts';
 
-export const RemoteRobotControl = (props, context) => {
+export const RemoteRobotControl = (props) => {
   return (
     <Window title="Remote Robot Control" width={500} height={500}>
       <Window.Content scrollable>
@@ -13,8 +13,8 @@ export const RemoteRobotControl = (props, context) => {
   );
 };
 
-export const RemoteRobotControlContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const RemoteRobotControlContent = (props) => {
+  const { act, data } = useBackend();
   const { robots = [] } = data;
   if (!robots.length) {
     return (
@@ -49,7 +49,8 @@ export const RemoteRobotControlContent = (props, context) => {
               }
             />
           </>
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Status">
             <Box
@@ -60,7 +61,8 @@ export const RemoteRobotControlContent = (props, context) => {
                   : decodeHtmlEntities(robot.mode) === 'Idle'
                     ? 'average'
                     : 'good'
-              }>
+              }
+            >
               {decodeHtmlEntities(robot.mode)}
             </Box>{' '}
             {(robot.hacked && (
