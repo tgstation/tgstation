@@ -593,5 +593,7 @@
 	mod.wearer.remove_traits(list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED, TRAIT_SHOVE_NO_STAGGER, TRAIT_NO_THROW_HITPUSH), MOD_TRAIT)
 
 /obj/item/mod/module/shove_blocker/locked
+	name = "superglued MOD bulwark module"
+	desc = "Layers upon layers of shock dampening plates, just to stop you from getting shoved into a wall by an angry mob. Good luck removing this one."
 	removable = FALSE
 	complexity = 0
