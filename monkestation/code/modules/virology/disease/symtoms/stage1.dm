@@ -106,7 +106,7 @@
 
 /datum/symptom/bee_vomit/activate(mob/living/mob)
 	if(!ismouse(mob))
-		if ((mob.reagents.get_reagent_amount(/datum/reagent/consumable/honey) < 5 + multiplier 0.5) && prob(multiplier * 3))
+		if ((mob.reagents.get_reagent_amount(/datum/reagent/consumable/honey) < 5 + multiplier * 0.5) && prob(multiplier * 3))
 			mob.reagents.add_reagent(/datum/reagent/consumable/honey, multiplier)
 
 	if(prob(4*multiplier))
@@ -167,7 +167,7 @@
 
 
 /datum/symptom/cult_hallucination
-	name = "Visions of the End-Times"	
+	name = "Visions of the End-Times"
 	desc = "UNKNOWN"
 	stage = 1
 	badness = EFFECT_DANGER_ANNOYING
@@ -182,7 +182,7 @@
 	var/client/C = mob.client
 	if(!C)
 		return
-	mob.whisper("...[pick(rune_words_rune)]...")	
+	mob.whisper("...[pick(rune_words_rune)]...")
 
 	var/list/turf_list = list()
 	for(var/turf/T in spiral_block(get_turf(mob), 40))
@@ -201,11 +201,11 @@
 				var/image/rune_holder = image('monkestation/code/modules/virology/icons/deityrunes.dmi',T,"")
 				var/image/rune_render = image('monkestation/code/modules/virology/icons/deityrunes.dmi',T,"fullrune-[runenum]")
 				rune_render.color = LIGHT_COLOR_BLOOD_MAGIC
-			
+
 				C.images += rune_holder
 
 		//		anim(target = T, a_icon = 'monkestation/code/modules/virology/icons/deityrunes.dmi', flick_anim = "fullrune-[runenum]-write", col = DEFAULT_BLOOD, sleeptime = 36)
-				
+
 				spawn(30)
 
 					rune_render.icon_state = "fullrune-[runenum]"
