@@ -14,12 +14,21 @@
 	lock_back_sound = 'sound/weapons/gun/pistol/slide_lock.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/pistol/slide_drop.ogg'
 	var/has_stripe = TRUE
+	var/COOLDOWN_STRIPE
 
 /obj/item/gun/ballistic/automatic/pistol/paco/Initialize(mapload) //Sec pistol, Paco(renamed to TACO... Atleast 10 percent of the time)
 	. = ..()
-	if(prob(10) && has_stripe)
+	if(prob(10))
 		name = "\improper FS HG .35 Auto \"Taco\" LE"
-		desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 and high capacity magazines. <font color=#FFE733>You notice a small difference on the side of the pistol... An engraving depicting a taco! It's a Limited Run model!</font>"
+		desc += " <font color=#FFE733>You notice a small difference on the side of the pistol... An engraving depicting a taco! It's a Limited Run model!</font>"
+
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag
+	spawnwithmagazine = FALSE
+
+obj/item/gun/ballistic/automatic/pistol/paco/update_icon_state()
+	if(!has_stripe) //Definitely turn this into a switch case statement if someone (or I) decide to add more variants, but this works for now
+		icon_state = "spaco"
+		inhand_icon_state = "spaco"
 
 /obj/item/gun/ballistic/automatic/pistol/paco/add_seclight_point() //Seclite functionality
 	AddComponent(/datum/component/seclite_attachable, \
@@ -28,30 +37,20 @@
 		overlay_x = 15, \
 		overlay_y = 13)
 
-/obj/item/gun/ballistic/automatic/pistol/paco/no_mag
-	spawnwithmagazine = FALSE
-
-/obj/item/gun/ballistic/automatic/pistol/paco/stripeless //No stripe, can also be renamed and have it's description changed.
-	desc = "A modern and reliable sidearm for the soldier in the field. Commonly issued as a sidearm to Security Officers. Uses standard and rubber .35 and high capacity magazines. With the red lining removed, you figure there's ample room to engrave something nice on it!"
-	icon_state = "spaco"
-	inhand_icon_state = "spaco"
-	obj_flags = UNIQUE_RENAME
-	spawnwithmagazine = FALSE
-	has_stripe = FALSE
-
 /obj/item/gun/ballistic/automatic/pistol/paco/AltClick(mob/user) //Some people like the stripe, some people don't. Gives you the option to do the unthinkable.
-	if(has_stripe) //Checks if the gun has a stripe to rip
+	if(has_stripe && !TIMER_COOLDOWN_CHECK(src, COOLDOWN_STRIPE)) //Checks if the gun has a stripe to rip and is not on cooldown
+		TIMER_COOLDOWN_START(src, COOLDOWN_STRIPE, 6 SECONDS)
 		playsound(src, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
 		balloon_alert_to_viewers("[user] starts picking at the Paco's stripe!")
 		if(do_after(user, 6 SECONDS))
+			has_stripe = FALSE
+			obj_flags = UNIQUE_RENAME
+			desc += " You figure there's ample room to engrave something nice on it, but know that it'd offer no tactical advantage whatsoever."
 			playsound(src, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
 			balloon_alert_to_viewers("[user] rips the stripe right off the Paco!") //The implication that the stripe is just a piece of red tape is very funny
-			eject_magazine(user) //You don't want to tamper with a loaded gun, do you?
-			rack(src)
-			var/stripeless = new /obj/item/gun/ballistic/automatic/pistol/paco/stripeless
-			remove_item_from_storage(user)
-			qdel(src)
-			user.put_in_hands(stripeless)
+			update_icon_state()
+			update_appearance() //So you don't have to rack the slide to update the sprite
+			update_inhand_icon(user) //So you don't have to switch the gun inhand to update the inhand sprite
 
 //Lethal ammo for Paco.
 /obj/item/ammo_casing/c35
