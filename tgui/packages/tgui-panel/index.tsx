@@ -108,7 +108,7 @@ const setupApp = () => {
       ],
       () => {
         renderApp();
-      }
+      },
     );
   }
 };

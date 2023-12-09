@@ -58,7 +58,7 @@ export const telemetryMiddleware = (store) => {
         let telemetryMutated = false;
 
         const duplicateConnection = telemetry.connections.find((conn) =>
-          connectionsMatch(conn, client)
+          connectionsMatch(conn, client),
         );
         if (!duplicateConnection) {
           telemetryMutated = true;

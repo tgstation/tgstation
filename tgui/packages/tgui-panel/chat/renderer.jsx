@@ -461,7 +461,7 @@ class ChatRenderer {
           !Byond.IS_LTE_IE8 &&
           MESSAGE_TYPES.find(
             (typeDef) =>
-              typeDef.selector && node.querySelector(typeDef.selector)
+              typeDef.selector && node.querySelector(typeDef.selector),
           );
         message.type = typeDef?.type || MESSAGE_TYPE_UNKNOWN;
       }
@@ -519,7 +519,7 @@ class ChatRenderer {
         // Remove pruned messages from the message array
 
         this.messages = this.messages.filter(
-          (message) => message.node !== 'pruned'
+          (message) => message.node !== 'pruned',
         );
         logger.log(`pruned ${fromIndex} visible messages`);
       }
