@@ -133,8 +133,9 @@ const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
         </Tabs>
       </Stack.Item>
       <Stack.Item>
-        {(implantTab && implantsByCategory && implantsByCategory[implantTab]) ? (implantsByCategory[implantTab].map((implant) => (
-          <ImplantDisplay key={implant.ref} implant={implant} />
+        {(implantTab && implantsByCategory && implantsByCategory[implantTab])
+          ? (implantsByCategory[implantTab].map((implant) => (
+            <ImplantDisplay key={implant.ref} implant={implant} />
         ))) : (
           <NoticeBox>No implants detected.</NoticeBox>
         )}
