@@ -23,7 +23,7 @@ export const NtosPhysScanner = (props) => {
             <br />
           </Box>
           <Box
-            style={{ 'white-space': 'pre-line' }}
+            style={{ whiteSpace: 'pre-line' }}
             dangerouslySetInnerHTML={textHtml}
           />
         </Section>

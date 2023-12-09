@@ -84,9 +84,6 @@
 /// (new_name, old_name)
 #define COMSIG_GLOB_STATION_NAME_CHANGED "!station_name_changed"
 
-/// Global signal sent before the gamemode is set up
-#define COMSIG_GLOB_PRE_GAMEMODE_SETUP "!pre_gamemode_setup"
-
 /// Global signal sent before we decide what job everyone has
 #define COMSIG_GLOB_PRE_JOBS_ASSIGNED "!pre_roles_assigned"
 

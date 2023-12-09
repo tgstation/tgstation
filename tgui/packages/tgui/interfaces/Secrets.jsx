@@ -1,6 +1,14 @@
 import { toFixed } from 'common/math';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Flex, LabeledControls, NoticeBox, RoundGauge, Section, Stack } from '../components';
+import {
+  Button,
+  Flex,
+  LabeledControls,
+  NoticeBox,
+  RoundGauge,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 const TAB2NAME = [
@@ -82,7 +90,8 @@ const HelpfulTab = (props) => {
             <NoticeBox
               mb={-0.5}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
+              height={lineHeightNormal}
+            >
               Your admin button here, coder!
             </NoticeBox>
           </Stack.Item>
@@ -112,7 +121,8 @@ const HelpfulTab = (props) => {
             <NoticeBox
               mb={-0.5}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
+              height={lineHeightNormal}
+            >
               Your admin button here, coder!
             </NoticeBox>
           </Stack.Item>
@@ -253,7 +263,8 @@ const HelpfulTab = (props) => {
             <NoticeBox
               mb={-0.5}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
+              height={lineHeightNormal}
+            >
               Your admin button here, coder!
             </NoticeBox>
           </Stack.Item>
@@ -291,7 +302,8 @@ const FunTab = (props) => {
             <NoticeBox
               mb={0.0}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
+              height={lineHeightNormal}
+            >
               Your admin button here, coder!
             </NoticeBox>
           </Stack.Item>
@@ -340,13 +352,13 @@ const FunTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <Button
-              icon="users"
-              lineHeight={lineHeightNormal}
+            <NoticeBox
+              mb={0.0}
               width={buttonWidthNormal}
-              content="Triple AI mode"
-              onClick={() => act('tripleAI')}
-            />
+              height={lineHeightNormal}
+            >
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -414,7 +426,8 @@ const FunTab = (props) => {
             <NoticeBox
               mb={-0.5}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
+              height={lineHeightNormal}
+            >
               Your admin button here, coder!
             </NoticeBox>
           </Stack.Item>
@@ -444,7 +457,8 @@ const FunTab = (props) => {
             <NoticeBox
               mb={-0.5}
               width={buttonWidthNormal}
-              height={lineHeightNormal}>
+              height={lineHeightNormal}
+            >
               Your admin button here, coder!
             </NoticeBox>
           </Stack.Item>
@@ -641,7 +655,8 @@ export const Secrets = (props) => {
                     onClick={() => act('show_admins')}
                   />
                 </>
-              }>
+              }
+            >
               <Flex mx={-0.5} align="stretch" justify="center">
                 <Flex.Item bold>
                   <NoticeBox color="black">
@@ -654,7 +669,8 @@ export const Secrets = (props) => {
                 textAlign="center"
                 mx={-0.5}
                 align="stretch"
-                justify="center">
+                justify="center"
+              >
                 <Flex.Item ml={-10} mr={1}>
                   <Button
                     selected={tabIndex === 2}
@@ -687,7 +703,8 @@ export const Secrets = (props) => {
                   <LabeledControls>
                     <LabeledControls.Item
                       minWidth="66px"
-                      label="Chances of admin complaint">
+                      label="Chances of admin complaint"
+                    >
                       <RoundGauge
                         size={2}
                         value={TAB2NAME[tabIndex - 1].gauge}
@@ -695,9 +712,9 @@ export const Secrets = (props) => {
                         maxValue={100}
                         alertAfter={100 * 0.7}
                         ranges={{
-                          'good': [-2, 100 * 0.25],
-                          'average': [100 * 0.25, 100 * 0.75],
-                          'bad': [100 * 0.75, 100],
+                          good: [-2, 100 * 0.25],
+                          average: [100 * 0.25, 100 * 0.75],
+                          bad: [100 * 0.75, 100],
                         }}
                         format={(value) => toFixed(value) + '%'}
                       />
@@ -723,7 +740,8 @@ export const Secrets = (props) => {
                 TAB2NAME[tabIndex - 1].title +
                 ' Or: ' +
                 TAB2NAME[tabIndex - 1].blurb
-              }>
+              }
+            >
               <TabComponent />
             </Section>
           </Flex.Item>

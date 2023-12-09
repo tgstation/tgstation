@@ -13,14 +13,16 @@ export const AbductorConsole = (props) => {
             icon="list"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             Abductsoft 3000
           </Tabs.Tab>
           <Tabs.Tab
             icon="list"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Mission Settings
           </Tabs.Tab>
         </Tabs>
@@ -99,7 +101,8 @@ const EmergencyTeleporter = (props) => {
           color="bad"
           onClick={() => act('teleporter_send')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mark Retrieval">
           <Button
@@ -131,7 +134,8 @@ const VestSettings = (props) => {
           content={vest_lock ? 'Locked' : 'Unlocked'}
           onClick={() => act('toggle_vest')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button

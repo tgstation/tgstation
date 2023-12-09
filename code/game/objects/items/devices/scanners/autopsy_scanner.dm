@@ -1,25 +1,31 @@
 /obj/item/autopsy_scanner
 	name = "autopsy scanner"
 	desc = "Used in surgery to extract information from a cadaver. Can also scan the health of cadavers like an advanced health analyzer!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "autopsy_scanner"
 	inhand_icon_state = "autopsy_scanner"
 	worn_icon_state = "autopsy_scanner"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
 	custom_price = PAYCHECK_COMMAND
 
-/obj/item/autopsy_scanner/attack(mob/living/M, mob/living/carbon/human/user)
+/obj/item/autopsy_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
 	if(!user.can_read(src) || user.is_blind())
-		return
+		return ITEM_INTERACT_BLOCKING
+
+	var/mob/living/M = interacting_with
 
 	if(M.stat != DEAD && !HAS_TRAIT(M, TRAIT_FAKEDEATH)) // good job, you found a loophole
 		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
-		return
+		return ITEM_INTERACT_BLOCKING
+
+	. = ITEM_INTERACT_SUCCESS
 
 	// Clumsiness/brain damage check
 	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
@@ -50,7 +56,6 @@
 
 	autopsy_information += "Toxin damage: [CEILING(scanned.getToxLoss(), 1)]"
 	autopsy_information += "Oxygen damage: [CEILING(scanned.getOxyLoss(), 1)]"
-	autopsy_information += "Cloning damage: [CEILING(scanned.getCloneLoss(), 1)]"
 
 	autopsy_information += "<center>Bodypart Data</center><br>"
 	for(var/obj/item/bodypart/bodyparts as anything in scanned.bodyparts)

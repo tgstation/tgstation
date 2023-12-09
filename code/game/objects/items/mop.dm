@@ -60,7 +60,9 @@
  * * cleaned_turf the turf that is being cleaned
  * * cleaner the mob that is doing the cleaning
  */
-/obj/item/mop/proc/apply_reagents(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner)
+/obj/item/mop/proc/apply_reagents(datum/cleaning_source, turf/cleaned_turf, mob/living/cleaner, clean_succeeded)
+	if(!clean_succeeded)
+		return
 	reagents.expose(cleaned_turf, TOUCH, 10) //Needed for proper floor wetting.
 	var/val2remove = 1
 	if(cleaner?.mind)

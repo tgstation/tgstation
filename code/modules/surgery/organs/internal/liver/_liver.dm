@@ -1,7 +1,7 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_RESISTANCE 1 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
-#define MAX_TOXIN_LIVER_DAMAGE 2 //the max damage the liver can recieve per second (~1 min at max damage will destroy liver)
+#define MAX_TOXIN_LIVER_DAMAGE 2 //the max damage the liver can receive per second (~1 min at max damage will destroy liver)
 
 /obj/item/organ/internal/liver
 	name = "liver"

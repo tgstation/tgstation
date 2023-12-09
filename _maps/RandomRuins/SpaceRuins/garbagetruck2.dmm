@@ -86,8 +86,8 @@
 /turf/open/space/basic,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "iU" = (
+/obj/item/storage/medkit/brute,
 /obj/effect/spawner/random/trash/garbage,
-/obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "kf" = (
@@ -164,12 +164,17 @@
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/rack_parts,
 /obj/item/storage/pill_bottle/mannitol,
-/obj/item/retractor/advanced,
 /obj/effect/decal/cleanable/oil/slippery,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "qC" = (
 /turf/closed/wall/mineral/titanium,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"qV" = (
+/obj/item/retractor/advanced{
+	pixel_x = 8
+	},
+/turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "qX" = (
 /obj/effect/decal/cleanable/plastic,
@@ -395,9 +400,9 @@
 	},
 /obj/item/rack_parts,
 /obj/item/shard,
-/obj/item/wrench/medical,
 /obj/effect/decal/cleanable/plastic,
 /obj/effect/spawner/random/contraband/permabrig_gear,
+/obj/item/wrench/medical,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "EJ" = (
@@ -449,6 +454,10 @@
 /obj/effect/spawner/random/medical/medkit,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
+"Ka" = (
+/obj/effect/spawner/random/trash/food_packaging,
+/turf/open/floor/plating,
+/area/ruin/space/has_grav/garbagetruck/medicalwaste)
 "Kk" = (
 /obj/item/wheelchair,
 /obj/item/screwdriver,
@@ -462,6 +471,7 @@
 "Lh" = (
 /obj/item/food/deadmouse/moldy,
 /obj/item/pushbroom,
+/obj/item/clothing/shoes/galoshes,
 /obj/item/storage/bag/trash/filled,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
@@ -569,7 +579,6 @@
 "Qq" = (
 /obj/structure/microscope,
 /obj/structure/broken_flooring/singular,
-/obj/effect/spawner/random/trash/food_packaging,
 /obj/item/instrument/bilehorn,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/medicalwaste)
@@ -790,7 +799,7 @@ CJ
 CJ
 CJ
 eO
-CJ
+qV
 CJ
 Kk
 CJ
@@ -855,7 +864,7 @@ uR
 CJ
 CJ
 hv
-CJ
+Ka
 CJ
 CJ
 Gp

@@ -1,3 +1,6 @@
+/// Station traits displayed in the lobby
+GLOBAL_LIST_EMPTY(lobby_station_traits)
+
 ///Base class of station traits. These are used to influence rounds in one way or the other by influencing the levers of the station.
 /datum/station_trait
 	///Name of the trait

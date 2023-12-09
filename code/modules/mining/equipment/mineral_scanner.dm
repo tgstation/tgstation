@@ -2,14 +2,14 @@
 /obj/item/mining_scanner
 	desc = "A scanner that checks surrounding rock for useful minerals; it can also be used to stop gibtonite detonations."
 	name = "manual mining scanner"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "manual_mining"
 	inhand_icon_state = "analyzer"
 	worn_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0
@@ -38,7 +38,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	var/cooldown = 35
 	var/current_cooldown = 0

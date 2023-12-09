@@ -45,7 +45,6 @@
 	var/atom/movable/moving_from_pull
 	///Holds information about any movement loops currently running/waiting to run on the movable. Lazy, will be null if nothing's going on
 	var/datum/movement_packet/move_packet
-	var/datum/forced_movement/force_moving = null //handled soley by forced_movement.dm
 	/**
 	 * an associative lazylist of relevant nested contents by "channel", the list is of the form: list(channel = list(important nested contents of that type))
 	 * each channel has a specific purpose and is meant to replace potentially expensive nested contents iteration.
@@ -319,18 +318,15 @@
 		overlays.Insert(1, emissive_block)
 	return overlays
 
-/atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
+/atom/movable/proc/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(message)
-		visible_message(span_danger("[src] crashes into [impacted_turf]!"))
-	var/atom/highest = impacted_turf
-	for(var/atom/hurt_atom as anything in impacted_turf.contents)
-		if(!hurt_atom.density)
-			continue
-		if(isobj(hurt_atom) || ismob(hurt_atom))
-			if(hurt_atom.layer > highest.layer)
-				highest = hurt_atom
-	INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
+	if(!(impact_flags & ZIMPACT_NO_MESSAGE))
+		visible_message(
+			span_danger("[src] crashes into [impacted_turf]!"),
+			span_userdanger("You crash into [impacted_turf]!"),
+		)
+	if(!(impact_flags & ZIMPACT_NO_SPIN))
+		INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)
 	return TRUE
 
