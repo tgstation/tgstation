@@ -1,4 +1,4 @@
-import { Component, InfernoNode } from 'inferno';
+import { Component, ReactNode } from 'react';
 import { resolveAsset } from '../../assets';
 import { fetchRetry } from '../../http';
 import { ServerData } from './data';
@@ -8,7 +8,7 @@ let fetchServerData: Promise<ServerData> | undefined;
 
 export class ServerPreferencesFetcher extends Component<
   {
-    render: (serverData: ServerData | undefined) => InfernoNode;
+    render: (serverData: ServerData | undefined) => ReactNode;
   },
   {
     serverData?: ServerData;
@@ -25,7 +25,7 @@ export class ServerPreferencesFetcher extends Component<
   async populateServerData() {
     if (!fetchServerData) {
       fetchServerData = fetchRetry(resolveAsset('preferences.json')).then(
-        (response) => response.json()
+        (response) => response.json(),
       );
     }
 
@@ -37,6 +37,6 @@ export class ServerPreferencesFetcher extends Component<
   }
 
   render() {
-    return this.props.render(this.state.serverData);
+    return this.props?.render?.(this.state.serverData);
   }
 }

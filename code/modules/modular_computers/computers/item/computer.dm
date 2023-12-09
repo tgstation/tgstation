@@ -839,7 +839,7 @@
 /obj/item/modular_computer/deconstruct(disassembled = TRUE)
 	remove_pai()
 	eject_aicard()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if (disassembled)
 			internal_cell?.forceMove(drop_location())
 			computer_id_slot?.forceMove(drop_location())

@@ -6,7 +6,7 @@
 		/datum/ai_planning_subtree/handle_medbot_speech,
 		/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit,
 		/datum/ai_planning_subtree/treat_wounded_target,
-		/datum/ai_planning_subtree/salute_beepsky,
+		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 	)
 	ai_movement = /datum/ai_movement/jps/bot/medbot

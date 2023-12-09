@@ -27,7 +27,8 @@ export const NoticeBoard = (props) => {
               key={item.ref}
               color="black"
               backgroundColor="white"
-              style={{ padding: '2px 2px 0 2px' }}>
+              style={{ padding: '2px 2px 0 2px' }}
+            >
               <Stack.Item align="center" grow>
                 <Box align="center">{item.name}</Box>
               </Stack.Item>

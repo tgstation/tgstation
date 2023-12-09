@@ -301,7 +301,7 @@
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(refill_canister)
 		return ..()
-	if(!(flags_1 & NODECONSTRUCT_1)) //the non constructable vendors drop metal instead of a machine frame.
+	if(!(obj_flags & NO_DECONSTRUCTION)) //the non constructable vendors drop metal instead of a machine frame.
 		new /obj/item/stack/sheet/iron(loc, 3)
 	qdel(src)
 
@@ -1068,7 +1068,7 @@
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
 	if(!istype(replacer))
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) && !replacer.works_from_distance)
+	if((obj_flags & NO_DECONSTRUCTION) && !replacer.works_from_distance)
 		return FALSE
 	if(!component_parts || !refill_canister)
 		return FALSE

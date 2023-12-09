@@ -2,7 +2,11 @@ import { useBackend, useLocalState } from '../backend';
 import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
-import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
+import {
+  ObjectivePrintout,
+  Objective,
+  ReplaceObjectivesButton,
+} from './common/Objectives';
 
 const hereticRed = {
   color: '#e03c3c',
@@ -309,24 +313,27 @@ export const AntagInfoHeretic = (props) => {
     <Window width={675} height={635}>
       <Window.Content
         style={{
-          'background-image': 'none',
-          'background': ascended
+          backgroundImage: 'none',
+          background: ascended
             ? 'radial-gradient(circle, rgba(24,9,9,1) 54%, rgba(31,10,10,1) 60%, rgba(46,11,11,1) 80%, rgba(47,14,14,1) 100%);'
             : 'radial-gradient(circle, rgba(9,9,24,1) 54%, rgba(10,10,31,1) 60%, rgba(21,11,46,1) 80%, rgba(24,14,47,1) 100%);',
-        }}>
+        }}
+      >
         <Stack vertical fill>
           <Stack.Item>
             <Tabs fluid>
               <Tabs.Tab
                 icon="info"
                 selected={currentTab === 0}
-                onClick={() => setTab(0)}>
+                onClick={() => setTab(0)}
+              >
                 Information
               </Tabs.Tab>
               <Tabs.Tab
                 icon={currentTab === 1 ? 'book-open' : 'book'}
                 selected={currentTab === 1}
-                onClick={() => setTab(1)}>
+                onClick={() => setTab(1)}
+              >
                 Research
               </Tabs.Tab>
             </Tabs>

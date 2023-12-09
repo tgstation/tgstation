@@ -176,7 +176,7 @@
 		tool.forceMove(drop_point)
 
 /obj/item/surgery_tray/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		dump_contents()
 		new /obj/item/stack/rods(drop_location(), 2)
 		new /obj/item/stack/sheet/mineral/silver(drop_location())

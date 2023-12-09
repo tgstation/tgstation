@@ -416,7 +416,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 	qdel(src)
 

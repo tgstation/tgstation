@@ -196,7 +196,9 @@
     padding-right: 1.25em;
     margin-right: -0.5em;
     padding-right: 0.5em;
-    transition: border-color 0.125s ease-out, background-color 0.0625s ease-out;
+    transition:
+      border-color 0.125s ease-out,
+      background-color 0.0625s ease-out;
 
     &:hover,
     &--active {
