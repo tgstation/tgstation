@@ -372,21 +372,19 @@
 	cell_container_opened = !cell_container_opened
 	to_chat(user, span_notice("You [cell_container_opened ? "open" : "close"] the cell container hatch of [src]."))
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/crowbar_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(!cell_container_opened || !internal_cell)
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	internal_cell.forceMove(drop_location())
 	balloon_alert(user, "cell removed")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/portable_atmospherics/canister/welder_act_secondary(mob/living/user, obj/item/I)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
 	if(!I.tool_start_check(user, amount=1))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/pressure = air_contents.return_pressure()
 	if(pressure > 300)
@@ -398,20 +396,23 @@
 		to_chat(user, span_notice("You cut [src] apart."))
 		deconstruct(TRUE)
 
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/portable_atmospherics/canister/welder_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
 	if(user.combat_mode)
-		return FALSE
-	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
 		return
+	if(atom_integrity >= max_integrity || (machine_stat & BROKEN) || !tool.tool_start_check(user, amount = 1))
+		return ITEM_INTERACT_SUCCESS
 
 	to_chat(user, span_notice("You begin repairing cracks in [src]..."))
 	while(tool.use_tool(src, user, 2.5 SECONDS, volume=40))
 		atom_integrity = min(atom_integrity + 25, max_integrity)
 		if(atom_integrity >= max_integrity)
 			to_chat(user, span_notice("You've finished repairing [src]."))
-			return
+			return ITEM_INTERACT_SUCCESS
 		to_chat(user, span_notice("You repair some of the cracks in [src]..."))
+
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone, direction)
 	. = ..()
