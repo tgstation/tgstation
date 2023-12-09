@@ -6,11 +6,11 @@
 	filedesc = "Coupon Master"
 	downloader_category = PROGRAM_CATEGORY_DEVICE
 	extended_desc = "Program for receiving discounts for several cargo goodies. After redeeming a coupon, hit a photocopier with your PDA to print it."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 5
 	tgui_id = "NtosCouponMaster"
 	program_icon = "ticket"
-	usage_flags = PROGRAM_PDA //It relies on the PDA messenger to let you know of new codes
+	can_run_on_flags = PROGRAM_PDA //It relies on the PDA messenger to let you know of new codes
 	detomatix_resistance = DETOMATIX_RESIST_MALUS
 
 /datum/computer_file/program/coupon/on_install()
