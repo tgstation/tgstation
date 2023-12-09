@@ -1,0 +1,5 @@
+author: "san7890"
+delete-after: True
+changes:
+  - admin: "Object Possession has been reworked, please report any potential bugs."
+  - qol: "Object Possession should now throw a screen alert for you to unpossess the object instead of you having to search the stat-panel for the \"release obj\" verb. You can still use the verb but it's a lot nicer now. Aghosting will also work now."
