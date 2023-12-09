@@ -2,7 +2,7 @@
 /obj/item/pinpointer
 	name = "pinpointer"
 	desc = "A handheld tracking device that locks onto certain signals."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinpointer"
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
