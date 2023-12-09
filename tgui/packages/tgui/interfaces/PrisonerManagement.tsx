@@ -94,7 +94,7 @@ const sortImplants = (implants: ImplantInfo[]) => {
       }
       return acc;
     },
-    {}
+    {},
   );
 
   return implantsByCategory;
@@ -109,12 +109,12 @@ const formatCategory = (category: string) => {
 
 const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
   const implantsByCategory: Record<string, ImplantInfo[]> = sortImplants(
-    props.implants
+    props.implants,
   );
 
   const [implantTab, setImplantTab] = useSharedState(
     'implantTab',
-    Object.keys(implantsByCategory)[0]
+    Object.keys(implantsByCategory)[0],
   );
 
   return (
@@ -133,10 +133,11 @@ const AllImplantDisplay = (props: { implants: ImplantInfo[] }) => {
         </Tabs>
       </Stack.Item>
       <Stack.Item>
-        {(implantTab && implantsByCategory && implantsByCategory[implantTab])
-          ? (implantsByCategory[implantTab].map((implant) => (
+        {implantTab && implantsByCategory && implantsByCategory[implantTab] ? (
+          implantsByCategory[implantTab].map((implant) => (
             <ImplantDisplay key={implant.ref} implant={implant} />
-        ))) : (
+          ))
+        ) : (
           <NoticeBox>No implants detected.</NoticeBox>
         )}
       </Stack.Item>
