@@ -4,6 +4,7 @@
 	desc = "An apparently sentient virus, extremely adaptable and resistant to outside sources of mutation."
 	viable_mobtypes = list(/mob/living/carbon/human)
 	mutable = FALSE
+	bypasses_immunity = TRUE
 	var/mob/camera/disease/overmind
 	var/disease_id
 
@@ -46,6 +47,9 @@
 	if(overmind)
 		overmind.add_infection(src)
 
+/datum/disease/advance/sentient_disease/GenerateProperties()
+	..()
+	src.properties["stealth"] += 6 //SD gets an extra bit of stealth, as a treat, to avoid getting caught out so early
 
 /datum/disease/advance/sentient_disease/GetDiseaseID()
 	if (!disease_id) //if we don't set this here it can reinfect people after the disease dies, since overmind.tag won't be null when the disease is alive, but will be null afterwards, thus the disease ID changes

@@ -47,7 +47,8 @@ export const PortraitPicker = (props) => {
                 height="100%"
                 align="center"
                 justify="center"
-                direction="column">
+                direction="column"
+              >
                 {got_paintings ? (
                   <>
                     <Flex.Item>
@@ -56,8 +57,7 @@ export const PortraitPicker = (props) => {
                         height="128px"
                         width="128px"
                         style={{
-                          'vertical-align': 'middle',
-                          '-ms-interpolation-mode': 'nearest-neighbor',
+                          verticalAlign: 'middle',
                         }}
                       />
                     </Flex.Item>

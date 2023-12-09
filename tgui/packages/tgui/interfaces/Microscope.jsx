@@ -26,14 +26,16 @@ export const Microscope = (props) => {
             icon="microscope"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             Micro-Organisms ({cell_lines.length})
           </Tabs.Tab>
           <Tabs.Tab
             icon="microscope"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Viruses ({viruses.length})
           </Tabs.Tab>
         </Tabs>

@@ -380,7 +380,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Try to unwrench an object in a WONDERFUL DYNAMIC WAY
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20)
-	if((flags_1 & NODECONSTRUCT_1) || wrench.tool_behaviour != TOOL_WRENCH)
+	if((obj_flags & NO_DECONSTRUCTION) || wrench.tool_behaviour != TOOL_WRENCH)
 		return CANT_UNFASTEN
 
 	var/turf/ground = get_turf(src)

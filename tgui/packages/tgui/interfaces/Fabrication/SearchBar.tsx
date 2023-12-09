@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { Stack, Input, Icon } from '../../components';
 
 /**

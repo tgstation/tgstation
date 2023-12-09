@@ -189,7 +189,7 @@
 /obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
 	. = ..()
@@ -399,4 +399,3 @@
 	. += ore_output
 	. += light_in
 	. += light_out
-

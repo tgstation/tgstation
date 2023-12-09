@@ -26,7 +26,7 @@ export const InterviewManager = (props) => {
               key={id}
               content={ckey + (disconnected ? ' (DC)' : '')}
               color={queued ? 'default' : colorMap(status)}
-              onClick={() => act('open', { 'id': id })}
+              onClick={() => act('open', { id: id })}
             />
           ))}
         </Section>
@@ -36,7 +36,7 @@ export const InterviewManager = (props) => {
               key={id}
               content={ckey + (disconnected ? ' (DC)' : '')}
               color={colorMap(status)}
-              onClick={() => act('open', { 'id': id })}
+              onClick={() => act('open', { id: id })}
             />
           ))}
         </Section>
