@@ -131,6 +131,16 @@
 		if(elevation)
 			AddElement(/datum/element/elevation, pixel_shift = elevation)
 
+///Spawns two to six maintenance spawners inside the closet
+/obj/structure/closet/proc/populate_with_random_maint_loot()
+	SIGNAL_HANDLER
+
+	for (var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/random/maintenance(src)
+
+	UnregisterSignal(src, COMSIG_CLOSET_POPULATE_CONTENTS)
+
+///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
@@ -161,27 +171,6 @@
 	can_install_electronics = FALSE
 	paint_jobs = null
 	elevation_open = 0
-
-/obj/structure/closet/crate/maint
-
-/obj/structure/closet/crate/maint/Initialize(mapload)
-	..()
-
-	var/static/list/possible_crates = RANDOM_CRATE_LOOT
-
-	var/crate_path = pick_weight(possible_crates)
-	var/obj/structure/closet/crate/random_crate = new crate_path(loc)
-	random_crate.RegisterSignal(random_crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
-	if (prob(50))
-		random_crate.open(null, special_effects = FALSE) //crates spawned as immediatly opened don't need to animate into being opened
-
-	return INITIALIZE_HINT_QDEL
-
-/obj/structure/closet/proc/populate_with_random_maint_loot()
-	SIGNAL_HANDLER
-
-	for (var/i in 1 to rand(2,6))
-		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."

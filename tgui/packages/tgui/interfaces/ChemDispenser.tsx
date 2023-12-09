@@ -2,7 +2,14 @@ import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, LabeledList, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
@@ -72,7 +79,8 @@ export const ChemDispenser = (props) => {
                 onClick={() => setHasCol(!hasCol)}
               />
             </>
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Energy">
               <ProgressBar value={data.energy / data.maxEnergy}>
@@ -119,7 +127,8 @@ export const ChemDispenser = (props) => {
                 />
               )}
             </>
-          }>
+          }
+        >
           <Box mr={-1}>
             {Object.keys(recipes).map((recipe) => (
               <Button
@@ -152,7 +161,8 @@ export const ChemDispenser = (props) => {
                 })
               }
             />
-          ))}>
+          ))}
+        >
           <Box mr={-1}>
             {data.chemicals.map((chemical) => (
               <Button
@@ -190,7 +200,8 @@ export const ChemDispenser = (props) => {
               content={amount}
               onClick={() => act('remove', { amount })}
             />
-          ))}>
+          ))}
+        >
           <BeakerDisplay
             beaker={beaker}
             title_label={recording && 'Virtual beaker'}

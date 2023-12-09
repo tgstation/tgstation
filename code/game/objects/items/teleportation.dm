@@ -13,10 +13,10 @@
 /obj/item/locator
 	name = "bluespace locator"
 	desc = "Used to track portable teleportation beacons and targets with embedded tracking implants."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "locator"
 	var/temp = null
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_SMALL
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -100,7 +100,7 @@
 /obj/item/hand_tele
 	name = "hand tele"
 	desc = "A portable item using blue-space technology. One of the buttons opens a portal, the other re-opens your last destination."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "hand_tele"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -317,13 +317,13 @@
 /obj/item/syndicate_teleporter
 	name = "experimental teleporter"
 	desc = "A reverse-engineered version of the Nanotrasen handheld teleporter. Lacks the advanced safety features of its counterpart. A three-headed serpent can be seen on the back."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "syndi-tele"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 10
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'

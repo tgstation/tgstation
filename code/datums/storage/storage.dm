@@ -982,7 +982,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	return open_storage_on_signal(source, user)
 
-/// Signal handler to open up the storage when we recieve a signal.
+/// Signal handler to open up the storage when we receive a signal.
 /datum/storage/proc/open_storage_on_signal(datum/source, mob/to_show)
 	SIGNAL_HANDLER
 

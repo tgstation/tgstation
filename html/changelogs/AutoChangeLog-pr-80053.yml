@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue with the offsets of ridden vehicles on tables, and another when buckled to a bed."

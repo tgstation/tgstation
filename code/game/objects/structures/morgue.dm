@@ -106,7 +106,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	return attack_hand(user)
 
 /obj/structure/bodycontainer/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 5)
 	toggle_organ_decay(src)
 	qdel(src)

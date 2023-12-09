@@ -313,11 +313,10 @@
 	return ..()
 
 /datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
-	if(!ishuman(burdened))
-		return FALSE
-	var/datum/brain_trauma/special/burdened/burden = burdened.has_trauma_type(/datum/brain_trauma/special/burdened)
-	if(burden)
-		return "You are at burden level [burden.burden_level]/9."
+	if(ishuman(burdened))
+		var/datum/brain_trauma/special/burdened/burden = burdened.has_trauma_type(/datum/brain_trauma/special/burdened)
+		if(burden)
+			return "You are at burden level [burden.burden_level]/9."
 	return "You are not burdened."
 
 /datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)
@@ -362,11 +361,6 @@
 		transferred = TRUE
 		target.adjustOxyLoss(-suffocation_damage)
 		chaplain.adjustOxyLoss(suffocation_damage * burden_modifier, forced = TRUE)
-	var/clone_damage = target.getCloneLoss()
-	if(clone_damage && !HAS_TRAIT(chaplain, TRAIT_NOCLONELOSS))
-		transferred = TRUE
-		target.adjustCloneLoss(-clone_damage)
-		chaplain.adjustCloneLoss(clone_damage * burden_modifier, forced = TRUE)
 	if(!HAS_TRAIT(chaplain, TRAIT_NOBLOOD))
 		if(target.blood_volume < BLOOD_VOLUME_SAFE)
 			var/target_blood_data = target.get_blood_data(target.get_blood_id())
@@ -508,7 +502,10 @@
 	alignment = ALIGNMENT_GOOD
 	candle_overlay = FALSE
 	rites_list = list(
+		/datum/religion_rites/holy_violin,
+		/datum/religion_rites/portable_song_tuning,
 		/datum/religion_rites/song_tuner/evangelism,
+		/datum/religion_rites/song_tuner/light,
 		/datum/religion_rites/song_tuner/nullwave,
 		/datum/religion_rites/song_tuner/pain,
 		/datum/religion_rites/song_tuner/lullaby,

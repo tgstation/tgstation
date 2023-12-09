@@ -32,7 +32,7 @@
 
 /datum/crafting_recipe/cleanbot
 	name = "Cleanbot"
-	result = /mob/living/simple_animal/bot/cleanbot
+	result = /mob/living/basic/bot/cleanbot
 	reqs = list(
 		/obj/item/reagent_containers/cup/bucket = 1,
 		/obj/item/assembly/prox_sensor = 1,
@@ -56,7 +56,7 @@
 
 /datum/crafting_recipe/medbot
 	name = "Medbot"
-	result = /mob/living/simple_animal/bot/medbot
+	result = /mob/living/basic/bot/medbot
 	reqs = list(
 		/obj/item/healthanalyzer = 1,
 		/obj/item/storage/medkit = 1,
@@ -71,10 +71,10 @@
 	category = CAT_ROBOT
 
 /datum/crafting_recipe/medbot/on_craft_completion(mob/user, atom/result)
-	var/mob/living/simple_animal/bot/medbot/bot = result
+	var/mob/living/basic/bot/medbot/bot = result
 	var/obj/item/storage/medkit/medkit = bot.contents[3]
 	bot.medkit_type = medkit
-	bot.healthanalyzer = bot.contents[4]
+	bot.health_analyzer = bot.contents[4]
 
 	///if you add a new one don't forget to update /obj/item/storage/medkit/attackby()
 	if (istype(medkit, /obj/item/storage/medkit/fire))
@@ -90,7 +90,7 @@
 	else if (istype(src, /obj/item/storage/medkit/tactical))
 		bot.skin = "bezerk"
 
-	bot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+	bot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 	bot.update_appearance()
 
 /datum/crafting_recipe/honkbot
