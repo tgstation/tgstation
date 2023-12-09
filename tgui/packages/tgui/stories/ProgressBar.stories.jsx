@@ -5,7 +5,14 @@
  */
 
 import { useLocalState } from '../backend';
-import { Box, Button, Input, LabeledList, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  Input,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 
 export const meta = {
   title: 'ProgressBar',
@@ -19,12 +26,12 @@ const Story = (props) => {
   const color_data = color
     ? { color: color }
     : {
-      ranges: {
-        good: [0.5, Infinity],
-        bad: [-Infinity, 0.1],
-        average: [0, 0.5],
-      },
-    };
+        ranges: {
+          good: [0.5, Infinity],
+          bad: [-Infinity, 0.1],
+          average: [0, 0.5],
+        },
+      };
 
   return (
     <Section>

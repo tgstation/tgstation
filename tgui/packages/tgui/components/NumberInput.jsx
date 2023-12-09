@@ -5,8 +5,8 @@
  */
 
 import { clamp } from 'common/math';
-import { classes, pureComponentHooks } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { classes } from 'common/react';
+import { Component, createRef } from 'react';
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 
@@ -40,7 +40,7 @@ export class NumberInput extends Component {
             this.setState({
               suppressingFlicker: false,
             }),
-          suppressFlicker
+          suppressFlicker,
         );
       }
     };
@@ -87,13 +87,13 @@ export class NumberInput extends Component {
           state.internalValue = clamp(
             state.internalValue + (offset * step) / stepPixelSize,
             minValue - step,
-            maxValue + step
+            maxValue + step,
           );
           // Clamp the final value
           state.value = clamp(
             state.internalValue - (state.internalValue % step) + stepOffset,
             minValue,
-            maxValue
+            maxValue,
           );
           state.origin = e.screenY;
         } else if (Math.abs(offset) > 4) {
@@ -165,14 +165,15 @@ export class NumberInput extends Component {
       displayValue = intermediateValue;
     }
 
-    // prettier-ignore
     const contentElement = (
-      <div className="NumberInput__content" unselectable={Byond.IS_LTE_IE8}>
-        {
-          (animated && !dragging && !suppressingFlicker) ?
-            (<AnimatedNumber value={displayValue} format={format} />) :
-            (format ? format(displayValue) : displayValue)
-        }
+      <div className="NumberInput__content">
+        {animated && !dragging && !suppressingFlicker ? (
+          <AnimatedNumber value={displayValue} format={format} />
+        ) : format ? (
+          format(displayValue)
+        ) : (
+          displayValue
+        )}
 
         {unit ? ' ' + unit : ''}
       </div>
@@ -189,15 +190,18 @@ export class NumberInput extends Component {
         minHeight={height}
         lineHeight={lineHeight}
         fontSize={fontSize}
-        onMouseDown={this.handleDragStart}>
+        onMouseDown={this.handleDragStart}
+      >
         <div className="NumberInput__barContainer">
           <div
             className="NumberInput__bar"
             style={{
-              // prettier-ignore
-              height: clamp(
-                (displayValue - minValue) / (maxValue - minValue) * 100,
-                0, 100) + '%',
+              height:
+                clamp(
+                  ((displayValue - minValue) / (maxValue - minValue)) * 100,
+                  0,
+                  100,
+                ) + '%',
             }}
           />
         </div>
@@ -208,8 +212,8 @@ export class NumberInput extends Component {
           style={{
             display: !editing ? 'none' : undefined,
             height: height,
-            'line-height': lineHeight,
-            'font-size': fontSize,
+            lineHeight: lineHeight,
+            fontSize: fontSize,
           }}
           onBlur={(e) => {
             if (!editing) {
@@ -274,7 +278,6 @@ export class NumberInput extends Component {
   }
 }
 
-NumberInput.defaultHooks = pureComponentHooks;
 NumberInput.defaultProps = {
   minValue: -Infinity,
   maxValue: +Infinity,

@@ -119,24 +119,7 @@
 					return
 				INVOKE_ASYNC(knower, TYPE_PROC_REF(/mob/living/carbon/human, slow_psykerize))
 
-/// Signal to decrease burden_level (see update_burden proc) if an organ is added
-/datum/brain_trauma/special/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
-	SIGNAL_HANDLER
-
-	if(special) //aheals
-		return
-
-	if(istype(new_organ, /obj/item/organ/internal/eyes))
-		var/obj/item/organ/internal/eyes/new_eyes = new_organ
-		if(new_eyes.tint < TINT_BLIND) //unless you added unworking eyes (flashlight eyes), this is removing burden
-			update_burden(FALSE)
-		return
-	else if(istype(new_organ, /obj/item/organ/internal/appendix))
-		return
-
-	update_burden(increase = FALSE)//working organ
-
-/datum/brain_trauma/special/burdened/proc/is_burdensome_to_lose_organ(mob/burdened, obj/item/organ/old_organ, special)
+/datum/brain_trauma/special/burdened/proc/is_burdensome_organ(mob/burdened, obj/item/organ/organ, special)
 	if(special) //aheals
 		return
 	if(!ishuman(burdened))
@@ -168,20 +151,28 @@
 	if(!burdened_species.mutantliver)
 		critical_slots -= ORGAN_SLOT_LIVER
 
-	if(!(old_organ.slot in critical_slots))
+	if(!(organ.slot in critical_slots))
 		return FALSE
-	else if(istype(old_organ, /obj/item/organ/internal/eyes))
-		var/obj/item/organ/internal/eyes/old_eyes = old_organ
-		if(old_eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
+	else if(istype(organ, /obj/item/organ/internal/eyes))
+		var/obj/item/organ/internal/eyes/eyes = organ
+		if(eyes.tint < TINT_BLIND) //unless you were already blinded by them (flashlight eyes), this is adding burden!
 			return TRUE
 		return FALSE
 	return TRUE
+
+/// Signal to decrease burden_level (see update_burden proc) if an organ is added
+/datum/brain_trauma/special/burdened/proc/organ_added_burden(mob/burdened, obj/item/organ/new_organ, special)
+	SIGNAL_HANDLER
+
+	if(is_burdensome_organ(burdened, new_organ, special))
+		update_burden(increase = FALSE)//working organ
 
 /// Signal to increase burden_level (see update_burden proc) if an organ is removed
 /datum/brain_trauma/special/burdened/proc/organ_removed_burden(mob/burdened, obj/item/organ/old_organ, special)
 	SIGNAL_HANDLER
 
-	update_burden(increase = TRUE)//lost organ
+	if(is_burdensome_organ(burdened, old_organ, special))
+		update_burden(increase = TRUE) //lost organ
 
 /// Signal to decrease burden_level (see update_burden proc) if a limb is added
 /datum/brain_trauma/special/burdened/proc/limbs_added_burden(datum/source, obj/item/bodypart/new_limb, special)
@@ -192,7 +183,7 @@
 	update_burden(increase = FALSE)
 
 /// Signal to increase burden_level (see update_burden proc) if a limb is removed
-/datum/brain_trauma/special/burdened/proc/limbs_removed_burden(datum/source, obj/item/bodypart/old_limb, special)
+/datum/brain_trauma/special/burdened/proc/limbs_removed_burden(datum/source, obj/item/bodypart/old_limb, special, dismembered)
 	SIGNAL_HANDLER
 
 	if(special) //something we don't wanna consider, like instaswapping limbs

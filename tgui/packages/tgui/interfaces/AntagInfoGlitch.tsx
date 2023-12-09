@@ -98,7 +98,7 @@ const SpecificInfo = (props) => {
     case 'NetGuardian Prime':
       return (
         <Stack.Item grow>
-          <span style={{ ...textStyles.danger, 'font-size': '16px' }}>
+          <span style={{ ...textStyles.danger, fontSize: '16px' }}>
             ORGANIC LIFE MUST BE TERMINATED.
           </span>
         </Stack.Item>
