@@ -1,4 +1,5 @@
-import { useBackend, useSharedState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -12,7 +13,6 @@ import {
 import { Window } from '../layouts';
 
 export const DopplerArray = (props) => {
-  const { act, data } = useBackend();
   return (
     <Window width={650} height={320} resizable>
       <Window.Content>
@@ -25,10 +25,7 @@ export const DopplerArray = (props) => {
 const DopplerArrayContent = (props) => {
   const { act, data } = useBackend();
   const { records = [], disk, storage } = data;
-  const [activeRecordName, setActiveRecordName] = useSharedState(
-    'activeRecordrecord',
-    records[0]?.name,
-  );
+  const [activeRecordName, setActiveRecordName] = useState(records[0]?.name);
   const activeRecord = records.find((record) => {
     return record.name === activeRecordName;
   });

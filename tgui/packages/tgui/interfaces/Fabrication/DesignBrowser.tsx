@@ -1,7 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { ReactNode } from 'react';
-import { useSharedState } from '../../backend';
+import { ReactNode, useState } from 'react';
 import { Stack, Section, Icon, Dimmer } from '../../components';
 import { Design, MaterialMap } from './Types';
 import { SearchBar } from './SearchBar';
@@ -127,12 +126,9 @@ export const DesignBrowser = <T extends Design = Design>(
     categoryButtons,
   } = props;
 
-  const [selectedCategory, setSelectedCategory] = useSharedState(
-    'selected_category',
-    ALL_CATEGORY,
-  );
+  const [selectedCategory, setSelectedCategory] = useState(ALL_CATEGORY);
 
-  const [searchText, setSearchText] = useSharedState('search_text', '');
+  const [searchText, setSearchText] = useState('');
 
   const onCategorySelected = (newCategory: string) => {
     if (newCategory === selectedCategory) {

@@ -1,12 +1,13 @@
 import { classes } from 'common/react';
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
+import { useState } from 'react';
 
 export const NtosEmojipedia = (props) => {
   const { data } = useBackend();
   const { emoji_list } = data;
-  const [filter, updatefilter] = useSharedState('filter', '');
+  const [filter, updatefilter] = useState('');
 
   let filtered_emoji_list = filter
     ? emoji_list.filter((emoji) => {

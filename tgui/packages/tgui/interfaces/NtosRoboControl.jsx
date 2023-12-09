@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -10,6 +10,7 @@ import {
   Tabs,
 } from '../components';
 import { NtosWindow } from '../layouts';
+import { useState } from 'react';
 
 const getMuleByRef = (mules, ref) => {
   return mules?.find((mule) => mule.mule_ref === ref);
@@ -17,8 +18,9 @@ const getMuleByRef = (mules, ref) => {
 
 export const NtosRoboControl = (props) => {
   const { act, data } = useBackend();
-  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
+  const [tab_main, setTab_main] = useState(1);
   const { bots, drones, id_owner, droneaccess, dronepingtypes } = data;
+
   return (
     <NtosWindow width={550} height={550}>
       <NtosWindow.Content scrollable>

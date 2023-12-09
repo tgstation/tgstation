@@ -1,10 +1,12 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 import { GenericUplink } from './Uplink/GenericUplink';
+import { useState } from 'react';
 
 export const AbductorConsole = (props) => {
-  const [tab, setTab] = useSharedState('tab', 1);
+  const [tab, setTab] = useState(1);
+
   return (
     <Window theme="abductor" width={600} height={532}>
       <Window.Content scrollable>

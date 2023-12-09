@@ -6,7 +6,7 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
 import {
@@ -33,10 +33,8 @@ export const Newscaster = (props) => {
   const { act, data } = useBackend();
   const NEWSCASTER_SCREEN = 1;
   const BOUNTYBOARD_SCREEN = 2;
-  const [screenmode, setScreenmode] = useSharedState(
-    'tab_main',
-    NEWSCASTER_SCREEN,
-  );
+  const [screenmode, setScreenmode] = useState(NEWSCASTER_SCREEN);
+
   return (
     <>
       <NewscasterChannelCreation />

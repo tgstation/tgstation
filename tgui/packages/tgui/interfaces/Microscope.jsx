@@ -1,11 +1,13 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 export const Microscope = (props) => {
   const { act, data } = useBackend();
-  const [tab, setTab] = useSharedState('tab', 1);
+  const [tab, setTab] = useState(1);
   const { has_dish, cell_lines = [], viruses = [] } = data;
+
   return (
     <Window>
       <Window.Content scrollable>
@@ -52,6 +54,7 @@ const Organisms = (props) => {
   if (!cell_lines.length) {
     return <NoticeBox>No micro-organisms found</NoticeBox>;
   }
+
   return cell_lines.map((cell_line) => {
     return (
       <Section key={cell_line.desc} title={cell_line.desc}>

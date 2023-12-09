@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Button,
   Icon,
@@ -10,6 +10,7 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
+import { useState } from 'react';
 
 export const AnomalyRefinery = (props) => {
   const { act, data } = useBackend();
@@ -24,8 +25,9 @@ export const AnomalyRefinery = (props) => {
 
 const AnomalyRefineryContent = (props) => {
   const { act, data } = useBackend();
-  const [currentTab, changeTab] = useSharedState('exploderTab', 1);
+  const [currentTab, changeTab] = useState(1);
   const { core, valvePresent, active } = data;
+
   return (
     <Stack vertical fill>
       {currentTab === 1 && <CoreCompressorContent />}

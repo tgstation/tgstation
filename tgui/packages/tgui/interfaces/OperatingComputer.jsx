@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Button,
@@ -9,6 +9,7 @@ import {
   Tabs,
 } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 const damageTypes = [
   {
@@ -31,7 +32,7 @@ const damageTypes = [
 
 export const OperatingComputer = (props) => {
   const { act } = useBackend();
-  const [tab, setTab] = useSharedState('tab', 1);
+  const [tab, setTab] = useState(1);
 
   return (
     <Window width={350} height={470}>
@@ -60,6 +61,7 @@ const PatientStateView = (props) => {
   if (!table) {
     return <NoticeBox>No Table Detected</NoticeBox>;
   }
+
   return (
     <>
       <Section title="Patient State">
