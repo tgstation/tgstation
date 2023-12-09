@@ -28,7 +28,7 @@
 		block = check_contact_sterility(BODY_ZONE_LEGS)
 		bleeding = check_bodypart_bleeding(BODY_ZONE_LEGS)
 
-	
+
 	var/static/list/viral_cleanable_types = list(
 		/obj/effect/decal/cleanable/blood,
 		/obj/effect/decal/cleanable/vomit,
@@ -99,7 +99,9 @@
 
 /mob/living/proc/breath_airborne_diseases_from_clouds()
 	for(var/turf/T in range(1, src))
-		for(var/obj/effect/pathogen_cloud/cloud in T.contents)
+		var/sanity = 0
+		for((var/obj/effect/pathogen_cloud/cloud in T.contents) sanity < 10)
+			sanity++ //anything more than 10 and you aint getting air really
 			if (!cloud.sourceIsCarrier || cloud.source != src || cloud.modified)
 				if (Adjacent(cloud))
 					for (var/datum/disease/advanced/V in cloud.viruses)
@@ -133,4 +135,4 @@
 	var/block = check_contact_sterility(zone)
 	if(block)
 		infect_disease(D, notes = note)
-	
+

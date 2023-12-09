@@ -56,9 +56,13 @@ GLOBAL_LIST_INIT(science_goggles_wearers, list())
 		return PROCESS_KILL
 	if(next_process > world.time)
 		return
-		
+
 /obj/effect/pathogen_cloud/core/Destroy()
 	. = ..()
+	QDEL_NULL(viruses)
+	target = null
+	source = null
+	id_list = null
 	STOP_PROCESSING(SSactualfastprocess, src)
 	if (pathogen)
 		for (var/mob/living/L in GLOB.science_goggles_wearers)
