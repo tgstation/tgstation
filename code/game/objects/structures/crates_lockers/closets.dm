@@ -84,6 +84,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	/// access types for card reader
 	var/list/access_choices = TRUE
 
+	/// Whether this closet is sealed or not. If sealed, it'll have its own internal air
+	var/sealed = FALSE
+
+	/// Internal gas for this closet.
+	var/datum/gas_mixture/internal_air
+	/// Volume of the internal air
+	var/air_volume = TANK_STANDARD_VOLUME * 3
+
 /datum/armor/structure_closet
 	melee = 20
 	bullet = 10
@@ -94,6 +102,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/Initialize(mapload)
 	. = ..()
+
+	if(sealed)
+		internal_air = new(air_volume)
+		START_PROCESSING(SSobj, src)
 
 	var/static/list/closet_paint_jobs
 	if(isnull(closet_paint_jobs))
@@ -151,6 +163,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(!opened)
 		take_contents()
 
+/obj/structure/closet/return_air()
+	if(sealed)
+		return internal_air
+	else
+		return ..()
+
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
 	SEND_SIGNAL(src, COMSIG_CLOSET_POPULATE_CONTENTS)
@@ -162,9 +180,22 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/Destroy()
 	id_card = null
+	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
 	GLOB.roundstart_station_closets -= src
 	return ..()
+
+/obj/structure/closet/process(seconds_per_tick)
+	if(!sealed)
+		return PROCESS_KILL
+	process_internal_air(seconds_per_tick)
+
+/obj/structure/closet/proc/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		current_exposed_air.equalize(internal_air)
 
 /obj/structure/closet/update_appearance(updates=ALL)
 	. = ..()

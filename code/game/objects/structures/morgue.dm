@@ -158,6 +158,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			AM.forceMove(src)
 	update_appearance()
 
+#define MORGUE_EMPTY 1
+#define MORGUE_NO_MOBS 2
+#define MORGUE_ONLY_BRAINDEAD 3
+#define MORGUE_HAS_REVIVABLE 4
+
 /*
  * Morgue
  */
@@ -176,10 +181,43 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	var/beep_cooldown = 1 MINUTES
 	/// Whether this morgue tray has revivables or not
 	var/morgue_state = MORGUE_EMPTY
-	/// The tracked mobs inside this morgue tray
-	var/list/mob/living/stored_living = list()
 	/// The cooldown to prevent this from spamming beeps.
 	COOLDOWN_DECLARE(next_beep)
+
+	/// Internal air of this morgue, for cooling purposes.
+	var/datum/gas_mixture/internal_air
+
+	/// The rate at which the internal air mixture cools
+	var/cooling_rate_per_second = 4
+	/// Minimum temperature of the internal air mixture
+	var/minimum_temperature = T0C - 60
+
+
+/obj/structure/bodycontainer/morgue/Initialize(mapload)
+	. = ..()
+	internal_air = new()
+	START_PROCESSING(SSobj, src)
+
+/obj/structure/closet/return_air()
+	return internal_air
+
+/obj/structure/bodycontainer/morgue/process(seconds_per_tick)
+	update_morgue_status()
+	update_appearance(UPDATE_ICON_STATE)
+	if(morgue_state == MORGUE_HAS_REVIVABLE && beeper && COOLDOWN_FINISHED(src, next_beep))
+		playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
+		COOLDOWN_START(src, next_beep, beep_cooldown)
+
+	if(!connected || connected.loc != src)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		// The internal air won't cool down the external air when the freezer is opened.
+		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
+		return ..()
+	else
+		if(internal_air.temperature <= minimum_temperature)
+			return
+		var/temperature_decrease_this_tick = min(cooling_rate_per_second * seconds_per_tick, internal_air.temperature - minimum_temperature)
+		internal_air.temperature -= temperature_decrease_this_tick
 
 /obj/structure/bodycontainer/morgue/beeper_off
 	name = "secure morgue"
@@ -192,10 +230,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bodycontainer/morgue/proc/update_morgue_status()
-	if(contents == 1)
+	if(contents <= 1)
 		morgue_state = MORGUE_EMPTY
 		return
 
+	var/list/stored_living = get_all_contents_type(/mob/living) // Search for mobs in all contents.
 	if(!length(stored_living))
 		morgue_state = MORGUE_NO_MOBS
 		return
@@ -204,13 +243,13 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		morgue_state = MORGUE_ONLY_BRAINDEAD
 		return
 
-	for(var/mob/living/occupant as anything in compiled)
+	for(var/mob/living/occupant as anything in stored_living)
 		if(iscarbon(occupant))
 			var/mob/living/carbon/carbon_occupant = occupant
 			if(!carbon_occupant.can_defib_client())
 				continue
 		else
-			if(HAS_TRAIT(occupant, TRAIT_SUICIDED) || HAS_TRAIT(occupant, TRAIT_BADDNA) || (!key && !occupant.get_ghost(FALSE, TRUE)))
+			if(HAS_TRAIT(occupant, TRAIT_SUICIDED) || HAS_TRAIT(occupant, TRAIT_BADDNA) || (!occupant.key && !occupant.get_ghost(FALSE, TRUE)))
 				continue
 		morgue_state = MORGUE_HAS_REVIVABLE
 		if(beeper)
@@ -218,22 +257,11 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		return
 	morgue_state = MORGUE_ONLY_BRAINDEAD
 
-/obj/structure/bodycontainer/morgue/process(seconds_per_tick)
-	if(morgue_state != MORGUE_HAS_REVIVABLE)
-		return PROCESS_KILL
-
-	if(beeper && COOLDOWN_FINISHED(src, next_beep))
-		playsound(src, 'sound/weapons/gun/general/empty_alarm.ogg', 50, FALSE) //Revive them you blind fucks
-		update_morgue_status()
-		COOLDOWN_START(src, next_beep, beep_cooldown)
-
-
 /obj/structure/bodycontainer/morgue/proc/handle_bodybag_enter(obj/structure/closet/body_bag/arrived_bag)
 	if(!arrived_bag.tag_name)
 		return
 	name = "[initial(name)] - ([arrived_bag.tag_name])"
 	update_appearance(UPDATE_ICON)
-	var/list/compiled = get_all_contents_type(/mob/living) // Search for mobs in all contents.
 
 /obj/structure/bodycontainer/morgue/proc/handle_bodybag_exit(obj/structure/closet/body_bag/exited_bag)
 	name = initial(name)
@@ -242,15 +270,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/morgue/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(istype(arrived, /obj/structure/closet/body_bag))
-		return handle_bodybag(arrived)
-
-	var/list/compiled = arrived.get_all_contents_type(/mob/living) // Search for mobs in all contents.
-	for(var/mob/living/target in compiled)
+		return handle_bodybag_enter(arrived)
+	update_morgue_status()
 
 /obj/structure/bodycontainer/morgue/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(istype(gone, /obj/structure/closet/body_bag))
 		return handle_bodybag_exit(gone)
+	update_morgue_status()
 
 /obj/structure/bodycontainer/morgue/examine(mob/user)
 	. = ..()
