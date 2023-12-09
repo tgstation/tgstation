@@ -75,17 +75,19 @@
 	return ..()
 
 
-/obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/cleanbot/attackby(obj/item/item_attached, mob/user, params)
 	..()
-	if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
-		if(!can_finish_build(W, user))
-			return
-		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location(), bucket_obj)
-		A.name = created_name
-		A.robot_arm = W.type
-		to_chat(user, span_notice("You add [W] to [src]. Beep boop!"))
-		qdel(W)
-		qdel(src)
+	if(!istype(item_attached, /obj/item/bodypart/arm/left/robot) && !istype(item_attached, /obj/item/bodypart/arm/right/robot))
+		return
+	if(!can_finish_build(item_attached, user))
+		return
+	var/mob/living/basic/bot/cleanbot/bot = new(drop_location())
+	bot.apply_custom_bucket(bucket_obj)
+	bot.name = created_name
+	bot.robot_arm = item_attached.type
+	to_chat(user, span_notice("You add [item_attached] to [src]. Beep boop!"))
+	qdel(item_attached)
+	qdel(src)
 
 
 //Edbot Assembly

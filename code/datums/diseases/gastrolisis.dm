@@ -9,6 +9,7 @@
 	stage_prob = 0.5
 	disease_flags = CURABLE
 	cures = list(/datum/reagent/consumable/salt,  /datum/reagent/medicine/mutadone)
+	bypasses_immunity = TRUE
 
 
 /datum/disease/gastrolosis/stage_act(seconds_per_tick, times_fired)
@@ -79,7 +80,7 @@
 					OT.MakeSlippery(TURF_WET_LUBE, 100)
 
 
-/datum/disease/gastrolosis/cure()
+/datum/disease/gastrolosis/cure(add_resistance = TRUE)
 	. = ..()
 	if(affected_mob && !is_species(affected_mob, /datum/species/snail)) //undo all the snail fuckening
 		var/mob/living/carbon/human/H = affected_mob

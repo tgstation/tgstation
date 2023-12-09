@@ -93,7 +93,8 @@ export const TramControl = (props) => {
             width={4.9}
             tooltipPosition="top"
             tooltip={COLOR2BLURB[getDestColor(dest)]}
-            onClick={() => setTransitIndex(destinations.indexOf(dest))}>
+            onClick={() => setTransitIndex(destinations.indexOf(dest))}
+          >
             <Icon ml={-2.1} fontSize="60px" name="circle-o" />
           </Button>
           {(destinations.length - 1 !== destinations.indexOf(dest) && (
@@ -111,8 +112,8 @@ export const TramControl = (props) => {
                     tooltipPosition="bottom"
                     tooltip={dep}
                     style={{
-                      'border-radius': '5em',
-                      'border': '2px solid white',
+                      borderRadius: '5em',
+                      border: '2px solid white',
                     }}
                   />
                 </Stack.Item>
