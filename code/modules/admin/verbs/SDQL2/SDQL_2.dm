@@ -206,11 +206,13 @@
 	var/prompt = tgui_alert(usr, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
 	if (prompt != "Yes")
 		return
-	var/list/results = world.SDQL2_query(usr, query_text, key_name_admin(usr), "[key_name(usr)]")
-	if(length(results) == 3)
-		for(var/I in 1 to 3)
-			to_chat(usr, results[I], confidential = TRUE)
 	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
+	var/list/results = world.SDQL2_query(usr, query_text, key_name_admin(usr), "[key_name(usr)]")
+	if(length(results) == 0)
+		return
+
+	for(var/I in 1 to 3)
+		to_chat(usr, results[I], confidential = TRUE)
 
 /world/proc/SDQL2_query(mob/user, query_text, log_entry1, log_entry2, silent = FALSE)
 	// will give information back to the user about the status of the query, different than silent because this is stuff that we would always send to a real cliented mob.
