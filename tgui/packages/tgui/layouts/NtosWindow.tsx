@@ -128,7 +128,7 @@ export const NtosWindow = (props) => {
                 icon="window-close-o"
                 tooltip="Close"
                 tooltipPosition="bottom-start"
-                onClick={() => act('PC_close')}
+                onClick={() => act('PC_exit')}
               />
             )}
             {!PC_showexitprogram && (
