@@ -14,7 +14,7 @@
 /obj/machinery/status_display
 	name = "status display"
 	desc = null
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "frame"
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -30,9 +30,9 @@
 	var/message2 = ""
 
 	/// Normal text color
-	var/text_color = "#09F"
+	var/text_color = COLOR_DISPLAY_BLUE
 	/// Color for headers, eg. "- ETA -"
-	var/header_text_color = "#2CF"
+	var/header_text_color = COLOR_DISPLAY_PURPLE
 
 /obj/item/wallframe/status_display
 	name = "status display frame"
@@ -73,7 +73,7 @@
 	return TRUE
 
 /obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(!disassembled)
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
@@ -151,7 +151,7 @@
 	)
 		set_light(0)
 		return
-	set_light(1.5, 0.7, LIGHT_COLOR_BLUE) // blue light
+	set_light(1.5, 0.7, LIGHT_COLOR_FAINT_CYAN) // blue light
 
 /obj/machinery/status_display/update_overlays(updates)
 	. = ..()
@@ -232,7 +232,7 @@
 		set_messages("shutl","not in service")
 		return PROCESS_KILL
 	else if(shuttle.timer)
-		var/line1 = "<<< [shuttle.getModeStr()]"
+		var/line1 = shuttle.getModeStr()
 		var/line2 = shuttle.getTimerStr()
 
 		set_messages(line1, line2)
@@ -248,7 +248,7 @@
  * Nice overlay to make text smoothly scroll with no client updates after setup.
  */
 /obj/effect/overlay/status_display_text
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
 
 	/// The message this overlay is displaying.
@@ -319,6 +319,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/status_display,
 	))
+	find_and_hang_on_wall()
 
 /obj/machinery/status_display/evac/Destroy()
 	SSradio.remove_object(src,frequency)
@@ -373,8 +374,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 /obj/machinery/status_display/supply
 	name = "supply display"
 	current_mode = SD_MESSAGE
-	text_color = "#F90"
-	header_text_color = "#FC2"
+	text_color = COLOR_DISPLAY_ORANGE
+	header_text_color = COLOR_DISPLAY_YELLOW
 
 /obj/machinery/status_display/supply/process()
 	if(machine_stat & NOPOWER)
@@ -397,7 +398,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 			line1 = ""
 			line2 = ""
 	else
-		line1 = "<<< [SSshuttle.supply.getModeStr()]"
+		line1 = SSshuttle.supply.getModeStr()
 		line2 = SSshuttle.supply.getTimerStr()
 	set_messages(line1, line2)
 
@@ -408,8 +409,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 	current_mode = SD_MESSAGE
 	var/shuttle_id
 
-	text_color = "#0F5"
-	header_text_color = "#2FC"
+	text_color = COLOR_DISPLAY_GREEN
+	header_text_color = COLOR_DISPLAY_CYAN
 
 /obj/machinery/status_display/shuttle/process()
 	if(!shuttle_id || (machine_stat & NOPOWER))
@@ -442,21 +443,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
-/obj/machinery/status_display/ai/Initialize(mapload)
-	. = ..()
-	GLOB.ai_status_displays.Add(src)
-
-/obj/machinery/status_display/ai/Destroy()
-	GLOB.ai_status_displays.Remove(src)
-	. = ..()
-
 /obj/machinery/status_display/ai/attack_ai(mob/living/silicon/ai/user)
 	if(!isAI(user))
 		return
 	var/list/choices = list()
 	for(var/emotion_const in GLOB.ai_status_display_emotes)
 		var/icon_state = GLOB.ai_status_display_emotes[emotion_const]
-		choices[emotion_const] = image(icon = 'icons/obj/status_display.dmi', icon_state = icon_state)
+		choices[emotion_const] = image(icon = 'icons/obj/machines/status_display.dmi', icon_state = icon_state)
 
 	var/emotion_result = show_radial_menu(user, src, choices, tooltips = TRUE)
 	for(var/_emote in typesof(/datum/emote/ai/emotion_display))
@@ -502,9 +495,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 	var/static/list/picture_options = list(
 		"Default" = "default",
+		"Delta Alert" = "deltaalert",
 		"Red Alert" = "redalert",
+		"Blue Alert" = "bluealert",
+		"Green Alert" = "greenalert",
 		"Biohazard" = "biohazard",
 		"Lockdown" = "lockdown",
+		"Radiation" = "radiation",
 		"Happy" = "ai_happy",
 		"Neutral" = "ai_neutral",
 		"Very Happy" = "ai_veryhappy",
@@ -556,3 +553,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 #undef LINE2_X
 #undef LINE2_Y
 #undef STATUS_DISPLAY_FONT_DATUM
+
+#undef SCROLL_PADDING

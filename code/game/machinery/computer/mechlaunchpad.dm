@@ -35,7 +35,7 @@
 	connected_mechpad = null
 
 /obj/machinery/computer/mechpad/LateInitialize()
-	for(var/obj/machinery/mechpad/pad in GLOB.mechpad_list)
+	for(var/obj/machinery/mechpad/pad as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/mechpad))
 		if(pad == connected_mechpad)
 			continue
 		if(pad.id != id)
@@ -100,11 +100,11 @@
 			if(buffered_pad in mechpads)
 				remove_pad(buffered_pad)
 			connect_launchpad(buffered_pad)
-			multitool.buffer = null
+			multitool.set_buffer(null)
 			to_chat(user, span_notice("You connect the console to the pad with data from the [multitool.name]'s buffer."))
 		else
 			add_pad(buffered_pad)
-			multitool.buffer = null
+			multitool.set_buffer(null)
 			to_chat(user, span_notice("You upload the data from the [multitool.name]'s buffer."))
 	return TRUE
 

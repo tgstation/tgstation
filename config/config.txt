@@ -126,11 +126,14 @@ VOTE_PERIOD 600
 ## players' votes default to "No vote" (otherwise,  default to "No change")
 # DEFAULT_NO_VOTE
 
-## disable abandon mob
-NORESPAWN
+## Determines if players can respawn after death
+## 0 = Cannot respawn (default)
+## 1 = Can respawn
+## 2 = Can respawn if choosing a different character
+ALLOW_RESPAWN 0
 
-## Respawn delay (deciseconds), which doesn't allow to return to lobby (default 10 minutes)
-#RESPAWN_DELAY 6000
+## Respawn delay (deciseconds), which doesn't allow to return to lobby
+RESPAWN_DELAY 0
 
 ## set a hosted by name for unix platforms
 HOSTEDBY Yournamehere
@@ -294,6 +297,9 @@ NOTIFY_NEW_PLAYER_ACCOUNT_AGE 1
 ##	Requres database
 #IRC_FIRST_CONNECTION_ALERT
 
+## Discord ID of a role that should be pinged when a new player makes their first connection
+#NEW_PLAYER_ALERT_ROLE_ID 1138188190604341308
+
 ## Deny all new connections by ckeys we haven't seen before (exempts admins and only denies the connection if the database is enabled and connected)
 ##	Requires database
 #PANIC_BUNKER
@@ -378,7 +384,7 @@ CLIENT_ERROR_BUILD 1421
 ## Set to 0 or comment out to disable.
 SECOND_TOPIC_LIMIT 10
 
-MINUTE_TOPIC_LIMIT 100
+MINUTE_TOPIC_LIMIT 200
 
 
 ## CLICK RATE LIMITING
@@ -404,8 +410,8 @@ MINUTE_CLICK_LIMIT 400
 
 ## Game Chat Message Options
 ## Various messages to be sent to connected chat channels.
-## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS4.
-## If using TGS4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
+## Uncommenting these will enable them, by default they will be broadcast to Game chat channels on TGS3 or non-admin channels on TGS>=4.
+## If using TGS>=4, the string option can be set as one of more chat channel tags (separated by ','s) to limit the message to channels with that tag name (case-sensitive). This will have no effect on TGS3.
 ## i.e. CHANNEL_ANNOUNCE_NEW_GAME chat_channel_tag
 
 ## Which channel will have a message about a new game starting, message includes the station name.
@@ -575,12 +581,15 @@ PR_ANNOUNCEMENTS_PER_ROUND 5
 #TTS_VOICE_BLACKLIST Sans Undertale
 #TTS_VOICE_BLACKLIST Papyrus Undertale
 
-## Uncomment this to allow players to disable having a voice on their character for TTS.
-#TTS_ALLOW_PLAYER_VOICE_DISABLING
-
 ## Comment to disable sending a toast notification on the host server when initializations complete.
 ## Even if this is enabled, a notification will only be sent if there are no clients connected.
 TOAST_NOTIFICATION_ON_INIT
 
 ## Causes configuration errors to spit out runtimes
 CONFIG_ERRORS_RUNTIME
+
+## Restricts client uploads to the server, defined in bytes, default is 0.5MB
+UPLOAD_LIMIT 524288
+
+## Restricts admin client uploads to the server, defined in bytes, default is 5MB
+UPLOAD_LIMIT_ADMIN 5242880

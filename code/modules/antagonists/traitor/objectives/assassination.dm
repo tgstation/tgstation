@@ -107,20 +107,13 @@
 		return //in their pockets please
 	succeed_objective()
 
-/datum/traitor_objective/target_player/assassinate/calling_card/generate_objective(datum/mind/generating_for, list/possible_duplicates)
-	. = ..()
-	if(!.) //didn't generate
-		return FALSE
-	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdeleted))
-
 /datum/traitor_objective/target_player/assassinate/calling_card/ungenerate_objective()
-	UnregisterSignal(target, COMSIG_QDELETING)
 	. = ..() //unsets kill target
 	if(card)
 		UnregisterSignal(card, COMSIG_ITEM_EQUIPPED)
 	card = null
 
-/datum/traitor_objective/target_player/assassinate/calling_card/on_target_qdeleted()
+/datum/traitor_objective/target_player/assassinate/calling_card/target_deleted()
 	//you cannot plant anything on someone who is gone gone, so even if this happens after you're still liable to fail
 	fail_objective(penalty_cost = telecrystal_penalty)
 
@@ -154,7 +147,7 @@
 		taker.visible_message(span_notice("[taker] holds [behead_goal] into the air for a moment."), span_boldnotice("You lift [behead_goal] into the air for a moment."))
 		succeed_objective()
 
-/datum/traitor_objective/target_player/assassinate/behead/proc/on_target_dismembered(datum/source, obj/item/bodypart/head/lost_head, special)
+/datum/traitor_objective/target_player/assassinate/behead/proc/on_target_dismembered(datum/source, obj/item/bodypart/head/lost_head, special, dismembered)
 	SIGNAL_HANDLER
 	if(!istype(lost_head))
 		return
@@ -228,7 +221,7 @@
 		return FALSE //MISSION FAILED, WE'LL GET EM NEXT TIME
 
 	var/datum/mind/target_mind = pick(possible_targets)
-	target = target_mind.current
+	set_target(target_mind.current)
 	replace_in_name("%TARGET%", target.real_name)
 	replace_in_name("%JOB TITLE%", target_mind.assigned_role.title)
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
@@ -236,17 +229,17 @@
 
 /datum/traitor_objective/target_player/assassinate/ungenerate_objective()
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
-	target = null
+	set_target(null)
 
 ///proc for checking for special states that invalidate a target
 /datum/traitor_objective/target_player/assassinate/proc/special_target_filter(list/possible_targets)
 	return
 
-/datum/traitor_objective/target_player/assassinate/proc/on_target_qdeleted()
-	SIGNAL_HANDLER
+/datum/traitor_objective/target_player/assassinate/target_deleted()
 	if(objective_state == OBJECTIVE_STATE_INACTIVE)
 		//don't take an objective target of someone who is already obliterated
 		fail_objective()
+	return ..()
 
 /datum/traitor_objective/target_player/assassinate/proc/on_target_death()
 	SIGNAL_HANDLER

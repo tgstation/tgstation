@@ -66,6 +66,8 @@
 /datum/component/growth_and_differentiation/Destroy(force, silent)
 	STOP_PROCESSING(SSdcs, src)
 	deltimer(timer_id)
+	optional_checks = null
+	optional_grow_behavior = null
 	return ..()
 
 /// Wrapper for qdel() so we can pass it in RegisterSignals(). I hate it here too.
@@ -138,4 +140,6 @@
 	if(!silent)
 		old_mob.visible_message(span_warning("[old_mob] grows into \a [new_mob_name]!"))
 
-	old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
+	var/mob/living/transformed_mob = old_mob.change_mob_type(growth_path, old_mob.loc, new_name = new_mob_name, delete_old_mob = TRUE)
+	if(initial(new_mob.unique_name))
+		transformed_mob.set_name()

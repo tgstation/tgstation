@@ -87,7 +87,7 @@
 	if(tool)
 		speed_mod = tool.toolspeed
 
-	if(HAS_TRAIT(target, TRAIT_DISSECTED))
+	if(HAS_TRAIT(target, TRAIT_SURGICALLY_ANALYZED))
 		speed_mod *= SURGERY_SPEED_DISSECTION_MODIFIER
 
 	if(check_morbid_curiosity(user, tool, surgery))
@@ -129,7 +129,7 @@
 				surgery.complete(user)
 
 	if(target.stat == DEAD && was_sleeping && user.client)
-		user.client.give_award(/datum/award/achievement/misc/sandman, user)
+		user.client.give_award(/datum/award/achievement/jobs/sandman, user)
 
 	surgery.step_in_progress = FALSE
 	return advance
@@ -227,11 +227,11 @@
 
 // Check if we are entitled to morbid bonuses
 /datum/surgery_step/proc/check_morbid_curiosity(mob/user, obj/item/tool, datum/surgery/surgery)
-	if(!(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)))
+	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
 		return FALSE
 	if(tool && !(tool.item_flags & CRUEL_IMPLEMENT))
 		return FALSE
-	if(!(surgery.surgery_flags & SURGERY_MORBID_CURIOSITY))
+	if(!HAS_MIND_TRAIT(user, TRAIT_MORBID))
 		return FALSE
 	return TRUE
 

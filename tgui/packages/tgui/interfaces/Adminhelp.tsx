@@ -10,8 +10,8 @@ type AdminhelpData = {
   urgentAhelpPromptMessage: string;
 };
 
-export const Adminhelp = (props, context) => {
-  const { act, data } = useBackend<AdminhelpData>(context);
+export const Adminhelp = (props) => {
+  const { act, data } = useBackend<AdminhelpData>();
   const {
     adminCount,
     urgentAhelpEnabled,
@@ -19,28 +19,23 @@ export const Adminhelp = (props, context) => {
     urgentAhelpPromptMessage,
   } = data;
   const [requestForAdmin, setRequestForAdmin] = useLocalState(
-    context,
     'request_for_admin',
-    false
+    false,
   );
   const [currentlyInputting, setCurrentlyInputting] = useLocalState(
-    context,
     'confirm_request',
-    false
+    false,
   );
-  const [ahelpMessage, setAhelpMessage] = useLocalState(
-    context,
-    'ahelp_message',
-    ''
-  );
+  const [ahelpMessage, setAhelpMessage] = useLocalState('ahelp_message', '');
 
   const confirmationText = 'alert admins';
   return (
     <Window title="Create Adminhelp" theme="admin" height={300} width={500}>
       <Window.Content
         style={{
-          'background-image': 'none',
-        }}>
+          backgroundImage: 'none',
+        }}
+      >
         <Stack vertical fill>
           <Stack.Item grow>
             <TextArea
@@ -62,8 +57,9 @@ export const Adminhelp = (props, context) => {
                     fontFamily="arial"
                     backgroundColor="grey"
                     style={{
-                      'font-style': 'normal',
-                    }}>
+                      fontStyle: 'normal',
+                    }}
+                  >
                     Input &apos;{confirmationText}&apos; to proceed.
                     <Input
                       placeholder="Confirmation Prompt"

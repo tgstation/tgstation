@@ -1,7 +1,18 @@
 import { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, Input, NumberInput, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Divider,
+  Icon,
+  Input,
+  NumberInput,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -50,56 +61,53 @@ const findAmount = (item_amts, name) => {
   return amount.amt;
 };
 
-const ShoppingTab = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+const ShoppingTab = (props) => {
+  const { data, act } = useBackend<Data>();
   const { credit_type, order_categories, order_datums, item_amts } = data;
   const [shopCategory, setShopCategory] = useLocalState(
-    context,
     'shopCategory',
-    order_categories[0]
+    order_categories[0],
   );
-  const [condensed] = useLocalState(context, 'condensed', false);
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const [condensed] = useLocalState('condensed', false);
+  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
   const search = createSearch<OrderDatum>(
     searchItem,
-    (order_datums) => order_datums.name
+    (order_datums) => order_datums.name,
   );
   let goods =
     searchItem.length > 0
-      ? order_datums.filter((item) => search(item) && item.cat === shopCategory)
+      ? order_datums.filter((item) => search(item))
       : order_datums.filter((item) => item && item.cat === shopCategory);
 
   return (
     <Stack fill vertical>
       <Section mb={-1}>
         <Stack.Item>
-          <Tabs>
+          <Tabs fluid textAlign="center">
             {order_categories.map((category) => (
               <Tabs.Tab
                 key={category}
                 selected={category === shopCategory}
                 onClick={() => {
                   setShopCategory(category);
-
                   if (searchItem.length > 0) {
                     setSearchItem('');
                   }
-                }}>
+                }}
+              >
                 {category}
               </Tabs.Tab>
             ))}
-            <Stack.Item grow>
+            <Stack.Item>
               <Input
                 autoFocus
-                ml={5}
-                width="150px"
                 mt={0.5}
+                width="150px"
                 placeholder="Search item..."
                 value={searchItem}
                 onInput={(e, value) => {
                   setSearchItem(value);
                 }}
-                fluid
               />
             </Stack.Item>
           </Tabs>
@@ -114,27 +122,26 @@ const ShoppingTab = (props, context) => {
                 <Stack>
                   <span
                     style={{
-                      'vertical-align': 'middle',
+                      verticalAlign: 'middle',
                     }}
                   />{' '}
                   {!condensed && (
                     <Stack.Item>
                       <Box
                         as="img"
-                        m={1}
                         src={`data:image/jpeg;base64,${item.product_icon}`}
-                        height="36px"
-                        width="36px"
+                        height="34px"
+                        width="34px"
                         style={{
-                          '-ms-interpolation-mode': 'nearest-neighbor',
-                          'vertical-align': 'middle',
+                          verticalAlign: 'middle',
                         }}
                       />
                     </Stack.Item>
                   )}
                   <Stack.Item>{capitalize(item.name)}</Stack.Item>
-                  <Stack.Item grow mt={-1} color="label" fontSize="10px">
+                  <Stack.Item grow color="label" fontSize="10px">
                     <Button
+                      mt={-1}
                       color="transparent"
                       icon="info"
                       tooltipPosition="right"
@@ -142,13 +149,13 @@ const ShoppingTab = (props, context) => {
                     />
                     <br />
                   </Stack.Item>
-                  <Stack.Item mt={-0.5}>
-                    <Box fontSize="10px" color="label" textAlign="right">
+                  <Stack.Item mt={-1.5} Align="right">
+                    <Box fontSize="10px" color="label">
                       {item.cost + credit_type + ' per order.'}
                     </Box>
                     <Button
-                      ml={2}
                       icon="minus"
+                      ml={2}
                       onClick={() =>
                         act('remove_one', {
                           target: item.ref,
@@ -187,8 +194,8 @@ const ShoppingTab = (props, context) => {
   );
 };
 
-const CheckoutTab = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+const CheckoutTab = (props) => {
+  const { data, act } = useBackend<Data>();
   const {
     credit_type,
     purchase_tooltip,
@@ -203,7 +210,7 @@ const CheckoutTab = (props, context) => {
   } = data;
   const total_cargo_cost = Math.floor(total_cost * cargo_cost_multiplier);
   const checkout_list = order_datums.filter(
-    (food) => food && (findAmount(item_amts, food.name) || 0)
+    (food) => food && (findAmount(item_amts, food.name) || 0),
   );
   return (
     <Stack vertical fill>
@@ -228,7 +235,7 @@ const CheckoutTab = (props, context) => {
                 <Stack.Item key={key}>
                   <Stack>
                     <Stack.Item>{capitalize(item.name)}</Stack.Item>
-                    <Stack.Item grow mt={-1} color="label" fontSize="10px">
+                    <Stack.Item grow color="label" fontSize="10px">
                       {'"' + item.desc + '"'}
                       <br />
                       <Box textAlign="right">
@@ -306,7 +313,7 @@ const CheckoutTab = (props, context) => {
   );
 };
 
-const OrderSent = (props, context) => {
+const OrderSent = (props) => {
   return (
     <Dimmer>
       <Stack vertical>
@@ -321,11 +328,11 @@ const OrderSent = (props, context) => {
   );
 };
 
-export const ProduceConsole = (props, context) => {
-  const { data } = useBackend<Data>(context);
-  const { points, off_cooldown, order_categories } = data;
-  const [tabIndex, setTabIndex] = useLocalState(context, 'tab-index', 1);
-  const [condensed, setCondensed] = useLocalState(context, 'condensed', false);
+export const ProduceConsole = (props) => {
+  const { data } = useBackend<Data>();
+  const { credit_type, points, off_cooldown, order_categories } = data;
+  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [condensed, setCondensed] = useLocalState('condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>
@@ -361,12 +368,10 @@ export const ProduceConsole = (props, context) => {
           <Section>
             <Stack direction="column">
               <Stack.Item grow>
-                Currently available balance: {points || 0}
+                Currently available balance: {points || 0} {credit_type}
               </Stack.Item>
-              <Stack.Item textAlign="right" fill>
+              <Stack.Item textAlign="right">
                 <Button
-                  ml={65}
-                  mt={-4}
                   color={condensed ? 'green' : 'red'}
                   content={condensed ? 'Uncondense' : 'Condense'}
                   onClick={() => setCondensed(!condensed)}

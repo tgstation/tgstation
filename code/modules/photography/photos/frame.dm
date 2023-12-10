@@ -143,7 +143,7 @@
 	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
 	framed = null
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
@@ -173,7 +173,7 @@
 		. += framed
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
 		if(framed)
 			F.displayed = framed
@@ -261,6 +261,19 @@
 
 /obj/structure/sign/picture_frame/showroom/four
 	persistence_id = "frame_showroom4"
+
+// for the hall of fame escape shuttle
+/obj/structure/sign/picture_frame/hall_of_fame/one
+	persistence_id = "frame_hall_of_fame_1"
+
+/obj/structure/sign/picture_frame/hall_of_fame/two
+	persistence_id = "frame_hall_of_fame_2"
+
+/obj/structure/sign/picture_frame/hall_of_fame/three
+	persistence_id = "frame_hall_of_fame_3"
+
+/obj/structure/sign/picture_frame/hall_of_fame/four
+	persistence_id = "frame_hall_of_fame_4"
 
 /obj/structure/sign/picture_frame/portrait/bar
 	persistence_id = "frame_bar"

@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 #define HALLUCINATION_ARGLIST 3
 
 /// Biotypes which cannot hallucinate for balance and logic reasons (not code)
-#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_EPIC)
+#define NO_HALLUCINATION_BIOTYPES (MOB_ROBOTIC|MOB_SPIRIT|MOB_SPECIAL)
 
 // Macro wrapper for _cause_hallucination so we can cheat in named arguments, like AddComponent.
 /**
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
  */
 /proc/visible_hallucination_pulse(atom/center, radius = 7, hallucination_duration = 50 SECONDS, hallucination_max_duration, list/optional_messages)
 	for(var/mob/living/nearby_living in view(center, radius))
-		if(HAS_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE) || (nearby_living.mind && HAS_TRAIT(nearby_living.mind, TRAIT_MADNESS_IMMUNE)))
+		if(HAS_MIND_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE))
 			continue
 
 		if(nearby_living.mob_biotypes & NO_HALLUCINATION_BIOTYPES)

@@ -1,7 +1,7 @@
 /obj/machinery/button
 	name = "button"
 	desc = "A remote control switch."
-	icon = 'icons/obj/buttons.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	base_icon_state = "button"
 	icon_state = "button"
 	///Icon suffix for the skin of the front pannel that is added to base_icon_state
@@ -55,6 +55,7 @@
 			board.accesses = req_one_access
 
 	setup_device()
+	find_and_hang_on_wall()
 
 /obj/machinery/button/Destroy()
 	QDEL_NULL(device)
@@ -139,7 +140,7 @@
 	else
 		return ..()
 
-/obj/machinery/button/emag_act(mob/user)
+/obj/machinery/button/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return
@@ -150,9 +151,9 @@
 
 	// The device inside can be emagged by swiping the button
 	// returning TRUE will prevent feedback (so we can do our own)
-	if(device?.emag_act(user))
-		return
-	balloon_alert(user, "access overridden")
+	if(!device?.emag_act(user, emag_card))
+		balloon_alert(user, "access overridden")
+	return TRUE
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
@@ -232,6 +233,20 @@
 	if(device)
 		device.pulsed(user)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED,src)
+
+/**
+ * Called when the mounted button's wall is knocked down.
+ */
+/obj/machinery/button/proc/knock_down()
+	if(device)
+		device.forceMove(get_turf(src))
+		device = null
+	if(board)
+		board.forceMove(get_turf(src))
+		req_access = list()
+		req_one_access = list()
+		board = null
+	qdel(src)
 
 /obj/machinery/button/door
 	name = "door button"

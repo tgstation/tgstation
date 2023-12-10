@@ -113,6 +113,23 @@
 		"transfusion"
 	],
 
+	"carps": [
+		"aquarium",
+		"carp",
+		"carps",
+		"carpotoxin",
+		"fin",
+		"fins",
+		"fish",
+		"fang",
+		"gnash",
+		"migration",
+		"slash",
+		"shred",
+		"teeth",
+		"tooth"
+	],
+
 	"clowns": [
 		"banana",
 		"clown",
@@ -261,6 +278,43 @@
 		"turret",
 		"uzi",
 		"wt550"
+	],
+
+	"heresy": [
+		"armsy",
+		"ash",
+		"blade",
+		"cloak",
+		"codex",
+		"cosmic",
+		"eldritch",
+		"fire shark",
+		"flesh",
+		"focus",
+		"ghoul",
+		"grasp",
+		"hand",
+		"heart",
+		"heresy",
+		"heretic",
+		"lionhunter",
+		"maid in the mirror",
+		"mansus",
+		"offer",
+		"pierced reality",
+		"raw prophet",
+		"reality crack",
+		"reality pierce",
+		"ritual",
+		"robe",
+		"rune",
+		"rust",
+		"sacrifice",
+		"space",
+		"stalker",
+		"star",
+		"void",
+		"worm"
 	],
 
 	"insects": [
@@ -424,7 +478,7 @@
 		"wiz",
 		"wizard",
 		"zombie"
-		]
+	]
 
 
 

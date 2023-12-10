@@ -78,8 +78,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 		QDEL_NULL(sizzle)
 	if(particle_effect)
 		QDEL_NULL(particle_effect)
-	if(process_effect)
-		QDEL_NULL(process_effect)
+	process_effect = null
 	return ..()
 
 /datum/component/acid/RegisterWithParent()
@@ -167,6 +166,13 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 
 	// Snowflake code for handling acid melting walls.
 	// We really should consider making turfs use atom_integrity, but for now this is just for acids.
+
+	//Strong walls will never get melted
+	if(target_turf.get_explosive_block() >= 2)
+		return
+	//Reinforced floors never get melted
+	if(istype(target_turf, /turf/open/floor/engine))
+		return
 	if(acid_power < ACID_POWER_MELT_TURF)
 		return
 
@@ -198,7 +204,7 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/acid/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_danger("[source.p_theyre(TRUE)] covered in a corrosive liquid!")
+	examine_list += span_danger("[source.p_Theyre()] covered in a corrosive liquid!")
 
 /// Makes it possible to clean acid off of objects.
 /datum/component/acid/proc/on_clean(atom/source, clean_types)
@@ -248,9 +254,9 @@ GLOBAL_DATUM_INIT(acid_overlay, /mutable_appearance, mutable_appearance('icons/e
 	if(!isliving(arrived))
 		return
 	var/mob/living/crosser = arrived
-	if(crosser.movement_type & FLYING)
+	if(crosser.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
-	if(crosser.m_intent == MOVE_INTENT_WALK)
+	if(crosser.move_intent == MOVE_INTENT_WALK)
 		return
 	if(prob(60))
 		return

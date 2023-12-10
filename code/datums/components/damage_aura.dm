@@ -24,9 +24,6 @@
 	/// Stamina damage to damage over a second
 	var/stamina_damage = 0
 
-	/// Amount of cloning damage to damage over a second
-	var/clone_damage = 0
-
 	/// Amount of blood to damage over a second
 	var/blood_damage = 0
 
@@ -53,7 +50,6 @@
 	toxin_damage = 0,
 	suffocation_damage = 0,
 	stamina_damage = 0,
-	clone_damage = 0,
 	blood_damage = 0,
 	organ_damage = null,
 	simple_damage = 0,
@@ -72,7 +68,6 @@
 	src.toxin_damage = toxin_damage
 	src.suffocation_damage = suffocation_damage
 	src.stamina_damage = stamina_damage
-	src.clone_damage = clone_damage
 	src.blood_damage = blood_damage
 	src.organ_damage = organ_damage
 	src.simple_damage = simple_damage
@@ -91,14 +86,16 @@
 
 /// What effect the damage aura has if it has an owner.
 /datum/component/damage_aura/proc/owner_effect(mob/living/owner_mob, seconds_per_tick)
-	owner_mob.adjustStaminaLoss(-20 * seconds_per_tick, updating_stamina = FALSE)
-	owner_mob.adjustBruteLoss(-1 * seconds_per_tick, updating_health = FALSE)
-	owner_mob.adjustFireLoss(-1 * seconds_per_tick, updating_health = FALSE)
-	owner_mob.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
-	owner_mob.adjustOxyLoss(-1 * seconds_per_tick, updating_health = FALSE)
+	var/need_mob_update = FALSE
+	need_mob_update += owner_mob.adjustStaminaLoss(-20 * seconds_per_tick, updating_stamina = FALSE)
+	need_mob_update += owner_mob.adjustBruteLoss(-1 * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner_mob.adjustFireLoss(-1 * seconds_per_tick, updating_health = FALSE)
+	need_mob_update += owner_mob.adjustToxLoss(-1 * seconds_per_tick, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner_mob.adjustOxyLoss(-1 * seconds_per_tick, updating_health = FALSE)
 	if (owner_mob.blood_volume < BLOOD_VOLUME_NORMAL)
 		owner_mob.blood_volume += 2 * seconds_per_tick
-	owner_mob.updatehealth()
+	if(need_mob_update)
+		owner_mob.updatehealth()
 
 /datum/component/damage_aura/process(seconds_per_tick)
 	var/should_show_effect = COOLDOWN_FINISHED(src, last_damage_effect_time)
@@ -123,7 +120,6 @@
 			candidate.adjustToxLoss(toxin_damage * seconds_per_tick, updating_health = FALSE)
 			candidate.adjustOxyLoss(suffocation_damage * seconds_per_tick, updating_health = FALSE)
 			candidate.adjustStaminaLoss(stamina_damage * seconds_per_tick, updating_stamina = FALSE)
-			candidate.adjustCloneLoss(clone_damage * seconds_per_tick, updating_health = FALSE)
 
 			for (var/organ in organ_damage)
 				candidate.adjustOrganLoss(organ, organ_damage[organ] * seconds_per_tick)

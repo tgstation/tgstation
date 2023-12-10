@@ -115,7 +115,7 @@
 /area/station/maintenance/department/cargo)
 "y" = (
 /obj/item/gps/mining,
-/turf/open/misc/asteroid,
+/turf/open/misc/asteroid/dug,
 /area/station/asteroid)
 "z" = (
 /obj/item/storage/bag/ore{
@@ -1048,7 +1048,7 @@ b
 i
 i
 I
-I
+y
 Y
 i
 Y
@@ -1100,10 +1100,10 @@ B
 I
 I
 P
-y
-i
-i
-i
+Q
+Q
+Q
+Q
 Q
 Q
 Q
@@ -1126,10 +1126,10 @@ Y
 Y
 I
 Y
-i
-i
-i
-i
+Q
+Q
+Q
+Q
 Q
 Q
 Q

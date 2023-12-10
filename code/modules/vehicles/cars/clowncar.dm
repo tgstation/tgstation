@@ -110,10 +110,33 @@
 
 /obj/vehicle/sealed/car/clowncar/Bump(atom/bumped)
 	. = ..()
-	if(isliving(bumped) && !istype(bumped, /mob/living/basic/deer))
+	if(isliving(bumped))
 		if(ismegafauna(bumped))
 			return
 		var/mob/living/hittarget_living = bumped
+
+		if(istype(hittarget_living, /mob/living/basic/deer))
+			visible_message(span_warning("[src] careens into [hittarget_living]! Oh the humanity!"))
+			for(var/mob/living/carbon/carbon_occupant in occupants)
+				if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
+					continue
+				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
+					var/pick_mode = text2num(pick(list(
+						"[WOUND_PICK_LOWEST_SEVERITY]",
+						"[WOUND_PICK_HIGHEST_SEVERITY]"
+					)))
+					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
+					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
+					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
+
+			hittarget_living.adjustBruteLoss(200)
+			new /obj/effect/decal/cleanable/blood/splatter(get_turf(hittarget_living))
+
+			log_combat(src, hittarget_living, "rammed into", null, "injuring all passengers and killing the [hittarget_living]")
+			dump_mobs(TRUE)
+			playsound(src, 'sound/vehicles/car_crash.ogg', 100)
+			return
+
 		if(iscarbon(hittarget_living))
 			var/mob/living/carbon/carb = hittarget_living
 			carb.Paralyze(4 SECONDS) //I play to make sprites go horizontal
@@ -147,14 +170,16 @@
 	playsound(target_pancake, 'sound/effects/cartoon_splat.ogg', 75)
 	log_combat(src, crossed, "ran over")
 
-/obj/vehicle/sealed/car/clowncar/emag_act(mob/user)
+/obj/vehicle/sealed/car/clowncar/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
+	balloon_alert(user, "fun mode engaged")
 	to_chat(user, span_danger("You scramble [src]'s child safety lock, and a panel with six colorful buttons appears!"))
 	initialize_controller_action_type(/datum/action/vehicle/sealed/roll_the_dice, VEHICLE_CONTROL_DRIVE)
 	initialize_controller_action_type(/datum/action/vehicle/sealed/cannon, VEHICLE_CONTROL_DRIVE)
 	AddElement(/datum/element/waddling)
+	return TRUE
 
 /obj/vehicle/sealed/car/clowncar/atom_destruction(damage_flag)
 	playsound(src, 'sound/vehicles/clowncar_fart.ogg', 100)
@@ -173,7 +198,7 @@
  * * Fart and make everyone nearby laugh
  */
 /obj/vehicle/sealed/car/clowncar/proc/roll_the_dice(mob/user)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
 		to_chat(user, span_notice("The button panel is currently recharging."))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CLOWNCAR_RANDOMNESS, dice_cooldown_time)
@@ -191,7 +216,7 @@
 			foam.start(log = TRUE)
 		if(3)
 			visible_message(span_danger("[user] presses one of the colorful buttons on [src], and the clown car turns on its singularity disguise system."))
-			icon = 'icons/obj/engine/singularity.dmi'
+			icon = 'icons/obj/machines/engine/singularity.dmi'
 			icon_state = "singularity_s1"
 			addtimer(CALLBACK(src, PROC_REF(reset_icon)), 10 SECONDS)
 		if(4)

@@ -1,21 +1,15 @@
 /obj/item/gun/ballistic/rifle
 	name = "Bolt Rifle"
 	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
-	icon = 'icons/obj/weapons/guns/mosinnagant.dmi'
-	icon_state = "moistnugget"
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
+	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
+	icon_state = "sakhno"
 	w_class = WEIGHT_CLASS_BULKY
-	inhand_icon_state = "moistnugget"
-	worn_icon_state = "moistnugget"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	bolt_wording = "bolt"
 	bolt_type = BOLT_TYPE_LOCKING
 	semi_auto = FALSE
 	internal_magazine = TRUE
-	fire_sound = 'sound/weapons/gun/rifle/shot.ogg'
+	fire_sound = 'sound/weapons/gun/rifle/shot_heavy.ogg'
 	fire_sound_volume = 90
 	rack_sound = 'sound/weapons/gun/rifle/bolt_out.ogg'
 	bolt_drop_sound = 'sound/weapons/gun/rifle/bolt_in.ogg'
@@ -31,6 +25,7 @@
 		return
 	drop_bolt(user)
 
+
 /obj/item/gun/ballistic/rifle/can_shoot()
 	if (bolt_locked)
 		return FALSE
@@ -45,35 +40,39 @@
 ///////////////////////
 
 /obj/item/gun/ballistic/rifle/boltaction
-	name = "\improper Mosin Nagant"
-	desc = "A classic Mosin Nagant. They don't make them like they used to. Well, okay, in all honesty, this one is actually \
-		a new refurbished version. So it works just fine! Often found in the hands of underpaid Nanotrasen interns, \
-		Russian military LARPers, actual Space Russians, revolutionaries and cargo technicians. Still feels slightly moist."
-	sawn_desc = "A sawn-off Mosin Nagant, popularly known as an \"Obrez\". \
+	name = "\improper Sakhno Precision Rifle"
+	desc = "A Sakhno Precision Rifle, a bolt action weapon that was (and certainly still is) popular with \
+		frontiersmen, cargo runners, private security forces, explorers, and other unsavoury types. This particular \
+		pattern of the rifle dates back all the way to 2440."
+	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
 		There was probably a reason it wasn't manufactured this short to begin with. \
-		This one is still in surprisingly good condition. Often found in the hands \
-		of underpaid Nanotrasen interns without a care for company property, Russian military LARPers, \
-		actual drunk Space Russians, Tiger Co-op assassins and cargo technicians. <I>Still</I> feels slightly moist."
-	weapon_weight = WEAPON_HEAVY
-	icon_state = "moistnugget"
-	inhand_icon_state = "moistnugget"
+		Despite the terrible nature of the modification, the weapon seems otherwise in good condition."
+
+	icon_state = "sakhno"
+	inhand_icon_state = "sakhno"
+	worn_icon_state = "sakhno"
+
 	slot_flags = ITEM_SLOT_BACK
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction
 	can_bayonet = TRUE
-	knife_x_offset = 37
-	knife_y_offset = 14
+	knife_x_offset = 42
+	knife_y_offset = 12
 	can_be_sawn_off = TRUE
+	weapon_weight = WEAPON_HEAVY
 	var/jamming_chance = 20
 	var/unjam_chance = 10
 	var/jamming_increment = 5
 	var/jammed = FALSE
 	var/can_jam = FALSE
 
+	SET_BASE_PIXEL(-8, 0)
+
 /obj/item/gun/ballistic/rifle/boltaction/sawoff(mob/user)
 	. = ..()
 	if(.)
 		spread = 36
 		can_bayonet = FALSE
+		SET_BASE_PIXEL(0, 0)
 		update_appearance()
 
 /obj/item/gun/ballistic/rifle/boltaction/attack_self(mob/user)
@@ -125,46 +124,136 @@
 	desc = "A weapon favored by carp hunters, but just as infamously employed by agents of the Animal Rights Consortium against human aggressors. Because it's ironic."
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "speargun"
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	inhand_x_dimension = 32
-	inhand_y_dimension = 32
 	inhand_icon_state = "speargun"
 	worn_icon_state = "speargun"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/harpoon
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	can_be_sawn_off = FALSE
 
+	SET_BASE_PIXEL(0, 0)
+
 /obj/item/gun/ballistic/rifle/boltaction/surplus
-	desc = "A classic Mosin Nagant, ruined by centuries of moisture. Some Space Russians claim that the moisture \
-		is a sign of good luck. A sober user will know that this thing is going to fucking jam. Repeatedly. \
-		Often found in the hands of cargo technicians, Russian military LARPers, Tiger Co-Op terrorist cells, \
-		cryo-frozen Space Russians, and security personnel with a bone to pick. EXTREMELY moist."
-	sawn_desc = "A sawn-off Mosin Nagant, popularly known as an \"Obrez\". \
+	name = "\improper Sakhno M2442 Army"
+	desc = "A modification of the Sakhno Precision Rifle, \"Sakhno M2442 Army\" is stamped into the side. \
+		It is unknown what army this pattern of rifle was made for or if it was ever even used by an army \
+		of any sort. What you can discern, however, is that its previous owner did not treat the weapon well. \
+		For some reason, there's moisture all through the internals."
+	sawn_desc = "A sawn-off Sakhno Precision Rifle, popularly known as an \"Obrez\". \
+		\"Sakhno M2442 Army\" is stamped into the side of it. \
 		There was probably a reason it wasn't manufactured this short to begin with. \
-		This one has been ruined by centuries of moisture and WILL jam. Often found in the hands of \
-		cargo technicians with a death wish, Russian military LARPers, actual drunk Space Russians, \
-		Tiger Co-op assassins, cryo-frozen Space Russians, and security personnel with \
-		little care for professional conduct while making 'arrests' point blank in the back of the head \
-		until the gun clicks. EXTREMELY moist."
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
+		Cutting the weapon down seems to have not helped with the moisture problem."
+	icon_state = "sakhno_tactifucked"
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/surplus
 	can_jam = TRUE
 
 /obj/item/gun/ballistic/rifle/boltaction/prime
-	name = "\improper Regal Nagant"
-	desc = "A prized hunting Mosin Nagant. Used for the most dangerous game."
-	icon_state = "moistprime"
-	inhand_icon_state = "moistprime"
-	worn_icon_state = "moistprime"
+	name = "\improper Sakhno-Zhihao Sporting Rifle"
+	desc = "An upgrade and modernisation of the original Sakhno rifle, made with such wonders as \
+		modern materials, a scope, and other impressive technological advancements that, to be honest, \
+		were already around when the original weapon was designed. Surprisingly for a rifle of this type, \
+		the scope actually has magnification, rather than being decorative."
+	icon_state = "zhihao"
+	inhand_icon_state = "zhihao"
+	worn_icon_state = "zhihao"
 	can_be_sawn_off = TRUE
-	sawn_desc = "A sawn-off Regal Nagant... Doing this was a sin, I hope you're happy. \
-		You are now probably one of the few people in the universe to ever hold a \"Regal Obrez\". \
-		Even thinking about that name combination makes you ill."
+	sawn_desc = "A sawn-off Sakhno-Zhihao Sporting Rifle... Doing this was a sin, I hope you're happy. \
+		You are now probably one of the few people in the universe to ever hold an \"Obrez Moderna\". \
+		All you had to do was take an allen wrench to the stock to take it off. But no, you just had to \
+		go for the saw."
+
+/obj/item/gun/ballistic/rifle/boltaction/prime/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 1.5)
 
 /obj/item/gun/ballistic/rifle/boltaction/prime/sawoff(mob/user)
 	. = ..()
 	if(.)
-		name = "\improper Regal Obrez" // wear it loud and proud
+		name = "\improper Obrez Moderna" // wear it loud and proud
+
+/obj/item/gun/ballistic/rifle/rebarxbow
+	name = "Heated Rebar Crossbow"
+	desc = "Made from an inducer, iron rods, and some wire, this crossbow fires sharpened iron rods, made from the plentiful iron rods found stationwide. \
+			Only holds one rod in the magazine - you can craft the crossbow with a crowbar to try and force a second rod in, but risks a misfire, or worse..."
+	icon = 'icons/obj/weapons/guns/ballistic.dmi'
+	icon_state = "rebarxbow"
+	inhand_icon_state = "rebarxbow"
+	worn_icon_state = "rebarxbow"
+	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
+	must_hold_to_load = TRUE
+	mag_display = FALSE
+	empty_indicator = TRUE
+	bolt_type = BOLT_TYPE_LOCKING
+	semi_auto = FALSE
+	internal_magazine = TRUE
+	can_modify_ammo = FALSE
+	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
+	bolt_wording = "bowstring"
+	magazine_wording = "rod"
+	cartridge_wording = "rod"
+	misfire_probability = 25
+	weapon_weight = WEAPON_HEAVY
+	initial_caliber = CALIBER_REBAR
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
+	fire_sound = 'sound/items/syringeproj.ogg'
+	can_be_sawn_off = FALSE
+	tac_reloads = FALSE
+	var/draw_time = 3 SECONDS
+	SET_BASE_PIXEL(0, 0)
+
+/obj/item/gun/ballistic/rifle/rebarxbow/rack(mob/user = null)
+	if (bolt_locked)
+		drop_bolt(user)
+		return
+	balloon_alert(user, "bowstring loosened")
+	playsound(src, rack_sound, rack_sound_volume, rack_sound_vary)
+	handle_chamber(empty_chamber =  FALSE, from_firing = FALSE, chamber_next_round = FALSE)
+	bolt_locked = TRUE
+	update_appearance()
+
+/obj/item/gun/ballistic/rifle/rebarxbow/drop_bolt(mob/user = null)
+	if(!do_after(user, draw_time, target = src))
+		return
+	playsound(src, bolt_drop_sound, bolt_drop_sound_volume, FALSE)
+	balloon_alert(user, "bowstring drawn")
+	chamber_round()
+	bolt_locked = FALSE
+	update_appearance()
+
+/obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
+	if (bolt_locked)
+		return FALSE
+	return ..()
+
+/obj/item/gun/ballistic/rifle/rebarxbow/examine(mob/user)
+	. = ..()
+	. += "The crossbow is [bolt_locked ? "not ready" : "ready"] to fire."
+
+/obj/item/gun/ballistic/rifle/rebarxbow/forced
+	name = "Stressed Rebar Crossbow"
+	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could have a bit more ammo in this crossbow. Hopefully, it was worth it."
+	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
+	can_misfire = TRUE
+	misfire_probability = 25
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/force
+
+/obj/item/gun/ballistic/rifle/rebarxbow/syndie
+	name = "Syndicate Rebar Crossbow"
+	desc = "The syndicate liked the bootleg rebar crossbow NT engineers made, so they showed what it could be if properly developed. \
+			Holds three shots without a chance of exploding, and features a built in scope. Normally uses special syndicate jagged iron bars, but can be wrenched to shoot inferior normal ones."
+	icon_state = "rebarxbowsyndie"
+	inhand_icon_state = "rebarxbowsyndie"
+	worn_icon_state = "rebarxbowsyndie"
+	w_class = WEIGHT_CLASS_NORMAL
+	can_modify_ammo = TRUE
+	initial_caliber = CALIBER_REBAR_SYNDIE
+	alternative_caliber = CALIBER_REBAR_SYNDIE_NORMAL
+	alternative_ammo_misfires = FALSE
+	draw_time = 1
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/syndie
+
+/obj/item/gun/ballistic/rifle/rebarxbow/syndie/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/scope, range_modifier = 2) //enough range to at least be useful for stealth
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun
 	name = "pipegun"
@@ -178,9 +267,9 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	initial_caliber = CALIBER_SHOTGUN
-	alternative_caliber = CALIBER_A762
+	alternative_caliber = CALIBER_STRILKA310
 	initial_fire_sound = 'sound/weapons/gun/sniper/shot.ogg'
 	alternative_fire_sound = 'sound/weapons/gun/shotgun/shot.ogg'
 	can_modify_ammo = TRUE
@@ -188,6 +277,8 @@
 	knife_y_offset = 11
 	can_be_sawn_off = FALSE
 	projectile_damage_multiplier = 0.75
+
+	SET_BASE_PIXEL(0, 0)
 
 /obj/item/gun/ballistic/rifle/boltaction/pipegun/handle_chamber()
 	. = ..()
@@ -199,7 +290,7 @@
 	icon_state = "musket_prime"
 	inhand_icon_state = "musket_prime"
 	worn_icon_state = "musket_prime"
-	mag_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun/prime
 	projectile_damage_multiplier = 1
 
 /// MAGICAL BOLT ACTIONS + ARCANE BARRAGE? ///
@@ -207,25 +298,15 @@
 /obj/item/gun/ballistic/rifle/enchanted
 	name = "enchanted bolt action rifle"
 	desc = "Careful not to lose your head."
+	icon_state = "enchanted_rifle"
+	inhand_icon_state = "enchanted_rifle"
+	worn_icon_state = "enchanted_rifle"
+	slot_flags = ITEM_SLOT_BACK
 	var/guns_left = 30
-	mag_type = /obj/item/ammo_box/magazine/internal/enchanted
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/enchanted
 	can_be_sawn_off = FALSE
 
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage
-	name = "arcane barrage"
-	desc = "Pew Pew Pew."
-	fire_sound = 'sound/weapons/emitter.ogg'
-	pin = /obj/item/firing_pin/magic
-	icon_state = "arcane_barrage"
-	inhand_icon_state = "arcane_barrage"
-	slot_flags = null
-	can_bayonet = FALSE
-	item_flags = NEEDS_PERMIT | DROPDEL | ABSTRACT | NOBLUDGEON
-	flags_1 = NONE
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
-	show_bolt_icon = FALSE //It's a magic hand, not a rifle
-
-	mag_type = /obj/item/ammo_box/magazine/internal/arcane_barrage
+	SET_BASE_PIXEL(-8, 0)
 
 /obj/item/gun/ballistic/rifle/enchanted/dropped()
 	. = ..()
@@ -235,9 +316,6 @@
 
 /obj/item/gun/ballistic/rifle/enchanted/proc/discard_gun(mob/living/user)
 	user.throw_item(pick(oview(7,get_turf(user))))
-
-/obj/item/gun/ballistic/rifle/enchanted/arcane_barrage/discard_gun(mob/living/user)
-	qdel(src)
 
 /obj/item/gun/ballistic/rifle/enchanted/attack_self()
 	return
@@ -277,7 +355,7 @@
 	rack_sound = 'sound/weapons/gun/sniper/rack.ogg'
 	suppressed_sound = 'sound/weapons/gun/general/heavy_shot_suppressed.ogg'
 	recoil = 2
-	mag_type = /obj/item/ammo_box/magazine/sniper_rounds
+	accepted_magazine_type = /obj/item/ammo_box/magazine/sniper_rounds
 	internal_magazine = FALSE
 	w_class = WEIGHT_CLASS_NORMAL
 	slot_flags = ITEM_SLOT_BACK
@@ -295,7 +373,7 @@
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/scope, range_modifier = 7) //enough range to at least make extremely good use of the penetrator rounds
+	AddComponent(/datum/component/scope, range_modifier = 4) //enough range to at least make extremely good use of the penetrator rounds
 
 /obj/item/gun/ballistic/rifle/sniper_rifle/reset_semicd()
 	. = ..()

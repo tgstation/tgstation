@@ -83,7 +83,7 @@
 	/// The `world.time` when the last color update occurred.
 	var/last_update_time = 0
 
-/atom/movable/screen/admin_popup/Initialize(mapload, ...)
+/atom/movable/screen/admin_popup/Initialize(mapload, datum/hud/hud_owner, ...)
 	. = ..()
 
 	START_PROCESSING(SSobj, src)

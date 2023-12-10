@@ -130,18 +130,6 @@
 /obj/structure/chair/comfy/shuttle,
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
-"aD" = (
-/obj/machinery/flasher/directional/north{
-	id = "cockpit_flasher"
-	},
-/obj/item/kirbyplants/organic/plant21{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/light/directional/north,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "aE" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -251,7 +239,7 @@
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "aX" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
+/mob/living/basic/drone/snowflake/bardrone,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
@@ -269,13 +257,6 @@
 "ba" = (
 /obj/structure/table/wood/shuttle_bar,
 /obj/effect/spawner/random/entertainment/gambling,
-/turf/open/floor/iron/grimy,
-/area/shuttle/escape)
-"bc" = (
-/obj/item/kirbyplants/organic/plant21{
-	pixel_x = -3;
-	pixel_y = 3
-	},
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 "bd" = (
@@ -391,15 +372,6 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"bG" = (
-/obj/item/kirbyplants/organic/plant21{
-	pixel_x = -3;
-	pixel_y = 3
-	},
-/obj/machinery/status_display/evac/directional/north,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "bH" = (
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
@@ -471,11 +443,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"bT" = (
-/obj/item/kirbyplants/organic/plant10,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "bU" = (
 /obj/structure/table,
 /obj/item/storage/medkit/fire,
@@ -499,21 +466,6 @@
 /obj/machinery/light/small/directional/east,
 /turf/open/floor/iron/grimy,
 /area/shuttle/escape)
-"bX" = (
-/obj/machinery/light/directional/west,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"bY" = (
-/obj/machinery/light/small/directional/north,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
-"bZ" = (
-/obj/machinery/light/small/directional/south,
-/obj/effect/turf_decal/tile/bar/opposingcorners,
-/turf/open/floor/iron,
-/area/shuttle/escape)
 "ca" = (
 /obj/machinery/light/directional/south,
 /obj/machinery/vending/wallmed/directional/south{
@@ -535,10 +487,47 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/shuttle/escape)
+"eK" = (
+/obj/item/kirbyplants/organic/plant10,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"zw" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/iron/grimy,
+/area/shuttle/escape)
 "EL" = (
 /obj/machinery/status_display/evac/directional/south,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
+/area/shuttle/escape)
+"Nt" = (
+/obj/machinery/flasher/directional/north{
+	id = "cockpit_flasher"
+	},
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/machinery/light/directional/north,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"UI" = (
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/machinery/status_display/evac/directional/north,
+/obj/effect/turf_decal/tile/bar/opposingcorners,
+/turf/open/floor/iron,
+/area/shuttle/escape)
+"ZL" = (
+/obj/item/kirbyplants/organic/plant21{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/grimy,
 /area/shuttle/escape)
 
 (1,1,1) = {"
@@ -575,13 +564,13 @@ aC
 aH
 aL
 ab
-bY
-bH
+aE
+zw
 aZ
-bc
+ZL
 aZ
-bH
-bZ
+zw
+aE
 ab
 bp
 bs
@@ -667,10 +656,10 @@ ah
 an
 at
 ab
-aD
+Nt
 aE
 aE
-bX
+aE
 aE
 aE
 aE
@@ -715,7 +704,7 @@ ai
 ao
 ao
 ab
-bG
+UI
 aE
 aO
 aR
@@ -772,7 +761,7 @@ aY
 aj
 bN
 be
-bT
+eK
 bk
 ac
 br

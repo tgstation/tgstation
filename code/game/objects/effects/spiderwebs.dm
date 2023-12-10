@@ -174,11 +174,11 @@
 
 /obj/structure/spider/sticky/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
-	if(isspider(mover))
+	if(HAS_TRAIT(mover, TRAIT_WEB_SURFER))
 		return TRUE
 	if(!isliving(mover))
 		return
-	if(isspider(mover.pulledby))
+	if(!isnull(mover.pulledby) && HAS_TRAIT(mover.pulledby, TRAIT_WEB_SURFER))
 		return TRUE
 	loc.balloon_alert(mover, "stuck in web!")
 	return FALSE
@@ -186,7 +186,7 @@
 /obj/structure/spider/spikes
 	name = "web spikes"
 	icon = 'icons/effects/effects.dmi'
-	desc = "hardened silk formed into small yet deadly spikes."
+	desc = "Silk hardened into small yet deadly spikes."
 	icon_state = "webspikes1"
 	max_integrity = 40
 
@@ -194,11 +194,31 @@
 	. = ..()
 	AddComponent(/datum/component/caltrop, min_damage = 20, max_damage = 30, flags = CALTROP_NOSTUN | CALTROP_BYPASS_SHOES)
 
-/obj/structure/spider/carcass
-	name = "web carcass"
+/obj/structure/spider/reflector
+	name = "Reflective silk screen"
 	icon = 'icons/effects/effects.dmi'
-	desc = "hardened silk formed into small yet deadly spikes."
+	desc = "Made up of an extremly reflective silk material looking at it hurts."
+	icon_state = "reflector"
+	max_integrity = 30
+	density = TRUE
+	opacity = TRUE
+	anchored = TRUE
+	flags_ricochet = RICOCHET_SHINY | RICOCHET_HARD
+	receive_ricochet_chance_mod = INFINITY
+
+/obj/structure/spider/reflector/Initialize(mapload)
+	. = ..()
+	air_update_turf(TRUE, TRUE)
+
+/obj/structure/spider/effigy
+	name = "web effigy"
+	icon = 'icons/effects/effects.dmi'
+	desc = "A giant spider! Fortunately, this one is just a statue of hardened webbing."
 	icon_state = "webcarcass"
 	max_integrity = 125
 	density = TRUE
 	anchored = FALSE
+
+/obj/structure/spider/effigy/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/temporary_atom, 1 MINUTES)

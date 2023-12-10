@@ -35,9 +35,9 @@
 	inhand_icon_state = "jumpsuit"
 	greyscale_colors = "#3f3f3f"
 	greyscale_config = /datum/greyscale_config/jumpsuit
-	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit_inhand_left
-	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit_inhand_right
-	greyscale_config_worn = /datum/greyscale_config/jumpsuit_worn
+	greyscale_config_worn = /datum/greyscale_config/jumpsuit/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
+	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
 	w_class = WEIGHT_CLASS_BULKY
 	armor_type = /datum/armor/clothing_under/curator_nasa
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS

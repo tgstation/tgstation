@@ -7,7 +7,7 @@
 	icon_state = "chainsaw_off"
 	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 13
 	var/force_on = 24
 	w_class = WEIGHT_CLASS_HUGE
@@ -26,6 +26,18 @@
 	var/on = FALSE
 	///The looping sound for our chainsaw when running
 	var/datum/looping_sound/chainsaw/chainsaw_loop
+
+/obj/item/chainsaw/apply_fantasy_bonuses(bonus)
+	. = ..()
+	force_on = modify_fantasy_variable("force_on", force_on, bonus)
+	if(on)
+		force = force_on
+
+/obj/item/chainsaw/remove_fantasy_bonuses(bonus)
+	force_on = reset_fantasy_variable("force_on", force_on)
+	if(on)
+		force = force_on
+	return ..()
 
 /obj/item/chainsaw/Initialize(mapload)
 	. = ..()

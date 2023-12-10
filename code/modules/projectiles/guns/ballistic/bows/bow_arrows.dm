@@ -2,15 +2,16 @@
 /obj/item/ammo_casing/arrow
 	name = "arrow"
 	desc = "Stabby Stabman!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow"
+	base_icon_state = "arrow"
 	inhand_icon_state = "arrow"
 	projectile_type = /obj/projectile/bullet/arrow
 	flags_1 = NONE
 	throwforce = 1
 	firing_effect_type = null
 	caliber = CALIBER_ARROW
-	is_cased_ammo = FALSE
+	///Whether the bullet type spawns another casing of the same type or not.
 	var/reusable = TRUE
 
 /obj/item/ammo_casing/arrow/Initialize(mapload)
@@ -18,34 +19,30 @@
 	AddElement(/datum/element/envenomable_casing)
 	AddElement(/datum/element/caseless, reusable)
 
+/obj/item/ammo_casing/arrow/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]"
+
 ///base arrow projectile
 /obj/projectile/bullet/arrow
 	name = "arrow"
 	desc = "Ow! Get it out of me!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
+	icon = 'icons/obj/weapons/bows/arrows.dmi'
 	icon_state = "arrow_projectile"
 	damage = 50
 	speed = 1
 	range = 25
-
-///*sigh* NON-REUSABLE base arrow projectile. In the future: let's componentize the reusable subtype, jesus
-/obj/projectile/bullet/arrow
-	name = "arrow"
-	desc = "Ow! Get it out of me!"
-	icon = 'icons/obj/weapons/guns/bows/arrows.dmi'
-	icon_state = "arrow_projectile"
-	damage = 50
-	speed = 1
-	range = 25
-
-/// despawning arrow type
-/obj/item/ammo_casing/arrow/despawning/dropped()
-	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(floor_vanish)), 5 SECONDS)
-
-/obj/item/ammo_casing/arrow/despawning/proc/floor_vanish()
-	if(isturf(loc))
-		qdel(src)
+	shrapnel_type = null
+	embedding = list(
+		embed_chance = 90,
+		fall_chance = 2,
+		jostle_chance = 2,
+		ignore_throwspeed_threshold = TRUE,
+		pain_stam_pct = 0.5,
+		pain_mult = 3,
+		jostle_pain_mult = 3,
+		rip_time = 1 SECONDS
+	)
 
 /// holy arrows
 /obj/item/ammo_casing/arrow/holy
@@ -53,6 +50,7 @@
 	desc = "A holy diver seeking its target."
 	icon_state = "holy_arrow"
 	inhand_icon_state = "holy_arrow"
+	base_icon_state = "holy_arrow"
 	projectile_type = /obj/projectile/bullet/arrow/holy
 
 /// holy arrow projectile
@@ -61,11 +59,20 @@
 	desc = "Here it comes, cultist scum!"
 	icon_state = "holy_arrow_projectile"
 	damage = 20 //still a lot but this is roundstart gear so far less
+	embedding = list(
+		embed_chance = 50,
+		fall_chance = 2,
+		jostle_chance = 0,
+		ignore_throwspeed_threshold = TRUE,
+		pain_stam_pct = 0.5,
+		pain_mult = 3,
+		rip_time = 1 SECONDS
+	)
 
 /obj/projectile/bullet/arrow/holy/Initialize(mapload)
 	. = ..()
 	//50 damage to revenants
-	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 30)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 30)
 
 /// special pyre sect arrow
 /// in the future, this needs a special sprite, but bows don't support non-hardcoded arrow sprites
@@ -80,6 +87,7 @@
 	desc = "THE UNMATCHED POWER OF THE SUN"
 	icon_state = "holy_arrow_projectile"
 	damage = 20
+	embedding = null
 
 /obj/projectile/bullet/arrow/blazing/on_hit(atom/target, blocked, pierce_hit)
 	. = ..()

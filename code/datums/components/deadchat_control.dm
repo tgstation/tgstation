@@ -39,7 +39,11 @@
 		if(deadchat_mode & ANARCHY_MODE) // Choose one, please.
 			stack_trace("deadchat_control component added to [parent.type] with both democracy and anarchy modes enabled.")
 		timerid = addtimer(CALLBACK(src, PROC_REF(democracy_loop)), input_cooldown, TIMER_STOPPABLE | TIMER_LOOP)
-	notify_ghosts("[parent] is now deadchat controllable!", source = parent, action = NOTIFY_ORBIT, header="Something Interesting!")
+	notify_ghosts(
+		"[parent] is now deadchat controllable!",
+		source = parent,
+		header = "Ghost Possession!",
+	)
 	if(!ismob(parent) && !SSpoints_of_interest.is_valid_poi(parent))
 		SSpoints_of_interest.make_point_of_interest(parent)
 		generated_point_of_interest = TRUE
@@ -51,6 +55,7 @@
 	ckey_to_cooldown = null
 	if(generated_point_of_interest)
 		SSpoints_of_interest.remove_point_of_interest(parent)
+	on_removal = null
 	return ..()
 
 /datum/component/deadchat_control/proc/deadchat_react(mob/source, message)
@@ -190,7 +195,7 @@
 	if(!isobserver(user))
 		return
 
-	examine_list += span_notice("[A.p_theyre(TRUE)] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
+	examine_list += span_notice("[A.p_Theyre()] currently under deadchat control using the [(deadchat_mode & DEMOCRACY_MODE) ? "democracy" : "anarchy"] ruleset!")
 
 	if(deadchat_mode & DEMOCRACY_MODE)
 		examine_list += span_notice("Type a command into chat to vote on an action. This happens once every [input_cooldown * 0.1] second\s.")

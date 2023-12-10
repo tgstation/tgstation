@@ -95,3 +95,24 @@
 	name = "Sol Dry"
 	desc = "A soothing, mellow drink made from ginger."
 	icon_state = "soldry"
+
+/datum/glass_style/drinking_glass/hakka_mate
+	required_drink_type = /datum/reagent/consumable/hakka_mate
+	name = "glass of Hakka-Mate"
+	desc = "The perfect drink for hacking. Just don't pour it on your computer, that'll only slow you down."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "hakka_mate"
+
+/datum/glass_style/drinking_glass/melon_soda
+	required_drink_type = /datum/reagent/consumable/melon_soda
+	name = "glass of melon soda"
+	desc = "As enjoyed by Japanese children and 30-something Japan enthusiasts."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "melon_soda"
+
+/datum/glass_style/drinking_glass/volt_energy
+	required_drink_type = /datum/reagent/consumable/volt_energy
+	name = "glass of 24-Volt Energy"
+	desc = "It's sharp, it's sour, it's electrifying!"
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "volt_energy"

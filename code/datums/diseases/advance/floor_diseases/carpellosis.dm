@@ -8,9 +8,9 @@
 	agent = "Carp Ella"
 	cures = list(/datum/reagent/carpet)
 	viable_mobtypes = list(/mob/living/carbon/human)
-	required_organs = list(/obj/item/organ/internal/stomach)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_MEDIUM
+	required_organ = ORGAN_SLOT_STOMACH
 	max_stages = 5
 	/// The chance of Carp Ella to spawn on cure
 	var/ella_spawn_chance = 10
@@ -29,6 +29,9 @@
 	cures = list(pick(cures))
 	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 	cure_text = cure.name
+
+/datum/disease/advance/carpellosis/GetDiseaseID()
+	return "[type]"
 
 /datum/disease/advance/carpellosis/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -64,7 +67,7 @@
 		QDEL_NULL(rift_ability)
 	return ..()
 
-/datum/disease/advance/carpellosis/cure()
+/datum/disease/advance/carpellosis/cure(add_resistance = TRUE)
 	if(ability_granted)
 		rift_ability.Remove(affected_mob)
 	if(max_stage_reached && prob(ella_spawn_chance))

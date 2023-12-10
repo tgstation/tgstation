@@ -148,7 +148,7 @@
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 
 	/// The gorilla we created, we only hold this ref until the round starts.
-	var/mob/living/simple_animal/hostile/gorilla/cargo_domestic/cargorilla
+	var/mob/living/basic/gorilla/cargorilla/cargorilla
 
 /datum/station_trait/cargorilla/New()
 	. = ..()
@@ -158,16 +158,14 @@
 /datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
 	SIGNAL_HANDLER
 
-	var/mob/living/simple_animal/sloth/cargo_sloth = GLOB.cargo_sloth
-	if(!cargo_sloth)
+	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
+	if(isnull(cargo_sloth))
 		return
 
 	cargorilla = new(cargo_sloth.loc)
 	cargorilla.name = cargo_sloth.name
 	// We do a poll on roundstart, don't let ghosts in early
-	cargorilla.being_polled_for = TRUE
 	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
-
 	// hm our sloth looks funny today
 	qdel(cargo_sloth)
 
@@ -191,7 +189,7 @@
 	cargorilla = null
 
 /// Get us a ghost for the gorilla.
-/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/simple_animal/hostile/gorilla/cargo_domestic/gorilla)
+/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
 	if(QDELETED(gorilla))
 		return
 
@@ -299,14 +297,14 @@
 /obj/item/birthday_invite/proc/setup_card(birthday_name)
 	desc = "A card stating that its [birthday_name]'s birthday today."
 	icon_state = "paperslip_words"
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 
 /obj/item/clothing/head/costume/party
 	name = "party hat"
 	desc = "A crappy paper hat that you are REQUIRED to wear."
 	icon_state = "party_hat"
 	greyscale_config =  /datum/greyscale_config/party_hat
-	greyscale_config_worn = /datum/greyscale_config/party_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/party_hat/worn
 	flags_inv = 0
 	armor_type = /datum/armor/none
 	var/static/list/hat_colors = list(
@@ -326,4 +324,38 @@
 	name = "festive paper hat"
 	icon_state = "xmashat_grey"
 	greyscale_config = /datum/greyscale_config/festive_hat
-	greyscale_config_worn = /datum/greyscale_config/festive_hat_worn
+	greyscale_config_worn = /datum/greyscale_config/festive_hat/worn
+
+/// Tells the area map generator to ADD MORE TREEEES
+/datum/station_trait/forested
+	name = "Forested"
+	trait_type = STATION_TRAIT_NEUTRAL
+	trait_to_give = STATION_TRAIT_FORESTED
+	trait_flags = STATION_TRAIT_PLANETARY
+	weight = 10
+	show_in_report = TRUE
+	report_message = "There sure are a lot of trees out there."
+
+/datum/station_trait/triple_ai
+	name = "AI Triumvirate"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = TRUE
+	weight = 1
+	report_message = "Your station has been instated with three Nanotrasen Artificial Intelligence models."
+
+/datum/station_trait/triple_ai/New()
+	. = ..()
+	RegisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED, PROC_REF(on_occupations_divided))
+
+/datum/station_trait/triple_ai/revert()
+	UnregisterSignal(SSjob, COMSIG_OCCUPATIONS_DIVIDED)
+	return ..()
+
+/datum/station_trait/triple_ai/proc/on_occupations_divided(datum/source, pure, allow_all)
+	SIGNAL_HANDLER
+
+	for(var/datum/job/ai/ai_datum in SSjob.joinable_occupations)
+		ai_datum.spawn_positions = 3
+	if(!pure)
+		for(var/obj/effect/landmark/start/ai/secondary/secondary_ai_spawn in GLOB.start_landmarks_list)
+			secondary_ai_spawn.latejoin_active = TRUE

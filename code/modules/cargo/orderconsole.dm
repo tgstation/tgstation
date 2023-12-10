@@ -62,12 +62,13 @@
 	else
 		return ..()
 
-/obj/machinery/computer/cargo/emag_act(mob/user)
+/obj/machinery/computer/cargo/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	if(user)
-		user.visible_message(span_warning("[user] swipes a suspicious card through [src]!"),
-		span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
+		if (emag_card)
+			user.visible_message(span_warning("[user] swipes [emag_card] through [src]!"))
+		to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
 
 	obj_flags |= EMAGGED
 	contraband = TRUE
@@ -77,6 +78,7 @@
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
 	update_static_data(user)
+	return TRUE
 
 /obj/machinery/computer/cargo/on_construction(mob/user)
 	. = ..()
@@ -111,9 +113,11 @@
 		message = blockade_warning
 	data["message"] = message
 
+	var/list/amount_by_name = list()
 	var/cart_list = list()
 	for(var/datum/supply_order/order in SSshuttle.shopping_list)
 		if(cart_list[order.pack.name])
+			amount_by_name[order.pack.name] += 1
 			cart_list[order.pack.name][1]["amount"]++
 			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
 			if(order.department_destination)
@@ -122,6 +126,7 @@
 				cart_list[order.pack.name][1]["paid"]++
 			continue
 
+		amount_by_name[order.pack.name] += 1
 		cart_list[order.pack.name] = list(list(
 			"cost_type" = order.cost_type,
 			"object" = order.pack.name,
@@ -139,19 +144,23 @@
 
 
 	data["requests"] = list()
-	for(var/datum/supply_order/SO in SSshuttle.request_list)
+	for(var/datum/supply_order/order in SSshuttle.request_list)
+		var/datum/supply_pack/pack = order.pack
+		amount_by_name[pack.name] += 1
 		data["requests"] += list(list(
-			"object" = SO.pack.name,
-			"cost" = SO.pack.get_cost(),
-			"orderer" = SO.orderer,
-			"reason" = SO.reason,
-			"id" = SO.id
+			"object" = pack.name,
+			"cost" = pack.get_cost(),
+			"orderer" = order.orderer,
+			"reason" = order.reason,
+			"id" = order.id,
 		))
+	data["amount_by_name"] = amount_by_name
 
 	return data
 
 /obj/machinery/computer/cargo/ui_static_data(mob/user)
 	var/list/data = list()
+	data["max_order"] = CARGO_MAX_ORDER
 	data["supplies"] = list()
 	for(var/pack in SSshuttle.supply_packs)
 		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
@@ -168,7 +177,7 @@
 			"id" = pack,
 			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
 			"goody" = P.goody,
-			"access" = P.access
+			"access" = P.access,
 		))
 	return data
 
@@ -185,7 +194,7 @@
 	var/datum/supply_pack/pack = SSshuttle.supply_packs[id]
 	if(!istype(pack))
 		CRASH("Unknown supply pack id given by order console ui. ID: [id]")
-	if(amount > 50 || amount < 1) // Holy shit fuck off
+	if(amount > CARGO_MAX_ORDER || amount < 1) // Holy shit fuck off
 		CRASH("Invalid amount passed into add_item")
 	if((pack.hidden && !(obj_flags & EMAGGED)) || (pack.contraband && !contraband) || pack.drop_pod_only || (pack.special && !pack.special_enabled))
 		return
@@ -220,8 +229,11 @@
 			say("[id_card] lacks the requisite access for this purchase.")
 			return
 
+	// The list we are operating on right now
+	var/list/working_list = SSshuttle.shopping_list
 	var/reason = ""
 	if(requestonly && !self_paid)
+		working_list = SSshuttle.request_list
 		reason = tgui_input_text(user, "Reason", name)
 		if(isnull(reason))
 			return
@@ -231,6 +243,13 @@
 		say("ERROR: Small crates may only be purchased by private accounts.")
 		return
 
+	var/similar_count = SSshuttle.supply.get_order_count(pack)
+	if(similar_count == OVER_ORDER_LIMIT)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 50, FALSE)
+		say("ERROR: No more then [CARGO_MAX_ORDER] of any pack may be ordered at once")
+		return
+
+	amount = clamp(amount, 1, CARGO_MAX_ORDER - similar_count)
 	for(var/count in 1 to amount)
 		var/obj/item/coupon/applied_coupon
 		for(var/obj/item/coupon/coupon_check in loaded_coupons)
@@ -240,11 +259,16 @@
 				applied_coupon = coupon_check
 				break
 
-		var/datum/supply_order/SO = new(pack = pack ,orderer = name, orderer_rank = rank, orderer_ckey = ckey, reason = reason, paying_account = account, coupon = applied_coupon)
-		if(requestonly && !self_paid)
-			SSshuttle.request_list += SO
-		else
-			SSshuttle.shopping_list += SO
+		var/datum/supply_order/order = new(
+			pack = pack ,
+			orderer = name,
+			orderer_rank = rank,
+			orderer_ckey = ckey,
+			reason = reason,
+			paying_account = account,
+			coupon = applied_coupon,
+		)
+		working_list += order
 
 	if(self_paid)
 		say("Order processed. The price will be charged to [account.account_holder]'s bank account on delivery.")
@@ -264,13 +288,14 @@
 			continue
 		if(order.department_destination)
 			say("Only the department that ordered this item may cancel it.")
-			return
+			return FALSE
 		if(order.applied_coupon)
 			say("Coupon refunded.")
 			order.applied_coupon.forceMove(get_turf(src))
 		SSshuttle.shopping_list -= order
-		. = TRUE
-		break
+		qdel(order)
+		return TRUE
+	return FALSE
 /**
  * maps the ordename displayed on the ui to its supply pack id
  * * order_name - the name of the order
@@ -359,9 +384,7 @@
 		if("remove")
 			var/order_name = params["order_name"]
 			//try removing atleast one item with the specified name. An order may not be removed if it was from the department
-			//also we create an copy of the cart list else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
-			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
-			for(var/datum/supply_order/order in shopping_cart)
+			for(var/datum/supply_order/order in SSshuttle.shopping_list)
 				if(order.pack.name != order_name)
 					continue
 				if(remove_item(order.id))
@@ -372,8 +395,7 @@
 			var/order_name = params["order_name"]
 
 			//clear out all orders with the above mentioned order_name name to make space for the new amount
-			var/list/shopping_cart = SSshuttle.shopping_list.Copy() //we operate on the list copy else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
-			for(var/datum/supply_order/order in shopping_cart) //find corresponding order id for the order name
+			for(var/datum/supply_order/order in SSshuttle.shopping_list) //find corresponding order id for the order name
 				if(order.pack.name == order_name)
 					remove_item(order.id)
 
@@ -381,7 +403,7 @@
 			var/amount = text2num(params["amount"])
 			if(amount == 0)
 				return TRUE
-			if(amount > 50)
+			if(amount > CARGO_MAX_ORDER)
 				return
 			var/supply_pack_id = name_to_id(order_name) //map order name to supply pack id for adding
 			if(!supply_pack_id)

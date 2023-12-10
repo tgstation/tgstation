@@ -3,6 +3,7 @@
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
+	icon = 'icons/obj/devices/flash.dmi'
 	icon_state = "flash"
 	inhand_icon_state = "flashtool"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -193,7 +194,7 @@
 	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
 	// This trumps same-loc checks to discourage floor spinning in general to counter flashes.
 	// In short, combat spinning is silly and you should feel silly for doing it.
-	if(victim.flags_1 & IS_SPINNING_1)
+	if(HAS_TRAIT(victim, TRAIT_SPINNING))
 		return DEVIATION_NONE
 
 	if(iscarbon(victim))
@@ -243,12 +244,18 @@
 		var/mob/living/silicon/robot/flashed_borgo = M
 		log_combat(user, flashed_borgo, "flashed", src)
 		update_icon(ALL, TRUE)
-		if(!flashed_borgo.flash_act(affect_silicon = TRUE))
+		if(flashed_borgo.flash_act(affect_silicon = TRUE))
+			if(flashed_borgo.is_blind())
+				var/flash_duration = rand(8,12) SECONDS
+				flashed_borgo.Paralyze(flash_duration)
+				flashed_borgo.set_temp_blindness_if_lower(flash_duration)
+				user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors and computing with the flash!"), span_danger("You overload [flashed_borgo]'s sensors and computing with the flash!"))
+			else
+				user.visible_message(span_warning("[user] blinds [flashed_borgo] with the flash!"), span_danger("You blind [flashed_borgo] with the flash!"))
+			flashed_borgo.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
+			flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
+		else
 			user.visible_message(span_warning("[user] fails to blind [flashed_borgo] with the flash!"), span_warning("You fail to blind [flashed_borgo] with the flash!"))
-			return
-		flashed_borgo.Paralyze(rand(80,120))
-		flashed_borgo.set_confusion_if_lower(5 SECONDS * CONFUSION_STACK_MAX_MULTIPLIER)
-		user.visible_message(span_warning("[user] overloads [flashed_borgo]'s sensors with the flash!"), span_danger("You overload [flashed_borgo]'s sensors with the flash!"))
 		return
 
 	user.visible_message(span_warning("[user] fails to blind [M] with the flash!"), span_warning("You fail to blind [M] with the flash!"))
@@ -290,7 +297,6 @@
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
 	desc = "If you see this, you're not likely to remember it any time soon."
-	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer"
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -336,7 +342,7 @@
 
 /obj/item/assembly/flash/hypnotic
 	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
-	flashing_overlay = "flash-hypno"
+	flashing_overlay = "mindflash"
 	light_color = LIGHT_COLOR_PINK
 	cooldown = 20
 

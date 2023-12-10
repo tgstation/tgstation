@@ -16,6 +16,7 @@
 
 /obj/item/book/granter/martial/on_reading_start(mob/user)
 	to_chat(user, span_notice("You start reading about [martial_name]..."))
+	return TRUE
 
 /obj/item/book/granter/martial/on_reading_finished(mob/user)
 	to_chat(user, "[greet]")

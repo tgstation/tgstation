@@ -671,7 +671,7 @@
 /area/ruin/powered/clownplanet)
 "RW" = (
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Tj" = (
@@ -714,7 +714,7 @@
 "YI" = (
 /obj/machinery/light/small/directional/south,
 /obj/effect/mapping_helpers/no_lava,
-/mob/living/simple_animal/hostile/retaliate/clown,
+/mob/living/basic/clown,
 /turf/open/floor/noslip,
 /area/ruin/powered/clownplanet)
 "Zg" = (

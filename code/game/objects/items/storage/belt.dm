@@ -75,6 +75,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/spess_knife,
+		/obj/item/melee/sickly_blade/lock,
 	))
 
 /obj/item/storage/belt/utility/chief
@@ -424,6 +425,7 @@
 		/obj/item/wirecutters,
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
+		/obj/item/skeleton_key,
 	))
 
 
@@ -554,7 +556,7 @@
 /obj/item/storage/belt/military/abductor
 	name = "agent belt"
 	desc = "A belt used by abductor agents."
-	icon = 'icons/obj/abductor.dmi'
+	icon = 'icons/obj/antags/abductor.dmi'
 	icon_state = "belt"
 	inhand_icon_state = "security"
 	worn_icon_state = "security"
@@ -619,11 +621,10 @@
 
 /obj/item/storage/belt/grenade/full/PopulateContents()
 	generate_items_inside(list(
-		/obj/item/grenade/chem_grenade/facid = 1,
 		/obj/item/grenade/chem_grenade/incendiary = 2,
 		/obj/item/grenade/empgrenade = 2,
 		/obj/item/grenade/frag = 10,
-		/obj/item/grenade/flashbang = 1,
+		/obj/item/grenade/flashbang = 2,
 		/obj/item/grenade/gluon = 4,
 		/obj/item/grenade/smokebomb = 4,
 		/obj/item/grenade/syndieminibomb = 2,
@@ -670,6 +671,7 @@
 	atom_storage.max_slots = 6
 	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL // Set to this so the  light replacer can fit.
 	atom_storage.set_holdable(list(
+		/obj/item/access_key,
 		/obj/item/assembly/mousetrap,
 		/obj/item/clothing/gloves,
 		/obj/item/flashlight,
@@ -696,24 +698,28 @@
 
 /obj/item/storage/belt/bandolier
 	name = "bandolier"
-	desc = "A bandolier for holding rifle and shotgun ammunition."
+	desc = "A bandolier for holding rifle shotgun, and bigger revolver caliber ammunition."
 	icon_state = "bandolier"
 	inhand_icon_state = "bandolier"
 	worn_icon_state = "bandolier"
 
 /obj/item/storage/belt/bandolier/Initialize(mapload)
 	. = ..()
-	atom_storage.max_slots = 18
-	atom_storage.max_total_storage = 18
+	atom_storage.max_slots = 24
+	atom_storage.max_total_storage = 24
+	atom_storage.numerical_stacking = TRUE
+	atom_storage.allow_quick_gather = TRUE
+	atom_storage.allow_quick_empty = TRUE
 	atom_storage.numerical_stacking = TRUE
 	atom_storage.set_holdable(list(
-		/obj/item/ammo_casing/a762,
+		/obj/item/ammo_casing/strilka310,
 		/obj/item/ammo_casing/shotgun,
+		/obj/item/ammo_casing/a357,
 	))
 
 /obj/item/storage/belt/fannypack
 	name = "fannypack"
-	desc = "A dorky fannypack for keeping small items in."
+	desc = "A dorky fannypack for keeping small items in. Concealed enough, or ugly enough to avert their eyes, that others won't see what you put in or take out easily."
 	icon_state = "fannypack_leather"
 	inhand_icon_state = null
 	worn_icon_state = "fannypack_leather"
@@ -724,6 +730,7 @@
 	. = ..()
 	atom_storage.max_slots = 3
 	atom_storage.max_specific_storage = WEIGHT_CLASS_SMALL
+	atom_storage.silent = TRUE
 
 /obj/item/storage/belt/fannypack/black
 	name = "black fannypack"

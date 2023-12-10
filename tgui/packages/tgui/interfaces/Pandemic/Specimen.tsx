@@ -4,10 +4,10 @@ import { Data } from './types';
 import { SymptomDisplay } from './Symptom';
 import { VirusDisplay } from './Virus';
 
-export const SpecimenDisplay = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const SpecimenDisplay = (props) => {
+  const { data } = useBackend<Data>();
   const { viruses = [] } = data;
-  const [tab, setTab] = useLocalState(context, 'tab', 0);
+  const [tab, setTab] = useLocalState('tab', 0);
   const virus = viruses[tab];
 
   return (
@@ -28,10 +28,10 @@ export const SpecimenDisplay = (props, context) => {
   );
 };
 
-const Buttons = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const Buttons = (props) => {
+  const { act, data } = useBackend<Data>();
   const { is_ready, viruses = [] } = data;
-  const [tab, setTab] = useLocalState(context, 'tab', 0);
+  const [tab, setTab] = useLocalState('tab', 0);
   const virus = viruses[tab];
 
   return (
@@ -44,7 +44,8 @@ const Buttons = (props, context) => {
                 <Tabs.Tab
                   selected={tab === index}
                   onClick={() => setTab(index)}
-                  key={index}>
+                  key={index}
+                >
                   {virus.name}
                 </Tabs.Tab>
               );

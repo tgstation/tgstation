@@ -127,7 +127,7 @@
 "nC" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/defibrillator/loaded,
-/obj/item/storage/backpack/duffelbag/med/surgery{
+/obj/item/surgery_tray/full{
 	pixel_y = 13
 	},
 /obj/effect/turf_decal/tile/blue/anticorner{
@@ -178,7 +178,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "oA" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
 	pixel_y = 2
@@ -645,7 +645,7 @@ Ei
 AW
 yq
 tq
-mw
+rV
 rV
 OL
 QT
@@ -659,7 +659,7 @@ OL
 QT
 OL
 rV
-mw
+rV
 tq
 Wd
 AW

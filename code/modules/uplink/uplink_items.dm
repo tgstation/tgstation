@@ -12,6 +12,7 @@
 		uplink_item.limited_stock = limited_stock
 		if(uplink_item.cost >= 20) //Tough love for nuke ops
 			discount *= 0.5
+		uplink_item.stock_key = WEAKREF(uplink_item)
 		uplink_item.category = category
 		uplink_item.cost = max(round(uplink_item.cost * (1 - discount)),1)
 		uplink_item.name += " ([round(((initial(uplink_item.cost)-uplink_item.cost)/initial(uplink_item.cost))*100)]% off!)"
@@ -135,6 +136,10 @@
 			return A
 	to_chat(user, span_boldnotice("[A] materializes onto the floor!"))
 	return A
+
+///For special overrides if an item can be bought or not.
+/datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
+	return TRUE
 
 /datum/uplink_category/discounts
 	name = "Discounted Gear"

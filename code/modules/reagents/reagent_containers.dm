@@ -23,7 +23,7 @@
 	/// If the reagents inside of this container will splash out when the container tries to splash onto someone or something
 	var/spillable = FALSE
 	/**
-	 * The different thresholds at which the reagent fill overlay will change. See reagentfillings.dmi.
+	 * The different thresholds at which the reagent fill overlay will change. See medical/reagent_fillings.dmi.
 	 *
 	 * Should be a list of integers which correspond to a reagent unit threshold.
 	 * If null, no automatic fill overlays are generated.
@@ -36,7 +36,19 @@
 	/// If not set, uses the current icon state.
 	var/fill_icon_state = null
 	/// The icon file to take fill icon appearances from
-	var/fill_icon = 'icons/obj/reagentfillings.dmi'
+	var/fill_icon = 'icons/obj/medical/reagent_fillings.dmi'
+
+/obj/item/reagent_containers/apply_fantasy_bonuses(bonus)
+	. = ..()
+	if(reagents)
+		reagents.maximum_volume = modify_fantasy_variable("maximum_volume", reagents.maximum_volume, bonus * 10, minimum = 5)
+	volume = modify_fantasy_variable("maximum_volume_beaker", volume, bonus * 10, minimum = 5)
+
+/obj/item/reagent_containers/remove_fantasy_bonuses(bonus)
+	if(reagents)
+		reagents.maximum_volume = reset_fantasy_variable("maximum_volume", reagents.maximum_volume)
+	volume = reset_fantasy_variable("maximum_volume_beaker", volume)
+	return ..()
 
 /obj/item/reagent_containers/Initialize(mapload, vol)
 	. = ..()
@@ -49,13 +61,16 @@
 		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
 	add_initial_reagents()
 
-/obj/item/reagent_containers/examine()
+/obj/item/reagent_containers/examine(mob/user)
 	. = ..()
 	if(has_variable_transfer_amount)
 		if(possible_transfer_amounts.len > 1)
 			. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount.")
 		else if(possible_transfer_amounts.len)
 			. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
+	if(isliving(user) && HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
+		var/mob/living/living_user = user
+		living_user.taste(reagents)
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()
@@ -129,7 +144,7 @@
 		span_danger("You splash the contents of [src] onto [target][punctuation]"),
 		ignored_mobs = target,
 	)
-
+	SEND_SIGNAL(target, COMSIG_ATOM_SPLASHED)
 	if (ismob(target))
 		var/mob/target_mob = target
 		target_mob.show_message(
@@ -140,11 +155,11 @@
 
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 
-	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))
-		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+		splash_animation.icon_state = "splash_floor"
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
-	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
+	target.flick_overlay_view(splash_animation, 1 SECONDS)
 
 	for(var/datum/reagent/reagent as anything in reagents.reagent_list)
 		reagent_text += "[reagent] ([num2text(reagent.volume)]),"
@@ -180,9 +195,9 @@
  */
 /obj/item/reagent_containers/on_accidental_consumption(mob/living/carbon/M, mob/living/carbon/user, obj/item/source_item,  discover_after = TRUE)
 	M.losebreath += 2
-	reagents?.trans_to(M, min(15, reagents.total_volume / rand(5,10)), transfered_by = user, methods = INGEST)
+	reagents?.trans_to(M, min(15, reagents.total_volume / rand(5,10)), transferred_by = user, methods = INGEST)
 	if(source_item?.reagents)
-		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transfered_by = user, methods = TOUCH)
+		reagents.trans_to(source_item, min(source_item.reagents.total_volume / 2, reagents.total_volume / 5), transferred_by = user, methods = TOUCH)
 
 	return ..()
 
@@ -239,11 +254,11 @@
 
 	playsound(target, 'sound/effects/slosh.ogg', 25, TRUE)
 
-	var/image/splash_animation = image('icons/effects/effects.dmi', target, "splash")
+	var/mutable_appearance/splash_animation = mutable_appearance('icons/effects/effects.dmi', "splash")
 	if(isturf(target))
-		splash_animation = image('icons/effects/effects.dmi', target, "splash_floor")
+		splash_animation.icon_state = "splash_floor"
 	splash_animation.color = mix_color_from_reagents(reagents.reagent_list)
-	flick_overlay_global(splash_animation, GLOB.clients, 1.0 SECONDS)
+	target.flick_overlay_view(splash_animation, 1.0 SECONDS)
 
 	reagents.clear_reagents()
 

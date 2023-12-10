@@ -77,11 +77,38 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	unique = TRUE
 	/// Deity this bible is related to
 	var/deity_name = "Space Jesus"
+	/// Component which catches bullets for us
+	var/datum/component/bullet_catcher
 
 /obj/item/book/bible/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE_HOLY)
+	bullet_catcher = AddComponent(\
+		/datum/component/bullet_intercepting,\
+		active_slots = ITEM_SLOT_SUITSTORE,\
+		on_intercepted = CALLBACK(src, PROC_REF(on_intercepted_bullet)),\
+	)
 	carve_out()
+
+/obj/item/book/bible/Destroy(force)
+	QDEL_NULL(bullet_catcher)
+	return ..()
+
+/// Destroy the bible when it's shot by a bullet
+/obj/item/book/bible/proc/on_intercepted_bullet(mob/living/victim, obj/projectile/bullet)
+	victim.add_mood_event("blessing", /datum/mood_event/blessing)
+	playsound(victim, 'sound/magic/magic_block_holy.ogg', 50, TRUE)
+	victim.visible_message(span_warning("\The [src] takes \the [bullet] in [victim]'s place!"))
+	var/obj/structure/fluff/paper/stack/pages = new(get_turf(src))
+	pages.dir = pick(GLOB.alldirs)
+	name = "punctured bible"
+	desc = "A memento of good luck, or perhaps divine intervention?"
+	icon_state = "shot"
+	if (!GLOB.bible_icon_state)
+		GLOB.bible_icon_state = "shot" // New symbol of your religion if you hadn't picked one
+	atom_storage?.remove_all(get_turf(src))
+	QDEL_NULL(atom_storage)
+	QDEL_NULL(bullet_catcher)
 
 /obj/item/book/bible/examine(mob/user)
 	. = ..()
@@ -105,7 +132,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			to_chat(user, span_userdanger("[deity_name] <b>SMITE</b> thee!"))
 			add_memory_in_range(user, 7, /datum/memory/witnessed_gods_wrath, protagonist = user, deuteragonist = src, antagonist = deity_name)
 			user.client?.give_award(/datum/award/achievement/misc/gods_wrath, user)
-			user.gib()
+			user.gib(DROP_ALL_REMAINS)
 		else
 			to_chat(user, span_userdanger("[deity_name] cast a curse upon thee!"))
 			user.AddComponent(/datum/component/omen/bible)
@@ -196,7 +223,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	var/list/hurt_limbs = built_in_his_image.get_damaged_bodyparts(1, 1, BODYTYPE_ORGANIC)
 	if(length(hurt_limbs))
 		for(var/obj/item/bodypart/affecting as anything in hurt_limbs)
-			if(affecting.heal_damage(heal_amt, heal_amt, BODYTYPE_ORGANIC))
+			if(affecting.heal_damage(heal_amt, heal_amt, required_bodytype = BODYTYPE_ORGANIC))
 				built_in_his_image.update_damage_overlays()
 		built_in_his_image.visible_message(span_notice("[user] heals [built_in_his_image] with the power of [deity_name]!"))
 		to_chat(built_in_his_image, span_boldnotice("May the power of [deity_name] compel you to be healed!"))
@@ -224,27 +251,30 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
+			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
+			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
 
 	if(user == target_mob)
 		balloon_alert(user, "can't heal yourself!")
 		return
 
-	var/smack = TRUE
-	if(prob(60) && bless(target_mob, user))
-		smack = FALSE
-	else if(iscarbon(target_mob))
+	var/smack_chance = DEFAULT_SMACK_CHANCE
+	if(GLOB.religious_sect)
+		smack_chance = GLOB.religious_sect.smack_chance
+	var/success = !prob(smack_chance) && bless(target_mob, user)
+	if(success)
+		return
+	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
 			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
-	if(smack)
-		target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
-				span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
-		log_combat(user, target_mob, "attacked", src)
+	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
+			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
+	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return !istype(storage_holder, /obj/item/book/bible)
@@ -262,7 +292,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 				make_new_altar(bible_smacked, user)
 				return
 			for(var/obj/effect/rune/nearby_runes in range(2, user))
-				nearby_runes.invisibility = 0
+				nearby_runes.SetInvisibility(INVISIBILITY_NONE, id=type, priority=INVISIBILITY_PRIORITY_BASIC_ANTI_INVISIBILITY)
 		bible_smacked.balloon_alert(user, "floor smacked!")
 
 	if(user.mind?.holy_role)
@@ -296,13 +326,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/stone in sword.contents)
 				stone.required_role = null
-				for(var/mob/living/simple_animal/shade/shade in stone)
+				for(var/mob/living/basic/shade/shade in stone)
 					var/datum/antagonist/cult/cultist = shade.mind.has_antag_datum(/datum/antagonist/cult)
 					if(cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()
-					shade.icon_state = "shade_holy"
-					shade.name = "Purified [shade.name]"
+					shade.theme = THEME_HOLY
+					shade.name = "Purified [shade.real_name]"
+					shade.update_appearance(UPDATE_ICON_STATE)
 				stone.release_shades(user)
 				qdel(stone)
 			new /obj/item/nullrod/claymore(get_turf(sword))
@@ -332,6 +363,17 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 	deity_name = "The Syndicate"
 	var/uses = 1
 	var/owner_name
+
+/obj/item/book/bible/syndicate/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/anti_magic, MAGIC_RESISTANCE|MAGIC_RESISTANCE_HOLY)
+	AddComponent(/datum/component/effect_remover, \
+		success_feedback = "You disrupt the magic of %THEEFFECT with %THEWEAPON.", \
+		success_forcesay = "BEGONE FOUL MAGIKS!!", \
+		tip_text = "Clear rune", \
+		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
+	)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25, requires_combat_mode = FALSE)
 
 /obj/item/book/bible/syndicate/attack_self(mob/living/carbon/human/user, modifiers)
 	if(!uses || !istype(user))

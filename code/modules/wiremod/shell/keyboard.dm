@@ -1,6 +1,6 @@
 /obj/item/keyboard_shell
 	name = "Keyboard Shell"
-	icon = 'icons/obj/wiremod.dmi'
+	icon = 'icons/obj/science/circuits.dmi'
 	icon_state = "setup_small_keyboard"
 	inhand_icon_state = "electronic"
 	worn_icon_state = "electronic"
@@ -27,7 +27,7 @@
 	var/datum/port/output/output
 
 /obj/item/circuit_component/keyboard_shell/populate_ports()
-	entity = add_output_port("User", PORT_TYPE_ATOM)
+	entity = add_output_port("User", PORT_TYPE_USER)
 	output = add_output_port("Message", PORT_TYPE_STRING)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
@@ -52,5 +52,4 @@
 	entity.set_output(user)
 	output.set_output(message)
 	signal.set_output(COMPONENT_SIGNAL)
-
 

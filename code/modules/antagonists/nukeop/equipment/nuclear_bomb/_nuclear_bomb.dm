@@ -57,7 +57,6 @@ GLOBAL_VAR(station_nuke_source)
 /obj/machinery/nuclearbomb/Initialize(mapload)
 	. = ..()
 	countdown = new(src)
-	GLOB.nuke_list += src
 	core = new /obj/item/nuke_core(src)
 	STOP_PROCESSING(SSobj, core)
 	update_appearance()
@@ -69,7 +68,6 @@ GLOBAL_VAR(station_nuke_source)
 	if(!exploding)
 		// If we're not exploding, set the alert level back to normal
 		toggle_nuke_safety()
-	GLOB.nuke_list -= src
 	QDEL_NULL(countdown)
 	QDEL_NULL(core)
 	return ..()
@@ -465,7 +463,6 @@ GLOBAL_VAR(station_nuke_source)
 		"A nuclear device has been armed in [get_area_name(src)]!",
 		source = src,
 		header = "Nuke Armed",
-		action = NOTIFY_ORBIT,
 	)
 	update_appearance()
 
@@ -524,7 +521,9 @@ GLOBAL_VAR(station_nuke_source)
 	update_appearance()
 	sound_to_playing_players('sound/machines/alarm.ogg')
 
-	if(SSticker?.mode)
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NUKE_DEVICE_DETONATING, src)
+
+	if(SSticker.HasRoundStarted())
 		SSticker.roundend_check_paused = TRUE
 	addtimer(CALLBACK(src, PROC_REF(actually_explode)), 10 SECONDS)
 	return TRUE
@@ -643,7 +642,7 @@ GLOBAL_VAR(station_nuke_source)
 
 	to_chat(gibbed, span_userdanger("You are shredded to atoms by [source]!"))
 	gibbed.investigate_log("has been gibbed by a nuclear blast.", INVESTIGATE_DEATHS)
-	gibbed.gib()
+	gibbed.gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /**

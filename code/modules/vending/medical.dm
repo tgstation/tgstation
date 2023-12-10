@@ -13,12 +13,13 @@
 		/obj/item/healthanalyzer = 4,
 		/obj/item/wrench/medical = 1,
 		/obj/item/stack/sticky_tape/surgical = 3,
-		/obj/item/healthanalyzer/wound = 4,
+		/obj/item/healthanalyzer/simple = 4,
 		/obj/item/stack/medical/ointment = 2,
 		/obj/item/stack/medical/suture = 2,
 		/obj/item/stack/medical/bone_gel = 4,
 		/obj/item/cane/white = 2,
 		/obj/item/clothing/glasses/eyepatch/medical = 2,
+		/obj/item/storage/box/bandages = 2,
 	)
 	contraband = list(
 		/obj/item/storage/box/gum/happiness = 3,
@@ -57,7 +58,7 @@
 		/obj/item/healthanalyzer = 0,
 		/obj/item/wrench/medical = 0,
 		/obj/item/stack/sticky_tape/surgical = 0,
-		/obj/item/healthanalyzer/wound = 0,
+		/obj/item/healthanalyzer/simple = 0,
 		/obj/item/stack/medical/ointment = 0,
 		/obj/item/stack/medical/suture = 1,
 		/obj/item/stack/medical/bone_gel = 1,

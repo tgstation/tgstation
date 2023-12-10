@@ -270,7 +270,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged{
+/mob/living/basic/trooper/syndicate/ranged{
 	environment_smash = 0;
 	name = "Syndicate Salvage Worker"
 	},
@@ -664,6 +664,10 @@
 	pixel_x = 14
 	},
 /obj/structure/cable,
+/obj/item/megaphone{
+	pixel_x = -2;
+	pixel_y = -4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cf" = (
@@ -686,11 +690,11 @@
 /area/shuttle/abandoned/bridge)
 "cg" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/computer/shuttle/white_ship/pod/recall{
-	dir = 8
-	},
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 1
+	},
+/obj/machinery/computer/shuttle/white_ship/bridge{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
@@ -768,13 +772,16 @@
 /turf/open/floor/iron,
 /area/shuttle/abandoned/bar)
 "cv" = (
-/obj/machinery/computer/shuttle/white_ship/bridge{
-	dir = 8
-	},
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
 	},
+/obj/structure/table,
+/obj/item/folder/blue{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/machinery/recharger,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cx" = (
@@ -828,28 +835,19 @@
 /obj/structure/table,
 /obj/machinery/light/small/built/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/cell_charger,
+/obj/item/stock_parts/cell/high,
 /obj/item/radio/off{
 	pixel_x = 6;
 	pixel_y = 7
 	},
-/obj/item/megaphone{
-	pixel_x = -2;
-	pixel_y = -4
-	},
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cE" = (
-/obj/structure/table,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/cell_charger,
-/obj/item/stock_parts/cell/high,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -12
-	},
-/obj/item/wrench{
-	pixel_x = -12
-	},
+/obj/item/wrench,
+/obj/item/storage/toolbox/emergency,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "cF" = (
@@ -1521,7 +1519,7 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/blood/gibs/old,
-/mob/living/basic/syndicate/melee{
+/mob/living/basic/trooper/syndicate/melee{
 	environment_smash = 0
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1580,7 +1578,7 @@
 "qc" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on,
-/mob/living/basic/syndicate/melee{
+/mob/living/basic/trooper/syndicate/melee{
 	environment_smash = 0
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -1600,7 +1598,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/mob/living/basic/syndicate/melee{
+/mob/living/basic/trooper/syndicate/melee{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,
@@ -1652,15 +1650,9 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/cargo)
 "wE" = (
-/obj/structure/table,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/all_access,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/folder/blue{
-	pixel_x = 6;
-	pixel_y = 9
-	},
-/obj/machinery/recharger,
 /turf/open/floor/iron/dark,
 /area/shuttle/abandoned/bridge)
 "xK" = (

@@ -2,7 +2,7 @@
 /obj/item/infuser_book
 	name = "DNA infusion book"
 	desc = "An entire book on how to not turn yourself into a fly mutant."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state ="book"
 	worn_icon_state = "book"
 	throw_speed = 2

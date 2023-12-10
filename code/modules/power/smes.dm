@@ -51,7 +51,7 @@
 		for(var/d in GLOB.cardinals)
 			var/turf/T = get_step(src, d)
 			for(var/obj/machinery/power/terminal/term in T)
-				if(term && term.dir == turn(d, 180))
+				if(term && term.dir == REVERSE_DIR(d))
 					terminal = term
 					break dir_loop
 
@@ -97,7 +97,7 @@
 		terminal = null
 		var/turf/T = get_step(src, dir)
 		for(var/obj/machinery/power/terminal/term in T)
-			if(term && term.dir == turn(dir, 180))
+			if(term && term.dir == REVERSE_DIR(dir))
 				terminal = term
 				terminal.master = src
 				to_chat(user, span_notice("Terminal found."))
@@ -134,7 +134,7 @@
 			to_chat(user, span_warning("You need more wires!"))
 			return
 
-		var/terminal_cable_layer = CABLE_LAYER_1
+		var/terminal_cable_layer
 		if(LAZYACCESS(params2list(params), RIGHT_CLICK))
 			var/choice = tgui_input_list(user, "Select Power Input Cable Layer", "Select Cable Layer", GLOB.cable_name_to_layer)
 			if(isnull(choice))
@@ -147,7 +147,7 @@
 		if(do_after(user, 20, target = src))
 			if(C.get_amount() < 10 || !C)
 				return
-			var/obj/structure/cable/N = T.get_cable_node() //get the connecting node cable, if there's one
+			var/obj/structure/cable/N = T.get_cable_node(terminal_cable_layer) //get the connecting node cable, if there's one
 			if (prob(50) && electrocute_mob(usr, N, N, 1, TRUE)) //animate the electrocution if uncautious and unlucky
 				do_sparks(5, TRUE, src)
 				return
@@ -205,7 +205,7 @@
 
 // create a terminal object pointing towards the SMES
 // wires will attach to this
-/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_cable_layer)
+/obj/machinery/power/smes/proc/make_terminal(turf/T, terminal_cable_layer = cable_layer)
 	terminal = new/obj/machinery/power/terminal(T)
 	terminal.cable_layer = terminal_cable_layer
 	terminal.setDir(get_dir(T,src))

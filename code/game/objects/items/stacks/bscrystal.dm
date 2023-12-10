@@ -2,7 +2,7 @@
 /obj/item/stack/ore/bluespace_crystal
 	name = "bluespace crystal"
 	desc = "A glowing bluespace crystal, not much is known about how they work. It looks very delicate."
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/ore.dmi'
 	icon_state = "bluespace_crystal"
 	singular_name = "bluespace crystal"
 	dye_color = DYE_COSMIC
@@ -64,7 +64,7 @@
 //Polycrystals, aka stacks
 /obj/item/stack/sheet/bluespace_crystal
 	name = "bluespace polycrystal"
-	icon = 'icons/obj/telescience.dmi'
+	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "polycrystal"
 	inhand_icon_state = null
 	singular_name = "bluespace polycrystal"
@@ -76,6 +76,7 @@
 	grind_results = list(/datum/reagent/bluespace = 20)
 	point_value = 30
 	merge_type = /obj/item/stack/sheet/bluespace_crystal
+	material_type = /datum/material/bluespace
 	var/crystal_type = /obj/item/stack/ore/bluespace_crystal/refined
 
 /obj/item/stack/sheet/bluespace_crystal/attack_self(mob/user)// to prevent the construction menu from ever happening

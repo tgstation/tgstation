@@ -250,15 +250,15 @@
 	var/turf/newtarget = locate(new_x, new_y, starting.z)
 	return newtarget
 
-/obj/item/pneumatic_cannon/handle_atom_del(atom/A)
+/obj/item/pneumatic_cannon/Exited(atom/movable/gone, direction)
 	. = ..()
-	if (loadedItems.Remove(A))
-		var/obj/item/I = A
-		if(istype(I))
-			loadedWeightClass -= I.w_class
+	if(loadedItems.Remove(gone))
+		var/obj/item/item = gone
+		if(istype(item))
+			loadedWeightClass -= item.w_class
 		else
 			loadedWeightClass--
-	else if (A == tank)
+	else if (gone == tank)
 		tank = null
 		update_appearance()
 

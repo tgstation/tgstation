@@ -2,7 +2,18 @@ import { BooleanLike } from 'common/react';
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Box, Section, NumberInput, Table, Tabs, LabeledList, NoticeBox, Button, ProgressBar, Stack } from '../components';
+import {
+  Box,
+  Section,
+  NumberInput,
+  Table,
+  Tabs,
+  LabeledList,
+  NoticeBox,
+  Button,
+  ProgressBar,
+  Stack,
+} from '../components';
 
 type BiogeneratorData = {
   processing: BooleanLike;
@@ -32,8 +43,8 @@ type Design = {
   amount: number;
 };
 
-export const Biogenerator = (props, context) => {
-  const { act, data } = useBackend<BiogeneratorData>(context);
+export const Biogenerator = (props) => {
+  const { act, data } = useBackend<BiogeneratorData>();
   const {
     processing,
     beaker,
@@ -48,9 +59,8 @@ export const Biogenerator = (props, context) => {
     categories,
   } = data;
   const [selectedCategory, setSelectedCategory] = useLocalState<string>(
-    context,
     'category',
-    data.categories[0]?.name
+    data.categories[0]?.name,
   );
   const items =
     categories.find((category) => category.name === selectedCategory)?.items ||
@@ -75,17 +85,20 @@ export const Biogenerator = (props, context) => {
                       disabled={!can_process || processing}
                       onClick={() => act('activate')}
                     />
-                  }>
+                  }
+                >
                   <ProgressBar
                     value={biomass}
                     minValue={0}
                     maxValue={max_visual_biomass}
-                    color="good">
+                    color="good"
+                  >
                     <Box
                       lineHeight={1.9}
                       style={{
-                        'text-shadow': '1px 1px 0 black',
-                      }}>
+                        textShadow: '1px 1px 0 black',
+                      }}
+                    >
                       {`${parseFloat(biomass.toFixed(2))} units`}
                     </Box>
                   </ProgressBar>
@@ -102,18 +115,21 @@ export const Biogenerator = (props, context) => {
                         content="Eject"
                         onClick={() => act('eject')}
                       />
-                    }>
+                    }
+                  >
                     <ProgressBar
                       value={beakerCurrentVolume}
                       minValue={0}
                       height={2}
                       maxValue={beakerMaxVolume}
-                      color={reagent_color}>
+                      color={reagent_color}
+                    >
                       <Box
                         lineHeight={1.9}
                         style={{
-                          'text-shadow': '1px 1px 0 black',
-                        }}>
+                          textShadow: '1px 1px 0 black',
+                        }}
+                      >
                         {`${beakerCurrentVolume} of ${beakerMaxVolume} units`}
                       </Box>
                     </ProgressBar>
@@ -136,7 +152,8 @@ export const Biogenerator = (props, context) => {
                   align="center"
                   key={category.name}
                   selected={category.name === selectedCategory}
-                  onClick={() => setSelectedCategory(category.name)}>
+                  onClick={() => setSelectedCategory(category.name)}
+                >
                   {category.name}
                 </Tabs.Tab>
               ))}
@@ -163,13 +180,12 @@ export const Biogenerator = (props, context) => {
   );
 };
 
-const ItemList = (props, context) => {
-  const { act } = useBackend(context);
+const ItemList = (props) => {
+  const { act } = useBackend();
   const items = props.items.map((item) => {
     const [amount, setAmount] = useLocalState(
-      context,
       'amount' + item.name,
-      item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1
+      item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1,
     );
     const disabled =
       props.processing ||
@@ -177,7 +193,7 @@ const ItemList = (props, context) => {
       (item.is_reagent && props.space < amount) ||
       props.biomass < Math.ceil((item.cost * amount) / props.efficiency);
     const max_possible = Math.floor(
-      (props.efficiency * props.biomass) / item.cost
+      (props.efficiency * props.biomass) / item.cost,
     );
     const max_capacity = item.is_reagent ? props.space : props.max_output;
     const max_amount = Math.max(1, Math.min(max_capacity, max_possible));
@@ -195,7 +211,7 @@ const ItemList = (props, context) => {
         <span
           className={classes(['design32x32', item.id])}
           style={{
-            'vertical-align': 'middle',
+            verticalAlign: 'middle',
           }}
         />{' '}
         <b>{item.name}</b>

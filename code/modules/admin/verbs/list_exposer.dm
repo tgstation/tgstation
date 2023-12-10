@@ -13,8 +13,8 @@
 	if(!SSticker.HasRoundStarted())
 		tgui_alert(usr, "The game hasn't started yet!")
 		return
-	var/data = "<b>Showing last [length(GLOB.lastsignalers)] signalers.</b><hr>"
-	for(var/entry in GLOB.lastsignalers)
+	var/data = "<b>Showing last [length(GLOB.investigate_signaler)] signalers.</b><hr>"
+	for(var/entry in GLOB.investigate_signaler)
 		data += "[entry]<BR>"
 	usr << browse(data, "window=lastsignalers;size=800x500")
 

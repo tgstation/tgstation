@@ -19,7 +19,7 @@
 /datum/computer_file/New()
 	..()
 	uid = file_uid++
-	RegisterSignal(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(on_install))
+	RegisterSignal(src, COMSIG_COMPUTER_FILE_STORE, PROC_REF(on_install))
 
 /datum/computer_file/Destroy(force)
 	if(computer)
@@ -86,6 +86,8 @@
  * * background - Whether the app is running in the background.
  */
 /datum/computer_file/program/proc/event_powerfailure()
+	if(program_flags & PROGRAM_RUNS_WITHOUT_POWER)
+		return
 	kill_program()
 
 /**

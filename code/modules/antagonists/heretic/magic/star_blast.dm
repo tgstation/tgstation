@@ -35,9 +35,9 @@
 
 /obj/projectile/magic/star_ball/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/effect_trail/cosmic_trail)
+	AddElement(/datum/element/effect_trail, /obj/effect/forcefield/cosmic_field/fast)
 
-/obj/projectile/magic/star_ball/on_hit(atom/target, blocked = FALSE, pierce_hit)
+/obj/projectile/magic/star_ball/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	var/mob/living/cast_on = firer
 	for(var/mob/living/nearby_mob in range(star_mark_range, target))

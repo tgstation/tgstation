@@ -10,11 +10,6 @@
 	icon_state = "springlock"
 	complexity = 3 // it is inside every part of your suit, so
 	incompatible_modules = list(/obj/item/mod/module/springlock)
-	var/death_trap = TRUE
-
-/obj/item/mod/module/springlock/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	death_trap = !death_trap
 
 /obj/item/mod/module/springlock/on_install()
 	mod.activation_step_time *= 0.5
@@ -42,11 +37,7 @@
 ///Signal fired when wearer attempts to activate/deactivate suits
 /obj/item/mod/module/springlock/proc/on_activate_spring_block(datum/source, user)
 	SIGNAL_HANDLER
-
-	if(death_trap)
-		balloon_alert(user, "springlocks aren't responding...?")
-	else
-		balloon_alert(user, "you disable it just in time")
+	balloon_alert(user, "springlocks aren't responding...?")
 	return MOD_CANCEL_ACTIVATE
 
 ///Delayed death proc of the suit after the wearer is exposed to reagents
@@ -295,7 +286,9 @@
 	playsound(src, 'sound/effects/curseattack.ogg', 50)
 	mod.wearer.AddElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY)
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(check_upstairs))
+	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	passtable_on(mod.wearer, MOD_TRAIT)
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/on_deactivation(display_message = TRUE, deleting = FALSE)
@@ -309,8 +302,10 @@
 		playsound(src, 'sound/effects/curseattack.ogg', 50)
 	qdel(mod.wearer.RemoveElement(/datum/element/forced_gravity, NEGATIVE_GRAVITY))
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(mod.wearer, COMSIG_MOB_SAY)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, MOD_TRAIT)
+	passtable_off(mod.wearer, MOD_TRAIT)
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)
@@ -342,6 +337,10 @@
 	QDEL_IN(mod.wearer, FLY_TIME)
 
 #undef FLY_TIME
+
+/obj/item/mod/module/atrocinator/proc/on_talk(datum/source, list/speech_args)
+	SIGNAL_HANDLER
+	speech_args[SPEECH_SPANS] |= "upside_down"
 
 /obj/item/mod/module/recycler/donk/safe
 	name = "MOD foam dart recycler module"

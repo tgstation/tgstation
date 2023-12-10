@@ -77,21 +77,21 @@
 	return ..()
 
 /datum/reagent/eigenstate/on_mob_life(mob/living/carbon/living_mob)
+	. = ..()
 	if(prob(20))
 		do_sparks(5,FALSE,living_mob)
 
-	return ..()
-
 /datum/reagent/eigenstate/on_mob_delete(mob/living/living_mob) //returns back to original location
+	. = ..()
 	do_sparks(5,FALSE,living_mob)
 	to_chat(living_mob, span_userdanger("You feel strangely whole again."))
 	if(!living_mob.reagents.has_reagent(/datum/reagent/stabilizing_agent))
 		do_teleport(living_mob, location_return, 0, asoundin = 'sound/effects/phasein.ogg') //Teleports home
 		do_sparks(5,FALSE,living_mob)
 	qdel(eigenstate)
-	return ..()
 
 /datum/reagent/eigenstate/overdose_start(mob/living/living_mob) //Overdose, makes you teleport randomly
+	. = ..()
 	to_chat(living_mob, span_userdanger("You feel like your perspective is being ripped apart as you begin flitting in and out of reality!"))
 	living_mob.set_jitter_if_lower(40 SECONDS)
 	metabolization_rate += 0.5 //So you're not stuck forever teleporting.
@@ -101,10 +101,10 @@
 	return ..()
 
 /datum/reagent/eigenstate/overdose_process(mob/living/living_mob) //Overdose, makes you teleport randomly
+	. = ..()
 	do_sparks(5, FALSE, living_mob)
 	do_teleport(living_mob, get_turf(living_mob), 10, asoundin = 'sound/effects/phasein.ogg')
 	do_sparks(5, FALSE, living_mob)
-	return ..()
 
 //FOR ADDICTION-LIKE EFFECTS, SEE datum/status_effect/eigenstasium
 

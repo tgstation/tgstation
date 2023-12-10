@@ -3,7 +3,7 @@
 /obj/machinery/field/containment
 	name = "containment field"
 	desc = "An energy field."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "Contain_F"
 	density = FALSE
 	move_resist = INFINITY
@@ -123,7 +123,7 @@
 	if(isliving(mover))
 		shock(mover)
 		return
-	if(ismachinery(mover) || isstructure(mover) || ismecha(mover))
+	if(ismachinery(mover) || isstructure(mover) || isvehicle(mover))
 		bump_field(mover)
 		return
 

@@ -49,9 +49,9 @@
 		QDEL_NULL(beaker)
 	return ..()
 
-/obj/machinery/chem_heater/handle_atom_del(atom/A)
+/obj/machinery/chem_heater/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(A == beaker)
+	if(gone == beaker)
 		beaker = null
 		update_appearance()
 
@@ -78,8 +78,8 @@
 	if(!user)
 		return FALSE
 	if(beaker)
-		try_put_in_hand(beaker, user)
 		UnregisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP)
+		try_put_in_hand(beaker, user)
 		beaker = null
 	if(new_beaker)
 		beaker = new_beaker
@@ -154,6 +154,11 @@
 			beaker.reagents.handle_reactions()
 
 			use_power(active_power_usage * seconds_per_tick)
+
+/obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	default_unfasten_wrench(user, tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/chem_heater/attackby(obj/item/I, mob/user, params)
 	if(default_deconstruction_screwdriver(user, "mixer0b", "mixer0b", I))
@@ -268,7 +273,7 @@
 		if(!equilibrium.reaction.results)//Incase of no result reactions
 			continue
 		var/_reagent = equilibrium.reaction.results[1]
-		var/datum/reagent/reagent = beaker?.reagents.get_reagent(_reagent) //Reactions are named after their primary products
+		var/datum/reagent/reagent = beaker?.reagents.has_reagent(_reagent) //Reactions are named after their primary products
 		if(!reagent)
 			continue
 		var/overheat = FALSE
@@ -433,41 +438,41 @@ To continue set your target temperature to 390K."}
 		return
 	if(buffer_type == "acid")
 		if(volume < 0)
-			var/datum/reagent/acid_reagent = beaker.reagents.get_reagent(/datum/reagent/reaction_agent/acidic_buffer)
+			var/datum/reagent/acid_reagent = beaker.reagents.has_reagent(/datum/reagent/reaction_agent/acidic_buffer)
 			if(!acid_reagent)
 				say("Unable to find acidic buffer in beaker to draw from! Please insert a beaker containing acidic buffer.")
 				return
-			var/datum/reagent/acid_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/acidic_buffer)
+			var/datum/reagent/acid_reagent_heater = reagents.has_reagent(/datum/reagent/reaction_agent/acidic_buffer)
 			var/cur_vol = 0
 			if(acid_reagent_heater)
 				cur_vol = acid_reagent_heater.volume
 			volume = 100 - cur_vol
-			beaker.reagents.trans_id_to(src, acid_reagent.type, volume)//negative because we're going backwards
+			beaker.reagents.trans_to(src, volume, target_id = acid_reagent.type)//negative because we're going backwards
 			return
 		//We must be positive here
-		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/acidic_buffer, dispense_volume)
+		reagents.trans_to(beaker, dispense_volume, target_id = /datum/reagent/reaction_agent/acidic_buffer)
 		return
 
 	if(buffer_type == "basic")
 		if(volume < 0)
-			var/datum/reagent/basic_reagent = beaker.reagents.get_reagent(/datum/reagent/reaction_agent/basic_buffer)
+			var/datum/reagent/basic_reagent = beaker.reagents.has_reagent(/datum/reagent/reaction_agent/basic_buffer)
 			if(!basic_reagent)
 				say("Unable to find basic buffer in beaker to draw from! Please insert a beaker containing basic buffer.")
 				return
-			var/datum/reagent/basic_reagent_heater = reagents.get_reagent(/datum/reagent/reaction_agent/basic_buffer)
+			var/datum/reagent/basic_reagent_heater = reagents.has_reagent(/datum/reagent/reaction_agent/basic_buffer)
 			var/cur_vol = 0
 			if(basic_reagent_heater)
 				cur_vol = basic_reagent_heater.volume
 			volume = 100 - cur_vol
-			beaker.reagents.trans_id_to(src, basic_reagent.type, volume)//negative because we're going backwards
+			beaker.reagents.trans_to(src, volume, target_id = basic_reagent.type)//negative because we're going backwards
 			return
-		reagents.trans_id_to(beaker, /datum/reagent/reaction_agent/basic_buffer, dispense_volume)
+		reagents.trans_to(beaker, dispense_volume, target_id = /datum/reagent/reaction_agent/basic_buffer)
 		return
 
 
 /obj/machinery/chem_heater/proc/get_purity_color(datum/equilibrium/equilibrium)
 	var/_reagent = equilibrium.reaction.results[1]
-	var/datum/reagent/reagent = equilibrium.holder.get_reagent(_reagent)
+	var/datum/reagent/reagent = equilibrium.holder.has_reagent(_reagent)
 	// Can't be a switch due to http://www.byond.com/forum/post/2750423
 	if(reagent.purity in 1 to INFINITY)
 		return "blue"

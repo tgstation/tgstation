@@ -262,6 +262,61 @@
 	result = /obj/item/food/beef_wellington
 	category = CAT_MEAT
 
+/datum/crafting_recipe/food/full_roast
+	name = "Roast Chicken Dinner"
+	reqs = list(
+		/obj/item/food/meat/steak/chicken = 2,
+		/obj/item/food/roastparsnip = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/flour = 5,
+		/datum/reagent/consumable/gravy = 15,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/roast_dinner
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/full_roast_lizzy
+	name = "Grain-Free Roast Chicken Dinner"
+	reqs = list(
+		/obj/item/food/meat/steak/chicken = 2,
+		/obj/item/food/roastparsnip = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/korta_flour = 25,
+		/datum/reagent/consumable/nutriment = 5,
+		/datum/reagent/blood = 5,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/roast_dinner_lizzy
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/full_roast_tofu
+	name = "Meat-Free Roast Dinner"
+	reqs = list(
+		/obj/item/food/tofu = 6,
+		/obj/item/food/roastparsnip = 1,
+		/obj/item/food/grown/onion = 1,
+		/obj/item/food/grown/peas = 1,
+		/obj/item/food/grown/potato = 1,
+		/obj/item/food/grown/cabbage = 1,
+		/obj/item/food/grown/herbs = 1,
+		/datum/reagent/consumable/flour = 15,
+		/datum/reagent/consumable/soymilk = 15,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/consumable/blackpepper = 2
+	)
+	result = /obj/item/food/roast_dinner_tofu
+	category = CAT_MEAT
+
 /datum/crafting_recipe/food/full_english
 	name = "Full English Breakfast"
 	reqs = list(
@@ -294,4 +349,25 @@
 		/datum/reagent/consumable/ketchup = 10,
 	)
 	result = /obj/item/food/raw_meatloaf
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/sweet_and_sour_meatballs
+	name = "Sweet and sour meatballs"
+	reqs = list(
+		/obj/item/food/meatball = 3,
+		/obj/item/food/pineappleslice = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/datum/reagent/consumable/sugar = 5,
+	)
+	result = /obj/item/food/sweet_and_sour_meatballs
+	category = CAT_MEAT
+
+/datum/crafting_recipe/food/pineapple_skewer
+	name = "Pineapple skewer"
+	reqs = list(
+		/obj/item/stack/rods = 1,
+		/obj/item/food/pineappleslice = 2,
+		/obj/item/food/meat/cutlet = 2,
+	)
+	result = /obj/item/food/kebab/pineapple_skewer
 	category = CAT_MEAT

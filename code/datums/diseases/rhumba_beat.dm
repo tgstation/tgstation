@@ -9,6 +9,7 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 1
 	severity = DISEASE_SEVERITY_BIOHAZARD
+	bypasses_immunity = TRUE
 
 /datum/disease/rhumba_beat/stage_act(seconds_per_tick, times_fired)
 	. = ..()
@@ -18,7 +19,7 @@
 	switch(stage)
 		if(2)
 			if(SPT_PROB(26, seconds_per_tick))
-				affected_mob.adjustFireLoss(5, FALSE)
+				affected_mob.adjustFireLoss(5)
 			if(SPT_PROB(0.5, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel strange..."))
 		if(3)

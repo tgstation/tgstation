@@ -21,6 +21,8 @@
 #define FACTION_CLOWN "clowns"
 /// Headslugs
 #define FACTION_CREATURE "creature"
+/// Cats
+#define FACTION_CAT "cat"
 /// Faithless and shadowpeople
 #define FACTION_FAITHLESS "faithless"
 /// Gnomes
@@ -43,6 +45,8 @@
 #define FACTION_MIMIC "mimic"
 /// Beasts found on the various mining environments
 #define FACTION_MINING "mining"
+/// Watchers don't like any creatures other than each other
+#define FACTION_WATCHER "watcher"
 /// Monkeys and gorillas
 #define FACTION_MONKEY "monkey"
 /// Mushrooms and mushroompeople

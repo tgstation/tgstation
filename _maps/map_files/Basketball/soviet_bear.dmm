@@ -6,9 +6,9 @@
 /area/centcom/basketball)
 "aw" = (
 /obj/structure/table,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
@@ -353,9 +353,9 @@
 /area/centcom/basketball)
 "Bd" = (
 /obj/structure/table,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
-/obj/item/ammo_box/a762,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
+/obj/item/ammo_box/strilka310,
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "BJ" = (
@@ -535,14 +535,14 @@
 /turf/open/floor/iron/dark/small,
 /area/centcom/basketball)
 "Om" = (
-/mob/living/simple_animal/hostile/bear/fightpit,
+/mob/living/basic/bear/fightpit,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "OB" = (
-/mob/living/simple_animal/hostile/bear/fightpit,
+/mob/living/basic/bear/fightpit,
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "PU" = (

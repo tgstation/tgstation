@@ -141,7 +141,7 @@
 	return COMPONENT_CLEANED
 
 /// When you take brute damage, schedule an explosion
-/datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype)
+/datum/status_effect/stacking/brimdust_coating/proc/on_take_damage(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BRUTE)
 		return
@@ -171,6 +171,7 @@
 		var/armor = target.run_armor_check(attack_flag = BOMB)
 		target.apply_damage(damage_dealt, damagetype = BURN, blocked = armor, spread_damage = TRUE)
 
+	SEND_SIGNAL(owner, COMSIG_BRIMDUST_EXPLOSION)
 	add_stacks(-1)
 
 /// Slowdown applied when you are detonated on the space station

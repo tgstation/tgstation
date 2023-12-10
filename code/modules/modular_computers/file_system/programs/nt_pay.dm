@@ -1,13 +1,13 @@
 /datum/computer_file/program/nt_pay
 	filename = "ntpay"
 	filedesc = "Nanotrasen Pay System"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "generic"
+	downloader_category = PROGRAM_CATEGORY_DEVICE
+	program_open_overlay = "generic"
 	extended_desc = "An application that locally (in your sector) helps to transfer money or track your expenses and profits."
 	size = 2
 	tgui_id = "NtosPay"
 	program_icon = "money-bill-wave"
-	usage_flags = PROGRAM_ALL
+	can_run_on_flags = PROGRAM_ALL
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///Pay token, by which we can send credits

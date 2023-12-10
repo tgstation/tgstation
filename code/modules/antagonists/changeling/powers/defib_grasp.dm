@@ -4,7 +4,7 @@
 		we will snatch their arms off and instantly finalize our stasis."
 	helptext = "This ability is passive, and will trigger when a defibrillator paddle is applied to our chest \
 		while we are dead or in stasis. Will also stun cyborgs momentarily."
-	needs_button = FALSE
+	owner_has_control = FALSE
 	dna_cost = 0
 
 	/// Flags to pass to fully heal when we get zapped
@@ -33,7 +33,6 @@
 	else
 		changeling.fully_heal(heal_flags)
 
-	changeling.cure_fakedeath(CHANGELING_TRAIT) // rips us out of revival stasis (if we're in it)
 	changeling.buckled?.unbuckle_mob(changeling) // get us off of stasis beds please
 	changeling.set_resting(FALSE)
 	changeling.adjust_jitter(20 SECONDS)

@@ -3,7 +3,7 @@
  * The file also contain the guicode of the machine
  */
 /obj/machinery/atmospherics/components/unary/hypertorus
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "core_off"
 
 	name = "thermomachine"
@@ -126,7 +126,7 @@
 /obj/machinery/hypertorus
 	name = "hypertorus_core"
 	desc = "hypertorus_core"
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "core_off"
 	move_resist = INFINITY
 	anchored = TRUE
@@ -169,10 +169,13 @@
 	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface_off"
 	circuit = /obj/item/circuitboard/machine/HFR_interface
-	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 	icon_state_off = "interface_off"
 	icon_state_open = "interface_open"
 	icon_state_active = "interface_active"
+	/// Have we been activated at least once?
+	var/activated = FALSE
+	/// Reference to the core of our machine
+	var/obj/machinery/atmospherics/components/unary/hypertorus/core/connected_core
 
 /obj/machinery/hypertorus/interface/Destroy()
 	if(connected_core)
@@ -181,16 +184,19 @@
 
 /obj/machinery/hypertorus/interface/multitool_act(mob/living/user, obj/item/I)
 	. = ..()
-	var/turf/T = get_step(src,turn(dir,180))
+	var/turf/T = get_step(src,REVERSE_DIR(dir))
 	var/obj/machinery/atmospherics/components/unary/hypertorus/core/centre = locate() in T
 
 	if(!centre || !centre.check_part_connectivity())
 		to_chat(user, span_notice("Check all parts and then try again."))
 		return TRUE
-	new/obj/item/paper/guides/jobs/atmos/hypertorus(loc)
-	connected_core = centre
 
+	connected_core = centre
 	connected_core.activate(user)
+	if(!activated)
+		new /obj/item/paper/guides/jobs/atmos/hypertorus(loc)
+		activated = TRUE
+
 	return TRUE
 
 /obj/machinery/hypertorus/interface/ui_interact(mob/user, datum/tgui/ui)
@@ -436,7 +442,7 @@
 /obj/item/hfr_box
 	name = "HFR box"
 	desc = "If you see this, call the police."
-	icon = 'icons/obj/atmospherics/components/hypertorus.dmi'
+	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "error"
 	///What kind of box are we handling?
 	var/box_type = "impossible"

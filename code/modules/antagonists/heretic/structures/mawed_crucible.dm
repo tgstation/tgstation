@@ -3,7 +3,7 @@
 	name = "mawed crucible"
 	desc = "A deep basin made of cast iron, immortalized by steel-like teeth holding it in place. \
 		Staring at the vile extract within fills your mind with terrible ideas."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/antags/eldritch.dmi'
 	icon_state = "crucible"
 	base_icon_state = "crucible"
 	break_sound = 'sound/hallucinations/wail.ogg'
@@ -212,7 +212,7 @@
 /obj/item/eldritch_potion
 	name = "brew of day and night"
 	desc = "You should never see this"
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/antags/eldritch.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	/// When a heretic examines a mawed crucible, shows a list of possible potions by name + includes this tip to explain what it does.
 	var/crucible_tip = "Doesn't do anything."

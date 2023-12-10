@@ -26,10 +26,6 @@
 	item_path = /obj/item/storage/belt/mining
 	cost_per_order = 500
 
-/datum/orderable_item/mining/point_card
-	item_path = /obj/item/card/mining_point_card
-	cost_per_order = 500
-
 /datum/orderable_item/mining/jaunter
 	item_path = /obj/item/wormhole_jaunter
 	cost_per_order = 750
@@ -106,3 +102,7 @@
 /datum/orderable_item/mining/style_meter
 	item_path = /obj/item/style_meter
 	cost_per_order = 1500
+
+/datum/orderable_item/mining/weather_radio
+	item_path = /obj/item/radio/weather_monitor
+	cost_per_order = 400

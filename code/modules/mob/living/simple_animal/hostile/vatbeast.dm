@@ -14,7 +14,7 @@
 	atmos_requirements = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
 	health = 250
 	maxHealth = 250
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 0, OXY = 1)
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	obj_damage = 40
@@ -28,8 +28,7 @@
 
 /mob/living/simple_animal/hostile/vatbeast/Initialize(mapload)
 	. = ..()
-	var/datum/action/cooldown/tentacle_slap/slapper = new(src)
-	slapper.Grant(src)
+	GRANT_ACTION(/datum/action/cooldown/tentacle_slap)
 
 	add_cell_sample()
 	AddComponent(/datum/component/tameable, list(/obj/item/food/fries, /obj/item/food/cheesyfries, /obj/item/food/cornchips, /obj/item/food/carrotfries), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))

@@ -10,21 +10,23 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	desc = "This shard seems to be directly linked to some sinister entity. It might be your god! It also gives you a really horrible rash when you hold onto it for too long."
 	items_to_create = list(/obj/item/vorpalscythe)
 
-/obj/item/organ/internal/cyberimp/arm/shard/scythe/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/internal/cyberimp/arm/shard/scythe/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(receiver.mind)
-		receiver.mind.add_traits(TRAIT_MORBID, ORGAN_TRAIT)
+		ADD_TRAIT(receiver.mind, TRAIT_MORBID, ORGAN_TRAIT)
 
 /obj/item/organ/internal/cyberimp/arm/shard/scythe/Retract()
 	var/obj/item/vorpalscythe/scythe = active_item
 	if(!scythe)
 		return FALSE
-	if(scythe.empowerment < SCYTHE_SATED)
-		to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
-		playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
-		var/obj/item/bodypart/part = owner.get_holding_bodypart_of_item(scythe)
-		if(part)
-			part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
+
+	var/obj/item/bodypart/part = hand
+	if(isnull(part) || scythe.empowerment >= SCYTHE_SATED)
+		return ..()
+
+	to_chat(owner, span_userdanger("[scythe] tears into you for your unworthy display of arrogance!"))
+	playsound(owner, 'sound/magic/demon_attack1.ogg', 50, TRUE)
+	part.receive_damage(brute = 25, wound_bonus = 10, sharpness = SHARP_EDGED)
 	return ..()
 
 /obj/item/vorpalscythe
@@ -164,7 +166,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 
 		scythe_empowerment(potential_empowerment)
 
-		if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID)) //You feel good about yourself, pal?
+		if(HAS_MIND_TRAIT(user, TRAIT_MORBID)) //You feel good about yourself, pal?
 			user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
 
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

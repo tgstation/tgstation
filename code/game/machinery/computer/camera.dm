@@ -19,7 +19,7 @@
 	/// All the plane masters that need to be applied.
 	var/atom/movable/screen/background/cam_background
 
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_SIGHT
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_SIGHT
 
 /obj/machinery/computer/security/Initialize(mapload)
 	. = ..()
@@ -50,6 +50,8 @@
 
 /obj/machinery/computer/security/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
+	if(!user.can_perform_action(src, NEED_DEXTERITY)) //prevents monkeys from using camera consoles
+		return
 	// Update UI
 	ui = SStgui.try_update_ui(user, src, ui)
 
@@ -82,24 +84,26 @@
 
 /obj/machinery/computer/security/ui_data()
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
+			ref = REF(active_camera),
 			status = active_camera.status,
 		)
 	return data
 
 /obj/machinery/computer/security/ui_static_data()
 	var/list/data = list()
+	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
-	var/list/cameras = get_available_cameras()
+	var/list/cameras = get_camera_list(network)
 	data["cameras"] = list()
 	for(var/i in cameras)
 		var/obj/machinery/camera/C = cameras[i]
 		data["cameras"] += list(list(
 			name = C.c_tag,
+			ref = REF(C),
 		))
 
 	return data
@@ -110,13 +114,11 @@
 		return
 
 	if(action == "switch_camera")
-		var/c_tag = params["name"]
-		var/list/cameras = get_available_cameras()
-		var/obj/machinery/camera/selected_camera = cameras[c_tag]
+		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
 		active_camera = selected_camera
 		playsound(src, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 
-		if(!selected_camera)
+		if(isnull(active_camera))
 			return TRUE
 
 		update_active_camera_screen()
@@ -177,28 +179,6 @@
 	cam_screen.vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
-
-// Returns the list of cameras accessible from this computer
-/obj/machinery/computer/security/proc/get_available_cameras()
-	var/list/L = list()
-	for (var/obj/machinery/camera/cam as anything in GLOB.cameranet.cameras)
-		//Get the camera's turf in case it's inside something like a borg
-		var/turf/camera_turf = get_turf(cam)
-		if((is_away_level(z) || is_away_level(camera_turf.z)) && (camera_turf.z != z))//if on away mission, can only receive feed from same z_level cameras
-			continue
-		L.Add(cam)
-	var/list/D = list()
-	for(var/obj/machinery/camera/cam in L)
-		if(!cam.network)
-			stack_trace("Camera in a cameranet has no camera network")
-			continue
-		if(!(islist(cam.network)))
-			stack_trace("Camera in a cameranet has a non-list camera network")
-			continue
-		var/list/tempnetwork = cam.network & network
-		if(tempnetwork.len)
-			D["[cam.c_tag]"] = cam
-	return D
 
 // SECURITY MONITORS
 

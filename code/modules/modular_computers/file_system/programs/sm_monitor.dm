@@ -1,12 +1,12 @@
 /datum/computer_file/program/supermatter_monitor
 	filename = "ntcims"
 	filedesc = "NT CIMS"
-	category = PROGRAM_CATEGORY_ENGI
+	downloader_category = PROGRAM_CATEGORY_ENGINEERING
 	ui_header = "smmon_0.gif"
-	program_icon_state = "smmon_0"
+	program_open_overlay = "smmon_0"
 	extended_desc = "Crystal Integrity Monitoring System, connects to specially calibrated supermatter sensors to provide information on the status of supermatter-based engines."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_CONSTRUCTION)
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	download_access = list(ACCESS_CONSTRUCTION)
 	size = 5
 	tgui_id = "NtosSupermatter"
 	program_icon = "radiation"
@@ -22,7 +22,7 @@
 	refresh()
 
 /// Apparently destroy calls this [/datum/computer_file/Destroy]. Here just to clean our references.
-/datum/computer_file/program/supermatter_monitor/kill_program()
+/datum/computer_file/program/supermatter_monitor/kill_program(mob/user)
 	for(var/supermatter in supermatters)
 		clear_supermatter(supermatter)
 	return ..()
@@ -34,7 +34,7 @@
 	var/turf/user_turf = get_turf(computer.ui_host())
 	if(!user_turf)
 		return
-	for(var/obj/machinery/power/supermatter_crystal/sm in GLOB.machines)
+	for(var/obj/machinery/power/supermatter_crystal/sm as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
 		//Exclude Syndicate owned, Delaminating, not within coverage, not on a tile.
 		if (!sm.include_in_cims || !isturf(sm.loc) || !(is_station_level(sm.z) || is_mining_level(sm.z) || sm.z == user_turf.z))
 			continue
@@ -109,6 +109,6 @@
 	if(last_status != new_status)
 		last_status = new_status
 		ui_header = "smmon_[last_status].gif"
-		program_icon_state = "smmon_[last_status]"
+		program_open_overlay = "smmon_[last_status]"
 		if(istype(computer))
 			computer.update_appearance()

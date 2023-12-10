@@ -22,6 +22,9 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 	. = ..()
 	. += GLOB.human_recipes
 
+/obj/item/stack/sheet/animalhide/human/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/generic
 	name = "skin"
 	desc = "A piece of skin."
@@ -42,6 +45,9 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola suit", /obj/item/clothing/under/costume/gondola, 2, check_density = FALSE, category = CAT_CLOTHING), \
 	))
 
+/obj/item/stack/sheet/animalhide/corgi/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/mothroach
 	name = "mothroach hide"
 	desc = "A thin layer of mothroach hide."
@@ -49,6 +55,9 @@ GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	icon_state = "sheet-mothroach"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/mothroach
+
+/obj/item/stack/sheet/animalhide/mothroach/five
+	amount = 5
 
 /obj/item/stack/sheet/animalhide/gondola
 	name = "gondola hide"
@@ -78,6 +87,9 @@ GLOBAL_LIST_INIT(corgi_recipes, list ( \
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/cat
 
+/obj/item/stack/sheet/animalhide/cat/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/monkey
 	name = "monkey hide"
 	desc = "The by-product of monkey farming."
@@ -95,6 +107,9 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	. = ..()
 	. += GLOB.monkey_recipes
 
+/obj/item/stack/sheet/animalhide/monkey/five
+	amount = 5
+
 /obj/item/stack/sheet/animalhide/lizard
 	name = "lizard skin"
 	desc = "Sssssss..."
@@ -102,6 +117,9 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 	icon_state = "sheet-lizard"
 	inhand_icon_state = null
 	merge_type = /obj/item/stack/sheet/animalhide/lizard
+
+/obj/item/stack/sheet/animalhide/lizard/five
+	amount = 5
 
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien hide"
@@ -119,6 +137,9 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 /obj/item/stack/sheet/animalhide/xeno/get_main_recipes()
 	. = ..()
 	. += GLOB.xeno_recipes
+
+/obj/item/stack/sheet/animalhide/xeno/five
+	amount = 5
 
 /obj/item/stack/sheet/animalhide/carp
 	name = "carp scales"
@@ -140,6 +161,9 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	. = ..()
 	. += GLOB.carp_recipes
 
+/obj/item/stack/sheet/animalhide/carp/five
+	amount = 5
+
 //don't see anywhere else to put these, maybe together they could be used to make the xenos suit?
 /obj/item/stack/sheet/xenochitin
 	name = "alien chitin"
@@ -155,12 +179,6 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	desc = "The claw of a terrible creature."
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "claw"
-
-/obj/item/weed_extract
-	name = "weed extract"
-	desc = "A piece of slimy, purplish weed."
-	icon = 'icons/mob/nonhuman-player/alien.dmi'
-	icon_state = "weed_extract"
 
 /*
  * Leather SHeet
@@ -178,7 +196,7 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("muzzle", /obj/item/clothing/mask/muzzle, 2, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("basketball", /obj/item/toy/basketball, 20, check_density = FALSE, category = CAT_ENTERTAINMENT), \
 	new/datum/stack_recipe("baseball", /obj/item/toy/beach_ball/baseball, 3, check_density = FALSE, category = CAT_ENTERTAINMENT), \
-	new/datum/stack_recipe("saddle", /obj/item/saddle, 5, check_density = FALSE, category = CAT_EQUIPMENT), \
+	new/datum/stack_recipe("saddle", /obj/item/goliath_saddle, 5, check_density = FALSE, category = CAT_EQUIPMENT), \
 	new/datum/stack_recipe("leather shoes", /obj/item/clothing/shoes/laceup, 2, check_density = FALSE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("cowboy boots", /obj/item/clothing/shoes/cowboy, 2, check_density = FALSE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("botany gloves", /obj/item/clothing/gloves/botanic_leather, 3, check_density = FALSE, category = CAT_CLOTHING), \
@@ -207,6 +225,10 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 /obj/item/stack/sheet/leather/get_main_recipes()
 	. = ..()
 	. += GLOB.leather_recipes
+
+/obj/item/stack/sheet/leather/five
+	amount = 5
+
 /*
  * Sinew
  */
@@ -218,6 +240,20 @@ GLOBAL_LIST_INIT(leather_recipes, list ( \
 	icon_state = "sinew"
 	novariants = TRUE
 	merge_type = /obj/item/stack/sheet/sinew
+
+/obj/item/stack/sheet/sinew/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+
+	// As bone and sinew have just a little too many recipes for this, we'll just split them up.
+	// Sinew slapcrafting will mostly-sinew recipes, and bones will have mostly-bones recipes.
+	var/static/list/slapcraft_recipe_list = list(\
+		/datum/crafting_recipe/goliathcloak, /datum/crafting_recipe/skilt, /datum/crafting_recipe/drakecloak,\
+		)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 /obj/item/stack/sheet/sinew/wolf
 	name = "wolf sinew"
@@ -268,6 +304,16 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	w_class = WEIGHT_CLASS_NORMAL
 	layer = MOB_LAYER
 	merge_type = /obj/item/stack/sheet/animalhide/ashdrake
+
+/obj/item/stack/sheet/animalhide/ashdrake/Initialize(mapload, new_amount, merge, list/mat_override, mat_amt)
+	. = ..()
+
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/drakecloak)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
 
 //Step one - dehairing.
 
@@ -326,8 +372,8 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	AddComponent(/datum/component/bakeable, /obj/item/stack/sheet/leather, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
 /obj/item/stack/sheet/wethide/burn()
-	visible_message(span_notice("[src] burns up, leaving a sheet of leather behind!"))
-	new /obj/item/stack/sheet/leather(loc) // only one sheet remains to incentivise not burning your wethide to dry it
+	visible_message(span_notice("[src] dries up!"))
+	new /obj/item/stack/sheet/leather(loc, amount) // all the sheets to incentivize not losing your whole stack by accident
 	qdel(src)
 
 /obj/item/stack/sheet/wethide/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
@@ -336,6 +382,6 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 /obj/item/stack/sheet/wethide/atmos_expose(datum/gas_mixture/air, exposed_temperature)
 	wetness--
 	if(wetness == 0)
-		new /obj/item/stack/sheet/leather(drop_location(), 1)
+		new /obj/item/stack/sheet/leather(drop_location(), amount)
 		wetness = initial(wetness)
 		use(1)

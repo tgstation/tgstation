@@ -83,7 +83,7 @@ Consuming extracts:
 	..()
 
 /obj/item/slimecross/consuming/grey
-	colour = "grey"
+	colour = SLIME_TYPE_GREY
 	effect_desc = "Creates a slime cookie."
 	cookietype = /obj/item/slime_cookie/grey
 
@@ -95,7 +95,7 @@ Consuming extracts:
 	nutrition = 15
 
 /obj/item/slimecross/consuming/orange
-	colour = "orange"
+	colour = SLIME_TYPE_ORANGE
 	effect_desc = "Creates a slime cookie that heats the target up and grants cold immunity for a short time."
 	cookietype = /obj/item/slime_cookie/orange
 
@@ -109,7 +109,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/firecookie)
 
 /obj/item/slimecross/consuming/purple
-	colour = "purple"
+	colour = SLIME_TYPE_PURPLE
 	effect_desc = "Creates a slime cookie that heals the target from every type of damage."
 	cookietype = /obj/item/slime_cookie/purple
 
@@ -120,15 +120,17 @@ Consuming extracts:
 	taste = "fruit jam and cough medicine"
 
 /obj/item/slime_cookie/purple/do_effect(mob/living/M, mob/user)
-	M.adjustBruteLoss(-5)
-	M.adjustFireLoss(-5)
-	M.adjustToxLoss(-5, forced=1) //To heal slimepeople.
-	M.adjustOxyLoss(-5)
-	M.adjustCloneLoss(-5)
-	M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
+	var/need_mob_update = FALSE
+	need_mob_update += M.adjustBruteLoss(-5, updating_health = FALSE)
+	need_mob_update += M.adjustFireLoss(-5, updating_health = FALSE)
+	need_mob_update += M.adjustToxLoss(-5, updating_health = FALSE, forced = TRUE) //To heal slimepeople.
+	need_mob_update += M.adjustOxyLoss(-5, updating_health = FALSE)
+	need_mob_update += M.adjustOrganLoss(ORGAN_SLOT_BRAIN, -5)
+	if(need_mob_update)
+		M.updatehealth()
 
 /obj/item/slimecross/consuming/blue
-	colour = "blue"
+	colour = SLIME_TYPE_BLUE
 	effect_desc = "Creates a slime cookie that wets the floor around you and makes you immune to water based slipping for a short time."
 	cookietype = /obj/item/slime_cookie/blue
 
@@ -142,7 +144,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/watercookie)
 
 /obj/item/slimecross/consuming/metal
-	colour = "metal"
+	colour = SLIME_TYPE_METAL
 	effect_desc = "Creates a slime cookie that increases the target's resistance to brute damage."
 	cookietype = /obj/item/slime_cookie/metal
 
@@ -156,7 +158,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/metalcookie)
 
 /obj/item/slimecross/consuming/yellow
-	colour = "yellow"
+	colour = SLIME_TYPE_YELLOW
 	effect_desc = "Creates a slime cookie that makes the target immune to electricity for a short time."
 	cookietype = /obj/item/slime_cookie/yellow
 
@@ -170,7 +172,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/sparkcookie)
 
 /obj/item/slimecross/consuming/darkpurple
-	colour = "dark purple"
+	colour = SLIME_TYPE_DARK_PURPLE
 	effect_desc = "Creates a slime cookie that reverses how the target's body treats toxins."
 	cookietype = /obj/item/slime_cookie/darkpurple
 
@@ -184,7 +186,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/toxincookie)
 
 /obj/item/slimecross/consuming/darkblue
-	colour = "dark blue"
+	colour = SLIME_TYPE_DARK_BLUE
 	effect_desc = "Creates a slime cookie that chills the target and extinguishes them."
 	cookietype = /obj/item/slime_cookie/darkblue
 
@@ -199,7 +201,7 @@ Consuming extracts:
 	M.extinguish_mob()
 
 /obj/item/slimecross/consuming/silver
-	colour = "silver"
+	colour = SLIME_TYPE_SILVER
 	effect_desc = "Creates a slime cookie that never gets the target fat."
 	cookietype = /obj/item/slime_cookie/silver
 
@@ -214,7 +216,7 @@ Consuming extracts:
 	M.reagents.add_reagent(/datum/reagent/consumable/nutriment/stabilized,10)
 
 /obj/item/slimecross/consuming/bluespace
-	colour = "bluespace"
+	colour = SLIME_TYPE_BLUESPACE
 	effect_desc = "Creates a slime cookie that teleports the target to a random place in the area."
 	cookietype = /obj/item/slime_cookie/bluespace
 
@@ -250,7 +252,7 @@ Consuming extracts:
 		playsound(get_turf(M), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/slimecross/consuming/sepia
-	colour = "sepia"
+	colour = SLIME_TYPE_SEPIA
 	effect_desc = "Creates a slime cookie that makes the target do things slightly faster."
 	cookietype = /obj/item/slime_cookie/sepia
 
@@ -264,7 +266,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/timecookie)
 
 /obj/item/slimecross/consuming/cerulean
-	colour = "cerulean"
+	colour = SLIME_TYPE_CERULEAN
 	effect_desc = "Creates a slime cookie that has a chance to make another once you eat it."
 	cookietype = /obj/item/slime_cookie/cerulean
 	cookies = 3 //You're gonna get more.
@@ -282,7 +284,7 @@ Consuming extracts:
 		C.taste = taste + " and a sugar cookie"
 
 /obj/item/slimecross/consuming/pyrite
-	colour = "pyrite"
+	colour = SLIME_TYPE_PYRITE
 	effect_desc = "Creates a slime cookie that randomly colors the target."
 	cookietype = /obj/item/slime_cookie/pyrite
 
@@ -324,7 +326,7 @@ Consuming extracts:
 	M.add_atom_colour(colour,WASHABLE_COLOUR_PRIORITY)
 
 /obj/item/slimecross/consuming/red
-	colour = "red"
+	colour = SLIME_TYPE_RED
 	effect_desc = "Creates a slime cookie that creates a spatter of blood on the floor, while also restoring some of the target's blood."
 	cookietype = /obj/item/slime_cookie/red
 
@@ -342,7 +344,7 @@ Consuming extracts:
 		C.blood_volume += 25 //Half a vampire drain.
 
 /obj/item/slimecross/consuming/green
-	colour = "green"
+	colour = SLIME_TYPE_GREEN
 	effect_desc = "Creates a slime cookie that is absolutely disgusting, makes the target vomit, however all reagent in their body are also removed."
 	cookietype = /obj/item/slime_cookie/green
 
@@ -355,11 +357,11 @@ Consuming extracts:
 /obj/item/slime_cookie/green/do_effect(mob/living/M, mob/user)
 	if(ishuman(M))
 		var/mob/living/carbon/human/H = M
-		H.vomit(25)
+		H.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 25)
 	M.reagents.remove_all()
 
 /obj/item/slimecross/consuming/pink
-	colour = "pink"
+	colour = SLIME_TYPE_PINK
 	effect_desc = "Creates a slime cookie that makes the target want to spread the love."
 	cookietype = /obj/item/slime_cookie/pink
 
@@ -373,7 +375,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/lovecookie)
 
 /obj/item/slimecross/consuming/gold
-	colour = "gold"
+	colour = SLIME_TYPE_GOLD
 	effect_desc = "Creates a slime cookie that has a gold coin inside."
 	cookietype = /obj/item/slime_cookie/gold
 
@@ -392,7 +394,7 @@ Consuming extracts:
 	M.put_in_hand(C)
 
 /obj/item/slimecross/consuming/oil
-	colour = "oil"
+	colour = SLIME_TYPE_OIL
 	effect_desc = "Creates a slime cookie that slows anyone next to the user."
 	cookietype = /obj/item/slime_cookie/oil
 
@@ -406,7 +408,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/tarcookie)
 
 /obj/item/slimecross/consuming/black
-	colour = "black"
+	colour = SLIME_TYPE_BLACK
 	effect_desc = "Creates a slime cookie that makes the target look like a spooky skeleton for a little bit."
 	cookietype = /obj/item/slime_cookie/black
 
@@ -420,7 +422,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/spookcookie)
 
 /obj/item/slimecross/consuming/lightpink
-	colour = "light pink"
+	colour = SLIME_TYPE_LIGHT_PINK
 	effect_desc = "Creates a slime cookie that makes the target, and anyone next to the target, pacifistic for a small amount of time."
 	cookietype = /obj/item/slime_cookie/lightpink
 
@@ -434,7 +436,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/peacecookie)
 
 /obj/item/slimecross/consuming/adamantine
-	colour = "adamantine"
+	colour = SLIME_TYPE_ADAMANTINE
 	effect_desc = "Creates a slime cookie that increases the target's resistance to burn damage."
 	cookietype = /obj/item/slime_cookie/adamantine
 
@@ -448,7 +450,7 @@ Consuming extracts:
 	M.apply_status_effect(/datum/status_effect/adamantinecookie)
 
 /obj/item/slimecross/consuming/rainbow
-	colour = "rainbow"
+	colour = SLIME_TYPE_RAINBOW
 	effect_desc = "Creates a slime cookie that has the effect of a random cookie."
 
 /obj/item/slimecross/consuming/rainbow/spawncookie()

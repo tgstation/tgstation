@@ -7,7 +7,7 @@
 	gender = FEMALE
 	mob_biotypes = MOB_ORGANIC|MOB_BEAST
 	speak_emote = list("grunts", "grunts lowly")
-	butcher_results = list(/obj/item/food/meat/slab = 3)
+	butcher_results = list(/obj/item/food/meat/slab/grassfed = 3)
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently nudges"
@@ -30,13 +30,12 @@
 	var/time_to_freeze_for = (rand(5, 10) SECONDS)
 	ai_controller.set_blackboard_key(BB_STATIONARY_SECONDS, time_to_freeze_for)
 	ai_controller.set_blackboard_key(BB_STATIONARY_COOLDOWN, (time_to_freeze_for * (rand(3, 5))))
-	ai_controller.set_blackboard_key(BB_STATIONARY_TARGETS, stationary_scary_things)
+	ai_controller.set_blackboard_key(BB_STATIONARY_TARGETS, typecacheof(stationary_scary_things))
 
 /datum/ai_controller/basic_controller/deer
 	blackboard = list(
-		BB_BASIC_MOB_FLEEING = TRUE,
 		BB_STATIONARY_MOVE_TO_TARGET = TRUE,
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -47,3 +46,8 @@
 		/datum/ai_planning_subtree/find_nearest_thing_which_attacked_me_to_flee,
 		/datum/ai_planning_subtree/flee_target,
 	)
+
+/// Cold resistent and doesn't need to breathe
+/mob/living/basic/deer/ice
+	habitable_atmos = list("min_oxy" = 0, "max_oxy" = 0, "min_plas" = 0, "max_plas" = 0, "min_co2" = 0, "max_co2" = 0, "min_n2" = 0, "max_n2" = 0)
+	minimum_survivable_temperature = 0

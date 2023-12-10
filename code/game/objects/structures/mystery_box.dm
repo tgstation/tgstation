@@ -187,7 +187,7 @@ GLOBAL_LIST_INIT(mystery_box_extended, list(
 		if(grant_extra_mag && istype(instantiated_gun, /obj/item/gun/ballistic))
 			var/obj/item/gun/ballistic/instantiated_ballistic = instantiated_gun
 			if(!instantiated_ballistic.internal_magazine)
-				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.mag_type(loc)
+				var/obj/item/ammo_box/magazine/extra_mag = new instantiated_ballistic.spawn_magazine_type(loc)
 				user.put_in_hands(extra_mag)
 
 	user.visible_message(span_notice("[user] takes [presented_item] from [src]."), span_notice("You take [presented_item] from [src]."), vision_distance = COMBAT_MESSAGE_RANGE)

@@ -100,7 +100,7 @@
 	PROTECTED_PROC(TRUE)
 
 	if (isnull(instruction_screen))
-		instruction_screen = new(null, message, user.client)
+		instruction_screen = new(null, null, message, user.client)
 		user.client?.screen += instruction_screen
 	else
 		instruction_screen.change_message(message)

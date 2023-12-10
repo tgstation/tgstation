@@ -11,7 +11,6 @@
 	symptom_delay_max = 1
 	var/passive_message = "" //random message to infected but not actively healing people
 
-
 /datum/symptom/heal/Activate(datum/disease/advance/A)
 	. = ..()
 	if(!.)
@@ -75,8 +74,8 @@
 		power = 2
 
 /datum/symptom/heal/starlight/proc/CanTileHealDirectional(turf/turf_to_check, direction)
-	if(direction == ZTRAIT_UP)
-		turf_to_check = turf_to_check.above()
+	if(direction == UP)
+		turf_to_check = GET_TURF_ABOVE(turf_to_check)
 		if(!turf_to_check)
 			return STARLIGHT_CANNOT_HEAL
 	var/area/area_to_check = get_area(turf_to_check)
@@ -86,7 +85,7 @@
 		// while space covers normal space and those caused by explosions,
 		// if there is a floor tile when checking above, that means
 		// a roof exists so the outdoors should only work downwards
-		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == ZTRAIT_DOWN))
+		if(isspaceturf(turf_to_check) || (area_to_check.outdoors && direction == DOWN))
 			if (levels_of_glass)
 				return STARLIGHT_CAN_HEAL_WITH_PENALTY // Glass gives a penalty.
 			return STARLIGHT_CAN_HEAL // No glass = can heal fully.
@@ -98,10 +97,10 @@
 		// Our turf is transparent OR openspace - we can check higher or lower z-levels
 		if(istransparentturf(turf_to_check) || istype(turf_to_check, /turf/open/openspace))
 			// Check above or below us
-			if(direction == ZTRAIT_UP)
-				turf_to_check = turf_to_check.above()
+			if(direction == UP)
+				turf_to_check = GET_TURF_ABOVE(turf_to_check)
 			else
-				turf_to_check = turf_to_check.below()
+				turf_to_check = GET_TURF_BELOW(turf_to_check)
 
 			// If we found a turf above or below us,
 			// then we can rerun the loop on the newly found turf / area
@@ -114,7 +113,7 @@
 			// Checking below, we assume that space is below us (as we're standing on station)
 			// Checking above, we check that the area is "outdoors" before assuming if it is space or not.
 			else
-				if(direction == ZTRAIT_DOWN || (direction == ZTRAIT_UP && area_to_check.outdoors))
+				if(direction == DOWN || (direction == UP && area_to_check.outdoors))
 					if (levels_of_glass)
 						return STARLIGHT_CAN_HEAL_WITH_PENALTY
 					return STARLIGHT_CAN_HEAL
@@ -122,12 +121,12 @@
 		return STARLIGHT_CANNOT_HEAL // Hit a non-space, Non-transparent turf - no healsies
 
 /datum/symptom/heal/starlight/proc/CanTileHeal(turf/original_turf, satisfied_with_penalty)
-	var/current_heal_level = CanTileHealDirectional(original_turf, ZTRAIT_DOWN)
+	var/current_heal_level = CanTileHealDirectional(original_turf, DOWN)
 	if(current_heal_level == STARLIGHT_CAN_HEAL)
 		return current_heal_level
 	if(current_heal_level && satisfied_with_penalty) // do not care if there is a healing penalty or no
 		return current_heal_level
-	var/heal_level_from_above = CanTileHealDirectional(original_turf, ZTRAIT_UP)
+	var/heal_level_from_above = CanTileHealDirectional(original_turf, UP)
 	if(heal_level_from_above > current_heal_level)
 		return heal_level_from_above
 	else
@@ -162,8 +161,8 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -181,17 +180,18 @@
 */
 /datum/symptom/heal/chem
 	name = "Toxolysis"
+	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
 	stealth = 0
 	resistance = -2
 	stage_speed = 2
 	transmittable = -2
 	level = 7
-	var/food_conversion = FALSE
-	desc = "The virus rapidly breaks down any foreign chemicals in the bloodstream."
+	required_organ = ORGAN_SLOT_HEART
 	threshold_descs = list(
 		"Resistance 7" = "Increases chem removal speed.",
 		"Stage Speed 6" = "Consumed chemicals nourish the host.",
 	)
+	var/food_conversion = FALSE
 
 /datum/symptom/heal/chem/Start(datum/disease/advance/A)
 	. = ..()
@@ -222,19 +222,20 @@
 */
 /datum/symptom/heal/metabolism
 	name = "Metabolic Boost"
+	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
+		but also causing increased hunger."
 	stealth = -1
 	resistance = -2
 	stage_speed = 2
 	transmittable = 1
 	level = 7
-	var/triple_metabolism = FALSE
-	var/reduced_hunger = FALSE
-	desc = "The virus causes the host's metabolism to accelerate rapidly, making them process chemicals twice as fast,\
-		but also causing increased hunger."
+	required_organ = ORGAN_SLOT_STOMACH
 	threshold_descs = list(
 		"Stealth 3" = "Reduces hunger rate.",
 		"Stage Speed 10" = "Chemical metabolization is tripled instead of doubled.",
 	)
+	var/triple_metabolism = FALSE
+	var/reduced_hunger = FALSE
 
 /datum/symptom/heal/metabolism/Start(datum/disease/advance/A)
 	. = ..()
@@ -245,17 +246,16 @@
 	if(A.totalStealth() >= 3)
 		reduced_hunger = TRUE
 
-/datum/symptom/heal/metabolism/Heal(mob/living/carbon/C, datum/disease/advance/A, actual_power)
-	if(!istype(C))
-		return
+/datum/symptom/heal/metabolism/Heal(mob/living/carbon/infected_mob, datum/disease/advance/A, actual_power)
 	var/metabolic_boost = triple_metabolism ? 2 : 1
-	C.reagents.metabolize(C, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
-	C.overeatduration = max(C.overeatduration - 4 SECONDS, 0)
+	infected_mob.reagents.metabolize(infected_mob, metabolic_boost * SSMOBS_DT, 0, can_overdose=TRUE) //this works even without a liver; it's intentional since the virus is metabolizing by itself
+	infected_mob.overeatduration = max(infected_mob.overeatduration - 4 SECONDS, 0)
 	var/lost_nutrition = 9 - (reduced_hunger * 5)
-	C.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
+	infected_mob.adjust_nutrition(-lost_nutrition * HUNGER_FACTOR) //Hunger depletes at 10x the normal speed
 	if(prob(2))
-		to_chat(C, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
-	return 1
+		to_chat(infected_mob, span_notice("You feel an odd gurgle in your stomach, as if it was working much faster than normal."))
+	return TRUE
+
 /*Nocturnal Regeneration
  * Increases stealth
  * Slightly reduces resistance
@@ -303,8 +303,8 @@
 	if(prob(5))
 		to_chat(M, span_notice("The darkness soothes and mends your wounds."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, BODYTYPE_ORGANIC)) //more effective on brute
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len * 0.5, required_bodytype = BODYTYPE_ORGANIC)) //more effective on brute
 			M.update_damage_overlays()
 	return 1
 
@@ -312,6 +312,7 @@
 	if(M.getBruteLoss() || M.getFireLoss())
 		return TRUE
 	return FALSE
+
 /*Regen Coma
  * No effect on stealth
  * Increases resistance
@@ -384,9 +385,10 @@
 
 
 /datum/symptom/heal/coma/proc/coma(mob/living/M)
+	if(QDELETED(M) || M.stat == DEAD)
+		return
 	M.fakedeath("regenerative_coma", !deathgasp)
 	addtimer(CALLBACK(src, PROC_REF(uncoma), M), 300)
-
 
 /datum/symptom/heal/coma/proc/uncoma(mob/living/M)
 	if(QDELETED(M) || !active_coma)
@@ -403,8 +405,8 @@
 	if(!parts.len)
 		return
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	if(active_coma && M.getBruteLoss() + M.getFireLoss() == 0)
@@ -426,11 +428,12 @@
 	transmittable = 1
 	level = 6
 	passive_message = span_notice("Your skin feels oddly dry...")
-	var/absorption_coeff = 1
+	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
 		"Resistance 5" = "Water is consumed at a much slower rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
+	var/absorption_coeff = 1
 
 /datum/symptom/heal/water/Start(datum/disease/advance/A)
 	. = ..()
@@ -441,17 +444,18 @@
 	if(A.totalResistance() >= 5)
 		absorption_coeff = 0.25
 
-/datum/symptom/heal/water/CanHeal(datum/disease/advance/A)
+/datum/symptom/heal/water/CanHeal(datum/disease/advance/advanced_disease)
 	. = 0
-	var/mob/living/M = A.affected_mob
-	if(M.fire_stacks < 0)
-		M.adjust_fire_stacks(min(absorption_coeff, -M.fire_stacks))
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
+
+	if(infected_mob.fire_stacks < 0)
+		infected_mob.adjust_fire_stacks(min(absorption_coeff, -infected_mob.fire_stacks))
 		. += power
-	if(M.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
-		M.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
+	if(infected_mob.reagents.has_reagent(/datum/reagent/water/holywater, needs_metabolizing = FALSE))
+		infected_mob.reagents.remove_reagent(/datum/reagent/water/holywater, 0.5 * absorption_coeff)
 		. += power * 0.75
-	else if(M.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
-		M.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
+	else if(infected_mob.reagents.has_reagent(/datum/reagent/water, needs_metabolizing = FALSE))
+		infected_mob.reagents.remove_reagent(/datum/reagent/water, 0.5 * absorption_coeff)
 		. += power * 0.5
 
 /datum/symptom/heal/water/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -465,15 +469,16 @@
 	if(prob(5))
 		to_chat(M, span_notice("You feel yourself absorbing the water around you to soothe your damaged skin."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len * 0.5, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 
 	return 1
 
-/datum/symptom/heal/water/passive_message_condition(mob/living/M)
-	if(M.getBruteLoss() || M.getFireLoss())
+/datum/symptom/heal/water/passive_message_condition(mob/living/carbon/infected_mob)
+	if(infected_mob.getBruteLoss() || infected_mob.getFireLoss())
 		return TRUE
+
 	return FALSE
 
 /// Determines the rate at which Plasma Fixation heals based on the amount of plasma in the air
@@ -498,11 +503,12 @@
 	transmittable = -2
 	level = 8
 	passive_message = span_notice("You feel an odd attraction to plasma.")
-	var/temp_rate = 1
+	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
 		"Transmission 6" = "Increases temperature adjustment rate.",
 		"Stage Speed 7" = "Increases healing speed.",
 	)
+	var/temp_rate = 1
 
 /datum/symptom/heal/plasma/Start(datum/disease/advance/A)
 	. = ..()
@@ -534,7 +540,7 @@
 
 // Check internals breath, environmental plasma, and plasma in bloodstream to determine the heal power
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/advanced_disease)
-	var/mob/living/diseased_mob = advanced_disease.affected_mob
+	var/mob/living/carbon/infected_mob = advanced_disease.affected_mob
 	var/datum/gas_mixture/environment
 	var/list/gases
 
@@ -544,24 +550,23 @@
 	///  the amount of mols in a breath is significantly lower than in the environment so we are just going to use the tank's
 	///  distribution pressure as an abstraction rather than calculate it using the ideal gas equation.
 	///  balanced around a tank set to 4kpa = about 0.2 healing power. maxes out at 0.75 healing power, or 15kpa.
-	if(iscarbon(diseased_mob))
-		var/mob/living/carbon/breather = diseased_mob
-		var/obj/item/tank/internals/internals_tank = breather.internal
-		if(internals_tank)
-			var/datum/gas_mixture/tank_contents = internals_tank.return_air()
-			if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
-				if(tank_contents.gases[/datum/gas/plasma])
-					// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
-					. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
-	// Check environment
-	if(diseased_mob.loc)
-		environment = diseased_mob.loc.return_air()
-	if(environment)
-		gases = environment.gases
-		if(gases[/datum/gas/plasma])
-			. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+	var/obj/item/tank/internals/internals_tank = infected_mob.internal
+	if(internals_tank)
+		var/datum/gas_mixture/tank_contents = internals_tank.return_air()
+		if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
+			if(tank_contents.gases[/datum/gas/plasma])
+				// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
+				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
+	else // Check environment
+		if(infected_mob.loc)
+			environment = infected_mob.loc.return_air()
+		if(environment)
+			gases = environment.gases
+			if(gases[/datum/gas/plasma])
+				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+
 	// Check for reagents in bloodstream
-	if(diseased_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
+	if(infected_mob.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
 		. += power * MAX_HEAL_COEFFICIENT_BLOODSTREAM //Determines how much the symptom heals if injected or ingested
 
 /datum/symptom/heal/plasma/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
@@ -587,8 +592,8 @@
 		return
 	if(prob(5))
 		to_chat(M, span_notice("The pain from your wounds fades rapidly."))
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
 
@@ -611,7 +616,6 @@
 	symptom_delay_min = 1
 	symptom_delay_max = 1
 	passive_message = span_notice("Your skin glows faintly for a moment.")
-	var/cellular_damage = FALSE
 	threshold_descs = list(
 		"Transmission 6" = "Additionally heals cellular damage.",
 		"Resistance 7" = "Increases healing speed.",
@@ -623,8 +627,6 @@
 		return
 	if(A.totalResistance() >= 7)
 		power = 2
-	if(A.totalTransmittable() >= 6)
-		cellular_damage = TRUE
 
 /datum/symptom/heal/radiation/CanHeal(datum/disease/advance/A)
 	return HAS_TRAIT(A.affected_mob, TRAIT_IRRADIATED) ? power : 0
@@ -632,10 +634,8 @@
 /datum/symptom/heal/radiation/Heal(mob/living/carbon/M, datum/disease/advance/A, actual_power)
 	var/heal_amt = actual_power
 
-	if(cellular_damage)
-		M.adjustCloneLoss(-heal_amt * 0.5)
-
-	M.adjustToxLoss(-(2 * heal_amt))
+	if(M.adjustToxLoss(-(2 * heal_amt), updating_health = FALSE))
+		M.updatehealth()
 
 	var/list/parts = M.get_damaged_bodyparts(1,1, BODYTYPE_ORGANIC)
 
@@ -645,7 +645,10 @@
 	if(prob(4))
 		to_chat(M, span_notice("Your skin glows faintly, and you feel your wounds mending themselves."))
 
-	for(var/obj/item/bodypart/L in parts)
-		if(L.heal_damage(heal_amt/parts.len, heal_amt/parts.len, BODYTYPE_ORGANIC))
+	for(var/obj/item/bodypart/bodypart in parts)
+		if(bodypart.heal_damage(heal_amt/parts.len, heal_amt/parts.len, required_bodytype = BODYTYPE_ORGANIC))
 			M.update_damage_overlays()
 	return 1
+
+/datum/symptom/heal/radiation/can_generate_randomly()
+	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) //because people can never really suffer enough

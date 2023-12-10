@@ -10,8 +10,8 @@ type Data = {
   loop: BooleanLike;
 };
 
-export const Timer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const Timer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { timing, loop } = data;
 
   return (
@@ -34,7 +34,8 @@ export const Timer = (props, context) => {
                 onClick={() => act('time')}
               />
             </>
-          }>
+          }
+        >
           <TimerContent />
         </Section>
       </Window.Content>
@@ -43,8 +44,8 @@ export const Timer = (props, context) => {
 };
 
 /** Displays a few more buttons to control the timer. */
-const TimerContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TimerContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const { minutes, seconds, timing } = data;
 
   return (

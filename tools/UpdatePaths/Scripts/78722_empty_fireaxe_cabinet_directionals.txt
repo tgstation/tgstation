@@ -1,0 +1,11 @@
+/obj/structure/fireaxecabinet/empty{dir = @UNSET} : /obj/structure/fireaxecabinet/empty/directional/south
+/obj/structure/fireaxecabinet/empty{dir = 1} : /obj/structure/fireaxecabinet/empty/directional/north
+/obj/structure/fireaxecabinet/empty{dir = 2} : /obj/structure/fireaxecabinet/empty/directional/south
+/obj/structure/fireaxecabinet/empty{dir = 4} : /obj/structure/fireaxecabinet/empty/directional/east
+/obj/structure/fireaxecabinet/empty{dir = 8} : /obj/structure/fireaxecabinet/empty/directional/west
+
+/obj/structure/fireaxecabinet/mechremoval/empty{dir = @UNSET} : /obj/structure/fireaxecabinet/mechremoval/empty/directional/south
+/obj/structure/fireaxecabinet/mechremoval/empty{dir = 1} : /obj/structure/fireaxecabinet/mechremoval/empty/directional/north
+/obj/structure/fireaxecabinet/mechremoval/empty{dir = 2} : /obj/structure/fireaxecabinet/mechremoval/empty/directional/south
+/obj/structure/fireaxecabinet/mechremoval/empty{dir = 4} : /obj/structure/fireaxecabinet/mechremoval/empty/directional/east
+/obj/structure/fireaxecabinet/mechremoval/empty{dir = 8} : /obj/structure/fireaxecabinet/mechremoval/empty/directional/west

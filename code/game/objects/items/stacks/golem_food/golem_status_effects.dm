@@ -95,11 +95,11 @@
 	return ..()
 
 /datum/status_effect/golem/get_examine_text()
-	return span_notice("[owner.p_their(capitalized = TRUE)] body has been augmented with veins of [mineral_name].")
+	return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
 
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
-	icon = 'icons/mob/species/golems.dmi'
+	icon = 'icons/mob/human/species/golems.dmi'
 	layers = ALL_EXTERNAL_OVERLAYS
 	///The bodypart that the overlay is currently applied to
 	var/datum/weakref/attached_bodypart
@@ -176,21 +176,21 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_burned))
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod *= burn_multiplier
 	return TRUE
 
 /datum/status_effect/golem/plasma/on_remove()
-	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_RESISTHIGHPRESSURE, TRAIT_RESISTHEAT, TRAIT_ASHSTORM_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE)
 	var/mob/living/carbon/human/human_owner = owner
 	human_owner.physiology.burn_mod /= burn_multiplier
 	return ..()
 
 /// When we take fire damage (or... technically also cold damage, we don't differentiate), zap a nearby APC
-/datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype)
+/datum/status_effect/golem/plasma/proc/on_burned(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BURN)
 		return
@@ -292,6 +292,7 @@
 /// Make our arm do slashing effects
 /datum/status_effect/golem/diamond/proc/set_arm_fluff(obj/item/bodypart/arm/arm)
 	arm.unarmed_attack_verb = "slash"
+	arm.grappled_attack_verb = "lacerate"
 	arm.unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	arm.unarmed_attack_sound = 'sound/weapons/slash.ogg'
 	arm.unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -343,7 +344,7 @@
 	if (!.)
 		return FALSE
 	var/mob/living/carbon/human/human_owner = owner
-	RegisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK, PROC_REF(on_punched))
+	RegisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_punched))
 	human_owner.physiology.brute_mod *= brute_modifier
 	for (var/obj/item/bodypart/arm/arm in human_owner.bodyparts)
 		if (arm.limb_id != SPECIES_GOLEM)
@@ -354,23 +355,22 @@
 /datum/status_effect/golem/titanium/proc/on_punched(mob/living/puncher, atom/punchee, proximity)
 	SIGNAL_HANDLER
 	if (!proximity || !isliving(punchee))
-		return
+		return NONE
 	var/mob/living/victim = punchee
 	if (victim.body_position == LYING_DOWN || (!(FACTION_MINING in victim.faction) && !(FACTION_BOSS in victim.faction)))
-		return
+		return NONE
 	victim.apply_damage(mining_bonus, BRUTE)
 
 /// Make the targeted arm big and strong
 /datum/status_effect/golem/titanium/proc/buff_arm(obj/item/bodypart/arm/arm)
 	arm.unarmed_damage_low += damage_increase
 	arm.unarmed_damage_high += damage_increase
-	arm.unarmed_stun_threshold += damage_increase // We don't want to make knockdown more likely
 	RegisterSignal(arm, COMSIG_QDELETING, PROC_REF(on_arm_destroyed))
 	LAZYADD(modified_arms, arm)
 
 /datum/status_effect/golem/titanium/on_remove()
 	var/mob/living/carbon/human/human_owner = owner
-	UnregisterSignal(human_owner, COMSIG_HUMAN_MELEE_UNARMED_ATTACK)
+	UnregisterSignal(human_owner, COMSIG_LIVING_UNARMED_ATTACK)
 	human_owner.physiology.brute_mod /= brute_modifier
 	for (var/obj/item/bodypart/arm/arm as anything in modified_arms)
 		debuff_arm(arm)
@@ -383,7 +383,6 @@
 		return
 	arm.unarmed_damage_low -= damage_increase
 	arm.unarmed_damage_high -= damage_increase
-	arm.unarmed_stun_threshold -= damage_increase
 	UnregisterSignal(arm, COMSIG_QDELETING)
 
 /// Remove references to deleted arms

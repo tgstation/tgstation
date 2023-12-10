@@ -51,28 +51,11 @@
 "ak" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/shuttle/escape)
-"al" = (
-/obj/machinery/light/directional/west,
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/escape)
 "am" = (
 /turf/open/floor/mineral/titanium/tiled,
 /area/shuttle/escape)
 "an" = (
 /turf/open/floor/mineral/titanium/tiled/blue,
-/area/shuttle/escape)
-"ao" = (
-/obj/machinery/light/directional/east,
-/obj/machinery/camera/autoname{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/escape)
-"ap" = (
-/obj/machinery/computer/crew{
-	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "aq" = (
 /obj/structure/chair/comfy/shuttle{
@@ -83,12 +66,6 @@
 "ar" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
-	},
-/turf/open/floor/mineral/titanium/tiled/white,
-/area/shuttle/escape)
-"as" = (
-/obj/machinery/computer/security{
-	dir = 8
 	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
@@ -113,11 +90,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"ax" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
 "ay" = (
 /obj/machinery/button/flasher{
 	id = "cockpit_flasher";
@@ -126,12 +98,6 @@
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "az" = (
-/turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
-"aA" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/closet/emcloset,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "aB" = (
@@ -158,25 +124,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/escape)
-"aG" = (
-/obj/item/radio/intercom/directional/north,
-/obj/machinery/camera/autoname{
-	dir = 6
-	},
-/turf/open/floor/mineral/titanium,
-/area/shuttle/escape)
-"aH" = (
-/obj/machinery/light/directional/west,
-/obj/machinery/button/flasher{
-	id = "shuttle_flasher";
-	pixel_x = -24;
-	pixel_y = -6
-	},
-/obj/machinery/flasher/directional/west{
-	id = "shuttle_flasher"
-	},
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
 "aI" = (
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
@@ -206,12 +153,6 @@
 	name = "Emergency Shuttle Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/general,
-/turf/open/floor/mineral/plastitanium/red,
-/area/shuttle/escape/brig)
-"aN" = (
-/obj/structure/chair/comfy/shuttle{
-	dir = 1
-	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/shuttle/escape/brig)
 "aO" = (
@@ -246,9 +187,6 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
-"aU" = (
-/turf/open/openspace/airless,
-/area/template_noop)
 "aV" = (
 /obj/machinery/light/directional/east,
 /obj/item/radio/intercom/directional/north,
@@ -265,7 +203,7 @@
 /area/shuttle/escape)
 "aX" = (
 /obj/structure/table/optable,
-/obj/item/storage/backpack/duffelbag/med/surgery,
+/obj/item/surgery_tray/full,
 /obj/item/clothing/mask/surgical,
 /turf/open/floor/mineral/titanium/blue,
 /area/shuttle/escape)
@@ -363,25 +301,33 @@
 /obj/machinery/power/shuttle_engine/propulsion,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
-"bj" = (
-/obj/structure/window/reinforced/spawner/directional/west,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
 "bk" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/turf/open/floor/glass/reinforced,
-/area/shuttle/escape)
-"bl" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "eV" = (
 /obj/machinery/camera/autoname,
 /turf/open/floor/mineral/titanium/white,
+/area/shuttle/escape)
+"hf" = (
+/obj/machinery/light/floor,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"jl" = (
+/obj/machinery/computer/security{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"se" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"ue" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/turf/open/floor/glass/reinforced,
 /area/shuttle/escape)
 "uu" = (
 /obj/structure/chair/comfy/shuttle{
@@ -390,11 +336,59 @@
 /obj/machinery/status_display/evac/directional/south,
 /turf/open/floor/mineral/titanium/tiled/blue,
 /area/shuttle/escape)
+"vi" = (
+/obj/machinery/button/flasher{
+	id = "shuttle_flasher";
+	pixel_x = -24;
+	pixel_y = -6
+	},
+/obj/machinery/flasher/directional/west{
+	id = "shuttle_flasher"
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
+"Bv" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/closet/emcloset,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"Ca" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/escape/brig)
 "Ej" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 8
 	},
 /obj/machinery/status_display/evac/directional/south,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"Kb" = (
+/obj/structure/window/reinforced/spawner/directional/west,
+/obj/structure/window/reinforced/spawner/directional/south,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/escape)
+"Kv" = (
+/obj/machinery/computer/crew{
+	dir = 4
+	},
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/mineral/titanium/tiled/white,
+/area/shuttle/escape)
+"Pk" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/mineral/titanium/tiled/blue,
+/area/shuttle/escape)
+"Rl" = (
+/obj/machinery/camera/autoname{
+	dir = 4
+	},
 /turf/open/floor/mineral/titanium/tiled/white,
 /area/shuttle/escape)
 "WP" = (
@@ -426,7 +420,7 @@ ak
 aQ
 ak
 aj
-aU
+aa
 aj
 ak
 aW
@@ -435,7 +429,7 @@ aW
 ak
 ak
 aj
-aU
+aa
 aj
 ak
 ak
@@ -448,19 +442,19 @@ aa
 ab
 ab
 ak
-ap
+Kv
 at
 ak
 aa
 ak
 aB
-aH
+vi
 aI
 aO
 aE
-aS
+Pk
 ak
-aU
+aa
 ak
 aE
 aE
@@ -469,7 +463,7 @@ aE
 aE
 aP
 ak
-aU
+aa
 ak
 aX
 bc
@@ -481,20 +475,20 @@ bi
 ab
 ab
 af
-al
+af
 aq
 Ej
 ak
-ax
+ue
 ak
 aC
 aI
-aN
+Ca
 aO
 aR
 uu
 ak
-ax
+ue
 ak
 aF
 aK
@@ -503,13 +497,13 @@ aK
 aK
 WZ
 ak
-ax
+ue
 ak
 aY
 aZ
 eV
 ak
-bj
+Kb
 "}
 (4,1,1) = {"
 ab
@@ -549,7 +543,7 @@ bk
 ab
 ad
 ah
-an
+hf
 an
 an
 aw
@@ -558,7 +552,7 @@ aw
 aD
 aE
 aE
-aP
+aE
 aE
 aE
 aT
@@ -617,11 +611,11 @@ bk
 ab
 ab
 af
-ao
+Rl
 ar
 WP
 ak
-aA
+Bv
 ak
 aF
 aL
@@ -630,7 +624,7 @@ aL
 aL
 WZ
 ak
-aA
+Bv
 ak
 aR
 aL
@@ -639,32 +633,23 @@ aL
 aL
 WZ
 ak
-aA
+Bv
 ak
 ba
 aZ
 aZ
 ak
-bl
+se
 "}
 (8,1,1) = {"
 aa
 ab
 ab
 ak
-as
+jl
 au
 ak
 aa
-ak
-aG
-aE
-aE
-aE
-aE
-aE
-ak
-aU
 ak
 aV
 aE
@@ -673,7 +658,16 @@ aE
 aE
 aE
 ak
-aU
+aa
+ak
+aV
+aE
+aE
+aE
+aE
+aE
+ak
+aa
 ak
 bb
 bd
@@ -698,7 +692,7 @@ ab
 ab
 ak
 aj
-aU
+aa
 aj
 ak
 ab
@@ -707,7 +701,7 @@ ab
 ab
 ak
 aj
-aU
+aa
 aj
 ak
 ak

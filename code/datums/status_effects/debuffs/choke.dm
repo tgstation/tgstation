@@ -110,7 +110,7 @@
 	if(choking_on && iscarbon(owner))
 		var/mob/living/carbon/carbon_owner = owner
 		// This will yeet the thing we're choking on out of us
-		carbon_owner.vomit(lost_nutrition = 20, force = TRUE, distance = 2)
+		carbon_owner.vomit(vomit_flags = (VOMIT_CATEGORY_DEFAULT | MOB_VOMIT_FORCE), lost_nutrition = 20, distance = 2)
 
 /datum/status_effect/choke/proc/on_vomit(mob/source, distance, force)
 	SIGNAL_HANDLER
@@ -122,7 +122,7 @@
 		choking_on.throw_at(target, distance, 1, source)
 
 /datum/status_effect/choke/get_examine_text()
-	return span_boldwarning("[owner.p_they(TRUE)] [owner.p_are()] choking!")
+	return span_boldwarning("[owner.p_They()] [owner.p_are()] choking!")
 
 /datum/status_effect/choke/proc/remove_choke(datum/source)
 	SIGNAL_HANDLER
@@ -215,8 +215,8 @@
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
 		var/obj/item/bodypart/chest = carbon_victim.get_bodypart(BODY_ZONE_CHEST)
-		if(chest)
-			chest.force_wound_upwards(/datum/wound/blunt/severe, wound_source = "human force to the chest")
+		carbon_victim.cause_wound_of_type_and_severity(WOUND_BLUNT, chest, WOUND_SEVERITY_SEVERE, wound_source = "human force to the chest")
+
 	playsound(owner, 'sound/creatures/crack_vomit.ogg', 120, extrarange = 5, falloff_exponent = 4)
 	vomit_up()
 
@@ -267,23 +267,23 @@
 		victim.adjustBruteLoss(0.2)
 	return TRUE
 
-/datum/status_effect/choke/tick(seconds_per_tick)
+/datum/status_effect/choke/tick(seconds_between_ticks)
 	if(!should_do_effects())
 		return
 
-	deal_damage(seconds_per_tick)
+	deal_damage(seconds_between_ticks)
 
 	var/client/client_owner = owner.client
 	if(client_owner)
 		do_vfx(client_owner)
 
-/datum/status_effect/choke/proc/deal_damage(seconds_per_tick)
-	owner.losebreath += 1 * seconds_per_tick // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
+/datum/status_effect/choke/proc/deal_damage(seconds_between_ticks)
+	owner.losebreath += 1 * seconds_between_ticks // 1 breath loss a second. This will deal additional breath damage, and prevent breathing
 	if(flaming)
 		var/obj/item/bodypart/head = owner.get_bodypart(BODY_ZONE_HEAD)
 		if(head)
-			head.receive_damage(0, 2 * seconds_per_tick, damage_source = "choking")
-		owner.adjustStaminaLoss(2 * seconds_per_tick)
+			head.receive_damage(0, 2 * seconds_between_ticks, damage_source = "choking")
+		owner.adjustStaminaLoss(2 * seconds_between_ticks)
 
 /datum/status_effect/choke/proc/do_vfx(client/vfx_on)
 	var/old_x = delta_x

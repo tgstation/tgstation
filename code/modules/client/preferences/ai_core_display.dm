@@ -6,14 +6,13 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/ai_core_display/init_possible_values()
-	var/list/values = list()
+	return GLOB.ai_core_display_screens - "Portrait"
 
-	values["Random"] = icon('icons/mob/silicon/ai.dmi', "questionmark")
-
-	for (var/screen in GLOB.ai_core_display_screens - "Portrait" - "Random")
-		values[screen] = icon('icons/mob/silicon/ai.dmi', resolve_ai_icon_sync(screen))
-
-	return values
+/datum/preference/choiced/ai_core_display/icon_for(value)
+	if (value == "Random")
+		return icon('icons/mob/silicon/ai.dmi', "questionmark")
+	else
+		return icon('icons/mob/silicon/ai.dmi', resolve_ai_icon_sync(value))
 
 /datum/preference/choiced/ai_core_display/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

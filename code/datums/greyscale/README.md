@@ -9,7 +9,9 @@ If you're wanting to add easy recolors for your sprite then this is the system f
 
 ## Other Documents
 
+- [Troubleshooting help](https://hackmd.io/@tgstation/GAGS-Troubleshooting)
 - [Basic follow along guide on hackmd](https://hackmd.io/@tgstation/GAGS-Walkthrough)
+- [Layer types list](https://hackmd.io/@tgstation/GAGS-Layer-Types)
 
 ## Broad overview
 
@@ -107,7 +109,7 @@ As an example:
 ```c
 /datum/greyscale_config/canister
 	name = "Canister" //Required for debugging, will runtime without one!
-	icon_file = 'icons/obj/atmospherics/canisters/default.dmi'
+	icon_file = 'icons/obj/pipes_n_cables/canisters/default.dmi'
 	json_config = 'code/datums/greyscale/json_configs/canister_default.json'
 ```
 And that's all you need to make it usable by other code:

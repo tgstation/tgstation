@@ -1,7 +1,7 @@
 /obj/machinery/igniter
 	name = "igniter"
 	desc = "It's useful for igniting plasma."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "igniter0"
 	base_icon_state = "igniter"
 	plane = FLOOR_PLANE
@@ -53,10 +53,10 @@
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 5)
 		new /obj/item/assembly/igniter(loc)
 	return ..()
@@ -68,7 +68,7 @@
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/incinerator_ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
@@ -134,7 +134,7 @@
 /obj/item/wallframe/sparker
 	name = "Sparker WallFrame"
 	desc = "An unmounted sparker. Attach it to a wall to use."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "migniter"
 	result_path = /obj/machinery/sparker
 	pixel_shift = 26
@@ -142,7 +142,7 @@
 /obj/machinery/sparker
 	name = "mounted igniter"
 	desc = "A wall-mounted ignition device."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "migniter"
 	base_icon_state = "migniter"
 	resistance_flags = FIRE_PROOF
@@ -162,6 +162,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	spark_system.set_up(2, 1, src)
 	spark_system.attach(src)
 	register_context()
+	find_and_hang_on_wall()
 
 /obj/machinery/sparker/Destroy()
 	QDEL_NULL(spark_system)
@@ -197,10 +198,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/wallframe/sparker(loc)
 	return ..()
 
@@ -211,7 +212,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/sparker, 26)
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/update_icon_state()
 	if(disable)

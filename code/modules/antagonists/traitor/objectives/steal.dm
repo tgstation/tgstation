@@ -97,6 +97,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	possible_items = list(
 		/datum/objective_item/steal/traitor/cargo_budget,
 		/datum/objective_item/steal/traitor/clown_shoes,
+		/datum/objective_item/steal/traitor/lawyers_badge,
+		/datum/objective_item/steal/traitor/chef_moustache,
+		/datum/objective_item/steal/traitor/pka,
 	)
 
 /datum/traitor_objective/steal_item/somewhat_risky
@@ -250,7 +253,7 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	desc = "It looks dangerous."
 	item_flags = EXAMINE_SKIP
 
-	icon = 'icons/obj/device_syndie.dmi'
+	icon = 'icons/obj/antags/syndicate_tools.dmi'
 	icon_state = "bug"
 
 	/// The object on which this bug can be planted on. Has to be a type.

@@ -63,7 +63,7 @@
 		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
 		return
 
-	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, id = get_idcard(), skip_first = FALSE)
+	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 1, access = get_access(), skip_first = FALSE)
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
@@ -77,15 +77,15 @@
 		var/dir_1 = 0
 		var/dir_2 = 0
 		if(i == 1)
-			dir_2 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
+			dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i+1], current_turf)))
 		else if(i == length(path))
-			dir_2 = turn(angle2dir(get_angle(path[i-1], current_turf)), 180)
+			dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i-1], current_turf)))
 		else
-			dir_1 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
-			dir_2 = turn(angle2dir(get_angle(path[i-1], current_turf)), 180)
+			dir_1 = REVERSE_DIR(angle2dir(get_angle(path[i+1], current_turf)))
+			dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i-1], current_turf)))
 			if(dir_1 > dir_2)
 				dir_1 = dir_2
-				dir_2 = turn(angle2dir(get_angle(path[i+1], current_turf)), 180)
+				dir_2 = REVERSE_DIR(angle2dir(get_angle(path[i+1], current_turf)))
 		path_image.icon_state = "[dir_1]-[dir_2]"
 		client.images += path_image
 		client.navigation_images += path_image

@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(disposal_pipe_recipes, list(
 		new /datum/pipe_info/disposal("Junction", /obj/structure/disposalpipe/junction, PIPE_TRIN_M),
 		new /datum/pipe_info/disposal("Y-Junction", /obj/structure/disposalpipe/junction/yjunction),
 		new /datum/pipe_info/disposal("Sort Junction", /obj/structure/disposalpipe/sorting/mail, PIPE_TRIN_M),
+		new /datum/pipe_info/disposal("Rotator", /obj/structure/disposalpipe/rotator, PIPE_ONEDIR_FLIPPABLE),
 		new /datum/pipe_info/disposal("Trunk", /obj/structure/disposalpipe/trunk),
 		new /datum/pipe_info/disposal("Bin", /obj/machinery/disposal/bin, PIPE_ONEDIR),
 		new /datum/pipe_info/disposal("Outlet", /obj/structure/disposaloutlet),
@@ -73,9 +74,9 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	),
 	"Station Equipment" = list(
 		new /datum/pipe_info/transit("Through Tube Station", /obj/structure/c_transit_tube/station, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Terminus Tube Station", /obj/structure/c_transit_tube/station/reverse, PIPE_UNARY),
+		new /datum/pipe_info/transit("Terminus Tube Station", /obj/structure/c_transit_tube/station/reverse, PIPE_UNARY_FLIPPABLE),
 		new /datum/pipe_info/transit("Through Tube Dispenser Station", /obj/structure/c_transit_tube/station/dispenser, PIPE_STRAIGHT),
-		new /datum/pipe_info/transit("Terminus Tube Dispenser Station", /obj/structure/c_transit_tube/station/dispenser/reverse, PIPE_UNARY),
+		new /datum/pipe_info/transit("Terminus Tube Dispenser Station", /obj/structure/c_transit_tube/station/dispenser/reverse, PIPE_UNARY_FLIPPABLE),
 		new /datum/pipe_info/transit("Transit Tube Pod", /obj/structure/c_transit_tube_pod, PIPE_ONEDIR),
 	)
 ))
@@ -110,11 +111,13 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(PIPE_UNARY_FLIPPABLE)
 			dirs = list("[NORTH]" = "North", "[EAST]" = "East", "[SOUTH]" = "South", "[WEST]" = "West",
 						"[NORTHEAST]" = "North Flipped", "[SOUTHEAST]" = "East Flipped", "[SOUTHWEST]" = "South Flipped", "[NORTHWEST]" = "West Flipped")
+		if(PIPE_ONEDIR_FLIPPABLE)
+			dirs = list("[SOUTH]" = name, "[SOUTHEAST]" = "[name] Flipped")
 
 	var/list/rows = list()
 	for(var/dir in dirs)
 		var/numdir = text2num(dir)
-		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
+		var/flipped = ((dirtype == PIPE_TRIN_M) || (dirtype == PIPE_UNARY_FLIPPABLE) || (dirtype == PIPE_ONEDIR_FLIPPABLE)) && (ISDIAGONALDIR(numdir))
 		var/is_variant_selected = selected && (!selected_dir ? FALSE : (dirtype == PIPE_ONEDIR ? TRUE : (numdir == selected_dir)))
 		rows += list(list(
 			"selected" = is_variant_selected,
@@ -167,7 +170,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	worn_icon_state = "RPD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 10
 	throwforce = 10
 	throw_speed = 1
@@ -193,10 +196,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/disposal_build_speed = 0.5 SECONDS
 	///Speed of building transit devices
 	var/transit_build_speed = 0.5 SECONDS
-	///Speed of removal of unwrenched devices
-	var/destroy_speed = 0.2 SECONDS
-	///Speed of reprogramming connectable directions of smart pipes
-	var/reprogram_speed = 0.2 SECONDS
 	///Category currently active (Atmos, disposal, transit)
 	var/category = ATMOS_CATEGORY
 	///Piping layer we are going to spawn the atmos device in
@@ -405,18 +404,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return ..()
 
 	if(istype(atom_to_attack, /obj/item/rpd_upgrade))
-		var/obj/item/rpd_upgrade/rpd_up = atom_to_attack
-
-		//already installed
-		if(rpd_up.upgrade_flags & upgrade_flags)
-			balloon_alert(user, "already installed!")
-			return TRUE
-
-		//install & delete upgrade
-		upgrade_flags |= rpd_up.upgrade_flags
-		playsound(src.loc, 'sound/machines/click.ogg', 50, TRUE)
-		balloon_alert(user, "upgrade installed")
-		qdel(rpd_up)
+		install_upgrade(atom_to_attack, user)
 		return TRUE
 
 	var/atom/attack_target = atom_to_attack
@@ -444,9 +432,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 	if((mode & DESTROY_MODE) && istype(attack_target, /obj/item/pipe) || istype(attack_target, /obj/structure/disposalconstruct) || istype(attack_target, /obj/structure/c_transit_tube) || istype(attack_target, /obj/structure/c_transit_tube_pod) || istype(attack_target, /obj/item/pipe_meter) || istype(attack_target, /obj/structure/disposalpipe/broken))
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-		if(do_after(user, destroy_speed, target = attack_target))
-			playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
-			qdel(attack_target)
+		playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
+		qdel(attack_target)
 		return
 
 	if(mode & REPROGRAM_MODE)
@@ -467,8 +454,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				return
 
 			playsound(get_turf(src), 'sound/machines/click.ogg', 50, TRUE)
-			if(!do_after(user, reprogram_speed, target = target_smart_pipe))
-				return
 
 			// Something else could have changed the target's state while we were waiting in do_after
 			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
@@ -624,6 +609,23 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			else
 				return ..()
 
+/obj/item/pipe_dispenser/attackby(obj/item/item, mob/user, params)
+	if(istype(item, /obj/item/rpd_upgrade))
+		install_upgrade(item, user)
+		return TRUE
+	return ..()
+
+/// Installs an upgrade into the RPD after checking if it is already installed
+/obj/item/pipe_dispenser/proc/install_upgrade(obj/item/rpd_upgrade/rpd_disk, mob/user)
+	// Check if the upgrade's already present
+	if(rpd_disk.upgrade_flags & upgrade_flags)
+		balloon_alert(user, "already installed!")
+		return
+	// Adds the upgrade from the disk and then deletes the disk
+	upgrade_flags |= rpd_disk.upgrade_flags
+	playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
+	balloon_alert(user, "upgrade installed")
+	qdel(rpd_disk)
 
 ///Changes the piping layer when the mousewheel is scrolled up or down.
 /obj/item/pipe_dispenser/proc/mouse_wheeled(mob/source_mob, atom/A, delta_x, delta_y, params)
@@ -646,7 +648,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/rpd_upgrade
 	name = "RPD advanced design disk"
 	desc = "It seems to be empty."
-	icon = 'icons/obj/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "datadisk3"
 	/// Bitflags for upgrades
 	var/upgrade_flags

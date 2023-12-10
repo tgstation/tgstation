@@ -10,7 +10,6 @@
 	spreading_modifier = 1
 	desc = "If left untreated the subject will suffer from lethargy, dizziness and periodic loss of conciousness."
 	severity = DISEASE_SEVERITY_MEDIUM
-	disease_flags = CAN_CARRY|CAN_RESIST
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	spread_text = "Organ failure"
 	visibility_flags = HIDDEN_PANDEMIC

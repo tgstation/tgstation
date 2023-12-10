@@ -29,14 +29,14 @@
 
 /obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/statue/attackby(obj/item/W, mob/living/user, params)
 	add_fingerprint(user)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(W.tool_behaviour == TOOL_WELDER)
 			if(!W.tool_start_check(user, amount=1))
 				return FALSE
@@ -50,7 +50,7 @@
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/statue/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/amount_mod = disassembled ? 0 : -2
 		for(var/mat in custom_materials)
 			var/datum/material/custom_material = GET_MATERIAL_REF(mat)
@@ -64,7 +64,10 @@
 
 /obj/structure/statue/uranium
 	max_integrity = 300
-	light_range = 2
+	// largish, dim green glow
+	light_range = 3
+	light_power = 0.7
+	light_color = LIGHT_COLOR_NUCLEAR
 	custom_materials = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*5)
 	impressiveness = 25 // radiation makes an impression
 	abstract_type = /obj/structure/statue/uranium
@@ -270,7 +273,7 @@
 	inhand_icon_state = "screwdriver_nuke"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -475,8 +478,8 @@ Moving interrupts
 		user.balloon_alert(user, "no sculpt target!")
 		return FALSE
 	//No big icon things
-	var/icon/thing_icon = icon(target.icon, target.icon_state)
-	if(thing_icon.Height() != world.icon_size || thing_icon.Width() != world.icon_size)
+	var/list/icon_dimensions = get_icon_dimensions(target.icon)
+	if(icon_dimensions["width"] != world.icon_size || icon_dimensions["height"] != world.icon_size)
 		user.balloon_alert(user, "sculpt target is too big!")
 		return FALSE
 	return TRUE

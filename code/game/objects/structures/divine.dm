@@ -1,7 +1,7 @@
 /obj/structure/sacrificealtar
 	name = "sacrificial altar"
 	desc = "An altar designed to perform blood sacrifice for a deity. Alt-click it to sacrifice a buckled creature."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "sacrificealtar"
 	anchored = TRUE
 	density = FALSE
@@ -18,13 +18,13 @@
 		return
 	to_chat(user, span_notice("Invoking the sacred ritual, you sacrifice [L]."))
 	L.investigate_log("has been sacrificially gibbed on an altar.", INVESTIGATE_DEATHS)
-	L.gib()
+	L.gib(DROP_ALL_REMAINS)
 	message_admins("[ADMIN_LOOKUPFLW(user)] has sacrificed [key_name_admin(L)] on the sacrificial altar at [AREACOORD(src)].")
 
 /obj/structure/healingfountain
 	name = "healing fountain"
 	desc = "A fountain containing the waters of life."
-	icon = 'icons/obj/hand_of_god_structures.dmi'
+	icon = 'icons/obj/service/hand_of_god_structures.dmi'
 	icon_state = "fountain"
 	anchored = TRUE
 	density = TRUE

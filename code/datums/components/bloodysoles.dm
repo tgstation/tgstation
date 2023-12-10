@@ -7,7 +7,7 @@
 	var/last_blood_state = BLOOD_STATE_NOT_BLOODY
 
 	/// How much of each grubby type we have on our feet
-	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0,BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
+	var/list/bloody_shoes = list(BLOOD_STATE_HUMAN = 0, BLOOD_STATE_XENO = 0, BLOOD_STATE_OIL = 0, BLOOD_STATE_NOT_BLOODY = 0)
 
 	/// The ITEM_SLOT_* slot the item is equipped on, if it is.
 	var/equipped_slot
@@ -44,7 +44,20 @@
  * Returns true if the parent item is obscured by something else that the wielder is wearing
  */
 /datum/component/bloodysoles/proc/is_obscured()
-	return wielder.check_obscured_slots(TRUE) & equipped_slot
+	return wielder.check_obscured_slots(TRUE) & equipped_slot || is_under_feet_covered()
+
+/**
+ * Returns true if the parent item is worn in the ITEM_SLOT_ICLOTHING slot and the
+ * wielder is wearing something on their shoes.
+ *
+ * Allows for jumpsuits to cover feet without getting all bloodied when their wearer
+ * is wearing shoes.
+ */
+/datum/component/bloodysoles/proc/is_under_feet_covered()
+	if(!(equipped_slot & ITEM_SLOT_ICLOTHING))
+		return FALSE
+
+	return !isnull(wielder.shoes)
 
 /**
  * Run to update the icon of the parent

@@ -1,18 +1,17 @@
 /datum/preference/choiced/glasses
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
+	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "glasses"
 	savefile_identifier = PREFERENCE_CHARACTER
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/glasses/init_possible_values()
-	var/list/values = list()
+	return assoc_to_keys(GLOB.nearsighted_glasses) + "Random"
 
-	values["Random"] = icon('icons/effects/random_spawners.dmi', "questionmark")
-
-	for(var/glass_design in GLOB.nearsighted_glasses - "Random")
-		values[glass_design] = icon('icons/obj/clothing/glasses.dmi', "glasses_[lowertext(glass_design)]")
-
-	return values
+/datum/preference/choiced/glasses/icon_for(value)
+	if (value == "Random")
+		return icon('icons/effects/random_spawners.dmi', "questionmark")
+	else
+		return icon('icons/obj/clothing/glasses.dmi', "glasses_[lowertext(value)]")
 
 /datum/preference/choiced/glasses/is_accessible(datum/preferences/preferences)
 	if (!..(preferences))

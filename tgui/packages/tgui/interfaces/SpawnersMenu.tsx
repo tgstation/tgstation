@@ -10,13 +10,14 @@ type SpawnersMenuContext = {
 type spawner = {
   name: string;
   amount_left: number;
+  desc?: string;
   you_are_text?: string;
   flavor_text?: string;
   important_text?: string;
 };
 
-export const SpawnersMenu = (props, context) => {
-  const { act, data } = useBackend<SpawnersMenuContext>(context);
+export const SpawnersMenu = (props) => {
+  const { act, data } = useBackend<SpawnersMenuContext>();
   const spawners = data.spawners || [];
   return (
     <Window title="Spawners Menu" width={700} height={525}>
@@ -52,17 +53,26 @@ export const SpawnersMenu = (props, context) => {
                       />
                     </Stack.Item>
                   </Stack>
-                }>
+                }
+              >
                 <LabeledList>
-                  <LabeledList.Item label="Origin">
-                    {spawner.you_are_text || 'Unknown'}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Directives">
-                    {spawner.flavor_text || 'None'}
-                  </LabeledList.Item>
-                  <LabeledList.Item color="bad" label="Conditions">
-                    {spawner.important_text || 'None'}
-                  </LabeledList.Item>
+                  {spawner.desc ? (
+                    <LabeledList.Item label="Description">
+                      {spawner.desc}
+                    </LabeledList.Item>
+                  ) : (
+                    <div>
+                      <LabeledList.Item label="Origin">
+                        {spawner.you_are_text || 'Unknown'}
+                      </LabeledList.Item>
+                      <LabeledList.Item label="Directives">
+                        {spawner.flavor_text || 'None'}
+                      </LabeledList.Item>
+                      <LabeledList.Item color="bad" label="Conditions">
+                        {spawner.important_text || 'None'}
+                      </LabeledList.Item>
+                    </div>
+                  )}
                 </LabeledList>
               </Section>
             </Stack.Item>

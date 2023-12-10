@@ -22,10 +22,10 @@
 
 /area/space/nearstation
 	icon_state = "space_near"
-	area_flags = UNIQUE_AREA | AREA_USES_STARLIGHT
+	area_flags = UNIQUE_AREA
 	static_lighting = TRUE
 	base_lighting_alpha = 0
-	base_lighting_color = COLOR_WHITE
+	base_lighting_color = null
 
 /area/misc/start
 	name = "start area"
@@ -43,3 +43,8 @@
 	base_lighting_alpha = 255
 	name = "Test Room"
 	icon_state = "test_room"
+
+/area/misc/testroom/gateway_room
+	name = "Gateway Room"
+	icon = 'icons/area/areas_station.dmi'
+	icon_state = "gateway"

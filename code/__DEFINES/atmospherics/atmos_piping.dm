@@ -22,7 +22,13 @@
 #define MAX_OUTPUT_PRESSURE 4500
 /// (L/s) Maximum speed powered equipment can work at.
 #define MAX_TRANSFER_RATE 200
-/// How many percent of the contents that an overclocked volume pumps leak into the air
+/// (kPa) Minimum pressure volume pumps can move.
+#define VOLUME_PUMP_MINIMUM_OUTPUT_PRESSURE 0.01
+/// (kPa) What pressure volume pumps max out at.
+#define VOLUME_PUMP_MAX_OUTPUT_PRESSURE 9000
+/// (kPa) Allowed pressure difference between input and output pipenets for overclocked volume pump.
+#define VOLUME_PUMP_OVERPRESSURE_ALLOWANCE 1000
+/// How many percent of the contents that an overclocked volume pumps leak into the air.
 #define VOLUME_PUMP_LEAK_AMOUNT 0.1
 //used for device_type vars
 #define UNARY 1
@@ -41,6 +47,8 @@
 #define TANK_DEFAULT_RELEASE_PRESSURE 16
 /// The default initial value gas plasmamen tanks releases valves are set to.
 #define TANK_PLASMAMAN_RELEASE_PRESSURE 4
+/// The default initial value gas flown tanks releases valves are set to.
+#define TANK_CLOWN_RELEASE_PRESSURE 20
 /// The internal temperature in kelvins at which a handheld gas tank begins to take damage.
 #define TANK_MELT_TEMPERATURE 1000000
 /// The internal pressure in kPa at which a handheld gas tank begins to take damage.

@@ -121,7 +121,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		CRASH("Attempted to call init_logging twice!")
 
 	round_id = GLOB.round_id
-	logging_start_timestamp = unix_timestamp_string()
+	logging_start_timestamp = rustg_unix_timestamp()
 	log_categories = list()
 	disabled_categories = list()
 
@@ -206,6 +206,42 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	return category_tree
 
+/// Log entry header used to mark a file is being reset
+#define LOG_CATEGORY_RESET_FILE_MARKER "{\"LOG FILE RESET -- THIS IS AN ERROR\"}"
+#define LOG_CATEGORY_RESET_FILE_MARKER_READABLE "LOG FILE RESET -- THIS IS AN ERROR"
+/// Gets a recovery file for the given path. Caches the last known recovery path for each path.
+/datum/log_holder/proc/get_recovery_file_for(path)
+	var/static/cache
+	if(isnull(cache))
+		cache = list()
+
+	var/count = cache[path] || 0
+	while(fexists("[path].rec[count]"))
+		count++
+	cache[path] = count
+
+	return "[path].rec[count]"
+
+/// Sets up the given category's file and header.
+/datum/log_holder/proc/init_category_file(datum/log_category/category)
+	var/file_path = category.get_output_file(null)
+	if(fexists(file_path)) // already exists? implant a reset marker
+		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER, file_path)
+		fcopy(file_path, get_recovery_file_for(file_path))
+	rustg_file_write("[json_encode(category.category_header)]\n", file_path)
+
+	if(!human_readable_enabled)
+		return
+
+	file_path = category.get_output_file(null, "log")
+	if(fexists(file_path))
+		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
+		fcopy(file_path, get_recovery_file_for(file_path))
+	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
+
+#undef LOG_CATEGORY_RESET_FILE_MARKER
+#undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
+
 /// Initializes the given log category and populates the list of contained categories based on the sub category list
 /datum/log_holder/proc/init_log_category(datum/log_category/category_type, list/datum/log_category/sub_categories)
 	var/datum/log_category/category_instance = new category_type
@@ -239,17 +275,13 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		LOG_HEADER_CATEGORY = category_instance.category,
 	)
 
-	rustg_file_write("[json_encode(category_header)]\n", category_instance.get_output_file(null))
-	if(human_readable_enabled)
-		rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", category_instance.get_output_file(null, "log"))
-
-/datum/log_holder/proc/unix_timestamp_string() // pending change to rust-g
-	return RUSTG_CALL(RUST_G, "unix_timestamp")()
+	category_instance.category_header = category_header
+	init_category_file(category_instance, category_header)
 
 /datum/log_holder/proc/human_readable_timestamp(precision = 3)
 	var/start = time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")
 	// now we grab the millis from the rustg timestamp
-	var/rustg_stamp = unix_timestamp_string()
+	var/rustg_stamp = rustg_unix_timestamp()
 	var/list/timestamp = splittext(rustg_stamp, ".")
 #ifdef UNIT_TESTS
 	if(length(timestamp) != 2)
@@ -273,7 +305,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		stack_trace("Logging with a non-text message")
 
 	if(!category)
-		category = LOG_CATEGORY_NOT_FOUND
+		category = LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND
 		stack_trace("Logging with a null or empty category")
 
 	if(data && !islist(data))
@@ -289,7 +321,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	var/datum/log_category/log_category = log_categories[category]
 	if(!log_category)
-		Log(LOG_CATEGORY_NOT_FOUND, message, data)
+		Log(LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND, message, data)
 		CRASH("Attempted to log to a category that doesn't exist! [category]")
 
 	var/list/semver_store = null

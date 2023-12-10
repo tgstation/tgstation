@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	icon_keyboard = null
 	icon_screen = "invaders"
 	light_color = LIGHT_COLOR_GREEN
-	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON
 	var/list/prize_override
 
 /obj/machinery/computer/arcade/proc/Reset()
@@ -156,6 +156,8 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	desc = "Does not support Pinball."
 	icon_state = "arcade"
 	circuit = /obj/item/circuitboard/computer/arcade/battle
+
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE // we don't need to be literate to play video games fam
 
 	var/enemy_name = "Space Villain"
 	///Enemy health/attack points
@@ -582,7 +584,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 			var/mob/living/living_user = user
 			if (istype(living_user))
 				living_user.investigate_log("has been gibbed by an emagged Orion Trail game.", INVESTIGATE_DEATHS)
-				living_user.gib()
+				living_user.gib(DROP_ALL_REMAINS)
 		SSblackbox.record_feedback("nested tally", "arcade_results", 1, list("loss", "hp", (obj_flags & EMAGGED ? "emagged":"normal")))
 		user.lost_game()
 
@@ -620,17 +622,18 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	. += "\t[span_info("magical -> defend until outmagiced")]"
 	return .
 
-/obj/machinery/computer/arcade/battle/emag_act(mob/user)
+/obj/machinery/computer/arcade/battle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 
+	balloon_alert(user, "hard mode enabled")
 	to_chat(user, span_warning("A mesmerizing Rhumba beat starts playing from the arcade machine's speakers!"))
 	temp = "<br><center><h2>If you die in the game, you die for real!<center><h2>"
 	max_passive = 6
 	bomb_cooldown = 18
 	var/gamerSkill = 0
-	if(usr?.mind)
-		gamerSkill = usr.mind.get_skill_level(/datum/skill/gaming)
+	if(user?.mind)
+		gamerSkill = user.mind.get_skill_level(/datum/skill/gaming)
 	enemy_setup(gamerSkill)
 	enemy_hp += 100 //extra HP just to make cuban pete even more bullshit
 	player_hp += 30 //the player will also get a few extra HP in order to have a fucking chance
@@ -644,6 +647,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 	name = "Outbomb Cuban Pete"
 
 	updateUsrDialog()
+	return TRUE
 
 // ** AMPUTATION ** //
 
@@ -691,4 +695,4 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 /obj/machinery/computer/arcade/amputation/festive //dispenses wrapped gifts instead of arcade prizes, also known as the ancap christmas tree
 	name = "Mediborg's Festive Amputation Adventure"
 	desc = "A picture of a blood-soaked medical cyborg wearing a Santa hat flashes on the screen. The mediborg has a speech bubble that says, \"Put your hand in the machine if you aren't a <b>coward!</b>\""
-	prize_override = list(/obj/item/a_gift/anything = 1)
+	prize_override = list(/obj/item/gift/anything = 1)

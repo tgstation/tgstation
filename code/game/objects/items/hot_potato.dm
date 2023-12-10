@@ -2,7 +2,7 @@
 /obj/item/hot_potato
 	name = "hot potato"
 	desc = "A label on the side of this potato reads \"Product of Donk Co. Service Wing. Activate far away from populated areas. Device will only attach to sapient creatures.\" <span class='boldnotice'>You can attack anyone with it to force it on them instead of yourself!</span>"
-	icon = 'icons/obj/hydroponics/harvest.dmi'
+	icon = 'icons/obj/service/hydroponics/harvest.dmi'
 	icon_state = "potato"
 	item_flags = NOBLUDGEON
 	force = 0
@@ -150,7 +150,11 @@
 		log_bomber(null, null, src, "was primed for detonation (Timer:[delay],Explosive:[detonate_explosion],Range:[detonate_dev_range]/[detonate_heavy_range]/[detonate_light_range]/[detonate_fire_range])")
 	active = TRUE
 	if(detonate_explosion) //doesn't send a notification unless it's a genuine, exploding hot potato.
-		notify_ghosts("[user] has primed a Hot Potato!", source = src, action = NOTIFY_ORBIT, header = "Hot Hot Hot!")
+		notify_ghosts(
+			"[user] has primed a Hot Potato!",
+			source = src,
+			header = "Hot Hot Hot!",
+		)
 
 /obj/item/hot_potato/proc/deactivate()
 	update_appearance()

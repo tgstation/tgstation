@@ -62,6 +62,11 @@
 /obj/item/storage/box/lights/mixed,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
+"as" = (
+/obj/item/kirbyplants/random/dead,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/command/bridge)
 "av" = (
 /obj/effect/spawner/structure/window/hollow/end{
 	dir = 1
@@ -112,6 +117,14 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"aW" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/ks13/security/court)
 "bd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -290,6 +303,27 @@
 /obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
+"dx" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/cup/glass/bottle/vodka{
+	pixel_x = -7;
+	pixel_y = 13
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/command/bridge)
+"dy" = (
+/obj/structure/window/spawner/directional/south,
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/security/court)
 "dE" = (
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
@@ -373,6 +407,11 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
+"eE" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/service/cafe)
 "eG" = (
 /obj/structure/frame/machine,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -422,10 +461,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/solars/ks13/sb_bow_solars)
+"fe" = (
+/obj/item/circuitboard/computer/solar_control,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "fg" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/singulo)
+"fz" = (
+/obj/structure/sign/departments/medbay/alt/directional/west,
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "fC" = (
 /obj/structure/chair{
 	dir = 4
@@ -449,7 +497,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "fL" = (
 /obj/machinery/door/window/left/directional/west{
@@ -471,6 +519,10 @@
 "fU" = (
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
+"gd" = (
+/obj/machinery/portable_atmospherics/canister/plasma,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/singulo)
 "ge" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -493,14 +545,6 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
-"gy" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/structure/window/spawner/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/security/court)
 "gB" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 4
@@ -526,6 +570,11 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"gU" = (
+/obj/item/kirbyplants/random/dead,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/security/court)
 "hm" = (
 /obj/machinery/vending/hydroseeds,
 /obj/effect/mapping_helpers/broken_floor,
@@ -548,6 +597,13 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"hT" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/chapel{
+	dir = 4
+	},
+/area/ruin/space/ks13/service/chapel)
 "hY" = (
 /obj/item/stack/cable_coil/cut,
 /obj/effect/mapping_helpers/broken_floor,
@@ -611,6 +667,12 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/court_hall)
+"iL" = (
+/obj/structure/sign/departments/medbay/alt/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "iR" = (
 /obj/machinery/door/airlock/command{
 	name = "E.V.A."
@@ -640,6 +702,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/ruin/space/ks13/security/court)
+"iV" = (
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/plating,
+/area/ruin/space/ks13/security/court)
 "jc" = (
 /obj/structure/frame/machine{
 	anchored = 1
@@ -666,6 +732,11 @@
 	},
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
+"jk" = (
+/obj/structure/lattice,
+/obj/machinery/light/small/directional/north,
+/turf/template_noop,
+/area/ruin/space/ks13/security/sec)
 "jl" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/service/bar)
@@ -711,12 +782,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/secure_storage)
-"kA" = (
-/obj/item/kirbyplants/random/dead,
-/obj/effect/mapping_helpers/broken_floor,
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/hallway/central)
 "kE" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -734,12 +799,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/hydro)
-"kJ" = (
-/obj/machinery/light/small/directional/east,
-/obj/structure/closet/emcloset,
-/obj/machinery/light/small/directional/east,
-/turf/open/floor/iron/airless,
-/area/space/nearstation)
 "kK" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -797,6 +856,15 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/ai/corridor)
+"lq" = (
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
+"lw" = (
+/obj/structure/lattice,
+/obj/item/chair,
+/obj/machinery/light/small/broken/directional/east,
+/turf/template_noop,
+/area/ruin/space/ks13/engineering/singulo)
 "lz" = (
 /obj/machinery/door/airlock/security{
 	name = "Security"
@@ -820,14 +888,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/central)
-"lR" = (
-/obj/structure/lattice,
-/obj/structure/frame/computer{
-	anchored = 1
+"lV" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/chapel{
+	dir = 4
 	},
-/obj/machinery/light/small/directional/north,
-/turf/template_noop,
-/area/space/nearstation)
+/area/ruin/space/ks13/service/chapel)
 "lW" = (
 /obj/structure/rack,
 /obj/item/stock_parts/cell/lead,
@@ -844,16 +912,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/dark,
 /area/ruin/space/ks13/medical/morgue)
-"mg" = (
-/obj/structure/lattice,
-/obj/machinery/light/small/directional/north,
-/turf/template_noop,
-/area/space/nearstation)
-"mp" = (
-/obj/structure/sign/departments/medbay/alt/directional/west,
-/obj/item/kirbyplants/random/dead,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/hallway/central)
 "mv" = (
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -911,6 +969,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/template_noop,
 /area/space/nearstation)
+"nf" = (
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/hallway/central)
 "nm" = (
 /obj/structure/sign/warning/test_chamber/directional/north,
 /obj/machinery/atmospherics/pipe/smart/simple/dark/visible,
@@ -963,13 +1025,6 @@
 "od" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/hallway/aft)
-"oj" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/chapel{
-	dir = 1
-	},
-/area/ruin/space/ks13/service/chapel)
 "om" = (
 /obj/structure/lattice,
 /obj/effect/mapping_helpers/broken_floor,
@@ -980,6 +1035,14 @@
 	dir = 1
 	},
 /area/ruin/space/ks13/service/chapel)
+"op" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/security/court)
 "oq" = (
 /obj/structure/rack,
 /obj/item/vending_refill/boozeomat,
@@ -1123,7 +1186,7 @@
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
 /obj/item/stack/sheet/glass/fifty,
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "pc" = (
 /obj/effect/decal/cleanable/blood/splatter,
@@ -1333,7 +1396,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/cryo_tube,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "qh" = (
 /obj/structure/fluff/oldturret,
@@ -1600,20 +1663,8 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
-"rH" = (
-/obj/structure/window/spawner/directional/south,
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/ks13/security/court)
 "rI" = (
 /obj/structure/table_frame/wood,
-/obj/item/clothing/head/helmet/chaplain{
-	armor = null;
-	desc = "The Chaplains crusader helment. It seems old and dented."
-	},
 /turf/open/floor/wood,
 /area/ruin/space/ks13/service/chapel_office)
 "rJ" = (
@@ -1883,6 +1934,10 @@
 /obj/machinery/power/smes,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/sb_bow_solars_control)
+"sQ" = (
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/security/court)
 "sR" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/research/glass{
@@ -1899,11 +1954,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"sT" = (
-/obj/structure/window/spawner/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/ruin/space/ks13/security/court)
 "sU" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/engineering/singulo)
@@ -2320,6 +2370,13 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"vD" = (
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/chapel{
+	dir = 1
+	},
+/area/ruin/space/ks13/service/chapel)
 "vE" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/cable,
@@ -2431,6 +2488,11 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
+"wt" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/head/chaplain/bishopmitre,
+/turf/open/floor/iron/dark,
+/area/ruin/space/ks13/service/chapel_office)
 "wu" = (
 /obj/structure/rack,
 /obj/effect/decal/cleanable/dirt,
@@ -2567,7 +2629,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "xb" = (
 /obj/structure/frame/computer{
@@ -2658,10 +2720,6 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/medical/medbay)
-"xy" = (
-/obj/structure/window/spawner/directional/south,
-/turf/open/floor/plating,
-/area/ruin/space/ks13/security/court)
 "xA" = (
 /obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -2717,7 +2775,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "xN" = (
 /obj/structure/rack,
@@ -2956,6 +3014,11 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
+"yY" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/iron/airless,
+/area/space/nearstation)
 "yZ" = (
 /obj/structure/grille/broken,
 /obj/effect/decal/cleanable/glass,
@@ -3101,6 +3164,13 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/vault)
+"zJ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/solarpanel_small,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/hallway/central)
 "zK" = (
 /obj/machinery/light/small/directional/east,
 /obj/effect/decal/cleanable/dirt,
@@ -3422,7 +3492,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/smes,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Bv" = (
 /obj/effect/decal/cleanable/glass,
@@ -3480,14 +3550,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"BH" = (
-/obj/structure/window/spawner/directional/south,
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/security/court)
 "BI" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/floor/plating/airless,
@@ -3539,14 +3601,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/sec)
-"BV" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/chapel{
-	dir = 4
-	},
-/area/ruin/space/ks13/service/chapel)
 "BW" = (
 /obj/effect/spawner/structure/window/hollow/end,
 /turf/open/floor/plating,
@@ -3570,17 +3624,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/cell)
-"Cd" = (
-/obj/machinery/light/small/directional/west,
-/obj/structure/table_frame,
-/obj/item/wallframe/apc{
-	pixel_x = -5;
-	pixel_y = 9
-	},
-/obj/item/wallframe/apc,
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/tech_storage)
 "Ce" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/machinery/airalarm/directional/north,
@@ -3598,12 +3641,6 @@
 	},
 /turf/template_noop,
 /area/space/nearstation)
-"Cn" = (
-/obj/structure/sign/departments/medbay/alt/directional/east,
-/obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random/dead,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/hallway/central)
 "Co" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/white/airless,
@@ -3752,19 +3789,6 @@
 /obj/machinery/pipedispenser,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"Dj" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/bottle/vodka{
-	pixel_x = 6;
-	pixel_y = 10
-	},
-/obj/item/reagent_containers/cup/glass/bottle/vodka{
-	pixel_x = -7;
-	pixel_y = 13
-	},
-/obj/machinery/light/small/directional/north,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "Dl" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/effect/mapping_helpers/burnt_floor,
@@ -3852,7 +3876,7 @@
 	pixel_y = 6
 	},
 /obj/item/ai_module/core/full/drone,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "DL" = (
 /obj/structure/table,
@@ -3970,10 +3994,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/tool_storage)
-"Eg" = (
-/obj/item/kirbyplants/random/dead,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/hallway/central)
 "Ei" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -4045,11 +4065,6 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/rnd)
-"EC" = (
-/obj/machinery/portable_atmospherics/canister/plasma,
-/obj/machinery/portable_atmospherics/canister/plasma,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "ED" = (
 /obj/machinery/door/airlock/maintenance{
 	name = "Atmospherics Access"
@@ -4219,12 +4234,6 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
-"Fy" = (
-/obj/machinery/light/small/directional/west,
-/obj/machinery/light/small/directional/west,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "FB" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/closet,
@@ -4266,6 +4275,25 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/atmos)
+"FQ" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -7;
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
+	pixel_x = -7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/command/bridge)
 "FR" = (
 /obj/machinery/vending/sovietsoda,
 /turf/open/floor/iron/airless,
@@ -4316,11 +4344,6 @@
 "Gc" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/grav_gen)
-"Ge" = (
-/obj/item/kirbyplants/random/dead,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/security/court)
 "Gf" = (
 /turf/closed/wall,
 /area/space/nearstation)
@@ -4507,6 +4530,13 @@
 	},
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/command/bridge)
+"GW" = (
+/obj/item/circuitboard/machine/smes,
+/obj/structure/table,
+/obj/effect/spawner/random/maintenance,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/secure_storage)
 "GY" = (
 /obj/structure/cable,
 /turf/open/floor/iron/chapel{
@@ -4548,7 +4578,7 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/space_heater,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Hh" = (
 /obj/effect/decal/cleanable/dirt,
@@ -4668,25 +4698,6 @@
 /obj/structure/girder/reinforced,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/science/ordnance)
-"HL" = (
-/obj/structure/table/wood,
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 8;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = 8
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{
-	pixel_x = -7
-	},
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "HO" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
@@ -4721,6 +4732,10 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
+"Ia" = (
+/obj/item/kirbyplants/random/dead,
+/turf/open/floor/iron,
+/area/ruin/space/ks13/command/bridge_hall)
 "Ib" = (
 /obj/effect/mapping_helpers/broken_floor,
 /obj/effect/decal/cleanable/blood/old,
@@ -4903,11 +4918,6 @@
 /obj/item/wallframe/firealarm,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/atmos)
-"Jm" = (
-/obj/machinery/light/small/directional/east,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/ruin/space/ks13/engineering/singulo)
 "Jp" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -4955,7 +4965,7 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Jz" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -5280,6 +5290,14 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/hallway/aft)
+"Lu" = (
+/obj/structure/table/wood,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/effect/spawner/random/maintenance,
+/turf/open/floor/iron/chapel{
+	dir = 1
+	},
+/area/ruin/space/ks13/service/chapel)
 "Lw" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
@@ -5341,12 +5359,12 @@
 	pixel_y = 6
 	},
 /obj/item/circuitboard/machine/protolathe/offstation,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "LM" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "LN" = (
 /turf/closed/wall,
@@ -5395,14 +5413,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/engineering/singulo)
-"Mb" = (
-/obj/structure/table/wood,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/spawner/random/maintenance,
-/turf/open/floor/iron/chapel{
-	dir = 1
-	},
-/area/ruin/space/ks13/service/chapel)
 "Mc" = (
 /obj/machinery/atmospherics/pipe/smart/simple/scrubbers/visible,
 /turf/closed/wall/r_wall,
@@ -5500,7 +5510,7 @@
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/structure/canister_frame/machine/unfinished_canister_frame,
+/obj/structure/fluff/broken_canister_frame,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/iron,
@@ -5791,10 +5801,6 @@
 /obj/effect/mapping_helpers/apc/no_charge,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
-"Og" = (
-/obj/item/kirbyplants/random/dead,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/security/court)
 "Oh" = (
 /obj/machinery/vending/cigarette,
 /turf/open/floor/iron/airless,
@@ -5958,6 +5964,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
+"Pc" = (
+/obj/structure/lattice,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/obj/machinery/light/small/directional/north,
+/turf/template_noop,
+/area/ruin/space/ks13/command/bridge)
 "Pd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
 /obj/effect/decal/cleanable/dirt,
@@ -6021,7 +6035,7 @@
 	pixel_x = -6;
 	pixel_y = -6
 	},
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Pq" = (
 /obj/effect/decal/cleanable/dirt,
@@ -6030,15 +6044,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/security/court)
-"Ps" = (
-/obj/machinery/light/small/directional/east,
-/obj/item/circuitboard/machine/smes,
-/obj/structure/table,
-/obj/machinery/light/small/directional/east,
-/obj/effect/spawner/random/maintenance,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/engineering/secure_storage)
 "Pt" = (
 /obj/structure/cable,
 /obj/effect/mapping_helpers/broken_floor,
@@ -6159,11 +6164,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/singulo)
-"PT" = (
-/obj/item/kirbyplants/random/dead,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/command/bridge)
 "PU" = (
 /obj/structure/cable,
 /turf/open/floor/iron,
@@ -6396,7 +6396,7 @@
 "Rm" = (
 /obj/structure/rack,
 /obj/item/circuitboard/computer/crew,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Ro" = (
 /obj/structure/grille/broken,
@@ -6706,6 +6706,10 @@
 /obj/structure/chair,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/security/court_hall)
+"SI" = (
+/obj/structure/closet/emcloset,
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/dorms)
 "SJ" = (
 /obj/structure/frame/computer{
 	anchored = 1;
@@ -6924,10 +6928,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/security/sec)
-"TA" = (
-/obj/item/kirbyplants/random/dead,
-/turf/open/floor/iron,
-/area/ruin/space/ks13/command/bridge_hall)
 "TB" = (
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
@@ -6987,12 +6987,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/engineering/aft_solars_control)
-"TO" = (
-/obj/structure/lattice,
-/obj/item/chair,
-/obj/machinery/light/small/broken/directional/east,
-/turf/template_noop,
-/area/space/nearstation)
 "TQ" = (
 /obj/item/shard{
 	icon_state = "medium"
@@ -7529,7 +7523,7 @@
 /obj/item/stack/sheet/mineral/silver{
 	amount = 15
 	},
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "WO" = (
 /obj/effect/spawner/random/maintenance,
@@ -7581,6 +7575,15 @@
 "Xa" = (
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/ai/corridor)
+"Xb" = (
+/obj/machinery/light/small/directional/west,
+/obj/structure/table_frame,
+/obj/item/wallframe/apc{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/airless,
+/area/ruin/space/ks13/engineering/tech_storage)
 "Xd" = (
 /obj/structure/closet/crate/bin,
 /obj/effect/decal/cleanable/dirt,
@@ -7593,6 +7596,11 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
+"Xf" = (
+/obj/structure/window/spawner/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/space/ks13/security/court)
 "Xh" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/directional/east,
@@ -7603,7 +7611,7 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/mapping_helpers/apc/no_charge,
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "Xj" = (
 /obj/effect/decal/cleanable/dirt,
@@ -7623,11 +7631,6 @@
 "Xr" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/science/genetics)
-"Xs" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random/dead,
-/turf/open/floor/iron/airless,
-/area/ruin/space/ks13/service/cafe)
 "Xt" = (
 /obj/structure/table,
 /obj/effect/spawner/random/maintenance,
@@ -7653,13 +7656,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/science/rnd)
-"Xz" = (
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/chapel{
-	dir = 4
-	},
-/area/ruin/space/ks13/service/chapel)
 "XA" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
@@ -7681,6 +7677,10 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white/airless,
 /area/ruin/space/ks13/medical/medbay)
+"XI" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "XJ" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/effect/mapping_helpers/apc/no_charge,
@@ -7715,6 +7715,12 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/aux_storage)
+"XV" = (
+/obj/item/kirbyplants/random/dead,
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/hallway/central)
 "XW" = (
 /turf/closed/wall,
 /area/ruin/space/ks13/security/court_hall)
@@ -7735,6 +7741,13 @@
 	},
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/bridge)
+"Yb" = (
+/obj/structure/cable,
+/obj/structure/frame/computer{
+	anchored = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/space/ks13/engineering/sb_bow_solars_control)
 "Yc" = (
 /turf/closed/wall/r_wall,
 /area/ruin/space/ks13/ai/corridor)
@@ -7835,7 +7848,7 @@
 /area/ruin/space/ks13/hallway/aft)
 "YC" = (
 /obj/structure/fluff/oldturret,
-/turf/open/floor/iron,
+/turf/open/floor/circuit/red/off,
 /area/ruin/space/ks13/ai/corridor)
 "YE" = (
 /obj/structure/plaque/static_plaque/golden/commission/ks13,
@@ -7980,13 +7993,13 @@
 /obj/item/stack/sheet/mineral/plasma{
 	amount = 15
 	},
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "Zq" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1
 	},
-/obj/structure/canister_frame/machine/unfinished_canister_frame,
+/obj/structure/fluff/broken_canister_frame,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/science/ordnance)
 "Zr" = (
@@ -8006,6 +8019,11 @@
 /obj/item/grenade/empgrenade,
 /turf/open/floor/iron,
 /area/ruin/space/ks13/command/eva)
+"Zv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/mapping_helpers/burnt_floor,
+/turf/open/floor/plating/airless,
+/area/ruin/space/ks13/command/bridge)
 "Zw" = (
 /obj/item/stack/cable_coil/cut,
 /obj/effect/mapping_helpers/broken_floor,
@@ -8040,7 +8058,7 @@
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/turf/open/floor/iron/airless,
+/turf/open/floor/circuit/red/airless,
 /area/ruin/space/ks13/ai/vault)
 "ZC" = (
 /obj/structure/table/glass,
@@ -8435,7 +8453,7 @@ MB
 rw
 PA
 JN
-Mb
+Lu
 IW
 WA
 JN
@@ -8548,13 +8566,13 @@ MB
 EQ
 Ok
 pN
-Xz
+hT
 IW
 xB
 vl
 NO
 uf
-oU
+yY
 zN
 qG
 aa
@@ -8661,7 +8679,7 @@ MB
 rw
 oo
 zb
-oj
+vD
 IW
 OP
 LE
@@ -8767,14 +8785,14 @@ aa
 aa
 rk
 MB
-sh
+wt
 Eu
 sh
 sh
 rw
 Jf
 vl
-BV
+lV
 je
 Eq
 vl
@@ -9571,7 +9589,7 @@ Fq
 yq
 rm
 uf
-kJ
+SI
 oU
 sm
 wc
@@ -10756,13 +10774,13 @@ aa
 aa
 aa
 aa
-rk
 aa
 aa
 aa
-rk
-rk
-rk
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -10868,16 +10886,16 @@ aa
 aa
 aa
 aa
-rk
-aa
-rk
-rk
-rk
 aa
 aa
 aa
-rk
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -10909,7 +10927,7 @@ rk
 QG
 QG
 Xt
-Cd
+Xb
 DT
 QG
 QG
@@ -10981,16 +10999,16 @@ aa
 aa
 aa
 aa
-rk
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
 aa
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11095,24 +11113,24 @@ aa
 aa
 aa
 aa
-rk
-Yc
-Pw
-fU
-zA
-fU
-Yc
 aa
-rk
-rk
-rk
-rk
-rk
-rk
-rk
-rk
-rk
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11153,7 +11171,7 @@ oQ
 xn
 ZC
 xx
-mp
+fz
 yl
 Uw
 DM
@@ -11207,29 +11225,29 @@ aa
 aa
 aa
 aa
+aa
 rk
-Yc
-Yc
-eA
-Yc
-Yc
-fU
-Yc
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
+aa
+aa
+aa
 rk
 rk
 rk
-rk
-rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11320,26 +11338,26 @@ aa
 aa
 aa
 aa
+rk
 aa
 rk
 rk
 rk
-Yc
-AW
-KO
-Yc
-Bw
-Bw
-Bw
-Bw
-Bw
-Bw
-IF
-IF
-RL
+aa
 aa
 aa
 rk
+rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11351,7 +11369,7 @@ rk
 rk
 sU
 sU
-EC
+gd
 CX
 PI
 PI
@@ -11433,23 +11451,23 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 rk
 Yc
 Yc
-lk
 Yc
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
-Jw
+Yc
+Yc
+Yc
+Yc
+aa
 rk
+aa
+aa
+aa
+aa
+aa
+aa
+aa
 aa
 aa
 aa
@@ -11547,24 +11565,24 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
 rk
 Yc
+Pw
 fU
+zA
 fU
-fU
-fU
-fU
-fU
-fU
-fU
-YC
 Yc
-rk
-rk
 aa
+rk
+rk
+rk
+rk
+rk
+rk
+rk
+rk
+rk
+rk
 aa
 aa
 aa
@@ -11659,25 +11677,25 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
-aa
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-st
-Yc
-Yc
-aa
 rk
-aa
+Yc
+Yc
+eA
+Yc
+Yc
+fU
+Yc
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+rk
 aa
 aa
 aa
@@ -11696,7 +11714,7 @@ PI
 Ex
 pi
 FI
-Fy
+FI
 FI
 FI
 zv
@@ -11718,12 +11736,12 @@ Se
 wF
 CO
 rQ
-Cn
+iL
 zK
 yl
 Uw
 qw
-Xs
+eE
 ah
 XX
 Xh
@@ -11773,22 +11791,22 @@ aa
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+rk
+rk
+rk
 Yc
-YC
-fU
-fU
-fU
-fU
-fU
-fU
-fU
+AW
+KO
 Yc
-Yc
-aa
+sg
+Bw
+Bw
+Bw
+Bw
+Bw
+IF
+IF
+RL
 aa
 aa
 aa
@@ -11824,7 +11842,7 @@ NB
 fg
 Wk
 sU
-TO
+lw
 rk
 Xr
 BB
@@ -11888,20 +11906,20 @@ aa
 aa
 aa
 aa
-aa
-aa
+rk
 Yc
 Yc
-st
+lk
 Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-Yc
-aa
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+Jw
+rk
 aa
 aa
 aa
@@ -12002,9 +12020,9 @@ aa
 aa
 aa
 aa
-aa
+rk
 Yc
-Yc
+fU
 fU
 fU
 fU
@@ -12014,8 +12032,8 @@ fU
 fU
 YC
 Yc
-aa
-aa
+rk
+rk
 aa
 aa
 uu
@@ -12037,11 +12055,11 @@ bm
 PI
 zv
 PI
+Jc
 xJ
 xJ
 xJ
-xJ
-xJ
+Jc
 zv
 PI
 zv
@@ -12128,8 +12146,8 @@ st
 Yc
 Yc
 aa
-aa
 rk
+aa
 aa
 uu
 NJ
@@ -12241,8 +12259,8 @@ fU
 Yc
 Yc
 aa
-IF
-rk
+aa
+aa
 aa
 yf
 bN
@@ -12354,8 +12372,8 @@ Yc
 Yc
 Yc
 aa
-Bw
-Gf
+aa
+aa
 aa
 yf
 wQ
@@ -12467,8 +12485,8 @@ fU
 YC
 Yc
 aa
-Bw
-Gf
+aa
+aa
 aa
 yf
 WF
@@ -12489,11 +12507,11 @@ PI
 zv
 PI
 zv
+Jc
 xJ
 xJ
 xJ
-xJ
-xJ
+PI
 PI
 fg
 FI
@@ -12581,7 +12599,7 @@ Yc
 Yc
 Yc
 Bw
-Gf
+Jw
 aa
 yf
 yf
@@ -12798,15 +12816,15 @@ Yc
 Yc
 Yc
 Yc
-fU
+lq
 Bu
 Hg
 fJ
-fU
+lq
 YC
 Yc
 Yc
-IF
+Xa
 aa
 aa
 aa
@@ -12826,7 +12844,7 @@ fg
 Jc
 gB
 PI
-Jm
+zv
 zv
 zv
 HX
@@ -13025,11 +13043,11 @@ Yc
 Yc
 Yc
 Xi
-fU
+lq
 qf
 Rm
-fU
-fU
+lq
+lq
 Yc
 LL
 Yc
@@ -13144,7 +13162,7 @@ fU
 fU
 fU
 PW
-KO
+XI
 Yc
 aa
 aa
@@ -13254,7 +13272,7 @@ LM
 xL
 Po
 Jy
-fU
+lq
 YC
 Yc
 DK
@@ -13621,7 +13639,7 @@ rk
 rr
 rr
 ab
-Ps
+GW
 DL
 rr
 rr
@@ -13633,7 +13651,7 @@ QR
 NG
 yl
 XC
-Qz
+zJ
 Mz
 QR
 yg
@@ -13878,7 +13896,7 @@ Wy
 gm
 Lq
 Lq
-mg
+jk
 rk
 hY
 rk
@@ -14982,9 +15000,9 @@ AX
 yl
 yl
 DM
-Eg
+nf
 wv
-kA
+XV
 iF
 cf
 wv
@@ -15423,7 +15441,7 @@ wJ
 DZ
 FM
 DZ
-TA
+Ia
 As
 aa
 aa
@@ -15729,7 +15747,7 @@ aa
 aa
 xS
 pR
-pR
+fe
 xS
 VB
 cR
@@ -15764,7 +15782,7 @@ Pk
 WV
 wU
 rl
-lR
+Pc
 Db
 IL
 Aw
@@ -15841,7 +15859,7 @@ bP
 aa
 aa
 xS
-VB
+Yb
 IK
 xS
 pR
@@ -15877,7 +15895,7 @@ Dz
 ag
 Jz
 JC
-Wm
+Zv
 Rs
 rk
 vY
@@ -15990,7 +16008,7 @@ Pk
 SA
 Am
 rl
-HL
+FQ
 sa
 Hu
 IL
@@ -16095,7 +16113,7 @@ ig
 DZ
 wg
 rl
-PT
+as
 QN
 WD
 Gs
@@ -16103,7 +16121,7 @@ aJ
 aJ
 Wi
 rl
-Dj
+dx
 Bg
 Wm
 Ol
@@ -16205,7 +16223,7 @@ Sb
 As
 LW
 As
-TA
+Ia
 wg
 rl
 se
@@ -16452,11 +16470,11 @@ IF
 oU
 cz
 uw
-Ge
+gU
 JT
 JT
 JT
-sT
+Xf
 oV
 EN
 uU
@@ -16569,7 +16587,7 @@ gH
 KJ
 JT
 MO
-gy
+op
 iU
 MU
 YL
@@ -16682,7 +16700,7 @@ cJ
 Nv
 WB
 pv
-rH
+aW
 Yg
 pf
 YL
@@ -16908,7 +16926,7 @@ JT
 WB
 NI
 MO
-BH
+dy
 oV
 Pq
 uU
@@ -17021,7 +17039,7 @@ WB
 NI
 NI
 MO
-gy
+op
 Ft
 NI
 uU
@@ -17130,11 +17148,11 @@ oU
 cz
 tH
 uw
-Og
+sQ
 WB
 NI
 WB
-xy
+iV
 Yg
 NI
 uU

@@ -16,7 +16,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 			continue
 		if(IS_WIZARD(target) && !badmin)
 			// wizards are not only immune but can speak all languages to taunt their victims over the radio
-			target.grant_all_languages(source=LANGUAGE_BABEL)
+			target.grant_all_languages(source = LANGUAGE_BABEL)
 			ADD_TRAIT(target.mind, TRAIT_TOWER_OF_BABEL, MAGIC_TRAIT)
 			to_chat(target, span_reallybig(span_hypnophrase("You feel a magical force improving your speech patterns!")))
 			continue
@@ -49,7 +49,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 	if(!to_curse.mind)
 		return
 
-	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || HAS_TRAIT(to_curse.mind, TRAIT_TOWER_OF_BABEL))
+	if(to_curse.can_block_magic(MAGIC_RESISTANCE|MAGIC_RESISTANCE_MIND) || HAS_MIND_TRAIT(to_curse, TRAIT_TOWER_OF_BABEL))
 		to_chat(to_curse, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
 

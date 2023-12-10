@@ -227,14 +227,13 @@
 	damage = 20
 	armour_penetration = 60
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target
-		if(mob_target.faction_check_mob(firer))
+		if(mob_target.faction_check_atom(firer))
 			damage = 0
 
 	. = ..()
@@ -247,16 +246,17 @@
 	damage = 0
 	color = rgb(255,255,102)
 
-/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	firer.forceMove(get_turf(src))
+	if(!QDELETED(firer))
+		firer.forceMove(get_turf(src))
 
 //Herald's loot: Cloak of the Prophet
 
 /obj/item/clothing/neck/cloak/herald_cloak
 	name = "cloak of the prophet"
 	desc = "A cloak which protects you from the heresy of the world."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "herald_cloak"
 	body_parts_covered = CHEST|GROIN|ARMS
 	hit_reaction_chance = 20

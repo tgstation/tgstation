@@ -11,15 +11,10 @@
 		//Use passed in instance
 		fish_source = configuration
 	else
-		/// Check if it's a preset key
-		var/datum/fish_source/preset_configuration = GLOB.preset_fish_sources[configuration]
-		if(!preset_configuration)
-			stack_trace("Invalid fishing spot configuration \"[configuration]\" passed down to fishing spot component.")
-			return COMPONENT_INCOMPATIBLE
-		fish_source = preset_configuration
+		return COMPONENT_INCOMPATIBLE
+	fish_source.on_fishing_spot_init()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_attackby))
 	RegisterSignal(parent, COMSIG_FISHING_ROD_CAST, PROC_REF(handle_cast))
-
 
 /datum/component/fishing_spot/proc/handle_cast(datum/source, obj/item/fishing_rod/rod, mob/user)
 	SIGNAL_HANDLER
@@ -41,7 +36,7 @@
 	if(HAS_TRAIT(user,TRAIT_GONE_FISHING) || rod.currently_hooked_item)
 		user.balloon_alert(user, "already fishing")
 		return COMPONENT_NO_AFTERATTACK
-	var/denial_reason = fish_source.reason_we_cant_fish(rod, user)
+	var/denial_reason = fish_source.reason_we_cant_fish(rod, user, parent)
 	if(denial_reason)
 		to_chat(user, span_warning(denial_reason))
 		return COMPONENT_NO_AFTERATTACK
@@ -51,14 +46,6 @@
 /datum/component/fishing_spot/proc/start_fishing_challenge(obj/item/fishing_rod/rod, mob/user)
 	/// Roll what we caught based on modified table
 	var/result = fish_source.roll_reward(rod, user)
-	var/datum/fishing_challenge/challenge = new(parent, result, rod, user)
-	challenge.background = fish_source.background
-	challenge.difficulty = fish_source.calculate_difficulty(result, rod, user)
-	RegisterSignal(challenge, COMSIG_FISHING_CHALLENGE_COMPLETED, PROC_REF(fishing_completed))
+	var/datum/fishing_challenge/challenge = new(src, result, rod, user)
+	fish_source.pre_challenge_started(rod, user, challenge)
 	challenge.start(user)
-
-/datum/component/fishing_spot/proc/fishing_completed(datum/fishing_challenge/source, mob/user, success, perfect)
-	if(success)
-		var/obj/item/fish/caught = source.reward_path
-		user.add_mob_memory(/datum/memory/caught_fish, protagonist = user, deuteragonist = initial(caught.name))
-		fish_source.dispense_reward(source.reward_path, user)

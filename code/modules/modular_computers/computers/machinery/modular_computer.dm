@@ -2,7 +2,7 @@
 /obj/machinery/modular_computer
 	name = "modular computer"
 	desc = "You shouldn't see this. If you do, report it." //they should be examining the processor instead
-	icon = 'icons/obj/modular_console.dmi'
+	icon = 'icons/obj/machines/modular_console.dmi'
 	icon_state = "console"
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.05
 	density = TRUE
@@ -13,8 +13,6 @@
 	var/internal_cell = null
 	///A flag that describes this device type
 	var/hardware_flag = PROGRAM_CONSOLE
-	///Power usage during last tick
-	var/last_power_usage = 0
 	/// Amount of programs that can be ran at once
 	var/max_idle_programs = 4
 
@@ -61,9 +59,9 @@
 	if(cpu)
 		cpu.attack_ghost(user)
 
-/obj/machinery/modular_computer/emag_act(mob/user)
+/obj/machinery/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!cpu)
-		to_chat(user, span_warning("You'd need to turn the [src] on first."))
+		balloon_alert(user, "turn it on first!")
 		return FALSE
 	return cpu.emag_act(user)
 
@@ -72,7 +70,7 @@
 	set_light(cpu?.enabled ? light_strength : 0)
 
 /obj/machinery/modular_computer/update_icon_state()
-	if(!cpu || !cpu.enabled || !cpu.use_power() || (machine_stat & NOPOWER))
+	if(!cpu || !cpu.enabled || (machine_stat & NOPOWER))
 		icon_state = icon_state_unpowered
 	else
 		icon_state = icon_state_powered
@@ -83,8 +81,8 @@
 	if(!cpu)
 		return .
 
-	if(cpu.enabled && cpu.use_power())
-		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
+	if(cpu.enabled)
+		. += cpu.active_program?.program_open_overlay || screen_icon_state_menu
 	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
 
@@ -125,9 +123,9 @@
 		return cpu.screwdriver_act(user, tool)
 	return ..()
 
-/obj/machinery/modular_computer/wrench_act(mob/user, obj/item/tool)
+/obj/machinery/modular_computer/wrench_act_secondary(mob/user, obj/item/tool)
 	if(cpu)
-		return cpu.wrench_act(user, tool)
+		return cpu.wrench_act_secondary(user, tool)
 	return ..()
 
 /obj/machinery/modular_computer/welder_act(mob/user, obj/item/tool)
@@ -136,7 +134,7 @@
 	return ..()
 
 /obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
-	if (cpu && !user.combat_mode && !(flags_1 & NODECONSTRUCT_1))
+	if (cpu && !user.combat_mode && !(obj_flags & NO_DECONSTRUCTION))
 		return cpu.attackby(W, user)
 	return ..()
 

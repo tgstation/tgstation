@@ -943,7 +943,7 @@
   - refactor: Refactored "secluded locations" into a trait
   Paxilmaniac:
   - code_imp: The dmi that reagent holders take fill icons from is no longer hard
-      coded as reagentfillings.dmi, and can be changed using the fill_icon variable
+      coded as reagent_fillings.dmi, and can be changed using the fill_icon variable
   Rhials:
   - bugfix: The disease outbreak events will no longer attempt to fire if there are
       no valid players to infect.

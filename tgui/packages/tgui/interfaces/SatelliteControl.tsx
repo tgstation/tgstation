@@ -16,8 +16,8 @@ type Satellite = {
   mode: string;
 };
 
-export const SatelliteControl = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const SatelliteControl = (props) => {
+  const { data } = useBackend<Data>();
   const { meteor_shield } = data;
 
   return (
@@ -31,8 +31,8 @@ export const SatelliteControl = (props, context) => {
 };
 
 /** Displays coverage info of the meteor shield */
-const ShieldInfo = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const ShieldInfo = (props) => {
+  const { data } = useBackend<Data>();
   const { meteor_shield_coverage, meteor_shield_coverage_max } = data;
 
   return (
@@ -41,9 +41,6 @@ const ShieldInfo = (props, context) => {
         <LabeledList.Item label="Coverage">
           <ProgressBar
             value={meteor_shield_coverage / meteor_shield_coverage_max}
-            content={
-              (100 * meteor_shield_coverage) / meteor_shield_coverage_max + '%'
-            }
             ranges={{
               good: [1, Infinity],
               average: [0.3, 1],
@@ -57,8 +54,8 @@ const ShieldInfo = (props, context) => {
 };
 
 /** Displays a map of satellites and their status */
-const SatelliteDisplay = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const SatelliteDisplay = (props) => {
+  const { act, data } = useBackend<Data>();
   const { satellites = [] } = data;
 
   return (

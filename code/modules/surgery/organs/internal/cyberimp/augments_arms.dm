@@ -76,7 +76,7 @@
 	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."))
 	update_appearance()
 
-/obj/item/organ/internal/cyberimp/arm/on_insert(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = arm_owner.hand_bodyparts[side]
@@ -84,7 +84,7 @@
 		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self)) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
 		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
-/obj/item/organ/internal/cyberimp/arm/on_remove(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
 	Retract()
 	if(hand)
@@ -124,12 +124,17 @@
 /obj/item/organ/internal/cyberimp/arm/proc/Retract()
 	if(!active_item || (active_item in src))
 		return FALSE
+	if(owner)
+		owner.visible_message(
+			span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+			span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
+			span_hear("You hear a short mechanical noise."),
+		)
 
-	owner?.visible_message(span_notice("[owner] retracts [active_item] back into [owner.p_their()] [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-		span_notice("[active_item] snaps back into your [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."),
-		span_hear("You hear a short mechanical noise."))
+		owner.transferItemToLoc(active_item, src, TRUE)
+	else
+		active_item.forceMove(src)
 
-	owner.transferItemToLoc(active_item, src, TRUE)
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
 	active_item = null
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
@@ -253,13 +258,13 @@
 /obj/item/organ/internal/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/toolset/emag_act(mob/user)
+/obj/item/organ/internal/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
 		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
 			return FALSE
 
-	to_chat(user, span_notice("You unlock [src]'s integrated knife!"))
+	balloon_alert(user, "integrated knife unlocked")
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
@@ -286,7 +291,7 @@
 		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
-		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
+		flash.arm = WEAKREF(src)
 
 /obj/item/organ/internal/cyberimp/arm/flash/Extend()
 	. = ..()
@@ -320,7 +325,7 @@
 		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
-		flash.arm = WEAKREF(src) // Todo: wipe single letter vars out of assembly code
+		flash.arm = WEAKREF(src)
 
 /obj/item/organ/internal/cyberimp/arm/surgery
 	name = "surgical toolset implant"
@@ -360,8 +365,8 @@
 
 	actions_types = list()
 
-	///The amount of damage dealt by the empowered attack.
-	var/punch_damage = 13
+	///The amount of damage the implant adds to our unarmed attacks.
+	var/punch_damage = 5
 	///IF true, the throw attack will not smash people into walls
 	var/non_harmful_throw = TRUE
 	///How far away your attack will throw your oponent
@@ -373,14 +378,14 @@
 	///How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS
 
-/obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/reciever, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
-	if(ishuman(reciever)) //Sorry, only humans
-		RegisterSignal(reciever, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
+	if(ishuman(arm_owner)) //Sorry, only humans
+		RegisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/obj/item/organ/internal/cyberimp/arm/muscle/Remove(mob/living/carbon/implant_owner, special = 0)
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
-	UnregisterSignal(implant_owner, COMSIG_HUMAN_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
 	. = ..()
@@ -397,20 +402,21 @@
 /obj/item/organ/internal/cyberimp/arm/muscle/proc/on_attack_hand(mob/living/carbon/human/source, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(source.get_active_hand() != source.get_bodypart(check_zone(zone)) || !proximity)
-		return
+	if(source.get_active_hand() != hand || !proximity)
+		return NONE
 	if(!source.combat_mode || LAZYACCESS(modifiers, RIGHT_CLICK))
-		return
+		return NONE
 	if(!isliving(target))
-		return
+		return NONE
 	var/datum/dna/dna = source.has_dna()
 	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
-		return
+		return NONE
+	if(!source.can_unarmed_attack())
+		return COMPONENT_SKIP_ATTACK
 
 	var/mob/living/living_target = target
-
 	source.changeNext_move(CLICK_CD_MELEE)
-	var/picked_hit_type = pick("punch", "smash", "kick")
+	var/picked_hit_type = pick("punch", "smash", "pummel", "bash", "slam")
 
 	if(organ_flags & ORGAN_FAILING)
 		if(source.body_position != LYING_DOWN && living_target != source && prob(50))
@@ -424,16 +430,23 @@
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_shields(source, punch_damage, "[source]'s' [picked_hit_type]"))
+		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
 			source.do_attack_animation(target)
 			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
 			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
 			return COMPONENT_CANCEL_ATTACK_CHAIN
 
+	var/potential_damage = punch_damage
+	var/obj/item/bodypart/attacking_bodypart = hand
+	potential_damage += rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
-	living_target.apply_damage(punch_damage, BRUTE)
+	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
+	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = attacking_bodypart.unarmed_effectiveness)
+	living_target.apply_damage(potential_damage, attacking_bodypart.attack_type, target_zone, armor_block)
+	living_target.apply_damage(potential_damage*1.5, STAMINA, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)

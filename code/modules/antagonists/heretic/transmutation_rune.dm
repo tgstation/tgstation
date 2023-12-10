@@ -80,6 +80,10 @@
 	for(var/atom/close_atom as anything in range(1, src))
 		if(!ismovable(close_atom))
 			continue
+		if(isitem(close_atom))
+			var/obj/item/close_item = close_atom
+			if(close_item.item_flags & ABSTRACT) //woops sacrificed your own head
+				continue
 		if(close_atom.invisibility)
 			continue
 		if(close_atom == user)
@@ -90,6 +94,7 @@
 	// A copy of our requirements list.
 	// We decrement the values of to determine if enough of each key is present.
 	var/list/requirements_list = ritual.required_atoms.Copy()
+	var/list/banned_atom_types = ritual.banned_atom_types.Copy()
 	// A list of all atoms we've selected to use in this recipe.
 	var/list/selected_atoms = list()
 
@@ -105,8 +110,16 @@
 			// We already have enough of this type, skip
 			if(requirements_list[req_type] <= 0)
 				continue
-			if(!istype(nearby_atom, req_type))
+			// If req_type is a list of types, check all of them for one match.
+			if(islist(req_type))
+				if(!(is_type_in_list(nearby_atom, req_type)))
+					continue
+			else if(!istype(nearby_atom, req_type))
 				continue
+			// if list has items, check if the strict type is banned.
+			if(length(banned_atom_types))
+				if(nearby_atom.type in banned_atom_types)
+					continue
 
 			// This item is a valid type. Add it to our selected atoms list.
 			selected_atoms |= nearby_atom
@@ -122,7 +135,7 @@
 
 	// All of the atoms have been checked, let's see if the ritual was successful
 	var/list/what_are_we_missing = list()
-	for(var/atom/req_type as anything in requirements_list)
+	for(var/req_type in requirements_list)
 		var/number_of_things = requirements_list[req_type]
 		// <= 0 means it's fulfilled, skip
 		if(number_of_things <= 0)
@@ -130,10 +143,16 @@
 
 		// > 0 means it's unfilfilled - the ritual has failed, we should tell them why
 		// Lets format the thing they're missing and put it into our list
-		var/formatted_thing = "[number_of_things] [initial(req_type.name)]\s"
-		if(ispath(req_type, /mob/living/carbon/human))
-			// If we need a human, there is a high likelihood we actually need a (dead) body
-			formatted_thing = "[number_of_things] [number_of_things > 1 ? "bodies":"body"]"
+		var/formatted_thing = "[number_of_things] "
+		if(islist(req_type))
+			var/list/req_type_list = req_type
+			var/list/req_text_list = list()
+			for(var/atom/possible_type as anything in req_type_list)
+				req_text_list += ritual.parse_required_item(possible_type)
+			formatted_thing += english_list(req_text_list, and_text = "or")
+
+		else
+			formatted_thing = ritual.parse_required_item(req_type)
 
 		what_are_we_missing += formatted_thing
 
@@ -156,7 +175,7 @@
 	// Some rituals may remove atoms from the selected_atoms list, and not consume them.
 	var/list/initial_selected_atoms = selected_atoms.Copy()
 	for(var/atom/to_disappear as anything in selected_atoms)
-		to_disappear.invisibility = INVISIBILITY_ABSTRACT
+		to_disappear.SetInvisibility(INVISIBILITY_ABSTRACT, id=type)
 
 	// All the components have been invisibled, time to actually do the ritual. Call on_finished_recipe
 	// (Note: on_finished_recipe may sleep in the case of some rituals like summons, which expect ghost candidates.)
@@ -170,7 +189,7 @@
 	for(var/atom/to_appear as anything in initial_selected_atoms)
 		if(QDELETED(to_appear))
 			continue
-		to_appear.invisibility = initial(to_appear.invisibility)
+		to_appear.RemoveInvisibility(type)
 
 	// And finally, give some user feedback
 	// No feedback is given on failure here -
@@ -179,6 +198,7 @@
 		loc.balloon_alert(user, "ritual complete")
 
 	return ritual_result
+
 
 /// A 3x3 heretic rune. The kind heretics actually draw in game.
 /obj/effect/heretic_rune/big

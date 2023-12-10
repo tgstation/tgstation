@@ -1,5 +1,14 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Table } from 'tgui/components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  RestrictedInput,
+  Section,
+  Stack,
+  Table,
+} from 'tgui/components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
 import { CrimeWatcher } from './CrimeWatcher';
@@ -9,14 +18,14 @@ import { getSecurityRecord } from './helpers';
 import { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
-export const SecurityRecordView = (props, context) => {
-  const foundRecord = getSecurityRecord(context);
+export const SecurityRecordView = (props) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <NoticeBox>Nothing selected.</NoticeBox>;
 
-  const { data } = useBackend<SecurityRecordsData>(context);
+  const { data } = useBackend<SecurityRecordsData>();
   const { assigned_view } = data;
 
-  const [open] = useLocalState<boolean>(context, 'printOpen', false);
+  const [open] = useLocalState<boolean>('printOpen', false);
 
   return (
     <Stack fill vertical>
@@ -35,13 +44,13 @@ export const SecurityRecordView = (props, context) => {
   );
 };
 
-const RecordInfo = (props, context) => {
-  const foundRecord = getSecurityRecord(context);
+const RecordInfo = (props) => {
+  const foundRecord = getSecurityRecord();
   if (!foundRecord) return <NoticeBox>Nothing selected.</NoticeBox>;
 
-  const { act, data } = useBackend<SecurityRecordsData>(context);
+  const { act, data } = useBackend<SecurityRecordsData>();
   const { available_statuses } = data;
-  const [open, setOpen] = useLocalState<boolean>(context, 'printOpen', false);
+  const [open, setOpen] = useLocalState<boolean>('printOpen', false);
 
   const { min_age, max_age } = data;
 
@@ -56,6 +65,7 @@ const RecordInfo = (props, context) => {
     rank,
     species,
     wanted_status,
+    voice,
   } = foundRecord;
 
   const hasValidCrimes = !!crimes.find((crime) => !!crime.valid);
@@ -71,7 +81,8 @@ const RecordInfo = (props, context) => {
                   height="1.7rem"
                   icon="print"
                   onClick={() => setOpen(true)}
-                  tooltip="Print a rapsheet or poster.">
+                  tooltip="Print a rapsheet or poster."
+                >
                   Print
                 </Button>
               </Stack.Item>
@@ -91,7 +102,8 @@ const RecordInfo = (props, context) => {
               {name}
             </Table.Cell>
           }
-          wrap>
+          wrap
+        >
           <LabeledList>
             <LabeledList.Item
               buttons={available_statuses.map((button, index) => {
@@ -110,12 +122,14 @@ const RecordInfo = (props, context) => {
                     }
                     pl={!isSelected ? '1.8rem' : 1}
                     tooltip={CRIMESTATUS2DESC[button] || ''}
-                    tooltipPosition="bottom-start">
+                    tooltipPosition="bottom-start"
+                  >
                     {button[0]}
                   </Button>
                 );
               })}
-              label="Status">
+              label="Status"
+            >
               <Box color={CRIMESTATUS2COLOR[wanted_status]}>
                 {wanted_status}
               </Box>
@@ -167,6 +181,9 @@ const RecordInfo = (props, context) => {
                 target_ref={crew_ref}
                 text={fingerprint}
               />
+            </LabeledList.Item>
+            <LabeledList.Item label="Voice">
+              <EditableText field="voice" target_ref={crew_ref} text={voice} />
             </LabeledList.Item>
             <LabeledList.Item label="Note">
               <EditableText

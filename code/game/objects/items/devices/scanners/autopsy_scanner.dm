@@ -1,17 +1,48 @@
 /obj/item/autopsy_scanner
 	name = "autopsy scanner"
-	desc = "Used in surgery to extract information from a cadaver."
-	icon = 'icons/obj/device.dmi'
+	desc = "Used in surgery to extract information from a cadaver. Can also scan the health of cadavers like an advanced health analyzer!"
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "autopsy_scanner"
 	inhand_icon_state = "autopsy_scanner"
 	worn_icon_state = "autopsy_scanner"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2)
 	custom_price = PAYCHECK_COMMAND
+
+/obj/item/autopsy_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
+	if(!user.can_read(src) || user.is_blind())
+		return ITEM_INTERACT_BLOCKING
+
+	var/mob/living/M = interacting_with
+
+	if(M.stat != DEAD && !HAS_TRAIT(M, TRAIT_FAKEDEATH)) // good job, you found a loophole
+		to_chat(user, span_deadsay("[icon2html(src, user)] ERROR! CANNOT SCAN LIVE CADAVERS. PROCURE HEALTH ANALYZER OR TERMINATE PATIENT."))
+		return ITEM_INTERACT_BLOCKING
+
+	. = ITEM_INTERACT_SUCCESS
+
+	// Clumsiness/brain damage check
+	if ((HAS_TRAIT(user, TRAIT_CLUMSY) || HAS_TRAIT(user, TRAIT_DUMB)) && prob(50))
+		user.visible_message(span_warning("[user] analyzes the floor's vitals!"), \
+							span_notice("You stupidly try to analyze the floor's vitals!"))
+		to_chat(user, "[span_info("Analyzing results for The floor:\n\tOverall status: <b>Healthy</b>")]\
+				\n[span_info("Key: <font color='#00cccc'>Suffocation</font>/<font color='#00cc66'>Toxin</font>/<font color='#ffcc33'>Burn</font>/<font color='#ff3333'>Brute</font>")]\
+				\n[span_info("\tDamage specifics: <font color='#66cccc'>0</font>-<font color='#00cc66'>0</font>-<font color='#ff9933'>0</font>-<font color='#ff3333'>0</font>")]\
+				\n[span_info("Body temperature: ???")]")
+		return
+
+	user.visible_message(span_notice("[user] scans [M]'s cadaver."))
+	to_chat(user, span_deadsay("[icon2html(src, user)] ANALYZING CADAVER."))
+
+	healthscan(user, M, advanced = TRUE)
+
+	add_fingerprint(user)
 
 /obj/item/autopsy_scanner/proc/scan_cadaver(mob/living/carbon/human/user, mob/living/carbon/scanned)
 	if(scanned.stat != DEAD)
@@ -19,13 +50,12 @@
 
 	var/list/autopsy_information = list()
 	autopsy_information += "[scanned.name] - Species: [scanned.dna.species.name]"
-	autopsy_information += "Time of Death - [scanned.tod]"
+	autopsy_information += "Time of Death - [scanned.station_timestamp_timeofdeath]"
 	autopsy_information += "Time of Autopsy - [station_time_timestamp()]"
 	autopsy_information += "Autopsy Coroner - [user.name]"
 
 	autopsy_information += "Toxin damage: [CEILING(scanned.getToxLoss(), 1)]"
 	autopsy_information += "Oxygen damage: [CEILING(scanned.getOxyLoss(), 1)]"
-	autopsy_information += "Cloning damage: [CEILING(scanned.getCloneLoss(), 1)]"
 
 	autopsy_information += "<center>Bodypart Data</center><br>"
 	for(var/obj/item/bodypart/bodyparts as anything in scanned.bodyparts)
@@ -66,8 +96,8 @@
 			if(blood_id != /datum/reagent/blood)
 				var/datum/reagent/reagents = GLOB.chemical_reagents_list[blood_id]
 				blood_type = reagents ? reagents.name : blood_id
-				autopsy_information += "Blood Type: [blood_type]<br>"
-				autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]) %<br>"
+			autopsy_information += "Blood Type: [blood_type]<br>"
+			autopsy_information += "Blood Volume: [scanned.blood_volume] cl ([blood_percent]%) <br>"
 
 	for(var/datum/disease/diseases as anything in scanned.diseases)
 		autopsy_information += "Name: [diseases.name] | Type: [diseases.spread_text]<br>"

@@ -6,6 +6,11 @@
 /area/ruin)
 "dI" = (
 /obj/item/grown/bananapeel,
+/obj/item/ammo_casing/a357/spent{
+	dir = 9;
+	pixel_x = -13;
+	pixel_y = 10
+	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "ef" = (
@@ -37,17 +42,9 @@
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"iP" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "lS" = (
 /obj/structure/door_assembly,
 /turf/open/floor/iron/checker/airless,
-/area/ruin)
-"mB" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating/airless,
 /area/ruin)
 "of" = (
 /obj/item/storage/toolbox/syndicate,
@@ -75,11 +72,25 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
+"tz" = (
+/obj/machinery/atmospherics/components/unary/passive_vent{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/machinery/light/small/broken/directional/south,
+/obj/item/ammo_casing/a357/spent,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
 "uc" = (
-/obj/item/ammo_casing/energy/c3dbullet,
 /obj/effect/decal/cleanable/blood/footprints{
 	dir = 4
 	},
+/obj/item/ammo_casing/a357/spent{
+	pixel_x = -5;
+	dir = 5;
+	pixel_y = 6
+	},
+/obj/item/ammo_casing/a357/spent,
 /obj/item/gps/spaceruin,
 /turf/open/floor/plating/airless,
 /area/ruin)
@@ -124,12 +135,16 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
+"zk" = (
+/obj/machinery/computer/old,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"Al" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
 "Ar" = (
-/obj/item/ammo_casing/energy/c3dbullet{
-	dir = 5;
-	pixel_x = 59;
-	pixel_y = 6
-	},
 /obj/item/clothing/mask/gas/clown_hat{
 	pixel_y = 39
 	},
@@ -142,6 +157,13 @@
 "BU" = (
 /obj/structure/table,
 /obj/machinery/microwave,
+/turf/open/floor/iron/checker/airless,
+/area/ruin)
+"CH" = (
+/obj/effect/decal/cleanable/blood/footprints{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "CZ" = (
@@ -168,10 +190,6 @@
 "Fx" = (
 /turf/template_noop,
 /area/template_noop)
-"Gv" = (
-/obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "GF" = (
 /obj/structure/table,
 /obj/item/stamp/mime,
@@ -181,12 +199,13 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"GS" = (
-/obj/effect/decal/cleanable/blood/footprints{
-	dir = 4
-	},
+"GR" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/mob_spawn/corpse/human/clown,
+/obj/item/ammo_casing/energy/c3dbullet,
+/obj/effect/decal/cleanable/blood/footprints,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/checker/airless,
+/turf/open/floor/plating/airless,
 /area/ruin)
 "Ij" = (
 /obj/machinery/door/airlock/glass,
@@ -198,7 +217,6 @@
 /area/ruin)
 "JK" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber,
-/obj/item/ammo_casing/energy/c3dbullet,
 /obj/effect/decal/cleanable/blood/gibs/up,
 /turf/open/floor/plating/airless,
 /area/ruin)
@@ -220,22 +238,11 @@
 	},
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
-"Kx" = (
-/obj/machinery/computer/old{
-	dir = 4
-	},
-/obj/machinery/light/broken/directional/west,
-/turf/open/floor/iron/checker/airless,
-/area/ruin)
 "KI" = (
 /obj/structure/sign/poster/contraband/microwave,
 /turf/closed/wall,
 /area/ruin)
-"KV" = (
-/obj/effect/decal/cleanable/blood,
-/obj/effect/mob_spawn/corpse/human/clown,
-/obj/item/ammo_casing/energy/c3dbullet,
-/obj/effect/decal/cleanable/blood/footprints,
+"Ln" = (
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating/airless,
 /area/ruin)
@@ -245,18 +252,13 @@
 /area/ruin)
 "Pq" = (
 /obj/machinery/light/broken/directional/north,
-/obj/item/ammo_casing/energy/c3dbullet,
 /obj/structure/reagent_dispensers/watertank,
+/obj/item/ammo_casing/a357/spent,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Qb" = (
 /obj/structure/sign/poster/contraband/masked_men,
 /turf/closed/wall,
-/area/ruin)
-"Qh" = (
-/obj/machinery/computer/old,
-/obj/machinery/light/broken/directional/north,
-/turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Sc" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -265,22 +267,15 @@
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "Vj" = (
-/obj/structure/grille,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/effect/mapping_helpers/damaged_window,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/turf/template_noop,
+/turf/open/floor/plating/airless,
 /area/ruin)
-"WY" = (
-/obj/machinery/atmospherics/components/unary/passive_vent{
+"XA" = (
+/obj/machinery/computer/old{
 	dir = 4
 	},
-/obj/item/ammo_casing/energy/c3dbullet{
-	pixel_y = 10;
-	pixel_x = 115;
-	dir = 9
-	},
-/obj/effect/decal/cleanable/blood/gibs,
 /turf/open/floor/iron/checker/airless,
 /area/ruin)
 "YF" = (
@@ -400,9 +395,9 @@ GF
 Jz
 Jz
 vs
-Kx
+XA
 Jz
-Qh
+zk
 gV
 gZ
 Fx
@@ -417,13 +412,13 @@ gZ
 gZ
 Kh
 ED
-iP
+Al
 lS
 ve
-WY
+tz
 KI
 hG
-iP
+Al
 Vj
 Fx
 Fx
@@ -443,7 +438,7 @@ JK
 Ar
 Ij
 AK
-iP
+Al
 gZ
 Fx
 Fx
@@ -459,7 +454,7 @@ Kr
 rn
 Jz
 Jz
-Gv
+gV
 Sc
 Jz
 Jz
@@ -499,7 +494,7 @@ gZ
 gZ
 Jz
 hT
-iP
+Al
 dI
 Jz
 YF
@@ -519,7 +514,7 @@ gZ
 gZ
 Qb
 Pq
-mB
+Ln
 gV
 vj
 gZ
@@ -539,7 +534,7 @@ gZ
 gZ
 Jz
 dq
-mB
+Ln
 CZ
 of
 gZ
@@ -561,7 +556,7 @@ Jz
 gZ
 gZ
 EY
-KV
+GR
 gZ
 Fx
 Fx
@@ -581,7 +576,7 @@ gZ
 Fx
 gZ
 gV
-GS
+CH
 gZ
 Fx
 Fx

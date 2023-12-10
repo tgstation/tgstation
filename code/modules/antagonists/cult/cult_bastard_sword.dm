@@ -15,7 +15,7 @@
 	light_color = "#ff0000"
 	attack_verb_continuous = list("attacks", "slashes", "stabs", "slices", "tears", "lacerates", "rips", "dices", "rends")
 	attack_verb_simple = list("attack", "slash", "stab", "slice", "tear", "lacerate", "rip", "dice", "rend")
-	icon = 'icons/obj/cult/items_and_weapons.dmi'
+	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "cultbastard"
 	inhand_icon_state = "cultbastard"
 	hitsound = 'sound/weapons/bladeslice.ogg'
@@ -33,7 +33,7 @@
 	set_light(4)
 	AddComponent(/datum/component/butchering, 50, 80)
 	AddComponent(/datum/component/two_handed, require_twohands = TRUE)
-	AddComponent(/datum/component/soul_stealer)
+	AddComponent(/datum/component/soul_stealer, soulstone_type = /obj/item/soulstone)
 	AddComponent( \
 		/datum/component/spin2win, \
 		spin_cooldown_time = 25 SECONDS, \
@@ -80,7 +80,7 @@
 			to_chat(user, span_cultlarge("\"You cling to the Forgotten Gods, as if you're more than their pawn.\""))
 			to_chat(user, span_userdanger("A horrible force yanks at your arm!"))
 			user.emote("scream")
-			user.apply_damage(30, BRUTE, pick(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
+			user.apply_damage(30, BRUTE, pick(GLOB.arm_zones))
 			user.dropItemToGround(src, TRUE)
 			user.Paralyze(50)
 			return

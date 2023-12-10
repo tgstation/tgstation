@@ -14,7 +14,7 @@
 	/// An existing strip menus
 	var/list/strip_menus
 
-/datum/element/strippable/Attach(datum/target, list/items, should_strip_proc_path)
+/datum/element/strippable/Attach(datum/target, list/items = list(), should_strip_proc_path)
 	. = ..()
 	if (!isatom(target))
 		return ELEMENT_INCOMPATIBLE
@@ -342,7 +342,7 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP)))
+		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || (item.item_flags & EXAMINE_SKIP)))
 			items[strippable_key] = result
 			continue
 

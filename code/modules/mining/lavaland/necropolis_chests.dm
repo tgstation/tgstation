@@ -55,7 +55,7 @@
 		if(12)
 			new /obj/item/jacobs_ladder(src)
 		if(13)
-			new /obj/item/guardiancreator/miner(src)
+			new /obj/item/guardian_creator/miner(src)
 		if(14)
 			new /obj/item/warp_cube/red(src)
 		if(15)
@@ -177,6 +177,6 @@
 /obj/item/skeleton_key
 	name = "skeleton key"
 	desc = "An artifact usually found in the hands of the natives of lavaland, which NT now holds a monopoly on."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "skeleton_key"
 	w_class = WEIGHT_CLASS_SMALL

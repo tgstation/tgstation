@@ -24,30 +24,18 @@
 "f" = (
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/ruin/syndicate_lava_base/telecomms)
-"h" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/airlock/hatch{
-	name = "Telecommunications"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/obj/modular_map_connector,
-/turf/template_noop,
-/area/ruin/syndicate_lava_base/telecomms)
 "j" = (
 /turf/open/floor/circuit/green,
 /area/ruin/syndicate_lava_base/telecomms)
-"l" = (
-/obj/machinery/light/small/directional/east,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/noticeboard/directional/east,
+"m" = (
+/obj/machinery/computer/camera_advanced,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"m" = (
-/obj/machinery/computer/camera_advanced,
+"n" = (
+/obj/machinery/telecomms/relay/preset/ruskie{
+	use_power = 0
+	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -77,24 +65,15 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"s" = (
-/obj/machinery/firealarm/directional/west,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
+"v" = (
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/machinery/airalarm/directional/south,
-/turf/open/floor/iron/dark,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/circuit/green,
 /area/ruin/syndicate_lava_base/telecomms)
-"u" = (
+"x" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/ruin/syndicate_lava_base/telecomms)
-"y" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -107,8 +86,8 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"A" = (
-/obj/machinery/light/small/directional/west,
+"B" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -118,6 +97,17 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/telecomms)
+"E" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/airlock/hatch{
+	name = "Telecommunications"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/obj/modular_map_connector,
+/turf/template_noop,
 /area/ruin/syndicate_lava_base/telecomms)
 "G" = (
 /obj/structure/table/reinforced,
@@ -130,12 +120,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"M" = (
-/obj/machinery/telecomms/relay/preset/ruskie{
-	use_power = 0
-	},
-/obj/machinery/light/small/directional/west,
+"N" = (
+/obj/machinery/firealarm/directional/west,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/mapping_helpers/airalarm/syndicate_access,
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 "O" = (
@@ -146,8 +135,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
-"R" = (
+"U" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/noticeboard/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
@@ -158,10 +150,17 @@
 "W" = (
 /turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
+"Y" = (
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
+/area/ruin/syndicate_lava_base/telecomms)
 "Z" = (
-/obj/effect/mapping_helpers/airalarm/syndicate_access,
-/obj/machinery/airalarm/directional/east,
-/turf/open/floor/circuit/green,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/turf/open/floor/iron/dark,
 /area/ruin/syndicate_lava_base/telecomms)
 
 (1,1,1) = {"
@@ -178,7 +177,7 @@ a
 f
 f
 j
-M
+n
 j
 f
 f
@@ -189,7 +188,7 @@ f
 j
 j
 o
-Z
+v
 j
 f
 a
@@ -209,8 +208,8 @@ a
 e
 c
 o
-A
-s
+Y
+N
 f
 f
 "}
@@ -218,7 +217,7 @@ f
 a
 e
 c
-y
+Z
 m
 C
 b
@@ -228,7 +227,7 @@ f
 a
 e
 W
-R
+B
 K
 z
 G
@@ -238,8 +237,8 @@ f
 a
 e
 p
-l
-u
+U
+x
 q
 f
 f
@@ -249,7 +248,7 @@ a
 a
 a
 a
-h
+E
 a
 a
 a

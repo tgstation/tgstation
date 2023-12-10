@@ -68,7 +68,7 @@
 #define CAN_USE_ON_OTHERS (1<<0)
 ///Flag that decides whether the Mafia ability can be used on themselves.
 #define CAN_USE_ON_SELF (1<<1)
-///Flag that decides whether the Mafia ability can be used on dead players. This overwrites the first two, and only allows for dead.
+///Flag that decides whether the Mafia ability can be used on dead players.
 #define CAN_USE_ON_DEAD (1<<2)
 
 #define MAFIA_PHASE_SETUP "No Game"
@@ -100,6 +100,8 @@
 /// now clearing refs to prepare for the next day. Do not do any actions here, it's just for ref clearing.
 #define COMSIG_MAFIA_NIGHT_END "night_end"
 
+/// signal sent to roles when the game is confirmed starting
+#define COMSIG_MAFIA_GAME_START "game_start"
 /// signal sent to roles when the game is confirmed ending
 #define COMSIG_MAFIA_GAME_END "game_end"
 
@@ -107,6 +109,8 @@
 GLOBAL_LIST_EMPTY(mafia_signup)
 /// list of ghosts who want to play mafia that have since disconnected. They are kept in the lobby, but not counted for starting a game.
 GLOBAL_LIST_EMPTY(mafia_bad_signup)
+/// list of PDAs who want to play mafia, every time someone enters the list it checks to see if enough are in
+GLOBAL_LIST_EMPTY(pda_mafia_signup)
 /// the current global mafia game running.
 GLOBAL_VAR(mafia_game)
 /// list of ghosts in mafia_signup who have voted to start early

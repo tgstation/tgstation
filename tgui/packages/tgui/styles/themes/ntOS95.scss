@@ -11,17 +11,17 @@ $dark-gray: #858585;
 $scrollbar-color-multiplier: 1;
 
 @use '../colors.scss' with (
-   $primary: #000000,
-   $good: #007c11,
-   $average: #f0ec11,
-   $bad: #db2828,
-   $label: #000000,
- );
+  $primary: #000000,
+  $good: #007c11,
+  $average: #f0ec11,
+  $bad: #db2828,
+  $label: #000000
+);
 @use '../base.scss' with (
-   $color-bg: #008081,
-   $color-bg-grad-spread: 0%,
-   $border-radius: 0,
- );
+  $color-bg: #008081,
+  $color-bg-grad-spread: 0%,
+  $border-radius: 0
+);
 
 .theme-ntOS95 {
   // Atomic classes
@@ -32,7 +32,7 @@ $scrollbar-color-multiplier: 1;
     '../components/Button.scss',
     $with: (
       'color-default': #e8e4c9,
-      'color-disabled': #363636,
+      'color-disabled': #707070,
       'color-selected': #007c11,
       'color-caution': #be6209,
       'color-danger': #9d0808
@@ -71,12 +71,24 @@ $scrollbar-color-multiplier: 1;
   }
 
   .Section {
+    &__titleText {
+      color: black;
+    }
     color: black;
     background-color: #c0c0c0;
     outline: base.em(2px) outset #c3c3c3;
   }
 
   .Input {
+    background-color: white;
+    outline: base.em(2px) inset #c3c3c3;
+    color: black;
+    &__input:-ms-input-placeholder {
+      color: black;
+    }
+  }
+
+  .TextArea {
     background-color: white;
     outline: base.em(2px) inset #c3c3c3;
   }

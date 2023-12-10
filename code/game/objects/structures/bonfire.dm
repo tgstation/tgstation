@@ -10,26 +10,21 @@
 /obj/structure/bonfire
 	name = "bonfire"
 	desc = "For grilling, broiling, charring, smoking, heating, roasting, toasting, simmering, searing, melting, and occasionally burning things."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "bonfire"
 	light_color = LIGHT_COLOR_FIRE
 	density = FALSE
 	anchored = TRUE
 	buckle_lying = 0
 	pass_flags_self = PASSTABLE | LETPASSTHROW
-	///is the bonfire lit?
+	/// is the bonfire lit?
 	var/burning = FALSE
-	///icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
+	/// icon for the bonfire while on. for a softer more burning embers icon, use "bonfire_warm"
 	var/burn_icon = "bonfire_on_fire"
-	///if the bonfire has a grill attached
+	/// if the bonfire has a grill attached
 	var/grill = FALSE
-
-/obj/structure/bonfire/dense
-	density = TRUE
-
-/obj/structure/bonfire/prelit/Initialize(mapload)
-	. = ..()
-	start_burning()
+	/// the looping sound effect that is played while burning
+	var/datum/looping_sound/burning/burning_loop
 
 /obj/structure/bonfire/Initialize(mapload)
 	. = ..()
@@ -37,6 +32,12 @@
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
+	burning_loop = new(src)
+
+/obj/structure/bonfire/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	QDEL_NULL(burning_loop)
+	. = ..()
 
 /obj/structure/bonfire/attackby(obj/item/used_item, mob/living/user, params)
 	if(istype(used_item, /obj/item/stack/rods) && !can_buckle && !grill)
@@ -50,7 +51,7 @@
 				can_buckle = TRUE
 				buckle_requires_restraints = TRUE
 				to_chat(user, span_notice("You add a rod to \the [src]."))
-				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/hydroponics/equipment.dmi', "bonfire_rod")
+				var/mutable_appearance/rod_underlay = mutable_appearance('icons/obj/service/hydroponics/equipment.dmi', "bonfire_rod")
 				rod_underlay.pixel_y = 16
 				underlays += rod_underlay
 			if("Grill")
@@ -76,7 +77,6 @@
 				used_item.pixel_y = used_item.base_pixel_y + clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(world.icon_size/2), world.icon_size/2)
 		else
 			return ..()
-
 
 /obj/structure/bonfire/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -107,6 +107,8 @@
 /obj/structure/bonfire/proc/start_burning()
 	if(burning || !check_oxygen())
 		return
+
+	burning_loop.start()
 	icon_state = burn_icon
 	burning = TRUE
 	set_light(6)
@@ -164,6 +166,8 @@
 	. = ..()
 	if(!burning)
 		return
+
+	burning_loop.stop()
 	icon_state = "bonfire"
 	burning = FALSE
 	set_light(0)
@@ -177,5 +181,17 @@
 /obj/structure/bonfire/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	if(..())
 		buckled_mob.pixel_y -= 13
+
+/obj/structure/bonfire/dense
+	density = TRUE
+
+/obj/structure/bonfire/prelit/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+// Late init so that we can wait for air to exist in lazyloaded templates
+/obj/structure/bonfire/prelit/LateInitialize()
+	. = ..()
+	start_burning()
 
 #undef BONFIRE_FIRE_STACK_STRENGTH

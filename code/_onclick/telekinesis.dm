@@ -93,7 +93,7 @@
 /obj/item/tk_grab
 	name = "Telekinetic Grab"
 	desc = "Magic"
-	icon = 'icons/obj/magic.dmi'//Needs sprites
+	icon = 'icons/effects/magic.dmi'//Needs sprites
 	icon_state = "2"
 	item_flags = NOBLUDGEON | ABSTRACT | DROPDEL
 	//inhand_icon_state = null
@@ -110,6 +110,8 @@
 
 /obj/item/tk_grab/Destroy()
 	STOP_PROCESSING(SSfastprocess, src)
+	if(!QDELETED(focus))
+		REMOVE_TRAIT(focus, TRAIT_TELEKINESIS_CONTROLLED, REF(tk_user))
 	focus = null
 	tk_user = null
 	return ..()
@@ -259,6 +261,7 @@
 	if(!check_if_focusable(target))
 		return
 	focus = target
+	ADD_TRAIT(focus, TRAIT_TELEKINESIS_CONTROLLED, REF(tk_user))
 	update_appearance()
 	apply_focus_overlay()
 	return TRUE

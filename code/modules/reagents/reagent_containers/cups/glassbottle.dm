@@ -4,6 +4,18 @@
 //Functionally identical to regular drinks. The only difference is that the default bottle size is 100. - Darem
 //Bottles now knockdown and break when smashed on people's heads. - Giacom
 
+/// Initializes GLOB.alcohol_containers, only containers that actually have reagents are added to the list.
+/proc/init_alcohol_containers()
+	var/list/containers = subtypesof(/obj/item/reagent_containers/cup/glass/bottle)
+	for(var/typepath in containers)
+		containers -= typepath
+		var/obj/item/reagent_containers/cup/glass/bottle/instance = new typepath
+		if(!length(instance.list_reagents))
+			qdel(instance)
+			continue
+		containers[typepath] = instance
+	return containers
+
 /obj/item/reagent_containers/cup/glass/bottle
 	name = "glass bottle"
 	desc = "This blank bottle is unyieldingly anonymous, offering no clues to its contents."
@@ -27,6 +39,12 @@
 	var/bottle_knockdown_duration = BOTTLE_KNOCKDOWN_DEFAULT_DURATION
 	tool_behaviour = TOOL_ROLLINGPIN // Used to knock out the Chef.
 	toolspeed = 1.3 //it's a little awkward to use, but it's a cylinder alright.
+
+/obj/item/reagent_containers/cup/glass/bottle/Initialize(mapload, vol)
+	. = ..()
+	AddComponent(/datum/component/slapcrafting,\
+		slapcraft_recipes = list(/datum/crafting_recipe/molotov)\
+	)
 
 /obj/item/reagent_containers/cup/glass/bottle/small
 	name = "small glass bottle"
@@ -138,7 +156,7 @@
 		if(3)
 			intensity_state = "high"
 	///The froth fountain that we are sticking onto the bottle
-	var/mutable_appearance/froth = mutable_appearance(icon, "froth_bottle_[intensity_state]")
+	var/mutable_appearance/froth = mutable_appearance('icons/obj/drinks/drink_effects.dmi', "froth_bottle_[intensity_state]")
 	froth.pixel_x = offset_x
 	froth.pixel_y = offset_y
 	add_overlay(froth)
@@ -163,6 +181,7 @@
 	attack_verb_continuous = list("stabs", "slashes", "attacks")
 	attack_verb_simple = list("stab", "slash", "attack")
 	sharpness = SHARP_EDGED
+	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
 	///The mask image for mimicking a broken-off bottom of the bottle
 	var/static/icon/broken_outline = icon('icons/obj/drinks/drink_effects.dmi', "broken")
 	///The mask image for mimicking a broken-off neck of the bottle
@@ -317,6 +336,7 @@
 
 /obj/item/reagent_containers/cup/glass/bottle/holywater/hell
 	desc = "A flask of holy water...it's been sitting in the Necropolis a while though."
+	icon_state = "unholyflask"
 	list_reagents = list(/datum/reagent/hellwater = 100)
 
 /obj/item/reagent_containers/cup/glass/bottle/vermouth
@@ -720,6 +740,30 @@
 	list_reagents = list(/datum/reagent/consumable/ethanol/mushi_kombucha = 30)
 	isGlass = FALSE
 
+/obj/item/reagent_containers/cup/glass/bottle/hakka_mate
+	name = "Hakka-Mate"
+	desc = "Hakka-Mate: it's an acquired taste."
+	icon_state = "hakka_mate_bottle"
+	list_reagents = list(/datum/reagent/consumable/hakka_mate = 30)
+
+/obj/item/reagent_containers/cup/glass/bottle/shochu
+	name = "Shu-Kouba Straight Shochu"
+	desc = "A boozier form of shochu designed for mixing. Comes straight from Mars' Dusty City itself, Shu-Kouba."
+	icon_state = "shochu_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/shochu = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/yuyake
+	name = "Moonlabor Yūyake"
+	desc = "The distilled essence of disco and flared pants, captured like lightning in a bottle."
+	icon_state = "yuyake_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/yuyake = 100)
+
+/obj/item/reagent_containers/cup/glass/bottle/coconut_rum
+	name = "Breezy Shoals Coconut Rum"
+	desc = "Live the breezy life with Breezy Shoals, made with only the *finest Caribbean rum."
+	icon_state = "coconut_rum_bottle"
+	list_reagents = list(/datum/reagent/consumable/ethanol/coconut_rum = 100)
+
 ////////////////////////// MOLOTOV ///////////////////////
 /obj/item/reagent_containers/cup/glass/bottle/molotov
 	name = "molotov cocktail"
@@ -759,10 +803,10 @@
 			if(istype(contained_reagent, accelerant_type))
 				firestarter = 1
 				break
+	..()
 	if(firestarter && active)
 		target.fire_act()
 		new /obj/effect/hotspot(get_turf(target))
-	..()
 
 /obj/item/reagent_containers/cup/glass/bottle/molotov/attackby(obj/item/I, mob/user, params)
 	if(I.get_temperature() && !active)
@@ -800,7 +844,7 @@
 /obj/item/reagent_containers/cup/glass/bottle/pruno
 	name = "pruno mix"
 	desc = "A trash bag filled with fruit, sugar, yeast, and water, pulped together into a pungent slurry to be fermented in an enclosed space, traditionally the toilet. Security would love to confiscate this, one of the many things wrong with them."
-	icon = 'icons/obj/janitor.dmi'
+	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	list_reagents = list(/datum/reagent/consumable/prunomix = 50)
 	var/fermentation_time = 30 SECONDS /// time it takes to ferment
@@ -879,6 +923,22 @@
 	icon_state = "cream"
 	list_reagents = list(/datum/reagent/consumable/cream = 100)
 	drink_type = DAIRY
+
+/obj/item/reagent_containers/cup/glass/bottle/juice/eggnog
+	name = "eggnog"
+	desc = "For enjoying the most wonderful time of the year."
+	icon = 'icons/obj/drinks/boxes.dmi'
+	icon_state = "nog2"
+	list_reagents = list(/datum/reagent/consumable/ethanol/eggnog = 100)
+	drink_type = FRUIT
+
+/obj/item/reagent_containers/cup/glass/bottle/juice/dreadnog
+	name = "eggnog"
+	desc = "For when you want some nondescript soda inside of your eggnog!"
+	icon = 'icons/obj/drinks/boxes.dmi'
+	icon_state = "dreadnog"
+	list_reagents = list(/datum/reagent/consumable/ethanol/dreadnog = 100)
+	drink_type = FRUIT | GROSS
 
 /obj/item/reagent_containers/cup/glass/bottle/juice/tomatojuice
 	name = "tomato juice"

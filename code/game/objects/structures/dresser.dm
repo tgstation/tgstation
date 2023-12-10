@@ -1,7 +1,7 @@
 /obj/structure/dresser
 	name = "dresser"
 	desc = "A nicely-crafted wooden dresser. It's filled with lots of undies."
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "dresser"
 	resistance_flags = FLAMMABLE
 	density = TRUE
@@ -17,7 +17,7 @@
 		return ..()
 
 /obj/structure/dresser/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
 	qdel(src)
 

@@ -129,16 +129,16 @@
 
 /datum/status_effect/fire_blasted/on_apply()
 	if(owner.on_fire && animate_duration > 0 SECONDS)
-		var/image/warning_sign = image(icon = 'icons/effects/effects.dmi', icon_state = "blessed", layer = BELOW_MOB_LAYER, loc = owner)
-		owner.flick_overlay_view(warning_sign, initial(duration))
-		warning_sign.alpha = 50
-		animate(warning_sign, alpha = 255, time = animate_duration)
+		var/mutable_appearance/warning_sign = mutable_appearance('icons/effects/effects.dmi', "blessed", BELOW_MOB_LAYER)
+		var/atom/movable/flick_visual/warning = owner.flick_overlay_view(warning_sign, initial(duration))
+		warning.alpha = 50
+		animate(warning, alpha = 255, time = animate_duration)
 
 	return TRUE
 
-/datum/status_effect/fire_blasted/tick(seconds_per_tick, times_fired)
-	owner.adjustFireLoss(tick_damage)
-	owner.adjustStaminaLoss(2 * tick_damage)
+/datum/status_effect/fire_blasted/tick(seconds_between_ticks)
+	owner.adjustFireLoss(tick_damage * seconds_between_ticks)
+	owner.adjustStaminaLoss(2 * tick_damage * seconds_between_ticks)
 
 // The beam fireblast spits out, causes people to walk through it to be on fire
 /obj/effect/ebeam/fire

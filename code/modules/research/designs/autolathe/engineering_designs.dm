@@ -324,18 +324,6 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
-/datum/design/tscanner
-	name = "T-Ray Scanner"
-	id = "tscanner"
-	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5)
-	build_path = /obj/item/t_scanner
-	category = list(
-		RND_CATEGORY_INITIAL,
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING,
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
 /datum/design/requests_console
 	name = "Requests Console Frame"
 	id = "requests_console"
@@ -399,6 +387,40 @@
 		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2.5,
 	)
 	build_path = /obj/item/wallframe/telescreen/auxbase
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/tram_controller
+	name = "Tram Controller Cabinet"
+	id = "tram_controller"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/gold = SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 7,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 4,
+	)
+	build_path = /obj/item/wallframe/tram/controller
+	category = list(
+		RND_CATEGORY_INITIAL,
+		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/tram_display
+	name = "Tram Indicator Display"
+	id = "tram_display"
+	build_type = PROTOLATHE
+	materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1,
+		/datum/material/glass =SHEET_MATERIAL_AMOUNT * 2,
+	)
+	build_path = /obj/item/wallframe/indicator_display
 	category = list(
 		RND_CATEGORY_INITIAL,
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS,

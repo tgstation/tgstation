@@ -4,7 +4,16 @@ import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useBackend } from '../backend';
-import { Button, Divider, NumberInput, ProgressBar, Section, Box, LabeledList, Stack } from '../components';
+import {
+  Button,
+  Divider,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Box,
+  LabeledList,
+  Stack,
+} from '../components';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
 
@@ -29,8 +38,8 @@ type GasDisplayProps = {
 
 const mappedTopMargin = '2%';
 
-export const BluespaceSender = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BluespaceSender = (props) => {
+  const { act, data } = useBackend<Data>();
   const { gas_transfer_rate, credits, bluespace_network_gases = [], on } = data;
 
   const gases: Gas[] = flow([
@@ -92,7 +101,8 @@ export const BluespaceSender = (props, context) => {
                 onClick={() => act('retrieve')}
               />
             </>
-          }>
+          }
+        >
           <Box>{'The vendors have made ' + credits + ' credits so far.'}</Box>
           <Divider />
           <LabeledList>
@@ -106,8 +116,8 @@ export const BluespaceSender = (props, context) => {
   );
 };
 
-const GasDisplay = (props: GasDisplayProps, context) => {
-  const { act } = useBackend<Data>(context);
+const GasDisplay = (props: GasDisplayProps) => {
+  const { act } = useBackend<Data>();
   const {
     gas: { amount, id, name, price },
     gasMax,

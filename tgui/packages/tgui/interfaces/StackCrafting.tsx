@@ -1,7 +1,15 @@
 import { createSearch } from 'common/string';
 import { filter, map, reduce, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from '../components';
+import {
+  Box,
+  Button,
+  Input,
+  NoticeBox,
+  Section,
+  Collapsible,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 import { clamp } from 'common/math';
 import { flow } from 'common/fp';
@@ -60,7 +68,7 @@ function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
  */
 const filterRecipeList = (
   list: RecipeList,
-  keyFilter: (key: string) => boolean
+  keyFilter: (key: string) => boolean,
 ) => {
   const filteredList: RecipeList = flow([
     map((entry: RecipeListEntry): RecipeListFilterableEntry => {
@@ -89,11 +97,11 @@ const filterRecipeList = (
   return Object.keys(filteredList).length ? filteredList : undefined;
 };
 
-export const StackCrafting = (_props, context) => {
-  const { data } = useBackend<StackCraftingProps>(context);
+export const StackCrafting = (_props) => {
+  const { data } = useBackend<StackCraftingProps>();
   const { amount, recipes = {} } = data;
 
-  const [searchText, setSearchText] = useLocalState(context, 'searchText', '');
+  const [searchText, setSearchText] = useLocalState('searchText', '');
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
@@ -114,7 +122,8 @@ export const StackCrafting = (_props, context) => {
                 mx={1}
               />
             </>
-          }>
+          }
+        >
           {filteredRecipes ? (
             <RecipeListBox recipes={filteredRecipes} />
           ) : (
@@ -131,18 +140,18 @@ const RecipeListBox = (props: RecipeListProps) => {
 
   return (
     <>
-      {Object.keys(recipes).map((title) => {
+      {Object.keys(recipes).map((title, index) => {
         const recipe = recipes[title];
         if (isRecipeList(recipe)) {
           return (
-            <Collapsible ml={1} color="label" title={title}>
+            <Collapsible key={title} ml={1} color="label" title={title}>
               <Box ml={2}>
                 <RecipeListBox recipes={recipe} />
               </Box>
             </Collapsible>
           );
         } else {
-          return <RecipeBox title={title} recipe={recipe} />;
+          return <RecipeBox key={title} title={title} recipe={recipe} />;
         }
       })}
     </>
@@ -157,14 +166,14 @@ const buildMultiplier = (recipe: Recipe, amount: number) => {
   return Math.floor(amount / recipe.req_amount);
 };
 
-const Multipliers = (props: MultiplierProps, context) => {
-  const { act } = useBackend(context);
+const Multipliers = (props: MultiplierProps) => {
+  const { act } = useBackend();
 
   const { recipe, maxMultiplier } = props;
 
   const maxM = Math.min(
     maxMultiplier,
-    Math.floor(recipe.max_res_amount / recipe.res_amount)
+    Math.floor(recipe.max_res_amount / recipe.res_amount),
   );
 
   const multipliers = [5, 10, 25];
@@ -182,7 +191,7 @@ const Multipliers = (props: MultiplierProps, context) => {
               multiplier: multiplier,
             })
           }
-        />
+        />,
       );
     }
   }
@@ -197,15 +206,15 @@ const Multipliers = (props: MultiplierProps, context) => {
             multiplier: maxM,
           })
         }
-      />
+      />,
     );
   }
 
   return <>{finalResult.map((x) => x)}</>;
 };
 
-const RecipeBox = (props: RecipeBoxProps, context) => {
-  const { act, data } = useBackend<StackCraftingProps>(context);
+const RecipeBox = (props: RecipeBoxProps) => {
+  const { act, data } = useBackend<StackCraftingProps>();
 
   const { amount } = data;
 

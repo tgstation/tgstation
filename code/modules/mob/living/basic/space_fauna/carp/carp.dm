@@ -32,6 +32,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
+	melee_attack_cooldown = 1.5 SECONDS
 	response_help_continuous = "pets"
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
@@ -57,7 +58,7 @@
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/carp
+		/datum/pet_command/point_targeting/attack
 	)
 	/// Carp want to eat raw meat
 	var/static/list/desired_food = list(/obj/item/food/meat/slab, /obj/item/food/meat/rawcutlet)
@@ -78,25 +79,6 @@
 		/obj/machinery/vending,
 		/obj/structure/window,
 	))
-	/// Weighted list of colours a carp can be
-	/// Weighted list of usual carp colors
-	var/static/list/carp_colors = list(
-		COLOR_CARP_PURPLE = 7,
-		COLOR_CARP_PINK = 7,
-		COLOR_CARP_GREEN = 7,
-		COLOR_CARP_GRAPE = 7,
-		COLOR_CARP_SWAMP = 7,
-		COLOR_CARP_TURQUOISE = 7,
-		COLOR_CARP_BROWN = 7,
-		COLOR_CARP_TEAL = 7,
-		COLOR_CARP_LIGHT_BLUE = 7,
-		COLOR_CARP_RUSTY = 7,
-		COLOR_CARP_RED = 7,
-		COLOR_CARP_YELLOW = 7,
-		COLOR_CARP_BLUE = 7,
-		COLOR_CARP_PALE_GREEN = 7,
-		COLOR_CARP_SILVER = 1, // The rare silver carp
-	)
 
 /mob/living/basic/carp/Initialize(mapload, mob/tamer)
 	ADD_TRAIT(src, TRAIT_FREE_HYPERSPACE_MOVEMENT, INNATE_TRAIT) //Need to set before init cause if we init in hyperspace we get dragged before the trait can be added
@@ -110,6 +92,7 @@
 	AddElement(/datum/element/ai_flee_while_injured)
 	setup_eating()
 
+	AddComponent(/datum/component/aggro_emote, emote_list = string_list(list("gnashes")))
 	AddComponent(/datum/component/regenerator, outline_colour = regenerate_colour)
 	if (tamer)
 		on_tamed(tamer, feedback = FALSE)
@@ -120,24 +103,20 @@
 	teleport = new(src)
 	teleport.Grant(src)
 	ai_controller.set_blackboard_key(BB_CARP_RIFT, teleport)
-	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETTING_WHITELIST, allowed_obstacle_targets)
-
-
-/mob/living/basic/carp/Destroy()
-	QDEL_NULL(teleport)
-	return ..()
+	ai_controller.set_blackboard_key(BB_OBSTACLE_TARGETING_WHITELIST, allowed_obstacle_targets)
 
 /// Tell the elements and the blackboard what food we want to eat
 /mob/living/basic/carp/proc/setup_eating()
-	AddElement(/datum/element/basic_eating, 10, 0, null, desired_food)
-	AddElement(/datum/element/basic_eating, 0, 10, BRUTE, desired_trash) // We are killing our planet
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, desired_food + desired_trash)
+	AddElement(/datum/element/basic_eating, food_types = desired_food)
+	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 10, damage_type = BRUTE, food_types = desired_trash) // We are killing our planet
+	var/list/foods_list = desired_food + desired_trash
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
 
 /// Set a random colour on the carp, override to do something else
 /mob/living/basic/carp/proc/apply_colour()
 	if (!greyscale_config)
 		return
-	set_greyscale(colors = list(pick_weight(carp_colors)))
+	set_greyscale(colors = list(pick_weight(GLOB.carp_colors)))
 
 /// Called when another mob has forged a bond of friendship with this one, passed the taming mob as 'tamer'
 /mob/living/basic/carp/proc/on_tamed(mob/tamer, feedback = TRUE)
@@ -269,6 +248,7 @@
 
 /mob/living/basic/carp/advanced
 	health = 40
+	maxHealth = 40
 	obj_damage = 15
 
 #undef RARE_CAYENNE_CHANCE

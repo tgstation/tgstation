@@ -6,7 +6,7 @@
 /obj/structure/mannequin
 	name = "mannequin"
 	desc = "Oh, so this is a dress-up game now."
-	icon = 'icons/mob/species/human/mannequin.dmi'
+	icon = 'icons/mob/human/mannequin.dmi'
 	icon_state = "mannequin_wood_male"
 	density = TRUE
 	resistance_flags = FLAMMABLE
@@ -87,7 +87,7 @@
 /obj/structure/mannequin/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/mannequin/update_overlays()
 	. = ..()
@@ -191,6 +191,7 @@
 	desc = "Not to knock over."
 	material = MANNEQUIN_SKELETON
 	anchored = TRUE
+	obj_flags = UNIQUE_RENAME
 	starting_items = list(
 		/obj/item/clothing/glasses/eyepatch,
 		/obj/item/clothing/suit/costume/hawaiian,

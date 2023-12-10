@@ -6,7 +6,7 @@
 /obj/item/veilrender
 	name = "veil render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast city."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bone_blade"
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
@@ -86,7 +86,7 @@
 /obj/item/veilrender/honkrender
 	name = "honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown
+	spawn_type = /mob/living/basic/clown
 	spawn_amt = 10
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of endless laughter."
@@ -97,7 +97,7 @@
 /obj/item/veilrender/honkrender/honkhulkrender
 	name = "superior honk render"
 	desc = "A wicked curved blade of alien origin, recovered from the ruins of a vast circus. This one gleams with a special light."
-	spawn_type = /mob/living/simple_animal/hostile/retaliate/clown/clownhulk
+	spawn_type = /mob/living/basic/clown/clownhulk
 	spawn_amt = 5
 	activate_descriptor = "depression"
 	rend_desc = "Gently wafting with the sounds of mirthful grunting."
@@ -150,7 +150,7 @@
 /obj/tear_in_reality/proc/deranged(mob/living/carbon/C)
 	if(!C || C.stat == DEAD)
 		return
-	C.vomit(0, TRUE, TRUE, 3, TRUE)
+	C.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 3)
 	C.spew_organ(3, 2)
 	C.investigate_log("has died from using telekinesis on a tear in reality.", INVESTIGATE_DEATHS)
 	C.death()
@@ -210,7 +210,7 @@
 /obj/item/necromantic_stone
 	name = "necromantic stone"
 	desc = "A shard capable of resurrecting humans as skeleton thralls."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "necrostone"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -258,7 +258,7 @@
 	target.revive(ADMIN_HEAL_ALL)
 	spooky_scaries |= target
 	to_chat(target, span_userdanger("You have been revived by <B>[user.real_name]</B>!"))
-	to_chat(target, span_userdanger("[user.p_theyre(TRUE)] your master now, assist [user.p_them()] even if it costs you your new life!"))
+	to_chat(target, span_userdanger("[user.p_Theyre()] your master now, assist [user.p_them()] even if it costs you your new life!"))
 	var/datum/antagonist/wizard/antag_datum = user.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(antag_datum)
 		if(!antag_datum.wiz_team)
@@ -311,7 +311,7 @@
 
 //Provides a decent heal, need to pump every 6 seconds
 /obj/item/organ/internal/heart/cursed/wizard
-	pump_delay = 60
+	pump_delay = 6 SECONDS
 	heal_brute = 25
 	heal_burn = 25
 	heal_oxy = 25
@@ -320,7 +320,7 @@
 /obj/item/warp_whistle
 	name = "warp whistle"
 	desc = "Calls a cloud to come pick you up and drop you at a random location on the station."
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/obj/art/musician.dmi'
 	icon_state = "whistle"
 
 	/// Person using the warp whistle
@@ -341,7 +341,7 @@
 /obj/effect/temp_visual/teleporting_tornado
 	name = "tornado"
 	desc = "This thing sucks!"
-	icon = 'icons/obj/wizard.dmi'
+	icon = 'icons/effects/magic.dmi'
 	icon_state = "tornado"
 	layer = FLY_LAYER
 	plane = ABOVE_GAME_PLANE

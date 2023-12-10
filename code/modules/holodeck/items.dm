@@ -75,7 +75,7 @@
 /obj/machinery/readybutton
 	name = "ready declaration device"
 	desc = "This device is used to declare ready. If all devices in an area are ready, the event will begin!"
-	icon = 'icons/obj/monitors.dmi'
+	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "auth_off"
 	var/ready = 0
 	var/area/currentarea = null
@@ -135,7 +135,7 @@
 	eventstarted = TRUE
 
 	for(var/obj/structure/window/W in currentarea)
-		if(W.flags_1&NODECONSTRUCT_1) // Just in case: only holo-windows
+		if(W.obj_flags & NO_DECONSTRUCTION) // Just in case: only holo-windows
 			qdel(W)
 
 	for(var/mob/M in currentarea)

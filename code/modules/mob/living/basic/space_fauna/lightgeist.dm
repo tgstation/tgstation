@@ -21,6 +21,7 @@
 	health = 2
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	melee_attack_cooldown = 5 SECONDS
 	friendly_verb_continuous = "taps"
 	friendly_verb_simple = "tap"
 	density = FALSE
@@ -33,7 +34,7 @@
 	verb_exclaim = "zaps"
 	verb_yell = "bangs"
 	initial_language_holder = /datum/language_holder/lightbringer
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
 	light_range = 4
 	faction = list(FACTION_NEUTRAL)
 	unsuitable_atmos_damage = 0
@@ -65,15 +66,49 @@
 		complete_text = "%TARGET%'s wounds mend together.",\
 	)
 
+/mob/living/basic/lightgeist/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
+	. = ..()
+	if (. && isliving(target))
+		faction |= REF(target) // Anyone we heal will treat us as a friend
 
 /mob/living/basic/lightgeist/ghost()
 	. = ..()
 	if(.)
 		death()
 
-/// This is a bit neutered since these aren't intended to exist outside of player control, but it's a bit weird to just have these guys be completely stationary.
-/// No attacking or anything like that, though. Just something so they seem alive.
 /datum/ai_controller/basic_controller/lightgeist
+	blackboard = list(
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/lightgeist,
+	)
+
 	ai_traits = STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
+
+	planning_subtrees = list(
+		/datum/ai_planning_subtree/simple_find_target,
+		/datum/ai_planning_subtree/basic_melee_attack_subtree, // We heal things by attacking them
+	)
+
+/// Attack only mobs who have damage that we can heal, I think this is specific enough not to be a generic type
+/datum/targeting_strategy/lightgeist
+	/// Types of mobs we can heal, not in a blackboard key because there is no point changing this at runtime because the component will already exist
+	var/heal_biotypes = MOB_ORGANIC | MOB_MINERAL
+	/// Type of limb we can heal
+	var/required_bodytype = BODYTYPE_ORGANIC
+
+/datum/targeting_strategy/lightgeist/can_attack(mob/living/living_mob, mob/living/target, vision_range)
+	if (!isliving(target) || target.stat == DEAD)
+		return FALSE
+	if (!(heal_biotypes & target.mob_biotypes))
+		return FALSE
+	if (!iscarbon(target))
+		return target.getBruteLoss() > 0 || target.getFireLoss() > 0
+	var/mob/living/carbon/carbon_target = target
+	for (var/obj/item/bodypart/part in carbon_target.bodyparts)
+		if (!part.brute_dam && !part.burn_dam)
+			continue
+		if (!(part.bodytype & required_bodytype))
+			continue
+		return TRUE
+	return FALSE

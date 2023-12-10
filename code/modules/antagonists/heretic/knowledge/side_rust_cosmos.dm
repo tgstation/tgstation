@@ -18,6 +18,28 @@
 	cost = 1
 	route = PATH_SIDE
 
+/datum/heretic_knowledge/entropy_pulse
+	name = "Pulse of Entropy"
+	desc = "Allows you to transmute 20 irons and 2 garbage items to fill the surrounding vicinity of the rune with rust."
+	gain_text = "Reality begins to whisper to me. To give it its entropic end."
+	required_atoms = list(
+		/obj/item/stack/sheet/iron = 20,
+		/obj/item/trash = 2
+	)
+	cost = 0
+	route = PATH_SIDE
+	var/rusting_range = 4
+
+/datum/heretic_knowledge/entropy_pulse/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	for(var/turf/nearby_turf in view(rusting_range, loc))
+		if(get_dist(nearby_turf, loc) <= 1) //tiles on rune should always be rusted
+			nearby_turf.rust_heretic_act()
+		//we exclude closed turf to avoid exposing cultist bases
+		if(prob(20) || isclosedturf(nearby_turf))
+			continue
+		nearby_turf.rust_heretic_act()
+	return TRUE
+
 /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
 	desc = "Allows you to transmute wirecutters, a pool of vomit, and a heart to cast a curse of sickness on a crew member. \
@@ -66,9 +88,10 @@
 		/obj/item/book = 1,
 		/obj/item/bodypart/head = 1,
 	)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
+	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1
 	route = PATH_SIDE
+	poll_ignore_define = POLL_IGNORE_RUST_SPIRIT
 
 /datum/heretic_knowledge/summon/rusty/cleanup_atoms(list/selected_atoms)
 	var/obj/item/bodypart/head/ritual_head = locate() in selected_atoms

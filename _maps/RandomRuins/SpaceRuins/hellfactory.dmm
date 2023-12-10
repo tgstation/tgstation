@@ -335,28 +335,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/hellfactoryoffice)
-"bg" = (
-/obj/machinery/modular_computer/preset/civilian,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hellfactory)
-"bh" = (
-/obj/machinery/light/directional/north,
-/obj/item/chair/plastic{
-	pixel_y = 4
-	},
-/obj/item/chair/plastic{
-	pixel_y = 8
-	},
-/obj/item/chair/plastic{
-	pixel_y = 12
-	},
-/obj/structure/rack,
-/turf/open/floor/iron,
-/area/ruin/space/has_grav/hellfactory)
-"bi" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
 "bj" = (
 /obj/structure/grille,
 /turf/open/floor/plating,
@@ -576,10 +554,6 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
-"bY" = (
-/obj/machinery/light/small/directional/west,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
 "bZ" = (
 /obj/machinery/door/puzzle/keycard/stockroom,
 /turf/open/floor/iron/dark,
@@ -730,11 +704,6 @@
 /obj/item/stack/tile/iron/base,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/hellfactory)
-"cC" = (
-/obj/machinery/light/directional/east,
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
 "cD" = (
 /obj/structure/ore_box,
 /obj/effect/turf_decal/delivery/white,
@@ -828,6 +797,16 @@
 /obj/structure/window/spawner/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
+"dm" = (
+/obj/structure/cable,
+/obj/machinery/light/floor/broken,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
+"gu" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/bot_white/left,
+/turf/open/floor/iron/dark,
+/area/ruin/space/has_grav/hellfactory)
 "hk" = (
 /obj/machinery/atmospherics/components/tank/water_vapor{
 	dir = 8
@@ -847,10 +826,18 @@
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/iron/checker,
 /area/ruin/space/has_grav/hellfactory)
-"lR" = (
-/obj/machinery/light/floor,
-/obj/effect/turf_decal/bot_white/right,
-/turf/open/floor/iron/dark,
+"lP" = (
+/obj/item/chair/plastic{
+	pixel_y = 4
+	},
+/obj/item/chair/plastic{
+	pixel_y = 8
+	},
+/obj/item/chair/plastic{
+	pixel_y = 12
+	},
+/obj/structure/rack,
+/turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "nd" = (
 /obj/structure/sign/warning/vacuum,
@@ -875,9 +862,8 @@
 /obj/structure/sign/poster/random/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
-"pT" = (
-/obj/machinery/light/built/directional/south,
-/obj/structure/marker_beacon/burgundy,
+"po" = (
+/obj/machinery/light/floor/broken,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "qK" = (
@@ -885,14 +871,12 @@
 /obj/effect/spawner/random/exotic/languagebook,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
-"ry" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/floor,
-/obj/effect/turf_decal/bot_white/left,
-/turf/open/floor/iron/dark,
-/area/ruin/space/has_grav/hellfactory)
 "sk" = (
 /obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
+"ux" = (
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "uL" = (
@@ -942,6 +926,10 @@
 /obj/structure/sign/warning/chem_diamond,
 /turf/closed/wall,
 /area/ruin/space/has_grav/hellfactory)
+"KZ" = (
+/obj/machinery/modular_computer/preset/civilian,
+/turf/open/floor/iron,
+/area/ruin/space/has_grav/hellfactory)
 "Ns" = (
 /obj/structure/closet/crate,
 /obj/machinery/conveyor/auto{
@@ -977,12 +965,6 @@
 "Sz" = (
 /obj/effect/decal/cleanable/oil,
 /turf/open/floor/plating,
-/area/ruin/space/has_grav/hellfactory)
-"SF" = (
-/obj/machinery/light/broken/directional/south,
-/obj/structure/marker_beacon/burgundy,
-/obj/structure/cable,
-/turf/open/floor/iron,
 /area/ruin/space/has_grav/hellfactory)
 "UK" = (
 /obj/effect/decal/cleanable/oil/streak,
@@ -1229,7 +1211,7 @@ aA
 aA
 bL
 aA
-pT
+po
 cE
 aW
 Vd
@@ -1251,7 +1233,7 @@ bx
 bE
 by
 by
-bY
+by
 by
 by
 by
@@ -1271,7 +1253,7 @@ ao
 ao
 aF
 ah
-bh
+lP
 aA
 bp
 cV
@@ -1280,7 +1262,7 @@ Wh
 BC
 oJ
 Zq
-ry
+gu
 by
 by
 cv
@@ -1298,15 +1280,15 @@ ao
 aG
 Yd
 ah
-bg
-aA
+KZ
+ux
 bL
 aA
 Wh
 Wh
 oJ
-by
-by
+oJ
+oJ
 oJ
 Wh
 by
@@ -1331,7 +1313,7 @@ aW
 VN
 by
 by
-lR
+oJ
 oJ
 oJ
 uL
@@ -1362,7 +1344,7 @@ cq
 cz
 cq
 cz
-cC
+cq
 cP
 cy
 cJ
@@ -1391,7 +1373,7 @@ aL
 ca
 aL
 cq
-SF
+dm
 cE
 ac
 Vd
@@ -1460,7 +1442,7 @@ aE
 aP
 aP
 ah
-bi
+by
 aB
 aW
 ac
@@ -1594,8 +1576,8 @@ at
 GE
 aL
 GE
-aZ
 aB
+aZ
 aB
 aL
 by

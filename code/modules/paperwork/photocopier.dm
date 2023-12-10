@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier
 	name = "photocopier"
 	desc = "Used to copy important documents and anatomy studies."
-	icon = 'icons/obj/library.dmi'
+	icon = 'icons/obj/service/library.dmi'
 	icon_state = "photocopier"
 	density = TRUE
 	power_channel = AREA_USAGE_EQUIP
@@ -91,27 +91,25 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	. = ..()
 	toner_cartridge = new(src)
 	setup_components()
+	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
 /// Simply adds the necessary components for this to function.
 /obj/machinery/photocopier/proc/setup_components()
 	AddComponent(/datum/component/payment, PHOTOCOPIER_FEE, SSeconomy.get_dep_account(ACCOUNT_CIV), PAYMENT_CLINICAL)
 
-/obj/machinery/photocopier/handle_atom_del(atom/deleting_atom)
-	if(deleting_atom == object_copy)
+/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == object_copy)
 		object_copy = null
-	if(deleting_atom == ass)
-		ass = null
-	if(deleting_atom == toner_cartridge)
+	if(gone == toner_cartridge)
 		toner_cartridge = null
-	if(deleting_atom in paper_stack)
-		paper_stack -= deleting_atom
-	return ..()
+	if(gone in paper_stack)
+		paper_stack -= gone
 
 /obj/machinery/photocopier/Destroy()
 	// object_copy can be a traitor objective, don't qdel
 	if(object_copy)
 		object_copy.forceMove(drop_location())
-		object_copy = null
 
 	QDEL_NULL(toner_cartridge)
 	QDEL_LIST(paper_stack)
@@ -538,7 +536,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
@@ -623,10 +621,6 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 			visible_message(span_warning("[object_copy] is shoved out of the way by [ass]!"))
 			object_copy = null
 
-/obj/machinery/photocopier/Exited(atom/movable/gone, direction)
-	check_ass() // There was potentially a person sitting on the copier, check if they're still there.
-	return ..()
-
 /**
  * Checks the living mob `ass` exists and its location is the same as the photocopier.
  *
@@ -680,7 +674,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/item/toner
 	name = "toner cartridge"
 	desc = "A small, lightweight cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5

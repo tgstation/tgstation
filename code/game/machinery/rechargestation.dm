@@ -1,7 +1,7 @@
 /obj/machinery/recharge_station
 	name = "recharging station"
 	desc = "This device recharges energy dependent lifeforms, like cyborgs, ethereals and MODsuit users."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/machines/borg_charger.dmi'
 	icon_state = "borgcharger0"
 	density = FALSE
 	req_access = list(ACCESS_ROBOTICS)
@@ -21,7 +21,6 @@
 
 	materials = AddComponent(
 		/datum/component/remote_materials, \
-		"charger", \
 		mapload, \
 		mat_container_flags = MATCONTAINER_NO_INSERT, \
 	)
@@ -157,4 +156,7 @@
 /obj/machinery/recharge_station/proc/process_occupant(seconds_per_tick)
 	if(!occupant)
 		return
-	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, recharge_speed * seconds_per_tick / 2, repairs, sendmats)
+	var/main_draw = use_power_from_net(recharge_speed * seconds_per_tick, take_any = TRUE) //Pulls directly from the Powernet to dump into the cell
+	if(!main_draw)
+		return
+	SEND_SIGNAL(occupant, COMSIG_PROCESS_BORGCHARGER_OCCUPANT, main_draw, repairs, sendmats)

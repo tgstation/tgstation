@@ -37,12 +37,12 @@
 	. = ..()
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/ai_retaliate)
-	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_NO_MIRROR_REFLECTION), INNATE_TRAIT)
 
 ///Controller for space bats, has nothing unique, just retaliation.
 /datum/ai_controller/basic_controller/space_bat
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/ignore_faction(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

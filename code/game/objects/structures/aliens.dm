@@ -38,11 +38,11 @@
 /obj/structure/alien/gelpod
 	name = "gelatinous mound"
 	desc = "A mound of jelly-like substance encasing something inside."
-	icon = 'icons/obj/fluff.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "gelmound"
 
 /obj/structure/alien/gelpod/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/effect/mob_spawn/corpse/human/damaged(get_turf(src))
 	qdel(src)
 
@@ -447,7 +447,7 @@
 
 /obj/structure/alien/egg/atom_break(damage_flag)
 	. = ..()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(status != BURST)
 			Burst(kill=TRUE)
 

@@ -2,11 +2,12 @@
 /obj/machinery/pdapainter
 	name = "\improper Tablet & ID Painter"
 	desc = "A painting machine that can be used to paint PDAs and trim IDs. To use, simply insert the item and choose the desired preset."
-	icon = 'icons/obj/pda.dmi'
+	icon = 'icons/obj/machines/pda.dmi'
 	icon_state = "pdapainter"
 	base_icon_state = "pdapainter"
 	density = TRUE
 	max_integrity = 200
+	integrity_failure = 0.5
 	/// Current ID card inserted into the machine.
 	var/obj/item/card/id/stored_id_card = null
 	/// Current PDA inserted into the machine.
@@ -93,11 +94,12 @@
 			if(stored_id_card)
 				SSexplosions.low_mov_atom += stored_id_card
 
-/obj/machinery/pdapainter/handle_atom_del(atom/A)
-	if(A == stored_pda)
+/obj/machinery/pdapainter/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == stored_pda)
 		stored_pda = null
 		update_appearance(UPDATE_ICON)
-	if(A == stored_id_card)
+	if(gone == stored_id_card)
 		stored_id_card = null
 		update_appearance(UPDATE_ICON)
 
@@ -105,7 +107,7 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool))
 		power_change()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/pdapainter/attackby(obj/item/O, mob/living/user, params)
 	if(machine_stat & BROKEN)
@@ -158,9 +160,6 @@
 	else
 		eject_id_card(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
-/obj/machinery/pdapainter/deconstruct(disassembled = TRUE)
-	atom_break()
 
 /**
  * Insert a PDA into the machine.
@@ -335,6 +334,12 @@
 			stored_pda.icon_state = initial(pda_path.icon_state)
 			stored_pda.desc = initial(pda_path.desc)
 
+			return TRUE
+		if("reset_pda")
+			if((machine_stat & BROKEN) || !stored_pda)
+				return TRUE
+
+			stored_pda.reset_imprint()
 			return TRUE
 		if("trim_card")
 			if((machine_stat & BROKEN) || !stored_id_card)

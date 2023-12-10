@@ -2,7 +2,7 @@
 	name = "Bot pad controller"
 	desc = "Use this device to control the connected bot pad."
 	desc_controls = "Left-click for launch, right-click for recall."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "botpad_controller"
 	w_class = WEIGHT_CLASS_SMALL
 	// ID of the remote, used for linking up
@@ -40,7 +40,7 @@
 			connected_botpad = buffered_remote
 			connected_botpad.connected_remote = src
 			connected_botpad.id = id
-			multitool.buffer = null
+			multitool.set_buffer(null)
 			to_chat(user, span_notice("You connect the controller to the pad with data from the [multitool.name]'s buffer."))
 		else
 			to_chat(user, span_warning("Unable to upload!"))

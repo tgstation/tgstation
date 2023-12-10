@@ -1,6 +1,6 @@
 /*An alternative to exit gateways, signposts send you back to somewhere safe onstation with their semiotic magic.*/
 /obj/structure/signpost
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/fluff/general.dmi'
 	icon_state = "signpost"
 	anchored = TRUE
 	density = TRUE

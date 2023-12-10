@@ -6,10 +6,6 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
-"c" = (
-/obj/machinery/light/directional/north,
-/turf/open/floor/iron/white,
-/area/ruin/space/djstation)
 "e" = (
 /obj/structure/lattice,
 /obj/effect/spawner/random/structure/grille,
@@ -42,25 +38,24 @@
 /obj/item/storage/bag/tray,
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
-"j" = (
-/obj/machinery/light/directional/south,
-/turf/open/floor/iron/white,
-/area/ruin/space/djstation)
-"k" = (
-/obj/structure/closet/secure_closet/freezer/meat/all_access,
-/turf/open/floor/iron/freezer,
-/area/ruin/space/djstation)
 "r" = (
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/ruin/space/djstation)
+"s" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/mining{
+	req_access = null
+	},
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
+"t" = (
+/obj/structure/closet/secure_closet/freezer/fridge/all_access,
+/obj/machinery/light/directional/north,
+/turf/open/floor/iron/freezer,
+/area/ruin/space/djstation)
 "z" = (
 /obj/machinery/oven/range,
 /turf/open/floor/iron/white,
-/area/ruin/space/djstation)
-"A" = (
-/obj/structure/closet/secure_closet/freezer/fridge/all_access,
-/turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "F" = (
 /obj/structure/table,
@@ -99,12 +94,6 @@
 /obj/item/book/manual/wiki/cooking_to_serve_man,
 /turf/open/floor/iron/white,
 /area/ruin/space/djstation)
-"Q" = (
-/obj/structure/closet/secure_closet/freezer/kitchen/mining{
-	req_access = null
-	},
-/turf/open/floor/iron/freezer,
-/area/ruin/space/djstation)
 "R" = (
 /obj/structure/table,
 /obj/item/reagent_containers/condiment/enzyme{
@@ -117,6 +106,10 @@
 	spawn_random_offset = 1
 	},
 /turf/open/floor/iron/white,
+/area/ruin/space/djstation)
+"S" = (
+/obj/structure/closet/secure_closet/freezer/meat/all_access,
+/turf/open/floor/iron/freezer,
 /area/ruin/space/djstation)
 "T" = (
 /obj/machinery/door/airlock/public/glass{
@@ -195,7 +188,7 @@ a
 e
 b
 L
-Q
+s
 h
 W
 W
@@ -209,7 +202,7 @@ I
 e
 a
 L
-A
+t
 f
 W
 R
@@ -223,7 +216,7 @@ b
 e
 b
 L
-k
+S
 h
 W
 i
@@ -239,10 +232,10 @@ a
 L
 L
 L
-c
+W
 O
 J
-j
+W
 L
 L
 b

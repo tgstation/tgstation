@@ -10,12 +10,12 @@
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/organ/internal/brain/psyker/on_insert(mob/living/carbon/inserted_into)
+/obj/item/organ/internal/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from)
+/obj/item/organ/internal/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
@@ -36,7 +36,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
-	head_flags = HEAD_LIPS|HEAD_EYEHOLES|HEAD_DEBRAIN
+	head_flags = HEAD_DEBRAIN
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()
@@ -82,9 +82,9 @@
 	qdel(old_head)
 	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
-	old_brain.Remove(src, special = TRUE, no_id_transfer = TRUE)
+	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
-	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
+	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(old_eyes)
 		qdel(old_eyes)
 	return TRUE
@@ -129,7 +129,7 @@
 	icon_state = "lucky"
 	force = 10
 	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
-	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/cylinder/revchap
 	obj_flags = UNIQUE_RENAME
 	custom_materials = null
 	actions_types = list(/datum/action/item_action/pray_refill)
@@ -183,7 +183,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 25)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25)
 	name = pick(possible_names)
 	desc = possible_names[name]
 
@@ -303,7 +303,7 @@
 	id = "psychic_projection"
 	alert_type = null
 	remove_on_fullheal = TRUE
-	tick_interval = 0.1 SECONDS
+	tick_interval = 0.2 SECONDS
 	/// Times the target has dry fired a weapon.
 	var/times_dry_fired = 0
 	/// Needs to reach times_dry_fired for the next dry fire to happen.
@@ -328,7 +328,7 @@
 	game_plane_master_controller.remove_filter("psychic_blur")
 	game_plane_master_controller.remove_filter("psychic_wave")
 
-/datum/status_effect/psychic_projection/tick(seconds_per_tick, times_fired)
+/datum/status_effect/psychic_projection/tick(seconds_between_ticks)
 	var/obj/item/gun/held_gun = owner?.is_holding_item_of_type(/obj/item/gun)
 	if(!held_gun)
 		return

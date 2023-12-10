@@ -4,6 +4,7 @@
 	desc = "A state-of-the-art implant that improves a baseline's functionality."
 	visual = FALSE
 	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
 	var/implant_color = "#FFFFFF"
 	var/implant_overlay
 
@@ -86,7 +87,7 @@
 	stored_items = list()
 
 
-/obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special = 0)
+/obj/item/organ/internal/cyberimp/brain/anti_drop/Remove(mob/living/carbon/implant_owner, special, movement_flags)
 	if(active)
 		ui_action_click()
 	..()
@@ -112,11 +113,11 @@
 
 	var/stun_cap_amount = 40
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/on_remove(mob/living/carbon/implant_owner)
+/obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_remove(mob/living/carbon/implant_owner)
 	. = ..()
 	UnregisterSignal(implant_owner, signalCache)
 
-/obj/item/organ/internal/cyberimp/brain/anti_stun/on_insert(mob/living/carbon/receiver)
+/obj/item/organ/internal/cyberimp/brain/anti_stun/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	RegisterSignals(receiver, signalCache, PROC_REF(on_signal))
 
@@ -167,15 +168,8 @@
 	name = "boxed cybernetic implants"
 	desc = "A sleek, sturdy box."
 	icon_state = "cyber_implants"
-	var/list/boxed = list(
-		/obj/item/autosurgeon/syndicate/thermal_eyes,
-		/obj/item/autosurgeon/syndicate/xray_eyes,
-		/obj/item/autosurgeon/syndicate/anti_stun,
-		/obj/item/autosurgeon/syndicate/reviver)
-	var/amount = 5
 
 /obj/item/storage/box/cyber_implants/PopulateContents()
-	var/implant
-	while(contents.len <= amount)
-		implant = pick(boxed)
-		new implant(src)
+	new /obj/item/autosurgeon/syndicate/xray_eyes(src)
+	new /obj/item/autosurgeon/syndicate/anti_stun(src)
+	new /obj/item/autosurgeon/syndicate/reviver(src)

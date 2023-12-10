@@ -6,10 +6,10 @@
 	agent = "Atmobacter Polyri"
 	cures = list(/datum/reagent/firefighting_foam)
 	viable_mobtypes = list(/mob/living/carbon/human)
-	required_organs = list(/obj/item/organ/internal/stomach)
 	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
 	severity = DISEASE_SEVERITY_HARMFUL
 	max_stages = 5
+	required_organ = ORGAN_SLOT_STOMACH
 	/// The chance of burped out tritium to be hot during max stage
 	var/tritium_burp_hot_chance = 10
 
@@ -21,6 +21,9 @@
 	cures = list(pick(cures))
 	var/datum/reagent/cure = GLOB.chemical_reagents_list[cures[1]]
 	cure_text = cure.name
+
+/datum/disease/advance/gastritium/GetDiseaseID()
+	return "[type]"
 
 /datum/disease/advance/gastritium/stage_act(seconds_per_tick, times_fired)
 	. = ..()

@@ -4,7 +4,7 @@
 /obj/machinery/power/singularity_beacon
 	name = "ominous beacon"
 	desc = "This looks suspicious..."
-	icon = 'icons/obj/engine/singularity.dmi'
+	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "beacon0"
 
 	anchored = FALSE
@@ -114,7 +114,7 @@
 // SINGULO BEACON SPAWNER
 /obj/item/sbeacondrop
 	name = "suspicious beacon"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
@@ -146,3 +146,7 @@
 /obj/item/sbeacondrop/clownbomb
 	desc = "A label on it reads: <i>Warning: Activating this device will send a silly explosive to your location</i>."
 	droptype = /obj/machinery/syndicatebomb/badmin/clown
+
+/obj/item/sbeacondrop/horse
+	desc = "A label on it reads: <i>Warning: Activating this device will send a live horse to your location.</i>"
+	droptype = /mob/living/basic/pony/syndicate

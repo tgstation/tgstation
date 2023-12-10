@@ -1,14 +1,14 @@
 // Knife Template, should not appear in game normaly //
 /obj/item/knife
 	name = "knife"
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/kitchen_righthand.dmi'
 	inhand_icon_state = "knife"
 	worn_icon_state = "knife"
 	desc = "The original knife, it is said that all other knives are only copies of this one."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 10
 	demolition_mod = 0.75
 	w_class = WEIGHT_CLASS_SMALL
@@ -53,7 +53,7 @@
 /obj/item/knife/ritual
 	name = "ritual knife"
 	desc = "The unearthly energies that once powered this blade are now dormant."
-	icon = 'icons/obj/eldritch.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bone_blade"
 	inhand_icon_state = "bone_blade"
 	worn_icon_state = "bone_blade"
@@ -62,12 +62,15 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	item_flags = CRUEL_IMPLEMENT //maybe they want to use it in surgery
+	force = 15
+	throwforce = 15
+	wound_bonus = 20
 	w_class = WEIGHT_CLASS_NORMAL
 
 /obj/item/knife/bloodletter
 	name = "bloodletter"
 	desc = "An occult looking dagger that is cold to the touch. Somehow, the flawless orb on the pommel is made entirely of liquid blood."
-	icon = 'icons/obj/ice_moon/artifacts.dmi'
+	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "bloodletter"
 	worn_icon_state = "render"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -92,7 +95,7 @@
 	icon_state = "butch"
 	inhand_icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 10
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
@@ -104,6 +107,7 @@
 
 /obj/item/knife/hunting
 	name = "hunting knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	desc = "Despite its name, it's mainly used for cutting meat from dead prey rather than actual hunting."
 	inhand_icon_state = "huntingknife"
 	icon_state = "huntingknife"
@@ -118,6 +122,7 @@
 
 /obj/item/knife/combat
 	name = "combat knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "buckknife"
 	desc = "A military combat utility survival knife."
 	embedding = list("pain_mult" = 4, "embed_chance" = 65, "fall_chance" = 10, "ignore_throwspeed_threshold" = TRUE)
@@ -129,6 +134,7 @@
 
 /obj/item/knife/combat/survival
 	name = "survival knife"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "survivalknife"
 	embedding = list("pain_mult" = 4, "embed_chance" = 35, "fall_chance" = 10)
 	desc = "A hunting grade survival knife."
@@ -139,6 +145,7 @@
 /obj/item/knife/combat/bone
 	name = "bone dagger"
 	inhand_icon_state = "bone_dagger"
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "bone_dagger"
 	worn_icon_state = "bone_dagger"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -150,7 +157,7 @@
 	custom_materials = null
 
 /obj/item/knife/combat/bone/Initialize(mapload)
-	flags_1 &= ~CONDUCT_1
+	flags_1 &= ~CONDUCTS_ELECTRICITY
 	return ..()
 
 /obj/item/knife/combat/cyborg
@@ -161,7 +168,7 @@
 
 /obj/item/knife/shiv
 	name = "glass shiv"
-	icon = 'icons/obj/shards.dmi'
+	icon = 'icons/obj/weapons/stabby.dmi'
 	icon_state = "shiv"
 	inhand_icon_state = "shiv"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -175,7 +182,7 @@
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/knife/shiv/Initialize(mapload)
-	flags_1 &= ~CONDUCT_1
+	flags_1 &= ~CONDUCTS_ELECTRICITY
 	return ..()
 
 /obj/item/knife/shiv/plasma
@@ -244,7 +251,6 @@
 	name = "carrot shiv"
 	icon_state = "carrotshiv"
 	inhand_icon_state = "carrotshiv"
-	icon = 'icons/obj/kitchen.dmi'
 	desc = "Unlike other carrots, you should probably keep this far away from your eyes."
 	custom_materials = null
 

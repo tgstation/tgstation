@@ -1,5 +1,9 @@
 #define LOCKER_FULL -1
 
+///A comprehensive list of all closets (NOT CRATES) in the game world
+GLOBAL_LIST_EMPTY(roundstart_station_closets)
+
+
 /obj/structure/closet
 	name = "closet"
 	desc = "It's a basic storage unit."
@@ -15,19 +19,20 @@
 	contents_pressure_protection = 0
 	/// How insulated the thing is, for the purposes of calculating body temperature. Must be between 0 and 1!
 	contents_thermal_insulation = 0
+	pass_flags_self = PASSSTRUCTURE | LETPASSCLICKS
 
 	/// The overlay for the closet's door
 	var/obj/effect/overlay/closet_door/door_obj
 	/// Whether or not this door is being animated
 	var/is_animating_door = FALSE
 	/// Vertical squish of the door
-	var/door_anim_squish = 0.12
+	var/door_anim_squish = 0.2
 	/// The maximum angle the door will be drawn at
-	var/door_anim_angle = 136
-	/// X position of the closet door hinge
+	var/door_anim_angle = 140
+	/// X position of the closet door hinge, relative to the center of the sprite
 	var/door_hinge_x = -6.5
 	/// Amount of time it takes for the door animation to play
-	var/door_anim_time = 1.5 // set to 0 to make the door not animate at all
+	var/door_anim_time = 2 // set to 0 to make the door not animate at all
 	/// Paint jobs for this closet, crates are a subtype of closet so they override these values
 	var/list/paint_jobs = TRUE
 	/// Controls whether a door overlay should be applied using the icon_door value as the icon state
@@ -60,6 +65,7 @@
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
+	var/icon_broken = "sparking"
 	/// Whether a skittish person can dive inside this closet. Disable if opening the closet causes "bad things" to happen or that it leads to a logical inconsistency.
 	var/divable = TRUE
 	/// true whenever someone with the strong pull component (or magnet modsuit module) is dragging this, preventing opening
@@ -119,6 +125,9 @@
 	if(access_choices)
 		access_choices = card_reader_choices
 
+	if(is_station_level(z) && mapload)
+		add_to_roundstart_list()
+
 	// if closed, any item at the crate's loc is put in the contents
 	if (mapload && !opened)
 		. = INITIALIZE_HINT_LATELOAD
@@ -154,6 +163,7 @@
 /obj/structure/closet/Destroy()
 	id_card = null
 	QDEL_NULL(door_obj)
+	GLOB.roundstart_station_closets -= src
 	return ..()
 
 /obj/structure/closet/update_appearance(updates=ALL)
@@ -189,6 +199,11 @@
 
 	if(welded)
 		. += icon_welded
+
+	if(broken && secure)
+		. += mutable_appearance(icon, icon_broken, alpha = alpha)
+		. += emissive_appearance(icon, icon_broken, src, alpha = alpha)
+		return
 
 	if(broken || !secure)
 		return
@@ -521,7 +536,7 @@
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		if(ispath(material_drop) && material_drop_amount)
 			new material_drop(loc, material_drop_amount)
 		if (secure)
@@ -538,7 +553,7 @@
 
 /obj/structure/closet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		bust_open()
 
 /obj/structure/closet/CheckParts(list/parts_list)
@@ -637,7 +652,7 @@
 
 	return TRUE
 
-/// returns TRUE if attackBy call shouldn't be continued (because tool weaponas used/closet weaponas of weaponrong type), FALSE if otherweaponise
+/// returns TRUE if attackBy call shouldn't be continued (because tool was used/closet was of wrong type), FALSE if otherwise
 /obj/structure/closet/proc/tool_interact(obj/item/weapon, mob/living/user)
 	. = TRUE
 	var/obj/item/card/id/id = null
@@ -734,11 +749,11 @@
 
 		id_card = null
 		switch(choice)
-			if("Personal") //only the player weaponho sweaponiped their id has access.
+			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(id)
 				name = "[id.registered_name] locker"
 				desc = "now owned by [id.registered_name]. [initial(desc)]"
-			if("Departmental") //anyone weaponho has the same access permissions as this id has access
+			if("Departmental") //anyone who has the same access permissions as this id has access
 				name = "[id.assignment] closet"
 				desc = "Its a [id.assignment] closet. [initial(desc)]"
 				set_access(id.GetAccess())
@@ -795,18 +810,18 @@
 					if(!opened)
 						return
 					user.visible_message(span_notice("[user] slices apart \the [src]."),
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."),
-									span_hear("You hear weaponelding."))
+									span_notice("You cut \the [src] apart with \the [weapon]."),
+									span_hear("You hear welding."))
 					deconstruct(TRUE)
 				return
-			else // for example cardboard box is cut weaponith weaponirecutters
+			else // for example cardboard box is cut with wirecutters
 				user.visible_message(span_notice("[user] cut apart \the [src]."), \
-									span_notice("You cut \the [src] apart weaponith \the [weapon]."))
+									span_notice("You cut \the [src] apart with \the [weapon]."))
 				deconstruct(TRUE)
 				return
 		if (user.combat_mode)
 			return
-		if(user.transferItemToLoc(weapon, drop_location())) // so weapone put in unlit weaponelder too
+		if(user.transferItemToLoc(weapon, drop_location())) // so we put in unlit welder too
 			return
 
 	else if(weapon.tool_behaviour == TOOL_WELDER && can_weld_shut)
@@ -1052,16 +1067,16 @@
 	)
 	update_appearance()
 
-/obj/structure/closet/emag_act(mob/user)
+/obj/structure/closet/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(secure && !broken)
-		if(user)
-			user.visible_message(span_warning("Sparks fly from [src]!"),
-							span_warning("You scramble [src]'s lock, breaking it open!"),
-							span_hear("You hear a faint electrical spark."))
+		visible_message(span_warning("Sparks fly from [src]!"), blind_message = span_hear("You hear a faint electrical spark."))
+		balloon_alert(user, "lock broken open")
 		playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		broken = TRUE
 		locked = FALSE
 		update_appearance()
+		return TRUE
+	return FALSE
 
 /obj/structure/closet/get_remote_view_fullscreens(mob/user)
 	if(user.stat == DEAD || !(user.sight & (SEEOBJS|SEEMOBS)))
@@ -1132,7 +1147,7 @@
 	return COMSIG_CARBON_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
-/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, mob/living/caster)
+/obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, atom/caster)
 	SIGNAL_HANDLER
 
 	locked = FALSE
@@ -1140,5 +1155,9 @@
 
 /obj/structure/closet/preopen
 	opened = TRUE
+
+///Adds the closet to a global list. Placed in its own proc so that crates may be excluded.
+/obj/structure/closet/proc/add_to_roundstart_list()
+	GLOB.roundstart_station_closets += src
 
 #undef LOCKER_FULL

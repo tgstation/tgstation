@@ -62,7 +62,7 @@
 	if(!istype(simple_pawn))
 		return
 
-	return simple_pawn.access_card
+	return simple_pawn.access_card.GetAccess()
 
 /datum/ai_controller/hostile_friend/proc/on_ridden_driver_move(atom/movable/movable_parent, mob/living/user, direction)
 	SIGNAL_HANDLER
@@ -96,7 +96,7 @@
 
 	var/mob/living/living_pawn = pawn
 	if(!IS_DEAD_OR_INCAP(living_pawn))
-		examine_text += span_notice("[pawn.p_they(TRUE)] seem[pawn.p_s()] happy to see you!")
+		examine_text += span_notice("[pawn.p_They()] seem[pawn.p_s()] happy to see you!")
 
 // next section is regarding commands
 

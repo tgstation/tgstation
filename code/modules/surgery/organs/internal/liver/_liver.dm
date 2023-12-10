@@ -1,7 +1,7 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_RESISTANCE 1 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
-#define MAX_TOXIN_LIVER_DAMAGE 2 //the max damage the liver can recieve per second (~1 min at max damage will destroy liver)
+#define MAX_TOXIN_LIVER_DAMAGE 2 //the max damage the liver can receive per second (~1 min at max damage will destroy liver)
 
 /obj/item/organ/internal/liver
 	name = "liver"
@@ -61,12 +61,12 @@
 	qdel(GetComponent(/datum/component/squeak))
 
 /// Registers COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/internal/liver/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/liver/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL, PROC_REF(handle_chemical))
 
 /// Unregisters COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/internal/liver/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/liver/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL)
 
@@ -83,7 +83,7 @@
 /obj/item/organ/internal/liver/examine(mob/user)
 	. = ..()
 
-	if(HAS_TRAIT(user, TRAIT_ENTRAILS_READER) || (user.mind && HAS_TRAIT(user.mind, TRAIT_ENTRAILS_READER)) || isobserver(user))
+	if(HAS_MIND_TRAIT(user, TRAIT_ENTRAILS_READER) || isobserver(user))
 		if(HAS_TRAIT(src, TRAIT_LAW_ENFORCEMENT_METABOLISM))
 			. += span_info("Fatty deposits and sprinkle residue, imply that this is the liver of someone in <em>security</em>.")
 		if(HAS_TRAIT(src, TRAIT_CULINARY_METABOLISM))
@@ -134,7 +134,7 @@
 		return
 
 	var/obj/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	var/list/cached_reagents = owner.reagents.reagent_list
+	var/list/cached_reagents = owner.reagents?.reagent_list
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
 
@@ -147,12 +147,12 @@
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
 			// a 15u syringe is a nice baseline to scale lethality by
-			liver_damage += ((amount/15) * toxin.toxpwr) / liver_resistance
+			liver_damage += ((amount/15) * toxin.toxpwr * toxin.liver_damage_multiplier) / liver_resistance
 
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
-	owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
+	owner.reagents?.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
 
 	if(liver_damage)
 		apply_organ_damage(min(liver_damage * seconds_per_tick , MAX_TOXIN_LIVER_DAMAGE * seconds_per_tick))
@@ -172,18 +172,18 @@
 			to_chat(owner, span_userdanger("You feel stabbing pain in your abdomen!"))
 		if(2)
 			to_chat(owner, span_userdanger("You feel a burning sensation in your gut!"))
-			owner.vomit()
+			owner.vomit(VOMIT_CATEGORY_DEFAULT)
 		if(3)
 			to_chat(owner, span_userdanger("You feel painful acid in your throat!"))
-			owner.vomit(blood = TRUE)
+			owner.vomit(VOMIT_CATEGORY_BLOOD)
 		if(4)
 			to_chat(owner, span_userdanger("Overwhelming pain knocks you out!"))
-			owner.vomit(blood = TRUE, distance = rand(1,2))
+			owner.vomit(VOMIT_CATEGORY_BLOOD, distance = rand(1,2))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(2.5 SECONDS)
 		if(5)
 			to_chat(owner, span_userdanger("You feel as if your guts are about to melt!"))
-			owner.vomit(blood = TRUE,distance = rand(1,3))
+			owner.vomit(VOMIT_CATEGORY_BLOOD, distance = rand(1,3))
 			owner.emote("Scream")
 			owner.AdjustUnconscious(5 SECONDS)
 
@@ -229,7 +229,7 @@
 		if(3 * LIVER_FAILURE_STAGE_SECONDS to 4 * LIVER_FAILURE_STAGE_SECONDS - 1)
 			examine_list += span_notice("[owner]'s eyes are completely yellow, and [owner.p_they()] [owner.p_are()] visibly suffering.")
 		if(4 * LIVER_FAILURE_STAGE_SECONDS to INFINITY)
-			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_they(TRUE)] [owner.p_do()]n't look like [owner.p_they()] will be alive for much longer.")
+			examine_list += span_danger("[owner]'s eyes are completely yellow and swelling with pus. [owner.p_They()] [owner.p_do()]n't look like [owner.p_they()] will be alive for much longer.")
 
 /obj/item/organ/internal/liver/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantliver
@@ -245,12 +245,23 @@
 /obj/item/organ/internal/liver/cybernetic
 	name = "basic cybernetic liver"
 	desc = "A very basic device designed to mimic the functions of a human liver. Handles toxins slightly worse than an organic liver."
+	failing_desc = "seems to be broken."
 	icon_state = "liver-c"
 	organ_flags = ORGAN_ROBOTIC
+	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 	toxTolerance = 2
 	liver_resistance = 0.9 * LIVER_DEFAULT_TOX_RESISTANCE // -10%
-	maxHealth = STANDARD_ORGAN_THRESHOLD*0.5
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
+
+/obj/item/organ/internal/liver/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
+		owner.adjustToxLoss(10)
+		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
+	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
+		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
 
 /obj/item/organ/internal/liver/cybernetic/tier2
 	name = "cybernetic liver"
@@ -265,21 +276,29 @@
 	name = "upgraded cybernetic liver"
 	desc = "An upgraded version of the cybernetic liver, designed to improve further upon organic livers. It is resistant to alcohol poisoning and is very robust at filtering toxins."
 	icon_state = "liver-c-u2"
-	alcohol_tolerance = 0.001
+	alcohol_tolerance = ALCOHOL_RATE * 0.2
 	maxHealth = 2 * STANDARD_ORGAN_THRESHOLD
 	toxTolerance = 10 //can shrug off up to 10u of toxins
 	liver_resistance = 1.5 * LIVER_DEFAULT_TOX_RESISTANCE // +50%
 	emp_vulnerability = 20
 
-/obj/item/organ/internal/liver/cybernetic/emp_act(severity)
+/obj/item/organ/internal/liver/cybernetic/surplus
+	name = "surplus prosthetic liver"
+	desc = "A very cheap prosthetic liver, mass produced for low-functioning alcoholics... It looks more like a water filter than \
+		an actual liver. \
+		Very fragile, absolutely terrible at filtering toxins and substantially weak to alcohol. \
+		Offers no protection against EMPs."
+	icon_state = "liver-c-s"
+	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.35
+	alcohol_tolerance = ALCOHOL_RATE * 2 // can barely handle alcohol
+	toxTolerance = 1 //basically can't shrug off any toxins
+	liver_resistance = 0.75 * LIVER_DEFAULT_TOX_RESISTANCE // -25%
+	emp_vulnerability = 100
+
+//surplus organs are so awful that they explode when removed, unless failing
+/obj/item/organ/internal/liver/cybernetic/surplus/Initialize(mapload)
 	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.adjustToxLoss(10)
-		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
-	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
-		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
+	AddElement(/datum/element/dangerous_surgical_removal)
 
 #undef HAS_SILENT_TOXIN
 #undef HAS_NO_TOXIN

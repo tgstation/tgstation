@@ -20,7 +20,7 @@
 /obj/machinery/computer/turbine_computer/locate_machinery(multitool_connection)
 	if(!mapping_id)
 		return
-	for(var/obj/machinery/power/turbine/core_rotor/main in GLOB.machines)
+	for(var/obj/machinery/power/turbine/core_rotor/main as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/turbine/core_rotor))
 		if(main.mapping_id != mapping_id)
 			continue
 		register_machine(main)

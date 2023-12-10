@@ -30,8 +30,8 @@ const ROTATION_MAP = {
   east: 'rotateZ(-90deg)',
 } as const;
 
-const TilePreview = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TilePreview = (props) => {
+  const { data } = useBackend<Data>();
   const { selected_icon, selected_direction } = data;
 
   return (
@@ -40,7 +40,8 @@ const TilePreview = (props, context) => {
       style={{
         width: '50px',
         height: '50px',
-      }}>
+      }}
+    >
       <Box
         className={classes(['rtd32x32', selected_icon])}
         style={{
@@ -53,8 +54,8 @@ const TilePreview = (props, context) => {
   );
 };
 
-const DirectionSelect = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const DirectionSelect = (props) => {
+  const { act, data } = useBackend<Data>();
   const { tile_dirs = [], selected_direction } = data;
   return (
     <Section fill vertical>
@@ -78,8 +79,8 @@ const DirectionSelect = (props, context) => {
   );
 };
 
-const TileRotateSection = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const TileRotateSection = (props) => {
+  const { data } = useBackend<Data>();
   const { selected_direction } = data;
   return (
     <Stack fill vertical>
@@ -93,13 +94,12 @@ const TileRotateSection = (props, context) => {
   );
 };
 
-const TileDesignSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TileDesignSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
   const [categoryName, setCategoryName] = useLocalState(
-    context,
     'categoryName',
-    selected_category
+    selected_category,
   );
   const shownCategory =
     categories.find((category) => category.category_name === categoryName) ||
@@ -112,7 +112,8 @@ const TileDesignSection = (props, context) => {
             fluid
             key={category.category_name}
             selected={category.category_name === categoryName}
-            onClick={() => setCategoryName(category.category_name)}>
+            onClick={() => setCategoryName(category.category_name)}
+          >
             {category.category_name}
           </Tabs.Tab>
         ))}
@@ -135,7 +136,8 @@ const TileDesignSection = (props, context) => {
               category_name: shownCategory.category_name,
               id: i + 1,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"
@@ -152,7 +154,7 @@ const TileDesignSection = (props, context) => {
   );
 };
 
-export const RapidTilingDevice = (props, context) => {
+export const RapidTilingDevice = (props) => {
   return (
     <Window width={500} height={540}>
       <Window.Content>

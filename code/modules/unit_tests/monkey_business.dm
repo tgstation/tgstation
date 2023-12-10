@@ -14,7 +14,8 @@
 
 /datum/unit_test/monkey_business/Run()
 	for(var/monkey_id in 1 to length(GLOB.the_station_areas))
-		var/mob/living/carbon/human/monkey = allocate(/mob/living/carbon/human/consistent, get_first_open_turf_in_area(GLOB.the_station_areas[monkey_id]))
+		var/area/monkey_zone = GLOB.areas_by_type[GLOB.the_station_areas[monkey_id]]
+		var/mob/living/carbon/human/monkey = allocate(/mob/living/carbon/human/consistent, get_first_open_turf_in_area(monkey_zone))
 		monkey.set_species(/datum/species/monkey)
 		monkey.set_name("Monkey [monkey_id]")
 		if(monkey_id % monkey_angry_nth == 0) // BLOOD FOR THE BLOOD GODS

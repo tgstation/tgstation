@@ -70,7 +70,7 @@ GLOBAL_DATUM_INIT(fire_overlay, /mutable_appearance, mutable_appearance('icons/e
 /datum/component/burning/proc/on_examine(atom/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	examine_list += span_danger("[source.p_theyre(TRUE)] burning!")
+	examine_list += span_danger("[source.p_Theyre()] burning!")
 
 /// Handles searing the hand of anyone who tries to touch parent without protection.
 /datum/component/burning/proc/on_attack_hand(atom/source, mob/living/carbon/user)

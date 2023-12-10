@@ -2,13 +2,13 @@
 /obj/machinery/food_cart
 	name = "food cart"
 	desc = "A compact unpackable mobile cooking stand. Wow! When unpacked, it reminds you of those greasy gamer setups some people on NTNet have."
-	icon = 'icons/obj/kitchen.dmi'
+	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "foodcart"
 	density = TRUE
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	req_access = list(ACCESS_KITCHEN)
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = NO_DECONSTRUCTION
 	var/unpacked = FALSE
 	var/obj/machinery/griddle/stand/cart_griddle
 	var/obj/machinery/smartfridge/food/cart_smartfridge
@@ -134,7 +134,7 @@
 /obj/effect/food_cart_stand
 	name = "food cart tent"
 	desc = "Something to battle the sun, for there are no breaks for the burger flippers."
-	icon = 'icons/obj/3x3.dmi'
+	icon = 'icons/obj/fluff/3x3.dmi'
 	icon_state = "stand"
 	layer = ABOVE_MOB_LAYER//big mobs will still go over the tent, this is fine and cool
 	plane = GAME_PLANE_UPPER

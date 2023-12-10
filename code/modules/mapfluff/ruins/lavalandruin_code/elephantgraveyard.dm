@@ -20,7 +20,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*4)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "rib"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "rib"
 
 /obj/structure/statue/bone/skull
@@ -29,7 +29,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*12)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "skull"
 
 /obj/structure/statue/bone/skull/half
@@ -37,7 +37,7 @@
 	custom_materials = list(/datum/material/bone=SHEET_MATERIAL_AMOUNT*6)
 	icon = 'icons/obj/art/statuelarge.dmi'
 	icon_state = "skull-half"
-	icon_preview = 'icons/obj/previews.dmi'
+	icon_preview = 'icons/obj/fluff/previews.dmi'
 	icon_state_preview = "halfskull"
 
 //***Wasteland floor and rock turfs here.
@@ -59,6 +59,12 @@
 	.=..()
 	if(prob(floor_variance))
 		icon_state = "[base_icon_state][rand(0,6)]"
+
+/turf/open/misc/asteroid/basalt/wasteland/basin
+	icon_state = "wasteland_dug"
+	base_icon_state = "wasteland_dug"
+	floor_variance = 0
+	dug = TRUE
 
 /turf/closed/mineral/strong/wasteland
 	name = "ancient dry rock"
@@ -90,6 +96,9 @@
 	.=..()
 	create_reagents(20)
 	reagents.add_reagent(dispensedreagent, 20)
+	//I'm pretty much aware that, because how oil wells and sinks work, attackby() won't work unless in combat mode.
+	//Thankfully, the user can cast the line from a distance.
+	AddComponent(/datum/component/fishing_spot, /datum/fish_source/oil_well)
 
 /obj/structure/sink/oil_well/attack_hand(mob/user, list/modifiers)
 	flick("puddle-oil-splash",src)
@@ -98,7 +107,7 @@
 
 /obj/structure/sink/oil_well/attackby(obj/item/O, mob/living/user, params)
 	flick("puddle-oil-splash",src)
-	if(O.tool_behaviour == TOOL_SHOVEL && !(flags_1 & NODECONSTRUCT_1)) //attempt to deconstruct the puddle with a shovel
+	if(O.tool_behaviour == TOOL_SHOVEL && !(obj_flags & NO_DECONSTRUCTION)) //attempt to deconstruct the puddle with a shovel
 		to_chat(user, "You fill in the oil well with soil.")
 		O.play_tool_sound(src)
 		deconstruct()
@@ -129,19 +138,21 @@
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave"
 	base_icon_state = "grave"
-	dense_when_open = TRUE
+	density = FALSE
 	material_drop = /obj/item/stack/ore/glass/basalt
 	material_drop_amount = 5
 	anchorable = FALSE
 	anchored = TRUE
 	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
-	breakout_time = 90 SECONDS
+	breakout_time = 2 MINUTES
 	open_sound = 'sound/effects/shovel_dig.ogg'
 	close_sound = 'sound/effects/shovel_dig.ogg'
 	can_install_electronics = FALSE
 	can_weld_shut = FALSE
 	cutting_tool = null
 	paint_jobs = null
+	elevation = 4 //It's a small mound.
+	elevation_open = 0
 
 	/// will this grave give you nightmares when opened
 	var/lead_tomb = FALSE
@@ -159,6 +170,11 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
+
+/obj/structure/closet/crate/grave/close(mob/living/user)
+	. = ..()
+	// So that graves stay undense
+	set_density(FALSE)
 
 /obj/structure/closet/crate/grave/examine(mob/user)
 	. = ..()
@@ -237,12 +253,12 @@
 			dug_closed = TRUE
 			close(user)
 		else if(open(user, force = TRUE))
-			if (user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID))
+			if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 				user.add_mood_event("morbid_graverobbing", /datum/mood_event/morbid_graverobbing)
 			else
 				user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 			if(lead_tomb && first_open)
-				if(user.mind && HAS_TRAIT(user.mind, TRAIT_MORBID))
+				if(HAS_MIND_TRAIT(user, TRAIT_MORBID))
 					to_chat(user, span_notice("Did someone say something? I'm sure it was nothing."))
 				else
 					user.gain_trauma(/datum/brain_trauma/magic/stalker)
@@ -267,6 +283,29 @@
 		user.add_mood_event("graverobbing", /datum/mood_event/graverobbing)
 		deconstruct(TRUE)
 		return TRUE
+
+/obj/structure/closet/crate/grave/container_resist_act(mob/living/user)
+	if(opened)
+		return
+	// The player is trying to dig themselves out of an early grave
+	user.changeNext_move(CLICK_CD_BREAKOUT)
+	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.visible_message(
+		span_warning("[src]'s dirt begins to shift and rumble!"),
+		span_notice("You desperately begin to claw at the dirt around you, trying to force yourself upwards through the soil... (this will take about [DisplayTimeText(breakout_time)].)"),
+		span_hear("You hear the sound of shifting dirt from [src]."),
+	)
+	if(do_after(user, breakout_time, target = src))
+		if(opened)
+			return
+		user.visible_message(
+			span_danger("[user] emerges from [src], scattering dirt everywhere!"),
+			span_notice("You triumphantly surface out of [src], scattering dirt all around the grave!"),
+		)
+		bust_open()
+	else
+		if(user.loc == src)
+			to_chat(user, span_warning("You fail to dig yourself out of [src]!"))
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"

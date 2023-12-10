@@ -170,4 +170,5 @@ h1.alert, h2.alert		{color: #000000;}
 .swarmer				{color: #2C75FF;}
 .resonate				{color: #298F85;}
 
+.upside_down			{display: inline; -moz-transform: scale(-1, -1); -webkit-transform: scale(-1, -1); -o-transform: scale(-1, -1); -ms-transform: scale(-1, -1); transform: scale(-1, -1);}
 </style>"}

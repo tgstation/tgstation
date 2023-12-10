@@ -1,7 +1,11 @@
+#define WORKOUT_XP 5
+#define EXERCISE_STATUS_DURATION 20 SECONDS
+#define SAFE_DRUNK_LEVEL 39 
+
 /obj/structure/weightmachine
 	name = "chest press machine"
 	desc = "Just looking at this thing makes you feel tired."
-	icon = 'icons/obj/gym_equipment.dmi'
+	icon = 'icons/obj/fluff/gym_equipment.dmi'
 	icon_state = "stacklifter"
 	base_icon_state = "stacklifter"
 	can_buckle = TRUE
@@ -14,6 +18,9 @@
 
 	///The weight action we give to people that buckle themselves to us.
 	var/datum/action/push_weights/weight_action
+
+	///message when drunk user fails to use the machine
+	var/drunk_message = "You try for a new record and pull through! Through a muscle that is."
 
 	///List of messages picked when using the machine.
 	var/static/list/more_weight = list(
@@ -31,6 +38,12 @@
 		"You feel robust!",
 		"You feel indestructible!",
 	)
+	var/static/list/finished_silicon_message = list(
+		"You feel nothing!",
+		"No pain, no gain!",
+		"Chassis hardness rating... Unchanged.",
+		"You feel the exact same. Nothing.",
+	)
 
 /obj/structure/weightmachine/Initialize(mapload)
 	. = ..()
@@ -38,20 +51,17 @@
 	weight_action = new(src)
 	weight_action.weightpress = src
 
-	AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		lmb_text = "Work out", \
-	)
+	var/static/list/tool_behaviors
+	if(!tool_behaviors)
+		tool_behaviors = string_assoc_nested_list(list(
+			TOOL_CROWBAR = list(
+				SCREENTIP_CONTEXT_RMB = "Deconstruct",
+			),
 
-	var/static/list/tool_behaviors = list(
-		TOOL_CROWBAR = list(
-			SCREENTIP_CONTEXT_RMB = "Deconstruct",
-		),
-
-		TOOL_WRENCH = list(
-			SCREENTIP_CONTEXT_RMB = "Anchor",
-		),
-	)
+			TOOL_WRENCH = list(
+				SCREENTIP_CONTEXT_RMB = "Anchor",
+			),
+		))
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
 /obj/structure/weightmachine/Destroy()
@@ -87,13 +97,43 @@
 	return TRUE
 
 /obj/structure/weightmachine/proc/perform_workout(mob/living/user)
+	if(user.nutrition <= NUTRITION_LEVEL_STARVING)
+		user.balloon_alert(user, "too hungry to workout!")
+		return
+
 	user.balloon_alert_to_viewers("[pick(more_weight)]")
 	START_PROCESSING(SSobj, src)
+
 	if(do_after(user, 8 SECONDS, src) && user.has_gravity())
-		user.Stun(2 SECONDS)
-		user.balloon_alert(user, pick(finished_message))
+		// with enough dedication, even clowns can overcome their handicaps
+		var/clumsy_chance = 30 - (user.mind.get_skill_level(/datum/skill/fitness) * 5)
+		if(HAS_TRAIT(user, TRAIT_CLUMSY) && prob(clumsy_chance))
+			playsound(src, 'sound/effects/bang.ogg', 50, TRUE)
+			to_chat(user, span_warning("Your hand slips, causing the [name] to smash you!"))
+			user.take_bodypart_damage(rand(2, 5))
+			end_workout()
+			return
+
+		// awlways a chance for a person not to fail horribly when drunk
+		if(user.get_drunk_amount() > SAFE_DRUNK_LEVEL && prob(min(user.get_drunk_amount(), 99)))
+			playsound(src,'sound/effects/bang.ogg', 50, TRUE)
+			to_chat(user, span_warning(drunk_message))
+			user.take_bodypart_damage(rand(5, 10), wound_bonus = 10)
+			end_workout()
+			return
+
+		if(issilicon(user))
+			user.balloon_alert(user, pick(finished_silicon_message))
+		else
+			user.balloon_alert(user, pick(finished_message))
+
+		user.adjust_nutrition(-3) // feel the burn
 		user.add_mood_event("exercise", /datum/mood_event/exercise)
-		user.apply_status_effect(/datum/status_effect/exercised)
+
+		// remember the real xp gain is from sleeping after working out
+		user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP)
+		user.apply_status_effect(/datum/status_effect/exercised, EXERCISE_STATUS_DURATION)
+
 	end_workout()
 
 /obj/structure/weightmachine/proc/end_workout()
@@ -105,23 +145,32 @@
 	if(!has_buckled_mobs())
 		end_workout()
 		return FALSE
-	var/image/workout_icon = new(icon, src, "[base_icon_state]-o", ABOVE_MOB_LAYER)
-	workout_icon.plane = GAME_PLANE_UPPER
-	flick_overlay_view(workout_icon, 8)
+	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER)
+	SET_PLANE_EXPLICIT(workout, GAME_PLANE_UPPER, src)
+	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
 	animate(user, pixel_y = pixel_shift_y, time = 4)
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
 	animate(pixel_y = user.base_pixel_y, time = 4)
+
+	var/stamina_exhaustion = 5 - (user.mind.get_skill_level(/datum/skill/fitness) * 0.5)
+	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
+
 	return TRUE
 
 /**
  * Weight lifter subtype
  */
 /obj/structure/weightmachine/weightlifter
-	name = "inline bench press"
+	name = "incline bench press"
 	icon_state = "benchpress"
 	base_icon_state = "benchpress"
 
 	pixel_shift_y = 5
 
+	drunk_message = "You raise the bar over you trying to balance it with one hand, keyword tried."
+
+#undef WORKOUT_XP
+#undef EXERCISE_STATUS_DURATION
+#undef SAFE_DRUNK_LEVEL

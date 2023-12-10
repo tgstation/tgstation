@@ -28,15 +28,14 @@
 //Gives player-controlled variants the ability to swap attacks
 /mob/living/simple_animal/hostile/asteroid/elite/Initialize(mapload)
 	. = ..()
-	for(var/action_type in attack_action_types)
-		var/datum/action/innate/elite_attack/attack_action = new action_type()
-		attack_action.Grant(src)
+	AddComponent(/datum/component/seethrough_mob)
+	grant_actions_by_list(attack_action_types)
 
 //Prevents elites from attacking members of their faction (can't hurt themselves either) and lets them mine rock with an attack despite not being able to smash walls.
-/mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget()
+/mob/living/simple_animal/hostile/asteroid/elite/AttackingTarget(atom/attacked_target)
 	if(ishostile(target))
 		var/mob/living/simple_animal/hostile/M = target
-		if(faction_check_mob(M))
+		if(faction_check_atom(M))
 			return FALSE
 	if(istype(target, /obj/structure/elite_tumor))
 		var/obj/structure/elite_tumor/T = target
@@ -125,7 +124,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	desc = "An odd, pulsing tumor sticking out of the ground.  You feel compelled to reach out and touch it..."
 	armor_type = /datum/armor/structure_elite_tumor
 	resistance_flags = INDESTRUCTIBLE
-	icon = 'icons/obj/lavaland/tumor.dmi'
+	icon = 'icons/obj/mining_zones/tumor.dmi'
 	icon_state = "tumor"
 	pixel_x = -16
 	base_pixel_x = -16
@@ -213,7 +212,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.key = elitemind.key
 		mychild.sentience_act()
-		notify_ghosts("\A [mychild] has been awakened in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite awakened")
+		notify_ghosts(
+			"\A [mychild] has been awakened in \the [get_area(src)]!",
+			source = mychild,
+			header = "Lavaland Elite awakened",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 	mychild.log_message("has been awakened by [key_name(activator)]!", LOG_GAME, color="#960000")
 	icon_state = "tumor_popped"
 	RegisterSignal(mychild, COMSIG_QDELETING, PROC_REF(onEliteLoss))
@@ -227,7 +231,12 @@ While using this makes the system rely on OnFire, it still gives options for tim
 	if(boosted)
 		mychild.maxHealth = mychild.maxHealth * 2
 		mychild.health = mychild.maxHealth
-		notify_ghosts("\A [mychild] has been challenged in \the [get_area(src)]!", source = mychild, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Lavaland Elite challenged")
+		notify_ghosts(
+			"\A [mychild] has been challenged in \the [get_area(src)]!",
+			source = mychild,
+			header = "Lavaland Elite challenged",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 	mychild.log_message("has been challenged by [key_name(activator)]!", LOG_GAME, color="#960000")
 
 /obj/structure/elite_tumor/Initialize(mapload)
@@ -353,7 +362,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 /obj/item/tumor_shard
 	name = "tumor shard"
 	desc = "A strange, sharp, crystal shard from an odd tumor on Lavaland.  Stabbing the corpse of a lavaland elite with this will revive them, assuming their soul still lingers.  Revived lavaland elites only have half their max health, but are completely loyal to their reviver."
-	icon = 'icons/obj/lavaland/artefacts.dmi'
+	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "crevice_shard"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'

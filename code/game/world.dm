@@ -49,8 +49,8 @@ GLOBAL_VAR(restart_counter)
  * - Dominion/Cyberboss
  *
  * Where to put init shit quick guide:
- * If you need it to happen before the mc is created: world/Genesis. 
- * If you need it to happen last: world/New(), 
+ * If you need it to happen before the mc is created: world/Genesis.
+ * If you need it to happen last: world/New(),
  * Otherwise, in a subsystem preinit or init. Subsystems can set an init priority.
  */
 
@@ -180,7 +180,7 @@ GLOBAL_VAR(restart_counter)
 #ifdef UNIT_TESTS
 	cb = CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(RunUnitTests))
 #else
-	cb = VARSET_CALLBACK(SSticker, force_ending, TRUE)
+	cb = VARSET_CALLBACK(SSticker, force_ending, ADMIN_FORCE_END_ROUND)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
@@ -190,7 +190,7 @@ GLOBAL_VAR(restart_counter)
 	data["tick_usage"] = world.tick_usage
 	data["tick_lag"] = world.tick_lag
 	data["time"] = world.time
-	data["timestamp"] = logger.unix_timestamp_string()
+	data["timestamp"] = rustg_unix_timestamp()
 	return data
 
 /world/proc/SetupLogs()
@@ -326,6 +326,7 @@ GLOBAL_VAR(restart_counter)
 			shutdown_logging() // See comment below.
 			auxcleanup()
 			TgsEndProcess()
+			return ..()
 
 	log_world("World rebooted at [time_stamp()]")
 
@@ -341,7 +342,7 @@ GLOBAL_VAR(restart_counter)
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		LIBCALL(debug_server, "auxtools_shutdown")()
+		call_ext(debug_server, "auxtools_shutdown")()
 
 /world/Del()
 	auxcleanup()
@@ -360,8 +361,8 @@ GLOBAL_VAR(restart_counter)
 		var/server_name = CONFIG_GET(string/servername)
 		if (server_name)
 			new_status += "<b>[server_name]</b> "
-		if(!CONFIG_GET(flag/norespawn))
-			features += "respawn"
+		if(CONFIG_GET(flag/allow_respawn))
+			features += "respawn" // show "respawn" regardless of "respawn as char" or "free respawn"
 		if(!CONFIG_GET(flag/allow_ai))
 			features += "AI disabled"
 		hostedby = CONFIG_GET(string/hostedby)
@@ -397,31 +398,35 @@ GLOBAL_VAR(restart_counter)
 	else
 		hub_password = "SORRYNOPASSWORD"
 
-// If this is called as a part of maploading you cannot call it on the newly loaded map zs, because those get handled later on in the pipeline
-/world/proc/increaseMaxX(new_maxx, max_zs_to_load = maxz)
+/**
+ * Handles incresing the world's maxx var and intializing the new turfs and assigning them to the global area.
+ * If map_load_z_cutoff is passed in, it will only load turfs up to that z level, inclusive.
+ * This is because maploading will handle the turfs it loads itself.
+ */
+/world/proc/increase_max_x(new_maxx, map_load_z_cutoff = maxz)
 	if(new_maxx <= maxx)
 		return
 	var/old_max = world.maxx
 	maxx = new_maxx
-	if(!max_zs_to_load)
+	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guaranteed to be touching the global area, so we'll just do this
 	var/list/to_add = block(
 		locate(old_max + 1, 1, 1),
-		locate(maxx, maxy, max_zs_to_load))
+		locate(maxx, maxy, map_load_z_cutoff))
 	global_area.contained_turfs += to_add
 
-/world/proc/increaseMaxY(new_maxy, max_zs_to_load = maxz)
+/world/proc/increase_max_y(new_maxy, map_load_z_cutoff = maxz)
 	if(new_maxy <= maxy)
 		return
 	var/old_maxy = maxy
 	maxy = new_maxy
-	if(!max_zs_to_load)
+	if(!map_load_z_cutoff)
 		return
 	var/area/global_area = GLOB.areas_by_type[world.area] // We're guarenteed to be touching the global area, so we'll just do this
 	var/list/to_add = block(
 		locate(1, old_maxy + 1, 1),
-		locate(maxx, maxy, max_zs_to_load))
+		locate(maxx, maxy, map_load_z_cutoff))
 	global_area.contained_turfs += to_add
 
 /world/proc/incrementMaxZ()
@@ -463,14 +468,14 @@ GLOBAL_VAR(restart_counter)
 		else
 			CRASH("Unsupported platform: [system_type]")
 
-	var/init_result = LIBCALL(library, "init")("block")
+	var/init_result = call_ext(library, "init")("block")
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
 /world/proc/init_debugger()
 	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (dll)
-		LIBCALL(dll, "auxtools_init")()
+		call_ext(dll, "auxtools_init")()
 		enable_debugging()
 
 /world/Profile(command, type, format)

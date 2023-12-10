@@ -9,7 +9,7 @@
 	icon_state = "spaceold"
 	inhand_icon_state = "space_helmet"
 	desc = "A special helmet with solar UV shielding to protect your eyes from harmful rays."
-	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | PLASMAMAN_HELMET_EXEMPT | HEADINTERNALS
+	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT | STACKABLE_HELMET_EXEMPT | HEADINTERNALS
 	armor_type = /datum/armor/helmet_space
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
 
@@ -134,11 +134,11 @@
 	return ..()
 
 // Clean up the cell on destroy
-/obj/item/clothing/suit/space/handle_atom_del(atom/A)
-	if(A == cell)
+/obj/item/clothing/suit/space/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
 		cell = null
 		thermal_on = FALSE
-	return ..()
 
 // support for items that interact with the cell
 /obj/item/clothing/suit/space/get_cell()
@@ -160,7 +160,7 @@
 
 /obj/item/clothing/suit/space/crowbar_act(mob/living/user, obj/item/tool)
 	toggle_spacesuit_cell(user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/suit/space/screwdriver_act(mob/living/user, obj/item/tool)
 	var/range_low = 20 // Default min temp c
@@ -174,7 +174,7 @@
 	if(deg_c && deg_c >= range_low && deg_c <= range_high)
 		temperature_setting = round(T0C + deg_c, 0.1)
 		to_chat(user, span_notice("You see the readout change to [deg_c] c."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
 /obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, params)
@@ -226,7 +226,7 @@
  * Toggle the space suit's thermal regulator status...
  * Can't do it if it has no charge.
  * Arguments:
- * * toggler - User mob who recieves the to_chat messages.
+ * * toggler - User mob who receives the to_chat messages.
  * * manual_toggle - If false get a differently-flavored message about it being disabled by itself
  */
 /obj/item/clothing/suit/space/proc/toggle_spacesuit(mob/toggler, manual_toggle = TRUE)
@@ -254,12 +254,15 @@
 	toggle_spacesuit(user)
 
 // let emags override the temperature settings
-/obj/item/clothing/suit/space/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
-		user.visible_message(span_warning("You emag [src], overwriting thermal regulator restrictions."))
+/obj/item/clothing/suit/space/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	obj_flags |= EMAGGED
+	if (user)
+		balloon_alert(user, "thermal regulator restrictions overridden")
 		user.log_message("emagged [src], overwriting thermal regulator restrictions.", LOG_GAME)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 // update the HUD icon
 /obj/item/clothing/suit/space/proc/update_hud_icon(mob/user)

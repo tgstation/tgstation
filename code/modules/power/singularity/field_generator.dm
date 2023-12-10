@@ -128,7 +128,7 @@ no power level overlay is currently in the overlays list.
 /obj/machinery/field/generator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/field/generator/welder_act(mob/living/user, obj/item/welder)
 	. = ..()

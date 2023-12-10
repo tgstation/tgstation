@@ -30,6 +30,8 @@
 		/obj/item/food/grown/banana,
 		/obj/item/gun/energy/laser/thermal,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 	))
 
 /obj/item/storage/belt/holster/energy
@@ -47,6 +49,8 @@
 		/obj/item/food/grown/banana,
 		/obj/item/gun/energy/laser/thermal,
 		/obj/item/gun/energy/recharge/ebow,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 	))
 
 /obj/item/storage/belt/holster/energy/thermal
@@ -65,6 +69,14 @@
 /obj/item/storage/belt/holster/energy/disabler/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/gun/energy/disabler = 1,
+	),src)
+
+/obj/item/storage/belt/holster/energy/smoothbore
+	desc = "A rather plain pair of shoulder holsters with a bit of insulated padding inside. Designed to hold energy weaponry. Seems it was meant to fit two smoothbores."
+
+/obj/item/storage/belt/holster/energy/smoothbore/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/gun/energy/disabler/smoothbore = 2,
 	),src)
 
 /obj/item/storage/belt/holster/detective
@@ -86,12 +98,14 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box/c38, // Revolver speedloaders.
 		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
 		/obj/item/gun/energy/dueling,
 		/obj/item/gun/energy/laser/thermal,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 		/obj/item/gun/ballistic/rifle/boltaction, //fits if you make it an obrez
 	))
 
@@ -121,7 +135,7 @@
 	inhand_icon_state = "syndicate_holster"
 	worn_icon_state = "syndicate_holster"
 	w_class = WEIGHT_CLASS_NORMAL
-	var/datum/action/item_action/chameleon/change/chameleon_action
+	actions_types = list(/datum/action/item_action/chameleon/change/belt)
 
 /obj/item/storage/belt/holster/chameleon/Initialize(mapload)
 	. = ..()
@@ -137,31 +151,17 @@
 		/obj/item/gun/ballistic/revolver,
 		/obj/item/ammo_box/c38,
 		/obj/item/ammo_box/a357,
-		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_box/magazine/toy/pistol,
 		/obj/item/gun/energy/recharge/ebow,
 		/obj/item/gun/energy/e_gun/mini,
 		/obj/item/gun/energy/disabler,
-		/obj/item/gun/energy/dueling
+		/obj/item/gun/energy/dueling,
+		/obj/item/gun/energy/laser/captain,
+		/obj/item/gun/energy/e_gun/hos,
 	))
 
 	atom_storage.silent = TRUE
-
-	chameleon_action = new(src)
-	chameleon_action.chameleon_type = /obj/item/storage/belt
-	chameleon_action.chameleon_name = "Belt"
-	chameleon_action.initialize_disguises()
-	add_item_action(chameleon_action)
-
-/obj/item/storage/belt/holster/chameleon/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-	chameleon_action.emp_randomise()
-
-/obj/item/storage/belt/holster/chameleon/broken/Initialize(mapload)
-	. = ..()
-	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/storage/belt/holster/nukie
 	name = "operative holster"
@@ -180,7 +180,24 @@
 		/obj/item/ammo_box/magazine, // ALL magazines.
 		/obj/item/ammo_box/c38, //There isn't a speedloader parent type, so I just put these three here by hand.
 		/obj/item/ammo_box/a357, //I didn't want to just use /obj/item/ammo_box, because then this could hold huge boxes of ammo.
-		/obj/item/ammo_box/a762,
+		/obj/item/ammo_box/strilka310,
 		/obj/item/ammo_casing, // For shotgun shells, rockets, launcher grenades, and a few other things.
 		/obj/item/grenade, // All regular grenades, the big grenade launcher fires these.
 	))
+
+/obj/item/storage/belt/holster/nukie/cowboy
+	desc = "A deep shoulder holster capable of holding almost any form of small firearm and its ammo. This one's specialized for handguns."
+
+/obj/item/storage/belt/holster/nukie/cowboy/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 3
+	atom_storage.max_specific_storage = WEIGHT_CLASS_NORMAL
+
+/obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
+	generate_items_inside(list(
+		/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear = 1,
+		/obj/item/ammo_box/a357 = 2,
+	), src)
+
+
+

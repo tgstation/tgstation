@@ -74,9 +74,9 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /**
  * points is any type of currency this machine accepts(money, mining points etc) which is displayed on the ui
  * Args:
- * card - The ID card we retrive these points from
+ * card - The ID card we retrieve these points from
  */
-/obj/machinery/computer/order_console/proc/retrive_points(obj/item/card/id/id_card)
+/obj/machinery/computer/order_console/proc/retrieve_points(obj/item/card/id/id_card)
 	return round(id_card.registered_account?.account_balance)
 
 /obj/machinery/computer/order_console/ui_data(mob/user)
@@ -95,7 +95,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		var/mob/living/living_user = user
 		var/obj/item/card/id/id_card = living_user.get_idcard(TRUE)
 		if(id_card)
-			data["points"] = retrive_points(id_card)
+			data["points"] = retrieve_points(id_card)
 
 	return data
 
@@ -134,12 +134,19 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	switch(action)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
-			grocery_list[wanted_item] += 1
+			if(grocery_list[wanted_item] >= 20)
+				return
+			else
+				grocery_list[wanted_item] += 1
 		if("remove_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
 			if(!grocery_list[wanted_item])
 				return
-			grocery_list[wanted_item] -= 1
+			if(grocery_list[wanted_item] < 1)
+				grocery_list[wanted_item] = 0
+				return
+			else
+				grocery_list[wanted_item] -= 1
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 		if("cart_set")
@@ -156,6 +163,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			//So miners cant spam buy crates for a very low price
 			if(get_total_cost() < CARGO_CRATE_VALUE)
 				return
+
 			var/obj/item/card/id/used_id_card = living_user.get_idcard(TRUE)
 			if(!used_id_card || !used_id_card.registered_account)
 				say("No bank account detected!")
@@ -215,7 +223,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	return FALSE
 
 /**
- * whatever type of points was retrived in retrive_points() subtract those type of points from the card upon confirming order
+ * whatever type of points was retrieved in retrieve_points() subtract those type of points from the card upon confirming order
  * Args:
  * final_cost - amount of points to subtract from this card
  * card - The ID card to subtract these points from

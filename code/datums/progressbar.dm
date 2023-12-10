@@ -16,7 +16,10 @@
 	var/last_progress = 0
 	///Variable to ensure smooth visual stacking on multiple progress bars.
 	var/listindex = 0
-
+	///The type of our last value for bar_loc, for debugging
+	var/location_type
+	///Where to draw the progress bar above the icon
+	var/offset_y
 
 /datum/progressbar/New(mob/User, goal_number, atom/target)
 	. = ..()
@@ -34,7 +37,13 @@
 		return
 	goal = goal_number
 	bar_loc = target
-	bar = image('icons/effects/progessbar.dmi', bar_loc, "prog_bar_0")
+	location_type = bar_loc.type
+
+	var/list/icon_offsets = target.get_oversized_icon_offsets()
+	var/offset_x = icon_offsets["x"]
+	offset_y = icon_offsets["y"]
+
+	bar = image('icons/effects/progressbar.dmi', bar_loc, "prog_bar_0", pixel_x = offset_x)
 	SET_PLANE_EXPLICIT(bar, ABOVE_HUD_PLANE, User)
 	bar.appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	user = User
@@ -60,8 +69,8 @@
 				continue
 			progress_bar.listindex--
 
-			progress_bar.bar.pixel_y = 32 + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
-			var/dist_to_travel = 32 + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
+			progress_bar.bar.pixel_y = world.icon_size + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1))
+			var/dist_to_travel = world.icon_size + offset_y + (PROGRESSBAR_HEIGHT * (progress_bar.listindex - 1)) - PROGRESSBAR_HEIGHT
 			animate(progress_bar.bar, pixel_y = dist_to_travel, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 		LAZYREMOVEASSOC(user.progressbars, bar_loc, src)
@@ -116,7 +125,7 @@
 	bar.pixel_y = 0
 	bar.alpha = 0
 	user_client.images += bar
-	animate(bar, pixel_y = 32 + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
+	animate(bar, pixel_y = world.icon_size + offset_y + (PROGRESSBAR_HEIGHT * (listindex - 1)), alpha = 255, time = PROGRESSBAR_ANIMATION_TIME, easing = SINE_EASING)
 
 
 ///Updates the progress bar image visually.
@@ -137,6 +146,13 @@
 
 	QDEL_IN(src, PROGRESSBAR_ANIMATION_TIME)
 
+///Progress bars are very generic, and what hangs a ref to them depends heavily on the context in which they're used
+///So let's make hunting harddels easier yeah?
+/datum/progressbar/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Owner's type: [location_type]"
 
 #undef PROGRESSBAR_ANIMATION_TIME
 #undef PROGRESSBAR_HEIGHT

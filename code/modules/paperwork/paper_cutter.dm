@@ -1,7 +1,7 @@
 /obj/item/papercutter
 	name = "paper cutter"
 	desc = "Standard office equipment. Precisely cuts paper using a large blade."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "papercutter"
 	force = 5
 	throwforce = 5
@@ -109,7 +109,7 @@
 	tool.play_tool_sound(src)
 	balloon_alert(user, "[blade_secured ? "un" : ""]secured")
 	blade_secured = !blade_secured
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/papercutter/attackby(obj/item/inserted_item, mob/user, params)
 	if(istype(inserted_item, /obj/item/paper))
@@ -171,8 +171,9 @@
 	to_chat(user, span_userdanger("You neatly cut [stored_paper][clumsy ? "... and your finger in the process!" : "."]"))
 	if(clumsy)
 		var/obj/item/bodypart/finger = user.get_active_hand()
-		var/datum/wound/slash/moderate/papercut = new
-		papercut.apply_wound(finger, wound_source = "paper cut")
+		if (iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			carbon_user.cause_wound_of_type_and_severity(WOUND_SLASH, finger, WOUND_SEVERITY_MODERATE, wound_source = "paper cut")
 	stored_paper = null
 	qdel(stored_paper)
 	new /obj/item/paper/paperslip(get_turf(src))
@@ -202,6 +203,13 @@
 	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
 	grind_results = list(/datum/reagent/cellulose = 1.5) //It's a normal paper sheet divided in 2. 3 divided by 2 equals 1.5, this way you can't magically dupe cellulose
 
+/obj/item/paper/paperslip/fortune
+	name = "fortune slip"
+
+/obj/item/paper/paperslip/fortune/Initialize(mapload)
+	default_raw_text = pick(GLOB.wisdoms)
+	return ..()
+
 /obj/item/paper/paperslip/corporate //More fancy and sturdy paper slip which is a "plastic card", used for things like spare ID safe code
 	name = "corporate plastic card"
 	desc = "A plastic card for confidential corporate matters. Can be written on with pen somehow."
@@ -216,7 +224,7 @@
 /obj/item/hatchet/cutterblade
 	name = "paper cutter blade"
 	desc = "The blade of a paper cutter. Most likely removed for polishing or sharpening."
-	icon = 'icons/obj/bureaucracy.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "cutterblade"
 	inhand_icon_state = "knife"
 	lefthand_file = 'icons/mob/inhands/equipment/kitchen_lefthand.dmi'

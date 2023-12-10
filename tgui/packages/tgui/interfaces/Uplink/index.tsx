@@ -1,14 +1,27 @@
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { GenericUplink, Item } from './GenericUplink';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import { fetchRetry } from '../../http';
 import { resolveAsset } from '../../assets';
 import { BooleanLike } from 'common/react';
-import { Box, Tabs, Button, Stack, Section, Tooltip, Dimmer } from '../../components';
+import {
+  Box,
+  Tabs,
+  Button,
+  Stack,
+  Section,
+  Tooltip,
+  Dimmer,
+} from '../../components';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 import { Objective, ObjectiveMenu } from './ObjectiveMenu';
-import { calculateProgression, calculateReputationLevel, reputationDefault, reputationLevelsTooltip } from './calculateReputationLevel';
+import {
+  calculateProgression,
+  calculateDangerLevel,
+  dangerDefault,
+  dangerLevelsTooltip,
+} from './calculateDangerLevel';
 
 type UplinkItem = {
   id: string;
@@ -59,6 +72,7 @@ type UplinkData = {
   maximum_potential_objectives: number;
   purchased_items: number;
   shop_locked: BooleanLike;
+  can_renegotiate: BooleanLike;
 };
 
 type UplinkState = {
@@ -80,8 +94,8 @@ type ItemExtraData = {
 let fetchServerData: Promise<ServerData> | undefined;
 
 export class Uplink extends Component<{}, UplinkState> {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       allItems: [],
       allCategories: [],
@@ -96,10 +110,10 @@ export class Uplink extends Component<{}, UplinkState> {
   async populateServerData() {
     if (!fetchServerData) {
       fetchServerData = fetchRetry(resolveAsset('uplink.json')).then(
-        (response) => response.json()
+        (response) => response.json(),
       );
     }
-    const { data } = useBackend<UplinkData>(this.context);
+    const { data } = useBackend<UplinkData>();
 
     const uplinkFlag = data.uplink_flag;
     const uplinkRole = data.assigned_role;
@@ -145,7 +159,7 @@ export class Uplink extends Component<{}, UplinkState> {
     });
 
     uplinkData.categories = uplinkData.categories.filter((value) =>
-      availableCategories.includes(value)
+      availableCategories.includes(value),
     );
 
     this.setState({
@@ -155,11 +169,12 @@ export class Uplink extends Component<{}, UplinkState> {
   }
 
   render() {
-    const { data, act } = useBackend<UplinkData>(this.context);
+    const { data, act } = useBackend<UplinkData>();
     const {
       telecrystals,
       progression_points,
       primary_objectives,
+      can_renegotiate,
       completed_final_objective,
       active_objectives,
       potential_objectives,
@@ -225,7 +240,7 @@ export class Uplink extends Component<{}, UplinkState> {
               <>
                 ,&nbsp;
                 <Box as="span">
-                  {calculateReputationLevel(item.progression_minimum, true)}
+                  {calculateDangerLevel(item.progression_minimum, true)}
                 </Box>
               </>
             ) : (
@@ -249,7 +264,7 @@ export class Uplink extends Component<{}, UplinkState> {
     // Clamp it down between 0 and 2
     progressionPercentage = Math.min(
       Math.max(progressionPercentage / progression_scaling_deviance, -1),
-      1
+      1,
     );
     // Round it and convert it into a percentage
     progressionPercentage = Math.round(progressionPercentage * 1000) / 10;
@@ -278,25 +293,28 @@ export class Uplink extends Component<{}, UplinkState> {
                           (!!has_progression && (
                             <Box>
                               <Box>
-                                Your current level of reputation.&nbsp;
-                                Reputation determines what quality of objective
-                                you get and what items you can purchase.&nbsp;
+                                <Box>Your current level of threat.</Box> Threat
+                                determines
+                                {has_objectives
+                                  ? ' the severity of secondary objectives you get and '
+                                  : ' '}
+                                what items you can purchase.&nbsp;
                                 <Box mt={0.5}>
                                   {/* A minute in deciseconds */}
-                                  Reputation passively increases by{' '}
+                                  Threat passively increases by{' '}
                                   <Box color="green" as="span">
                                     {calculateProgression(
-                                      current_progression_scaling
+                                      current_progression_scaling,
                                     )}
                                   </Box>
                                   &nbsp;every minute
                                 </Box>
                                 {Math.abs(progressionPercentage) > 0 && (
                                   <Box mt={0.5}>
-                                    Because your reputation is{' '}
+                                    Because your threat level is
                                     {progressionPercentage < 0
-                                      ? 'ahead '
-                                      : 'behind '}
+                                      ? ' ahead '
+                                      : ' behind '}
                                     of where it should be, you are getting
                                     <Box
                                       as="span"
@@ -306,26 +324,28 @@ export class Uplink extends Component<{}, UplinkState> {
                                           : 'green'
                                       }
                                       ml={1}
-                                      mr={1}>
+                                      mr={1}
+                                    >
                                       {progressionPercentage}%
                                     </Box>
                                     {progressionPercentage < 0
                                       ? 'less'
                                       : 'more'}{' '}
-                                    reputation every minute
+                                    threat every minute
                                   </Box>
                                 )}
-                                {reputationLevelsTooltip}
+                                {dangerLevelsTooltip}
                               </Box>
                             </Box>
                           )) ||
-                          'Your current level of reputation. You are a respected elite and do not need to improve your reputation.'
-                        }>
+                          "Your current threat level. You are a killing machine and don't need to improve your threat level."
+                        }
+                      >
                         {/* If we have no progression,
                       just give them a generic title */}
                         {has_progression
-                          ? calculateReputationLevel(progression_points, false)
-                          : calculateReputationLevel(reputationDefault, false)}
+                          ? calculateDangerLevel(progression_points, false)
+                          : calculateDangerLevel(dangerDefault, false)}
                       </Tooltip>
                     </Box>
                     <Box color="good" bold fontSize={1.2} textAlign="right">
@@ -341,22 +361,25 @@ export class Uplink extends Component<{}, UplinkState> {
                   <Stack.Item grow={1}>
                     <Tabs fluid textAlign="center">
                       {!!has_objectives && (
-                        <Fragment>
+                        <>
                           <Tabs.Tab
                             selected={currentTab === 0}
-                            onClick={() => this.setState({ currentTab: 0 })}>
+                            onClick={() => this.setState({ currentTab: 0 })}
+                          >
                             Primary Objectives
                           </Tabs.Tab>
                           <Tabs.Tab
                             selected={currentTab === 1}
-                            onClick={() => this.setState({ currentTab: 1 })}>
+                            onClick={() => this.setState({ currentTab: 1 })}
+                          >
                             Secondary Objectives
                           </Tabs.Tab>
-                        </Fragment>
+                        </>
                       )}
                       <Tabs.Tab
                         selected={currentTab === 2 || !has_objectives}
-                        onClick={() => this.setState({ currentTab: 2 })}>
+                        onClick={() => this.setState({ currentTab: 2 })}
+                      >
                         Market
                       </Tabs.Tab>
                     </Tabs>
@@ -379,6 +402,7 @@ export class Uplink extends Component<{}, UplinkState> {
                 <PrimaryObjectiveMenu
                   primary_objectives={primary_objectives}
                   final_objective={completed_final_objective}
+                  can_renegotiate={can_renegotiate}
                 />
               )) ||
                 (currentTab === 1 && has_objectives && (
@@ -436,7 +460,8 @@ export class Uplink extends Component<{}, UplinkState> {
                           fontFamily={'Bahnschrift'}
                           fontSize={3}
                           align={'top'}
-                          as="span">
+                          as="span"
+                        >
                           SHOP LOCKED
                         </Box>
                       </Dimmer>

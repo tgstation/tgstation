@@ -1,7 +1,21 @@
 import { BooleanLike, classes } from 'common/react';
-import { Component } from 'inferno';
-import { Section, Stack, Box, Button, Flex, Tooltip, NoticeBox, Dimmer, Icon } from '../../components';
-import { calculateProgression, getReputation, Rank } from './calculateReputationLevel';
+import { Component } from 'react';
+import {
+  Section,
+  Stack,
+  Box,
+  Button,
+  Flex,
+  Tooltip,
+  NoticeBox,
+  Dimmer,
+  Icon,
+} from '../../components';
+import {
+  calculateProgression,
+  getDangerLevel,
+  Rank,
+} from './calculateDangerLevel';
 import { ObjectiveState } from './constants';
 
 export type Objective = {
@@ -50,8 +64,8 @@ export class ObjectiveMenu extends Component<
   ObjectiveMenuProps,
   ObjectiveMenuState
 > {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       draggingObjective: null,
       objectiveX: 0,
@@ -148,7 +162,8 @@ export class ObjectiveMenu extends Component<
                           <Box
                             color="label"
                             className="UplinkObjective__EmptyObjective"
-                            onMouseUp={this.handleObjectiveAdded}>
+                            onMouseUp={this.handleObjectiveAdded}
+                          >
                             <Stack textAlign="center" fill align="center">
                               <Stack.Item textAlign="center" width="100%">
                                 Empty Objective, drop objectives here to take
@@ -168,11 +183,11 @@ export class ObjectiveMenu extends Component<
                           handleObjectiveAction,
                           handleObjectiveCompleted,
                           handleObjectiveAbort,
-                          true
+                          true,
                         )}
                       </Stack.Item>
                     );
-                  }
+                  },
                 )}
               </Stack>
             </Section>
@@ -182,7 +197,8 @@ export class ObjectiveMenu extends Component<
               title="Potential Objectives"
               textAlign="center"
               fill
-              scrollable>
+              scrollable
+            >
               <Flex wrap="wrap" justify="space-evenly">
                 {potentialObjectives.map((objective) => {
                   return (
@@ -194,7 +210,8 @@ export class ObjectiveMenu extends Component<
                       mx="0.5%"
                       onMouseDown={(event) => {
                         this.handleObjectiveClick(event, objective);
-                      }}>
+                      }}
+                    >
                       {(objective.id !== draggingObjective?.id &&
                         ObjectiveFunction(
                           objective,
@@ -202,11 +219,11 @@ export class ObjectiveMenu extends Component<
                           undefined,
                           undefined,
                           undefined,
-                          true
+                          true,
                         )) || (
                         <Box
                           style={{
-                            'border': '2px dashed black',
+                            border: '2px dashed black',
                           }}
                           width="100%"
                           height="100%"
@@ -225,21 +242,13 @@ export class ObjectiveMenu extends Component<
                   </Dimmer>
                 )) ||
                   (potentialObjectives.length < maximumPotentialObjectives && (
-                    <Flex.Item
-                      basis="100%"
-                      style={
-                        {
-                          // "background-color": "rgba(0, 0, 0, 0.5)",
-                        }
-                      }
-                      mb={1}
-                      mx="0.5%"
-                      minHeight="100px">
+                    <Flex.Item basis="100%" mb={1} mx="0.5%" minHeight="100px">
                       <Stack
                         align="center"
                         height="100%"
                         width="100%"
-                        textAlign="center">
+                        textAlign="center"
+                      >
                         <Stack.Item width="100%">
                           <Button
                             content="Request More Objectives"
@@ -262,8 +271,9 @@ export class ObjectiveMenu extends Component<
             left={`${objectiveX - 180}px`}
             top={`${objectiveY}px`}
             style={{
-              'pointer-events': 'none',
-            }}>
+              pointerEvents: 'none',
+            }}
+          >
             {ObjectiveFunction(draggingObjective, false)}
           </Box>
         )}
@@ -278,14 +288,14 @@ const ObjectiveFunction = (
   handleObjectiveAction?: (objective: Objective, action: string) => void,
   handleCompletion?: (objective: Objective) => void,
   handleAbort?: (objective: Objective) => void,
-  grow: boolean = false
+  grow: boolean = false,
 ) => {
-  const reputation = getReputation(objective.progression_minimum);
+  const dangerLevel = getDangerLevel(objective.progression_minimum);
   return (
     <ObjectiveElement
       name={objective.name}
       description={objective.description}
-      reputation={reputation}
+      dangerLevel={dangerLevel}
       telecrystalReward={objective.telecrystal_reward}
       telecrystalPenalty={objective.telecrystal_penalty}
       progressionReward={objective.progression_reward}
@@ -318,7 +328,7 @@ const ObjectiveFunction = (
                   content={value.name}
                   icon={value.icon}
                   tooltip={value.tooltip}
-                  className={reputation.gradient}
+                  className={dangerLevel.gradient}
                   onClick={() => {
                     handleObjectiveAction(objective, value.action);
                   }}
@@ -334,7 +344,7 @@ const ObjectiveFunction = (
 
 type ObjectiveElementProps = {
   name: string;
-  reputation: Rank;
+  dangerLevel: Rank;
   description: string;
   telecrystalReward: number;
   progressionReward: number;
@@ -351,10 +361,10 @@ type ObjectiveElementProps = {
   handleAbort?: (event: MouseEvent) => void;
 };
 
-export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
+export const ObjectiveElement = (props: ObjectiveElementProps) => {
   const {
     name,
-    reputation,
+    dangerLevel,
     description,
     uiButtons = null,
     telecrystalReward,
@@ -399,10 +409,11 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
         <Box
           className={classes([
             'UplinkObjective__Titlebar',
-            reputation.gradient,
+            dangerLevel.gradient,
           ])}
           width="100%"
-          height="100%">
+          height="100%"
+        >
           <Stack>
             <Stack.Item grow={1}>
               {name}{' '}
@@ -446,18 +457,19 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                 <Stack align="center" justify="center">
                   <Box
                     style={{
-                      'border': '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
-                      'border-bottom': objectiveFinished ? 'none' : undefined,
+                      border: '2px solid rgba(0, 0, 0, 0.5)',
+                      borderLeft: 'none',
+                      borderRight: 'none',
+                      borderBottom: objectiveFinished ? 'none' : undefined,
                     }}
-                    className={reputation.gradient}
+                    className={dangerLevel.gradient}
                     py={0.5}
                     width="100%"
-                    textAlign="center">
+                    textAlign="center"
+                  >
                     {telecrystalReward} TC,
                     <Box ml={1} as="span">
-                      {calculateProgression(progressionReward)} Reputation
+                      {calculateProgression(progressionReward)} Threat Level
                       {Math.abs(progressionDiff) > 10 && (
                         <Tooltip
                           content={
@@ -473,16 +485,18 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                                       : 'orange'
                                     : 'green'
                                 }
-                                as="span">
+                                as="span"
+                              >
                                 {Math.abs(progressionDiff)}%
                               </Box>
-                              {progressionDiff > 0 ? 'less' : 'more'} reputation
-                              from this objective. This is because your
-                              reputation is{' '}
+                              {progressionDiff > 0 ? 'less' : 'more'} threat
+                              from this objective. This is because your threat
+                              level is{' '}
                               {progressionDiff > 0 ? 'ahead ' : 'behind '}
                               where it normally should be at.
                             </Box>
-                          }>
+                          }
+                        >
                           <Box
                             ml={1}
                             color={
@@ -492,7 +506,8 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                                   : 'orange'
                                 : 'green'
                             }
-                            as="span">
+                            as="span"
+                          >
                             ({progressionDiff > 0 ? '-' : '+'}
                             {Math.abs(progressionDiff)}%)
                           </Box>
@@ -504,17 +519,18 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                 {objectiveFinished ? (
                   <Box
                     inline
-                    className={reputation.gradient}
+                    className={dangerLevel.gradient}
                     style={{
-                      'border-radius': '0',
-                      'border': '2px solid rgba(0, 0, 0, 0.5)',
-                      'border-left': 'none',
-                      'border-right': 'none',
+                      borderRadius: '0',
+                      border: '2px solid rgba(0, 0, 0, 0.5)',
+                      borderLeft: 'none',
+                      borderRight: 'none',
                     }}
                     position="relative"
                     width="100%"
                     textAlign="center"
-                    bold>
+                    bold
+                  >
                     <Box
                       width="100%"
                       height="100%"
@@ -531,9 +547,10 @@ export const ObjectiveElement = (props: ObjectiveElementProps, context) => {
                       onClick={handleCompletion}
                       color={objectiveFailed ? 'bad' : 'good'}
                       style={{
-                        'border': '1px solid rgba(0, 0, 0, 0.65)',
+                        border: '1px solid rgba(0, 0, 0, 0.65)',
                       }}
-                      my={1}>
+                      my={1}
+                    >
                       TURN IN
                     </Button>
                   </Box>

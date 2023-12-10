@@ -9,7 +9,7 @@ The console is located at computer/gulag_teleporter.dm
 /obj/machinery/gulag_teleporter
 	name = "labor camp teleporter"
 	desc = "A bluespace teleporter used for teleporting prisoners to the labor camp."
-	icon = 'icons/obj/machines/implantchair.dmi'
+	icon = 'icons/obj/machines/implant_chair.dmi'
 	icon_state = "implantchair"
 	base_icon_state = "implantchair"
 	state_open = FALSE

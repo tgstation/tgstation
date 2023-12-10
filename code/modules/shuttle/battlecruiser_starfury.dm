@@ -154,7 +154,7 @@
 
 	if(!team)
 		team = new()
-		var/obj/machinery/nuclearbomb/selfdestruct/nuke = locate() in GLOB.nuke_list
+		var/obj/machinery/nuclearbomb/selfdestruct/nuke = SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/selfdestruct)[1]
 		if(nuke.r_code == NUKE_CODE_UNSET)
 			nuke.r_code = random_nukecode()
 		team.nuke = nuke
@@ -171,15 +171,11 @@
 				notify_ghosts(
 					"The battlecruiser has an object of interest: [our_candidate]!",
 					source = our_candidate,
-					action = NOTIFY_ORBIT,
-					header = "Something's Interesting!"
-					)
+				)
 			else
 				notify_ghosts(
 					"The battlecruiser has an object of interest: [spawner]!",
 					source = spawner,
-					action = NOTIFY_ORBIT,
-					header="Something's Interesting!"
-					)
+				)
 
 	priority_announce("Unidentified armed ship detected near the station.")

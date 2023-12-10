@@ -31,6 +31,7 @@
 					/obj/item/mecha_parts/mecha_equipment/hydraulic_clamp,
 				)
 	crate_name= "\improper APLU MK-I kit"
+	crate_type = /obj/structure/closet/crate/science/robo
 
 /datum/supply_pack/engineering/conveyor
 	name = "Conveyor Assembly Crate"
@@ -125,6 +126,7 @@
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/pump = 2)
 	crate_name = "portable air pump crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/engineering/portascrubber
 	name = "Portable Scrubber Crate"
@@ -133,6 +135,7 @@
 	access_view = ACCESS_ATMOSPHERICS
 	contains = list(/obj/machinery/portable_atmospherics/scrubber = 2)
 	crate_name = "portable scrubber crate"
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/engineering/hugescrubber
 	name = "Huge Portable Scrubber Crate"
@@ -149,7 +152,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/machinery/space_heater)
 	crate_name = "space heater crate"
-	crate_type = /obj/structure/closet/crate/large
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 
 /datum/supply_pack/engineering/bsa
 	name = "Bluespace Artillery Parts"
@@ -159,7 +162,8 @@
 	cost = CARGO_CRATE_VALUE * 30
 	special = TRUE
 	access_view = ACCESS_COMMAND
-	contains = list(/obj/item/circuitboard/machine/bsa/front,
+	contains = list(/obj/item/paper/guides/jobs/engineering/bsa,
+					/obj/item/circuitboard/machine/bsa/front,
 					/obj/item/circuitboard/machine/bsa/middle,
 					/obj/item/circuitboard/machine/bsa/back,
 					/obj/item/circuitboard/computer/bsa_control,
@@ -265,7 +269,7 @@
 	access = ACCESS_CE
 	contains = list(/obj/machinery/power/supermatter_crystal/shard)
 	crate_name = "supermatter shard crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure/radiation
 	dangerous = TRUE
 
 /datum/supply_pack/engine/tesla_coils
@@ -290,5 +294,27 @@
 					/obj/item/hfr_box/core,
 				)
 	crate_name = "HFR crate"
-	crate_type = /obj/structure/closet/crate/secure/engineering
+	crate_type = /obj/structure/closet/crate/secure/engineering/atmos
 	dangerous = TRUE
+
+/datum/supply_pack/engineering/rad_protection_modules
+	name = "Radiation Protection Modules"
+	desc = "Contains multiple radiation protections modules for MODsuits."
+	hidden = TRUE
+	contains = list(/obj/item/mod/module/rad_protection = 3)
+	crate_name = "modsuit radiation modules"
+	crate_type = /obj/structure/closet/crate/engineering
+
+/datum/supply_pack/engineering/rad_nebula_shielding_kit
+	name = "Radioactive Nebula Shielding"
+	desc = "Contains circuitboards and radiation modules for constructing radioactive nebula shielding."
+	cost = CARGO_CRATE_VALUE * 2
+
+	special = TRUE
+	contains = list(
+		/obj/item/mod/module/rad_protection = 5,
+		/obj/item/circuitboard/machine/radioactive_nebula_shielding = 5,
+		/obj/item/paper/fluff/radiation_nebula = 1,
+	)
+	crate_name = "radioactive nebula shielding (IMPORTANT)"
+	crate_type = /obj/structure/closet/crate/engineering

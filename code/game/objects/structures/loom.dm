@@ -2,7 +2,7 @@
 /obj/structure/loom
 	name = "loom"
 	desc = "A simple device used to weave cloth and other thread-based fabrics together into usable material."
-	icon = 'icons/obj/hydroponics/equipment.dmi'
+	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "loom"
 	density = TRUE
 	anchored = TRUE
@@ -21,4 +21,4 @@
 /obj/structure/loom/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 0.5 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS

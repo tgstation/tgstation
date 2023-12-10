@@ -67,22 +67,26 @@
 		return
 
 	if(active)
-		INVOKE_ASYNC(src, PROC_REF(on_equip), user)
+		INVOKE_ASYNC(src, PROC_REF(on_equip), source, user)
 	else
-		INVOKE_ASYNC(src, PROC_REF(on_drop), user)
+		INVOKE_ASYNC(src, PROC_REF(on_drop), source, user)
 
 ///Called when a mob equips the spear, registers them as the holder and checks their signals for moving.
 /datum/component/jousting/proc/on_equip(datum/source, mob/user, slot)
 	SIGNAL_HANDLER
+	if(current_holder)
+		INVOKE_ASYNC(src, PROC_REF(on_drop), source, user)
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move), TRUE)
 	current_holder = user
+	RegisterSignal(current_holder, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move), TRUE)
 
 /datum/component/jousting/proc/on_drop(datum/source, mob/user)
 	SIGNAL_HANDLER
+	if(!current_holder)
+		return
 
 	reset_charge()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(current_holder, COMSIG_MOVABLE_MOVED)
 	current_holder = null
 
 /**
