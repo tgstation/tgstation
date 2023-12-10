@@ -107,6 +107,7 @@
 	if(node)
 		node.atmos_init()
 		node.add_member(gas_connector)
+		gas_connector.update_parents()
 	SSair.add_to_rebuild_queue(gas_connector)
 
 /**
