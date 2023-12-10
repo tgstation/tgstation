@@ -13,6 +13,8 @@
 	var/uplink_location
 	/// Whether we give them some random objetives to aim for.
 	var/spawn_with_objectives = TRUE
+	/// Tracks number of bounties claimed, for roundend
+	var/bounties_claimed = 0
 
 /datum/antagonist/spy/on_gain()
 	. = ..()
@@ -31,6 +33,7 @@
 	. = ..()
 	.["See All Bounties"] = CALLBACK(src, PROC_REF(see_bounties))
 	.["Refresh Bounties"] = CALLBACK(src, PROC_REF(refresh_bounties))
+	.["Give Spy Uplink"] = CALLBACK(src, PROC_REF(admin_create_spy_uplink))
 
 /datum/antagonist/spy/proc/see_bounties()
 	if(!check_rights(R_ADMIN|R_DEBUG))
@@ -40,26 +43,37 @@
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
 
-/datum/antagonist/spy/proc/auto_create_spy_uplink(mob/living/carbon/spy)
-	if(!iscarbon(spy))
+/datum/antagonist/spy/proc/admin_create_spy_uplink()
+	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
+
+	if(!auto_create_spy_uplink(owner.current, give_backup = FALSE))
+		tgui_alert(usr, "Failed to give [owner.current] a spy uplink - likely don't have a valid item to host it.", "Mission Failed")
+
+/datum/antagonist/spy/proc/auto_create_spy_uplink(mob/living/carbon/spy, give_backup = TRUE)
+	if(!iscarbon(spy))
+		return FALSE
 
 	var/spy_uplink_loc = spy.client?.prefs?.read_preference(/datum/preference/choiced/uplink_location)
 	if(isnull(spy_uplink_loc) || spy_uplink_loc == UPLINK_IMPLANT)
 		spy_uplink_loc = pick(UPLINK_PEN, UPLINK_PDA)
 
 	var/obj/item/spy_uplink = spy.get_uplink_location(spy_uplink_loc)
-	if(isnull(spy_uplink))
-		var/datum/action/backup_uplink/backup = new(src)
-		backup.Grant(spy)
-		to_chat(spy, span_boldnotice("You were unable to be supplied with an uplink, so you have been given the ability to create one yourself."))
-		return
+	if(isnull(spy_uplink) || !create_spy_uplink(spy, spy_uplink))
+		if(give_backup)
+			var/datum/action/backup_uplink/backup = new(src)
+			backup.Grant(spy)
+			to_chat(spy, span_boldnotice("You were unable to be supplied with an uplink, so you have been given the ability to create one yourself."))
+		return FALSE
 
-	create_spy_uplink(spy, spy_uplink)
+	return TRUE
 
 /datum/antagonist/spy/proc/create_spy_uplink(mob/living/carbon/spy, obj/item/spy_uplink)
-	spy_uplink.AddComponent(/datum/component/spy_uplink, spy)
+	if(!spy_uplink.AddComponent(/datum/component/spy_uplink, src))
+		return FALSE
+
 	uplink_created = TRUE
+
 	if(istype(spy_uplink, /obj/item/modular_computer/pda))
 		uplink_location = "your PDA"
 
@@ -71,6 +85,8 @@
 
 	else if(istype(spy_uplink, /obj/item/radio))
 		uplink_location = "your radio headset"
+
+	return TRUE
 
 /datum/antagonist/spy/proc/give_random_objectives()
 	// melbert todo : make this a json

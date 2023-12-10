@@ -6,15 +6,12 @@
  * Used for spies to complete bounties.
  */
 /datum/component/spy_uplink
-	/// Weakref to the spy which owns this uplink
+	/// Weakref to the spy antag datum which owns this uplink
 	var/datum/weakref/spy_ref
 	/// The handler which manages all bounties across all spies.
 	var/static/datum/spy_bounty_handler/handler
 
-	VAR_FINAL/obj/effect/scan_effect/active_scan_effect
-	VAR_FINAL/obj/effect/scan_effect/cone/active_scan_cone
-
-/datum/component/spy_uplink/Initialize(mob/living/spy)
+/datum/component/spy_uplink/Initialize(datum/antagonist/spy/spy)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -35,6 +32,10 @@
 		COMSIG_TABLET_CHECK_DETONATE,
 	))
 
+/datum/component/spy_uplink/proc/is_our_spy(mob/whoever)
+	var/datum/atagonist/spy/spy_datum = spy_ref?.resolve()
+	return spy_datum?.owner.current == whoever
+
 /datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
 	SIGNAL_HANDLER
 
@@ -43,7 +44,7 @@
 /datum/component/spy_uplink/proc/on_attack_self(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(IS_WEAKREF_OF(user, spy_ref))
+	if(is_our_spy(user))
 		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum, ui_interact), user)
 	return NONE
 
@@ -52,7 +53,7 @@
 
 	if(!ismovable(target))
 		return NONE
-	if(!IS_WEAKREF_OF(user, spy_ref))
+	if(!is_our_spy(user))
 		return NONE
 	if(try_steal(target, user))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
@@ -74,27 +75,45 @@
 
 	return FALSE
 
-/// Attempts to steal the passed atom in accordance with the passed bounty.
-/// If successful, proceeds to complete the bounty.
+/// Wraps the stealing process in a scanning effect.
 /datum/component/spy_uplink/proc/start_stealing(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	if(!isturf(stealing.loc) && stealing.loc != spy)
 		to_chat(spy, span_warning("You can't scan [stealing] from there!"))
-		return
+		return FALSE
 
+	var/obj/effect/scan_effect/active_scan_effect = new(stealing.loc)
+	active_scan_effect.appearance = stealing.appearance
+	active_scan_effect.dir = stealing.dir
+	active_scan_effect.makeHologram()
+
+	var/obj/effect/scan_effect/cone/active_scan_cone
+	if(isturf(on_what.loc) && isturf(spy.loc)) // Cone doesn't make sense if its being held or something
+		active_scan_cone = new(spy.loc)
+		active_scan_cone.transform = active_scan_cone.transform.Turn(get_angle(spy, stealing))
+		active_scan_cone.pixel_x -= 48
+		active_scan_cone.pixel_y -= 48
+		active_scan_cone.alpha = 0
+		aniamte(active_scan_cone, time = 0.5 SECONDS, alpha = initial(active_scan_cone.alpha))
+
+	. = steal_process(stealing, spy, bounty)
+	qdel(active_scan_effect)
+	qdel(active_scan_cone)
+	return .
+
+/// Attempts to steal the passed atom in accordance with the passed bounty.
+/// If successful, proceeds to complete the bounty.
+/datum/component/spy_uplink/proc/steal_process(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	spy.visible_message(
 		span_warning("[spy] starts scanning [stealing] with a strange device..."),
 		span_notice("You start scanning [stealing], preparing it for extraction."),
 	)
-	apply_scan_effect(stealing, spy)
+
 	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src)))
-		clear_scan_effect(stealing)
-		return
+		return FALSE
 	if(bounty.claimed)
 		to_chat(spy, span_warning("The bounty for [stealing] has been claimed by another spy!"))
-		clear_scan_effect(stealing)
-		return
+		return FALSE
 
-	clear_scan_effect(stealing)
 	bounty.clean_up_stolen_item(stealing, spy)
 	bounty.claimed = TRUE
 
@@ -105,21 +124,10 @@
 
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-/datum/component/spy_uplink/proc/apply_scan_effect(atom/movable/on_what, mob/living/spy)
-	active_scan_effect = new(on_what.loc)
-	active_scan_effect.appearance = on_what.appearance
-	active_scan_effect.dir = on_what.dir
-	active_scan_effect.makeHologram()
+	var/datum/atagonist/spy/spy_datum = spy_ref?.resolve()
+	spy_datum?.bounties_claimed += 1
 
-	if(isturf(on_what.loc) && isturf(spy.loc)) // Cone doesn't make sense if its being held or something
-		active_scan_cone = new(spy.loc)
-		active_scan_cone.transform = active_scan_cone.transform.Turn(get_angle(spy, on_what))
-		active_scan_cone.pixel_x -= 48
-		active_scan_cone.pixel_y -= 48
-
-/datum/component/spy_uplink/proc/clear_scan_effect()
-	QDEL_NULL(active_scan_effect)
-	QDEL_NULL(active_scan_cone)
+	return TRUE
 
 /datum/component/spy_uplink/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
