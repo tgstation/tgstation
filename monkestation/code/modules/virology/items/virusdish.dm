@@ -259,9 +259,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 /obj/item/weapon/virusdish/examine(mob/user)
 	desc = initial(desc)
 	if(open)
-		desc += "\n Its lid is open!
+		desc += "\n Its lid is open!"
 	else
-		desc += "\n Its lid is closed!
+		desc += "\n Its lid is closed!"
 
 	desc += "\n There is a sticker with some printed information on it. <a href ='?src=\ref[src];examine=1'>(Read it)</a>"
 	..()
