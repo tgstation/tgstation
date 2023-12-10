@@ -22,8 +22,6 @@ new /datum/disease_ability/symptom/medium/nano_destroy,
 new /datum/disease_ability/symptom/medium/disfiguration,
 new /datum/disease_ability/symptom/medium/polyvitiligo,
 new /datum/disease_ability/symptom/medium/itching,
-new /datum/disease_ability/symptom/medium/heal/sensory_restoration,
-new /datum/disease_ability/symptom/medium/heal/mind_restoration,
 new /datum/disease_ability/symptom/powerful/fire,
 new /datum/disease_ability/symptom/powerful/flesh_eating,
 new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
@@ -354,14 +352,6 @@ new /datum/disease_ability/symptom/powerful/heal/coma,
 	symptoms = list(/datum/symptom/itching)
 	short_desc = "Cause victims to itch."
 	long_desc = "Cause victims to itch, increasing all stats except stealth."
-
-/datum/disease_ability/symptom/medium/heal/sensory_restoration
-	symptoms = list(/datum/symptom/sensory_restoration)
-	short_desc = "Regenerate eye and ear damage of victims."
-	long_desc = "Regenerate eye and ear damage of victims."
-
-/datum/disease_ability/symptom/medium/heal/mind_restoration
-	symptoms = list(/datum/symptom/mind_restoration)
 
 /******POWERFUL******/
 
