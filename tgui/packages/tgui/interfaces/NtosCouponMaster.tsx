@@ -18,8 +18,8 @@ export const NtosCouponMaster = (props) => {
   const { act, data } = useBackend<Data>();
   const { valid_id, redeemed_coupons = [], printed_coupons = [] } = data;
   return (
-    <NtosWindow width={400} height={500}>
-      <NtosWindow.Content>
+    <NtosWindow width={400} height={400}>
+      <NtosWindow.Content scrollable>
         {!valid_id ? (
           <NoticeBox danger>
             No bank account detected. Insert a valid ID.
@@ -27,7 +27,7 @@ export const NtosCouponMaster = (props) => {
         ) : (
           <>
             <NoticeBox info>
-              You can print redeemed coupons at the nearest photocopier.
+              You can print redeemed coupons by right-clicking a photocopier.
             </NoticeBox>
             <Input
               width={200}
@@ -39,14 +39,14 @@ export const NtosCouponMaster = (props) => {
                 })
               }
             />
-            <Section scrollable title="Redeemed Coupons">
+            <Section title="Redeemed Coupons">
               {redeemed_coupons.map((coupon, index) => (
                 <Box key={index} className="candystripe">
                   {coupon.goody} ({coupon.discount}% OFF)
                 </Box>
               ))}
             </Section>
-            <Section scrollabe title="Printed Coupons">
+            <Section title="Printed Coupons">
               {printed_coupons.map((coupon, index) => (
                 <Box key={index} className="candystripe">
                   {coupon.goody} ({coupon.discount}% OFF)

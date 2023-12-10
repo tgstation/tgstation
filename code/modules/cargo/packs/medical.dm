@@ -189,3 +189,4 @@
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/organ/internal/cyberimp/arm/muscle = 2)
 	crate_name = "Strong-Arm implant crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE

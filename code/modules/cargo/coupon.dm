@@ -1,16 +1,27 @@
+///datum used by the Coupon Master PDA app to generate coupon items redeemed by a bank account.
 /datum/coupon_code
+	///The pack that'll receive the discount
 	var/datum/supply_pack/discounted_pack
-	var/discount = 0.05
+	///The discount of the pack, on a 0 to 1 range.
+	var/discount
+	/**
+	 * If set, copies of the coupon code will delete itself after a while if not printed.
+	 * The ones SSmodular_computer.discount_coupons stay intact.
+	 */
 	var/expires_in
+	///Has the coupon been printed. Dictates in which section it's shown, and that it cannot be printed again.
 	var/printed = FALSE
+	///The timerid for deletion if expires_in is set.
 	var/timerid
+	///Reference to the associated bank account, since we need to clear refs on deletion.
 	var/datum/bank_account/associated_account
 
 /datum/coupon_code/New(discount, discounted_pack, expires_in)
 	..()
 	src.discounted_pack = discounted_pack
 	src.discount = discount
-	src.expires_in = expires_in
+	if(expires_in)
+		src.expires_in = world.time + expires_in
 
 /datum/coupon_code/Destroy()
 	if(associated_account)
@@ -47,7 +58,7 @@
 
 /// Choose what our prize is :D
 /obj/item/coupon/proc/generate(discount, datum/supply_pack/discounted_pack)
-	src.discounted_pack = discounted_pack || pick(subtypesof(/datum/supply_pack/goody))
+	src.discounted_pack = discounted_pack || pick(GLOB.discountable_packs[pick_weight(GLOB.pack_discount_odds)])
 	var/static/list/chances = list("0.10" = 4, "0.15" = 8, "0.20" = 10, "0.25" = 8, "0.50" = 4, COUPON_OMEN = 1)
 	discount_pct_off = discount || pick_weight(chances)
 

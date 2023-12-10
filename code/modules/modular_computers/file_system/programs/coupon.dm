@@ -1,10 +1,11 @@
 #define COUPON_PAPER_USE 1
 #define COUPON_TONER_USE 0.250
 
+///A program that enables the user to redeem randomly generated coupons for several cargo packs (mostly goodies).
 /datum/computer_file/program/coupon
 	filename = "couponmaster"
 	filedesc = "Coupon Master"
-	downloader_category = PROGRAM_CATEGORY_DEVICE
+	downloader_category = PROGRAM_CATEGORY_SUPPLY
 	extended_desc = "Program for receiving discounts for several cargo goodies. After redeeming a coupon, hit a photocopier with your PDA to print it."
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 5
@@ -15,7 +16,14 @@
 
 /datum/computer_file/program/coupon/on_install()
 	. = ..()
+	///set the discount_coupons list, which means SSmodular_computers will now begin to periodically produce new coupon codes.
 	LAZYINITLIST(SSmodular_computers.discount_coupons)
+	ADD_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED, REF(src)) //All that glitters is not gold
+
+/datum/computer_file/program/coupon/Destroy()
+	if(computer)
+		REMOVE_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED, REF(src))
+	return ..()
 
 /datum/computer_file/program/coupon/ui_data(mob/user)
 	var/list/data = list()

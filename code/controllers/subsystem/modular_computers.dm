@@ -1,4 +1,4 @@
-///The maximum amount of logs that can be generated before they start overwriting eachother.
+s///The maximum amount of logs that can be generated before they start overwriting eachother.
 #define MAX_LOG_COUNT 300
 
 SUBSYSTEM_DEF(modular_computers)
@@ -26,6 +26,7 @@ SUBSYSTEM_DEF(modular_computers)
 
 	///Lazylist of coupons used by the Coupon Master PDA app. e.g. "COUPONCODE25" = coupon_code
 	var/list/discount_coupons
+	///When will the next coupon drop?
 	var/next_discount = 0
 
 /datum/controller/subsystem/modular_computers/Initialize()
@@ -37,32 +38,42 @@ SUBSYSTEM_DEF(modular_computers)
 	if(discount_coupons && world.time >= next_discount)
 		announce_coupon()
 
+///Generate new coupon codes that can be redeemed with the Coupon Master App
 /datum/controller/subsystem/modular_computers/proc/announce_coupon()
 	//If there's no way to announce the coupon, we may as well skip it.
 	var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
 	if(isnull(announcement_system))
 		return
 
-	var/static/list/discounts = list("0.10" = 7, "0.15" = 16, "0.20" = 20, "0.25" = 16, "0.50" = 8, "0.75" = 1)
-	var/static/list/flash_discounts = list("0.30" = 3, "0.40" = 8, "0.50" = 8, "0.75" = 3)
-	var/static/regex/only_alphanumeric = regex("\[^a-zA-Z0-9]", "g")
+	var/static/list/discounts = list("0.10" = 7, "0.15" = 16, "0.20" = 20, "0.25" = 16, "0.50" = 8, "0.66" = 1)
+	var/static/list/flash_discounts = list("0.30" = 3, "0.40" = 8, "0.50" = 8, "0.66" = 2, "0.75" = 1)
+	///Eliminates non-alphanumeri characters, as well as the word "Single-Pack" or "Pack" or "Crate" from the coupon code
+	var/static/regex/strip_pack_name = regex("\[^a-zA-Z0-9]|(Single-)?Pack|Crate", "g")
 
-	var/datum/supply_pack/discounted_pack = pick(subtypesof(/datum/supply_pack/goody))
+	var/datum/supply_pack/discounted_pack = pick(GLOB.discountable_packs[pick_weight(GLOB.pack_discount_odds)])
 	var/pack_name = initial(discounted_pack.name)
 	var/chosen_discount
 	var/expires_in = 0
 	if(prob(75))
 		chosen_discount = text2num(pick_weight(discounts))
+		if(prob(20))
+			expires_in = rand(8,10)
 	else
 		chosen_discount = text2num(pick_weight(flash_discounts))
 		expires_in = rand(2, 4)
-	var/coupon_code = "[uppertext(only_alphanumeric.Replace(pack_name, ""))][chosen_discount*100]"
+	var/coupon_code = "[uppertext(strip_pack_name.Replace(pack_name, ""))][chosen_discount*100]"
 
-	///Was the exact same coupon already done? Well, too bad.
-	if(coupon_code in discount_coupons)
+	var/list/targets = list()
+	for (var/messenger_ref in GLOB.pda_messengers)
+		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
+		if(locate(/datum/computer_file/program/coupon) in messenger?.computer.stored_files)
+			targets += messenger
+
+	///Don't go any further if the same coupon code has been done alrady or if there's no recipient for the 'promo'.
+	if((coupon_code in discount_coupons) || !length(targets))
 		return
 
-	var/datum/coupon_code/coupon = new(chosen_discount, discounted_pack, expires_in ? world.time + expires_in MINUTES : 0)
+	var/datum/coupon_code/coupon = new(chosen_discount, discounted_pack, expires_in)
 
 	discount_coupons[coupon_code] = coupon
 
@@ -71,12 +82,12 @@ SUBSYSTEM_DEF(modular_computers)
 		"A new discount has dropped for %GOODY: %DISCOUNT.",
 		"Check this new offer out: %GOODY, now %DISCOUNT off.",
 		"Now on sales: %GOODY, at %DISCOUNT discount!",
-		"This item is now %DISCOUNT off: %GOODY.",
+		"This item is now on sale (%DISCOUNT off): %GOODY.",
 		"Would you look at that! A %DISCOUNT discount on %GOODY!",
 		"Exclusive offer for %GOODY. Only %DISCOUNT! Get it now:",
 		"%GOODY is now %DISCOUNT off.",
 		"*RING* A new discount has dropped: %GOODY, %DISCOUNT off.",
-		"%GOODY - %DISCOUNT."
+		"%GOODY - %DISCOUNT off."
 	)
 	var/static/list/code_messages = list(
 		"Here's the code",
@@ -84,25 +95,19 @@ SUBSYSTEM_DEF(modular_computers)
 		"Open the app to redeem it",
 		"Code",
 		"Redeem it now",
+		"Buy it now",
 	)
 
-	var/list/targets = list()
-	for (var/messenger_ref in GLOB.pda_messengers)
-		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
-		if(locate(/datum/computer_file/program/coupon) in messenger?.computer.stored_files)
-			targets += messenger
+	var/chosen_promo_message = replacetext(replacetext(pick(promo_messages), "%GOODY", pack_name), "%DISCOUNT", "[chosen_discount*100]%")
+	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
+		"fakename" = "Coupon Master",
+		"fakejob" = "Goodies Promotion",
+		"message" = "[chosen_promo_message] [pick(code_messages)]: [coupon_code][expires_in ? " (EXPIRES IN [expires_in] MINUTES)" : ""].",
+		"targets" = targets,
+		"automated" = TRUE,
+	))
 
-	if(length(targets))
-		var/chosen_promo_message = replacetext(replacetext(pick(promo_messages), "%GOODY", pack_name), "%DISCOUNT", "[chosen_discount*100]%")
-		var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
-			"fakename" = "Coupon Master Update",
-			"fakejob" = "Goodies Promotional System",
-			"message" = "[chosen_promo_message] [code_messages]: [coupon_code][expires_in ? " (EXPIRES IN [expires_in] MINUTES)" : ""].",
-			"targets" = targets,
-			"automated" = TRUE,
-		))
-
-		signal.send_to_receivers()
+	signal.send_to_receivers()
 
 	next_discount = world.time + rand(3, 5) MINUTES
 
