@@ -214,7 +214,12 @@
 	for(var/I in 1 to 3)
 		to_chat(usr, results[I], confidential = TRUE)
 
+/// Parses the `query_text` input and handles running it and returning the desired results.
+/// This should not be called directly, use either the `admin_SDQL2_query` or `HandleUserlessSDQL` wrappers instead.
 /world/proc/SDQL2_query(mob/user, query_text, log_entry1, log_entry2, silent = FALSE)
+	if(IsAdminAdvancedProcCall()) // safety, should only be invoked through the admin_SDQL2_query if we are assuming a cliented mob is running it. use the wrapper client proc!
+		return
+
 	// will give information back to the user about the status of the query, different than silent because this is stuff that we would always send to a real cliented mob.
 	var/user_feedback = FALSE
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
