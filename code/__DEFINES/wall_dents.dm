@@ -1,2 +1,3 @@
 #define WALL_DENT_HIT 1
 #define WALL_DENT_SHOT 2
+#define MAX_DENT_DECALS 15
