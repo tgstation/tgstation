@@ -109,10 +109,20 @@
 /datum/spy_bounty/item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
-		if(length(item.special_equipment))
+		if(length(item.special_equipment) || item.difficulty <= 0)
 			continue
 		if(!item.target_exists())
 			continue
+		switch(difficulty)
+			if(SPY_DIFFICULTY_EASY)
+				if(item.difficulty >= 3)
+					continue
+			if(SPY_DIFFICULTY_MEDIUM)
+				if(item.difficulty <= 2 || item.difficulty >= 5)
+					continue
+			if(SPY_DIFFICULTY_HARD)
+				if(item.difficulty <= 3)
+					continue
 		valid_possible_items += item
 
 	for(var/datum/spy_bounty/item/existing_bounty in handler.get_all_bounties())
@@ -128,6 +138,12 @@
 
 /datum/spy_bounty/item/is_stealable(atom/movable/stealing)
 	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
+
+/datum/spy_bounty/item/medium
+	difficulty = SPY_DIFFICULTY_MEDIUM
+
+/datum/spy_bounty/item/hard
+	difficulty = SPY_DIFFICULTY_HARD
 
 /datum/spy_bounty/machine
 	difficulty = SPY_DIFFICULTY_MEDIUM // melbert todo : change based on location
@@ -279,8 +295,22 @@
 
 // Steal someone's heirloom
 /datum/spy_bounty/targets_person/some_item/heirloom
-	difficulty = "unset"
-	desired_type = /obj/item // melbert todo : make this work
+	desired_type = /obj/item
+
+/datum/spy_bounty/targets_person/some_item/heirloom/is_valid_crewmember(mob/living/carbon/human/crewmember)
+	return ..() && crewmember.has_quirk(/datum/quirk/item_quirk/family_heirloom)
+
+/datum/spy_bounty/targets_person/some_item/heirloom/find_desired_thing(mob/living/carbon/human/crewmember)
+	var/datum/quirk/item_quirk/family_heirloom/quirk = crewmember.get_quirk(/datum/quirk/item_quirk/family_heirloom)
+	return quirk.heirloom?.resolve()
+
+/datum/spy_bounty/targets_person/some_item/heirloom/target_found(mob/crewmember)
+	var/obj/item/desired_thing = find_desired_thing(crewmember)
+	target_original_desired_ref = WEAKREF(desired_thing)
+	name = "Steal [crewmember.real_name]'s heirloom [desired_thing.name]"
+	help = "Steal [desired_thing] from [crewmember.real_name]. \
+		You can accomplish this via brute force, or by scanning them with your uplink while they are incapacitated."
+	return TRUE
 
 // Steal a limb or organ off someone
 /datum/spy_bounty/targets_person/some_item/limb_or_organ

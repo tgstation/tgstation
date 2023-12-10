@@ -22,6 +22,16 @@
 	var/objective_type = OBJECTIVE_ITEM_TYPE_NORMAL
 	/// Whether this item exists on the station map at the start of a round.
 	var/exists_on_map = FALSE
+	/**
+	 * How hard it is to steal this item given normal circumstances, ranked on a scale of 1 to 5.
+	 *
+	 * 1 - Probably found in a public area
+	 * 2 - Likely on someone's person, or in a less-than-public but otherwise unguarded area
+	 * 3 - Usually on someone's person, or in a locked locker or otherwise secure area
+	 * 4 - Always on someone's person, or in a secure area
+	 * 5 - You know it when you see it. Things like the Nuke Disc which have a pointer to it at all times.
+	 */
+	var/difficulty = 0
 
 /// For objectives with special checks (does that intellicard have an ai in it? etcetc)
 /datum/objective_item/proc/check_special_completion()
@@ -72,6 +82,7 @@
 	excludefromjob = list(JOB_BARTENDER)
 	item_owner = list(JOB_BARTENDER)
 	exists_on_map = TRUE
+	difficulty = 2
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/doublebarrel)
@@ -91,6 +102,7 @@
 		JOB_STATION_ENGINEER,
 	)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/fireaxe/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/fireaxe)
@@ -105,6 +117,7 @@
 	)
 	item_owner = list(JOB_ROBOTICIST)
 	exists_on_map = TRUE
+	difficulty = 2
 
 /obj/item/crowbar/mechremoval/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/crowbar/mechremoval)
@@ -115,6 +128,7 @@
 	excludefromjob = list(JOB_CHAPLAIN)
 	item_owner = list(JOB_CHAPLAIN)
 	exists_on_map = TRUE
+	difficulty = 2
 
 /obj/item/nullrod/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/nullrod)
@@ -125,6 +139,7 @@
 	excludefromjob = list(JOB_CLOWN, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_CLOWN)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/clothing/shoes/clown_shoes/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/shoes/clown_shoes)
@@ -135,6 +150,7 @@
 	excludefromjob = list(JOB_MIME, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_MIME)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/clothing/mask/gas/mime/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/mask/gas/mime)
@@ -145,6 +161,7 @@
 	excludefromjob = list(JOB_SHAFT_MINER, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_SHAFT_MINER)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/recharge/kinetic_accelerator)
@@ -155,6 +172,7 @@
 	excludefromjob = list(JOB_COOK, JOB_HEAD_OF_PERSONNEL, JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER)
 	item_owner = list(JOB_COOK)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/clothing/mask/fakemoustache/italian/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/mask/fakemoustache/italian)
@@ -164,6 +182,7 @@
 	targetitem = /obj/item/gun/ballistic/revolver/c38/detective
 	excludefromjob = list(JOB_DETECTIVE)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/gun/ballistic/revolver/c38/detective/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/revolver/c38/detective)
@@ -174,6 +193,7 @@
 	excludefromjob = list(JOB_LAWYER)
 	item_owner = list(JOB_LAWYER)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/clothing/accessory/lawyers_badge/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/accessory/lawyers_badge)
@@ -183,6 +203,7 @@
 	targetitem = /obj/item/storage/belt/utility/chief
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
+	difficulty = 2
 
 /obj/item/storage/belt/utility/chief/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/storage/belt/utility/chief)
@@ -199,6 +220,7 @@
 		JOB_CHIEF_MEDICAL_OFFICER
 	)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/melee/baton/telescopic/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
@@ -209,6 +231,7 @@
 	excludefromjob = list(JOB_QUARTERMASTER, JOB_CARGO_TECHNICIAN)
 	item_owner = list(JOB_QUARTERMASTER)
 	exists_on_map = TRUE
+	difficulty = 2
 
 /obj/item/card/id/departmental_budget/car/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/card/id/departmental_budget/car)
@@ -218,6 +241,7 @@
 	targetitem = /obj/item/mod/control/pre_equipped/magnate
 	excludefromjob = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/mod/control/pre_equipped/magnate/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/magnate)
@@ -234,6 +258,7 @@
 		JOB_CHIEF_MEDICAL_OFFICER
 	)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/card/id/advanced/gold/captains_spare/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/card/id/advanced/gold/captains_spare)
@@ -246,6 +271,7 @@
 	targetitem = /obj/item/gun/energy/laser/captain
 	excludefromjob = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/gun/energy/laser/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/laser/captain)
@@ -256,6 +282,7 @@
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
@@ -266,6 +293,7 @@
 	excludefromjob = list(JOB_HEAD_OF_SECURITY)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/automatic/combat/compact)
@@ -276,6 +304,7 @@
 	excludefromjob = list(JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR, JOB_HEAD_OF_PERSONNEL)
 	item_owner = list(JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/hand_tele/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/hand_tele)
@@ -286,6 +315,7 @@
 	excludefromjob = list(JOB_CAPTAIN)
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/tank/jetpack/oxygen/captain)
@@ -296,6 +326,7 @@
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/clothing/shoes/magboots/advance/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/shoes/magboots/advance)
@@ -306,6 +337,7 @@
 	excludefromjob = list(JOB_CAPTAIN)
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/clothing/accessory/medal/gold/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/accessory/medal/gold/captain)
@@ -316,6 +348,7 @@
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
 	item_owner = list(JOB_CHIEF_MEDICAL_OFFICER)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/reagent_containers/hypospray/cmo)
@@ -324,6 +357,7 @@
 	name = "the nuclear authentication disk"
 	targetitem = /obj/item/disk/nuclear
 	excludefromjob = list(JOB_CAPTAIN)
+	difficulty = 5
 
 /obj/item/disk/nuclear/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/disk/nuclear)
@@ -337,6 +371,7 @@
 	excludefromjob = list(JOB_HEAD_OF_SECURITY, JOB_WARDEN)
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/clothing/suit/hooded/ablative/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/suit/hooded/ablative)
@@ -347,6 +382,7 @@
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR)
 	item_owner = list(JOB_RESEARCH_DIRECTOR)
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/clothing/suit/armor/reactive/teleport/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/suit/armor/reactive/teleport)
@@ -356,6 +392,7 @@
 	valid_containers = list(/obj/item/folder)
 	targetitem = /obj/item/documents
 	exists_on_map = TRUE
+	difficulty = 3
 
 /obj/item/documents/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/documents) //Any set of secret documents. Doesn't have to be NT's
@@ -365,6 +402,7 @@
 	valid_containers = list(/obj/item/nuke_core_container)
 	targetitem = /obj/item/nuke_core
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/nuke_core/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/nuke_core)
@@ -379,6 +417,7 @@
 	excludefromjob = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST, JOB_ROBOTICIST, JOB_GENETICIST)
 	item_owner = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/computer_disk/hdd_theft/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/computer_disk/hdd_theft)
@@ -392,6 +431,7 @@
 	name = "a sliver of a supermatter crystal"
 	targetitem = /obj/item/nuke_core/supermatter_sliver
 	valid_containers = list(/obj/item/nuke_core_container/supermatter)
+	difficulty = 5
 
 /datum/objective_item/steal/supermatter/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
@@ -404,6 +444,7 @@
 /datum/objective_item/steal/functionalai
 	name = "a functional AI"
 	targetitem = /obj/item/aicard
+	difficulty = 5
 
 /datum/objective_item/steal/functionalai/New()
 	. = ..()
@@ -435,6 +476,7 @@
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	altitems = list(/obj/item/photo)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/areaeditor/blueprints/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/areaeditor/blueprints)
@@ -453,6 +495,7 @@
 	targetitem = /obj/item/blackbox
 	excludefromjob = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
 	exists_on_map = TRUE
+	difficulty = 4
 
 /obj/item/blackbox/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/blackbox)
@@ -466,6 +509,7 @@
 	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_ATMOSPHERIC_TECHNICIAN, JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 	item_owner = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/clothing/gloves/color/yellow/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/gloves/color/yellow)
@@ -475,6 +519,7 @@
 	targetitem = /obj/item/toy/plush/moth
 	excludefromjob = list(JOB_PSYCHOLOGIST, JOB_PARAMEDIC, JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/toy/plush/moth/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/toy/plush/moth)
@@ -483,6 +528,7 @@
 	name = "cute lizard plush toy"
 	targetitem = /obj/item/toy/plush/lizard_plushie
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/toy/plush/lizard_plushie/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/toy/plush/lizard_plushie)
@@ -492,6 +538,7 @@
 	targetitem = /obj/item/stamp/denied
 	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_SHAFT_MINER)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/stamp/denied/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/stamp/denied)
@@ -501,6 +548,7 @@
 	targetitem = /obj/item/stamp/granted
 	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_SHAFT_MINER)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/stamp/granted/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/stamp/granted)
@@ -510,6 +558,7 @@
 	targetitem = /obj/item/book/manual/wiki/security_space_law
 	excludefromjob = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY, JOB_LAWYER, JOB_DETECTIVE)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/book/manual/wiki/security_space_law/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/book/manual/wiki/security_space_law)
@@ -520,6 +569,7 @@
 	excludefromjob = list(JOB_ATMOSPHERIC_TECHNICIAN, JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER, JOB_SCIENTIST, JOB_RESEARCH_DIRECTOR, JOB_GENETICIST, JOB_ROBOTICIST)
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/pipe_dispenser/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/pipe_dispenser)
@@ -529,6 +579,7 @@
 	targetitem = /obj/item/storage/fancy/donut_box
 	excludefromjob = list(JOB_CAPTAIN, JOB_CHIEF_ENGINEER, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_QUARTERMASTER, JOB_CHIEF_MEDICAL_OFFICER, JOB_RESEARCH_DIRECTOR, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_LAWYER, JOB_DETECTIVE)
 	exists_on_map = TRUE
+	difficulty = 1
 
 /obj/item/storage/fancy/donut_box/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/storage/fancy/donut_box)

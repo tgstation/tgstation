@@ -60,7 +60,15 @@
 		if(item.cost >= SPY_UPPER_COST_THRESHOLD)
 			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
 
+	// For the first bounty set, replace all hard bounties with medium ones
+	var/hard_bounties_to_skip = bounties_to_give[SPY_DIFFICULTY_HARD
+	bounties_to_give[SPY_DIFFICULTY_HARD] = 0
+	bounties_to_give[SPY_DIFFICULTY_MEDIUM] += hard_bounties_to_skip
+
 	refresh_bounty_list()
+
+	bounties_to_give[SPY_DIFFICULTY_HARD] += hard_bounties_to_skip
+	bounties_to_give[SPY_DIFFICULTY_MEDIUM] -= hard_bounties_to_skip
 
 /// Helper that returns a list of all active bounties in a single list, regardless of difficulty.
 /datum/spy_bounty_handler/proc/get_all_bounties() as /list

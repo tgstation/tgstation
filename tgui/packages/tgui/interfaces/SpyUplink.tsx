@@ -16,14 +16,14 @@ type Data = {
   bounties: Bounty[];
 };
 
+const difficulty_to_color = {
+  'easy': 'good',
+  'medium': 'average',
+  'hard': 'bad',
+};
+
 const BountyDisplay = (props: { bounty: Bounty }) => {
   const { bounty } = props;
-
-  const difficulty_to_color = {
-    'easy': 'good',
-    'medium': 'average',
-    'hard': 'bad',
-  };
 
   return (
     <Section>
@@ -56,22 +56,23 @@ const BountyDisplay = (props: { bounty: Bounty }) => {
   );
 };
 
-export const SpyUplink = (props, context) => {
-  const { data } = useBackend<Data>(context);
+// Formats a number of deciseconds into a string minutes:seconds
+const format_deciseconds = (deciseconds: number) => {
+  const seconds = Math.floor(deciseconds / 10);
+  const minutes = Math.floor(seconds / 60);
+
+  const seconds_left = seconds % 60;
+  const minutes_left = minutes % 60;
+
+  const seconds_string = seconds_left.toString().padStart(2, '0');
+  const minutes_string = minutes_left.toString().padStart(2, '0');
+
+  return `${minutes_string}:${seconds_string}`;
+};
+
+export const SpyUplink = () => {
+  const { data } = useBackend<Data>();
   const { bounties, time_left } = data;
-
-  const format_deciseconds = (deciseconds: number) => {
-    const seconds = Math.floor(deciseconds / 10);
-    const minutes = Math.floor(seconds / 60);
-
-    const seconds_left = seconds % 60;
-    const minutes_left = minutes % 60;
-
-    const seconds_string = seconds_left.toString().padStart(2, '0');
-    const minutes_string = minutes_left.toString().padStart(2, '0');
-
-    return `${minutes_string}:${seconds_string}`;
-  };
 
   return (
     <Window width={450} height={615} theme="ntos_darkmode">
@@ -88,10 +89,10 @@ export const SpyUplink = (props, context) => {
               Time until refresh: {format_deciseconds(time_left)}
             </Box>
           }>
-          <Stack vertical fill>
+          <Stack vertical fill zebra>
             <Stack.Item>
               {bounties.map((bounty) => (
-                <Stack.Item key={bounty.name} className="candystripe">
+                <Stack.Item key={bounty.name}>
                   <BountyDisplay bounty={bounty} />
                 </Stack.Item>
               ))}
