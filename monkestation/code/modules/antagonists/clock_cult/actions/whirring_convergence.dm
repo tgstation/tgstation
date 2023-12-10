@@ -43,7 +43,12 @@
 	if(user && istype(user, /mob/living/eminence))
 		final_message = span + span_bigbrass("<i><b>Master Eminence<b> transmits, \"") + sent_message + span_bigbrass("\"</i></span>")
 	else if(user)
-		final_message = span + "<i><b>Clock[user.gender == FEMALE ? "sister" : "brother"] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]</b> transmits, \"" + sent_message + "\"</i></span>"
+		var/pronoun_phrase = "sibling"
+		if(user.gender == FEMALE)
+			pronoun_phrase = "sister"
+		else if(user.gender == MALE)
+			pronoun_phrase = "brother"
+		final_message = span + "<i><b>Clock[pronoun_phrase] [findtextEx(user.name, user.real_name) ? user.name : "[user.real_name] (as [user.name])"]</b> transmits, \"" + sent_message + "\"</i></span>"
 	else
 		final_message = span + sent_message + "</span>"
 

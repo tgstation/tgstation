@@ -85,7 +85,7 @@ GLOBAL_LIST_EMPTY(abscond_markers)
 		var/mob/passing_mob = mover
 		if(IS_CLOCK(passing_mob))
 			return FALSE
-	for(var/mob/held_mob in mover.contents)
+	for(var/mob/held_mob in mover.get_all_contents()) //CHECK THIS WORKS
 		if(IS_CLOCK(held_mob))
 			return FALSE
 	return ..()

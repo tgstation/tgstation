@@ -67,10 +67,10 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 ///check how many human members we have and anything that goes with that
 /datum/team/clock_cult/proc/check_member_count()
 	check_member_distribution()
-	max_human_servants = round(max((get_active_player_count() / 7) + 5, max_human_servants))
+	max_human_servants = round(max((get_active_player_count() / 8) + 6, max_human_servants))
 	var/human_servant_count = length(human_servants)
 	var/main_message = "The Ark will be torn open if [max_human_servants - human_servant_count] more minds are converted to the faith of Rat'var\
-						[get_charged_anchor_crystals() ? "." : "and an Anchoring Crystal is summoned and protected on the station."]"
+						[get_charged_anchor_crystals() >= 2 ? "." : "and two Anchoring Crystals are summoned and protected on the station."]"
 
 	if((human_servant_count * 2) > max_human_servants && warning_stage < CONVERSION_WARNING_HALFWAY)
 		send_clock_message(null, span_bigbrass("Rat'var's influence is growing. [main_message]"), sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
@@ -81,13 +81,13 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 						   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 		warning_stage = CONVERSION_WARNING_THREEQUARTERS
 
-	else if((human_servant_count == max_human_servants - 1) && warning_stage < CONVERSION_WARNING_CRITIAL && get_charged_anchor_crystals())
+	else if((human_servant_count == max_human_servants - 1) && warning_stage < CONVERSION_WARNING_CRITIAL && get_charged_anchor_crystals() >= 2)
 		send_clock_message(span_bigbrass("The internal cogs of the Ark begin spinning, ready for activation.<br> \
 										  Upon the next conversion, the dimensional barrier will become too weak for The Ark to remain closed and it will be forced open."), \
 						   sent_sound = 'sound/magic/clockwork/scripture_tier_up.ogg')
 		warning_stage = CONVERSION_WARNING_CRITIAL
 
-	else if((human_servant_count >= max_human_servants) && get_charged_anchor_crystals())
+	else if((human_servant_count >= max_human_servants) && get_charged_anchor_crystals() >= 2)
 		GLOB.clock_ark?.prepare_ark()
 
 ///check that our human_servants and non_human_servants lists are correct and if not then set them to be correct
@@ -126,7 +126,7 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 #undef CONVERSION_WARNING_THREEQUARTERS
 #undef CONVERSION_WARNING_CRITIAL
 
-#define POSSIBLE_CRYSTAL_AREAS 5
+#define POSSIBLE_CRYSTAL_AREAS 6
 /datum/objective/anchoring_crystals
 	var/list/valid_areas = list()
 
@@ -142,11 +142,11 @@ GLOBAL_DATUM(main_clock_cult, /datum/team/clock_cult)
 	update_explanation_text()
 
 /datum/objective/anchoring_crystals/update_explanation_text()
-	explanation_text = "Summon an anchoring crystal on the station an protect it for 5 minutes to allow the ark to open. \
-						Up to 2 more crystals can be created for extra power, however, the crew will be alerted and the crystals must be summoned in [english_list(valid_areas)]."
+	explanation_text = "Summon two anchorings crystals on the station and protect them for 5 minutes to allow the ark to open. \
+						Up to 2 crystals can be created for extra power, however, the crew will be alerted and they must be summoned in [english_list(valid_areas)]."
 
 /datum/objective/anchoring_crystals/check_completion()
-	return get_charged_anchor_crystals() || completed
+	return get_charged_anchor_crystals() >= 2 || completed
 
 /datum/objective/ratvar
 	explanation_text = "Protect The Ark so that Rat'var may enlighten this world!"

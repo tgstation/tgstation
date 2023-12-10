@@ -45,6 +45,7 @@
 		servant_datum.give_slab = FALSE
 		converted_mob.mind.add_antag_datum(servant_datum)
 		converted_mob.Paralyze(5 SECONDS)
+		converted_mob.blood_volume = BLOOD_VOLUME_NORMAL
 		if(ishuman(converted_mob))
 			var/mob/living/carbon/human/human_converted = converted_mob
 			human_converted.uncuff()
@@ -65,3 +66,8 @@
 
 	visible_message(span_warning("\The [src] falters as though it cannot support more servants."))
 	return FALSE
+
+/obj/structure/destructible/clockwork/sigil/submission/dispel_check(mob/user)
+	if(active_timer)
+		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently converting [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
+			return FALSE

@@ -25,14 +25,14 @@
 		to_chat(invoker, span_userdanger("No ark located, contact the admins with an ahelp(f1)."))
 		return FALSE
 
-	if(!get_charged_anchor_crystals())
-		to_chat(invoker, span_brass("Reebe is not yet anchored enough to this realm, summon and protect an anchoring crystal."))
+	if(!get_charged_anchor_crystals() >= 2)
+		to_chat(invoker, span_brass("Reebe is not yet anchored enough to this realm, the ark cannot open until enough anchoring crystals are summoned and protected."))
 		return FALSE
 
 	return TRUE
 
 /datum/scripture/ark_activation/invoke_success()
-	if(!GLOB.clock_ark) //checking twice just in case
+	if(!GLOB.clock_ark)
 		to_chat(invoker, span_userdanger("No ark located, contact the admins with an ahelp(f1)."))
 		return FALSE
 

@@ -7,7 +7,7 @@
 	invocation_time = 1 SECONDS //short invocation but using it also takes some time afterwards
 	invocation_text = list("By the light of Eng'Ine...") //the second line is said when used on someone
 	button_icon_state = "Sentinel's Compromise"
-	category = SPELLTYPE_PRESERVATION
+	category = SPELLTYPE_SERVITUDE //you have a healing spell please please PLEASE use it
 	slab_overlay = "compromise"
 	use_time = 15 SECONDS
 	recital_sound = 'sound/magic/magic_missile.ogg'
@@ -31,6 +31,7 @@
 
 	clockwork_say(invoker, text2ratvar("Wounds will close."), TRUE)
 
+	//MMMMMM, CHUNKY
 	var/total_damage = (healed_mob.getBruteLoss() + healed_mob.getFireLoss() + healed_mob.getOxyLoss() + healed_mob.getCloneLoss()) * 0.6
 	healed_mob.stamina.adjust(healed_mob.staminaloss * 0.6)
 	healed_mob.adjustBruteLoss(-healed_mob.getBruteLoss() * 0.6)

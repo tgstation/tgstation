@@ -41,7 +41,15 @@
 			living_mob.apply_status_effect(STATUS_EFFECT_INTERDICTION)
 
 	for(var/obj/vehicle/sealed/mecha/mech in range(INTERDICTION_LENS_RANGE, src))
-		if(!use_power(POWER_PER_PERSON))
+		var/clock_pilot = FALSE
+		for(var/mob/living/pilot in mech.occupants)
+			if(!IS_CLOCK(pilot))
+				continue
+
+			clock_pilot = TRUE
+			break
+
+		if(clock_pilot || !use_power(POWER_PER_PERSON))
 			continue
 
 		mech.emp_act(EMP_HEAVY)

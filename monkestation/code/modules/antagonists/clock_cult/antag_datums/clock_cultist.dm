@@ -44,8 +44,8 @@
 
 /datum/antagonist/clock_cultist/greet()
 	. = ..()
+	to_chat(owner.current, span_ratvar("HEY"))
 	to_chat(owner.current, span_boldwarning("Dont forget, your structures are by default off and must be clicked on to be turned on. Structures that are turned on have passive power use."))
-	to_chat(owner.current, span_userdanger("HEY"))
 	to_chat(owner.current, span_boldwarning("YOUR CLOCKWORK SLAB UI HAS A MORE IN DEPTH GUIDE IN ITS BOTTOM RIGHT HAND SIDE. \
 											YOU CAN HOVER YOUR MOUSE POINTER OVER SCRIPTURE BUTTONS FOR EXTRA INFO."))
 

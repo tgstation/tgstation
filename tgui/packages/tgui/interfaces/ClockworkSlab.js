@@ -82,6 +82,9 @@ const ClockworkHelp = (props, context) => {
             to unlock more scriptures and siphon power!
           </b>
           <br />
+          Hover over the button for a scripture to get additonal information for
+          it.
+          <br />
         </Section>
       </Collapsible>
       <Collapsible title="Unlocking Scriptures" color="average">
@@ -115,8 +118,8 @@ const ClockworkHelp = (props, context) => {
             <font color={brassColor}>Structures:&nbsp;</font>
           </b>
           A variety of invaluable structures are available to you, allowing
-          effective defense of your sanctum. Use your Slab on a structure to
-          gain extra information.
+          effective defense of Reebe. Use your Slab on a structure to gain extra
+          information.
           <br />
           <b>
             <font color={brassColor}>Traps:&nbsp;</font>
@@ -126,10 +129,24 @@ const ClockworkHelp = (props, context) => {
           to link traps and triggers together.
           <br />
           <b>
+            <font color={replicaFab}>Replica Fabricator:&nbsp;</font>
+          </b>
+          The Replica Fabricator is one of the strongest tools available to you,
+          via the <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. It
+          allows the conversion of all materials into power, which can be used
+          to create floors, walls, and airlocks. The airlocks will shock all
+          non-servants.
+          <br />
+          <b>
             <font color={clockMarauder}>Clockwork Marauder:&nbsp;</font>
           </b>
           A powerful shell that can deflect attacks and delivers a strong blow
           in close quarter combat.
+          <br />
+          <b>
+            <font color={clockMarauder}>Cogscarab:&nbsp;</font>
+          </b>
+          A small construct able to construct defenses on Reebe.
           <br />
           <br />
         </Section>
@@ -140,8 +157,8 @@ const ClockworkHelp = (props, context) => {
             <font color={brassColor}>Vitality:&nbsp;</font>
           </b>
           You need vitality to create{' '}
-          <font color={clockMarauder}>Clockwork Marauders</font>, which is
-          gotten from sacrificing living beings to a{' '}
+          <font color={clockMarauder}>Clockwork Marauders and Cogscarabs</font>,
+          which is gotten from sacrificing living beings to a{' '}
           <font color={brassColor}>Vitality Sigil</font>.
           <br />
           <b>
@@ -154,22 +171,19 @@ const ClockworkHelp = (props, context) => {
             <font color={brassColor}>Your Base:&nbsp;</font>
           </b>
           Defending The Ark is your highest priority! You&#39;re significantly
-          stronger while on brass tiles, so make your home indefensible.
-          <br />
-          <b>
-            <font color={replicaFab}>Replica Fabricator:&nbsp;</font>
-          </b>
-          The Replica Fabricator is one of the strongest tools available to you,
-          via the <font color={tinkerCache}>Tinkerer&#39;s Cache</font>. It
-          allows the conversion of all materials into power, which can be used
-          to create floors, walls, and airlocks. The airlocks will shock all
-          non-servants.
+          stronger while on brass tiles, so make sure to protect your home.
           <br />
           <b>
             <font color={brassColor}>Nar&#39;sie:&nbsp;</font>
           </b>
           Nar&#39;sian cultists are your greatest foe! Some of your spells are
           less effective on them, and vice-versa.
+          <br />
+          <b>
+            <font color={brassColor}>Linking structures:&nbsp;</font>
+          </b>
+          Your powered structures can also be linked to triggers to toggle them.
+          But dont forget, they use power while active.
           <br />
           <br />
         </Section>
