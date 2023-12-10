@@ -90,7 +90,7 @@
 	do_sparks(3, FALSE, stealing)
 
 	if(stealing.resistance_flags & INDESTRUCTIBLE)
-		return // melbert todo : how to handle indestructible items
+		return // melbert todo : how to handle indestructible items (put them on the black market?)
 
 	// Don't mess with it while it's going away
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
@@ -105,13 +105,18 @@
 
 	/// Reference to an objective item datum that we want stolen.
 	VAR_FINAL/datum/objective_item/desired_item
+	/// List of typepaths disallowed from being selected as the desired item.
+	var/static/list/blacklisted_item_types = typecacheof(list(
+		/obj/item/aicard,
+		/obj/item/disk/nuclear,
+	))
 
 /datum/spy_bounty/item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
 		if(length(item.special_equipment) || item.difficulty <= 0)
 			continue
-		if(!item.target_exists())
+		if(!item.target_exists() || is_type_in_typecache(item.targetitem, blacklisted_item_types))
 			continue
 		switch(difficulty)
 			if(SPY_DIFFICULTY_EASY)
@@ -133,7 +138,7 @@
 
 	desired_item = pick(valid_possible_items)
 	name = "Steal [desired_item]"
-	help = "Steal [desired_item]." // melbert todo : needs to give hints.
+	help = desired_item.steal_hint || "Steal [desired_item]."
 	return TRUE
 
 /datum/spy_bounty/item/is_stealable(atom/movable/stealing)

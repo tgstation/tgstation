@@ -32,6 +32,8 @@
 	 * 5 - You know it when you see it. Things like the Nuke Disc which have a pointer to it at all times.
 	 */
 	var/difficulty = 0
+	/// A hint explaining how one may find the target item.
+	var/steal_hint = "The clown might have one."
 
 /// For objectives with special checks (does that intellicard have an ai in it? etcetc)
 /datum/objective_item/proc/check_special_completion()
@@ -83,6 +85,7 @@
 	item_owner = list(JOB_BARTENDER)
 	exists_on_map = TRUE
 	difficulty = 2
+	steal_hint = "A double-barrel shotgun usually found on the bartender's person, or if none are around, in the bar's backroom."
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/doublebarrel)
@@ -103,6 +106,8 @@
 	)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "Only two of these exist on the station - one in the bridge, and one in atmospherics. \
+		You can use a multitool to hack open the case, or break it open the hard way."
 
 /obj/item/fireaxe/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/fireaxe)
@@ -118,6 +123,8 @@
 	item_owner = list(JOB_ROBOTICIST)
 	exists_on_map = TRUE
 	difficulty = 2
+	steal_hint = "A specialized tool found in the roboticist's lab. \
+		You can use a multitool to hack open the case, or break it open the hard way."
 
 /obj/item/crowbar/mechremoval/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/crowbar/mechremoval)
@@ -129,6 +136,9 @@
 	item_owner = list(JOB_CHAPLAIN)
 	exists_on_map = TRUE
 	difficulty = 2
+	steal_hint = "A holy artifact usually found on the chaplain's person, or if none are around, in the chapel's relic closet. \
+		If there is a chaplain around, it is likely be to be transformed into some holy weapon \
+		- some very difficult to remove from their person."
 
 /obj/item/nullrod/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/nullrod)
@@ -140,6 +150,7 @@
 	item_owner = list(JOB_CLOWN)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "The clown's huge, bright shoes. They should always be on the clown's feet."
 
 /obj/item/clothing/shoes/clown_shoes/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/shoes/clown_shoes)
@@ -151,6 +162,7 @@
 	item_owner = list(JOB_MIME)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "The mime's mask. It should always be on the mime's face."
 
 /obj/item/clothing/mask/gas/mime/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/mask/gas/mime)
@@ -162,6 +174,9 @@
 	item_owner = list(JOB_SHAFT_MINER)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "A tool primarily used by shaft miners. \
+		Most carry one or multiple on their person or in their backpack, but \
+		they can also likely be found in the mining station, mining office, or auxiliary mining base."
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/recharge/kinetic_accelerator)
@@ -173,6 +188,7 @@
 	item_owner = list(JOB_COOK)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "The chef's fake Italian moustache, either found on their face or in the garbage, depending on the chef."
 
 /obj/item/clothing/mask/fakemoustache/italian/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/mask/fakemoustache/italian)
@@ -183,6 +199,8 @@
 	excludefromjob = list(JOB_DETECTIVE)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "A .38 special revolver found in the Detective's holder. \
+		Usually found on the Detective's person, or if none are around, in the detective's locker, in their office."
 
 /obj/item/gun/ballistic/revolver/c38/detective/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/revolver/c38/detective)
@@ -194,6 +212,7 @@
 	item_owner = list(JOB_LAWYER)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "The lawyer's attorney. Usually pinned to their chest, but a spare can be obtained from their clothes vendor."
 
 /obj/item/clothing/accessory/lawyers_badge/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/accessory/lawyers_badge)
@@ -204,6 +223,7 @@
 	excludefromjob = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
 	difficulty = 2
+	steal_hint = "The chief engineer's toolbelt, strapped to their waist at all times."
 
 /obj/item/storage/belt/utility/chief/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/storage/belt/utility/chief)
@@ -221,6 +241,8 @@
 	)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "A standard-issue self-defense weapon for all heads of staffs except the Head of Security. \
+		Rarely found off of their person."
 
 /obj/item/melee/baton/telescopic/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/melee/baton/telescopic)
@@ -232,6 +254,8 @@
 	item_owner = list(JOB_QUARTERMASTER)
 	exists_on_map = TRUE
 	difficulty = 2
+	steal_hint = "A card that allows access to cargo's funds. \
+		Normally found in the locker of the Quartermaster, but a particularly keen one may have it on their person."
 
 /obj/item/card/id/departmental_budget/car/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/card/id/departmental_budget/car)
@@ -242,6 +266,8 @@
 	excludefromjob = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "A specially made MOD unit for the station's Captain. \
+		If not being worn by the Captain at all times, you would find it in the Suit Storage Unit in their quarters."
 
 /obj/item/mod/control/pre_equipped/magnate/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/magnate)
@@ -259,6 +285,9 @@
 	)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "The spare ID of the High Lord himself. \
+		If there's no official Captain around, you may find it pinned to the chest of the Acting Captain - one of the Heads of Staff. \
+		Otherwise, you'll have to bust open the golden safe on the bridge with acid or explosives to get to it."
 
 /obj/item/card/id/advanced/gold/captains_spare/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/card/id/advanced/gold/captains_spare)
@@ -272,6 +301,8 @@
 	excludefromjob = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "A self-charging laser gun found in a display case in the Captain's Quarters. \
+		Breaking it open may trigger a security alert, so be careful."
 
 /obj/item/gun/energy/laser/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/laser/captain)
@@ -283,6 +314,8 @@
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "The Head of Security's unique three mode laser gun. \
+		Always found on their person, if they are alive, but may otherwise be found in their locker."
 
 /obj/item/gun/energy/e_gun/hos/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/e_gun/hos)
@@ -294,6 +327,8 @@
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "A miniaturized combat shotgun. May be found in Head of Security's locker \
+		or strapped to their back."
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/ballistic/shotgun/automatic/combat/compact)
@@ -305,6 +340,8 @@
 	item_owner = list(JOB_CAPTAIN, JOB_RESEARCH_DIRECTOR)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "Only two of these devices exist on the station, with one sitting in the Teleporter Control Room \
+		for emergencies, and the other in the Captain's Quarters for personal use."
 
 /obj/item/hand_tele/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/hand_tele)
@@ -316,6 +353,7 @@
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "A special yellow jetpack found in the Suit Storage Unit in the Captain's Quarters."
 
 /obj/item/tank/jetpack/oxygen/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/tank/jetpack/oxygen/captain)
@@ -327,6 +365,8 @@
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "A pair of magnetic boots found in the Chief Engineer's Suit Storage Unit. \
+		May also be found on their person, usually beneath their MODsuit."
 
 /obj/item/clothing/shoes/magboots/advance/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/shoes/magboots/advance)
@@ -338,6 +378,8 @@
 	item_owner = list(JOB_CAPTAIN)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "A golden medal found in a medal case in the Captain's Quarters. \
+		The Captain themselves also wears one pinned to their jumpsuit."
 
 /obj/item/clothing/accessory/medal/gold/captain/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/accessory/medal/gold/captain)
@@ -349,6 +391,8 @@
 	item_owner = list(JOB_CHIEF_MEDICAL_OFFICER)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "The Chief Medical Officer's personal injector. \
+		Usually found amongst their medical supplies on their person, on their belt, or otherwise in their locker."
 
 /obj/item/reagent_containers/hypospray/cmo/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/reagent_containers/hypospray/cmo)
@@ -358,6 +402,8 @@
 	targetitem = /obj/item/disk/nuclear
 	excludefromjob = list(JOB_CAPTAIN)
 	difficulty = 5
+	steal_hint = "THAT disk - you know the one. Carried by the Captain at all times (hopefully). \
+		Difficult to miss, but if you can't find it, the Head of Security and Captain both have devices to track its precise location."
 
 /obj/item/disk/nuclear/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/disk/nuclear)
@@ -372,6 +418,7 @@
 	item_owner = list(JOB_HEAD_OF_SECURITY)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "An ablative trechcoat found on the shelves of the Armory."
 
 /obj/item/clothing/suit/hooded/ablative/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/suit/hooded/ablative)
@@ -383,6 +430,8 @@
 	item_owner = list(JOB_RESEARCH_DIRECTOR)
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "A special suit of armor found in the possession of the Research Director. \
+		You may otherwise find it in their locker."
 
 /obj/item/clothing/suit/armor/reactive/teleport/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/suit/armor/reactive/teleport)
@@ -393,6 +442,9 @@
 	targetitem = /obj/item/documents
 	exists_on_map = TRUE
 	difficulty = 3
+	steal_hint = "A set of papers belonging to one of the megaconglomerates. A photocopy may suffice. \
+		Nanotrasen documents can easily be found in the station's vault. \
+		For other corporations, you may find them in strange and distant places."
 
 /obj/item/documents/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/documents) //Any set of secret documents. Doesn't have to be NT's
@@ -403,6 +455,7 @@
 	targetitem = /obj/item/nuke_core
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "The core of the station's self-destruct device, found in the vault."
 
 /obj/item/nuke_core/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/nuke_core)
@@ -418,6 +471,7 @@
 	item_owner = list(JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "The hard drive of the master research server, found in R&D's server room."
 
 /obj/item/computer_disk/hdd_theft/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/computer_disk/hdd_theft)
@@ -432,6 +486,7 @@
 	targetitem = /obj/item/nuke_core/supermatter_sliver
 	valid_containers = list(/obj/item/nuke_core_container/supermatter)
 	difficulty = 5
+	steal_hint = "A small shard of the station's supermatter crystal engine."
 
 /datum/objective_item/steal/supermatter/New()
 	special_equipment += /obj/item/storage/box/syndie_kit/supermatter
@@ -445,6 +500,7 @@
 	name = "a functional AI"
 	targetitem = /obj/item/aicard
 	difficulty = 5
+	steal_hint = "An intellicard (or MODsuit) containing an AI."
 
 /datum/objective_item/steal/functionalai/New()
 	. = ..()
@@ -477,6 +533,8 @@
 	altitems = list(/obj/item/photo)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "The blueprints of the station, found in the Chief Engineer's locker, or on their person. \
+		A picture will may suffice."
 
 /obj/item/areaeditor/blueprints/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/areaeditor/blueprints)
@@ -496,6 +554,7 @@
 	excludefromjob = list(JOB_CHIEF_ENGINEER, JOB_STATION_ENGINEER, JOB_ATMOSPHERIC_TECHNICIAN)
 	exists_on_map = TRUE
 	difficulty = 4
+	steal_hint = "The station Blackbox device, found solely within Telecommunications."
 
 /obj/item/blackbox/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/blackbox)
@@ -510,6 +569,7 @@
 	item_owner = list(JOB_STATION_ENGINEER, JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "A basic pair of insulated gloves, usually found worn by Assistants, Engineers, or Cargo Technicians."
 
 /obj/item/clothing/gloves/color/yellow/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/clothing/gloves/color/yellow)
@@ -520,6 +580,7 @@
 	excludefromjob = list(JOB_PSYCHOLOGIST, JOB_PARAMEDIC, JOB_CHEMIST, JOB_MEDICAL_DOCTOR, JOB_VIROLOGIST, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "A moth plush toy. The Psychologist has one for to help console patients."
 
 /obj/item/toy/plush/moth/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/toy/plush/moth)
@@ -529,6 +590,7 @@
 	targetitem = /obj/item/toy/plush/lizard_plushie
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "A lizard plush toy. Often found hidden in maintenance."
 
 /obj/item/toy/plush/lizard_plushie/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/toy/plush/lizard_plushie)
@@ -539,6 +601,7 @@
 	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_SHAFT_MINER)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "Cargo often has multiple of these red stamps lying around to process paperwork."
 
 /obj/item/stamp/denied/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/stamp/denied)
@@ -549,6 +612,7 @@
 	excludefromjob = list(JOB_CARGO_TECHNICIAN, JOB_QUARTERMASTER, JOB_SHAFT_MINER)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "Cargo often has multiple of these green stamps lying around to process paperwork."
 
 /obj/item/stamp/granted/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/stamp/granted)
@@ -559,6 +623,8 @@
 	excludefromjob = list(JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_HEAD_OF_SECURITY, JOB_LAWYER, JOB_DETECTIVE)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "Often found in possession of Security and Lawyers. \
+		The courtroom and library are also good places to look."
 
 /obj/item/book/manual/wiki/security_space_law/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/book/manual/wiki/security_space_law)
@@ -570,6 +636,7 @@
 	item_owner = list(JOB_CHIEF_ENGINEER)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "A tool often used by Engineers, Atmospherics Technicians, and Ordnance Technicians."
 
 /obj/item/pipe_dispenser/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/pipe_dispenser)
@@ -580,6 +647,7 @@
 	excludefromjob = list(JOB_CAPTAIN, JOB_CHIEF_ENGINEER, JOB_HEAD_OF_PERSONNEL, JOB_HEAD_OF_SECURITY, JOB_QUARTERMASTER, JOB_CHIEF_MEDICAL_OFFICER, JOB_RESEARCH_DIRECTOR, JOB_SECURITY_OFFICER, JOB_WARDEN, JOB_LAWYER, JOB_DETECTIVE)
 	exists_on_map = TRUE
 	difficulty = 1
+	steal_hint = "Everyone has a box of donuts - you may most commonly find them on the Bridge, within Security, or in a break room."
 
 /obj/item/storage/fancy/donut_box/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/storage/fancy/donut_box)

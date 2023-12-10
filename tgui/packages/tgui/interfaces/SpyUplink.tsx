@@ -17,9 +17,9 @@ type Data = {
 };
 
 const difficulty_to_color = {
-  'easy': 'good',
-  'medium': 'average',
-  'hard': 'bad',
+  easy: 'good',
+  medium: 'average',
+  hard: 'bad',
 };
 
 const BountyDisplay = (props: { bounty: Bounty }) => {
@@ -46,7 +46,9 @@ const BountyDisplay = (props: { bounty: Bounty }) => {
           </Box>
         </Stack.Item>
         <Stack.Item>
-          <BlockQuote>{bounty.help}</BlockQuote>
+          <BlockQuote>
+            <i>{bounty.help}</i>
+          </BlockQuote>
         </Stack.Item>
         <Stack.Item>
           <i>Reward: {bounty.reward}</i>
@@ -79,7 +81,8 @@ export const SpyUplink = () => {
       <Window.Content
         style={{
           'background-image': 'none',
-        }}>
+        }}
+      >
         <Section
           fill
           title="Spy Bounties"
@@ -88,11 +91,12 @@ export const SpyUplink = () => {
             <Box mt={0.4}>
               Time until refresh: {format_deciseconds(time_left)}
             </Box>
-          }>
-          <Stack vertical fill zebra>
+          }
+        >
+          <Stack vertical fill>
             <Stack.Item>
               {bounties.map((bounty) => (
-                <Stack.Item key={bounty.name}>
+                <Stack.Item key={bounty.name} className="candystripe">
                   <BountyDisplay bounty={bounty} />
                 </Stack.Item>
               ))}

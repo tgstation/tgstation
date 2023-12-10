@@ -61,7 +61,7 @@
 			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
 
 	// For the first bounty set, replace all hard bounties with medium ones
-	var/hard_bounties_to_skip = bounties_to_give[SPY_DIFFICULTY_HARD
+	var/hard_bounties_to_skip = bounties_to_give[SPY_DIFFICULTY_HARD]
 	bounties_to_give[SPY_DIFFICULTY_HARD] = 0
 	bounties_to_give[SPY_DIFFICULTY_MEDIUM] += hard_bounties_to_skip
 

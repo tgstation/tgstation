@@ -114,6 +114,8 @@
 	if(isturf(on_what.loc) && isturf(spy.loc)) // Cone doesn't make sense if its being held or something
 		active_scan_cone = new(spy.loc)
 		active_scan_cone.transform = active_scan_cone.transform.Turn(get_angle(spy, on_what))
+		active_scan_cone.pixel_x -= 48
+		active_scan_cone.pixel_y -= 48
 
 /datum/component/spy_uplink/proc/clear_scan_effect()
 	QDEL_NULL(active_scan_effect)

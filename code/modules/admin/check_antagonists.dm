@@ -48,6 +48,10 @@
 	parts += antag_listing_commands()
 	return "<tr><td>[parts.Join("</td><td>")]</td></tr>"
 
+/// Used to format the categroy header for antags in check-antags
+/datum/antagonist/proc/antag_listing_category_header()
+	return "<b>[capitalize(roundend_category)]</b>"
+
 /datum/admins/proc/build_antag_listing()
 	var/list/sections = list()
 	var/list/priority_sections = list()
@@ -78,7 +82,7 @@
 			next_antag = all_antagonists[i+1]
 		if(!current_category)
 			current_category = current_antag.roundend_category
-			current_section += "<b>[capitalize(current_category)]</b><br>"
+			current_section += "[current_antag.antag_listing_category_header()]<br>"
 			current_section += "<table cellspacing=5>"
 		current_section += current_antag.antag_listing_entry() // Name - (Traitor) - FLW | PM | TP
 
