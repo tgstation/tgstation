@@ -33,17 +33,18 @@
 /datum/hud/new_player/proc/add_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
 		return
-	var/position_iterator = 1
+	var/x_offset = 232
+	var/x_button_offset = 36 // You're never going to show so many of these that we need a second row, right?
 	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
 		if (!trait.can_display_lobby_button())
 			continue
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
 		sign_up_button.SlowInit()
 		sign_up_button.owner = REF(mymob)
-		sign_up_button.screen_loc = "TOP:-[42 + 28 * position_iterator],CENTER:-86"
+		sign_up_button.screen_loc = offset_to_screen_loc(x_offset, 397, mymob.client.view)
+		x_offset -= x_button_offset
 		static_inventory += sign_up_button
 		trait.setup_lobby_button(sign_up_button)
-		position_iterator++
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
