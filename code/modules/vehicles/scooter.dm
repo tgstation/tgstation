@@ -3,6 +3,7 @@
 	desc = "A fun way to get around."
 	icon_state = "scooter"
 	are_legs_exposed = TRUE
+	var/holdable = TRUE
 
 /obj/vehicle/ridden/scooter/Initialize(mapload)
 	. = ..()
@@ -72,7 +73,8 @@
 /obj/vehicle/ridden/scooter/skateboard/generate_actions()
 	. = ..()
 	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/ollie, VEHICLE_CONTROL_DRIVE)
-	initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/kickflip, VEHICLE_CONTROL_DRIVE)
+	if(holdable)
+		initialize_controller_action_type(/datum/action/vehicle/ridden/scooter/skateboard/kickflip, VEHICLE_CONTROL_DRIVE)
 
 /obj/vehicle/ridden/scooter/skateboard/post_buckle_mob(mob/living/M)//allows skateboards to be non-dense but still allows 2 skateboarders to collide with each other
 	set_density(TRUE)
@@ -270,6 +272,7 @@
 	icon_state = null
 	density = FALSE
 	instability = 12
+	holdable = FALSE
 	///Stores the shoes associated with the vehicle
 	var/obj/item/clothing/shoes/wheelys/shoes = null
 	///Name of the wheels, for visible messages
