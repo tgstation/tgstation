@@ -219,7 +219,7 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/reload_configuration,
 	/client/proc/restart_controller,
 	/client/proc/run_empty_query,
-	/client/proc/SDQL2_query,
+	/client/proc/admin_SDQL2_query,
 	/client/proc/set_dynex_scale,
 	/client/proc/spawn_debug_full_crew,
 	/client/proc/test_cardpack_distribution,

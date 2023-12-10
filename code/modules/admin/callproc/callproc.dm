@@ -75,7 +75,7 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 	handler.remove_caller(user)
 
 /**
- * Handles a userless sdql, used by circuits and tgs.
+ * Handles a userless sdql, used by circuits and tgs. Will return the list we get back from SDQL2_query()
  *
  * Arguments:
  * * user - a string used to identify the user
@@ -84,13 +84,13 @@ GLOBAL_PROTECT(AdminProcCallHandler)
 /proc/HandleUserlessSDQL(user, query_text)
 	if(IsAdminAdvancedProcCall())
 		return
+
 	var/mob/proccall_handler/handler = GLOB.AdminProcCallHandler
 	handler.add_caller(user)
-	var/lastusr = usr
-	usr = handler
-	. = world.SDQL2_query(query_text, user, user)
-	usr = lastusr
+	var/results = world.SDQL2_query(handler, query_text, user, user)
 	handler.remove_caller(user)
+
+	return results
 
 /client/proc/callproc()
 	set category = "Debug"

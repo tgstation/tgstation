@@ -195,8 +195,10 @@
 		state = SDQL2_STATE_ERROR;\
 		CRASH("SDQL2 fatal error");};
 
-/client/proc/SDQL2_query(query_text as message)
+/client/proc/admin_SDQL2_query(query_text as message)
 	set category = "Debug"
+	set name = "SDQL2 Query"
+
 	if(!check_rights(R_DEBUG))  //Shouldn't happen... but just to be safe.
 		message_admins(span_danger("ERROR: Non-admin [key_name(usr)] attempted to execute a SDQL query!"))
 		usr.log_message("non-admin attempted to execute a SDQL query!", LOG_ADMIN)
@@ -204,19 +206,25 @@
 	var/prompt = tgui_alert(usr, "Run SDQL2 Query?", "SDQL2", list("Yes", "Cancel"))
 	if (prompt != "Yes")
 		return
-	var/list/results = world.SDQL2_query(query_text, key_name_admin(usr), "[key_name(usr)]")
+	var/list/results = world.SDQL2_query(usr, query_text, key_name_admin(usr), "[key_name(usr)]")
 	if(length(results) == 3)
 		for(var/I in 1 to 3)
 			to_chat(usr, results[I], confidential = TRUE)
 	SSblackbox.record_feedback("nested tally", "SDQL query", 1, list(ckey, query_text))
 
-/world/proc/SDQL2_query(query_text, log_entry1, log_entry2, silent = FALSE)
+/world/proc/SDQL2_query(mob/user, query_text, log_entry1, log_entry2, silent = FALSE)
+	// will give information back to the user about the status of the query, different than silent because this is stuff that we would always send to a real cliented mob.
+	var/user_feedback = FALSE
 	var/query_log = "executed SDQL query(s): \"[query_text]\"."
+
 	if(!silent)
 		message_admins("[log_entry1] [query_log]")
 	query_log = "[log_entry2] [query_log]"
-	usr.log_message(query_log, LOG_ADMIN)
+	user.log_message(query_log, LOG_ADMIN)
 	NOTICE(query_log)
+
+	if(user == GLOB.AdminProcCallHandler)
+		user_feedback = TRUE
 
 	var/start_time_total = REALTIMEOFDAY
 	var/sequential = FALSE
@@ -236,8 +244,8 @@
 		var/datum/sdql2_query/query = new /datum/sdql2_query(query_tree)
 		if(QDELETED(query))
 			continue
-		if(usr)
-			query.show_next_to_key = usr.ckey
+		if(user_feedback) // otherwise, there would be no user/ckey to look up in GLOB.directory
+			query.show_next_to_key = user.ckey
 		waiting_queue += query
 		if(query.options & SDQL2_OPTION_SEQUENTIAL)
 			sequential = TRUE
@@ -246,16 +254,17 @@
 		var/datum/sdql2_query/query = popleft(waiting_queue)
 		running += query
 		var/msg = "Starting query #[query.id] - [query.get_query_text()]."
-		if(usr)
-			to_chat(usr, span_admin("[msg]"), confidential = TRUE)
+		if(user_feedback)
+			to_chat(user, span_admin(msg), confidential = TRUE)
 		log_admin(msg)
 		query.ARun()
+
 	else //Start all
 		for(var/datum/sdql2_query/query in waiting_queue)
 			running += query
 			var/msg = "Starting query #[query.id] - [query.get_query_text()]."
-			if(usr)
-				to_chat(usr, span_admin("[msg]"), confidential = TRUE)
+			if(user_feedback)
+				to_chat(user, span_admin(msg), confidential = TRUE)
 			log_admin(msg)
 			query.ARun()
 
@@ -275,8 +284,8 @@
 			else if(query.state != SDQL2_STATE_IDLE)
 				finished = FALSE
 				if(query.state == SDQL2_STATE_ERROR)
-					if(usr)
-						to_chat(usr, span_admin("SDQL query [query.get_query_text()] errored. It will NOT be automatically garbage collected. Please remove manually."), confidential = TRUE)
+					if(user_feedback)
+						to_chat(user, span_admin("SDQL query [query.get_query_text()] errored. It will NOT be automatically garbage collected. Please remove manually."), confidential = TRUE)
 					running -= query
 			else
 				if(query.finished)
@@ -292,13 +301,13 @@
 						var/datum/sdql2_query/next_query = popleft(waiting_queue)
 						running += next_query
 						var/msg = "Starting query #[next_query.id] - [next_query.get_query_text()]."
-						if(usr)
-							to_chat(usr, span_admin("[msg]"), confidential = TRUE)
+						if(user_feedback)
+							to_chat(user, span_admin(msg), confidential = TRUE)
 						log_admin(msg)
 						next_query.ARun()
 				else
-					if(usr)
-						to_chat(usr, span_admin("SDQL query [query.get_query_text()] was halted. It will NOT be automatically garbage collected. Please remove manually."), confidential = TRUE)
+					if(user_feedback)
+						to_chat(user, span_admin("SDQL query [query.get_query_text()] was halted. It will NOT be automatically garbage collected. Please remove manually."), confidential = TRUE)
 					running -= query
 	while(!finished)
 
