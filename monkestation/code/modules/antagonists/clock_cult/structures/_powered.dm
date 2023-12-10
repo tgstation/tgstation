@@ -209,4 +209,3 @@
 		return
 
 	structure.try_toggle_power()
-	//INVOKE_ASYNC(trap, TYPE_PROC_REF(/obj/structure/destructible/clockwork/gear_base/powered, try_toggle_power))

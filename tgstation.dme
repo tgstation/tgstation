@@ -5774,7 +5774,7 @@
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\preservation\vanguard.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\abscond.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\golem_conversion.dm"
-#include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\hateful_manacels.dm"
+#include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\hateful_manaceles.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\integration_cog.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\kindle.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\scriptures\servitude\sentinels_compromise.dm"

@@ -308,8 +308,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 	pointed_spell.parent_scripture = src
 
 /datum/scripture/slab/Destroy()
-	if(progress)
-		QDEL_NULL(progress)
+	progress?.end_progress()
 
 	if(!QDELETED(pointed_spell))
 		QDEL_NULL(pointed_spell)
@@ -377,7 +376,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 
 	if(!silent)
 		to_chat(invoker, span_brass("You are no longer invoking <b>[name]</b>."))
-	qdel(progress)
+	progress.end_progress()
 
 	pointed_spell.unset_click_ability(invoker)
 	invoking_slab.charge_overlay = null
