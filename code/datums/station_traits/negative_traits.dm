@@ -26,7 +26,7 @@
 	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
 
 /datum/station_trait/mail_blocked/on_round_start()
-	///This is either a holiday or sunday... well then, let's flip the situation.
+	//This is either a holiday or sunday... well then, let's flip the situation.
 	if(SSeconomy.mail_blocked)
 		name = "Postal system overtime"
 		report_message = "Despite being a day off, the postal system is working overtime today. Mail will be delivered this shift."
