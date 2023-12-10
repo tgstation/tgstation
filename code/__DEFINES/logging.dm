@@ -88,8 +88,6 @@
 #define LOG_ENTRY_KEY_ID "id"
 #define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
 
-/// Log entry header used to mark a file is being reset
-
 // Internal categories
 #define LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND "internal-category-not-found"
 #define LOG_CATEGORY_INTERNAL_ERROR "internal-error"
