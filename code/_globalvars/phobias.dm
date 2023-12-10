@@ -434,7 +434,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"ocky icky" = typechacheof(list(
 		/obj/item/banhammer,
 		/obj/item/toy/plush/awakenedplushie,
-	))
+	)),
 	"robots" = typecacheof(list(
 		/obj/item/ai_module,
 		/obj/item/aicard,
