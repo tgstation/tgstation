@@ -177,6 +177,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
 	var/supermatter_sliver_removed = FALSE
+
+	/// If the SM is decorated with holiday lights
+	var/holiday_lights = FALSE
+
 	/// Cooldown for sending emergency alerts to the common radio channel
 	COOLDOWN_DECLARE(common_radio_cooldown)
 
@@ -211,6 +215,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
 	soundloop = new(src, TRUE)
+
+	if(!isnull(check_holidays(FESTIVE_SEASON)) && istype(src, /obj/machinery/power/supermatter_crystal/engine))
+		holiday_lights()
 
 	if (!moveable)
 		move_resist = MOVE_FORCE_OVERPOWERING // Avoid being moved by statues or other memes
@@ -496,6 +503,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		. += mutable_appearance(icon = icon, icon_state = "[base_icon_state]-psy", layer = FLOAT_LAYER - 1, alpha = psy_coeff * 255)
 	if(delamination_strategy)
 		. += delamination_strategy.overlays(src)
+	if(holiday_lights)
+		. += mutable_appearance(icon, "holiday_lights")
+		. += emissive_appearance(icon, "holiday_lights_e", src, alpha = src.alpha)
 	return .
 
 /obj/machinery/power/supermatter_crystal/update_icon(updates)
@@ -1024,6 +1034,23 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	COOLDOWN_START(src, common_radio_cooldown, SUPERMATTER_COMMON_RADIO_DELAY)
 	return TRUE
+
+/obj/machinery/power/supermatter_crystal/proc/holiday_lights()
+	desc += "\nRadiating both festive cheer and actual radiation, it has a dazzling spectacle lights wrapped lovingly around the base transforming it from a potential doomsday device into a cosmic yuletide centerpiece."
+	holiday_lights = TRUE
+	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(holiday_attackby))
+	update_appearance()
+
+/obj/machinery/power/supermatter_crystal/proc/holiday_attackby(datum/source, obj/item/item, mob/living/user)
+	SIGNAL_HANDLER
+	if(istype(item, /obj/item/clothing/head/costume/santa))
+		balloon_alert(user, "placed hat")
+		QDEL_NULL(item)
+		desc += "\n\nThere's a santa hat placed atop it. How it got there without being dusted is a mystery."
+		var/mutable_appearance/sm_hat = mutable_appearance(icon, "santa_hat")
+		add_overlay(sm_hat)
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return FALSE
 
 #undef BIKE
 #undef COIL

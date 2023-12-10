@@ -103,6 +103,7 @@
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
 	color = "#00ff80"
+	pixel_y = 8
 
 /obj/effect/countdown/supermatter/get_value()
 	var/obj/machinery/power/supermatter_crystal/S = attached_to
