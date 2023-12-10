@@ -203,3 +203,35 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "debt payer pin"
 	desc = "I've paid my debt and all I've got was this pin."
 	icon_state = "debt_payer_pin"
+
+/// Self-identify as a dangerous subversive
+/obj/item/clothing/accessory/anti_sec_pin
+	name = "subversive pin"
+	desc = "A badge which loudly and proudly proclaims your hostility to the Nanotrasen Security Team, and authority in general."
+	icon_state = "anti_sec"
+
+/obj/item/clothing/accessory/anti_sec_pin/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/pinnable_accessory, silent = TRUE, pinning_time = 5 SECONDS)
+
+/obj/item/clothing/accessory/anti_sec_pin/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	log_combat(attacher, attach_to.wearer, "pinned a suspicious pin onto", src)
+	return TRUE
+
+/obj/item/clothing/accessory/anti_sec_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_CRIMINAL_SYMPATHISER, "[CLOTHING_TRAIT]_[REF(src)]")
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_wearer = user
+		human_wearer.sec_hud_set_security_status()
+
+/obj/item/clothing/accessory/anti_sec_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_CRIMINAL_SYMPATHISER, "[CLOTHING_TRAIT]_[REF(src)]")
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_wearer = user
+		human_wearer.sec_hud_set_security_status()
