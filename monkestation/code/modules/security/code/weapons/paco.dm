@@ -47,6 +47,7 @@ obj/item/gun/ballistic/automatic/pistol/paco/update_icon_state()
 			obj_flags = UNIQUE_RENAME
 			desc += " You figure there's ample room to engrave something nice on it, but know that it'd offer no tactical advantage whatsoever."
 			playsound(src, 'sound/items/duct_tape_rip.ogg', 50, TRUE)
+			playsound(src, rack_sound, 50, TRUE) //Increases satisfaction
 			balloon_alert_to_viewers("[user] rips the stripe right off the Paco!") //The implication that the stripe is just a piece of red tape is very funny
 			update_icon_state()
 			update_appearance() //So you don't have to rack the slide to update the sprite
