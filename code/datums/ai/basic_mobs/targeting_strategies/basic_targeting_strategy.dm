@@ -126,6 +126,10 @@
 	find_smaller = FALSE
 	inclusive = FALSE
 
+
+/datum/targeting_strategy/basic/of_size/smaller
+	inclusive = FALSE
+
 /// Makes the mob only attack their own faction. Useful mostly if their attacks do something helpful (e.g. healing touch).
 /datum/targeting_strategy/basic/same_faction
 
