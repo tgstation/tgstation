@@ -87,8 +87,9 @@ GLOBAL_LIST_INIT(virusdishes, list())
 
 /obj/item/weapon/virusdish/attack_self(mob/living/user, list/modifiers)
 	open = !open
-	update_icon()
+	update_appearance()
 	to_chat(user,span_notice("You [open?"open":"close"] dish's lid."))
+	update_desc()
 	if (open)
 		last_openner = user
 		if (contained_virus)
@@ -196,7 +197,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 		contained_virus.makerandom(list(50,90),list(10,100),anti,bad,src)
 		growth = rand(5, 50)
 		name = "growth dish (Unknown [contained_virus.form])"
-		update_icon()
+		update_appearance()
 		contained_virus.origin = "Random Dish"
 	else
 		GLOB.virusdishes.Remove(src)
@@ -256,15 +257,16 @@ GLOBAL_LIST_INIT(virusdishes, list())
 				strength -= 40
 	qdel(src)
 
-/obj/item/weapon/virusdish/examine(mob/user)
+/obj/item/weapon/virusdish/update_desc(updates)
+	. = ..()
 	desc = initial(desc)
 	if(open)
-		desc += "\n Its lid is open!"
+		desc += "\nIts lid is open!"
 	else
-		desc += "\n Its lid is closed!"
+		desc += "\nIts lid is closed!"
+	if(info)
+		desc += "\nThere is a sticker with some printed information on it. <a href ='?src=\ref[src];examine=1'>(Read it)</a>"
 
-	desc += "\n There is a sticker with some printed information on it. <a href ='?src=\ref[src];examine=1'>(Read it)</a>"
-	..()
 
 /obj/item/weapon/virusdish/Topic(href, href_list)
 	if(..())

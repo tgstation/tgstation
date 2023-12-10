@@ -118,6 +118,7 @@
 			say("Added new pathogen to database.")
 		var/datum/data/record/v = GLOB.virusDB["[dish.contained_virus.uniqueID]-[dish.contained_virus.subID]"]
 		dish.info = dish.contained_virus.get_info()
+		dish.update_desc()
 		last_scan_name = dish.contained_virus.name(TRUE)
 		if (v)
 			last_scan_name += v.fields["nickname"] ? " \"[v.fields["nickname"]]\"" : ""
