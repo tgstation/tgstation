@@ -65,7 +65,7 @@
 	icon_dead = "bean-dead"
 	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
 	genes = list(/datum/plant_gene/trait/never_mutate, /datum/plant_gene/trait/repeated_harvest)
-	mutatelist = list(/obj/item/seeds/greenbean/jump)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/greenbean_jump)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/medicine/c2/multiver = 0.04) //They're good for you!
 	graft_gene = /datum/plant_gene/trait/never_mutate
 

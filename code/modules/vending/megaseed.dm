@@ -95,6 +95,7 @@
 		/obj/item/seeds/cannabis = 3,
 		/obj/item/seeds/starthistle = 2,
 		/obj/item/seeds/cocaleaf = 2, // MONKESTATION ADDITION
+		/obj/item/seeds/coconut = 3, // MONKESTATION ADDITION
 		/obj/item/seeds/random = 2,
 	)
 
