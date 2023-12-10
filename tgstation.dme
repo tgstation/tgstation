@@ -6021,6 +6021,7 @@
 #include "monkestation\code\modules\clothing\accessories\accessories.dm"
 #include "monkestation\code\modules\clothing\gloves\gloves.dm"
 #include "monkestation\code\modules\clothing\head\costume.dm"
+#include "monkestation\code\modules\clothing\head\hat.dm"
 #include "monkestation\code\modules\clothing\head\misc.dm"
 #include "monkestation\code\modules\clothing\masks\gasmask.dm"
 #include "monkestation\code\modules\clothing\masks\misc.dm"

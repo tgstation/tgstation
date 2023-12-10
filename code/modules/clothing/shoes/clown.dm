@@ -44,11 +44,10 @@
 		to_chat(user, span_notice("You switch on the waddle dampeners!"))
 		enabled_waddle = FALSE
 
-/obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
-	name = "clown jester shoes"
+/obj/item/clothing/shoes/clown_shoes/jester
+	name = "jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."
 	icon_state = "jester_shoes"
-	squeak_sound = list('sound/effects/clown_jingle1.ogg'=1, 'sound/effects/clown_jingle2.ogg') //jingHONK jinglHONK jHONKgle jiHONKgle
 
 /obj/item/clothing/shoes/clown_shoes/meown_shoes
 	name = "meown shoes"
@@ -62,10 +61,3 @@
 	icon_state = "ducky_shoes"
 	inhand_icon_state = "ducky_shoes"
 	squeak_sound = list('sound/effects/quack.ogg'=1) //quack quack quack quack
-
-/obj/item/clothing/shoes/clown_shoes/green_jester_shoes
-	name = "jester shoes"
-	desc = "Shoes that jingle with every step!!"
-	icon_state = "green_jester_shoes"
-	inhand_icon_state = "green_jester_shoes"
-	squeak_sound = list('sound/effects/jingle.ogg'=1) //jingle jingle jingle jingle
