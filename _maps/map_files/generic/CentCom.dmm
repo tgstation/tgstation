@@ -13683,7 +13683,6 @@
 /area/centcom/central_command_areas/kitchen)
 "Ok" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/mob/living/silicon/robot,
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/central_command_areas/admin)
 "Ol" = (
