@@ -1,4 +1,0 @@
-author: "MomoBerri"
-delete-after: True
-changes:
-  - balance: "added a minimum player count of 35 to Malfunctioning AI, and lowered weight to 3 for storyteller."

@@ -83,3 +83,7 @@
   Tractor Mann:
   - rscadd: Added 10 songs to the jukebox!
   - rscadd: Added 1 song to the hacked jukebox!
+2023-12-10:
+  MomoBerri:
+  - balance: added a minimum player count of 35 to Malfunctioning AI, and lowered
+      weight to 3 for storyteller.
