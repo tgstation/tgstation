@@ -27,6 +27,19 @@
 	data["uplink_location"] = uplink_location
 	return data
 
+/datum/antagonist/spy/get_admin_commands()
+	. = ..()
+	.["See All Bounties"] = CALLBACK(src, PROC_REF(see_bounties))
+	.["Refresh Bounties"] = CALLBACK(src, PROC_REF(refresh_bounties))
+
+/datum/antagonist/spy/proc/see_bounties()
+	if(!check_rights(R_ADMIN|R_DEBUG))
+		return
+
+/datum/antagonist/spy/proc/refresh_bounties()
+	if(!check_rights(R_ADMIN|R_DEBUG))
+		return
+
 /datum/antagonist/spy/proc/auto_create_spy_uplink(mob/living/carbon/spy)
 	if(!iscarbon(spy))
 		return
