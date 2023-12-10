@@ -89,8 +89,6 @@
 #define LOG_ENTRY_KEY_SCHEMA_VERSION "s-ver"
 
 /// Log entry header used to mark a file is being reset
-#define LOG_CATEGORY_RESET_FILE_MARKER "{\"LOG FILE RESET -- THIS IS AN ERROR\"}"
-#define LOG_CATEGORY_RESET_FILE_MARKER_READABLE "LOG FILE RESET -- THIS IS AN ERROR"
 
 // Internal categories
 #define LOG_CATEGORY_INTERNAL_CATEGORY_NOT_FOUND "internal-category-not-found"

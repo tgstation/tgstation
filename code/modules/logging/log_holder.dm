@@ -206,6 +206,9 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 	return category_tree
 
+/// Log entry header used to mark a file is being reset
+#define LOG_CATEGORY_RESET_FILE_MARKER "{\"LOG FILE RESET -- THIS IS AN ERROR\"}"
+#define LOG_CATEGORY_RESET_FILE_MARKER_READABLE "LOG FILE RESET -- THIS IS AN ERROR"
 /// Gets a recovery file for the given path. Caches the last known recovery path for each path.
 /datum/log_holder/proc/get_recovery_file_for(path)
 	var/static/cache
@@ -235,6 +238,9 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		rustg_file_append(LOG_CATEGORY_RESET_FILE_MARKER_READABLE, file_path)
 		fcopy(file_path, get_recovery_file_for(file_path))
 	rustg_file_write("\[[human_readable_timestamp()]\] Starting up round ID [round_id].\n - -------------------------\n", file_path)
+
+#undef LOG_CATEGORY_RESET_FILE_MARKER
+#undef LOG_CATEGORY_RESET_FILE_MARKER_READABLE
 
 /// Initializes the given log category and populates the list of contained categories based on the sub category list
 /datum/log_holder/proc/init_log_category(datum/log_category/category_type, list/datum/log_category/sub_categories)
