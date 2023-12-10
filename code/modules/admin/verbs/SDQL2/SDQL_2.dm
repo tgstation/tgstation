@@ -231,7 +231,7 @@
 	user.log_message(query_log, LOG_ADMIN)
 	NOTICE(query_log)
 
-	if(user == GLOB.AdminProcCallHandler)
+	if(user != GLOB.AdminProcCallHandler)
 		user_feedback = TRUE
 
 	var/start_time_total = REALTIMEOFDAY
