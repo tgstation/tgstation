@@ -23,7 +23,7 @@
 			move_to_error_room()
 			var/msg = " was found to have no .loc with an attached client, if the cause is unknown it would be wise to ask how this was accomplished."
 			message_admins(ADMIN_LOOKUPFLW(src) + msg)
-			send2tgs_adminless_only("Mob", key_name(src) + msg, R_ADMIN)
+			send2tgs_adminless_only("Mob", key_name_and_tag(src) + msg, R_ADMIN)
 			src.log_message("was found to have no .loc with an attached client.", LOG_GAME)
 
 		// This is a temporary error tracker to make sure we've caught everything
