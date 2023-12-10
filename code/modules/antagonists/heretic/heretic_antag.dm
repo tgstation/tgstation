@@ -45,6 +45,8 @@
 	var/list/mob/living/carbon/human/sac_targets
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
+	/// How many favours were gained from sacrificing, to be used in a defiled altar to gain organs.
+	var/favour = 0
 	/// A static typecache of all tools we can scribe with.
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.

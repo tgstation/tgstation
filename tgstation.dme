@@ -2683,6 +2683,7 @@
 #include "code\modules\antagonists\heretic\status_effects\ghoul.dm"
 #include "code\modules\antagonists\heretic\status_effects\mark_effects.dm"
 #include "code\modules\antagonists\heretic\structures\carving_knife.dm"
+#include "code\modules\antagonists\heretic\structures\defiled_altar.dm"
 #include "code\modules\antagonists\heretic\structures\mawed_crucible.dm"
 #include "code\modules\antagonists\highlander\highlander.dm"
 #include "code\modules\antagonists\hypnotized\hypnotized.dm"

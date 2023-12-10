@@ -450,6 +450,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/narsie,
 		/obj/structure/destructible/cult,
 		/obj/structure/destructible/eldritch_crucible,
+		/obj/structure/destructible/defiled_altar,
 		/obj/structure/spirit_board,
 	)),
 ))
