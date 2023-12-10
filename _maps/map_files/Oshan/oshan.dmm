@@ -439,7 +439,7 @@
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/main)
 "ahL" = (
-/obj/machinery/disease2/isolator,
+/obj/structure/table/glass,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "ahN" = (

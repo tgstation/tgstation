@@ -8200,7 +8200,7 @@
 "cAM" = (
 /obj/machinery/newscaster/directional/north,
 /obj/effect/turf_decal/tile/green/full,
-/obj/machinery/disease2/isolator,
+/obj/machinery/computer/diseasesplicer,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/virology)
 "cAR" = (
@@ -66227,7 +66227,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/item/radio/intercom/directional/south,
-/obj/machinery/computer/diseasesplicer,
 /turf/open/floor/iron/dark,
 /area/station/medical/virology)
 "vqM" = (

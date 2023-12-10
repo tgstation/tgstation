@@ -121,7 +121,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 				success = I.reagents.trans_to(src, 10, transfered_by = user)
 			if (success > 0)
 				to_chat(user, span_notice("You transfer [success] units of the solution to \the [src]."))
-			return 
+			return
 	if((user.istate & ISTATE_HARM) && I.force)
 		visible_message(span_danger("The virus dish is smashed to bits!"))
 		shatter(user)
@@ -143,7 +143,7 @@ GLOBAL_LIST_INIT(virusdishes, list())
 				success = reagents.trans_to(target, 10, transfered_by = user)
 			if (success > 0)
 				to_chat(user, span_notice("You transfer [success] units of the solution to \the [target]."))
-			return 
+			return
 		if(istype(target, /obj/structure/reagent_dispensers))
 			var/obj/structure/reagent_dispensers/obj = target
 			var/success = obj.reagents.trans_to(src, 10, transfered_by = user)
@@ -256,14 +256,15 @@ GLOBAL_LIST_INIT(virusdishes, list())
 				strength -= 40
 	qdel(src)
 
-/obj/item/weapon/virusdish/examine(var/mob/user)
-	..()
+/obj/item/weapon/virusdish/examine(mob/user)
+	desc = initial(desc)
 	if(open)
-		to_chat(user, span_notice("Its lid is open!"))
+		desc += "\n Its lid is open!
 	else
-		to_chat(user, span_notice("Its lid is closed!"))
-	if(info)
-		to_chat(user, span_info("There is a sticker with some printed information on it. <a href ='?src=\ref[src];examine=1'>(Read it)</a>"))
+		desc += "\n Its lid is closed!
+
+	desc += "\n There is a sticker with some printed information on it. <a href ='?src=\ref[src];examine=1'>(Read it)</a>"
+	..()
 
 /obj/item/weapon/virusdish/Topic(href, href_list)
 	if(..())

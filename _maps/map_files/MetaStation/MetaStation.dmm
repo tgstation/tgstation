@@ -58155,7 +58155,6 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
-/obj/machinery/disease2/isolator,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "uGr" = (

@@ -26500,7 +26500,6 @@
 	name = "virology camera";
 	network = list("ss13","medbay","virology")
 	},
-/obj/machinery/disease2/isolator,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "grM" = (
