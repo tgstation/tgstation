@@ -380,8 +380,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	if(holder && (human_mutation in mutations))
 		set_se(0, human_mutation)
 		. = human_mutation.on_losing(holder)
-		if(!.)
-			qdel(human_mutation) // qdel mutations on removal
+		qdel(human_mutation) // qdel mutations on removal
 		update_instability(FALSE)
 		return
 
