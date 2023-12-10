@@ -1047,8 +1047,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		balloon_alert(user, "placed hat")
 		QDEL_NULL(item)
 		desc += "\n\nThere's a santa hat placed atop it. How it got there without being dusted is a mystery."
-		var/mutable_appearance/sm_hat = mutable_appearance(icon, "santa_hat")
-		add_overlay(sm_hat)
+		add_overlay(mutable_appearance(icon, "santa_hat"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	return FALSE
 
