@@ -88,16 +88,16 @@
 	desc = "A personal, protective forcefield typically seen in military applications. \
 		This advanced deflector shield is essentially a scaled down version of those seen on starships, \
 		and the power cost can be an easy indicator of this. However, it is capable of blocking nearly any incoming attack, \
-		though with its' low amount of separate charges, the user remains mortal."
+		but only once every few seconds; a grim reminder of the users mortality."
 	icon_state = "energy_shield"
 	complexity = 3
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.5
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 2
 	incompatible_modules = list(/obj/item/mod/module/energy_shield)
 	/// Max charges of the shield.
-	var/max_charges = 3
+	var/max_charges = 1
 	/// The time it takes for the first charge to recover.
-	var/recharge_start_delay = 20 SECONDS
+	var/recharge_start_delay = 10 SECONDS
 	/// How much time it takes for charges to recover after they started recharging.
 	var/charge_increment_delay = 1 SECONDS
 	/// How much charge is recovered per recovery.

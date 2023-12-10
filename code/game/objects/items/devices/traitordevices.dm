@@ -18,7 +18,7 @@ effective or pretty fucking useless.
 /obj/item/batterer
 	name = "mind batterer"
 	desc = "A strange device with twin antennas."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "batterer"
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
@@ -285,7 +285,7 @@ effective or pretty fucking useless.
 /obj/item/jammer
 	name = "radio jammer"
 	desc = "Device used to disrupt nearby radio communication."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "jammer"
 	var/active = FALSE
 	var/range = 12

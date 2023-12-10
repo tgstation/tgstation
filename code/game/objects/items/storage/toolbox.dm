@@ -416,7 +416,7 @@
 	dog_fashion = null
 
 /obj/item/storage/toolbox/guncase/doublesword
-	name = "double-energy sword weapon case"
+	name = "double-bladed energy sword weapon case"
 	weapon_to_spawn = /obj/item/dualsaber
 	extra_to_spawn = /obj/item/soap/syndie
 

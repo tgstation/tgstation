@@ -242,7 +242,7 @@
 
 /obj/structure/frame/computer/rcd/Initialize(mapload)
 	name = "computer frame"
-	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon = 'icons/obj/devices/stock_parts.dmi'
 	icon_state = "0"
 
 	. = ..()

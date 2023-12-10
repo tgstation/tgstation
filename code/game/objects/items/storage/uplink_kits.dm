@@ -570,6 +570,7 @@
 	new /obj/item/card/emag/doorjack (src)
 	new /obj/item/reagent_containers/hypospray/medipen/stimulants (src)
 	new /obj/item/grenade/c4 (src)
+	new /obj/item/mod/module/energy_shield(src)
 
 /// Surplus Ammo Box
 

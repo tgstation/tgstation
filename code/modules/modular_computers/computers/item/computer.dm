@@ -47,7 +47,7 @@
 	var/max_idle_programs = 2
 
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
-	var/hardware_flag = NONE
+	var/hardware_flag = PROGRAM_ALL
 //	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
 
 	///The theme, used for the main menu and file browser apps.
@@ -472,13 +472,13 @@
 		shutdown_computer()
 		return
 
-	if(active_program && active_program.requires_ntnet && !get_ntnet_status())
+	if(active_program && (active_program.program_flags & PROGRAM_REQUIRES_NTNET) && !get_ntnet_status())
 		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
 
 	for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
 		idle_programs.process_tick(seconds_per_tick)
 		idle_programs.ntnet_status = get_ntnet_status()
-		if(idle_programs.requires_ntnet && !idle_programs.ntnet_status)
+		if((idle_programs.program_flags & PROGRAM_REQUIRES_NTNET) && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
 
 	if(active_program)
@@ -506,6 +506,8 @@
 	physical.loc.visible_message(span_notice("[icon2html(physical, viewers(physical.loc))] \The [src] displays a [caller.filedesc] notification: [alerttext]"))
 
 /obj/item/modular_computer/proc/ring(ringtone) // bring bring
+	if(!use_power())
+		return
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_PDA_GLITCHED))
 		playsound(src, pick('sound/machines/twobeep_voice1.ogg', 'sound/machines/twobeep_voice2.ogg'), 50, TRUE)
 	else
@@ -522,8 +524,9 @@
 	data["PC_device_theme"] = device_theme
 
 	if(internal_cell)
+		data["PC_lowpower_mode"] = !internal_cell.charge
 		switch(internal_cell.percent())
-			if(80 to 200) // 100 should be maximal but just in case..
+			if(80 to INFINITY)
 				data["PC_batteryicon"] = "batt_100.gif"
 			if(60 to 80)
 				data["PC_batteryicon"] = "batt_80.gif"
@@ -537,6 +540,7 @@
 				data["PC_batteryicon"] = "batt_5.gif"
 		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
 	else
+		data["PC_lowpower_mode"] = FALSE
 		data["PC_batteryicon"] = null
 		data["PC_batterypercent"] = null
 
@@ -569,7 +573,8 @@
 		CRASH("tried to open program that does not belong to this computer")
 
 	if(!program || !istype(program)) // Program not found or it's not executable program.
-		to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+		if(user)
+			to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
 		return FALSE
 
 	// The program is already running. Resume it.
@@ -582,15 +587,17 @@
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
-	if(!program.is_supported_by_hardware(hardware_flag, 1, user))
+	if(!program.is_supported_by_hardware(hardware_flag, loud = TRUE, user = user))
 		return FALSE
 
 	if(idle_threads.len > max_idle_programs)
-		to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
+		if(user)
+			to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
 		return FALSE
 
-	if(program.requires_ntnet && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
-		to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
+		if(user)
+			to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
 		return FALSE
 
 	if(!program.on_start(user))
@@ -675,7 +682,7 @@
  * It is separated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight(mob/user)
-	if(!has_light)
+	if(!has_light || !internal_cell || !internal_cell.charge)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, disabled_time))
 		balloon_alert(user, "disrupted!")
@@ -898,3 +905,14 @@
 	inserted_pai = null
 	update_appearance(UPDATE_ICON)
 	return TRUE
+
+/**
+ * Debug ModPC
+ * Used to spawn all programs for Create and Destroy unit test.
+ */
+/obj/item/modular_computer/debug
+	max_capacity = INFINITY
+
+/obj/item/modular_computer/debug/Initialize(mapload)
+	starting_programs += subtypesof(/datum/computer_file/program)
+	return ..()
