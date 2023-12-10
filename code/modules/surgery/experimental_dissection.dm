@@ -24,7 +24,7 @@
 /datum/surgery_step/experimental_dissection
 	name = "dissection"
 	implements = list(
-		/obj/item/autopsy_scanner = 100,
+		/obj/item/healthanalyzer = 100,
 		TOOL_SCALPEL = 60,
 		TOOL_KNIFE = 20,
 		/obj/item/shard = 10,

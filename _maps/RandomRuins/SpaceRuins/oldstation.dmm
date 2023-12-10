@@ -1284,7 +1284,7 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/obj/item/autopsy_scanner,
+/obj/item/healthanalyzer,
 /turf/open/floor/iron/white,
 /area/ruin/space/ancientstation/delta/rnd)
 "fw" = (

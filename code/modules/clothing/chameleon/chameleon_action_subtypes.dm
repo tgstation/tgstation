@@ -257,7 +257,6 @@
 		/obj/item/analyzer,
 		/obj/item/assembly/flash/handheld,
 		/obj/item/assembly/signaler,
-		/obj/item/autopsy_scanner,
 		/obj/item/camera,
 		/obj/item/cane,
 		/obj/item/detective_scanner,

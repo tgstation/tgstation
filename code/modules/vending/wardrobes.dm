@@ -342,7 +342,7 @@
 		/obj/item/table_clock = 1,
 	)
 	premium = list(
-		/obj/item/autopsy_scanner = 1,
+		/obj/item/healthanalyzer = 1,
 		/obj/item/storage/medkit/coroner = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/coroner_wardrobe

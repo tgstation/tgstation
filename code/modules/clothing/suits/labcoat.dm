@@ -104,7 +104,7 @@
 /obj/item/clothing/suit/toggle/labcoat/coroner/Initialize(mapload)
 	. = ..()
 	allowed += list(
-		/obj/item/autopsy_scanner,
+		/obj/item/healthanalyzer,
 		/obj/item/scythe,
 	)
 

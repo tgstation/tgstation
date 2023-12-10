@@ -365,7 +365,7 @@
 		/obj/item/retractor,
 		/obj/item/hemostat,
 		/obj/item/cautery,
-		/obj/item/autopsy_scanner,
+		/obj/item/healthanalyzer,
 	))
 
 /obj/item/storage/medkit/coroner/PopulateContents()
