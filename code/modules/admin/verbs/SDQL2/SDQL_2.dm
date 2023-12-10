@@ -211,8 +211,8 @@
 	if(length(results) == 0)
 		return
 
-	for(var/I in 1 to 3)
-		to_chat(usr, results[I], confidential = TRUE)
+	for(var/message in 1 to 3)
+		to_chat(usr, results[message], confidential = TRUE)
 
 /// Parses the `query_text` input and handles running it and returning the desired results.
 /// This should not be called directly, use either the `admin_SDQL2_query` or `HandleUserlessSDQL` wrappers instead.
