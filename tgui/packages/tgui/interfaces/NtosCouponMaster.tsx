@@ -30,7 +30,6 @@ export const NtosCouponMaster = (props) => {
               You can print redeemed coupons by right-clicking a photocopier.
             </NoticeBox>
             <Input
-              width={200}
               fontSize={1.2}
               placeholder="Insert your coupon code here"
               onChange={(e, value) =>
