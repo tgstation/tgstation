@@ -181,6 +181,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/Destroy()
 	GLOB.bots_list -= src
+	calling_ai_ref = null
 	QDEL_NULL(paicard)
 	QDEL_NULL(pa_system)
 	QDEL_NULL(internal_radio)
