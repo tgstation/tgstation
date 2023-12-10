@@ -6,7 +6,7 @@
 	mob_trait = TRAIT_CYBORG_LOVER
 	gain_text = span_notice("You are fascinated by silicon life forms.")
 	lose_text = span_danger("Cyborgs and other silicons aren't cool anymore.")
-	medical_record_text = "Patient reports being attracted by silicon life forms."
+	medical_record_text = "Patient reports being fascinated by silicon life forms."
 	mail_goodies = list(
 		/obj/item/stock_parts/cell/potato,
 		/obj/item/stack/cable_coil,
