@@ -9,6 +9,15 @@
 		JOB_HEAD_OF_SECURITY,
 	) // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	maximum_antags = 1
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	required_enemies = 5
 	weight = 2
 	min_players = 35
 	max_occurrences = 1

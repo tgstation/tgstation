@@ -24,7 +24,7 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	required_enemies = 3
+	required_enemies = 5
 	base_antags = 4
 	maximum_antags = 4
 	// I give up, just there should be enough heads with 35 players...
