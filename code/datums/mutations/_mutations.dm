@@ -143,7 +143,6 @@
 		mut_overlay.Remove(get_visual_indicator())
 		owner.overlays_standing[layer_used] = mut_overlay
 		owner.apply_overlay(layer_used)
-	qdel(src)
 
 /mob/living/carbon/proc/update_mutations_overlay()
 	return
