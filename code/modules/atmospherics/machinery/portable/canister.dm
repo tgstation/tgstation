@@ -453,7 +453,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
-	if(default_deconstruction_screwdriver(user, null, null, screwdriver))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
@@ -720,6 +720,8 @@
 
 	update_appearance()
 
+
+/// Opens/closes the canister valve
 /obj/machinery/portable_atmospherics/canister/proc/toggle_valve(mob/user)
 	var/logmsg
 	var/admin_msg
@@ -754,6 +756,7 @@
 	investigate_log(logmsg, INVESTIGATE_ATMOS)
 	release_log += logmsg
 
+/// Turns canister shielding on or off
 /obj/machinery/portable_atmospherics/canister/proc/toggle_shielding(mob/user)
 	shielding_powered = !shielding_powered
 	SSair.start_processing_machine(src)
@@ -761,6 +764,7 @@
 	user.investigate_log("turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
 	update_appearance()
 
+/// Ejects tank from canister, if any
 /obj/machinery/portable_atmospherics/canister/proc/eject_tank(mob/user)
 	if(holding)
 		if(valve_open)
@@ -768,6 +772,8 @@
 			user.investigate_log("removed the [holding], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
 		replace_tank(user, FALSE)
 		return TRUE
+
+/// Turns hyper-noblium crystal reaction suppression in the canister on or off
 /obj/machinery/portable_atmospherics/canister/proc/toggle_reaction_suppression(mob/user, wire_pulsed = FALSE)
 	if(!nob_crystal_inserted)
 		if(!wire_pulsed)

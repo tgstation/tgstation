@@ -926,12 +926,10 @@
 	screwdriver.play_tool_sound(src, 50)
 	toggle_panel_open()
 	if(panel_open)
-		if(icon_state_open)
-			icon_state = icon_state_open
+		icon_state = icon_state_open
 		balloon_alert(user, "opened maintenance hatch")
 	else
-		if(icon_state_closed)
-			icon_state = icon_state_closed
+		icon_state = icon_state_closed
 		balloon_alert(user, "closed maintenance hatch")
 	return TRUE
 
