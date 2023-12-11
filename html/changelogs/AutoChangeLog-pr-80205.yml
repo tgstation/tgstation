@@ -1,6 +1,0 @@
-author: "MTandi"
-delete-after: True
-changes:
-  - image: "New cleanbot sprites"
-  - image: "New bucket sprites"
-  - rscdel: "All buckets and cleanbots are back to being blue"
