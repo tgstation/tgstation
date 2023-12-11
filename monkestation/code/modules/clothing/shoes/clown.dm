@@ -9,13 +9,16 @@
 /obj/item/clothing/shoes/clown_shoes/green_jester_shoes
 	name = "jester shoes"
 	desc = "Shoes that jingle with every step!!"
+	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
 	icon_state = "green_jester_shoes"
-	inhand_icon_state = "green_jester_shoes"
-	squeak_sound = list('sound/effects/jingle.ogg'=1) //jingle jingle jingle jingle
+	worn_icon = 'icons/mob/clothing/feet.dmi'
+	worn_icon_state = "green_jester_shoes"
+	squeak_sound = list('monkestation/sound/effects/jingle.ogg'=1) //jingle jingle jingle jingle
 
 /obj/item/clothing/shoes/clown_shoes/clown_jester_shoes
 	name = "clown jester shoes"
 	desc = "A court jester's shoes, updated with modern squeaking technology."
 	icon_state = "jester_shoes"
-	squeak_sound = list('sound/effects/clown_jingle1.ogg'=1, 'sound/effects/clown_jingle2.ogg') //jingHONK jinglHONK jHONKgle jiHONKgle
+	icon = 'icons/obj/clothing/shoes.dmi'
+	squeak_sound = list('monkestation/sound/effects/clown_jingle1.ogg'=1, 'monkestation/sound/effects/clown_jingle2.ogg') //jingHONK jinglHONK jHONKgle jiHONKgle
 
