@@ -64,7 +64,7 @@
 
 /datum/ai_planning_subtree/basic_ranged_attack_subtree/minebot/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(!living_pawn.combat_mode) //we are not on attack mode
+	if(QDELETED(living_pawn) || !living_pawn.combat_mode) //we are not on attack mode
 		return
 	return ..()
 

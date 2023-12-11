@@ -21,7 +21,7 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/find_cat_food/kitten/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/atom/target = controller.blackboard[BB_CAT_FOOD_TARGET]
-	if(target && get_dist(target, controller.pawn) > controller.blackboard[BB_MAX_DISTANCE_TO_FOOD])
+	if(QDELETED(controller.pawn) || (target && get_dist(target, controller.pawn) > controller.blackboard[BB_MAX_DISTANCE_TO_FOOD]))
 		controller.queue_behavior(/datum/ai_behavior/beacon_for_food, BB_CAT_FOOD_TARGET, BB_HUNGRY_MEOW)
 		return
 	return ..()
