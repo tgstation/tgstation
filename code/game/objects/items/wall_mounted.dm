@@ -64,7 +64,7 @@
 	var/turf/T = get_step(get_turf(user), user.dir)
 	if(iswallturf(T))
 		T.attackby(src, user)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/wrench_act(mob/living/user, obj/item/tool)
 	var/metal_amt = round(custom_materials[GET_MATERIAL_REF(/datum/material/iron)]/SHEET_MATERIAL_AMOUNT) //Replace this shit later
@@ -79,11 +79,11 @@
 	if(glass_amt)
 		new /obj/item/stack/sheet/glass(get_turf(src), glass_amt)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/electronics
 	desc = "Looks like a circuit. Probably is."
-	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "door_electronics"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

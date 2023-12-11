@@ -99,11 +99,11 @@
 		var/obj/machinery/air_sensor/sensor = multi_tool.buffer
 		multi_tool.set_buffer(src)
 		sensor.multitool_act(user, multi_tool)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "vent saved in buffer")
 	multi_tool.set_buffer(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/screwdriver_act(mob/living/user, obj/item/tool)
 	var/time_to_repair = (10 SECONDS) * (1 - get_integrity_percentage())
@@ -117,7 +117,7 @@
 
 	else
 		balloon_alert(user, "interrupted!")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/vent_pump/atom_fix()
 	set_is_operational(TRUE)

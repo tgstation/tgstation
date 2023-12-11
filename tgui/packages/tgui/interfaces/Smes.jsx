@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, ProgressBar, Section, Slider } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Slider,
+} from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 
@@ -48,10 +56,12 @@ export const Smes = (props) => {
                 <Button
                   icon={inputAttempt ? 'sync-alt' : 'times'}
                   selected={inputAttempt}
-                  onClick={() => act('tryinput')}>
+                  onClick={() => act('tryinput')}
+                >
                   {inputAttempt ? 'Auto' : 'Off'}
                 </Button>
-              }>
+              }
+            >
               <Box color={inputState}>
                 {(capacityPercent >= 100 && 'Fully Charged') ||
                   (inputting && 'Charging') ||
@@ -131,10 +141,12 @@ export const Smes = (props) => {
                 <Button
                   icon={outputAttempt ? 'power-off' : 'times'}
                   selected={outputAttempt}
-                  onClick={() => act('tryoutput')}>
+                  onClick={() => act('tryoutput')}
+                >
                   {outputAttempt ? 'On' : 'Off'}
                 </Button>
-              }>
+              }
+            >
               <Box color={outputState}>
                 {outputting
                   ? 'Sending'

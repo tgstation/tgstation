@@ -16,7 +16,7 @@ export const CircuitAdminPanel = (props) => {
   const { act, data } = useBackend<CircuitAdminPanelData>();
 
   return (
-    <Window title="Circuit Admin Panel" width={1200} height={500} resizable>
+    <Window title="Circuit Admin Panel" width={1200} height={500}>
       <Window.Content>
         <Stack vertical>
           <Stack.Item>
@@ -26,7 +26,8 @@ export const CircuitAdminPanel = (props) => {
                 <Button
                   onClick={() => {
                     act('disable_circuit_sound');
-                  }}>
+                  }}
+                >
                   Disable all circuit sound emitters
                 </Button>
               </Stack.Item>

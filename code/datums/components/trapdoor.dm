@@ -258,7 +258,7 @@
 /obj/item/trapdoor_remote
 	name = "trapdoor remote"
 	desc = "A small machine that interfaces with a trapdoor controller for easy use."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/remote.dmi'
 	icon_state = "trapdoor_remote"
 	COOLDOWN_DECLARE(trapdoor_cooldown)
 	var/trapdoor_cooldown_time = 2 SECONDS

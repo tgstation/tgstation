@@ -121,7 +121,7 @@
 
 /// Gets the ban cache of the passed in client
 /// If the cache has not been generated, we start off a query
-/// If we still have a query going for this request, we just sleep until it's recieved back
+/// If we still have a query going for this request, we just sleep until it's received back
 /proc/retrieve_ban_cache(client/player_client)
 	if(QDELETED(player_client))
 		return

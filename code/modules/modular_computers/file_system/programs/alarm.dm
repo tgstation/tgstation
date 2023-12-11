@@ -5,7 +5,7 @@
 	ui_header = "alarm_green.gif"
 	program_open_overlay = "alert-green"
 	extended_desc = "This program provides visual interface for a station's alarm system."
-	requires_ntnet = 1
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 4
 	tgui_id = "NtosStationAlertConsole"
 	program_icon = "bell"

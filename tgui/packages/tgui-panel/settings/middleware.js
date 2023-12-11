@@ -6,7 +6,13 @@
 
 import { storage } from 'common/storage';
 import { setClientTheme } from '../themes';
-import { loadSettings, updateSettings, addHighlightSetting, removeHighlightSetting, updateHighlightSetting } from './actions';
+import {
+  loadSettings,
+  updateSettings,
+  addHighlightSetting,
+  removeHighlightSetting,
+  updateHighlightSetting,
+} from './actions';
 import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
 

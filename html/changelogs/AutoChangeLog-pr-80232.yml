@@ -1,0 +1,4 @@
+author: "vorpal-void"
+delete-after: True
+changes:
+  - bugfix: "fixed outdated item description"

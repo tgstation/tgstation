@@ -939,6 +939,105 @@
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_5
 
+/obj/item/food/roast_dinner
+	name = "roast dinner"
+	desc = "A luxuriously roasted chicken, accompanied by cabbage, parsnip, potatoes, peas, stuffing and a small boat of gravy."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "full_roast"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/roast_slice, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/roast_slice
+	name = "plate of roast dinner"
+	desc = "A small plate of roast chicken, peas, cabbage, parsnips, potatoes, stuffing and... WAIT is this all the gravy I get?!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "roast_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | GRAIN
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_lizzy
+	name = "grain-free roast dinner"
+	desc = "A luxuriously roasted chicken, accompanied by cabbage, parsnip, potatoes, peas, korta stuffing and a small boat of korta-blood gravy."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "full_roast_lizzy"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_lizzy/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/roast_slice_lizzy, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/roast_slice_lizzy
+	name = "plate of grain-free roast dinner"
+	desc = "A small plate of roast chicken, peas, cabbage, parsnips, potatoes, korta stuffing and... WAIT is this all the korta-blood gravy I get?!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "roast_slice_lizzy"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | NUTS
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_tofu
+	name = "tofu roast dinner"
+	desc = "A luxuriously roasted tofu-'chicken', accompanied by cabbage, parsnip, potatoes, peas, stuffing and a small boat of soybased gravy."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "full_roast_tofu"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 21,
+		/datum/reagent/consumable/nutriment/vitamin = 6,
+	)
+	tastes = list("tofu" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+
+/obj/item/food/roast_dinner_tofu/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE,  /obj/item/food/roast_slice_tofu, 3, 3 SECONDS, table_required = TRUE,  screentip_verb = "Cut")
+
+/obj/item/food/roast_slice_tofu
+	name = "plate of tofu roast dinner"
+	desc = "A small plate of roast tofu-'chicken', peas, cabbage, parsnips, potatoes, stuffing and... WAIT is this all the soy gravy I get?!"
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "roast_slice_tofu"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 7,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("tofu" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = GRAIN | VEGETABLES
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_5
+
 /obj/item/food/full_english
 	name = "full english breakfast"
 	desc = "A hearty plate with all the trimmings, representing the pinnacle of the breakfast art."

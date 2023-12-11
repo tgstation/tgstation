@@ -278,7 +278,7 @@
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	var/turf/T = loc
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(stored)
 			var/obj/structure/disposalconstruct/construct = stored
 			stored = null

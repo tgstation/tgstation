@@ -66,18 +66,17 @@
 			owner.adjustBruteLoss(-heal_amt * delta_time_capped)
 			owner.adjustFireLoss(-heal_amt * delta_time_capped)
 			owner.adjustOxyLoss(-heal_amt * delta_time_capped)
-			owner.adjustCloneLoss(-heal_amt * delta_time_capped)
 	else
 		owner.adjustPlasma(0.1 * plasma_rate * delta_time)
 
-/obj/item/organ/internal/alien/plasmavessel/on_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/alien/plasmavessel/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/target_alien = organ_owner
 		target_alien.updatePlasmaDisplay()
 	RegisterSignal(organ_owner, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
 
-/obj/item/organ/internal/alien/plasmavessel/on_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/alien/plasmavessel/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	if(isalien(organ_owner))
 		var/mob/living/carbon/alien/organ_owner_alien = organ_owner
@@ -96,18 +95,18 @@
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_XENO_HIVENODE
 	w_class = WEIGHT_CLASS_TINY
+	organ_traits = list(TRAIT_XENO_IMMUNE)
 	actions_types = list(/datum/action/cooldown/alien/whisper)
 	/// Indicates if the queen died recently, aliens are heavily weakened while this is active.
 	var/recent_queen_death = FALSE
 
-/obj/item/organ/internal/alien/hivenode/on_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/alien/hivenode/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	organ_owner.faction |= ROLE_ALIEN
-	ADD_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
 
-/obj/item/organ/internal/alien/hivenode/Remove(mob/living/carbon/organ_owner, special = FALSE)
-	organ_owner.faction -= ROLE_ALIEN
-	REMOVE_TRAIT(organ_owner, TRAIT_XENO_IMMUNE, ORGAN_TRAIT)
+/obj/item/organ/internal/alien/hivenode/on_mob_remove(mob/living/carbon/organ_owner, special = FALSE)
+	if(organ_owner)
+		organ_owner.faction -= ROLE_ALIEN
 	return ..()
 
 //When the alien queen dies, all aliens suffer a penalty as punishment for failing to protect her.
@@ -233,11 +232,11 @@
 	stomach_contents -= source
 	UnregisterSignal(source, list(COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH, COMSIG_QDELETING))
 
-/obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/stomach/alien/Insert(mob/living/carbon/stomach_owner, special, movement_flags)
 	RegisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE, PROC_REF(something_moved))
 	return ..()
 
-/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special = FALSE)
+/obj/item/organ/internal/stomach/alien/Remove(mob/living/carbon/stomach_owner, special, movement_flags)
 	UnregisterSignal(stomach_owner, COMSIG_ATOM_RELAYMOVE)
 	return ..()
 

@@ -1,7 +1,7 @@
 /obj/item/encryptionkey
 	name = "standard encryption key"
 	desc = "An encryption key for a radio headset."
-	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cypherkey_basic"
 	w_class = WEIGHT_CLASS_TINY
 	/// Can this radio key access the binary radio channel?

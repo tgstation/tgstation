@@ -1,5 +1,5 @@
 import { Box } from './Box';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 
 export class FakeTerminal extends Component {
   constructor(props) {
