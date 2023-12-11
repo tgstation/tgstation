@@ -69,6 +69,10 @@
 	new_symp.name = name
 	new_symp.id = id
 	new_symp.neutered = neutered
+	new_symp.multiplier = multiplier
+	new_symp.chance = chance
+	new_symp.max_chance = max_chance
+	new_symp.max_multiplier = max_multiplier
 	return new_symp
 
 /datum/symptom/proc/generate_threshold_desc()
