@@ -3,7 +3,7 @@
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/remote.dmi'
 	name = "tram remote"
 	desc = "A remote control that can be linked to a tram. This can only go well."
 	w_class = WEIGHT_CLASS_TINY

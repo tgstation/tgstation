@@ -6,7 +6,7 @@
 /datum/unit_test/tail_wag/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 	var/obj/item/organ/external/tail/cat/dummy_tail = allocate(/obj/item/organ/external/tail/cat)
-	dummy_tail.Insert(dummy, special = TRUE, drop_if_replaced = FALSE)
+	dummy_tail.Insert(dummy, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 	// SANITY TEST
 
@@ -74,7 +74,7 @@
 	// TESTING MOB DEATH
 
 	// put it back and start wagging again
-	dummy_tail.Insert(dummy, special = TRUE, drop_if_replaced = FALSE)
+	dummy_tail.Insert(dummy, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	SEND_SIGNAL(dummy, COMSIG_ORGAN_WAG_TAIL, TRUE)
 	if(!(dummy_tail.wag_flags & WAG_WAGGING))
 		TEST_FAIL("Tail did not start wagging when it should have!")

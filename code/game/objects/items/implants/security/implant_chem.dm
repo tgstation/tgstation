@@ -3,6 +3,10 @@
 	desc = "Injects things."
 	icon_state = "reagents"
 	actions_types = null
+	implant_flags = IMPLANT_TYPE_SECURITY
+	hud_icon_state = "hud_imp_chem"
+	/// All possible injection sizes for the implant shown in the prisoner management console.
+	var/list/implant_sizes = list(1, 5, 10)
 
 /obj/item/implant/chem/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
@@ -10,24 +14,51 @@
 				<b>Life:</b> Deactivates upon death but remains within the body.<BR>
 				<b>Important Notes: Due to the system functioning off of nutrients in the implanted subject's body, the subject<BR>
 				will suffer from an increased appetite.</B><BR>
-				<HR>
 				<b>Implant Details:</b><BR>
-				<b>Function:</b> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
+				<i>Function:</i> Contains a small capsule that can contain various chemicals. Upon receiving a specially encoded signal<BR>
 				the implant releases the chemicals directly into the blood stream.<BR>
-				<b>Special Features:</b>
 				<i>Micro-Capsule</i>- Can be loaded with any sort of chemical agent via the common syringe and can hold 50 units.<BR>
 				Can only be loaded while still in its original case.<BR>
-				<b>Integrity:</b> Implant will last so long as the subject is alive."}
+				<b>Integrity:</b> Implant will last so long as the subject is alive, breaking down and releasing all contents on death."}
 	return dat
+
+/obj/item/implant/chem/is_shown_on_console(obj/machinery/computer/prisoner/management/console)
+	return is_valid_z_level(get_turf(console), get_turf(imp_in))
+
+/obj/item/implant/chem/get_management_console_data()
+	var/list/info_shown = ..()
+	info_shown["Volume"] = "[reagents.total_volume]u"
+	return info_shown
+
+/obj/item/implant/chem/get_management_console_buttons()
+	var/list/buttons = ..()
+	for(var/i in implant_sizes)
+		UNTYPED_LIST_ADD(buttons, list(
+			"name" = "Inject [i]u",
+			"color" = "good",
+			"action_key" = "inject",
+			"action_params" = list("amount" = i),
+		))
+	return buttons
+
+/obj/item/implant/chem/handle_management_console_action(mob/user, list/params, obj/machinery/computer/prisoner/management/console)
+	. = ..()
+	if(.)
+		return
+
+	if(params["implant_action"] == "inject")
+		var/amount = text2num(params["amount"])
+		if(!(amount in implant_sizes))
+			return TRUE
+
+		var/reagents_inside = reagents.get_reagent_log_string()
+		activate(amount)
+		log_combat(user, imp_in, "injected [amount] units of [reagents_inside]", src)
+		return TRUE
 
 /obj/item/implant/chem/Initialize(mapload)
 	. = ..()
 	create_reagents(50, OPENCONTAINER)
-	GLOB.tracked_chem_implants += src
-
-/obj/item/implant/chem/Destroy()
-	GLOB.tracked_chem_implants -= src
-	return ..()
 
 /obj/item/implant/chem/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

@@ -12,7 +12,14 @@ import {
   PING_ROUNDTRIP_WORST,
 } from './constants';
 
-export const pingReducer = (state = {}, action) => {
+type PingState = {
+  roundtrip: number | undefined;
+  roundtripAvg: number | undefined;
+  failCount: number;
+  networkQuality: number;
+};
+
+export const pingReducer = (state = {} as PingState, action) => {
   const { type, payload } = action;
 
   if (type === pingSuccess.type) {
@@ -34,7 +41,7 @@ export const pingReducer = (state = {}, action) => {
     const networkQuality = clamp01(
       state.networkQuality - failCount / PING_MAX_FAILS,
     );
-    const nextState = {
+    const nextState: PingState = {
       ...state,
       failCount: failCount + 1,
       networkQuality,

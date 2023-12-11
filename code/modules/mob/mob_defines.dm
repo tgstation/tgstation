@@ -89,14 +89,6 @@
 	/// What is the mobs real name (name is overridden for disguises etc)
 	var/real_name = null
 
-	/**
-	  * back up of the real name during admin possession
-	  *
-	  * If an admin possesses an object it's real name is set to the admin name and this
-	  * stores whatever the real name was previously. When possession ends, the real name
-	  * is reset to this value
-	  */
-	var/name_archive //For admin things like possession
 
 	/// Default body temperature
 	var/bodytemperature = BODYTEMP_NORMAL //310.15K / 98.6F
@@ -157,9 +149,6 @@
 
 	/// Can they interact with station electronics
 	var/has_unlimited_silicon_privilege = FALSE
-
-	///Used by admins to possess objects. All mobs should have this var
-	var/obj/control_object
 
 	///Calls relay_move() to whatever this is set to when the mob tries to move
 	var/atom/movable/remote_control

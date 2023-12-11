@@ -4,9 +4,8 @@
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
 	program_open_overlay = "radarntos"
-	requires_ntnet = TRUE
-	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_PDA
+	program_flags = PROGRAM_REQUIRES_NTNET
+	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRadar"
 	///List of trackable entities. Updated by the scan() proc.
@@ -219,9 +218,8 @@
 	filename = "lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	download_access = list(ACCESS_MEDICAL)
-	available_on_ntnet = TRUE
 	program_icon = "heartbeat"
 
 /datum/computer_file/program/radar/lifeline/find_atom()
@@ -259,9 +257,8 @@
 	filename = "custodiallocator"
 	filedesc = "Custodial Locator"
 	extended_desc = "This program allows for tracking of custodial equipment."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	download_access = list(ACCESS_JANITOR)
-	available_on_ntnet = TRUE
 	program_icon = "broom"
 	size = 2
 	detomatix_resistance = DETOMATIX_RESIST_MINOR
@@ -304,9 +301,7 @@
 	filedesc = "Fission360"
 	program_open_overlay = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
-	requires_ntnet = FALSE
-	available_on_ntnet = FALSE
-	available_on_syndinet = TRUE
+	program_flags = PROGRAM_ON_SYNDINET_STORE
 	tgui_id = "NtosRadarSyndicate"
 	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"

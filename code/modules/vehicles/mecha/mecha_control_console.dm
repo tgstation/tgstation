@@ -76,7 +76,7 @@
 /obj/item/mecha_parts/mecha_tracking
 	name = "exosuit tracking beacon"
 	desc = "Device used to transmit exosuit data."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	/// If this beacon allows for AI control. Exists to avoid using istype() on checking
