@@ -181,9 +181,3 @@
 	description = "benis"
 	mappath = "_maps/templates/holodeck_refuelingstation.dmm"
 	restricted = TRUE
-
-/datum/map_template/holodeck/holodeck_honkchurch
-    name = "Holodeck - Honkchurch"
-    template_id = "holodeck_honkchurch"
-    description = "HONK!"
-    mappath = "_maps/templates/holodeck_honkchurch.dmm"
