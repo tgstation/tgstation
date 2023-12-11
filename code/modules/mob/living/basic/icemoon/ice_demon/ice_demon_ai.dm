@@ -80,7 +80,7 @@
 
 /datum/ai_planning_subtree/targeted_mob_ability/summon_afterimages/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(living_pawn.health / living_pawn.maxHealth > 0.5) //only use this ability when under half health
+	if(QDELETED(living_pawn) || (living_pawn.health / living_pawn.maxHealth > 0.5)) //only use this ability when under half health
 		return
 	return ..()
 

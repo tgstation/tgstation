@@ -79,7 +79,7 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/baby_egg/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(living_pawn.pulling) //we are already pulling something
+	if(QDELETED(living_pawn) || living_pawn.pulling) //we are already pulling something
 		return
 	return ..()
 
@@ -94,6 +94,9 @@
 /datum/ai_planning_subtree/dig_away_from_danger
 
 /datum/ai_planning_subtree/dig_away_from_danger/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(QDELETED(controller.pawn))
+		return
+
 	var/currently_underground = is_jaunting(controller.pawn)
 	var/storm_approaching = controller.blackboard[BB_STORM_APPROACHING]
 
