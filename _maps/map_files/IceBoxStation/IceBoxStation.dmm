@@ -12673,10 +12673,6 @@
 	dir = 8
 	},
 /area/station/science/research)
-"dWv" = (
-/obj/effect/mapping_helpers/airlock/access/any/science/maintenance,
-/turf/open/genturf,
-/area/icemoon/underground/unexplored/rivers/deep)
 "dWK" = (
 /obj/machinery/hydroponics/soil,
 /obj/item/shovel/spade,
@@ -46702,9 +46698,7 @@
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
 /obj/structure/cable,
-/obj/machinery/power/terminal{
-	dir = 2
-	},
+/obj/machinery/power/terminal,
 /turf/open/floor/iron/dark,
 /area/station/engineering/supermatter/room)
 "oXc" = (
@@ -60092,9 +60086,7 @@
 /turf/open/floor/iron/white/textured,
 /area/station/security/medical)
 "tqb" = (
-/obj/machinery/siren/weather{
-	dir = 2
-	},
+/obj/machinery/siren/weather,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "tqk" = (
@@ -78049,7 +78041,7 @@ oSU
 oSU
 oSU
 oSU
-dWv
+oSU
 oSU
 oSU
 oSU

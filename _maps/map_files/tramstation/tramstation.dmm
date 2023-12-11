@@ -8157,9 +8157,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/door/window/right/directional/west,
+/obj/machinery/door/window/right/directional/west{
+	req_access = list("security")
+	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /turf/open/floor/plating,
 /area/station/security/office)
 "bwp" = (
@@ -34616,7 +34617,8 @@
 "kcT" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/door/window/brigdoor/left/directional/east{
-	name = "Medical Delivery Chute"
+	name = "Medical Delivery Chute";
+	req_access = list("medical")
 	},
 /obj/machinery/navbeacon{
 	codes_txt = "delivery;dir=8";
@@ -34626,7 +34628,6 @@
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
-/obj/effect/mapping_helpers/airlock/access/all/medical/general,
 /turf/open/floor/plating,
 /area/station/medical/storage)
 "kcX" = (
@@ -73446,7 +73447,6 @@
 	location = "Security";
 	name = "navigation beacon (Security Delivery)"
 	},
-/obj/machinery/door/window/right/directional/west,
 /obj/effect/turf_decal/loading_area{
 	dir = 8
 	},
