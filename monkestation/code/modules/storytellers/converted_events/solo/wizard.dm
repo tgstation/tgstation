@@ -34,7 +34,6 @@
 /datum/round_event/antagonist/solo/wizard
 
 /datum/round_event/antagonist/solo/wizard/add_datum_to_mind(datum/mind/antag_mind)
-	. = ..()
 	var/mob/living/current_mob = antag_mind.current
 	SSjob.FreeRole(antag_mind.assigned_role.title)
 	var/list/items = current_mob.get_equipped_items(TRUE)
@@ -42,4 +41,4 @@
 	for(var/obj/item/item as anything in items)
 		qdel(item)
 
-	antag_mind.current.forceMove(pick(GLOB.wizardstart))
+	antag_mind.make_wizard()
