@@ -28,14 +28,9 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/mob/living/carbon/item_tending(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(. & ITEM_INTERACT_SUCCESS)
-		return .
-
-	if(!length(all_wounds))
-		return .
-	if(user.combat_mode && user != src)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
 
 	for(var/datum/wound/wound as anything in shuffle(all_wounds))
