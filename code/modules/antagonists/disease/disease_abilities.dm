@@ -24,7 +24,6 @@ new /datum/disease_ability/symptom/medium/polyvitiligo,
 new /datum/disease_ability/symptom/medium/itching,
 new /datum/disease_ability/symptom/powerful/fire,
 new /datum/disease_ability/symptom/powerful/flesh_eating,
-new /datum/disease_ability/symptom/powerful/inorganic_adaptation,
 new /datum/disease_ability/symptom/powerful/heal/starlight,
 new /datum/disease_ability/symptom/powerful/heal/oxygen,
 new /datum/disease_ability/symptom/powerful/heal/chem,
@@ -361,9 +360,6 @@ new /datum/disease_ability/symptom/powerful/heal/coma,
 /datum/disease_ability/symptom/powerful/flesh_eating
 	symptoms = list(/datum/symptom/flesh_eating)
 
-
-/datum/disease_ability/symptom/powerful/inorganic_adaptation
-	symptoms = list(/datum/symptom/inorganic_adaptation)
 
 /datum/disease_ability/symptom/powerful/narcolepsy
 	symptoms = list(/datum/symptom/narcolepsy)

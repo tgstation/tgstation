@@ -50,3 +50,36 @@
 			affected_mob.set_heartattack(TRUE)
 			affected_mob.reagents.add_reagent(/datum/reagent/medicine/c2/penthrite, 3) // To give the victim a final chance to shock their heart before losing consciousness
 			return FALSE
+
+/datum/symptom/catapult_sneeze
+	name = "Sneezing?"
+	desc = "The virus causes irritation of the nasal cavity, making the host sneeze occasionally. Sneezes from this symptom will spread the virus in a 4 meter cone in front of the host."
+	restricted = TRUE
+	stage = 4
+	max_multiplier = 10
+	badness = EFFECT_DANGER_HARMFUL
+	COOLDOWN_DECLARE(launch_cooldown)
+
+/datum/symptom/catapult_sneeze/activate(mob/living/mob)
+	mob.emote("sneeze")
+
+	if(prob(5 * multiplier) && COOLDOWN_FINISHED(src, launch_cooldown))
+		to_chat(mob, span_userdanger("You are launched violently backwards by an all-mighty sneeze!"))
+		var/launch_distance = round(multiplier)
+		var/turf/target = get_ranged_target_turf(mob, turn(mob.dir, 180), launch_distance)
+		mob.throw_at(target, launch_distance, rand(3,9)) //with the wounds update, sneezing at 7 speed was causing peoples bones to spontaneously explode, turning cartoonish sneezing into a nightmarishly lethal GBS 2.0 outbreak
+		COOLDOWN_START(src, launch_cooldown, 10 SECONDS)
+
+	if(ishuman(mob))
+		var/mob/living/carbon/human/host = mob
+		if (prob(50) && isturf(mob.loc))
+			if(istype(host.wear_mask, /obj/item/clothing/mask/cigarette))
+				var/obj/item/clothing/mask/cigarette/I = host.get_item_by_slot(ITEM_SLOT_MASK)
+				if(prob(20))
+					var/turf/Q = get_turf(mob)
+					var/turf/endLocation
+					var/spitForce = pick(0,1,2,3)
+					endLocation = get_ranged_target_turf(Q, mob.dir, spitForce)
+					to_chat(mob, "<span class ='warning'>You sneezed \the [host.wear_mask] out of your mouth!</span>")
+					host.dropItemToGround(I)
+					I.throw_at(endLocation,spitForce,1)

@@ -89,7 +89,7 @@
 			to_chat(mob, span_notice("You feel the [wound] heal itself."))
 			wound.remove_wound()
 			break
-			
+
 	var/heal_amt = 5*multiplier
 	var/current_health = mob.getBruteLoss()
 	if(current_health >= heal_amt)
@@ -382,3 +382,32 @@
 			if(prob(29))
 				explosion(affected_mob, devastation_range = -1, light_impact_range = 2, flame_range = 2, flash_range = 3, adminlog = FALSE, explosion_cause = src) // This is equivalent to a lvl 1 fireball
 				multiplier -= 3
+
+
+/datum/symptom/adaptation
+	name = "Inorganic Biology"
+	desc = "The virus can survive and replicate even in an inorganic environment, increasing its resistance and infection rate."
+	max_count = 1
+	stage = 4
+	badness = EFFECT_DANGER_FLAVOR
+	var/biotypes = MOB_MINERAL | MOB_ROBOTIC
+
+/datum/symptom/adaptation/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	disease.infectable_biotypes |= biotypes
+
+/datum/symptom/adaptation/deactivate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	disease.infectable_biotypes &= ~(biotypes)
+
+/datum/symptom/adaptation/undead
+	name = "Necrotic Metabolism"
+	desc = "The virus is able to thrive and act even within dead hosts."
+	biotypes = MOB_UNDEAD
+
+/datum/symptom/adaptation/undead/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	.=..()
+	disease.process_dead = TRUE
+
+/datum/symptom/adaptation/undead/deactivate(mob/living/carbon/mob, datum/disease/advanced/disease)
+	.=..()
+	disease.process_dead = FALSE
+

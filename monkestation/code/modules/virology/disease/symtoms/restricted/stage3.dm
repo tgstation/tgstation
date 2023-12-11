@@ -23,3 +23,4 @@
 
 			if(prob(2.5))
 				to_chat(affected_mob, span_warning(pick("You feel pain shoot down your legs!", "You feel like you are going to pass out at any moment.", "You feel really dizzy.")))
+

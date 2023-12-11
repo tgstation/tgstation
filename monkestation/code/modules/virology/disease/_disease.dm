@@ -76,12 +76,12 @@ GLOBAL_LIST_INIT(virusDB, list())
 		if(!length(L.diseases))
 			continue
 		for(var/datum/disease/advanced/D as anything in L.diseases)
-			if (ID == "[D.uniqueID]-[D.subID]")	
+			if (ID == "[D.uniqueID]-[D.subID]")
 				return
 
 	for (var/obj/item/I in GLOB.infected_items)
 		for(var/datum/disease/advanced/D as anything in I.viruses)
-			if (ID == "[D.uniqueID]-[D.subID]")	
+			if (ID == "[D.uniqueID]-[D.subID]")
 				return
 
 	var/dishes = 0
@@ -335,7 +335,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	roll_antigen()
 	log += "<br />[ROUND_TIME()] Mutated antigen [old_dat] into [get_antigen_string()]."
 	update_global_log()
-	
+
 /datum/disease/advanced/proc/get_antigen_string()
 	var/dat = ""
 	for (var/A in antigen)
@@ -367,7 +367,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 
 /datum/disease/advanced/proc/activate(mob/living/mob, starved = FALSE, seconds_per_tick)
-	if(mob.stat == DEAD)
+	if((mob.stat == DEAD) && !process_dead)
 		return
 
 	//Searing body temperatures cure diseases, on top of killing you.
@@ -423,7 +423,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	for(var/datum/symptom/e in symptoms)
 		if (e.can_run_effect(immune_data[1], seconds_per_tick))
-			e.run_effect(mob, seconds_per_tick)
+			e.run_effect(mob, src)
 
 	//fever is a reaction of the body's immune system to the infection. The higher the antibody concentration (and the disease still not cured), the higher the fever
 	if (mob.bodytemperature < BODYTEMP_HEAT_DAMAGE_LIMIT)//but we won't go all the way to burning up just because of a fever, probably
@@ -480,7 +480,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 			log_debug("[form] [uniqueID]-[subID] in [key_name(mob)] has been wiped out by an immunity overload.")
 	*/
 	for(var/datum/symptom/e in symptoms)
-		e.End(src)
+		e.disable_effect(mob, src)
 	mob.diseases -= src
 	//--Plague Stuff--
 	/*
@@ -522,11 +522,11 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 /datum/disease/advanced/proc/name(override=FALSE)
 	.= "[form] #["[uniqueID]"][childID ? "-["[childID]"]" : ""]"
-	
+
 	if (!override && ("[uniqueID]-[subID]" in GLOB.virusDB))
 		var/datum/data/record/V = GLOB.virusDB["[uniqueID]-[subID]"]
 		.= V.fields["name"]
-	
+
 /datum/disease/advanced/proc/real_name()
 	.= "[form] #["[uniqueID]"]-["[subID]"]"
 	if ("[uniqueID]-[subID]" in GLOB.virusDB)
@@ -940,7 +940,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 		var/dishes = 0
 		for (var/mob/living/L in GLOB.mob_list)
 			for(var/datum/disease/advanced/D as anything in L.diseases)
-				if (ID == "[D.uniqueID]-[D.subID]")	
+				if (ID == "[D.uniqueID]-[D.subID]")
 					infctd_mobs++
 					if (L.stat == DEAD)
 						infctd_mobs_dead++
@@ -948,10 +948,10 @@ GLOBAL_LIST_INIT(virusDB, list())
 						logs["[ID]"]= list()
 					logs["[ID]"] += "[L]"
 					logs["[ID]"]["[L]"] = D.log
-					
+
 		for (var/obj/item/I in GLOB.infected_items)
 			for(var/datum/disease/advanced/D as anything in I.viruses)
-				if (ID == "[D.uniqueID]-[D.subID]")	
+				if (ID == "[D.uniqueID]-[D.subID]")
 					infctd_items++
 					if(!length(logs["[ID]"]))
 						logs["[ID]"] = list()
@@ -965,7 +965,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 						logs["[ID]"] = list()
 					logs["[ID]"] += "[dish]"
 					logs["[ID]"]["[dish]"] = dish.contained_virus.log
-		
+
 		var/datum/disease/advanced/D = GLOB.inspectable_diseases[ID]
 		dat += {"<tr>
 			<td><a href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];diseasepanel_examine=["[D.uniqueID]"]-["[D.subID]"]'>[D.form] #["[D.uniqueID]"]-["[D.subID]"]</a></td>
