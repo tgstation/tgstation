@@ -87,6 +87,11 @@
 /mob/living/carbon/human/suicide_log(obj/item/suicide_tool)
 	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
 	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
+	if(isnull(suicide_tool))
+		continue
+
+	SSblackbox.record_feedback("tally", "suicide_item", 1, suicide_tool.type)
+
 
 #undef HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE
 #undef HUMAN_COMBAT_MODE_SUICIDE_MESSAGE
