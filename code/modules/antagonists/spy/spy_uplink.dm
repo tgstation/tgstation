@@ -91,7 +91,7 @@
 		active_scan_cone = new(spy.loc)
 		active_scan_cone.transform = active_scan_cone.transform.Turn(get_angle(spy, stealing))
 		active_scan_cone.pixel_x -= 48
-		active_scan_cone.pixel_y -= 48
+		active_scan_cone.pixel_y -= 72
 		active_scan_cone.alpha = 0
 		animate(active_scan_cone, time = 0.5 SECONDS, alpha = initial(active_scan_cone.alpha))
 
