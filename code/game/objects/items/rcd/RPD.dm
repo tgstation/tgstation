@@ -214,6 +214,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE | REPROGRAM_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
+	/// Does it allow ranged use (bluespace RPD)
+	var/works_from_distance = FALSE
+
+/obj/item/pipe_dispenser/bluespace
+	name = "bluespace rapid pipe dispenser"
+	desc = "A device used to rapidly pipe things. This one features a bluespace position matrix, allowing for piping from a distance."
+	color = "#04BCF4"
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*37.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*18.75, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.5)
+	works_from_distance = TRUE
 
 /datum/armor/item_pipe_dispenser
 	fire = 100
@@ -400,18 +409,11 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return TRUE
 
 /obj/item/pipe_dispenser/pre_attack(atom/atom_for_attack, mob/the_user, params)
-	var/bluespace = FALSE
 	. = ..()
 	if(.)
 		return
 
-	if(!the_user.Adjacent(atom_for_attack))
-		if(!(upgrade_flags & RPD_UPGRADE_BLUESPACE))
-			return
-		else
-			bluespace = TRUE
-
-	return rpd_attack_action(atom_for_attack, the_user, params, bluespace)
+	return rpd_attack_action(atom_for_attack, the_user, params, works_from_distance)
 
 /obj/item/pipe_dispenser/proc/rpd_attack_action(atom/atom_to_attack, mob/user, params, bluespace = FALSE)
 	if(!ISADVANCEDTOOLUSER(user) || istype(atom_to_attack, /turf/open/space/transit))
@@ -644,7 +646,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
 	if(!range_check(attacked_object, user))
 		return
-	if(upgrade_flags & RPD_UPGRADE_BLUESPACE)
+	if(works_from_distance)
 		if(check_obstacles(get_turf(src), get_turf(attacked_object)))
 			balloon_alert(user, "can't reach!")
 			return
@@ -715,10 +717,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/rpd_upgrade/unwrench
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
-
-/obj/item/rpd_upgrade/bluespace
-	desc = "Upgrades the position matrix to allow functioning from a distance, thanks to the power of bluespace."
-	upgrade_flags = RPD_UPGRADE_BLUESPACE
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

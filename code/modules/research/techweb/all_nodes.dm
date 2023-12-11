@@ -790,6 +790,7 @@
 		"bluespacesyringe",
 		"bluespace_coffeepot",
 		"bs_rped",
+		"rpd_bluespace",
 		"minerbag_holding",
 		"ore_silo",
 		"phasic_scanning",

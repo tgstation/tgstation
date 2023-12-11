@@ -74,6 +74,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rpd/bluespace
+	name = "Bluespace RPD"
+	id = "rpd_bluespace"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*37.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*18.75, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.5)
+	build_path = /obj/item/pipe_dispenser/bluespace
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/rcd_loaded
 	name = "Rapid Construction Device"
 	desc = "A tool that can construct and deconstruct walls, airlocks and floors on the fly."
@@ -197,18 +208,6 @@
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/rpd_upgrade/unwrench
-	category = list(
-		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
-
-/datum/design/rpd_upgrade/bluespace
-	name = "RPD bluespace upgrade"
-	desc = "Upgrades the position matrix to allow functioning from a distance, thanks to the power of bluespace."
-	id = "rpd_upgrade_bluespace"
-	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.25, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT * 2.5)
-	build_path = /obj/item/rpd_upgrade/bluespace
 	category = list(
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
 	)
