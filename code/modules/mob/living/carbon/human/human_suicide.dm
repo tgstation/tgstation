@@ -88,7 +88,7 @@
 	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool]" : ""].", INVESTIGATE_DEATHS)
 	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK)
 	if(isnull(suicide_tool))
-		continue
+		return
 
 	SSblackbox.record_feedback("tally", "suicide_item", 1, suicide_tool.type)
 
