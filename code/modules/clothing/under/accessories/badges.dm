@@ -220,7 +220,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 		return FALSE
 
 	var/target = ishuman(attach_to.loc) ? attach_to.loc : attach_to
-	log_combat(attacher, target, "pinned a suspicious pin onto", src)
+	log_combat(attacher, target, "pinned an 'arrest me immediately' pin onto", src)
 	return TRUE
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
