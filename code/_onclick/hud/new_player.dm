@@ -1,5 +1,7 @@
 #define SHUTTER_MOVEMENT_DURATION 0.4 SECONDS
 #define SHUTTER_WAIT_DURATION 0.2 SECONDS
+/// Maximum number of station trait buttons we will display, please think hard before creating scenarios where there are more than this
+#define MAX_STATION_TRAIT_BUTTONS_VERTICAL 3
 
 /datum/hud/new_player
 	///Whether the menu is currently on the client's screen or not
@@ -33,18 +35,22 @@
 /datum/hud/new_player/proc/add_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
 		return
-	var/x_offset = 233
-	var/x_button_offset = 27 // You're never going to show so many of these that we need a second row, right?
+	var/buttons_created = 0
+	var/y_offset = 397
+	var/y_button_offset = 27
 	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
 		if (!trait.can_display_lobby_button())
 			continue
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
 		sign_up_button.SlowInit()
 		sign_up_button.owner = REF(mymob)
-		sign_up_button.screen_loc = offset_to_screen_loc(x_offset, 397, mymob.client.view)
-		x_offset -= x_button_offset
+		sign_up_button.screen_loc = offset_to_screen_loc(233, y_offset, mymob.client.view)
+		y_offset += y_button_offset
 		static_inventory += sign_up_button
 		trait.setup_lobby_button(sign_up_button)
+		buttons_created++
+		if (buttons_created >= MAX_STATION_TRAIT_BUTTONS_VERTICAL)
+			return
 
 /atom/movable/screen/lobby
 	plane = SPLASHSCREEN_PLANE
@@ -565,3 +571,4 @@
 
 #undef SHUTTER_MOVEMENT_DURATION
 #undef SHUTTER_WAIT_DURATION
+#undef MAX_STATION_TRAIT_BUTTONS_VERTICAL
