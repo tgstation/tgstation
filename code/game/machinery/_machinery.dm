@@ -927,10 +927,10 @@
 	toggle_panel_open()
 	if(panel_open)
 		icon_state = icon_state_open
-		balloon_alert(user, "opened maintenance hatch")
+		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
 	else
 		icon_state = icon_state_closed
-		balloon_alert(user, "closed maintenance hatch")
+		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
 	return TRUE
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench)
