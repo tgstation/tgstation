@@ -92,7 +92,7 @@
 		SSblackbox.record_feedback("tally", "suicide_item", 1, suicide_tool_type)
 
 	investigate_log("has died from committing suicide[suicide_tool ? " with [suicide_tool] ([suicide_tool_type])" : ""].", INVESTIGATE_DEATHS)
-	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK, suicide_data)
+	log_message("(job: [src.job ? "[src.job]" : "None"]) committed suicide", LOG_ATTACK, data = suicide_data)
 
 
 #undef HUMAN_BRAIN_DAMAGE_SUICIDE_MESSAGE
