@@ -222,7 +222,9 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 			return
 		// The internal air won't cool down the external air when the freezer is opened.
 		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
-		current_exposed_air.equalize(internal_air)
+		if(current_exposed_air.equalize(internal_air))
+			var/turf/location = get_turf(src)
+			location.air_update_turf(update = TRUE, remove = FALSE)
 	else
 		if(internal_air.temperature <= minimum_temperature)
 			return
