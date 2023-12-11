@@ -7,6 +7,7 @@
 	name = "Storyteller"
 	message = "Vote for the storyteller!"
 	has_desc = TRUE
+	player_startable = FALSE
 
 
 /datum/vote/storyteller/New()
