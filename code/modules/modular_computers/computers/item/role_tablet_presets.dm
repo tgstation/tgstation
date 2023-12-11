@@ -130,6 +130,18 @@
 		/datum/computer_file/program/robocontrol,
 	)
 
+/obj/item/modular_computer/pda/security_dispatcher
+	name = "security dispatcher PDA"
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
+	greyscale_colors = "#EA3232#0000CC#005fcc"
+	inserted_item = /obj/item/pen/red/security
+	starting_programs = list(
+		/datum/computer_file/program/records/security,
+		/datum/computer_file/program/crew_manifest,
+		/datum/computer_file/program/robocontrol,
+		/datum/computer_file/program/chatclient,
+	)
+
 /obj/item/modular_computer/pda/detective
 	name = "detective PDA"
 	greyscale_colors = "#805A2F#990202"

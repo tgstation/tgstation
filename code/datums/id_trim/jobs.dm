@@ -1093,6 +1093,43 @@
 		ACCESS_XENOBIOLOGY,
 	)
 
+/datum/id_trim/job/security_dispatcher
+	assignment = "Security Dispatcher"
+	trim_state = "trim_securitydispatcher"
+	department_color = COLOR_SECURITY_RED
+	subdepartment_color = COLOR_SECURITY_RED
+	sechud_icon_state = SECHUD_SECURITY_DISPATCHER
+	minimal_access = list(
+		ACCESS_BRIG,
+		ACCESS_BRIG_ENTRANCE,
+		ACCESS_COURT,
+		ACCESS_MECH_SECURITY,
+		ACCESS_MINERAL_STOREROOM,
+		ACCESS_SECURITY,
+		ACCESS_WEAPONS,
+		)
+	extra_access = list(
+		ACCESS_ARMORY,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_MORGUE,
+		)
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+		ACCESS_HOS,
+		)
+	job = /datum/job/security_dispatcher
+
+/datum/id_trim/job/security_dispatcher/refresh_trim_access()
+	. = ..()
+
+	if(!.)
+		return
+
+	// Config check for if sec has maint access.
+	if(CONFIG_GET(flag/security_has_maint_access))
+		access |= list(ACCESS_MAINT_TUNNELS)
+
 /datum/id_trim/job/shaft_miner
 	assignment = "Shaft Miner"
 	trim_state = "trim_shaftminer"

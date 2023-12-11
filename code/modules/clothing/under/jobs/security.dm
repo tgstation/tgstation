@@ -97,6 +97,22 @@
 	inhand_icon_state = null
 	alt_covers_chest = TRUE
 
+/obj/item/clothing/under/rank/security/dispatcher
+	desc = "Formal shirt alongside with red pants and blue bands on arms. Great for office job."
+	name = "dispatcher's suit"
+	icon_state = "rdispatcher"
+	inhand_icon_state = null
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/rank/security/dispatcher/skirt
+	desc = "Formal shirt alongside with red skirt and blue bands on arms. Great for office job."
+	name = "dispatcher's suitskirt"
+	icon_state = "rdispatcher_skirt"
+	body_parts_covered = CHEST|GROIN|ARMS
+	dying_key = DYE_REGISTRY_JUMPSKIRT
+	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+
 /*
  * Detective
  */

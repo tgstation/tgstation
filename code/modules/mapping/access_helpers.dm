@@ -278,6 +278,11 @@
 	access_list += ACCESS_HOS
 	return access_list
 
+/obj/effect/mapping_helpers/airlock/access/any/security/dispatch/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_SECURITY_DISPATCHER
+	return access_list
+
 /obj/effect/mapping_helpers/airlock/access/any/security/maintenance/get_access()
 	var/list/access_list = ..()
 	access_list += list(ACCESS_SECURITY, ACCESS_MAINT_TUNNELS)
@@ -747,6 +752,11 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/hos/get_access()
 	var/list/access_list = ..()
 	access_list += ACCESS_HOS
+	return access_list
+
+/obj/effect/mapping_helpers/airlock/access/all/security/dispatch/get_access()
+	var/list/access_list = ..()
+	access_list += ACCESS_SECURITY_DISPATCHER
 	return access_list
 
 // -------------------- Service access helpers

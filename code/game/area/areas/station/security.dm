@@ -70,6 +70,11 @@
 	icon_state = "warden"
 	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
 
+/area/station/security/dispatch
+	name = "Security Dispatch"
+	icon_state = "dispatch"
+	sound_environment = SOUND_AREA_SMALL_SOFTFLOOR
+
 /area/station/security/evidence
 	name = "Evidence Storage"
 	icon_state = "evidence"

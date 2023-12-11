@@ -4141,6 +4141,7 @@
 #include "code\modules\jobs\job_types\research_director.dm"
 #include "code\modules\jobs\job_types\roboticist.dm"
 #include "code\modules\jobs\job_types\scientist.dm"
+#include "code\modules\jobs\job_types\security_dispatcher.dm"
 #include "code\modules\jobs\job_types\security_officer.dm"
 #include "code\modules\jobs\job_types\servant_golem.dm"
 #include "code\modules\jobs\job_types\shaft_miner.dm"

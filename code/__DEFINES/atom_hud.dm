@@ -105,6 +105,7 @@
 #define SECHUD_RESEARCH_DIRECTOR "hudresearchdirector"
 #define SECHUD_ROBOTICIST "hudroboticist"
 #define SECHUD_SECURITY_OFFICER "hudsecurityofficer"
+#define SECHUD_SECURITY_DISPATCHER "hudsecuritydispatcher"
 #define SECHUD_SCIENTIST "hudscientist"
 #define SECHUD_SHAFT_MINER "hudshaftminer"
 #define SECHUD_STATION_ENGINEER "hudstationengineer"

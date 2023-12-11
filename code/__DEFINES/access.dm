@@ -49,6 +49,8 @@
 #define ACCESS_HOS "hos"
 /// Access for the detective to get into their office, the medical data console, and some other detective-related stuff.
 #define ACCESS_DETECTIVE "detective"
+/// Access for the Security Dispatcher room
+#define ACCESS_SECURITY_DISPATCHER "security_dispatcher"
 
 /// Engineering General Access, grants access to the standard parts of engineering (as well as the Supermatter and related equipment).
 #define ACCESS_ENGINEERING "engineering"
@@ -437,6 +439,7 @@
 	ACCESS_BRIG_ENTRANCE, \
 	ACCESS_COURT, \
 	ACCESS_DETECTIVE, \
+	ACCESS_SECURITY_DISPATCHER, \
 	ACCESS_HOS, \
 	ACCESS_MECH_SECURITY, \
 	ACCESS_SECURITY, \
