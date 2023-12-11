@@ -176,7 +176,7 @@
 	difficulty = 1
 	steal_hint = "A tool primarily used by shaft miners. \
 		Most carry one or multiple on their person or in their backpack, but \
-		they can also likely be found in the mining station, mining office, or auxiliary mining base."
+		they can also be found in the mining station, mining office, or auxiliary mining base."
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/gun/energy/recharge/kinetic_accelerator)

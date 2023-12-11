@@ -33,7 +33,7 @@
 	))
 
 /datum/component/spy_uplink/proc/is_our_spy(mob/whoever)
-	var/datum/atagonist/spy/spy_datum = spy_ref?.resolve()
+	var/datum/antagonist/spy/spy_datum = spy_ref?.resolve()
 	return spy_datum?.owner.current == whoever
 
 /datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
@@ -87,13 +87,13 @@
 	active_scan_effect.makeHologram()
 
 	var/obj/effect/scan_effect/cone/active_scan_cone
-	if(isturf(on_what.loc) && isturf(spy.loc)) // Cone doesn't make sense if its being held or something
+	if(isturf(stealing.loc) && isturf(spy.loc)) // Cone doesn't make sense if its being held or something
 		active_scan_cone = new(spy.loc)
 		active_scan_cone.transform = active_scan_cone.transform.Turn(get_angle(spy, stealing))
 		active_scan_cone.pixel_x -= 48
 		active_scan_cone.pixel_y -= 48
 		active_scan_cone.alpha = 0
-		aniamte(active_scan_cone, time = 0.5 SECONDS, alpha = initial(active_scan_cone.alpha))
+		animate(active_scan_cone, time = 0.5 SECONDS, alpha = initial(active_scan_cone.alpha))
 
 	. = steal_process(stealing, spy, bounty)
 	qdel(active_scan_effect)
@@ -124,7 +124,7 @@
 
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
-	var/datum/atagonist/spy/spy_datum = spy_ref?.resolve()
+	var/datum/antagonist/spy/spy_datum = spy_ref?.resolve()
 	spy_datum?.bounties_claimed += 1
 
 	return TRUE

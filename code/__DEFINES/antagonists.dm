@@ -145,6 +145,9 @@
 /// JSON string file for all of our heretic influence flavors
 #define HERETIC_INFLUENCE_FILE "antagonist_flavor/heretic_influences.json"
 
+/// JSON file containing spy objectives
+#define SPY_OBJECTIVE_FILE "antagonist_flavor/spy_objective.json"
+
 ///employers that are from the syndicate
 GLOBAL_LIST_INIT(syndicate_employers, list(
 	"Animal Rights Consortium",

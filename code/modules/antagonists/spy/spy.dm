@@ -89,19 +89,10 @@
 	return TRUE
 
 /datum/antagonist/spy/proc/give_random_objectives()
-	// melbert todo : make this a json
-	var/list/random_garbage = list(
-		"Ensure [pick("Engineering", "Research", "Medical")] is [pick("destroyed", "sabotaged", "ruined", "wrecked", "demolished", "obliterated")] by the end of the shift.",
-		"Ensure [pick("Security", "Supply", "the bridge")] is [pick("destroyed", "sabotaged", "ruined", "wrecked", "demolished", "obliterated")] by the end of the shift.",
-		"Make it difficult, but not impossible to [pick("escape", "leave", "evacuate", "flee", "depart")] the station.",
-		"Steal as many [pick("weapons", "tools", "items", "objects", "things")] as you can.",
-		"Ensure no rival [pick("agents", "spies", "operatives", "moles", "traitors")] [pick("escape", "leave", "evacuate", "flee", "depart")] the station.",
-	)
-
 	for(var/i in 1 to rand(1, 3))
 		var/datum/objective/custom/your_mission = new()
 		your_mission.owner = owner
-		your_mission.explanation_text = pick_n_take(random_garbage)
+		your_mission.explanation_text = pick_list_replacements(SPY_OBJECTIVE_FILE, "objective_body")
 		objectives += your_mission
 
 	if(prob(MARTYR_PROB))

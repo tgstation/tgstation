@@ -10,12 +10,12 @@
 	/// The name of the bounty.
 	/// Should be a short description without punctuation.
 	/// IE: "Steal the captain's ID"
-	var/name = "Do something"
+	var/name
 	/// Help text for the bounty.
 	/// Should include additional information about the bounty to assist the spy in figuring out what to do.
 	/// Should be punctuated.
 	/// IE: "Steal the captain's ID. It was last seen in the captain's office."
-	var/help = "Do something to someone in somewhere."
+	var/help
 	/// Difficult of the bounty, one of [SPY_DIFFICULTY_EASY], [SPY_DIFFICULTY_MEDIUM], [SPY_DIFFICULTY_HARD].
 	var/difficulty = "unset"
 	/// How long of a do-after must be completed by the Spy to turn in the bounty.
@@ -37,6 +37,7 @@
 
 /// Helper that translates the bounty into UI data for TGUI
 /datum/spy_bounty/proc/to_ui_data()
+	SHOULD_CALL_PARENT(TRUE)
 	return list(
 		"name" = name,
 		"help" = help,
@@ -151,33 +152,34 @@
 	difficulty = SPY_DIFFICULTY_HARD
 
 /datum/spy_bounty/machine
-	difficulty = SPY_DIFFICULTY_MEDIUM // melbert todo : change based on location
+	difficulty = SPY_DIFFICULTY_MEDIUM
 	theft_time = 10 SECONDS
 
-	/// What area (typepath) the desired machine is in.
-	VAR_FINAL/area/location_type
 	/// What machine (typepath) we want to steal.
-	VAR_FINAL/obj/machinery/target_type
+	var/obj/machinery/target_type
+	/// What area (typepath) the desired machine is in.
+	/// Can be pre-set for subtypes. If set, requires the machine to be in the location_type.
+	/// If not set, picks a random machine from all areas it can currently be found in.
+	var/area/location_type
+	/// Help text to describe what machine we want to steal.
+	var/find_machine_help
 
 /datum/spy_bounty/machine/init_bounty(datum/spy_bounty_handler/handler)
-	target_type = pick(
-		/obj/machinery/computer/bank_machine,
-		/obj/machinery/computer/communications,
-		/obj/machinery/computer/crew,
-		/obj/machinery/computer/security,
-		/obj/machinery/computer/upload,
-	)
-
-	var/list/existing_areas = list()
+	// Blacklisting maintenance in general, as well as any areas that already have a bounty in them.
+	var/list/blacklisted_areas = typecacheof(/area/station/maintenance)
 	for(var/datum/spy_bounty/machine/existing_bounty in handler.get_all_bounties())
-		existing_areas[existing_bounty.location_type] = TRUE
+		blacklisted_areas[existing_bounty.location_type] = TRUE
 
 	var/list/obj/machinery/all_possible = list()
 	for(var/obj/machinery/found_machine as anything in SSmachines.get_machines_by_type_and_subtypes(target_type))
 		if(!is_station_level(found_machine.z))
 			continue
 		var/area/found_machine_area = get_area(found_machine)
-		if(existing_areas[found_machine_area.type])
+		if(is_type_in_typecache(found_machine_area, blacklisted_areas))
+			continue
+		if(!isnull(location_type) && !istype(found_machine_area, location_type))
+			continue
+		if(!(found_machine_area.area_flags & VALID_TERRITORY)) // only steal from valid station areas
 			continue
 		all_possible += found_machine
 
@@ -187,8 +189,8 @@
 	var/obj/machinery/machine = pick(all_possible)
 	var/area/machine_area = get_area(machine)
 	location_type = machine_area.type
-	name = "Steal \the [machine_area]'s [machine.name]"
-	help = "Steal [machine], found in [machine_area]."
+	name ||= "Steal [machine_area]'s [machine.name]"
+	help ||= "Steal [machine], found in [machine_area]."
 	return TRUE
 
 /datum/spy_bounty/machine/is_stealable(atom/movable/stealing)
@@ -199,6 +201,34 @@
 		return FALSE
 
 	return TRUE
+
+
+/datum/spy_bounty/machine/random_medium
+	difficulty = SPY_DIFFICULTY_MEDIUM
+
+/datum/spy_bounty/machine/random_medium/init_bounty(datum/spy_bounty_handler/handler)
+	target_type = pick(
+		/obj/machinery/computer/bank_machine,
+		/obj/machinery/computer/crew,
+		/obj/machinery/computer/security,
+	)
+	return ..()
+
+/datum/spy_bounty/machine/chem
+	difficulty = SPY_DIFFICULTY_MEDIUM
+	target_type = /obj/machinery/chem_dispenser
+	location_type = /area/station/medical/pharmacy
+	help = "Steal one of the chemical dispensers found in the Pharmacy."
+
+/datum/spy_bounty/machine/ai_upload
+	difficulty = SPY_DIFFICULTY_HARD
+	target_type = /obj/machinery/computer/upload
+	location_type = /area/station/ai_monitored/turret_protected/ai_upload
+	help = "Steal the station's primary AI upload terminal."
+
+/datum/spy_bounty/machine/comms_console
+	difficulty = SPY_DIFFICULTY_HARD
+	target_type = /obj/machinery/computer/communications
 
 /// Subtype for a bounty that targets a specific crew member
 /datum/spy_bounty/targets_person
@@ -339,3 +369,52 @@
 	if(ispath(desired_type, /obj/item/organ))
 		return locate(desired_type) in crewmember.organs
 	return null
+
+/datum/spy_bounty/some_bot
+	theft_time = 10 SECONDS
+	/// What typepath of bot we want to steal.
+	var/bot_type
+	/// Help text to describe what bot we want to steal.
+	var/find_bot_help
+	/// Weakref to the bot we want to steal.
+	VAR_FINAL/datum/weakref/target_bot_ref
+
+/datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
+	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
+		if(ispath(bot_type, existing_bounty.bot_type::parent_type)) // ensure we don't get two similar bounties.
+			return FALSE
+
+	var/list/mob/living/possible_bots = list()
+	for(var/mob/living/simple_animal/bot/bot as anything in GLOB.bots_list)
+		if(!is_station_level(bot.z))
+			continue
+		if(!istype(bot, bot_type))
+			continue
+		possible_bots += bot
+
+	if(!length(possible_bots))
+		return FALSE
+
+	var/mob/living/picked = pick(possible_bots)
+	target_bot_ref = WEAKREF(picked)
+	name ||= "Abduct [picked.name]"
+	help ||= "Steal the station robot assistant [picked.name]."
+	return TRUE
+
+/datum/spy_bounty/some_bot/is_stealable(atom/movable/stealing)
+	return IS_WEAKREF_OF(stealing, target_bot_ref)
+
+/datum/spy_bounty/some_bot/beepsky
+	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
+	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/officer
+	help = "Steal Officer Beepsky, commonly found patrolling the station."
+
+/datum/spy_bounty/some_bot/ofitser
+	difficulty = SPY_DIFFICULTY_HARD
+	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/armsky
+	help = "Steal Sergeant-At-Armsky, commonly found guarding the station's Armory."
+
+/datum/spy_bounty/some_bot/scrubbs
+	difficulty = SPY_DIFFICULTY_EASY
+	bot_type = /mob/living/basic/bot/cleanbot/medbay
+	help = "Steal Scrubbs MD, commonly found mopping up blood in Medbay."
