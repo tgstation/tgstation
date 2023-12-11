@@ -410,7 +410,7 @@
 		to_chat(user, span_warning("As you begin unwrenching \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		unsafe_wrenching = TRUE //Oh dear oh dear
 
-	if(I.use_tool(src, user, empty_pipe ? 0 : 20, volume = 50))
+	if(I.use_tool(src, user, empty_pipe ? 0 : 2 SECONDS, volume = 50))
 		user.visible_message( \
 			"[user] unfastens \the [src].", \
 			span_notice("You unfasten \the [src]."), \
