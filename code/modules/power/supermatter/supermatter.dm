@@ -1044,7 +1044,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 /obj/machinery/power/supermatter_crystal/proc/holiday_attackby(datum/source, obj/item/item, mob/living/user)
 	SIGNAL_HANDLER
 	if(istype(item, /obj/item/clothing/head/costume/santa))
-		balloon_alert(user, "placed hat")
 		QDEL_NULL(item)
 		desc += "\n\nThere's a santa hat placed atop it. How it got there without being dusted is a mystery."
 		add_overlay(mutable_appearance(icon, "santa_hat"))
