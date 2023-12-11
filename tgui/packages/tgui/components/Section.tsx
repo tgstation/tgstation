@@ -42,14 +42,16 @@ export const Section = forwardRef(
       if (!ref?.current) return;
 
       if (scrollable || scrollableHorizontal) {
-        addScrollableNode(ref.current as HTMLElement);
+        addScrollableNode(ref.current);
         if (onScroll && ref.current) {
           ref.current.onscroll = onScroll;
         }
       }
       return () => {
+        if (!ref?.current) return;
+
         if (scrollable || scrollableHorizontal) {
-          removeScrollableNode(ref.current as HTMLElement);
+          removeScrollableNode(ref.current);
         }
       };
     }, []);
