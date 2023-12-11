@@ -13,6 +13,6 @@
 /obj/item/storage/box/vials
 	name = "box of vials"
 
-/obj/item/storage/box/beakers/PopulateContents()
+/obj/item/storage/box/vials/PopulateContents()
 	for(var/i in 1 to 7)
 		new /obj/item/reagent_containers/cup/beaker/vial( src )
