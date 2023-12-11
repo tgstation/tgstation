@@ -216,7 +216,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
 	soundloop = new(src, TRUE)
 
-	if(!isnull(check_holidays(FESTIVE_SEASON)) && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
+	if(!isnull(check_holidays(FESTIVE_SEASON)))
 		holiday_lights()
 
 	if (!moveable)
@@ -258,6 +258,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			to_chat(user, span_warning("The taste is overwhelming and indescribable!"))
 			living_user.electrocute_act(shock_damage = 15, source = src, flags = SHOCK_KNOCKDOWN | SHOCK_NOGLOVES)
 			. += span_notice("It could use a little more Sodium Chloride...")
+
+	if(holiday_lights)
+		. += span_notice("Radiating both festive cheer and actual radiation, it has a dazzling spectacle lights wrapped lovingly around the base transforming it from a potential doomsday device into a cosmic yuletide centerpiece.")
 
 	. += delamination_strategy.examine(src)
 	return .
@@ -1036,7 +1039,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	return TRUE
 
 /obj/machinery/power/supermatter_crystal/proc/holiday_lights()
-	desc += "\nRadiating both festive cheer and actual radiation, it has a dazzling spectacle lights wrapped lovingly around the base transforming it from a potential doomsday device into a cosmic yuletide centerpiece."
 	holiday_lights = TRUE
 	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(holiday_attackby))
 	update_appearance()
