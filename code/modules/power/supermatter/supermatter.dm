@@ -216,7 +216,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	AddComponent(/datum/component/supermatter_crystal, CALLBACK(src, PROC_REF(wrench_act_callback)), CALLBACK(src, PROC_REF(consume_callback)))
 	soundloop = new(src, TRUE)
 
-	if(!isnull(check_holidays(FESTIVE_SEASON)) && istype(src, /obj/machinery/power/supermatter_crystal/engine))
+	if(!isnull(check_holidays(FESTIVE_SEASON)) && !istype(src, /obj/machinery/power/supermatter_crystal/shard))
 		holiday_lights()
 
 	if (!moveable)
