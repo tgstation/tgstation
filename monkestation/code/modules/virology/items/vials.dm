@@ -9,3 +9,10 @@
 	possible_transfer_amounts = list(5,10,15,25)
 	fill_icon_thresholds = list(0, 1, 20, 40, 60, 80, 100)
 	fill_icon = 'monkestation/code/modules/virology/icons/items.dmi'
+
+/obj/item/storage/box/vials
+	name = "box of vials"
+
+/obj/item/storage/box/beakers/PopulateContents()
+	for(var/i in 1 to 7)
+		new /obj/item/reagent_containers/cup/beaker/vial( src )

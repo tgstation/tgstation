@@ -47,6 +47,7 @@
 	uniform = /obj/item/clothing/under/rank/medical/virologist
 	backpack_contents = list(
 		/obj/item/extrapolator = 1,
+		/obj/item/storage/box/vials = 1,
 	)
 	suit = /obj/item/clothing/suit/toggle/labcoat/virologist
 	suit_store = /obj/item/flashlight/pen
