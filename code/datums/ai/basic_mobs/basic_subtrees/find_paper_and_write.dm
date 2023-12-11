@@ -9,7 +9,7 @@
 
 	var/obj/item/paper/target = controller.blackboard[BB_FOUND_PAPER]
 
-	if(QDELETED(target))
+	if(QDELETED(target)|| QDELETED(controller.pawn))
 		controller.queue_behavior(/datum/ai_behavior/find_and_set/empty_paper, BB_FOUND_PAPER, /obj/item/paper)
 		return
 
