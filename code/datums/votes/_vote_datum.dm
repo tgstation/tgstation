@@ -80,7 +80,7 @@
  */
 /datum/vote/proc/can_be_initiated(mob/by_who, forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!player_startable)
+	if(!player_startable && !forced)
 		return FALSE
 
 	if(started_time)
