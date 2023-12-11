@@ -121,6 +121,7 @@
 #include "code\game\machinery\suit_storage_unit.dm"
 //features
 #include "features\additional_circuit\includes.dm"
+#include "features\hardsuits\code\_jetpack.dm"
 #include "features\hardsuits\code\armor.dm"
 #include "features\hardsuits\code\hardsuit.dm"
 #include "features\hardsuits\code\helmet.dm"
