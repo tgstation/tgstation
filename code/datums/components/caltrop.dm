@@ -115,8 +115,10 @@
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND, attacking_item = parent)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
-		H.Paralyze(paralyze_duration)
-
+		if(!HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+			H.Paralyze(paralyze_duration)
+		else
+			H.Knockdown(paralyze_duration)
 	if(!soundfile)
 		return
 	playsound(H, soundfile, 15, TRUE, -3)
