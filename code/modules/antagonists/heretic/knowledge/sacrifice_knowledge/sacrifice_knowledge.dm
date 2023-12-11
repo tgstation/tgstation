@@ -195,6 +195,7 @@
 
 	to_chat(user, span_hypnophrase("[feedback]."))
 	heretic_datum.total_sacrifices++
+	heretic_datum.favours += heretic_datum.favour_gain
 	heretic_datum.knowledge_points += 2
 
 	if(!begin_sacrifice(sacrifice))

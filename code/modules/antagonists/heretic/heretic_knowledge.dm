@@ -273,6 +273,8 @@
 /datum/heretic_knowledge/limited_amount/starting/on_research(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	our_heretic.heretic_path = route
+	if(our_heretic.heretic_path == PATH_FLESH)
+		our_heretic.favour_gain = 4 //Flesh Heretic gets more favours to play with
 	SSblackbox.record_feedback("tally", "heretic_path_taken", 1, route)
 
 /**

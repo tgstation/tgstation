@@ -51,6 +51,7 @@ type KnowledgeInfo = {
 type Info = {
   charges: number;
   total_sacrifices: number;
+  favours: number;
   ascended: BooleanLike;
   objectives: Objective[];
   can_change_objective: BooleanLike;
@@ -182,7 +183,7 @@ const GuideSection = () => {
 
 const InformationSection = (props) => {
   const { data } = useBackend<Info>();
-  const { charges, total_sacrifices, ascended } = data;
+  const { charges, total_sacrifices, ascended, favours } = data;
   return (
     <Stack.Item>
       <Stack vertical fill>
@@ -210,6 +211,10 @@ const InformationSection = (props) => {
           You have made a total of&nbsp;
           <b>{total_sacrifices || 0}</b>&nbsp;
           <span style={hereticRed}>sacrifices</span>.
+        </Stack.Item>
+        <Stack.Item>
+          You have <b>{favours || 0}</b>&nbsp;
+          <span style={hereticPurple}>favour{favours !== 1 ? 's' : ''}</span>.
         </Stack.Item>
       </Stack>
     </Stack.Item>

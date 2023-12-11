@@ -288,3 +288,16 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	body.do_jitter_animation()
 	body.visible_message(span_danger("An awful ripping sound is heard as [ripped_thing]'s [exterior_text] is ripped straight out, wrapping around [le_book || "the book"], turning into an eldritch shade of blue!"))
 	return ..()
+
+/datum/heretic_knowledge/defiled_altar
+	name = "Defiled Altar"
+	desc = "Allows you to transmute a wooden table and a cloth to create a Defiled Altar. \
+		The Defiled Altar can be used to gain bodyparts and organs using favours gained from sacrifices. \
+		Useful for gathering recipes used for rituals."
+	required_atoms = list(
+		/obj/item/stack/sheet/cloth  = 1,
+		/obj/structure/table/wood = 1,
+	)
+	result_atoms = list(/obj/structure/destructible/defiled_altar)
+	cost = 0
+	route = PATH_START

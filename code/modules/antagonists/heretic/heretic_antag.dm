@@ -50,8 +50,10 @@
 	var/list/all_sac_targets = list()
 	/// Whether we're drawing a rune or not
 	var/drawing_rune = FALSE
-	/// How many favours were gained from sacrificing, to be used in a defiled altar to gain organs.
-	var/favour = 0
+	/// How many favours the heretics gain per sacrifice:
+	var/favour_gain = 2
+	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to get organs.
+	var/favours = 0
 	/// A static typecache of all tools we can scribe with.
 	var/static/list/scribing_tools = typecacheof(list(/obj/item/pen, /obj/item/toy/crayon))
 	/// A blacklist of turfs we cannot scribe on.
@@ -89,6 +91,7 @@
 	data["charges"] = knowledge_points
 	data["total_sacrifices"] = total_sacrifices
 	data["ascended"] = ascended
+	data["favours"] = favours
 
 	// This should be cached in some way, but the fact that final knowledge
 	// has to update its disabled state based on whether all objectives are complete,
