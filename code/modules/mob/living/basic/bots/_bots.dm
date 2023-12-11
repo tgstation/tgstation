@@ -91,6 +91,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/relay_attackers)
+
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	GLOB.bots_list += src
@@ -522,8 +525,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 
 	if(istype(item_to_drop, /obj/item/storage))
-		var/obj/item/storage/storage_to_drop = item_to_drop
-		storage_to_drop.emptyStorage()
+		item_to_drop.contents = list()
 		return
 
 	if(!istype(item_to_drop, /obj/item/gun/energy))
@@ -803,3 +805,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	update_appearance()
 	if(update_hud)
 		diag_hud_set_botmode()
+
+/mob/living/basic/bot/proc/after_attacked(datum/source, atom/attacker, attack_flags)
+	if(!(attack_flags & ATTACKER_DAMAGING_ATTACK))
+		return
+	do_sparks(number = 5, cardinal_only = TRUE, source = src)
