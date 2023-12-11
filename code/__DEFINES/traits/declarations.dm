@@ -815,6 +815,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mechs that can have orebox functionality on movement
 #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
 
+///A trait for mechs that were created through the normal construction process, and not spawned by map or other effects.
+#define TRAIT_MECHA_CREATED_NORMALLY "trait_mecha_created_normally"
+
 ///fish traits
 #define TRAIT_RESIST_EMULSIFY "resist_emulsify"
 #define TRAIT_FISH_SELF_REPRODUCE "fish_self_reproduce"
