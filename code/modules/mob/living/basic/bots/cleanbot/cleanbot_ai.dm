@@ -159,7 +159,7 @@
 /datum/ai_planning_subtree/befriend_janitors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are now evil. dont befriend the janitors
-	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if((QDELETED(bot_pawn) || bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	if(controller.blackboard_key_exists(BB_FRIENDLY_JANITOR))
 		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE)
