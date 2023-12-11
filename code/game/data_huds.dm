@@ -316,7 +316,7 @@ Security HUDs! Basic mode shows only the job.
 	var/icon/sec_icon = icon(icon, icon_state, dir)
 	holder.pixel_y = sec_icon.Height() - world.icon_size
 
-	if (HAS_TRAIT(src, TRAIT_CRIMINAL_SYMPATHISER))
+	if (HAS_TRAIT(src, TRAIT_ALWAYS_WANTED))
 		holder.icon_state = "hudwanted"
 		set_hud_image_active(WANTED_HUD)
 		return

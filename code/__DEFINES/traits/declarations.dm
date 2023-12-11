@@ -1012,6 +1012,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOB_TIPPED "mob_tipped"
 
 /// Trait which self-identifies as an enemy of the law
-#define TRAIT_CRIMINAL_SYMPATHISER "criminal_sympathiser"
+#define TRAIT_ALWAYS_WANTED "always_wanted"
 
 // END TRAIT DEFINES

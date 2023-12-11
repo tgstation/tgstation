@@ -225,14 +225,14 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_CRIMINAL_SYMPATHISER, "[CLOTHING_TRAIT]_[REF(src)]")
+	ADD_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_CRIMINAL_SYMPATHISER, "[CLOTHING_TRAIT]_[REF(src)]")
+	REMOVE_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
