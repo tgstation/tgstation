@@ -7,7 +7,7 @@
 
 /datum/symptom/cough/activate(mob/living/carbon/mob)
 	mob.emote("cough")
-	
+
 	var/datum/gas_mixture/breath
 	if (ishuman(mob))
 		var/mob/living/carbon/human/H = mob
@@ -145,7 +145,7 @@
 /datum/symptom/fridge/deactivate(mob/living/carbon/mob)
 	if(mob)
 		mob.remove_body_temperature_change("chills")
-	
+
 /datum/symptom/hair
 	name = "Hair Loss"
 	desc = "Causes rapid hairloss in the infected."
@@ -577,7 +577,7 @@
 /datum/symptom/blindness/activate(mob/living/carbon/mob)
 	if(!iscarbon(mob))
 		return
-	
+
 	var/obj/item/organ/internal/eyes/eyes = mob.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
 		return // can't do much

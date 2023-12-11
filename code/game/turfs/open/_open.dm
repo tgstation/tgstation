@@ -267,7 +267,7 @@
 		slipper.Immobilize(1 SECONDS)
 		slipper.incapacitate(1 SECONDS)
 	else
-		slipper.Knockdown(knockdown_amount)
+		slipper.bananeer(total_time = knockdown_amount * 0.5, stun_time = knockdown_time * 0.5, height = (knockdown_amount * 0.5), flip_count = round(knockdown_amount * 0.1))
 		slipper.Paralyze(paralyze_amount)
 		slipper.stop_pulling()
 

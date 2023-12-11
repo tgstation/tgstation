@@ -6566,6 +6566,7 @@
 #include "monkestation\code\modules\virology\disease\premades\heart_attack.dm"
 #include "monkestation\code\modules\virology\disease\premades\transformations.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\_symptom.dm"
+#include "monkestation\code\modules\virology\disease\symtoms\animation_procs.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\stage1.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\stage2.dm"
 #include "monkestation\code\modules\virology\disease\symtoms\stage3.dm"
