@@ -1051,7 +1051,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(holiday_hat_examine))
 		add_overlay(mutable_appearance(icon, "santa_hat"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	return FALSE
+	return NONE
 
 /// Adds the hat flavor text when examined
 /obj/machinery/power/supermatter_crystal/proc/holiday_hat_examine(atom/source, mob/user, list/examine_list)
