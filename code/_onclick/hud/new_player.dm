@@ -33,8 +33,8 @@
 /datum/hud/new_player/proc/add_station_trait_buttons()
 	if (!mymob?.client || mymob.client.interviewee || !length(GLOB.lobby_station_traits))
 		return
-	var/x_offset = 232
-	var/x_button_offset = 36 // You're never going to show so many of these that we need a second row, right?
+	var/x_offset = 233
+	var/x_button_offset = 27 // You're never going to show so many of these that we need a second row, right?
 	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
 		if (!trait.can_display_lobby_button())
 			continue
