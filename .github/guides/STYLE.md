@@ -464,6 +464,53 @@ turn_on(power_usage = 30) // Fine!
 set_invincible(FALSE) // Fine! Boolean parameters don't always need to be named. In this case, it is obvious what it means.
 ```
 
+### Prefer bitflags when using multiple boolean arguments.
+
+When you have a proc that has multiple arguments that are boolean, it is recommended to convert them to a single bitflag.
+
+This is very bad:
+```DM
+can_perform_action(FALSE, TRUE, TRUE, FALSE)
+```
+
+We have no idea what these arguments are doing and the code is not human legible.
+
+This is bad:
+```DM
+can_perform_action(no_gravity = FALSE, no_light = TRUE, no_literacy = TRUE, no_dexterity= FALSE)
+```
+
+This is very verbose and can also result in double negatives. As more arguments get added later, the code gets longer. This can all be condensed into a single bitflag argument like so,
+
+This is good:
+```DM
+can_perform_action(NEED_GRAVITY | NEED_DEXTERITY) // no_light and no_literacy are omitted 
+```
+
+You should also properly document the context of the bitflag in both the defines and the proc where it is used like so,
+
+```DM
+/// If gravity must be present to perform action (can't use pens without gravity)
+#define NEED_GRAVITY (1<<0)
+/// If reading is required to perform action (can't read a book if you are illiterate)
+#define NEED_LITERACY (1<<1)
+/// If lighting must be present to perform action (can't heal someone in the dark)
+#define NEED_LIGHT (1<<2)
+/// If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
+#define NEED_DEXTERITY (1<<3)
+
+/**
+ * Checks whether a mob can perform an action to interact with an object
+ * *
+ * action_bitflags: (see code/__DEFINES/mobs.dm)
+ * * NEED_GRAVITY - If gravity must be present to perform action (can't use pens without gravity)
+ * * NEED_LITERACY - If reading is required to perform action (can't read a book if you are illiterate)
+ * * NEED_LIGHT - If lighting must be present to perform action (can't heal someone in the dark)
+ * * NEED_DEXTERITY - If other mobs (monkeys, aliens, etc) can perform action (can't use computers if you are a monkey)
+**/
+/mob/proc/can_perform_action(action_bitflags=NONE) // we should set the default arg to be NONE otherwise this will runtime when checking our bitflags
+```
+
 ## Multi-lining
 
 Whether it's a very long proc call, a long list people will be adding to, or something else entirely, there may be times where splitting code across multiple lines is the most readable. When you have to is up to maintainer discretion, but if you do, follow this consistent style.
