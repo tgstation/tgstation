@@ -1,7 +1,0 @@
-author: "SeeBeeSee"
-delete-after: True
-changes:
-  - rscadd: "Added mutations for unused plants"
-  - rscadd: "long-sought coconut seeds to the MegaSeed vendor"
-  - bugfix: "fixed mutations/genes for unused/unobtainable plants"
-  - qol: "reintroduced kudzu as an obtainable crop outside of events, with a time-consuming process to obtain"

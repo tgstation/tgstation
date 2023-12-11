@@ -87,3 +87,18 @@
   MomoBerri:
   - balance: added a minimum player count of 35 to Malfunctioning AI, and lowered
       weight to 3 for storyteller.
+2023-12-11:
+  DexeeXI:
+  - bugfix: fixed an issue that resulted in undesirable behavior.
+  DimWhat:
+  - image: Resprited several plasmaman envirosuits and helms.
+  KoboldCommando:
+  - bugfix: the sec skirts no longer have prominent breasts
+  SeeBeeSee:
+  - rscadd: Added mutations for unused plants
+  - rscadd: long-sought coconut seeds to the MegaSeed vendor
+  - bugfix: fixed mutations/genes for unused/unobtainable plants
+  - qol: reintroduced kudzu as an obtainable crop outside of events, with a time-consuming
+      process to obtain
+  etherware-novice:
+  - bugfix: no kickflipping rollerskates
