@@ -926,11 +926,13 @@
 	screwdriver.play_tool_sound(src, 50)
 	toggle_panel_open()
 	if(panel_open)
-		icon_state = icon_state_open
-		to_chat(user, span_notice("You open the maintenance hatch of [src]."))
+		if(icon_state_open)
+			icon_state = icon_state_open
+		balloon_alert(user, "opened maintenance hatch")
 	else
-		icon_state = icon_state_closed
-		to_chat(user, span_notice("You close the maintenance hatch of [src]."))
+		if(icon_state_closed)
+			icon_state = icon_state_closed
+		balloon_alert(user, "closed maintenance hatch")
 	return TRUE
 
 /obj/machinery/proc/default_change_direction_wrench(mob/user, obj/item/wrench)
