@@ -1,14 +1,16 @@
-// The defiled altar, a heretic structure that is used to get organs using favours gained from sacrificing
+// The defiled altar, a heretic structure that is used to get organs using favours gained from sacrificing. Mostly copied code from the Mawed Crucible
 /obj/structure/destructible/defiled_altar
 	name = "Defiled Altar"
 	desc = "An altar, defiled by someone to provide a communion with the old ones itself. \
-		It's sanctity has been corrupted, defiled by their ruinous powers. Just looking at it is making you sick. \
-		Most often used to seek a favour by practicers of dark arts to their patron."
+		It's sanctity has been corrupted by their ruinous powers. Unnatural lights glow from the rune. \
+		Most often used to seek a favour by practicers of dark arts to their patrons."
 	icon = 'icons/obj/antags/cult/structures.dmi'
 	icon_state = "altar"
 	base_icon_state = "altar"
 	break_sound = 'sound/hallucinations/wail.ogg'
-	light_power = 1
+	light_power = 2
+	light_range = 2.5
+	light_color = LIGHT_COLOR_INTENSE_RED
 	anchored = TRUE
 	density = TRUE
 	var/organs_list = list(
@@ -28,7 +30,7 @@
 		/obj/item/bodypart/head) // There is probably (read:definitely) a better way than this but i'm not sure how to do so.
 	///Check to see if it is currently being used.
 	var/in_use = FALSE
-	///How much favour does each item requested uses.
+	///How much favour does each item spawned uses.
 	var/favour_cost = 1
 
 /obj/structure/destructible/defiled_altar/attacked_by(obj/item/weapon, mob/living/user)
@@ -70,14 +72,15 @@
  */
 /obj/structure/destructible/defiled_altar/proc/show_radial(mob/living/user)
 	in_use = TRUE
-	create_potion(user)
+	create_item(user)
 	in_use = FALSE
 
 /*
- * Shows the user of radial of possible potions,
- * and create the potion they chose.
+ * Ask the user to choose between organs or bodyparts
+ * It then shows the user of radial of possible items based on the type they chose,
+ * user then can chose any items they would like to spawn.
  */
-/obj/structure/destructible/defiled_altar/proc/create_potion(mob/living/user)
+/obj/structure/destructible/defiled_altar/proc/create_item(mob/living/user)
 	// Assoc list of [name] to [image] for the radial
 	var/list/choices = list()
 	// Assoc list of [name] to [path] for after the radial, to spawn it
@@ -106,6 +109,7 @@
 				names_to_path[initial(bodyparts.name)] = bodyparts
 				choices[initial(bodyparts.name)] = image(icon = initial(bodyparts.icon), icon_state = initial(bodyparts.icon_state))
 
+	// Which Organs/Bodyparts would the heretic choose to spawn.
 	var/picked_choice = show_radial_menu(
 		user,
 		src,
@@ -117,23 +121,23 @@
 	if(isnull(picked_choice))
 		return
 
+	//spookifies the items.
 	var/obj/item/spawned_type = names_to_path[picked_choice]
 	var/obj/item/spawned_item = new spawned_type(drop_location())
 	spawned_item.color =  "#4e587e"
 	spawned_item.name = "eldritch [spawned_item.name]"
 
-	playsound(src, 'sound/misc/desecration-02.ogg', 75, TRUE)
-	new /obj/effect/temp_visual/bubblegum_hands/rightpaw(drop_location())
-	visible_message(span_notice("a hand came out of the [src]'s rune, carrying within a [spawned_item.name] before submerging back down."))
+	playsound(src, 'sound/magic/blind.ogg', 75, TRUE)
+	new /obj/effect/temp_visual/cult/sparks(drop_location())
+	visible_message(span_notice("Sparks materialize around the [src]'s, before a [spawned_item.name] appeared."))
 	balloon_alert(user, "favour called")
 
 	var/datum/antagonist/heretic/heretic_datum = IS_HERETIC(user)
 	heretic_datum.favours = heretic_datum.favours - favour_cost
 
 /*
- * "Bites the hand that feeds it", except more literally.
- * Called when a non-heretic interacts with the crucible,
- * causing them to lose their active hand to it.
+ * Called when a non-heretic interacts with the Altar,
+ * causing them to lose get flung by it a la cult airlock while also receiving brain damage.
  */
 /obj/structure/destructible/defiled_altar/proc/uh_oh(mob/living/carbon/user)
 	var/atom/throwtarget
