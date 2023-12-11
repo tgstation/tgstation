@@ -133,7 +133,7 @@
 	name = "deathrattled department"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/deathrattle_department
 	blacklist = list(/datum/station_trait/deathrattle_all)
 
 	var/department_to_apply_to
@@ -161,49 +161,42 @@
 
 /datum/station_trait/deathrattle_department/service
 	name = "Deathrattled Service"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
 	name = "Deathrattled Cargo"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
 	name = "Deathrattled Engineering"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
 	name = "Deathrattled Command"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
 	name = "Deathrattled Science"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
 	name = "Deathrattled Security"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
 	name = "Deathrattled Medical"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
