@@ -12,7 +12,7 @@
  *flicks are forwarded to master
  *override makes it so the alert is not replaced until cleared by a clear_alert with clear_override, and it's used for hallucinations.
  */
-/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE)
+/mob/proc/throw_alert(category, type, severity, obj/new_master, override = FALSE, timeout_override, no_anim = FALSE)
 
 	if(!category || QDELETED(src))
 		return
@@ -67,9 +67,11 @@
 	alerts[category] = thealert
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
-	thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
-	animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
-
+	if(!no_anim)
+		thealert.transform = matrix(32, 6, MATRIX_TRANSLATE)
+		animate(thealert, transform = matrix(), time = 2.5, easing = CUBIC_EASING)
+	if(timeout_override)
+		thealert.timeout = timeout_override
 	if(thealert.timeout)
 		addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), thealert.timeout)
 		thealert.timeout = world.time + thealert.timeout - world.tick_lag
@@ -801,6 +803,163 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 	ghost_owner.observer_view(target)
+
+/atom/movable/screen/alert/poll_alert
+	name = "Looking for candidates"
+	icon_state = "template"
+	timeout = 30 SECONDS
+	ghost_screentips = TRUE
+	var/show_time_left = FALSE // If true you need to call START_PROCESSING manually
+	var/image/time_left_overlay // The last image showing the time left
+	var/image/signed_up_overlay // image showing that you're signed up
+	var/image/stacks_overlay
+	var/image/candidates_num_overlay
+	var/image/role_name_overlay
+	var/datum/candidate_poll/poll // If set, on Click() it'll register the player as a candidate
+
+/atom/movable/screen/alert/poll_alert/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/left_click_text
+	if(poll)
+		if(owner in poll.signed_up)
+			left_click_text = "Leave"
+		else
+			left_click_text = "Enter"
+		context[SCREENTIP_CONTEXT_LMB] = "[left_click_text] Poll"
+		if(poll.ignoring_category)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Never For This Round"
+		if(poll.jump_to_me && isobserver(owner))
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Jump To"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/atom/movable/screen/alert/poll_alert/process()
+	if(show_time_left)
+		var/timeleft = timeout - world.time
+		if(timeleft <= 0)
+			return PROCESS_KILL
+		cut_overlay(time_left_overlay)
+		var/obj/O = new
+		O.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 8px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>"
+		var/matrix/M = new
+		M.Translate(4, 16)
+		O.transform = M
+		time_left_overlay = image(O)
+		time_left_overlay.plane = plane
+		add_overlay(time_left_overlay)
+		qdel(O)
+	if(poll)
+		if(!role_name_overlay)
+			var/only_question = poll.role ? poll.role : "?"
+			var/obj/O = new
+			O.maptext = "<span style='font-family: \"Small Fonts\"; text-align: right; font-size: 7px; color: #B3E3FC; -dm-text-outline: 1px black'>[full_capitalize(only_question)]</span>"
+			O.maptext_width = 128
+			var/matrix/M = new
+			M.Translate(-128, 0)
+			O.transform = M
+			role_name_overlay = image(O)
+			role_name_overlay.plane = plane
+			add_overlay(role_name_overlay)
+			qdel(O)
+		var/num_same = 1
+		for(var/datum/candidate_poll/P2 in SSpolling.currently_polling)
+			if(P2 != poll && P2.hash == poll.hash && !P2.finished)
+				num_same++
+		display_stacks(num_same)
+		update_signed_up_alert()
+	..()
+
+/atom/movable/screen/alert/poll_alert/Click(location, control, params)
+	. = ..()
+	if(!.)
+		return
+	if(poll)
+		var/list/modifiers = params2list(params)
+		if((LAZYACCESS(modifiers, ALT_CLICK)) && poll.ignoring_category)
+			set_never_round()
+			return
+		if((LAZYACCESS(modifiers, CTRL_CLICK)) && poll.jump_to_me)
+			jump_to_pic_source()
+			return
+		var/success
+		if(owner in poll.signed_up)
+			success = poll.remove_candidate(owner)
+		else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+			success = poll.sign_up(owner)
+		if(success)
+			// Add a small overlay to indicate we've signed up
+			update_signed_up_alert()
+
+/atom/movable/screen/alert/poll_alert/proc/set_never_round()
+	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+		poll.never_for_this_round(owner)
+		color = "red"
+		return
+	poll.never_for_this_round(owner, undoing = TRUE)
+	color = initial(color)
+
+/atom/movable/screen/alert/poll_alert/proc/jump_to_pic_source()
+	if(!poll?.jump_to_me || !isobserver(owner))
+		return
+	var/turf/target_turf = get_turf(poll.jump_to_me)
+	if(target_turf && isturf(target_turf))
+		owner.abstract_move(target_turf)
+
+/atom/movable/screen/alert/poll_alert/Topic(href, href_list)
+	if(!poll)
+		return
+	if(href_list["never"])
+		set_never_round()
+		return
+	if(href_list["signup"])
+		if(owner in poll.signed_up)
+			poll.remove_candidate(owner)
+		else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+			poll.sign_up(owner)
+		update_signed_up_alert()
+	if(href_list["jump"])
+		jump_to_pic_source()
+		return
+
+/atom/movable/screen/alert/poll_alert/proc/update_signed_up_alert()
+	if(!signed_up_overlay)
+		signed_up_overlay = image('icons/hud/screen_gen.dmi', icon_state = "selector")
+		signed_up_overlay.plane = plane
+	if(owner in poll.signed_up)
+		add_overlay(signed_up_overlay)
+	else
+		cut_overlay(signed_up_overlay)
+
+/atom/movable/screen/alert/poll_alert/proc/update_candidates_number_overlay()
+	cut_overlay(candidates_num_overlay)
+	if(!length(poll.signed_up))
+		return
+	var/obj/O = new
+	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: aqua; -dm-text-outline: 1px black'>[length(poll.signed_up)]</span>"
+	var/matrix/M = new
+	M.Translate(18, 2)
+	O.transform = M
+	candidates_num_overlay = image(O)
+	candidates_num_overlay.plane = plane
+	add_overlay(candidates_num_overlay)
+	qdel(O)
+
+/atom/movable/screen/alert/poll_alert/proc/display_stacks(stacks = 1)
+	cut_overlay(stacks_overlay)
+	if(stacks <= 1)
+		return
+	var/obj/O = new
+	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: yellow; -dm-text-outline: 1px black'>[stacks]x</span>"
+	var/matrix/M = new
+	M.Translate(3, 2)
+	O.transform = M
+	stacks_overlay = image(O)
+	stacks_overlay.plane = plane
+	add_overlay(stacks_overlay)
+	qdel(O)
 
 //OBJECT-BASED
 

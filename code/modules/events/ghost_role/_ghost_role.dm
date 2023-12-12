@@ -99,7 +99,7 @@
 	var/list/mob/dead/observer/regular_candidates
 	// don't get their hopes up
 	if(priority_candidates.len < minimum_required)
-		regular_candidates = poll_ghost_candidates("Do you wish to be considered for the special role of '[role_name]'?", jobban, be_special)
+		regular_candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for the special role of '[role_name]'?", check_jobban = jobban, role = be_special)
 	else
 		regular_candidates = list()
 

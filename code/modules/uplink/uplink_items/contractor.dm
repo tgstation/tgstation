@@ -91,10 +91,10 @@
 
 /datum/uplink_item/contractor/partner/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	to_chat(user, span_notice("The uplink vibrates quietly, connecting to nearby agents..."))
-	var/list/candidates = poll_ghost_candidates(
+	var/list/candidates = SSpolling.poll_ghost_candidates(
 		question = "Do you want to play as the Contractor Support Unit for [user.real_name]?",
-		jobban_type = ROLE_TRAITOR,
-		be_special_flag = ROLE_TRAITOR,
+		check_jobban = ROLE_TRAITOR,
+		role = ROLE_TRAITOR,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT,
 	)
