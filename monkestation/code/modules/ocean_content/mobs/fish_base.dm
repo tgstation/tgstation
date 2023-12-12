@@ -19,7 +19,6 @@
 
 
 /mob/living/basic/aquatic/fish/Destroy()
-	. = ..()
 	var/datum/group_planning/attached = ai_controller?.blackboard[BB_GROUP_DATUM]
 	if(attached)
 		if(src in attached.group_mobs)
@@ -28,6 +27,7 @@
 			attached.in_progress_mobs -= src
 		if(src in attached.finished_mobs)
 			attached.finished_mobs -= src
+	return ..()
 
 /mob/living/basic/aquatic/fish/cod
 	name = "Cod"
