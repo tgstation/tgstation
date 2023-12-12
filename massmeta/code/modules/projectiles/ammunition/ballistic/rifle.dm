@@ -1,8 +1,8 @@
 // какая нахуй стрилка
 
 /obj/item/ammo_casing/strilka310
-	name = ".762 bullet casing"
-	desc = "A .762 bullet casing."
+	name = "7.62 bullet casing"
+	desc = "A 7.62 bullet casing."
 	icon = 'massmeta/icons/mosin/ammo.dmi'
 	icon_state = "762-casing"
 	caliber = CALIBER_STRILKA310
