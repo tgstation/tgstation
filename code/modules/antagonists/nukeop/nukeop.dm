@@ -570,6 +570,7 @@
 		role = ROLE_OPERATIVE,
 		poll_time = 30 SECONDS,
 		ignore_category = POLL_IGNORE_SYNDICATE,
+		role_name_text = "syndicate reinforcement"
 	)
 
 	nuke_candidates -= admin // may be easy to fat-finger say yes. so just don't

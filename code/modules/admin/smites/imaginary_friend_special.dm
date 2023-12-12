@@ -62,6 +62,7 @@
 		check_jobban = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
+		role_name_text = "imaginary friend",
 	)
 	var/volunteer_count = length(volunteers)
 	if (volunteer_count == 0)
