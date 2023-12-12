@@ -135,13 +135,15 @@
 		return
 	var/list/tables = list()
 	for(var/obj/structure/table/table in bridge)
-		if(table.loc.is_blocked_turf_ignore_climbable())
+		var/turf/table_turf = get_turf(table)
+		if(table_turf.is_blocked_turf_ignore_climbable()) //dont spawn a coffeemaker on a fax machine or smth
 			continue
 		tables += table
 	if(!length(tables))
 		return
-	new /obj/machinery/coffeemaker/impressa(pick(tables))
-	new /obj/item/storage/box/coffeepack(pick(tables))
+	var/picked_table = pick(tables)
+	new /obj/machinery/coffeemaker/impressa(picked_table)
+	new /obj/item/storage/box/coffeepack(picked_table)
 
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED
