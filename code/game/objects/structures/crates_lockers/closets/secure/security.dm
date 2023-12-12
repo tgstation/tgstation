@@ -152,7 +152,7 @@
 	new /obj/item/clothing/under/rank/security/dispatcher/skirt(src)
 	new /obj/item/clothing/suit/armor/vest/secjacket/dispatcher(src)
 	new /obj/item/clothing/glasses/hud/security(src)
-	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/reagent_containers/spray/pepper(src)
 	new /obj/item/flashlight/seclite(src)
 	new /obj/item/clothing/neck/link_scryer/loaded(src)
 	new /obj/item/modular_computer/laptop/preset/civilian(src)
