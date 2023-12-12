@@ -35,6 +35,16 @@
 	allow_bureaucratic_error = FALSE
 	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS | JOB_HIDE_WHEN_EMPTY | JOB_LATEJOIN_ONLY
 
+/datum/job/bridge_assistant/get_roundstart_spawn_point()
+	var/list/possible_turfs = list()
+	for(var/turf/possible_turf as anything in GLOB.areas_by_type[/area/station/command/bridge])
+		if(possible_turf.is_blocked_turf())
+			continue
+		possible_turfs += possible_turf
+	if(length(possible_turfs))
+		return pick(possible_turfs)
+	return ..()
+
 /datum/outfit/job/bridge_assistant
 	name = "Bridge Assistant"
 	jobtype = /datum/job/bridge_assistant

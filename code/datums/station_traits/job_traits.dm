@@ -117,7 +117,6 @@
 	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/bridge_assistant
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 
 /datum/station_trait/job/bridge_assistant/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
