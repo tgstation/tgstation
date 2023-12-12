@@ -37,7 +37,8 @@
 
 /datum/job/bridge_assistant/get_roundstart_spawn_point()
 	var/list/possible_turfs = list()
-	for(var/turf/possible_turf as anything in GLOB.areas_by_type[/area/station/command/bridge])
+	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
+	for(var/turf/possible_turf as anything in bridge.contained_turfs)
 		if(possible_turf.is_blocked_turf())
 			continue
 		possible_turfs += possible_turf
