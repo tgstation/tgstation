@@ -1,3 +1,7 @@
+#define CAN_ROLL_ALWAYS 1//always can roll
+#define CAN_ROLL_PROTECTED 2 //can roll if config lets protected roles roll
+#define CAN_ROLL_NEVER 3//never roll
+
 /**
  * A station trait which enables a temporary job
  * Generally speaking these should always all be mutually exclusive, don't have too many at once
@@ -7,13 +11,20 @@
 	trait_flags = STATION_TRAIT_ABSTRACT
 	/// What tooltip to show on the button
 	var/button_desc = "Sign up to gain some kind of unusual job, not available in most rounds."
+	/// Can this job roll antag?
+	var/can_roll_antag = CAN_ROLL_ALWAYS
 	/// Type of job to enable
-	var/job_to_add = /datum/job/clown
+	var/datum/job/job_to_add = /datum/job/clown
 	/// Who signed up to this in the lobby
 	var/list/lobby_candidates
 
 /datum/station_trait/job/New()
 	. = ..()
+	switch(can_roll_antag)
+		if(CAN_ROLL_PROTECTED)
+			SSstation.antag_protected_roles += job_to_add::title
+		if(CAN_ROLL_NEVER)
+			SSstation.antag_restricted_roles += job_to_add::title
 	blacklist += subtypesof(/datum/station_trait/job) - type // All but ourselves
 	RegisterSignal(SSdcs, COMSIG_GLOB_PRE_JOBS_ASSIGNED, PROC_REF(pre_jobs_assigned))
 
@@ -60,6 +71,9 @@
 	our_job = SSjob.GetJob(our_job::title)
 	our_job.total_positions++
 
+/datum/station_trait/job/can_display_lobby_button(client/player)
+	var/datum/job/trait_job = (locate(job_to_add) in SSjob.all_occupations)
+	return trait_job.player_old_enough(player) && ..()
 
 /// Adds a gorilla to the cargo department, replacing the sloth and the mech
 /datum/station_trait/job/cargorilla
@@ -67,6 +81,7 @@
 	button_desc = "Sign up to become the Cargo Gorilla, a peaceful shepherd of boxes."
 	weight = 1
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
+	can_roll_antag = CAN_ROLL_NEVER
 	job_to_add = /datum/job/cargo_gorilla
 	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 
@@ -93,3 +108,21 @@
 	// monkey carries the crates, the age of robot is over
 	if(GLOB.cargo_ripley)
 		qdel(GLOB.cargo_ripley)
+
+/datum/station_trait/job/bridge_assistant
+	name = "Bridge Assistant"
+	button_desc = "Sign up to become the Bridge Assistant and watch over the Bridge."
+	weight = 1
+	report_message = "We have installed a Bridge Assistant on your station."
+	show_in_report = TRUE
+	can_roll_antag = CAN_ROLL_PROTECTED
+	job_to_add = /datum/job/bridge_assistant
+	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
+
+/datum/station_trait/job/bridge_assistant/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
+	. = ..()
+	overlays += "bridge_assistant"
+
+#undef CAN_ROLL_ALWAYS
+#undef CAN_ROLL_PROTECTED
+#undef CAN_ROLL_NEVER

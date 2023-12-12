@@ -173,6 +173,13 @@
 /datum/component/two_handed/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
+	if(HAS_TRAIT(user, TRAIT_NO_TWOHANDING))
+		if(require_twohands)
+			to_chat(user, span_warning("You feel too weak to wield this!"))
+			user.dropItemToGround(parent, force=TRUE)
+		else
+			to_chat(user, span_warning("You feel too weak to wield this with both hands!"))
+		return
 	if(user.get_inactive_held_item())
 		if(require_twohands)
 			to_chat(user, span_notice("[parent] is too cumbersome to carry in one hand!"))
