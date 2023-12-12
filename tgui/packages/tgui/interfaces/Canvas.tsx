@@ -123,8 +123,10 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     const y_resolution = this.props.imageHeight || 36;
     const x_scale = Math.round(width / x_resolution);
     const y_scale = Math.round(height / y_resolution);
-    const x = Math.floor(event.offsetX / x_scale);
-    const y = Math.floor(event.offsetY / y_scale);
+
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor((event.clientX - rect.left) / x_scale);
+    const y = Math.floor((event.clientY - rect.top) / y_scale);
     return { x, y };
   }
 

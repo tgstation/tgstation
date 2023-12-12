@@ -77,9 +77,8 @@
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
 		if(LAZYACCESS(ignore_list, found_item))
-			found -= found_item
-	if(length(found))
-		return pick(found)
+			continue
+		return found_item
 
 /datum/ai_planning_subtree/acid_spray
 

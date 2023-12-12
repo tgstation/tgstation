@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "climbing or being shoved into a glass table won't cause elevation issues."

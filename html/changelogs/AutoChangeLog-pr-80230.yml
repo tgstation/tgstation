@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Added subversive pins to the black market uplink which make security hate you"
+  - rscadd: "The detective's spy cam can now be conveniently pinned onto people in the same manner as medals"
