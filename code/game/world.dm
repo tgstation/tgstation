@@ -51,7 +51,7 @@ GLOBAL_VAR(restart_counter)
 	GLOB.revdata = new
 
 	InitTgs()
-
+	SSmetrics.world_init_time = REALTIMEOFDAY
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
 	load_admins()
