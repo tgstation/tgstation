@@ -8,12 +8,12 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/hauntium
 	value_per_unit = 0.05
-	beauty_modifier = 0.25
 	//pretty good but only the undead can actually make use of these modifiers
 	strength_modifier = 1.2
 	armor_modifiers = list(MELEE = 1.1, BULLET = 1.1, LASER = 1.15, ENERGY = 1.15, BOMB = 1, BIO = 1, FIRE = 1, ACID = 0.7)
 	sculpting_duration = SCULPT_TIME_SLOW
 	sculpting_experience_multipler = 5
+	beauty_modifier = 35
 
 /datum/material/hauntium/on_applied_obj(obj/o, amount, material_flags)
 	. = ..()

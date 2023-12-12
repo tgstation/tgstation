@@ -1,3 +1,6 @@
+/// This is a flat constant for our beauty equation which is:
+/// beauty = material.beauty_modifier * BEAUTY_PER_MATERIAL * material_amount
+#define BEAUTY_PER_MATERIAL 10
 
 /// art quality defines, used in datums/components/art.dm, elsewhere
 #define BAD_ART 12.5

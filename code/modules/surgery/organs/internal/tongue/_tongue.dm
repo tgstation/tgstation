@@ -226,8 +226,6 @@
 		qdel(src)
 		return
 
-	init_statue()
-
 /datum/action/cooldown/turn_to_statue/Destroy()
 	clean_up_statue()
 	return ..()
@@ -243,10 +241,6 @@
 	if(tongue_target.owner != owner)
 		return FALSE
 
-	if(isnull(statue))
-		if(feedback)
-			owner.balloon_alert(owner, "you can't seem to statue-ize!")
-		return FALSE // permanently bricked
 	if(owner.stat != CONSCIOUS)
 		if(feedback)
 			owner.balloon_alert(owner, "you're too weak!")
@@ -255,6 +249,9 @@
 	return TRUE
 
 /datum/action/cooldown/turn_to_statue/Activate(atom/target)
+	if(!statue)
+		init_statue()
+
 	StartCooldown(3 SECONDS)
 
 	var/is_statue = owner.loc == statue
@@ -337,7 +334,7 @@
 
 /// Cleans up the reference to the statue and unregisters signals
 /datum/action/cooldown/turn_to_statue/proc/clean_up_statue()
-	if(QDELETED(statue))
+	if(QDELETED(statue) || !statue)
 		statue = null
 		return
 

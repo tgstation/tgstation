@@ -1,6 +1,8 @@
 /// This controls the delay for the sculpt rock breaking sound
 /// Every 4th iterator while sculpting will emit a sound (rougly every couple of seconds)
 #define SCULPT_SOUND_INCREMENT 4
+/// The recipe to craft carving blocks requires 5 material
+#define STATUE_RECIPE_MATERIAL_COST 5
 
 /obj/structure/statue
 	name = "statue"
@@ -14,17 +16,27 @@
 	material_modifier = 0.5
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
-	/// Beauty component mood modifier
-	var/impressiveness = 15
 	/// Art component subtype added to this statue
 	var/art_type = /datum/element/art
 	/// Abstract root type
 	var/abstract_type = /obj/structure/statue
+	/// The level of sculpting skill used to craft this statue
+	var/sculpting_skill = SKILL_LEVEL_NONE
 
-/obj/structure/statue/Initialize(mapload)
+/obj/structure/statue/Initialize(mapload, beauty=0, sculpting_skill_level=SKILL_LEVEL_NONE)
 	. = ..()
-	AddElement(art_type, impressiveness)
-	AddElement(/datum/element/beauty, impressiveness * 75)
+	sculpting_skill = sculpting_skill_level
+
+	if(!beauty) // if the statue doesn't spawn with beauty (mapload) then use raw material values
+		var/datum/material/material = get_master_material()
+		if(material && material.beauty_modifier)
+			beauty = material.beauty_modifier
+
+	if(beauty) // if we still don't have beauty skip adding it
+		AddElement(/datum/element/beauty, beauty * BEAUTY_PER_MATERIAL * STATUE_RECIPE_MATERIAL_COST)
+		// negative beauty for art is abstract and will still give mood boosts via absolute value
+		AddElement(art_type, abs(beauty))
+
 	AddComponent(/datum/component/simple_rotation)
 
 /obj/structure/statue/wrench_act(mob/living/user, obj/item/tool)
@@ -69,7 +81,6 @@
 	light_power = 0.7
 	light_color = LIGHT_COLOR_NUCLEAR
 	custom_materials = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*5)
-	impressiveness = 25 // radiation makes an impression
 	abstract_type = /obj/structure/statue/uranium
 
 /obj/structure/statue/uranium/nuke
@@ -86,7 +97,6 @@
 
 /obj/structure/statue/plasma
 	max_integrity = 200
-	impressiveness = 20
 	desc = "This statue is suitably made from plasma."
 	custom_materials = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/plasma
@@ -103,7 +113,6 @@
 
 /obj/structure/statue/gold
 	max_integrity = 300
-	impressiveness = 25
 	desc = "This is a highly valuable statue made from gold."
 	custom_materials = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/gold
@@ -136,7 +145,6 @@
 
 /obj/structure/statue/silver
 	max_integrity = 300
-	impressiveness = 25
 	desc = "This is a valuable statue made from silver."
 	custom_materials = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/silver
@@ -165,7 +173,6 @@
 
 /obj/structure/statue/diamond
 	max_integrity = 1000
-	impressiveness = 50
 	desc = "This is a very expensive diamond statue."
 	custom_materials = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/diamond
@@ -186,7 +193,6 @@
 
 /obj/structure/statue/bananium
 	max_integrity = 300
-	impressiveness = 50
 	desc = "A bananium statue with a small engraving:'HOOOOOOONK'."
 	custom_materials = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/bananium
@@ -199,7 +205,6 @@
 
 /obj/structure/statue/sandstone
 	max_integrity = 50
-	impressiveness = 15
 	custom_materials = list(/datum/material/sandstone=SHEET_MATERIAL_AMOUNT*5)
 	abstract_type = /obj/structure/statue/sandstone
 
@@ -251,7 +256,6 @@
 	icon_state = "eng"
 	custom_materials = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*10)
 	max_integrity = 1000
-	impressiveness = 100
 	abstract_type = /obj/structure/statue/elder_atmosian //This one is uncarvable
 
 ///////////Goliath//////////////////////////////////////////////////
@@ -389,7 +393,7 @@ Moving interrupts
 		user.balloon_alert(user, "statue finished")
 		var/sculpting_xp = material.sculpting_experience_multipler * (material.sculpting_duration/10)
 		user.mind?.adjust_experience(/datum/skill/sculpting, sculpting_xp)
-		prepared_block.create_statue()
+		prepared_block.create_statue(user, is_bluespace_chisel)
 
 	stop_sculpting(silent = !interrupted)
 
@@ -503,20 +507,33 @@ Moving interrupts
 		return FALSE
 	return TRUE
 
-/obj/structure/carving_block/proc/create_statue()
+/obj/structure/carving_block/proc/create_statue(mob/living/user, bluespace_chisel)
+	var/datum/material/material = get_master_material()
+	var/beauty_value
+	var/sculpting_skill_level
+	var/sculpting_beauty_muliplier = 1
+
+	if(material.beauty_modifier)
+		beauty_value = material.beauty_modifier
+		//source.AddElement(/datum/element/beauty, beauty_modifier * amount)
+		if(user.mind)
+			sculpting_skill_level = user.mind.get_skill_level(/datum/skill/sculpting)
+			sculpting_beauty_muliplier *= user.mind.get_skill_modifier(/datum/skill/sculpting, SKILL_VALUE_MODIFIER)
+
+		beauty_value *= sculpting_beauty_muliplier
+
 	if(current_preset_type)
-		var/obj/structure/statue/preset_statue = new current_preset_type(get_turf(src))
+		var/obj/structure/statue/preset_statue = new current_preset_type(get_turf(src), beauty_value, sculpting_skill_level)
 		preset_statue.set_custom_materials(custom_materials)
-		qdel(src)
 	else if(current_target)
-		var/obj/structure/statue/custom/new_statue = new(get_turf(src), finished_statue_icon)
+		var/obj/structure/statue/custom/new_statue = new(get_turf(src), beauty_value, sculpting_skill_level, finished_statue_icon)
 		new_statue.dir = dir
 		new_statue.set_custom_materials(custom_materials)
 		// so we don't end up with "statue of statue of statue of statue of statue of chair"
 		var/is_statue_original = istype(current_target, /obj/structure/statue/custom)
 		new_statue.name = is_statue_original ? current_target.name : "statue of [current_target.name]"
 		new_statue.desc = is_statue_original ? current_target.desc : "A carved statue depicting [current_target.name]."
-		qdel(src)
+	qdel(src)
 
 /obj/structure/carving_block/proc/set_completion(value, animate_statue=FALSE)
 	if(!current_target)
@@ -577,13 +594,12 @@ Moving interrupts
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
 	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS
 
-/obj/structure/statue/custom/Initialize(mapload, icon/statue_icon)
-	. = ..()
+/obj/structure/statue/custom/Initialize(mapload, beauty_value, sculpting_skill_level=SKILL_LEVEL_NONE, icon/statue_icon)
 	if(mapload && !statue_icon)
 		stack_trace("[src] spawned without a statue icon.")
 		return INITIALIZE_HINT_QDEL
-
 	icon = statue_icon
+	. = ..()
 
 // We need this for the silver tongue /datum/action/cooldown/turn_to_statue ability
 // Need to update the icon every time they use the ability
@@ -597,4 +613,5 @@ Moving interrupts
 
 	icon = statue_icon
 
+#undef STATUE_RECIPE_MATERIAL_COST
 #undef SCULPT_SOUND_INCREMENT

@@ -13,16 +13,20 @@
 	  */
 	var/beauty_counter = list()
 
-/datum/element/beauty/Attach(datum/target, beauty)
+/datum/element/beauty/Attach(atom/target, beauty)
 	. = ..()
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
+	//if(HAS_TRAIT(target, TRAIT_BEAUTY))
+	//	return
+
+	//ADD_TRAIT(target, TRAIT_BEAUTY, ELEMENT_TRAIT(type))
 	src.beauty = beauty
 
 	if(!beauty_counter[target] && ismovable(target))
 		var/atom/movable/mov_target = target
-		mov_target.become_area_sensitive(BEAUTY_ELEMENT_TRAIT)
+		mov_target.become_area_sensitive(ELEMENT_TRAIT(type))
 		RegisterSignal(mov_target, COMSIG_ENTER_AREA, PROC_REF(enter_area))
 		RegisterSignal(mov_target, COMSIG_EXIT_AREA, PROC_REF(exit_area))
 
@@ -38,7 +42,7 @@
 
 	if(new_area.outdoors)
 		return
-	new_area.totalbeauty += beauty * beauty_counter[source]
+	new_area.totalbeauty += beauty
 	new_area.update_beauty()
 
 /datum/element/beauty/proc/exit_area(datum/source, area/old_area)
@@ -46,10 +50,11 @@
 
 	if(old_area.outdoors)
 		return
-	old_area.totalbeauty -= beauty * beauty_counter[source]
+	old_area.totalbeauty -= beauty
 	old_area.update_beauty()
 
-/datum/element/beauty/Detach(datum/source)
+/datum/element/beauty/Detach(atom/source)
+	//REMOVE_TRAIT(source, TRAIT_BEAUTY, ELEMENT_TRAIT(type))
 	if(!beauty_counter[source])
 		return ..()
 	var/area/current_area = get_area(source)
@@ -61,7 +66,7 @@
 		beauty_counter -= source
 		var/atom/movable/movable_source = source
 		if(istype(movable_source))
-			movable_source.lose_area_sensitivity(BEAUTY_ELEMENT_TRAIT)
+			movable_source.lose_area_sensitivity(ELEMENT_TRAIT(type))
 	else //lower the 'counter' down by one, update the area, and call parent if it's reached zero.
 		beauty_counter[source]--
 		if(current_area && !current_area.outdoors)
@@ -73,4 +78,4 @@
 			beauty_counter -= source
 			var/atom/movable/movable_source = source
 			if(istype(movable_source))
-				movable_source.lose_area_sensitivity(BEAUTY_ELEMENT_TRAIT)
+				movable_source.lose_area_sensitivity(ELEMENT_TRAIT(type))
