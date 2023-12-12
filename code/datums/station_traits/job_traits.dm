@@ -4,7 +4,7 @@
  */
 /datum/station_trait/job
 	sign_up_button = TRUE
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/job
 	/// What tooltip to show on the button
 	var/button_desc = "Sign up to gain some kind of unusual job, not available in most rounds."
 	/// Type of job to enable
@@ -68,7 +68,6 @@
 	weight = 1
 	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
 	job_to_add = /datum/job/cargo_gorilla
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 
 /datum/station_trait/job/cargorilla/New()
 	. = ..()

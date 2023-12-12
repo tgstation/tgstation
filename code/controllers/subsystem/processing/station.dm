@@ -58,7 +58,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 			setup_trait(trait_typepath)
 			continue
 
-		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
+		if(initial(trait_typepath.abstract_type) == trait_typepath)
 			continue //Dont add abstract ones to it
 
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_PLANETARY) && SSmapping.is_planetary()) // we're on a planet but we can't do planet ;_;
