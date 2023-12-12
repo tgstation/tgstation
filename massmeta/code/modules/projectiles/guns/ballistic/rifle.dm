@@ -47,5 +47,5 @@
 		Even thinking about that name combination makes you ill."
 
 /obj/item/gun/ballistic/rifle/boltaction/harpoon
-	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
