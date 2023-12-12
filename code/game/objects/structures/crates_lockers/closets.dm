@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			return
 		if(current_exposed_air.equalize(internal_air))
 			var/turf/location = get_turf(src)
-			location.air_update_turf(update = TRUE, remove = FALSE)
+			location.air_update_turf()
 
 /obj/structure/closet/update_appearance(updates=ALL)
 	. = ..()

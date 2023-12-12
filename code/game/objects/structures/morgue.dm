@@ -224,7 +224,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
 		if(current_exposed_air.equalize(internal_air))
 			var/turf/location = get_turf(src)
-			location.air_update_turf(update = TRUE, remove = FALSE)
+			location.air_update_turf()
 	else
 		if(internal_air.temperature <= minimum_temperature)
 			return
