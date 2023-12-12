@@ -6595,4 +6595,6 @@
 #include "monkestation\code\random_rooms\engines\kilostation.dm"
 #include "monkestation\code\random_rooms\engines\metastation.dm"
 #include "monkestation\code\random_rooms\engines\tramstation.dm"
+#include "monkestation\code\modules\food_and_drinks\recipes\recipes_meat.dm"
+#include "monkestation\code\game\objects\items\food\corndog.dm"
 // END_INCLUDE
