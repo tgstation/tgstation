@@ -118,9 +118,30 @@
 	can_roll_antag = CAN_ROLL_PROTECTED
 	job_to_add = /datum/job/bridge_assistant
 
+/datum/station_trait/job/bridge_assistant/New()
+	. = ..()
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(add_coffee))
+
 /datum/station_trait/job/bridge_assistant/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += "bridge_assistant"
+
+/datum/station_trait/job/bridge_assistant/proc/add_coffee(datum/source)
+	SIGNAL_HANDLER
+	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
+	if(!bridge)
+		return
+	if(locate(/obj/machinery/coffeemaker) in bridge)
+		return
+	var/list/tables = list()
+	for(var/obj/structure/table/table in bridge)
+		if(table.loc.is_blocked_turf_ignore_climbable())
+			continue
+		tables += table
+	if(!length(tables))
+		return
+	new /obj/machinery/coffeemaker/impressa(pick(tables))
+	new /obj/item/storage/box/coffeepack(pick(tables))
 
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED
