@@ -1,16 +1,3 @@
-/obj/item/gun/ballistic/rifle
-	name = "Bolt Rifle"
-	desc = "Some kind of bolt action rifle. You get the feeling you shouldn't have this."
-	icon = 'massmeta/icons/mosin/mosinnagant.dmi'
-	lefthand_file = 'massmeta/icons/mosin/64x_guns_left.dmi'
-	righthand_file = 'massmeta/icons/mosin/64x_guns_right.dmi'
-	icon_state = "moistnugget"
-	inhand_icon_state = "moistnugget"
-	worn_icon_state = "moistnugget"
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-
-
 /obj/item/gun/ballistic/rifle/boltaction
 	name = "\improper Mosin Nagant"
 	desc = "A classic Mosin Nagant. They don't make them like they used to. Well, okay, in all honesty, this one is actually \
@@ -21,9 +8,15 @@
 		This one is still in surprisingly good condition. Often found in the hands \
 		of underpaid Nanotrasen interns without a care for company property, Russian military LARPers, \
 		actual drunk Space Russians, Tiger Co-op assassins and cargo technicians. <I>Still</I> feels slightly moist."
+	icon = 'massmeta/icons/mosin/mosinnagant.dmi'
+	lefthand_file = 'massmeta/icons/mosin/64x_guns_left.dmi'
+	righthand_file = 'massmeta/icons/mosin/64x_guns_right.dmi'
 	icon_state = "moistnugget"
 	inhand_icon_state = "moistnugget"
 	worn_icon_state = "moistnugget"
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+
 
 /obj/item/gun/ballistic/rifle/boltaction/surplus
 	name = "\improper Mosin Nagant"
@@ -53,10 +46,6 @@
 		You are now probably one of the few people in the universe to ever hold a \"Regal Obrez\". \
 		Even thinking about that name combination makes you ill."
 
-/obj/item/gun/ballistic/rifle/lionhunter
-	icon = 'icons/obj/weapons/guns/wide_guns.dmi'
-
-/obj/item/gun/ballistic/rifle/enchanted
-	icon_state = "moistnugget"
-	inhand_icon_state = "moistnugget"
-	worn_icon_state = "moistnugget"
+/obj/item/gun/ballistic/rifle/boltaction/harpoon
+	lefthand_file = 'icons/mob/inhands/weapons/64x_guns_left.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/64x_guns_right.dmi'

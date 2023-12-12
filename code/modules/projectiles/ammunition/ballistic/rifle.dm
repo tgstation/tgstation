@@ -8,10 +8,12 @@
 	projectile_type = /obj/projectile/bullet/strilka310
 
 // massmeta edit
-// /obj/item/ammo_casing/strilka310/Initialize(mapload)
-// 	. = ..()
-//
-// 	AddElement(/datum/element/caseless)
+/*
+ /obj/item/ammo_casing/strilka310/Initialize(mapload)
+ 	. = ..()
+
+	AddElement(/datum/element/caseless)
+*/
 
 /obj/item/ammo_casing/strilka310/surplus
 	name = ".310 Strilka surplus bullet casing"
