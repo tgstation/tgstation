@@ -240,8 +240,7 @@
 
 //Monkestation edit: Removes a harddel
 /mob/living/basic/mining/mook/worker/bard/Destroy()
-	qdel(held_guitar)
-	held_guitar = null
+	QDEL_NULL(held_guitar)
 	return ..()
 
 /mob/living/basic/mining/mook/worker/tribal_chief
