@@ -142,8 +142,16 @@
 	if(!length(tables))
 		return
 	var/picked_table = pick(tables)
-	new /obj/machinery/coffeemaker/impressa(picked_table)
-	new /obj/item/storage/box/coffeepack(picked_table)
+	tables -= picked_table
+	var/picked_turf = get_turf(picked_table)
+	if(length(tables))
+		var/another_table = pick(tables)
+		for(var/obj/thing_on_table in picked_turf)
+			if(thing_on_table == picked_table)
+				continue
+			thing_on_table.forceMove(get_turf(another_table))
+	new /obj/machinery/coffeemaker/impressa(picked_turf)
+	new /obj/item/storage/box/coffeepack(picked_turf)
 
 #undef CAN_ROLL_ALWAYS
 #undef CAN_ROLL_PROTECTED
