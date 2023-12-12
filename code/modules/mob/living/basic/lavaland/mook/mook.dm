@@ -242,7 +242,7 @@
 /mob/living/basic/mining/mook/worker/bard/Destroy()
 	qdel(held_guitar)
 	held_guitar = null
-	..()
+	return ..()
 
 /mob/living/basic/mining/mook/worker/tribal_chief
 	name = "tribal chief"
