@@ -25,10 +25,7 @@ SUBSYSTEM_DEF(metrics)
 
 	var/list/generic_insert = get_metric_data_main()
 	var/list/special = list(
-		"datetime_subsystem" = "NOW()",
-	)
-	var/list/special_extra = list(
-		"datetime_extra" = "NOW()",
+		"datetime" = "NOW()",
 	)
 	var/list/subsystem_extra_insert = list()
 	var/list/subsystem_insert = list()
@@ -73,7 +70,7 @@ SUBSYSTEM_DEF(metrics)
 
 	SSdbcore.MassInsert(format_table_name("subsystem_metrics"), subsystem_insert , ignore_errors = TRUE, special_columns = special, duplicate_key = TRUE)
 	if(length(subsystem_extra_insert))
-		SSdbcore.MassInsert(format_table_name("subsystem_extra_metrics"), subsystem_extra_insert , ignore_errors = TRUE, special_columns = special_extra, duplicate_key = TRUE)
+		SSdbcore.MassInsert(format_table_name("subsystem_extra_metrics"), subsystem_extra_insert , ignore_errors = TRUE, special_columns = special, duplicate_key = TRUE)
 
 /datum/controller/subsystem/metrics/proc/get_metric_data_main()
 	var/list/out = list()
