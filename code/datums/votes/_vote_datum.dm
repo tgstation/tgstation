@@ -80,8 +80,10 @@
  */
 /datum/vote/proc/can_be_initiated(mob/by_who, forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	//monkestation edit begin
 	if(!player_startable && !forced)
 		return FALSE
+	//monkestation edit end
 
 	if(started_time)
 		var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))
