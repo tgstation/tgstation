@@ -300,3 +300,85 @@
   - bugfix: false walls icons will now display again
   whataboutism-alos:
   - rscadd: Sprited and implemented a short lizard tail
+2023-12-10:
+  Higgin:
+  - bugfix: Healing viruses now no longer self-cure for reasons they're not supposed
+      to and do for those that they are.
+  JohnFulpWillard:
+  - rscadd: PDAs with a dead power cell are now limited to using their Messenger app.
+  - bugfix: Microwaves now stop charging PDAs if the cell was removed mid-charge.
+  - bugfix: Microwaves can now charge laptops.
+  - bugfix: PDA Flashlights can't be turned on while the PDA is dead.
+  - bugfix: You can now hold a laptop up to a camera (if it has a notekeeper app installed)
+      like PDAs already could.
+  Melbert:
+  - refactor: Refactored some methods of items interacting with other objects or mobs,
+      such as surgery and health analzyers. Report if anything seems wrong
+  Rhials, MrMelbert:
+  - rscadd: The Tracker implant has had its teleport beacon functionality migrated
+      to the new (cargo accessible) Beacon implant.
+  - rscadd: Teleport Blocker security implant, that prevents the implantee from teleporting
+      by any means. Purchasable from cargo.
+  - rscadd: Security implants may now be harmlessly self-destructed at the Prisoner
+      Management Console.
+  - balance: The Tracker implant tracking radius has increased from 20 to 35 tiles.
+      The Prisoner Management Console will track and display the area the implantee
+      is in as well.
+  - balance: The exile implant now prevents implantees from operating shuttle controls.
+  - code_imp: Various code improvements and removal of unused vars in the Prisoner
+      Management Console
+  - code_imp: The HUD slots for chem/tracking implants have been converted to display
+      any implant with the IMPLANT_TYPE_SECURITY flag and an associated sprite.
+  - spellcheck: Modifies various implant pad readouts, removing false information
+      and rewriting some sections.
+  SyncIt21:
+  - bugfix: Pyrosium oxygen reaction now heats the holder and causes reactions inside
+      it. Also correctly sets the holder temperature to 20 kelvin & causes reactions
+      when first made
+  WarlockD:
+  - bugfix: 'The air_alarm_circuit to gets the environment from the proper turf.
+
+      :cl:'
+  san7890:
+  - admin: Object Possession has been reworked, please report any potential bugs.
+  - qol: Object Possession should now throw a screen alert for you to unpossess the
+      object instead of you having to search the stat-panel for the "release obj"
+      verb. You can still use the verb but it's a lot nicer now. Aghosting will also
+      work now.
+  timothymtorres:
+  - qol: Add RMB hotkey and screentip UI to tracking beacons to toggle them on/off.
+2023-12-11:
+  MTandi:
+  - image: New cleanbot sprites
+  - image: New bucket sprites
+  - rscdel: All buckets and cleanbots are back to being blue
+  xXPawnStarrXx:
+  - bugfix: fixed big rice pans getting worse with cooking.
+2023-12-12:
+  Ghommie:
+  - bugfix: Goldgrubs no longer block death bolts, even while alive.
+  Melbert:
+  - bugfix: When using an item on a mob, you will always attempt to fix wounds AFTER
+      surgery, BUT BEFORE the item's own interactions. As an example, this means using
+      a mesh on a mob will attempt to progress surgery first, then attempt to fix
+      any burn wounds, then heal burn damage.
+  OrionTheFox:
+  - image: The Head of Security's "Sturdy Shako" hat now uses the same gold color
+      as his other hat
+  Rhials:
+  - qol: Blackout drunkard personalities will now recieve a "you are about to sober
+      up" warning at the 60/40/20 second mark, instead of repeatedly at the 50 second
+      mark.
+  - bugfix: Sunset Saloon virtual domain should no longer sometimes spawn with holes
+      in the floor.
+  SyncIt21:
+  - bugfix: no runtime when unwrenching Atmos components
+  - spellcheck: fixed typo in attack chain define comment
+  jlsnow301:
+  - bugfix: Painting should be working again.
+  - bugfix: 'DNA Sequencer UI: You should be able to cycle in reverse with RMB again.'
+  - bugfix: Dropdowns should show what you've selected again.
+  vinylspiders:
+  - bugfix: fixes some AI runtimes that were caused by the pawn becoming null
+  vorpal-void:
+  - bugfix: fixed outdated item description

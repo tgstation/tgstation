@@ -9,7 +9,7 @@
 	var/obj/item/bodypart/head/noggin = ling.get_bodypart(BODY_ZONE_HEAD)
 	noggin.dismember()
 	TEST_ASSERT_NULL(ling.get_bodypart(BODY_ZONE_HEAD), "Changeling failed to be decapitated.")
-	TEST_ASSERT_NULL(noggin.brainmob.mind, "Changeling's mind was moved to their head after decapitation, but it should have remained in their body.")
+	TEST_ASSERT_NULL(noggin.brain.brainmob.mind, "Changeling's mind was moved to their brain after decapitation, but it should have remained in their body.")
 
 	var/obj/item/organ/internal/brain/oldbrain = noggin.brain
 	noggin.drop_organs()
@@ -33,7 +33,7 @@
 
 	var/obj/item/bodypart/head/noggin = normal_guy.get_bodypart(BODY_ZONE_HEAD)
 	noggin.dismember()
-	TEST_ASSERT_EQUAL(noggin.brainmob.mind, my_guys_mind, "Dummy's mind was not moved to their head after decapitation.")
+	TEST_ASSERT_EQUAL(noggin.brain.brainmob.mind, my_guys_mind, "Dummy's mind was not moved to their brain after decapitation.")
 
 	var/obj/item/organ/internal/brain/oldbrain = noggin.brain
 	noggin.drop_organs()

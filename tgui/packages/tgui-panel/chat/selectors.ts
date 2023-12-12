@@ -9,7 +9,7 @@ import { map } from 'common/collections';
 export const selectChat = (state) => state.chat;
 
 export const selectChatPages = (state) =>
-  map((id) => state.chat.pageById[id])(state.chat.pages);
+  map((id: string) => state.chat.pageById[id])(state.chat.pages);
 
 export const selectCurrentChatPage = (state) =>
   state.chat.pageById[state.chat.currentPageId];

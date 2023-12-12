@@ -143,7 +143,7 @@
 	var/mob/living/carbon/human/attacked_humanoid = interacting_with
 	var/obj/item/bodypart/affecting = attacked_humanoid.get_bodypart(check_zone(user.zone_selected))
 	if(isnull(affecting) || !IS_ROBOTIC_LIMB(affecting))
-		return ITEM_INTERACT_BLOCKING
+		return NONE
 
 	if(!use_tool(attacked_humanoid, user, 0, volume=50, amount=1))
 		return ITEM_INTERACT_BLOCKING

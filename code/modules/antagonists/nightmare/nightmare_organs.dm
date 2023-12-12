@@ -14,8 +14,10 @@
 	///Our associated terrorize spell, for antagonist nightmares
 	var/datum/action/cooldown/spell/pointed/terrorize/terrorize_spell
 
-/obj/item/organ/internal/brain/shadow/nightmare/on_insert(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/shadow/nightmare/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
+	RegisterSignal(brain_owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
+
 	if(brain_owner.dna.species.id != SPECIES_NIGHTMARE)
 		brain_owner.set_species(/datum/species/shadow/nightmare)
 		visible_message(span_warning("[brain_owner] thrashes as [src] takes root in [brain_owner.p_their()] body!"))
@@ -27,9 +29,7 @@
 		terrorize_spell = new(src)
 		terrorize_spell.Grant(brain_owner)
 
-	RegisterSignal(brain_owner, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(dodge_bullets))
-
-/obj/item/organ/internal/brain/shadow/nightmare/on_remove(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/shadow/nightmare/on_mob_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	QDEL_NULL(our_jaunt)
 	QDEL_NULL(terrorize_spell)
@@ -76,13 +76,13 @@
 	user.temporarilyRemoveItemFromInventory(src, TRUE)
 	Insert(user)
 
-/obj/item/organ/internal/heart/nightmare/on_insert(mob/living/carbon/heart_owner, special)
+/obj/item/organ/internal/heart/nightmare/on_mob_insert(mob/living/carbon/heart_owner, special)
 	. = ..()
 	if(special != HEART_SPECIAL_SHADOWIFY)
 		blade = new/obj/item/light_eater
 		heart_owner.put_in_hands(blade)
 
-/obj/item/organ/internal/heart/nightmare/on_remove(mob/living/carbon/heart_owner, special)
+/obj/item/organ/internal/heart/nightmare/on_mob_remove(mob/living/carbon/heart_owner, special)
 	. = ..()
 	respawn_progress = 0
 	if(blade && special != HEART_SPECIAL_SHADOWIFY)

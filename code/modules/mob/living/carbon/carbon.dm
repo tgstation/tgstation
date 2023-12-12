@@ -28,14 +28,9 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+/mob/living/carbon/item_tending(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(. & ITEM_INTERACT_SUCCESS)
-		return .
-
-	if(!length(all_wounds))
-		return .
-	if(user.combat_mode && user != src)
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
 		return .
 
 	for(var/datum/wound/wound as anything in shuffle(all_wounds))
@@ -979,7 +974,6 @@
 	for(var/obj/item/bodypart/bodypart_path as anything in bodyparts_paths)
 		var/real_body_part_path = overrides?[initial(bodypart_path.body_zone)] || bodypart_path
 		var/obj/item/bodypart/bodypart_instance = new real_body_part_path()
-		bodypart_instance.set_owner(src)
 		add_bodypart(bodypart_instance)
 
 /// Called when a new hand is added
@@ -996,8 +990,12 @@
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
-	new_bodypart.set_owner(src)
+	new_bodypart.update_owner(src)
+
+	for(var/obj/item/organ/organ in new_bodypart)
+		organ.mob_insert(src)
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1012,10 +1010,17 @@
 	synchronize_bodytypes()
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
-/mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
+/mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	old_bodypart.on_removal()
+	if(special)
+		for(var/obj/item/organ/organ in old_bodypart)
+			organ.bodypart_remove(limb_owner = src, movement_flags = NO_ID_TRANSFER)
+	else
+		for(var/obj/item/organ/organ in old_bodypart)
+			organ.mob_remove(src, special)
+
+	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
 
 	switch(old_bodypart.body_part)
@@ -1413,3 +1418,8 @@
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
+
+/mob/living/carbon/dropItemToGround(obj/item/item, force = FALSE, silent = FALSE, invdrop = TRUE)
+	if(item && ((item in organs) || (item in bodyparts))) //let's not do this, aight?
+		return FALSE
+	return ..()

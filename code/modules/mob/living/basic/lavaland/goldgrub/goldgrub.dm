@@ -73,6 +73,10 @@
 	if(stat != CONSCIOUS)
 		return COMPONENT_BULLET_PIERCED
 
+	///high penetration bullets should still go through. No goldgrub can save you from the colossus' death bolts.
+	if(prob(hitting_projectile.armour_penetration))
+		return NONE
+
 	visible_message(span_danger("[hitting_projectile] is repelled by [source]'s girth!"))
 	return COMPONENT_BULLET_BLOCKED
 

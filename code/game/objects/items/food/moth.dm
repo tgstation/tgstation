@@ -239,7 +239,7 @@
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_NORMAL
-	crafting_complexity = FOOD_COMPLEXITY_1
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/big_baked_rice/make_processable()
 	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/lil_baked_rice, 6, 3 SECONDS, table_required = TRUE, screentip_verb = "Cut")
@@ -256,7 +256,7 @@
 	tastes = list("rice" = 1, "potato" = 1, "veggies" = 1)
 	foodtypes = VEGETABLES | GRAIN
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = FOOD_COMPLEXITY_1
+	crafting_complexity = FOOD_COMPLEXITY_5
 
 /obj/item/food/oven_baked_corn
 	name = "oven-baked corn"
