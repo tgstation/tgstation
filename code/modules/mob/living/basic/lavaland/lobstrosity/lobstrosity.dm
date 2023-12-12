@@ -71,6 +71,8 @@
 	if(!isbasicmob(source))
 		return
 	var/mob/living/basic/basic_source = source
+	if(!ismob(target)) //Monkestation edit: Catches a runtime when the lobster charges into a wall.
+		return
 	var/mob/living/living_target = target
 	basic_source.melee_attack(living_target, ignore_cooldown = TRUE)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
