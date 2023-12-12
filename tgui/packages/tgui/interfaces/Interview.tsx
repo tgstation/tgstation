@@ -126,8 +126,8 @@ export const Interview = (props) => {
                   fluid
                   height={10}
                   maxLength={500}
-                  placeholder="Write your response here, max of 500 characters."
-                  onBlur={(e, input) =>
+                  placeholder="Write your response here, max of 500 characters. Press enter to submit."
+                  onEnter={(e, input) =>
                     act('update_answer', {
                       qidx,
                       answer: input,

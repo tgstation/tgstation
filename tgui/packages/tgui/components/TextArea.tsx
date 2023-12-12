@@ -17,7 +17,7 @@ import {
 import { toInputValue } from './Input';
 import { KEY } from 'common/keys';
 import { Box, BoxProps } from './Box';
-import { ChangeEvent, KeyboardEvent, FocusEvent } from 'react';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 type Props = Partial<{
   autoFocus: boolean;
@@ -26,8 +26,6 @@ type Props = Partial<{
   dontUseTabForIndent: boolean;
   maxLength: number;
   noborder: boolean;
-  // This fires when: clicked out, entered, escaped.
-  onBlur: (event: FocusEvent<HTMLTextAreaElement>, value: string) => void;
   // This fires when: value changes
   onChange: (event: ChangeEvent<HTMLTextAreaElement>, value: string) => void;
   // This fires when: enter is pressed
@@ -52,8 +50,6 @@ export const TextArea = forwardRef(
       noborder,
       onBlur,
       onChange,
-      onEnter,
-      onEscape,
       placeholder,
       scrollbar,
       selfClear,
@@ -65,26 +61,22 @@ export const TextArea = forwardRef(
 
     const [scrolledAmount, setScrolledAmount] = useState(0);
 
-    const handleKeyDown = (event) => {
-      if (event.key === KEY.Enter) {
-        onEnter?.(event, event.target.value);
-
+    const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
+      if (event.key === KEY.Enter && !event.shiftKey) {
         if (selfClear) {
-          event.target.value = '';
+          event.currentTarget.value = '';
         }
-        event.target.blur();
+        event.currentTarget.blur();
 
         return;
       }
 
       if (event.key === KEY.Escape) {
-        onEscape?.(event);
-
         if (selfClear) {
-          event.target.value = '';
+          event.currentTarget.value = '';
         } else {
-          event.target.value = toInputValue(value);
-          event.target.blur();
+          event.currentTarget.value = toInputValue(value);
+          event.currentTarget.blur();
         }
 
         return;
@@ -92,13 +84,12 @@ export const TextArea = forwardRef(
 
       if (!dontUseTabForIndent && event.key === KEY.Tab) {
         event.preventDefault();
-        const { value, selectionStart, selectionEnd } = event.target;
-        event.target.value =
+        const { value, selectionStart, selectionEnd } = event.currentTarget;
+        event.currentTarget.value =
           value.substring(0, selectionStart) +
           '\t' +
           value.substring(selectionEnd);
-        event.target.selectionEnd = selectionStart + 1;
-        onChange?.(event, event.target.value);
+        event.currentTarget.selectionEnd = selectionStart + 1;
       }
     };
 
@@ -163,7 +154,6 @@ export const TextArea = forwardRef(
             nowrap && 'TextArea__nowrap',
           ])}
           maxLength={maxLength}
-          onBlur={(event) => onBlur?.(event, event.target.value)}
           onChange={(event) => onChange?.(event, event.target.value)}
           onKeyDown={handleKeyDown}
           onScroll={() => {
