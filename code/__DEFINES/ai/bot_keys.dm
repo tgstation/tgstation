@@ -33,3 +33,25 @@
 #define BB_NEAR_DEATH_SPEECH "near_death_speech"
 ///in crit patient we must alert medbay about
 #define BB_PATIENT_IN_CRIT "patient_in_crit"
+
+// cleanbots
+///key that holds the foaming ability
+#define BB_CLEANBOT_FOAM "cleanbot_foam"
+///key that holds decals we hunt
+#define BB_CLEANABLE_DECALS "cleanable_decals"
+///key that holds blood we hunt
+#define BB_CLEANABLE_BLOOD "cleanable_blood"
+///key that holds pests we hunt
+#define BB_HUNTABLE_PESTS "huntable_pests"
+///key that holds emagged speech
+#define BB_CLEANBOT_EMAGGED_PHRASES "emagged_phrases"
+///key that holds drawings we hunt
+#define BB_CLEANABLE_DRAWINGS "cleanable_drawings"
+///Key that holds our clean target
+#define BB_CLEAN_TARGET "clean_target"
+///key that holds the janitor we will befriend
+#define BB_FRIENDLY_JANITOR "friendly_janitor"
+///key that holds the victim we will spray
+#define BB_ACID_SPRAY_TARGET "acid_spray_target"
+///key that holds trash we will burn
+#define BB_HUNTABLE_TRASH "huntable_trash"

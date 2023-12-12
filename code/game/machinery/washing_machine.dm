@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	if(!panel_open || busy)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/washing_machine/attackby(obj/item/W, mob/living/user, params)
 	if(default_deconstruction_screwdriver(user, null, null, W))
@@ -416,7 +416,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 	return attack_hand_secondary(user, modifiers)
 
 /obj/machinery/washing_machine/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 	qdel(src)
 

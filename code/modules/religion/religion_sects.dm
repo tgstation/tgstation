@@ -313,11 +313,10 @@
 	return ..()
 
 /datum/religion_sect/burden/tool_examine(mob/living/carbon/human/burdened) //display burden level
-	if(!ishuman(burdened))
-		return FALSE
-	var/datum/brain_trauma/special/burdened/burden = burdened.has_trauma_type(/datum/brain_trauma/special/burdened)
-	if(burden)
-		return "You are at burden level [burden.burden_level]/9."
+	if(ishuman(burdened))
+		var/datum/brain_trauma/special/burdened/burden = burdened.has_trauma_type(/datum/brain_trauma/special/burdened)
+		if(burden)
+			return "You are at burden level [burden.burden_level]/9."
 	return "You are not burdened."
 
 /datum/religion_sect/burden/sect_bless(mob/living/carbon/target, mob/living/carbon/chaplain)

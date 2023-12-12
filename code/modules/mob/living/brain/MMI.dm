@@ -1,7 +1,7 @@
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -74,7 +74,7 @@
 			return
 		var/mob/living/brain/B = newbrain.brainmob
 		if(!B.key && !newbrain.decoy_override)
-			B.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
+			B.notify_revival("Someone has put your brain in a MMI!", source = src)
 		user.visible_message(span_notice("[user] sticks \a [newbrain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [newbrain]."))
 
 		set_brainmob(newbrain.brainmob)
@@ -140,7 +140,7 @@
 
 	var/mob/living/brain/new_brain_brainmob = new_brain.brainmob
 	if(!new_brain_brainmob.key && !new_brain.decoy_override)
-		new_brain_brainmob.notify_ghost_cloning("Someone has put your brain in a MMI!", source = src)
+		new_brain_brainmob.notify_revival("Someone has put your brain in a MMI!", source = src)
 
 	set_brainmob(new_brain_brainmob)
 	new_brain.brainmob = null

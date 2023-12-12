@@ -1385,7 +1385,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /obj/machinery/vending/wallmed/directional/south,
 /turf/open/floor/wood,
 /area/shuttle/escape)

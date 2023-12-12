@@ -77,8 +77,8 @@ const ApprenticeSelection = (props) => {
               <img
                 src={resolveAsset(assetName)}
                 style={{
-                  'border-style': 'solid',
-                  'border-color': '#7e90a7',
+                  borderStyle: 'solid',
+                  borderColor: '#7e90a7',
                 }}
               />
             </Stack.Item>
@@ -90,7 +90,8 @@ const ApprenticeSelection = (props) => {
                   act('buy', {
                     school: schoolTitle,
                   })
-                }>
+                }
+              >
                 Select
               </Button>
             </Stack.Item>

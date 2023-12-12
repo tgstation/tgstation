@@ -240,8 +240,8 @@
 		. += span_info("The mounted bulb has burnt out. You can try replacing it with a new <b>flash</b>.")
 
 /obj/item/shield/energy
-	name = "energy combat shield"
-	desc = "A shield that reflects almost all energy projectiles, but is useless against physical attacks. It can be retracted, expanded, and stored anywhere."
+	name = "combat energy shield"
+	desc = "A hardlight shield capable of reflecting blocked energy projectiles, as well las providing well-rounded defense from most all other attacks."
 	icon_state = "eshield"
 	inhand_icon_state = "eshield"
 	w_class = WEIGHT_CLASS_TINY
@@ -261,6 +261,8 @@
 	var/active_throw_speed = 2
 	/// Whether clumsy people can transform this without side effects.
 	var/can_clumsy_use = FALSE
+	/// The chance for projectiles to be reflected by the shield
+	var/reflection_probability = 50
 
 /obj/item/shield/energy/Initialize(mapload)
 	. = ..()
@@ -275,10 +277,19 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/shield/energy/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	return FALSE
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return FALSE
+
+	if(attack_type == PROJECTILE_ATTACK)
+		var/obj/projectile/our_projectile = hitby
+
+		if(our_projectile.reflectable) //We handle this via IsReflect() instead.
+			final_block_chance = 0
+
+	return ..()
 
 /obj/item/shield/energy/IsReflect()
-	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) && prob(reflection_probability)
 
 /*
  * Signal proc for [COMSIG_TRANSFORMING_ON_TRANSFORM].
@@ -290,6 +301,14 @@
 		balloon_alert(user, active ? "activated" : "deactivated")
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+
+/obj/item/shield/energy/advanced
+	name = "advanced combat energy shield"
+	desc = "A hardlight shield capable of reflecting all energy projectiles, as well las providing well-rounded defense from most all other attacks. \
+		Often employed by Nanotrasen deathsquads."
+	icon_state = "advanced_eshield"
+	inhand_icon_state = "advanced_eshield"
+	reflection_probability = 100 //Guaranteed reflection
 
 /obj/item/shield/riot/tele
 	name = "telescopic shield"
