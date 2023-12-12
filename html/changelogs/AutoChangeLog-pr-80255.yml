@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "You should be able to move stamps on paper again."
