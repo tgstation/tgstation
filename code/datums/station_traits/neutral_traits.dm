@@ -141,60 +141,6 @@
 	var/new_colored_assistant_type = pick(subtypesof(/datum/colored_assistant) - get_configured_colored_assistant_type())
 	GLOB.colored_assistant = new new_colored_assistant_type
 
-/datum/station_trait/cargorilla
-	name = "Cargo Gorilla"
-	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 1
-	show_in_report = FALSE // Selective attention test. Did you spot the gorilla?
-
-	/// The gorilla we created, we only hold this ref until the round starts.
-	var/mob/living/basic/gorilla/cargorilla/cargorilla
-
-/datum/station_trait/cargorilla/New()
-	. = ..()
-	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(replace_cargo))
-
-/// Replace some cargo equipment and 'personnel' with a gorilla.
-/datum/station_trait/cargorilla/proc/replace_cargo(datum/source)
-	SIGNAL_HANDLER
-
-	var/mob/living/basic/sloth/cargo_sloth = GLOB.cargo_sloth
-	if(isnull(cargo_sloth))
-		return
-
-	cargorilla = new(cargo_sloth.loc)
-	cargorilla.name = cargo_sloth.name
-	// We do a poll on roundstart, don't let ghosts in early
-	INVOKE_ASYNC(src, PROC_REF(make_id_for_gorilla))
-	// hm our sloth looks funny today
-	qdel(cargo_sloth)
-
-	// monkey carries the crates, the age of robot is over
-	if(GLOB.cargo_ripley)
-		qdel(GLOB.cargo_ripley)
-
-/// Makes an ID card for the gorilla
-/datum/station_trait/cargorilla/proc/make_id_for_gorilla()
-	var/obj/item/card/id/advanced/cargo_gorilla/gorilla_id = new(cargorilla.loc)
-	gorilla_id.registered_name = cargorilla.name
-	gorilla_id.update_label()
-
-	cargorilla.put_in_hands(gorilla_id, del_on_fail = TRUE)
-
-/datum/station_trait/cargorilla/on_round_start()
-	if(!cargorilla)
-		return
-
-	addtimer(CALLBACK(src, PROC_REF(get_ghost_for_gorilla), cargorilla), 12 SECONDS) // give ghosts a bit of time to funnel in
-	cargorilla = null
-
-/// Get us a ghost for the gorilla.
-/datum/station_trait/cargorilla/proc/get_ghost_for_gorilla(mob/living/basic/gorilla/cargorilla/gorilla)
-	if(QDELETED(gorilla))
-		return
-
-	gorilla.poll_for_gorilla()
-
 /datum/station_trait/birthday
 	name = "Employee Birthday"
 	trait_type = STATION_TRAIT_NEUTRAL
