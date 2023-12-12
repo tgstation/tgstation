@@ -134,6 +134,10 @@
 	description = "I love showing off my mime pin!"
 	mood_change = 1
 
+/datum/mood_event/mime_vow //has an active vow of silence
+	description = "I've mastered the arts of speaking without language."
+	mood_change = 2
+
 /datum/mood_event/goodmusic
 	description = "There is something soothing about this music."
 	mood_change = 3

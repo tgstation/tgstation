@@ -16,6 +16,7 @@
 /datum/action/cooldown/spell/vow_of_silence/Grant(mob/grant_to)
 	. = ..()
 	ADD_TRAIT(grant_to, TRAIT_MIMING, "[type]")
+	grant_to.add_mood_event("vow", /datum/mood_event/mime_vow)
 
 /datum/action/cooldown/spell/vow_of_silence/Remove(mob/living/remove_from)
 	. = ..()
@@ -28,8 +29,10 @@
 		to_chat(cast_on, span_notice("You break your vow of silence."))
 		cast_on.log_message("broke [cast_on.p_their()] vow of silence.", LOG_GAME)
 		REMOVE_TRAIT(cast_on, TRAIT_MIMING, "[type]")
+		cast_on.clear_mood_event("vow")
 	else
 		to_chat(cast_on, span_notice("You make a vow of silence."))
 		cast_on.log_message("made a vow of silence.", LOG_GAME)
 		ADD_TRAIT(cast_on, TRAIT_MIMING, "[type]")
+		cast_on.add_mood_event("vow", /datum/mood_event/mime_vow)
 	cast_on.update_mob_action_buttons()
