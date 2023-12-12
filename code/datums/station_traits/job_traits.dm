@@ -120,23 +120,26 @@
 
 /datum/station_trait/job/bridge_assistant/New()
 	. = ..()
-	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(add_coffee))
+	RegisterSignal(SSatoms, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(add_coffeemaker))
 
 /datum/station_trait/job/bridge_assistant/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
 	. = ..()
 	overlays += "bridge_assistant"
 
-/datum/station_trait/job/bridge_assistant/proc/add_coffee(datum/source)
+/datum/station_trait/job/bridge_assistant/proc/add_coffeemaker(datum/source)
 	SIGNAL_HANDLER
 	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
 	if(!bridge)
 		return
-	if(locate(/obj/machinery/coffeemaker) in bridge)
-		return
+	var/list/possible_coffeemaker_positions = list(/area/station/command/bridge, /area/station/command/meeting_room)
+	for(var/possible_position in possible_coffeemaker_positions)
+		var/area/possible_area = GLOB.areas_by_type[possible_position]
+		if(possible_area && (locate(/obj/machinery/coffeemaker) in possible_area))
+			return
 	var/list/tables = list()
 	for(var/obj/structure/table/table in bridge)
 		var/turf/table_turf = get_turf(table)
-		if(table_turf.is_blocked_turf_ignore_climbable()) //dont spawn a coffeemaker on a fax machine or smth
+		if(table_turf.is_blocked_turf(ignore_atoms = list(table))) //dont spawn a coffeemaker on a fax machine or smth
 			continue
 		tables += table
 	if(!length(tables))
@@ -146,7 +149,7 @@
 	var/picked_turf = get_turf(picked_table)
 	if(length(tables))
 		var/another_table = pick(tables)
-		for(var/obj/thing_on_table in picked_turf)
+		for(var/obj/item/thing_on_table in picked_turf)
 			if(thing_on_table == picked_table)
 				continue
 			thing_on_table.forceMove(get_turf(another_table))
