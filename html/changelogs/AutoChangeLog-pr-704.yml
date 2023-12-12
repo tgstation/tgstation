@@ -1,4 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - config: "Microsoft did a change to how VSCode handles `editor.codeActionsOnSave`, and so now VSCode will auto-update its contents to the string equivalents. This PR commits said string equivalents to the repository to prevent developer confusion. Nothing has changed about how you develop SS13."

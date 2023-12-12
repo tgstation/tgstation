@@ -102,3 +102,11 @@
       process to obtain
   etherware-novice:
   - bugfix: no kickflipping rollerskates
+2023-12-12:
+  MichiRecRoom:
+  - config: Microsoft did a change to how VSCode handles `editor.codeActionsOnSave`,
+      and so now VSCode will auto-update its contents to the string equivalents. This
+      PR commits said string equivalents to the repository to prevent developer confusion.
+      Nothing has changed about how you develop SS13.
+  nednaZ:
+  - bugfix: Florida Man is Florida Man again
