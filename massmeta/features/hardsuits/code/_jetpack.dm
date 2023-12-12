@@ -70,6 +70,24 @@
 	air_contents = tempair_contents
 	return ..()
 
+/obj/item/tank/jetpack/suit/allow_thrust(num, use_fuel = TRUE)
+	if((num < 0.005 || air_contents.total_moles() < num))
+		turn_off(active_user)
+		return FALSE
+
+	// We've got the gas, it's chill
+	if(!use_fuel)
+		return TRUE
+
+	var/datum/gas_mixture/removed = remove_air(num)
+	if(removed.total_moles() < 0.005)
+		turn_off(active_user)
+		return FALSE
+
+	var/turf/T = get_turf(src)
+	T.assume_air(removed)
+	return TRUE
+
 /// Called when the jetpack moves, presumably away from the hardsuit.
 /obj/item/tank/jetpack/suit/proc/on_moved(atom/movable/source, atom/old_loc, movement_dir, forced, list/atom/old_locs)
 	SIGNAL_HANDLER
