@@ -4,7 +4,10 @@ SUBSYSTEM_DEF(sprite_accessories)
 	name = "Sprite Accessories"
 	flags = SS_NO_FIRE | SS_NO_INIT
 
-	// all of the lists are initialized as generated
+	// all of the lists are initialized as generated.
+	// they aren't statics because:
+	// A) it don't work in current framework (can probably do this should this ever be moved to Initialize())
+	// B) come on bud there's only one SS anyways
 
 	//Hairstyles
 	var/list/hairstyles_list //! stores /datum/sprite_accessory/hair indexed by name

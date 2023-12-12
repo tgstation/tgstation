@@ -16,34 +16,34 @@
  *	conversion in savefile.dm
  */
 
-/proc/init_sprite_accessory_subtypes(prototype, list/L, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
-	if(!istype(L))
-		L = list()
+/proc/init_sprite_accessory_subtypes(prototype, list/main, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
+	if(!istype(main))
+		main = list()
 	if(!istype(male))
 		male = list()
 	if(!istype(female))
 		female = list()
 
 	for(var/path in subtypesof(prototype))
-		var/datum/sprite_accessory/D = new path()
+		var/datum/sprite_accessory/accessory = new path
 
-		if(D.icon_state)
-			L[D.name] = D
+		if(accessory.icon_state)
+			main[accessory.name] = accessory
 		else
-			L += D.name
+			main += accessory.name
 
-		switch(D.gender)
+		switch(accessory.gender)
 			if(MALE)
-				male += D.name
+				male += accessory.name
 			if(FEMALE)
-				female += D.name
+				female += accessory.name
 			else
-				male += D.name
-				female += D.name
+				male += accessory.name
+				female += accessory.name
 	if(add_blank)
-		L[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
+		main[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
 
-	return L
+	return main
 
 /datum/sprite_accessory
 	/// The icon file the accessory is located in.
