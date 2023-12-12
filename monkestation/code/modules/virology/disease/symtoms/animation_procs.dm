@@ -74,8 +74,7 @@
 
 	if(isliving(src))
 		var/mob/living/living = src
-		living.Stun(stun_duration + total_time)
-	spawn(stun_duration + total_time)
+		living.Knockdown(stun_duration)
 		animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 #undef COLOR_MARTIX_BASE
