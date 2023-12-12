@@ -1,6 +1,6 @@
 /datum/job/security_dispatcher
 	title = JOB_SECURITY_DISPATCHER
-	description = "Relay distress calls from radio to Security and dispatch designated officers.\
+	description = "Relay distress calls from radio to Security and dispatch designated officers. \
 		Monitor crime scenes with sensors and cameras and report situational details."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	department_head = list(JOB_HEAD_OF_SECURITY)

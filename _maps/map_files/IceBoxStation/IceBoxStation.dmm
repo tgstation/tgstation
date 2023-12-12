@@ -2791,6 +2791,14 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"aTQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red/full,
+/obj/machinery/holopad,
+/turf/open/floor/iron/dark/textured_large,
+/area/station/security/dispatch)
 "aTT" = (
 /obj/structure/closet/toolcloset,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -10977,15 +10985,15 @@
 /obj/structure/chair/office{
 	dir = 4
 	},
-/obj/effect/landmark/start/security_officer,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
+/obj/effect/landmark/start/security_dispatcher,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "dlt" = (
 /obj/effect/turf_decal/weather/snow/corner{
 	dir = 8
@@ -12920,6 +12928,14 @@
 /obj/effect/turf_decal/tile/dark_blue/diagonal_edge,
 /turf/open/floor/iron/dark/diagonal,
 /area/station/engineering/atmos/storage)
+"dPs" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "dPy" = (
 /obj/machinery/camera/directional/west{
 	c_tag = "Xenobiology Kill Chamber";
@@ -16021,6 +16037,13 @@
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock)
+"ePP" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "ePR" = (
 /obj/structure/railing{
 	dir = 6
@@ -16301,38 +16324,12 @@
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "eUR" = (
-/obj/structure/table,
-/obj/machinery/button/door/directional/west{
-	id = "briggate";
-	name = "Brig Shutters";
-	pixel_x = -6;
-	pixel_y = -2
+/obj/machinery/computer/prisoner/management{
+	dir = 1
 	},
-/obj/machinery/button/flasher{
-	id = "brigentry";
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/machinery/button/door/directional/west{
-	id = "innerbrig";
-	name = "Brig Interior Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = 6;
-	pixel_y = 9;
-	req_access = list("security")
-	},
-/obj/machinery/button/door/directional/west{
-	id = "outerbrig";
-	name = "Brig Exterior Doors Control";
-	normaldoorcontrol = 1;
-	pixel_x = 6;
-	pixel_y = -2;
-	req_access = list("security")
-	},
-/obj/item/radio/intercom/prison/directional/north,
-/obj/effect/turf_decal/tile/red/full,
-/turf/open/floor/iron/dark/textured_large,
-/area/station/security/brig/entrance)
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "eUW" = (
 /obj/structure/chair/stool/directional/south,
 /obj/effect/landmark/start/janitor,
@@ -24506,7 +24503,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "hAm" = (
 /turf/open/floor/iron/white/side{
 	dir = 4
@@ -28656,11 +28653,13 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "iPT" = (
-/obj/machinery/airalarm/directional/west,
-/turf/open/floor/iron/dark/textured_edge{
-	dir = 4
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/cable,
+/obj/machinery/camera/motion/directional/west{
+	c_tag = "Security - Dispatch"
 	},
-/area/station/security/brig/entrance)
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "iQf" = (
 /obj/machinery/door/airlock/external{
 	name = "Service Hall Exit"
@@ -31623,18 +31622,21 @@
 	id = "briggate";
 	name = "Security Shutters"
 	},
-/obj/item/restraints/handcuffs,
-/obj/item/radio/off,
 /obj/structure/cable,
 /obj/machinery/door/window/brigdoor/left/directional/west{
-	name = "Brig Reception";
-	req_access = list("security")
+	name = "Dispatch Desk";
+	req_access = list("security_dispatcher")
 	},
 /obj/machinery/door/window/right/directional/east{
-	name = "Brig Reception"
+	name = "Dispatch Desk"
 	},
+/obj/item/paper_bin{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/pen,
 /turf/open/floor/iron/dark,
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "jMc" = (
 /obj/machinery/ai_slipper{
 	uses = 10
@@ -31948,7 +31950,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/plating,
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "jRd" = (
 /obj/effect/spawner/random/vending/snackvend,
 /obj/machinery/light/small/directional/west,
@@ -32528,6 +32530,14 @@
 /obj/effect/decal/cleanable/food/pie_smudge,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/fore)
+"kbo" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Dispatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/dispatch,
+/turf/open/floor/iron,
+/area/station/security/dispatch)
 "kbp" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/fluff/fokoff_sign,
@@ -34181,21 +34191,21 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "kxp" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Security Desk"
-	},
 /obj/machinery/door/poddoor/shutters/preopen{
 	id = "briggate";
 	name = "Security Shutters"
 	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/firedoor,
 /obj/effect/turf_decal/tile/red/full,
+/obj/machinery/door/airlock/security/glass{
+	name = "Security Dispatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/security/dispatch,
 /turf/open/floor/iron/dark/smooth_large,
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "kxs" = (
 /obj/machinery/light/directional/north,
 /turf/open/floor/iron,
@@ -39257,12 +39267,12 @@
 	},
 /area/station/science/research)
 "lYz" = (
-/obj/machinery/computer/records/security,
-/obj/machinery/light_switch/directional/north,
-/turf/open/floor/iron/dark/textured_edge{
-	dir = 8
+/obj/machinery/computer/crew{
+	dir = 1
 	},
-/area/station/security/brig/entrance)
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "lYR" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -40290,17 +40300,12 @@
 /turf/open/floor/wood,
 /area/station/command/meeting_room)
 "mqG" = (
-/obj/machinery/computer/warrant{
-	dir = 4
-	},
-/obj/machinery/camera/motion/directional/west{
-	c_tag = "Security - Checkpoint"
-	},
 /obj/structure/extinguisher_cabinet/directional/west,
+/obj/structure/closet/secure_closet/dispatcher,
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "mqO" = (
 /obj/machinery/power/port_gen/pacman,
 /turf/open/floor/plating,
@@ -45560,7 +45565,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/red/full,
 /turf/open/floor/iron/dark/textured_large,
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "nTA" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -46749,6 +46754,13 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
 /area/station/commons/vacant_room/office)
+"onR" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/landmark/start/security_dispatcher,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "ooa" = (
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/wood,
@@ -48386,19 +48398,38 @@
 /turf/open/floor/plating,
 /area/station/maintenance/solars/port/fore)
 "oLW" = (
-/obj/machinery/computer/security/telescreen{
-	desc = "Used to access the various cameras on the station.";
-	dir = 1;
-	layer = 3.1;
-	name = "Security Camera Monitor";
-	network = list("ss13");
-	pixel_y = 2
-	},
 /obj/structure/table,
+/obj/machinery/button/door/directional/west{
+	id = "briggate";
+	name = "Brig Shutters";
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/machinery/button/door/directional/west{
+	id = "outerbrig";
+	name = "Brig Exterior Doors Control";
+	normaldoorcontrol = 1;
+	pixel_x = 6;
+	pixel_y = -2;
+	req_access = list("security")
+	},
+/obj/machinery/button/door/directional/west{
+	id = "innerbrig";
+	name = "Brig Interior Doors Control";
+	normaldoorcontrol = 1;
+	pixel_x = 6;
+	pixel_y = 9;
+	req_access = list("security")
+	},
+/obj/machinery/button/flasher{
+	id = "brigentry";
+	pixel_x = -6;
+	pixel_y = 9
+	},
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 8
 	},
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "oMa" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/effect/turf_decal/weather/snow/corner{
@@ -50267,7 +50298,7 @@
 /turf/open/floor/iron/dark/textured_edge{
 	dir = 4
 	},
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "ppo" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -50454,7 +50485,7 @@
 /area/station/medical/chemistry)
 "psN" = (
 /turf/closed/wall/r_wall,
-/area/station/security/brig/entrance)
+/area/station/security/dispatch)
 "psP" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -52251,27 +52282,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/fitness)
-"pTd" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 4;
-	id = "briggate";
-	name = "Security Shutters"
-	},
-/obj/item/paper_bin{
-	pixel_x = -3;
-	pixel_y = 7
-	},
-/obj/item/pen,
-/obj/machinery/door/window/brigdoor/right/directional/west{
-	name = "Brig Reception";
-	req_access = list("security")
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Brig Reception"
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/brig/entrance)
 "pTf" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/cable,
@@ -58106,6 +58116,16 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/department/chapel)
+"rIa" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "briggate";
+	name = "Security Shutters"
+	},
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/dispatch)
 "rIc" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
@@ -63602,6 +63622,14 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/icemoon/underground/explored)
+"tum" = (
+/obj/machinery/computer/records/security,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "tur" = (
 /turf/open/floor/iron/cafeteria{
 	dir = 8
@@ -65019,13 +65047,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/fore)
 "tPW" = (
-/obj/machinery/door/airlock/security/glass{
-	name = "Secure Walkway"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/security/general,
-/obj/machinery/door/firedoor,
-/turf/open/floor/iron,
-/area/station/security/brig/entrance)
+/obj/machinery/light/small/directional/west,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "tPY" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
@@ -71091,6 +71116,15 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,
 /area/mine/production)
+"vQB" = (
+/obj/machinery/light_switch/directional/north,
+/obj/machinery/computer/security,
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 4
+	},
+/obj/machinery/status_display/evac/directional/east,
+/turf/open/floor/iron/dark,
+/area/station/security/dispatch)
 "vQG" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 10
@@ -237544,8 +237578,8 @@ lbk
 sDl
 sDl
 sDl
-sDl
-sDl
+psN
+rIa
 psN
 psN
 psN
@@ -237801,8 +237835,8 @@ gIL
 esK
 esK
 esK
-esK
-esK
+kbo
+ePP
 tPW
 iPT
 ppl
@@ -238058,11 +238092,11 @@ lbk
 sDl
 sDl
 sDl
-sDl
-sDl
 psN
+tum
+onR
 eUR
-nTp
+aTQ
 nTp
 kxp
 kQc
@@ -238315,9 +238349,9 @@ mfH
 sDl
 sDl
 sDl
-sDl
-sDl
 psN
+vQB
+dPs
 lYz
 dkY
 oLW
@@ -238572,10 +238606,10 @@ mfH
 sDl
 sDl
 sDl
-sDl
-sDl
 psN
-pTd
+psN
+psN
+jQU
 jLZ
 jQU
 psN

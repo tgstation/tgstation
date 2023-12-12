@@ -140,6 +140,25 @@
 	new /obj/item/clothing/accessory/armband/medblue(src)
 	new /obj/item/encryptionkey/headset_med(src)
 
+/obj/structure/closet/secure_closet/dispatcher
+	name = "security dispatcher's locker"
+	icon_state = "warden"
+	req_access = list(ACCESS_SECURITY_DISPATCHER)
+
+/obj/structure/closet/secure_closet/dispatcher/PopulateContents()
+	..()
+	new /obj/item/radio/headset/headset_sec/alt(src)
+	new /obj/item/clothing/under/rank/security/dispatcher(src)
+	new /obj/item/clothing/under/rank/security/dispatcher/skirt(src)
+	new /obj/item/clothing/suit/armor/vest/secjacket/dispatcher(src)
+	new /obj/item/clothing/glasses/hud/security(src)
+	new /obj/item/storage/belt/security/full(src)
+	new /obj/item/flashlight/seclite(src)
+	new /obj/item/clothing/neck/link_scryer/loaded(src)
+	new /obj/item/modular_computer/laptop/preset/civilian(src)
+	new /obj/item/radio/off(src)
+	new /obj/item/screwdriver(src)
+
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"
 	icon_state = "cabinet"
