@@ -1,0 +1,6 @@
+author: "Watermelon914"
+delete-after: True
+changes:
+  - balance: "Organs can now be preserved by putting them in freezing temperatures."
+  - balance: "Morgue trays and freezers will now cool down the contents placed inside of them."
+  - balance: "Morgue trays will now properly display if someone stored within them is revivable and make periodic beeps every minute."
