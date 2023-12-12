@@ -238,6 +238,11 @@
 	ai_controller.set_blackboard_key(BB_SONG_INSTRUMENT, held_guitar)
 	update_appearance()
 
+//Monkestation edit: Removes a harddel
+/mob/living/basic/mining/mook/worker/bard/Destroy()
+	held_guitar = null
+	..()
+
 /mob/living/basic/mining/mook/worker/tribal_chief
 	name = "tribal chief"
 	desc = "Acknowledge him!"
