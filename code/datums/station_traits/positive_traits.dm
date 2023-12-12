@@ -311,6 +311,7 @@
 		/datum/job/roboticist = /obj/item/organ/internal/cyberimp/eyes/hud/diagnostic,
 		/datum/job/scientist = /obj/item/organ/internal/ears/cybernetic,
 		/datum/job/security_officer = /obj/item/organ/internal/cyberimp/arm/flash,
+		/datum/job/security_dispatcher = /obj/item/organ/internal/tongue/robot, //Overwatch reports a miscount
 		/datum/job/shaft_miner = /obj/item/organ/internal/monster_core/rush_gland,
 		/datum/job/station_engineer = /obj/item/organ/internal/cyberimp/arm/toolset,
 		/datum/job/virologist = /obj/item/organ/internal/lungs/cybernetic/tier2,

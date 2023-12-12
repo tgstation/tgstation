@@ -7268,6 +7268,7 @@
 "bOZ" = (
 /obj/effect/turf_decal/tile/red/half,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor4/fore)
 "bPh" = (
@@ -15103,7 +15104,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
-/obj/effect/turf_decal/trimline/red/filled/corner,
+/obj/effect/turf_decal/tile/red/half,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor4/fore)
 "dTJ" = (
@@ -36900,6 +36901,7 @@
 	dir = 4
 	},
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/side{
 	dir = 1
 	},
@@ -41647,6 +41649,7 @@
 /area/station/security/brig)
 "kTm" = (
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/effect/turf_decal/trimline/red/filled/corner,
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor4/fore)
 "kTz" = (
@@ -59631,8 +59634,9 @@
 "pzw" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red/half,
+/obj/effect/turf_decal/trimline/red/filled/corner{
+	dir = 8
+	},
 /turf/open/floor/iron/dark/side,
 /area/station/hallway/floor4/fore)
 "pzx" = (
@@ -316581,7 +316585,7 @@ eHr
 wGb
 mvw
 dfm
-moj
+pIG
 cBl
 xFp
 dGF
@@ -317100,7 +317104,7 @@ lKN
 oPO
 oPO
 lKN
-okJ
+qEA
 rRU
 cwX
 apg
@@ -317352,7 +317356,7 @@ btT
 hIb
 uSW
 dfm
-cjo
+moj
 oPO
 tXU
 jgG
@@ -317866,7 +317870,7 @@ liQ
 liQ
 aZX
 dfm
-pIG
+cjo
 oPO
 nVW
 efz
@@ -318123,7 +318127,7 @@ cAO
 liQ
 gxn
 dfm
-cjo
+ogl
 oPO
 sTs
 ocR
