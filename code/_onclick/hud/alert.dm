@@ -831,7 +831,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			left_click_text = "Enter"
 		context[SCREENTIP_CONTEXT_LMB] = "[left_click_text] Poll"
 		if(poll.ignoring_category)
-			context[SCREENTIP_CONTEXT_ALT_LMB] = "Never For This Round"
+			var/selected_never = FALSE
+			if(owner.ckey in GLOB.poll_ignore[poll.ignoring_category])
+				selected_never = TRUE
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "[selected_never ? "Cancel " : ""]Never For This Round"
 		if(poll.jump_to_me && isobserver(owner))
 			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Jump To"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -842,31 +845,31 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(timeleft <= 0)
 			return PROCESS_KILL
 		cut_overlay(time_left_overlay)
-		var/obj/O = new
-		O.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 8px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>"
-		var/matrix/M = new
-		M.Translate(4, 16)
-		O.transform = M
-		time_left_overlay = image(O)
+		var/obj/abstract_object = new
+		abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 8px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>"
+		var/matrix/move_matrix = new
+		move_matrix.Translate(4, 16)
+		abstract_object.transform = move_matrix
+		time_left_overlay = image(abstract_object)
 		time_left_overlay.plane = plane
 		add_overlay(time_left_overlay)
-		qdel(O)
+		qdel(abstract_object)
 	if(poll)
 		if(!role_name_overlay)
 			var/only_question = poll.role ? poll.role : "?"
-			var/obj/O = new
-			O.maptext = "<span style='font-family: \"Small Fonts\"; text-align: right; font-size: 7px; color: #B3E3FC; -dm-text-outline: 1px black'>[full_capitalize(only_question)]</span>"
-			O.maptext_width = 128
-			var/matrix/M = new
-			M.Translate(-128, 0)
-			O.transform = M
-			role_name_overlay = image(O)
+			var/obj/abstract_object = new
+			abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; text-align: right; font-size: 7px; color: #B3E3FC; -dm-text-outline: 1px black'>[full_capitalize(only_question)]</span>"
+			abstract_object.maptext_width = 128
+			var/matrix/move_matrix = new
+			move_matrix.Translate(-128, 0)
+			abstract_object.transform = move_matrix
+			role_name_overlay = image(abstract_object)
 			role_name_overlay.plane = plane
 			add_overlay(role_name_overlay)
-			qdel(O)
+			qdel(abstract_object)
 		var/num_same = 1
-		for(var/datum/candidate_poll/P2 in SSpolling.currently_polling)
-			if(P2 != poll && P2.hash == poll.hash && !P2.finished)
+		for(var/datum/candidate_poll/other_poll in SSpolling.currently_polling)
+			if(other_poll != poll && other_poll.hash == poll.hash && !other_poll.finished)
 				num_same++
 		display_stacks(num_same)
 		update_signed_up_alert()
@@ -937,29 +940,29 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	cut_overlay(candidates_num_overlay)
 	if(!length(poll.signed_up))
 		return
-	var/obj/O = new
-	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: aqua; -dm-text-outline: 1px black'>[length(poll.signed_up)]</span>"
-	var/matrix/M = new
-	M.Translate(18, 2)
-	O.transform = M
-	candidates_num_overlay = image(O)
+	var/obj/abstract_object = new
+	abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: aqua; -dm-text-outline: 1px black'>[length(poll.signed_up)]</span>"
+	var/matrix/move_matrix = new
+	move_matrix.Translate(18, 2)
+	abstract_object.transform = move_matrix
+	candidates_num_overlay = image(abstract_object)
 	candidates_num_overlay.plane = plane
 	add_overlay(candidates_num_overlay)
-	qdel(O)
+	qdel(abstract_object)
 
 /atom/movable/screen/alert/poll_alert/proc/display_stacks(stacks = 1)
 	cut_overlay(stacks_overlay)
 	if(stacks <= 1)
 		return
-	var/obj/O = new
-	O.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: yellow; -dm-text-outline: 1px black'>[stacks]x</span>"
-	var/matrix/M = new
-	M.Translate(3, 2)
-	O.transform = M
-	stacks_overlay = image(O)
+	var/obj/abstract_object = new
+	abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: yellow; -dm-text-outline: 1px black'>[stacks]x</span>"
+	var/matrix/move_matrix = new
+	move_matrix.Translate(3, 2)
+	abstract_object.transform = move_matrix
+	stacks_overlay = image(abstract_object)
 	stacks_overlay.plane = plane
 	add_overlay(stacks_overlay)
-	qdel(O)
+	qdel(abstract_object)
 
 //OBJECT-BASED
 
