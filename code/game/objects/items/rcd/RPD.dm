@@ -220,7 +220,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/bluespace
 	name = "bluespace rapid pipe dispenser"
 	desc = "A device used to rapidly pipe things. This one features a bluespace position matrix, allowing for piping from a distance."
-	color = "#04BCF4"
+	icon_state = "brpd"
+	worn_icon_state = "BRPD"
 	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*37.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*18.75, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.5)
 	works_from_distance = TRUE
 
