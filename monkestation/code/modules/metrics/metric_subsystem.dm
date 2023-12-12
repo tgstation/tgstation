@@ -36,7 +36,7 @@ SUBSYSTEM_DEF(metrics)
 		var/list/data = SS.get_metrics()
 		subsystem_insert += list(list(
 			"datetime" = "NOW()",
-			"round_id_subsystem" = text2num(GLOB.round_id), //NUM
+			"round_id" = text2num(GLOB.round_id), //NUM
 			"ss_id" = SS.ss_id, //VARSET
 			"relation_id_SS" = data["relation_id_SS"], //VARSET
 			"cost" = data["cost"], //DECIMAL
@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(metrics)
 			var/list/custom_data = data["custom"]
 			for(var/item in custom_data)
 				subsystem_extra_insert += list(list(
-					"round_id_extra" = text2num(GLOB.round_id), //NUM
+					"round_id" = text2num(GLOB.round_id), //NUM
 					"ss_id" = SS.ss_id, //VARSET
 					"relation_id_SS" = data["relation_id_SS"], //VARSET
 					"ss_value" = json_encode(list("name" = item, "value" = custom_data[item])), //LONG STRING
