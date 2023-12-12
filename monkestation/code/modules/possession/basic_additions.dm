@@ -105,11 +105,11 @@
 	if(number > 0)
 		dexterous = TRUE
 		advanced_simple = TRUE
-		add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
+		add_traits(list(TRAIT_CAN_HOLD_ITEMS, TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
 	else
 		dexterous = FALSE
 		advanced_simple = FALSE
-		remove_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
+		remove_traits(list(TRAIT_CAN_HOLD_ITEMS, TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_LITERATE), ROUNDSTART_TRAIT)
 
 //general disarm proc
 /mob/living/proc/disarm(mob/living/carbon/target)
@@ -223,8 +223,6 @@
 /mob/living/basic/perform_hand_swap(hand_index)
 	. = ..()
 	if(!isdrone(src))
-		if(!.)
-			return
 		if(!dexterous)
 			return
 		if(!hand_index)
