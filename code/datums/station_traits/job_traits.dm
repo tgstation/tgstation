@@ -130,7 +130,7 @@
 /datum/station_trait/job/bridge_assistant/proc/add_coffeemaker(datum/source)
 	SIGNAL_HANDLER
 	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
-	if(!bridge) //no bridge, what will he assist?
+	if(isnull(bridge)) //no bridge, what will he assist?
 		return
 	var/list/possible_coffeemaker_positions = list(/area/station/command/bridge, /area/station/command/meeting_room)
 	for(var/possible_position in possible_coffeemaker_positions) //don't spawn a coffeemaker if there is already one on the bridge
