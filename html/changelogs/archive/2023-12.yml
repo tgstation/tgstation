@@ -354,3 +354,31 @@
   - rscdel: All buckets and cleanbots are back to being blue
   xXPawnStarrXx:
   - bugfix: fixed big rice pans getting worse with cooking.
+2023-12-12:
+  Ghommie:
+  - bugfix: Goldgrubs no longer block death bolts, even while alive.
+  Melbert:
+  - bugfix: When using an item on a mob, you will always attempt to fix wounds AFTER
+      surgery, BUT BEFORE the item's own interactions. As an example, this means using
+      a mesh on a mob will attempt to progress surgery first, then attempt to fix
+      any burn wounds, then heal burn damage.
+  OrionTheFox:
+  - image: The Head of Security's "Sturdy Shako" hat now uses the same gold color
+      as his other hat
+  Rhials:
+  - qol: Blackout drunkard personalities will now recieve a "you are about to sober
+      up" warning at the 60/40/20 second mark, instead of repeatedly at the 50 second
+      mark.
+  - bugfix: Sunset Saloon virtual domain should no longer sometimes spawn with holes
+      in the floor.
+  SyncIt21:
+  - bugfix: no runtime when unwrenching Atmos components
+  - spellcheck: fixed typo in attack chain define comment
+  jlsnow301:
+  - bugfix: Painting should be working again.
+  - bugfix: 'DNA Sequencer UI: You should be able to cycle in reverse with RMB again.'
+  - bugfix: Dropdowns should show what you've selected again.
+  vinylspiders:
+  - bugfix: fixes some AI runtimes that were caused by the pawn becoming null
+  vorpal-void:
+  - bugfix: fixed outdated item description

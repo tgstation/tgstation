@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "no runtime when unwrenching Atmos components"
-  - spellcheck: "fixed typo in attack chain define comment"
