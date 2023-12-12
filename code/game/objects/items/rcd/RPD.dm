@@ -272,14 +272,24 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
-/obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
+/obj/item/pipe_dispenser/pre_attack_secondary(obj/attacked_object, mob/user, params)
+	. = ..()
+	if(.)
+		return
+	if(!works_from_distance && !user.Adjacent(attacked_object))
+		return
+	return copy_piping_color_layer(attacked_object, user, works_from_distance)
+
+/obj/item/pipe_dispenser/proc/copy_piping_color_layer(obj/machinery/atmospherics/target, mob/user, bluespace = FALSE)
 	if(!istype(target, /obj/machinery/atmospherics))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return
+	if(bluespace)
+		user.Beam(target, icon_state = "rped_upgrade", time = 1)
 	if(target.pipe_color && target.piping_layer)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
 		piping_layer = target.piping_layer
-		balloon_alert(user, "color/layer copied")
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		balloon_alert(user, "set to [paint_color] color and layer [piping_layer]")
+		return TRUE
 
 /obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
@@ -413,7 +423,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	. = ..()
 	if(.)
 		return
-
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return
 	return rpd_attack_action(atom_for_attack, the_user, params, works_from_distance)
 
 /obj/item/pipe_dispenser/proc/rpd_attack_action(atom/atom_to_attack, mob/user, params, bluespace = FALSE)
@@ -540,6 +551,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if(!do_after(user, atmos_build_speed, target = attack_target))
 						if(!isnull(beam))
 							qdel(beam)
+						return FALSE
 					playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 					var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(attack_target))
 					new_meter.setAttachLayer(piping_layer)
@@ -554,6 +566,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 					if(!do_after(user, atmos_build_speed, target = attack_target))
 						if(!isnull(beam))
 							qdel(beam)
+						return FALSE
 					if(recipe.all_layers == FALSE && (piping_layer == 1 || piping_layer == 5))//double check to stop cheaters (and to not waste time waiting for something that can't be placed)
 						balloon_alert(user, "can't build on this layer!")
 						return
@@ -593,6 +606,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(!do_after(user, disposal_build_speed, target = attack_target))
 					if(!isnull(beam))
 						qdel(beam)
+					return FALSE
 				var/obj/structure/disposalconstruct/new_disposals_segment = new (attack_target, queued_p_type, queued_p_dir, queued_p_flipped)
 
 				if(!new_disposals_segment.can_place())
@@ -627,6 +641,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				if(!do_after(user, transit_build_speed, target = attack_target))
 					if(!isnull(beam))
 						qdel(beam)
+					return FALSE
 				playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 				if(queued_p_type == /obj/structure/c_transit_tube_pod)
 					var/obj/structure/c_transit_tube_pod/pod = new /obj/structure/c_transit_tube_pod(attack_target)
@@ -656,6 +671,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	return ..()
 
 /obj/item/pipe_dispenser/afterattack(obj/attacked_object, mob/living/user, adjacent, params)
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		return
 	if(!range_check(attacked_object, user))
 		return
 	if(works_from_distance)
@@ -663,6 +680,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 			balloon_alert(user, "can't reach!")
 			return
 		rpd_attack_action(attacked_object, user, bluespace = !adjacent)
+	return ..()
+
+/obj/item/pipe_dispenser/afterattack_secondary(obj/attacked_object, mob/user, proximity_flag, click_parameters)
+	if(!range_check(attacked_object, user))
+		return
+	if(works_from_distance)
+		if(check_obstacles(get_turf(src), get_turf(attacked_object)))
+			balloon_alert(user, "can't reach!")
+			return
+		copy_piping_color_layer(attacked_object, user, bluespace = !proximity_flag)
 	return ..()
 
 /obj/item/pipe_dispenser/proc/range_check(atom/target, mob/user)
