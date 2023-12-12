@@ -48,7 +48,6 @@ export const TextArea = forwardRef(
       dontUseTabForIndent,
       maxLength,
       noborder,
-      onBlur,
       onChange,
       placeholder,
       scrollbar,
