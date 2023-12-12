@@ -1,0 +1,4 @@
+author: "Buyrcsp2"
+delete-after: True
+changes:
+  - bugfix: "Bird Phobia now triggers on geese"
