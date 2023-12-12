@@ -115,5 +115,10 @@
 #include "code\__DEFINES\text.dm"
 #include "code\datums\brain_damage\mild.dm"
 #include "code\datums\quirks\positive_quirks\augmented.dm"
+#include "code\modules\projectiles\guns\ballistic\rifle.dm"
+#include "code\game\objects\items\storage\toolbox.dm"
+#include "code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
+#include "code\modules\projectiles\ammunition\ballistic\rifle.dm"
+#include "code\modules\projectiles\projectile\bullets\rifle.dm"
 //features
 #include "features\additional_circuit\includes.dm"
