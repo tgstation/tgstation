@@ -62745,6 +62745,7 @@
 	name = "Dispatch"
 	},
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/dispatch,
 /turf/open/floor/iron,
 /area/station/security/dispatch)
 "pJr" = (
@@ -63136,7 +63137,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/landmark/event_spawn,
 /turf/open/floor/iron,
 /area/station/security/dispatch)
 "pNA" = (
@@ -97074,6 +97074,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
+"ylu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/iron,
+/area/station/security/dispatch)
 "ylT" = (
 /obj/machinery/newscaster/directional/west,
 /obj/effect/decal/cleanable/dirt,
@@ -147095,7 +147101,7 @@ hOz
 ucz
 gxx
 jwG
-kHZ
+ylu
 nIb
 dth
 hmi

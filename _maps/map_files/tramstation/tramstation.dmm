@@ -37108,6 +37108,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/dispatch,
 /turf/open/floor/iron/dark,
 /area/station/security/dispatch)
 "mbJ" = (
@@ -47456,6 +47457,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/security/dispatch,
 /turf/open/floor/iron/dark,
 /area/station/security/dispatch)
 "pTP" = (
