@@ -29,8 +29,8 @@
 			return "#000000"
 
 /proc/random_underwear(gender)
-	if(!SSsprite_accessories.underwear_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, SSsprite_accessories.underwear_list, SSsprite_accessories.underwear_m, SSsprite_accessories.underwear_f)
+	if(length(SSsprite_accessories.underwear_list) == 0)
+		CRASH("No underwear to choose from!")
 	switch(gender)
 		if(MALE)
 			return pick(SSsprite_accessories.underwear_m)
@@ -40,8 +40,8 @@
 			return pick(SSsprite_accessories.underwear_list)
 
 /proc/random_undershirt(gender)
-	if(!SSsprite_accessories.undershirt_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, SSsprite_accessories.undershirt_list, SSsprite_accessories.undershirt_m, SSsprite_accessories.undershirt_f)
+	if(length(SSsprite_accessories.undershirt_list) == 0)
+		CRASH("No undershirts to choose from!")
 	switch(gender)
 		if(MALE)
 			return pick(SSsprite_accessories.undershirt_m)
@@ -51,8 +51,8 @@
 			return pick(SSsprite_accessories.undershirt_list)
 
 /proc/random_socks()
-	if(!SSsprite_accessories.socks_list.len)
-		init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, SSsprite_accessories.socks_list)
+	if(length(SSsprite_accessories.socks_list) == 0)
+		CRASH("No socks to choose from!")
 	return pick(SSsprite_accessories.socks_list)
 
 /proc/random_backpack()
