@@ -139,9 +139,9 @@
 
 /datum/bodypart_overlay/mutant/wings/functional/get_global_feature_list()
 	if(wings_open)
-		return SSsprite_accessories.wings_open_list
+		return SSaccessories.wings_open_list
 	else
-		return SSsprite_accessories.wings_list
+		return SSaccessories.wings_list
 
 ///Update our wingsprite to the open wings variant
 /datum/bodypart_overlay/mutant/wings/functional/proc/open_wings()

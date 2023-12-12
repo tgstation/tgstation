@@ -1,6 +1,6 @@
 /// Storage subsystem that just holds lists of sprite accessories for accession in generating said sprites.
 /// A sprite accessory is something that we add to a human sprite to make them look different. This is hair, facial hair, underwear, mutant bits, etc.
-SUBSYSTEM_DEF(sprite_accessories)
+SUBSYSTEM_DEF(accessories) // just 'accessories' for brevity
 	name = "Sprite Accessories"
 	flags = SS_NO_FIRE | SS_NO_INIT
 
@@ -57,7 +57,7 @@ SUBSYSTEM_DEF(sprite_accessories)
 /// Sets up all of the lists for later utilization. We keep this stuff out of GLOB due to the size of the data.
 /// In an ideal world we could just do this on our subsystem Initialize() but there are too many things that are immediately dependent on this in the roundstart initialization
 /// which means that we have to time it so that it invokes with the rest of the GLOB datumized lists. Great apologies.
-/// This proc lives on the subsytem instead of being a global proc so we don't have to prepend SSsprite_accessories to the list every time it really gets annoying
+/// This proc lives on the subsytem instead of being a global proc so we don't have to prepend SSaccessories to the list every time it really gets annoying
 /datum/controller/subsystem/sprite_accessories/proc/setup_lists()
 	//hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hairstyles_list, hairstyles_male_list, hairstyles_female_list)
