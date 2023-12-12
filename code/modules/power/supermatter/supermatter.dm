@@ -507,8 +507,12 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	if(delamination_strategy)
 		. += delamination_strategy.overlays(src)
 	if(holiday_lights)
-		. += mutable_appearance(icon, "holiday_lights")
-		. += emissive_appearance(icon, "holiday_lights_e", src, alpha = src.alpha)
+		if(istype(src, /obj/machinery/power/supermatter_crystal/shard))
+			. += mutable_appearance(icon, "holiday_lights_shard")
+			. += emissive_appearance(icon, "holiday_lights_shard_e", src, alpha = src.alpha)
+		else
+			. += mutable_appearance(icon, "holiday_lights")
+			. += emissive_appearance(icon, "holiday_lights_e", src, alpha = src.alpha)
 	return .
 
 /obj/machinery/power/supermatter_crystal/update_icon(updates)
@@ -1040,16 +1044,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 /obj/machinery/power/supermatter_crystal/proc/holiday_lights()
 	holiday_lights = TRUE
-	RegisterSignal(src, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(holiday_attackby))
+	RegisterSignal(src, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(holiday_item_interaction))
 	update_appearance()
 
 /// Consume the santa hat and add it as an overlay
-/obj/machinery/power/supermatter_crystal/proc/holiday_attackby(source, mob/living/user, obj/item/item, list/modifiers)
+/obj/machinery/power/supermatter_crystal/proc/holiday_item_interaction(source, mob/living/user, obj/item/item, list/modifiers)
 	SIGNAL_HANDLER
 	if(istype(item, /obj/item/clothing/head/costume/santa))
 		QDEL_NULL(item)
 		RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(holiday_hat_examine))
-		add_overlay(mutable_appearance(icon, "santa_hat"))
+		if(istype(src, /obj/machinery/power/supermatter_crystal/shard))
+			add_overlay(mutable_appearance(icon, "santa_hat_shard"))
+		else
+			add_overlay(mutable_appearance(icon, "santa_hat"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	return NONE
 

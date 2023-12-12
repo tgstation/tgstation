@@ -22,9 +22,6 @@
 	plane = GAME_PLANE_UPPER
 	moveable = TRUE
 
-/obj/machinery/power/supermatter_crystal/shard/holiday_lights()
-	return
-
 /// Shard SM with it's processing disabled.
 /obj/machinery/power/supermatter_crystal/shard/hugbox
 	name = "anchored supermatter shard"
