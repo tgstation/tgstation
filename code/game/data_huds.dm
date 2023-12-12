@@ -315,6 +315,12 @@ Security HUDs! Basic mode shows only the job.
 	var/image/holder = hud_list[WANTED_HUD]
 	var/icon/sec_icon = icon(icon, icon_state, dir)
 	holder.pixel_y = sec_icon.Height() - world.icon_size
+
+	if (HAS_TRAIT(src, TRAIT_ALWAYS_WANTED))
+		holder.icon_state = "hudwanted"
+		set_hud_image_active(WANTED_HUD)
+		return
+
 	var/perp_name = get_face_name(get_id_name(""))
 
 	if(!perp_name || !GLOB.manifest)
