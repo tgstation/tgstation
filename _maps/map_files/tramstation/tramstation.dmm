@@ -15094,10 +15094,12 @@
 "ehd" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/window/brigdoor/right/directional/east{
-	name = "Security Front Desk";
+	name = "Dispatch Desk";
 	req_access = list("security")
 	},
-/obj/machinery/door/window/left/directional/west,
+/obj/machinery/door/window/left/directional/west{
+	name = "Dispatch Desk"
+	},
 /obj/machinery/door/firedoor,
 /turf/open/floor/iron,
 /area/station/security/dispatch)
@@ -49284,12 +49286,14 @@
 /area/station/security/prison/workout)
 "qAB" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor/left/directional/west{
-	name = "Security Front Desk";
-	req_access = list("security")
-	},
-/obj/machinery/door/window/right/directional/east,
 /obj/machinery/door/firedoor,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Dispatch Desk";
+	req_access = list("security_dispatcher")
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Dispatch Desk"
+	},
 /turf/open/floor/iron,
 /area/station/security/dispatch)
 "qBg" = (

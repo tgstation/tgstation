@@ -11290,14 +11290,6 @@
 	},
 /turf/open/floor/iron/dark/corner,
 /area/station/engineering/atmos/pumproom)
-"eft" = (
-/obj/structure/extinguisher_cabinet/directional/north,
-/obj/structure/closet/secure_closet/security/sec,
-/obj/effect/turf_decal/tile/red/half/contrasted{
-	dir = 4
-	},
-/turf/open/floor/iron/dark,
-/area/station/security/lockers)
 "efC" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/stripes/line{
@@ -39695,6 +39687,8 @@
 	name = "Dispatch"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/dispatch,
+/obj/effect/mapping_helpers/airlock/access/all/security/brig,
+/obj/machinery/door/firedoor,
 /turf/open/floor/iron/dark,
 /area/station/security/dispatch)
 "ogb" = (
@@ -41136,13 +41130,13 @@
 /area/station/medical/pharmacy)
 "oHJ" = (
 /obj/structure/closet/secure_closet/security/sec,
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "oHO" = (
@@ -43085,6 +43079,7 @@
 "pti" = (
 /obj/structure/closet/secure_closet/security/sec,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/structure/extinguisher_cabinet/directional/west,
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
 "pts" = (
@@ -96816,8 +96811,8 @@ aLc
 bbk
 rnc
 oJr
-iTZ
-eft
+vZm
+nJu
 upR
 nJu
 pti
@@ -97330,7 +97325,7 @@ xfh
 czt
 wPG
 sDK
-iTZ
+vZm
 oHJ
 eYT
 nUF
