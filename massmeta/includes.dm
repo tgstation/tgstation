@@ -114,5 +114,6 @@
 #include "code\modules\hooch.dm"
 #include "code\__DEFINES\text.dm"
 #include "code\datums\brain_damage\mild.dm"
+#include "code\datums\quirks\positive_quirks\augmented.dm"
 //features
 #include "features\additional_circuit\includes.dm"
