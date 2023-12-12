@@ -1,6 +1,6 @@
-#define CAN_ROLL_ALWAYS 1//always can roll
+#define CAN_ROLL_ALWAYS 1 //always can roll for antag
 #define CAN_ROLL_PROTECTED 2 //can roll if config lets protected roles roll
-#define CAN_ROLL_NEVER 3//never roll
+#define CAN_ROLL_NEVER 3 //never roll antag
 
 /**
  * A station trait which enables a temporary job
@@ -112,7 +112,7 @@
 /datum/station_trait/job/bridge_assistant
 	name = "Bridge Assistant"
 	button_desc = "Sign up to become the Bridge Assistant and watch over the Bridge."
-	weight = 1
+	weight = 2
 	report_message = "We have installed a Bridge Assistant on your station."
 	show_in_report = TRUE
 	can_roll_antag = CAN_ROLL_PROTECTED
@@ -126,20 +126,21 @@
 	. = ..()
 	overlays += "bridge_assistant"
 
+/// Creates a coffeemaker in the bridge, if we don't have one yet.
 /datum/station_trait/job/bridge_assistant/proc/add_coffeemaker(datum/source)
 	SIGNAL_HANDLER
 	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
-	if(!bridge)
+	if(!bridge) //no bridge, what will he assist?
 		return
 	var/list/possible_coffeemaker_positions = list(/area/station/command/bridge, /area/station/command/meeting_room)
-	for(var/possible_position in possible_coffeemaker_positions)
+	for(var/possible_position in possible_coffeemaker_positions) //don't spawn a coffeemaker if there is already one on the bridge
 		var/area/possible_area = GLOB.areas_by_type[possible_position]
 		if(possible_area && (locate(/obj/machinery/coffeemaker) in possible_area))
 			return
 	var/list/tables = list()
 	for(var/obj/structure/table/table in bridge)
 		var/turf/table_turf = get_turf(table)
-		if(table_turf.is_blocked_turf(ignore_atoms = list(table))) //dont spawn a coffeemaker on a fax machine or smth
+		if(table_turf.is_blocked_turf(ignore_atoms = list(table))) //don't spawn a coffeemaker on a fax machine or smth
 			continue
 		tables += table
 	if(!length(tables))
@@ -149,7 +150,7 @@
 	var/picked_turf = get_turf(picked_table)
 	if(length(tables))
 		var/another_table = pick(tables)
-		for(var/obj/item/thing_on_table in picked_turf)
+		for(var/obj/item/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
 			if(thing_on_table == picked_table)
 				continue
 			thing_on_table.forceMove(get_turf(another_table))
