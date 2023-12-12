@@ -156,7 +156,7 @@
 /datum/station_trait/bot_languages/on_round_start()
 	. = ..()
 	// All bots that exist round start on station Z OR on the escape shuttle have their set language randomized.
-	for(var/mob/living/simple_animal/bot/found_bot as anything in GLOB.bots_list)
+	for(var/mob/living/found_bot as anything in GLOB.bots_list)
 		found_bot.randomize_language_if_on_station()
 
 /datum/station_trait/revenge_of_pun_pun
