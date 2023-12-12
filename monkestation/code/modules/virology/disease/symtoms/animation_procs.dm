@@ -76,6 +76,9 @@
 		var/mob/living/living = src
 		living.Knockdown(stun_duration)
 		animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
+	else
+		spawn(stun_duration + total_time)
+			animate(src, pixel_x = 0, pixel_y = 0, transform = src.transform.Turn(-turn), time = 3, easing = LINEAR_EASING, flags=ANIMATION_PARALLEL)
 
 #undef COLOR_MARTIX_BASE
 #undef COLOR_MATRIX_GRAYSCALE
