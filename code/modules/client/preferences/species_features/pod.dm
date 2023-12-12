@@ -6,10 +6,10 @@
 	should_generate_icons = TRUE
 
 /datum/preference/choiced/pod_hair/init_possible_values()
-	return assoc_to_keys_features(ACCESSORIES.pod_hair_list)
+	return assoc_to_keys_features(SSsprite_accessories.pod_hair_list)
 
 /datum/preference/choiced/pod_hair/icon_for(value)
-	var/datum/sprite_accessory/pod_hair = ACCESSORIES.pod_hair_list[value]
+	var/datum/sprite_accessory/pod_hair = SSsprite_accessories.pod_hair_list[value]
 
 	var/icon/icon_with_hair = icon('icons/mob/human/bodyparts_greyscale.dmi', "pod_head_m")
 
@@ -24,7 +24,7 @@
 	return icon_with_hair
 
 /datum/preference/choiced/pod_hair/create_default_value()
-	return pick(assoc_to_keys_features(ACCESSORIES.pod_hair_list))
+	return pick(assoc_to_keys_features(SSsprite_accessories.pod_hair_list))
 
 /datum/preference/choiced/pod_hair/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["pod_hair"] = value

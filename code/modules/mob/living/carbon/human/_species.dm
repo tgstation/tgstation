@@ -635,7 +635,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/obj/item/bodypart/arm/left/left_arm = species_human.get_bodypart(BODY_ZONE_L_ARM)
 			var/obj/item/bodypart/leg/right/right_leg = species_human.get_bodypart(BODY_ZONE_R_LEG)
 			var/obj/item/bodypart/leg/left/left_leg = species_human.get_bodypart(BODY_ZONE_L_LEG)
-			var/datum/sprite_accessory/markings = ACCESSORIES.moth_markings_list[species_human.dna.features["moth_markings"]]
+			var/datum/sprite_accessory/markings = SSsprite_accessories.moth_markings_list[species_human.dna.features["moth_markings"]]
 			if(noggin && (IS_ORGANIC_LIMB(noggin)))
 				var/mutable_appearance/markings_head_overlay = mutable_appearance(markings.icon, "[markings.icon_state]_head", -BODY_LAYER)
 				markings_head_overlay.pixel_y += height_offset
@@ -667,7 +667,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Underwear, Undershirts & Socks
 	if(!HAS_TRAIT(species_human, TRAIT_NO_UNDERWEAR))
 		if(species_human.underwear)
-			var/datum/sprite_accessory/underwear/underwear = ACCESSORIES.underwear_list[species_human.underwear]
+			var/datum/sprite_accessory/underwear/underwear = SSsprite_accessories.underwear_list[species_human.underwear]
 			var/mutable_appearance/underwear_overlay
 			if(underwear)
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE && (underwear.gender == MALE))
@@ -680,7 +680,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				standing += underwear_overlay
 
 		if(species_human.undershirt)
-			var/datum/sprite_accessory/undershirt/undershirt = ACCESSORIES.undershirt_list[species_human.undershirt]
+			var/datum/sprite_accessory/undershirt/undershirt = SSsprite_accessories.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/working_shirt
 				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
@@ -691,7 +691,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 				standing += working_shirt
 
 		if(species_human.socks && species_human.num_legs >= 2 && !(species_human.bodytype & BODYTYPE_DIGITIGRADE))
-			var/datum/sprite_accessory/socks/socks = ACCESSORIES.socks_list[species_human.socks]
+			var/datum/sprite_accessory/socks/socks = SSsprite_accessories.socks_list[species_human.socks]
 			if(socks)
 				standing += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 
@@ -741,13 +741,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/accessory
 			switch(bodypart)
 				if("ears")
-					accessory = ACCESSORIES.ears_list[source.dna.features["ears"]]
+					accessory = SSsprite_accessories.ears_list[source.dna.features["ears"]]
 				if("body_markings")
-					accessory = ACCESSORIES.body_markings_list[source.dna.features["body_markings"]]
+					accessory = SSsprite_accessories.body_markings_list[source.dna.features["body_markings"]]
 				if("legs")
-					accessory = ACCESSORIES.legs_list[source.dna.features["legs"]]
+					accessory = SSsprite_accessories.legs_list[source.dna.features["legs"]]
 				if("caps")
-					accessory = ACCESSORIES.caps_list[source.dna.features["caps"]]
+					accessory = SSsprite_accessories.caps_list[source.dna.features["caps"]]
 
 			if(!accessory || accessory.icon_state == "none")
 				continue

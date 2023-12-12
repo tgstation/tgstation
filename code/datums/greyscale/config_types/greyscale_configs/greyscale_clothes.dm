@@ -519,7 +519,7 @@
 	icon_file = 'icons/mob/clothing/feet.dmi'
 
 //
-// ACCESSORIES
+// SSsprite_accessories
 //
 
 /datum/greyscale_config/suspenders

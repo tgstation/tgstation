@@ -21,7 +21,7 @@
 /datum/quirk/item_quirk/bald/add_unique(client/client_source)
 	var/obj/item/clothing/head/wig/natural/baldie_wig = new(get_turf(quirk_holder))
 	if(old_hair == "Bald")
-		baldie_wig.hairstyle = pick(ACCESSORIES.hairstyles_list - "Bald")
+		baldie_wig.hairstyle = pick(SSsprite_accessories.hairstyles_list - "Bald")
 	else
 		baldie_wig.hairstyle = old_hair
 

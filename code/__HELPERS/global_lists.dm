@@ -2,63 +2,6 @@
 /////Initial Building/////
 //////////////////////////
 
-/proc/init_sprite_accessories()
-	//hair
-	init_sprite_accessory_subtypes(
-		/datum/sprite_accessory/hair,
-		ACCESSORIES.hairstyles_list,
-		ACCESSORIES.hairstyles_male_list,
-		ACCESSORIES.hairstyles_female_list,
-	)
-
-	//facial hair
-	init_sprite_accessory_subtypes(
-		/datum/sprite_accessory/facial_hair,
-		ACCESSORIES.facial_hairstyles_list,
-		ACCESSORIES.facial_hairstyles_male_list,
-		ACCESSORIES.facial_hairstyles_female_list,
-	)
-
-	//underwear
-	init_sprite_accessory_subtypes(
-		/datum/sprite_accessory/underwear,
-		ACCESSORIES.underwear_list,
-		ACCESSORIES.underwear_m,
-		ACCESSORIES.underwear_f,
-	)
-
-	//undershirt
-	init_sprite_accessory_subtypes(
-		/datum/sprite_accessory/undershirt,
-		ACCESSORIES.undershirt_list,
-		ACCESSORIES.undershirt_m,
-		ACCESSORIES.undershirt_f,
-	)
-
-	//socks
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, ACCESSORIES.socks_list)
-
-
-	//bodypart accessories (blizzard intensifies)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, ACCESSORIES.body_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, ACCESSORIES.tails_list_human, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, ACCESSORIES.tails_list_lizard, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, ACCESSORIES.tails_list_monkey, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, ACCESSORIES.snouts_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns,ACCESSORIES.horns_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, ACCESSORIES.ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, ACCESSORIES.wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, ACCESSORIES.wings_open_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, ACCESSORIES.frills_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, ACCESSORIES.spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, ACCESSORIES.animated_spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, ACCESSORIES.legs_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, ACCESSORIES.caps_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, ACCESSORIES.moth_wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, ACCESSORIES.moth_antennae_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, ACCESSORIES.moth_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, ACCESSORIES.pod_hair_list)
-
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
 /proc/init_species_list()
 	for(var/species_path in subtypesof(/datum/species))
@@ -79,14 +22,13 @@
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
 		var/datum/sprite_accessory/gradient/gradient = new path()
 		if(gradient.gradient_category  & GRADIENT_APPLIES_TO_HAIR)
-			ACCESSORIES.hair_gradients_list[gradient.name] = gradient
+			SSsprite_accessories.hair_gradients_list[gradient.name] = gradient
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
-			ACCESSORIES.facial_hair_gradients_list[gradient.name] = gradient
+			SSsprite_accessories.facial_hair_gradients_list[gradient.name] = gradient
 
 /// Legacy procs that really should be replaced with proper _INIT macros
 /proc/make_datum_reference_lists()
 	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
-	init_sprite_accessories()
 	init_species_list()
 	init_hair_gradients()
 	init_keybindings()
