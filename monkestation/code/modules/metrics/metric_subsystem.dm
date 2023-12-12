@@ -22,17 +22,14 @@ SUBSYSTEM_DEF(metrics)
 /datum/controller/subsystem/metrics/fire(resumed)
 	if (!SSdbcore.Connect() && !debug)
 		return
-
+	var/sql_at_fire = SQLtime()
 	var/list/generic_insert = get_metric_data_main()
-	var/list/special = list(
-		"datetime" = "NOW()",
-	)
 	var/list/subsystem_extra_insert = list()
 	var/list/subsystem_insert = list()
 	for(var/datum/controller/subsystem/SS in Master.subsystems)
 		var/list/data = SS.get_metrics()
 		subsystem_insert += list(list(
-			"datetime" = "NOW()",
+			"datetime" = sql_at_fire,
 			"round_id" = text2num(GLOB.round_id), //NUM
 			"ss_id" = SS.ss_id, //VARSET
 			"relation_id_SS" = data["relation_id_SS"], //VARSET
@@ -44,6 +41,7 @@ SUBSYSTEM_DEF(metrics)
 			var/list/custom_data = data["custom"]
 			for(var/item in custom_data)
 				subsystem_extra_insert += list(list(
+					"datetime" = sql_at_fire
 					"round_id" = text2num(GLOB.round_id), //NUM
 					"ss_id" = SS.ss_id, //VARSET
 					"relation_id_SS" = data["relation_id_SS"], //VARSET
@@ -55,7 +53,7 @@ SUBSYSTEM_DEF(metrics)
 	var/datum/db_query/query_add_metrics = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("metric_data")] (`datetime`, `cpu`, `maptick`, `elapsed_processed`, `elapsed_real`, `client_count`, `round_id`, `relational_id`) VALUES (:datetime, :cpu, :maptick, :elapsed_processed, :elapsed_real, :client_count, :round_id, :relational_id)"},
 		list(
-			"datetime" = SQLtime(),
+			"datetime" = sql_at_fire,
 			"cpu" = generic_insert["cpu"],
 			"maptick" = generic_insert["maptick"],
 			"elapsed_processed" = generic_insert["elapsed_processed"],
@@ -65,12 +63,12 @@ SUBSYSTEM_DEF(metrics)
 			"relational_id" = generic_insert["relational_id"],
 		))
 	if(!query_add_metrics.Execute())
-		addtimer(CALLBACK(src, PROC_REF(retry_failed), generic_insert), 10 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(retry_failed), generic_insert, sql_at_fire), 10 SECONDS)
 	qdel(query_add_metrics)
 
-	SSdbcore.MassInsert(format_table_name("subsystem_metrics"), subsystem_insert , ignore_errors = TRUE, special_columns = special, duplicate_key = TRUE)
+	SSdbcore.MassInsert(format_table_name("subsystem_metrics"), subsystem_insert , ignore_errors = TRUE, duplicate_key = TRUE)
 	if(length(subsystem_extra_insert))
-		SSdbcore.MassInsert(format_table_name("subsystem_extra_metrics"), subsystem_extra_insert , ignore_errors = TRUE, special_columns = special, duplicate_key = TRUE)
+		SSdbcore.MassInsert(format_table_name("subsystem_extra_metrics"), subsystem_extra_insert , ignore_errors = TRUE, duplicate_key = TRUE)
 
 /datum/controller/subsystem/metrics/proc/get_metric_data_main()
 	var/list/out = list()
@@ -84,11 +82,11 @@ SUBSYSTEM_DEF(metrics)
 
 	return out
 
-/datum/controller/subsystem/metrics/proc/retry_failed(list/generic_insert)
+/datum/controller/subsystem/metrics/proc/retry_failed(list/generic_insert, sql_at_fire)
 	var/datum/db_query/query_add_metrics = SSdbcore.NewQuery({"
 		INSERT INTO [format_table_name("metric_data")] (`datetime`, `cpu`, `maptick`, `elapsed_processed`, `elapsed_real`, `client_count`, `round_id`, `relational_id`) VALUES (:datetime, :cpu, :maptick, :elapsed_processed, :elapsed_real, :client_count, :round_id, :relational_id)"},
 		list(
-			"datetime" = SQLtime(),
+			"datetime" = sql_at_fire,
 			"cpu" = generic_insert["cpu"],
 			"maptick" = generic_insert["maptick"],
 			"elapsed_processed" = generic_insert["elapsed_processed"],
@@ -98,5 +96,5 @@ SUBSYSTEM_DEF(metrics)
 			"relational_id" = generic_insert["relational_id"],
 		))
 	if(!query_add_metrics.Execute())
-		addtimer(CALLBACK(src, PROC_REF(retry_failed), generic_insert), 10 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(retry_failed), generic_insert, sql_at_fire), 10 SECONDS)
 	qdel(query_add_metrics)
