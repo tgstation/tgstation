@@ -95,7 +95,7 @@ SUBSYSTEM_DEF(sprite_accessories)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, moth_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, pod_hair_list)
 
-	/// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+	// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
 		var/datum/sprite_accessory/gradient/gradient = new path
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_HAIR)
