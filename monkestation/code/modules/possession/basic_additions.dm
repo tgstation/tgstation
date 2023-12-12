@@ -221,22 +221,23 @@
 
 /mob/living/basic/perform_hand_swap(hand_index)
 	. = ..()
-	if(!.)
-		return
-	if(!dexterous)
-		return
-	if(!hand_index)
-		hand_index = (active_hand_index % held_items.len)+1
-	var/oindex = active_hand_index
-	active_hand_index = hand_index
-	if(hud_used)
-		var/atom/movable/screen/inventory/hand/H
-		H = hud_used.hand_slots["[hand_index]"]
-		if(H)
-			H.update_appearance()
-		H = hud_used.hand_slots["[oindex]"]
-		if(H)
-			H.update_appearance()
+	if(!isdrone(src))
+		if(!.)
+			return
+		if(!dexterous)
+			return
+		if(!hand_index)
+			hand_index = (active_hand_index % held_items.len)+1
+		var/oindex = active_hand_index
+		active_hand_index = hand_index
+		if(hud_used)
+			var/atom/movable/screen/inventory/hand/H
+			H = hud_used.hand_slots["[hand_index]"]
+			if(H)
+				H.update_appearance()
+			H = hud_used.hand_slots["[oindex]"]
+			if(H)
+				H.update_appearance()
 
 /mob/living/basic/put_in_hands(obj/item/I, del_on_fail = FALSE, merge_stacks = TRUE, ignore_animation = TRUE)
 	. = ..()

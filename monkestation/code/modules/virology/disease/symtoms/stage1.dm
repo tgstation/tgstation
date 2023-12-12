@@ -303,6 +303,8 @@
 			Q.color = null
 
 /datum/symptom/itching
+	name = "Itching"
+	desc = "Makes you Itch!"
 	stage = 1
 	badness = EFFECT_DANGER_ANNOYING
 	var/scratch = FALSE
