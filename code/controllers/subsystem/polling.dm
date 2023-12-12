@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(polling)
 		var/act_never = ""
 		if(ignore_category)
 			act_never = "<a href='?src=[REF(A)];never=1'>\[Never For This Round]</a>"
-		to_chat(candidate_mob, "<big>[span_boldnotice("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]" : "\"[question]\""]. [act_jump] [act_signup] [act_never]")]</big>")
+		to_chat(candidate_mob, "<big>[span_boldnotice("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")]</big>")
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, A)

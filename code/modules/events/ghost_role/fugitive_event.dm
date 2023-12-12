@@ -20,7 +20,7 @@
 	if(isnull(landing_turf))
 		return MAP_ERROR
 	var/list/possible_backstories = list()
-	var/list/candidates = get_candidates(ROLE_FUGITIVE, ROLE_FUGITIVE)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_FUGITIVE, role = ROLE_FUGITIVE)
 
 	if(!length(candidates))
 		return NOT_ENOUGH_PLAYERS
