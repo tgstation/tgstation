@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(metrics)
 			var/list/custom_data = data["custom"]
 			for(var/item in custom_data)
 				subsystem_extra_insert += list(list(
-					"datetime" = sql_at_fire
+					"datetime" = sql_at_fire,
 					"round_id" = text2num(GLOB.round_id), //NUM
 					"ss_id" = SS.ss_id, //VARSET
 					"relation_id_SS" = data["relation_id_SS"], //VARSET
