@@ -13,7 +13,7 @@
 
 	spell_max_level = 1
 
-/datum/action/cooldown/spell/vow_of_silence/Grant(mob/grant_to)
+/datum/action/cooldown/spell/vow_of_silence/Grant(mob/living/grant_to)
 	. = ..()
 	ADD_TRAIT(grant_to, TRAIT_MIMING, "[type]")
 	grant_to.add_mood_event("vow", /datum/mood_event/mime_vow)
