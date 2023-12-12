@@ -1,0 +1,6 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - bugfix: "AIs can summon bots again"
+  - bugfix: "cleanbots can clean floors directly underneath them and prioritize floors nearest to them"
+  - bugfix: "medbots drop empty medkits now"

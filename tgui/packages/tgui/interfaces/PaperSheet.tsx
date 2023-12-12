@@ -956,7 +956,7 @@ export class PreviewView extends Component<PreviewViewProps> {
         fill
         fitted
         scrollable
-        scrollableRef={scrollableRef}
+        ref={scrollableRef}
         onScroll={handleOnScroll}
       >
         <Box
