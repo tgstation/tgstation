@@ -97,7 +97,8 @@
 		role = ROLE_TRAITOR,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_CONTRACTOR_SUPPORT,
-		role_name_text = "contractor support unit"
+		pic_source = /obj/item/modular_computer/pda/syndicate_contract_uplink,
+		role_name_text = "contractor support unit",
 	)
 	if(!LAZYLEN(candidates))
 		to_chat(user, span_notice("No available agents at this time, please try again later."))

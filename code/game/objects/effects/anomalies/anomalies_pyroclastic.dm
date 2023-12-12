@@ -39,7 +39,7 @@
 	var/datum/action/innate/slime/reproduce/repro_action = new
 	repro_action.Grant(pyro)
 
-	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a pyroclastic anomaly slime?", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, target_mob = pyro, ignore_category = POLL_IGNORE_PYROSLIME, role_name_text = "pyro slime")
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a pyroclastic anomaly slime?", check_jobban = ROLE_SENTIENCE, poll_time = 10 SECONDS, target_mob = pyro, ignore_category = POLL_IGNORE_PYROSLIME, pic_source = pyro, role_name_text = "pyroclastic anomaly slime")
 	if(!LAZYLEN(candidates))
 		return
 

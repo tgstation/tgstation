@@ -16,7 +16,7 @@
 	role_name = "slaughter demon"
 
 /datum/round_event/ghost_role/slaughter/spawn_role()
-	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, role_name_text = role_name)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, pic_source = /mob/living/basic/demon/slaughter, role_name_text = role_name)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

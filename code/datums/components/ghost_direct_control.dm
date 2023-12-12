@@ -79,7 +79,8 @@
 		role = ban_type,
 		poll_time = poll_length,
 		ignore_category = poll_ignore_key,
-		role_name_text = role_name
+		pic_source = parent,
+		role_name_text = role_name,
 	)
 	awaiting_ghosts = FALSE
 	if (!LAZYLEN(candidates))
