@@ -2,58 +2,60 @@
 /// A sprite accessory is something that we add to a human sprite (based on a client's preferences) to make them look different.
 SUBSYSTEM_DEF(sprite_accessories)
 	name = "Sprite Accessories"
-	flags = SS_NO_FIRE
-	init_order = INIT_ORDER_SPRITE_ACCESSORIES
+	flags = SS_NO_FIRE | SS_NO_INIT
 
 	// all of the lists are initialized as generated
 
 	//Hairstyles
-	var/static/list/hairstyles_list //! stores /datum/sprite_accessory/hair indexed by name
-	var/static/list/hairstyles_male_list //! stores only hair names
-	var/static/list/hairstyles_female_list //! stores only hair names
-	var/static/list/facial_hairstyles_list //! stores /datum/sprite_accessory/facial_hair indexed by name
-	var/static/list/facial_hairstyles_male_list //! stores only hair names
-	var/static/list/facial_hairstyles_female_list //! stores only hair names
-	var/static/list/hair_gradients_list //! stores /datum/sprite_accessory/hair_gradient indexed by name
-	var/static/list/facial_hair_gradients_list //! stores /datum/sprite_accessory/facial_hair_gradient indexed by name
+	var/list/hairstyles_list //! stores /datum/sprite_accessory/hair indexed by name
+	var/list/hairstyles_male_list //! stores only hair names
+	var/list/hairstyles_female_list //! stores only hair names
+	var/list/facial_hairstyles_list //! stores /datum/sprite_accessory/facial_hair indexed by name
+	var/list/facial_hairstyles_male_list //! stores only hair names
+	var/list/facial_hairstyles_female_list //! stores only hair names
+	var/list/hair_gradients_list //! stores /datum/sprite_accessory/hair_gradient indexed by name
+	var/list/facial_hair_gradients_list //! stores /datum/sprite_accessory/facial_hair_gradient indexed by name
 
 	//Underwear
-	var/static/list/underwear_list //! stores /datum/sprite_accessory/underwear indexed by name
-	var/static/list/underwear_m //! stores only underwear name
-	var/static/list/underwear_f //! stores only underwear name
+	var/list/underwear_list //! stores /datum/sprite_accessory/underwear indexed by name
+	var/list/underwear_m //! stores only underwear name
+	var/list/underwear_f //! stores only underwear name
 
 	//Undershirts
-	var/static/list/undershirt_list //! stores /datum/sprite_accessory/undershirt indexed by name
-	var/static/list/undershirt_m  //! stores only undershirt name
-	var/static/list/undershirt_f  //! stores only undershirt name
+	var/list/undershirt_list //! stores /datum/sprite_accessory/undershirt indexed by name
+	var/list/undershirt_m  //! stores only undershirt name
+	var/list/undershirt_f  //! stores only undershirt name
 
 	//Socks
-	var/static/list/socks_list //! stores /datum/sprite_accessory/socks indexed by name
+	var/list/socks_list //! stores /datum/sprite_accessory/socks indexed by name
 
 	//Lizard Bits (all datum lists indexed by name)
-	var/static/list/body_markings_list
-	var/static/list/snouts_list
-	var/static/list/horns_list
-	var/static/list/frills_list
-	var/static/list/spines_list
-	var/static/list/legs_list
-	var/static/list/animated_spines_list
+	var/list/body_markings_list
+	var/list/snouts_list
+	var/list/horns_list
+	var/list/frills_list
+	var/list/spines_list
+	var/list/legs_list
+	var/list/animated_spines_list
 
 	//Mutant Human bits
-	var/static/list/tails_list_human
-	var/static/list/tails_list_lizard
-	var/static/list/tails_list_monkey
-	var/static/list/ears_list
-	var/static/list/wings_list
-	var/static/list/wings_open_list
-	var/static/list/moth_wings_list
-	var/static/list/moth_antennae_list
-	var/static/list/moth_markings_list
-	var/static/list/caps_list
-	var/static/list/pod_hair_list
+	var/list/tails_list_human
+	var/list/tails_list_lizard
+	var/list/tails_list_monkey
+	var/list/ears_list
+	var/list/wings_list
+	var/list/wings_open_list
+	var/list/moth_wings_list
+	var/list/moth_antennae_list
+	var/list/moth_markings_list
+	var/list/caps_list
+	var/list/pod_hair_list
 
-// sets up all the lists for later utilization
-/datum/controller/subsystem/sprite_accessories/Initialize()
+/// Sets up all of the lists for later utilization. We keep this stuff out of GLOB due to the size of the data.
+/// In an ideal world we could just do this on our subsystem Initialize() but there are too many things that are immediately dependent on this in the roundstart initialization
+/// which means that we have to time it so that it invokes with the rest of the GLOB datumized lists. Great apologies.
+/// This proc lives on the subsytem instead of being a global proc so we don't have to prepend SSsprite_accessories to the list every time it really gets annoying
+/datum/controller/subsystem/sprite_accessories/proc/setup_lists()
 	//hair
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, hairstyles_list, hairstyles_male_list, hairstyles_female_list)
 
@@ -89,3 +91,11 @@ SUBSYSTEM_DEF(sprite_accessories)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, moth_antennae_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, moth_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, pod_hair_list)
+
+	/// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
+	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
+		var/datum/sprite_accessory/gradient/gradient = new path
+		if(gradient.gradient_category & GRADIENT_APPLIES_TO_HAIR)
+			hair_gradients_list[gradient.name] = gradient
+		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
+			facial_hair_gradients_list[gradient.name] = gradient
