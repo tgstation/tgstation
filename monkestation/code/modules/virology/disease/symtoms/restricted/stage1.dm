@@ -98,3 +98,39 @@
 
 /datum/symptom/transformation/gondola/digital
 	new_form = /mob/living/simple_animal/pet/gondola/virtual_domain
+
+/datum/symptom/anxiety
+	name = "Severe Anxiety"
+	desc = "Causes the host to suffer from severe anxiety"
+	stage = 1
+	badness = EFFECT_DANGER_ANNOYING
+	restricted = TRUE
+	max_multiplier = 4
+
+/datum/symptom/anxiety/activate(mob/living/carbon/mob, datum/disease/advanced/disease)
+
+	switch(round(multiplier, 1))
+		if(2) //also changes say, see say.dm
+			if(prob(2.5))
+				to_chat(mob, span_notice("You feel anxious."))
+		if(3)
+			if(prob(5))
+				to_chat(mob, span_notice("Your stomach flutters."))
+			if(prob(2.5))
+				to_chat(mob, span_notice("You feel panicky."))
+			if(prob(1))
+				to_chat(mob, span_danger("You're overtaken with panic!"))
+				mob.adjust_confusion(rand(2 SECONDS, 3 SECONDS))
+		if(4)
+			if(prob(5))
+				to_chat(mob, span_danger("You feel butterflies in your stomach."))
+			if(prob(2.5))
+				mob.visible_message(span_danger("[mob] stumbles around in a panic."), \
+												span_userdanger("You have a panic attack!"))
+				mob.adjust_confusion(rand(6 SECONDS, 8 SECONDS))
+				mob.adjust_jitter(rand(12 SECONDS, 16 SECONDS))
+			if(prob(1))
+				mob.visible_message(span_danger("[mob] coughs up butterflies!"), \
+													span_userdanger("You cough up butterflies!"))
+				new /mob/living/basic/butterfly(mob.loc)
+				new /mob/living/basic/butterfly(mob.loc)

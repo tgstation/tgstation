@@ -94,12 +94,16 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
-			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
+			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease (Only clears players diseases)?",, list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(holder)] has cured all diseases.")
-				for(var/thing in SSdisease.active_diseases)
-					var/datum/disease/D = thing
-					D.cure(0)
+				for(var/mob/living/living as anything in GLOB.alive_mob_list)
+					if(!isliving(living))
+						continue
+					if(!length(living.diseases))
+						continue
+					for(var/datum/disease/advanced/disease as anything in living.diseases)
+						disease.cure(living)
 
 		if("list_bombers")
 			holder.list_bombers()

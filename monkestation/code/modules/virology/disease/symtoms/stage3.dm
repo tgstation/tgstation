@@ -112,15 +112,6 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	to_chat(mob, span_notice("You have trouble telling right and left apart all of a sudden."))
 	mob.adjust_confusion(1 SECONDS * multiplier)
 
-/datum/symptom/mutation
-	name = "DNA Degradation"
-	desc = "Attacks the infected's DNA, causing it to break down."
-	stage = 3
-	badness = EFFECT_DANGER_DEADLY
-
-/datum/symptom/mutation/activate(mob/living/carbon/mob)
-	mob.adjustCloneLoss(2)
-
 /datum/symptom/groan
 	name = "Groaning Syndrome"
 	desc = "Causes the infected to groan randomly."

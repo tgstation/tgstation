@@ -277,12 +277,6 @@
 	icon_state = "bottle3"
 	spawned_disease = /datum/disease/brainrot
 
-/obj/item/reagent_containers/cup/bottle/anxiety
-	name = "Severe Anxiety culture bottle"
-	desc = "A small bottle. Contains a sample of Lepidopticides."
-	spawned_disease = /datum/disease/anxiety
-
-
 /obj/item/reagent_containers/cup/bottle/fluspanish
 	name = "Spanish flu culture bottle"
 	desc = "A small bottle. Contains a sample of Inquisitius."

@@ -848,6 +848,7 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 				apply_status_effect(/datum/status_effect/go_away)
 			if(7)
 				to_chat(src, span_notice("Oh, I actually feel quite alright!"))
+				infect_disease_predefined(DISEASE_DECLONING, TRUE, "[ROUND_TIME()] Infected by DNA Instability")
 				//ForceContractDisease(new/datum/disease/decloning()) //slow acting, non-viral clone damage based GBS
 			if(8)
 				var/list/elligible_organs = list()
