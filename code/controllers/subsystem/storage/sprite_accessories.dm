@@ -1,11 +1,12 @@
 /// Storage subsystem that just holds lists of sprite accessories for accession in generating said sprites.
-/// A sprite accessory is something that we add to a human sprite (based on a client's preferences) to make them look different.
+/// A sprite accessory is something that we add to a human sprite to make them look different. This is hair, facial hair, underwear, mutant bits, etc.
 SUBSYSTEM_DEF(sprite_accessories)
 	name = "Sprite Accessories"
 	flags = SS_NO_FIRE | SS_NO_INIT
 
 	// they aren't statics because:
-	// A) it don't work in current framework (can probably do this should this ever be moved to Initialize()) because statics are initialized AFTER we do GLOB stuff
+	// A) it don't work in current framework because statics are initialized AFTER we do GLOB stuff and this is all still reliant on those same timings.
+	// When we eventually get everything ironed out with everything that this relies on (which still lives in GLOB), we can reconsider this.
 	// B) come on bud there's only one SS anyways
 
 	//Hairstyles
@@ -101,3 +102,28 @@ SUBSYSTEM_DEF(sprite_accessories)
 			hair_gradients_list[gradient.name] = gradient
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
 			facial_hair_gradients_list[gradient.name] = gradient
+
+/// This reads the applicable sprite accessory datum's subtypes and adds it to the subsystems's list of sprite accessories.
+/// The boolean `add_blank` argument just adds a "None" option to the list of sprite accessories, like if a felinid doesn't want a tail or something, typically good for gated-off things.
+/datum/controller/subsystem/sprite_accessories/proc/init_sprite_accessory_subtypes(prototype, list/main, list/male, list/female, add_blank = FALSE)
+	for(var/path in subtypesof(prototype))
+		var/datum/sprite_accessory/accessory = new path
+
+		if(accessory.icon_state)
+			main[accessory.name] = accessory
+		else
+			main += accessory.name
+
+		switch(accessory.gender)
+			if(MALE)
+				male += accessory.name
+			if(FEMALE)
+				female += accessory.name
+			else
+				male += accessory.name
+				female += accessory.name
+
+	if(add_blank)
+		main[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
+
+	return main

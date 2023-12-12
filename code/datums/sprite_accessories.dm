@@ -16,35 +16,6 @@
  *	conversion in savefile.dm
  */
 
-/proc/init_sprite_accessory_subtypes(prototype, list/main, list/male, list/female, add_blank)//Roundstart argument builds a specific list for roundstart parts where some parts may be locked
-	if(!istype(main))
-		main = list()
-	if(!istype(male))
-		male = list()
-	if(!istype(female))
-		female = list()
-
-	for(var/path in subtypesof(prototype))
-		var/datum/sprite_accessory/accessory = new path
-
-		if(accessory.icon_state)
-			main[accessory.name] = accessory
-		else
-			main += accessory.name
-
-		switch(accessory.gender)
-			if(MALE)
-				male += accessory.name
-			if(FEMALE)
-				female += accessory.name
-			else
-				male += accessory.name
-				female += accessory.name
-	if(add_blank)
-		main[SPRITE_ACCESSORY_NONE] = new /datum/sprite_accessory/blank
-
-	return main
-
 /datum/sprite_accessory
 	/// The icon file the accessory is located in.
 	var/icon
