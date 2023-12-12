@@ -2,8 +2,10 @@
 /// A sprite accessory is something that we add to a human sprite (based on a client's preferences) to make them look different.
 SUBSYSTEM_DEF(sprite_accessories)
 	name = "Sprite Accessories"
-	flags = SS_NO_FIRE
+	flags = SS_NO_FIRE | SS_NO_INIT
 	init_order = INIT_ORDER_SPRITE_ACCESSORIES
+
+	// all of the lists are initialized as generated
 
 	//Hairstyles
 	var/static/list/hairstyles_list //! stores /datum/sprite_accessory/hair indexed by name
@@ -49,3 +51,6 @@ SUBSYSTEM_DEF(sprite_accessories)
 	var/static/list/moth_markings_list
 	var/static/list/caps_list
 	var/static/list/pod_hair_list
+
+// Alias to [SSsprite_accessories]
+#define sprite_accessories SSsprite_accessories

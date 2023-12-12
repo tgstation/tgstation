@@ -37,7 +37,7 @@
 	var/wagging = FALSE
 
 /datum/bodypart_overlay/mutant/spines/get_global_feature_list()
-	return GLOB.spines_list
+	return SSsprite_accessories.spines_list
 
 /datum/bodypart_overlay/mutant/spines/get_base_icon_state()
 	return (wagging ? "wagging_" : "") + sprite_datum.icon_state //add the wagging tag if we be wagging

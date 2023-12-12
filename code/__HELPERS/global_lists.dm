@@ -79,9 +79,9 @@
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
 		var/datum/sprite_accessory/gradient/gradient = new path()
 		if(gradient.gradient_category  & GRADIENT_APPLIES_TO_HAIR)
-			GLOB.hair_gradients_list[gradient.name] = gradient
+			SSsprite_accessories.hair_gradients_list[gradient.name] = gradient
 		if(gradient.gradient_category & GRADIENT_APPLIES_TO_FACIAL_HAIR)
-			GLOB.facial_hair_gradients_list[gradient.name] = gradient
+			SSsprite_accessories.facial_hair_gradients_list[gradient.name] = gradient
 
 /// Legacy procs that really should be replaced with proper _INIT macros
 /proc/make_datum_reference_lists()
