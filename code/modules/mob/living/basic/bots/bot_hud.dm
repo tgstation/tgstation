@@ -65,13 +65,15 @@
 		hud.remove_atom_from_hud(src)
 
 	for(var/index in 1 to our_path.len)
-		var/turf/current_turf = our_path[index]
 		if(index == 1 || index == our_path.len)
 			continue
+		var/turf/current_turf = our_path[index]
 		var/turf/previous_turf = our_path[index - 1]
+
 		var/turf/next_turf = our_path[index + 1]
 		var/next_direction = get_dir(previous_turf, next_turf)
 		var/previous_direction = get_dir(current_turf, previous_turf)
+
 		var/final_direction = (ISDIAGONALDIR(next_direction) && (previous_direction & (NORTH|SOUTH))) ? REVERSE_DIR(next_direction) : next_direction
 		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = GAME_PLANE, dir = final_direction)
 		path_display.color = path_image_color
