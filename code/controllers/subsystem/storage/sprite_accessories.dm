@@ -52,5 +52,5 @@ SUBSYSTEM_DEF(sprite_accessories)
 	var/static/list/caps_list
 	var/static/list/pod_hair_list
 
-// Alias to [SSsprite_accessories]
-#define sprite_accessories SSsprite_accessories
+// Alias to [ACCESSORIES]
+#define ACCESSORIES ACCESSORIES

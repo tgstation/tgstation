@@ -222,7 +222,7 @@
 					return
 				if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 					return
-				var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", SSsprite_accessories.facial_hairstyles_list)
+				var/new_style = tgui_input_list(user, "Select a facial hairstyle", "Grooming", ACCESSORIES.facial_hairstyles_list)
 				if(isnull(new_style))
 					return
 				if(!get_location_accessible(human_target, location))
@@ -275,7 +275,7 @@
 				return
 			if(!user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
 				return
-			var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", SSsprite_accessories.hairstyles_list)
+			var/new_style = tgui_input_list(user, "Select a hairstyle", "Grooming", ACCESSORIES.hairstyles_list)
 			if(isnull(new_style))
 				return
 			if(!get_location_accessible(human_target, location))

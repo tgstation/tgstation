@@ -42,7 +42,7 @@
 		return
 	switch(choice)
 		if("Underwear")
-			var/new_undies = tgui_input_list(user, "Select your underwear", "Changing", SSsprite_accessories.underwear_list)
+			var/new_undies = tgui_input_list(user, "Select your underwear", "Changing", ACCESSORIES.underwear_list)
 			if(new_undies)
 				dressing_human.underwear = new_undies
 		if("Underwear Color")
@@ -50,11 +50,11 @@
 			if(new_underwear_color)
 				dressing_human.underwear_color = sanitize_hexcolor(new_underwear_color)
 		if("Undershirt")
-			var/new_undershirt = tgui_input_list(user, "Select your undershirt", "Changing", SSsprite_accessories.undershirt_list)
+			var/new_undershirt = tgui_input_list(user, "Select your undershirt", "Changing", ACCESSORIES.undershirt_list)
 			if(new_undershirt)
 				dressing_human.undershirt = new_undershirt
 		if("Socks")
-			var/new_socks = tgui_input_list(user, "Select your socks", "Changing", SSsprite_accessories.socks_list)
+			var/new_socks = tgui_input_list(user, "Select your socks", "Changing", ACCESSORIES.socks_list)
 			if(new_socks)
 				dressing_human.socks = new_socks
 

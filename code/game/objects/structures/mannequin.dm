@@ -94,19 +94,19 @@
 	var/mutable_appearance/pedestal = mutable_appearance(icon, "pedestal_[material]")
 	pedestal.pixel_y = -3
 	. += pedestal
-	var/datum/sprite_accessory/underwear/underwear = SSsprite_accessories.underwear_list[underwear_name]
+	var/datum/sprite_accessory/underwear/underwear = ACCESSORIES.underwear_list[underwear_name]
 	if(underwear)
 		if(body_type == FEMALE && underwear.gender == MALE)
 			. += wear_female_version(underwear.icon_state, underwear.icon, BODY_LAYER, FEMALE_UNIFORM_FULL)
 		else
 			. += mutable_appearance(underwear.icon, underwear.icon_state, -BODY_LAYER)
-	var/datum/sprite_accessory/undershirt/undershirt = SSsprite_accessories.undershirt_list[undershirt_name]
+	var/datum/sprite_accessory/undershirt/undershirt = ACCESSORIES.undershirt_list[undershirt_name]
 	if(undershirt)
 		if(body_type == FEMALE)
 			. += wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 		else
 			. += mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
-	var/datum/sprite_accessory/socks/socks = SSsprite_accessories.socks_list[socks_name]
+	var/datum/sprite_accessory/socks/socks = ACCESSORIES.socks_list[socks_name]
 	if(socks)
 		. += mutable_appearance(socks.icon, socks.icon_state, -BODY_LAYER)
 	for(var/slot_flag in worn_items)
@@ -167,15 +167,15 @@
 		return
 	switch(choice)
 		if("Underwear")
-			var/new_undies = tgui_input_list(user, "Select the mannequin's underwear", "Changing", SSsprite_accessories.underwear_list)
+			var/new_undies = tgui_input_list(user, "Select the mannequin's underwear", "Changing", ACCESSORIES.underwear_list)
 			if(new_undies)
 				underwear_name = new_undies
 		if("Undershirt")
-			var/new_undershirt = tgui_input_list(user, "Select the mannequin's undershirt", "Changing", SSsprite_accessories.undershirt_list)
+			var/new_undershirt = tgui_input_list(user, "Select the mannequin's undershirt", "Changing", ACCESSORIES.undershirt_list)
 			if(new_undershirt)
 				undershirt_name = new_undershirt
 		if("Socks")
-			var/new_socks = tgui_input_list(user, "Select the mannequin's socks", "Changing", SSsprite_accessories.socks_list)
+			var/new_socks = tgui_input_list(user, "Select the mannequin's socks", "Changing", ACCESSORIES.socks_list)
 			if(new_socks)
 				socks_name = new_socks
 	update_appearance()
