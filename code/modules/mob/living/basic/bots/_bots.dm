@@ -807,5 +807,5 @@ GLOBAL_LIST_INIT(command_strings, list(
 		diag_hud_set_botmode()
 
 /mob/living/basic/bot/proc/after_attacked(datum/source, atom/attacker, attack_flags)
-	if((attack_flags & ATTACKER_DAMAGING_ATTACK))
+	if(attack_flags & ATTACKER_DAMAGING_ATTACK)
 		do_sparks(number = 5, cardinal_only = TRUE, source = src)
