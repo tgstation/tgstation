@@ -49,3 +49,5 @@
 /obj/item/gun/ballistic/rifle/boltaction/harpoon
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
