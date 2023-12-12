@@ -4,55 +4,54 @@ SUBSYSTEM_DEF(sprite_accessories)
 	name = "Sprite Accessories"
 	flags = SS_NO_FIRE | SS_NO_INIT
 
-	// all of the lists are initialized as generated.
 	// they aren't statics because:
-	// A) it don't work in current framework (can probably do this should this ever be moved to Initialize())
+	// A) it don't work in current framework (can probably do this should this ever be moved to Initialize()) because statics are initialized AFTER we do GLOB stuff
 	// B) come on bud there's only one SS anyways
 
 	//Hairstyles
-	var/list/hairstyles_list //! stores /datum/sprite_accessory/hair indexed by name
-	var/list/hairstyles_male_list //! stores only hair names
-	var/list/hairstyles_female_list //! stores only hair names
-	var/list/facial_hairstyles_list //! stores /datum/sprite_accessory/facial_hair indexed by name
-	var/list/facial_hairstyles_male_list //! stores only hair names
-	var/list/facial_hairstyles_female_list //! stores only hair names
-	var/list/hair_gradients_list //! stores /datum/sprite_accessory/hair_gradient indexed by name
-	var/list/facial_hair_gradients_list //! stores /datum/sprite_accessory/facial_hair_gradient indexed by name
+	var/list/hairstyles_list = list() //! stores /datum/sprite_accessory/hair indexed by name
+	var/list/hairstyles_male_list = list() //! stores only hair names
+	var/list/hairstyles_female_list = list() //! stores only hair names
+	var/list/facial_hairstyles_list = list() //! stores /datum/sprite_accessory/facial_hair indexed by name
+	var/list/facial_hairstyles_male_list = list() //! stores only hair names
+	var/list/facial_hairstyles_female_list = list() //! stores only hair names
+	var/list/hair_gradients_list = list() //! stores /datum/sprite_accessory/hair_gradient indexed by name
+	var/list/facial_hair_gradients_list = list() //! stores /datum/sprite_accessory/facial_hair_gradient indexed by name
 
 	//Underwear
-	var/list/underwear_list //! stores /datum/sprite_accessory/underwear indexed by name
-	var/list/underwear_m //! stores only underwear name
-	var/list/underwear_f //! stores only underwear name
+	var/list/underwear_list = list() //! stores /datum/sprite_accessory/underwear indexed by name
+	var/list/underwear_m = list()//! stores only underwear name
+	var/list/underwear_f = list()//! stores only underwear name
 
 	//Undershirts
-	var/list/undershirt_list //! stores /datum/sprite_accessory/undershirt indexed by name
-	var/list/undershirt_m  //! stores only undershirt name
-	var/list/undershirt_f  //! stores only undershirt name
+	var/list/undershirt_list = list() //! stores /datum/sprite_accessory/undershirt indexed by name
+	var/list/undershirt_m = list()//! stores only undershirt name
+	var/list/undershirt_f = list()//! stores only undershirt name
 
 	//Socks
-	var/list/socks_list //! stores /datum/sprite_accessory/socks indexed by name
+	var/list/socks_list = list() //! stores /datum/sprite_accessory/socks indexed by name
 
 	//Lizard Bits (all datum lists indexed by name)
-	var/list/body_markings_list
-	var/list/snouts_list
-	var/list/horns_list
-	var/list/frills_list
-	var/list/spines_list
-	var/list/legs_list
-	var/list/animated_spines_list
+	var/list/body_markings_list = list()
+	var/list/snouts_list = list()
+	var/list/horns_list = list()
+	var/list/frills_list = list()
+	var/list/spines_list = list()
+	var/list/legs_list = list()
+	var/list/animated_spines_list = list()
 
 	//Mutant Human bits
-	var/list/tails_list_human
-	var/list/tails_list_lizard
-	var/list/tails_list_monkey
-	var/list/ears_list
-	var/list/wings_list
-	var/list/wings_open_list
-	var/list/moth_wings_list
-	var/list/moth_antennae_list
-	var/list/moth_markings_list
-	var/list/caps_list
-	var/list/pod_hair_list
+	var/list/tails_list_human = list()
+	var/list/tails_list_lizard = list()
+	var/list/tails_list_monkey = list()
+	var/list/ears_list = list()
+	var/list/wings_list = list()
+	var/list/wings_open_list = list()
+	var/list/moth_wings_list = list()
+	var/list/moth_antennae_list = list()
+	var/list/moth_markings_list = list()
+	var/list/caps_list = list()
+	var/list/pod_hair_list = list()
 
 /// Sets up all of the lists for later utilization. We keep this stuff out of GLOB due to the size of the data.
 /// In an ideal world we could just do this on our subsystem Initialize() but there are too many things that are immediately dependent on this in the roundstart initialization
@@ -95,8 +94,6 @@ SUBSYSTEM_DEF(sprite_accessories)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, moth_markings_list)
 	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, pod_hair_list)
 
-	hair_gradients_list = list()
-	facial_hair_gradients_list = list()
 	/// Hair Gradients - Initialise all /datum/sprite_accessory/hair_gradient into an list indexed by gradient-style name
 	for(var/path in subtypesof(/datum/sprite_accessory/gradient))
 		var/datum/sprite_accessory/gradient/gradient = new path
