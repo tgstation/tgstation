@@ -4,34 +4,60 @@
 
 /proc/init_sprite_accessories()
 	//hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/hair, GLOB.hairstyles_list, GLOB.hairstyles_male_list, GLOB.hairstyles_female_list)
+	init_sprite_accessory_subtypes(
+		/datum/sprite_accessory/hair,
+		SSsprite_accessories.hairstyles_list,
+		SSsprite_accessories.hairstyles_male_list,
+		SSsprite_accessories.hairstyles_female_list,
+	)
+
 	//facial hair
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/facial_hair, GLOB.facial_hairstyles_list, GLOB.facial_hairstyles_male_list, GLOB.facial_hairstyles_female_list)
+	init_sprite_accessory_subtypes(
+		/datum/sprite_accessory/facial_hair,
+		SSsprite_accessories.facial_hairstyles_list,
+		SSsprite_accessories.facial_hairstyles_male_list,
+		SSsprite_accessories.facial_hairstyles_female_list,
+	)
+
 	//underwear
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/underwear, GLOB.underwear_list, GLOB.underwear_m, GLOB.underwear_f)
+	init_sprite_accessory_subtypes(
+		/datum/sprite_accessory/underwear,
+		SSsprite_accessories.underwear_list,
+		SSsprite_accessories.underwear_m,
+		SSsprite_accessories.underwear_f,
+	)
+
 	//undershirt
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/undershirt, GLOB.undershirt_list, GLOB.undershirt_m, GLOB.undershirt_f)
+	init_sprite_accessory_subtypes(
+		/datum/sprite_accessory/undershirt,
+		SSsprite_accessories.undershirt_list,
+		SSsprite_accessories.undershirt_m,
+		SSsprite_accessories.undershirt_f,
+	)
+
 	//socks
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, GLOB.socks_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/socks, SSsprite_accessories.socks_list)
+
+
 	//bodypart accessories (blizzard intensifies)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, GLOB.body_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, GLOB.tails_list_human, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, GLOB.tails_list_lizard, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, GLOB.tails_list_monkey, add_blank = TRUE)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, GLOB.snouts_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns,GLOB.horns_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, GLOB.ears_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, GLOB.wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, GLOB.wings_open_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, GLOB.frills_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, GLOB.spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, GLOB.animated_spines_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, GLOB.legs_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, GLOB.caps_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, GLOB.moth_wings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, GLOB.moth_antennae_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, GLOB.moth_markings_list)
-	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, GLOB.pod_hair_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/body_markings, SSsprite_accessories.body_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/human, SSsprite_accessories.tails_list_human, add_blank = TRUE)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/lizard, SSsprite_accessories.tails_list_lizard, add_blank = TRUE)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/tails/monkey, SSsprite_accessories.tails_list_monkey, add_blank = TRUE)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/snouts, SSsprite_accessories.snouts_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/horns,SSsprite_accessories.horns_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/ears, SSsprite_accessories.ears_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings, SSsprite_accessories.wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/wings_open, SSsprite_accessories.wings_open_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/frills, SSsprite_accessories.frills_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines, SSsprite_accessories.spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/spines_animated, SSsprite_accessories.animated_spines_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/legs, SSsprite_accessories.legs_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/caps, SSsprite_accessories.caps_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_wings, SSsprite_accessories.moth_wings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_antennae, SSsprite_accessories.moth_antennae_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/moth_markings, SSsprite_accessories.moth_markings_list)
+	init_sprite_accessory_subtypes(/datum/sprite_accessory/pod_hair, SSsprite_accessories.pod_hair_list)
 
 /// Inits GLOB.species_list. Not using GLOBAL_LIST_INIT b/c it depends on GLOB.string_lists
 /proc/init_species_list()
