@@ -70,7 +70,7 @@
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets, BB_CLEAN_TARGET, final_hunt_list)
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets
-	action_cooldown = 2 SECONDS
+	action_cooldown = 1 SECONDS
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)

@@ -69,6 +69,14 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/obj/item/card/id/access_card
 	///The trim type that will grant additional acces
 	var/datum/id_trim/additional_access
+	///file the path icon is stored in
+	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
+	///state of the path icon
+	var/path_image_icon_state = "path_indicator"
+	///what color this path icon will use
+	var/path_image_color = "#FFFFFF"
+	///list of all layed path icons
+	var/list/current_pathed_turfs = list()
 
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
@@ -91,8 +99,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/relay_attackers)
 
+	AddElement(/datum/element/relay_attackers)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)

@@ -37,3 +37,69 @@
 			holder.icon_state = "hudmove"
 		else
 			holder.icon_state = ""
+
+/mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
+	SIGNAL_HANDLER
+
+	if(isnull(ai_controller))
+		return
+
+	clear_path_hud()
+
+	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
+	QDEL_LIST(path_images)
+
+	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
+
+	var/atom/move_target = ai_controller.current_movement_target
+	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
+		return
+
+	var/list/our_path = source.movement_path
+	if(!length(our_path))
+		return
+
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.remove_atom_from_hud(src)
+
+	for(var/index in 1 to our_path.len)
+		var/turf/current_turf = our_path[index]
+		if(index == 1 || index == our_path.len)
+			continue
+		var/turf/previous_turf = our_path[index - 1]
+		var/turf/next_turf = our_path[index + 1]
+		var/next_direction = get_dir(previous_turf, next_turf)
+		var/previous_direction = get_dir(current_turf, previous_turf)
+		var/final_direction = (ISDIAGONALDIR(next_direction) && (previous_direction & (NORTH|SOUTH))) ? REVERSE_DIR(next_direction) : next_direction
+		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = GAME_PLANE, dir = final_direction)
+		path_display.color = path_image_color
+		path_images += path_display
+		current_pathed_turfs[current_turf] = path_display
+
+	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
+		hud.add_atom_to_hud(src)
+
+/mob/living/basic/bot/proc/handle_loop_movement(atom/movable/source)
+	SIGNAL_HANDLER
+
+	if(client || !length(current_pathed_turfs) || isnull(ai_controller))
+		return
+
+	var/atom/move_target = ai_controller.current_movement_target
+
+	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
+		clear_path_hud()
+
+	var/turf/our_turf = get_turf(src)
+	var/image/target_image = current_pathed_turfs[our_turf]
+	if(target_image)
+		animate(target_image, alpha = 0, time = 0.3 SECONDS)
+	current_pathed_turfs -= our_turf
+	return
+
+/mob/living/basic/bot/proc/clear_path_hud()
+	for(var/turf/index in current_pathed_turfs)
+		var/image/our_image = current_pathed_turfs[index]
+		animate(our_image, alpha = 0, time = 0.3 SECONDS)
+		current_pathed_turfs -= index
+
