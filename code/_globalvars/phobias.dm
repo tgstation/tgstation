@@ -65,6 +65,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/chicken,
 		/mob/living/basic/parrot,
 		/mob/living/basic/pet/penguin,
+		/mob/living/simple_animal/hostile/retaliate/goose,
 	)),
 	"carps" = typecacheof(list(
 		/mob/living/basic/carp,
