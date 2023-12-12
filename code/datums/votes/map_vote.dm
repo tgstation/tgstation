@@ -2,7 +2,6 @@
 	name = "Map"
 	message = "Vote for next round's map!"
 	count_method = VOTE_COUNT_METHOD_MULTI
-	player_startable = FALSE //monkestation edit
 	donator_multiplier = 3 //monkestation addition
 
 /datum/vote/map_vote/New()
