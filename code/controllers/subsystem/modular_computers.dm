@@ -1,4 +1,4 @@
-///The maximum amount of logs that can be generated before they start overwriting eachother.
+s///The maximum amount of logs that can be generated before they start overwriting eachother.
 #define MAX_LOG_COUNT 300
 
 SUBSYSTEM_DEF(modular_computers)
@@ -41,6 +41,8 @@ SUBSYSTEM_DEF(modular_computers)
 ///Generate new coupon codes that can be redeemed with the Coupon Master App
 /datum/controller/subsystem/modular_computers/proc/announce_coupon()
 	//If there's no way to announce the coupon, we may as well skip it.
+	if(!length(GLOB.announcement_systems))
+		return
 	var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
 	if(isnull(announcement_system))
 		return
