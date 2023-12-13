@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
-export const StackingConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const StackingConsole = (props) => {
+  const { act, data } = useBackend();
   const { machine } = data;
   return (
     <Window width={320} height={340}>
@@ -18,8 +18,8 @@ export const StackingConsole = (props, context) => {
   );
 };
 
-export const StackingConsoleContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const StackingConsoleContent = (props) => {
+  const { act, data } = useBackend();
   const {
     input_direction,
     output_direction,
@@ -45,10 +45,9 @@ export const StackingConsoleContent = (props, context) => {
                   })
                 }
               />
-            }>
-            <Box style={{ 'text-transform': 'capitalize' }}>
-              {input_direction}
-            </Box>
+            }
+          >
+            <Box style={{ textTransform: 'capitalize' }}>{input_direction}</Box>
           </LabeledList.Item>
           <LabeledList.Item
             label="Output"
@@ -62,8 +61,9 @@ export const StackingConsoleContent = (props, context) => {
                   })
                 }
               />
-            }>
-            <Box style={{ 'text-transform': 'capitalize' }}>
+            }
+          >
+            <Box style={{ textTransform: 'capitalize' }}>
               {output_direction}
             </Box>
           </LabeledList.Item>
@@ -88,7 +88,8 @@ export const StackingConsoleContent = (props, context) => {
                       })
                     }
                   />
-                }>
+                }
+              >
                 {sheet.amount || 'Unknown'}
               </LabeledList.Item>
             ))}

@@ -14,8 +14,8 @@ type Data = {
   emptying: BooleanLike;
 };
 
-export const ChemAcclimator = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ChemAcclimator = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     chem_temp,
     target_temperature,
@@ -77,7 +77,8 @@ export const ChemAcclimator = (props, context) => {
               selected={enabled}
               onClick={() => act('toggle_power')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Volume">
               <NumberInput

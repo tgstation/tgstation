@@ -108,7 +108,7 @@
 		/datum/reagent/consumable/milk/chocolate_milk = -1)
 
 	virus_suspectibility = 1.5
-	resulting_atoms = list(/mob/living/simple_animal/pet/cat = 1) //The basic cat mobs are all male, so you mightt need a gender swap potion if you want to fill the fortress with kittens.
+	resulting_atoms = list(/mob/living/basic/pet/cat = 1)
 
 /datum/micro_organism/cell_line/corgi
 	desc = "Canid cells"

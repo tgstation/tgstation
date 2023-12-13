@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Button, Icon, LabeledList, NumberInput, Section, Stack, Table } from '../components';
+import {
+  Button,
+  Icon,
+  LabeledList,
+  NumberInput,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 import { ReagentLookup } from './common/ReagentLookup';
 import { RecipeLookup } from './common/RecipeLookup';
@@ -8,8 +16,8 @@ const bookmarkedReactions = new Set();
 
 const matchBitflag = (a, b) => a & b && (a | b) === b;
 
-export const Reagents = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Reagents = (props) => {
+  const { act, data } = useBackend();
   const {
     beakerSync,
     reagent_mode_recipe,
@@ -22,7 +30,6 @@ export const Reagents = (props, context) => {
     { flag: bitflags.BURN, icon: 'burn' },
     { flag: bitflags.TOXIN, icon: 'biohazard' },
     { flag: bitflags.OXY, icon: 'wind' },
-    { flag: bitflags.CLONE, icon: 'male' },
     { flag: bitflags.HEALING, icon: 'medkit' },
     { flag: bitflags.DAMAGING, icon: 'skull-crossbones' },
     { flag: bitflags.EXPLOSIVE, icon: 'bomb' },
@@ -42,7 +49,7 @@ export const Reagents = (props, context) => {
     { flag: bitflags.COMPETITIVE, icon: 'recycle' },
   ];
 
-  const [page, setPage] = useLocalState(context, 'page', 1);
+  const [page, setPage] = useLocalState('page', 1);
 
   return (
     <Window width={720} height={850}>
@@ -81,7 +88,8 @@ export const Reagents = (props, context) => {
                         }
                       />
                     </>
-                  }>
+                  }
+                >
                   <RecipeLookup
                     recipe={reagent_mode_recipe}
                     bookmarkedReactions={bookmarkedReactions}
@@ -112,7 +120,8 @@ export const Reagents = (props, context) => {
                         }
                       />
                     </>
-                  }>
+                  }
+                >
                   <ReagentLookup reagent={reagent_mode_reagent} />
                 </Section>
               </Stack.Item>
@@ -132,9 +141,9 @@ export const Reagents = (props, context) => {
   );
 };
 
-const TagBox = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [page, setPage] = useLocalState(context, 'page', 1);
+const TagBox = (props) => {
+  const { act, data } = useBackend();
+  const [page, setPage] = useLocalState('page', 1);
   const { bitflags } = props;
   const { selectedBitflags } = data;
   return (
@@ -146,7 +155,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_brute');
             setPage(1);
-          }}>
+          }}
+        >
           Brute
         </Button>
         <Button
@@ -155,7 +165,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_burn');
             setPage(1);
-          }}>
+          }}
+        >
           Burn
         </Button>
         <Button
@@ -164,7 +175,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_toxin');
             setPage(1);
-          }}>
+          }}
+        >
           Toxin
         </Button>
         <Button
@@ -173,17 +185,9 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_oxy');
             setPage(1);
-          }}>
+          }}
+        >
           Suffocation
-        </Button>
-        <Button
-          color={selectedBitflags & bitflags.CLONE ? 'green' : 'red'}
-          icon="male"
-          onClick={() => {
-            act('toggle_tag_clone');
-            setPage(1);
-          }}>
-          Clone
         </Button>
         <Button
           color={selectedBitflags & bitflags.ORGAN ? 'green' : 'red'}
@@ -191,7 +195,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_organ');
             setPage(1);
-          }}>
+          }}
+        >
           Organ
         </Button>
         <Button
@@ -200,7 +205,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_chemical');
             setPage(1);
-          }}>
+          }}
+        >
           Chemical
         </Button>
         <Button
@@ -209,7 +215,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_plant');
             setPage(1);
-          }}>
+          }}
+        >
           Plants
         </Button>
         <Button
@@ -218,7 +225,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_other');
             setPage(1);
-          }}>
+          }}
+        >
           Other
         </Button>
       </LabeledList.Item>
@@ -229,7 +237,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_drink');
             setPage(1);
-          }}>
+          }}
+        >
           Drink
         </Button>
         <Button
@@ -238,7 +247,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_food');
             setPage(1);
-          }}>
+          }}
+        >
           Food
         </Button>
         <Button
@@ -247,7 +257,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_healing');
             setPage(1);
-          }}>
+          }}
+        >
           Healing
         </Button>
         <Button
@@ -256,7 +267,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_damaging');
             setPage(1);
-          }}>
+          }}
+        >
           Toxic
         </Button>
         <Button
@@ -265,7 +277,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_drug');
             setPage(1);
-          }}>
+          }}
+        >
           Drugs
         </Button>
         <Button
@@ -274,7 +287,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_slime');
             setPage(1);
-          }}>
+          }}
+        >
           Slime
         </Button>
         <Button
@@ -283,7 +297,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_explosive');
             setPage(1);
-          }}>
+          }}
+        >
           Explosive
         </Button>
         <Button
@@ -292,7 +307,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_unique');
             setPage(1);
-          }}>
+          }}
+        >
           Unique
         </Button>
       </LabeledList.Item>
@@ -303,7 +319,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_easy');
             setPage(1);
-          }}>
+          }}
+        >
           Easy
         </Button>
         <Button
@@ -312,7 +329,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_moderate');
             setPage(1);
-          }}>
+          }}
+        >
           Moderate
         </Button>
         <Button
@@ -321,7 +339,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_hard');
             setPage(1);
-          }}>
+          }}
+        >
           Hard
         </Button>
         <Button
@@ -330,7 +349,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_dangerous');
             setPage(1);
-          }}>
+          }}
+        >
           Dangerous
         </Button>
         <Button
@@ -339,7 +359,8 @@ const TagBox = (props, context) => {
           onClick={() => {
             act('toggle_tag_competitive');
             setPage(1);
-          }}>
+          }}
+        >
           Competitive
         </Button>
       </LabeledList.Item>
@@ -347,9 +368,9 @@ const TagBox = (props, context) => {
   );
 };
 
-const RecipeLibrary = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [page, setPage] = useLocalState(context, 'page', 1);
+const RecipeLibrary = (props) => {
+  const { act, data } = useBackend();
+  const [page, setPage] = useLocalState('page', 1);
   const { flagIcons } = props;
   const {
     selectedBitflags,
@@ -359,22 +380,17 @@ const RecipeLibrary = (props, context) => {
   } = data;
 
   const [reagentFilter, setReagentFilter] = useLocalState(
-    context,
     'reagentFilter',
-    true
+    true,
   );
-  const [bookmarkMode, setBookmarkMode] = useLocalState(
-    context,
-    'bookmarkMode',
-    false
-  );
+  const [bookmarkMode, setBookmarkMode] = useLocalState('bookmarkMode', false);
 
   const matchReagents = (reaction) => {
     if (!reagentFilter || currentReagents === null) {
       return true;
     }
     let matches = reaction.reactants.filter((reactant) =>
-      currentReagents.includes(reactant.id)
+      currentReagents.includes(reactant.id),
     ).length;
     return matches === currentReagents.length;
   };
@@ -388,11 +404,11 @@ const RecipeLibrary = (props, context) => {
   const visibleReactions = bookmarkMode
     ? bookmarkArray
     : master_reaction_list.filter(
-      (reaction) =>
-        (selectedBitflags
-          ? matchBitflag(selectedBitflags, reaction.bitflags)
-          : true) && matchReagents(reaction)
-    );
+        (reaction) =>
+          (selectedBitflags
+            ? matchBitflag(selectedBitflags, reaction.bitflags)
+            : true) && matchReagents(reaction),
+      );
 
   const pageIndexMax = Math.ceil(visibleReactions.length / 50);
 
@@ -451,7 +467,8 @@ const RecipeLibrary = (props, context) => {
             onClick={() => setPage(Math.min(page + 1, pageIndexMax))}
           />
         </>
-      }>
+      }
+    >
       <Table>
         <Table.Row>
           <Table.Cell bold color="label">

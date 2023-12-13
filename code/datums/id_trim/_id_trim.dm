@@ -16,6 +16,8 @@
 	var/intern_alt_name = null
 	/// The icon_state associated with this trim, as it will show on the security HUD.
 	var/sechud_icon_state = SECHUD_UNKNOWN
+	/// How threatened does a security bot feel when scanning this ID? A negative value may cause them to forgive things which would otherwise cause aggro.
+	var/threat_modifier = 0
 
 	/// Accesses that this trim unlocks on a card it is imprinted on. These accesses never take wildcard slots and can be added and removed at will.
 	var/list/access = list()

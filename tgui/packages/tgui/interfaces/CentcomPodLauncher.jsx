@@ -3,35 +3,47 @@ import { classes } from 'common/react';
 import { storage } from 'common/storage';
 import { multiline } from 'common/string';
 import { createUuid } from 'common/uuid';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Divider, Input, Knob, LabeledControls, NumberInput, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  ByondUi,
+  Divider,
+  Input,
+  Knob,
+  LabeledControls,
+  NumberInput,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 const pod_grey = {
   color: 'grey',
 };
 
-const useCompact = (context) => {
-  const [compact, setCompact] = useLocalState(context, 'compact', false);
+const useCompact = () => {
+  const [compact, setCompact] = useLocalState('compact', false);
   const toggleCompact = () => setCompact(!compact);
   return [compact, toggleCompact];
 };
 
-export const CentcomPodLauncher = (props, context) => {
-  const [compact] = useCompact(context);
+export const CentcomPodLauncher = (props) => {
+  const [compact] = useCompact();
   return (
     <Window
       title="Supply Pod Menu (Use against Helen Weinstein)"
       width={compact ? 460 : 730}
-      height={compact ? 360 : 440}>
+      height={compact ? 360 : 440}
+    >
       <CentcomPodLauncherContent />
     </Window>
   );
 };
 
-const CentcomPodLauncherContent = (props, context) => {
-  const [compact] = useCompact(context);
+const CentcomPodLauncherContent = (props) => {
+  const [compact] = useCompact();
   return (
     <Window.Content>
       <Stack fill vertical>
@@ -410,13 +422,9 @@ const EFFECTS_ALL = [
   },
 ];
 
-const ViewTabHolder = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tabPageIndex, setTabPageIndex] = useLocalState(
-    context,
-    'tabPageIndex',
-    1
-  );
+const ViewTabHolder = (props) => {
+  const { act, data } = useBackend();
+  const [tabPageIndex, setTabPageIndex] = useLocalState('tabPageIndex', 1);
   const { mapRef } = data;
   const TabPageComponent = TABPAGES[tabPageIndex].component();
   return (
@@ -485,7 +493,8 @@ const ViewTabHolder = (props, context) => {
             }}
           />
         </>
-      }>
+      }
+    >
       <Stack fill vertical>
         <Stack.Item>
           <TabPageComponent />
@@ -505,7 +514,7 @@ const ViewTabHolder = (props, context) => {
   );
 };
 
-const TabPod = (props, context) => {
+const TabPod = (props) => {
   return (
     <Box color="label">
       Note: You can right click on this
@@ -515,8 +524,8 @@ const TabPod = (props, context) => {
   );
 };
 
-const TabBay = (props, context) => {
-  const { act, data } = useBackend(context);
+const TabBay = (props) => {
+  const { act, data } = useBackend();
   return (
     <>
       <Button
@@ -534,8 +543,8 @@ const TabBay = (props, context) => {
   );
 };
 
-const TabDrop = (props, context) => {
-  const { act, data } = useBackend(context);
+const TabDrop = (props) => {
+  const { act, data } = useBackend();
   return (
     <>
       <Button
@@ -553,9 +562,9 @@ const TabDrop = (props, context) => {
   );
 };
 
-const PodStatusPage = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [compact, toggleCompact] = useCompact(context);
+const PodStatusPage = (props) => {
+  const { act, data } = useBackend();
+  const [compact, toggleCompact] = useCompact();
   return (
     <Section fill width="100%">
       <Stack>
@@ -579,10 +588,10 @@ const PodStatusPage = (props, context) => {
                           effect.details
                             ? data.effectShrapnel
                               ? effect.title +
-                              '\n' +
-                              data.shrapnelType +
-                              '\nMagnitude:' +
-                              data.shrapnelMagnitude
+                                '\n' +
+                                data.shrapnelType +
+                                '\nMagnitude:' +
+                                data.shrapnelMagnitude
                               : effect.title
                             : effect.title
                         }
@@ -600,11 +609,11 @@ const PodStatusPage = (props, context) => {
                             : act(effect.act)
                         }
                         style={{
-                          'vertical-align': 'middle',
-                          'margin-left': j !== 0 ? '1px' : '0px',
-                          'margin-right':
+                          verticalAlign: 'middle',
+                          marginLeft: j !== 0 ? '1px' : '0px',
+                          marginRight:
                             j !== list.list.length - 1 ? '1px' : '0px',
-                          'border-radius': '5px',
+                          borderRadius: '5px',
                         }}
                       />
                     )}
@@ -671,13 +680,9 @@ const PodStatusPage = (props, context) => {
   );
 };
 
-const ReverseMenu = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tabPageIndex, setTabPageIndex] = useLocalState(
-    context,
-    'tabPageIndex',
-    1
-  );
+const ReverseMenu = (props) => {
+  const { act, data } = useBackend();
+  const [tabPageIndex, setTabPageIndex] = useLocalState('tabPageIndex', 1);
   return (
     <Section
       fill
@@ -701,7 +706,8 @@ const ReverseMenu = (props, context) => {
             }
           }}
         />
-      }>
+      }
+    >
       {data.effectReverse === 1 && (
         <Stack fill vertical>
           <Stack.Item maxHeight="20px">
@@ -763,8 +769,8 @@ const ReverseMenu = (props, context) => {
 };
 
 class PresetsPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       presets: [],
     };
@@ -782,8 +788,8 @@ class PresetsPage extends Component {
     storage.set('podlauncher_preset_' + id, data);
   }
 
-  async loadDataFromPreset(id, context) {
-    const { act } = useBackend(this.context);
+  async loadDataFromPreset(id) {
+    const { act } = useBackend();
     act('loadDataFromPreset', {
       payload: await storage.get('podlauncher_preset_' + id),
     });
@@ -822,23 +828,11 @@ class PresetsPage extends Component {
   }
   render() {
     const { presets } = this.state;
-    const { act, data } = useBackend(this.context);
-    const [presetIndex, setSelectedPreset] = useLocalState(
-      this.context,
-      'presetIndex',
-      0
-    );
-    const [settingName, setEditingNameStatus] = useLocalState(
-      this.context,
-      'settingName',
-      0
-    );
-    const [newNameText, setText] = useLocalState(
-      this.context,
-      'newNameText',
-      ''
-    );
-    const [hue, setHue] = useLocalState(this.context, 'hue', 0);
+    const { act, data } = useBackend();
+    const [presetIndex, setSelectedPreset] = useLocalState('presetIndex', 0);
+    const [settingName, setEditingNameStatus] = useLocalState('settingName', 0);
+    const [newNameText, setText] = useLocalState('newNameText', '');
+    const [hue, setHue] = useLocalState('hue', 0);
     return (
       <Section
         scrollable
@@ -882,7 +876,8 @@ class PresetsPage extends Component {
               onClick={() => this.deletePreset(presetIndex)}
             />
           </>
-        }>
+        }
+      >
         {settingName === 1 && (
           <>
             <Button
@@ -933,24 +928,24 @@ class PresetsPage extends Component {
         )}
         {presets
           ? presets.map((preset, i) => (
-            <Button
-              key={i}
-              width="100%"
-              backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
-              onClick={() => setSelectedPreset(preset.id)}
-              onDblClick={() => this.loadDataFromPreset(preset.id)}
-              content={preset.title}
-              style={
-                presetIndex === preset.id
-                  ? {
-                    'border-width': '1px',
-                    'border-style': 'solid',
-                    'border-color': `hsl(${preset.hue}, 80%, 80%)`,
-                  }
-                  : ''
-              }
-            />
-          ))
+              <Button
+                key={i}
+                width="100%"
+                backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
+                onClick={() => setSelectedPreset(preset.id)}
+                onDblClick={() => this.loadDataFromPreset(preset.id)}
+                content={preset.title}
+                style={
+                  presetIndex === preset.id
+                    ? {
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        borderColor: `hsl(${preset.hue}, 80%, 80%)`,
+                      }
+                    : ''
+                }
+              />
+            ))
           : ''}
         <span style={pod_grey}>
           <br />
@@ -962,9 +957,9 @@ class PresetsPage extends Component {
   }
 }
 
-const LaunchPage = (props, context) => {
-  const [compact] = useCompact(context);
-  const { act, data } = useBackend(context);
+const LaunchPage = (props) => {
+  const [compact] = useCompact();
+  const { act, data } = useBackend();
   return (
     <Button
       fluid
@@ -984,8 +979,8 @@ const LaunchPage = (props, context) => {
   );
 };
 
-const StylePage = (props, context) => {
-  const { act, data } = useBackend(context);
+const StylePage = (props) => {
+  const { act, data } = useBackend();
   return (
     <Section
       fill
@@ -1003,7 +998,8 @@ const StylePage = (props, context) => {
           tooltipPosition="bottom-start"
           onClick={() => act('effectName')}
         />
-      }>
+      }
+    >
       {STYLES.map((page, i) => (
         <Button
           key={i}
@@ -1020,17 +1016,18 @@ const StylePage = (props, context) => {
           }
           tooltip={page.title}
           style={{
-            'vertical-align': 'middle',
-            'margin-right': '5px',
-            'border-radius': '20px',
+            verticalAlign: 'middle',
+            marginRight: '5px',
+            borderRadius: '20px',
           }}
           selected={data.styleChoice - 1 === i}
-          onClick={() => act('setStyle', { style: i })}>
+          onClick={() => act('setStyle', { style: i })}
+        >
           <Box
             className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
-              'transform': 'rotate(45deg) translate(-25%,-10%)',
-              'pointer-events': 'none',
+              transform: 'rotate(45deg) translate(-25%,-10%)',
+              pointerEvents: 'none',
             }}
           />
         </Button>
@@ -1039,9 +1036,9 @@ const StylePage = (props, context) => {
   );
 };
 
-const Bays = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [compact] = useCompact(context);
+const Bays = (props) => {
+  const { act, data } = useBackend();
+  const [compact] = useCompact();
   return (
     <Section
       fill
@@ -1071,7 +1068,8 @@ const Bays = (props, context) => {
             tooltipPosition="bottom-end"
           />
         </>
-      }>
+      }
+    >
       {BAYS.map((bay, i) => (
         <Button
           key={i}
@@ -1085,8 +1083,8 @@ const Bays = (props, context) => {
   );
 };
 
-const Timing = (props, context) => {
-  const { act, data } = useBackend(context);
+const Timing = (props) => {
+  const { act, data } = useBackend();
   return (
     <Section
       fill
@@ -1116,7 +1114,8 @@ const Timing = (props, context) => {
             onClick={() => act('toggleRevDelays')}
           />
         </>
-      }>
+      }
+    >
       <DelayHelper delay_list={DELAYS} />
       {(data.custom_rev_delay && (
         <>
@@ -1129,15 +1128,16 @@ const Timing = (props, context) => {
   );
 };
 
-const DelayHelper = (props, context) => {
-  const { act, data } = useBackend(context);
+const DelayHelper = (props) => {
+  const { act, data } = useBackend();
   const { delay_list, reverse = false } = props;
   return (
     <LabeledControls wrap>
       {delay_list.map((delay, i) => (
         <LabeledControls.Item
           key={i}
-          label={data.custom_rev_delay ? '' : delay.title}>
+          label={data.custom_rev_delay ? '' : delay.title}
+        >
           <Knob
             inline
             step={0.02}
@@ -1167,8 +1167,8 @@ const DelayHelper = (props, context) => {
   );
 };
 
-const Sounds = (props, context) => {
-  const { act, data } = useBackend(context);
+const Sounds = (props) => {
+  const { act, data } = useBackend();
   return (
     <Section
       fill
@@ -1184,7 +1184,8 @@ const Sounds = (props, context) => {
           }
           onClick={() => act('soundVolume')}
         />
-      }>
+      }
+    >
       {SOUNDS.map((sound, i) => (
         <Button
           key={i}

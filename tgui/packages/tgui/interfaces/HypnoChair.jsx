@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, Icon, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
-export const HypnoChair = (props, context) => {
-  const { act, data } = useBackend(context);
+export const HypnoChair = (props) => {
+  const { act, data } = useBackend();
   return (
     <Window width={375} height={480}>
       <Window.Content>
@@ -27,7 +27,8 @@ export const HypnoChair = (props, context) => {
                     : data.occupant.stat === 1
                       ? 'average'
                       : 'bad'
-                }>
+                }
+              >
                 {data.occupant.stat === 0
                   ? 'Conscious'
                   : data.occupant.stat === 1

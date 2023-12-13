@@ -16,10 +16,9 @@ If you are completely new to frontend and prefer to **learn by doing**, start wi
 
 ### Guides
 
-This project uses **Inferno** - a very fast UI rendering engine with a similar API to React. Take your time to read these guides:
+This project uses React. Take your time to read the guide:
 
-- [React guide](https://reactjs.org/docs/hello-world.html)
-- [Inferno documentation](https://infernojs.org/docs/guides/components) - highlights differences with React.
+- [React guide](https://react.dev/learn)
 
 If you were already familiar with an older, Ractive-based tgui, and want to translate concepts between old and new tgui, read this [interface conversion guide](docs/converting-old-tgui-interfaces.md).
 
@@ -71,6 +70,7 @@ However, if you want finer control over the installation or build process, you w
 - `tools/build/build tgui-clean` - Clean up tgui folder.
 
 > With Juke Build, you can run multiple targets together, e.g.:
+>
 > ```
 > tools/build/build tgui tgui-lint tgui-tsc tgui-test
 > ```
@@ -137,7 +137,7 @@ Press `F12` or click the green bug to open the KitchenSink interface. This inter
 playground to test various tgui components.
 
 **Layout Debugger.**
-Press `F11` to toggle the *layout debugger*. It will show outlines of
+Press `F11` to toggle the _layout debugger_. It will show outlines of
 all tgui elements, which makes it easy to understand how everything comes
 together, and can reveal certain layout bugs which are not normally visible.
 

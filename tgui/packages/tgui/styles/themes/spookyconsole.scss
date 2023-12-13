@@ -7,11 +7,11 @@
   $good: #010005,
   $bad: #970934,
   $fg-map-keys: (),
-  $bg-map-keys: (),
+  $bg-map-keys: ()
 );
 @use '../base.scss' with (
   $color-bg: #240101,
-  $color-bg-grad-spread: 12%,
+  $color-bg-grad-spread: 12%
 );
 
 $updated-bg-map: colors.$bg-map !default;

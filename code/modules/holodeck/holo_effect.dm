@@ -49,7 +49,8 @@
 	var/static/banned_books = list(/obj/item/book/manual/random, /obj/item/book/manual/nuclear, /obj/item/book/manual/wiki)
 	var/newtype = pick(subtypesof(/obj/item/book/manual) - banned_books)
 	var/obj/item/book/manual/to_spawn = new newtype(loc)
-	to_spawn.flags_1 |= (HOLOGRAM_1 | NODECONSTRUCT_1)
+	to_spawn.flags_1 |= HOLOGRAM_1
+	to_spawn.obj_flags |= NO_DECONSTRUCTION
 	return to_spawn
 
 /obj/effect/holodeck_effect/mobspawner
@@ -94,8 +95,8 @@
 		/mob/living/basic/pet/dog/pug,
 	)
 	mobtype += pick(
-		/mob/living/simple_animal/pet/cat,
-		/mob/living/simple_animal/pet/cat/kitten,
+		/mob/living/basic/pet/cat,
+		/mob/living/basic/pet/cat/kitten,
 	)
 
 /obj/effect/holodeck_effect/mobspawner/bee

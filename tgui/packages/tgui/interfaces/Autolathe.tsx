@@ -1,5 +1,15 @@
 import { useBackend } from '../backend';
-import { LabeledList, Section, ProgressBar, Collapsible, Stack, Icon, Box, Tooltip, Button } from '../components';
+import {
+  LabeledList,
+  Section,
+  ProgressBar,
+  Collapsible,
+  Stack,
+  Icon,
+  Box,
+  Tooltip,
+  Button,
+} from '../components';
 import { Window } from '../layouts';
 import { capitalize } from 'common/string';
 import { Design, MaterialMap } from './Fabrication/Types';
@@ -17,8 +27,8 @@ type AutolatheData = {
   active: BooleanLike;
 };
 
-export const Autolathe = (props, context) => {
-  const { data } = useBackend<AutolatheData>(context);
+export const Autolathe = (props) => {
+  const { data } = useBackend<AutolatheData>();
   const {
     materialtotal,
     materialsmax,
@@ -49,10 +59,11 @@ export const Autolathe = (props, context) => {
                     minValue={0}
                     maxValue={materialsmax}
                     ranges={{
-                      'good': [materialsmax * 0.85, materialsmax],
-                      'average': [materialsmax * 0.25, materialsmax * 0.85],
-                      'bad': [0, materialsmax * 0.25],
-                    }}>
+                      good: [materialsmax * 0.85, materialsmax],
+                      average: [materialsmax * 0.25, materialsmax * 0.85],
+                      bad: [0, materialsmax * 0.25],
+                    }}
+                  >
                     {materialtotal / SHEET_MATERIAL_AMOUNT +
                       '/' +
                       materialsmax / SHEET_MATERIAL_AMOUNT +
@@ -66,7 +77,8 @@ export const Autolathe = (props, context) => {
                         {filteredMaterials.map((material) => (
                           <LabeledList.Item
                             key={material.name}
-                            label={capitalize(material.name)}>
+                            label={capitalize(material.name)}
+                          >
                             <ProgressBar
                               style={{
                                 transform: 'scaleX(-1) scaleY(1)',
@@ -74,7 +86,8 @@ export const Autolathe = (props, context) => {
                               value={materialsmax - material.amount}
                               maxValue={materialsmax}
                               backgroundColor={material.color}
-                              color="black">
+                              color="black"
+                            >
                               <div style={{ transform: 'scaleX(-1)' }}>
                                 {material.amount / SHEET_MATERIAL_AMOUNT +
                                   ' sheets'}
@@ -97,7 +110,7 @@ export const Autolathe = (props, context) => {
               buildRecipeElement={(
                 design,
                 availableMaterials,
-                _onPrintDesign
+                _onPrintDesign,
               ) => (
                 <AutolatheRecipe
                   design={design}
@@ -121,8 +134,8 @@ type PrintButtonProps = {
   maxmult: number;
 };
 
-const PrintButton = (props: PrintButtonProps, context) => {
-  const { act } = useBackend<AutolatheData>(context);
+const PrintButton = (props: PrintButtonProps) => {
+  const { act } = useBackend<AutolatheData>();
   const {
     design,
     quantity,
@@ -141,7 +154,8 @@ const PrintButton = (props: PrintButtonProps, context) => {
           SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
           available={availableMaterials}
         />
-      }>
+      }
+    >
       <div
         className={classes([
           'FabricatorRecipe__Button',
@@ -150,7 +164,8 @@ const PrintButton = (props: PrintButtonProps, context) => {
         color={'transparent'}
         onClick={() =>
           canPrint && act('make', { id: design.id, multiplier: quantity })
-        }>
+        }
+      >
         &times;{quantity}
       </div>
     </Tooltip>
@@ -163,8 +178,8 @@ type AutolatheRecipeProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
-  const { act } = useBackend<AutolatheData>(context);
+const AutolatheRecipe = (props: AutolatheRecipeProps) => {
+  const { act } = useBackend<AutolatheData>();
   const { design, availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const maxmult = design.maxmult;
@@ -178,7 +193,8 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -190,7 +206,8 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
             SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={availableMaterials}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
@@ -198,7 +215,8 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
           ])}
           onClick={() =>
             canPrint && act('make', { id: design.id, multiplier: 1 })
-          }>
+          }
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}
@@ -230,7 +248,8 @@ const AutolatheRecipe = (props: AutolatheRecipeProps, context) => {
         className={classes([
           'FabricatorRecipe__Button',
           !canPrint && 'FabricatorRecipe__Button--disabled',
-        ])}>
+        ])}
+      >
         <Button.Input
           content={'[Max: ' + maxmult + ']'}
           color={'transparent'}

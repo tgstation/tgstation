@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dropdown, Input, Section, Stack, TextArea } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+  TextArea,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -22,7 +30,8 @@ export const CommandReport = () => {
       title="Create Command Report"
       width={325}
       height={685}
-      theme="admin">
+      theme="admin"
+    >
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -43,8 +52,8 @@ export const CommandReport = () => {
 };
 
 /** Allows the user to set the "sender" of the message via dropdown */
-const CentComName = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CentComName = (props) => {
+  const { act, data } = useBackend<Data>();
   const { command_name, command_name_presets = [], custom_name } = data;
 
   return (
@@ -77,8 +86,8 @@ const CentComName = (props, context) => {
 };
 
 /** Allows the user to set the "sender" of the message via dropdown */
-const SubHeader = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const SubHeader = (props) => {
+  const { act, data } = useBackend<Data>();
   const { subheader } = data;
 
   return (
@@ -100,8 +109,8 @@ const SubHeader = (props, context) => {
 };
 
 /** Features a section with dropdown for the announcement colour. */
-const AnnouncementColor = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AnnouncementColor = (props) => {
+  const { act, data } = useBackend<Data>();
   const { announcement_colors = [], announcement_color } = data;
 
   return (
@@ -121,8 +130,8 @@ const AnnouncementColor = (props, context) => {
 };
 
 /** Features a section with dropdown for sounds. */
-const AnnouncementSound = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AnnouncementSound = (props) => {
+  const { act, data } = useBackend<Data>();
   const { announcer_sounds = [], played_sound } = data;
 
   return (
@@ -142,13 +151,12 @@ const AnnouncementSound = (props, context) => {
 };
 
 /** Creates the report textarea with a submit button. */
-const ReportText = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ReportText = (props) => {
+  const { act, data } = useBackend<Data>();
   const { announce_contents, print_report, command_report_content } = data;
   const [commandReport, setCommandReport] = useLocalState<string>(
-    context,
     'textArea',
-    command_report_content
+    command_report_content,
   );
 
   return (
@@ -164,7 +172,8 @@ const ReportText = (props, context) => {
           <Button.Checkbox
             fluid
             checked={announce_contents}
-            onClick={() => act('toggle_announce')}>
+            onClick={() => act('toggle_announce')}
+          >
             Announce Contents
           </Button.Checkbox>
           <Button.Checkbox
@@ -176,7 +185,8 @@ const ReportText = (props, context) => {
               !announce_contents &&
               "Printing the report is required since we aren't announcing its contents."
             }
-            tooltipPosition="top">
+            tooltipPosition="top"
+          >
             Print Report
           </Button.Checkbox>
         </Stack.Item>

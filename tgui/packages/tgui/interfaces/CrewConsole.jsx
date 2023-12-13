@@ -80,8 +80,8 @@ export const CrewConsole = () => {
   );
 };
 
-const CrewTable = (props, context) => {
-  const { act, data } = useBackend(context);
+const CrewTable = (props) => {
+  const { act, data } = useBackend();
   const sensors = sortBy((s) => s.ijob)(data.sensors ?? []);
   return (
     <Table>
@@ -107,8 +107,8 @@ const CrewTable = (props, context) => {
   );
 };
 
-const CrewTableEntry = (props, context) => {
-  const { act, data } = useBackend(context);
+const CrewTableEntry = (props) => {
+  const { act, data } = useBackend();
   const { link_allowed } = data;
   const { sensor_data } = props;
   const {
@@ -125,7 +125,7 @@ const CrewTableEntry = (props, context) => {
   } = sensor_data;
 
   return (
-    <Table.Row>
+    <Table.Row className="candystripe">
       <Table.Cell bold={jobIsHead(ijob)} color={jobToColor(ijob)}>
         {name}
         {assignment !== undefined ? ` (${assignment})` : ''}
@@ -139,7 +139,7 @@ const CrewTableEntry = (props, context) => {
               toxdam,
               burndam,
               brutedam,
-              HEALTH_COLOR_BY_LEVEL
+              HEALTH_COLOR_BY_LEVEL,
             )}
             size={1}
           />

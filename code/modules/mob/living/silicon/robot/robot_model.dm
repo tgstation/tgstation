@@ -8,13 +8,13 @@
  **/
 /obj/item/robot_model
 	name = "Default"
-	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "std_mod"
 	w_class = WEIGHT_CLASS_GIGANTIC
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	///Host of this model
 	var/mob/living/silicon/robot/robot
 	///Icon of the module selection screen

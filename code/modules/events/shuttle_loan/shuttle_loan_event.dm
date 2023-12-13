@@ -39,7 +39,11 @@
 	situation = new situation()
 
 /datum/round_event/shuttle_loan/announce(fake)
-	priority_announce("Cargo: [situation.announcement_text]", situation.sender)
+	var/announcement_text = situation?.announcement_text
+	if(isnull(announcement_text) || fake)
+		var/datum/shuttle_loan_situation/fake_situation = pick(subtypesof(/datum/shuttle_loan_situation))
+		announcement_text = initial(fake_situation.announcement_text)
+	priority_announce("Cargo: [announcement_text]", situation.sender)
 	SSshuttle.shuttle_loan = src
 
 /datum/round_event/shuttle_loan/proc/loan_shuttle()

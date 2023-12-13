@@ -1589,3 +1589,13 @@
 		/datum/stock_part/servo = 2,
 		/datum/stock_part/matter_bin = 1,
 	)
+
+/obj/item/circuitboard/machine/shieldwallgen
+	name = "Shield Wall Generator"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/power/shieldwallgen
+	req_components = list(
+		/datum/stock_part/capacitor/tier2 = 2,
+		/datum/stock_part/micro_laser/tier2 = 2,
+		/obj/item/stack/sheet/plasteel = 2,
+	)

@@ -177,7 +177,7 @@
 /obj/machinery/coffeemaker/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/coffeemaker/attackby(obj/item/attack_item, mob/living/user, params)
 	//You can only screw open empty grinder

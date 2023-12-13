@@ -50,7 +50,6 @@
 	need_mob_update += owner.adjustFireLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 	need_mob_update += owner.adjustToxLoss(-grace_heal * seconds_between_ticks, forced = TRUE)
 	need_mob_update += owner.adjustOxyLoss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjustCloneLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 	if(need_mob_update)
 		owner.updatehealth()
 
@@ -92,7 +91,6 @@
 		human_owner.physiology.burn_mod *= 0.1
 		human_owner.physiology.tox_mod *= 0.1
 		human_owner.physiology.oxy_mod *= 0.1
-		human_owner.physiology.clone_mod *= 0.1
 		human_owner.physiology.stamina_mod *= 0.1
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
@@ -105,7 +103,6 @@
 		human_owner.physiology.burn_mod *= 10
 		human_owner.physiology.tox_mod *= 10
 		human_owner.physiology.oxy_mod *= 10
-		human_owner.physiology.clone_mod *= 10
 		human_owner.physiology.stamina_mod *= 10
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 	owner.remove_stun_absorption(id)
@@ -262,7 +259,6 @@
 		toxin_heal = 1.4, \
 		suffocation_heal = 1.4, \
 		stamina_heal = 1.4, \
-		clone_heal = 0.4, \
 		simple_heal = 1.4, \
 		organ_healing = organ_healing, \
 		healing_color = "#375637", \
@@ -333,7 +329,6 @@
 			need_mob_update += itemUser.adjustOxyLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustStaminaLoss(-0.6 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
-			need_mob_update += itemUser.adjustCloneLoss(-0.2 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because apparently clone damage is the bastion of all health
 			if(need_mob_update)
 				itemUser.updatehealth()
 
@@ -555,7 +550,6 @@
 		owner_physiology.burn_mod *= 0.5
 		owner_physiology.tox_mod *= 0.5
 		owner_physiology.oxy_mod *= 0.5
-		owner_physiology.clone_mod *= 0.5
 		owner_physiology.stamina_mod *= 0.5
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
@@ -573,7 +567,6 @@
 		owner_physiology.burn_mod *= 2
 		owner_physiology.tox_mod *= 2
 		owner_physiology.oxy_mod *= 2
-		owner_physiology.clone_mod *= 2
 		owner_physiology.stamina_mod *= 2
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)

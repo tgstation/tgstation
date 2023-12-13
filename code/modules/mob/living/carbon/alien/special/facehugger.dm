@@ -1,6 +1,6 @@
 
 
-//TODO: Make these simple_animals
+//TODO: Make these basic mobs
 
 #define MIN_IMPREGNATION_TIME 100 //time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150

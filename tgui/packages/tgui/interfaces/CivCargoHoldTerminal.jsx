@@ -1,9 +1,16 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, LabeledList, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
-export const CivCargoHoldTerminal = (props, context) => {
-  const { act, data } = useBackend(context);
+export const CivCargoHoldTerminal = (props) => {
+  const { act, data } = useBackend();
   const { pad, sending, status_report, id_inserted, id_bounty_info, picking } =
     data;
   const in_text = 'Welcome valued employee.';
@@ -47,7 +54,8 @@ export const CivCargoHoldTerminal = (props, context) => {
                     onClick={() => act('eject')}
                   />
                 </>
-              }>
+              }
+            >
               <LabeledList>
                 <LabeledList.Item label="Status" color={pad ? 'good' : 'bad'}>
                   {pad ? 'Online' : 'Not Found'}
@@ -65,8 +73,8 @@ export const CivCargoHoldTerminal = (props, context) => {
   );
 };
 
-const BountyTextBox = (props, context) => {
-  const { data } = useBackend(context);
+const BountyTextBox = (props) => {
+  const { data } = useBackend();
   const { id_bounty_info, id_bounty_value, id_bounty_num } = data;
   const na_text = 'N/A, please add a new bounty.';
   return (
@@ -86,8 +94,8 @@ const BountyTextBox = (props, context) => {
   );
 };
 
-const BountyPickBox = (props, context) => {
-  const { act, data } = useBackend(context);
+const BountyPickBox = (props) => {
+  const { act, data } = useBackend();
   const { id_bounty_names, id_bounty_values } = data;
   return (
     <Section title="Please Select a Bounty:" textAlign="center">
@@ -97,7 +105,8 @@ const BountyPickBox = (props, context) => {
             fluid
             color="green"
             content={id_bounty_names[0]}
-            onClick={() => act('pick', { 'value': 1 })}>
+            onClick={() => act('pick', { value: 1 })}
+          >
             <Box fontSize="14px">Payout: {id_bounty_values[0]} cr</Box>
           </Button>
         </Flex.Item>
@@ -106,7 +115,8 @@ const BountyPickBox = (props, context) => {
             fluid
             color="green"
             content={id_bounty_names[1]}
-            onClick={() => act('pick', { 'value': 2 })}>
+            onClick={() => act('pick', { value: 2 })}
+          >
             <Box fontSize="14px">Payout: {id_bounty_values[1]} cr</Box>
           </Button>
         </Flex.Item>
@@ -115,7 +125,8 @@ const BountyPickBox = (props, context) => {
             fluid
             color="green"
             content={id_bounty_names[2]}
-            onClick={() => act('pick', { 'value': 3 })}>
+            onClick={() => act('pick', { value: 3 })}
+          >
             <Box fontSize="14px">Payout: {id_bounty_values[2]} cr</Box>
           </Button>
         </Flex.Item>

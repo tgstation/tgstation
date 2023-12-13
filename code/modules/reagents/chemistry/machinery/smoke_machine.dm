@@ -95,7 +95,7 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool, time = 4 SECONDS))
 		on = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/smoke_machine/attackby(obj/item/I, mob/user, params)

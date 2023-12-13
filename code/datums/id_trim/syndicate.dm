@@ -6,6 +6,7 @@
 	subdepartment_color = COLOR_SYNDIE_RED
 	sechud_icon_state = SECHUD_SYNDICATE
 	access = list(ACCESS_SYNDICATE)
+	threat_modifier = 5 // Bad guy on deck
 
 /// Trim for Syndicate mobs, outfits and corpses.
 /datum/id_trim/syndicom/crew
@@ -53,6 +54,7 @@
 	assignment = "Syndicate Battlecruiser Crew"
 	trim_state = "trim_syndicate"
 	access = list(ACCESS_SYNDICATE)
+	threat_modifier = 10
 
 /// Trim for Syndicate mobs, outfits and corpses.
 /datum/id_trim/battlecruiser/captain
@@ -63,6 +65,7 @@
 /datum/id_trim/chameleon
 	assignment = "Unknown"
 	access = list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS)
+	threat_modifier = -5 // This guy seems legit
 
 /// Trim for Chameleon ID cards. Many outfits, nuke ops and some corpses hold Chameleon ID cards.
 /datum/id_trim/chameleon/operative

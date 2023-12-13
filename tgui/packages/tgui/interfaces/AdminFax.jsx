@@ -1,8 +1,19 @@
 import { useBackend, useLocalState } from '../backend';
-import { Section, Box, Dropdown, Button, Input, TextArea, Divider, NumberInput, Tooltip, Knob } from '../components';
+import {
+  Section,
+  Box,
+  Dropdown,
+  Button,
+  Input,
+  TextArea,
+  Divider,
+  NumberInput,
+  Tooltip,
+  Knob,
+} from '../components';
 import { Window } from '../layouts';
 
-export const AdminFax = (props, context) => {
+export const AdminFax = (props) => {
   return (
     <Window title="Admin Fax Panel" width={400} height={675} theme="admin">
       <Window.Content>
@@ -12,31 +23,23 @@ export const AdminFax = (props, context) => {
   );
 };
 
-export const FaxMainPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const FaxMainPanel = (props) => {
+  const { act, data } = useBackend();
 
-  const [fax, setFax] = useLocalState(context, 'fax', '');
-  const [saved, setSaved] = useLocalState(context, 'saved', false);
-  const [paperName, setPaperName] = useLocalState(context, 'paperName', '');
-  const [fromWho, setFromWho] = useLocalState(context, 'fromWho', '');
-  const [rawText, setRawText] = useLocalState(context, 'rawText', '');
-  const [stamp, setStamp] = useLocalState(context, 'stampType', '');
-  const [stampCoordX, setStampCoordX] = useLocalState(
-    context,
-    'stampCoordX',
-    0
-  );
-  const [stampCoordY, setStampCoordY] = useLocalState(
-    context,
-    'stampCoordY',
-    0
-  );
-  const [stampAngle, setStampAngle] = useLocalState(context, 'stampAngle', 0);
+  const [fax, setFax] = useLocalState('fax', '');
+  const [saved, setSaved] = useLocalState('saved', false);
+  const [paperName, setPaperName] = useLocalState('paperName', '');
+  const [fromWho, setFromWho] = useLocalState('fromWho', '');
+  const [rawText, setRawText] = useLocalState('rawText', '');
+  const [stamp, setStamp] = useLocalState('stampType', '');
+  const [stampCoordX, setStampCoordX] = useLocalState('stampCoordX', 0);
+  const [stampCoordY, setStampCoordY] = useLocalState('stampCoordY', 0);
+  const [stampAngle, setStampAngle] = useLocalState('stampAngle', 0);
   if (stamp && data.stamps[0] !== 'None') {
     data.stamps.unshift('None');
   }
   return (
-    <div class="faxmenu">
+    <div className="faxmenu">
       <Section
         title="Fax Menu"
         buttons={
@@ -48,11 +51,13 @@ export const FaxMainPanel = (props, context) => {
                 act('follow', {
                   faxName: fax,
                 })
-              }>
+              }
+            >
               Follow
             </Button>
           </Box>
-        }>
+        }
+      >
         <Box fontSize="13px">
           <Dropdown
             textAlign="center"
@@ -75,10 +80,12 @@ export const FaxMainPanel = (props, context) => {
               act('preview', {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Preview
           </Button>
-        }>
+        }
+      >
         <Box fontSize="14px">
           <Input
             mb="5px"
@@ -91,13 +98,15 @@ export const FaxMainPanel = (props, context) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setPaperName('Nanotrasen Official Report')}>
+            onClick={() => setPaperName('Nanotrasen Official Report')}
+          >
             Nanotrasen
           </Button>
           <Button
             icon="s"
             width="49%"
-            onClick={() => setPaperName('Syndicate Report')}>
+            onClick={() => setPaperName('Syndicate Report')}
+          >
             Syndicate
           </Button>
         </Box>
@@ -117,7 +126,8 @@ export const FaxMainPanel = (props, context) => {
             icon="n"
             mr="7px"
             width="49%"
-            onClick={() => setFromWho('Nanotrasen')}>
+            onClick={() => setFromWho('Nanotrasen')}
+          >
             Nanotrasen
           </Button>
           <Button icon="s" width="49%" onClick={() => setFromWho('Syndicate')}>
@@ -198,7 +208,8 @@ export const FaxMainPanel = (props, context) => {
               act('send', {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Send
           </Button>
           <Button
@@ -217,7 +228,8 @@ export const FaxMainPanel = (props, context) => {
                 stampAngle: stampAngle,
                 fromWho: fromWho,
               });
-            }}>
+            }}
+          >
             Save
           </Button>
           <Button
@@ -227,7 +239,8 @@ export const FaxMainPanel = (props, context) => {
               act('createPaper', {
                 faxName: fax,
               })
-            }>
+            }
+          >
             Create paper
           </Button>
         </Box>

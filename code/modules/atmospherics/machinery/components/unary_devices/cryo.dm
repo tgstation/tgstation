@@ -452,20 +452,20 @@
 	else
 		to_chat(user, "<span class='warning'>You can't access the maintenance panel while the pod is " \
 		+ (on ? "active" : (occupant ? "full" : "open")) + "!</span>")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
 	if(on || state_open)
 		return FALSE
 	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
 	if(on || occupant || state_open)
 		return FALSE
 	if(default_change_direction_wrench(user, tool))
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/attackby(obj/item/I, mob/user, params)
 	if(istype(I, /obj/item/reagent_containers/cup))
