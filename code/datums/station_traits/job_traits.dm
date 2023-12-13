@@ -13,6 +13,8 @@
 	var/button_desc = "Sign up to gain some kind of unusual job, not available in most rounds."
 	/// Can this job roll antag?
 	var/can_roll_antag = CAN_ROLL_ALWAYS
+	/// How many positions to spawn?
+	var/position_amount = 1
 	/// Type of job to enable
 	var/datum/job/job_to_add = /datum/job/clown
 	/// Who signed up to this in the lobby
@@ -61,15 +63,16 @@
 	if (!LAZYLEN(lobby_candidates))
 		on_failed_assignment()
 		return // Nobody signed up :(
-	var/mob/dead/new_player/picked_player = pick(lobby_candidates)
-	picked_player.mind.assigned_role = new job_to_add()
+	for(var/_ in 1 to position_amount)
+		var/mob/dead/new_player/picked_player = pick_n_take(lobby_candidates)
+		picked_player.mind.assigned_role = new job_to_add()
 	lobby_candidates = null
 
 /// Called if we didn't assign a role before the round began, we add it to the latejoin menu instead
 /datum/station_trait/job/proc/on_failed_assignment()
 	var/datum/job/our_job = job_to_add
 	our_job = SSjob.GetJob(our_job::title)
-	our_job.total_positions++
+	our_job.total_positions = position_amount
 
 /datum/station_trait/job/can_display_lobby_button(client/player)
 	var/datum/job/trait_job = (locate(job_to_add) in SSjob.all_occupations)
@@ -138,9 +141,11 @@
 		if(possible_area && (locate(/obj/machinery/coffeemaker) in possible_area))
 			return
 	var/list/tables = list()
-	for(var/obj/structure/table/table in bridge)
-		var/turf/table_turf = get_turf(table)
-		if(table_turf.is_blocked_turf(ignore_atoms = list(table))) //don't spawn a coffeemaker on a fax machine or smth
+	for(var/turf/area_turf as anything in bridge.get_contained_turfs())
+		var/obj/structure/table/table = locate() in area_turf
+		if(isnull(table))
+			continue
+		if(area_turf.is_blocked_turf(ignore_atoms = list(table))) //don't spawn a coffeemaker on a fax machine or smth
 			continue
 		tables += table
 	if(!length(tables))

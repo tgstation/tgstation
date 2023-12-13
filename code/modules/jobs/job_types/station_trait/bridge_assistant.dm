@@ -33,18 +33,26 @@
 	)
 	rpg_title = "Royal Guard"
 	allow_bureaucratic_error = FALSE
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS | JOB_HIDE_WHEN_EMPTY | JOB_LATEJOIN_ONLY
+	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
 
 /datum/job/bridge_assistant/get_roundstart_spawn_point()
+	var/list/chair_turfs = list()
 	var/list/possible_turfs = list()
 	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
-	for(var/turf/possible_turf as anything in bridge.contained_turfs)
+	if(isnull(bridge))
+		return ..() //if no bridge, spawn on the arrivals shuttle (but also what the fuck)
+	for(var/turf/possible_turf as anything in bridge.get_contained_turfs())
 		if(possible_turf.is_blocked_turf())
 			continue
+		if(locate(/obj/structure/chair) in possible_turf)
+			chair_turfs += possible_turf
+			continue
 		possible_turfs += possible_turf
+	if(length(chair_turfs))
+		return pick(chair_turfs) //prioritize turfs with a chair
 	if(length(possible_turfs))
-		return pick(possible_turfs)
-	return ..()
+		return pick(possible_turfs) //if none, just pick a random turf in the bridge
+	return ..() //if the bridge has no turfs, spawn on the arrivals shuttle
 
 /datum/outfit/job/bridge_assistant
 	name = "Bridge Assistant"

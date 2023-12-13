@@ -4427,7 +4427,6 @@
 #include "code\modules\mob\status_procs.dm"
 #include "code\modules\mob\transform_procs.dm"
 #include "code\modules\mob\camera\camera.dm"
-#include "code\modules\mob\dead\crew_manifest.dm"
 #include "code\modules\mob\dead\dead.dm"
 #include "code\modules\mob\dead\new_player\latejoin_menu.dm"
 #include "code\modules\mob\dead\new_player\login.dm"
