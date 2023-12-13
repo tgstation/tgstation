@@ -1,25 +1,35 @@
 //Basically vanilla+ stuff, doesn't experiment with cooked sausage since people may want to do stuff with that/ mildly out of scope - The beginning of the corndog crafting tree
-/obj/item/food/raw_sausage/stick
+/obj/item/food/raw_sausage_stick //Does't inherit raw_sausage to avoid weird behavior with attackby()
 	name = "raw sausage on a stick"
+	desc = "Simply put, a sausage on a stick."
 	trash_type = /obj/item/popsicle_stick
 	icon = 'monkestation/icons/obj/food/corndog.dmi'
 	icon_state = "rawsausage_stick"
+	food_reagents = list(
+	/datum/reagent/consumable/nutriment/protein = 5,
+	/datum/reagent/consumable/nutriment/vitamin = 2,
+	)
+	tastes = list("meat" = 1)
+	foodtypes = MEAT | RAW
+	eatverbs = list("bite", "chew", "nibble", "deep throat", "gobble", "chomp")
+	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/raw_sausage/stick/rod
+/obj/item/food/raw_sausage_stick/rod
 	name = "raw sausage on a rod"
+	desc = "Simply put, a sausage on a rod."
 	trash_type = /obj/item/stack/rods
 	icon_state = "rawsausage_rod"
 
 /obj/item/food/raw_sausage/attackby(obj/item/used_item, mob/living/user, params)
-	if(istype(used_item, /obj/item/stack/rods))
+	if(istype(used_item, /obj/item/popsicle_stick))
 		qdel(used_item)
 		qdel(src)
-		var/sausagestick = new /obj/item/food/raw_sausage/stick/rod
+		var/sausagestick = new /obj/item/food/raw_sausage_stick
 		user.put_in_hands(sausagestick)
-	if(istype(used_item, /obj/item/popsicle_stick))
+	if(istype(used_item, /obj/item/stack/rods))
 		used_item.use(1)
 		qdel(src)
-		var/sausagestick = new /obj/item/food/raw_sausage/stick
+		var/sausagestick = new /obj/item/food/raw_sausage_stick/rod
 		user.put_in_hands(sausagestick)
 
 //Where the real corndogging begins, CHOOSE YOUR CLASS
@@ -57,7 +67,7 @@
 /obj/item/food/corndog
 	trash_type = /obj/item/popsicle_stick
 	name = "corndog"
-	desc = "A crispy hot dog coated in battery goodness!" //Could be better, any funnymen please suggest something
+	desc = "The best thing to come out of 1900s America." //Could be better, any funnymen please suggest something
 	icon = 'monkestation/icons/obj/food/corndog.dmi'
 	icon_state = "corndog_stick"
 	food_reagents = list(
@@ -76,9 +86,30 @@
 	trash_type = /obj/item/stack/rods
 	icon_state = "corndog_rod"
 
-//Forbidden zone
-/obj/item/food/corndog/akuma
-	trash_type = /obj/item/stack/rods
-	icon_state = "corndog_akuma"
-	desc = "A demonic hotdog of occult origin." //wip
-	tastes = list("EEEEEEEVIL" = 1, "meat" = 1, "the souls of the damned" = 1)
+/obj/item/food/corndog/ketchup //End of the corndog crafting tree, no name change so frying it doesn't give a weird name
+	icon_state = "corndog_stick_k"
+	desc = "The best thing to come out of 1900s America, paired with the best thing to come out of 1800s America... Debatably."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/consumable/ketchup = 5
+	)
+
+/obj/item/food/corndog/ketchup/rod
+	icon_state = "corndog_rod_k"
+
+//Forbidden corndog corner
+/obj/item/food/corndog/NarDog
+	trash_type = /obj/item/popsicle_stick //The most EVIL popsicle underscore stick
+	name = "Nar’Dog"
+	icon_state = "demondog"
+	food_reagents = list(
+	/datum/reagent/consumable/nutriment/protein = 15,
+	/datum/reagent/consumable/nutriment/vitamin = 10,
+	/datum/reagent/consumable/ethanol/narsour = 10,
+	/datum/reagent/brimdust = 4
+	)
+	desc = "A demonic corndog of occult origin, it glows with an unholy power..."
+	tastes = list("brimstone" = 1, "the souls of the damned" = 1)
+	foodtypes = MEAT | GRAIN | ALCOHOL
+	venue_value = FOOD_PRICE_EXOTIC
