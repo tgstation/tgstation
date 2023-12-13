@@ -926,8 +926,8 @@ const SnowflakeGeneraor = (props) => {
   );
 };
 
-const SnowflakeOreScanner = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeOreScanner = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { cooldown } = props.module.snowflake;
   return (
@@ -954,8 +954,8 @@ const SnowflakeOreScanner = (props, context) => {
   );
 };
 
-const SnowflakeLawClaw = (props, context) => {
-  const { act, data } = useBackend<MainData>(context);
+const SnowflakeLawClaw = (props) => {
+  const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
   const { autocuff } = props.module.snowflake;
   return (

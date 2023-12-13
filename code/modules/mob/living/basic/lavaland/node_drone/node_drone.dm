@@ -25,6 +25,7 @@
 	mob_biotypes = MOB_ROBOTIC
 	faction = list(FACTION_STATION, FACTION_NEUTRAL)
 	light_range = 4
+	basic_mob_flags = DEL_ON_DEATH
 
 	speak_emote = list("chirps")
 	response_help_continuous = "pets"
@@ -48,7 +49,6 @@
 /mob/living/basic/node_drone/death(gibbed)
 	. = ..()
 	explosion(origin = src, light_impact_range = 1, smoke = 1)
-	qdel(src)
 
 /mob/living/basic/node_drone/Destroy()
 	attached_vent?.node = null //clean our reference to the vent both ways.
@@ -112,7 +112,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_FLEEING = FALSE, // Will flee when the vent lies undefended.
 		BB_CURRENT_HUNTING_TARGET = null, // Hunts for vents.
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(), // Use this to find vents to run away from
+		BB_TARGETTING_DATUM = /datum/targeting_strategy/basic, // Use this to find vents to run away from
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

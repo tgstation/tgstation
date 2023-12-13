@@ -70,22 +70,24 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
 		update_appearance(UPDATE_ICON_STATE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-off", initial(icon_state), tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
 	if(default_pry_open(tool, close_after_pry = TRUE, closed_density = FALSE))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
+	if(.)
+		return
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
 		update_boulder_count()
@@ -95,28 +97,27 @@
 		balloon_alert_to_viewers("accepted")
 		START_PROCESSING(SSmachines, src)
 		return TRUE
-	if(istype(attacking_item, /obj/item/card/id))
-		if(!holds_mining_points)
-			return FALSE
-		if(points_held <= 0)
-			balloon_alert_to_viewers("no points to claim!")
-			if(!COOLDOWN_FINISHED(src, sound_cooldown))
-				return TRUE
-			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
-			return FALSE
-		var/obj/item/card/id/id_card = attacking_item
-		var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
-		if(!amount)
-			return
-		if(amount > points_held)
-			amount = points_held
-		id_card.registered_account.mining_points += amount
-		points_held = round(points_held - amount)
-		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
-		return TRUE
-	if(.)
+	if(!istype(attacking_item, /obj/item/card/id))
 		return
+	if(!holds_mining_points)
+		return FALSE
+	if(points_held <= 0)
+		balloon_alert_to_viewers("no points to claim!")
+		if(!COOLDOWN_FINISHED(src, sound_cooldown))
+			return TRUE
+		COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
+		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
+		return FALSE
+	var/obj/item/card/id/id_card = attacking_item
+	var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
+	if(!amount)
+		return
+	if(amount > points_held)
+		amount = points_held
+	id_card.registered_account.mining_points += amount
+	points_held = round(points_held - amount)
+	to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
+	return TRUE
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -125,12 +126,13 @@
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(holds_minerals)
-		if(!length(boulders_contained))
-			balloon_alert_to_viewers("No boulders to remove!")
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		remove_boulder(pick(boulders_contained))
+	if(!holds_minerals)
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(!length(boulders_contained))
+		balloon_alert_to_viewers("No boulders to remove!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	remove_boulder(pick(boulders_contained))
+	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
 /obj/machinery/bouldertech/deconstruct(disassembled)
 	. = ..()
@@ -151,8 +153,6 @@
 			break
 		if(boulders_concurrent <= 0)
 			break //Try again next time
-		if(!boulders_contained.len)
-			break
 
 		if(!istype(potential_boulder, /obj/item/boulder))
 			potential_boulder.forceMove(drop_location())
