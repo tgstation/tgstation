@@ -55,6 +55,7 @@
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
+		controller.clear_blackboard_key(BB_BEACON_TARGET)
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
