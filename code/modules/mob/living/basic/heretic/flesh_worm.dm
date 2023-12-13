@@ -75,6 +75,7 @@
 /// Grows a new segment behind the passed mob
 /mob/living/basic/heretic_summon/armsy/proc/new_segment(mob/living/basic/heretic_summon/armsy/behind)
 	var/mob/living/segment = new type(drop_location(), FALSE)
+	ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 	segment.AddComponent(/datum/component/mob_chain, front = behind, vary_icon_state = TRUE)
 	behind.register_behind(segment)
 	return segment
