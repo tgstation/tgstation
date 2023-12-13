@@ -137,7 +137,7 @@ export const ModulesPane = (props) => {
                   </Stack.Item>
                 </Stack>
               </Button>
-            )
+            ),
           )}
         </Stack.Item>
         <Stack.Item grow pl={1}>
