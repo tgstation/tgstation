@@ -419,5 +419,13 @@
 	trim_state = "trim_stationengineer"
 	department_color = COLOR_ASSISTANT_GRAY
 
+/datum/station_trait/assistant_gimmicks
+	name = "Functional Assistants Pilot"
+	report_message = "The Nanotrassen Assistant Affairs division is performing a pilot to see if different job equipments help improve productivity!"
+	trait_type = STATION_TRAIT_POSITIVE
+	weight = 3
+	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
+	show_in_report = TRUE
+
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
