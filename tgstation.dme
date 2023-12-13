@@ -6189,6 +6189,7 @@
 #include "monkestation\code\modules\mentor\mentor_say.dm"
 #include "monkestation\code\modules\mentor\mentor_who.dm"
 #include "monkestation\code\modules\metrics\metric_subsystem.dm"
+#include "monkestation\code\modules\metrics\sql_logging_subsystem.dm"
 #include "monkestation\code\modules\metrics\subsystem_analytics\generics.dm"
 #include "monkestation\code\modules\mob\mob.dm"
 #include "monkestation\code\modules\mob\mob_defines.dm"
