@@ -32,7 +32,7 @@ export const NtosCouponMaster = (props) => {
             <Input
               fontSize={1.2}
               placeholder="Insert your coupon code here"
-              onChange={(e, value) =>
+              onEnter={(e, value) =>
                 act('redeem', {
                   code: value,
                 })
