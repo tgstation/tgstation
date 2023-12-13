@@ -51,7 +51,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "dq" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/trash/candy{
 	pixel_x = 7
 	},
@@ -84,12 +84,12 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "hS" = (
-/obj/structure/closet/crate/trashcart/filled,
 /obj/item/toy/xmas_cracker,
 /obj/item/toy/xmas_cracker,
 /obj/item/toy/toy_xeno,
 /obj/item/clothing/head/costume/party/festive,
 /obj/effect/decal/cleanable/fuel_pool,
+/obj/structure/closet/crate/trashcart,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "it" = (
@@ -105,6 +105,7 @@
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "kj" = (
 /obj/structure/mannequin/plastic,
+/obj/structure/spider/stickyweb,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "kz" = (
@@ -233,6 +234,9 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/cardboard_cutout,
 /obj/item/clothing/neck/tie/horrible,
+/obj/item/sticker/clown{
+	pixel_y = 8
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "sA" = (
@@ -264,6 +268,9 @@
 	pixel_y = -2
 	},
 /obj/item/folder/blue,
+/obj/item/crowbar/hammer{
+	desc = "It's a hammer with 'OLD RELIABLE' written on the handle. It's seen some use."
+	},
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "ub" = (
@@ -386,7 +393,6 @@
 "wW" = (
 /obj/structure/spider/stickyweb,
 /obj/item/food/badrecipe/moldy,
-/obj/item/grown/bananapeel,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "xd" = (
@@ -673,6 +679,7 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/item/mail/junkmail,
 /obj/item/healthanalyzer/simple/disease,
+/obj/item/sticker/smile,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "OZ" = (
@@ -690,7 +697,6 @@
 "Pv" = (
 /obj/structure/spider/stickyweb,
 /obj/item/kirbyplants/synthetic/plant29,
-/obj/item/crowbar/hammer,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "PJ" = (
@@ -721,7 +727,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)
 "QD" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/effect/spawner/random/entertainment/plushie_delux,
 /obj/effect/spawner/random/entertainment/toy,
 /obj/item/c_tube{
@@ -743,7 +749,9 @@
 /obj/item/coin/plastic,
 /obj/structure/safe,
 /obj/structure/spider/stickyweb,
-/obj/item/tank/jetpack/oxygen,
+/obj/item/tank/jetpack/oxygen{
+	desc = "A tank of compressed oxygen for use as propulsion in zero-gravity areas. It's blue, and has a triangle chiselled into the paint."
+	},
 /obj/item/switchblade,
 /obj/item/survivalcapsule/bathroom,
 /turf/open/floor/plating,
@@ -815,7 +823,10 @@
 /obj/item/paper/fluff/junkmail_generic,
 /obj/item/pen/red,
 /obj/structure/table_frame/wood,
-/obj/item/mod/paint,
+/obj/item/mod/paint{
+	pixel_x = -6;
+	pixel_y = -2
+	},
 /obj/effect/spawner/random/decoration/paint,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/garbagetruck/toystore)

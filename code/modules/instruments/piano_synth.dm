@@ -37,7 +37,7 @@
 	RegisterSignal(src, COMSIG_INSTRUMENT_END, PROC_REF(update_icon_for_playing_music))
 
 // Called by a component signal to update musical note VFX for songs playing while worn.
-/obj/item/instrument/piano_synth/headphones/proc/update_icon_for_playing_music()
+/obj/item/instrument/piano_synth/headphones/proc/update_icon_for_playing_music(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
 	update_appearance()
 
@@ -129,7 +129,7 @@
 /obj/item/circuit_component/synth/proc/start_playing(datum/port/input/port)
 	synth.song.start_playing(src)
 
-/obj/item/circuit_component/synth/proc/on_song_start()
+/obj/item/circuit_component/synth/proc/on_song_start(datum/source, datum/starting_song, atom/player)
 	SIGNAL_HANDLER
 	is_playing.set_output(TRUE)
 	started_playing.set_output(COMPONENT_SIGNAL)

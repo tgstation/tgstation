@@ -342,7 +342,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			return
 
 	// OTHER
-	if(istype(attacking_item, /obj/item/modular_computer/pda))
+	if(istype(attacking_item, /obj/item/modular_computer))
 		var/itemname = ""
 		var/info = ""
 
@@ -440,7 +440,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		toggle_cam(null, 0)
 
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
 			var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 			if(!assembly)

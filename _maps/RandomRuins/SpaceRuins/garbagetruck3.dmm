@@ -1,6 +1,7 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "ac" = (
 /obj/item/trash/semki/healthy,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "ap" = (
@@ -23,7 +24,6 @@
 	pixel_x = -9;
 	pixel_y = 2
 	},
-/obj/item/stack/rods/ten,
 /obj/structure/closet/crate/preopen,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -45,6 +45,7 @@
 	pixel_y = 4
 	},
 /obj/item/popsicle_stick,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "bP" = (
@@ -192,10 +193,10 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "kR" = (
-/obj/item/tank/internals/oxygen/yellow,
 /obj/structure/closet/crate/preopen,
 /obj/effect/decal/cleanable/shreds,
 /obj/effect/spawner/random/maintenance,
+/obj/item/sticker/toolbox,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "la" = (
@@ -228,7 +229,6 @@
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "lA" = (
-/obj/item/sticker/toolbox,
 /obj/structure/closet/crate/cardboard,
 /obj/item/book/manual/wiki/engineering_guide,
 /obj/item/book/manual/wiki/engineering_construction,
@@ -276,10 +276,12 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/item/trash/boritos/purple,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pd" = (
-/obj/item/stack/rods/ten,
+/obj/effect/decal/cleanable/fuel_pool,
+/obj/item/tank/internals/oxygen/yellow,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "pk" = (
@@ -320,14 +322,20 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/bed/dogbed,
 /turf/open/floor/plating/dumpsterair,
-/area/space)
+/area/ruin/space/has_grav/garbagetruck/squat)
 "sb" = (
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/item/boxcutter,
-/obj/item/boxcutter,
 /obj/item/folder/yellow,
 /obj/item/geiger_counter,
-/obj/item/stack/sticky_tape,
+/obj/item/boxcutter{
+	pixel_x = 5
+	},
+/obj/item/boxcutter{
+	pixel_x = 10
+	},
+/obj/item/stack/sticky_tape{
+	pixel_x = -5
+	},
 /obj/structure/closet/crate/preopen,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -520,6 +528,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "zY" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/item/stack/rods/ten,
 /obj/item/toy/minimeteor,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -531,10 +540,12 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Cm" = (
 /obj/effect/decal/cleanable/fuel_pool,
-/obj/item/mod/module/jetpack,
+/obj/item/mod/module/jetpack{
+	pixel_y = 2;
+	pixel_x = -6
+	},
 /obj/item/stock_parts/servo,
 /obj/item/stock_parts/subspace/filter,
-/obj/structure/fluff/oldturret,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Dq" = (
@@ -632,6 +643,7 @@
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Hk" = (
 /obj/item/food/pizzaslice/moldy/bacteria,
+/obj/item/stack/rods/ten,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
 "Hn" = (
@@ -721,7 +733,10 @@
 /obj/structure/closet/crate,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/item/airlock_painter,
-/obj/item/pen/screwdriver,
+/obj/item/pen/screwdriver{
+	pixel_y = -2;
+	pixel_x = 8
+	},
 /obj/item/rcd_ammo,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -755,7 +770,7 @@
 	},
 /obj/item/storage/fancy/cigarettes/cigpack_cannabis{
 	pixel_x = 6;
-	pixel_y = 2
+	pixel_y = -2
 	},
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/squat)
@@ -1066,7 +1081,7 @@ RD
 To
 Xt
 TD
-pd
+Xt
 JR
 Kq
 sb
@@ -1088,7 +1103,7 @@ iU
 Xt
 Xt
 ac
-Xt
+To
 bb
 jN
 lA
@@ -1114,7 +1129,7 @@ Xt
 Rw
 To
 Ol
-To
+pd
 mV
 "}
 (10,1,1) = {"

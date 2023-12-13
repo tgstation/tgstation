@@ -5,7 +5,6 @@
 	program_open_overlay = "id"
 	extended_desc = "Program for programming employee ID cards to access parts of the station."
 	download_access = list(ACCESS_COMMAND)
-	requires_ntnet = 0
 	size = 8
 	tgui_id = "NtosCard"
 	program_icon = "id-card"

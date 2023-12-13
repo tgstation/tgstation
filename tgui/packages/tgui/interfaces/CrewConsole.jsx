@@ -125,7 +125,7 @@ const CrewTableEntry = (props) => {
   } = sensor_data;
 
   return (
-    <Table.Row>
+    <Table.Row className="candystripe">
       <Table.Cell bold={jobIsHead(ijob)} color={jobToColor(ijob)}>
         {name}
         {assignment !== undefined ? ` (${assignment})` : ''}
@@ -139,7 +139,7 @@ const CrewTableEntry = (props) => {
               toxdam,
               burndam,
               brutedam,
-              HEALTH_COLOR_BY_LEVEL
+              HEALTH_COLOR_BY_LEVEL,
             )}
             size={1}
           />

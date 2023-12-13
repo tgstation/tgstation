@@ -50,11 +50,9 @@
 	move_update_air(old_loc)
 
 /obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(welded_down)
 		if(!tool.tool_start_check(user, amount=2))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(
 			span_notice("[user.name] starts to cut the [name] free from the floor."),
@@ -63,18 +61,18 @@
 		)
 
 		if(!tool.use_tool(src, user, delay=100, volume=100))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		welded_down = FALSE
 		to_chat(user, span_notice("You cut [src] free from the floor."))
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(!anchored)
 		balloon_alert(user, "wrench it first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=2))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user.name] starts to weld the [name] to the floor."),
@@ -83,20 +81,19 @@
 	)
 
 	if(!tool.use_tool(src, user, delay = 100, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	welded_down = TRUE
 	to_chat(user, span_notice("You weld [src] to the floor."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/welder_act_secondary(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(!(machine_stat & BROKEN))
 		balloon_alert(user, "no repair needed!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=1))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user] is repairing [src]."),
@@ -106,21 +103,22 @@
 
 	if(tool.use_tool(src, user, delay = 40, volume = 50))
 		if(!(machine_stat & BROKEN))
-			return
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You repair [src]"))
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_icon()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-panel")
 		else
 			cut_overlay("[initial(icon_state)]-panel")
 		SStgui.update_uis(src)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/smartfridge/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
@@ -136,21 +134,19 @@
 	air_update_turf(TRUE, anchorvalue)
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		power_change()
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/crowbar_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(default_pry_open(tool, close_after_pry = TRUE))
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(welded_down)
 		balloon_alert(user, "unweld first!")
 	else
 		default_deconstruction_crowbar(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -225,10 +221,7 @@
 
 /// Returns the number of items visible in the fridge. Faster than subtracting 2 lists
 /obj/machinery/smartfridge/proc/visible_items()
-	var/component_part_count = 0
-	for(var/datum/stock_part/datum_part in component_parts)
-		component_part_count -= 1
-	return contents.len - component_part_count
+	return contents.len - 1 // Circuitboard
 
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
@@ -479,16 +472,25 @@
 	else
 		. += span_info("It's not anchored to the floor. It can be [EXAMINE_HINT("wrenched")] down.")
 	. += span_info("The whole rack can be [EXAMINE_HINT("pried")] apart.")
+
 /obj/machinery/smartfridge/drying_rack/welder_act(mob/living/user, obj/item/tool)
+	return NONE
+
 /obj/machinery/smartfridge/drying_rack/welder_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
+
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
+	return NONE
+
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
+	return
+
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
-/obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
 
-	default_deconstruction_crowbar(tool, ignore_panel = TRUE)
+/obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool, ignore_panel = TRUE))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
 	. = ..()

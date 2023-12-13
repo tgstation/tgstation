@@ -277,7 +277,7 @@
 	if(default_unfasten_wrench(user, tool, time = GUILLOTINE_WRENCH_DELAY))
 		setDir(SOUTH)
 		current_action = GUILLOTINE_ACTION_IDLE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	current_action = GUILLOTINE_ACTION_IDLE
 	return FALSE
 

@@ -350,12 +350,12 @@
 /datum/antagonist/changeling/proc/regain_powers()
 	emporium_action.Grant(owner.current)
 	for(var/datum/action/changeling/power as anything in innate_powers)
-		power.Grant(owner.current)
+		power.on_purchase(owner.current)
 
 	for(var/power_path in purchased_powers)
 		var/datum/action/changeling/power = purchased_powers[power_path]
 		if(istype(power))
-			power.Grant(owner.current)
+			power.on_purchase(owner.current)
 
 /*
  * The act of purchasing a certain power for a changeling.

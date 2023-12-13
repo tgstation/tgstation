@@ -294,12 +294,12 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 		if(isstructure(holo_object))
-			holo_object.flags_1 |= NODECONSTRUCT_1
+			holo_object.obj_flags |= NO_DECONSTRUCTION
 			return
 
 		if(ismachinery(holo_object))
 			var/obj/machinery/holo_machine = holo_object
-			holo_machine.flags_1 |= NODECONSTRUCT_1
+			holo_machine.obj_flags |= NO_DECONSTRUCTION
 			holo_machine.power_change()
 
 			if(istype(holo_machine, /obj/machinery/button))

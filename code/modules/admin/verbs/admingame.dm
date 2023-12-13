@@ -68,6 +68,15 @@
 
 	body += "<b>Mob type</b> = [M.type]<br><br>"
 
+	if(M.client)
+		body += "<b>Old names:</b> "
+		var/datum/player_details/deets = GLOB.player_details[M.ckey]
+		if(deets)
+			body += deets.get_played_names()
+		else
+			body += "<i>None?!</i>"
+		body += "<br><br>"
+
 	body += "<A href='?_src_=holder;[HrefToken()];boot2=[REF(M)]'>Kick</A> | "
 	if(M.client)
 		body += "<A href='?_src_=holder;[HrefToken()];newbankey=[M.key];newbanip=[M.client.address];newbancid=[M.client.computer_id]'>Ban</A> | "

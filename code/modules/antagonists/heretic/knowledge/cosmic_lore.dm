@@ -111,7 +111,7 @@
 /datum/heretic_knowledge/spell/star_blast
 	name = "Star Blast"
 	desc = "Fires a projectile that moves very slowly and creates cosmic fields on impact. \
-		Anyone hit by the projectile will recieve burn damage, a knockdown, and give people in a three tile range a star mark."
+		Anyone hit by the projectile will receive burn damage, a knockdown, and give people in a three tile range a star mark."
 	gain_text = "The Beast was behind me now at all times, with each sacrifice words of affirmation coursed through me."
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/cosmic,
@@ -125,10 +125,10 @@
 
 /datum/heretic_knowledge/blade_upgrade/cosmic
 	name = "Cosmic Blade"
-	desc = "Your blade now deals damage to people's cells through cosmic radiation. \
+	desc = "Your blade now deals damage to people's organs through cosmic radiation. \
 		Your attacks will chain bonus damage to up to two previous victims. \
 		The combo is reset after two seconds without making an attack, \
-		or if you attack someone already marked. If you combo more than four attacks you will recieve, \
+		or if you attack someone already marked. If you combo more than four attacks you will receive, \
 		a cosmic trail and increase your combo timer up to ten seconds."
 	gain_text = "The Beast took my blades in their hand, I kneeled and felt a sharp pain. \
 		The blades now glistened with fragmented power. I fell to the ground and wept at the beast's feet."
@@ -152,6 +152,15 @@
 	var/combo_counter = 0
 
 /datum/heretic_knowledge/blade_upgrade/cosmic/do_melee_effects(mob/living/source, mob/living/target, obj/item/melee/sickly_blade/blade)
+	var/static/list/valid_organ_slots = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_BRAIN
+	)
 	if(source == target)
 		return
 	if(combo_timer)
@@ -160,8 +169,8 @@
 	var/mob/living/second_target_resolved = second_target?.resolve()
 	var/mob/living/third_target_resolved = third_target?.resolve()
 	var/need_mob_update = FALSE
-	need_mob_update += target.adjustFireLoss(4, updating_health = FALSE)
-	need_mob_update += target.adjustCloneLoss(2, updating_health = FALSE)
+	need_mob_update += target.adjustFireLoss(5, updating_health = FALSE)
+	need_mob_update += target.adjustOrganLoss(pick(valid_organ_slots), 8)
 	if(need_mob_update)
 		target.updatehealth()
 	if(target == second_target_resolved || target == third_target_resolved)
@@ -173,18 +182,18 @@
 		new /obj/effect/temp_visual/cosmic_explosion(get_turf(second_target_resolved))
 		playsound(get_turf(second_target_resolved), 'sound/magic/cosmic_energy.ogg', 25, FALSE)
 		need_mob_update = FALSE
-		need_mob_update += second_target_resolved.adjustFireLoss(10, updating_health = FALSE)
-		need_mob_update += second_target_resolved.adjustCloneLoss(6, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustFireLoss(14, updating_health = FALSE)
+		need_mob_update += second_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 12)
 		if(need_mob_update)
-			target.updatehealth()
+			second_target_resolved.updatehealth()
 		if(third_target_resolved)
 			new /obj/effect/temp_visual/cosmic_domain(get_turf(third_target_resolved))
 			playsound(get_turf(third_target_resolved), 'sound/magic/cosmic_energy.ogg', 50, FALSE)
 			need_mob_update = FALSE
-			need_mob_update += third_target_resolved.adjustFireLoss(20, updating_health = FALSE)
-			need_mob_update += third_target_resolved.adjustCloneLoss(12, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustFireLoss(28, updating_health = FALSE)
+			need_mob_update += third_target_resolved.adjustOrganLoss(pick(valid_organ_slots), 14)
 			if(need_mob_update)
-				target.updatehealth()
+				third_target_resolved.updatehealth()
 			if(combo_counter > 3)
 				target.apply_status_effect(/datum/status_effect/star_mark, source)
 				if(target.mind && target.stat != DEAD)

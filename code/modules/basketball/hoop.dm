@@ -164,7 +164,7 @@
 		score_chance *= 0.5
 
 	// aim penalty for spinning while shooting
-	if(istype(thrower) && thrower.flags_1 & IS_SPINNING_1)
+	if(istype(thrower) && HAS_TRAIT(thrower, TRAIT_SPINNING))
 		score_chance *= 0.5
 
 	if(prob(score_chance))

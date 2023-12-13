@@ -30,7 +30,7 @@
 		return
 	var/mob/living/living_pawn = controller.pawn
 	// We can't hunt if we're indisposed
-	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED) || living_pawn.stat != CONSCIOUS)
+	if(QDELETED(living_pawn) || HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED) || living_pawn.stat != CONSCIOUS)
 		return
 
 	var/atom/hunted = controller.blackboard[target_key]

@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import { TextArea, Stack, Button, NoticeBox, Input, Box } from '../components';
 import { Window } from '../layouts';
 
@@ -18,23 +19,18 @@ export const Adminhelp = (props) => {
     bannedFromUrgentAhelp,
     urgentAhelpPromptMessage,
   } = data;
-  const [requestForAdmin, setRequestForAdmin] = useLocalState(
-    'request_for_admin',
-    false
-  );
-  const [currentlyInputting, setCurrentlyInputting] = useLocalState(
-    'confirm_request',
-    false
-  );
-  const [ahelpMessage, setAhelpMessage] = useLocalState('ahelp_message', '');
+  const [requestForAdmin, setRequestForAdmin] = useState(false);
+  const [currentlyInputting, setCurrentlyInputting] = useState(false);
+  const [ahelpMessage, setAhelpMessage] = useState('');
 
   const confirmationText = 'alert admins';
   return (
     <Window title="Create Adminhelp" theme="admin" height={300} width={500}>
       <Window.Content
         style={{
-          'background-image': 'none',
-        }}>
+          backgroundImage: 'none',
+        }}
+      >
         <Stack vertical fill>
           <Stack.Item grow>
             <TextArea
@@ -56,8 +52,9 @@ export const Adminhelp = (props) => {
                     fontFamily="arial"
                     backgroundColor="grey"
                     style={{
-                      'font-style': 'normal',
-                    }}>
+                      fontStyle: 'normal',
+                    }}
+                  >
                     Input &apos;{confirmationText}&apos; to proceed.
                     <Input
                       placeholder="Confirmation Prompt"
