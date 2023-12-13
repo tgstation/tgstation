@@ -243,8 +243,6 @@ multiple modular subtrees with behaviors
 	SHOULD_NOT_SLEEP(TRUE) //Fuck you don't sleep in procs like this.
 	if(!COOLDOWN_FINISHED(src, failed_planning_cooldown))
 		return FALSE
-	if(QDELETED(pawn))
-		return FALSE
 
 	LAZYINITLIST(current_behaviors)
 	LAZYCLEARLIST(planned_behaviors)
