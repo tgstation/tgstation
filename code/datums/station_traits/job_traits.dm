@@ -75,7 +75,7 @@
 
 /datum/station_trait/job/can_display_lobby_button(client/player)
 	var/datum/job/our_job = SSjob.GetJob(job_to_add::title)
-	return trait_job.player_old_enough(player) && ..()
+	return our_job.player_old_enough(player) && ..()
 
 /// Adds a gorilla to the cargo department, replacing the sloth and the mech
 /datum/station_trait/job/cargorilla
