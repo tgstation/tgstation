@@ -1,6 +1,6 @@
 /datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top/SelectBehaviors(datum/ai_controller/controller, delta_time)
 	var/mob/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(!target || QDELETED(target) || QDELETED(controller.pawn))
+	if(!target || QDELETED(target))
 		return
 	if(target.loc != controller.pawn.loc)
 		return
