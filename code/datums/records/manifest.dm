@@ -189,7 +189,7 @@ GLOBAL_DATUM_INIT(manifest, /datum/manifest, new)
 		positions[department.department_name] = list("exceptions" = exceptions, "open" = open)
 
 	return list(
-		"manifest" = GLOB.manifest.get_manifest(),
+		"manifest" = get_manifest(),
 		"positions" = positions
 	)
 
