@@ -536,7 +536,6 @@
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
-		"surgery_advanced_plastic_surgery",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
