@@ -147,8 +147,10 @@
 	)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
-		return
+		return INITIALIZE_HINT_LATELOAD
+
 	skin = "advanced"
 	update_appearance(UPDATE_OVERLAYS)
 	damage_type_healer = HEAL_ALL_DAMAGE
