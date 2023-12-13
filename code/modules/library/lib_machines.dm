@@ -563,10 +563,12 @@
 			inventory_update()
 			to_chat(user, span_notice("[scanner]'s screen flashes: 'Title added to general inventory.'"))
 
-/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user)
-	if(!density)
-		return
+/obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(!density || obj_flags & EMAGGED)
+		return FALSE
 	obj_flags |= EMAGGED
+	balloon_alert(user, "forbidden knowledge unlocked")
+	return TRUE
 
 /obj/machinery/computer/libraryconsole/bookmanagement/has_anything_changed()
 	if(..())

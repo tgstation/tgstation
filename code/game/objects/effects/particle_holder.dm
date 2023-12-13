@@ -22,7 +22,7 @@
 	var/atom/movable/lie_about_areas = loc
 	lie_about_areas.vis_contents += src
 	if(!ismovable(loc))
-		RegisterSignal(loc, COMSIG_PARENT_QDELETING, PROC_REF(immovable_deleted))
+		RegisterSignal(loc, COMSIG_QDELETING, PROC_REF(immovable_deleted))
 
 	if(particle_flags & PARTICLE_ATTACH_MOB)
 		RegisterSignal(loc, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))

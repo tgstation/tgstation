@@ -25,7 +25,7 @@
 		return
 	src.overmind = overmind
 	overmind.register_new_minion(parent)
-	RegisterSignal(overmind, COMSIG_PARENT_QDELETING, PROC_REF(overmind_deleted))
+	RegisterSignal(overmind, COMSIG_QDELETING, PROC_REF(overmind_deleted))
 	RegisterSignal(overmind, COMSIG_BLOB_SELECTED_STRAIN, PROC_REF(overmind_properties_changed))
 	overmind_properties_changed(overmind, overmind.blobstrain)
 

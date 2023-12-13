@@ -138,12 +138,12 @@
 		hint_text = activator.grab_hint()
 
 /datum/component/artifact/RegisterWithParent()
-	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_PARENT_QDELETING), PROC_REF(on_destroy))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignals(parent, list(COMSIG_ATOM_DESTRUCTION, COMSIG_QDELETING), PROC_REF(on_destroy))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_STICKER_STICKED, PROC_REF(on_sticker))
 	RegisterSignal(parent, COMSIG_STICKER_UNSTICKED, PROC_REF(on_desticker))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_unarmed))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_ROBOT, PROC_REF(on_robot_attack))
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
@@ -152,12 +152,12 @@
 /datum/component/artifact/UnregisterFromParent()
 	GLOB.running_artifact_list -= parent
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_STICKER_STICKED,
 		COMSIG_STICKER_UNSTICKED,
 		COMSIG_ATOM_ATTACK_HAND,
-		COMSIG_PARENT_ATTACKBY,
+		COMSIG_ATOM_ATTACKBY,
 		COMSIG_ATOM_ATTACK_ROBOT,
 		COMSIG_ATOM_EX_ACT,
 		COMSIG_ATOM_EMP_ACT,

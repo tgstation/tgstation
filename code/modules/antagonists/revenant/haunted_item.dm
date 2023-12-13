@@ -75,10 +75,10 @@
 	return ..()
 
 /datum/component/haunted_item/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_hit_by_holy_tool))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_hit_by_holy_tool))
 
 /datum/component/haunted_item/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 
 /// Removes the haunting, showing any despawn message we have and qdeling our component
 /datum/component/haunted_item/proc/clear_haunting()
@@ -89,7 +89,7 @@
 
 	qdel(src)
 
-/// Signal proc for [COMSIG_PARENT_ATTACKBY], when we get smacked by holy stuff we should stop being ghostly.
+/// Signal proc for [COMSIG_ATOM_ATTACKBY], when we get smacked by holy stuff we should stop being ghostly.
 /datum/component/haunted_item/proc/on_hit_by_holy_tool(obj/item/source, obj/item/attacking_item, mob/living/attacker, params)
 	SIGNAL_HANDLER
 

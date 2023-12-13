@@ -116,12 +116,13 @@
 			eject_speed = EJECT_SPEED_SLOW
 	return TRUE
 
-/obj/structure/disposaloutlet/emag_act(mob/user, obj/item/card/emag/E)
+/obj/structure/disposaloutlet/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return
-	to_chat(user, span_notice("You silently disable the sanity checking on \the [src]'s ejection force."))
+	balloon_alert(user, "ejection force maximized")
 	obj_flags |= EMAGGED
+	return TRUE
 
 #undef EJECT_SPEED_SLOW
 #undef EJECT_SPEED_MED

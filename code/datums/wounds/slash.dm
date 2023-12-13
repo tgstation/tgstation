@@ -67,9 +67,9 @@
 
 /datum/wound/slash/flesh/proc/set_highest_scar(datum/scar/new_scar)
 	if(highest_scar)
-		UnregisterSignal(highest_scar, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(highest_scar, COMSIG_QDELETING)
 	if(new_scar)
-		RegisterSignal(new_scar, COMSIG_PARENT_QDELETING, PROC_REF(clear_highest_scar))
+		RegisterSignal(new_scar, COMSIG_QDELETING, PROC_REF(clear_highest_scar))
 	highest_scar = new_scar
 
 /datum/wound/slash/flesh/proc/clear_highest_scar(datum/source)

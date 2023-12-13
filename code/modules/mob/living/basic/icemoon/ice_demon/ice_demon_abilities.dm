@@ -107,11 +107,11 @@
 /datum/action/cooldown/spell/conjure/create_afterimages/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/basic/created_copy = summoned_object
 	created_copy.AddComponent(/datum/component/joint_damage, overlord_mob = owner)
-	RegisterSignals(created_copy, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(delete_copy))
+	RegisterSignals(created_copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(delete_copy))
 	number_of_afterimages++
 
 /datum/action/cooldown/spell/conjure/create_afterimages/proc/delete_copy(mob/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	number_of_afterimages--

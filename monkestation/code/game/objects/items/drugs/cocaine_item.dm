@@ -143,7 +143,7 @@
 	potency = 20
 	growthstages = 1
 	product = /obj/item/food/grown/cocaleaf
-	mutatelist = list()
+	possible_mutations = list()
 	reagents_add = list(/datum/reagent/drug/cocaine = 0.3, /datum/reagent/consumable/nutriment = 0.15)
 
 /obj/item/food/grown/cocaleaf

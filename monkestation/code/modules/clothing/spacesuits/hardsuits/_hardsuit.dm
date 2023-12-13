@@ -230,7 +230,7 @@
 		return
 	active_hardsuit = loc
 	RegisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_hardsuit_moved))
-	RegisterSignal(active_user, COMSIG_PARENT_QDELETING, PROC_REF(on_user_del))
+	RegisterSignal(active_user, COMSIG_QDELETING, PROC_REF(on_user_del))
 
 	START_PROCESSING(SSobj, src)
 
@@ -241,7 +241,7 @@
 		UnregisterSignal(active_hardsuit, COMSIG_MOVABLE_MOVED)
 		active_hardsuit = null
 	if(active_user)
-		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(user, COMSIG_QDELETING)
 		active_user = null
 	tank = null
 	air_contents = tempair_contents

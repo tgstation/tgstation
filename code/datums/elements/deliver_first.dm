@@ -24,7 +24,7 @@
 		return ELEMENT_INCOMPATIBLE
 	src.goal_area_type = goal_area_type
 	src.payment = payment
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(target, COMSIG_ATOM_EMAG_ACT, PROC_REF(on_emag))
 	RegisterSignal(target, COMSIG_CLOSET_POST_OPEN, PROC_REF(on_post_open))
@@ -36,7 +36,7 @@
 	. = ..()
 	REMOVE_TRAIT(target, TRAIT_BANNED_FROM_CARGO_SHUTTLE, REF(src))
 	UnregisterSignal(target, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_ATOM_EMAG_ACT,
 		COMSIG_CLOSET_PRE_OPEN,

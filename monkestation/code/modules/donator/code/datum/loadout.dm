@@ -239,3 +239,10 @@
 	item_path = /obj/item/clothing/suit/hooded/aotcloak
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//kon chieko
+/datum/loadout_item/head/bells
+	name = "Hair ribbons with bells"
+	item_path = /obj/item/clothing/head/costume/bells
+	donator_only = TRUE
+	requires_purchase = FALSE

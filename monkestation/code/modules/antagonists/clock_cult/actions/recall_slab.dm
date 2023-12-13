@@ -10,7 +10,7 @@
 /// Set the passed object as our marked item
 /datum/action/innate/clockcult/recall_slab/proc/mark_item(obj/to_mark)
 	marked_slab = to_mark
-	RegisterSignal(marked_slab, COMSIG_PARENT_QDELETING, PROC_REF(on_marked_item_deleted))
+	RegisterSignal(marked_slab, COMSIG_QDELETING, PROC_REF(on_marked_item_deleted))
 
 
 /// Unset our current marked item
@@ -18,11 +18,11 @@
 	if(!marked_slab)
 		return
 
-	UnregisterSignal(marked_slab, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(marked_slab, COMSIG_QDELETING)
 	marked_slab = null
 
 
-/// Signal proc for COMSIG_PARENT_QDELETING on our marked item, unmarks our item if it's deleted
+/// Signal proc for COMSIG_QDELETING on our marked item, unmarks our item if it's deleted
 /datum/action/innate/clockcult/recall_slab/proc/on_marked_item_deleted(datum/source)
 	SIGNAL_HANDLER
 

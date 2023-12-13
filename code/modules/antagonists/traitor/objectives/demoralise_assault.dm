@@ -55,7 +55,7 @@
 /datum/traitor_objective/target_player/assault/ungenerate_objective()
 	UnregisterSignal(target, COMSIG_ATOM_WAS_ATTACKED)
 	UnregisterSignal(target, COMSIG_LIVING_DEATH)
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(target, COMSIG_QDELETING)
 
 	target = null
 
@@ -110,7 +110,7 @@
 	replace_in_name("%COUNT%", attacks_required)
 
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_death))
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_qdeleted))
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_qdeleted))
 
 	return TRUE
 

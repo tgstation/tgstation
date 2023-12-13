@@ -14,13 +14,13 @@
 	if(!.)
 		return
 	target.add_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER), SLEEPING_CARP_TRAIT)
-	RegisterSignal(target, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
+	RegisterSignal(target, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(hit_by_projectile))
 	target.faction |= FACTION_CARP //:D
 
 /datum/martial_art/the_sleeping_carp/on_remove(mob/living/target)
 	target.remove_traits(list(TRAIT_NOGUNS, TRAIT_HARDLY_WOUNDED, TRAIT_NODISMEMBER), SLEEPING_CARP_TRAIT)
-	UnregisterSignal(target, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(target, COMSIG_ATOM_ATTACKBY)
 	UnregisterSignal(target, COMSIG_ATOM_PRE_BULLET_ACT)
 	target.faction -= FACTION_CARP //:(
 	. = ..()

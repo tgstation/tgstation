@@ -26,7 +26,7 @@
 	src.max_range = max_range
 	src.target_self = target_self
 
-	RegisterSignal(ability, COMSIG_PARENT_QDELETING, PROC_REF(ability_destroyed))
+	RegisterSignal(ability, COMSIG_QDELETING, PROC_REF(ability_destroyed))
 
 /datum/component/revenge_ability/RegisterWithParent()
 	. = ..()
@@ -35,7 +35,7 @@
 /datum/component/revenge_ability/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_ATOM_WAS_ATTACKED)
 	if (ability)
-		UnregisterSignal(ability, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(ability, COMSIG_QDELETING)
 	return ..()
 
 /// If we were attacked, get revenge

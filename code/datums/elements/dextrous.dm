@@ -16,7 +16,7 @@
 	ADD_TRAIT(target, TRAIT_CAN_HOLD_ITEMS, REF(src))
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_hand_clicked))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
 /datum/element/dextrous/Detach(datum/source)
 	. = ..()
@@ -27,7 +27,7 @@
 	mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
 	REMOVE_TRAIT(source, TRAIT_CAN_HOLD_ITEMS, REF(src))
 	UnregisterSignal(source, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_UNARMED_ATTACK,
 	))

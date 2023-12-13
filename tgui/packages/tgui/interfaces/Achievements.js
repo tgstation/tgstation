@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Flex, Icon, Table, Tabs } from '../components';
+import { Box, Flex, Icon, Table, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 export const Achievements = (props, context) => {
@@ -52,7 +52,15 @@ const AchievementTable = (props, context) => {
 
 const Achievement = (props) => {
   const { achievement } = props;
-  const { name, desc, icon_class, value, score } = achievement;
+  const {
+    name,
+    desc,
+    icon_class,
+    value,
+    score,
+    achieve_info,
+    achieve_tooltip,
+  } = achievement;
   return (
     <Table.Row key={name}>
       <Table.Cell collapsing>
@@ -69,6 +77,13 @@ const Achievement = (props) => {
           <Box color={value ? 'good' : 'bad'}>
             {value ? 'Unlocked' : 'Locked'}
           </Box>
+        )}
+        {!!achieve_info && (
+          <Tooltip position="bottom" content={achieve_tooltip}>
+            <Box fontSize={0.9} opacity={0.8}>
+              {achieve_info}
+            </Box>
+          </Tooltip>
         )}
       </Table.Cell>
     </Table.Row>

@@ -33,6 +33,8 @@
 
 	/// Multipliers donators get for this vote type
 	var/donator_multiplier = 0
+	// can we start this vote by a player
+	var/player_startable = TRUE
 
 /**
  * Used to determine if this vote is a possible
@@ -78,6 +80,8 @@
  */
 /datum/vote/proc/can_be_initiated(mob/by_who, forced = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+	if(!player_startable)
+		return FALSE
 
 	if(started_time)
 		var/next_allowed_time = (started_time + CONFIG_GET(number/vote_delay))

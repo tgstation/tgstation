@@ -4,3 +4,7 @@
 	icon = 'monkestation/icons/obj/clothing/gloves.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/gloves.dmi'
 	icon_state = "syndimaid_arms"
+
+/obj/item/clothing/gloves/color/plasmaman
+	icon = 'monkestation/icons/obj/clothing/plasmaman_gloves.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/plasmaman_gloves.dmi'

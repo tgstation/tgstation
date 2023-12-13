@@ -129,10 +129,15 @@ GLOBAL_LIST(labor_sheet_values)
 	if(stacking_machine)
 		stacking_machine.labor_console = src
 
-/obj/machinery/mineral/labor_claim_console/emag_act(mob/user)
-	if(!(obj_flags & EMAGGED))
-		obj_flags |= EMAGGED
-		to_chat(user, span_warning("PZZTTPFFFT"))
+/obj/machinery/mineral/labor_claim_console/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if (obj_flags & EMAGGED)
+		return FALSE
+
+	obj_flags |= EMAGGED
+	balloon_alert(user, "id authenticator short-circuited")
+	visible_message(span_warning("[src] lets out a few sparks!"))
+	do_sparks(2, TRUE, src)
+	return TRUE
 
 /**********************Prisoner Collection Unit**************************/
 

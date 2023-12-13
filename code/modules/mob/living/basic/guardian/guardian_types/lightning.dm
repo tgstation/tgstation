@@ -50,7 +50,7 @@
 		var/datum/old_chain = enemy_chains[old_target]
 		qdel(old_chain)
 	var/datum/new_chain = chain_to(target)
-	RegisterSignal(new_chain, COMSIG_PARENT_QDELETING, PROC_REF(on_chain_deleted))
+	RegisterSignal(new_chain, COMSIG_QDELETING, PROC_REF(on_chain_deleted))
 	LAZYADDASSOC(enemy_chains, target, new_chain)
 
 /// Create a damaging lightning chain between ourselves and a target
