@@ -2,7 +2,7 @@
 	name = "raw corndog on a stick"
 	reqs = list(
 		/obj/item/food/raw_sausage_stick = 1,
-		/datum/reagent/consumable/cornmeal_batter = 5,
+		/datum/reagent/consumable/cornmeal_batter = 10,
 	)
 	result = /obj/item/food/raw_corndog
 	category = CAT_MEAT
@@ -11,7 +11,7 @@
 	name = "raw corndog on a rod"
 	reqs = list(
 		/obj/item/food/raw_sausage_stick/rod = 1,
-		/datum/reagent/consumable/cornmeal_batter = 5,
+		/datum/reagent/consumable/cornmeal_batter = 10,
 	)
 	result = /obj/item/food/raw_corndog/rod
 	category = CAT_MEAT
