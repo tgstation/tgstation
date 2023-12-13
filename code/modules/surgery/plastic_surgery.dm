@@ -16,7 +16,8 @@
 	)
 
 /datum/surgery/plastic_surgery/advanced
-	name = "advanced plastic surgery"
+	name = "Advanced plastic surgery"
+	requires_tech = TRUE
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,

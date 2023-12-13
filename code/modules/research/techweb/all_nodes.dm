@@ -536,6 +536,7 @@
 		"surgery_heal_combo",
 		"surgery_lobotomy",
 		"surgery_wing_reconstruction",
+		"surgery_advanced_plastic_surgery",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 1500)
 
@@ -2409,18 +2410,6 @@
 		"mod_joint_torsion",
 		"mod_recycler",
 		"mod_shooting",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/advanced_plastic_surgery
-	id = "plastic_surgery"
-	display_name = "Advanced Plastic Surgery"
-	description = "A Procedure long lost due to licensing problems now once again available."
-	prereq_ids = list("base")
-	design_ids = list(
-		"surgery_advanced_plastic_surgery"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE
