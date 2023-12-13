@@ -28080,6 +28080,19 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"jap" = (
+/obj/effect/turf_decal/trimline/dark_red/arrow_ccw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_green/arrow_ccw,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "jaq" = (
 /obj/effect/landmark/start/head_of_personnel,
 /turf/open/floor/iron,
@@ -52257,6 +52270,20 @@
 /obj/structure/reagent_dispensers/fueltank,
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
+"qMM" = (
+/obj/effect/turf_decal/trimline/dark_red/arrow_ccw{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/dark_green/arrow_ccw,
+/obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/pump/off{
+	dir = 4;
+	name = "O2 To Pure"
+	},
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "qMN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -62021,7 +62048,7 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4{
+/obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible/layer4{
 	dir = 8
 	},
 /turf/open/floor/iron,
@@ -242985,7 +243012,7 @@ aOX
 qwF
 sEB
 hpI
-loV
+qMM
 kfs
 kfs
 kfs
@@ -243242,7 +243269,7 @@ qwF
 qwF
 sEB
 hpI
-loV
+jap
 kfs
 bln
 sEB
