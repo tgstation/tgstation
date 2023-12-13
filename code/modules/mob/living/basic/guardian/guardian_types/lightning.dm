@@ -92,3 +92,4 @@
 /obj/effect/ebeam/chain
 	name = "lightning chain"
 	layer = LYING_MOB_LAYER
+	plane = GAME_PLANE_FOV_HIDDEN

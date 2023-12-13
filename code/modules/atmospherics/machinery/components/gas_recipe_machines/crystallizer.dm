@@ -10,6 +10,7 @@
 	name = "crystallizer"
 	desc = "Used to crystallize or solidify gases."
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	density = TRUE
 	max_integrity = 300
 	armor_type = /datum/armor/binary_crystallizer

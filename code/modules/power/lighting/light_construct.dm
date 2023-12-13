@@ -5,6 +5,7 @@
 	icon_state = "tube-construct-stage1"
 	anchored = TRUE
 	layer = WALL_OBJ_LAYER
+	plane = GAME_PLANE_UPPER
 	max_integrity = 200
 	armor_type = /datum/armor/structure_light_construct
 

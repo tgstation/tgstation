@@ -19,6 +19,7 @@
 	absorption_ratio = 0.125
 	explosion_power = 12
 	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 	moveable = TRUE
 
 /// Shard SM with it's processing disabled.
