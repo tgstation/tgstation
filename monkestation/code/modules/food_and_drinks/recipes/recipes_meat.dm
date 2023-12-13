@@ -36,6 +36,7 @@
 
 /datum/crafting_recipe/food/NarDog
 	name = "Nar'Dog"
+	desc = "A demonic corndog of occult origin, it glows with an unholy power..." //overwrites default description to avoid metadata being displayed in the craft menu
 	reqs = list(
 	/obj/item/food/corndog = 1, //YOU'RE GOING TO USE THE POPSICLE STICK AND YOU'RE GOING TO LIKE IT!!!
 	/datum/reagent/consumable/ethanol/narsour = 20,
