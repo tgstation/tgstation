@@ -89,5 +89,5 @@
 /obj/item/clothing/neck/cloak/skill_reward/sculpting
 	name = "legendary sculpter's cloak"
 	desc = "Worn by the most skilled sculpters, this legendary cloak is only attainable by achieving sculpting enlightenment. This status symbol represents a being who tirelessly slaved away to transform their art into renown glory, countless statues were sacrificed to achieve perfection."
-	icon_state = "sculptingcloak"
+	icon_state = "sculptercloak"
 	associated_skill_path = /datum/skill/sculpting

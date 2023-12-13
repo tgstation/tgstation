@@ -18,10 +18,6 @@
 	if(!isatom(target) || isarea(target))
 		return ELEMENT_INCOMPATIBLE
 
-	//if(HAS_TRAIT(target, TRAIT_BEAUTY))
-	//	return
-
-	//ADD_TRAIT(target, TRAIT_BEAUTY, ELEMENT_TRAIT(type))
 	src.beauty = beauty
 
 	if(!beauty_counter[target] && ismovable(target))
@@ -54,7 +50,6 @@
 	old_area.update_beauty()
 
 /datum/element/beauty/Detach(atom/source)
-	//REMOVE_TRAIT(source, TRAIT_BEAUTY, ELEMENT_TRAIT(type))
 	if(!beauty_counter[source])
 		return ..()
 	var/area/current_area = get_area(source)
