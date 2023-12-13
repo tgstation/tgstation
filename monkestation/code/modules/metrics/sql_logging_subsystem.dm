@@ -107,7 +107,7 @@ SUBSYSTEM_DEF(sql_logging)
 		var/area/area = get_area(source)
 		source_area = area.name
 
-	if(is_null(source_name))
+	if(isnull(source_name))
 		source_name = target_ckey
 
 	sorted_data = list(
