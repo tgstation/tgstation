@@ -114,16 +114,16 @@
  * Handles air relocation to the pipe network/environment
  */
 /datum/gas_machine_connector/proc/relocate_airs(mob/user)
-	var/turf/T = get_turf(connected_machine)
+	var/turf/local_turf = get_turf(connected_machine)
 	var/datum/gas_mixture/inside_air = gas_connector.airs[1]
 	if(inside_air.total_moles() > 0)
-		if(gas_connector.nodes[1])
-			var/datum/gas_mixture/parents_air = gas_connector.parents[1].air
-			if(istype(gas_connector.nodes[1], /obj/machinery/atmospherics/components/unary/portables_connector))
-				var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = gas_connector.nodes[1]
-				if(!portable_devices_connector.connected_device)
-					T.assume_air(inside_air)
-					return
-			parents_air.merge(inside_air)
+		if(!gas_connector.nodes[1])
+			local_turf.assume_air(inside_air)
 			return
-		T.assume_air(inside_air)
+		var/datum/gas_mixture/parents_air = gas_connector.parents[1].air
+		if(istype(gas_connector.nodes[1], /obj/machinery/atmospherics/components/unary/portables_connector))
+			var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = gas_connector.nodes[1]
+			if(!portable_devices_connector.connected_device)
+				local_turf.assume_air(inside_air)
+				return
+		parents_air.merge(inside_air)

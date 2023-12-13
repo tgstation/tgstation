@@ -201,12 +201,12 @@
 	return..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/on_deconstruction()
-	var/turf/T = get_turf(loc)
+	var/turf/local_turf = get_turf(loc)
 	var/datum/gas_mixture/to_release = moderator_internal || internal_fusion
 	if(to_release == moderator_internal)
 		to_release.merge(internal_fusion)
 	if(to_release)
-		T.assume_air(to_release)
+		local_turf.assume_air(to_release)
 	return ..()
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/crowbar_deconstruction_act(mob/living/user, obj/item/tool, internal_pressure = 0)

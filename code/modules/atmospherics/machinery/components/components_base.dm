@@ -333,7 +333,7 @@
  * Handles air relocation to the pipenet/environment
  */
 /obj/machinery/atmospherics/components/proc/relocate_airs(datum/gas_mixture/to_release)
-	var/turf/T = get_turf(src)
+	var/turf/local_turf = get_turf(src)
 	for(var/i in 1 to device_type)
 		var/datum/gas_mixture/air = airs[i]
 		if(!nodes[i] || (istype(nodes[i], /obj/machinery/atmospherics/components/unary/portables_connector) && !portable_device_connected(i)))
@@ -345,4 +345,4 @@
 		var/datum/gas_mixture/parents_air = parents[i].air
 		parents_air.merge(air)
 	if(to_release)
-		T.assume_air(to_release)
+		local_turf.assume_air(to_release)
