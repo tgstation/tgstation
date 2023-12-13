@@ -70,6 +70,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force, ...)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
+	current_movement_target = null
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
@@ -337,10 +338,10 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
-// Turn the controller off if the pawn has been qdeleted
+// qdel the controller if the pawn has been qdeleted
 /datum/ai_controller/proc/on_pawn_qdeleted()
 	SIGNAL_HANDLER
-	set_ai_status(AI_STATUS_OFF)
+	qdel(src)
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
