@@ -26,8 +26,8 @@ type Question = {
 };
 
 enum STATUS {
-  APPROVED = 'interview_approved',
-  DENIED = 'interview_denied',
+  Approved = 'interview_approved',
+  Denied = 'interview_denied',
 }
 
 // Matches a complete markdown-style link, capturing the whole [...](...)
@@ -56,7 +56,7 @@ export const Interview = (props) => {
   const {
     connected,
     is_admin,
-    questions = [{ qidx: 0, question: 'What', response: '' } as Question],
+    questions = [], // TODO: Remove default
     queue_pos,
     read_only,
     status,
@@ -115,7 +115,7 @@ export const Interview = (props) => {
               <b>You will not be able to edit your answers after submitting.</b>
             </p>
           )}
-          {questions.map(({ qidx, question = '', response }) => (
+          {questions.map(({ qidx, question, response }) => (
             <Section key={qidx} title={`Question ${qidx}`}>
               <p>{linkifyText(question)}</p>
               {((read_only || is_admin) && (
@@ -147,9 +147,9 @@ const RenderedStatus = (props: { status: string; queue_pos: number }) => {
   const { status, queue_pos } = props;
 
   switch (status) {
-    case STATUS.APPROVED:
+    case STATUS.Approved:
       return <NoticeBox success>This interview was approved.</NoticeBox>;
-    case STATUS.DENIED:
+    case STATUS.Denied:
       return <NoticeBox danger>This interview was denied.</NoticeBox>;
     default:
       return (

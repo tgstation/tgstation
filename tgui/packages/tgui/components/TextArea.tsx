@@ -49,6 +49,8 @@ export const TextArea = forwardRef(
       maxLength,
       noborder,
       onChange,
+      onEnter,
+      onEscape,
       placeholder,
       scrollbar,
       selfClear,
@@ -56,12 +58,18 @@ export const TextArea = forwardRef(
       ...boxProps
     } = props;
     const { className, fluid, nowrap, ...rest } = boxProps;
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
     const [scrolledAmount, setScrolledAmount] = useState(0);
 
     const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-      if (event.key === KEY.Enter && !event.shiftKey) {
+      if (event.key === KEY.Enter) {
+        if (event.shiftKey) {
+          onChange?.(event as any, event.currentTarget.value);
+          return;
+        }
+
+        onEnter?.(event, event.currentTarget.value);
         if (selfClear) {
           event.currentTarget.value = '';
         }
@@ -71,6 +79,7 @@ export const TextArea = forwardRef(
       }
 
       if (event.key === KEY.Escape) {
+        onEscape?.(event);
         if (selfClear) {
           event.currentTarget.value = '';
         } else {
