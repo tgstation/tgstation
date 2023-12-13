@@ -33,6 +33,7 @@
 	rpg_title = "Royal Guard"
 	allow_bureaucratic_error = FALSE
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
+	ignore_human_authority = TRUE
 
 /datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
