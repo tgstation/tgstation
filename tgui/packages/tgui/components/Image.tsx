@@ -2,9 +2,10 @@ import { ReactNode } from 'react';
 import { Box, BoxProps } from './Box';
 import { Tooltip } from './Tooltip';
 
-type Props = {
-  tooltip?: ReactNode;
-} & IconUnion &
+type Props = Partial<{
+  tooltip: ReactNode;
+}> &
+  IconUnion &
   BoxProps;
 
 type IconUnion =
@@ -21,7 +22,7 @@ export const Image = (props: Props) => {
 
   let content = (
     <Box {...rest}>
-      <img className="tgui__image" src={src} />
+      <img className="Image__Inner" src={src} />
     </Box>
   );
 

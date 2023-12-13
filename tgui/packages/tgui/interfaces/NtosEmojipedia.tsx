@@ -2,8 +2,8 @@ import { classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
 import { useBackend } from '../backend';
-import { Button, Input, Section } from '../components';
-import { Image } from '../components/Image';
+import { Button, Input, Section, Image } from '../components';
+import {} from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -47,6 +47,7 @@ export const NtosEmojipedia = (props) => {
           {filteredEmojis.map((emoji) => (
             <Image
               key={emoji.name}
+              m={0}
               className={classes(['emojipedia16x16', emoji.name])}
               tooltip={emoji.name}
               onClick={() => {

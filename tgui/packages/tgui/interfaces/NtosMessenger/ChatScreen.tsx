@@ -7,6 +7,7 @@ import {
   Modal,
   Tooltip,
   Icon,
+  Image,
 } from '../../components';
 import { Component, RefObject, createRef } from 'react';
 import { NtMessage, NtMessenger, NtPicture } from './types';
@@ -226,7 +227,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
               this.setState({ selectingPhoto: false });
             }}
           >
-            <Box as="img" src={photo.path} maxHeight={10} />
+            <Image src={photo.path} maxHeight={10} />
           </Button>
         </Stack.Item>
       ));
@@ -291,7 +292,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                   tooltip="Remove attachment"
                   tooltipPosition="auto-end"
                 >
-                  <Box as="img" src={selectedPhoto} />
+                  <Image src={selectedPhoto} />
                 </Button>
               </Stack.Item>
             )}
@@ -380,7 +381,7 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                 />
               }
             >
-              <Box as="img" src={previewingImage} />
+              <Image src={previewingImage} />
             </Section>
           </Modal>
         )}
@@ -419,14 +420,14 @@ const ChatMessage = (props: ChatMessageProps) => {
       {!!everyone && (
         <Box className="NtosChatMessage__everyone">Sent to everyone</Box>
       )}
-      {photoPath !== null && (
+      {!!photoPath && (
         <Button
           tooltip="View image"
           className="NtosChatMessage__image"
           color="transparent"
           onClick={onPreviewImage}
         >
-          <Box as="img" src={photoPath} mt={1} />
+          <Image src={photoPath} mt={1} />
         </Button>
       )}
     </Box>

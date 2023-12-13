@@ -251,10 +251,6 @@ export const Box = (props: BoxProps) => {
     : computeBoxClassName(rest);
   const computedProps = computeBoxProps(rest);
 
-  if (as === 'img') {
-    computedProps.style['-ms-interpolation-mode'] = 'nearest-neighbor';
-  }
-
   // Render the component
   return createElement(
     typeof as === 'string' ? as : 'div',

@@ -1,5 +1,6 @@
-.Image {
+.Image__Inner {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  -ms-interpolation-mode: nearest-neighbor;
 }
