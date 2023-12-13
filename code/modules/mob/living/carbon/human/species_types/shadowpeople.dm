@@ -119,7 +119,7 @@
 /// Heal in darkness and potentially trigger other effects, persists for a short duration after leaving
 /datum/status_effect/shadow_regeneration
 	id = "shadow_regeneration"
-	duration = 2.5 SECONDS
+	duration = 2 SECONDS
 	status_type = STATUS_EFFECT_REFRESH
 	alert_type = /atom/movable/screen/alert/status_effect/shadow_regeneration
 
