@@ -70,6 +70,15 @@
 	air_contents = tempair_contents
 	return ..()
 
+/obj/item/tank/jetpack/suit/process()
+	var/mob/living/carbon/human/H = loc.loc
+	if(!tank || tank != H.s_store)
+		turn_off(active_user)
+		update_appearance()
+		return
+	excited = TRUE
+	..()
+
 /obj/item/tank/jetpack/suit/allow_thrust(num, use_fuel = TRUE)
 	if((num < 0.005 || air_contents.total_moles() < num))
 		turn_off(active_user)

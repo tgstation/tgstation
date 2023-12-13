@@ -1,7 +1,7 @@
 /obj/item/choice_beacon/space_suit
 	name = "space suit delivery beacon"
 	desc = "Summon your space suit"
-	icon = 'massmeta/icons/obj/device.dmi'
+	icon = 'massmeta/features/hardsuits/icons/device.dmi'
 	icon_state = "gangtool-suit"
 	w_class = WEIGHT_CLASS_BULKY
 

@@ -13,7 +13,7 @@
 
 /obj/machinery/suit_storage_unit/atmos
 	mod_type = null
-	space_suit_type = /obj/item/choice_beacon/space_suit/engineering
+	space_suit_type = /obj/item/choice_beacon/space_suit/atmos
 
 /obj/machinery/suit_storage_unit/ce
 	mod_type = null

@@ -1,8 +1,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit
 	name = "hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low-pressure environment. Has radiation shielding."
-	icon = 'massmeta/icons/obj/clothing/hats.dmi'
-	worn_icon = 'massmeta/icons/mob/clothing/head.dmi'
+	icon = 'massmeta/features/hardsuits/icons/hats.dmi'
+	worn_icon = 'massmeta/features/hardsuits/icons/head.dmi'
 	icon_state = "hardsuit0-engineering"
 	max_integrity = 300
 	armor_type = /datum/armor/hardsuit
@@ -31,6 +31,7 @@
 	user.update_worn_head() //so our mob-overlays update
 
 	set_light_on(on)
+	update_item_action_buttons()
 
 
 /obj/item/clothing/head/helmet/space/hardsuit/dropped(mob/user)

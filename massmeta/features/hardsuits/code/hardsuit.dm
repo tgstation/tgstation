@@ -4,8 +4,8 @@
 /obj/item/clothing/suit/space/hardsuit
 	name = "hardsuit"
 	desc = "A special suit that protects against hazardous, low pressure environments. Has radiation shielding."
-	icon = 'massmeta/icons/obj/clothing/suits.dmi'
-	worn_icon = 'massmeta/icons/mob/clothing/suit.dmi'
+	icon = 'massmeta/features/hardsuits/icons/suits.dmi'
+	worn_icon = 'massmeta/features/hardsuits/icons/suit.dmi'
 	icon_state = "hardsuit-engineering"
 	max_integrity = 300
 	min_cold_protection_temperature = SPACE_SUIT_MIN_TEMP_PROTECT
@@ -239,8 +239,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit/atmos
 	name = "atmospherics hardsuit helmet"
 	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
-	icon_state = "hardsuit0-atmos"
-	hardsuit_type = "atmos"
+	icon_state = "hardsuit0-atmospherics"
+	hardsuit_type = "atmospherics"
 	armor_type = /datum/armor/hardsuit_atmos
 	heat_protection = HEAD //Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -248,7 +248,7 @@
 /obj/item/clothing/suit/space/hardsuit/atmos
 	name = "atmospherics hardsuit"
 	desc = "A modified engineering hardsuit for work in a hazardous, low pressure environment. The radiation shielding plates were removed to allow for improved thermal protection instead."
-	icon_state = "hardsuit-atmos"
+	icon_state = "hardsuit-atmospherics"
 	armor_type = /datum/armor/hardsuit_atmos
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS //Uncomment to enable firesuit protection
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
@@ -291,8 +291,8 @@
 /obj/item/clothing/head/helmet/space/hardsuit/rd
 	name = "prototype hardsuit helmet"
 	desc = "A prototype helmet designed for research in a hazardous, low pressure environment. Scientific data flashes across the visor."
-	icon_state = "hardsuit0-toxins"
-	hardsuit_type = "toxins"
+	icon_state = "hardsuit0-rd"
+	hardsuit_type = "rd"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT
 	armor_type = /datum/armor/hardsuit_rd
@@ -331,7 +331,7 @@
 /obj/item/clothing/suit/space/hardsuit/rd
 	name = "prototype hardsuit"
 	desc = "A prototype suit that protects against hazardous, low pressure environments. Fitted with extensive plating for handling explosives and dangerous research materials."
-	icon_state = "hardsuit-toxins"
+	icon_state = "hardsuit-rd"
 	resistance_flags = ACID_PROOF | FIRE_PROOF
 	max_heat_protection_temperature = FIRE_SUIT_MAX_TEMP_PROTECT //Same as an emergency firesuit. Not ideal for extended exposure.
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/gun/energy/wormhole_projector,
@@ -347,7 +347,7 @@
 	name = "security hardsuit helmet"
 	desc = "A special helmet designed for work in a hazardous, low pressure environment. Has an additional layer of armor."
 	icon_state = "hardsuit0-sec"
-	hardsuit_type = "security"
+	hardsuit_type = "sec"
 	armor_type = /datum/armor/hardsuit_security
 
 
