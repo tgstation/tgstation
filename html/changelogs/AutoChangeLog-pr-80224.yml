@@ -1,0 +1,4 @@
+author: "san7890"
+delete-after: True
+changes:
+  - server: "The TGS -> Discord Relay Warning that detects if a cliented mob has a null loc should now be plaintext instead of being fully screwed up with useless codestuffs."
