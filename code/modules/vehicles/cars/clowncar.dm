@@ -72,8 +72,9 @@
 				addtimer(CALLBACK(src, PROC_REF(irish_car_bomb)), 5 SECONDS)
 
 /obj/vehicle/sealed/car/clowncar/proc/irish_car_bomb()
-	dump_mobs()
-	explosion(src, light_impact_range = 1)
+	dump_mobs(randomstep = FALSE)
+	//Die
+	explosion(src, devastation_range = 1)
 
 /obj/vehicle/sealed/car/clowncar/after_add_occupant(mob/M, control_flags)
 	. = ..()
