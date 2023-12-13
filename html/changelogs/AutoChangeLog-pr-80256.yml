@@ -1,4 +1,0 @@
-author: "Ryll/Shaps"
-delete-after: True
-changes:
-  - bugfix: "You can no longer stack more than one applications of a burn wound at once"
