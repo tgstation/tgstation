@@ -1,3 +1,5 @@
+//Sprites done by Camriod_Core - Bounty Requested by Camriod_Core, financed by Iamcooldan for 2000 monkecoins
+
 //Basically vanilla+ stuff, doesn't experiment with cooked sausage since people may want to do stuff with that/ mildly out of scope - The beginning of the corndog crafting tree
 /obj/item/food/raw_sausage_stick //Does't inherit raw_sausage to avoid weird behavior with attackby()
 	name = "raw sausage on a stick"
