@@ -28,7 +28,7 @@
 		return
 	connected_mechpad = pad
 	connected_mechpad.id = id
-	RegisterSignal(connected_mechpad, COMSIG_PARENT_QDELETING, PROC_REF(unconnect_launchpad))
+	RegisterSignal(connected_mechpad, COMSIG_QDELETING, PROC_REF(unconnect_launchpad))
 
 /obj/machinery/computer/mechpad/proc/unconnect_launchpad(obj/machinery/mechpad/pad)
 	SIGNAL_HANDLER
@@ -110,12 +110,12 @@
 
 /obj/machinery/computer/mechpad/proc/add_pad(obj/machinery/mechpad/pad)
 	mechpads += pad
-	RegisterSignal(pad, COMSIG_PARENT_QDELETING, PROC_REF(remove_pad))
+	RegisterSignal(pad, COMSIG_QDELETING, PROC_REF(remove_pad))
 
 /obj/machinery/computer/mechpad/proc/remove_pad(obj/machinery/mechpad/pad)
 	SIGNAL_HANDLER
 	mechpads -= pad
-	UnregisterSignal(pad, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(pad, COMSIG_QDELETING)
 
 /**
  * Tries to call the launch proc on the connected mechpad, returns if unavailable

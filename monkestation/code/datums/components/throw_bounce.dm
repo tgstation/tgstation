@@ -38,10 +38,10 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_POST_THROW, PROC_REF(throw_check))
 	RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(hit_throw))
 	RegisterSignal(parent, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(on_ground))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/throw_bounce/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_THROW_LANDED, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_IMPACT, COMSIG_MOVABLE_THROW_LANDED, COMSIG_ATOM_EXAMINE))
 
 /datum/component/throw_bounce/Destroy()
 	. = ..()

@@ -9,7 +9,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_ATOM_AFTER_ATTACKEDBY, PROC_REF(print_info))
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 
 /datum/element/clockwork_structure_info/Detach(datum/target)

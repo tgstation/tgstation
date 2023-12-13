@@ -20,7 +20,7 @@
 
 /datum/antagonist/ex_vassal/on_gain()
 	. = ..()
-	RegisterSignal(owner.current, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(owner.current, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/antagonist/ex_vassal/on_removal()
 	if(revenge_vassal)

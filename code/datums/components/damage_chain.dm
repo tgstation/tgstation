@@ -52,7 +52,7 @@
 
 	var/atom/atom_parent = parent
 	chain = atom_parent.Beam(linked_to, icon = beam_icon, icon_state = beam_state, beam_type = beam_type, maxdistance = max_distance)
-	RegisterSignal(chain, COMSIG_PARENT_QDELETING, PROC_REF(end_beam))
+	RegisterSignal(chain, COMSIG_QDELETING, PROC_REF(end_beam))
 	START_PROCESSING(SSfastprocess, src)
 
 /datum/component/damage_chain/RegisterWithParent()
@@ -63,7 +63,7 @@
 
 /datum/component/damage_chain/Destroy(force, silent)
 	if (!QDELETED(chain))
-		UnregisterSignal(chain, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(chain, COMSIG_QDELETING)
 		QDEL_NULL(chain)
 	chain = null
 	STOP_PROCESSING(SSfastprocess, src)

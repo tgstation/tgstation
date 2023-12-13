@@ -34,7 +34,7 @@
 /datum/disease/parrot_possession/cure()
 	var/atom/movable/inside_parrot = locate(/mob/living/basic/parrot/poly/ghost) in affected_mob
 	if(inside_parrot)
-		UnregisterSignal(inside_parrot, list(COMSIG_PARENT_PREQDELETED, COMSIG_MOVABLE_MOVED))
+		UnregisterSignal(inside_parrot, list(COMSIG_PREQDELETED, COMSIG_MOVABLE_MOVED))
 		inside_parrot.forceMove(affected_mob.drop_location())
 		affected_mob.visible_message(
 			span_danger("[inside_parrot] is violently driven out of [affected_mob]!"),
@@ -45,9 +45,9 @@
 
 /datum/disease/parrot_possession/proc/set_parrot(mob/living/parrot)
 	parrot_controller = parrot.ai_controller
-	RegisterSignals(parrot, list(COMSIG_PARENT_PREQDELETED, COMSIG_MOVABLE_MOVED), PROC_REF(on_parrot_exit))
+	RegisterSignals(parrot, list(COMSIG_PREQDELETED, COMSIG_MOVABLE_MOVED), PROC_REF(on_parrot_exit))
 
 /datum/disease/parrot_possession/proc/on_parrot_exit(datum/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, list(COMSIG_PARENT_PREQDELETED, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(source, list(COMSIG_PREQDELETED, COMSIG_MOVABLE_MOVED))
 	cure()

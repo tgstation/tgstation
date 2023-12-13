@@ -101,11 +101,11 @@
 	var/atom/beam_origin = ismecha(owner.loc) ? owner.loc : owner
 	link = beam_origin.Beam(watcher, icon_state = "r_beam", override_target_pixel_x = 0)
 	RegisterSignals(owner, forbidden_actions, PROC_REF(opportunity_attack))
-	RegisterSignals(owner, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_participant_died))
-	RegisterSignals(watcher, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_participant_died))
+	RegisterSignals(owner, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_participant_died))
+	RegisterSignals(watcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_participant_died))
 
 /datum/status_effect/overwatch/on_remove()
-	UnregisterSignal(owner, forbidden_actions + list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(owner, forbidden_actions + list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	QDEL_NULL(link)
 	owner.remove_traits(list(TRAIT_OVERWATCHED, TRAIT_OVERWATCH_IMMUNE), TRAIT_STATUS_EFFECT(id))
 	if (!QDELETED(owner))
@@ -124,7 +124,7 @@
 /datum/status_effect/overwatch/proc/unregister_watcher(mob/living/former_overwatcher)
 	if (!overwatch_triggered)
 		former_overwatcher.Stun(2 SECONDS, ignore_canstun = TRUE)
-	UnregisterSignal(former_overwatcher, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(former_overwatcher, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 
 /// Uh oh, you did something within my threat radius, now we're going to shoot you
 /datum/status_effect/overwatch/proc/opportunity_attack()
