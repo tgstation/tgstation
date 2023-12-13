@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(sql_logging)
 	name = "SQL Logging"
 
 	init_order = INIT_ORDER_METRICS
-	wait = 1 MINUTES
+	wait = 2 MINUTES
 	runlevels = RUNLEVEL_LOBBY | RUNLEVEL_SETUP | RUNLEVEL_GAME | RUNLEVEL_POSTGAME // ALL THE LEVELS
 	ss_id = "sql-logs"
 	flags = SS_KEEP_TIMING // We want consistancy so we run every 5 irl minutes plus at round end.
