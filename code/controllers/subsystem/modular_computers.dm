@@ -44,8 +44,6 @@ SUBSYSTEM_DEF(modular_computers)
 	if(!length(GLOB.announcement_systems))
 		return
 	var/obj/machinery/announcement_system/announcement_system = pick(GLOB.announcement_systems)
-	if(isnull(announcement_system))
-		return
 
 	var/static/list/discounts = list("0.10" = 7, "0.15" = 16, "0.20" = 20, "0.25" = 16, "0.50" = 8, "0.66" = 1)
 	var/static/list/flash_discounts = list("0.30" = 3, "0.40" = 8, "0.50" = 8, "0.66" = 2, "0.75" = 1)
