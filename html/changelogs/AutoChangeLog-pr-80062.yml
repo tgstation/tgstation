@@ -1,0 +1,5 @@
+author: "LemonInTheDark, Donglesplonge"
+delete-after: True
+changes:
+  - image: "Redoes fov \"mask\" sprites. They're clean, have a very pleasant dithering effect, and look real fuckin good!"
+  - rscdel: "Changed FOV, it no longer hides mobs, instead it blurs the hidden area, and makes it a bit darker/oversaturated"
