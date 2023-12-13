@@ -70,12 +70,11 @@
 
 /// Called if we didn't assign a role before the round began, we add it to the latejoin menu instead
 /datum/station_trait/job/proc/on_failed_assignment()
-	var/datum/job/our_job = job_to_add
-	our_job = SSjob.GetJob(our_job::title)
+	var/datum/job/our_job = SSjob.GetJob(job_to_add::title)
 	our_job.total_positions = position_amount
 
 /datum/station_trait/job/can_display_lobby_button(client/player)
-	var/datum/job/trait_job = (locate(job_to_add) in SSjob.all_occupations)
+	var/datum/job/our_job = SSjob.GetJob(job_to_add::title)
 	return trait_job.player_old_enough(player) && ..()
 
 /// Adds a gorilla to the cargo department, replacing the sloth and the mech

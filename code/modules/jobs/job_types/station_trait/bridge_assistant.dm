@@ -19,7 +19,6 @@
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CIV
 
-	mind_traits = list(TRAIT_NO_TWOHANDING)
 	liver_traits = list(TRAIT_PRETENDER_ROYAL_METABOLISM)
 
 	display_order = JOB_DISPLAY_ORDER_BRIDGE_ASSISTANT
@@ -34,6 +33,10 @@
 	rpg_title = "Royal Guard"
 	allow_bureaucratic_error = FALSE
 	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS
+
+/datum/job/bridge_assistant/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	ADD_TRAIT(spawned, TRAIT_NO_TWOHANDING, JOB_TRAIT)
 
 /datum/job/bridge_assistant/get_roundstart_spawn_point()
 	var/list/chair_turfs = list()
