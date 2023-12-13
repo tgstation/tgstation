@@ -19,7 +19,7 @@
 	if(forced_by)
 		voluntary = FALSE
 
-	if((tag != LOG_OOC) && (tag != LOG_ASAY) && (tag != LOG_EMOTE))
+	if(!(tag & LOG_OOC) && !(tag & LOG_ASAY) && !(tag & LOG_EMOTE))
 		add_event_to_buffer(src, data = "[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", log_key = "SAY", voluntary = voluntary)
 
 	log_message("[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", message_type, log_globally = log_globally)
