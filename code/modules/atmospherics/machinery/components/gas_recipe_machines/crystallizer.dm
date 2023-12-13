@@ -41,6 +41,12 @@
 	internal = new
 	register_context()
 
+/obj/machinery/atmospherics/components/binary/crystallizer/on_deconstruction()	
+	var/turf/local_turf = get_turf(loc)
+	if(internal.total_moles())
+		local_turf.assume_air(internal)
+	return ..()
+
 /obj/machinery/atmospherics/components/binary/crystallizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
@@ -62,7 +68,7 @@
 	return ..()
 
 /obj/machinery/atmospherics/components/binary/crystallizer/crowbar_act(mob/living/user, obj/item/tool)
-	return crowbar_deconstruction_act(user, tool)	
+	return crowbar_deconstruction_act(user, tool, internal.return_pressure())	
 
 /obj/machinery/atmospherics/components/binary/crystallizer/update_overlays()
 	. = ..()
