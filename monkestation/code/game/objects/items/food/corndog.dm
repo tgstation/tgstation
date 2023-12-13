@@ -109,7 +109,7 @@
 	/datum/reagent/consumable/ethanol/narsour = 10,
 	/datum/reagent/brimdust = 4
 	)
-	desc = "A demonic corndog of occult origin, it glows with an unholy power..."
+	desc = "A demonic corndog of occult origin, <font color=#ae0000>it glows with an unholy power</font>..."
 	tastes = list("brimstone" = 1, "the souls of the damned" = 1)
 	foodtypes = MEAT | GRAIN | ALCOHOL
 	venue_value = FOOD_PRICE_EXOTIC
