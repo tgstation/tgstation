@@ -74962,6 +74962,14 @@
 /obj/structure/flora/grass/both/style_3,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
+"wXM" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/effect/landmark/start/clown,
+/turf/open/floor/iron/smooth,
+/area/station/security/brig)
 "wXR" = (
 /obj/structure/table,
 /obj/item/storage/medkit/regular{
@@ -169946,7 +169954,7 @@ wqI
 xSn
 dUO
 wqI
-xSn
+wXM
 dUO
 wqI
 xSn

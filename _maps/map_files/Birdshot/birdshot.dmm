@@ -49400,6 +49400,7 @@
 	dir = 6
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/start/clown,
 /turf/open/floor/iron/small,
 /area/station/security/brig)
 "rpq" = (

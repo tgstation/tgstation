@@ -41557,6 +41557,7 @@
 	},
 /obj/structure/bed,
 /obj/item/bedsheet,
+/obj/effect/landmark/start/clown,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "oTR" = (

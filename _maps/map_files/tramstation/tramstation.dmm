@@ -42515,6 +42515,11 @@
 /obj/structure/closet/l3closet/security,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/lockers)
+"nZT" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/landmark/start/clown,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "nZW" = (
 /obj/structure/sign/poster/contraband/lusty_xenomorph/directional/east,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -88400,7 +88405,7 @@ gvI
 ozX
 gvI
 oih
-lAA
+nZT
 oCk
 thP
 rBz

@@ -65300,6 +65300,11 @@
 	dir = 6
 	},
 /area/station/hallway/floor1/aft)
+"qZg" = (
+/obj/effect/turf_decal/tile/red/fourcorners,
+/obj/effect/landmark/start/clown,
+/turf/open/floor/iron/dark,
+/area/station/security/holding_cell)
 "qZh" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -324243,7 +324248,7 @@ vOE
 aUR
 wrj
 oWR
-fVw
+qZg
 fVw
 xYO
 ffe
