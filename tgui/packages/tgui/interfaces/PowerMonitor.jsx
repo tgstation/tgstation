@@ -1,7 +1,7 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -17,6 +17,7 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 const PEAK_DRAW = 500000;
 
@@ -38,7 +39,7 @@ export const PowerMonitor = () => {
 export const PowerMonitorContent = (props) => {
   const { data } = useBackend();
   const { history = { supply: [], demand: [] } } = data;
-  const [sortByField, setSortByField] = useLocalState('sortByField', null);
+  const [sortByField, setSortByField] = useState(null);
   const supply = history.supply[history.supply.length - 1] || 0;
   const demand = history.demand[history.demand.length - 1] || 0;
   const supplyData = history.supply.map((value, i) => [i, value]);
