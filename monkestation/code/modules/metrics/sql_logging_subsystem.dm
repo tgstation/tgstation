@@ -107,6 +107,9 @@ SUBSYSTEM_DEF(sql_logging)
 		var/area/area = get_area(source)
 		source_area = area.name
 
+	if(is_null(source_name))
+		source_name = target_ckey
+
 	sorted_data = list(
 		"timestamp" = SQLtime(),
 		"round_id" = text2num(GLOB.round_id),
