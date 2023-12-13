@@ -4,8 +4,6 @@
 
 /datum/ai_planning_subtree/hoard_items/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(QDELETED(living_pawn))
-		return
 
 	var/turf/myspace = controller.blackboard[BB_HOARD_LOCATION]
 
