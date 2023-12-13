@@ -135,9 +135,9 @@
 	if(isnull(bridge)) //no bridge, what will he assist?
 		return
 	var/list/possible_coffeemaker_positions = list(/area/station/command/bridge, /area/station/command/meeting_room)
-	for(var/possible_position in possible_coffeemaker_positions) //don't spawn a coffeemaker if there is already one on the bridge
-		var/area/possible_area = GLOB.areas_by_type[possible_position]
-		if(possible_area && (locate(/obj/machinery/coffeemaker) in possible_area))
+	var/list/coffeemakers = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/coffeemaker)
+	for(var/obj/machinery/coffeemaker as anything in coffeemakers) //don't spawn a coffeemaker if there is already one on the bridge
+		if(is_type_in_list(get_area(coffeemaker), possible_coffeemaker_positions))
 			return
 	var/list/tables = list()
 	for(var/turf/area_turf as anything in bridge.get_contained_turfs())
