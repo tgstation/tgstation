@@ -159,6 +159,7 @@
 				continue
 			thing_on_table.forceMove(get_turf(another_table))
 	new /obj/machinery/coffeemaker/impressa(picked_turf)
+	new /obj/item/reagent_containers/cup/coffeepot(picked_turf)
 	new /obj/item/storage/box/coffeepack(picked_turf)
 
 #undef CAN_ROLL_ALWAYS
