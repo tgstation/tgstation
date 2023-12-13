@@ -337,7 +337,7 @@ rules:
   ## Require or disallow named function expressions
   # func-names: error
   ## Enforce the consistent use of either function declarations or expressions
-  func-style: [error, expression]
+  # func-style: [error, expression]
   ## Enforce line breaks between arguments of a function call
   # function-call-argument-newline: error
   ## Enforce consistent line breaks inside function parentheses
