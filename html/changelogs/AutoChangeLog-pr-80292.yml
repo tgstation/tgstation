@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Cult chat, PDAs, succumbing, etc shouldn't blue screen anymore."
