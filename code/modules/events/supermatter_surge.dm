@@ -36,7 +36,7 @@
 		/datum/event_admin_setup/input_number/surge_spiciness,
 	)
 
-/datum/round_event_control/supermatter_surge/can_spawn_event(players_amt, allow_magic = FALSE)
+/datum/round_event_control/supermatter_surge/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //monkestation edit: adds fake_check
 	. = ..()
 
 	if(!SSjob.has_minimum_jobs(crew_threshold = 3, jobs = JOB_GROUP_ENGINEERS, head_jobs = list(JOB_CHIEF_ENGINEER)))

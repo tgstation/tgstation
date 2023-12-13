@@ -35,7 +35,7 @@
 	  */
 	var/list/_listen_lookup
 	/// Lazy associated list in the structure of `target -> list(signal -> proctype)` that are run when the datum receives that signal
-	var/list/list/datum/callback/signal_procs
+	var/list/list/datum/callback/_signal_procs
 
 	/// Datum level flags
 	var/datum_flags = NONE
@@ -140,7 +140,7 @@
 
 ///Only override this if you know what you're doing. You do not know what you're doing
 ///This is a threat
-/datum/proc/clear_signal_refs()
+/datum/proc/_clear_signal_refs()
 	var/list/lookup = _listen_lookup
 	if(lookup)
 		for(var/sig in lookup)

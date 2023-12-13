@@ -150,7 +150,9 @@
 	plane = GAME_PLANE
 	alpha = 0
 	color = COLOR_PALE_GREEN
-	light_range = 2
+//	light_range = 2 //monkestation removal
+	light_inner_range = 1 //monkestation edit
+	light_outer_range = 2 //monkestation edit
 	light_color = COLOR_PALE_GREEN
 	/// Who are we reviving?
 	var/mob/living/corpse

@@ -106,7 +106,7 @@
 		master.vassals -= src
 		owner.enslaved_to = null
 	//Remove ALL Traits, as long as its from BLOODSUCKER_TRAIT's source.
-	for(var/allstatus_traits in owner.current.status_traits)
+	for(var/allstatus_traits in owner.current._status_traits)
 		REMOVE_TRAIT(owner.current, allstatus_traits, BLOODSUCKER_TRAIT)
 	//Remove Recuperate Power
 	while(powers.len)
