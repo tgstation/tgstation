@@ -3543,7 +3543,6 @@
 #include "code\modules\client\preferences\clothing.dm"
 #include "code\modules\client\preferences\darkened_flash.dm"
 #include "code\modules\client\preferences\food_allergy.dm"
-#include "code\modules\client\preferences\fov_darkness.dm"
 #include "code\modules\client\preferences\fps.dm"
 #include "code\modules\client\preferences\gender.dm"
 #include "code\modules\client\preferences\ghost.dm"
