@@ -188,7 +188,7 @@
  * Returns the quantity of mineral sheets in each ore's boulder contents roll. First roll can produce the most ore, with subsequent rolls scaling lower logarithmically.
  */
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
-	var/mineral_count = boulder_size * (log(rand(1+ore_floor, 4+ore_floor))**-1)
+	var/mineral_count = boulder_size * (log(rand(1+ore_floor, 4 + ore_floor)) ** -1)
 	mineral_count = SHEET_MATERIAL_AMOUNT * round(mineral_count)
 	return mineral_count
 
@@ -242,15 +242,15 @@
 		return FALSE //Bad end, try again.
 
 	for(var/mob/living/carbon/human/potential_miner in range(7, src)) //Give the miners who are near the vent points and xp.
-			var/mob/living/carbon/human/true_miner = potential_miner
-			var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
-			if(true_miner?.mind)
-				true_miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
-			if(!user_id_card)
-				continue
-			var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
-			user_id_card.registered_account.mining_points += point_reward_val
-			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
+		var/mob/living/carbon/human/true_miner = potential_miner
+		var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
+		if(true_miner?.mind)
+			true_miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
+		if(!user_id_card)
+			continue
+		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
+		user_id_card.registered_account.mining_points += point_reward_val
+		user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.pre_escape() //Visually show the drone is done and flies away.
 	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
@@ -274,9 +274,6 @@
 			if(do_after(user, 4 SECONDS))
 				discovered = TRUE
 				balloon_alert(user, "vent scanned!")
-
-			if(ishuman(user))
-				var/mob/living/carbon/human/scanning_miner = user
 			generate_description(user)
 			if(!ishuman(user))
 				return
@@ -477,7 +474,7 @@
 
 /obj/structure/ore_vent/boss/start_wave_defense()
 	// Completely override the normal wave defense, and just spawn the boss.
-	var/mob/living/simple_animal/boss = new summoned_boss(loc)
+	var/mob/living/simple_animal/hostile/megafauna/boss = new summoned_boss(loc)
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
 	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever
 	boss.say(boss.summon_line) //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.

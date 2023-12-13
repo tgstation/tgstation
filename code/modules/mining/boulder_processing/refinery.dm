@@ -36,7 +36,7 @@
 		manipulator_stack += ((servo.tier - 1))
 	boulders_processing_max = clamp(manipulator_stack, 1, 6)
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
-		matter_bin_stack += ((bin.tier))
+		matter_bin_stack += bin.tier
 	boulders_held_max = matter_bin_stack
 
 
@@ -95,5 +95,4 @@
 	. = ..()
 	if(. == PROCESS_KILL)
 		set_light_on(FALSE)
-		return
 

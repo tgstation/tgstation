@@ -249,7 +249,7 @@
 		update_boulder_count()
 		return TRUE //We've processed all the materials in the boulder, so we can just destroy it in break_apart.
 
-	chosen_boulder.reset_processing_cooldown() //So that we don't pick it back up!
+	chosen_boulder.restart_processing_cooldown() //So that we don't pick it back up!
 	chosen_boulder.durability = rand(chosen_boulder.boulder_size, chosen_boulder.boulder_size + BOULDER_SIZE_SMALL) //Reset durability to a random value between the boulder's size and a little more.
 	remove_boulder(chosen_boulder)
 	return TRUE
@@ -291,7 +291,7 @@
 		update_boulder_count()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return FALSE
-	specific_boulder.reset_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
+	specific_boulder.restart_processing_cooldown() //Reset the cooldown so we don't pick it back up by the same machine.
 	if(isturf(drop_turf))
 		specific_boulder.forceMove(drop_turf)
 	else

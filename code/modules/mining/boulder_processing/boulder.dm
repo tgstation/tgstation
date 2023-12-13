@@ -1,3 +1,5 @@
+#define GOLEM_BREAK_SPEED_MULTIPLIER 3
+
 /**
  * The objects that ore vents produce, which is refined into minerals.
  */
@@ -90,16 +92,16 @@
 
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
+	if(.)
+		return
 	if(!isliving(user))
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
 		return TRUE
 	if(isgolem(user))
-		manual_process(weapon, user, 3)
+		manual_process(weapon, user, override_speed_multiplier = GOLEM_BREAK_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(.)
-		return
 
 /obj/item/boulder/update_icon_state()
 	. = ..()
@@ -113,28 +115,30 @@
 		else
 			icon_state = "[boulder_string]_small"
 
-/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed, mech_override = FALSE, continued = FALSE)
+/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, instant_break = FALSE, continued = FALSE)
 	var/process_speed = 0
 	if(weapon)
 		process_speed = weapon.toolspeed
 		weapon.play_tool_sound(src, 50)
 		if(!continued)
 			to_chat(user, span_notice("You swing at \the [src]..."))
-	else if (override_speed)
-		process_speed = override_speed
+	else if (override_speed_multiplier)
+		process_speed = override_speed_multiplier
 		playsound(src, 'sound/effects/rocktap1.ogg', 50)
 		if(!continued)
 			to_chat(user, span_notice("You scrape away at \the [src]..."))
 	else
 		return
 
-	if(!mech_override)
+	if(!HAS_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
 		if(!do_after(user, (2 * process_speed SECONDS), target = src))
 			return FALSE
 		if(!user.Adjacent(src))
 			return
-	durability--
-	user.apply_damage(4, STAMINA)
+		durability--
+		user.apply_damage(4, STAMINA)
+	else
+		durability = 0
 	if(durability <= 0)
 		convert_to_ore()
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
@@ -144,7 +148,7 @@
 		return
 	var/msg = (durability == 1 ? "is crumbling!" : "looks weaker!")
 	to_chat(user, span_notice("\The [src] [msg]"))
-	manual_process(weapon, user, override_speed, continued = TRUE)
+	manual_process(weapon, user, override_speed_multiplier, continued = TRUE)
 
 /obj/item/boulder/proc/convert_to_ore(weak)
 	for(var/datum/material/picked in custom_materials)
@@ -172,11 +176,9 @@
 		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore)
 
 /obj/item/boulder/proc/can_get_processed()
-	if(COOLDOWN_FINISHED(src, processing_cooldown))
-		return TRUE
-	return FALSE
+	return COOLDOWN_FINISHED(src, processing_cooldown)
 
-/obj/item/boulder/proc/reset_processing_cooldown()
+/obj/item/boulder/proc/restart_processing_cooldown()
 	COOLDOWN_START(src, processing_cooldown, 2 SECONDS)
 
 /**
@@ -231,7 +233,7 @@
 	artifact_inside = new artifact_type(src) /// This could be poggers for archaeology in the future.
 
 /obj/item/boulder/artifact/Destroy(force)
-	artifact_inside = null
+	QDEL_NULL(artifact_inside)
 	return ..()
 
 /obj/item/boulder/artifact/convert_to_ore()
@@ -269,3 +271,5 @@
 	desc = "A bizzare, twisted boulder. Wait, wait no, it's just a rock."
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 	durability = 1
+
+#undef GOLEM_BREAK_SPEED_MULTIPLIER

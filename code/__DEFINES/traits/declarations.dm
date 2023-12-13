@@ -1017,4 +1017,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait which self-identifies as an enemy of the law
 #define TRAIT_ALWAYS_WANTED "always_wanted"
 
+/// That which allows mobs to instantly break down boulders.
+#define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
+
 // END TRAIT DEFINES

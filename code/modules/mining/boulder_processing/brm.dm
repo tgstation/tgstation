@@ -106,10 +106,6 @@
 		balloon_alert_to_viewers("no boulders to collect!")
 		return FALSE //Nothing to collect
 	var/obj/item/boulder/random_boulder = pick(SSore_generation.available_boulders)
-	if(!random_boulder)
-		return FALSE
-	if(!istype(random_boulder))
-		return FALSE
 	if(random_boulder.processed_by)
 		return FALSE
 
@@ -130,6 +126,7 @@
 	balloon_alert_to_viewers("boulder appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
+	return TRUE
 
 /obj/machinery/bouldertech/brm/proc/toggle_auto_on(mob/user)
 	if(panel_open)
