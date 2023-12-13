@@ -69,7 +69,7 @@
 /obj/item/food/corndog
 	trash_type = /obj/item/popsicle_stick
 	name = "corndog"
-	desc = "The best thing to come out of 1900s America." //Could be better, any funnymen please suggest something
+	desc = "The best thing to come out of 1900s America."
 	icon = 'monkestation/icons/obj/food/corndog.dmi'
 	icon_state = "corndog_stick"
 	food_reagents = list(
