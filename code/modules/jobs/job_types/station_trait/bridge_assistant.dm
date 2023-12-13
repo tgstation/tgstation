@@ -63,6 +63,10 @@
 	jobtype = /datum/job/bridge_assistant
 
 	id_trim = /datum/id_trim/job/bridge_assistant
+	backpack_contents = list(
+		/obj/item/modular_computer/pda/bridge_assistant = 1,
+	)
+
 	uniform = /obj/item/clothing/under/trek/command/next
 	neck = /obj/item/clothing/neck/large_scarf/blue
 	belt = /obj/item/storage/belt/utility/full/inducer
