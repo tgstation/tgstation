@@ -8,13 +8,10 @@
 
 /datum/ai_planning_subtree/perch_on_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
-	if(QDELETED(living_pawn))
-		return
-
-	var/atom/buckled_to = living_pawn.buckled
+	var/atom/buckled_too = living_pawn.buckled
 
 	//do we have a current target or is chance to unbuckle has passed? then unbuckle!
-	if(buckled_to)
+	if(buckled_too)
 		if((SPT_PROB(unperch_chance, seconds_per_tick) || controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET)))
 			controller.queue_behavior(/datum/ai_behavior/unbuckle_mob)
 			return
