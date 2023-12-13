@@ -68,9 +68,9 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
-	var/positive_trait_count = pick(4;0, 3;1, 2;2, 1;3)
-	var/neutral_trait_count = pick(3;0, 6;1, 3;2, 1;3)
-	var/negative_trait_count = pick(4;0, 3;1, 2;2, 1;3)
+	var/positive_trait_count = text2num(pick_weight(CONFIG_GET(keyed_list/positive_station_traits)))
+	var/neutral_trait_count = text2num(pick_weight(CONFIG_GET(keyed_list/neutral_station_traits)))
+	var/negative_trait_count = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
 
 	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)
 	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)

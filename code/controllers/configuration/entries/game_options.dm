@@ -430,3 +430,18 @@
 /datum/config_entry/flag/give_tutorials_without_db
 
 /datum/config_entry/string/new_player_alert_role_id
+
+/datum/config_entry/keyed_list/positive_station_traits
+	default = list("0" = 4, "1" = 3, "2" = 2, "3" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/negative_station_traits
+	default = list("0" = 4, "1" = 3, "2" = 2, "3" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
+
+/datum/config_entry/keyed_list/neutral_station_traits
+	default = list("0" = 3, "1" = 6, "2" = 3, "3" = 1)
+	key_mode = KEY_MODE_TEXT
+	value_mode = VALUE_MODE_NUM
