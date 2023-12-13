@@ -41,5 +41,5 @@
 	/datum/reagent/consumable/ethanol/narsour = 20,
 	/datum/reagent/brimdust = 15
 	)
-	result = /obj/item/food/raw_corndog/rod
+	result = /obj/item/food/corndog/NarDog
 	category = CAT_MEAT
