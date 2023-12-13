@@ -241,18 +241,16 @@
 		update_appearance(UPDATE_ICON_STATE)
 		return FALSE //Bad end, try again.
 
-	for(var/mob/living/carbon/human/potential_miner as anything in range(7, src)) //Give the miners who are near the vent points and xp.
-		if(ishuman(potential_miner))
+	for(var/mob/living/carbon/human/potential_miner in range(7, src)) //Give the miners who are near the vent points and xp.
 			var/mob/living/carbon/human/true_miner = potential_miner
 			var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
-			if(true_miner && true_miner.mind)
+			if(true_miner?.mind)
 				true_miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
 			if(!user_id_card)
 				continue
-			if(user_id_card)
-				var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
-				user_id_card.registered_account.mining_points += (point_reward_val)
-				user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
+			var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
+			user_id_card.registered_account.mining_points += point_reward_val
+			user_id_card.registered_account.bank_card_talk("You have been awarded [point_reward_val] mining points for your efforts.")
 	node.pre_escape() //Visually show the drone is done and flies away.
 	add_overlay(mutable_appearance('icons/obj/mining_zones/terrain.dmi', "well", ABOVE_MOB_LAYER, src, GAME_PLANE))
 
@@ -265,7 +263,7 @@
 		balloon_alert_to_viewers("vent tapped!")
 		return
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))
-		balloon_alert_to_viewers("Protect the node drone!")
+		balloon_alert_to_viewers("protect the node drone!")
 		return
 	if(!discovered)
 		balloon_alert(user, "scanning...")
@@ -279,13 +277,15 @@
 
 			if(ishuman(user))
 				var/mob/living/carbon/human/scanning_miner = user
-				var/obj/item/card/id/user_id_card = scanning_miner.get_idcard(TRUE)
-				if(user_id_card)
-					user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
-					user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
 			generate_description(user)
-			return
-		else
+			if(!ishuman(user))
+				return
+			var/mob/living/carbon/human/scanning_miner = user
+			var/obj/item/card/id/user_id_card = scanning_miner.get_idcard(TRUE)
+			if(isnull(user_id_card))
+				return
+			user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
+			user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
 			return
 	if(scan_only)
 		return
@@ -305,8 +305,6 @@
 		for(var/turf/closed/mineral/rock in oview(i))
 			if(istype(rock, /turf/open/misc/asteroid) && prob(35)) // so it's too common
 				new /obj/effect/decal/cleanable/rubble(rock)
-			if(!istype(rock, /turf/closed/mineral))
-				continue
 			if(prob(100 - (i * 15)))
 				rock.gets_drilled(user, FALSE)
 				if(prob(50))
@@ -406,10 +404,8 @@
 	icon_state = "ore_vent_ice"
 	icon_state_tapped = "ore_vent_ice_active"
 	defending_mobs = list(
-		/mob/living/basic/mining/ice_whelp,
 		/mob/living/basic/mining/lobstrosity,
 		/mob/living/basic/mining/legion/snow/spawner_made,
-		/mob/living/basic/mining/ice_demon,
 		/mob/living/simple_animal/hostile/asteroid/polarbear,
 		/mob/living/simple_animal/hostile/asteroid/wolf,
 	)
@@ -484,7 +480,7 @@
 	var/mob/living/simple_animal/boss = new summoned_boss(loc)
 	RegisterSignal(boss, COMSIG_LIVING_DEATH, PROC_REF(handle_wave_conclusion))
 	COOLDOWN_START(src, wave_cooldown, INFINITY) //Basically forever
-	boss.say("You dare disturb my slumber?!")
+	boss.say(boss.summon_line) //Pull their specific summon line to say. Default is meme text so make sure that they have theirs set already.
 
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
