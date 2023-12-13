@@ -97,7 +97,7 @@
 					var/static/pipenetwarnings = 10
 					if(pipenetwarnings > 0)
 						log_mapping("build_pipeline_blocking(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
-						////DEBUG PURPOSES, UNCOMMENT WHEN DONE!!!!! pipenetwarnings--
+						pipenetwarnings--
 						if(pipenetwarnings == 0)
 							log_mapping("build_pipeline_blocking(): further messages about pipenets will be suppressed")
 

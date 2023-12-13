@@ -444,7 +444,7 @@ SUBSYSTEM_DEF(air)
 				var/static/pipenetwarnings = 10
 				if(pipenetwarnings > 0)
 					log_mapping("expand_pipeline(): [item.type] added to a pipenet while still having one. (pipes leading to the same spot stacking in one turf) around [AREACOORD(item)].")
-					////DEBUG PURPOSES, UNCOMMENT WHEN DONE!!!!!  pipenetwarnings--
+					pipenetwarnings--
 					if(pipenetwarnings == 0)
 						log_mapping("expand_pipeline(): further messages about pipenets will be suppressed")
 
