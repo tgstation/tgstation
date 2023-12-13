@@ -28,4 +28,4 @@
 	setup = TRUE
 
 /datum/round_event/summon_wizard_event/start()
-	triggered_event.runEvent()
+	triggered_event.run_event()

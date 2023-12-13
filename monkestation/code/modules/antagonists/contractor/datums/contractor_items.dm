@@ -160,7 +160,7 @@
 		return
 
 	var/datum/round_event_control/event = locate(/datum/round_event_control/communications_blackout) in SSevents.control
-	event.runEvent()
+	event.run_event()
 
 /datum/contractor_item/mod_baton_holster
 	name = "Baton Holster Module"
