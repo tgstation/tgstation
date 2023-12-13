@@ -22,7 +22,7 @@ export const NtosCouponMaster = (props) => {
       <NtosWindow.Content scrollable>
         {!valid_id ? (
           <NoticeBox danger>
-            No bank account detected. Insert a valid ID.
+            No valid bank account detected. Insert a valid ID.
           </NoticeBox>
         ) : (
           <>
