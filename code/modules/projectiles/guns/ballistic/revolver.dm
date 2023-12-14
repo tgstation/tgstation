@@ -245,6 +245,10 @@
 		var/is_target_face = zone == BODY_ZONE_HEAD || zone == BODY_ZONE_PRECISE_EYES || zone == BODY_ZONE_PRECISE_MOUTH
 		var/loaded_rounds = get_ammo(FALSE, FALSE) // check before it is fired
 
+		if(HAS_TRAIT(user, TRAIT_CURSED)) // I cannot live, I cannot die, trapped in myself, body my holding cell.
+			to_chat(user, span_warning("What a horrible night... To have a curse!"))
+			return
+
 		if(loaded_rounds && is_target_face)
 			add_memory_in_range(user, 7, /datum/memory/witnessed_russian_roulette, \
 				protagonist = user, \
@@ -255,9 +259,6 @@
 			)
 
 		if(chambered)
-			if(HAS_TRAIT(user, TRAIT_CURSED)) // I cannot live, I cannot die, trapped in myself, body my holding cell.
-				to_chat(user, span_warning("What a horrible night... To have a curse!"))
-				return
 			var/obj/item/ammo_casing/AC = chambered
 			if(AC.fire_casing(user, user, params, distro = 0, quiet = 0, zone_override = null, spread = 0, fired_from = src))
 				playsound(user, fire_sound, fire_sound_volume, vary_fire_sound)

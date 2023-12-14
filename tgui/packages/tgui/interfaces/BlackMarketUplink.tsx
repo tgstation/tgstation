@@ -1,5 +1,13 @@
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, Modal, Section, Stack, Tabs } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Modal,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -68,7 +76,8 @@ export const BlackMarketUplink = (props) => {
                 act('set_market', {
                   market: market.id,
                 })
-              }>
+              }
+            >
               {market.name}
             </Tabs.Tab>
           ))}
@@ -85,7 +94,8 @@ export const BlackMarketUplink = (props) => {
                     act('set_category', {
                       category: category,
                     })
-                  }>
+                  }
+                >
                   {category}
                 </Tabs.Tab>
               ))}

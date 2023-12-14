@@ -39,7 +39,7 @@
 		return FALSE
 	if(default_unfasten_wrench(user, tool))
 		update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cell_charger/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/stock_parts/cell) && !panel_open)

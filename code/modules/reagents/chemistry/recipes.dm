@@ -46,7 +46,7 @@
 	var/temp_exponent_factor = 2
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
-	/// How much the temperature will change (with no intervention) (i.e. for 30u made the temperature will increase by 100, same with 300u. The final temp will always be start + this value, with the exception con beakers with different specific heats)
+	/// How much the temperature changes per unit of chem used. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
 	var/thermic_constant = 50
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
@@ -182,7 +182,7 @@
 		var/datum/reagent/reagent = holder.has_reagent(id)
 		if(!reagent)
 			return
-		reagent.volume = round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
+		reagent.volume = round((reagent.volume * 0.98), CHEMICAL_QUANTISATION_LEVEL) //Slowly lower yield per tick
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)

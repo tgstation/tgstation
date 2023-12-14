@@ -50,7 +50,6 @@
 	heuristic = get_dist(tile, node_goal)
 	f_value = number_tiles + heuristic
 
-/// TODO: Macro this to reduce proc overhead
 /proc/HeapPathWeightCompare(datum/jps_node/a, datum/jps_node/b)
 	return b.f_value - a.f_value
 

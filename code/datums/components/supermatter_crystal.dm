@@ -212,7 +212,7 @@
 	SIGNAL_HANDLER
 	if(tool_act_callback)
 		tool_act_callback.Invoke(user, tool)
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING
 	attackby_hit(source, tool, user)
 
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)

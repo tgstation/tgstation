@@ -764,13 +764,13 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 //GHOSTS
 //TODO: expand this system to replace the pollCandidates/CheckAntagonist/"choose quickly"/etc Yes/No messages
-/atom/movable/screen/alert/notify_cloning
+/atom/movable/screen/alert/revival
 	name = "Revival"
 	desc = "Someone is trying to revive you. Re-enter your corpse if you want to be revived!"
 	icon_state = "template"
 	timeout = 300
 
-/atom/movable/screen/alert/notify_cloning/Click()
+/atom/movable/screen/alert/revival/Click()
 	. = ..()
 	if(!.)
 		return
@@ -868,6 +868,18 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 	carbon_owner.changeNext_move(CLICK_CD_RESIST)
 	carbon_owner.shoes.handle_tying(carbon_owner)
+
+/atom/movable/screen/alert/unpossess_object
+	name = "Unpossess"
+	desc = "You are possessing an object. Click this alert to unpossess it."
+	icon_state = "buckled"
+
+/atom/movable/screen/alert/unpossess_object/Click()
+	. = ..()
+	if(!.)
+		return
+
+	qdel(owner.GetComponent(/datum/component/object_possession))
 
 // PRIVATE = only edit, use, or override these if you're editing the system as a whole
 

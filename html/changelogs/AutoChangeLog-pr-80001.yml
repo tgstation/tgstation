@@ -1,4 +1,0 @@
-author: "MidoriWroth"
-delete-after: True
-changes:
-  - bugfix: "Icebox chemistry lab shutters are controlled by the button in the chemistry lab and not in the pharmacy again."

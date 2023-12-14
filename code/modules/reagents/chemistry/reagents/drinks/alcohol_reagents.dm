@@ -1342,7 +1342,6 @@
 		var/need_mob_update
 		need_mob_update = drinker.adjustBruteLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
 		need_mob_update += drinker.adjustFireLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
-		need_mob_update += drinker.adjustCloneLoss(-5 * REM * seconds_per_tick, updating_health = FALSE)
 		need_mob_update += drinker.adjustOxyLoss(-4 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
 		need_mob_update += drinker.adjustToxLoss(-3 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 		if(need_mob_update)

@@ -59,7 +59,8 @@ export const LanguageMenu = (props) => {
                       </>
                     )}
                   </>
-                }>
+                }
+              >
                 {language.desc} Key: ,{language.key}{' '}
                 {language.can_understand
                   ? 'Can understand.'
@@ -78,7 +79,8 @@ export const LanguageMenu = (props) => {
                 selected={omnitongue}
                 onClick={() => act('toggle_omnitongue')}
               />
-            }>
+            }
+          >
             <LabeledList>
               {unknown_languages.map((language) => (
                 <LabeledList.Item
@@ -93,7 +95,8 @@ export const LanguageMenu = (props) => {
                         })
                       }
                     />
-                  }>
+                  }
+                >
                   {language.desc} Key: ,{language.key}{' '}
                   {!!language.shadow && '(gained from mob)'}{' '}
                   {language.can_speak ? 'Can speak.' : 'Cannot speak.'}
