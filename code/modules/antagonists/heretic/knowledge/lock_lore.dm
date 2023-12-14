@@ -199,8 +199,7 @@
 	for(var/mob/living/carbon/human/body in atoms)
 		if(body.stat != DEAD)
 			continue
-		var/obj/item/bodypart/chest = body.get_bodypart(BODY_ZONE_CHEST)
-		if(LAZYLEN(chest.get_organs()))
+		if(LAZYLEN(body.get_organs_for_zone(BODY_ZONE_CHEST)))
 			to_chat(user, span_hierophant_warning("[body] has organs in their chest."))
 			continue
 

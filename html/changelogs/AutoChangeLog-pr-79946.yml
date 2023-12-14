@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Disease outbreak: classic spawned from the admin secrets panel no longer fails to start"
-  - bugfix: "Disease outbreak provides a message about why it fails to start"

@@ -5,16 +5,26 @@
  */
 
 import { useLocalState } from '../backend';
-import { Box, DraggableControl, Icon, Input, Knob, LabeledList, NumberInput, Section, Slider } from '../components';
+import {
+  Box,
+  DraggableControl,
+  Icon,
+  Input,
+  Knob,
+  LabeledList,
+  NumberInput,
+  Section,
+  Slider,
+} from '../components';
 
 export const meta = {
   title: 'Input',
   render: () => <Story />,
 };
 
-const Story = (props, context) => {
-  const [number, setNumber] = useLocalState(context, 'number', 0);
-  const [text, setText] = useLocalState(context, 'text', 'Sample text');
+const Story = (props) => {
+  const [number, setNumber] = useLocalState('number', 0);
+  const [text, setText] = useLocalState('text', 'Sample text');
   return (
     <Section>
       <LabeledList>
@@ -91,7 +101,8 @@ const Story = (props, context) => {
               dragMatrix={[0, -1]}
               step={1}
               stepPixelSize={5}
-              onDrag={(e, value) => setNumber(value)}>
+              onDrag={(e, value) => setNumber(value)}
+            >
               {(control) => (
                 <Box onMouseDown={control.handleDragStart}>
                   <Icon

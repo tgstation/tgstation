@@ -180,12 +180,6 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	icon = 'icons/mob/nonhuman-player/alien.dmi'
 	icon_state = "claw"
 
-/obj/item/weed_extract
-	name = "weed extract"
-	desc = "A piece of slimy, purplish weed."
-	icon = 'icons/mob/nonhuman-player/alien.dmi'
-	icon_state = "weed_extract"
-
 /*
  * Leather SHeet
  */

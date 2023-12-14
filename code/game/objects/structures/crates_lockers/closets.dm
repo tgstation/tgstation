@@ -74,6 +74,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/secure = FALSE
 	var/can_install_electronics = TRUE
 
+	var/is_maploaded = FALSE
+
 	var/contents_initialized = FALSE
 	/// is this closet locked by an exclusive id, i.e. your own personal locker
 	var/datum/weakref/id_card = null
@@ -83,6 +85,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/card_reader_installed = FALSE
 	/// access types for card reader
 	var/list/access_choices = TRUE
+
+	/// Whether this closet is sealed or not. If sealed, it'll have its own internal air
+	var/sealed = FALSE
+
+	/// Internal gas for this closet.
+	var/datum/gas_mixture/internal_air
+	/// Volume of the internal air
+	var/air_volume = TANK_STANDARD_VOLUME * 3
 
 /datum/armor/structure_closet
 	melee = 20
@@ -129,8 +139,9 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		add_to_roundstart_list()
 
 	// if closed, any item at the crate's loc is put in the contents
-	if (mapload && !opened)
-		. = INITIALIZE_HINT_LATELOAD
+	if (mapload)
+		is_maploaded = TRUE
+	. = INITIALIZE_HINT_LATELOAD
 
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
@@ -148,8 +159,22 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
-	if(!opened)
+	if(!opened && is_maploaded)
 		take_contents()
+
+	if(sealed)
+		var/datum/gas_mixture/external_air = loc.return_air()
+		if(external_air && is_maploaded)
+			internal_air = external_air.copy()
+		else
+			internal_air = new()
+		START_PROCESSING(SSobj, src)
+
+/obj/structure/closet/return_air()
+	if(sealed)
+		return internal_air
+	else
+		return ..()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -162,9 +187,24 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/Destroy()
 	id_card = null
+	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
 	GLOB.roundstart_station_closets -= src
 	return ..()
+
+/obj/structure/closet/process(seconds_per_tick)
+	if(!sealed)
+		return PROCESS_KILL
+	process_internal_air(seconds_per_tick)
+
+/obj/structure/closet/proc/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		if(current_exposed_air.equalize(internal_air))
+			var/turf/location = get_turf(src)
+			location.air_update_turf()
 
 /obj/structure/closet/update_appearance(updates=ALL)
 	. = ..()
@@ -536,7 +576,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return open(user)
 
 /obj/structure/closet/deconstruct(disassembled = TRUE)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		if(ispath(material_drop) && material_drop_amount)
 			new material_drop(loc, material_drop_amount)
 		if (secure)
@@ -553,7 +593,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		bust_open()
 
 /obj/structure/closet/CheckParts(list/parts_list)

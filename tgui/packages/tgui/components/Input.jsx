@@ -6,7 +6,7 @@
 
 import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
 import { classes } from 'common/react';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { Box } from './Box';
 
 // prettier-ignore
@@ -17,8 +17,8 @@ export const toInputValue = value => (
 );
 
 export class Input extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.inputRef = createRef();
     this.state = {
       editing: false,
@@ -138,7 +138,8 @@ export class Input extends Component {
           monospace && 'Input--monospace',
           className,
         ])}
-        {...rest}>
+        {...rest}
+      >
         <div className="Input__baseline">.</div>
         <input
           ref={this.inputRef}

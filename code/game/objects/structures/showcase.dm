@@ -147,7 +147,7 @@
 		to_chat(user, span_notice("You unscrew the screws."))
 		tool.play_tool_sound(src, 100)
 		deconstruction_state = SHOWCASE_SCREWDRIVERED
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/showcase/crowbar_act(mob/living/user, obj/item/tool)
 	if(!tool.use_tool(src, user, 2 SECONDS, volume=100))
@@ -155,13 +155,13 @@
 	to_chat(user, span_notice("You start to crowbar the showcase apart..."))
 	new /obj/item/stack/sheet/iron(drop_location(), 4)
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/showcase/wrench_act(mob/living/user, obj/item/tool)
 	if(deconstruction_state != SHOWCASE_CONSTRUCTED)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 //Feedback is given in examine because showcases can basically have any sprite assigned to them
 

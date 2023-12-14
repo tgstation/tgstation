@@ -1,0 +1,94 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/abductor,
+/area/virtual_domain/safehouse)
+"b" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/plating/abductor,
+/area/virtual_domain/safehouse)
+"d" = (
+/obj/modular_map_connector,
+/turf/open/floor/plating/abductor,
+/area/virtual_domain/safehouse)
+"n" = (
+/turf/open/floor/plating/abductor,
+/area/virtual_domain/safehouse)
+"o" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/floor/plating/abductor2,
+/area/virtual_domain/safehouse)
+"t" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/plating/abductor2,
+/area/virtual_domain/safehouse)
+"u" = (
+/obj/machinery/abductor/console,
+/turf/open/floor/plating/abductor,
+/area/virtual_domain/safehouse)
+"v" = (
+/obj/machinery/door/airlock/abductor,
+/turf/open/floor/plating/abductor,
+/area/virtual_domain/safehouse)
+"E" = (
+/obj/machinery/abductor/pad{
+	desc = "A funky looking disc, built into the floor."
+	},
+/turf/open/floor/plating/abductor,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+n
+a
+a
+a
+a
+d
+"}
+(2,1,1) = {"
+a
+E
+t
+t
+b
+a
+"}
+(3,1,1) = {"
+a
+n
+n
+n
+n
+a
+"}
+(4,1,1) = {"
+v
+n
+n
+n
+n
+v
+"}
+(5,1,1) = {"
+a
+n
+n
+n
+n
+a
+"}
+(6,1,1) = {"
+a
+u
+o
+o
+n
+a
+"}
+(7,1,1) = {"
+n
+a
+a
+a
+a
+n
+"}

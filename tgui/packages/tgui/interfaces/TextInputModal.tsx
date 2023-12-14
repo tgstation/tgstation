@@ -1,9 +1,10 @@
 import { Loader } from './common/Loader';
 import { InputButtons } from './common/InputButtons';
-import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { useBackend } from '../backend';
 import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
+import { KEY } from 'common/keys';
 
 type TextInputData = {
   large_buttons: boolean;
@@ -23,22 +24,19 @@ export const removeAllSkiplines = (toSanitize: string) => {
   return toSanitize.replace(/[\r\n]+/, '');
 };
 
-export const TextInputModal = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
+export const TextInputModal = (props) => {
+  const { act, data } = useBackend<TextInputData>();
   const {
     large_buttons,
     max_length,
     message = '',
     multiline,
-    placeholder,
+    placeholder = '',
     timeout,
     title,
   } = data;
-  const [input, setInput] = useLocalState<string>(
-    context,
-    'input',
-    placeholder || ''
-  );
+
+  const [input, setInput] = useState(placeholder || '');
   const onType = (value: string) => {
     if (value === input) {
       return;
@@ -62,14 +60,17 @@ export const TextInputModal = (props, context) => {
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
-          const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_ENTER && (!visualMultiline || !event.shiftKey)) {
+          if (
+            event.key === KEY.Enter &&
+            (!visualMultiline || !event.shiftKey)
+          ) {
             act('submit', { entry: input });
           }
-          if (keyCode === KEY_ESCAPE) {
+          if (event.key === KEY.Escape) {
             act('cancel');
           }
-        }}>
+        }}
+      >
         <Section fill>
           <Stack fill vertical>
             <Stack.Item>
@@ -92,8 +93,11 @@ export const TextInputModal = (props, context) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props, context) => {
-  const { act, data } = useBackend<TextInputData>(context);
+const InputArea = (props: {
+  input: string;
+  onType: (value: string) => void;
+}) => {
+  const { act, data } = useBackend<TextInputData>();
   const { max_length, multiline } = data;
   const { input, onType } = props;
 
@@ -113,7 +117,7 @@ const InputArea = (props, context) => {
         event.preventDefault();
         act('submit', { entry: input });
       }}
-      onInput={(_, value) => onType(value)}
+      onChange={(_, value) => onType(value)}
       placeholder="Type something..."
       value={input}
     />

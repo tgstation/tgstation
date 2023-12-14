@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - code_imp: "Made ARDS death check respect maxHealth."

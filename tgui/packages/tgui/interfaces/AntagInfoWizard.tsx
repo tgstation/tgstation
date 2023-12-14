@@ -2,7 +2,11 @@ import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Box, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective, ReplaceObjectivesButton } from './common/Objectives';
+import {
+  ObjectivePrintout,
+  Objective,
+  ReplaceObjectivesButton,
+} from './common/Objectives';
 
 const teleportstyle = {
   color: 'yellow',
@@ -48,8 +52,8 @@ type Info = {
   can_change_objective: BooleanLike;
 };
 
-export const AntagInfoWizard = (props, context) => {
-  const { data, act } = useBackend<Info>(context);
+export const AntagInfoWizard = (props) => {
+  const { data, act } = useBackend<Info>();
   const { ritual, objectives, can_change_objective } = data;
 
   return (
@@ -152,7 +156,7 @@ export const AntagInfoWizard = (props, context) => {
   );
 };
 
-const RitualPrintout = (props: { ritual: GrandRitual }, context) => {
+const RitualPrintout = (props: { ritual: GrandRitual }) => {
   const { ritual } = props;
   if (!ritual.next_area) {
     return null;

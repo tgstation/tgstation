@@ -440,6 +440,7 @@
 	extra_access = list(
 		ACCESS_PSYCHOLOGY,
 		ACCESS_PHARMACY,
+		ACCESS_VIROLOGY,
 	)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -695,7 +696,6 @@
 	sechud_icon_state = SECHUD_MEDICAL_DOCTOR
 	extra_access = list(
 		ACCESS_PLUMBING,
-		ACCESS_VIROLOGY,
 		)
 	minimal_access = list(
 		ACCESS_MECH_MEDICAL,
@@ -704,6 +704,7 @@
 		ACCESS_MORGUE,
 		ACCESS_PHARMACY,
 		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -754,6 +755,7 @@
 		)
 	extra_access = list(
 		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -775,6 +777,7 @@
 		ACCESS_HOS,
 		)
 	job = /datum/job/prisoner
+	threat_modifier = 1 // I'm watching you
 
 /datum/id_trim/job/prisoner/one
 	trim_state = "trim_prisoner_1"
@@ -1167,6 +1170,7 @@
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_VIROLOGY,
+		ACCESS_PHARMACY,
 		)
 	extra_access = list(
 		ACCESS_PLUMBING,

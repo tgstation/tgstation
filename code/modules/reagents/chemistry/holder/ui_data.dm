@@ -261,7 +261,6 @@
 	data["bitflags"]["BURN"] = REACTION_TAG_BURN
 	data["bitflags"]["TOXIN"] = REACTION_TAG_TOXIN
 	data["bitflags"]["OXY"] = REACTION_TAG_OXY
-	data["bitflags"]["CLONE"] = REACTION_TAG_CLONE
 	data["bitflags"]["HEALING"] = REACTION_TAG_HEALING
 	data["bitflags"]["DAMAGING"] = REACTION_TAG_DAMAGING
 	data["bitflags"]["EXPLOSIVE"] = REACTION_TAG_EXPLOSIVE
@@ -356,9 +355,6 @@
 			return TRUE
 		if("toggle_tag_oxy")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_OXY
-			return TRUE
-		if("toggle_tag_clone")
-			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_CLONE
 			return TRUE
 		if("toggle_tag_healing")
 			ui_tags_selected = ui_tags_selected ^ REACTION_TAG_HEALING

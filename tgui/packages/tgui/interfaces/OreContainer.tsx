@@ -1,5 +1,6 @@
 import { createSearch, toTitleCase } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import { Box, Button, Input, Stack, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
@@ -19,13 +20,14 @@ type Data = {
   ore_images: Ore_images[];
 };
 
-export const OreContainer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const OreContainer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { ores = [] } = data;
-  const [searchItem, setSearchItem] = useLocalState(context, 'searchItem', '');
+  const [searchItem, setSearchItem] = useState('');
   const search = createSearch(searchItem, (ore: Ores) => ore.name);
   const ores_filtered =
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
+
   return (
     <Window title="Ore Container" width={550} height={400}>
       <Window.Content>
@@ -84,8 +86,8 @@ export const OreContainer = (props, context) => {
   );
 };
 
-const RetrieveIcon = (props, context) => {
-  const { data } = useBackend<Data>(context);
+const RetrieveIcon = (props) => {
+  const { data } = useBackend<Data>();
   const { ore_images = [] } = data;
   const { ore } = props;
 
@@ -103,8 +105,7 @@ const RetrieveIcon = (props, context) => {
       height="64px"
       width="64px"
       style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'vertical-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   );

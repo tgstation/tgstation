@@ -692,7 +692,7 @@
 
 //garbage trucks
 /area/ruin/space/has_grav/garbagetruck
-	name = "decommissioned garbage truck"
+	name = "Decommissioned Garbage Truck"
 	sound_environment = SOUND_AREA_SMALL_ENCLOSED
 	ambience_index = AMBIENCE_MAINT
 /area/ruin/space/has_grav/garbagetruck/foodwaste

@@ -1,7 +1,7 @@
 /obj/item/desynchronizer
 	name = "desynchronizer"
 	desc = "An experimental device that can temporarily desynchronize the user from spacetime, effectively making them disappear while it's active."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "desynchronizer"
 	inhand_icon_state = "electronic"
 	w_class = WEIGHT_CLASS_SMALL

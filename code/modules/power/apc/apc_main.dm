@@ -295,7 +295,7 @@
 			. += "The cover is closed."
 
 /obj/machinery/power/apc/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(!(machine_stat & BROKEN))
 		set_broken()

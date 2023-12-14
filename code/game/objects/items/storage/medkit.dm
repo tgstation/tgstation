@@ -259,7 +259,7 @@
 	icon_state = "medkit_advanced"
 	inhand_icon_state = "medkit-rad"
 	custom_premium_price = PAYCHECK_COMMAND * 6
-	damagetype_healed = "all"
+	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/advanced/PopulateContents()
 	if(empty)
@@ -276,7 +276,7 @@
 	desc = "I hope you've got insurance."
 	icon_state = "medkit_tactical"
 	inhand_icon_state = "medkit-tactical"
-	damagetype_healed = "all"
+	damagetype_healed = HEAL_ALL_DAMAGE
 
 /obj/item/storage/medkit/tactical/Initialize(mapload)
 	. = ..()

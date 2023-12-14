@@ -1,8 +1,21 @@
 import { filter, uniqBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, Dropdown, LabeledList, Stack } from '../../components';
-import { CHROMOSOME_NEVER, CHROMOSOME_NONE, CHROMOSOME_USED, MUT_COLORS, MUT_EXTRA } from './constants';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  LabeledList,
+  Stack,
+} from '../../components';
+import {
+  CHROMOSOME_NEVER,
+  CHROMOSOME_NONE,
+  CHROMOSOME_USED,
+  MUT_COLORS,
+  MUT_EXTRA,
+} from './constants';
 
 /**
  * The following predicate tests if two mutations are functionally
@@ -13,9 +26,9 @@ const isSameMutation = (a, b) => {
   return a.Alias === b.Alias && a.AppliedChromo === b.AppliedChromo;
 };
 
-const ChromosomeInfo = (props, context) => {
+const ChromosomeInfo = (props) => {
   const { mutation, disabled } = props;
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend();
   if (mutation.CanChromo === CHROMOSOME_NEVER) {
     return <Box color="label">No compatible chromosomes</Box>;
   }
@@ -55,9 +68,9 @@ const ChromosomeInfo = (props, context) => {
   return null;
 };
 
-const MutationCombiner = (props, context) => {
+const MutationCombiner = (props) => {
   const { mutations = [], source } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
 
   const brefFromName = (name) => {
     return mutations.find((mutation) => mutation.Name === name)?.ByondRef;
@@ -80,9 +93,9 @@ const MutationCombiner = (props, context) => {
   );
 };
 
-export const MutationInfo = (props, context) => {
+export const MutationInfo = (props) => {
   const { mutation } = props;
-  const { data, act } = useBackend(context);
+  const { data, act } = useBackend();
   const {
     diskCapacity,
     diskReadOnly,
@@ -105,7 +118,7 @@ export const MutationInfo = (props, context) => {
     );
   }
   const savedToConsole = mutationStorage.find((x) =>
-    isSameMutation(x, mutation)
+    isSameMutation(x, mutation),
   );
   const savedToDisk = diskMutations.find((x) => isSameMutation(x, mutation));
   const combinedMutations = flow([
@@ -171,7 +184,8 @@ export const MutationInfo = (props, context) => {
                           is_activator: 1,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       Print Activator
                     </Button>
                   </Stack.Item>
@@ -185,7 +199,8 @@ export const MutationInfo = (props, context) => {
                           is_activator: 0,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       Print Mutator
                     </Button>
                   </Stack.Item>
@@ -198,7 +213,8 @@ export const MutationInfo = (props, context) => {
                           mutref: mutation.ByondRef,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       CRISPR [{crisprCharges}]
                     </Button>
                   </Stack.Item>
