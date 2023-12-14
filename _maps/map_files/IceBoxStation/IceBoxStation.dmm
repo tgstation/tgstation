@@ -23138,13 +23138,15 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/fore)
 "huZ" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
-/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
-	dir = 8
+/obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
+/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
+	dir = 4
 	},
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/floor/plating,
-/area/station/engineering/atmos)
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1{
+	dir = 10
+	},
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "hvl" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/spawner/random/entertainment/arcade,
@@ -28282,11 +28284,11 @@
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "jdA" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Mix to Turbine"
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1{
+	dir = 10
 	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
+/turf/open/floor/plating/snowed/icemoon,
+/area/icemoon/surface/outdoors/nospawn)
 "jdB" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/anticorner/contrasted{
@@ -30032,10 +30034,13 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
 "jJH" = (
-/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1,
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
+	dir = 8
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/station/engineering/atmos)
 "jJM" = (
 /turf/open/floor/glass,
 /area/station/security/lockers)
@@ -31572,8 +31577,9 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "khf" = (
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
-	dir = 5
+/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/dark{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -52278,15 +52284,11 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "qMM" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/orange/visible,
-/obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
-	dir = 4
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+	dir = 5
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1{
-	dir = 10
-	},
-/turf/open/floor/plating/snowed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "qMN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line{
@@ -59217,9 +59219,8 @@
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "sYZ" = (
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1{
-	dir = 10
-	},
+/obj/machinery/atmospherics/pipe/smart/simple/orange/visible,
+/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer1,
 /turf/open/floor/plating/snowed/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
 "sZa" = (
@@ -62039,9 +62040,8 @@
 /turf/open/floor/plating/snowed/coldroom,
 /area/station/service/kitchen/coldroom)
 "tWI" = (
-/obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
-/obj/machinery/atmospherics/pipe/layer_manifold/dark{
-	dir = 8
+/obj/machinery/atmospherics/components/binary/pump{
+	name = "Mix to Turbine"
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -64285,14 +64285,10 @@
 /turf/open/floor/iron/dark,
 /area/station/security/execution/education)
 "uID" = (
-/obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/trinary/mixer{
-	dir = 1;
-	name = "plasma mixer"
-	},
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "uII" = (
@@ -240435,8 +240431,8 @@ lxU
 fcN
 fcN
 nBG
-jdA
-khf
+tWI
+qMM
 rBQ
 ssh
 skx
@@ -240693,7 +240689,7 @@ jBR
 fnA
 hHN
 lRR
-tWI
+khf
 shj
 qnO
 lxu
@@ -241715,11 +241711,11 @@ eMr
 cnq
 nVe
 xMh
-huZ
+jJH
 cnq
 nVe
 cnq
-huZ
+jJH
 cnq
 klr
 jYH
@@ -241978,8 +241974,8 @@ rwB
 swu
 mkG
 swu
-qMM
-jJH
+huZ
+sYZ
 lOI
 pGQ
 wgG
@@ -242751,7 +242747,7 @@ aOX
 aRj
 aOX
 qwF
-sYZ
+jdA
 vuu
 xvj
 rCW
