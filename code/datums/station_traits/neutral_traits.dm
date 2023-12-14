@@ -361,7 +361,7 @@
 	for(var/obj/item/item as anything in living_mob.get_equipped_items(include_accessories = TRUE))
 		if(living_mob.is_holding(item)) //We don't care of held items.
 			continue
-		item.add_atom_colour(get_new_color(), WASHABLE_COLOUR_PRIORITY)
+		item.add_atom_colour(get_new_color(), FIXED_COLOUR_PRIORITY)
 		slot_flags_to_update |= item.slot_flags
 	living_mob.update_clothing(slot_flags_to_update)
 
@@ -369,23 +369,23 @@
 	SHOULD_CALL_PARENT(FALSE)
 
 /datum/station_trait/outfit_color/rotated
-	weight = 1
+	weight = 2
 	report_message = "So ugh, before the shift we tried a new experimental slime jelly and plasma-infused laundry capsule, and..."
-	var/rotation = 120
+	var/rotation = 70
+
+/datum/station_trait/outfit_color/rotated/New()
+	. = ..()
+	rotation = pick(70, 290)
 
 /datum/station_trait/outfit_color/rotated/get_new_color()
 	return color_matrix_rotate_hue(rotation)
 
 /datum/station_trait/outfit_color/random
-	weight = 1
-	report_message = "So ugh, a clown pulled a prank on us and dyed your outfits of random colors at the last minute..."
+	weight = 2
+	report_message = "So ugh, before the shift some clown dumped a bunch of dyes into the laundry, and..."
 
 /datum/station_trait/outfit_color/random/get_new_color()
 	return RANDOM_COLOUR
-
-/datum/station_trait/outfit_color/rotated/New()
-	. = ..()
-	rotation = pick(120, 240)
 
 /// Tells the area map generator to ADD MORE TREEEES
 /datum/station_trait/forested
