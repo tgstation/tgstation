@@ -7,12 +7,17 @@
 	var/outfit_weight = 0
 
 
+/datum/outfit/job/assistant/gimmick/give_jumpsuit(mob/living/carbon/human/target)
+	return //dont do colorized and stuff, it messes with our uniforms
+
 /datum/outfit/job/assistant/gimmick/bee
 	name = "Gimmick Assistant - Bee"
 	suit = /obj/item/clothing/suit/hooded/bee_costume
+	uniform = /obj/item/clothing/under/color/yellow
+
 	l_pocket = /obj/item/coupon/bee
 
-	outfit_weight = 5
+	outfit_weight = 2
 
 /obj/item/coupon/bee
 	name = "coupon - 70% off Beekeeping Starter Crate"
@@ -28,19 +33,20 @@
 
 	l_hand = /obj/item/storage/fancy/egg_box/fertile
 
-	outfit_weight = 3
+	outfit_weight = 2
 
 /datum/outfit/job/assistant/gimmick/cyborg
 	name = "Gimmick Assistant - Cardborg"
 	suit = /obj/item/clothing/suit/costume/cardborg
 	head = /obj/item/clothing/head/costume/cardborg
+	uniform = /obj/item/clothing/under/color/black
 
 	r_hand = /obj/item/weldingtool/largetank
 	l_hand = /obj/item/stack/cable_coil/five
 
 	uniform = /obj/item/clothing/under/color/black
 
-	outfit_weight = 3
+	outfit_weight = 2
 
 /datum/outfit/job/assistant/gimmick/cyborg/post_equip(mob/living/carbon/human/equipped, visualsOnly)
 	. = ..()
@@ -56,7 +62,7 @@
 
 	uniform = /obj/item/clothing/under/color/orange
 
-	outfit_weight = 10
+	outfit_weight = 6
 
 /datum/outfit/job/assistant/gimmick/rollerskater
 	name = "Gimmick Assistant - Rollerskater"
@@ -67,14 +73,16 @@
 
 	uniform = /obj/item/clothing/under/color/darkblue
 
-	outfit_weight = 10
+	outfit_weight = 6
 
 /datum/outfit/job/assistant/gimmick/fisher
 	name = "Gimmick Assistant - Fisher"
 	suit = /obj/item/clothing/suit/jacket/puffer/vest
+	uniform = /obj/item/clothing/under/color/blue
+
 	r_hand = /obj/item/storage/toolbox/fishing
 
-	outfit_weight = 5
+	outfit_weight = 3
 
 /datum/outfit/job/assistant/gimmick/patient
 	name = "Gimmick Assistant - Patient"
@@ -90,6 +98,7 @@
 /datum/outfit/job/assistant/gimmick/mopper
 	name = "Gimmick Assistant - Mopper"
 	suit = /obj/item/clothing/suit/caution
+	uniform = /obj/item/clothing/under/color/lightpurple
 
 	l_hand = /obj/item/mop
 
@@ -107,6 +116,7 @@
 /datum/outfit/job/assistant/gimmick/broomer
 	name = "Gimmick Assistant - Broomer"
 	suit = /obj/item/clothing/suit/caution
+	uniform = /obj/item/clothing/under/color/lightpurple
 
 	l_hand = /obj/item/pushbroom
 	r_hand = /obj/item/storage/bag/trash
@@ -117,10 +127,11 @@
 	name = "Gimmick Assistant = Hall Monitor"
 	head = /obj/item/clothing/head/collectable/police
 	mask = /obj/item/clothing/mask/whistle
+	uniform = /obj/item/clothing/under/color/red
 
 	neck = /obj/item/camera
 
-	outfit_weight = 3
+	outfit_weight = 2
 
 /datum/outfit/job/assistant/gimmick/monkey
 	name = "Gimmick Assistant - Monkey"
@@ -129,10 +140,10 @@
 	l_pocket = /obj/item/food/monkeycube
 	r_pocket = /obj/item/food/monkeycube
 
-	outfit_weight = 5
+	outfit_weight = 1
 
 /datum/outfit/job/assistant/gimmick/flesh
-	name = "Gimmick Assistant - FLeshy"
+	name = "Gimmick Assistant - Fleshy"
 	suit = /obj/item/clothing/suit/hooded/bloated_human
 	r_hand = /obj/item/toy/foamblade
 
@@ -149,17 +160,50 @@
 
 /datum/outfit/job/assistant/gimmick/handyman
 	name = "Gimmick Assistant - Handyman"
+
 	suit = /obj/item/clothing/suit/hazardvest
 	belt = /obj/item/storage/belt/utility/full
 	head = /obj/item/clothing/head/utility/hardhat
+	uniform = /obj/item/clothing/under/color/yellow
 
-	outfit_weight = 8
+	outfit_weight = 6
 
 /datum/outfit/job/assistant/gimmick/magician
 	name = "Gimmick Assistant - Magician"
 
 	head = /obj/item/clothing/head/hats/tophat
+	uniform = /obj/item/clothing/under/color/lightpurple
+
 	l_hand = /obj/item/gun/magic/wand/nothing
 
 	outfit_weight = 2
 
+/datum/outfit/job/assistant/gimmick/firefighter
+	name = "Gimmick Assistant - Firefighter"
+
+	head = /obj/item/clothing/head/utility/hardhat/red
+	suit = /obj/item/clothing/suit/hazardvest
+	uniform = /obj/item/clothing/under/color/red
+
+	l_pocket = /obj/item/stack/medical/ointment
+	r_pocket = /obj/item/extinguisher/mini
+
+	outfit_weight = 3
+
+/datum/outfit/job/assistant/gimmick/gardener
+	name = "Gimmick Assistant - Gardener"
+	uniform = /obj/item/clothing/under/color/green
+	skillchips = list(/obj/item/skillchip/bonsai)
+
+	l_pocket = /obj/item/knife/plastic
+	l_hand = /obj/item/kirbyplants/random
+
+	outfit_weight = 3
+
+/datum/outfit/job/assistant/gimmick/artist
+	name = "Gimmick Assistant - Artist"
+	uniform = /obj/item/clothing/under/color/rainbow
+
+	backpack_contents = list(/obj/item/storage/crayons)
+
+	outfit_weight = 3

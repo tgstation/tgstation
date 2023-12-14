@@ -427,6 +427,7 @@
 	weight = 3
 	trait_to_give = STATION_TRAIT_ASSISTANT_GIMMICKS
 	show_in_report = TRUE
+	blacklist = list(/datum/station_trait/colored_assistants)
 
 #undef PARTY_COOLDOWN_LENGTH_MIN
 #undef PARTY_COOLDOWN_LENGTH_MAX
