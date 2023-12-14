@@ -26,6 +26,7 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
+		BB_RESISTING = FALSE,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
@@ -91,7 +92,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/able_to_run()
 	var/mob/living/living_pawn = pawn
 
-	if(IS_DEAD_OR_INCAP(living_pawn))
+	if(living_pawn.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB | IGNORE_STASIS) || living_pawn.stat > CONSCIOUS)
 		return FALSE
 	return ..()
 

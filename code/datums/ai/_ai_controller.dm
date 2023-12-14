@@ -171,6 +171,15 @@ multiple modular subtrees with behaviors
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
+
+	var/mob/living/living_pawn = src.pawn
+
+	if(!length(living_pawn.do_afters))
+		living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, FALSE)
+
+	if(living_pawn.ai_controller.blackboard[BB_RESISTING])
+		return
+
 	if(!able_to_run())
 		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
