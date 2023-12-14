@@ -1,5 +1,5 @@
 import { toFixed } from 'common/math';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Button,
   Flex,
@@ -10,6 +10,7 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
+import { useState } from 'react';
 
 const TAB2NAME = [
   {
@@ -631,8 +632,9 @@ const FunForYouTab = (props) => {
 export const Secrets = (props) => {
   const { act, data } = useBackend();
   const { is_debugger, is_funmin } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 2);
+  const [tabIndex, setTabIndex] = useState(2);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
+
   return (
     <Window title="Secrets Panel" width={500} height={488} theme="admin">
       <Window.Content>

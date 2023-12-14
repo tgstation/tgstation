@@ -933,7 +933,7 @@ class PresetsPage extends Component {
                 width="100%"
                 backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
                 onClick={() => setSelectedPreset(preset.id)}
-                onDblClick={() => this.loadDataFromPreset(preset.id)}
+                onDoubleClick={() => this.loadDataFromPreset(preset.id)}
                 content={preset.title}
                 style={
                   presetIndex === preset.id

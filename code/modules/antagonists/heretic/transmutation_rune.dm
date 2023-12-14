@@ -80,6 +80,10 @@
 	for(var/atom/close_atom as anything in range(1, src))
 		if(!ismovable(close_atom))
 			continue
+		if(isitem(close_atom))
+			var/obj/item/close_item = close_atom
+			if(close_item.item_flags & ABSTRACT) //woops sacrificed your own head
+				continue
 		if(close_atom.invisibility)
 			continue
 		if(close_atom == user)

@@ -1,10 +1,10 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { ReactNode } from 'react';
-import { useSharedState } from '../../backend';
 import { Stack, Section, Icon, Dimmer } from '../../components';
 import { Design, MaterialMap } from './Types';
 import { SearchBar } from './SearchBar';
+import { useSharedState } from '../../backend';
 
 /**
  * A function that does nothing.

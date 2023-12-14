@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Pyrosium oxygen reaction now heats the holder and causes reactions inside it. Also correctly sets the holder temperature to 20 kelvin & causes reactions when first made"

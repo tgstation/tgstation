@@ -41,7 +41,7 @@
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are DONE listening to orders
-	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+	if(QDELETED(bot_pawn) || bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	return ..()
 
@@ -51,7 +51,7 @@
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
 
-	if(LAZYLEN(bot_pawn.do_afters))
+	if(QDELETED(bot_pawn) || LAZYLEN(bot_pawn.do_afters))
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
@@ -77,15 +77,14 @@
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
 		if(LAZYACCESS(ignore_list, found_item))
-			found -= found_item
-	if(length(found))
-		return pick(found)
+			continue
+		return found_item
 
 /datum/ai_planning_subtree/acid_spray
 
 /datum/ai_planning_subtree/acid_spray/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
-	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(QDELETED(bot_pawn) || !(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	if(controller.reachable_key(BB_ACID_SPRAY_TARGET, BOT_CLEAN_PATH_LIMIT))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)
@@ -150,7 +149,7 @@
 
 /datum/ai_planning_subtree/use_mob_ability/foam_area/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(QDELETED(bot_pawn) || !(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	return ..()
 

@@ -6,7 +6,7 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useSharedState, useLocalState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
 import {
@@ -23,6 +23,7 @@ import {
 } from '../components';
 import { marked } from 'marked';
 import { sanitizeText } from '../sanitize';
+import { useState } from 'react';
 
 const CENSOR_MESSAGE =
   'This channel has been deemed as threatening to \
@@ -36,6 +37,7 @@ export const Newscaster = (props) => {
     'tab_main',
     NEWSCASTER_SCREEN,
   );
+
   return (
     <>
       <NewscasterChannelCreation />
@@ -72,11 +74,12 @@ export const Newscaster = (props) => {
 /** The modal menu that contains the prompts to making new channels. */
 const NewscasterChannelCreation = (props) => {
   const { act, data } = useBackend();
-  const [lockedmode, setLockedmode] = useLocalState('lockedmode', 1);
+  const [lockedmode, setLockedmode] = useState(true);
   const { creating_channel, name, desc } = data;
   if (!creating_channel) {
     return null;
   }
+
   return (
     <Modal textAlign="center" mr={1.5}>
       <Stack vertical>

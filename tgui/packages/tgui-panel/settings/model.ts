@@ -3,7 +3,7 @@
  */
 import { createUuid } from 'common/uuid';
 
-export const createHighlightSetting = (obj) => ({
+export const createHighlightSetting = (obj?: Record<string, any>) => ({
   id: createUuid(),
   highlightText: '',
   highlightColor: '#ffdd44',
@@ -13,7 +13,7 @@ export const createHighlightSetting = (obj) => ({
   ...obj,
 });
 
-export const createDefaultHighlightSetting = (obj) =>
+export const createDefaultHighlightSetting = (obj?: Record<string, any>) =>
   createHighlightSetting({
     id: 'default',
     ...obj,

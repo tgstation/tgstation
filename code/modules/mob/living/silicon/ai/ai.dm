@@ -606,7 +606,7 @@
 	var/summon_success
 	if(isbasicbot(bot))
 		var/mob/living/basic/bot/basic_bot = bot
-		summon_success = basic_bot.summon_bot(src, grant_all_access = TRUE)
+		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
 	else
 		var/mob/living/simple_animal/bot/simple_bot = bot
 		call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
