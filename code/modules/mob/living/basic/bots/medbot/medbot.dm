@@ -254,12 +254,6 @@
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
-/mob/living/basic/bot/medbot/explode()
-	var/atom/our_loc = drop_location()
-	drop_part(medkit_type, our_loc)
-	drop_part(health_analyzer, our_loc)
-	return ..()
-
 /mob/living/basic/bot/medbot/examine()
 	. = ..()
 	if(!(medical_mode_flags & MEDBOT_TIPPED_MODE))

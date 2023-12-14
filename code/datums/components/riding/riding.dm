@@ -26,8 +26,6 @@
 	var/list/directional_vehicle_layers = list()
 	/// same as above but instead of layer you have a list(px, py)
 	var/list/directional_vehicle_offsets = list()
-	/// planes of the rider
-	var/list/directional_rider_planes = list()
 	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
 	var/list/allowed_turf_typecache
 	/// allow typecache for only certain turfs, forbid to allow all but those. allow only certain turfs will take precedence.
@@ -108,7 +106,6 @@
 	var/atom/movable/movable_parent = parent
 	handle_vehicle_layer(movable_parent.dir)
 	handle_vehicle_offsets(movable_parent.dir)
-	handle_rider_plane(movable_parent.dir)
 
 	if(rider.pulling == source)
 		rider.stop_pulling()
@@ -138,19 +135,8 @@
 		. = AM.layer
 	AM.layer = .
 
-/datum/component/riding/proc/handle_rider_plane(dir)
-	var/atom/movable/movable_parent = parent
-	var/target_plane = directional_rider_planes["[dir]"]
-	if(isnull(target_plane))
-		return
-	for(var/mob/buckled_mob in movable_parent.buckled_mobs)
-		SET_PLANE_EXPLICIT(buckled_mob, target_plane, movable_parent)
-
 /datum/component/riding/proc/set_vehicle_dir_layer(dir, layer)
 	directional_vehicle_layers["[dir]"] = layer
-
-/datum/component/riding/proc/set_rider_dir_plane(dir, plane)
-	directional_rider_planes["[dir]"] = plane
 
 /// This is called after the ridden atom is successfully moved and is used to handle icon stuff
 /datum/component/riding/proc/vehicle_moved(datum/source, oldloc, dir, forced)
@@ -166,7 +152,6 @@
 		return // runtimed with piggy's without this, look into this more
 	handle_vehicle_offsets(dir)
 	handle_vehicle_layer(dir)
-	handle_rider_plane(dir)
 
 /// Turning is like moving
 /datum/component/riding/proc/vehicle_turned(datum/source, _old_dir, new_dir)

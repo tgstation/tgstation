@@ -78,7 +78,7 @@
 /datum/ai_controller/basic_controller/crab
 	blackboard = list(
 		BB_ALWAYS_IGNORE_FACTION = TRUE,
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/ours_or_smaller,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/smaller,
 		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 

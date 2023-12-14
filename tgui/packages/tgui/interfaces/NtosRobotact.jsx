@@ -1,4 +1,4 @@
-import { useBackend, useSharedState } from '../backend';
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -11,6 +11,7 @@ import {
   Tabs,
 } from '../components';
 import { NtosWindow } from '../layouts';
+import { useState } from 'react';
 
 export const NtosRobotact = (props) => {
   return (
@@ -24,8 +25,8 @@ export const NtosRobotact = (props) => {
 
 export const NtosRobotactContent = (props) => {
   const { act, data } = useBackend();
-  const [tab_main, setTab_main] = useSharedState('tab_main', 1);
-  const [tab_sub, setTab_sub] = useSharedState('tab_sub', 1);
+  const [tab_main, setTab_main] = useState(1);
+  const [tab_sub, setTab_sub] = useState(1);
   const {
     charge,
     maxcharge,
@@ -51,6 +52,7 @@ export const NtosRobotactContent = (props) => {
   const laws = data.Laws || [];
   const borgLog = data.borgLog || [];
   const borgUpgrades = data.borgUpgrades || [];
+
   return (
     <Flex direction={'column'}>
       <Flex.Item position="relative" mb={1}>

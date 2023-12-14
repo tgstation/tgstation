@@ -500,10 +500,6 @@
 /datum/component/riding/creature/leaper/handle_specials()
 	. = ..()
 	set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(17, 46), TEXT_SOUTH = list(17,51), TEXT_EAST = list(27, 46), TEXT_WEST = list(6, 46)))
-	set_rider_dir_plane(SOUTH, GAME_PLANE_UPPER)
-	set_rider_dir_plane(NORTH, GAME_PLANE)
-	set_rider_dir_plane(EAST, GAME_PLANE_UPPER)
-	set_rider_dir_plane(WEST, GAME_PLANE_UPPER)
 
 /datum/component/riding/creature/leaper/Initialize(mob/living/riding_mob, force = FALSE, ride_check_flags = NONE, potion_boost = FALSE)
 	. = ..()

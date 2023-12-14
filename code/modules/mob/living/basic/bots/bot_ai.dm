@@ -58,6 +58,8 @@
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
 	if(!isdatum(target)) //we dont need to check if its not a datum!
 		return TRUE
+	if(get_turf(pawn) == get_turf(target))
+		return TRUE
 	var/list/path = get_path_to(pawn, target, max_distance = distance, access = get_access())
 	if(!length(path))
 		return FALSE
