@@ -42,9 +42,9 @@
 
 	//the recipients can receive the message
 	for(var/datum/antagonist/ling_receiver in GLOB.antagonists)
-		if(!ling_receive.owner)
+		if(!ling_receiver.owner)
 			continue
-		var/mob/living/ling_mob = ling_receive.owner.current
+		var/mob/living/ling_mob = ling_receiver.owner.current
 		if(!IS_CHANGELING(ling_mob) && !IS_TIGER_FANATIC(ling_mob))
 			continue
 		//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
