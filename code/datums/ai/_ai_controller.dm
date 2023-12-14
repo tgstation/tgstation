@@ -343,7 +343,6 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/on_pawn_qdeleted()
 	SIGNAL_HANDLER
 	set_ai_status(AI_STATUS_OFF)
-	UnpossessPawn(FALSE)
 	set_movement_target(type, null)
 	ai_movement.stop_moving_towards(src)
 
