@@ -1,27 +1,19 @@
 {
   "$schema": "https://json.schemastore.org/swcrc",
+  "env": {
+    "targets": "ie 11"
+  },
   "jsc": {
+    "loose": true,
     "parser": {
       "syntax": "typescript",
-      "tsx": true,
-      "dynamicImport": false,
-      "decorators": false
+      "tsx": true
     },
-    "experimental": {
-      "plugins": [
-        [
-          "swc-plugin-inferno",
-          {
-            "pure": true // Enable or disable /*#__PURE__*/ statements
-          }
-        ]
-      ]
-    },
-    "target": "es5",
-    "loose": false,
-    "externalHelpers": false,
-    // Requires v1.2.50 or upper and requires target to be es2016 or upper.
-    "keepClassNames": false
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
   },
   "minify": true
 }
