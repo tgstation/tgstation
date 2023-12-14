@@ -77,10 +77,14 @@
 /datum/objective/contractor_total/check_completion()
 	var/datum/antagonist/traitor/antag_datum = owner.has_antag_datum(/datum/antagonist/traitor)
 	var/datum/uplink_handler/handler = antag_datum?.uplink_handler
-	if(!handler)
-		return FALSE
+	var/completed_contracts = 0
+	for(var/datum/traitor_objective/objective in handler?.completed_objectives)
+		if(objective.objective_state != OBJECTIVE_STATE_COMPLETED)
+			continue
 
-	return length(handler.completed_objectives) >= contracts_needed //only given to contractors so we can assume any completed objectives are contracts
+		completed_contracts++
+
+	return completed_contracts >= contracts_needed || completed //only given to contractors so we can assume any completed objectives are contracts
 
 /datum/job/drifting_contractor
 	title = ROLE_DRIFTING_CONTRACTOR
