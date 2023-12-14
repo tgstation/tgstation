@@ -107,7 +107,7 @@
 	return null
 
 /datum/ai_behavior/execute_clean
-	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH
+	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_REQUIRE_REACH
 
 /datum/ai_behavior/execute_clean/setup(datum/ai_controller/controller, target_key)
 	. = ..()
