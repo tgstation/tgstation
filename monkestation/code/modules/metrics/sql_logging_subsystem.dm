@@ -108,7 +108,8 @@ SUBSYSTEM_DEF(sql_logging)
 		source_y = source.y
 		source_z = source.z
 		var/area/area = get_area(source)
-		source_area = area.name
+		if(!isnull(area))
+			source_area = area.name
 
 	if(isnull(source_name))
 		source_name = target_ckey
