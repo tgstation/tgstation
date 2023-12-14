@@ -1198,6 +1198,9 @@
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible{
 	dir = 4
 	},
+/obj/machinery/atmospherics/components/trinary/filter/atmos/n2{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "aww" = (
@@ -20501,7 +20504,7 @@
 /area/station/maintenance/starboard/fore)
 "hHt" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible{
+/obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible{
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
