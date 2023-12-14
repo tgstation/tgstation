@@ -463,7 +463,7 @@
  * Checks if this changeling can absorb the DNA of [target].
  * if [verbose] = TRUE, give feedback as to why they cannot absorb the DNA.
  */
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE, var/strangle = FALSE)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE, strangle = FALSE)
 	if(!target)
 		return FALSE
 	if(!iscarbon(owner.current))
