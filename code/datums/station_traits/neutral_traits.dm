@@ -382,6 +382,7 @@
 
 /datum/station_trait/outfit_color/rotated/New()
 	. = ..()
+	// A full 120/240 rotation would look bad in terms of contrast, since the RGB colorspace is kinda flawed.
 	rotation = pick(75, 285)
 
 /datum/station_trait/outfit_color/rotated/get_new_color(obj/item/item)
