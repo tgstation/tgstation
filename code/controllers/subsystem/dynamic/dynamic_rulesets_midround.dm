@@ -886,9 +886,9 @@
 	if(forced)
 		return ..()
 
-	for (var/mob/creature in living_antags)
-		if(IS_CHANGELING(creature))
-			changelings += creature
+	for(var/datum/antagonist/changeling/ling in GLOB.antagonists)
+		isliving(ling.owner?.current)
+			changelings += ling
 
 	if(!changelings.len)//No changelings around, why bother to show up?
 		return FALSE

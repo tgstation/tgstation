@@ -72,9 +72,6 @@
 	completed = FALSE
 	var/blessings_required = 3
 
-/datum/objective/changeling_blessed/update_explanation_text()
-
-
 /datum/objective/changeling_blessed/check_completion()
 	var/datum/antagonist/tiger_fanatic/tiger_fanatic = owner.has_antag_datum(/datum/antagonist/tiger_fanatic)
 	if(isnull(tiger_fanatic))

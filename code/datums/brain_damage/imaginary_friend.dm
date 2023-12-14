@@ -533,26 +533,6 @@
 	name = real_name
 	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
 
-/datum/brain_trauma/special/imaginary_friend/trapped_owner/changeling_echo
-	name = "changeling echo"
-	desc = "An echo of the consciousness of someone absorbed by a changeling."
-	gain_text = "The mind of this one is especially malliable, we contstruct an echo of them from their memories."
-	lose_text = "The echo we constructed fades."
-	random_gain = FALSE
-	var/worshiper_name
-	var/old_body
-
-/datum/brain_trauma/special/imaginary_friend/trapped_owner/changeling_echo/make_friend()
-	friend = new /mob/camera/imaginary_friend/changeling_echo(get_turf(owner), src)
-
-/datum/brain_trauma/special/imaginary_friend/trapped_owner/changeling_echo/proc/update_identity()
-	if(worshiper_name)
-		friend.real_name = worshiper_name
-		friend.name = worshiper_name
-	if(old_body)
-		friend.human_image = old_body
-
-
 /mob/camera/imaginary_friend/changeling_echo
 	name = "Worshiper"
 	real_name = "Worshiper"
