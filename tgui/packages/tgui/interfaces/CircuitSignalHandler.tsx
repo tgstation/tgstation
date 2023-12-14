@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { Component } from 'react';
 import { useBackend } from '../backend';
 import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
@@ -17,7 +18,7 @@ type CircuitSignalHandlerState = {
   signal_id: string;
   responseList: Response[];
   parameterList: Parameter[];
-  global: Boolean;
+  global: BooleanLike;
 };
 
 type CircuitSignalHandlerData = {
