@@ -6,13 +6,9 @@ type Data = {
   mmi_view: string;
 };
 
-export const LingMMITalk = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
-  const [mmiMessage, setmmiMessage] = useLocalState<string>(
-    context,
-    'textArea',
-    ''
-  );
+export const LingMMITalk = (props) => {
+  const { data, act } = useBackend<Data>();
+  const [mmiMessage, setmmiMessage] = useLocalState<string>('textArea', '');
 
   return (
     <Window title="Decoy Brain MMI View" height={360} width={360}>

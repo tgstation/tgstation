@@ -9,9 +9,9 @@ import { useBackend } from '../backend';
 import { Box, Button } from '../components';
 import { Window } from './Window';
 
-export const NtosWindow = (props, context) => {
+export const NtosWindow = (props) => {
   const { title, width = 575, height = 700, children } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   const {
     PC_device_theme,
     PC_batteryicon,
@@ -21,6 +21,7 @@ export const NtosWindow = (props, context) => {
     PC_stationtime,
     PC_programheaders = [],
     PC_showexitprogram,
+    PC_lowpower_mode,
   } = data;
   return (
     <Window title={title} width={width} height={height} theme={PC_device_theme}>
@@ -41,6 +42,7 @@ export const NtosWindow = (props, context) => {
             </Box>
             <Box inline italic mr={2} opacity={0.33}>
               {(PC_device_theme === 'syndicate' && 'Syndix') || 'NtOS'}
+              {!!PC_lowpower_mode && ' - RUNNING ON LOW POWER MODE'}
             </Box>
           </div>
           <div className="NtosHeader__right">

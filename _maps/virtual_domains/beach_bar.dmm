@@ -754,7 +754,9 @@
 /turf/closed/wall/mineral/sandstone,
 /area/virtual_domain/fullbright)
 "FM" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "mine"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "FQ" = (

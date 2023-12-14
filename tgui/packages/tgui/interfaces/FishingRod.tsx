@@ -2,11 +2,6 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Box, Stack, Button, Section, Flex } from '../components';
 
-type Quality = {
-  name: string;
-  kind: 'good' | 'neutral' | 'medium';
-};
-
 type FishingRodData = {
   bait_name: string;
   bait_icon: string;
@@ -24,8 +19,8 @@ type FishingSlotProps = {
   current_item_icon: string | null;
 };
 
-const FishingRodSlot = (props: FishingSlotProps, context) => {
-  const { act } = useBackend(context);
+const FishingRodSlot = (props: FishingSlotProps) => {
+  const { act } = useBackend();
 
   const icon_wrapper = (icon) => (
     <Box
@@ -34,9 +29,8 @@ const FishingRodSlot = (props: FishingSlotProps, context) => {
       height="64px"
       src={`data:image/jpeg;base64,${icon}`}
       style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'vertical-align': 'middle',
-        'object-fit': 'cover',
+        verticalAlign: 'middle',
+        objectFit: 'cover',
       }}
     />
   );
@@ -47,7 +41,8 @@ const FishingRodSlot = (props: FishingSlotProps, context) => {
         <Stack.Item grow>
           <Button
             fluid
-            onClick={() => act('slot_action', { slot: props.slot })}>
+            onClick={() => act('slot_action', { slot: props.slot })}
+          >
             <Flex>
               <Flex.Item>
                 {!!props.current_item_icon &&
@@ -66,11 +61,11 @@ const FishingRodSlot = (props: FishingSlotProps, context) => {
   );
 };
 
-export const FishingRod = (props, context) => {
-  const { act, data } = useBackend<FishingRodData>(context);
+export const FishingRod = (props) => {
+  const { data } = useBackend<FishingRodData>();
 
   return (
-    <Window>
+    <Window height={300} width={300}>
       <Window.Content>
         <Section>
           <FishingRodSlot

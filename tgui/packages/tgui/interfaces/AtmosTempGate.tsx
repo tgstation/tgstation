@@ -10,8 +10,8 @@ type Data = {
   max_temperature: number;
 };
 
-export const AtmosTempGate = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AtmosTempGate = (props) => {
+  const { act, data } = useBackend<Data>();
   const { on, temperature, min_temperature, max_temperature } = data;
 
   return (

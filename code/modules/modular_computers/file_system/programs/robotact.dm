@@ -5,10 +5,9 @@
 	extended_desc = "A built-in app for cyborg self-management and diagnostics."
 	ui_header = "robotact.gif" //DEBUG -- new icon before PR
 	program_open_overlay = "command"
-	requires_ntnet = FALSE
-	available_on_ntnet = FALSE
+	program_flags = NONE
 	undeletable = TRUE
-	usage_flags = PROGRAM_PDA
+	can_run_on_flags = PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRobotact"
 	program_icon = "terminal"

@@ -1,9 +1,18 @@
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Flex, Icon, LabeledList, Modal, Section } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Flex,
+  Icon,
+  LabeledList,
+  Modal,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
-export const ShuttleConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ShuttleConsole = (props) => {
+  const { act, data } = useBackend();
   const { type = 'shuttle', blind_drop } = props;
   const { authorization_required } = data;
   return (
@@ -16,7 +25,8 @@ export const ShuttleConsole = (props, context) => {
           height={12}
           fontSize="28px"
           fontFamily="monospace"
-          textAlign="center">
+          textAlign="center"
+        >
           <Flex>
             <Flex.Item mt={2}>
               <Icon name="minus-circle" />
@@ -53,16 +63,16 @@ const getLocationIdByName = (locations, name) => {
 
 const STATUS_COLOR_KEYS = {
   'In Transit': 'good',
-  'Idle': 'average',
-  'Igniting': 'average',
-  'Recharging': 'average',
-  'Missing': 'bad',
+  Idle: 'average',
+  Igniting: 'average',
+  Recharging: 'average',
+  Missing: 'bad',
   'Unauthorized Access': 'bad',
-  'Locked': 'bad',
+  Locked: 'bad',
 };
 
-export const ShuttleConsoleContent = (props, context) => {
-  const { act, data } = useBackend(context);
+export const ShuttleConsoleContent = (props) => {
+  const { act, data } = useBackend();
   const { type, blind_drop } = props;
   const {
     status,
@@ -88,7 +98,8 @@ export const ShuttleConsoleContent = (props, context) => {
       </Box>
       <Section
         title={type === 'shuttle' ? 'Shuttle Controls' : 'Base Launch Controls'}
-        level={2}>
+        level={2}
+      >
         <LabeledList>
           <LabeledList.Item label="Location">
             {docked_location || 'Not Available'}
@@ -107,7 +118,8 @@ export const ShuttleConsoleContent = (props, context) => {
                   onClick={() => act('random')}
                 />
               )
-            }>
+            }
+          >
             {(locations.length === 0 && (
               <Box mb={1.7} color="bad">
                 Not Available

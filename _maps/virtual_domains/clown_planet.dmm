@@ -370,7 +370,9 @@
 /turf/open/floor/noslip,
 /area/virtual_domain)
 "xt" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "mine"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "yd" = (

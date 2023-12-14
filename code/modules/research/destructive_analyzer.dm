@@ -171,6 +171,7 @@
 	if(isnull(id))
 		return FALSE
 
+	var/item_type = loaded_item.type
 	if(id == DESTRUCTIVE_ANALYZER_DESTROY_POINTS)
 		if(!destroy_item(gain_research_points = TRUE))
 			return FALSE
@@ -181,7 +182,7 @@
 		return FALSE
 	if(!destroy_item())
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[loaded_item.type]"))
+	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_to_discover.id]", "[item_type]"))
 	stored_research.unhide_node(node_to_discover)
 	return TRUE
 

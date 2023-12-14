@@ -1,10 +1,18 @@
 import { useBackend } from '../backend';
-import { Button, Dropdown, Flex, Input, LabeledList, ProgressBar, Section } from '../components';
+import {
+  Button,
+  Dropdown,
+  Flex,
+  Input,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
-export const Mule = (props, context) => {
-  const { act, data } = useBackend(context);
+export const Mule = (props) => {
+  const { act, data } = useBackend();
   const {
     on,
     cell,
@@ -47,7 +55,8 @@ export const Mule = (props, context) => {
                 />
               )}
             </>
-          }>
+          }
+        >
           <ProgressBar
             value={cell ? cellPercent / 100 : 0}
             color={cell ? 'good' : 'bad'}
@@ -64,7 +73,8 @@ export const Mule = (props, context) => {
               <LabeledList>
                 <LabeledList.Item
                   label="Load"
-                  color={load ? 'good' : 'average'}>
+                  color={load ? 'good' : 'average'}
+                >
                   {load || 'None'}
                 </LabeledList.Item>
               </LabeledList>
@@ -91,7 +101,8 @@ export const Mule = (props, context) => {
                   />
                 )}
               </>
-            }>
+            }
+          >
             <LabeledList>
               <LabeledList.Item label="ID">
                 <Input

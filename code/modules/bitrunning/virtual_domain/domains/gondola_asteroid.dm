@@ -6,7 +6,6 @@
 	I bet there's a way to move it myself."
 	key = "gondola_asteroid"
 	map_name = "gondola_asteroid"
-	safehouse_path = /datum/map_template/safehouse/shuttle_space
 
 /// Very pushy gondolas, great for moving loot crates.
 /obj/structure/closet/crate/secure/bitrunning/encrypted/gondola

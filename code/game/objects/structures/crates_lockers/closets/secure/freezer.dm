@@ -8,26 +8,26 @@
 	/// If FALSE, we will protect the first person in the freezer from an explosion / nuclear blast.
 	var/jones = FALSE
 	paint_jobs = null
+	sealed = TRUE
 
-/obj/structure/closet/secure_closet/freezer/before_open(mob/living/user, force)
-	. = ..()
-	if(!.)
-		return FALSE
+	/// The rate at which the internal air mixture cools
+	var/cooling_rate_per_second = 4
+	/// Minimum temperature of the internal air mixture
+	var/minimum_temperature = T0C - 60
 
-	toggle_organ_decay(src)
-	return TRUE
-
-/obj/structure/closet/secure_closet/freezer/after_close(mob/living/user)
-	. = ..()
-	toggle_organ_decay(src)
-
-/obj/structure/closet/secure_closet/freezer/Destroy()
-	toggle_organ_decay(src)
-	return ..()
-
-/obj/structure/closet/secure_closet/freezer/Initialize(mapload)
-	. = ..()
-	toggle_organ_decay(src)
+/obj/structure/closet/secure_closet/freezer/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		// The internal air won't cool down the external air when the freezer is opened.
+		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
+		return ..()
+	else
+		if(internal_air.temperature <= minimum_temperature)
+			return
+		var/temperature_decrease_this_tick = min(cooling_rate_per_second * seconds_per_tick, internal_air.temperature - minimum_temperature)
+		internal_air.temperature -= temperature_decrease_this_tick
 
 /obj/structure/closet/secure_closet/freezer/ex_act()
 	if(jones)
@@ -37,7 +37,7 @@
 	return FALSE
 
 /obj/structure/closet/secure_closet/freezer/deconstruct(disassembled)
-	if (!(flags_1 & NODECONSTRUCT_1))
+	if (!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/assembly/igniter/condenser(drop_location())
 	. = ..()
 

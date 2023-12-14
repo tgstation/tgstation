@@ -1,7 +1,19 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, LabeledList, NumberInput, Dropdown, Section, Stack } from '../components';
+import { useState } from 'react';
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  Dropdown,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
-import { AtmosHandbookContent, atmosHandbookHooks } from './common/AtmosHandbook';
+import {
+  AtmosHandbookContent,
+  atmosHandbookHooks,
+} from './common/AtmosHandbook';
 import { Gasmix, GasmixParser } from './common/GasmixParser';
 
 type Chamber = {
@@ -12,25 +24,21 @@ type Chamber = {
   output_info?: { active: boolean; amount: number };
 };
 
-export const AtmosControlConsole = (props, context) => {
+export const AtmosControlConsole = (props) => {
   const { act, data } = useBackend<{
     chambers: Chamber[];
     maxInput: number;
     maxOutput: number;
     reconnecting: boolean;
     control: boolean;
-  }>(context);
+  }>();
   const chambers = data.chambers || [];
-  const [chamberId, setChamberId] = useLocalState(
-    context,
-    'chamberId',
-    chambers[0]?.id
-  );
+  const [chamberId, setChamberId] = useState(chambers[0]?.id);
   const selectedChamber =
     chambers.length === 1
       ? chambers[0]
       : chambers.find((chamber) => chamber.id === chamberId);
-  const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks(context);
+  const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks();
   return (
     <Window width={550} height={350}>
       <Window.Content scrollable>
@@ -43,7 +51,7 @@ export const AtmosControlConsole = (props, context) => {
               onSelected={(value) =>
                 setChamberId(
                   chambers.find((chamber) => chamber.name === value)?.id ||
-                    chambers[0].id
+                    chambers[0].id,
                 )
               }
             />
@@ -59,7 +67,8 @@ export const AtmosControlConsole = (props, context) => {
                 onClick={() => act('reconnect')}
               />
             )
-          }>
+          }
+        >
           {!!selectedChamber && !!selectedChamber.gasmix ? (
             <GasmixParser
               gasmix={selectedChamber.gasmix}

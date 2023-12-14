@@ -9,17 +9,17 @@ import { Material } from './Types';
 // by popular demand of discord people (who are always right and never wrong)
 // this is completely made up
 const MATERIAL_RARITY: Record<string, number> = {
-  'glass': 0,
-  'iron': 1,
-  'plastic': 2,
-  'titanium': 3,
-  'plasma': 4,
-  'silver': 5,
-  'gold': 6,
-  'uranium': 7,
-  'diamond': 8,
+  glass: 0,
+  iron: 1,
+  plastic: 2,
+  titanium: 3,
+  plasma: 4,
+  silver: 5,
+  gold: 6,
+  uranium: 7,
+  diamond: 8,
   'bluespace crystal': 9,
-  'bananium': 10,
+  bananium: 10,
 };
 
 export type MaterialAccessBarProps = {
@@ -49,7 +49,7 @@ const LABEL_FORMAT = (value: number) => formatSiUnit(value, 0);
  * the ore silo. Has pop-out docks for each material type for ejecting up to
  * fifty sheets.
  */
-export const MaterialAccessBar = (props: MaterialAccessBarProps, context) => {
+export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
   const { availableMaterials, SHEET_MATERIAL_AMOUNT, onEjectRequested } = props;
 
   return (
@@ -65,7 +65,7 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps, context) => {
               }
             />
           </Flex.Item>
-        )
+        ),
       )}
     </Flex>
   );
@@ -77,13 +77,12 @@ type MaterialCounterProps = {
   onEjectRequested: (quantity: number) => void;
 };
 
-const MaterialCounter = (props: MaterialCounterProps, context) => {
+const MaterialCounter = (props: MaterialCounterProps) => {
   const { material, onEjectRequested, SHEET_MATERIAL_AMOUNT } = props;
 
   const [hovering, setHovering] = useLocalState(
-    context,
     `MaterialCounter__${material.name}`,
-    false
+    false,
   );
 
   const sheets = material.amount / SHEET_MATERIAL_AMOUNT;
@@ -96,13 +95,15 @@ const MaterialCounter = (props: MaterialCounterProps, context) => {
         'MaterialDock',
         hovering && 'MaterialDock--active',
         sheets < 1 && 'MaterialDock--disabled',
-      ])}>
+      ])}
+    >
       <Stack vertial direction={'column-reverse'}>
         <Flex
           direction="column"
           textAlign="center"
           onClick={() => onEjectRequested(1)}
-          className="MaterialDock__Label">
+          className="MaterialDock__Label"
+        >
           <Flex.Item>
             <MaterialIcon materialName={material.name} sheets={sheets} />
           </Flex.Item>
@@ -147,7 +148,7 @@ type EjectButtonProps = {
   onEject: (quantity: number) => void;
 };
 
-const EjectButton = (props: EjectButtonProps, context) => {
+const EjectButton = (props: EjectButtonProps) => {
   const { amount, sheets, onEject } = props;
 
   return (
@@ -158,7 +159,8 @@ const EjectButton = (props: EjectButtonProps, context) => {
         'Fabricator__PrintAmount',
         amount > sheets && 'Fabricator__PrintAmount--disabled',
       ])}
-      onClick={() => onEject(amount)}>
+      onClick={() => onEject(amount)}
+    >
       &times;{amount}
     </Button>
   );

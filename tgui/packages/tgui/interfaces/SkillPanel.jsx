@@ -12,8 +12,8 @@ const skillyellow = {
   fontWeight: 'bold',
 };
 
-export const SkillPanel = (props, context) => {
-  const { act, data } = useBackend(context);
+export const SkillPanel = (props) => {
+  const { act, data } = useBackend();
   const skills = data.skills || [];
   return (
     <Window title="Manage Skills" width={600} height={500}>
