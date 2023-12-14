@@ -16,22 +16,22 @@
 	result = /obj/item/food/raw_corndog/rod
 	category = CAT_MEAT
 
-/datum/crafting_recipe/food/corndog_ketchup
-	name = "corndog with ketchup"
+/datum/crafting_recipe/food/fullcondiment
+	name = "corndog with toppings"
 	reqs = list(
 		/obj/item/food/corndog = 1,
 		/datum/reagent/consumable/ketchup = 5,
 	)
-	result = /obj/item/food/corndog/ketchup
+	result = /obj/item/food/corndog/fullcondiment
 	category = CAT_MEAT
 
-/datum/crafting_recipe/food/corndog_ketchup/rod
-	name = "corndog with ketchup... on a rod!"
+/datum/crafting_recipe/food/fullcondiment/rod
+	name = "corndog with toppings... on a rod!"
 	reqs = list(
 		/obj/item/food/corndog/rod = 1,
 		/datum/reagent/consumable/ketchup = 5,
 	)
-	result = /obj/item/food/corndog/ketchup/rod
+	result = /obj/item/food/corndog/fullcondiment/rod
 	category = CAT_MEAT
 
 /datum/crafting_recipe/food/NarDog

@@ -88,17 +88,18 @@
 	trash_type = /obj/item/stack/rods
 	icon_state = "corndog_rod"
 
-/obj/item/food/corndog/ketchup //End of the corndog crafting tree, no name change so frying it doesn't give a weird name
-	icon_state = "corndog_stick_k"
-	desc = "The best thing to come out of 1900s America, paired with the best thing to come out of 1800s America... Debatably."
+/obj/item/food/corndog/fullcondiment //End of the corndog crafting tree, no name change so frying it doesn't give a weird name
+	icon_state = "corndog_stick_km"
+	desc = "The best thing to come out of 1900s America paired with the best thing to come out of 1800s America, paired with, hey- Just how old is mustard?"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment/protein = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 		/datum/reagent/consumable/ketchup = 5
 	)
+	tastes = list("American superiority" = 1, "carnival food" = 1, "mustard" = 1)
 
-/obj/item/food/corndog/ketchup/rod
-	icon_state = "corndog_rod_k"
+/obj/item/food/corndog/fullcondiment/rod
+	icon_state = "corndog_rod_km"
 
 //Forbidden corndog corner
 /obj/item/food/corndog/NarDog
