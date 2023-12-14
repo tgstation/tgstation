@@ -463,7 +463,7 @@
  * Checks if this changeling can absorb the DNA of [target].
  * if [verbose] = TRUE, give feedback as to why they cannot absorb the DNA.
  */
-/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE)
+/datum/antagonist/changeling/proc/can_absorb_dna(mob/living/carbon/human/target, verbose = TRUE, var/strangle = FALSE)
 	if(!target)
 		return FALSE
 	if(!iscarbon(owner.current))
@@ -482,7 +482,7 @@
 		if(verbose)
 			to_chat(user, span_warning("[target] is not compatible with our biology."))
 		return FALSE
-	if(has_profile_with_dna(target.dna))
+	if(has_profile_with_dna(target.dna) && !strangle) //There are lots of reasons to full strangle absorb someone besides getting their DNA.
 		if(verbose)
 			to_chat(user, span_warning("We already have this DNA in storage!"))
 		return FALSE

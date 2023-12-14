@@ -214,6 +214,9 @@
 	. = ..()
 	if(!proximity)
 		return
+	if(fake)
+		return
+
 	if(istype(target, /obj/structure/table))
 		var/obj/structure/table/T = target
 		T.deconstruct(FALSE)

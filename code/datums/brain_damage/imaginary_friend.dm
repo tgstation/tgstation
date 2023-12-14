@@ -532,3 +532,41 @@
 	real_name = "[owner.real_name]?"
 	name = real_name
 	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/changeling_echo
+	name = "changeling echo"
+	desc = "An echo of the consciousness of someone absorbed by a changeling."
+	gain_text = "The mind of this one is especially malliable, we contstruct an echo of them from their memories."
+	lose_text = "The echo we constructed fades."
+	random_gain = FALSE
+	var/worshiper_name
+	var/old_body
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/changeling_echo/make_friend()
+	friend = new /mob/camera/imaginary_friend/changeling_echo(get_turf(owner), src)
+
+/datum/brain_trauma/special/imaginary_friend/trapped_owner/changeling_echo/proc/update_identity()
+	if(worshiper_name)
+		friend.real_name = worshiper_name
+		friend.name = worshiper_name
+	if(old_body)
+		friend.human_image = old_body
+
+
+/mob/camera/imaginary_friend/changeling_echo
+	name = "Worshiper"
+	real_name = "Worshiper"
+	human_image = icon('icons/mob/simple/lavaland/lavaland_monsters.dmi', icon_state = "curseblob")
+	desc = "This one was made from the shattered mind of a worshiper, now it serves the hive even in death."
+
+
+/mob/camera/imaginary_friend/changeling_echo/setup_appearance(original_appearance, original_name)
+	human_image = original_appearance
+	real_name = original_name
+	name = original_name
+	Show()
+	return
+
+/mob/camera/imaginary_friend/changeling_echo/greet()
+	to_chat(src, span_changeling(span_bold("You are absorbed, but you your mind persist! You you have become one with the hive!")))
+	to_chat(src, span_changeling("Your mind has melded with the changeling that absorbed you, assist them however you can!"))

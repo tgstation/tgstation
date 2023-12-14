@@ -20,21 +20,33 @@
 	if(user.mind.has_antag_datum(/datum/antagonist/fallen_changeling))
 		to_chat(user, span_changeling("<b>We're cut off from the hivemind! We've lost everything! EVERYTHING!!</b>"))
 		return FALSE
-	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
-	if(!ling_sender)
+	if(!IS_CHANGELING(user) && !IS_TIGER_FANATIC(user))
 		return FALSE
+
+	var/name
+
+	if(IS_TIGER_FANATIC(user))
+		name = "Unworthy Worshiper"
+
+	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
+
+	if(ling_sender)
+		name = ling_sender.changelingID
+
 	if(HAS_TRAIT(user, TRAIT_CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, span_warning("The poison in the air hinders our ability to interact with the hivemind."))
 		return FALSE
 
-	user.log_talk(message, LOG_SAY, tag="changeling [ling_sender.changelingID]")
-	var/msg = span_changeling("<b>[ling_sender.changelingID]:</b> [message]")
+	user.log_talk(message, LOG_SAY, tag="changeling [name]")
+	var/msg = span_changeling("<b>[name]:</b> [message]")
 
 	//the recipients can recieve the message
-	for(var/datum/antagonist/changeling/ling_reciever in GLOB.antagonists)
+	for(var/datum/antagonist/ling_reciever in GLOB.antagonists)
 		if(!ling_reciever.owner)
 			continue
 		var/mob/living/ling_mob = ling_reciever.owner.current
+		if(!IS_CHANGELING(ling_mob) && !IS_TIGER_FANATIC(ling_mob))
+			continue
 		//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
 		if(!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob))
 			continue

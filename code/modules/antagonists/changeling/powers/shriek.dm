@@ -13,25 +13,36 @@
 	if(user.movement_type & VENTCRAWLING)
 		user.balloon_alert(user, "can't shriek in pipes!")
 		return FALSE
-	for(var/mob/living/M in get_hearers_in_view(4, user))
-		if(iscarbon(M))
-			var/mob/living/carbon/C = M
-			if(!C.mind || !C.mind.has_antag_datum(/datum/antagonist/changeling))
-				var/obj/item/organ/internal/ears/ears = C.get_organ_slot(ORGAN_SLOT_EARS)
+	for(var/mob/living/mob_target in get_hearers_in_view(4, user))
+		if(iscarbon(mob_target))
+			var/mob/living/carbon/carbon_target = mob_target
+			SEND_SOUND(carbon_target, sound('sound/effects/screech.ogg'))
+
+			var/datum/antagonist/tiger_fanatic/tiger_fanatic = carbon_target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
+			if(tiger_fanatic) // Music to our ears
+				to_chat(carbon_target, span_changeling("The scream invigorates you!"))
+				carbon_target.AdjustAllImmobility(-5 SECONDS)
+				carbon_target.adjustStaminaLoss(-60)
+				carbon_target.set_jitter_if_lower(20 SECONDS)
+				tiger_fanatic.receive_blessing()
+				continue
+
+			if(!carbon_target.mind || !IS_CHANGELING(carbon_target))
+				var/obj/item/organ/internal/ears/ears = carbon_target.get_organ_slot(ORGAN_SLOT_EARS)
 				if(ears)
 					ears.adjustEarDamage(0, 30)
-				C.adjust_confusion(25 SECONDS)
-				C.set_jitter_if_lower(100 SECONDS)
-			else
-				SEND_SOUND(C, sound('sound/effects/screech.ogg'))
+				carbon_target.adjust_confusion(25 SECONDS)
+				carbon_target.set_jitter_if_lower(100 SECONDS)
+				continue
 
-		if(issilicon(M))
-			SEND_SOUND(M, sound('sound/weapons/flash.ogg'))
-			M.Paralyze(rand(100,200))
 
-	for(var/obj/machinery/light/L in range(4, user))
-		L.on = TRUE
-		L.break_light_tube()
+		if(issilicon(mob_target))
+			SEND_SOUND(mob_target, sound('sound/weapons/flash.ogg'))
+			mob_target.Paralyze(rand(100,200))
+
+	for(var/obj/machinery/light/lights in range(4, user))
+		lights.on = TRUE
+		lights.break_light_tube()
 		stoplag()
 	return TRUE
 

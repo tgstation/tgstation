@@ -25,7 +25,7 @@
 
 	var/mob/living/carbon/target = owner.pulling
 	var/datum/antagonist/changeling/changeling = owner.mind.has_antag_datum(/datum/antagonist/changeling)
-	return changeling.can_absorb_dna(target)
+	return changeling.can_absorb_dna(target, strangle = TRUE)
 
 /datum/action/changeling/absorb_dna/sting_action(mob/owner)
 	SHOULD_CALL_PARENT(FALSE) // the only reason to call parent is for proper blackbox logging, and we do that ourselves in a snowflake way
@@ -86,6 +86,11 @@
 		for(var/datum/objective/objective as anything in all_objectives)
 			if(!objective) //nulls? in my objective list? it's more likely than you think.
 				continue
+
+			if(istype(objective, /datum/objective/be_absorbed))
+				var/datum/objective/be_absorbed/absorbed = objective
+				absorbed.completed = TRUE
+
 			changeling.antag_memory += " Objective #[obj_count++]: [objective.explanation_text]."
 			var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
 			if(!other_owners.len)
@@ -131,6 +136,40 @@
 		target.mind.remove_antag_datum(/datum/antagonist/changeling)
 		var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)
 		fallen.objectives = copied_objectives
+
+	var/datum/antagonist/changeling/target_tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
+	if(target_tiger_fanatic)// If the target was a tiger cultist we get powered up.
+		to_chat(owner, span_changeling(span_boldnotice("[target] was a worshiper of the hive. Their DNA is prepared specifically for our tastes. We grow stronger.")))
+
+		var/genetic_points_to_add = rand(5, 10)
+		changeling.genetic_points += genetic_points_to_add
+		changeling.total_genetic_points += genetic_points_to_add
+
+		var/chems_to_add = rand (75, 125)
+		changeling.adjust_chemicals(chems_to_add)
+		changeling.total_chem_storage += chems_to_add
+
+		target.set_lying_angle(0)
+		if(target.wear_suit)
+			target.wear_suit.add_mob_blood(target) // For that pathetic, unwholsome look
+			target.update_worn_oversuit()
+		if(target.w_uniform)
+			target.w_uniform.add_mob_blood(target)
+			target.update_worn_undersuit()
+
+		var/original_appearance = target.appearance
+		var/original_name = target.real_name
+
+		target.set_lying_angle(90)
+
+		var/mob/camera/imaginary_friend/changeling_echo/worshiper = target.change_mob_type(
+			new_type = /mob/camera/imaginary_friend/changeling_echo,
+			location = get_turf(target),
+			delete_old_mob = FALSE,
+		)
+		worshiper.attach_to_owner(owner)
+		worshiper.setup_appearance(original_appearance, original_name)
+		to_chat(owner, span_changeling(span_boldnotice("The mind of this one is especially malleable, we are able to construct an echo of them from their memories.")))
 
 /datum/action/changeling/absorb_dna/proc/attempt_absorb(mob/living/carbon/human/target)
 	for(var/absorbing_iteration in 1 to 3)

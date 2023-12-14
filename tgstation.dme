@@ -3099,6 +3099,8 @@
 #include "code\modules\antagonists\spiders\spiders.dm"
 #include "code\modules\antagonists\survivalist\survivalist.dm"
 #include "code\modules\antagonists\syndicate_monkey\syndicate_monkey.dm"
+#include "code\modules\antagonists\tiger_fanatic\items.dm"
+#include "code\modules\antagonists\tiger_fanatic\tiger_fanatic.dm"
 #include "code\modules\antagonists\traitor\balance_helper.dm"
 #include "code\modules\antagonists\traitor\datum_traitor.dm"
 #include "code\modules\antagonists\traitor\objective_category.dm"

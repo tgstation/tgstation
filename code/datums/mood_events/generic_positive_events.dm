@@ -122,6 +122,11 @@
 	mood_change = 10 //maybe being a cultist isnt that bad after all
 	hidden = TRUE
 
+/datum/mood_event/changeling_enjoyer
+	description = "I have beared witness to the miracles of the hive!"
+	mood_change = 10
+	timeout = 5 MINUTES
+
 /datum/mood_event/family_heirloom
 	description = "My family heirloom is safe with me."
 	mood_change = 1

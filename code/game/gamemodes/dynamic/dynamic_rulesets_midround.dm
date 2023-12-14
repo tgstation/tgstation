@@ -861,6 +861,55 @@
 	log_dynamic("[key_name(body)] was spawned as a space changeling by the midround ruleset.")
 	return body
 
+/// Midround Tiger Fanatic Ruleset (From Ghosts)
+/datum/dynamic_ruleset/midround/from_ghosts/tiger_fanatic
+	name = "Tiger Cooperative Fanatic"
+	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
+	antag_datum = /datum/antagonist/tiger_fanatic
+	antag_flag = ROLE_TIGER_FANATIC
+	required_type = /mob/dead/observer
+	required_enemies = list(2, 2, 1, 1, 1, 1, 1, 0, 0, 0)
+	required_candidates = 1
+	weight = 4
+	cost = 3
+	repeatable = TRUE
+	var/list/possible_spawns = list() //This should be a cooler arrival in the future, maybe a drop pod?
+
+/datum/dynamic_ruleset/midround/from_ghosts/tiger_fanatic/execute()
+	possible_spawns += find_maintenance_spawn(atmos_sensitive = TRUE, require_darkness = FALSE)
+	if(!possible_spawns.len)
+		return MAP_ERROR
+	return ..()
+
+/datum/dynamic_ruleset/midround/from_ghosts/tiger_fanatic/ready(forced = FALSE)
+	var/list/changelings = list()
+	if(forced)
+		return ..()
+
+	for (var/mob/creature in living_antags)
+		if(IS_CHANGELING(creature))
+			changelings += creature
+
+	if(!changelings.len)//No changelings around, why bother to show up?
+		return FALSE
+
+	return ..()
+
+
+/datum/dynamic_ruleset/midround/from_ghosts/tiger_fanatic/generate_ruleset_body(mob/applicant)
+	var/datum/mind/player_mind = new /datum/mind(applicant.key)
+	player_mind.active = TRUE
+
+	var/mob/living/carbon/human/tiger = create_tiger_fanatic(pick(possible_spawns))
+	tiger.key = applicant.key
+	tiger.mind.add_antag_datum(/datum/antagonist/tiger_fanatic)
+
+	new /obj/item/storage/toolbox/mechanical(tiger.loc) //should be replaced eventually
+	message_admins("[ADMIN_LOOKUPFLW(tiger)] has been made into a Tiger Fanatic by the midround ruleset.")
+	tiger.log_message("was spawned as a Tiger Fanatic of [key_name(tiger)] by the midround ruleset.", LOG_GAME)
+
+	return tiger
+
 /// Midround Paradox Clone Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone
 	name = "Paradox Clone"

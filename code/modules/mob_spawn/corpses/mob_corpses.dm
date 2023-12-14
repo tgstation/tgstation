@@ -100,16 +100,15 @@
 
 /obj/effect/mob_spawn/corpse/human/tigercultist
 	name = "Tiger Cooperative Cultist"
-	outfit = /datum/outfit/tigercultcorpse
+	outfit = /datum/outfit/tiger_fanatic
 
-/datum/outfit/tigercultcorpse
+/datum/outfit/tigercult
 	name = "Tiger Cooperative Corpse"
-	uniform = /obj/item/clothing/under/rank/civilian/chaplain
-	suit = /obj/item/clothing/suit/hooded/chaplain_hoodie
+	uniform = /obj/item/clothing/under/syndicate/tacticool/puffed_shirt
+	suit = /obj/item/clothing/suit/hooded/tiger_co_hoodie
 	shoes = /obj/item/clothing/shoes/laceup
-	neck = /obj/item/clothing/neck/fake_heretic_amulet
-	head = /obj/item/clothing/head/hooded/chaplain_hood
-	back = /obj/item/storage/backpack/cultpack
+	mask = /obj/item/clothing/mask/mummy/tiger_co
+	gloves = /obj/item/clothing/gloves/bandages
 
 /obj/effect/mob_spawn/corpse/human/pirate
 	name = "Pirate"

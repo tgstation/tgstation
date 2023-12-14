@@ -113,3 +113,6 @@ laser2.ogg is adapted with 3 SFX made by junggle (CC 4), inferno (CC Sampling+),
 https://freesound.org/people/junggle/sounds/28917/
 https://freesound.org/people/inferno/sounds/18397/
 https://freesound.org/people/humanoide9000/sounds/330293/
+
+tiger_greeting.ogg taken from Low chant.wav, which is public domain (CC 0):
+https://freesound.org/people/adharca/sounds/319253/
