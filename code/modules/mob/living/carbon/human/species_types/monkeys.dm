@@ -59,7 +59,8 @@
 	C.RemoveElement(/datum/element/human_biter)
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(check_holidays(MONKEYDAY))
+	// STOP ADDING MONKEY SUBTYPES YOU HEATHEN
+	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
 
@@ -216,8 +217,5 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
-
-/datum/species/monkey/holodeck/check_roundstart_eligible()
-	return FALSE
 
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE
