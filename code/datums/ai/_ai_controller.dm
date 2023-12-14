@@ -71,7 +71,8 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	set_movement_target(type, null)
-	ai_movement.stop_moving_towards(src)
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
@@ -344,7 +345,8 @@ multiple modular subtrees with behaviors
 	SIGNAL_HANDLER
 	set_ai_status(AI_STATUS_OFF)
 	set_movement_target(type, null)
-	ai_movement.stop_moving_towards(src)
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
