@@ -264,7 +264,7 @@
 	transform = M.Turn(-previous_rotation)
 
 /obj/structure/flora/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(harvested)
 			return ..()
 
@@ -446,7 +446,7 @@
 	name = "xmas tree"
 	desc = "A wondrous decorated Christmas tree."
 	icon_state = "pine_c"
-	flags_1 = NODECONSTRUCT_1 //protected by the christmas spirit
+	obj_flags = NO_DECONSTRUCTION //protected by the christmas spirit
 
 /obj/structure/flora/tree/pine/xmas/presents
 	icon_state = "pinepresents"

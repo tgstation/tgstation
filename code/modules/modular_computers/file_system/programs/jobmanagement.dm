@@ -8,7 +8,7 @@ GLOBAL_VAR_INIT(time_last_changed_position, 0)
 	program_open_overlay = "id"
 	extended_desc = "Program for viewing and changing job slot availability."
 	download_access = list(ACCESS_COMMAND)
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 4
 	tgui_id = "NtosJobManager"
 	program_icon = "address-book"

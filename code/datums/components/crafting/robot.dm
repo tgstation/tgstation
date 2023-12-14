@@ -32,7 +32,7 @@
 
 /datum/crafting_recipe/cleanbot
 	name = "Cleanbot"
-	result = /mob/living/simple_animal/bot/cleanbot
+	result = /mob/living/basic/bot/cleanbot
 	reqs = list(
 		/obj/item/reagent_containers/cup/bucket = 1,
 		/obj/item/assembly/prox_sensor = 1,

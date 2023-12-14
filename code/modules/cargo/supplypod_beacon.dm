@@ -1,7 +1,7 @@
 /obj/item/supplypod_beacon
 	name = "Supply Pod Beacon"
 	desc = "A device that can be linked to an Express Supply Console for precision supply pod deliveries."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "supplypod_beacon"
 	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -69,7 +69,7 @@
 /obj/item/supplypod_beacon/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/supplypod_beacon/proc/unlink_console()
 	if(express_console)
@@ -107,5 +107,3 @@
 	if(!user.can_perform_action(src))
 		return
 	name += " ([tag])"
-
-

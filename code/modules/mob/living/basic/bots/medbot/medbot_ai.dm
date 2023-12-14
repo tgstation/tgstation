@@ -6,7 +6,7 @@
 		/datum/ai_planning_subtree/handle_medbot_speech,
 		/datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit,
 		/datum/ai_planning_subtree/treat_wounded_target,
-		/datum/ai_planning_subtree/salute_beepsky,
+		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 	)
 	ai_movement = /datum/ai_movement/jps/bot/medbot
@@ -23,7 +23,7 @@
 /datum/ai_movement/jps/bot/medbot/allowed_to_move(datum/move_loop/source)
 	var/datum/ai_controller/controller = source.extra_info
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	if(bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
+	if(QDELETED(bot_pawn) || bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE)
 		return FALSE
 	return ..()
 
@@ -32,7 +32,7 @@
 
 /datum/ai_planning_subtree/treat_wounded_target/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	if(bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE)
+	if(QDELETED(bot_pawn) || bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE)
 		controller.clear_blackboard_key(BB_PATIENT_TARGET)
 		return
 	var/reach_distance = (bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : BOT_PATIENT_PATH_LIMIT
@@ -98,7 +98,8 @@
 	if(patient.stat >= HARD_CRIT && prob(5))
 		var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 		announcement?.announce(pick(controller.blackboard[BB_NEAR_DEATH_SPEECH]))
-	bot_pawn.melee_attack(patient)
+	if(!QDELETED(bot_pawn))
+		bot_pawn.melee_attack(patient)
 	finish_action(controller, TRUE, target_key)
 
 // only clear the target if they get healed
@@ -126,7 +127,7 @@
 /datum/ai_planning_subtree/handle_medbot_speech/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
 	//we cant speak!
-	if(!(bot_pawn.medical_mode_flags & MEDBOT_SPEAK_MODE))
+	if(QDELETED(bot_pawn) || !(bot_pawn.medical_mode_flags & MEDBOT_SPEAK_MODE))
 		return
 
 	var/currently_tipped = bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE
@@ -173,7 +174,7 @@
 
 /datum/ai_planning_subtree/find_and_hunt_target/patients_in_crit/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/medbot/bot_pawn = controller.pawn
-	if(!(bot_pawn.medical_mode_flags & MEDBOT_DECLARE_CRIT))
+	if(QDELETED(bot_pawn) || !(bot_pawn.medical_mode_flags & MEDBOT_DECLARE_CRIT))
 		return
 	return ..()
 

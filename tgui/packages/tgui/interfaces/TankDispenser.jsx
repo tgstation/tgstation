@@ -18,7 +18,8 @@ export const TankDispenser = (props) => {
                   disabled={!data.plasma}
                   onClick={() => act('plasma')}
                 />
-              }>
+              }
+            >
               {data.plasma}
             </LabeledList.Item>
             <LabeledList.Item
@@ -30,7 +31,8 @@ export const TankDispenser = (props) => {
                   disabled={!data.oxygen}
                   onClick={() => act('oxygen')}
                 />
-              }>
+              }
+            >
               {data.oxygen}
             </LabeledList.Item>
           </LabeledList>

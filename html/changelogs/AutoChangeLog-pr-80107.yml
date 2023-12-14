@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixed mutations holding onto refs after removal"
-  - bugfix: "fixes timed dna injectors"

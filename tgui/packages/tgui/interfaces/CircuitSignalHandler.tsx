@@ -1,4 +1,4 @@
-import { Component } from 'inferno';
+import { Component } from 'react';
 import { useBackend } from '../backend';
 import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
 import { Window } from '../layouts';
@@ -110,7 +110,7 @@ export class CircuitSignalHandler extends Component<
                             // have a number->key assoc array here, so we have
                             // to explicitly cast it to a number[] type.
                             const bitflag_keys = Object.keys(
-                              this.bitflags
+                              this.bitflags,
                             ) as unknown as number[];
                             responseList.push({
                               name: 'Response',
