@@ -2,6 +2,10 @@
 	icon = 'massmeta/icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'massmeta/icons/mob/clothing/suits/armor.dmi'
 
+/obj/item/clothing/suit/armor/vest/det_suit
+	icon = 'massmeta/icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'massmeta/icons/mob/clothing/suits/armor.dmi'
+
 /obj/item/clothing/suit/armor/hos/trenchcoat
 	icon = 'massmeta/icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'massmeta/icons/mob/clothing/suits/armor.dmi'
