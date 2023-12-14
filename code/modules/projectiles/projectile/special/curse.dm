@@ -72,3 +72,4 @@
 	speed = 1
 	range = 20
 	color = "#ff7e7e"//Tint it slightly
+
