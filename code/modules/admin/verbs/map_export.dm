@@ -257,5 +257,5 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		var/length = GLOB.save_file_chars.len
 		var/calculated = FLOOR((index-1) / (length ** (i - 1)), 1)
 		calculated = (calculated % length) + 1
-		output = "[GLOB.save_file_chars[c]][output]"
+		output = "[GLOB.save_file_chars[calculated]][output]"
 	return output
