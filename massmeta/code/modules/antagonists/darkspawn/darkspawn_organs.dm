@@ -21,6 +21,3 @@
 	)
 	playsound(source, SFX_BULLET_MISS, 75, TRUE)
 	return COMPONENT_BULLET_PIERCED
-
-/obj/item/organ/internal/eyes/shadow/darkspawn
-	sight_flags = SEE_MOBS
