@@ -398,8 +398,13 @@ Moving interrupts
 	stop_sculpting(silent = !interrupted)
 
 /// To setup the sculpting target for the carving block
-/obj/item/chisel/proc/set_block(obj/structure/carving_block/B, mob/living/user, silent = FALSE)
-	prepared_block = B
+/obj/item/chisel/proc/set_block(obj/structure/carving_block/block, mob/living/user, silent = FALSE)
+	prepared_block = block
+	// certain materials with a texture_layer_icon_state attatch this appearance flag to our carving block
+	// that prevents filters from working properly while we sculpt. The carving block gets destroyed
+	// after we finish so we don't need to reset the flag
+	prepared_block.appearance_flags &= ~KEEP_TOGETHER
+
 	tracked_user = user
 	RegisterSignal(tracked_user, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	if(!silent)
@@ -560,7 +565,7 @@ Moving interrupts
 		else
 			var/mask_offset = min(world.icon_size, round(completion * world.icon_size))
 			remove_filter("partial_uncover")
-			add_filter("partial_uncover", 1, alpha_mask_filter(icon = white, y = -mask_offset))
+			add_filter("partial_uncover", 1, alpha_mask_filter(icon=white, y=-mask_offset))
 			statue_overlay.filters = filter(type="alpha", icon=white, y=-mask_offset, flags=MASK_INVERSE)
 	update_appearance()
 
