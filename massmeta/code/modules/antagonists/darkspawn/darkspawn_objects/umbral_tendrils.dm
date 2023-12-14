@@ -12,9 +12,6 @@
 	attack_verb_continuous = list("impales", "tentacles", "torns")
 	attack_verb_simple = list("impale", "tentacle", "torn")
 	item_flags = ABSTRACT | DROPDEL
-
-	COOLDOWN_DECLARE(tentacle_swing)
-
 	var/datum/antagonist/darkspawn/darkspawn
 	var/obj/item/umbral_tendrils/twin
 	var/ranged_mode = FALSE
@@ -22,7 +19,7 @@
 /obj/item/umbral_tendrils/Initialize(mapload, new_darkspawn)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NODROP, ABSTRACT_ITEM_TRAIT)
-	AddElement(/datum/element/light_eater)
+	AddComponent(/datum/component/light_eater)
 	darkspawn = new_darkspawn
 	for(var/obj/item/umbral_tendrils/U in loc)
 		if(U != src)
@@ -124,9 +121,6 @@
 			if(isopenturf(target))
 				tendril_jump(user, target)
 		if(user.combat_mode)
-			if(!COOLDOWN_FINISHED(src, tentacle_swing))
-				user.balloon_alert(user, "on cooldown!")
-				return
 			tendril_swing(user, target)
 
 /obj/item/umbral_tendrils/proc/tendril_jump(mob/living/user, turf/open/target) //throws the user towards the target turf
@@ -138,7 +132,7 @@
 		return
 	to_chat(user, span_velvet("You pull yourself towards [target]."))
 	playsound(user, 'sound/magic/tail_swing.ogg', 10, TRUE)
-	user.throw_at(target, 5, 3, gentle = TRUE)
+	user.throw_at(target, 5, 3)
 	darkspawn.use_psi(10)
 
 /obj/item/umbral_tendrils/proc/tendril_swing(mob/living/user, mob/living/target) //swing the tendrils to knock someone down
@@ -153,8 +147,7 @@
 	T.twinned = twin
 	T.firer = user
 	T.fire()
-	attack_self(user)
-	COOLDOWN_START(src, tentacle_swing, 2 SECONDS)
+	qdel(src)
 
 /obj/projectile/umbral_tendrils
 	name = "umbral tendrils"
@@ -192,7 +185,7 @@
 			else
 				L.Immobilize(0.15 SECONDS) // so they cant cancel the throw by moving
 				//why use target instead of L?
-				L.throw_at(get_step_towards(firer, target), 7, 2, gentle = TRUE) //pull them towards us!
+				L.throw_at(get_step_towards(firer, target), 7, 2) //pull them towards us!
 				target.visible_message(span_warning("[firer]'s [name] slam into [target] and drag them across the ground!"), \
 				span_userdanger("You're suddenly dragged across the floor!"))
 				L.Knockdown(8 SECONDS) //these can't hit people who are already on the ground but they can be spammed to all shit
