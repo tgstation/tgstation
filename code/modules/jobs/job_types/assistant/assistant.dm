@@ -70,6 +70,17 @@ Assistant
 	else
 		uniform = GLOB.colored_assistant.jumpskirts[index]
 
+/datum/job/assistant/get_outfit()
+	if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
+		return ..()
+
+	var/static/list/gimmicks = list()
+	if(!length(gimmicks))
+		for(var/datum/outfit/job/assistant/gimmick/gimmick_outfit as anything in subtypesof(/datum/outfit/job/assistant/gimmick))
+			gimmicks[gimmick_outfit] = gimmick_outfit::outfit_weight
+
+	return pick_weight(gimmicks)
+
 /datum/outfit/job/assistant/consistent
 	name = "Assistant - Consistent"
 

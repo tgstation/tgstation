@@ -1,15 +1,4 @@
-// This file contains the code and outfits for the assistant gimmicks station trait! When active, gives assistants random stupid gear
-/datum/job/assistant/get_outfit()
-	if(!HAS_TRAIT(SSstation, STATION_TRAIT_ASSISTANT_GIMMICKS))
-		return ..()
-
-	else
-		var/static/list/gimmicks = list()
-		if(!LAZYLEN(gimmicks))
-			for(var/datum/outfit/job/assistant/gimmick/gimmick_outfit as anything in subtypesof(/datum/outfit/job/assistant/gimmick))
-				gimmicks[gimmick_outfit] = gimmick_outfit::outfit_weight
-
-		return pick_weight(gimmicks)
+// This file contains the louadouts for the assistant gimmicks station trait! When active, gives assistants random stupid gear
 
 /// Parent type of gimmick loadouts for assistants for the functional assistant station traits
 /datum/outfit/job/assistant/gimmick
