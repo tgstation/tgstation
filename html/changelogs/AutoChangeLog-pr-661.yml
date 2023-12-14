@@ -1,0 +1,5 @@
+author: "dwasint"
+delete-after: True
+changes:
+  - rscadd: "growth dishes, Growth dishes now have their appearance depend on the disease in them. with a random color and a random pattern of a random color. Major mutations may cause a variation in color."
+  - rscadd: "pathology database, The Pathogen database lists mutated pathogen as children of the original pathogen, making archiving sensibly easier. Pathogen may also now be given a nickname instead of a name. Said nickname will appear when the disease is analyzed in a mob or on the Medical HUD. You may also change the disease's dangerosity from Undetermined to Safe or Dangerous, which will change the appearance of the Status icon that appears on the Medical HUD."
