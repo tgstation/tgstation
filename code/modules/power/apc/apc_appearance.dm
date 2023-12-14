@@ -118,4 +118,4 @@
 	if(malfai?.client)
 		mobs_to_show |= malfai.client
 	flick_overlay_global(hacker_image, mobs_to_show, 1 SECONDS)
-	hacked_flicker_counter = pick(3, 4, 5) //The counter is decrimented in the process() proc, which runs every two seconds.
+	hacked_flicker_counter = rand(3, 5) //The counter is decrimented in the process() proc, which runs every two seconds.
