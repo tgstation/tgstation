@@ -16,8 +16,7 @@
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_click))
 	RegisterSignal(target, COMSIG_ATOM_EXITED, PROC_REF(atom_exited))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
-	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	RegisterSignal(living_target.ai_controller, COMSIG_QDELETING, PROC_REF(on_controller_qdeleting))
+	RegisterSignals(target, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_death))
 
 /// Returns the item held in a mob's blackboard, if it has one
 /datum/element/ai_held_item/proc/get_held_item(mob/living/source)
@@ -68,8 +67,3 @@
 	ol_yeller.visible_message(span_danger("[ol_yeller] drops [carried_item] as [ol_yeller.p_they()] die[ol_yeller.p_s()]."))
 	carried_item.forceMove(ol_yeller.drop_location())
 	ol_yeller.ai_controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)
-
-/// If our controller is qdeleting, drop anything we were carrying
-/datum/element/ai_held_item/proc/on_controller_qdeleting(datum/ai_controller/controller)
-	SIGNAL_HANDLER
-	on_death(controller.pawn)

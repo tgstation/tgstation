@@ -338,10 +338,13 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
-// qdel the controller if the pawn has been qdeleted
+// Turn the controller off the controller if the pawn has been qdeleted
 /datum/ai_controller/proc/on_pawn_qdeleted()
 	SIGNAL_HANDLER
-	qdel(src)
+	set_ai_status(AI_STATUS_OFF)
+	// set these unconditionally in this case
+	current_movement_target = null
+	movement_target_source = type
 
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
