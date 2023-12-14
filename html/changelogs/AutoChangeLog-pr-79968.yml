@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored some methods of items interacting with other objects or mobs, such as surgery and health analzyers. Report if anything seems wrong"

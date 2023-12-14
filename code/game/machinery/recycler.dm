@@ -151,6 +151,10 @@
 			var/obj/item/mmi/as_mmi = thing
 			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
+			if(isitem(as_object))
+				var/obj/item/as_item = as_object
+				if(as_item.item_flags & ABSTRACT) //also catches organs and bodyparts *stares*
+					continue
 			nom += thing
 		else if(isliving(thing))
 			living_detected = TRUE

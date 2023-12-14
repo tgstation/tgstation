@@ -420,7 +420,7 @@
 			if(BODY_ZONE_HEAD)
 				plasmalimb = new /obj/item/bodypart/head/plasmaman
 
-		burn_human.del_and_replace_bodypart(plasmalimb)
+		burn_human.del_and_replace_bodypart(plasmalimb, special = TRUE)
 		burn_human.update_body_parts()
 		burn_human.emote("scream")
 		burn_human.visible_message(span_warning("[burn_human]'s [burn_limb.plaintext_zone] melts down to the bone!"), \

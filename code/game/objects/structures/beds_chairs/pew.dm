@@ -33,9 +33,7 @@
 /obj/structure/chair/pew/left/proc/gen_armrest()
 	leftpewarmrest = GetLeftPewArmrest()
 	leftpewarmrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE_EXPLICIT(leftpewarmrest, GAME_PLANE_UPPER, src)
 	update_leftpewarmrest()
-
 
 /obj/structure/chair/pew/left/proc/GetLeftPewArmrest()
 	return mutable_appearance('icons/obj/chairs_wide.dmi', "pewend_left_armrest")
@@ -76,7 +74,6 @@
 /obj/structure/chair/pew/right/proc/gen_armrest()
 	rightpewarmrest = GetRightPewArmrest()
 	rightpewarmrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE_EXPLICIT(rightpewarmrest, GAME_PLANE_UPPER, src)
 	update_rightpewarmrest()
 
 /obj/structure/chair/pew/right/proc/GetRightPewArmrest()

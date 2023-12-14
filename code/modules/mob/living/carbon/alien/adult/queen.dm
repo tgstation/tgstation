@@ -9,7 +9,6 @@
 	bubble_icon = "alienroyal"
 	mob_size = MOB_SIZE_LARGE
 	layer = LARGE_MOB_LAYER //above most mobs, but below speechbubbles
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	pressure_resistance = 200 //Because big, stompy xenos should not be blown around like paper.
 	butcher_results = list(/obj/item/food/meat/slab/xeno = 20, /obj/item/stack/sheet/animalhide/xeno = 3)
 
@@ -23,11 +22,11 @@
 
 /mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
 	. = ..()
-	SET_PLANE_IMPLICIT(src, GAME_PLANE_FOV_HIDDEN) //So it won't hide smaller mobs.
+	layer = LYING_MOB_LAYER
 
 /mob/living/carbon/alien/adult/royal/on_standing_up(new_lying_angle)
 	. = ..()
-	SET_PLANE_IMPLICIT(src, initial(plane))
+	layer = initial(layer)
 
 /mob/living/carbon/alien/adult/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE

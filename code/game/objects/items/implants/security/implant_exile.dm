@@ -5,11 +5,14 @@
 	name = "exile implant"
 	desc = "Prevents you from returning from away missions."
 	actions_types = null
+	implant_flags = IMPLANT_TYPE_SECURITY
+	hud_icon_state = "hud_imp_exile"
 
 /obj/item/implant/exile/get_data()
 	var/dat = {"<b>Implant Specifications:</b><BR>
 				<b>Name:</b> Nanotrasen Employee Exile Implant<BR>
-				<b>Implant Details:</b> The onboard gateway system has been modified to reject entry by individuals containing this implant.<BR>"}
+				<b>Implant Details:</b> The onboard gateway system has been modified to reject entry by individuals containing this implant.
+				Additionally, station mining shuttles will lock their controls if handled by someone with this implant.<BR>"}
 	return dat
 
 

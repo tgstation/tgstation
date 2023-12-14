@@ -19,6 +19,7 @@ export const NtosRoboControl = (props) => {
   const { act, data } = useBackend();
   const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const { bots, drones, id_owner, droneaccess, dronepingtypes } = data;
+
   return (
     <NtosWindow width={550} height={550}>
       <NtosWindow.Content scrollable>
