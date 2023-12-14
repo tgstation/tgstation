@@ -9,10 +9,8 @@
 		MAX_STACK_SIZE - size of a stack of mineral sheets. Constant.
 */
 
-//Only some parts of the item(stack only) was consumed
-#define PARTIAL_INSERT 1
 //The full item was consumed
-#define FULL_INSERT 2
+#define MATERIAL_INSERT_ITEM_SUCCESS 1
 
 /datum/component/material_container
 	/// The maximum amount of materials this material container can contain
@@ -277,6 +275,14 @@
 	//differs from held_item when using TK
 	var/active_held = user.get_active_held_item()
 
+	var/static/list/storage_items
+	if(isnull(storage_items))
+		storage_items = list(
+			/obj/item/storage/backpack,
+			/obj/item/storage/bag,
+			/obj/item/storage/box,
+		)
+
 	//1st iteration consumes all items that do not have contents inside
 	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration si its empty now)
 	for(var/i in 1 to 2)
@@ -320,13 +326,6 @@
 
 				//storage items usually come here but we make the exception only on the 1st iteration
 				//this is so players can insert items from their bags into machines for convinience
-				var/static/list/storage_items
-				if(isnull(storage_items))
-					storage_items = list(
-						/obj/item/storage/backpack,
-						/obj/item/storage/bag,
-						/obj/item/storage/box,
-					)
 				if(!is_type_in_list(target_item, storage_items))
 					continue
 				else if(!target_item.contents.len || i == 2)
@@ -339,16 +338,15 @@
 						to_chat(user, span_warning("[target_item] has its storage locked"))
 					return
 
-				//get all contents of this item reccursively
-				var/list/contents = target_item.get_all_contents_type(/obj/item)
 				//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
-				if(!isstack(target_item))
+				//for duffle bags and other storage items we can check for space 1 item at a time
+				if(!isstack(target_item) && !is_type_in_list(target_item, storage_items))
 					var/total_amount = 0
-					for(var/obj/item/weapon as anything in contents)
+					for(var/obj/item/weapon as anything in target_item.get_all_contents_type(/obj/item))
 						total_amount += get_item_material_amount(weapon, breakdown_flags)
 					if(!has_space(total_amount))
 						if(!(mat_container_flags & MATCONTAINER_SILENT))
-							to_chat(user, span_warning("[parent] does not have enough space for [target_item] [contents.len > 1 ? "And it's contents" : ""]!"))
+							to_chat(user, span_warning("[parent] does not have enough space for [target_item]!"))
 						return
 
 				first_checks = FALSE
@@ -417,30 +415,25 @@
 					//was this the original item in the players hand? put what's left back in the player's hand
 					if(!isnull(original_item))
 						user.put_in_active_hand(original_item)
-						//logging the operation to display for chat
-						var/list/chat_data = chat_msgs[item_name] || list()
-						chat_data["status"] = PARTIAL_INSERT
-						chat_data["stack"] = TRUE
-						chat_data["amount"] += inserted
-						chat_msgs[item_name] = chat_data
-						continue
 
 				//collect all messages to print later
-				var/list/chat_data = chat_msgs[item_name] || list()
-				chat_data["status"] = FULL_INSERT
-				chat_data["count"] += item_count
+				var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] || list()
+				var/list/item_data = status_data[item_name] || list()
+				item_data["amount"] += inserted
 				if(!is_stack) //count will match with amount so its not required
-					chat_data["amount"] += inserted
+					item_data["count"] += item_count
 				else
-					chat_data["stack"] = TRUE
-				chat_msgs[item_name] = chat_data
+					item_data["stack"] = TRUE
+				status_data[item_name] = item_data
+				chat_msgs["[MATERIAL_INSERT_ITEM_SUCCESS]"] = status_data
 
 			else
 				//collect all messages to print later
-				var/list/chat_data = chat_msgs[item_name] || list()
-				chat_data["status"] = inserted
-				chat_data["count"] += item_count
-				chat_msgs[item_name] = chat_data
+				var/list/status_data = chat_msgs["[inserted]"] || list()
+				var/list/item_data = status_data[item_name] || list()
+				item_data["count"] += item_count
+				status_data[item_name] = item_data
+				chat_msgs["[inserted]"] = status_data
 
 				//player split the stack by the requested amount but even that split amount could not be salvaged. merge it back with the original
 				if(!isnull(item_stack) && was_stack_split)
@@ -458,30 +451,28 @@
 
 	//we now summarize the chat msgs collected
 	if(!(mat_container_flags & MATCONTAINER_SILENT))
-		for(var/item_name as anything in chat_msgs)
-			//get chat data
-			var/list/chat_data = chat_msgs[item_name]
+		for(var/status as anything in chat_msgs)
+			var/list/status_data = chat_msgs[status]
 
-			//read the params
-			var/status = chat_data["status"]
-			var/count = chat_data["count"]
-			var/amount = chat_data["amount"]
+			for(var/item_name as anything in status_data)
+				//read the params
+				var/list/chat_data = status_data[item_name]
+				var/count = chat_data["count"]
+				var/amount = chat_data["amount"]
 
-			//decode the message
-			switch(status)
-				if(FULL_INSERT) //no problems full item was consumed
-					if(chat_data["stack"])
-						to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] was consumed by [parent]"))
-					else
-						to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] worth [amount] sheets of material was consumed by [parent]"))
-				if(PARTIAL_INSERT) //only some sheets from a stack was consumed
-					to_chat(user, span_notice("Only [amount] sheets of [item_name] was consumed by [parent]"))
-				if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space
-					to_chat(user, span_warning("[parent] has no space to accept [item_name]"))
-				if(MATERIAL_INSERT_ITEM_NO_MATS) //no materials inside these items
-					to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] has no materials to be accepted by [parent]"))
-				if(MATERIAL_INSERT_ITEM_FAILURE) //could be because the material type was not accepted or other stuff
-					to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] was rejected by [parent]"))
+				//decode the message
+				switch(text2num(status))
+					if(MATERIAL_INSERT_ITEM_SUCCESS) //no problems full item was consumed
+						if(chat_data["stack"])
+							to_chat(user, span_notice("[amount > 1 ? amount : ""] [item_name][amount > 1 ? "'s" : ""] was consumed by [parent]"))
+						else
+							to_chat(user, span_notice("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] worth [amount] sheets of material was consumed by [parent]"))
+					if(MATERIAL_INSERT_ITEM_NO_SPACE) //no space
+						to_chat(user, span_warning("[parent] has no space to accept [item_name]"))
+					if(MATERIAL_INSERT_ITEM_NO_MATS) //no materials inside these items
+						to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] has no materials to be accepted by [parent]"))
+					if(MATERIAL_INSERT_ITEM_FAILURE) //could be because the material type was not accepted or other stuff
+						to_chat(user, span_warning("[count > 1 ? count : ""] [item_name][count > 1 ? "'s" : ""] was rejected by [parent]"))
 
 /// Proc that allows players to fill the parent with mats
 /datum/component/material_container/proc/on_attackby(datum/source, obj/item/weapon, mob/living/user)
@@ -772,5 +763,4 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-#undef PARTIAL_INSERT
-#undef FULL_INSERT
+#undef MATERIAL_INSERT_ITEM_SUCCESS
