@@ -272,6 +272,121 @@
 	greyscale_config = /datum/greyscale_config/festive_hat
 	greyscale_config_worn = /datum/greyscale_config/festive_hat/worn
 
+/datum/station_trait/scarves
+	name = "Scarves"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 10
+	show_in_report = TRUE
+	var/list/scarves
+
+/datum/station_trait/scarves/New()
+	. = ..()
+	report_message = pick(
+		"Nanotrasen is experimenting with seeing if neck warmth improves employee morale.",
+		"After Space Fashion Week, scarves are the hot new accessory.",
+		"Everyone was simultaneously a little bit cold when they packed to go to the station.",
+		"The station is definitely not under attack by neck grappling aliens masquerading as wool. Definitely not.",
+		"You all get free scarves. Don't ask why.",
+		"A shipment of scarves was delivered to the station.",
+	)
+	scarves = typesof(/obj/item/clothing/neck/scarf) + list(
+		/obj/item/clothing/neck/large_scarf/red,
+		/obj/item/clothing/neck/large_scarf/green,
+		/obj/item/clothing/neck/large_scarf/blue,
+	)
+
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+
+/datum/station_trait/scarves/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
+	SIGNAL_HANDLER
+	var/scarf_type = pick(scarves)
+
+	spawned.equip_to_slot_or_del(new scarf_type(spawned), ITEM_SLOT_NECK, initial = FALSE)
+
+/datum/station_trait/wallets
+	name = "Wallets!"
+	trait_type = STATION_TRAIT_NEUTRAL
+	show_in_report = TRUE
+	weight = 10
+	report_message = "It has become temporarily fashionable to use a wallet, so everyone on the station has been issued one."
+
+/datum/station_trait/wallets/New()
+	. = ..()
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/wallets/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+	SIGNAL_HANDLER
+
+	var/obj/item/card/id/advanced/id_card = living_mob.get_item_by_slot(ITEM_SLOT_ID)
+	if(!istype(id_card))
+		return
+
+	living_mob.temporarilyRemoveItemFromInventory(id_card, force=TRUE)
+
+	// "Doc, what's wrong with me?"
+	var/obj/item/storage/wallet/wallet = new(src)
+	// "You've got a wallet embedded in your chest."
+	wallet.add_fingerprint(living_mob, ignoregloves = TRUE)
+
+	living_mob.equip_to_slot_if_possible(wallet, ITEM_SLOT_ID, initial=TRUE)
+
+	id_card.forceMove(wallet)
+
+	var/holochip_amount = id_card.registered_account.account_balance
+	new /obj/item/holochip(wallet, holochip_amount)
+	id_card.registered_account.adjust_money(-holochip_amount, "System: Withdrawal")
+
+	new /obj/effect/spawner/random/entertainment/wallet_storage(wallet)
+
+	// Put our filthy fingerprints all over the contents
+	for(var/obj/item/item in wallet)
+		item.add_fingerprint(living_mob, ignoregloves = TRUE)
+
+/datum/station_trait/outfit_color
+	name = "Laundry Disaster"
+	trait_type = STATION_TRAIT_NEUTRAL
+	abstract_type = /datum/station_trait/outfit_color
+	show_in_report = TRUE
+	report_message = "So, we ended up doing something astract and unspecified with the corporate laundry."
+
+/datum/station_trait/outfit_color/New()
+	. = ..()
+	blacklist = typesof(/datum/station_trait/outfit_color) - type
+	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
+
+/datum/station_trait/outfit_color/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
+	SIGNAL_HANDLER
+	var/slot_flags_to_update = NONE
+	for(var/obj/item/item as anything in living_mob.get_equipped_items(include_accessories = TRUE))
+		if(living_mob.is_holding(item)) //We don't care of held items.
+			continue
+		item.add_atom_colour(get_new_color(), WASHABLE_COLOUR_PRIORITY)
+		slot_flags_to_update |= item.slot_flags
+	living_mob.update_clothing(slot_flags_to_update)
+
+/datum/station_trait/outfit_color/proc/get_new_color()
+	SHOULD_CALL_PARENT(FALSE)
+
+/datum/station_trait/outfit_color/rotated
+	weight = 1
+	report_message = "So ugh, before the shift we tried a new experimental slime jelly and plasma-infused laundry capsule, and..."
+	var/rotation = 120
+
+/datum/station_trait/outfit_color/rotated/get_new_color()
+	return color_matrix_rotate_hue(rotation)
+
+/datum/station_trait/outfit_color/random
+	weight = 1
+	report_message = "So ugh, a clown pulled a prank on us and dyed your outfits of random colors at the last minute..."
+
+/datum/station_trait/outfit_color/random/get_new_color()
+	return RANDOM_COLOUR
+
+/datum/station_trait/outfit_color/rotated/New()
+	. = ..()
+	rotation = pick(120, 240)
+
 /// Tells the area map generator to ADD MORE TREEEES
 /datum/station_trait/forested
 	name = "Forested"
