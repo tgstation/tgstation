@@ -123,7 +123,7 @@
 	hidden = TRUE
 
 /datum/mood_event/changeling_enjoyer
-	description = "I have beared witness to the miracles of the hive!"
+	description = "I have been blessed by the hive!"
 	mood_change = 10
 	timeout = 5 MINUTES
 
