@@ -27,9 +27,7 @@ Space Station 13 is a paranoia-laden round-based roleplaying game set against th
 
 [Maps and Away Missions](.github/guides/MAPS_AND_AWAY_MISSIONS.md)
 
-## :exclamation: How to compile :exclamation:
-
-On **2021-01-04** we have changed the way to compile the codebase.
+## Compilation
 
 **The quick way**. Find `bin/server.cmd` in this folder and double click it to automatically build and host the server on port 1337.
 
