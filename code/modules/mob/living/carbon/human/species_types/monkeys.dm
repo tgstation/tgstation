@@ -217,4 +217,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 
+/datum/species/monkey/holodeck/check_roundstart_eligible()
+	return FALSE
+
 #undef MONKEY_SPEC_ATTACK_BITE_MISS_CHANCE

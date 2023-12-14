@@ -27,6 +27,9 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/monkey,
 	)
 
+/datum/species/monkey/human_legged/check_roundstart_eligible()
+	return FALSE
+
 /datum/species/monkey/monkey_freak
 	name = "human-armed monkey"
 	id = SPECIES_MONKEY_FREAK
@@ -40,6 +43,9 @@
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/monkey,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
+
+/datum/species/monkey/monkey_freak/check_roundstart_eligible()
+	return FALSE
 
 /mob/living/carbon/human/species/monkey/humand_legged
 	race = /datum/species/monkey/human_legged
