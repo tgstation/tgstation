@@ -89,14 +89,14 @@
 	. = ..()
 	RegisterSignal(owner, COMSIG_CARBON_PRE_MISC_HELP, PROC_REF(on_helped))
 	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_TENTACLE_IMMUNE), COMSIG_BRIMDUST_EXPLOSION), PROC_REF(release))
-	RegisterSignals(tentacle, list(COMSIG_PARENT_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING), PROC_REF(on_tentacle_left))
+	RegisterSignals(tentacle, list(COMSIG_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING), PROC_REF(on_tentacle_left))
 
 /datum/status_effect/incapacitating/stun/goliath_tentacled/on_remove()
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_CARBON_PRE_MISC_HELP, SIGNAL_ADDTRAIT(TRAIT_TENTACLE_IMMUNE), COMSIG_BRIMDUST_EXPLOSION))
 	if (isnull(tentacle))
 		return
-	UnregisterSignal(tentacle, list(COMSIG_PARENT_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING))
+	UnregisterSignal(tentacle, list(COMSIG_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING))
 	tentacle.retract()
 	tentacle = null
 
@@ -115,6 +115,6 @@
 /// Something happened to our associated tentacle
 /datum/status_effect/incapacitating/stun/goliath_tentacled/proc/on_tentacle_left()
 	SIGNAL_HANDLER
-	UnregisterSignal(tentacle, list(COMSIG_PARENT_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING)) // No endless loops for us please
+	UnregisterSignal(tentacle, list(COMSIG_QDELETING, COMSIG_GOLIATH_TENTACLE_RETRACTING)) // No endless loops for us please
 	tentacle = null
 	release()

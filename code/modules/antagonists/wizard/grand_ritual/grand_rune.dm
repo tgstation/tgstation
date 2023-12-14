@@ -193,8 +193,8 @@
 	INVOKE_ASYNC(src, PROC_REF(summon_round_event), user) // Running the event sleeps
 	trigger_side_effects()
 	tear_reality()
-	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE)
-	flick("activate", src)
+	SEND_SIGNAL(src, COMSIG_GRAND_RUNE_COMPLETE, cheese_sacrificed)
+	flick("[icon_state]_activate", src)
 	addtimer(CALLBACK(src, PROC_REF(remove_rune)), 6)
 	SSblackbox.record_feedback("amount", "grand_runes_invoked", 1)
 
@@ -221,7 +221,7 @@
 		return
 
 	var/datum/round_event_control/final_event = pick (possible_events)
-	final_event.runEvent()
+	final_event.run_event(event_cause = "a Grand Ritual Rune")
 	to_chat(user, span_notice("Your released magic afflicts the crew: [final_event.name]!"))
 
 /// Applies some local side effects to the area
@@ -321,6 +321,7 @@
 		return
 	return ..()
 
+
 #define PICK_NOTHING "Continuation"
 
 /// Make a selection from a radial menu.
@@ -365,6 +366,7 @@
 	if (!finale_effect)
 		return ..()
 	return finale_effect.ritual_invoke_time
+
 
 /**
  * Spawned when 50 or more cheese was sacrificed during previous grand rituals.

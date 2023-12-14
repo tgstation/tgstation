@@ -68,10 +68,10 @@
 /// Setter for reference handling
 /datum/component/ranged_mob_full_auto/proc/set_target(atom/new_target)
 	if (!isnull(target))
-		UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(target, COMSIG_QDELETING)
 	target = new_target
 	if (!isnull(target))
-		RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_deleted))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
 
 /// Don't hang references
 /datum/component/ranged_mob_full_auto/proc/on_target_deleted()

@@ -34,7 +34,7 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
+	RegisterSignal(scrubber, COMSIG_QDELETING, PROC_REF(scrubber_move))
 
 	spawned_mob = get_mob()
 	end_when = rand(300, 600)
@@ -125,7 +125,7 @@
 		kill()
 		CRASH("Unable to find suitable scrubber.")
 
-	RegisterSignal(scrubber, COMSIG_PARENT_QDELETING, PROC_REF(scrubber_move))
+	RegisterSignal(scrubber, COMSIG_QDELETING, PROC_REF(scrubber_move))
 
 	scrubber.clog()
 	scrubber.produce_mob(spawned_mob, living_mobs)

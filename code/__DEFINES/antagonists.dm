@@ -326,3 +326,6 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_SYNDICATE "Syndicate"
 #define ANTAG_GROUP_WIZARDS "Wizard Federation"
 #define ANTAG_GROUP_XENOS "Xenomorph Infestation"
+
+// This flag disables certain checks that presume antagonist datums mean 'baddie'.
+#define FLAG_FAKE_ANTAG (1 << 0)

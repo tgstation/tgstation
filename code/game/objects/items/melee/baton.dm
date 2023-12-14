@@ -443,7 +443,7 @@
 			log_mapping("[src] at [AREACOORD(src)] had an invalid preload_cell_type: [preload_cell_type].")
 		else
 			cell = new preload_cell_type(src)
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, PROC_REF(convert))
+	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(convert))
 	update_appearance()
 
 /obj/item/melee/baton/security/get_cell()
@@ -461,7 +461,7 @@
 /obj/item/melee/baton/security/Destroy()
 	if(cell)
 		QDEL_NULL(cell)
-	UnregisterSignal(src, COMSIG_PARENT_ATTACKBY)
+	UnregisterSignal(src, COMSIG_ATOM_ATTACKBY)
 	return ..()
 
 /obj/item/melee/baton/security/proc/convert(datum/source, obj/item/item, mob/user)

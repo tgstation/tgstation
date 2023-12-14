@@ -23,7 +23,7 @@
 	START_PROCESSING(subsystem, src);\
 	if(assoc_comp) {\
 		assoc_comp = AddComponent(assoc_comp, forced_origin);\
-		RegisterSignal(src, COMSIG_PARENT_QDELETING, PROC_REF(on_delete));\
+		RegisterSignal(src, COMSIG_QDELETING, PROC_REF(on_delete));\
 	}\
 } \
 ##X/proc/on_delete(atom/source){\

@@ -754,9 +754,9 @@
 /obj/item/hand_item/self_grasp/Destroy()
 	if(user)
 		to_chat(user, span_warning("You stop holding onto your[grasped_part ? " [grasped_part.name]" : "self"]."))
-		UnregisterSignal(user, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(user, COMSIG_QDELETING)
 	if(grasped_part)
-		UnregisterSignal(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_PARENT_QDELETING))
+		UnregisterSignal(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING))
 		grasped_part.grasped_by = null
 		grasped_part.refresh_bleed_rate()
 	grasped_part = null
@@ -779,8 +779,8 @@
 	grasped_part = grasping_part
 	grasped_part.grasped_by = src
 	grasped_part.refresh_bleed_rate()
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(qdel_void))
-	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_PARENT_QDELETING), PROC_REF(qdel_void))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(qdel_void))
+	RegisterSignals(grasped_part, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_QDELETING), PROC_REF(qdel_void))
 
 	var/bleed_rate = grasped_part.get_modified_bleed_rate()
 	var/bleeding_text = (bleed_rate ? ", trying to stop the bleeding" : "")

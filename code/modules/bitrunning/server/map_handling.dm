@@ -101,7 +101,7 @@
 			var/turf/tile = get_turf(thing)
 			goal_turfs += tile
 			RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_goal_turf_entered))
-			RegisterSignal(tile, COMSIG_PARENT_EXAMINE, PROC_REF(on_goal_turf_examined))
+			RegisterSignal(tile, COMSIG_ATOM_EXAMINE, PROC_REF(on_goal_turf_examined))
 			qdel(thing)
 			continue
 

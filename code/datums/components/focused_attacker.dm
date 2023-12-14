@@ -19,7 +19,7 @@
 
 /datum/component/focused_attacker/Destroy(force, silent)
 	if (!isnull(last_target))
-		UnregisterSignal(last_target, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(last_target, COMSIG_QDELETING)
 	return ..()
 
 /datum/component/focused_attacker/RegisterWithParent()
@@ -61,9 +61,9 @@
 /// Register a new target
 /datum/component/focused_attacker/proc/register_new_target(atom/target)
 	if (!isnull(last_target))
-		UnregisterSignal(last_target, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(last_target, COMSIG_QDELETING)
 	last_target = target
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_deleted))
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_deleted))
 
 /// Drop our target ref on deletion
 /datum/component/focused_attacker/proc/on_target_deleted(target)

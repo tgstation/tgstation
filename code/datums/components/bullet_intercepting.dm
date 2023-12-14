@@ -40,7 +40,7 @@
 	if (!(active_slots & slot))
 		return
 	RegisterSignal(equipper, COMSIG_PROJECTILE_PREHIT, PROC_REF(on_wearer_shot))
-	RegisterSignal(equipper, COMSIG_PARENT_QDELETING, PROC_REF(on_wearer_deleted))
+	RegisterSignal(equipper, COMSIG_QDELETING, PROC_REF(on_wearer_deleted))
 	wearer = equipper
 
 /// Called when item is unequipped, stop tracking bullets
@@ -48,7 +48,7 @@
 	SIGNAL_HANDLER
 	if (!wearer)
 		return
-	UnregisterSignal(wearer, list(COMSIG_PROJECTILE_PREHIT, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(wearer, list(COMSIG_PROJECTILE_PREHIT, COMSIG_QDELETING))
 	wearer = null
 
 /// Called when wearer is shot, check if we're going to block the hit

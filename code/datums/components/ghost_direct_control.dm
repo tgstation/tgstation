@@ -41,10 +41,10 @@
 /datum/component/ghost_direct_control/RegisterWithParent()
 	. = ..()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_GHOST, PROC_REF(on_ghost_clicked))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
 /datum/component/ghost_direct_control/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_EXAMINE))
 	return ..()
 
 /datum/component/ghost_direct_control/Destroy(force, silent)

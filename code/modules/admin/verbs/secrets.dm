@@ -207,12 +207,11 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("Make Your Own")
 					AdminCreateVirus(holder)
 				if("Random")
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					E = DC.runEvent()
+					force_event(/datum/round_event_control/disease_outbreak)
 				if("Choose")
 					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sort_list(typesof(/datum/disease), GLOBAL_PROC_REF(cmp_typepaths_asc))
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
+					var/datum/round_event/disease_outbreak/DO = DC.run_event()
 					DO.virus_type = virus
 					E = DO
 		if("allspecies")
@@ -253,11 +252,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
-		if("tripleAI")
-			if(!is_funmin)
-				return
-			holder.triple_ai()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("onlyone")
 			if(!is_funmin)
 				return

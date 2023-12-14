@@ -30,10 +30,10 @@
 /datum/component/grillable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PLACED_ON, PROC_REF(on_grill_start))
 	RegisterSignal(parent, COMSIG_ITEM_GRILL_PROCESS, PROC_REF(on_grill))
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/grillable/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_GRILL_PLACED_ON, COMSIG_ITEM_GRILL_PROCESS, COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(parent, list(COMSIG_ITEM_GRILL_PLACED_ON, COMSIG_ITEM_GRILL_PROCESS, COMSIG_ATOM_EXAMINE))
 
 // Inherit the new values passed to the component
 /datum/component/grillable/InheritComponent(datum/component/grillable/new_comp, original, cook_result, required_cook_time, positive_result, use_large_steam_sprite)

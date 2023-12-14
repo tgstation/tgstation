@@ -65,12 +65,12 @@
 		return
 	RegisterSignal(quirk_holder, COMSIG_MOB_LOGIN, PROC_REF(enable))
 	RegisterSignal(quirk_holder, COMSIG_MOB_LOGOUT, PROC_REF(disable))
-	RegisterSignal(quirk_holder, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(examined))
+	RegisterSignal(quirk_holder, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(examined))
 
 /datum/quirk/clown_disbelief/remove()
 	. = ..()
 	disable()
-	UnregisterSignal(quirk_holder, COMSIG_MOB_LOGOUT, COMSIG_MOB_LOGIN, COMSIG_PARENT_EXAMINE_MORE)
+	UnregisterSignal(quirk_holder, COMSIG_MOB_LOGOUT, COMSIG_MOB_LOGIN, COMSIG_ATOM_EXAMINE_MORE)
 
 /datum/quirk/clown_disbelief/proc/examined(datum/source, mob/user, list/examine_list)
 	if(user.mind?.assigned_role.type == /datum/job/clown)

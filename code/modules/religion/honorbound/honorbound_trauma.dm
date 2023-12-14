@@ -189,13 +189,13 @@
 	if(QDELETED(honorbound))
 		return FALSE
 
-	RegisterSignal(honorbound, COMSIG_PARENT_QDELETING, PROC_REF(on_honor_trauma_lost))
+	RegisterSignal(honorbound, COMSIG_QDELETING, PROC_REF(on_honor_trauma_lost))
 	honor_trauma = honorbound
 	return ..()
 
 /datum/action/cooldown/spell/pointed/declare_evil/Remove(mob/living/remove_from)
 	. = ..()
-	UnregisterSignal(honor_trauma, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(honor_trauma, COMSIG_QDELETING)
 	honor_trauma = null
 
 /// If we lose our honor trauma somehow, self-delete (and clear references)

@@ -218,6 +218,10 @@
 	track = EVENT_TRACK_MODERATE
 	tags = list(TAG_DESTRUCTIVE, TAG_SPACE, TAG_EXTERNAL)
 
+/datum/round_event_control/supermatter_surge
+	track = EVENT_TRACK_MODERATE
+	tags = list(TAG_DESTRUCTIVE, TAG_COMMUNAL)
+
 /datum/round_event_control/tram_malfunction
 	track = EVENT_TRACK_MUNDANE
 	tags = list(TAG_COMMUNAL)

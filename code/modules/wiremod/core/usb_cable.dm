@@ -88,13 +88,13 @@
 
 /obj/item/usb_cable/proc/register_circuit_signals()
 	RegisterSignal(attached_circuit, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(attached_circuit, COMSIG_PARENT_QDELETING, PROC_REF(on_circuit_qdeling))
+	RegisterSignal(attached_circuit, COMSIG_QDELETING, PROC_REF(on_circuit_qdeling))
 	RegisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 
 /obj/item/usb_cable/proc/unregister_circuit_signals(obj/item/integrated_circuit/old_circuit)
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 	))
 
 	UnregisterSignal(attached_circuit.shell, COMSIG_MOVABLE_MOVED)

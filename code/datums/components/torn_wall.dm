@@ -19,7 +19,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/torn_wall/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WELDER), PROC_REF(on_welded))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
 	RegisterSignal(parent, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changed))
@@ -28,7 +28,7 @@
 /datum/component/torn_wall/UnregisterFromParent()
 	var/atom/atom_parent = parent
 	UnregisterSignal(parent, list(
-		COMSIG_PARENT_EXAMINE,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_TOOL_ACT(TOOL_WELDER),
 		COMSIG_ATOM_UPDATE_OVERLAYS,
 		COMSIG_TURF_CHANGE,

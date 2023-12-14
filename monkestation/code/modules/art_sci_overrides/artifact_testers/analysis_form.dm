@@ -102,11 +102,11 @@
 
 /obj/item/sticker/analysis_form/register_signals(mob/living/user)
 	. = ..()
-	RegisterSignal(attached, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(attached, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/sticker/analysis_form/unregister_signals(datum/source)
 	. = ..()
-	UnregisterSignal(attached, list(COMSIG_PARENT_EXAMINE))
+	UnregisterSignal(attached, list(COMSIG_ATOM_EXAMINE))
 
 /obj/item/sticker/analysis_form/examine(mob/user)
 	. = ..()

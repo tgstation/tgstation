@@ -144,7 +144,7 @@
 	if(src)
 		color = RUNE_COLOR_RED
 	RegisterSignal(overflow_control, COMSIG_CREATED_ROUND_EVENT, PROC_REF(on_created_round_event))
-	overflow_control.runEvent()
+	overflow_control.run_event()
 
 /obj/effect/rune/beer/proc/on_created_round_event(datum/round_event_control/source_event_control, datum/round_event/scrubber_overflow/every_vent/created_event)
 	SIGNAL_HANDLER
