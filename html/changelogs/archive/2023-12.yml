@@ -422,3 +422,27 @@
   jlsnow301:
   - bugfix: You should be able to edit your character using the feature buttons again.
   - bugfix: You should be able to move stamps on paper again.
+2023-12-14:
+  Iamgoofball:
+  - balance: Light Footed now makes stepping on glass Knockdown instead of Paralyze
+  - code_imp: Fixes some single letter variable usage in caltrop.dm
+  LemonInTheDark, Donglesplonge:
+  - image: Redoes fov "mask" sprites. They're clean, have a very pleasant dithering
+      effect, and look real fuckin good!
+  - rscdel: Changed FOV, it no longer hides mobs, instead it blurs the hidden area,
+      and makes it a bit darker/oversaturated
+  Profakos:
+  - bugfix: Crabs will properly only target Tiny creatures
+  Y0SH1M4S73R:
+  - qol: The asteroid on Tramstation can now have areas expanded into or created within.
+  jlsnow301:
+  - bugfix: Cult chat, PDAs, succumbing, etc shouldn't blue screen anymore.
+  san7890:
+  - server: The TGS -> Discord Relay Warning that detects if a cliented mob has a
+      null loc should now be plaintext instead of being fully screwed up with useless
+      codestuffs.
+  - qol: For admins, in the "Spawn Atom" window where you pick atoms to spawn-by-type,
+      anything that is a subtype of `/mob/living/basic` should now be replaced with
+      the `BASIC` tag instead (like with carbons, reagent containers, turfs, etc.).
+      So, instead of having to scroll through and try and figure out what that weird
+      subtype of Poly is, it should now be easier to read in that smaller screen.
