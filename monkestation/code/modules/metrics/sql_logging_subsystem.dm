@@ -70,6 +70,9 @@ SUBSYSTEM_DEF(sql_logging)
 /proc/add_event_to_buffer(atom/source, atom/target, data, log_key = "GAME", voluntary = TRUE)
 	if(!data)
 		return
+	if(ismind(source))
+		var/datum/mind/mind = source
+		source = mind.current
 
 	var/list/sorted_data = list()
 
@@ -82,7 +85,7 @@ SUBSYSTEM_DEF(sql_logging)
 
 	var/target_name = "No Target"
 	var/target_ckey = "No Target"
-	if(target)
+	if(target && !isnull(target))
 		if(ismob(target))
 			var/mob/mob = target
 			if(mob.client)
@@ -92,7 +95,7 @@ SUBSYSTEM_DEF(sql_logging)
 				target_name = target.name
 				target_ckey = "Non Client Target"
 
-	if(source)
+	if(source && !isnull(source))
 		if(ismob(source))
 			var/mob/mob = source
 			if(mob.client)
