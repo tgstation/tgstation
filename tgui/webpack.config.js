@@ -55,9 +55,6 @@ module.exports = (env = {}, argv) => {
           use: [
             {
               loader: require.resolve('swc-loader'),
-              options: {
-                minify: mode === 'production',
-              },
             },
           ],
         },
@@ -129,6 +126,17 @@ module.exports = (env = {}, argv) => {
         './packages/tgui-bench/entrypoint',
       ],
     };
+  }
+
+  // Production build specific options
+  if (mode === 'production') {
+    const { EsbuildPlugin } = require('esbuild-loader');
+    config.optimization.minimizer = [
+      new EsbuildPlugin({
+        target: 'ie11',
+        css: true,
+      }),
+    ];
   }
 
   // Development build specific options
