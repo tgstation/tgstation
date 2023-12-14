@@ -6,19 +6,6 @@
 	/// The weight of the outfit to be picked
 	var/outfit_weight = 0
 
-/datum/outfit/job/assistant/gimmick/post_equip(mob/living/carbon/human/equipped, visualsOnly)
-	. = ..()
-
-	// Throw up any hoods
-	var/obj/item/clothing/suit/hooded/hood_suit = locate(/obj/item/clothing/suit/hooded) in equipped
-	if(!hood_suit)
-		return
-
-	var/datum/component/toggle_attached_clothing/component = hood_suit.GetComponent(/datum/component/toggle_attached_clothing)
-	if(!component)
-		return
-
-	component.toggle_deployable()
 
 /datum/outfit/job/assistant/gimmick/bee
 	name = "Gimmick Assistant - Bee"
