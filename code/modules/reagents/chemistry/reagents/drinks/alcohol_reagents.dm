@@ -2448,6 +2448,20 @@
 	var/atom/movable/plane_master_controller/game_plane_master_controller = psychonaut.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.add_filter("ritual_wine", 1, list("type" = "wave", "size" = 1, "x" = 5, "y" = 0, "flags" = WAVE_SIDEWAYS))
 
+/datum/reagent/consumable/ethanol/ritual_wine/on_mob_metabolize(mob/living/carbon/psychonaut, seconds_per_tick, times_fired)
+	. = ..()
+	if(IS_TIGER_FANATIC(psychonaut))
+		var/need_mob_update
+		var/healing = 1.5
+		need_mob_update = psychonaut.adjustToxLoss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += psychonaut.adjustOxyLoss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype, required_respiration_type = affected_respiration_type)
+		need_mob_update += psychonaut.adjustBruteLoss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += psychonaut.adjustFireLoss(-healing * REM * seconds_per_tick, updating_health = FALSE, required_bodytype = affected_bodytype)
+		need_mob_update += psychonaut.adjustOrganLoss(ORGAN_SLOT_LIVER, -healing * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		need_mob_update += psychonaut.adjustOrganLoss(ORGAN_SLOT_BRAIN, healing * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)
+		if(need_mob_update)
+			return UPDATE_MOB_HEALTH
+
 /datum/reagent/consumable/ethanol/ritual_wine/on_mob_end_metabolize(mob/living/psychonaut)
 	. = ..()
 	if(!psychonaut.hud_used)

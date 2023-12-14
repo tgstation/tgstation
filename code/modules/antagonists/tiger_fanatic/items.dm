@@ -68,6 +68,19 @@
 	desc = "These are used to cover up wounds along the arms. Deep ones."
 	icon_state = "bandages"
 
+// This is a little bit weaker than the bottled stuff
+/obj/item/reagent_containers/cup/glass/flask/ritual_wine
+	name = "flask of ritual wine"
+	desc = "For when times are tough. The hy-lurgixon teaches indulgence. But do it slowly."
+	icon_state = "flask_tiger"
+	list_reagents = list(
+		/datum/reagent/drug/mushroomhallucinogen = 15,
+		/datum/reagent/consumable/ethanol/ritual_wine = 30,
+		/datum/reagent/blood = 5,
+		/datum/reagent/medicine/omnizine = 5,
+		/datum/reagent/consumable/vinegar = 5,
+	)
+
 /datum/outfit/tiger_fanatic
 	name = "Tiger Fanatic Corpse"
 	uniform = /obj/item/clothing/under/syndicate/tacticool/puffed_shirt

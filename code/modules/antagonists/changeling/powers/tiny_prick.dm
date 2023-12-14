@@ -277,7 +277,7 @@
 	if(target.reagents && IS_TIGER_FANATIC(target))
 		var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
 		target.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4)
-		target.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 3)
+		target.reagents.add_reagent(/datum/reagent/medicine/changelinghaste, 3)
 		tiger_fanatic.receive_blessing()
 	return TRUE
 
