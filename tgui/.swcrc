@@ -1,8 +1,5 @@
 {
   "$schema": "https://json.schemastore.org/swcrc",
-  "env": {
-    "targets": "ie 11"
-  },
   "jsc": {
     "loose": true,
     "parser": {

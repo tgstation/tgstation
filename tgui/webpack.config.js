@@ -51,31 +51,10 @@ module.exports = (env = {}, argv) => {
     module: {
       rules: [
         {
-          test: /\.(js(x)?|cjs|ts(x)?)$/,
-          exclude: /node_modules/,
+          test: /\.([tj]s(x)?|cjs)$/,
           use: [
             {
               loader: require.resolve('swc-loader'),
-              options: {
-                env: {
-                  targets: 'ie 11',
-                },
-                jsc: {
-                  loose: true,
-                  parser: {
-                    syntax: 'typescript',
-                    tsx: true,
-                    dynamicImport: false,
-                    decorators: false,
-                  },
-                  transform: {
-                    react: {
-                      runtime: 'automatic',
-                    },
-                  },
-                },
-                minify: true,
-              },
             },
           ],
         },
