@@ -55,6 +55,9 @@ module.exports = (env = {}, argv) => {
           use: [
             {
               loader: require.resolve('swc-loader'),
+              options: {
+                minify: mode === 'production',
+              },
             },
           ],
         },

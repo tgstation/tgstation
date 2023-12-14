@@ -11,6 +11,5 @@
         "runtime": "automatic"
       }
     }
-  },
-  "minify": true
+  }
 }
