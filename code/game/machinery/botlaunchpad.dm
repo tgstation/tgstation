@@ -29,7 +29,7 @@
 	var/obj/item/multitool/multitool = tool
 	multitool.set_buffer(src)
 	balloon_alert(user, "saved to multitool buffer")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 // Checks the turf for a bot and launches it if it's the only mob on the pad.

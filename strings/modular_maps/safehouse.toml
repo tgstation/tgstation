@@ -1,5 +1,8 @@
 directory = "_maps/safehouses/"
 
+[rooms.abductor]
+modules = ["abductor.dmm"]
+
 [rooms.bathroom]
 modules = ["bathroom.dmm"]
 

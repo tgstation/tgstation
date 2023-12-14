@@ -21,11 +21,11 @@
 	if (owner.health <= HEALTH_DANGER_ZONE)
 		trigger_organ_action()
 
-/obj/item/organ/internal/monster_core/rush_gland/on_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/monster_core/rush_gland/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED, PROC_REF(trigger_organ_action))
 
-/obj/item/organ/internal/monster_core/rush_gland/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/monster_core/rush_gland/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED)
 

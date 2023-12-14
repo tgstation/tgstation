@@ -151,7 +151,7 @@
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	cell.add_fingerprint(user)
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(cell)
@@ -163,7 +163,7 @@
 	)
 	cell = null
 	diag_hud_set_mulebotcell()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)

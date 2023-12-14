@@ -1,7 +1,7 @@
 /obj/item/laser_pointer
 	name = "laser pointer"
 	desc = "Don't shine it in your eyes!"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "pointer"
 	inhand_icon_state = "pen"
 	worn_icon_state = "pen"
@@ -71,15 +71,19 @@
 		diode = null
 		return TRUE
 
-/obj/item/laser_pointer/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	. = ..()
-	if(isnull(crystal_lens) || !(tool.tool_behaviour == TOOL_WIRECUTTER || tool.tool_behaviour == TOOL_HEMOSTAT))
-		return
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
+	if(isnull(crystal_lens))
+		return .
+	if(tool_behaviour != TOOL_WIRECUTTER && tool_behaviour != TOOL_HEMOSTAT)
+		return .
 	tool.play_tool_sound(src)
 	balloon_alert(user, "removed crystal lens")
 	crystal_lens.forceMove(drop_location())
 	crystal_lens = null
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, params)
 	if(istype(attack_item, /obj/item/stock_parts/micro_laser))

@@ -128,6 +128,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 
 		assigned += candidate.mind
 		candidate.mind.restricted_roles = restricted_roles
+		candidate.mind.special_role = ROLE_BROTHER
 		GLOB.pre_setup_antags += candidate.mind
 
 	return TRUE

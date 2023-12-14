@@ -179,14 +179,14 @@ SUBSYSTEM_DEF(persistent_paintings)
  */
 /datum/controller/subsystem/persistent_paintings/proc/painting_ui_data(filter=NONE, admin=FALSE, search_text)
 	var/searching = filter & (PAINTINGS_FILTER_SEARCH_TITLE|PAINTINGS_FILTER_SEARCH_CREATOR) && search_text
+	var/list/paintings = admin ? admin_painting_data : cached_painting_data
 
-	if(!searching)
-		return admin ? admin_painting_data : cached_painting_data
+	if(!searching && !(filter & PAINTINGS_FILTER_AI_PORTRAIT))
+		return paintings
 
 	var/list/filtered_paintings = list()
-	var/list/searched_paintings = admin ? admin_painting_data : cached_painting_data
 
-	for(var/painting as anything in searched_paintings)
+	for(var/painting in paintings)
 		if(filter & PAINTINGS_FILTER_AI_PORTRAIT && ((painting["width"] != 24 && painting["width"] != 23) || (painting["height"] != 24 && painting["height"] != 23)))
 			continue
 		if(searching)
@@ -197,7 +197,7 @@ SUBSYSTEM_DEF(persistent_paintings)
 				haystack_text = painting["creator"]
 			if(!findtext(haystack_text, search_text))
 				continue
-		filtered_paintings += painting
+		filtered_paintings += list(painting)
 	return filtered_paintings
 
 /// Returns paintings with given tag.

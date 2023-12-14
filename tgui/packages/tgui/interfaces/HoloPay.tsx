@@ -1,6 +1,19 @@
 import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Dropdown, Icon, NoticeBox, RestrictedInput, Section, Stack, Table, TextArea, Tooltip } from 'tgui/components';
+import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Icon,
+  NoticeBox,
+  RestrictedInput,
+  Section,
+  Stack,
+  Table,
+  TextArea,
+  Tooltip,
+} from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 type HoloPayData = {
@@ -23,14 +36,14 @@ of their respective owners.`;
 export const HoloPay = (props) => {
   const { data } = useBackend<HoloPayData>();
   const { owner } = data;
-  const [setupMode, setSetupMode] = useLocalState('setupMode', false);
+  const [setupMode, setSetupMode] = useState(false);
   // User clicked the "Setup" or "Done" button.
   const onClick = () => {
     setSetupMode(!setupMode);
   };
 
   return (
-    <Window height="300" width="250" title="Holo Pay">
+    <Window height={300} width={250} title="Holo Pay">
       <Window.Content>
         {!owner ? (
           <NoticeBox>Error! Swipe an ID first.</NoticeBox>
@@ -106,7 +119,8 @@ const TerminalDisplay = (props) => {
         )
       }
       fill
-      title="Terminal">
+      title="Terminal"
+    >
       <Stack fill vertical>
         <Stack.Item align="center">
           <Icon color="good" name={shop_logo} size={5} />
@@ -181,13 +195,15 @@ const SetupDisplay = (props) => {
           onClick={() => {
             act('done');
             onClick();
-          }}>
+          }}
+        >
           Done
         </Button>
       }
       fill
       scrollable
-      title="Settings">
+      title="Settings"
+    >
       <Stack fill vertical>
         <Stack.Item>
           <Box bold color="label">
