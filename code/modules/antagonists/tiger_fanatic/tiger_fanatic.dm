@@ -91,5 +91,5 @@
 	new /obj/item/grenade/chem_grenade/bioterrorfoam(stash)
 	new /obj/item/card/emag/doorjack(stash)
 	new /obj/item/reagent_containers/cup/glass/flask/ritual_wine(stash)
-	tiger.put_in_hands.stash
+	tiger.put_in_hands(stash)
 	return tiger
