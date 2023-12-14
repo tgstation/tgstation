@@ -54,9 +54,9 @@
 
 /obj/vehicle/ridden/wheelchair/wrench_act(mob/living/user, obj/item/tool) //Attackby should stop it attacking the wheelchair after moving away during decon
 	..()
-	to_chat(user, span_notice("You begin to disassemble the wheelchair..."))
+	balloon_alert(user, "disassembling")
 	if(!tool.use_tool(src, user, 4 SECONDS, volume=50))
-		return
+		return TOOL_ACT_TOOLTYPE_SUCCESS
 	to_chat(user, span_notice("You detach the wheels and deconstruct the chair."))
 	new /obj/item/stack/rods(drop_location(), 6)
 	new /obj/item/stack/sheet/iron(drop_location(), 4)
