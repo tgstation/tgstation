@@ -12,7 +12,7 @@
 	else if(istext(_target?.color))
 		current_color = color_hex2color_matrix(_target.color)
 	else
-		current_color = color_matrix_identity()
+		current_color = COLOR_MATRIX_IDENTITY
 
 	var/mutable_appearance/view = image('icons/misc/colortest.dmi', "colors")
 	if(_target)
