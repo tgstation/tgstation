@@ -2,17 +2,18 @@ import { useBackend } from '../backend';
 import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { useState } from 'react';
+import { BooleanLike } from 'common/react';
 
 type Data = {
-  broken: boolean;
+  broken: BooleanLike;
   destinations: Dest[];
-  moving: boolean;
+  moving: BooleanLike;
   tram_location: string;
 };
 
 type Dest = {
   dest_icons: Record<string, string>;
-  id: string;
+  id: number;
   name: string;
 };
 
@@ -89,13 +90,14 @@ export const TramControl = (props) => {
               <Stack.Item>
                 <Button
                   disabled={tram_location === destinations[transitIndex].name}
-                  content="Send Tram"
                   onClick={() =>
                     act('send', {
                       destination: destinations[transitIndex].id,
                     })
                   }
-                />
+                >
+                  Send Tram
+                </Button>
               </Stack.Item>
             </Stack>
           </Section>
@@ -164,7 +166,7 @@ const Destination = (props) => {
           tooltip={COLOR2BLURB[getDestColor(dest)]}
           onClick={() => setTransitIndex(destinations.indexOf(dest))}
         >
-          <Icon ml={-2.1} fontSize="60px" name="circle-o" />
+          <Icon ml={-2.3} fontSize="59px" name="circle-o" />
         </Button>
         {(destinations.length - 1 !== destinations.indexOf(dest) && (
           <Section title=" " mt={-7.3} ml={10} mr={-6.1} />
