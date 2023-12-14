@@ -30710,7 +30710,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "lds" = (
@@ -36344,13 +36343,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
-"nbv" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/meter/layer4,
-/turf/open/floor/iron/dark,
-/area/station/engineering/atmos)
 "nbx" = (
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible{
 	dir = 4
@@ -40282,7 +40274,9 @@
 /obj/structure/sign/warning/fire/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
+/obj/machinery/atmospherics/pipe/layer_manifold/dark{
+	dir = 1
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "ouX" = (
@@ -65131,9 +65125,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/layer_manifold/dark{
-	dir = 1
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
+/obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "xhh" = (
@@ -65557,7 +65550,6 @@
 "xpB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
-/obj/machinery/meter/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "xpO" = (
@@ -112201,7 +112193,7 @@ kLi
 kLi
 swy
 bQY
-nbv
+kLi
 sEI
 tuf
 oLV
