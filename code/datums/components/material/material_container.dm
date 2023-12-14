@@ -279,7 +279,7 @@
 
 	//1st iteration consumes all items that do not have contents inside
 	//2nd iteration consumes items who do have contents inside(but they were consumed in the 1st iteration si its empty now)
-	for(var/i = 1; i <= 2; i++)
+	for(var/i in 1 to 2)
 		//no point inserting more items
 		if(inserted == MATERIAL_INSERT_ITEM_NO_SPACE)
 			break
@@ -344,7 +344,7 @@
 				//anything that isn't a stack cannot be split so find out if we have enough space, we don't want to consume half the contents of an object & leave it in a broken state
 				if(!isstack(target_item))
 					var/total_amount = 0
-					for(var/obj/item/weapon in contents)
+					for(var/obj/item/weapon as anything in contents)
 						total_amount += get_item_material_amount(weapon, breakdown_flags)
 					if(!has_space(total_amount))
 						if(!(mat_container_flags & MATCONTAINER_SILENT))
