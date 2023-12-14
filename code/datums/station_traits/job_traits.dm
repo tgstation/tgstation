@@ -149,13 +149,16 @@
 		tables += table
 	if(!length(tables))
 		return
-	var/picked_table = pick(tables)
-	tables -= picked_table
+	var/picked_table = pick_n_take(tables)
 	var/picked_turf = get_turf(picked_table)
 	if(length(tables))
 		var/another_table = pick(tables)
-		for(var/obj/item/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
+		for(var/obj/thing_on_table in picked_turf) //if there's paper bins or other shit on the table, get that off
 			if(thing_on_table == picked_table)
+				continue
+			if(HAS_TRAIT(thing_on_table, TRAIT_WALLMOUNTED) || (thing_on_table.flags_1 & ON_BORDER_1))
+				continue
+			if(thing_on_table.invisibility || !thing_on_table.alpha || !thing_on_table.mouse_opacity)
 				continue
 			thing_on_table.forceMove(get_turf(another_table))
 	new /obj/machinery/coffeemaker/impressa(picked_turf)
