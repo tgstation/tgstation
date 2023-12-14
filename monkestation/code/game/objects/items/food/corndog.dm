@@ -99,6 +99,7 @@
 	tastes = list("American superiority" = 1, "carnival food" = 1, "mustard" = 1)
 
 /obj/item/food/corndog/fullcondiment/rod
+	trash_type = /obj/item/stack/rods
 	icon_state = "corndog_rod_km"
 
 //Forbidden corndog corner
