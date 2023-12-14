@@ -17,7 +17,7 @@
 /// The virtual domain - side of the bitrunning crate. Deliver to the send location.
 /obj/structure/closet/crate/secure/bitrunning/encrypted
 	name = "encrypted cache"
-	desc = "Needs decrypted at the safehouse to be opened."
+	desc = "Needs to be decrypted at the safehouse to be opened."
 	locked = TRUE
 	damage_deflection = 30
 
