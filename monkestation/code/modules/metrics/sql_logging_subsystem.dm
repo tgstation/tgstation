@@ -70,7 +70,7 @@ SUBSYSTEM_DEF(sql_logging)
 /proc/add_event_to_buffer(atom/source, atom/target, data, log_key = "GAME", voluntary = TRUE)
 	if(!data)
 		return
-	if(ismind(source))
+	if(istype(source, /datum/mind))
 		var/datum/mind/mind = source
 		source = mind.current
 
