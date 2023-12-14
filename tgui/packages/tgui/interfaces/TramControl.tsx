@@ -3,6 +3,19 @@ import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { useState } from 'react';
 
+type Data = {
+  broken: boolean;
+  destinations: Dest[];
+  moving: boolean;
+  tram_location: string;
+};
+
+type Dest = {
+  dest_icons: Record<string, string>;
+  id: string;
+  name: string;
+};
+
 const DEPARTMENT2COLOR = {
   // Station
   Arrivals: 'black',
@@ -23,13 +36,13 @@ const DEPARTMENT2COLOR = {
   Ordnance: 'yellow',
   Office: 'red',
   Dormitories: 'black',
-};
+} as const;
 
 const COLOR2BLURB = {
   blue: "This is the tram's current location.",
   green: 'This is the selected destination.',
   transparent: 'Click to set destination.',
-};
+} as const;
 
 const marginNormal = 1;
 const marginDipped = 3;
@@ -41,8 +54,8 @@ const dipUnderCircle = (dest, dep) => {
 };
 
 export const TramControl = (props) => {
-  const { act, data } = useBackend();
-  const { broken, moving, destinations, tram_location } = data;
+  const { act, data } = useBackend<Data>();
+  const { broken, moving, destinations = [], tram_location } = data;
 
   const [transitIndex, setTransitIndex] = useState(1);
 
@@ -52,15 +65,18 @@ export const TramControl = (props) => {
         {(!!broken && <BrokenTramDimmer />) || (
           <Section fill>
             {!!moving && <MovingTramDimmer />}
-            <Stack ml="-6px" vertical fill>
-              <Stack.Item grow fontSize="16px" mt={1} mb={9} textAlign="center">
-                Nanotrasen Transit System
-              </Stack.Item>
-              <Stack.Item mb={4}>
+            <Stack
+              align="center"
+              fill
+              fontSize="16px"
+              justify="space-around"
+              vertical
+            >
+              <Stack.Item>Nanotrasen Transit System</Stack.Item>
+              <Stack.Item>
                 <Stack fill>
-                  <Stack.Item grow />
                   {destinations.map((dest) => (
-                    <Stack.Item key={dest.name} grow={1}>
+                    <Stack.Item key={dest.name}>
                       <Destination
                         dest={dest}
                         transitIndex={transitIndex}
@@ -68,10 +84,9 @@ export const TramControl = (props) => {
                       />
                     </Stack.Item>
                   ))}
-                  <Stack.Item grow={1} />
                 </Stack>
               </Stack.Item>
-              <Stack.Item fontSize="16px" mt={1} mb={9} textAlign="center" grow>
+              <Stack.Item>
                 <Button
                   disabled={tram_location === destinations[transitIndex].name}
                   content="Send Tram"
@@ -105,7 +120,10 @@ const BrokenTramDimmer = () => {
   );
 };
 
-const MovingTramDimmer = () => {
+const MovingTramDimmer = (props) => {
+  const { data } = useBackend<Data>();
+  const { tram_location } = data;
+
   return (
     <Dimmer>
       <Stack vertical>
@@ -122,6 +140,9 @@ const MovingTramDimmer = () => {
 
 const Destination = (props) => {
   const { dest, setTransitIndex, transitIndex } = props;
+  const { data } = useBackend<Data>();
+  const { destinations = [], tram_location } = data;
+
   const getDestColor = (dest) => {
     if (!tram_location) return 'bad';
     const here = dest.name === tram_location;
