@@ -927,7 +927,7 @@
 		"[protagonist_name] is brought into [antagonist_name]'s life of crime and espionage.",
 	)
 
-/// Saw someone play Russian Roulette.
+/// Saw someone get smited
 /datum/memory/witnessed_gods_wrath
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_SKIP_UNCONSCIOUS
 	story_value = STORY_VALUE_AMAZING
@@ -971,4 +971,39 @@
 		"appears dejected",
 		"is filled with regret",
 		"winces in despair"
+	)
+
+/datum/memory/sculpting/New(
+	datum/mind/memorizer_mind,
+	atom/protagonist,
+	atom/deuteragonist,
+	atom/antagonist,
+	statue_name,
+)
+	src.statue_name = statue_name
+	return ..()
+
+
+/// Sculpted a piece of art
+/datum/memory/sculpting
+	story_value = STORY_VALUE_OKAY
+	// Protagonist - The person who sculpted the object
+	// Antagonist - The block of material
+	/// the statue name that was sculpted
+	var/statue_name
+
+/datum/memory/sculpting/get_names()
+	return list("[protagonist_name] sculpting a piece of art using [antagonist_name].")
+
+/datum/memory/sculpting/get_starts()
+	return list(
+		"[protagonist_name] sculpting [antagonist_name] with a chisel",
+		"[protagonist_name] sculpting a [statue_name]",
+		"[protagonist_name] sculpting [antagonist_name] into a [statue_name]",
+		"A [antagonist_name] being shaped by [protagonist_name] into an art piece",
+	)
+
+/datum/memory/sculpting/get_moods()
+	return list(
+		"[protagonist_name] [mood_verb] as they sculpt [antagonist_name] into a [statue_name].",
 	)

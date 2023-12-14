@@ -527,9 +527,12 @@ Moving interrupts
 
 		beauty_value *= sculpting_beauty_muliplier
 
+	var/statue_name
+
 	if(current_preset_type)
 		var/obj/structure/statue/preset_statue = new current_preset_type(get_turf(src), beauty_value, sculpting_skill_level)
 		preset_statue.set_custom_materials(custom_materials)
+		statue_name = preset_statue.name
 	else if(current_target)
 		var/obj/structure/statue/custom/new_statue = new(get_turf(src), beauty_value, sculpting_skill_level, finished_statue_icon)
 		new_statue.dir = dir
@@ -538,6 +541,10 @@ Moving interrupts
 		var/is_statue_original = istype(current_target, /obj/structure/statue/custom)
 		new_statue.name = is_statue_original ? current_target.name : "statue of [current_target.name]"
 		new_statue.desc = is_statue_original ? current_target.desc : "A carved statue depicting [current_target.name]."
+		statue_name = new_statue.name
+
+	user.add_mood_event("sculpting", /datum/mood_event/sculpting)
+	user.add_mob_memory(/datum/memory/sculpting, antagonist=src, statue_name=statue_name)
 	qdel(src)
 
 /obj/structure/carving_block/proc/set_completion(value, animate_statue=FALSE)

@@ -182,6 +182,11 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
+/datum/mood_event/sculpting
+	description = "The true work of art is but a shadow of the divine perfection." // -Michelangelo
+	mood_change = 3
+	timeout = 2 MINUTES
+
 /datum/mood_event/pet_borg
 	description = "I just love my robotic friends!"
 	mood_change = 3
