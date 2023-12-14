@@ -89,7 +89,7 @@
 
 			if(istype(objective, /datum/objective/be_absorbed))
 				var/datum/objective/be_absorbed/absorbed = objective
-				absorbed.completed = TRUE
+				absorbed.player_absorbed = TRUE
 
 			changeling.antag_memory += " Objective #[obj_count++]: [objective.explanation_text]."
 			var/list/datum/mind/other_owners = objective.get_owners() - suckedbrain
@@ -137,9 +137,10 @@
 		var/datum/antagonist/fallen_changeling/fallen = target.mind.add_antag_datum(/datum/antagonist/fallen_changeling)
 		fallen.objectives = copied_objectives
 
-	var/datum/antagonist/changeling/target_tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
-	if(target_tiger_fanatic)// If the target was a tiger cultist we get powered up.
+
+	if(IS_TIGER_FANATIC(target))// If the target was a tiger cultist we get powered up.
 		to_chat(owner, span_changeling(span_boldnotice("[target] was a worshiper of the hive. Their DNA is prepared specifically for our tastes. We grow stronger.")))
+
 
 		var/genetic_points_to_add = rand(5, 10)
 		changeling.genetic_points += genetic_points_to_add
@@ -149,7 +150,11 @@
 		changeling.adjust_chemicals(chems_to_add)
 		changeling.total_chem_storage += chems_to_add
 
+		var/old_body_position = target.body_position_pixel_y_offset
+		target.body_position_pixel_y_offset = 0
+
 		target.set_lying_angle(0)
+
 		if(target.wear_suit)
 			target.wear_suit.add_mob_blood(target) // For that pathetic, unwholsome look
 			target.update_worn_oversuit()
@@ -160,6 +165,7 @@
 		var/original_appearance = target.appearance
 		var/original_name = target.real_name
 
+		target.body_position_pixel_y_offset = old_body_position
 		target.set_lying_angle(90)
 
 		var/mob/camera/imaginary_friend/changeling_echo/worshiper = target.change_mob_type(

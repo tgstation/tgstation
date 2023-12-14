@@ -125,7 +125,7 @@
 /datum/mood_event/changeling_enjoyer
 	description = "I have been blessed by the hive!"
 	mood_change = 10
-	timeout = 5 MINUTES
+	timeout = 3 MINUTES
 
 /datum/mood_event/family_heirloom
 	description = "My family heirloom is safe with me."

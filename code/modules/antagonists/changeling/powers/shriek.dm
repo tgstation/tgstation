@@ -18,8 +18,8 @@
 			var/mob/living/carbon/carbon_target = mob_target
 			SEND_SOUND(carbon_target, sound('sound/effects/screech.ogg'))
 
-			var/datum/antagonist/tiger_fanatic/tiger_fanatic = carbon_target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
-			if(tiger_fanatic) // Music to our ears
+			if(IS_TIGER_FANATIC(carbon_target))
+				var/datum/antagonist/tiger_fanatic/tiger_fanatic = carbon_target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
 				to_chat(carbon_target, span_changeling("The scream invigorates you!"))
 				carbon_target.AdjustAllImmobility(-5 SECONDS)
 				carbon_target.adjustStaminaLoss(-60)

@@ -38,10 +38,10 @@
 	explanation_text = "Be absorbed by a changeling so you may ascend to a higher level of being!"
 	martyr_compatible = TRUE
 	admin_grantable = TRUE
-	completed = FALSE
+	var/player_absorbed = FALSE
 
 /datum/objective/be_absorbed/check_completion()
-	if(completed)
+	if(player_absorbed)
 		return TRUE
 	return FALSE
 
@@ -54,9 +54,9 @@
 
 
 /datum/objective/be_absorbed/absorbed_escape/check_completion()
-	if(considered_escaped(owner))
+	if(player_absorbed || considered_escaped(owner))
 		return TRUE
-	..()
+	return FALSE
 
 /datum/antagonist/tiger_fanatic/proc/receive_blessing()
 	blessings += 1

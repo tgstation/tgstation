@@ -171,8 +171,8 @@
 
 	var/obj/item/melee/arm_blade/false/blade = new(target,1)
 
-	var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
-	if(tiger_fanatic)
+	if(IS_TIGER_FANATIC(target))
+		var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
 		blade.desc = "A grotesque mass of flesh that used to be your arm. It's slender form resembles a machete"
 		blade.force = 15
 		blade.block_chance = 30
@@ -274,8 +274,8 @@
 	..()
 	log_combat(user, target, "stung", "LSD sting")
 	addtimer(CALLBACK(src, PROC_REF(hallucination_time), target), rand(30 SECONDS, 60 SECONDS))
-	var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
-	if(target.reagents && tiger_fanatic)
+	if(target.reagents && IS_TIGER_FANATIC(target))
+		var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
 		target.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 4)
 		target.reagents.add_reagent(/datum/reagent/medicine/changelingadrenaline, 3)
 		tiger_fanatic.receive_blessing()
@@ -298,9 +298,9 @@
 	..()
 	log_combat(user, target, "stung", "cryo sting")
 	if(target.reagents)
-		var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
-		if(tiger_fanatic) // Music to our ears
-			target.reagents.add_reagent(/datum/reagent/medicine/cryoxadone, 30)
+		if(IS_TIGER_FANATIC(target))
+			var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
+			target.reagents.add_reagent(/datum/reagent/medicine/omnizine, 15) //cryoxadone might have been more thematic, but the frost oil fon't get us cold quick enough
 			tiger_fanatic.receive_blessing()
 
 		target.reagents.add_reagent(/datum/reagent/consumable/frostoil, 30)
