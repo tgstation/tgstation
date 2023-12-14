@@ -2456,6 +2456,10 @@
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/entry)
+"aSB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "aSD" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -5195,11 +5199,13 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "bQY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold/yellow/visible{
-	dir = 1
+/obj/effect/turf_decal/tile/neutral/half/contrasted{
+	dir = 8
 	},
-/obj/machinery/atmospherics/pipe/smart/simple/dark/visible/layer4,
-/turf/open/floor/iron,
+/obj/machinery/atmospherics/pipe/layer_manifold/dark{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "bRG" = (
 /obj/machinery/shower/directional/west,
@@ -17221,12 +17227,7 @@
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "gyg" = (
-/obj/effect/turf_decal/tile/neutral/half/contrasted{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/layer_manifold/dark{
-	dir = 8
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "gyG" = (
@@ -28303,11 +28304,13 @@
 /turf/open/floor/wood,
 /area/station/service/library)
 "klg" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 1
+/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
+/obj/machinery/door/firedoor/heavy,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8;
+	name = "Mix to Incinerator"
 	},
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
-/turf/open/floor/iron,
+/turf/open/floor/iron/dark/textured,
 /area/station/engineering/atmos)
 "klj" = (
 /obj/machinery/light/small/directional/north,
@@ -30710,6 +30713,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/meter,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "lds" = (
@@ -32171,15 +32175,6 @@
 /obj/effect/landmark/start/hangover/closet,
 /turf/open/floor/iron/dark,
 /area/station/commons/locker)
-"lDR" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible/layer5,
-/obj/machinery/door/firedoor/heavy,
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "Mix to Incinerator"
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/engineering/atmos)
 "lEr" = (
 /obj/effect/turf_decal/stripes/line,
 /obj/structure/cable,
@@ -40290,7 +40285,6 @@
 /obj/structure/sign/warning/fire/directional/east,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
-/obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
@@ -52387,16 +52381,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/cargo/storage)
-"sJj" = (
-/obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/trinary/mixer/flipped/layer4{
-	dir = 4;
-	name = "Turbine Mixer'"
-	},
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "sKf" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -62608,10 +62592,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"wmz" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "wmB" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
@@ -63135,8 +63115,11 @@
 /turf/open/floor/iron/dark,
 /area/station/security/courtroom)
 "wxe" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/dark/visible/layer1,
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wxg" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
@@ -65543,10 +65526,6 @@
 	dir = 1;
 	name = "O2 To Pure"
 	},
-/obj/machinery/atmospherics/components/binary/pump/layer4{
-	dir = 1;
-	name = "O2 to Turbine"
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "xoK" = (
@@ -65581,6 +65560,7 @@
 "xpB" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/meter/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal/incinerator)
 "xpO" = (
@@ -108886,7 +108866,7 @@ qRM
 cGS
 kkf
 kLp
-wxe
+gyg
 uwQ
 cii
 niY
@@ -109653,11 +109633,11 @@ bLg
 prT
 prT
 fVA
-wmz
-wmz
-wmz
+aSB
+aSB
+aSB
 fEA
-wxe
+gyg
 lAh
 aaf
 gWn
@@ -109910,7 +109890,7 @@ ftd
 cAt
 gxb
 apg
-wmz
+aSB
 sBV
 mei
 awt
@@ -110167,7 +110147,7 @@ dKE
 mHT
 tJF
 nau
-wmz
+aSB
 jvj
 vmx
 mGl
@@ -110424,7 +110404,7 @@ aGS
 mHT
 gXW
 nau
-klg
+wxe
 jvj
 nnD
 hfZ
@@ -110681,7 +110661,7 @@ hQB
 mHT
 egP
 gMt
-wmz
+aSB
 jvj
 nnD
 jea
@@ -110938,7 +110918,7 @@ cyW
 iQB
 tds
 nzo
-wmz
+aSB
 lxm
 smt
 tDt
@@ -111196,8 +111176,8 @@ cyW
 cyW
 nzo
 mTI
-sJj
-bQY
+jvj
+qua
 xoB
 hGk
 tfs
@@ -111452,7 +111432,7 @@ cyW
 cyW
 lxt
 nzo
-wmz
+aSB
 iTC
 smt
 eNi
@@ -111709,7 +111689,7 @@ cyW
 cyW
 cyW
 nzo
-wmz
+aSB
 dwf
 nnD
 elW
@@ -111966,7 +111946,7 @@ cyW
 cyW
 dfS
 nzo
-wmz
+aSB
 cyW
 kEe
 fPg
@@ -112223,7 +112203,7 @@ kLi
 kLi
 kLi
 swy
-gyg
+bQY
 nbv
 sEI
 tuf
@@ -112480,7 +112460,7 @@ tBM
 jhn
 jaO
 hXn
-lDR
+klg
 jhn
 svj
 rhx
