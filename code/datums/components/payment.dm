@@ -39,7 +39,7 @@
 /datum/component/payment/UnregisterFromParent()
 	UnregisterSignal(parent, list(COMSIG_OBJ_ATTEMPT_CHARGE, COMSIG_OBJ_ATTEMPT_CHARGE_CHANGE))
 
-/datum/component/payment/proc/attempt_charge(datum/source, atom/movable/target, extra_fees = 0)
+/datum/component/payment/proc/attempt_charge(atom/movable/source, atom/movable/target, extra_fees = 0)
 	SIGNAL_HANDLER
 	if(!cost && !extra_fees) //In case a free variant of anything is made it'll skip charging anyone.
 		return
@@ -54,9 +54,9 @@
 		card = user.get_idcard(TRUE)
 	if(!card && istype(user.pulling, /obj/item/card/id))
 		card = user.pulling
-	if(handle_card(user, card, total_cost))
+	if(handle_card(source, user, card, total_cost))
 		return //Only breaks here if the card can handle the cost of purchasing with someone's ID.
-	if(handle_cardless(user, total_cost)) //Here we attempt to handle the purchase physically, with held money first. Otherwise we default to below.
+	if(handle_cardless(source, user, total_cost)) //Here we attempt to handle the purchase physically, with held money first. Otherwise we default to below.
 		return
 	return COMPONENT_OBJ_CANCEL_CHARGE
 
@@ -76,7 +76,7 @@
 /**
  * Attempts to charge the mob, user, an integer number of credits, total_cost, without the use of an ID card to directly draw upon.
  */
-/datum/component/payment/proc/handle_cardless(mob/living/user, total_cost)
+/datum/component/payment/proc/handle_cardless(atom/movable/source, mob/living/user, total_cost)
 	//Here is all the possible non-ID payment methods.
 	var/list/counted_money = list()
 	var/physical_cash_total = 0
@@ -107,7 +107,7 @@
 		return FALSE
 
 	if(physical_cash_total < total_cost)
-		to_chat(user, span_notice("Insufficient funds. Aborting."))
+		source.say("Insufficient funds. Aborting.")
 		return FALSE
 	for(var/obj/cash_object in counted_money)
 		qdel(cash_object)
@@ -127,14 +127,14 @@
 		else
 			user.pulling = holochange
 	log_econ("[total_cost] credits were spent on [parent] by [user].")
-	to_chat(user, span_notice("Purchase completed with held credits."))
+	source.say("Purchase completed with held credits.")
 	playsound(user, 'sound/effects/cashregister.ogg', 20, TRUE)
 	return TRUE
 
 /**
  * Attempts to charge a mob, user, an integer number of credits, total_cost, directly from an ID card/bank account.
  */
-/datum/component/payment/proc/handle_card(mob/living/user, obj/item/card/id/idcard, total_cost)
+/datum/component/payment/proc/handle_card(atom/movable/source, mob/living/user, obj/item/card/id/idcard, total_cost)
 	var/atom/atom_parent = parent
 
 	if(!idcard)
@@ -142,21 +142,21 @@
 	if(!idcard?.registered_account)
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
-				to_chat(user, span_warning("There's no account detected on your ID, how mysterious!"))
+				source.say("There's no account detected on your ID, how mysterious!")
 			if(PAYMENT_ANGRY)
-				to_chat(user, span_warning("ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT."))
+				source.say("ARE YOU JOKING. YOU DON'T HAVE A BANK ACCOUNT ON YOUR ID YOU IDIOT.")
 			if(PAYMENT_CLINICAL)
-				to_chat(user, span_warning("ID Card lacks a bank account. Advancing."))
+				source.say("ID Card lacks a bank account. Advancing.")
 		return FALSE
 
 	if(!(idcard.registered_account.has_money(total_cost)))
 		switch(transaction_style)
 			if(PAYMENT_FRIENDLY)
-				to_chat(user, span_warning("I'm so sorry... You don't seem to have enough money."))
+				source.say("I'm so sorry... You don't seem to have enough money.")
 			if(PAYMENT_ANGRY)
-				to_chat(user, span_warning("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR."))
+				source.say("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR.")
 			if(PAYMENT_CLINICAL)
-				to_chat(user, span_warning("ID Card lacks funds. Aborting."))
+				source.say("ID Card lacks funds. Aborting.")
 		atom_parent.balloon_alert(user, "needs [total_cost] credit\s!")
 		return FALSE
 	target_acc.transfer_money(idcard.registered_account, total_cost, "Nanotrasen: Usage of Corporate Machinery")
