@@ -191,6 +191,8 @@
 		mod = new mod_type(src)
 	if(storage_type)
 		storage = new storage_type(src)
+	if(space_suit_type)								// MASSMETA EDIT
+		space_suit = new space_suit_type(src)		//
 	update_appearance()
 
 	register_context()
@@ -201,6 +203,7 @@
 	QDEL_NULL(mask)
 	QDEL_NULL(mod)
 	QDEL_NULL(storage)
+	QDEL_NULL(space_suit)	// MASSMETA EDIT
 	id_card = null
 	return ..()
 
@@ -233,12 +236,14 @@
 		. += "[base_icon_state]_panel"
 	if(state_open)
 		. += "[base_icon_state]_open"
-		if(suit || mod)
+		if(suit || mod || space_suit)		// MASSMETA EDIT
 			. += "[base_icon_state]_suit"
 		if(helmet)
 			. += "[base_icon_state]_helm"
 		if(storage)
 			. += "[base_icon_state]_storage"
+		if(space_suit)								// MASSMETA EDIT
+			. += "[base_icon_state]_space_suit"		//
 	if(!(machine_stat & BROKEN || machine_stat & NOPOWER))
 		if(state_open)
 			. += "[base_icon_state]_lights_open"
@@ -305,6 +310,7 @@
 	mask = null
 	mod = null
 	storage = null
+	space_suit = null		// MASSMETA EDIT
 	set_occupant(null)
 
 /obj/machinery/suit_storage_unit/deconstruct(disassembled = TRUE)
@@ -346,6 +352,7 @@
 			"mask" = create_silhouette_of(/obj/item/clothing/mask/breath),
 			"mod" = create_silhouette_of(/obj/item/mod/control),
 			"storage" = create_silhouette_of(/obj/item/tank/internals/oxygen),
+			"space_suit" = create_silhouette_of(/obj/item/choice_beacon/space_suit),	// MASSMETA EDIT
 		)
 
 	. = ..()
@@ -403,7 +410,7 @@
 			if (occupant && safeties)
 				say("Alert: safeties triggered, occupant detected!")
 				return
-			else if (!helmet && !mask && !suit && !storage && !occupant)
+			else if (!helmet && !mask && !suit && !storage && !occupant && !space_suit)		// MASSMETA EDIT
 				to_chat(user, "There's nothing inside [src] to disinfect!")
 				return
 			else
@@ -521,6 +528,7 @@
 			QDEL_NULL(mask)
 			QDEL_NULL(mod)
 			QDEL_NULL(storage)
+			QDEL_NULL(space_suit)		// MASSMETA EDIT
 			// The wires get damaged too.
 			wires.cut_all()
 		else
@@ -546,6 +554,9 @@
 			if(storage)
 				things_to_clear += storage
 				things_to_clear += storage.get_all_contents()
+			if(space_suit)											//
+				things_to_clear += space_suit						// MASSMETA EDIT
+				things_to_clear += space_suit.get_all_contents()	//
 			if(mob_occupant)
 				things_to_clear += mob_occupant
 				things_to_clear += mob_occupant.get_all_contents()
