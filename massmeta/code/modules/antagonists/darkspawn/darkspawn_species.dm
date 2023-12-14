@@ -12,7 +12,6 @@
 	inherent_traits = list(
 		//NOTRANSSTING, i guess it should be here but its no longer exist
 		//NOEYESPRITES,
-		TRAIT_GENELESS,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_UNDERWEAR,
 		TRAIT_ADVANCEDTOOLUSER,
