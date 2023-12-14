@@ -1,6 +1,6 @@
 /obj/item/clothing/suit/hooded/tiger_co_hoodie
 	name = "religious hoodie"
-	desc = "A red hoodie with a orange cross mark going through its back and front. Or an double axe. Or an 'T', perhaps?"
+	desc = "A red hoodie with an orange cross mark going through its back and front. Or a double axe. Or a 'T', perhaps?"
 	icon = 'icons/obj/clothing/suits/jacket.dmi'
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
 	icon_state = "tiger_co_hoodie"
@@ -13,7 +13,7 @@
 		/obj/item/lighter,
 		/obj/item/radio,
 		/obj/item/storage/belt/holster,
-		)
+	)
 
 	body_parts_covered = CHEST|GROIN|ARMS
 	cold_protection = CHEST|GROIN|ARMS
@@ -24,7 +24,7 @@
 
 /obj/item/clothing/head/hooded/tiger_co_hood
 	name = "red hood"
-	desc = "A red hood with orange trim. Not exacly the type for bringing things to grandma in. Nor for hunting wolves."
+	desc = "A red hood with an orange trim. Not exactly the type for bringing things to grandma in. Nor for hunting wolves."
 	icon = 'icons/obj/clothing/head/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 	icon_state = "tiger_co_hood"
@@ -33,8 +33,8 @@
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/hooded/tiger_co_inquisitor
-	name = "Tiger Co Inquisitor's Armour"
-	desc = "A proper attire of Tiger Co associated chaplain-inquisitors. Almost suprising it doesn't feature a fleshy third arm or something."
+	name = "tiger inquisitor's armor"
+	desc = "The proper attire of Tiger Cooperative associated chaplain-inquisitors. Almost surprising it doesn't feature a fleshy third arm or something."
 	icon = 'icons/obj/clothing/suits/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
 	icon_state = "tiger_co_inquisitor_armour"
@@ -56,7 +56,7 @@
 
 /obj/item/clothing/under/syndicate/tacticool/puffed_shirt
 	name = "red puffed shirt"
-	desc = "Mix of streetwear and utility. Though it might look expensive, its mostly made from recycled packages of Waffle Corp. products."
+	desc = "Mix of streetwear and utility. Though it might look expensive, it's mostly made from recycled packages of Waffle Corp. products."
 	icon_state = "puffed_shirt"
 
 /obj/item/clothing/mask/mummy/tiger_co
@@ -65,7 +65,7 @@
 
 /obj/item/clothing/gloves/bandages
 	name = "set of arm wraps"
-	desc = "These were used to cover up wounds along the arms. Deep ones."
+	desc = "These are used to cover up wounds along the arms. Deep ones."
 	icon_state = "bandages"
 
 /datum/outfit/tiger_fanatic

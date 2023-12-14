@@ -565,7 +565,6 @@
 	real_name = original_name
 	name = original_name
 	Show()
-	return
 
 /mob/camera/imaginary_friend/changeling_echo/greet()
 	to_chat(src, span_changeling(span_bold("You are absorbed, but you your mind persist! You you have become one with the hive!")))

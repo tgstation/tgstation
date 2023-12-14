@@ -19,7 +19,7 @@
 	owner.announce_objectives()
 
 /datum/antagonist/tiger_fanatic/on_gain()
-	owner.special_role = "tiger fanatic"
+	owner.special_role = ROLE_TIGER_FANATIC
 	SEND_SOUND(owner.current, sound('sound/effects/tiger_greeting.ogg'))
 	forge_objectives()
 	. = ..()
@@ -30,7 +30,7 @@
 	absorbed.owner = owner
 	blessed.owner = owner
 	objectives += absorbed
-	objectives +=blessed
+	objectives += blessed
 	. = ..()
 
 /datum/objective/be_absorbed
@@ -77,7 +77,7 @@
 
 /datum/objective/changeling_blessed/check_completion()
 	var/datum/antagonist/tiger_fanatic/tiger_fanatic = owner.has_antag_datum(/datum/antagonist/tiger_fanatic)
-	if(!tiger_fanatic)
+	if(isnull(tiger_fanatic))
 		return FALSE
 	if(tiger_fanatic.blessings >= blessings_required)
 		return TRUE

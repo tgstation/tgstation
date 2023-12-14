@@ -173,11 +173,11 @@
 
 	if(IS_TIGER_FANATIC(target))
 		var/datum/antagonist/tiger_fanatic/tiger_fanatic = target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
-		blade.desc = "A grotesque mass of flesh that used to be your arm. It's slender form resembles a machete"
+		blade.desc = "A grotesque mass of flesh that used to be your arm. Its slender form resembles a machete."
 		blade.force = 15
 		blade.block_chance = 30
 		blade.icon_state = "arm_blade_proto"
-		blade.update_icon_state()
+		blade.update_appearance(UPDATE_ICON_STATE)
 
 		tiger_fanatic.receive_blessing()
 
