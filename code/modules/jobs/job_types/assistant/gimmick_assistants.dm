@@ -11,8 +11,14 @@
 
 	// Throw up any hoods
 	var/obj/item/clothing/suit/hooded/hood_suit = locate(/obj/item/clothing/suit/hooded) in equipped
-	if(hood_suit)
-		SEND_SIGNAL(hood_suit, COMSIG_ITEM_UI_ACTION_CLICK) //we commit some tomfoolery
+	if(!hood_suit)
+		return
+
+	var/datum/component/toggle_attached_clothing/component = hood_suit.GetComponent(/datum/component/toggle_attached_clothing)
+	if(!component)
+		return
+
+	component.toggle_deployable()
 
 /datum/outfit/job/assistant/gimmick/bee
 	name = "Gimmick Assistant - Bee"
