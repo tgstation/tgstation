@@ -73,7 +73,7 @@
 /obj/item/tank/internals/anesthetic/examine(mob/user)
 	. = ..()
 	. += span_notice("A warning is etched into [src]...")
-	. += span_warning("There is no process in the body that uses N2O, so patients will exhale the N2O, exposing you to it. Make sure to work in a well-ventilated space.")
+	. += span_warning("There is no process in the body that uses N2O, so patients will exhale the N2O... exposing you to it. Make sure to work in a well-ventilated space to avoid sleepy mishaps.")
 
 /*
  * Plasma
