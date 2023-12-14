@@ -59,7 +59,8 @@
 	C.RemoveElement(/datum/element/human_biter)
 
 /datum/species/monkey/check_roundstart_eligible()
-	if(check_holidays(MONKEYDAY))
+	// STOP ADDING MONKEY SUBTYPES YOU HEATHEN
+	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
 
@@ -166,11 +167,11 @@
 	build_all_button_icons()
 
 
-/obj/item/organ/internal/brain/primate/on_insert(mob/living/carbon/primate)
+/obj/item/organ/internal/brain/primate/on_mob_insert(mob/living/carbon/primate)
 	. = ..()
 	RegisterSignal(primate, COMSIG_MOVABLE_CROSS, PROC_REF(on_crossed), TRUE)
 
-/obj/item/organ/internal/brain/primate/on_remove(mob/living/carbon/primate)
+/obj/item/organ/internal/brain/primate/on_mob_remove(mob/living/carbon/primate)
 	. = ..()
 	UnregisterSignal(primate, COMSIG_MOVABLE_CROSS)
 

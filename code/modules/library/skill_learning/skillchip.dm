@@ -9,7 +9,7 @@
 	name = "skillchip"
 	desc = "This biochip integrates with user's brain to enable mastery of specific skill. Consult certified Nanotrasen neurosurgeon before use."
 
-	icon = 'icons/obj/assemblies/circuitry_n_data.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "skillchip"
 	custom_price = PAYCHECK_CREW * 3
 	w_class = WEIGHT_CLASS_SMALL
@@ -106,7 +106,7 @@
 		return "Skillchip is not active."
 
 	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
-	if(QDELETED(holding_brain))
+	if(!holding_brain)
 		stack_trace("Skillchip's owner is null or qdeleted brain.")
 		return "Skillchip cannot detect viable brain."
 

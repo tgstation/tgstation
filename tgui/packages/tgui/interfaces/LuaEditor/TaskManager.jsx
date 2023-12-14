@@ -27,7 +27,8 @@ export const TaskManager = (props) => {
                 <Button
                   color="red"
                   icon="window-close"
-                  onClick={() => act('killTask', { info: info })}>
+                  onClick={() => act('killTask', { info: info })}
+                >
                   Kill
                 </Button>
               </LabeledList.Item>
@@ -47,7 +48,8 @@ export const TaskManager = (props) => {
                       params: { index: info.index },
                     });
                     setModal('call');
-                  }}>
+                  }}
+                >
                   Call
                 </Button>
                 <Button
@@ -55,7 +57,8 @@ export const TaskManager = (props) => {
                   icon="window-close"
                   onClick={() => {
                     act('killTask', { info: info });
-                  }}>
+                  }}
+                >
                   Kill
                 </Button>
               </LabeledList.Item>

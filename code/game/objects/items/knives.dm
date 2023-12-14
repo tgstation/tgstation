@@ -8,7 +8,7 @@
 	inhand_icon_state = "knife"
 	worn_icon_state = "knife"
 	desc = "The original knife, it is said that all other knives are only copies of this one."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 10
 	demolition_mod = 0.75
 	w_class = WEIGHT_CLASS_SMALL
@@ -95,7 +95,7 @@
 	icon_state = "butch"
 	inhand_icon_state = "butch"
 	desc = "A huge thing used for chopping and chopping up meat. This includes clowns and clown by-products."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 10
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6)
@@ -157,7 +157,7 @@
 	custom_materials = null
 
 /obj/item/knife/combat/bone/Initialize(mapload)
-	flags_1 &= ~CONDUCT_1
+	flags_1 &= ~CONDUCTS_ELECTRICITY
 	return ..()
 
 /obj/item/knife/combat/cyborg
@@ -182,7 +182,7 @@
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT * 4)
 
 /obj/item/knife/shiv/Initialize(mapload)
-	flags_1 &= ~CONDUCT_1
+	flags_1 &= ~CONDUCTS_ELECTRICITY
 	return ..()
 
 /obj/item/knife/shiv/plasma

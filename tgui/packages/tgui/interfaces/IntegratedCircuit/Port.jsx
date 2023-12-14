@@ -1,12 +1,12 @@
 import { Stack, Box } from '../../components';
-import { Component, createRef } from 'inferno';
+import { Component, createRef } from 'react';
 import { DisplayName } from './DisplayName';
 import { classes } from 'common/react';
 import { noop } from './constants';
 
 export class Port extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.iconRef = createRef();
     this.componentDidUpdate = this.componentDidUpdate.bind(this);
     this.componentDidMount = this.componentDidMount.bind(this);
@@ -95,14 +95,16 @@ export class Port extends Component {
             onMouseDown={this.handlePortMouseDown}
             onContextMenu={this.handlePortRightClick}
             onMouseUp={this.handlePortMouseUp}
-            textAlign="center">
+            textAlign="center"
+          >
             <svg
               style={{
                 width: '100%',
                 height: '100%',
                 position: 'absolute',
               }}
-              viewBox="0, 0, 100, 100">
+              viewBox="0, 0, 100, 100"
+            >
               {composite_types.map((compositeColor, index) => {
                 const radians = (2 * Math.PI) / composite_types.length;
                 const arcLength = radians * 50;

@@ -8,13 +8,13 @@
 	projectile_type = /obj/projectile/ion/weak
 	e_cost = LASER_SHOTS(4, STANDARD_CELL_CHARGE * 1.2)
 
-/obj/item/ammo_casing/energy/declone
-	projectile_type = /obj/projectile/energy/declone
+/obj/item/ammo_casing/energy/radiation
+	projectile_type = /obj/projectile/energy/radiation
 	select_name = "declone"
 	fire_sound = 'sound/weapons/pulse3.ogg'
 
-/obj/item/ammo_casing/energy/declone/weak
-	projectile_type = /obj/projectile/energy/declone/weak
+/obj/item/ammo_casing/energy/radiation/weak
+	projectile_type = /obj/projectile/energy/radiation/weak
 
 /obj/item/ammo_casing/energy/flora
 	fire_sound = 'sound/effects/stealthoff.ogg'

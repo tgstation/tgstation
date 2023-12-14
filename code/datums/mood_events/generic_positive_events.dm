@@ -57,8 +57,11 @@
 
 /datum/mood_event/exercise
 	description = "Working out releases those endorphins!"
-	mood_change = 2
-	timeout = 5 MINUTES
+	mood_change = 1
+
+/datum/mood_event/exercise/add_effects(fitness_level)
+	mood_change = fitness_level // the more fit you are, the more you like to work out
+	return ..()
 
 /datum/mood_event/pet_animal
 	description = "Animals are adorable! I can't stop petting them!"
@@ -374,3 +377,7 @@
 /datum/mood_event/madness_elation
 	description = "Madness truly is the greatest of blessings..."
 	mood_change = 200
+
+/datum/mood_event/prophat
+	description = "This hat fills me with whimsical joy!"
+	mood_change = 2

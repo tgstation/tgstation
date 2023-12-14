@@ -9,7 +9,8 @@ export const ChunkViewModal = (props) => {
   return (
     <Modal
       height={`${window.innerHeight * 0.8}px`}
-      width={`${window.innerWidth * 0.5}px`}>
+      width={`${window.innerWidth * 0.5}px`}
+    >
       <Section
         fill
         scrollable
@@ -22,10 +23,12 @@ export const ChunkViewModal = (props) => {
             onClick={() => {
               setModal(null);
               setViewedChunk(null);
-            }}>
+            }}
+          >
             Close
           </Button>
-        }>
+        }
+      >
         <Box
           as="pre"
           dangerouslySetInnerHTML={{

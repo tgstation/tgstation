@@ -1,6 +1,12 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, ProgressBar, Section, AnimatedNumber } from '../components';
+import {
+  Box,
+  Button,
+  ProgressBar,
+  Section,
+  AnimatedNumber,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -33,12 +39,14 @@ export const NtnetRelay = (props) => {
               content={enabled ? 'ENABLED' : 'DISABLED'}
               onClick={() => act('toggle')}
             />
-          }>
+          }
+        >
           {!dos_crashed ? (
             <ProgressBar
               value={dos_overload}
               minValue={0}
-              maxValue={dos_capacity}>
+              maxValue={dos_capacity}
+            >
               <AnimatedNumber value={dos_overload} /> GQ
               {' / '}
               {dos_capacity} GQ

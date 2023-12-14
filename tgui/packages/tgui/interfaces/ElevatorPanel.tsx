@@ -1,7 +1,15 @@
 import { clamp } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Blink, Button, Dimmer, Icon, Section, Stack } from '../components';
+import {
+  Box,
+  Blink,
+  Button,
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type FloorData = {
@@ -71,15 +79,16 @@ export const ElevatorPanel = (props) => {
                   <Stack.Item key={index}>
                     <Button
                       style={{
-                        'font-weight': 'bold',
-                        'font-size': '14px',
+                        fontWeight: 'bold',
+                        fontSize: '14px',
                       }}
                       fluid
                       ellipsis
                       textAlign="left"
                       icon="circle"
                       disabled={floor.z_level === current_floor}
-                      onClick={() => act('move_lift', { z: floor.z_level })}>
+                      onClick={() => act('move_lift', { z: floor.z_level })}
+                    >
                       {floor.name}
                     </Button>
                   </Stack.Item>
@@ -97,7 +106,8 @@ export const ElevatorPanel = (props) => {
                     'Closes all elevator doors, except \
                     those on the level of the elevator.'
                   }
-                  onClick={() => act('reset_doors')}>
+                  onClick={() => act('reset_doors')}
+                >
                   Reset Doors
                 </Button>
               ) : (
@@ -111,7 +121,8 @@ export const ElevatorPanel = (props) => {
                       ? 'In case of emergency, opens all lift doors.'
                       : `The station is only at ${emergency_level} alert.`
                   }
-                  onClick={() => act('emergency_door')}>
+                  onClick={() => act('emergency_door')}
+                >
                   Emergency
                 </Button>
               )}
@@ -183,10 +194,11 @@ const FloorPanel = (props) => {
         <Box
           textColor="white"
           style={{
-            'font-family': 'Monospace',
-            'font-size': '50px',
-            'font-weight': 'bold',
-          }}>
+            fontFamily: 'Monospace',
+            fontSize: '50px',
+            fontWeight: 'bold',
+          }}
+        >
           {current_floor - 1}
         </Box>
       </Stack.Item>

@@ -133,7 +133,7 @@
 	name = "deathrattled department"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/deathrattle_department
 	blacklist = list(/datum/station_trait/deathrattle_all)
 
 	var/department_to_apply_to
@@ -161,49 +161,42 @@
 
 /datum/station_trait/deathrattle_department/service
 	name = "Deathrattled Service"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SERVICE
 	department_name = "Service"
 
 /datum/station_trait/deathrattle_department/cargo
 	name = "Deathrattled Cargo"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_CARGO
 	department_name = "Cargo"
 
 /datum/station_trait/deathrattle_department/engineering
 	name = "Deathrattled Engineering"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_ENGINEERING
 	department_name = "Engineering"
 
 /datum/station_trait/deathrattle_department/command
 	name = "Deathrattled Command"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_COMMAND
 	department_name = "Command"
 
 /datum/station_trait/deathrattle_department/science
 	name = "Deathrattled Science"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SCIENCE
 	department_name = "Science"
 
 /datum/station_trait/deathrattle_department/security
 	name = "Deathrattled Security"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_SECURITY
 	department_name = "Security"
 
 /datum/station_trait/deathrattle_department/medical
 	name = "Deathrattled Medical"
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 1
 	department_to_apply_to = DEPARTMENT_BITFLAG_MEDICAL
 	department_name = "Medical"
@@ -334,7 +327,7 @@
 			ai.eyeobj.relay_speech = TRUE //surveillance upgrade. the ai gets cybernetics too.
 		return
 	var/obj/item/organ/internal/cybernetic = new cybernetic_type()
-	cybernetic.Insert(spawned, special = TRUE, drop_if_replaced = FALSE)
+	cybernetic.Insert(spawned, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
 /datum/station_trait/luxury_escape_pods
 	name = "Luxury Escape Pods"
@@ -350,12 +343,12 @@
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 5
 	show_in_report = TRUE
-	report_message = "Your station's medibots have recieved a hardware upgrade, enabling expanded healing capabilities."
+	report_message = "Your station's medibots have received a hardware upgrade, enabling expanded healing capabilities."
 	trait_to_give = STATION_TRAIT_MEDBOT_MANIA
 
 /datum/station_trait/random_event_weight_modifier/shuttle_loans
 	name = "Loaner Shuttle"
-	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to recieve more shuttle loan opportunities, with slightly higher payouts."
+	report_message = "Due to an uptick in pirate attacks around your sector, there are few supply vessels in nearby space willing to assist with special requests. Expect to receive more shuttle loan opportunities, with slightly higher payouts."
 	trait_type = STATION_TRAIT_POSITIVE
 	weight = 4
 	event_control_path = /datum/round_event_control/shuttle_loan

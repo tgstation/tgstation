@@ -34,12 +34,12 @@
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(held_item.tool_behaviour != TOOL_WRENCH || flags_1 & NODECONSTRUCT_1)
+		if(held_item.tool_behaviour != TOOL_WRENCH || obj_flags & NO_DECONSTRUCTION)
 			return
 
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
@@ -50,7 +50,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(build_stack_type)
 			new build_stack_type(loc, build_stack_amount)
 	..()
@@ -59,23 +59,13 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return TRUE
 
 	..()
 	weapon.play_tool_sound(src)
 	deconstruct(disassembled = TRUE)
 	return TRUE
-
-/obj/structure/bed/post_buckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.base_pixel_y -= elevation
-	buckled.pixel_y -= elevation
-
-/obj/structure/bed/post_unbuckle_mob(mob/living/buckled)
-	. = ..()
-	buckled.base_pixel_y += elevation
-	buckled.pixel_y += elevation
 
 /// Medical beds
 /obj/structure/bed/medical
@@ -342,13 +332,11 @@
 /obj/structure/bed/double/post_buckle_mob(mob/living/target)
 	. = ..()
 	if(buckled_mobs.len > 1 && !goldilocks) // Push the second buckled mob a bit higher from the normal lying position
-		target.base_pixel_y += 12
-		target.pixel_y += 12
+		target.pixel_y += 6
 		goldilocks = target
 
 /obj/structure/bed/double/post_unbuckle_mob(mob/living/target)
 	. = ..()
 	if(target == goldilocks)
-		target.base_pixel_y -= 12
-		target.pixel_y -= 12
+		target.pixel_y -= 6
 		goldilocks = null
