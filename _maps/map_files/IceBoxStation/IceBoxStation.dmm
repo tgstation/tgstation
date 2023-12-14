@@ -52271,18 +52271,12 @@
 /turf/open/floor/plating,
 /area/station/ai_monitored/turret_protected/aisat/maint)
 "qMM" = (
-/obj/effect/turf_decal/trimline/dark_red/arrow_ccw{
-	dir = 1
+/obj/machinery/atmospherics/pipe/bridge_pipe/cyan/visible,
+/obj/machinery/atmospherics/pipe/layer_manifold/yellow/visible{
+	dir = 8
 	},
-/obj/effect/turf_decal/trimline/dark_green/arrow_ccw,
-/obj/machinery/atmospherics/pipe/smart/simple/violet/visible/layer1{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/binary/pump/off{
-	dir = 4;
-	name = "O2 To Pure"
-	},
-/turf/open/floor/iron,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
 /area/station/engineering/atmos)
 "qMN" = (
 /obj/effect/decal/cleanable/dirt,
@@ -54449,9 +54443,8 @@
 /obj/effect/turf_decal/tile/purple/anticorner/contrasted{
 	dir = 4
 	},
-/obj/machinery/atmospherics/components/binary/pump/layer4{
-	dir = 8;
-	name = "Plasma to Turbine"
+/obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible/layer4{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -62045,11 +62038,12 @@
 /area/station/service/kitchen/coldroom)
 "tWI" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/green/visible,
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 8;
+	name = "Plasma to Turbine"
+	},
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible{
 	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/bridge_pipe/dark/visible/layer4{
-	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -241717,11 +241711,11 @@ eMr
 cnq
 nVe
 xMh
-eMr
+qMM
 cnq
 nVe
 cnq
-eMr
+qMM
 cnq
 nVe
 jYH
@@ -243012,7 +243006,7 @@ aOX
 qwF
 sEB
 hpI
-qMM
+jap
 kfs
 kfs
 kfs
