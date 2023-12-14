@@ -104,7 +104,6 @@
 
 //Forbidden corndog corner
 /obj/item/food/corndog/NarDog
-	trash_type = /obj/item/popsicle_stick //The most EVIL popsicle underscore stick
 	name = "Nar’Dog"
 	icon_state = "demondog"
 	food_reagents = list(
