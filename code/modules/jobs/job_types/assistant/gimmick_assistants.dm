@@ -172,3 +172,12 @@
 	head = /obj/item/clothing/head/utility/hardhat
 
 	outfit_weight = 8
+
+/datum/outfit/job/assistant/gimmick/magician
+	name = "Gimmick Assistant - Magician"
+
+	head = /obj/item/clothing/head/hats/tophat
+	l_hand = /obj/item/gun/magic/wand/nothing
+
+	outfit_weight = 2
+
