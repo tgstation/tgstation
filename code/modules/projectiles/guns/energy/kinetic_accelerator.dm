@@ -15,6 +15,7 @@
 	var/max_mod_capacity = 100
 	var/list/modkits = list()
 	gun_flags = NOT_A_REAL_GUN
+	var/disablemodification = FALSE //monkeedit - stops removal and addition of mods
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()
@@ -61,7 +62,7 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/crowbar_act(mob/living/user, obj/item/I)
 	. = TRUE
-	if(modkits.len)
+	if(modkits.len && !disablemodification) //monkeedit
 		to_chat(user, span_notice("You pry all the modifications out."))
 		I.play_tool_sound(src, 100)
 		for(var/a in modkits)
@@ -117,7 +118,7 @@
 	return ..()
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/borg/upgrade/modkit))
+	if(istype(I, /obj/item/borg/upgrade/modkit) && !disablemodification) //monkeedit
 		var/obj/item/borg/upgrade/modkit/MK = I
 		MK.install(src, user)
 	else
