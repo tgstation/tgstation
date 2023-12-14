@@ -89,7 +89,6 @@
 			new /obj/item/book/granter/crafting_recipe/maint_gun/smoothbore_disabler_prime(src)
 			new /obj/item/book/granter/crafting_recipe/trash_cannon(src)
 		if(53,54,55)
-			new /mob/living/simple_animal/hostile/retaliate/clown/fleshclown(src)
 			new /obj/item/toy/crayon/spraycan/lubecan(src)
 			new /obj/item/inspector/clown(src)
 			new /obj/item/pillow/clown(src)
