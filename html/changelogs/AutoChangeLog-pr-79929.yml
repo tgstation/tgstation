@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - balance: "Emagged and Hacked APCs now occasionally flicker a blue effect, and the effect is not visible with cameras."
