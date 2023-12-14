@@ -381,9 +381,26 @@
 			explosion(get_turf(user), devastation_range = -1, light_impact_range = 2, flame_range = 2, explosion_cause = src)
 		if(9)
 			//Cold
-			var/datum/disease/cold = new /datum/disease/cold()
 			selected_turf.visible_message(span_userdanger("[user] looks a little under the weather!"))
-			user.ForceContractDisease(cold, FALSE, TRUE)
+			var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+			var/list/anti = list(
+				ANTIGEN_BLOOD	= 1,
+				ANTIGEN_COMMON	= 1,
+				ANTIGEN_RARE	= 2,
+				ANTIGEN_ALIEN	= 0,
+				)
+			var/list/bad = list(
+				EFFECT_DANGER_HELPFUL	= 0,
+				EFFECT_DANGER_FLAVOR	= 1,
+				EFFECT_DANGER_ANNOYING	= 2,
+				EFFECT_DANGER_HINDRANCE	= 3,
+				EFFECT_DANGER_HARMFUL	= 1,
+				EFFECT_DANGER_DEADLY	= 0,
+				)
+			var/datum/disease/advanced/new_disease = new virus_choice
+			new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
+			user.infect_disease(new_disease, TRUE, "(Die of Fate 7)")
+
 		if(10)
 			//Nothing
 			selected_turf.visible_message(span_userdanger("Nothing seems to happen."))

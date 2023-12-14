@@ -38,14 +38,6 @@
 	///If this symptom can appear from /datum/disease/advance/GenerateSymptoms()
 	var/naturally_occuring = TRUE
 
-/datum/symptom/New()
-	var/list/S = SSdisease.list_symptoms
-	for(var/i = 1; i <= S.len; i++)
-		if(type == S[i])
-			id = "[i]"
-			return
-	CRASH("We couldn't assign an ID!")
-
 ///Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
 /datum/symptom/proc/Start(datum/disease/advance/A)
 	if(neutered)
@@ -77,6 +69,10 @@
 	new_symp.name = name
 	new_symp.id = id
 	new_symp.neutered = neutered
+	new_symp.multiplier = multiplier
+	new_symp.chance = chance
+	new_symp.max_chance = max_chance
+	new_symp.max_multiplier = max_multiplier
 	return new_symp
 
 /datum/symptom/proc/generate_threshold_desc()

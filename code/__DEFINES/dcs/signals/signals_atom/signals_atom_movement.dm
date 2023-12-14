@@ -15,6 +15,8 @@
 #define COMSIG_ATOM_ON_Z_IMPACT "movable_on_z_impact"
 ///called on a movable (NOT living) when it starts pulling (atom/movable/pulled, state, force)
 #define COMSIG_ATOM_START_PULL "movable_start_pull"
+///called on a movable when it starts being pulled
+#define COMSIG_ATOM_PULLED "movable_start_pulled"
 /// called on /atom when something attempts to pass through it (atom/movable/source, atom/movable/passing, dir)
 #define COMSIG_ATOM_TRIED_PASS "atom_tried_pass"
 	#define COMSIG_COMPONENT_PERMIT_PASSAGE (1 << 0)

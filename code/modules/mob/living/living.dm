@@ -95,6 +95,23 @@
 	if(m_intent == MOVE_INTENT_WALK)
 		return TRUE
 
+	if(length(diseases) && isliving(M))
+		var/mob/living/living = M
+		var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
+		var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
+		if(length(contact) && !block)
+			for(var/datum/disease/advanced/V as anything in contact)
+				living.infect_disease(V, notes="(Skin Contact - (Bump), coming from [src])")
+
+	if(isliving(M))
+		var/mob/living/living = M
+		var/block = check_contact_sterility(BODY_ZONE_EVERYTHING)
+		if(length(living.diseases))
+			var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
+			if(length(contact) && !block)
+				for(var/datum/disease/advanced/V as anything in contact)
+					infect_disease(V, notes="(Skin Contact - (Bump), coming from [living])")
+
 	SEND_SIGNAL(src, COMSIG_LIVING_MOB_BUMP, M)
 	//Even if we don't push/swap places, we "touched" them, so spread fire
 	spreadFire(M)
@@ -119,16 +136,6 @@
 		var/mob/living/L = M
 		theyre_blocking = L.istate & ISTATE_BLOCKING
 		they_can_move = L.mobility_flags & MOBILITY_MOVE
-		//Also spread diseases
-		for(var/thing in diseases)
-			var/datum/disease/D = thing
-			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-				L.ContactContractDisease(D)
-
-		for(var/thing in L.diseases)
-			var/datum/disease/D = thing
-			if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-				ContactContractDisease(D)
 
 		//Should stop you pushing a restrained person out of the way
 		if(L.pulledby && L.pulledby != src && HAS_TRAIT(L, TRAIT_RESTRAINED))
@@ -309,8 +316,10 @@
 		AM.setDir(current_dir)
 	now_pushing = FALSE
 
-/mob/living/start_pulling(atom/movable/AM, state, force = pull_force, supress_message = FALSE)
+/mob/living/start_pulling(atom/movable/AM, 	state, force = pull_force, supress_message = FALSE)
 	if(!AM || !src)
+		return FALSE
+	if(isturf(AM))
 		return FALSE
 	if(!(AM.can_be_pulled(src, state, force)))
 		return FALSE
@@ -382,15 +391,22 @@
 
 			SEND_SIGNAL(M, COMSIG_LIVING_GET_PULLED, src)
 			//Share diseases that are spread by touch
-			for(var/thing in diseases)
-				var/datum/disease/D = thing
-				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-					L.ContactContractDisease(D)
+			if(length(diseases) && isliving(M))
+				var/mob/living/living = M
+				var/block = living.check_contact_sterility(BODY_ZONE_EVERYTHING)
+				var/list/contact = filter_disease_by_spread(diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
+				if(length(contact) && !block)
+					for(var/datum/disease/advanced/V as anything in contact)
+						living.infect_disease(V, notes="(Skin Contact - (Grab), coming from [src])")
 
-			for(var/thing in L.diseases)
-				var/datum/disease/D = thing
-				if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
-					ContactContractDisease(D)
+			if(isliving(M))
+				var/mob/living/living = M
+				var/block = check_contact_sterility(BODY_ZONE_EVERYTHING)
+				if(length(living.diseases))
+					var/list/contact = filter_disease_by_spread(living.diseases, required = DISEASE_SPREAD_CONTACT_SKIN)
+					if(length(contact) && !block)
+						for(var/datum/disease/advanced/V as anything in contact)
+							infect_disease(V, notes="(Skin Contact - (Grab), coming from [living])")
 
 			if(iscarbon(L))
 				var/mob/living/carbon/C = L
@@ -468,6 +484,8 @@
 /mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
+	add_event_to_buffer(src, pointing_at, "points at [pointing_at]", "EMOTE")
+
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))
 
@@ -506,7 +524,7 @@
 /mob/living/incapacitated(flags)
 	if((flags & IGNORE_CRIT) && ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS)) && !src.pulledby))
 		return FALSE
-		
+
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 

@@ -39,6 +39,7 @@
 		target.transfer_ai(AI_TRANS_TO_CARD, user, null, src)
 		if(AI)
 			log_silicon("[key_name(user)] carded [key_name(AI)]", src)
+			add_event_to_buffer(user, AI, "carded [key_name(AI)]", "SILICON")
 			update_appearance()
 			return TRUE
 	return ..()

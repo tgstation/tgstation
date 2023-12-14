@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 
 /proc/wait_for_approval(client/requestor, datum/antagonist/requested_antag)
 	var/msg = "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(requestor)]</EM> [ADMIN_APPROVE_TOKEN(requestor)] [ADMIN_REJECT_TOKEN(requestor)] | [requestor] has requested to use their antag token to be a [requested_antag].")]"
-
+	add_event_to_buffer(requestor,  data = "has requested to use their antag token to be a [requested_antag].", log_key =  "META")
 	for(var/client/X in GLOB.admins)
 		X << 'sound/items/bikehorn.ogg'
 

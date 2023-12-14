@@ -84,7 +84,7 @@
 /// Allows access to the larger room for Chemistry plumbing machinery setups.
 #define ACCESS_PLUMBING "plumbing"
 /// Access to the Virology portion of the medical department, as well as the virology crate.
-#define ACCESS_VIROLOGY "virology"
+#define ACCESS_VIROLOGY "pathology"
 /// Access to the Psychologist's office.
 #define ACCESS_PSYCHOLOGY "psychology"
 /// Access for the Chief Medical Officer's personal quarters in mapping, as well as some other CMO-related things.

@@ -28,7 +28,8 @@ SUBSYSTEM_DEF(machines)
 /// Removes a machine from the machine subsystem; should only be called by the machine itself inside Destroy.
 /datum/controller/subsystem/machines/proc/unregister_machine(obj/machinery/machine)
 	var/list/existing = machines_by_type[machine.type]
-	existing -= machine
+	if(length(existing))
+		existing -= machine
 	if(!length(existing))
 		machines_by_type -= machine.type
 	all_machines -= machine

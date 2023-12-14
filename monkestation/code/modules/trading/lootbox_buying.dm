@@ -37,6 +37,7 @@
 
 /client/proc/open_lootbox()
 	message_admins("[ckey] opened a lootbox!")
+	add_event_to_buffer(src,  data = "has opened a lootbox!", log_key =  "META")
 	log_game("[ckey] opened a lootbox!")
 	if(!mob)
 		return
