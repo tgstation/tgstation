@@ -51,8 +51,8 @@ const AscensionSection = (props) => {
       <Stack vertical fill>
         <Stack.Item textColor="label">
           To be assimilated is to serve the
-          <span style={hivemindstyle}>&ensp;Hive,</span> and is the path towards
-          eternal life within the hive. You must be
+          <span style={hivemindstyle}>&ensp;Hive</span>, and is the path towards
+          eternal life. You must be
           <span style={absorbstyle}>&ensp;absorbed</span> by your changeling
           idols in order to forever be one with the
           <span style={hivemindstyle}>&ensp;Hive.</span>
@@ -100,9 +100,9 @@ const AbilitiesSection = (props) => {
             <Stack.Divider />
             <Stack.Item basis={0} textColor="label" grow>
               Your body has been
-              <span style={transformstyle}>adapted</span>
-              to best receive the blessings from the changelings. T heir holy
-              abilities will work wonders on your mortal flesh. Be
+              <span style={transformstyle}>adapted</span> to best receive the
+              blessings from the changelings. Their holy abilities will work
+              wonders on your mortal flesh. Be
               <span style={absorbstyle}>&ensp;stung</span> by them to receive
               blessings of health, enlightenment, and strength. Listen to their
               screams and be filled with vigor.

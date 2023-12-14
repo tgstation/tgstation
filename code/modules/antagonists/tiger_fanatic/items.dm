@@ -61,7 +61,7 @@
 
 /obj/item/clothing/mask/mummy/tiger_co
 	name = "set of bandadges"
-	desc = "To cover results of ritual scarification, disfigurement from drugs and transitioning into a changeling, and your ugly face."
+	desc = "To cover results of ritual scarification, disfigurement from drugs, and your ugly face."
 
 /obj/item/clothing/gloves/bandages
 	name = "set of arm wraps"
