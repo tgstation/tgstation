@@ -75,6 +75,7 @@ GLOBAL_VAR(dj_booth)
 		to_chat(user, span_info("You estimate it will take about [time_left ? DisplayTimeText(((time_left * 10) + 6000)) : DisplayTimeText(COOLDOWN_TIMELEFT(src, next_song_timer))] to cool down."))
 		return
 	start_broadcast()
+	add_event_to_buffer(user, src,  data = "started broadcasting [inserted_tape].", log_key = "MUSIC")
 
 /obj/machinery/cassette/dj_station/AltClick(mob/user)
 	. = ..()
@@ -165,6 +166,7 @@ GLOBAL_VAR(dj_booth)
 			UnregisterSignal(anything, COMSIG_CARBON_EQUIP_EARS)
 			UnregisterSignal(anything, COMSIG_MOVABLE_Z_CHANGED)
 		people_with_signals = list()
+	add_event_to_buffer(src,  data = "has stopped broadcasting [inserted_tape].", log_key = "MUSIC")
 
 /obj/machinery/cassette/dj_station/proc/start_broadcast()
 	var/choice = tgui_input_list(usr, "Choose which song to play.", "[src]", current_namelist)

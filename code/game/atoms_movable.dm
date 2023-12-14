@@ -504,6 +504,7 @@
 	pulling = pulled_atom
 	pulled_atom.set_pulledby(src)
 	SEND_SIGNAL(src, COMSIG_ATOM_START_PULL, pulled_atom, state, force)
+	SEND_SIGNAL(pulled_atom, COMSIG_ATOM_PULLED, src, state, force)
 	setGrabState(state)
 	if(ismob(pulled_atom))
 		var/mob/pulled_mob = pulled_atom

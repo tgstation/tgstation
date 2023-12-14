@@ -26,6 +26,7 @@
 		return FALSE
 	buyers_preferences.adjust_metacoins(buyer.ckey, -item_cost, donator_multipler = FALSE)
 
+	add_event_to_buffer(buyer,  data = "bought a [name] - [item_cost].", log_key = "META")
 	if(!one_time_buy)
 		finalize_purchase(buyer)
 		return

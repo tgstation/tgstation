@@ -84,6 +84,7 @@
 	maptext_y += 60
 	if(user.client)
 		message_admins("[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
+		add_event_to_buffer(user,  data = "opened a lootbox and recieved [rolled_item.name]!", log_key = "META")
 		log_game("[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
 	if(type_string == "Unusual")

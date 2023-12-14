@@ -148,6 +148,8 @@
 	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(emp_act))
 	RegisterSignal(parent, COMSIG_ATOM_EX_ACT, PROC_REF(ex_act))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_update_overlays))
+	RegisterSignal(parent, COMSIG_ATOM_PULLED, PROC_REF(log_pull))
+	RegisterSignal(parent, COMSIG_ATOM_NO_LONGER_PULLED, PROC_REF(log_stop_pull))
 
 /datum/component/artifact/UnregisterFromParent()
 	GLOB.running_artifact_list -= parent
@@ -161,6 +163,8 @@
 		COMSIG_ATOM_ATTACK_ROBOT,
 		COMSIG_ATOM_EX_ACT,
 		COMSIG_ATOM_EMP_ACT,
+		COMSIG_ATOM_NO_LONGER_PULLED,
+		COMSIG_ATOM_PULLED,
 	))
 
 /datum/component/artifact/proc/setup()
@@ -176,6 +180,7 @@
 		holder.visible_message(span_notice("[holder] [activation_message]"))
 	active = TRUE
 	holder.add_overlay(act_effect)
+	add_event_to_buffer(parent,  data = "has been activated!", log_key = "ARTIFACT")
 	effect_activate(silent)
 	return TRUE
 
@@ -188,6 +193,7 @@
 		holder.visible_message(span_notice("[holder] [deactivation_message]"))
 	active = FALSE
 	holder.cut_overlay(act_effect)
+	add_event_to_buffer(parent,  data = "has been deactivated!", log_key = "ARTIFACT")
 	effect_deactivate(silent)
 
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)

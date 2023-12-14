@@ -60,6 +60,8 @@ GLOBAL_LIST_INIT(infected_items, list())
 		//SSdisease.active_diseases += D
 		D.after_add()
 
+		add_event_to_buffer(src,  data = "was infected by virus: [D.admin_details()] at [loc_name(loc)].", log_key = "VIRUS")
+
 		if (!pathogen)
 			pathogen = image('monkestation/code/modules/virology/icons/effects.dmi', src, "pathogen_contact")
 			pathogen.plane = HUD_PLANE
