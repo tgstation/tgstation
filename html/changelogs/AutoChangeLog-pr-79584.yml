@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - balance: "Fitness level decreases the time it takes to firemany carry someone. Fitness level determines how much of a positive mood the workout grants. Working out is now more difficult and requires more nutrition."
+  - balance: "Exercise no longer triggers double metabolism."

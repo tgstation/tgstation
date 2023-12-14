@@ -7,9 +7,9 @@ import {
   Tabs,
 } from '../components';
 import { useBackend } from '../backend';
-import { useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
+import { useState } from 'react';
 
 type Data = {
   PlayerAccounts: PlayerAccount[];
@@ -38,7 +38,7 @@ enum SCREENS {
 }
 
 export const AccountingConsole = (props) => {
-  const [screenmode, setScreenmode] = useLocalState('tab_main', SCREENS.users);
+  const [screenmode, setScreenmode] = useState(SCREENS.users);
 
   return (
     <Window width={300} height={360}>

@@ -174,14 +174,8 @@
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/W in M)
-		if(!M.dropItemToGround(W))
-			// I hate that this is necessary, but the code is literally just dropping or deleting everything otherwise
-			// people should be allowed to keep their fucking organs
-			if(istype(W, /obj/item/organ) || istype(W, /obj/item/bodypart))
-				continue
-			qdel(W)
-			M.regenerate_icons()
+	M.drop_everything(del_on_drop = FALSE, force = TRUE, del_if_nodrop = TRUE)
+	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	var/msg = "[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!"

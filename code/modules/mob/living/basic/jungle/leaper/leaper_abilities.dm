@@ -42,7 +42,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "leaper_bubble_pop"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 3 SECONDS
 
 /obj/effect/temp_visual/leaper_projectile_impact/Initialize(mapload)
@@ -160,7 +159,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "leaper"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 1 SECONDS
 
 /obj/effect/temp_visual/blood_drop_rising/Initialize(mapload)
@@ -172,7 +170,6 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "blood_effect_falling"
 	layer = ABOVE_ALL_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	duration = 0.7 SECONDS
 	pixel_y = 60
 

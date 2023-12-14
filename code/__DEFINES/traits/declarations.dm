@@ -415,6 +415,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+/// Mob has fov applied to it
+#define TRAIT_FOV_APPLIED "fov_applied"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -483,6 +485,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Whether or not the user is in a MODlink call, prevents making more calls
 #define TRAIT_IN_CALL "in_call"
+
+/// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
+#define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -1010,5 +1015,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Trait given when a mob has been tipped
 #define TRAIT_MOB_TIPPED "mob_tipped"
+
+/// Trait which self-identifies as an enemy of the law
+#define TRAIT_ALWAYS_WANTED "always_wanted"
 
 // END TRAIT DEFINES

@@ -58,6 +58,8 @@
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
 	if(!isdatum(target)) //we dont need to check if its not a datum!
 		return TRUE
+	if(get_turf(pawn) == get_turf(target))
+		return TRUE
 	var/list/path = get_path_to(pawn, target, max_distance = distance, access = get_access())
 	if(!length(path))
 		return FALSE
@@ -95,7 +97,7 @@
 
 /datum/ai_planning_subtree/find_patrol_beacon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(!(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
+	if(QDELETED(bot_pawn) || !(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
 		return
 
 	if(controller.blackboard_key_exists(BB_BEACON_TARGET))
@@ -186,7 +188,7 @@
 /datum/ai_planning_subtree/salute_authority/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are criminals, dont salute the dirty pigs
-	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+	if(QDELETED(bot_pawn) || bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_SALUTE_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/salute_authority, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)
