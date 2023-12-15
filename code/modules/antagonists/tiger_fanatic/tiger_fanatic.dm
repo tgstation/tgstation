@@ -85,17 +85,3 @@
 	if(tiger_fanatic.blessings >= blessings_required)
 		return TRUE
 	return FALSE
-
-/proc/create_tiger_fanatic(spawn_loc)
-	var/mob/living/carbon/human/tiger = new(spawn_loc)
-	tiger.randomize_human_appearance(~(RANDOMIZE_NAME|RANDOMIZE_SPECIES))
-	tiger.equipOutfit(/datum/outfit/tiger_fanatic)
-	var/obj/item/storage/backpack/satchel/flat/empty/stash = new(spawn_loc)
-	new /obj/item/knife/combat(stash)
-	new /obj/item/gun/ballistic/automatic/pistol/deagle(stash)
-	new /obj/item/ammo_box/magazine/m50(stash)
-	new /obj/item/grenade/chem_grenade/bioterrorfoam(stash)
-	new /obj/item/card/emag/doorjack(stash)
-	new /obj/item/reagent_containers/cup/glass/flask/ritual_wine(stash)
-	tiger.put_in_hands(stash)
-	return tiger
