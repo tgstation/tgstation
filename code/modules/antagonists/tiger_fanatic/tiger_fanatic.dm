@@ -10,14 +10,6 @@
 	ui_name = "AntagInfoTigerFanatic"
 	var/blessings = 0
 
-/datum/antagonist/tiger_fanatic/greet()
-	. = ..()
-	to_chat(owner.current, span_changeling("You worship the changeling hive!."))
-	to_chat(owner.current, span_changeling("You have detected the pressence of the changeling hive mind, and have smuggled yourself aboard the station."))
-	to_chat(owner.current, span_changeling("This is your one opertunity to make contact with a changeling, you must be assimilated into the hive in order to accend."))
-	to_chat(owner.current, span_changeling("You have a weak connection to the changeling hivemind, your body has been conditioned to make you a perfect offering to the changelings."))
-	owner.announce_objectives()
-
 /datum/antagonist/tiger_fanatic/ui_data(mob/user)
 	var/list/data = list()
 	data["key"] = MODE_KEY_CHANGELING

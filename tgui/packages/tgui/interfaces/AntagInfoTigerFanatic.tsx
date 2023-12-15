@@ -18,6 +18,11 @@ const transformstyle = {
   fontWeight: 'bold',
 };
 
+const greeting_style = {
+  color: 'green',
+  fontWeight: 'bold',
+};
+
 type Info = {
   key: string;
   objectives: Objective[];
@@ -25,7 +30,7 @@ type Info = {
 
 export const AntagInfoTigerFanatic = (props) => {
   return (
-    <Window width={540} height={510}>
+    <Window width={540} height={540}>
       <Window.Content
         style={{
           backgroundImage: 'none',
@@ -77,6 +82,14 @@ const IntroductionSection = (props) => {
         <Stack.Item fontSize="25px">
           You are the Tiger Cooperative Fanatic
         </Stack.Item>
+        <span style={greeting_style}>
+          &ensp;You worship the changeling hive! You have detected the pressence
+          of the changeling hive mind, and have smuggled yourself aboard the
+          station. This is your one opertunity to make contact with a
+          changeling, you must be assimilated into the hive in order to accend.
+          You have a weak connection to the changeling hivemind, your body has
+          been conditioned to make you a perfect offering to the changelings.
+        </span>
         <Stack.Item>
           <ObjectivePrintout objectives={objectives} />
         </Stack.Item>
