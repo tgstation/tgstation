@@ -563,6 +563,8 @@ otherwise nothing. Clears automatically when focused.
 when this happens. Useful for things like chat inputs.
 - `onChange: (e, value) => void` - An event, which fires when you commit
 the text by either unfocusing the input box, or by pressing the Enter key.
+- `onEnter: (e, value) => void` - An event, which fires when pressing the Enter key.
+- `onEscape: (e, value) => void` - An event, which fires when unfocusing the input box.
 - `onInput: (e, value) => void` - An event, which fires on every keypress.
 
 ### `Knob`
