@@ -11,11 +11,15 @@
 	///How much of the reagent added. if it's a list, it'll pick a range with the range being list(lower_value, upper_value)
 	var/list/amount_added
 
-/datum/element/venomous/Attach(datum/target, poison_type, amount_added)
+/datum/element/venomous/Attach(datum/target, poison_type, amount_added, thrown_effect = FALSE)
 	. = ..()
 	src.poison_type = poison_type
 	src.amount_added = amount_added
-	target.AddComponent(/datum/component/on_hit_effect, CALLBACK(src, PROC_REF(do_venom)))
+	target.AddComponent(\
+		/datum/component/on_hit_effect,\
+		on_hit_callback = CALLBACK(src, PROC_REF(do_venom)),\
+		thrown_effect = thrown_effect,\
+	)
 
 /datum/element/venomous/Detach(datum/target)
 	qdel(target.GetComponent(/datum/component/on_hit_effect))
