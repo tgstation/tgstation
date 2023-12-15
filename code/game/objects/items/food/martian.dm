@@ -409,7 +409,7 @@
 	tastes = list("bun" = 1, "burger" = 2, "teriyaki onions" = 1, "cheese" = 1, "bacon" = 1, "pineapple" = 1)
 	foodtypes = MEAT | GRAIN | DAIRY | VEGETABLES | FRUIT | PINEAPPLE
 	w_class = WEIGHT_CLASS_SMALL
-	crafting_complexity = FOOD_COMPLEXITY_3
+	crafting_complexity = FOOD_COMPLEXITY_4 //It's THE big blue, Baby!
 
 /obj/item/food/burger/chappy
 	name = "\improper Chappy patty"
