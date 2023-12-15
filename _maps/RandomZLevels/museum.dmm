@@ -17,14 +17,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
-"aY" = (
-/turf/open/floor/holofloor/white,
-/area/awaymission/museum)
 "bg" = (
 /obj/structure/no_effect_signpost{
 	name = "if youre reading this you stink and also made by jimmyl"
 	},
 /turf/open/floor/bluespace,
+/area/awaymission/museum)
+"br" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
+"bI" = (
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "bJ" = (
 /mob/living/basic/statue/mannequin{
@@ -62,6 +69,14 @@
 	},
 /turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
+"cs" = (
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/effect/spawner/random/food_or_drink/snack,
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_half,
+/area/awaymission/museum)
 "cv" = (
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron/dark/diagonal,
@@ -87,6 +102,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"cW" = (
+/obj/machinery/computer/old,
+/turf/open/floor/circuit/green,
+/area/awaymission/museum)
 "cX" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/mapping_helpers/broken_floor,
@@ -96,9 +115,29 @@
 /obj/structure/barricade/wooden,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"ea" = (
+/obj/structure/flora/rock/icy/style_random,
+/obj/effect/turf_decal/siding{
+	dir = 10
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/structure/railing/corner,
+/turf/open/floor/holofloor/asteroid,
+/area/awaymission/museum)
 "em" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"es" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/machinery/light/warm/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "ev" = (
 /obj/structure/hedge,
@@ -129,11 +168,50 @@
 /obj/effect/turf_decal/siding/green,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"eX" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
+/turf/open/floor/holofloor/beach/coast{
+	dir = 1
+	},
+/area/awaymission/museum)
+"fa" = (
+/obj/effect/turf_decal/sand/plating,
+/mob/living/basic/statue/mannequin{
+	held_item = /obj/item/pickaxe;
+	hat = /obj/item/clothing/suit/hooded/explorer
+	},
+/obj/effect/turf_decal/mining,
+/turf/open/floor/plating,
+/area/awaymission/museum)
 "fu" = (
 /obj/item/banhammer{
 	force = -200
 	},
 /turf/open/floor/bluespace,
+/area/awaymission/museum)
+"gj" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/awaymission/museum)
+"gW" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"hC" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/computer/terminal/museum{
+	dir = 4;
+	content = list("2005 - By the early 2000s, Nanotrasen had long observed the computer gaming industry since its inception during the 1980s, and in 2005 would finally make their own entry into the market via the Nanoplay: the world’s first game console with built-in internet connectivity capabilities, bringing the gamers of the world together.")
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "hT" = (
 /mob/living/basic/statue/mannequin{
@@ -151,6 +229,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"hX" = (
+/obj/item/circuitboard{
+	icon_state = "flopdrive";
+	name = "microprocessor"
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/circuit/green,
+/area/awaymission/museum)
 "hY" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
 	dir = 6
@@ -167,6 +253,16 @@
 	},
 /obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"iK" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/tram/plate,
 /area/awaymission/museum)
 "iU" = (
 /obj/machinery/telecomms/relay/preset/auto,
@@ -195,6 +291,10 @@
 	dir = 8
 	},
 /turf/open/floor/circuit/green,
+/area/awaymission/museum)
+"jH" = (
+/obj/structure/fake_stairs/directional/west,
+/turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
 "jP" = (
 /obj/effect/landmark/observer_start,
@@ -243,15 +343,39 @@
 /obj/structure/railing,
 /turf/open/floor/catwalk_floor,
 /area/awaymission/museum)
+"lk" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
+/turf/open/floor/holofloor/beach/coast,
+/area/awaymission/museum)
 "lz" = (
 /obj/effect/landmark/awaystart,
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/awaymission/museum)
+"lB" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/tram/plate,
+/area/awaymission/museum)
 "mQ" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood/corner,
 /turf/open/floor/grass,
+/area/awaymission/museum)
+"mX" = (
+/obj/machinery/computer/arcade/battle{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/red,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
 "nh" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -286,6 +410,16 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"nH" = (
+/obj/structure/fluff/minepost,
+/obj/effect/turf_decal/siding{
+	dir = 5
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/holofloor/asteroid,
+/area/awaymission/museum)
 "nQ" = (
 /obj/effect/spawner/random/vending/colavend,
 /obj/effect/turf_decal/bot,
@@ -316,6 +450,17 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"oA" = (
+/obj/effect/turf_decal/siding/wideplating{
+	dir = 4
+	},
+/turf/open/floor/holofloor/beach/water,
+/area/awaymission/museum)
+"oQ" = (
+/turf/open/floor/holofloor/beach/coast{
+	dir = 1
+	},
 /area/awaymission/museum)
 "oZ" = (
 /obj/effect/turf_decal/trimline/yellow/arrow_ccw{
@@ -375,6 +520,15 @@
 "rm" = (
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"rr" = (
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
+"rO" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/turf_decal/siding/red,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_half,
+/area/awaymission/museum)
 "rP" = (
 /obj/item/clothing/mask/gas/clown_hat,
 /turf/open/floor/iron,
@@ -399,6 +553,14 @@
 /obj/structure/desk_bell,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"st" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "sy" = (
 /obj/structure/railing/corner,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -415,6 +577,16 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"th" = (
+/obj/structure/flora/rock/icy/style_random,
+/obj/effect/turf_decal/siding{
+	dir = 4
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/holofloor/asteroid,
+/area/awaymission/museum)
 "tv" = (
 /obj/effect/turf_decal/stripes{
 	dir = 4
@@ -429,6 +601,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"tI" = (
+/obj/effect/turf_decal/siding{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/holofloor/asteroid{
+	icon_state = "asteroid5"
+	},
+/area/awaymission/museum)
+"tN" = (
+/obj/effect/turf_decal/sand/plating,
+/turf/open/floor/tram/plate,
+/area/awaymission/museum)
 "ud" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/indestructible/plating,
@@ -438,6 +625,16 @@
 /obj/effect/mapping_helpers/broken_floor,
 /obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"uf" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "uE" = (
 /obj/structure/hedge,
@@ -450,6 +647,12 @@
 /turf/open/floor/grass,
 /area/awaymission/museum)
 "uY" = (
+/turf/open/floor/iron,
+/area/awaymission/museum)
+"vy" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "vE" = (
@@ -493,6 +696,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"xj" = (
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/turf/open/floor/holofloor/asteroid{
+	icon_state = "asteroid3"
+	},
+/area/awaymission/museum)
 "xv" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood{
@@ -515,7 +726,7 @@
 	},
 /obj/machinery/computer/terminal/museum{
 	dir = 1;
-	content = list("1995 - They would officially change their name to Nanotrasen, and the name would stick for the company.")
+	content = list("1995 - By the early 90s, as computers became smaller and technology more compact, Trasen-Knox saw the need to create more of a recognisable brand. They would officially change their name to Nanotrasen in 1995, and the name would stick for the company.")
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -523,10 +734,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"xR" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "yn" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 8
 	},
+/turf/open/indestructible/plating,
+/area/awaymission/museum)
+"yx" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "yK" = (
@@ -553,6 +775,31 @@
 	traits_to_add = list("No Parallax" = 1,"No X-Ray" = 1, "No Phase" = 1, "Baseturf" = /turf/open/indestructible/plating)
 	},
 /turf/open/floor/bluespace,
+/area/awaymission/museum)
+"zG" = (
+/obj/structure/chair/office{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/red,
+/mob/living/basic/statue/mannequin{
+	dir = 8;
+	hat = /obj/item/clothing/head/fedora
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_half,
+/area/awaymission/museum)
+"zK" = (
+/obj/machinery/computer/arcade/battle{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
+"zX" = (
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/iron,
 /area/awaymission/museum)
 "zY" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -644,6 +891,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"CF" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "CK" = (
 /obj/item/bedsheet/medical,
 /obj/structure/bed,
@@ -661,12 +916,24 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"El" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "ED" = (
 /obj/structure/girder,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "EQ" = (
-/obj/item/circuitboard/computer/arcade,
+/obj/item/circuitboard{
+	icon_state = "secmodschematic"
+	},
 /obj/item/screwdriver,
 /obj/structure/table/reinforced,
 /obj/structure/railing{
@@ -685,6 +952,14 @@
 	dir = 1
 	},
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"EU" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "EX" = (
 /obj/structure/railing{
@@ -719,6 +994,16 @@
 /obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Gi" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/structure/fluff{
+	name = "minecart";
+	icon = 'icons/obj/storage/crates.dmi';
+	icon_state = "miningcaropen";
+	desc = "Ore goes here."
+	},
+/turf/open/floor/tram/plate,
+/area/awaymission/museum)
 "Gx" = (
 /obj/machinery/vending/coffee,
 /obj/effect/turf_decal/bot,
@@ -727,6 +1012,30 @@
 "GE" = (
 /obj/structure/barricade/wooden,
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
+/turf/open/indestructible/plating,
+/area/awaymission/museum)
+"GG" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/mob/living/basic/statue/mannequin{
+	dir = 4
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
+"GQ" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/indestructible/plating,
+/area/awaymission/museum)
+"GS" = (
+/obj/effect/spawner/structure/window/hollow/reinforced/end{
+	dir = 1
+	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "GV" = (
@@ -749,6 +1058,14 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"Hw" = (
+/obj/machinery/computer/terminal/museum{
+	content = list("Early 1970s, 1978 - With the introduction of the microprocessor in the early 1970s, the world of computers became accessible to the masses via the introduction of the personal computer. Seizing on the opportunity to expand their horizons, Trasen-Knox would introduce their first personal computer, the TKC Personal Computer, in 1978, becoming a household name as well as the favourite computer producer of scientific groups in North America.")
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "IC" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood{
@@ -756,12 +1073,28 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/museum)
+"IF" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
+"IP" = (
+/turf/open/floor/holofloor/beach/coast,
+/area/awaymission/museum)
 "Jk" = (
 /obj/structure/barricade/wooden,
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
 	dir = 1
 	},
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"Jx" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "JF" = (
 /obj/machinery/gateway/away,
@@ -801,6 +1134,12 @@
 	dir = 10
 	},
 /turf/open/floor/grass,
+/area/awaymission/museum)
+"Lv" = (
+/obj/structure/window/reinforced/spawner/directional/east{
+	dir = 2
+	},
+/turf/open/floor/circuit/green,
 /area/awaymission/museum)
 "LY" = (
 /obj/effect/turf_decal/siding/wood{
@@ -852,6 +1191,12 @@
 /obj/effect/mapping_helpers/airlock/access/all/away/generic3,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"NV" = (
+/obj/structure/bed/pod{
+	dir = 1
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
 "NY" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -898,9 +1243,27 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"PF" = (
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/mining,
+/obj/item/flashlight/lantern{
+	icon_state = "lantern-on"
+	},
+/turf/open/floor/plating,
+/area/awaymission/museum)
 "PP" = (
 /obj/effect/mob_spawn/corpse/human/damaged,
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"PR" = (
+/obj/structure/fluff/minepost,
+/obj/effect/turf_decal/siding{
+	dir = 9
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
 "Qf" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
@@ -986,6 +1349,11 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"Sh" = (
+/obj/effect/turf_decal/siding,
+/obj/structure/railing,
+/turf/open/floor/holofloor/asteroid,
+/area/awaymission/museum)
 "Sr" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
@@ -1012,10 +1380,31 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"UB" = (
+/obj/structure/fluff/minepost,
+/obj/effect/turf_decal/siding{
+	dir = 6
+	},
+/obj/structure/railing{
+	dir = 4
+	},
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor/asteroid,
+/area/awaymission/museum)
 "UI" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"UK" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/preopen,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "US" = (
 /obj/machinery/computer/old{
@@ -1026,6 +1415,17 @@
 	dir = 6
 	},
 /turf/open/floor/circuit/green,
+/area/awaymission/museum)
+"UU" = (
+/obj/effect/turf_decal/siding{
+	dir = 1
+	},
+/turf/open/floor/holofloor/asteroid,
+/area/awaymission/museum)
+"UY" = (
+/obj/effect/spawner/random/trash/mess,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
 "Vc" = (
 /turf/open/floor/iron/dark,
@@ -1038,10 +1438,21 @@
 /obj/structure/fluff/fokoff_sign,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"VL" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "VS" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue/corner,
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"VW" = (
+/turf/open/floor/holofloor/beach/water,
 /area/awaymission/museum)
 "VZ" = (
 /obj/effect/turf_decal/siding/wood{
@@ -1079,6 +1490,13 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"WT" = (
+/obj/machinery/computer/terminal/museum{
+	content = list("2008 - Nanotrasen would buy out and merge with the Wulfe Group, a German company known for their manufacture of industrial equipment. Rebranding the company as Nanotrasen Heavy Industry (or NTHI), this would be Nanotrasen’s first step towards new horizons beyond computing. In a series of purchases, Nanotrasen would expand its range of products considerably, acquiring a chemical and oil subsidiary in Texas Chemical (now Nanotrasen Chemical Supply), a consumer goods subsidiary in Seowon Appliances (now Nanotrasen Consumer Goods)")
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "WX" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue/corner{
@@ -1100,6 +1518,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"XP" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/indestructible,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Yr" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/table/reinforced,
@@ -1107,6 +1533,16 @@
 /obj/effect/spawner/random/entertainment/toy,
 /obj/effect/spawner/random/entertainment/toy,
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"Yz" = (
+/obj/effect/turf_decal/siding,
+/mob/living/basic/statue/mannequin{
+	dir = 8;
+	held_item = /obj/item/pickaxe;
+	hat = /obj/item/clothing/suit/hooded/explorer
+	},
+/obj/structure/railing,
+/turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
 "YF" = (
 /obj/structure/hedge,
@@ -1126,6 +1562,10 @@
 	pixel_x = 12
 	},
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"Zg" = (
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/holofloor/beach/water,
 /area/awaymission/museum)
 "Zr" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -22118,11 +22558,11 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-uY
-uY
+FK
+FK
+FK
+FK
+FK
 uY
 uY
 uY
@@ -22373,15 +22813,15 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
+FK
+FK
+FK
+IP
+Zg
+oQ
+FK
+FK
+FK
 uY
 uY
 uY
@@ -22630,15 +23070,15 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
+FK
+jH
+mX
+IP
+VW
+oQ
+br
+NV
+FK
 uY
 uY
 uY
@@ -22887,15 +23327,15 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
+FK
+UY
+zG
+IP
+VW
+oQ
+GG
+rr
+FK
 uY
 uY
 uY
@@ -23144,15 +23584,15 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
+FK
+cs
+rO
+lk
+oA
+eX
+zK
+IF
+FK
 uY
 uY
 uY
@@ -23400,19 +23840,19 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
+FK
+FK
+GQ
+yx
+xR
+hC
+xR
+GS
+GQ
+FK
+FK
+FK
+FK
 uY
 uY
 uY
@@ -23658,22 +24098,22 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
-uY
+hV
+hV
+hV
+VL
+hV
+hV
+hV
+hV
+hV
+hV
+hV
+hV
+hV
+hV
+hV
+hV
 uY
 uY
 uY
@@ -23921,9 +24361,9 @@ uY
 uY
 uY
 uY
+qj
 uY
-uY
-uY
+qj
 uY
 uY
 uY
@@ -24169,10 +24609,10 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-Vc
+Sr
+gW
+Sr
+RC
 uY
 DV
 bV
@@ -24184,10 +24624,10 @@ lf
 bV
 bV
 bV
-uY
-uY
-uY
-uY
+bV
+bV
+bV
+bV
 uY
 uY
 uY
@@ -24426,10 +24866,10 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-Vc
+FK
+FK
+FK
+lb
 uY
 tD
 am
@@ -24440,11 +24880,11 @@ uY
 sy
 FK
 FK
+PR
+tI
+iK
+ea
 FK
-uY
-uY
-uY
-uY
 uY
 uY
 uY
@@ -24683,11 +25123,11 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-Vc
-uY
+FK
+cW
+Lv
+lb
+qj
 tD
 cn
 Mv
@@ -24695,13 +25135,13 @@ tv
 lb
 uY
 ZI
-aY
 rU
 FK
-uY
-uY
-uY
-uY
+UU
+fa
+Gi
+Yz
+Sr
 uY
 uY
 uY
@@ -24940,10 +25380,10 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-Vc
+FK
+hX
+Lv
+lb
 uY
 tD
 Kv
@@ -24952,13 +25392,13 @@ lh
 lb
 uY
 ZI
-aY
 hT
 FK
-uY
-uY
-uY
-uY
+xj
+PF
+tN
+Sh
+WT
 uY
 uY
 uY
@@ -25197,10 +25637,10 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-Vc
+FK
+FK
+FK
+Hw
 uY
 tD
 Wt
@@ -25211,11 +25651,11 @@ uY
 xJ
 FK
 FK
+nH
+th
+lB
+UB
 FK
-uY
-uY
-uY
-uY
 uY
 uY
 uY
@@ -25454,10 +25894,10 @@ uY
 uY
 uY
 uY
-uY
-uY
-uY
-Vc
+Sr
+Sr
+Sr
+zg
 uY
 nv
 hV
@@ -25469,10 +25909,10 @@ nh
 hV
 hV
 hV
-uY
-uY
-uY
-uY
+hV
+hV
+hV
+hV
 uY
 uY
 uY
@@ -25975,13 +26415,13 @@ OD
 bV
 bV
 RC
-uY
+qj
 lf
 bV
 bV
 ox
 bV
-Bq
+es
 uY
 uY
 uY
@@ -27002,9 +27442,9 @@ FK
 FK
 FK
 FK
-lb
-uY
-tD
+Jx
+gj
+uf
 FK
 FK
 FK
@@ -27769,6 +28209,7 @@ FK
 Cc
 VS
 zg
+qj
 uY
 uY
 uY
@@ -27778,8 +28219,7 @@ uY
 uY
 uY
 uY
-uY
-uY
+qj
 nh
 Pi
 Cc
@@ -29050,7 +29490,7 @@ uY
 uY
 uY
 uY
-hV
+CF
 hV
 zg
 uY
@@ -29068,7 +29508,7 @@ uY
 uY
 nh
 CD
-hV
+st
 hV
 hV
 hV
@@ -29307,7 +29747,7 @@ uY
 uY
 uY
 uY
-uY
+bI
 uY
 uY
 uY
@@ -29325,7 +29765,7 @@ uY
 uY
 uY
 uY
-uY
+zX
 uY
 uY
 uY
@@ -29564,7 +30004,7 @@ uY
 uY
 uY
 uY
-bV
+XP
 bV
 RC
 uY
@@ -29582,7 +30022,7 @@ uY
 uY
 lf
 Um
-bV
+UK
 bV
 bV
 bV
@@ -30623,7 +31063,7 @@ uY
 uY
 uY
 uY
-uY
+re
 uY
 uY
 uY
@@ -31628,9 +32068,9 @@ FK
 FK
 FK
 FK
-lb
-uY
-tD
+EU
+vy
+El
 FK
 FK
 FK
