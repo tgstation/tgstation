@@ -32,10 +32,10 @@
 	required_enemies = 5
 	// I give up, just there should be enough heads with 35 players...
 	min_players = 35
-	roundstart = FALSE
 	earliest_start = 45 MINUTES
 	weight = 4
 	max_occurrences = 1
+	prompted_picking = TRUE
 
 /datum/round_event/antagonist/solo/ghost/nuclear_operative
 	excute_round_end_reports = TRUE

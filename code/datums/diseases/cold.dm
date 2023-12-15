@@ -3,7 +3,7 @@
 	desc = "If left untreated the subject will contract the flu."
 	max_stages = 3
 	cure_text = "Rest & Spaceacillin"
-	cures = list(/datum/reagent/medicine/spaceacillin)
+	cures = list(/datum/reagent/medicine/antipathogenic/spaceacillin)
 	agent = "XY-rhinovirus"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	spreading_modifier = 0.5

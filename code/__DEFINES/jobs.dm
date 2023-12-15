@@ -59,7 +59,7 @@
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
 #define JOB_PARAMEDIC "Paramedic"
 #define JOB_CHEMIST "Chemist"
-#define JOB_VIROLOGIST "Virologist"
+#define JOB_VIROLOGIST "Pathologist"
 //Science
 #define JOB_SCIENTIST "Scientist"
 #define JOB_ROBOTICIST "Roboticist"

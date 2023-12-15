@@ -263,6 +263,9 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 #define GRENADE_NONCLUMSY_FUMBLE 2
 #define GRENADE_NO_FUMBLE 3
 
+#define BODY_ZONE_EVERYTHING "everything"
+#define BODY_ZONE_ARMS "arms"
+#define BODY_ZONE_LEGS "legs"
 #define BODY_ZONE_HEAD "head"
 #define BODY_ZONE_CHEST "chest"
 #define BODY_ZONE_L_ARM "l_arm"

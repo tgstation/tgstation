@@ -24,7 +24,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_CLONE
 
 /datum/chemical_reaction/medicine/spaceacillin
-	results = list(/datum/reagent/medicine/spaceacillin = 2)
+	results = list(/datum/reagent/medicine/antipathogenic/spaceacillin = 2)
 	required_reagents = list(/datum/reagent/cryptobiolin = 1, /datum/reagent/medicine/epinephrine = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OTHER
 

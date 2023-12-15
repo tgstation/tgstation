@@ -251,7 +251,7 @@
 	repeating = TRUE
 	heal_brute = 10
 	stop_bleeding = 0.6
-	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+	grind_results = list(/datum/reagent/medicine/antipathogenic/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/suture
 
 /obj/item/stack/medical/suture/emergency
@@ -310,7 +310,7 @@
 	flesh_regeneration = 3
 
 	var/is_open = TRUE ///This var determines if the sterile packaging of the mesh has been opened.
-	grind_results = list(/datum/reagent/medicine/spaceacillin = 2)
+	grind_results = list(/datum/reagent/medicine/antipathogenic/spaceacillin = 2)
 	merge_type = /obj/item/stack/medical/mesh
 
 /obj/item/stack/medical/mesh/Initialize(mapload, new_amount, merge = TRUE, list/mat_override=null, mat_amt=1)

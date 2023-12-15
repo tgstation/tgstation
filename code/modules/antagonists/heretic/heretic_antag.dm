@@ -140,6 +140,7 @@
 				return TRUE
 
 			log_heretic_knowledge("[key_name(owner)] gained knowledge: [initial(researched_path.name)]")
+			add_event_to_buffer(owner, data = "gained knowledge: [initial(researched_path.name)]", log_key = "HERETIC")
 			knowledge_points -= initial(researched_path.cost)
 			return TRUE
 
