@@ -133,7 +133,10 @@ class KeybindingButton extends Component<{
         fluid
         textAlign="center"
         captureKeys={typingHotkey === undefined}
-        onClick={onClick}
+        onClick={(event) => {
+          event.stopPropagation();
+          onClick?.();
+        }}
         selected={typingHotkey !== undefined}
       >
         {typingHotkey || currentHotkey || 'Unbound'}
