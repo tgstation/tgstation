@@ -90,7 +90,7 @@
 	if (isguardian(owner))
 		var/mob/living/basic/guardian/guardian_owner = owner
 		beacon.add_atom_colour(guardian_owner.guardian_colour, FIXED_COLOUR_PRIORITY)
-	RegisterSignal(beacon, COMSIG_PARENT_QDELETING, PROC_REF(on_beacon_deleted))
+	RegisterSignal(beacon, COMSIG_QDELETING, PROC_REF(on_beacon_deleted))
 	to_chat(src, span_bolddanger("Beacon placed! You may now warp targets and objects to it, including your user, via Alt+Click."))
 	StartCooldown()
 	return TRUE

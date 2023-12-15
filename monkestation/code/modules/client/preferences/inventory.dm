@@ -1,3 +1,5 @@
+#define DONATOR_ROUNDEND_BONUS 25 //25 monkecoin for donators
+
 /datum/preferences/proc/load_inventory(ckey)
 	if(!ckey || !SSdbcore.IsConnected())
 		return
@@ -41,6 +43,14 @@
 			amount = max_round_coins
 		max_round_coins -= amount
 
+	//Patreon Flat Roundend Bonus
+	if((parent.patreon?.has_access(2)) && donator_multipler)
+		amount += DONATOR_ROUNDEND_BONUS
+
+	//Twitch Flat Roundend Bonus
+	if((parent.twitch?.has_access(1)) && donator_multipler)
+		amount += DONATOR_ROUNDEND_BONUS
+
 	//Donator Multiplier
 	if(amount > 0 && donator_multipler)
 		switch(parent.patreon.access_rank)
@@ -53,6 +63,8 @@
 
 	amount = round(amount, 1) //make sure whole number
 	metacoins += amount //store the updated metacoins in a variable, but not the actual game-to-game storage mechanism (load_metacoins() pulls from database)
+
+	add_event_to_buffer(parent,  data = "monkecoins were changed by [amount] Reason: [reason].", log_key = "META")
 
 	//SQL query - updates the metacoins in the database (this is where the storage actually happens)
 	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET metacoins = metacoins + '[amount]' WHERE ckey = '[ckey]'")

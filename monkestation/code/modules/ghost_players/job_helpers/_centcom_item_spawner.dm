@@ -36,9 +36,13 @@
 	if(type in blacklisted_items) //should not be visible but just be extra sure we cant print these
 		return
 
-	new second_choice(get_turf(src))
+	spawn_chosen_item(second_choice)
 	say("[fabrication_phrase]")
 	playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
+
+///spawn our item, used if you want to add additional logic when an item is spawned
+/obj/structure/centcom_item_spawner/proc/spawn_chosen_item(type_to_spawn)
+	return new type_to_spawn(get_turf(src))
 
 ///build our items to spawn, override this to generate items_to_spawn, call parent at the END of your override
 /obj/structure/centcom_item_spawner/proc/build_items_to_spawn()

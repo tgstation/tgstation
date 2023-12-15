@@ -128,7 +128,7 @@
 	else
 		return ..()
 
-/obj/machinery/button/emag_act(mob/user)
+/obj/machinery/button/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
 	if(obj_flags & EMAGGED)
 		return
@@ -139,9 +139,9 @@
 
 	// The device inside can be emagged by swiping the button
 	// returning TRUE will prevent feedback (so we can do our own)
-	if(device?.emag_act(user))
-		return
-	balloon_alert(user, "access overridden")
+	if(!device?.emag_act(user, emag_card))
+		balloon_alert(user, "access overridden")
+	return TRUE
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)

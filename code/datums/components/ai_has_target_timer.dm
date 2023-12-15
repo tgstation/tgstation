@@ -49,8 +49,8 @@
 	store_current_time()
 	START_PROCESSING(SSdcs, src)
 	if (!isnull(last_target))
-		UnregisterSignal(last_target, COMSIG_PARENT_QDELETING)
-	RegisterSignal(new_target, COMSIG_PARENT_QDELETING, PROC_REF(finalise_losing_target))
+		UnregisterSignal(last_target, COMSIG_QDELETING)
+	RegisterSignal(new_target, COMSIG_QDELETING, PROC_REF(finalise_losing_target))
 	last_target = new_target
 
 /// When we lose our target, start a short timer in case we reacquire it very quickly
@@ -63,7 +63,7 @@
 	deltimer(reset_clock_timer)
 	STOP_PROCESSING(SSdcs, src)
 	if (!isnull(last_target))
-		UnregisterSignal(last_target, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(last_target, COMSIG_QDELETING)
 	last_target = null
 	time_on_target = 0
 	if (!QDELETED(parent))

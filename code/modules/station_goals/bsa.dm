@@ -391,6 +391,8 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 	return cannon
 /obj/machinery/computer/bsa_control/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
-	to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out."))
+	balloon_alert(user, "rigged to explode")
+	to_chat(user, span_warning("You emag [src] and hear the focusing crystal short out. You get the feeling it wouldn't be wise to stand near [src] when the BSA fires..."))
+	return TRUE

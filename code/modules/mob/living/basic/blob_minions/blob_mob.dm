@@ -29,7 +29,7 @@
 
 /// Associates this mob with a specific blob factory node
 /mob/living/basic/blob_minion/proc/link_to_factory(obj/structure/blob/special/factory/factory)
-	RegisterSignal(factory, COMSIG_PARENT_QDELETING, PROC_REF(on_factory_destroyed))
+	RegisterSignal(factory, COMSIG_QDELETING, PROC_REF(on_factory_destroyed))
 
 /// Called when our factory is destroyed
 /mob/living/basic/blob_minion/proc/on_factory_destroyed()

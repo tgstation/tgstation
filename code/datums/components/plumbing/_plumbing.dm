@@ -53,7 +53,7 @@
 		RegisterSignal(parent, COMSIG_COMPONENT_ADDED, PROC_REF(enable))
 
 /datum/component/plumbing/RegisterWithParent()
-	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING), PROC_REF(disable))
+	RegisterSignals(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING), PROC_REF(disable))
 	RegisterSignals(parent, list(COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH), PROC_REF(toggle_active))
 	RegisterSignal(parent, COMSIG_OBJ_HIDE, PROC_REF(hide))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(create_overlays)) //called by lateinit on startup
@@ -61,8 +61,9 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, PROC_REF(change_ducting_layer))
 
 /datum/component/plumbing/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_OBJ_DEFAULT_UNFASTEN_WRENCH, COMSIG_OBJ_HIDE, \
 	COMSIG_ATOM_UPDATE_OVERLAYS, COMSIG_ATOM_DIR_CHANGE, COMSIG_MOVABLE_CHANGE_DUCT_LAYER, COMSIG_COMPONENT_ADDED))
+	REMOVE_TRAIT(parent, TRAIT_UNDERFLOOR, REF(src))
 
 /datum/component/plumbing/Destroy()
 	ducts = null
@@ -316,6 +317,11 @@
 
 	var/should_hide = !underfloor_accessibility
 
+	if(should_hide)
+		ADD_TRAIT(parent_obj, TRAIT_UNDERFLOOR, REF(src))
+	else
+		REMOVE_TRAIT(parent_obj, TRAIT_UNDERFLOOR, REF(src))
+
 	if(parent_movable.anchored || !should_hide)
 		tile_covered = should_hide
 		parent_obj.update_appearance()
@@ -337,9 +343,9 @@
 
 /datum/component/plumbing/proc/set_recipient_reagents_holder(datum/reagents/receiver)
 	if(recipient_reagents_holder)
-		UnregisterSignal(recipient_reagents_holder, COMSIG_PARENT_QDELETING) //stop tracking whoever we were tracking
+		UnregisterSignal(recipient_reagents_holder, COMSIG_QDELETING) //stop tracking whoever we were tracking
 	if(receiver)
-		RegisterSignal(receiver, COMSIG_PARENT_QDELETING, PROC_REF(handle_reagent_del)) //on deletion call a wrapper proc that clears us, and maybe reagents too
+		RegisterSignal(receiver, COMSIG_QDELETING, PROC_REF(handle_reagent_del)) //on deletion call a wrapper proc that clears us, and maybe reagents too
 
 	recipient_reagents_holder = receiver
 

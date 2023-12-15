@@ -53,7 +53,7 @@
 	src.force_teleport_out_effect = force_teleport_out_effect
 	src.force_teleport_in_effect = force_teleport_in_effect
 
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(on_owner_qdel))
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(on_owner_qdel))
 
 	var/static/list/container_connections = list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(on_owner_moved),

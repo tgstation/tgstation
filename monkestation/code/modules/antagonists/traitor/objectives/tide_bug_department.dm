@@ -83,7 +83,7 @@
 		bug.balloon_alert(user, "The Tide virus bug materializes in your hand.")
 		AddComponent(/datum/component/traitor_objective_register, bug, \
 				succeed_signals = list(COMSIG_TRAITOR_BUG_ACTIVATED), \
-				fail_signals = list(COMSIG_PARENT_QDELETING), \
+				fail_signals = list(COMSIG_QDELETING), \
 				penalty = telecrystal_penalty)
 		bug.objective_weakref = WEAKREF(src)
 

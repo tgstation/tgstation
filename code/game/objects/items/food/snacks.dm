@@ -42,9 +42,30 @@
 
 /obj/item/food/candy/bronx/proc/after_eat(mob/living/eater)
 	if(ishuman(eater))
-		var/mob/living/carbon/human/carl = eater
-		var/datum/disease/disease = new /datum/disease/parasite()
-		carl.ForceContractDisease(disease, make_copy = FALSE, del_on_fail = TRUE)
+		var/datum/disease/advanced/parasite/disease = new
+		var/list/anti = list(
+			ANTIGEN_BLOOD	= 1,
+			ANTIGEN_COMMON	= 1,
+			ANTIGEN_RARE	= 0,
+			ANTIGEN_ALIEN	= 0,
+			)
+		var/list/bad = list(
+			EFFECT_DANGER_HELPFUL	= 1,
+			EFFECT_DANGER_FLAVOR	= 4,
+			EFFECT_DANGER_ANNOYING	= 4,
+			EFFECT_DANGER_HINDRANCE	= 0,
+			EFFECT_DANGER_HARMFUL	= 0,
+			EFFECT_DANGER_DEADLY	= 0,
+			)
+
+		disease.makerandom(list(30,55),list(0,50),anti,bad,null)
+
+		disease.log += "<br />[ROUND_TIME()] Infected [key_name(eater)]"
+		if(!length(eater.diseases))
+			eater.diseases = list()
+		eater.diseases += disease
+
+		disease.AddToGoggleView(eater)
 
 /obj/item/food/candy/bronx/examine(mob/user)
 	. = ..()

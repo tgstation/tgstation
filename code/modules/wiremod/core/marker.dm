@@ -34,7 +34,7 @@
 
 	say("Marked [target].")
 	marked_atom = target
-	RegisterSignal(marked_atom, COMSIG_PARENT_QDELETING, PROC_REF(cleanup_marked_atom))
+	RegisterSignal(marked_atom, COMSIG_QDELETING, PROC_REF(cleanup_marked_atom))
 	update_icon()
 	flick("multitool_circuit_flick", src)
 	playsound(src.loc, 'sound/misc/compiler-stage2.ogg', 30, TRUE)
@@ -50,7 +50,7 @@
 /obj/item/multitool/circuit/proc/clear_marked_atom()
 	if(!marked_atom)
 		return
-	UnregisterSignal(marked_atom, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(marked_atom, COMSIG_QDELETING)
 	marked_atom = null
 	update_icon()
 

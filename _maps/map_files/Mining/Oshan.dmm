@@ -69,6 +69,10 @@
 /obj/machinery/camera/autoname/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/visit)
+"eJ" = (
+/obj/structure/weightmachine/stacklifter,
+/turf/open/floor/iron/white,
+/area/station/security/prison)
 "eN" = (
 /obj/machinery/door/airlock/external/glass,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -140,6 +144,10 @@
 	},
 /turf/open/floor/iron,
 /area/mine/production)
+"hw" = (
+/obj/structure/weightmachine/weightlifter,
+/turf/open/floor/iron/white,
+/area/station/security/prison)
 "hC" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -299,7 +307,6 @@
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "mq" = (
-/obj/structure/rack,
 /obj/machinery/light/directional/east,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
@@ -352,7 +359,6 @@
 "ot" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/structure/rack,
 /turf/open/floor/iron,
 /area/station/security/prison/mess)
 "oy" = (
@@ -369,6 +375,10 @@
 /obj/structure/fans/tiny/forcefield,
 /turf/open/floor/engine,
 /area/mine/production)
+"pl" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/ocean/dark,
+/area/ocean/dark)
 "pr" = (
 /obj/machinery/ocean_elevator{
 	elevator_id = "prison";
@@ -452,10 +462,6 @@
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron,
 /area/mine/production)
-"ta" = (
-/obj/effect/landmark/start/prisoner,
-/turf/open/floor/iron,
-/area/station/security/prison/mess)
 "tn" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/iron,
@@ -471,7 +477,6 @@
 /area/station/security/prison/work)
 "vd" = (
 /obj/machinery/camera/autoname/directional/east,
-/obj/effect/landmark/start/prisoner,
 /obj/structure/toilet{
 	dir = 1
 	},
@@ -637,7 +642,6 @@
 /area/station/security/prison)
 "Bo" = (
 /obj/machinery/camera/autoname/directional/east,
-/obj/machinery/shower/directional/west,
 /turf/open/floor/iron/freezer,
 /area/station/security/prison/shower)
 "By" = (
@@ -762,10 +766,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/work)
-"Ge" = (
-/obj/effect/landmark/start/prisoner,
-/turf/open/floor/iron,
-/area/station/security/prison/work)
 "Gj" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -831,10 +831,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
 	},
-/turf/open/floor/iron/dark,
-/area/station/security/prison/garden)
-"Iv" = (
-/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/prison/garden)
 "IB" = (
@@ -937,10 +933,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
-"OF" = (
-/obj/structure/rack,
-/turf/open/floor/iron,
-/area/station/security/prison/mess)
 "OK" = (
 /obj/machinery/button/sea_elevator{
 	pixel_y = 32;
@@ -959,6 +951,7 @@
 /area/station/security/prison/mess)
 "Pg" = (
 /obj/structure/cable,
+/obj/structure/ore_box,
 /turf/open/floor/iron,
 /area/mine/production)
 "Pw" = (
@@ -972,7 +965,6 @@
 /area/ocean/dark)
 "Ql" = (
 /obj/machinery/camera/autoname/directional/north,
-/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "Qx" = (
@@ -1005,10 +997,6 @@
 /obj/machinery/hydroponics,
 /turf/open/floor/iron,
 /area/station/security/prison/garden)
-"RP" = (
-/obj/effect/landmark/start/prisoner,
-/turf/open/floor/iron/white,
-/area/station/security/prison/rec)
 "Sq" = (
 /obj/item/stack/license_plates/empty/fifty,
 /obj/structure/rack,
@@ -1063,7 +1051,6 @@
 "UY" = (
 /obj/structure/bed,
 /obj/item/bedsheet/red,
-/obj/effect/landmark/start/prisoner,
 /turf/open/floor/iron/dark,
 /area/station/security/prison)
 "Vu" = (
@@ -1088,6 +1075,10 @@
 	},
 /turf/open/floor/plating/ocean/dark,
 /area/ocean/dark)
+"Wk" = (
+/obj/structure/ore_box,
+/turf/open/floor/iron,
+/area/mine/production)
 "Wl" = (
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
@@ -24203,7 +24194,7 @@ qu
 qu
 wF
 wF
-Ge
+hX
 hX
 bd
 bd
@@ -24404,8 +24395,8 @@ Jq
 su
 zn
 nW
-nW
-nW
+Wk
+Wk
 Pg
 On
 go
@@ -24473,7 +24464,7 @@ HW
 Np
 rA
 Vu
-Iv
+oy
 xg
 QO
 HW
@@ -25235,13 +25226,13 @@ uv
 wn
 Wl
 kd
-kd
+eJ
 kd
 Zo
 XG
 Zo
 kd
-kd
+eJ
 kd
 qe
 nl
@@ -25738,7 +25729,7 @@ Hh
 Hh
 Hh
 Hh
-qu
+pl
 qu
 Xm
 nK
@@ -26766,7 +26757,7 @@ Hh
 Hh
 Hh
 Hh
-qu
+pl
 qu
 VN
 Zo
@@ -26777,13 +26768,13 @@ OX
 EQ
 Gj
 kd
-kd
+hw
 kd
 Zo
 dR
 Zo
 kd
-kd
+hw
 kd
 Tn
 zq
@@ -27299,7 +27290,7 @@ kd
 IB
 Tn
 Tn
-RP
+Av
 Av
 BF
 hL
@@ -27544,7 +27535,7 @@ Zo
 vC
 pu
 nP
-ta
+ry
 Pw
 OX
 xC
@@ -27801,7 +27792,7 @@ iN
 KA
 pu
 pu
-OF
+ry
 ry
 Pw
 DZ
@@ -28059,8 +28050,8 @@ ZJ
 VN
 pu
 pu
-OF
-OF
+ry
+ry
 ry
 Uq
 yj

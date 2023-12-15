@@ -10,7 +10,7 @@
 
 /obj/item/bitrunning_disk/item/monkestation_override/Initialize(mapload)
 	granted_item = selectable_items
-	RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	return ..()
 
 /**

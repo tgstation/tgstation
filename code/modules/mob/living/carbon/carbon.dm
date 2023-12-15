@@ -6,6 +6,7 @@
 
 	GLOB.carbon_list += src
 	AddComponent(/datum/component/carbon_sprint)
+	immune_system = new(src)
 	var/static/list/loc_connections = list(
 		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
 		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
@@ -21,6 +22,7 @@
 	QDEL_LIST(organs)
 	QDEL_LIST(bodyparts)
 	QDEL_LIST(implants)
+	QDEL_NULL(immune_system)
 	for(var/wound in all_wounds) // these LAZYREMOVE themselves when deleted so no need to remove the list here
 		qdel(wound)
 	for(var/scar in all_scars)
@@ -33,10 +35,13 @@
 	if(!all_wounds || !(!(user.istate & ISTATE_HARM) || user == src))
 		return ..()
 
+	if(can_perform_surgery(user, params))
+		return TRUE
+
 	for(var/i in shuffle(all_wounds))
-		var/datum/wound/W = i
-		if(W.try_treating(item, user))
-			return 1
+		var/datum/wound/wound = i
+		if(wound.try_treating(item, user))
+			return TRUE
 
 	return ..()
 

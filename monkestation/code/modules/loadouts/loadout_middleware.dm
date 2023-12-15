@@ -73,7 +73,7 @@
 			return null
 
 	//Here we will perform basic checks to ensure there are no exploits happening
-	if(interacted_item.donator_only && (!preferences.parent.patreon?.is_donator() || !preferences.parent.twitch?.is_donator()) && !is_admin(preferences.parent))
+	if(interacted_item.donator_only && !preferences.parent.patreon?.is_donator() && !preferences.parent.twitch?.is_donator() && !is_admin(preferences.parent))
 		message_admins("LOADOUT SYSTEM: Possible exploit detected, non-donator [preferences.parent.ckey] tried loading [interacted_item.item_path], but this is donator only.")
 		return null
 
@@ -151,7 +151,7 @@
 				formatted_list.len--
 				continue
 		if(item.donator_only) //These checks are also performed in the backend.
-			if((!preferences.parent.patreon?.is_donator() || !preferences.parent.twitch?.is_donator())&& !is_admin(preferences.parent))
+			if((!preferences.parent.patreon?.is_donator() && !preferences.parent.twitch?.is_donator()) && !is_admin(preferences.parent))
 				formatted_list.len--
 				continue
 
@@ -273,7 +273,7 @@
 		starting_config = initial(colored_item.greyscale_config),
 		starting_colors = slot_starting_colors,
 	)
-	RegisterSignal(menu, COMSIG_PARENT_PREQDELETED, TYPE_PROC_REF(/datum/preference_middleware/loadout, cleanup_greyscale_menu))
+	RegisterSignal(menu, COMSIG_PREQDELETED, TYPE_PROC_REF(/datum/preference_middleware/loadout, cleanup_greyscale_menu))
 	menu.ui_interact(usr)
 
 /// A proc to make sure our menu gets null'd properly when it's deleted.

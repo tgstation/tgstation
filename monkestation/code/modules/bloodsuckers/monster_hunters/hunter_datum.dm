@@ -237,8 +237,7 @@
 	SIGNAL_HANDLER
 
 	apocalypse = TRUE
-	var/datum/round_event_control/wonderlandapocalypse/invasion = new
-	invasion.runEvent()
+	force_event(/datum/round_event_control/wonderlandapocalypse, "a monsterhunter turning into a beast")
 
 /obj/item/clothing/mask/monster_preview_mask
 	name = "Monster Preview Mask"

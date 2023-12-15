@@ -11,7 +11,7 @@
 		return ELEMENT_INCOMPATIBLE
 
 	src.associated_skill = associated_skill
-	RegisterSignal(target, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(target, COMSIG_ATOM_ATTACK_HAND, PROC_REF(on_attack_hand))
 	RegisterSignal(target, COMSIG_ITEM_POST_EQUIPPED, PROC_REF(drop_if_unworthy))
 

@@ -69,7 +69,7 @@
 					to_chat(em_user, span_warning("You dont have enough cogs to do this!"))
 					return
 				em_user.cogs -= event_list[chosen_event]
-			chosen_event.runEvent()
+			chosen_event.run_event(event_cause = "an emience folding spacetime")
 			charges -= event_list[chosen_event]
 			if(charges + event_list[chosen_event] >= initial(charges)) //if charges was full then start processing
 				START_PROCESSING(SSfastprocess, src)

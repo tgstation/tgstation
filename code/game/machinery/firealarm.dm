@@ -214,17 +214,18 @@
 	if(prob(50 / severity))
 		alarm()
 
-/obj/machinery/firealarm/emag_act(mob/user)
+/obj/machinery/firealarm/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	update_appearance()
+	visible_message(span_warning("Sparks fly out of [src]!"))
 	if(user)
-		user.visible_message(span_warning("Sparks fly out of [src]!"))
-		user.balloon_alert(user, "speaker disabled!")
+		balloon_alert(user, "speaker disabled")
 		user.log_message("emagged [src].", LOG_ATTACK)
 	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	set_status()
+	return TRUE
 
 /**
  * Signal handler for checking if we should update fire alarm appearance accordingly to a newly set security level

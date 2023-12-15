@@ -129,6 +129,8 @@
 	AreaPowerCheck() // Make sure the area/local APC is powered first before we actually turn back on.
 
 /obj/item/radio/intercom/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
+
 	if(obj_flags & EMAGGED)
 		return
 
@@ -139,17 +141,17 @@
 			playsound(src, SFX_SPARKS, 75, TRUE, SILENCED_SOUND_EXTRARANGE)
 			freqlock = RADIO_FREQENCY_UNLOCKED
 			obj_flags |= EMAGGED
+			return TRUE
 
 		// A fully locked one will do nothing, as locked is intended to be used for stuff that should never be changed
 		if(RADIO_FREQENCY_LOCKED)
 			balloon_alert(user, "can't override frequency lock!")
 			playsound(src, 'sound/machines/buzz-two.ogg', 50, FALSE, SILENCED_SOUND_EXTRARANGE)
+			return
 
 		// Emagging an unlocked one will do nothing, for now
 		else
 			return
-
-	return ..()
 
 /obj/item/radio/intercom/update_icon_state()
 	icon_state = on ? initial(icon_state) : "intercom-p"

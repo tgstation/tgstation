@@ -47,24 +47,30 @@
 		else if(!(user.istate & ISTATE_HARM))
 			holder.visible_message(span_notice("[user] gently pushes [user.pulling] against the [holder]."))
 			process_stimuli(STIMULUS_CARBON_TOUCH)
+			add_event_to_buffer(user, user.pulling, "pushes [user.pulling] into [src.parent]", "ARTIFACT")
 		return
 
 	if(artifact_size == ARTIFACT_SIZE_LARGE) //only large artifacts since the average spessman wouldnt notice)
 		user.visible_message(span_notice("[user] touches [holder]."))
-		
+
 	if(ishuman(user))
-		var/mob/living/carbon/human/human = user 
+		var/mob/living/carbon/human/human = user
 		var/obj/item/bodypart/arm = human.get_active_hand()
 		if(arm.bodytype & BODYTYPE_ROBOTIC)
 			process_stimuli(STIMULUS_SILICON_TOUCH)
+			add_event_to_buffer(user, src.parent, "touched the [src.parent] with the [arm]", "ARTIFACT")
 		else
 			process_stimuli(STIMULUS_CARBON_TOUCH)
+			add_event_to_buffer(user, src.parent, "touched the [src.parent] with the [arm]", "ARTIFACT")
 	else if(iscarbon(user))
 		process_stimuli(STIMULUS_CARBON_TOUCH)
+		add_event_to_buffer(user, src.parent, "touched the [src.parent]", "ARTIFACT")
 	else if(issilicon(user))
 		process_stimuli(STIMULUS_SILICON_TOUCH)
+		add_event_to_buffer(user, src.parent, "touched the [src.parent]", "ARTIFACT")
 
 	process_stimuli(STIMULUS_FORCE, 1)
+	add_event_to_buffer(user, src.parent, "touched the [src.parent]", "ARTIFACT")
 
 	if(active)
 		effect_touched(user)
@@ -75,7 +81,7 @@
 //just redirect to on_unarmed
 /datum/component/artifact/proc/on_robot_attack(datum/source, mob/living/user)
 	SIGNAL_HANDLER
-	on_unarmed(source, user) 
+	on_unarmed(source, user)
 
 /datum/component/artifact/proc/ex_act(atom/source, severity)
 	SIGNAL_HANDLER
@@ -90,3 +96,11 @@
 /datum/component/artifact/proc/on_attackby(atom/source, obj/item/I, mob/user)
 	SIGNAL_HANDLER
 	I.on_artifact_interact(src, user)
+
+/datum/component/artifact/proc/log_pull(datum/source, atom/puller)
+	SIGNAL_HANDLER
+	add_event_to_buffer(puller, source, "has started pulling [parent]", "ARTIFACT")
+
+/datum/component/artifact/proc/log_stop_pull(datum/source, atom/puller)
+	SIGNAL_HANDLER
+	add_event_to_buffer(puller, source, "has stopped pulling [parent]", "ARTIFACT")

@@ -2008,7 +2008,7 @@
 	},
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/firing_range)
+/area/centcom/tdome/observation)
 "fP" = (
 /obj/structure/table/wood/fancy,
 /obj/item/storage/photo_album,
@@ -3769,7 +3769,7 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
-/area/centcom/central_command_areas/firing_range)
+/area/centcom/tdome/observation)
 "lb" = (
 /obj/structure/railing,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -5344,12 +5344,6 @@
 	},
 /turf/open/space/basic,
 /area/space)
-"pK" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 8
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/firing_range)
 "pN" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
@@ -6771,7 +6765,7 @@
 /area/centcom/syndicate_mothership/expansion_bombthreat)
 "tU" = (
 /turf/closed/indestructible/fakeglass,
-/area/centcom/central_command_areas/firing_range)
+/area/centcom/tdome/observation)
 "tV" = (
 /obj/machinery/atmospherics/pipe/smart/simple/general/visible,
 /turf/closed/indestructible/opsglass,
@@ -9139,12 +9133,6 @@
 /obj/structure/flora/bush/flowers_pp/style_random,
 /turf/open/floor/grass,
 /area/centcom/central_command_areas/hall)
-"Bb" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 10
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/firing_range)
 "Bc" = (
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
@@ -10859,7 +10847,7 @@
 	},
 /obj/machinery/light/directional/west,
 /turf/open/floor/wood/large,
-/area/centcom/central_command_areas/firing_range)
+/area/centcom/tdome/observation)
 "Gh" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
@@ -10950,6 +10938,9 @@
 	},
 /turf/open/floor/plating,
 /area/centcom/syndicate_mothership/control)
+"Gs" = (
+/turf/open/floor/iron/dark,
+/area/centcom/tdome/observation)
 "Gt" = (
 /obj/machinery/door/airlock/centcom{
 	name = "Trapp's Office"
@@ -13282,12 +13273,6 @@
 /obj/structure/noticeboard/directional/east,
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_bioterrorism)
-"MU" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/firing_range)
 "MV" = (
 /obj/effect/turf_decal/siding/thinplating{
 	dir = 5
@@ -13698,7 +13683,6 @@
 /area/centcom/central_command_areas/kitchen)
 "Ok" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/mob/living/silicon/robot,
 /turf/open/floor/mineral/titanium/purple,
 /area/centcom/central_command_areas/admin)
 "Ol" = (
@@ -14570,12 +14554,6 @@
 	},
 /turf/open/floor/iron/dark/herringbone,
 /area/centcom/central_command_areas/admin_hangout)
-"QT" = (
-/obj/effect/turf_decal/siding/wood{
-	dir = 6
-	},
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/firing_range)
 "QU" = (
 /obj/structure/flora/tree/pine/style_random,
 /obj/structure/flora/grass/both/style_random,
@@ -14918,9 +14896,6 @@
 	},
 /turf/open/lava/plasma/ice_moon,
 /area/centcom/syndicate_mothership/control)
-"RS" = (
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/firing_range)
 "RT" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/grass,
@@ -15720,10 +15695,6 @@
 /obj/item/radio/headset,
 /turf/open/floor/wood,
 /area/centcom/wizard_station)
-"Un" = (
-/obj/effect/turf_decal/siding/wood,
-/turf/open/floor/wood/large,
-/area/centcom/central_command_areas/firing_range)
 "Up" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/light/neon_lining{
@@ -17223,7 +17194,7 @@
 /area/centcom/central_command_areas/hall)
 "YY" = (
 /obj/machinery/computer/atmos_control/noreconnect{
-	atmos_chambers = list("nukiebase"="Burn        Chamber");
+	atmos_chambers = list("nukiebase"="Burn                Chamber");
 	desc = "Used to monitor the Syndicate Ordnance Laboratory's burn chamber.";
 	dir = 1;
 	name = "Ordnance Chamber Monitor"
@@ -57141,13 +57112,13 @@ pq
 ew
 gc
 QC
-Fn
-Fn
-Fn
-Fn
-Fn
-Fn
-Fn
+QC
+QC
+QC
+QC
+QC
+QC
+QC
 lr
 lr
 lr
@@ -57398,13 +57369,13 @@ Jd
 xp
 Ht
 Ht
-pK
-pK
-pK
+Ht
+Ht
+Ht
 Gg
-pK
-pK
-Bb
+Ht
+Ht
+aw
 mw
 rE
 GM
@@ -57655,13 +57626,13 @@ Jd
 TV
 Nf
 Wb
-RS
-RS
-RS
-RS
-RS
-RS
-Un
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Mo
 oF
 GM
 GM
@@ -57912,13 +57883,13 @@ Jd
 Xx
 Mp
 Mp
-MU
-MU
-MU
-MU
-MU
-MU
-QT
+Mp
+Mp
+Mp
+Mp
+Mp
+Mp
+Ro
 mw
 wq
 GM
@@ -58426,13 +58397,13 @@ ae
 ew
 Fo
 QC
-Bo
-Bo
-Bo
+Gs
+Gs
+Gs
 tU
-Bo
-Bo
-Bo
+Gs
+Gs
+Gs
 mw
 Ra
 GM
@@ -58940,13 +58911,13 @@ pq
 ew
 Ik
 QC
-Bo
-Bo
-Bo
+Gs
+Gs
+Gs
 tU
-Bo
-Bo
-Bo
+Gs
+Gs
+Gs
 mw
 UU
 GM

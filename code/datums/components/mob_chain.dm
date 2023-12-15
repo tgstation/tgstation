@@ -40,7 +40,7 @@
 	RegisterSignal(parent, COMSIG_MOB_LOST_CHAIN_TAIL, PROC_REF(on_lost_tail))
 	RegisterSignal(parent, COMSIG_MOB_CHAIN_CONTRACT, PROC_REF(on_contracted))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_death))
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(on_deletion))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_deletion))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_CAN_BE_PULLED, PROC_REF(on_pulled))
 	RegisterSignals(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HUMAN_EARLY_UNARMED_ATTACK, COMSIG_MOB_ATTACK_RANGED), PROC_REF(on_attack))
@@ -76,7 +76,7 @@
 		COMSIG_MOB_LOST_CHAIN_TAIL,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_MOVABLE_UPDATE_GLIDE_SIZE,
-		COMSIG_PARENT_QDELETING,
+		COMSIG_QDELETING,
 	))
 	qdel(parent.GetComponent(/datum/component/leash))
 	var/mob/living/living_parent = parent

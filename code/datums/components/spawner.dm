@@ -23,7 +23,7 @@
 	src.spawn_text = spawn_text
 	src.max_spawned = max_spawned
 
-	RegisterSignal(parent, COMSIG_PARENT_QDELETING, PROC_REF(stop_spawning))
+	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(stop_spawning))
 	START_PROCESSING((spawn_time < 2 SECONDS ? SSfastprocess : SSprocessing), src)
 
 /datum/component/spawner/process()
@@ -58,7 +58,7 @@
 	if (spawn_text)
 		spawner.visible_message(span_danger("[created] [spawn_text] [spawner]."))
 
-	RegisterSignal(created, COMSIG_PARENT_QDELETING, PROC_REF(on_deleted))
+	RegisterSignal(created, COMSIG_QDELETING, PROC_REF(on_deleted))
 
 /// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()
@@ -84,4 +84,4 @@
 	if (source.stat != DEAD)
 		return
 	spawned_things -= WEAKREF(source)
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_STATCHANGE))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE))

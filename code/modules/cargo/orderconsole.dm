@@ -75,12 +75,13 @@
 	if(obj_flags & EMAGGED)
 		. |= EXPORT_EMAG
 
-/obj/machinery/computer/cargo/emag_act(mob/user)
+/obj/machinery/computer/cargo/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	if(user)
-		user.visible_message(span_warning("[user] swipes a suspicious card through [src]!"),
-		span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
+		if (emag_card)
+			user.visible_message(span_warning("[user] swipes [emag_card] through [src]!"))
+		to_chat(user, span_notice("You adjust [src]'s routing and receiver spectrum, unlocking special supplies and contraband."))
 
 	obj_flags |= EMAGGED
 	contraband = TRUE
@@ -90,6 +91,7 @@
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
 	update_static_data(user)
+	return TRUE
 
 /obj/machinery/computer/cargo/on_construction(mob/user)
 	. = ..()

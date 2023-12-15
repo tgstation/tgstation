@@ -46,7 +46,7 @@
 	RegisterSignal(host, COMSIG_LIVING_DEATH, PROC_REF(on_host_died))
 	RegisterSignal(host, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(on_health_updated))
 	RegisterSignal(host, COMSIG_LIVING_REVIVE, PROC_REF(on_host_revived))
-	RegisterSignal(host, COMSIG_PARENT_QDELETING, PROC_REF(on_host_deleted))
+	RegisterSignal(host, COMSIG_QDELETING, PROC_REF(on_host_deleted))
 	var/mob/living/living_parent = parent
 	living_parent.updatehealth()
 
@@ -54,7 +54,7 @@
 /datum/component/life_link/proc/unregister_host()
 	if (isnull(host))
 		return
-	UnregisterSignal(host, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_REVIVE, COMSIG_PARENT_QDELETING))
+	UnregisterSignal(host, list(COMSIG_LIVING_DEATH, COMSIG_LIVING_HEALTH_UPDATE, COMSIG_LIVING_REVIVE, COMSIG_QDELETING))
 	host = null
 
 /// Called when your damage goes up or down

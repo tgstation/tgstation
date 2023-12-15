@@ -198,3 +198,10 @@
 	cold_protection = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/hooded_winterhood
+
+/obj/item/clothing/head/costume/bells
+	name = "Hair ribbons with bells"
+	desc = "A cute hair accessory adorned with red ribbons and small bells."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "bells"

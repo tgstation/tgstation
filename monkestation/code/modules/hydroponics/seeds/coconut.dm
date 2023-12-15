@@ -1,6 +1,6 @@
 /obj/item/seeds/coconut
-	name = "coconut tree"
-	desc = "A coconut tree."
+	name = "pack of Coconut seeds"
+	desc = "These seeds grow into coconut trees."
 	seed_offset = -12
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_seed"
@@ -21,7 +21,7 @@
 	genes = list(/datum/plant_gene/trait/repeated_harvest)
 
 	reagents_add = list(/datum/reagent/consumable/milk = 0.05, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.02)
-	possible_mutations = list(/datum/hydroponics/plant_mutation/infusion/coconut_gun)
+	infusion_mutations = list(/datum/hydroponics/plant_mutation/infusion/coconut_gun)
 
 /obj/item/seeds/coconut/gun
 	name = "coconut gun tree"

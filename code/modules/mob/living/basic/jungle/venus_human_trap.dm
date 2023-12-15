@@ -165,7 +165,7 @@
 	melee_attack_cooldown = 1.2 SECONDS
 	ai_controller = /datum/ai_controller/basic_controller/human_trap
 	///how much damage we take out of weeds
-	var/no_weed_damage = 20
+	var/no_weed_damage = 12.5
 	///how much do we heal in weeds
 	var/weed_heal = 10
 	///if the balloon alert was shown atleast once, reset after healing in weeds
@@ -197,7 +197,7 @@
 	else if(vines_in_range)
 		alert_shown = FALSE
 
-	apply_damage(vines_in_range ? weed_heal : no_weed_damage, BRUTE) //every life tick take 20 brute if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
+	adjustBruteLoss(vines_in_range ? -weed_heal : no_weed_damage) //every life tick take 20 damage if not near vines or heal 10 if near vines, 5 times out of weeds = u ded
 
 /datum/action/cooldown/vine_tangle
 	name = "Tangle"
@@ -229,7 +229,7 @@
 
 	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
-	RegisterSignal(new_vine, COMSIG_PARENT_QDELETING, PROC_REF(remove_vine), new_vine)
+	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
 	vines[new_vine] = component
 	if(isliving(target_atom))
 		var/mob/living/victim = target_atom

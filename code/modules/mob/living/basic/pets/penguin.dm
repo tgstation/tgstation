@@ -52,7 +52,7 @@
 	egg_target.forceMove(src)
 	carried_egg = attack_target
 	add_overlay("penguin_egg_overlay")
-	RegisterSignal(egg_target, COMSIG_PARENT_QDELETING, PROC_REF(on_hatch_egg))
+	RegisterSignal(egg_target, COMSIG_QDELETING, PROC_REF(on_hatch_egg))
 
 /mob/living/basic/pet/penguin/death(gibbed)
 	. = ..()
@@ -78,7 +78,7 @@
 	if(isnull(carried_egg))
 		return
 	carried_egg.forceMove(get_turf(src))
-	UnregisterSignal(carried_egg, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(carried_egg, COMSIG_QDELETING)
 	carried_egg = null
 	cut_overlay("penguin_egg_overlay")
 

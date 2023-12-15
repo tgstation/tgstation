@@ -22,10 +22,14 @@
 #define TAG_OVERMAP "overmap"
 /// When the event requires the station to be in space (meteors, carp)
 #define TAG_SPACE "space"
-/// When the event requires the station to be on planetary.
+/// When the event requires the station to be planetary.
 #define TAG_PLANETARY "planetary"
-/// When the event is an external threat(meteors, nukies).
+/// When the event is an external threat (meteors, nukies).
 #define TAG_EXTERNAL "external"
+/// When the event is an alien threat (blob, xenos)
+#define TAG_ALIEN "alien"
+/// When the event is magical in nature
+#define TAG_MAGICAL "magical"
 
 #define EVENT_TRACK_MUNDANE "Mundane"
 #define EVENT_TRACK_MODERATE "Moderate"

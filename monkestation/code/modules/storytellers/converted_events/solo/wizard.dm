@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/wizard
 	name = "Wizard"
-	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL)
+	tags = list(TAG_COMBAT, TAG_DESTRUCTIVE, TAG_EXTERNAL, TAG_MAGICAL)
 	typepath = /datum/round_event/antagonist/solo/wizard
 	antag_flag = ROLE_WIZARD
 	antag_datum = /datum/antagonist/wizard
@@ -9,9 +9,18 @@
 		JOB_HEAD_OF_SECURITY,
 	) // Just to be sure that a wizard getting picked won't ever imply a Captain or HoS not getting drafted
 	maximum_antags = 1
+	enemy_roles = list(
+		JOB_AI,
+		JOB_CAPTAIN,
+		JOB_DETECTIVE,
+		JOB_HEAD_OF_SECURITY,
+		JOB_SECURITY_OFFICER,
+		JOB_WARDEN,
+	)
+	required_enemies = 5
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 2
+	weight = 3
 	min_players = 35
 	max_occurrences = 1
 
@@ -25,7 +34,6 @@
 /datum/round_event/antagonist/solo/wizard
 
 /datum/round_event/antagonist/solo/wizard/add_datum_to_mind(datum/mind/antag_mind)
-	. = ..()
 	var/mob/living/current_mob = antag_mind.current
 	SSjob.FreeRole(antag_mind.assigned_role.title)
 	var/list/items = current_mob.get_equipped_items(TRUE)
@@ -33,4 +41,4 @@
 	for(var/obj/item/item as anything in items)
 		qdel(item)
 
-	antag_mind.current.forceMove(pick(GLOB.wizardstart))
+	antag_mind.make_wizard()

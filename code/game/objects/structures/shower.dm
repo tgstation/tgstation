@@ -245,6 +245,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 /obj/machinery/shower/proc/wash_atom(atom/target)
 	target.wash(CLEAN_RAD | CLEAN_WASH)
 	reagents.expose(target, (TOUCH), SHOWER_EXPOSURE_MULTIPLIER * SHOWER_SPRAY_VOLUME / max(reagents.total_volume, SHOWER_SPRAY_VOLUME))
+	if(isitem(target))
+		var/obj/item/item = target
+		if(length(item.viruses))
+			for(var/datum/disease/advanced/D as anything in item.viruses)
+				item.remove_disease(D)
 	if(isliving(target))
 		var/mob/living/living_target = target
 		check_heat(living_target)

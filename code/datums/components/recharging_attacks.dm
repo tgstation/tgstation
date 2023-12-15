@@ -24,7 +24,7 @@
 	src.crit_refund = crit_refund
 
 /datum/component/recharging_attacks/Destroy()
-	UnregisterSignal(recharged_action, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(recharged_action, COMSIG_QDELETING)
 	recharged_action = null
 	return ..()
 
@@ -32,13 +32,13 @@
 	. = ..()
 	RegisterSignal(parent, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(set_old_stat))
 	RegisterSignal(parent, COMSIG_HOSTILE_POST_ATTACKINGTARGET, PROC_REF(check_stat))
-	RegisterSignal(recharged_action, COMSIG_PARENT_QDELETING, PROC_REF(on_action_qdel))
+	RegisterSignal(recharged_action, COMSIG_QDELETING, PROC_REF(on_action_qdel))
 
 /datum/component/recharging_attacks/UnregisterFromParent()
 	. = ..()
 	UnregisterSignal(parent, list(COMSIG_HOSTILE_PRE_ATTACKINGTARGET, COMSIG_HOSTILE_POST_ATTACKINGTARGET))
 	if(recharged_action)
-		UnregisterSignal(recharged_action, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(recharged_action, COMSIG_QDELETING)
 
 /datum/component/recharging_attacks/proc/set_old_stat(mob/attacker, mob/attacked)
 	SIGNAL_HANDLER

@@ -21,7 +21,7 @@
 		return
 	icon_state = "[base_icon_state][rand(0, 7)]"
 	update_icon()
-	RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 
 /obj/item/bitrunning_disk/proc/on_examined(datum/source, mob/examiner, list/examine_text)
 	SIGNAL_HANDLER

@@ -1,5 +1,19 @@
 /datum/reagent/blood
-	data = list("viruses"=null,"blood_DNA"=null,"blood_type"=null,"resistances"=null,"trace_chem"=null,"mind"=null,"ckey"=null,"gender"=null,"real_name"=null,"cloneable"=null,"factions"=null,"quirks"=null)
+	data = list(
+		"viruses"=null,
+		"blood_DNA"=null,
+		"blood_type"=null,
+		"resistances"=null,
+		"trace_chem"=null,
+		"mind"=null,
+		"ckey"=null,
+		"gender"=null,
+		"real_name"=null,
+		"cloneable"=null,
+		"factions"=null,
+		"quirks"=null,
+		"immunity" = null,
+		)
 	name = "Blood"
 	color = "#9e0101" // rgb: 200, 0, 0
 	metabolization_rate = 12.5 * REAGENTS_METABOLISM //fast rate so it disappears fast.
@@ -34,13 +48,13 @@
 		for(var/thing in data["viruses"])
 			var/datum/disease/strain = thing
 
-			if((strain.spread_flags & DISEASE_SPREAD_SPECIAL) || (strain.spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS))
-				continue
-
-			if(methods & (INJECT|INGEST|PATCH))
-				exposed_mob.ForceContractDisease(strain)
-			else if((methods & (TOUCH|VAPOR)) && (strain.spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS))
-				exposed_mob.ContactContractDisease(strain)
+			if(istype(strain, /datum/disease/advanced))
+				var/datum/disease/advanced/advanced = strain
+				if(methods & (INJECT|INGEST|PATCH))
+					exposed_mob.infect_disease(advanced, TRUE, "(Contact, splashed with infected blood)")
+				if((methods & (TOUCH | VAPOR)) && (advanced.spread_flags & DISEASE_SPREAD_BLOOD))
+					if(exposed_mob.check_bodypart_bleeding(BODY_ZONE_EVERYTHING))
+						exposed_mob.infect_disease(advanced, notes="(Blood, splashed with infected blood)")
 
 	if(iscarbon(exposed_mob))
 		var/mob/living/carbon/exposed_carbon = exposed_mob
@@ -828,7 +842,7 @@
 /datum/reagent/aslimetoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	if(methods & ~TOUCH)
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/slime(), FALSE, TRUE)
+		exposed_mob.infect_disease_predefined(DISEASE_SLIME, TRUE, "[ROUND_TIME()] Advanced Mutation Toxin Infections [key_name(exposed_mob)]")
 
 /datum/reagent/gluttonytoxin
 	name = "Gluttony's Blessing"
@@ -840,7 +854,7 @@
 /datum/reagent/gluttonytoxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message=TRUE, touch_protection=0)
 	. = ..()
 	if(reac_volume >= 1)//This prevents microdosing from infecting masses of people
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/morph(), FALSE, TRUE)
+		exposed_mob.infect_disease_predefined(DISEASE_MORPH, TRUE, "[ROUND_TIME()] Gluttony Toxin Infections [key_name(exposed_mob)]")
 
 /datum/reagent/serotrotium
 	name = "Serotrotium"
@@ -1394,7 +1408,7 @@
 /datum/reagent/cyborg_mutation_nanomachines/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/robot(), FALSE, TRUE)
+		exposed_mob.infect_disease_predefined(DISEASE_ROBOT, TRUE, "[ROUND_TIME()] Nanomachine Infections [key_name(exposed_mob)]")
 
 /datum/reagent/xenomicrobes
 	name = "Xenomicrobes"
@@ -1406,7 +1420,7 @@
 /datum/reagent/xenomicrobes/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/transformation/xeno(), FALSE, TRUE)
+		exposed_mob.infect_disease_predefined(DISEASE_XENO, TRUE, "[ROUND_TIME()] Xenomicrobes Infections [key_name(exposed_mob)]")
 
 /datum/reagent/fungalspores
 	name = "Tubercle Bacillus Cosmosis Microbes"
@@ -1420,7 +1434,8 @@
 /datum/reagent/fungalspores/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)
+		return
+		//exposed_mob.ForceContractDisease(new /datum/disease/tuberculosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
 
 /datum/reagent/snail
 	name = "Agent-S"
@@ -1433,7 +1448,8 @@
 /datum/reagent/snail/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)
+		return
+		//exposed_mob.ForceContractDisease(new /datum/disease/gastrolosis(), FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
 
 /datum/reagent/fluorosurfactant//foam precursor
 	name = "Fluorosurfactant"
@@ -2610,12 +2626,13 @@
 	color = "#9A6750" //RGB: 154, 103, 80
 	taste_description = "inner peace"
 	penetrates_skin = NONE
-	var/datum/disease/transformation/gondola_disease = /datum/disease/transformation/gondola
+	var/disease_cat = DISEASE_GONDOLA
 
 /datum/reagent/gondola_mutation_toxin/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)
 	. = ..()
 	if((methods & (PATCH|INGEST|INJECT)) || ((methods & VAPOR) && prob(min(reac_volume,100)*(1 - touch_protection))))
-		exposed_mob.ForceContractDisease(new gondola_disease, FALSE, TRUE)
+		exposed_mob.infect_disease_predefined(disease_cat, TRUE, "[ROUND_TIME()] Gondola Reagent Infections [key_name(exposed_mob)]")
+		//exposed_mob.ForceContractDisease(new gondola_disease, FALSE, TRUE)  //TODO VIROLOGY SLIME TRANS
 
 
 /datum/reagent/spider_extract

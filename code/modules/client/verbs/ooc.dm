@@ -71,7 +71,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		to_chat(src, span_danger("You have OOC muted."))
 		return
-
+	add_event_to_buffer(mob, data = raw_msg, log_key = "OOC")
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key
@@ -85,6 +85,10 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(patreon.access_rank > 0)
 		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
 		keyname = "[sheet.icon_tag("patreon")][keyname]"
+
+	if(twitch.access_rank > 0)
+		var/datum/asset/spritesheet/sheet = get_asset_datum(/datum/asset/spritesheet/chat)
+		keyname = "[sheet.icon_tag("twitch")][keyname]"
 
 	//The linkify span classes and linkify=TRUE below make ooc text get clickable chat href links if you pass in something resembling a url
 	for(var/client/receiver as anything in GLOB.clients)

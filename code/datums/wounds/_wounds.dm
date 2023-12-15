@@ -259,8 +259,8 @@
 /// Setter for [victim]. Should completely transfer signals, attributes, etc. To the new victim - if there is any, as it can be null.
 /datum/wound/proc/set_victim(new_victim)
 	if(victim)
-		UnregisterSignal(victim, list(COMSIG_PARENT_QDELETING, COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB))
-		UnregisterSignal(victim, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(victim, list(COMSIG_QDELETING, COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB))
+		UnregisterSignal(victim, COMSIG_QDELETING)
 		UnregisterSignal(victim, COMSIG_MOB_SWAP_HANDS)
 		UnregisterSignal(victim, COMSIG_CARBON_POST_REMOVE_LIMB)
 		if (actionspeed_mod)
@@ -269,7 +269,7 @@
 	remove_wound_from_victim()
 	victim = new_victim
 	if(victim)
-		RegisterSignal(victim, COMSIG_PARENT_QDELETING, PROC_REF(null_victim))
+		RegisterSignal(victim, COMSIG_QDELETING, PROC_REF(null_victim))
 		RegisterSignals(victim, list(COMSIG_MOB_SWAP_HANDS, COMSIG_CARBON_POST_REMOVE_LIMB, COMSIG_CARBON_POST_ATTACH_LIMB), PROC_REF(add_or_remove_actionspeed_mod))
 
 		if (limb)
@@ -282,7 +282,7 @@
 		return FALSE //Limb can either be a reference to something or `null`. Returning the number variable makes it clear no change was made.
 	. = limb
 	if(limb) // if we're nulling limb, we're basically detaching from it, so we should remove ourselves in that case
-		UnregisterSignal(limb, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(limb, COMSIG_QDELETING)
 		UnregisterSignal(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED))
 		LAZYREMOVE(limb.wounds, src)
 		limb.update_wounds(replaced)
@@ -294,7 +294,7 @@
 	// POST-CHANGE
 
 	if (limb)
-		RegisterSignal(limb, COMSIG_PARENT_QDELETING, PROC_REF(source_died))
+		RegisterSignal(limb, COMSIG_QDELETING, PROC_REF(source_died))
 		RegisterSignals(limb, list(COMSIG_BODYPART_GAUZED, COMSIG_BODYPART_GAUZE_DESTROYED), PROC_REF(gauze_state_changed))
 		if (disabling)
 			limb.add_traits(list(TRAIT_PARALYSIS, TRAIT_DISABLED_BY_WOUND), REF(src))

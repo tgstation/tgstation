@@ -1,4 +1,6 @@
 #define INIT_ORDER_GAMEMODE 70
+///how many storytellers can be voted for along with always_votable ones
+#define DEFAULT_STORYTELLER_VOTE_OPTIONS 4
 
 SUBSYSTEM_DEF(gamemode)
 	name = "Gamemode"
@@ -9,7 +11,7 @@ SUBSYSTEM_DEF(gamemode)
 
 	/// List of our event tracks for fast access during for loops.
 	var/list/event_tracks = EVENT_TRACKS
-	/// Our storyteller. He progresses our trackboards and picks out events
+	/// Our storyteller. They progresses our trackboards and picks out events
 	var/datum/storyteller/storyteller
 	/// Result of the storyteller vote. Defaults to the guide.
 	var/voted_storyteller = /datum/storyteller/guide
@@ -446,7 +448,7 @@ SUBSYSTEM_DEF(gamemode)
 	if(. == EVENT_CANT_RUN)//we couldn't run this event for some reason, set its max_occurrences to 0
 		event.max_occurrences = 0
 	else if(. == EVENT_READY)
-		event.runEvent(random = TRUE, admin_forced = forced) // fallback to dynamic
+		event.run_event(random = TRUE, admin_forced = forced) // fallback to dynamic
 
 ///Resets frequency multiplier.
 /datum/controller/subsystem/gamemode/proc/resetFrequency()
@@ -776,17 +778,28 @@ SUBSYSTEM_DEF(gamemode)
 	point_thresholds[EVENT_TRACK_OBJECTIVES] = CONFIG_GET(number/objectives_point_threshold)
 
 /datum/controller/subsystem/gamemode/proc/storyteller_vote_choices()
-	var/client_amount = GLOB.clients.len
-	var/list/choices = list()
+	var/client_amount = length(GLOB.clients)
+	var/list/final_choices = list()
+	var/list/pick_from = list()
 	for(var/storyteller_type in storytellers)
 		var/datum/storyteller/storyboy = storytellers[storyteller_type]
 		if(!storyboy.votable)
 			continue
 		if((storyboy.population_min && storyboy.population_min > client_amount) || (storyboy.population_max && storyboy.population_max < client_amount))
 			continue
-		choices += storyboy.name
-		choices[storyboy.name] = 0
-	return choices
+
+		if(storyboy.always_votable)
+			final_choices[storyboy.name] = 0
+		else
+			pick_from[storyboy.name] = storyboy.weight
+
+	var/added_storytellers = 0
+	while(added_storytellers < DEFAULT_STORYTELLER_VOTE_OPTIONS && length(pick_from))
+		added_storytellers++
+		var/picked_storyteller = pick_weight(pick_from)
+		final_choices[picked_storyteller] = 0
+		pick_from -= picked_storyteller
+	return final_choices
 
 /datum/controller/subsystem/gamemode/proc/storyteller_desc(storyteller_name)
 	for(var/storyteller_type in storytellers)
@@ -1158,3 +1171,5 @@ SUBSYSTEM_DEF(gamemode)
 				continue
 			listed.occurrences++
 			listed.occurrences++
+
+#undef DEFAULT_STORYTELLER_VOTE_OPTIONS

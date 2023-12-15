@@ -21,6 +21,7 @@
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
 		handle_organs(seconds_per_tick, times_fired)
+		handle_virus_updates(seconds_per_tick)
 
 		. = ..()
 		if(QDELETED(src))
@@ -86,7 +87,6 @@
 		environment = loc.return_air()
 
 	var/datum/gas_mixture/breath
-
 	if(!get_organ_slot(ORGAN_SLOT_BREATHING_TUBE))
 		if(health <= HEALTH_THRESHOLD_FULLCRIT || (pulledby?.grab_state >= GRAB_KILL) || (lungs?.organ_flags & ORGAN_FAILING))
 			losebreath++  //You can't breath at all when in critical or when being choked, so you're going to miss a breath
@@ -151,6 +151,7 @@
 				loc_as_obj.handle_internal_lifeform(src,0)
 
 	check_breath(breath)
+	breath_airborne_diseases() //monkestation edit - VIROLOGY
 
 	if(breath)
 		loc.assume_air(breath)
@@ -351,9 +352,26 @@
 	else
 		// Miasma sickness
 		if(prob(1 * miasma_pp))
-			var/datum/disease/advance/miasma_disease = new /datum/disease/advance/random(max_symptoms = 2, max_level = 3)
-			miasma_disease.name = "Unknown"
-			ForceContractDisease(miasma_disease, make_copy = TRUE, del_on_fail = TRUE)
+			var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+			var/list/anti = list(
+				ANTIGEN_BLOOD	= 1,
+				ANTIGEN_COMMON	= 1,
+				ANTIGEN_RARE	= 2,
+				ANTIGEN_ALIEN	= 0,
+				)
+			var/list/bad = list(
+				EFFECT_DANGER_HELPFUL	= 0,
+				EFFECT_DANGER_FLAVOR	= 1,
+				EFFECT_DANGER_ANNOYING	= 2,
+				EFFECT_DANGER_HINDRANCE	= 3,
+				EFFECT_DANGER_HARMFUL	= 1,
+				EFFECT_DANGER_DEADLY	= 0,
+				)
+			var/datum/disease/advanced/new_disease = new virus_choice
+			new_disease.makerandom(list(50,90),list(50,100),anti,bad,src)
+			new_disease.carrier = TRUE
+			new_disease = new_disease.name
+			infect_disease(new_disease, TRUE, "Miasma Disease Infection [key_name(src)]")
 		// Miasma side-effects.
 		switch(miasma_pp)
 			if(0.25 to 5)
@@ -508,9 +526,6 @@
 		var/datum/disease/D = thing
 		if(SPT_PROB(D.infectivity, seconds_per_tick))
 			D.spread()
-
-		if(stat != DEAD || D.process_dead)
-			D.stage_act(seconds_per_tick, times_fired)
 
 /mob/living/carbon/handle_wounds(seconds_per_tick, times_fired)
 	for(var/thing in all_wounds)

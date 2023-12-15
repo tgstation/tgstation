@@ -253,13 +253,13 @@
 /obj/item/organ/internal/cyberimp/arm/toolset/l
 	zone = BODY_ZONE_L_ARM
 
-/obj/item/organ/internal/cyberimp/arm/toolset/emag_act(mob/user)
+/obj/item/organ/internal/cyberimp/arm/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
 	for(var/datum/weakref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
 		if(istype(/obj/item/knife/combat/cyborg, potential_knife))
 			return FALSE
 
-	to_chat(user, span_notice("You unlock [src]'s integrated knife!"))
+	balloon_alert(user, "integrated knife unlocked")
 	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 

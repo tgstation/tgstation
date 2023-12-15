@@ -11,3 +11,4 @@
 		)
 	population_min = 40
 	ignores_roundstart = TRUE
+	weight = 2

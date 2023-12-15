@@ -133,7 +133,7 @@
 				deity = "Christ"
 			to_chat(ghostie, span_userdanger("The power of [deity] compels you!"))
 			ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
-			ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
+			ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 10 SECONDS)
 			ghostie.adjust_health(50)
 		for(var/mob/living/carbon/C in get_hearers_in_view(effective_size,T))
 			if(IS_CULTIST(C))
