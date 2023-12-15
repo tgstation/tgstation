@@ -1,1 +1,0 @@
-#define STATUS_EFFECT_PROGENITORCURSE /datum/status_effect/progenitor_curse
