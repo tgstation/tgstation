@@ -13,6 +13,7 @@ export const RoboticsControlConsole = (props) => {
   const { act, data } = useBackend();
   const [tab, setTab] = useSharedState('tab', 1);
   const { can_hack, can_detonate, cyborgs = [], drones = [] } = data;
+
   return (
     <Window width={500} height={460}>
       <Window.Content scrollable>

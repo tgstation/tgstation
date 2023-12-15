@@ -382,3 +382,67 @@
   - bugfix: fixes some AI runtimes that were caused by the pawn becoming null
   vorpal-void:
   - bugfix: fixed outdated item description
+2023-12-13:
+  Ben10Omintrix:
+  - bugfix: AIs can summon bots again
+  - bugfix: cleanbots can clean floors directly underneath them and prioritize floors
+      nearest to them
+  - bugfix: medbots drop empty medkits now
+  Buyrcsp2:
+  - bugfix: Bird Phobia now triggers on geese
+  Ghommie:
+  - bugfix: climbing or being shoved into a glass table won't cause elevation issues.
+  Jacquerel:
+  - rscadd: Added subversive pins to the black market uplink which make security hate
+      you
+  - rscadd: The detective's spy cam can now be conveniently pinned onto people in
+      the same manner as medals
+  Jacquerel and Fikou:
+  - qol: If the station rolls the "Cargo Gorilla" station trait. you will be able
+      to sign up for the role from the game lobby.
+  - qol: If nobody signs up to be the Cargo Gorilla then you can select it from the
+      Late Join menu and arrive on the arrival shuttle.
+  - bugfix: The Cargo Gorilla will actually spawn.
+  LT3, Majkl-J:
+  - image: SM now has holiday lights
+  - image: You can now put a santa hat on the SM
+  Rex9001:
+  - admin: Updates the admin smite "Ocky icky phobia" with some new words
+  Ryll/Shaps:
+  - bugfix: You can no longer stack more than one applications of a burn wound at
+      once
+  Time-Green:
+  - bugfix: Highlander wont gib every person anymore
+  Watermelon914:
+  - balance: Organs can now be preserved by putting them in freezing temperatures.
+  - balance: Morgue trays and freezers will now cool down the contents placed inside
+      of them.
+  - balance: Morgue trays will now properly display if someone stored within them
+      is revivable and make periodic beeps every minute.
+  jlsnow301:
+  - bugfix: You should be able to edit your character using the feature buttons again.
+  - bugfix: You should be able to move stamps on paper again.
+2023-12-14:
+  Iamgoofball:
+  - balance: Light Footed now makes stepping on glass Knockdown instead of Paralyze
+  - code_imp: Fixes some single letter variable usage in caltrop.dm
+  LemonInTheDark, Donglesplonge:
+  - image: Redoes fov "mask" sprites. They're clean, have a very pleasant dithering
+      effect, and look real fuckin good!
+  - rscdel: Changed FOV, it no longer hides mobs, instead it blurs the hidden area,
+      and makes it a bit darker/oversaturated
+  Profakos:
+  - bugfix: Crabs will properly only target Tiny creatures
+  Y0SH1M4S73R:
+  - qol: The asteroid on Tramstation can now have areas expanded into or created within.
+  jlsnow301:
+  - bugfix: Cult chat, PDAs, succumbing, etc shouldn't blue screen anymore.
+  san7890:
+  - server: The TGS -> Discord Relay Warning that detects if a cliented mob has a
+      null loc should now be plaintext instead of being fully screwed up with useless
+      codestuffs.
+  - qol: For admins, in the "Spawn Atom" window where you pick atoms to spawn-by-type,
+      anything that is a subtype of `/mob/living/basic` should now be replaced with
+      the `BASIC` tag instead (like with carbons, reagent containers, turfs, etc.).
+      So, instead of having to scroll through and try and figure out what that weird
+      subtype of Poly is, it should now be easier to read in that smaller screen.
