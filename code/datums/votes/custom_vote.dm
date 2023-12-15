@@ -29,6 +29,27 @@
 	return forced
 
 /datum/vote/custom_vote/create_vote(mob/vote_creator)
+	var/custom_win_method = tgui_input_list(
+		vote_creator,
+		"How should the vote winner be determined?",
+		"Winner Method",
+		list("Simple", "Weighted Random", "No Winner"),
+		default = "Simple",
+	)
+	switch(custom_win_method)
+		if("Simple")
+			winner_method = VOTE_WINNER_METHOD_SIMPLE
+
+		if("Weighted Random")
+			winner_method = VOTE_WINNER_METHOD_RANDOM
+
+		if("No Winner")
+			winner_method = VOTE_WINNER_METHOD_NONE
+
+		else
+			to_chat(vote_creator, span_boldwarning("Unknown winner method. Contact a coder."))
+			return FALSE
+
 	override_question = tgui_input_text(vote_creator, "What is the vote for?", "Custom Vote")
 	if(!override_question)
 		return FALSE

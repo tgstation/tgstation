@@ -30,6 +30,8 @@
 	var/time_remaining
 	/// The counting method we use for votes.
 	var/count_method = VOTE_COUNT_METHOD_SINGLE
+	/// The method for selecting a winner.
+	var/winner_method = VOTE_WINNER_METHOD_SIMPLE
 
 /**
  * Used to determine if this vote is a possible
@@ -123,33 +125,43 @@
  */
 /datum/vote/proc/get_vote_result(list/non_voters)
 	RETURN_TYPE(/list)
+	SHOULD_CALL_PARENT(TRUE)
 
-	var/list/winners = list()
+	switch(winner_method)
+		if(VOTE_WINNER_METHOD_NONE)
+			return list()
+
+		if(VOTE_WINNER_METHOD_SIMPLE)
+			return get_simple_winner()
+
+		if(VOTE_WINNER_METHOD_RANDOM)
+			return get_random_winner()
+
+	stack_trace("invalid select winner method: [winner_method]. Defaulting to simple.")
+	return get_simple_winner()
+
+/// Gets the winner of the vote, selecting the choice with the most votes.
+/datum/vote/proc/get_simple_winner()
 	var/highest_vote = 0
+	var/list/current_winners = list()
 
 	for(var/option in choices)
-
 		var/vote_count = choices[option]
-		// If we currently have no winners...
-		if(!length(winners))
-			// And the current option has any votes, it's the new highest.
-			if(vote_count > 0)
-				winners += option
-				highest_vote = vote_count
+		if(vote_count < highest_vote)
 			continue
 
-		// If we're greater than, and NOT equal to, the highest vote,
-		// we are the new supreme winner - clear all others
 		if(vote_count > highest_vote)
-			winners.Cut()
-			winners += option
 			highest_vote = vote_count
+			current_winners = list(option)
+			continue
+		current_winners += option
 
-		// If we're equal to the highest vote, we tie for winner
-		else if(vote_count == highest_vote)
-			winners += option
+	return length(current_winners) ? current_winners : list()
 
-	return winners
+/// Gets the winner of the vote, selecting a random choice from all choices based on their vote count.
+/datum/vote/proc/get_random_winner()
+	var/winner = pick_weight(choices)
+	return winner ? list(winner) : list()
 
 /**
  * Gets the resulting text displayed when the vote is completed.

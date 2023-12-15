@@ -334,3 +334,10 @@
 #define VOTE_COUNT_METHOD_SINGLE 1
 /// Approval voting. Any number of selections per person, and the selection with the most votes wins.
 #define VOTE_COUNT_METHOD_MULTI 2
+
+/// The choice with the most votes wins. Ties are broken by the first choice to reach that number of votes.
+#define VOTE_WINNER_METHOD_SIMPLE 1
+/// The winning choice is selected randomly based on the number of votes each choice has.
+#define VOTE_WINNER_METHOD_RANDOM 2
+/// There is no winner for this vote.
+#define VOTE_WINNER_METHOD_NONE 3
