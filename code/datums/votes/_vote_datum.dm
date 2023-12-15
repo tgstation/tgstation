@@ -130,10 +130,8 @@
 	switch(winner_method)
 		if(VOTE_WINNER_METHOD_NONE)
 			return list()
-
 		if(VOTE_WINNER_METHOD_SIMPLE)
 			return get_simple_winner()
-
 		if(VOTE_WINNER_METHOD_RANDOM)
 			return get_random_winner()
 
@@ -183,10 +181,8 @@
 	switch(winner_method)
 		if(VOTE_WINNER_METHOD_NONE)
 			returned_text += "None"
-
 		if(VOTE_WINNER_METHOD_RANDOM)
 			returned_text += "Random"
-
 		else
 			returned_text += "Simple"
 
