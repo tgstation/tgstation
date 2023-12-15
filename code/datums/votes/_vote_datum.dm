@@ -204,12 +204,13 @@
 		var/percentage_text = ""
 		if(votes > 0)
 			var/actual_percentage = round((votes / total_votes) * 100, 0.1)
-			var/spaces_needed = 3 - DIGITS(actual_percentage)
+			var/text = "[actual_percentage]"
+			var/spaces_needed = 5 - length(text)
 			for(var/_ in 1 to spaces_needed)
 				returned_text += " "
-			percentage_text += "[actual_percentage]%"
+			percentage_text += "[text]%"
 		else
-			percentage_text = "  0%"
+			percentage_text = "    0%"
 		returned_text += "[percentage_text] | [span_bold(option)]: [choices[option]]"
 
 	if(!real_winner) // vote has no winner or cannot be won, but still had votes
