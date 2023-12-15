@@ -18,6 +18,12 @@
 	to_chat(owner.current, span_changeling("You have a weak connection to the changeling hivemind, your body has been conditioned to make you a perfect offering to the changelings."))
 	owner.announce_objectives()
 
+/datum/antagonist/tiger_fanatic/ui_data(mob/user)
+	var/list/data = list()
+	data["key"] = MODE_KEY_CHANGELING
+	data["objectives"] = get_objectives()
+	return data
+
 /datum/antagonist/tiger_fanatic/on_gain()
 	owner.special_role = ROLE_TIGER_FANATIC
 	SEND_SOUND(owner.current, sound('sound/effects/tiger_greeting.ogg'))

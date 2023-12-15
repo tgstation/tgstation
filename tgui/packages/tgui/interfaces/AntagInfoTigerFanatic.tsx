@@ -19,6 +19,7 @@ const transformstyle = {
 };
 
 type Info = {
+  key: string;
   objectives: Objective[];
 };
 
@@ -27,8 +28,9 @@ export const AntagInfoTigerFanatic = (props) => {
     <Window width={540} height={510}>
       <Window.Content
         style={{
-          'backgroundImage': 'none',
-        }}>
+          backgroundImage: 'none',
+        }}
+      >
         <Stack vertical fill>
           <Stack.Item>
             <IntroductionSection />
@@ -69,7 +71,8 @@ const IntroductionSection = (props) => {
     <Section
       fill
       title="Intro"
-      scrollable={!!objectives && objectives.length > 4}>
+      scrollable={!!objectives && objectives.length > 4}
+    >
       <Stack vertical fill>
         <Stack.Item fontSize="25px">
           You are the Tiger Cooperative Fanatic
@@ -83,6 +86,8 @@ const IntroductionSection = (props) => {
 };
 
 const AbilitiesSection = (props) => {
+  const { data } = useBackend<Info>();
+  const { key } = data;
   return (
     <Section fill title="Abilities">
       <Stack fill>
@@ -93,7 +98,8 @@ const AbilitiesSection = (props) => {
               you have managed to forge a weak connection to the
               <span style={hivemindstyle}>&ensp;changeling hivemind. </span>
               You can speak over the hivemind by using
-              <span style={absorbstyle}>&ensp;:g</span>. Contact the
+              <span style={hivemindstyle}>&ensp;.{key}</span> or
+              <span style={hivemindstyle}>&ensp;:{key}</span>. Contact the
               <span style={absorbstyle}> holy ones</span> so you may humbly
               serve them.
             </Stack.Item>
