@@ -72,9 +72,7 @@ export const DestructiveAnalyzer = (props) => {
             src={`data:image/jpeg;base64,${item_icon}`}
             height="64px"
             width="64px"
-            style={{
-              verticalAlign: 'middle',
-            }}
+            verticalAlign="middle"
           />
         </Section>
         <Section title="Deconstruction Methods">
