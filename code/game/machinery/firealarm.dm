@@ -27,8 +27,6 @@
 	light_range = 1.6
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 
-	//Trick to get the glowing overlay visible from a distance
-	luminosity = 1
 	//We want to use area sensitivity, let us
 	always_area_sensitive = TRUE
 	///Buildstate for contruction steps
