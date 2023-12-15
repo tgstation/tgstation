@@ -312,12 +312,14 @@
 						to_chat(user, span_warning("The brain installed is completely useless."))
 						return
 					tool.play_tool_sound(src)
-					tool.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]") // Display from tool because this structure is about to not exist
+
+					var/atom/alert_source = src
 					if(core_mmi.brainmob?.mind)
-						ai_structure_to_mob()
+						alert_source = ai_structure_to_mob() || alert_source
 					else
 						state = AI_READY_CORE
 						update_appearance()
+					alert_source.balloon_alert(user, "connected monitor[core_mmi?.brainmob?.mind ? " and neural network" : ""]")
 					return
 
 			if(AI_READY_CORE)
@@ -357,7 +359,7 @@
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"
 	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, format_text = TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
 	qdel(src)
-	return TRUE
+	return ai_mob
 
 /obj/structure/ai_core/update_icon_state()
 	switch(state)
