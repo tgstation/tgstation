@@ -5,7 +5,6 @@
 	key = "breeze_bay"
 	map_name = "breeze_bay"
 	reward_points = BITRUNNER_REWARD_LOW
-	safehouse_path = /datum/map_template/safehouse/wood
 
 /datum/lazy_template/virtual_domain/breeze_bay/setup_domain(list/created_atoms)
 	. = ..()

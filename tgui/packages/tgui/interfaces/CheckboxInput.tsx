@@ -1,4 +1,13 @@
-import { Button, Icon, Input, NoticeBox, Section, Stack, Table, Tooltip } from '../components';
+import {
+  Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
+} from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { createSearch, decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
@@ -17,8 +26,8 @@ type Data = {
 };
 
 /** Renders a list of checkboxes per items for input. */
-export const CheckboxInput = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const CheckboxInput = (props) => {
+  const { data } = useBackend<Data>();
   const {
     items = [],
     min_checked,
@@ -28,16 +37,11 @@ export const CheckboxInput = (props, context) => {
     title,
   } = data;
 
-  const [selections, setSelections] = useLocalState<string[]>(
-    context,
-    'selections',
-    []
-  );
+  const [selections, setSelections] = useLocalState<string[]>('selections', []);
 
   const [searchQuery, setSearchQuery] = useLocalState<string>(
-    context,
     'searchQuery',
-    ''
+    '',
   );
   const search = createSearch(searchQuery, (item: string) => item);
   const toDisplay = items.filter(search);
@@ -75,7 +79,8 @@ export const CheckboxInput = (props, context) => {
                           !selections.includes(item)
                         }
                         fluid
-                        onClick={() => selectItem(item)}>
+                        onClick={() => selectItem(item)}
+                      >
                         {item}
                       </Button.Checkbox>
                     </TableCell>

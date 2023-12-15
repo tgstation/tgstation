@@ -1,26 +1,29 @@
 /obj/item/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "slime_scanner"
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	w_class = WEIGHT_CLASS_SMALL
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.30, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.20)
 
-/obj/item/slime_scanner/attack(mob/living/living_mob, mob/living/user)
-	if(user.stat || !user.can_read(src) || user.is_blind())
-		return
-	if (!isslime(living_mob))
+/obj/item/slime_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
+	if(!user.can_read(src) || user.is_blind())
+		return ITEM_INTERACT_BLOCKING
+	if (!isslime(interacting_with))
 		to_chat(user, span_warning("This device can only scan slimes!"))
-		return
-	var/mob/living/simple_animal/slime/scanned_slime = living_mob
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/simple_animal/slime/scanned_slime = interacting_with
 	slime_scan(scanned_slime, user)
+	return ITEM_INTERACT_SUCCESS
 
 /proc/slime_scan(mob/living/simple_animal/slime/scanned_slime, mob/living/user)
 	var/to_render = "<b>Slime scan results:</b>\

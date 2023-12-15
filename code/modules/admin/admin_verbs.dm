@@ -169,7 +169,6 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	return list(
 	#ifdef TESTING /* Keep these at the top to not make the list look fugly */
 	/client/proc/check_missing_sprites,
-	/client/proc/run_dynamic_simulations,
 	#endif
 	/proc/machine_upgrade,
 	/datum/admins/proc/create_or_modify_area,
@@ -355,18 +354,21 @@ GLOBAL_PROTECT(admin_verbs_poll)
 	set name = "Invisimin"
 	set category = "Admin.Game"
 	set desc = "Toggles ghost-like invisibility (Don't abuse this)"
+
 	if(isnull(holder) || isnull(mob))
 		return
-	if(mob.invisimin)
+
+	if(HAS_TRAIT(mob, TRAIT_INVISIMIN))
+		REMOVE_TRAIT(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
 		mob.add_to_all_human_data_huds()
-		mob.invisimin = FALSE
 		mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
-		to_chat(mob, span_boldannounce("Invisimin off. Invisibility reset."), confidential = TRUE)
-	else
-		mob.remove_from_all_data_huds()
-		mob.invisimin = TRUE
-		mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
-		to_chat(mob, span_adminnotice("<b>Invisimin on. You are now as invisible as a ghost.</b>"), confidential = TRUE)
+		to_chat(mob, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
+		return
+
+	ADD_TRAIT(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+	mob.remove_from_all_data_huds()
+	mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+	to_chat(mob, span_adminnotice(span_bold("Invisimin on. You are now as invisible as a ghost.")), confidential = TRUE)
 
 /client/proc/check_antagonists()
 	set name = "Check Antagonists"
@@ -1188,3 +1190,4 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		QDEL_NULL(segment.ai_controller)
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
+

@@ -1,13 +1,13 @@
 /obj/item/sequence_scanner
 	name = "genetic sequence scanner"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "gene"
 	inhand_icon_state = "healthanalyzer"
 	worn_icon_state = "healthanalyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'
 	desc = "A hand-held scanner for analyzing someones gene sequence on the fly. Use on a DNA console to update the internal database."
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 3
@@ -29,32 +29,42 @@
 	if(LAZYLEN(genetic_makeup_buffer) > 0)
 		. += span_notice("It has the genetic makeup of \"[genetic_makeup_buffer["name"]]\" stored inside its buffer")
 
-/obj/item/sequence_scanner/attack(mob/living/target, mob/living/carbon/human/user)
-	add_fingerprint(user)
-	//no scanning if its a husk or DNA-less Species
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA))
-		user.visible_message(span_notice("[user] analyzes [target]'s genetic sequence."))
-		balloon_alert(user, "sequence analyzed")
-		playsound(user.loc, 'sound/items/healthanalyzer.ogg', 50) // close enough
-		gene_scan(target, user)
-	else
-		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic sequence."), span_warning("[target] has no readable genetic sequence!"))
+/obj/item/sequence_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
 
-/obj/item/sequence_scanner/attack_secondary(mob/living/target, mob/living/carbon/human/user, max_interact_count = 1)
 	add_fingerprint(user)
+
+	//no scanning if its a husk or DNA-less Species
+	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA))
+		user.visible_message(span_notice("[user] analyzes [interacting_with]'s genetic sequence."))
+		balloon_alert(user, "sequence analyzed")
+		playsound(user, 'sound/items/healthanalyzer.ogg', 50) // close enough
+		gene_scan(interacting_with, user)
+		return ITEM_INTERACT_SUCCESS
+
+	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic sequence."), span_warning("[interacting_with] has no readable genetic sequence!"))
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/sequence_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
+
+	add_fingerprint(user)
+
 	//no scanning if its a husk, DNA-less Species or DNA that isn't able to be copied by a changeling/disease
-	if (!HAS_TRAIT(target, TRAIT_GENELESS) && !HAS_TRAIT(target, TRAIT_BADDNA) && !HAS_TRAIT(target, TRAIT_NO_DNA_COPY))
-		user.visible_message(span_warning("[user] is scanning [target]'s genetic makeup."))
+	if (!HAS_TRAIT(interacting_with, TRAIT_GENELESS) && !HAS_TRAIT(interacting_with, TRAIT_BADDNA) && !HAS_TRAIT(interacting_with, TRAIT_NO_DNA_COPY))
+		user.visible_message(span_warning("[user] is scanning [interacting_with]'s genetic makeup."))
 		if(!do_after(user, 3 SECONDS))
 			balloon_alert(user, "scan failed!")
-			user.visible_message(span_warning("[user] fails to scan [target]'s genetic makeup."))
-			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-		makeup_scan(target, user)
+			user.visible_message(span_warning("[user] fails to scan [interacting_with]'s genetic makeup."))
+			return ITEM_INTERACT_BLOCKING
+		makeup_scan(interacting_with, user)
 		balloon_alert(user, "makeup scanned")
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	else
-		user.visible_message(span_notice("[user] fails to analyze [target]'s genetic makeup."), span_warning("[target] has no readable genetic makeup!"))
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+		return ITEM_INTERACT_SUCCESS
+
+	user.visible_message(span_notice("[user] fails to analyze [interacting_with]'s genetic makeup."), span_warning("[interacting_with] has no readable genetic makeup!"))
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/sequence_scanner/afterattack_secondary(obj/object, mob/user, proximity)
 	. = ..()

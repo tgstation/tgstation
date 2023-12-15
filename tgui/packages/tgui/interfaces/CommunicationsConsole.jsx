@@ -1,7 +1,17 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Blink, Box, Button, Dimmer, Flex, Icon, Modal, Section, TextArea } from '../components';
+import {
+  Blink,
+  Box,
+  Button,
+  Dimmer,
+  Flex,
+  Icon,
+  Modal,
+  Section,
+  TextArea,
+} from '../components';
 import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
@@ -19,11 +29,11 @@ const EMAG_SHUTTLE_NOTICE =
 
 const sortShuttles = sortBy(
   (shuttle) => !shuttle.emagOnly,
-  (shuttle) => shuttle.initial_cost
+  (shuttle) => shuttle.initial_cost,
 );
 
-const AlertButton = (props, context) => {
-  const { act, data } = useBackend(context);
+const AlertButton = (props) => {
+  const { act, data } = useBackend();
   const { alertLevelTick, canSetAlertLevel } = data;
   const { alertLevel, setShowAlertLevelConfirm } = props;
 
@@ -51,11 +61,11 @@ const AlertButton = (props, context) => {
   );
 };
 
-const MessageModal = (props, context) => {
-  const { data } = useBackend(context);
+const MessageModal = (props) => {
+  const { data } = useBackend();
   const { maxMessageLength } = data;
 
-  const [input, setInput] = useLocalState(context, props.label, '');
+  const [input, setInput] = useLocalState(props.label, '');
 
   const longEnough =
     props.minLength === undefined || input.length >= props.minLength;
@@ -74,7 +84,7 @@ const MessageModal = (props, context) => {
             width="80vw"
             backgroundColor="black"
             textColor="white"
-            onInput={(_, value) => {
+            onChange={(_, value) => {
               setInput(value.substring(0, maxMessageLength));
             }}
             value={input}
@@ -143,8 +153,8 @@ const NoConnectionModal = () => {
   );
 };
 
-const PageBuyingShuttle = (props, context) => {
-  const { act, data } = useBackend(context);
+const PageBuyingShuttle = (props) => {
+  const { act, data } = useBackend();
 
   return (
     <Box>
@@ -167,7 +177,8 @@ const PageBuyingShuttle = (props, context) => {
               style={{
                 display: 'inline-block',
                 width: '70%',
-              }}>
+              }}
+            >
               {shuttle.name}
             </span>
           }
@@ -191,7 +202,8 @@ const PageBuyingShuttle = (props, context) => {
               }
               tooltipPosition="left"
             />
-          }>
+          }
+        >
           <Box>{shuttle.description}</Box>
           <Box color="teal" fontSize="10px" italic>
             Occupancy Limit: {shuttle.occupancy_limit}
@@ -207,8 +219,8 @@ const PageBuyingShuttle = (props, context) => {
   );
 };
 
-const PageChangingStatus = (props, context) => {
-  const { act } = useBackend(context);
+const PageChangingStatus = (props) => {
+  const { act } = useBackend();
 
   return (
     <Box>
@@ -225,8 +237,8 @@ const PageChangingStatus = (props, context) => {
   );
 };
 
-const PageMain = (props, context) => {
-  const { act, data } = useBackend(context);
+const PageMain = (props) => {
+  const { act, data } = useBackend();
   const {
     alertLevel,
     alertLevelTick,
@@ -253,30 +265,26 @@ const PageMain = (props, context) => {
   } = data;
 
   const [callingShuttle, setCallingShuttle] = useLocalState(
-    context,
     'calling_shuttle',
-    false
+    false,
   );
   const [messagingAssociates, setMessagingAssociates] = useLocalState(
-    context,
     'messaging_associates',
-    false
+    false,
   );
   const [messagingSector, setMessagingSector] = useLocalState(
-    context,
     'messaing_sector',
-    null
+    null,
   );
   const [requestingNukeCodes, setRequestingNukeCodes] = useLocalState(
-    context,
     'requesting_nuke_codes',
-    false
+    false,
   );
 
   const [
     [showAlertLevelConfirm, confirmingAlertLevelTick],
     setShowAlertLevelConfirm,
-  ] = useLocalState(context, 'showConfirmPrompt', [null, null]);
+  ] = useLocalState('showConfirmPrompt', [null, null]);
 
   return (
     <Box>
@@ -556,8 +564,8 @@ const PageMain = (props, context) => {
   );
 };
 
-const PageMessages = (props, context) => {
-  const { act, data } = useBackend(context);
+const PageMessages = (props) => {
+  const { act, data } = useBackend();
   const messages = data.messages || [];
 
   const children = [];
@@ -569,7 +577,7 @@ const PageMessages = (props, context) => {
         content="Back"
         onClick={() => act('setState', { state: STATE_MAIN })}
       />
-    </Section>
+    </Section>,
   );
 
   const messageElements = [];
@@ -589,10 +597,10 @@ const PageMessages = (props, context) => {
                 message.answered
                   ? undefined
                   : () =>
-                    act('answerMessage', {
-                      message: parseInt(messageIndex, 10) + 1,
-                      answer: answerIndex + 1,
-                    })
+                      act('answerMessage', {
+                        message: parseInt(messageIndex, 10) + 1,
+                        answer: answerIndex + 1,
+                      })
               }
             />
           ))}
@@ -619,11 +627,12 @@ const PageMessages = (props, context) => {
               })
             }
           />
-        }>
+        }
+      >
         <Box dangerouslySetInnerHTML={textHtml} />
 
         {answers}
-      </Section>
+      </Section>,
     );
   }
 
@@ -632,8 +641,8 @@ const PageMessages = (props, context) => {
   return children;
 };
 
-export const CommunicationsConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const CommunicationsConsole = (props) => {
+  const { act, data } = useBackend();
   const {
     authenticated,
     authorizeName,

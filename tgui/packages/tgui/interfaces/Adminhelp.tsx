@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import { TextArea, Stack, Button, NoticeBox, Input, Box } from '../components';
 import { Window } from '../layouts';
 
@@ -10,37 +11,26 @@ type AdminhelpData = {
   urgentAhelpPromptMessage: string;
 };
 
-export const Adminhelp = (props, context) => {
-  const { act, data } = useBackend<AdminhelpData>(context);
+export const Adminhelp = (props) => {
+  const { act, data } = useBackend<AdminhelpData>();
   const {
     adminCount,
     urgentAhelpEnabled,
     bannedFromUrgentAhelp,
     urgentAhelpPromptMessage,
   } = data;
-  const [requestForAdmin, setRequestForAdmin] = useLocalState(
-    context,
-    'request_for_admin',
-    false
-  );
-  const [currentlyInputting, setCurrentlyInputting] = useLocalState(
-    context,
-    'confirm_request',
-    false
-  );
-  const [ahelpMessage, setAhelpMessage] = useLocalState(
-    context,
-    'ahelp_message',
-    ''
-  );
+  const [requestForAdmin, setRequestForAdmin] = useState(false);
+  const [currentlyInputting, setCurrentlyInputting] = useState(false);
+  const [ahelpMessage, setAhelpMessage] = useState('');
 
   const confirmationText = 'alert admins';
   return (
     <Window title="Create Adminhelp" theme="admin" height={300} width={500}>
       <Window.Content
         style={{
-          'background-image': 'none',
-        }}>
+          backgroundImage: 'none',
+        }}
+      >
         <Stack vertical fill>
           <Stack.Item grow>
             <TextArea
@@ -62,8 +52,9 @@ export const Adminhelp = (props, context) => {
                     fontFamily="arial"
                     backgroundColor="grey"
                     style={{
-                      'font-style': 'normal',
-                    }}>
+                      fontStyle: 'normal',
+                    }}
+                  >
                     Input &apos;{confirmationText}&apos; to proceed.
                     <Input
                       placeholder="Confirmation Prompt"
@@ -80,7 +71,6 @@ export const Adminhelp = (props, context) => {
                 )) || (
                   <Button
                     mt={1}
-                    content="Alert admins?"
                     onClick={() => {
                       if (requestForAdmin) {
                         setRequestForAdmin(false);
@@ -94,11 +84,13 @@ export const Adminhelp = (props, context) => {
                     tooltip={
                       bannedFromUrgentAhelp
                         ? 'You are banned from using urgent ahelps.'
-                        : null
+                        : undefined
                     }
                     fluid
                     textAlign="center"
-                  />
+                  >
+                    Alert admins?
+                  </Button>
                 )}
               </NoticeBox>
             </Stack.Item>

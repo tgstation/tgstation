@@ -149,7 +149,7 @@
 "ev" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/template_noop,
-/area/virtual_domain)
+/area/virtual_domain/safehouse)
 "eJ" = (
 /obj/structure/disposalpipe/sorting{
 	dir = 2
@@ -494,7 +494,7 @@
 /area/virtual_domain)
 "po" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /turf/open/floor/iron,
 /area/virtual_domain)
 "pv" = (
@@ -709,7 +709,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain)
 "vA" = (
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/turf_decal/stripes{
 	dir = 9
 	},
@@ -1064,7 +1064,7 @@
 /area/virtual_domain)
 "Fa" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/virtual_domain)
@@ -1233,7 +1233,7 @@
 /area/virtual_domain)
 "JR" = (
 /turf/template_noop,
-/area/virtual_domain)
+/area/virtual_domain/safehouse)
 "JT" = (
 /obj/structure/lattice/catwalk{
 	name = "industrial lift"
@@ -1455,9 +1455,11 @@
 /turf/open/floor/plating,
 /area/virtual_domain)
 "Qo" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "shuttle_space"
+	},
 /turf/template_noop,
-/area/virtual_domain)
+/area/virtual_domain/safehouse)
 "Qr" = (
 /turf/closed/indestructible/fakedoor/maintenance{
 	name = "maintenance access"
@@ -1819,7 +1821,7 @@
 /turf/open/floor/plating,
 /area/virtual_domain)
 "Ym" = (
-/mob/living/simple_animal/pet/cat/space,
+/mob/living/basic/pet/cat/space,
 /obj/structure/bed/dogbed{
 	name = "cat bed"
 	},

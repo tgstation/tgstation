@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Divider, Knob, LabeledControls, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Divider,
+  Knob,
+  LabeledControls,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -22,8 +30,8 @@ export const TrainingMachine = () => {
 };
 
 /** Creates a labeledlist of controls */
-const TrainingControls = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const TrainingControls = (props) => {
+  const { act, data } = useBackend<Data>();
   const { movespeed, range, moving } = data;
 
   return (

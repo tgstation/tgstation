@@ -51,7 +51,7 @@
 	if(!anchorable_cannon)
 		return FALSE
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/cannon/attackby(obj/item/used_item, mob/user, params)
 	if(charge_ignited)

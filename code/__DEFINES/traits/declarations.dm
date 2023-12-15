@@ -174,8 +174,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_DNA_SCRAMBLE "no_dna_scramble"
 /// Carbons with this trait can eat blood to regenerate their own blood volume, instead of injecting it
 #define TRAIT_DRINKS_BLOOD "drinks_blood"
-/// Mob is immune to clone (cellular) damage
-#define TRAIT_NOCLONELOSS "no_cloneloss"
 /// Mob is immune to toxin damage
 #define TRAIT_TOXIMMUNE "toxin_immune"
 /// Mob is immune to oxygen damage, does not need to breathe
@@ -190,6 +188,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EASILY_WOUNDED "easy_limb_wound"
 #define TRAIT_HARDLY_WOUNDED "hard_limb_wound"
 #define TRAIT_NEVER_WOUNDED "never_wounded"
+/// Species with this trait have 50% extra chance of bleeding from piercing and slashing wounds
+#define TRAIT_EASYBLEED "easybleed"
 #define TRAIT_TOXINLOVER "toxinlover"
 /// Doesn't get overlays from being in critical.
 #define TRAIT_NOCRITOVERLAY "no_crit_overlay"
@@ -347,7 +347,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
 /// Prevents hallucinations from the hallucination brain trauma (RDS)
 #define TRAIT_RDS_SUPPRESSED "rds_suppressed"
-/// overrides the update_fire proc to always add fire (for lava)
+/// mobs that have this trait cannot be extinguished
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
@@ -415,6 +415,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+/// Mob has fov applied to it
+#define TRAIT_FOV_APPLIED "fov_applied"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -437,6 +439,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait used by fugu glands to avoid double buffing
 #define TRAIT_FUGU_GLANDED "fugu_glanded"
+
+/// Trait that tracks if something has been renamed. Typically holds a REF() to the object itself (AKA src) for wide addition/removal.
+#define TRAIT_WAS_RENAMED "was_renamed"
 
 /// When someone with this trait fires a ranged weapon, their fire delays and click cooldowns are halved
 #define TRAIT_DOUBLE_TAP "double_tap"
@@ -480,6 +485,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Whether or not the user is in a MODlink call, prevents making more calls
 #define TRAIT_IN_CALL "in_call"
+
+/// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
+#define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -711,6 +719,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_THROWINGARM "throwing_arm"
 #define TRAIT_SETTLER "settler"
 
+/// This mob always lands on their feet when they fall, for better or for worse.
+#define TRAIT_CATLIKE_GRACE "catlike_grace"
+
 ///if the atom has a sticker attached to it
 #define TRAIT_STICKERED "stickered"
 
@@ -809,6 +820,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to mechs that can have orebox functionality on movement
 #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
 
+///A trait for mechs that were created through the normal construction process, and not spawned by map or other effects.
+#define TRAIT_MECHA_CREATED_NORMALLY "trait_mecha_created_normally"
+
 ///fish traits
 #define TRAIT_RESIST_EMULSIFY "resist_emulsify"
 #define TRAIT_FISH_SELF_REPRODUCE "fish_self_reproduce"
@@ -826,7 +840,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
 
-
+/// Trait given to a dreaming carbon when they are currently doing dreaming stuff
+#define TRAIT_DREAMING "currently_dreaming"
 
 ///generic atom traits
 /// Trait from [/datum/element/rust]. Its rusty and should be applying a special overlay to denote this.
@@ -843,6 +858,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NO_MIRROR_REFLECTION "no_mirror_reflection"
 /// If this movable is currently treading in a turf with the immerse element.
 #define TRAIT_IMMERSED "immersed"
+/// From [/datum/element/elevation_core] for purpose of checking if the turf has the trait from an instance of the element
+#define TRAIT_ELEVATED_TURF "elevated_turf"
 /**
  * With this, the immerse overlay will give the atom its own submersion visual overlay
  * instead of one that's also shared with other movables, thus making editing its appearance possible.
@@ -884,6 +901,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
 
+/// This atom is currently spinning.
+#define TRAIT_SPINNING "spinning"
 
 /// Denotes that this id card was given via the job outfit, aka the first ID this player got.
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
@@ -952,6 +971,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// the object has a label applied
 #define TRAIT_HAS_LABEL "labeled"
 
+/// Trait given to a mob that is currently thinking (giving off the "thinking" icon), used in an IC context
+#define TRAIT_THINKING_IN_CHARACTER "currently_thinking_IC"
+
 ///without a human having this trait, they speak as if they have no tongue.
 #define TRAIT_SPEAKS_CLEARLY "speaks_clearly"
 
@@ -982,7 +1004,22 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MOB_BREEDER "mob_breeder"
 /// Trait given to mobs that we do not want to mindswap
 #define TRAIT_NO_MINDSWAP "no_mindswap"
+///trait given to food that can be baked by /datum/component/bakeable
+#define TRAIT_BAKEABLE "bakeable"
 
 /// Trait given to foam darts that have an insert in them
 #define TRAIT_DART_HAS_INSERT "dart_has_insert"
+
+///Trait granted by janitor skillchip, allows communication with cleanbots
+#define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
+
+/// Trait given when a mob is currently in invisimin mode
+#define TRAIT_INVISIMIN "invisimin"
+
+///Trait given when a mob has been tipped
+#define TRAIT_MOB_TIPPED "mob_tipped"
+
+/// Trait which self-identifies as an enemy of the law
+#define TRAIT_ALWAYS_WANTED "always_wanted"
+
 // END TRAIT DEFINES

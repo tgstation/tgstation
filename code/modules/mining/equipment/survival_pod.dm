@@ -164,7 +164,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 
 /obj/item/gps/computer/wrench_act(mob/living/user, obj/item/I)
 	..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return TRUE
 
 	user.visible_message(span_warning("[user] disassembles [src]."),
@@ -201,7 +201,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	light_color = COLOR_VERY_PALE_LIME_GREEN
 	max_n_of_items = 10
 	pixel_y = -4
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = NO_DECONSTRUCTION
 
 /obj/machinery/smartfridge/survival_pod/Initialize(mapload)
 	AddElement(/datum/element/update_icon_blocker)

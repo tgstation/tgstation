@@ -2,10 +2,11 @@ import { useBackend, useSharedState } from '../backend';
 import { Button, LabeledList, NoticeBox, Section, Tabs } from '../components';
 import { Window } from '../layouts';
 
-export const Microscope = (props, context) => {
-  const { act, data } = useBackend(context);
-  const [tab, setTab] = useSharedState(context, 'tab', 1);
+export const Microscope = (props) => {
+  const { act, data } = useBackend();
+  const [tab, setTab] = useSharedState('tab', 1);
   const { has_dish, cell_lines = [], viruses = [] } = data;
+
   return (
     <Window>
       <Window.Content scrollable>
@@ -26,14 +27,16 @@ export const Microscope = (props, context) => {
             icon="microscope"
             lineHeight="23px"
             selected={tab === 1}
-            onClick={() => setTab(1)}>
+            onClick={() => setTab(1)}
+          >
             Micro-Organisms ({cell_lines.length})
           </Tabs.Tab>
           <Tabs.Tab
             icon="microscope"
             lineHeight="23px"
             selected={tab === 2}
-            onClick={() => setTab(2)}>
+            onClick={() => setTab(2)}
+          >
             Viruses ({viruses.length})
           </Tabs.Tab>
         </Tabs>
@@ -44,12 +47,13 @@ export const Microscope = (props, context) => {
   );
 };
 
-const Organisms = (props, context) => {
+const Organisms = (props) => {
   const { cell_lines } = props;
-  const { act, data } = useBackend(context);
+  const { act, data } = useBackend();
   if (!cell_lines.length) {
     return <NoticeBox>No micro-organisms found</NoticeBox>;
   }
+
   return cell_lines.map((cell_line) => {
     return (
       <Section key={cell_line.desc} title={cell_line.desc}>
@@ -75,9 +79,9 @@ const Organisms = (props, context) => {
   });
 };
 
-const Viruses = (props, context) => {
+const Viruses = (props) => {
   const { viruses } = props;
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   if (!viruses.length) {
     return <NoticeBox>No viruses found</NoticeBox>;
   }

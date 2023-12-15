@@ -58,6 +58,8 @@
 				/obj/item/clothing/glasses/eyepatch = 1,
 				/obj/item/clothing/glasses/eyepatch/medical = 1,
 				/obj/item/clothing/under/costume/gi = 1,
+				/obj/item/clothing/head/soft/propeller_hat = 1,
+				/obj/item/clothing/neck/bowtie/rainbow = 1,
 			),
 		),
 		list(

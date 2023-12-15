@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { BlockQuote, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const AntagInfoSentient = (props, context) => {
-  const { act, data } = useBackend(context);
+export const AntagInfoSentient = (props) => {
+  const { act, data } = useBackend();
   const { enslaved_to, holographic, p_them, p_their } = data;
   return (
     <Window width={400} height={400} theme="neutral">

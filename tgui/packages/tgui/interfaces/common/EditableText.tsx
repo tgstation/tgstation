@@ -19,15 +19,14 @@ type Props = {
  * Ensure that you have the corresponding action case in your Byond code.
  *
  */
-export const EditableText = (props: Props, context) => {
+export const EditableText = (props: Props) => {
   const { color, field, target_ref, text } = props;
   if (!field) return <> </>;
 
-  const { act } = useBackend(context);
+  const { act } = useBackend();
   const [editing, setEditing] = useLocalState<boolean>(
-    context,
     `editing_${field}`,
-    false
+    false,
   );
 
   return editing ? (
@@ -50,12 +49,13 @@ export const EditableText = (props: Props, context) => {
           as="span"
           color={!text ? 'grey' : color || 'white'}
           style={{
-            'text-decoration': 'underline',
-            'text-decoration-color': 'white',
-            'text-decoration-thickness': '1px',
-            'text-underline-offset': '1px',
+            textDecoration: 'underline',
+            textDecorationColor: 'white',
+            textDecorationThickness: '1px',
+            textUnderlineOffset: '1px',
           }}
-          onClick={() => setEditing(true)}>
+          onClick={() => setEditing(true)}
+        >
           {!text ? '(none)' : text}
         </Box>
       </Stack.Item>

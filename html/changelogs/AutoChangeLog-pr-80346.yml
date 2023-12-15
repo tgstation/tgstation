@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Confirmation buttons should be usable again. Bitrunning domains, command reports, etc."

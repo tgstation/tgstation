@@ -18,7 +18,7 @@ export const getAntagCategories = (antagonists: Antagonist[]) => {
   });
 
   const sortedAntagonists = sortBy<AntagGroup>(([key]) => key)(
-    Object.entries(categories)
+    Object.entries(categories),
   );
 
   return sortedAntagonists;
@@ -44,13 +44,13 @@ export const getDisplayName = (full_name: string, name?: string) => {
 
 export const getMostRelevant = (
   searchQuery: string,
-  observables: Observable[][]
+  observables: Observable[][],
 ) => {
   /** Returns the most orbited observable that matches the search. */
   const mostRelevant: Observable = flow([
     // Filters out anything that doesn't match search
     filter<Observable>((observable) =>
-      isJobOrNameMatch(observable, searchQuery)
+      isJobOrNameMatch(observable, searchQuery),
     ),
     // Sorts descending by orbiters
     sortBy<Observable>((observable) => -(observable.orbiters || 0)),
@@ -90,7 +90,7 @@ const getThreatColor = (orbiters = 0) => {
 export const getDisplayColor = (
   item: Observable,
   heatMap: boolean,
-  color?: string
+  color?: string,
 ) => {
   const { health, orbiters } = item;
   if (typeof health !== 'number') {
@@ -105,7 +105,7 @@ export const getDisplayColor = (
 /** Checks if a full name or job title matches the search. */
 export const isJobOrNameMatch = (
   observable: Observable,
-  searchQuery: string
+  searchQuery: string,
 ) => {
   if (!searchQuery) {
     return true;

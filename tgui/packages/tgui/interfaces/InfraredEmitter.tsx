@@ -8,8 +8,8 @@ type Data = {
   visible: BooleanLike;
 };
 
-export const InfraredEmitter = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const InfraredEmitter = (props) => {
+  const { act, data } = useBackend<Data>();
   const { on, visible } = data;
 
   return (

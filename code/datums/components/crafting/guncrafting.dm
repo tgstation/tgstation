@@ -87,10 +87,6 @@
 	name = "particle acceleration rifle part kit (lethal)"
 	desc = "The coup de grace of guncrafting. This suitcase contains the highly experimental rig for a particle acceleration rifle. Requires an energy gun, a stabilized flux anomaly and a stabilized gravity anomaly."
 
-/obj/item/weaponcrafting/gunkit/decloner
-	name = "decloner part kit (lethal)"
-	desc = "An uttery baffling array of gun parts and technology that somehow turns a laser gun into a decloner. Haircut not included."
-
 /obj/item/weaponcrafting/gunkit/ebow
 	name = "energy crossbow part kit (less lethal)"
 	desc = "Highly illegal weapons refurbishment kit that allows you to turn the standard proto-kinetic accelerator into a near-duplicate energy crossbow. Almost like the real thing!"

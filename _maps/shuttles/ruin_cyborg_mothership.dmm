@@ -17,7 +17,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "bE" = (
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/iron/showroomfloor,
 /area/shuttle/ruin/cyborg_mothership)
 "cU" = (

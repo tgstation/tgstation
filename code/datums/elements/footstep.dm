@@ -107,7 +107,7 @@
 		return
 
 	var/list/prepared_steps = prepare_step(source)
-	if(!prepared_steps)
+	if(isnull(prepared_steps))
 		return
 
 	if(isfile(footstep_sounds) || istext(footstep_sounds))
@@ -115,7 +115,7 @@
 		return
 
 	var/turf_footstep = prepared_steps[footstep_type]
-	if(!turf_footstep)
+	if(isnull(turf_footstep) || !footstep_sounds[turf_footstep])
 		return
 	playsound(source.loc, pick(footstep_sounds[turf_footstep][1]), footstep_sounds[turf_footstep][2] * volume, TRUE, footstep_sounds[turf_footstep][3] + e_range, falloff_distance = 1, vary = sound_vary)
 
@@ -133,7 +133,7 @@
 		range_adjustment = -2
 
 	var/list/prepared_steps = prepare_step(source)
-	if(!prepared_steps)
+	if(isnull(prepared_steps))
 		return
 
 	//cache for sanic speed (lists are references anyways)
@@ -141,19 +141,22 @@
 	///list returned by playsound() filled by client mobs who heard the footstep. given to play_fov_effect()
 	var/list/heard_clients
 
-	if ((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
+	if((source.wear_suit?.body_parts_covered | source.w_uniform?.body_parts_covered | source.shoes?.body_parts_covered) & FEET)
 		// we are wearing shoes
 
 		var/shoestep_type = prepared_steps[FOOTSTEP_MOB_SHOE]
-		heard_clients = playsound(source.loc, pick(footstep_sounds[shoestep_type][1]),
-			footstep_sounds[shoestep_type][2] * volume * volume_multiplier,
-			TRUE,
-			footstep_sounds[shoestep_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
+		if(!isnull(shoestep_type) && footstep_sounds[shoestep_type]) // shoestep type can be null
+			heard_clients = playsound(source.loc, pick(footstep_sounds[shoestep_type][1]),
+				footstep_sounds[shoestep_type][2] * volume * volume_multiplier,
+				TRUE,
+				footstep_sounds[shoestep_type][3] + e_range + range_adjustment, falloff_distance = 1, vary = sound_vary)
 	else
-		var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
+		// we are barefoot
+
 		if(source.dna.species.special_step_sounds)
 			heard_clients = playsound(source.loc, pick(source.dna.species.special_step_sounds), 50, TRUE, falloff_distance = 1, vary = sound_vary)
 		else
+			var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
 			var/static/list/bare_footstep_sounds = GLOB.barefootstep
 			if(!isnull(barefoot_type) && bare_footstep_sounds[barefoot_type]) // barefoot_type can be null
 				heard_clients = playsound(source.loc, pick(bare_footstep_sounds[barefoot_type][1]),

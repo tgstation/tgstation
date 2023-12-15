@@ -13,7 +13,7 @@ export const meta = {
   render: () => <Story />,
 };
 
-const Story = (props, context) => {
+const Story = (props) => {
   if (!window.localStorage) {
     return <NoticeBox>Local storage is not available.</NoticeBox>;
   }
@@ -26,10 +26,12 @@ const Story = (props, context) => {
           onClick={() => {
             localStorage.clear();
             storage.clear();
-          }}>
+          }}
+        >
           Clear
         </Button>
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Keys in use">
           {localStorage.length}

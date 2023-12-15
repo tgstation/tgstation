@@ -2,8 +2,8 @@ import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const OutfitManager = (props, context) => {
-  const { act, data } = useBackend(context);
+export const OutfitManager = (props) => {
+  const { act, data } = useBackend();
   const { outfits } = data;
   return (
     <Window title="Outfit Manager" width={300} height={300} theme="admin">
@@ -33,7 +33,8 @@ export const OutfitManager = (props, context) => {
                 onClick={() => act('new')}
               />
             </>
-          }>
+          }
+        >
           <Stack vertical>
             {outfits?.map((outfit) => (
               <Stack.Item key={outfit.ref}>
@@ -42,16 +43,17 @@ export const OutfitManager = (props, context) => {
                     grow={1}
                     shrink={1}
                     style={{
-                      'overflow': 'hidden',
-                      'white-space': 'nowrap',
-                      'text-overflow': 'ellipsis',
-                    }}>
+                      overflow: 'hidden',
+                      whiteSpace: 'nowrap',
+                      textOverflow: 'ellipsis',
+                    }}
+                  >
                     <Button
                       fluid
                       style={{
-                        'overflow': 'hidden',
-                        'white-space': 'nowrap',
-                        'text-overflow': 'ellipsis',
+                        overflow: 'hidden',
+                        whiteSpace: 'nowrap',
+                        textOverflow: 'ellipsis',
                       }}
                       content={outfit.name}
                       onClick={() => act('edit', { outfit: outfit.ref })}

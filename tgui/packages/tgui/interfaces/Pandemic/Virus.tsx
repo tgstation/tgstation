@@ -1,6 +1,13 @@
 import { capitalizeFirst, decodeHtmlEntities } from 'common/string';
 import { useBackend } from 'tgui/backend';
-import { Box, Input, LabeledList, Section, Stack, Tooltip } from 'tgui/components';
+import {
+  Box,
+  Input,
+  LabeledList,
+  Section,
+  Stack,
+  Tooltip,
+} from 'tgui/components';
 import { getColor } from './helpers';
 import { Data } from './types';
 
@@ -8,7 +15,7 @@ import { Data } from './types';
  * Displays info about the virus. Child elements display
  * the virus's traits and descriptions.
  */
-export const VirusDisplay = (props, context) => {
+export const VirusDisplay = (props) => {
   const { virus } = props;
 
   return (
@@ -29,8 +36,8 @@ export const VirusDisplay = (props, context) => {
 };
 
 /** Displays the description, name and other info for the virus. */
-const Info = (props, context) => {
-  const { act } = useBackend<Data>(context);
+const Info = (props) => {
+  const { act } = useBackend<Data>();
   const {
     virus: { agent, can_rename, cure, description, index, name, spread },
   } = props;
@@ -68,7 +75,7 @@ const Info = (props, context) => {
  * with object.keys but you would need a helper function for the tooltips.
  * I would rather hard code it here.
  */
-const Traits = (props, context) => {
+const Traits = (props) => {
   const {
     virus: { resistance, stage_speed, stealth, transmission },
   } = props;
@@ -94,7 +101,8 @@ const Traits = (props, context) => {
         <Tooltip content="Decides the spread type.">
           <LabeledList.Item
             color={getColor(transmission)}
-            label="Transmissibility">
+            label="Transmissibility"
+          >
             {transmission}
           </LabeledList.Item>
         </Tooltip>

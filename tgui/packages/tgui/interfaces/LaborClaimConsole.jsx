@@ -3,8 +3,8 @@ import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-export const LaborClaimConsole = (props, context) => {
-  const { act, data } = useBackend(context);
+export const LaborClaimConsole = (props) => {
+  const { act, data } = useBackend();
   const { can_go_home, id_points, ores, status_info, unclaimed_points } = data;
   return (
     <Window width={315} height={440}>
@@ -28,7 +28,8 @@ export const LaborClaimConsole = (props, context) => {
                   disabled={!unclaimed_points}
                   onClick={() => act('claim_points')}
                 />
-              }>
+              }
+            >
               {unclaimed_points}
             </LabeledList.Item>
           </LabeledList>

@@ -17,12 +17,12 @@ type Data = {
   beaker: Beaker;
 };
 
-export const PortableChemMixer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const PortableChemMixer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { beaker } = data;
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const chemicals = sortBy((chem: DispensableReagent) => chem.id)(
-    data.chemicals
+    data.chemicals,
   );
   return (
     <Window width={500} height={500}>
@@ -41,7 +41,8 @@ export const PortableChemMixer = (props, context) => {
                 })
               }
             />
-          ))}>
+          ))}
+        >
           <Box>
             {chemicals.map((chemical) => (
               <Button
@@ -69,7 +70,8 @@ export const PortableChemMixer = (props, context) => {
               content={amount}
               onClick={() => act('remove', { amount })}
             />
-          ))}>
+          ))}
+        >
           <BeakerDisplay beaker={beaker} showpH />
         </Section>
       </Window.Content>
