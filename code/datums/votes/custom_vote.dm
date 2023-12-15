@@ -73,8 +73,4 @@
 	. = ..()
 	. += "\n[override_question]"
 
-// There are no winners or losers for custom votes
-/datum/vote/custom_vote/get_winner_text(list/all_winners, real_winner, list/non_voters)
-	return "[span_bold("Did not vote:")] [length(non_voters)]"
-
 #undef MAX_CUSTOM_VOTE_OPTIONS

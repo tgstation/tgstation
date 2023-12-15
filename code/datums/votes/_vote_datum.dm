@@ -179,6 +179,17 @@
 	else
 		returned_text += span_bold("[capitalize(name)] Vote")
 
+	returned_text += "\nWinner Selection: "
+	switch(winner_method)
+		if(VOTE_WINNER_METHOD_NONE)
+			returned_text += "None"
+
+		if(VOTE_WINNER_METHOD_RANDOM)
+			returned_text += "Random"
+
+		else
+			returned_text += "Simple"
+
 	var/total_votes = 0 // for determining percentage of votes
 	for(var/option in choices)
 		total_votes += choices[option]
@@ -186,6 +197,7 @@
 	if(total_votes <= 0)
 		return span_bold("Vote Result: Inconclusive - No Votes!")
 
+	returned_text += "\nResults:"
 	for(var/option in choices)
 		returned_text += "\n"
 		var/votes = choices[option]
