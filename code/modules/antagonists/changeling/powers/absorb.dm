@@ -150,10 +150,10 @@
 		changeling.adjust_chemicals(chems_to_add)
 		changeling.total_chem_storage += chems_to_add
 
+		target.grab_ghost()
+
 		var/old_body_position = target.body_position_pixel_y_offset
 		target.body_position_pixel_y_offset = 0
-
-		target.grab_ghost()
 
 		target.set_lying_angle(0)
 
