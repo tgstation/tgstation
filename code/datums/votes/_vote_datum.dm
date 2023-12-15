@@ -173,9 +173,6 @@
  * Return a formatted string of text to be displayed to everyone.
  */
 /datum/vote/proc/get_result_text(list/all_winners, real_winner, list/non_voters)
-	if(length(all_winners) <= 0)
-		return span_bold("Vote Result: Inconclusive - No Votes!")
-
 	var/returned_text = ""
 	if(override_question)
 		returned_text += span_bold(override_question)
@@ -185,6 +182,9 @@
 	var/total_votes = 0 // for determining percentage of votes
 	for(var/option in choices)
 		total_votes += choices[option]
+
+	if(total_votes <= 0)
+		return span_bold("Vote Result: Inconclusive - No Votes!")
 
 	for(var/option in choices)
 		var/votes = choices[option]
