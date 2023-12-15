@@ -154,7 +154,7 @@
 			if(PAYMENT_FRIENDLY)
 				source.say("I'm so sorry... You don't seem to have enough money.")
 			if(PAYMENT_ANGRY)
-				source.say("YOU MORON. YOU ABSOLUTE BAFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR.")
+				source.say("YOU MORON. YOU ABSOLUTE BUFFOON. YOU INSUFFERABLE TOOL. YOU ARE POOR.")
 			if(PAYMENT_CLINICAL)
 				source.say("ID Card lacks funds. Aborting.")
 		atom_parent.balloon_alert(user, "needs [total_cost] credit\s!")
