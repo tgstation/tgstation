@@ -158,6 +158,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to trigger [queued_token_event] has been approved.")
+	add_event_to_buffer(owner,  data = "event tokens for [queued_token_event] approved.", log_key = "META")
 	adjust_event_tokens(-queued_token_event.token_cost)
 	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
 	queued_token_event = null
@@ -167,4 +168,5 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to trigger [queued_token_event] has been denied.")
+	add_event_to_buffer(owner,  data = "event tokens for [queued_token_event] denied.", log_key = "META")
 	queued_token_event = null
