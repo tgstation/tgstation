@@ -78,6 +78,7 @@
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 	var/recovery_prob = 0
+	var/cure_mod
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
@@ -85,13 +86,16 @@
 			return FALSE
 
 	if(has_cure())
-		if(disease_flags & CHRONIC && SPT_PROB(cure_chance, seconds_per_tick))
+		cure_mod = cure_chance
+		if(istype(src, /datum/disease/advance))
+			cure_mod = max(cure_chance, DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE)
+		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
 			return
-		if(SPT_PROB(cure_chance, seconds_per_tick))
+		if(SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(max(stage - 1, 1))
-		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
+		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
 			cure()
 			return FALSE
 

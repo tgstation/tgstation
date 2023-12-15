@@ -313,7 +313,7 @@ export const Filteriffic = (props) => {
                 />
               </>
             ) : (
-              <Box inline onDblClick={() => setHiddenSecret(true)}>
+              <Box inline onDoubleClick={() => setHiddenSecret(true)}>
                 {name}
               </Box>
             )

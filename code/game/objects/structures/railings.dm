@@ -9,7 +9,6 @@
 	anchored = TRUE
 	pass_flags_self = LETPASSTHROW|PASSSTRUCTURE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
@@ -164,7 +163,6 @@
 	icon = 'icons/obj/structures.dmi'
 	icon_state = "wooden_railing"
 	item_deconstruct = /obj/item/stack/sheet/mineral/wood
-	plane = GAME_PLANE_FOV_HIDDEN
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/railing/wooden_fence/Initialize(mapload)

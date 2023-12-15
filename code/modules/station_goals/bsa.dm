@@ -202,7 +202,6 @@ GLOBAL_VAR_INIT(bsa_unlock, FALSE)
 
 /obj/machinery/bsa/full/proc/get_layer()
 	top_layer = mutable_appearance(icon, layer = ABOVE_MOB_LAYER)
-	SET_PLANE_EXPLICIT(top_layer, GAME_PLANE_UPPER, src)
 	switch(dir)
 		if(WEST)
 			top_layer.icon_state = "top_west"

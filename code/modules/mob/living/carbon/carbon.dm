@@ -792,7 +792,6 @@
 	if(hud_used?.spacesuit)
 		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
 
-
 /mob/living/carbon/set_health(new_value)
 	. = ..()
 	if(. > hardcrit_threshold)

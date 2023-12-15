@@ -220,6 +220,7 @@
 		locked = FALSE
 		balloon_alert(user, "interface damaged")
 		update_appearance()
+		flicker_hacked_icon()
 		return TRUE
 
 // damage and destruction acts
