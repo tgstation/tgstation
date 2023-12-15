@@ -66,7 +66,6 @@
 	projectile_wound_bonus = -12
 	pin = /obj/item/firing_pin/monkey
 
-
 /obj/item/gun/ballistic/automatic/pistol/m1911/no_mag
 	spawnwithmagazine = FALSE
 

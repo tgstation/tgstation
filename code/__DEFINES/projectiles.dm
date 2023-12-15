@@ -64,6 +64,8 @@
 #define CALIBER_HOOK "hook"
 /// The caliber used by the changeling tentacle mutation.
 #define CALIBER_TENTACLE "tentacle"
+/// The acliber used by paintball and pepperball guns.
+#define CALIBER_PAINTBALL "paintball"
 
 /// For gunpoints, how many tiles around the target the shooter can roam without losing their shot
 #define GUNPOINT_SHOOTER_STRAY_RANGE 2
