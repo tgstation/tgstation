@@ -39,7 +39,7 @@
 /obj/machinery/light/red/dim
 	brightness = 4
 	bulb_power = 0.7
-	fire_brightness = 2
+	fire_brightness = 3
 
 /obj/machinery/light/blacklight
 	bulb_colour = "#A700FF"
