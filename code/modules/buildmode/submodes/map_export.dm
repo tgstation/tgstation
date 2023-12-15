@@ -5,16 +5,18 @@
 	var/save_flag = SAVE_ALL
 	var/static/is_running = FALSE
 
-/datum/buildmode_mode/map_export/change_settings(client/c)
-	var/static/list/options = list("Object Saving" = SAVE_OBJECTS,
-									"Mob Saving" = SAVE_MOBS,
-									"Turf Saving" = SAVE_TURFS,
-									"Area Saving" = SAVE_AREAS,
-									"Space Turf Saving" = SAVE_SPACE,
-									"Object Property Saving" = SAVE_OBJECT_PROPERTIES)
-	var/what_to_change = tgui_input_list(c, "What export setting would you like to toggle?", "Map Exporter", options)
+/datum/buildmode_mode/map_export/change_settings(client/builder)
+	var/static/list/options = list(
+								"Object Saving" = SAVE_OBJECTS,
+								"Mob Saving" = SAVE_MOBS,
+								"Turf Saving" = SAVE_TURFS,
+								"Area Saving" = SAVE_AREAS,
+								"Space Turf Saving" = SAVE_SPACE,
+								"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
+								)
+	var/what_to_change = tgui_input_list(builder, "What export setting would you like to toggle?", "Map Exporter", options)
 	save_flag ^= options[what_to_change]
-	to_chat(c, "<span class='notice'>[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"].</span>")
+	to_chat(builder, "<span class='notice'>[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"].</span>")
 
 /datum/buildmode_mode/map_export/show_help(client/builder)
 	to_chat(builder, span_purple(examine_block(
@@ -22,7 +24,7 @@
 		[span_bold("Set export options")] -> Right Mouse Button on buildmode button"))
 	)
 
-/datum/buildmode_mode/map_export/handle_selected_area(client/c, params)
+/datum/buildmode_mode/map_export/handle_selected_area(client/builder, params)
 	var/list/pa = params2list(params)
 	var/left_click = pa.Find("left")
 
@@ -38,7 +40,7 @@
 		return
 	//Emergency check
 	if(get_dist(cornerA, cornerB) > 60 || cornerA.z != cornerB.z)
-		var/confirm = alert("Are you sure about this? Exporting large maps may take quite a while.", "Map Exporter", "Yes", "No")
+		var/confirm = tgui_alert(usr, "Are you sure about this? Exporting large maps may take quite a while.", "Map Exporter", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 
@@ -52,7 +54,7 @@
 	to_chat(usr, span_warning("Saving, please wait..."))
 	is_running = TRUE
 
-	log_admin("Build Mode: [key_name(c)] is exporting the map area from [AREACOORD(cornerA)] through [AREACOORD(cornerB)]") //I put this before the actual saving of the map because it likely won't log if it crashes the fucking server
+	log_admin("Build Mode: [key_name(builder)] is exporting the map area from [AREACOORD(cornerA)] through [AREACOORD(cornerB)]") //I put this before the actual saving of the map because it likely won't log if it crashes the fucking server
 
 	//oversimplified for readability and understandibility
 
@@ -74,7 +76,7 @@
 	WRITE_FILE(filedir, "[dat]")
 
 	//Step 3: Give the file to client for download
-	usr << ftp(filedir)
+	DIRECT_OUTPUT(usr, ftp(filedir))
 
 	//Step 4: Remove the file from the server (hopefully we can find a way to avoid step)
 	fdel(filedir)

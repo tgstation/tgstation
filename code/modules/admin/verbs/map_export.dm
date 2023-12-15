@@ -6,24 +6,24 @@
 	if(!check_rights(R_DEBUG))
 		return
 
-	var/z_level = input("Export Which Z-Level?", "Map Exporter", 2) as num
-	var/start_x = input("Start X?", "Map Exporter", 1) as num
-	var/start_y = input("Start Y?", "Map Exporter", 1) as num
-	var/end_x = input("End X?", "Map Exporter", world.maxx-1) as num
-	var/end_y = input("End Y?", "Map Exporter", world.maxy-1) as num
+	var/z_level = tgui_input_number(usr, "Export Which Z-Level?", "Map Exporter", 2)
+	var/start_x = tgui_input_number(usr, "Start X?", "Map Exporter", 1)
+	var/start_y = tgui_input_number(usr, "Start Y?", "Map Exporter", 1)
+	var/end_x = tgui_input_number(usr, "End X?", "Map Exporter", world.maxx-1)
+	var/end_y = tgui_input_number(usr, "End Y?", "Map Exporter", world.maxy-1)
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
-	var/file_name = sanitize_filename(input("Filename?", "Map Exporter", "exportedmap_[date]") as text)
+	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exportedmap_[date]"))
 	var/confirm = tgui_alert(usr, "Are you sure you want to do this? This will cause extreme lag!", "Map Exporter", list("Yes", "No"))
 
 	if(confirm != "Yes")
 		return
 
-	var map_text = write_map(start_x, start_y, z_level, end_x, end_y, z_level)
+	var/map_text = write_map(start_x, start_y, z_level, end_x, end_y, z_level)
 	text2file(map_text, "data/[file_name].dmm")
-	usr << ftp("data/[file_name].dmm", "[file_name].dmm")
+	DIRECT_OUTPUT(usr, ftp("data/[file_name].dmm", "[file_name].dmm"))
 
-/proc/sanitize_filename(t)
-	return hashtag_newlines_and_tabs(t, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
+/proc/sanitize_filename(text)
+	return hashtag_newlines_and_tabs(text, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))
 
 /proc/hashtag_newlines_and_tabs(text, list/repl_chars = list("\n"="#","\t"="#"))
 	for(var/char in repl_chars)
@@ -33,11 +33,11 @@
 			index = findtext(text, char, index + length(char))
 	return text
 
-/obj/proc/on_object_saved(var/depth = 0)
+/obj/proc/on_object_saved(depth = 0)
 	return ""
 
 // Save resources in silo
-/obj/machinery/ore_silo/on_object_saved(var/depth = 0)
+/obj/machinery/ore_silo/on_object_saved(depth = 0)
 	if(depth >= 10)
 		return ""
 	var/data
@@ -61,24 +61,44 @@
 * elsewhere in code if you ever need to get a file in the .dmm format
 **/
 /atom/proc/get_save_vars()
-	return list("pixel_x",
-				"pixel_y",
-				"dir",
-				"name",
-				"req_access",
-				"piping_layer", 
-				"color", 
-				"icon", 
-				"icon_state", 
-				"pipe_color", 
-				"amount", 
-				"dwidth",
-				"dheight", 
-				"height", 
-				"width", 
-				"roundstart_template", 
-				"shuttle_id"
+	return list(
+			NAMEOF(src, color),
+			NAMEOF(src, dir),
+			NAMEOF(src, icon),
+			NAMEOF(src, icon_state),
+			NAMEOF(src, name),
+			NAMEOF(src, pixel_x),
+			NAMEOF(src, pixel_y),
 			)
+
+/obj/get_save_vars()
+	return ..() + NAMEOF(src, req_access)
+
+/obj/item/stack/get_save_vars()
+	return ..() + NAMEOF(src, amount)
+
+/obj/docking_port/get_save_vars()
+	return ..() + list(
+				NAMEOF(src, dheight),
+				NAMEOF(src, dwidth),
+				NAMEOF(src, height),
+				NAMEOF(src, shuttle_id),
+				NAMEOF(src, width),
+				)
+/obj/docking_port/stationary/get_save_vars()
+	return ..() + NAMEOF(src, roundstart_template)
+
+/obj/machinery/atmospherics/get_save_vars()
+	return ..() + list(
+				NAMEOF(src, piping_layer),
+				NAMEOF(src, pipe_color),
+				)
+
+/obj/item/pipe/get_save_vars()
+	return ..() + list(
+				NAMEOF(src, piping_layer),
+				NAMEOF(src, pipe_color),
+				)
 
 GLOBAL_LIST_INIT(save_file_chars, list(
 	"a","b","c","d","e",
@@ -91,32 +111,38 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	"J","K","L","M","N",
 	"O","P","Q","R","S",
 	"T","U","V","W","X",
-	"Y","Z"
+	"Y","Z",
 ))
 
-/proc/to_list_string(list/l)
+/proc/to_list_string(list/future_string)
 	. = "list("
 	var/first_entry = TRUE
-	for(var/item in l)
+	for(var/item in future_string)
 		if(!first_entry)
 			. += ", "
-		if(l[item])
-			. += hashtag_newlines_and_tabs("[item] = [l[item]]", list("{"="", "}"="", "\""="", ";"="", ","=""))
+		if(future_string[item])
+			. += hashtag_newlines_and_tabs("[item] = [future_string[item]]", list("{"="", "}"="", "\""="", ";"="", ","=""))
 		else
 			. += hashtag_newlines_and_tabs("[item]", list("{"="", "}"="", "\""="", ";"="", ","=""))
 		first_entry = FALSE
 	. += ")"
 
-//Converts a list of turfs into TGM file format
-/proc/write_map(minx as num, \
-				miny as num, \
-				minz as num, \
-				maxx as num, \
-				maxy as num, \
-				maxz as num, \
-				save_flag = SAVE_ALL, \
-				shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE, \
-				list/obj_blacklist = list())
+/**
+ *
+ *
+ *
+ */
+/proc/write_map(
+			minx,
+			miny,
+			minz,
+			maxx,
+			maxy,
+			maxz,
+			save_flag = SAVE_ALL,
+			shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
+			list/obj_blacklist = list()
+)
 
 	var/width = maxx - minx
 	var/height = maxy - miny
@@ -127,10 +153,10 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfsNeeded) + 0.999,1)
 
 	//Step 1: Run through the area and generate file data
-	var/list/header_chars	= list()	//The characters of the header
-	var/list/header_dat 	= list()	//The data of the header, lines up with chars
-	var/header				= ""		//The actual header in text
-	var/contents			= ""		//The contents in text (bit at the end)
+	var/list/header_chars = list() //The characters of the header
+	var/list/header_dat = list() //The data of the header, lines up with chars
+	var/header = "" //The actual header in text
+	var/contents = "" //The contents in text (bit at the end)
 	var/index = 1
 	for(var/z in 0 to depth)
 		for(var/x in 0 to width)
@@ -209,25 +235,25 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					index ++
 				contents += "[header_char]\n"
 			contents += "\"}"
-	return "//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE\n[header][contents]"
+	return "//[DMM2TGM_MESSAGE]\n[header][contents]"
 
 //vars_to_save = list() to save all vars
-/proc/generate_tgm_metadata(atom/O)
+/proc/generate_tgm_metadata(atom/object)
 	var/dat = ""
 	var/data_to_add = list()
-	var/list/vars_to_save = O.get_save_vars()
+	var/list/vars_to_save = object.get_save_vars()
 	if(!vars_to_save)
 		return
-	for(var/V in O.vars)
+	for(var/variable in object.vars)
 		CHECK_TICK
-		if(!(V in vars_to_save))
+		if(!(variable in vars_to_save))
 			continue
-		var/value = O.vars[V]
+		var/value = object.vars[variable]
 		if(!value)
 			continue
-		if(value == initial(O.vars[V]) || !issaved(O.vars[V]))
+		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
 			continue
-		if(V == "icon_state" && O.smoothing_flags)
+		if(variable == "icon_state" && object.smoothing_flags)
 			continue
 		var/symbol = ""
 		if(istext(value))
@@ -240,7 +266,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		else if(!(isnum(value) || ispath(value)))
 			continue
 		//Prevent symbols from being because otherwise you can name something [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
-		data_to_add += "[V] = [symbol][value][symbol]"
+		data_to_add += "[variable] = [symbol][value][symbol]"
 	//Process data to add
 	var/first = TRUE
 	for(var/data in data_to_add)
