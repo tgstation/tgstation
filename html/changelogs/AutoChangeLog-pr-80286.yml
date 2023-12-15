@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "Chemicals are now no longer less effective at curing advanced viruses than they used to be."

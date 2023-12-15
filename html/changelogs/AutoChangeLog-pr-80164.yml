@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "ORM will generate points regardless of how the ore enters it."
-  - bugfix: "Machines like autolathe, techfab etc can now be hit with iron sheets (or any other material item type those machines accept) when in combat mode rather than inserting them because it makes sense."
-  - bugfix: "Mat container won't display chats fully if the `MATCONTAINER_SILENT` flag is passed."
-  - refactor: "Machines like autolathe, techfab etc now display summed up material inserts to chats rather than each item individually. Also, will skip items & its contents if it cannot be processed thus saving time"

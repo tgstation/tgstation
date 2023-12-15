@@ -208,40 +208,32 @@ type ConfirmProps = Partial<{
 const ButtonConfirm = (props: ConfirmProps) => {
   const {
     color,
-    confirmColor,
-    confirmContent,
+    confirmColor = 'bad',
+    confirmContent = 'Confirm?',
     confirmIcon,
     content,
     children,
     icon,
-    onClick = () => null,
+    onClick,
     ...rest
   } = props;
   const [clickedOnce, setClickedOnce] = useState(false);
 
   const handleClick = () => {
-    if (clickedOnce) {
-      setClickedOnce(false);
+    if (!clickedOnce) {
+      setClickedOnce(true);
+      return;
     }
+
+    onClick?.();
+    setClickedOnce(false);
   };
-
-  useEffect(() => {
-    if (clickedOnce) {
-      window.addEventListener('click', handleClick);
-    } else {
-      window.removeEventListener('click', handleClick);
-    }
-
-    return () => {
-      window.removeEventListener('click', handleClick);
-    };
-  }, [clickedOnce]);
 
   return (
     <Button
       icon={clickedOnce ? confirmIcon : icon}
       color={clickedOnce ? confirmColor : color}
-      onClick={() => (clickedOnce ? onClick() : setClickedOnce(true))}
+      onClick={handleClick}
       {...rest}
     >
       {clickedOnce ? confirmContent : content}
