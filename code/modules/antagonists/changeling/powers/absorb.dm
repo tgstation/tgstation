@@ -153,6 +153,8 @@
 		var/old_body_position = target.body_position_pixel_y_offset
 		target.body_position_pixel_y_offset = 0
 
+		target.grab_ghost()
+
 		target.set_lying_angle(0)
 
 		if(target.wear_suit)
