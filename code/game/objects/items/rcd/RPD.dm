@@ -282,7 +282,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(target.pipe_color && target.piping_layer)
 		paint_color = GLOB.pipe_color_name[target.pipe_color]
-		pipe_layers = target.piping_layer
+		pipe_layers = PIPE_LAYER(target.piping_layer)
 		balloon_alert(user, "color/layer copied")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -452,7 +452,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(!isatom(attack_target)) //can return null, FALSE if do_after() fails see /obj/machinery/atmospherics/wrench_act()
 			return TRUE
 
-	var/can_make_pipe = check_can_make_pipe(atom_to_attack)
+	if(istype(attack_target, /obj/machinery/atmospherics) && (mode & BUILD_MODE))
+		attack_target = get_turf(attack_target)
+
+	var/can_make_pipe = check_can_make_pipe(attack_target)
 
 	. = TRUE
 
@@ -604,8 +607,6 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/static/list/make_pipe_whitelist
 	if(!make_pipe_whitelist)
 		make_pipe_whitelist = typecacheof(list(/obj/structure/lattice, /obj/structure/girder, /obj/item/pipe, /obj/structure/window, /obj/structure/grille))
-	if(istype(target_of_attack, /obj/machinery/atmospherics) && (mode & BUILD_MODE))
-		target_of_attack = get_turf(target_of_attack)
 	var/can_we_make_pipe = (isturf(target_of_attack) || is_type_in_typecache(target_of_attack, make_pipe_whitelist))
 	return can_we_make_pipe
 
