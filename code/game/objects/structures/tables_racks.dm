@@ -301,7 +301,7 @@
 
 /obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!istype(user) || !user.can_interact_with(src) || isobserver(user))
+	if(!isliving(user) || !user.can_interact_with(src))
 		return
 	if(!can_flip)
 		return
@@ -447,7 +447,7 @@
 	if(!istype(user) || !user.can_interact_with())
 		return FALSE
 	user.balloon_alert_to_viewers("flipping table upright...")
-	if(do_after(user, max_integrity * 0.25))
+	if(do_after(user, max_integrity * 0.25, src))
 		var/obj/structure/table/new_table = new table_type(loc)
 		new_table.update_integrity(get_integrity())
 		if(custom_materials)
