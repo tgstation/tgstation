@@ -58,6 +58,12 @@
 	AddElement(/datum/element/give_turf_traits, give_turf_traits)
 	register_context()
 
+	if(can_flip)
+		AddElement( \
+		/datum/element/contextual_screentip_bare_hands, \
+		rmb_text = "Flip", \
+		)
+
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
 /obj/structure/table/proc/make_climbable()
 	AddElement(/datum/element/climbable)
@@ -89,8 +95,6 @@
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)
-	if(can_flip)
-		. += span_notice("You can Ctrl+Shift+Click to flip the table.")
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
@@ -304,6 +308,7 @@
 	if(!isliving(user) || !user.can_interact_with(src))
 		return
 	if(!can_flip)
+		user.balloon_alert_to_viewers("it won't budge!")
 		return
 	user.balloon_alert_to_viewers("flipping table...")
 	if(!do_after(user, max_integrity * 0.25))
@@ -325,20 +330,11 @@
 	//Finally, add the custom materials, so the flags still apply to it
 	flipped_table.set_custom_materials(custom_materials)
 
-	var/sound_volume = 100
-	var/balloon_message = "table flipped"
-	var/user_pacifist = HAS_TRAIT(user, TRAIT_PACIFISM)
-
-	if (user_pacifist)
-		balloon_message = "table gently flipped"
-		sound_volume = 40
-
-	user.balloon_alert_to_viewers(balloon_message)
-	playsound(src, 'sound/items/trayhit2.ogg', sound_volume)
+	playsound(src, 'sound/items/trayhit2.ogg', 100)
 	qdel(src)
 
 	var/turf/throw_target = get_step(flipped_table, flipped_table.dir)
-	if (!isnull(throw_target) && !user_pacifist)
+	if (!isnull(throw_target) && !HAS_TRAIT(user, TRAIT_PACIFISM))
 		for (var/atom/movable/movable_entity in flipped_table.loc)
 			if (movable_entity == flipped_table)
 				continue
@@ -452,7 +448,6 @@
 		new_table.update_integrity(get_integrity())
 		if(custom_materials)
 			new_table.set_custom_materials(custom_materials)
-		user.balloon_alert_to_viewers("table flipped upright")
 		playsound('sound/items/trayhit2.ogg', 100)
 		qdel()
 
