@@ -81,6 +81,8 @@
 #include "code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
 #include "code\modules\projectiles\ammunition\ballistic\rifle.dm"
 #include "code\modules\projectiles\projectile\bullets\rifle.dm"
+#include "code\modules\vehicles\vehicle_actions.dm"
+#include "code\modules\vehicles\cars\cheburek.dm"
 //features
 #include "features\additional_circuit\includes.dm"
 #include "features\hardsuits\code\_jetpack.dm"
