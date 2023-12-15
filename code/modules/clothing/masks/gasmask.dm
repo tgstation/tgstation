@@ -495,3 +495,12 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_inv = HIDEFACIALHAIR
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = null
+
+/obj/item/clothing/mask/gas/paintball
+	name = "blue paintball mask"
+	desc = "Tacticool looking gas mask suited for protecting face against paintballs. Don't wear it for actual combat, you only would ridicule yourself."
+	icon_state = "paintball_blue"
+
+/obj/item/clothing/mask/gas/paintball/red
+	name = "red paintball mask"
+	icon_state = "paintball_red"

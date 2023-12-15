@@ -17,7 +17,7 @@
 
 /obj/item/ammo_box/magazine/paintball/blue
 	name = "blue paintballs magazine"
-	desc = "A magazine for paintball guns. This contains blue paintballs."
+	desc = "A magazine for paintball guns. This one contains blue paintballs."
 	icon_state = "paintball_blue"
 	base_icon_state = "paintball_blue"
 	ammo_type = /obj/item/ammo_casing/paintball/blue
