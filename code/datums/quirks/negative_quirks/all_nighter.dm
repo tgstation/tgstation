@@ -99,7 +99,7 @@
 			happy_camper = FALSE
 
 	//adjusts the mood event accordingly
-	if(("all_nighter" in quirk_holder.mob_mood?.mood_events) &&  happy_camper)
+	if(("all_nighter" in quirk_holder.mob_mood?.mood_events) && happy_camper)
 		quirk_holder.clear_mood_event("all_nighter", /datum/mood_event/all_nighter)
 	if(!("all_nighter" in quirk_holder.mob_mood?.mood_events) &&  !happy_camper)
 		quirk_holder.add_mood_event("all_nighter", /datum/mood_event/all_nighter)
