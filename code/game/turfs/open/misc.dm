@@ -5,8 +5,8 @@
 	name = "coder/mapper fucked up"
 	desc = "report on github please"
 
-	flags_1 = NO_SCREENTIPS_1
-	turf_flags = CAN_BE_DIRTY_1 | IS_SOLID | NO_RUST
+	flags_1 = NO_SCREENTIPS_1 | CAN_BE_DIRTY_1
+	turf_flags = IS_SOLID | NO_RUST
 
 	footstep = FOOTSTEP_FLOOR
 	barefootstep = FOOTSTEP_HARD_BAREFOOT
@@ -144,7 +144,7 @@
 			if(girder)
 				return girder.rcd_act(user, the_rcd, rcd_data)
 
-			PlaceOnTop(/turf/closed/wall)
+			place_on_top(/turf/closed/wall)
 			return TRUE
 		if(RCD_WINDOWGRILLE)
 			//check if we are building a window

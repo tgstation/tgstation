@@ -1,3 +1,7 @@
+#define NO_ANSWER 0
+#define POSITIVE_ANSWER 1
+#define NEGATIVE_ANSWER 2
+
 /datum/round_event_control/pirates
 	name = "Space Pirates"
 	typepath = /datum/round_event/pirates
@@ -46,6 +50,9 @@
 		return
 	if(!threat?.answered)
 		return
+	if(threat.answered == NEGATIVE_ANSWER)
+		priority_announce(chosen_gang.response_rejected, sender_override = chosen_gang.ship_name, color_override = chosen_gang.announcement_color)
+		return
 
 	var/datum/bank_account/plundered_account = SSeconomy.get_dep_account(ACCOUNT_CAR)
 	if(plundered_account)
@@ -83,14 +90,12 @@
 				notify_ghosts(
 					"The [chosen_gang.ship_name] has an object of interest: [spawned_mob]!",
 					source = spawned_mob,
-					action = NOTIFY_ORBIT,
 					header = "Pirates!",
 				)
 			else
 				notify_ghosts(
 					"The [chosen_gang.ship_name] has an object of interest: [spawner]!",
 					source = spawner,
-					action = NOTIFY_ORBIT,
 					header = "Pirate Spawn Here!",
 				)
 
@@ -108,3 +113,7 @@
 		event.gang_list = GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs
 	else
 		event.gang_list = list(new chosen)
+
+#undef NO_ANSWER
+#undef POSITIVE_ANSWER
+#undef NEGATIVE_ANSWER

@@ -102,11 +102,11 @@
  * # Pet Command: Use ability
  * Use an an ability that does not require any targets
  */
-/datum/pet_command/untargetted_ability
-	///untargetted ability we will use
+/datum/pet_command/untargeted_ability
+	///untargeted ability we will use
 	var/ability_key
 
-/datum/pet_command/untargetted_ability/execute_action(datum/ai_controller/controller)
+/datum/pet_command/untargeted_ability/execute_action(datum/ai_controller/controller)
 	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
 	if(!ability?.IsAvailable())
 		return
@@ -158,6 +158,37 @@
 	return SUBTREE_RETURN_FINISH_PLANNING
 
 /**
+ * # Breed command. breed with a partner!
+ */
+/datum/pet_command/point_targeting/breed
+	command_name = "Breed"
+	command_desc = "Command your pet to attempt to breed with a partner."
+	radial_icon = 'icons/mob/simple/animal.dmi'
+	radial_icon_state = "heart"
+	speech_commands = list("breed", "consummate")
+	var/datum/ai_behavior/reproduce_behavior = /datum/ai_behavior/make_babies
+
+/datum/pet_command/point_targeting/breed/set_command_target(mob/living/parent, atom/target)
+	if(isnull(target) || !isliving(target))
+		return
+	if(!HAS_TRAIT(parent, TRAIT_MOB_BREEDER) || !HAS_TRAIT(target, TRAIT_MOB_BREEDER))
+		return
+	if(isnull(parent.ai_controller))
+		return
+	if(!parent.ai_controller.blackboard[BB_BREED_READY] || isnull(parent.ai_controller.blackboard[BB_BABIES_PARTNER_TYPES]))
+		return
+	var/mob/living/living_target = target
+	if(!living_target.ai_controller?.blackboard[BB_BREED_READY])
+		return
+	return ..()
+
+/datum/pet_command/point_targeting/breed/execute_action(datum/ai_controller/controller)
+	if(is_type_in_list(controller.blackboard[BB_CURRENT_PET_TARGET], controller.blackboard[BB_BABIES_PARTNER_TYPES]))
+		controller.queue_behavior(reproduce_behavior, BB_CURRENT_PET_TARGET)
+		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	return SUBTREE_RETURN_FINISH_PLANNING
+
+/**
  * # Pet Command: Targetted Ability
  * Tells a pet to use some kind of ability on the next thing you point at
  */
@@ -204,7 +235,8 @@
 	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
 	if(QDELETED(victim))
 		return
-	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT])
+	// cancel the action if they're below our given crit stat, OR if we're trying to attack ourselves (this can happen on tamed mobs w/ protect subtree rarely)
+	if(victim.stat > controller.blackboard[BB_TARGET_MINIMUM_STAT] || victim == controller.pawn)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		return
 	controller.queue_behavior(protect_behavior, BB_CURRENT_PET_TARGET, BB_PET_TARGETING_STRATEGY)

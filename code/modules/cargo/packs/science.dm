@@ -113,7 +113,7 @@
 					/obj/item/clothing/head/utility/hardhat/red = 2,
 					/obj/item/storage/medkit = 2)
 	crate_name = "robotics assembly crate"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/closet/crate/secure/science/robo
 
 /datum/supply_pack/science/rped
 	name = "RPED crate"
@@ -176,4 +176,4 @@
 	access_view = ACCESS_ROBOTICS
 	contains = list(/obj/item/mod/core/standard = 3)
 	crate_name = "\improper MOD core crate"
-	crate_type = /obj/structure/closet/crate/secure/science
+	crate_type = /obj/structure/closet/crate/secure/science/robo

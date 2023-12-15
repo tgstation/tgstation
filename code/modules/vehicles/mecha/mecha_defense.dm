@@ -13,7 +13,7 @@
  * where they target the "dangerous" modules
  */
 
-/// tries to damage mech equipment depending on damage and where is being targetted
+/// tries to damage mech equipment depending on damage and where is being targeted
 /obj/vehicle/sealed/mecha/proc/try_damage_component(damage, def_zone)
 	if(damage < component_damage_threshold)
 		return

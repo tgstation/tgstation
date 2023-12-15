@@ -77,3 +77,8 @@
 ///What direction is the machine pumping (into pump/port or out to the tank/area)?
 #define PUMP_IN TRUE
 #define PUMP_OUT FALSE
+
+///Max allowed pressure for canisters to release air per tick
+#define CAN_MAX_RELEASE_PRESSURE (ONE_ATMOSPHERE * 25)
+///Min allowed pressure for canisters to release air per tick
+#define CAN_MIN_RELEASE_PRESSURE (ONE_ATMOSPHERE * 0.1)

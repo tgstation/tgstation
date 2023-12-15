@@ -13,7 +13,7 @@
 		message_admins("[key_name(src)] toggled debugging on.")
 		log_admin("[key_name(src)] toggled debugging on.")
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Debug Two") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Toggle Debug Two")
 
 /client/proc/Cell()
 	set category = "Debug"
@@ -24,7 +24,7 @@
 	if(!isturf(T))
 		return
 	atmos_scan(user=usr, target=T, silent=TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Air Status In Location") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Air Status In Location")
 
 /client/proc/cmd_admin_robotize(mob/M in GLOB.mob_list)
 	set category = "Admin.Fun"
@@ -68,7 +68,7 @@
 		CHECK_TICK
 	log_admin("[key_name(src)] has deleted all ([counter]) instances of [type_to_del].")
 	message_admins("[key_name_admin(src)] has deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Delete All") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Delete All")
 
 /client/proc/cmd_debug_force_del_all(object as text)
 	set category = "Debug"
@@ -87,7 +87,7 @@
 		CHECK_TICK
 	log_admin("[key_name(src)] has force-deleted all ([counter]) instances of [type_to_del].")
 	message_admins("[key_name_admin(src)] has force-deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Force-Delete All") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Force-Delete All")
 
 /client/proc/cmd_debug_hard_del_all(object as text)
 	set category = "Debug"
@@ -131,7 +131,7 @@
 			CHECK_TICK
 	log_admin("[key_name(src)] has hard deleted all ([counter]) instances of [type_to_del].")
 	message_admins("[key_name_admin(src)] has hard deleted all ([counter]) instances of [type_to_del].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Hard Delete All") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Hard Delete All")
 
 /client/proc/cmd_debug_make_powernets()
 	set category = "Debug"
@@ -139,7 +139,7 @@
 	SSmachines.makepowernets()
 	log_admin("[key_name(src)] has remade the powernet. makepowernets() called.")
 	message_admins("[key_name_admin(src)] has remade the powernets. makepowernets() called.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Powernets") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Make Powernets")
 
 /client/proc/cmd_admin_grantfullaccess(mob/M in GLOB.mob_list)
 	set category = "Debug"
@@ -167,9 +167,9 @@
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/modular_computer/pda))
-				var/obj/item/modular_computer/pda/PDA = worn
-				PDA.InsertID(id, H)
+			if(istype(worn, /obj/item/modular_computer))
+				var/obj/item/modular_computer/worn_computer = worn
+				worn_computer.InsertID(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
@@ -181,7 +181,7 @@
 
 	else
 		tgui_alert(usr,"Invalid mob")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Grant Full Access") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Grant Full Access")
 	log_admin("[key_name(src)] has granted [M.key] full access.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] has granted [M.key] full access."))
 
@@ -205,7 +205,7 @@
 	init_verbs()
 	if(isobserver(adminmob))
 		qdel(adminmob)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Assume Direct Control") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Assume Direct Control")
 
 /client/proc/cmd_give_direct_control(mob/M in GLOB.mob_list)
 	set category = "Admin.Game"
@@ -232,7 +232,7 @@
 		qdel(oldmob)
 	message_admins(span_adminnotice("[key_name_admin(usr)] gave away direct control of [M] to [newkey]."))
 	log_admin("[key_name(usr)] gave away direct control of [M] to [newkey].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Direct Control") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Give Direct Control")
 
 /client/proc/cmd_admin_areatest(on_station, filter_maint)
 	set category = "Mapping"
@@ -513,7 +513,7 @@
 	var/msg = span_danger("Admin [key_name_admin(usr)] healed / revived [ADMIN_LOOKUPFLW(M)]!")
 	message_admins(msg)
 	admin_ticket_log(M, msg)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Rejuvenate") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Rejuvenate")
 
 /client/proc/cmd_admin_delete(atom/A as obj|mob|turf in world)
 	set category = "Debug"
@@ -531,7 +531,7 @@
 	var/list/L = M.get_contents()
 	for(var/t in L)
 		to_chat(usr, "[t] [ADMIN_VV(t)] [ADMIN_TAG(t)]", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Check Contents") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Check Contents")
 
 /client/proc/modify_goals()
 	set category = "Debug"
@@ -772,7 +772,7 @@
 	if(answer != "YES")
 		return
 	message_admins(span_adminnotice("[key_name_admin(src)] cleared dynamic transit space."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Clear Dynamic Transit") // If...
+	BLACKBOX_LOG_ADMIN_VERB("Clear Dynamic Transit")
 	log_admin("[key_name(src)] cleared dynamic transit space.")
 	SSmapping.wipe_reservations() //this goes after it's logged, incase something horrible happens.
 
@@ -787,7 +787,7 @@
 	SSachievements.achievements_enabled = !SSachievements.achievements_enabled
 
 	message_admins(span_adminnotice("[key_name_admin(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Toggle Medal Disable") // If...
+	BLACKBOX_LOG_ADMIN_VERB("Toggle Medal Disable")
 	log_admin("[key_name(src)] [SSachievements.achievements_enabled ? "disabled" : "enabled"] the medal hub lockout.")
 
 /client/proc/view_runtimes()
@@ -819,7 +819,7 @@
 	SSevents.scheduled = world.time
 
 	message_admins(span_adminnotice("[key_name_admin(src)] pumped a random event."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Pump Random Event")
+	BLACKBOX_LOG_ADMIN_VERB("Pump Random Event")
 	log_admin("[key_name(src)] pumped a random event.")
 
 /client/proc/start_line_profiling()
@@ -830,7 +830,7 @@
 	LINE_PROFILE_START
 
 	message_admins(span_adminnotice("[key_name_admin(src)] started line by line profiling."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Start Line Profiling")
+	BLACKBOX_LOG_ADMIN_VERB("Start Line Profiling")
 	log_admin("[key_name(src)] started line by line profiling.")
 
 /client/proc/stop_line_profiling()
@@ -841,7 +841,7 @@
 	LINE_PROFILE_STOP
 
 	message_admins(span_adminnotice("[key_name_admin(src)] stopped line by line profiling."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stop Line Profiling")
+	BLACKBOX_LOG_ADMIN_VERB("Stop Line Profiling")
 	log_admin("[key_name(src)] stopped line by line profiling.")
 
 /client/proc/show_line_profiling()

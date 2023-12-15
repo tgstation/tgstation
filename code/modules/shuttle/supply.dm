@@ -1,38 +1,38 @@
 GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		/mob/living,
-		/obj/structure/blob,
-		/obj/effect/rune,
-		/obj/item/disk/nuclear,
-		/obj/machinery/nuclearbomb,
-		/obj/item/beacon,
-		/obj/narsie,
-		/obj/tear_in_reality,
-		/obj/machinery/teleport/station,
-		/obj/machinery/teleport/hub,
-		/obj/machinery/quantumpad,
-		/obj/effect/mob_spawn,
-		/obj/effect/hierophant,
-		/obj/structure/receiving_pad,
-		/obj/item/warp_cube,
-		/obj/machinery/rnd/production, //print tracking beacons, send shuttle
-		/obj/machinery/autolathe, //same
-		/obj/projectile/beam/wormhole,
-		/obj/effect/portal,
-		/obj/item/shared_storage,
-		/obj/structure/extraction_point,
-		/obj/machinery/syndicatebomb,
-		/obj/item/hilbertshotel,
-		/obj/item/swapper,
 		/obj/docking_port,
-		/obj/machinery/launchpad,
-		/obj/machinery/exodrone_launcher,
-		/obj/machinery/disposal,
-		/obj/structure/disposalpipe,
-		/obj/item/mail,
-		/obj/machinery/camera,
+		/obj/effect/hierophant,
+		/obj/effect/mob_spawn,
+		/obj/effect/portal,
+		/obj/effect/rune,
+		/obj/item/beacon,
+		/obj/item/disk/nuclear,
 		/obj/item/gps,
-		/obj/structure/checkoutmachine,
+		/obj/item/hilbertshotel,
+		/obj/item/mail,
+		/obj/item/shared_storage,
+		/obj/item/swapper,
+		/obj/item/warp_cube,
+		/obj/machinery/autolathe, // In case you manage to get it to print a beacon while in transit
+		/obj/machinery/camera,
+		/obj/machinery/disposal,
+		/obj/machinery/exodrone_launcher,
 		/obj/machinery/fax,
+		/obj/machinery/launchpad,
+		/obj/machinery/nuclearbomb,
+		/obj/machinery/quantumpad,
+		/obj/machinery/rnd/production,
+		/obj/machinery/syndicatebomb,
+		/obj/machinery/teleport/hub,
+		/obj/machinery/teleport/station,
+		/obj/narsie,
+		/obj/projectile/beam/wormhole,
+		/obj/structure/blob,
+		/obj/structure/checkoutmachine,
+		/obj/structure/disposalpipe,
+		/obj/structure/extraction_point,
+		/obj/structure/guardian_beacon,
+		/obj/tear_in_reality,
 	)))
 
 /// How many goody orders we can fit in a lockbox before we upgrade to a crate
@@ -195,10 +195,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			paying_for_this = spawning_order.paying_account
 			if(spawning_order.pack.goody)
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
-			var/reciever_message = "Cargo order #[spawning_order.id] has shipped."
+			var/receiver_message = "Cargo order #[spawning_order.id] has shipped."
 			if(spawning_order.charge_on_purchase)
-				reciever_message += " [price] credits have been charged to your bank account"
-			paying_for_this.bank_card_talk(reciever_message)
+				receiver_message += " [price] credits have been charged to your bank account"
+			paying_for_this.bank_card_talk(receiver_message)
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
@@ -296,7 +296,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /*
 	Generates a box of mail depending on our exports and imports.
 	Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
-	Then, fills the mail crate with mail, by picking applicable crew who can recieve mail at the time to sending.
+	Then, fills the mail crate with mail, by picking applicable crew who can receive mail at the time to sending.
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
 	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.

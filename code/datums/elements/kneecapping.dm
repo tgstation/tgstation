@@ -7,7 +7,7 @@
  * Kneecapping attacks have a wounding bonus between severe and critical+10 wound thresholds. Without some serious wound protecting
  * armour this all but guarantees a wound of some sort. The attack is directed specifically at a limb and the limb takes the damage.
  *
- * Requires the attacker to be aiming for either leg zone, which will be targetted specifically. They will than have a 3-second long
+ * Requires the attacker to be aiming for either leg zone, which will be targeted specifically. They will than have a 3-second long
  * do_after before executing the attack.
  *
  * Kneecapping requires the target to either be on the floor, immobilised or buckled to something. And also to have an appropriate leg.

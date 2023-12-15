@@ -46,7 +46,7 @@
 	if(prob(15/disease.spreading_modifier))
 		return
 
-	if(satiety>0 && prob(satiety/10)) // positive satiety makes it harder to contract the disease.
+	if(satiety>0 && prob(satiety/2)) // positive satiety makes it harder to contract the disease.
 		return
 
 	if(!target_zone)

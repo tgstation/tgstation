@@ -299,6 +299,8 @@
 /datum/ai_behavior/perform_speech
 
 /datum/ai_behavior/perform_speech/perform(seconds_per_tick, datum/ai_controller/controller, speech, speech_sound)
+	. = ..()
+
 	var/mob/living/living_pawn = controller.pawn
 	if(!istype(living_pawn))
 		return
@@ -357,6 +359,10 @@
 			continue
 		if(thing.IsObscured())
 			continue
+		if(isitem(thing))
+			var/obj/item/item = thing
+			if(item.item_flags & ABSTRACT)
+				continue
 		possible_targets += thing
 	if(!possible_targets.len)
 		finish_action(controller, FALSE)

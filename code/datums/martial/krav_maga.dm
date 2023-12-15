@@ -116,12 +116,6 @@
 	log_combat(attacker, defender, "neck chopped")
 	return TRUE
 
-/datum/martial_art/krav_maga/grab_act(mob/living/attacker, mob/living/defender)
-	if(check_streak(attacker, defender))
-		return TRUE
-	log_combat(attacker, defender, "grabbed (Krav Maga)")
-	..()
-
 /datum/martial_art/krav_maga/harm_act(mob/living/attacker, mob/living/defender)
 	if(check_streak(attacker, defender))
 		return TRUE

@@ -71,7 +71,7 @@
 			return FALSE
 		living_mob = on_who
 
-	if(living_mob?.incorporeal_move || on_who.movement_type & FLYING)
+	if(living_mob?.incorporeal_move || (on_who.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
 		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
 
 	return TRUE
@@ -244,7 +244,7 @@
 /obj/item/minespawner
 	name = "landmine deployment device"
 	desc = "When activated, will deploy an Asset Protection landmine after 3 seconds passes, perfect for high ranking NT officers looking to cover their assets from afar."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
 
 	var/mine_type = /obj/effect/mine/shrapnel/capspawn

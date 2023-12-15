@@ -915,6 +915,18 @@
 		"[antagonist_name] lifts an odd device to [protagonist_name]'s eyes and flashes him, imprinting murderous instructions.",
 	)
 
+/// Who converted into a blood brother
+/datum/memory/recruited_by_blood_brother
+
+/datum/memory/recruited_by_blood_brother/get_names()
+	return list("[protagonist_name] is converted into a blood brother by [antagonist_name]")
+
+/datum/memory/recruited_by_blood_brother/get_starts()
+	return list(
+		"[antagonist_name] acts just a bit too friendly with [protagonist_name], moments away from converting them into a blood brother.",
+		"[protagonist_name] is brought into [antagonist_name]'s life of crime and espionage.",
+	)
+
 /// Saw someone play Russian Roulette.
 /datum/memory/witnessed_gods_wrath
 	memory_flags = MEMORY_CHECK_BLINDNESS|MEMORY_SKIP_UNCONSCIOUS

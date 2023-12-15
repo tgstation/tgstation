@@ -201,14 +201,19 @@
 	var/mob/living/carbon/human/victim = owner
 	var/thermal_protection = victim.get_thermal_protection()
 
-	if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT && !no_protection)
-		return
+	if(!no_protection)
+		if(thermal_protection >= FIRE_IMMUNITY_MAX_TEMP_PROTECT)
+			return
+		if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT)
+			victim.adjust_bodytemperature(5.5 * seconds_per_tick)
+			return
 
-	if(thermal_protection >= FIRE_SUIT_MAX_TEMP_PROTECT && !no_protection)
-		victim.adjust_bodytemperature(5.5 * seconds_per_tick)
-		return
+	var/amount_to_heat = (BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick
+	if(owner.bodytemperature > BODYTEMP_FIRE_TEMP_SOFTCAP)
+		// Apply dimishing returns upon temp beyond the soft cap
+		amount_to_heat = amount_to_heat ** (BODYTEMP_FIRE_TEMP_SOFTCAP / owner.bodytemperature)
 
-	victim.adjust_bodytemperature((BODYTEMP_HEATING_MAX + (stacks * 12)) * 0.5 * seconds_per_tick)
+	victim.adjust_bodytemperature(amount_to_heat)
 	victim.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	victim.add_mob_memory(/datum/memory/was_burning)
 
@@ -233,10 +238,10 @@
 			qdel(moblight)
 		moblight = new moblight_type(owner)
 
-	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	cache_stacks()
 	update_overlay()
 	update_particles()
+	SEND_SIGNAL(owner, COMSIG_LIVING_IGNITED, owner)
 	return TRUE
 
 /**

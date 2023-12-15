@@ -1,8 +1,14 @@
 import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import { Button, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { ICON_BY_CATEGORY_NAME, ColorItem, LayerSelect, SmartPipeBlockSection } from './RapidPipeDispenser';
+import {
+  ICON_BY_CATEGORY_NAME,
+  ColorItem,
+  LayerSelect,
+  SmartPipeBlockSection,
+} from './RapidPipeDispenser';
 
 type Data = {
   // Dynamic
@@ -49,17 +55,14 @@ type Recipe = {
   dir: number;
 };
 
-const PipeTypeSection = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const PipeTypeSection = (props) => {
+  const { act, data } = useBackend<Data>();
   const { categories = [] } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    context,
-    'categoryName',
-    categories[0].cat_name
-  );
+  const [categoryName, setCategoryName] = useState(categories[0].cat_name);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
@@ -69,7 +72,8 @@ const PipeTypeSection = (props, context) => {
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -79,7 +83,6 @@ const PipeTypeSection = (props, context) => {
           key={recipe.pipe_index}
           fluid
           ellipsis
-          content={recipe.pipe_name}
           title={recipe.pipe_name}
           onClick={() =>
             act('pipe_type', {
@@ -88,14 +91,16 @@ const PipeTypeSection = (props, context) => {
               category: shownCategory.cat_name,
             })
           }
-        />
+        >
+          {recipe.pipe_name}
+        </Button>
       ))}
     </Section>
   );
 };
 
-export const PipeDispenser = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const PipeDispenser = (props) => {
+  const { act, data } = useBackend<Data>();
   const { category: rootCategoryIndex } = data;
   return (
     <Window width={530} height={530}>

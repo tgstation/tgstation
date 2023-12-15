@@ -1,10 +1,17 @@
 import { useBackend, useLocalState } from '../../backend';
 import { sortStrings } from 'common/collections';
-import { Box, Button, Dropdown, Section, Stack, TextArea } from '../../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Section,
+  Stack,
+  TextArea,
+} from '../../components';
 import { RequestsData, RequestType, RequestPriority } from './types';
 
-export const MessageWriteTab = (props, context) => {
-  const { act, data } = useBackend<RequestsData>(context);
+export const MessageWriteTab = (props) => {
+  const { act, data } = useBackend<RequestsData>();
   const {
     authentication_data,
     hack_state,
@@ -23,22 +30,16 @@ export const MessageWriteTab = (props, context) => {
     setPriority(RequestPriority.NORMAL);
     setRequestType(RequestType.ASSISTANCE);
   };
-  const [messageText, setMessageText] = useLocalState(
-    context,
-    'messageText',
-    ''
-  );
+  const [messageText, setMessageText] = useLocalState('messageText', '');
   const [requestType, setRequestType] = useLocalState(
-    context,
     'requestType',
-    RequestType.ASSISTANCE
+    RequestType.ASSISTANCE,
   );
   const [priority, setPriority] = useLocalState(
-    context,
     'priority',
-    RequestPriority.NORMAL
+    RequestPriority.NORMAL,
   );
-  const [recipient, setRecipient] = useLocalState(context, 'recipient', '');
+  const [recipient, setRecipient] = useLocalState('recipient', '');
   return (
     <Section>
       <Stack fill mb={2}>

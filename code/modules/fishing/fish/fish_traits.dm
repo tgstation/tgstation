@@ -70,7 +70,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
-	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
 	if(HAS_TRAIT(rod.bait, TRAIT_GOOD_QUALITY_BAIT) || HAS_TRAIT(rod.bait, TRAIT_GREAT_QUALITY_BAIT))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
-	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
 	if(!istype(rod.bait, /obj/item/food))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	if(!rod.bait)
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 		return
-	if(HAS_TRAIT(rod.bait, OMNI_BAIT_TRAIT))
+	if(HAS_TRAIT(rod.bait, TRAIT_OMNI_BAIT))
 		return
 	if(!istype(rod.bait, /obj/item/food/grown))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0

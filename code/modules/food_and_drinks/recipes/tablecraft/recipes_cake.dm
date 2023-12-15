@@ -226,7 +226,7 @@
 		/datum/reagent/consumable/sprinkles = 5,
 		/datum/reagent/teslium = 1 //To shock the whole thing into life
 	)
-	result = /mob/living/simple_animal/pet/cat/cak
+	result = /mob/living/basic/pet/cat/cak
 	category = CAT_CAKE //Cat! Haha, get it? CAT? GET IT? We get it - Love Felines
 
 /datum/crafting_recipe/food/fruitcake

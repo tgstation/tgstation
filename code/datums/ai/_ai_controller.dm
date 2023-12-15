@@ -352,7 +352,11 @@ multiple modular subtrees with behaviors
 /// Returns true if we have a blackboard key with the provided key and it is not qdeleting
 /datum/ai_controller/proc/blackboard_key_exists(key)
 	var/datum/key_value = blackboard[key]
-	return !QDELETED(key_value)
+	if (isdatum(key_value))
+		return !QDELETED(key_value)
+	if (islist(key_value))
+		return length(key_value) > 0
+	return !!key_value
 
 /**
  * Used to manage references to datum by AI controllers

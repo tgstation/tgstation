@@ -87,7 +87,7 @@
 	shift.shapeshift_type = shift.possible_shapes[1]
 	shift.Grant(dummy)
 
-	var/mob/living/simple_animal/hostile/guardian/test_stand = allocate(/mob/living/simple_animal/hostile/guardian)
+	var/mob/living/basic/guardian/test_stand = allocate(/mob/living/basic/guardian)
 	test_stand.set_summoner(dummy)
 
 	// The stand's summoner is dummy.

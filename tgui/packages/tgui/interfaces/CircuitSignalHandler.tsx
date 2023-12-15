@@ -1,4 +1,5 @@
-import { Component } from 'inferno';
+import { BooleanLike } from 'common/react';
+import { Component } from 'react';
 import { useBackend } from '../backend';
 import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
 import { Window } from '../layouts';
@@ -17,7 +18,7 @@ type CircuitSignalHandlerState = {
   signal_id: string;
   responseList: Response[];
   parameterList: Parameter[];
-  global: Boolean;
+  global: BooleanLike;
 };
 
 type CircuitSignalHandlerData = {
@@ -51,7 +52,7 @@ export class CircuitSignalHandler extends Component<
   }
 
   render() {
-    const { act, data } = useBackend<CircuitSignalHandlerData>(this.context);
+    const { act, data } = useBackend<CircuitSignalHandlerData>();
     const { responseList, parameterList, signal_id, global } = this
       .state as CircuitSignalHandlerState;
     const { global_port_types } = data;
@@ -110,7 +111,7 @@ export class CircuitSignalHandler extends Component<
                             // have a number->key assoc array here, so we have
                             // to explicitly cast it to a number[] type.
                             const bitflag_keys = Object.keys(
-                              this.bitflags
+                              this.bitflags,
                             ) as unknown as number[];
                             responseList.push({
                               name: 'Response',
@@ -199,7 +200,7 @@ type EntryProps = {
   options?: string[];
 };
 
-const Entry = (props: EntryProps, context) => {
+const Entry = (props: EntryProps) => {
   const {
     onRemove,
     onEnter,

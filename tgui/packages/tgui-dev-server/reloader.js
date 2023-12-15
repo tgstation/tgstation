@@ -83,19 +83,19 @@ export const reloadByondCache = async (bundleDir) => {
   }
   // Get dreamseeker instances
   const pids = cacheDirs.map((cacheDir) =>
-    parseInt(cacheDir.split('/cache/tmp').pop(), 10)
+    parseInt(cacheDir.split('/cache/tmp').pop(), 10),
   );
   const dssPromise = DreamSeeker.getInstancesByPids(pids);
   // Copy assets
   const assets = await resolveGlob(
     bundleDir,
-    './*.+(bundle|chunk|hot-update).*'
+    './*.+(bundle|chunk|hot-update).*',
   );
   for (let cacheDir of cacheDirs) {
     // Clear garbage
     const garbage = await resolveGlob(
       cacheDir,
-      './*.+(bundle|chunk|hot-update).*'
+      './*.+(bundle|chunk|hot-update).*',
     );
     try {
       // Plant a dummy browser window file, we'll be using this to avoid world topic. For byond 515.

@@ -111,7 +111,7 @@
 		return
 	for(var/datum/reagent/R in beaker.reagents.reagent_list)
 		if(R.type in icecream_vat_reagents)
-			beaker.reagents.trans_id_to(src, R.type, R.volume)
+			beaker.reagents.trans_to(src, R.volume, target_id = R.type)
 			say("Internalizing reagent.")
 			playsound(src, 'sound/items/drink.ogg', 25, TRUE)
 	return
@@ -190,7 +190,7 @@
 	return
 
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 4)
 	qdel(src)
 

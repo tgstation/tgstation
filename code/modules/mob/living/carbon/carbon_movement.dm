@@ -1,5 +1,5 @@
 /mob/living/carbon/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
-	if(movement_type & (FLYING | FLOATING))
+	if(movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return FALSE
 	if(!(lube_flags & SLIDE_ICE))
 		log_combat(src, (slipped_on || get_turf(src)), "slipped on the", null, ((lube_flags & SLIDE) ? "(SLIDING)" : null))

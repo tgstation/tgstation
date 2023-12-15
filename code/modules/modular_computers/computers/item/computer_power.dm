@@ -1,18 +1,19 @@
 ///The multiplier given to the base overtime charge drain value if its flashlight is on.
 #define FLASHLIGHT_DRAIN_MULTIPLIER 1.1
 
-// Tries to draw power from charger or, if no operational charger is present, from power cell.
+///Draws power from its rightful source (area if its a computer, the cell otherwise)
+///Takes into account special cases, like silicon PDAs through override, and nopower apps.
 /obj/item/modular_computer/proc/use_power(amount = 0)
 	if(check_power_override())
 		return TRUE
 
-	if(ismachinery(physical))
-		var/obj/machinery/machine_holder = physical
-		if(machine_holder.powered())
-			machine_holder.use_power(amount)
-			return TRUE
-
-	if(!internal_cell || !internal_cell.charge)
+	if(!internal_cell)
+		return FALSE
+	if(!internal_cell.charge && (isnull(active_program) || !(active_program.program_flags & PROGRAM_RUNS_WITHOUT_POWER)))
+		close_all_programs()
+		for(var/datum/computer_file/program/programs as anything in stored_files)
+			if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && open_program(program = programs))
+				return TRUE
 		return FALSE
 
 	if(!internal_cell.use(amount JOULES))
@@ -25,9 +26,9 @@
 		return internal_cell.give(amount)
 	return 0
 
-// Used in following function to reduce copypaste
+///Shuts down the computer from powerloss.
 /obj/item/modular_computer/proc/power_failure()
-	if(!enabled) // Shut down the computer
+	if(!enabled)
 		return
 	if(active_program)
 		active_program.event_powerfailure()
@@ -56,9 +57,10 @@
 	power_failure()
 	return FALSE
 
-///Used by subtypes for special cases for power usage, returns TRUE if it should stop the use_power chain.
+///Returns TRUE if the PC should not be using any power, FALSE otherwise.
+///Checks to see if the current app allows to be ran without power, if so we'll run with it.
 /obj/item/modular_computer/proc/check_power_override()
-	return FALSE
+	return (!internal_cell?.charge && (active_program?.program_flags & PROGRAM_RUNS_WITHOUT_POWER))
 
 //Integrated (Silicon) tablets don't drain power, because the tablet is required to state laws, so it being disabled WILL cause problems.
 /obj/item/modular_computer/pda/silicon/check_power_override()

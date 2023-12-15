@@ -212,7 +212,7 @@
 	SIGNAL_HANDLER
 	if(tool_act_callback)
 		tool_act_callback.Invoke(user, tool)
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING
 	attackby_hit(source, tool, user)
 
 /datum/component/supermatter_crystal/proc/bumped_hit(datum/source, atom/movable/hit_object)
@@ -300,13 +300,12 @@
 		message_admins("[atom_source] has consumed [key_name_admin(consumed_mob)] [ADMIN_JMP(atom_source)].")
 		atom_source.investigate_log("has consumed [key_name(consumed_mob)].", INVESTIGATE_ENGINE)
 		consumed_mob.investigate_log("has been dusted by [atom_source].", INVESTIGATE_DEATHS)
-		if(istype(consumed_mob, /mob/living/simple_animal/parrot/poly)) // Dusting Poly creates a power surge
+		if(istype(consumed_mob, /mob/living/basic/parrot/poly)) // Dusting Poly creates a power surge
 			force_event(/datum/round_event_control/supermatter_surge/poly, "Poly's revenge")
 			notify_ghosts(
 				"[consumed_mob] has been dusted by [atom_source]!",
 				source = atom_source,
 				header = "Polytechnical Difficulties",
-				notify_flags = NOTIFY_CATEGORY_DEFAULT,
 			)
 		consumed_mob.dust(force = TRUE)
 		matter_increase += 100 * object_size

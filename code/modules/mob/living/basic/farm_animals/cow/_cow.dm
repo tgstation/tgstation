@@ -45,7 +45,7 @@
 	udder_component()
 	setup_eating()
 	. = ..()
-	ai_controller.set_blackboard_key(BB_BASIC_FOODS, food_types)
+	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
 
 ///wrapper for the udder component addition so you can have uniquely uddered cow subtypes
 /mob/living/basic/cow/proc/udder_component()

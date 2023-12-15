@@ -3,6 +3,8 @@
 	var/enter_delay = 2 SECONDS
 	var/mouse_pointer
 	var/headlights_toggle = FALSE
+	///Determines which occupants provide access when bumping into doors
+	var/access_provider_flags = VEHICLE_CONTROL_DRIVE
 
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
@@ -31,7 +33,7 @@
 	. = ..()
 	if(istype(A, /obj/machinery/door))
 		var/obj/machinery/door/conditionalwall = A
-		for(var/mob/occupant as anything in return_drivers())
+		for(var/mob/occupant as anything in return_controllers_with_flag(access_provider_flags))
 			if(conditionalwall.try_safety_unlock(occupant))
 				return
 			conditionalwall.bumpopen(occupant)

@@ -627,6 +627,9 @@
 	begin_day = 11
 	holiday_hat = /obj/item/food/grown/poppy
 
+/datum/holiday/remembrance_day/greet()
+	return "Lest we forget."
+
 /datum/holiday/remembrance_day/getStationPrefix()
 	return pick("Peace", "Armistice", "Poppy")
 
@@ -839,9 +842,9 @@
 	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/toy/xmas_cracker = 3,
 			/obj/item/clothing/head/costume/santa = 1,
-			/obj/item/a_gift/anything = 1
+			/obj/item/gift/anything = 1,
+			/obj/item/toy/xmas_cracker = 3,
 		) = maint_holiday_weight,
 	)
 

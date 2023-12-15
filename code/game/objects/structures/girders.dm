@@ -99,7 +99,7 @@
 						return
 					rod.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/mineral/iron)
+					T.place_on_top(/turf/closed/wall/mineral/iron)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -149,7 +149,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall)
+					T.place_on_top(/turf/closed/wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -194,7 +194,7 @@
 						return
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
-					T.PlaceOnTop(/turf/closed/wall/r_wall)
+					T.place_on_top(/turf/closed/wall/r_wall)
 					transfer_fingerprints_to(T)
 					qdel(src)
 				return
@@ -271,9 +271,9 @@
 					sheets.use(amount)
 					var/turf/T = get_turf(src)
 					if(sheets.walltype)
-						T.PlaceOnTop(sheets.walltype)
+						T.place_on_top(sheets.walltype)
 					else
-						var/turf/newturf = T.PlaceOnTop(/turf/closed/wall/material)
+						var/turf/newturf = T.place_on_top(/turf/closed/wall/material)
 						var/list/material_list = list()
 						material_list[GET_MATERIAL_REF(sheets.material_type)] = SHEET_MATERIAL_AMOUNT * 2
 						if(material_list)
@@ -385,7 +385,7 @@
 	return FALSE
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/remains = pick(/obj/item/stack/rods, /obj/item/stack/sheet/iron)
 		new remains(loc)
 	qdel(src)
@@ -453,7 +453,7 @@
 				return
 			R.use(amount)
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/mineral/cult)
+			T.place_on_top(/turf/closed/wall/mineral/cult)
 			qdel(src)
 
 	else
@@ -463,7 +463,7 @@
 	return
 
 /obj/structure/girder/cult/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/runed_metal(drop_location(), 1)
 	qdel(src)
 
@@ -488,7 +488,7 @@
 				return FALSE
 
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall)
+			T.place_on_top(/turf/closed/wall)
 			qdel(src)
 			return TRUE
 		if(RCD_DECONSTRUCT)
@@ -525,7 +525,7 @@
 				return
 			B.use(amount)
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/mineral/bronze)
+			T.place_on_top(/turf/closed/wall/mineral/bronze)
 			qdel(src)
 
 	else

@@ -112,11 +112,14 @@
 	cryostylane_alert.attached_effect = src //so the alert can reference us, if it needs to
 
 /datum/reagent/inverse/cryostylane/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
-	if(current_cycle >= 60)
-		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
-		return ..()
+	. = ..()
 	if(!cube || affected_mob.loc != cube)
 		metabolization_rate += 0.01
+
+/datum/reagent/inverse/cryostylane/metabolize_reagent(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	if(current_cycle >= 60)
+		holder.remove_reagent(type, volume) // remove it all if we're past 60 cycles
+		return
 	return ..()
 
 /datum/reagent/inverse/cryostylane/on_mob_delete(mob/living/carbon/affected_mob, amount)

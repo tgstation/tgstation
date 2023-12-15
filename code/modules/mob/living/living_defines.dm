@@ -30,8 +30,6 @@
 	var/toxloss = 0
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
-	///Damage caused by being cloned or ejected from the cloner early. slimes also deal cloneloss damage to victims
-	var/cloneloss = 0
 
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN

@@ -17,7 +17,7 @@ describe('captureExternalLinks', () => {
   it('should subscribe to document clicks', () => {
     expect(addEventListenerSpy).toHaveBeenCalledWith(
       'click',
-      expect.any(Function)
+      expect.any(Function),
     );
   });
 

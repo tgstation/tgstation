@@ -19,8 +19,8 @@ type CTFPanelData =
       voted: BooleanLike;
     };
 
-export const CTFPanel = (props, context) => {
-  const { act, data } = useBackend<CTFPanelData>(context);
+export const CTFPanel = (props) => {
+  const { act, data } = useBackend<CTFPanelData>();
 
   return (
     <Window title="CTF Panel" width={700} height={600}>
@@ -49,7 +49,7 @@ export const CTFPanel = (props, context) => {
                   <Button
                     content="Jump"
                     fontSize="18px"
-                    fluid={1}
+                    fluid
                     color={team.color.toLowerCase()}
                     onClick={() =>
                       act('jump', {
@@ -61,7 +61,7 @@ export const CTFPanel = (props, context) => {
                   <Button
                     content="Join"
                     fontSize="18px"
-                    fluid={1}
+                    fluid
                     color={team.color.toLowerCase()}
                     onClick={() =>
                       act('join', {
@@ -95,7 +95,8 @@ export const CTFPanel = (props, context) => {
                   } else {
                     act('vote');
                   }
-                }}>
+                }}
+              >
                 {data.voted ? 'Unvote for CTF' : 'Vote for CTF'}
               </Button>
             </Stack.Item>
