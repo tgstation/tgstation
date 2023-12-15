@@ -292,7 +292,7 @@
 	name = "Pepperball (Nonlethal)"
 	id = "pepperball"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
+	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/ammo_casing/paintball/pepper
 	category = list(
 		RND_CATEGORY_HACKED,
@@ -304,7 +304,7 @@
 	name = "Pepperballs Magazine (Nonlethal)"
 	id = "pepperballs"
 	build_type = AUTOLATHE
-	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*20)
+	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT*20)
 	build_path = /obj/item/ammo_box/magazine/paintball/pepper
 	category = list(
 		RND_CATEGORY_HACKED,
