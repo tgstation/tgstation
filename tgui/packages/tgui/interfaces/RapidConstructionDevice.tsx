@@ -112,7 +112,6 @@ const DesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           height="31px"
           color="transparent"
           selected={

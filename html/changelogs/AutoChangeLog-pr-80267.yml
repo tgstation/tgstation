@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - rscadd: "Adds a new discount experiment for unlocking the combat exosuit nodes - complete it by scanning two exosuits with equipment in the left and right hand slots. This replaces the prior discount experiment about destroying exosuits."

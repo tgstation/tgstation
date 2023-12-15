@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "mobs that have the `TRAIT_PERMANENTLY_ONFIRE` trait cannot be extinguished by anything."
-  - bugfix: "stuff thrown into lava should not runtime. it currently does not but if there is a slight chance it does not happen"
