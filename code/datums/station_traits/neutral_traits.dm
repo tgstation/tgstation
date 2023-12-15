@@ -343,50 +343,6 @@
 	for(var/obj/item/item in wallet)
 		item.add_fingerprint(living_mob, ignoregloves = TRUE)
 
-/datum/station_trait/outfit_color
-	name = "Laundry Disaster"
-	trait_type = STATION_TRAIT_NEUTRAL
-	abstract_type = /datum/station_trait/outfit_color
-	show_in_report = TRUE
-	report_message = "So, we ended up doing something astract and unspecified with the corporate laundry."
-
-/datum/station_trait/outfit_color/New()
-	. = ..()
-	blacklist = typesof(/datum/station_trait/outfit_color) - type
-	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
-
-/datum/station_trait/outfit_color/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/living_mob, mob/M, joined_late)
-	SIGNAL_HANDLER
-	var/slot_flags_to_update = NONE
-	for(var/obj/item/item as anything in living_mob.get_equipped_items(include_accessories = TRUE))
-		if(living_mob.is_holding(item)) //We don't care of held items.
-			continue
-		get_new_color(item)
-		slot_flags_to_update |= item.slot_flags
-	living_mob.update_clothing(slot_flags_to_update)
-
-/datum/station_trait/outfit_color/proc/get_new_color(obj/item/item)
-	SHOULD_CALL_PARENT(FALSE)
-
-/datum/station_trait/outfit_color/random
-	weight = 3
-	report_message = "So ugh, before the shift we had a security breach in the laundry. It was a clown carrying lots of spraycans..."
-
-/datum/station_trait/outfit_color/random/get_new_color(obj/item/item)
-	item.add_atom_colour(RANDOM_COLOUR, WASHABLE_COLOUR_PRIORITY)
-
-/datum/station_trait/outfit_color/rotated
-	weight = 2
-	report_message = "So ugh, before the shift we tried a new experimental slime jelly and plasma-infused laundry capsule, and..."
-	var/rotation = 70
-
-/datum/station_trait/outfit_color/rotated/New()
-	. = ..()
-	rotation = pick(75, 285)
-
-/datum/station_trait/outfit_color/rotated/get_new_color(obj/item/item)
-	item.add_atom_colour(color_matrix_rotate_hue(rotation), FIXED_COLOUR_PRIORITY)
-
 /// Tells the area map generator to ADD MORE TREEEES
 /datum/station_trait/forested
 	name = "Forested"
