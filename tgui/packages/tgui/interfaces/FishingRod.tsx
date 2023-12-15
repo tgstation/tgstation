@@ -35,10 +35,8 @@ const FishingRodSlot = (props: Props) => {
                     width="64px" // todo come up with some way to scale this sanely
                     height="64px"
                     src={`data:image/jpeg;base64,${current_item_icon}`}
-                    style={{
-                      verticalAlign: 'middle',
-                      objectFit: 'cover',
-                    }}
+                    verticalAlign="middle"
+                    objectFit="cover"
                   />
                 )}
               </Flex.Item>

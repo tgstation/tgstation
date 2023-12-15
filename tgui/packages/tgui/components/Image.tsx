@@ -5,10 +5,8 @@ import { Tooltip } from './Tooltip';
 
 type Props = Partial<{
   fixBlur: boolean; // true is default, this is an ie thing
-  height: string;
   objectFit: 'contain' | 'cover'; // fill is default
   tooltip: ReactNode;
-  width: string;
 }> &
   IconUnion &
   BoxProps;
@@ -28,21 +26,17 @@ type IconUnion =
 export const Image = (props: Props) => {
   const {
     className,
-    height,
-    objectFit,
     fixBlur = true,
+    objectFit = 'fill',
     src,
     tooltip,
-    width,
     ...rest
   } = props;
 
   const computedStyle = {
     ...computeBoxProps(rest).style,
     '-ms-interpolation-mode': fixBlur ? 'nearest-neighbor' : 'auto',
-    height,
     objectFit,
-    width,
   };
 
   let content = (
