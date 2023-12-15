@@ -333,19 +333,11 @@
 	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
 	return ..() && ISINRANGE(found_percent, damage_percent - 5, damage_percent + 5)
 
-<<<<<<< HEAD
-/datum/experiment/scanning/random/mecha_destroyed_scan
-	name = "Exosuit Materials 2: Excessive Damage Test"
-	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
-	possible_types = list(/obj/structure/mecha_wreckage)
-	total_requirement = 1
-=======
 /datum/experiment/scanning/random/mecha_equipped_scan
 	name = "Exosuit Materials 2: Load Strain Test"
 	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
 	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 2
->>>>>>> 097c140dea9680ebb73291998ebfef0926c70b75
 
 /datum/experiment/scanning/random/mecha_equipped_scan/final_contributing_index_checks(atom/target, typepath)
 	var/obj/vehicle/sealed/mecha/stompy = target
