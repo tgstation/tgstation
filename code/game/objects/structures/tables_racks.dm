@@ -89,7 +89,7 @@
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)
-	. += span_notice("Ctrl+Shift+Click To flip the table.")
+	. += span_notice("You can Ctrl+Shift+Click to flip the table.")
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
