@@ -21,7 +21,7 @@
 	REMOVE_TRAIT(remove_from, TRAIT_MIMING, "[type]")
 
 /datum/action/cooldown/spell/vow_of_silence/before_cast(atom/cast_on)
-	if(tgui_alert(usr, "Are you sure? There's no going back.", "Break Vow", list("I'm Sure", "Abort")) == "Abort")
+	if(tgui_alert(usr, "Are you sure? There's no going back.", "Break Vow", list("I'm Sure", "Abort")) != "I'm Sure")
 		return SPELL_CANCEL_CAST
 	return ..()
 
