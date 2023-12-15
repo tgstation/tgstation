@@ -94,7 +94,7 @@
 	if(gopgear < 3)
 		if(rand(1,10) >= 9)
 			AddElement(/datum/element/waddling)
-			playsound(src, pick('massmeta/sound/vehicles/gear_blyat.ogg', 'massmeta/sound/vehicles/gear_fault.ogg', 'massmeta/sound/vehicles/gear_nah.ogg', 'massmeta/sound/vehicles/gear_fault2.ogg', 'massmeta/sound/vehicles/gear_fault3.ogg'), 50)
+			playsound(src, pick('massmeta/sounds/vehicles/gear_blyat.ogg', 'massmeta/sounds/vehicles/gear_fault.ogg', 'massmeta/sounds/vehicles/gear_nah.ogg', 'massmeta/sounds/vehicles/gear_fault2.ogg', 'massmeta/sounds/vehicles/gear_fault3.ogg'), 50)
 			addtimer(CALLBACK(src, PROC_REF(revert_waddling)), 1 SECONDS)
 		else
 			playsound(src, 'sound/mecha/mechmove04.ogg', 75)
@@ -109,7 +109,7 @@
 	if(gopgear > 0)
 		if(rand(1,10) >= 8) // chance 3 of 10 to hear that funny noise
 			AddElement(/datum/element/waddling) // your gears are juggling like a clown do
-			playsound(src, pick('massmeta/sound/vehicles/gear_blyat.ogg', 'massmeta/sound/vehicles/gear_fault.ogg', 'massmeta/sound/vehicles/gear_nah.ogg', 'massmeta/sound/vehicles/gear_fault2.ogg', 'massmeta/sound/vehicles/gear_fault3.ogg'), 50)
+			playsound(src, pick('massmeta/sounds/vehicles/gear_blyat.ogg', 'massmeta/sounds/vehicles/gear_fault.ogg', 'massmeta/sounds/vehicles/gear_nah.ogg', 'massmeta/sounds/vehicles/gear_fault2.ogg', 'massmeta/sounds/vehicles/gear_fault3.ogg'), 50)
 			addtimer(CALLBACK(src, PROC_REF(revert_waddling)), 1 SECONDS)
 		else
 			playsound(src, 'sound/mecha/mechmove04.ogg', 75)
@@ -144,7 +144,7 @@
 /obj/vehicle/sealed/car/cheburek/proc/endless_tik()
 
 	if(isturnsound_on)
-		playsound(src, 'massmeta/sound/vehicles/car_turn_signal.ogg', 60)
+		playsound(src, 'massmeta/sounds/vehicles/car_turn_signal.ogg', 60)
 		cut_overlay(image(icon, "car_blinkers", LYING_MOB_LAYER))
 		addtimer(CALLBACK(src, PROC_REF(endless_tak)), 0.5 SECONDS)
 
