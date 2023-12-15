@@ -147,7 +147,7 @@
 		user.electrocute_act(120, src)
 		opened = FALSE
 		return ITEM_INTERACT_SUCCESS
-	balloon_alert(user, "disconnected neural network")
+	tool.balloon_alert(user, "disconnected neural network") // Display from tool because this mob is about to not exist
 	to_chat(src, span_danger("You feel incredibly confused and disorientated."))
 	if(!ai_mob_to_structure())
 		return ITEM_INTERACT_SUCCESS
