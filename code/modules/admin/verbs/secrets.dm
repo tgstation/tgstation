@@ -260,11 +260,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
-		if("tripleAI")
-			if(!is_funmin)
-				return
-			holder.triple_ai()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("onlyone")
 			if(!is_funmin)
 				return
@@ -511,8 +506,8 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 					if(H.dna.features["tail_human"] == "None" || H.dna.features["ears"] == "None")
 						var/obj/item/organ/internal/ears/cat/ears = new
 						var/obj/item/organ/external/tail/cat/tail = new
-						ears.Insert(H, drop_if_replaced=FALSE)
-						tail.Insert(H, drop_if_replaced=FALSE)
+						ears.Insert(H, movement_flags = DELETE_IF_REPLACED)
+						tail.Insert(H, movement_flags = DELETE_IF_REPLACED)
 					var/list/honorifics = list("[MALE]" = list("kun"), "[FEMALE]" = list("chan","tan"), "[NEUTER]" = list("san"), "[PLURAL]" = list("san")) //John Robust -> Robust-kun
 					var/list/names = splittext(H.real_name," ")
 					var/forename = names.len > 1 ? names[2] : names[1]

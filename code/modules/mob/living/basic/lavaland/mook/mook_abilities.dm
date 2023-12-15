@@ -140,3 +140,9 @@
 	base_pixel_y = -16
 	base_pixel_x = -16
 	duration = 1 SECONDS
+
+/obj/effect/temp_visual/mook_dust/small
+
+/obj/effect/temp_visual/mook_dust/small/Initialize(mapload)
+	. = ..()
+	transform = transform.Scale(0.5)

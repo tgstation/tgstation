@@ -1133,3 +1133,19 @@
       on you if you actually had a cursed item equipped to you.
   vinylspiders:
   - bugfix: fixed remaining footstep runtimes
+2023-11-30:
+  Ben10Omintrix:
+  - refactor: cats are now basic pets. please report any bugs.
+  - rscadd: the cake cat and bread cat can now help the chef around in the kitchen
+  GoldenAlpharex:
+  - bugfix: The Radioactive Nebula station trait will now respect its upper intensity
+      cap set at one hour and forty minutes, no longer scaling past that, as was initially
+      intended.
+  Mothblocks:
+  - rscadd: Instead of teaming up random people together, blood brothers will now
+      start out with one player and let them convert a single other person over to
+      blood brother using a flash.
+  SuperNovaa41:
+  - bugfix: Cyber cops are now equipped with the correct outfit.
+  timothymtorres:
+  - bugfix: Fix bitrunning triggering claustrophobia

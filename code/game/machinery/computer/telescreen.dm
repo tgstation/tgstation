@@ -22,7 +22,7 @@
 	pixel_shift = 32
 
 /obj/machinery/computer/security/telescreen/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new frame_type(loc)
 	qdel(src)
 

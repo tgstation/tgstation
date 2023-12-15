@@ -1,4 +1,4 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -34,7 +34,8 @@ export const ChemFilterPane = (props: Props) => {
             })
           }
         />
-      }>
+      }
+    >
       {list.map((filter) => (
         <Fragment key={filter}>
           <Button

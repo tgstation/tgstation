@@ -1,10 +1,11 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { capitalizeAll } from 'common/string';
 import { BooleanLike, classes } from 'common/react';
 import { Window } from '../layouts';
 import { Section, Tabs, Button, Stack, Box } from '../components';
 import { ColorItem, LayerSelect } from './RapidPipeDispenser';
 import { SiloItem, MatterItem } from './RapidConstructionDevice';
+import { useState } from 'react';
 
 type Data = {
   silo_upgraded: BooleanLike;
@@ -29,13 +30,11 @@ type Recipe = {
 const PlumbingTypeSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
@@ -44,7 +43,8 @@ const PlumbingTypeSection = (props) => {
             fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -53,7 +53,6 @@ const PlumbingTypeSection = (props) => {
         <Button
           key={index}
           fluid
-          ellipsis
           color="transparent"
           selected={recipe.name === selected_recipe}
           onClick={() =>
@@ -61,7 +60,8 @@ const PlumbingTypeSection = (props) => {
               category: shownCategory.cat_name,
               id: index,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"

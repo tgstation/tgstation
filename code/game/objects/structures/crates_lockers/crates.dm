@@ -131,6 +131,16 @@
 		if(elevation)
 			AddElement(/datum/element/elevation, pixel_shift = elevation)
 
+///Spawns two to six maintenance spawners inside the closet
+/obj/structure/closet/proc/populate_with_random_maint_loot()
+	SIGNAL_HANDLER
+
+	for (var/i in 1 to rand(2,6))
+		new /obj/effect/spawner/random/maintenance(src)
+
+	UnregisterSignal(src, COMSIG_CLOSET_POPULATE_CONTENTS)
+
+///Removes the supply manifest from the closet
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster_ripped.ogg', 75, TRUE)
@@ -161,27 +171,6 @@
 	can_install_electronics = FALSE
 	paint_jobs = null
 	elevation_open = 0
-
-/obj/structure/closet/crate/maint
-
-/obj/structure/closet/crate/maint/Initialize(mapload)
-	..()
-
-	var/static/list/possible_crates = RANDOM_CRATE_LOOT
-
-	var/crate_path = pick_weight(possible_crates)
-	var/obj/structure/closet/crate/random_crate = new crate_path(loc)
-	random_crate.RegisterSignal(random_crate, COMSIG_CLOSET_POPULATE_CONTENTS, TYPE_PROC_REF(/obj/structure/closet/, populate_with_random_maint_loot))
-	if (prob(50))
-		random_crate.open(null, special_effects = FALSE) //crates spawned as immediatly opened don't need to animate into being opened
-
-	return INITIALIZE_HINT_QDEL
-
-/obj/structure/closet/proc/populate_with_random_maint_loot()
-	SIGNAL_HANDLER
-
-	for (var/i in 1 to rand(2,6))
-		new /obj/effect/spawner/random/maintenance(src)
 
 /obj/structure/closet/crate/trashcart //please make this a generic cart path later after things calm down a little
 	desc = "A heavy, metal trashcart with wheels."
@@ -240,22 +229,25 @@
 	icon_state = "freezer"
 	base_icon_state = "freezer"
 	paint_jobs = null
+	sealed = TRUE
+	/// The rate at which the internal air mixture cools
+	var/cooling_rate_per_second = 4
+	/// Minimum temperature of the internal air mixture
+	var/minimum_temperature = T0C - 60
 
-/obj/structure/closet/crate/freezer/before_open(mob/living/user, force)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	toggle_organ_decay(src)
-	return TRUE
-
-/obj/structure/closet/crate/freezer/after_close(mob/living/user)
-	. = ..()
-	toggle_organ_decay(src)
-
-/obj/structure/closet/crate/freezer/Destroy()
-	toggle_organ_decay(src)
-	return ..()
+/obj/structure/closet/crate/freezer/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		// The internal air won't cool down the external air when the freezer is opened.
+		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
+		return ..()
+	else
+		if(internal_air.temperature <= minimum_temperature)
+			return
+		var/temperature_decrease_this_tick = min(cooling_rate_per_second * seconds_per_tick, internal_air.temperature - minimum_temperature)
+		internal_air.temperature -= temperature_decrease_this_tick
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"

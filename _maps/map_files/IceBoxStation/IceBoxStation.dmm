@@ -14164,8 +14164,8 @@
 "ekm" = (
 /obj/machinery/door/poddoor/shutters/preopen{
 	dir = 8;
-	id = "pharmacy_shutters3";
-	name = "Pharmacy Shutters"
+	id = "chemistry_lower_shutters";
+	name = "Chemistry Exterior Shutters"
 	},
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -25849,7 +25849,7 @@
 /area/station/ai_monitored/turret_protected/aisat_interior)
 "hWI" = (
 /obj/effect/turf_decal/box,
-/obj/structure/closet/crate/maint,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
 /obj/effect/spawner/random/maintenance/six,
 /obj/structure/sign/poster/official/wtf_is_co2/directional/north,
 /turf/open/floor/iron/dark,
@@ -53003,7 +53003,7 @@
 /obj/effect/turf_decal/tile/blue{
 	dir = 8
 	},
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat/service)
 "qhp" = (

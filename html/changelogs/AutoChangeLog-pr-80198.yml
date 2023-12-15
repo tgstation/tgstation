@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "Away lathes can now print robot navigational beacons"
