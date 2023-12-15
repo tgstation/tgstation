@@ -547,5 +547,5 @@
 	Show()
 
 /mob/camera/imaginary_friend/changeling_echo/greet()
-	to_chat(src, span_changeling(span_bold("You are absorbed, but you your mind persist! You you have become one with the hive!")))
+	to_chat(src, span_changeling(span_bold("You have been absorbed, but you your mind persists! You you have become one with the hive!")))
 	to_chat(src, span_changeling("Your mind has melded with the changeling that absorbed you, assist them however you can!"))
