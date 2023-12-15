@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "items that are rejected by the mat container will display the chat message saying that."
