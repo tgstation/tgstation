@@ -27,7 +27,7 @@ export type BoxProps = Partial<{
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
  */
-export const unit = (value: unknown): string | undefined => {
+export const unit = (value: unknown) => {
   if (typeof value === 'string') {
     // Transparently convert pixels into rem units
     if (value.endsWith('px')) {
@@ -43,7 +43,7 @@ export const unit = (value: unknown): string | undefined => {
 /**
  * Same as `unit`, but half the size for integers numbers.
  */
-export const halfUnit = (value: unknown): string | undefined => {
+export const halfUnit = (value: unknown) => {
   if (typeof value === 'string') {
     return unit(value);
   }
