@@ -5519,6 +5519,7 @@
 #include "code\modules\shuttle\shuttle_events\meteors.dm"
 #include "code\modules\shuttle\shuttle_events\misc.dm"
 #include "code\modules\shuttle\shuttle_events\player_controlled.dm"
+#include "code\modules\shuttle\shuttle_events\turbulence.dm"
 #include "code\modules\spatial_grid\cell_tracker.dm"
 #include "code\modules\spells\spell.dm"
 #include "code\modules\spells\spell_types\madness_curse.dm"
