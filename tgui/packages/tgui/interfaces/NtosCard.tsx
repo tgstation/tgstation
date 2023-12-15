@@ -164,9 +164,10 @@ const IdCardPage = (props) => {
             fluid
             ellipsis
             icon="eject"
-            content={authIDName}
             onClick={() => act('PRG_eject_id')}
-          />
+          >
+            {authIDName}
+          </Button>
         </Stack.Item>
         <Stack.Item width="100%" mt={1} ml={0}>
           Login: {authenticatedUser || '-----'}
