@@ -216,7 +216,8 @@
 	log_combat(user, target, "stung", "extraction sting")
 	var/datum/antagonist/changeling/changeling = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(IS_TIGER_FANATIC(target))
-		to_chat(user, span_bold("[target.name]'s DNA is exquisite, as if tailor made for us, they must be a worshiper of the hive. We could gain power by absorbing them, but their loyalty may prove useful."))
+		to_chat(user, span_bold("[target.name]'s DNA is exquisite, as if tailor made for us, they must be a worshiper of the hive. We would have to absorb them to fully the richness of their DNA, but their loyalty may prove useful."))
+		return FALSE
 	if(!changeling.has_profile_with_dna(target.dna))
 		changeling.add_new_profile(target)
 	return TRUE
