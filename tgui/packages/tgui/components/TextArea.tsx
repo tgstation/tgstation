@@ -64,11 +64,6 @@ export const TextArea = forwardRef(
 
     const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
       if (event.key === KEY.Enter) {
-        if (event.shiftKey) {
-          onChange?.(event as any, event.currentTarget.value);
-          return;
-        }
-
         onEnter?.(event, event.currentTarget.value);
         if (selfClear) {
           event.currentTarget.value = '';
