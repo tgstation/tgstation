@@ -39,8 +39,6 @@
 		/obj/item/ammo_box/magazine/sniper_rounds/penetrator,
 		/obj/item/ammo_box/magazine,
 		/obj/item/ammo_box/magazine/toy,
-		/obj/item/gun/energy/recharge/kinetic_accelerator/meme,
-		/obj/item/gun/energy/recharge/kinetic_accelerator/meme/nonlethal,
 	)
 	blacklisted_types = list(
 		/obj/item/ammo_box/magazine/internal,
@@ -53,6 +51,7 @@
 		/obj/item/gun/magic/wand/death,
 		/obj/item/gun/magic/wand/safety,
 		/obj/item/gun/medbeam,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/meme,
 	)
 
 /obj/structure/centcom_item_spawner/gun_and_ammo_creator/spawn_chosen_item(type_to_spawn)

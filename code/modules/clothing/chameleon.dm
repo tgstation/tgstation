@@ -903,7 +903,7 @@
 	chameleon_action = new(src)
 	chameleon_action.chameleon_type = /obj/item/gun
 	chameleon_action.chameleon_name = "Gun"
-	chameleon_action.chameleon_blacklist = typecacheof(/obj/item/gun/energy/minigun)
+	chameleon_action.chameleon_blacklist = typecacheof(list(/obj/item/gun/energy/minigun, /obj/item/gun/energy/recharge/kinetic_accelerator/meme), only_root_path = TRUE)
 	chameleon_action.initialize_disguises()
 	add_item_action(chameleon_action)
 
