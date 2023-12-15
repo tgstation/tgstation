@@ -187,12 +187,12 @@
 		return span_bold("Vote Result: Inconclusive - No Votes!")
 
 	for(var/option in choices)
+		returned_text += "\n"
 		var/votes = choices[option]
 		var/percentage_text = ""
 		if(votes > 0)
 			var/actual_percentage = round((votes / total_votes) * 100, 0.1)
 			var/spaces_needed = 3 - DIGITS(actual_percentage)
-			returned_text += "\n"
 			for(var/_ in 1 to spaces_needed)
 				returned_text += " "
 			percentage_text += "[actual_percentage]%"
