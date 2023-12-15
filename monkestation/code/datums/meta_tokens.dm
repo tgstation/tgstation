@@ -83,6 +83,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(use_donor)
 		if(donator_token)
 			donator_token = FALSE
+			add_event_to_buffer(owner,  data = "used donator token [owner.prefs.token_month].", log_key = "META")
 			owner.prefs.token_month = text2num(time2text(world.time, "MM"))
 			owner.prefs.save_preferences()
 			return
@@ -117,6 +118,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to play as [in_queue] has been approved.")
+	add_event_to_buffer(owner,  data = "antag token for [in_queue] approved.", log_key = "META")
 	spend_antag_token(in_queued_tier, queued_donor)
 	if(!owner.mob.mind)
 		owner.mob.mind_initialize()
@@ -132,6 +134,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to play as [in_queue] has been denied.")
+	add_event_to_buffer(owner,  data = "antag token for [in_queue] denied.", log_key = "META")
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE
