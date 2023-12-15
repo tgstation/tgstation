@@ -316,13 +316,12 @@
 				continue
 			//item is either not allowed for redemption, not in the allowed types
 			if((target_item.item_flags & NO_MAT_REDEMPTION) || (allowed_item_typecache && !is_type_in_typecache(target_item, allowed_item_typecache)))
-				var/list/chat_data = null
-				if(!(mat_container_flags & MATCONTAINER_SILENT))
-					chat_data = chat_msgs[target_item.name] || list()
-					chat_data["status"] = MATERIAL_INSERT_ITEM_FAILURE
-					if(i == 1) //items like backpacks/anything that has contents come here a 2nd time so we don't count them again
-						chat_data["count"] += 1
-					chat_msgs[target_item.name] = chat_data
+				if(!(mat_container_flags & MATCONTAINER_SILENT) && i == 1) //count only child items the 1st time around
+					var/list/status_data = chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] || list()
+					var/list/item_data = status_data[target_item.name] || list()
+					item_data["count"] += 1
+					status_data[target_item.name] = item_data
+					chat_msgs["[MATERIAL_INSERT_ITEM_FAILURE]"] = status_data
 
 				//storage items usually come here but we make the exception only on the 1st iteration
 				//this is so players can insert items from their bags into machines for convinience

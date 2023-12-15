@@ -1,0 +1,5 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Keybindings in prefs are able to be set again."
+  - bugfix: "Fixed the weird spacing on buttons."
