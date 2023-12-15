@@ -1,5 +1,5 @@
 import { BooleanLike, classes } from 'common/react';
-import { Component } from 'react';
+import { Component, MouseEvent } from 'react';
 import {
   Section,
   Stack,

@@ -5,7 +5,7 @@
  */
 
 import { BooleanLike, classes } from 'common/react';
-import { createElement, MouseEvent, ReactNode } from 'react';
+import { createElement, MouseEvent, ReactNode, KeyboardEvent } from 'react';
 import { CSS_COLORS } from '../constants';
 
 type BooleanProps = Partial<Record<keyof typeof booleanStyleMap, boolean>>;
@@ -13,16 +13,24 @@ type StringProps = Partial<
   Record<keyof typeof stringStyleMap, string | BooleanLike>
 >;
 
+export type EventHandlers = Partial<{
+  onClick: (event: MouseEvent<HTMLDivElement>) => void;
+  onContextMenu: (event: MouseEvent<HTMLDivElement>) => void;
+  onDoubleClick: (event: MouseEvent<HTMLDivElement>) => void;
+  onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
+  onMouseOver: (event: MouseEvent<HTMLDivElement>) => void;
+  onMouseUp: (event: MouseEvent<HTMLDivElement>) => void;
+}>;
+
 export type BoxProps = Partial<{
   as: string;
   children: ReactNode;
   className: string | BooleanLike;
   style: Partial<CSSStyleDeclaration>;
-  onClick: (e: MouseEvent<HTMLDivElement>) => void;
-  onMouseOver: (e: MouseEvent<HTMLDivElement>) => void;
 }> &
   BooleanProps &
-  StringProps;
+  StringProps &
+  EventHandlers;
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
@@ -94,6 +102,7 @@ const mapColorPropTo = (attrName) => (style, value) => {
 const stringStyleMap = {
   align: mapRawPropTo('align'),
   bottom: mapUnitPropTo('bottom', unit),
+  colSpan: mapRawPropTo('colSpan'),
   fontFamily: mapRawPropTo('fontFamily'),
   fontSize: mapUnitPropTo('fontSize', unit),
   height: mapUnitPropTo('height', unit),
@@ -164,6 +173,7 @@ const booleanStyleMap = {
       style['right'] = 0;
     }
   },
+  fluid: mapBooleanPropTo('width', '100%'),
   inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
