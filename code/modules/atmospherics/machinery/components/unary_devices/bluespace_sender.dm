@@ -71,6 +71,11 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 			context[SCREENTIP_CONTEXT_RMB] = "[anchored ? "Unan" : "An"]chor"
 	return CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/atmospherics/components/unary/bluespace_sender/is_connectable()
+	if(!anchored)
+		return FALSE
+	. = ..()
+
 /obj/machinery/atmospherics/components/unary/bluespace_sender/update_icon_state()
 	if(panel_open)
 		icon_state = "[base_icon_state]_open"
@@ -125,9 +130,6 @@ GLOBAL_LIST_EMPTY_TYPED(bluespace_senders, /obj/machinery/atmospherics/component
 	return TRUE
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act(mob/living/user, obj/item/tool)
-	if(!anchored)
-		balloon_alert(user, "anchor!")
-		return ITEM_INTERACT_SUCCESS
 	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/unary/bluespace_sender/wrench_act_secondary(mob/living/user, obj/item/tool)

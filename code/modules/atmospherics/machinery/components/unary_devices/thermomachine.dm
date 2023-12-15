@@ -211,9 +211,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
-	if(!anchored)
-		balloon_alert(user, "anchor!")
-		return ITEM_INTERACT_SUCCESS
 	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)

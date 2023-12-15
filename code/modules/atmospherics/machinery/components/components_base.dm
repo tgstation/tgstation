@@ -265,7 +265,7 @@
 
 /obj/machinery/atmospherics/components/default_change_direction_wrench(mob/user, obj/item/I)
 	. = ..()
-	if(!. || !anchored)
+	if(!.)
 		return FALSE
 	set_init_directions()
 	for(var/i in 1 to device_type)
