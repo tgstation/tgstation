@@ -89,7 +89,8 @@
 /obj/structure/table/examine(mob/user)
 	. = ..()
 	. += deconstruction_hints(user)
-	. += span_notice("You can Ctrl+Shift+Click to flip the table.")
+	if(can_flip = TRUE)
+		+= span_notice("You can Ctrl+Shift+Click to flip the table.")
 
 /obj/structure/table/proc/deconstruction_hints(mob/user)
 	return span_notice("The top is <b>screwed</b> on, but the main <b>bolts</b> are also visible.")
@@ -298,9 +299,9 @@
 	..()
 	return SECONDARY_ATTACK_CONTINUE_CHAIN
 
-/obj/structure/table/CtrlShiftClick(mob/living/user)
+/obj/structure/table/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
-	if(!istype(user) || !user.can_interact_with(src) || isobserver(user))
+	if(!istype(user) || !user.can_interact_with() || isobserver(user))
 		return
 	if(!can_flip)
 		return
@@ -308,18 +309,18 @@
 	if(!do_after(user, max_integrity * 0.25))
 		return
 
-	var/obj/structure/flippedtable/flipped_table = new flipped_table_type(src.loc)
-	flipped_table.name = "flipped [src.name]"
-	flipped_table.desc = "[src.desc]<br> It's been flipped on its side!"
-	flipped_table.icon_state = src.base_icon_state
+	var/obj/structure/flippedtable/flipped_table = new flipped_table_type(loc)
+	flipped_table.name = "flipped [name]"
+	flipped_table.desc = "[desc]<br> It's been flipped on its side!"
+	flipped_table.icon_state = base_icon_state
 	var/new_dir = get_dir(user, flipped_table)
 	flipped_table.dir = new_dir
 	if(new_dir == NORTH)
 		flipped_table.layer = BELOW_MOB_LAYER
-	flipped_table.max_integrity = src.max_integrity
-	flipped_table.update_integrity(src.get_integrity())
-	flipped_table.table_type = src.type
-	if(istype(src, /obj/structure/table/greyscale)) //Greyscale tables need greyscale flags!
+	flipped_table.max_integrity = max_integrity
+	flipped_table.update_integrity(.get_integrity())
+	flipped_table.table_type = type
+	if(istype(/obj/structure/table/greyscale)) //Greyscale tables need greyscale flags!
 		flipped_table.material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR
 	//Finally, add the custom materials, so the flags still apply to it
 	flipped_table.set_custom_materials(custom_materials)
@@ -443,17 +444,17 @@
 
 /obj/structure/flippedtable/CtrlShiftClick(mob/user)
 	. = ..()
-	if(!istype(user) || !user.can_interact_with(src))
+	if(!istype(user) || !user.can_interact_with())
 		return FALSE
 	user.balloon_alert_to_viewers("flipping table upright...")
 	if(do_after(user, max_integrity * 0.25))
-		var/obj/structure/table/new_table = new table_type(src.loc)
-		new_table.update_integrity(src.get_integrity())
+		var/obj/structure/table/new_table = new table_type(loc)
+		new_table.update_integrity(get_integrity())
 		if(custom_materials)
 			new_table.set_custom_materials(custom_materials)
 		user.balloon_alert_to_viewers("table flipped upright")
-		playsound(src, 'sound/items/trayhit2.ogg', 100)
-		qdel(src)
+		playsound('sound/items/trayhit2.ogg', 100)
+		qdel()
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
