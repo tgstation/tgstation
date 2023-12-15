@@ -173,7 +173,7 @@
  * Return a formatted string of text to be displayed to everyone.
  */
 /datum/vote/proc/get_result_text(list/all_winners, real_winner, list/non_voters)
-	if(length(all_winners) <= 0 || !real_winner)
+	if(length(all_winners) <= 0)
 		return span_bold("Vote Result: Inconclusive - No Votes!")
 
 	var/returned_text = ""
@@ -182,8 +182,21 @@
 	else
 		returned_text += span_bold("[capitalize(name)] Vote")
 
+	var/total_votes = 0 // for determining percentage of votes
 	for(var/option in choices)
-		returned_text += "\n[span_bold(option)]: [choices[option]]"
+		total_votes += choices[option]
+
+	for(var/option in choices)
+		var/votes = choices[option]
+		var/actual_percentage = round((votes / total_votes) * 100, 0.1)
+		var/spaces_needed = 3 - DIGITS(actual_percentage)
+		returned_text += "\n"
+		for(var/_ in 1 to spaces_needed)
+			returned_text += " "
+		returned_text += "[actual_percentage]% [span_bold(option)]: [choices[option]]"
+
+	if(!real_winner) // vote has no winner or cannot be won, but still had votes
+		return returned_text
 
 	returned_text += "\n"
 	returned_text += get_winner_text(all_winners, real_winner, non_voters)
