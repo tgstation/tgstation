@@ -863,7 +863,7 @@
 
 /// Midround Tiger Fanatic Ruleset (From Ghosts)
 /datum/dynamic_ruleset/midround/from_ghosts/tiger_fanatic
-	name = "Tiger Cooperative Fanatic"
+	name = "Fanatic"
 	midround_ruleset_style = MIDROUND_RULESET_STYLE_LIGHT
 	antag_datum = /datum/antagonist/tiger_fanatic
 	antag_flag = ROLE_TIGER_FANATIC

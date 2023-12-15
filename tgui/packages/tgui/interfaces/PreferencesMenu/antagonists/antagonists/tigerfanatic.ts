@@ -3,7 +3,7 @@ import { multiline } from 'common/string';
 
 const TigerFanatic: Antagonist = {
   key: 'tigerfanatic',
-  name: 'Tiger Cooperative Fanatic',
+  name: 'Fanatic',
   description: [
     multiline`
       Praise the shapeshifters! You have completed holy pilgrimage to

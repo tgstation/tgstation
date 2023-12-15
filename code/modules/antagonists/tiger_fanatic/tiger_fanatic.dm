@@ -1,5 +1,5 @@
 /datum/antagonist/tiger_fanatic
-	name = "Tiger Cooperative Fanatic"
+	name = "Fanatic"
 	antagpanel_category = "Other"
 	job_rank = ROLE_TIGER_FANATIC
 	show_name_in_check_antagonists = TRUE
