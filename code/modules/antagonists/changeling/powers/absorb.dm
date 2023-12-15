@@ -142,11 +142,11 @@
 		to_chat(owner, span_changeling(span_boldnotice("[target] was a worshiper of the hive. Their DNA is prepared specifically for our tastes. We grow stronger.")))
 
 
-		var/genetic_points_to_add = rand(5, 10)
+		var/genetic_points_to_add = 5
 		changeling.genetic_points += genetic_points_to_add
 		changeling.total_genetic_points += genetic_points_to_add
 
-		var/chems_to_add = rand (75, 125)
+		var/chems_to_add = 35
 		changeling.adjust_chemicals(chems_to_add)
 		changeling.total_chem_storage += chems_to_add
 
