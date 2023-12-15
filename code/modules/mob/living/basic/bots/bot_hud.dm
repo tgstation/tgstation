@@ -74,8 +74,16 @@
 		var/next_direction = get_dir(previous_turf, next_turf)
 		var/previous_direction = get_dir(current_turf, previous_turf)
 
-		var/final_direction = (ISDIAGONALDIR(next_direction) && (previous_direction & (NORTH|SOUTH))) ? REVERSE_DIR(next_direction) : next_direction
-		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = GAME_PLANE, dir = final_direction)
+		var/image/path_display = image(icon = path_image_icon, loc = current_turf, icon_state = path_image_icon_state, layer = GAME_PLANE, dir = next_direction)
+
+		if((ISDIAGONALDIR(next_direction) && (previous_direction & (NORTH|SOUTH))))
+			if(next_direction == SOUTHWEST || next_direction == NORTHEAST)
+				path_display.transform = path_display.transform.Turn(90)
+				path_display.transform = path_display.transform.Scale(1, -1)
+			else
+				path_display.transform = path_display.transform.Turn(-90)
+				path_display.transform = path_display.transform.Scale(1, -1)
+
 		path_display.color = path_image_color
 		path_images += path_display
 		current_pathed_turfs[current_turf] = path_display
