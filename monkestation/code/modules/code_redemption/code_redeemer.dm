@@ -22,12 +22,26 @@ GLOBAL_LIST_INIT(redeemed_codes, list())
 		return
 
 	var/path = GLOB.stored_codes[code]
+	var/list/list_path = params2list(path)
 
 	if(isnum(path))
 		usr.client.prefs.adjust_metacoins(usr.ckey, path, "Redeemed a Giveaway Code", donator_multipler = FALSE)
 	else if(path == HIGH_THREAT || path == MEDIUM_THREAT || path == LOW_THREAT)
 		usr.client.saved_tokens.adjust_tokens(path, 1)
 		to_chat(usr, span_boldnotice("You have successfully redeemed a giveaway code for: [path] Antag Token."))
+	else if(list_path["unusual_path"])
+		var/obj/item/unusual = text2path(list_path["unusual_path"])
+		unusual = new
+		var/pulled_key =  usr.ckey
+		if(!pulled_key)
+			pulled_key = "MissingNo." // have fun trying to get this one lol
+		unusual.AddComponent(/datum/component/unusual_handler, particle_path = text2path(list_path["effect_path"]), fresh_unusual = TRUE, client_ckey = pulled_key)
+		usr.client.prefs.save_new_unusual(unusual)
+		to_chat(usr, span_greenannounce("You have successfully redeemed a giveaway code for: [unusual]"))
+		if(isliving(usr))
+			unusual.forceMove(get_turf(usr))
+		else
+			qdel(unusual)
 	else
 		var/pathedstring = text2path(path)
 		var/datum/store_item/given_item = new pathedstring

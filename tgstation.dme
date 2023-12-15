@@ -6551,6 +6551,7 @@
 #include "monkestation\code\modules\surgery\organs\internal\tongue.dm"
 #include "monkestation\code\modules\trading\box_rolling.dm"
 #include "monkestation\code\modules\trading\lootbox_buying.dm"
+#include "monkestation\code\modules\trading\lootbox_clothing.dm"
 #include "monkestation\code\modules\trading\lootbox_odds.dm"
 #include "monkestation\code\modules\trading\save_unusual_preference.dm"
 #include "monkestation\code\modules\trading\unusual_effects\_unusual_component.dm"
