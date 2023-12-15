@@ -136,6 +136,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	can_flip = FALSE
 
 //Sleeper
 /obj/machinery/sleeper/survival_pod

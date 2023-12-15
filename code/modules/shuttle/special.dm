@@ -204,6 +204,7 @@
 	obj_flags = NO_DECONSTRUCTION
 	max_integrity = 1000
 	var/boot_dir = 1
+	can_flip = FALSE
 
 /obj/structure/table/wood/shuttle_bar/Initialize(mapload, _buildstack)
 	. = ..()
