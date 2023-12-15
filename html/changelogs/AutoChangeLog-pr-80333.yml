@@ -1,0 +1,4 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - qol: "Anesthetics tank description now mentions a rare quirk of anesthetic."
