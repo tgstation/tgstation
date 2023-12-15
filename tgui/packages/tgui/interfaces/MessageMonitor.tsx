@@ -171,8 +171,8 @@ const MainScreenAuth = (props) => {
       <Stack.Item>
         <Section>
           <Input
-            value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            initialValue={auth_password}
+            onChange={(e, value) => setPassword(value)}
             placeholder="Password"
           />
           <Button
@@ -272,23 +272,25 @@ const MainScreenNotAuth = (props) => {
       <Stack.Item>
         <Section>
           <Input
-            value={auth_password}
-            onInput={(e, value) => setPassword(value)}
+            initialValue={auth_password}
+            onChange={(e, value) => setPassword(value)}
             placeholder="Password"
           />
-          <Button
-            content={'Auth'}
-            onClick={() => act('auth', { auth_password: auth_password })}
-          />
+          <Button onClick={() => act('auth', { auth_password: auth_password })}>
+            Auth
+          </Button>
           <Button
             icon={status ? 'power-off' : 'times'}
-            content={status ? 'ON' : 'OFF'}
             color={status ? 'green' : 'red'}
             disabled
             onClick={() => act('turn_server')}
-          />
+          >
+            {status ? 'ON' : 'OFF'}
+          </Button>
           {!!is_malf && (
-            <Button content="Hack" color="red" onClick={() => act('hack')} />
+            <Button color="red" onClick={() => act('hack')}>
+              Hack
+            </Button>
           )}
         </Section>
       </Stack.Item>

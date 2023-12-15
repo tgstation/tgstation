@@ -28,8 +28,8 @@ export const NtosEmojipedia = (props) => {
               <Input
                 type="text"
                 placeholder="Search by name"
-                value={filter}
-                onInput={(_, value) => updatefilter(value)}
+                initialValue={filter}
+                onChange={(_, value) => updatefilter(value)}
               />
               <Button
                 tooltip={'Click on an emoji to copy its tag!'}

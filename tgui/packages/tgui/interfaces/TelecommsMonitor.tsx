@@ -100,14 +100,15 @@ const MainScreen = (props) => {
       <Stack.Item>
         <Section>
           <Input
-            value={networkId}
-            onInput={(e, value) => setNetworkId(value)}
+            initialValue={networkId}
+            onChange={(e, value) => setNetworkId(value)}
             placeholder="Network ID"
           />
           <Button
-            content="Probe Network"
             onClick={() => act('probe_network', { network_id: networkId })}
-          />
+          >
+            Probe Network
+          </Button>
         </Section>
       </Stack.Item>
       <Stack.Item grow>

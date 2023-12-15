@@ -29,10 +29,10 @@ const Story = (props) => {
     <Section>
       <LabeledList>
         <LabeledList.Item label="Input (onChange)">
-          <Input value={text} onChange={(e, value) => setText(value)} />
+          <Input initialValue={text} onChange={(e, value) => setText(value)} />
         </LabeledList.Item>
         <LabeledList.Item label="Input (onInput)">
-          <Input value={text} onInput={(e, value) => setText(value)} />
+          <Input initialValue={text} onInput={(e, value) => setText(value)} />
         </LabeledList.Item>
         <LabeledList.Item label="NumberInput (onChange)">
           <NumberInput

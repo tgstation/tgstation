@@ -133,7 +133,7 @@ export const LaunchpadControl = (props) => {
     <Section
       title={
         <Input
-          value={pad_name}
+          initialValue={pad_name}
           width="170px"
           onChange={(e, value) =>
             act('rename', {

@@ -156,7 +156,7 @@ export const EntryGradient = (props: EntryGradientProps) => {
                 <Input
                   key={index}
                   maxWidth={'70px'}
-                  value={entry}
+                  initialValue={entry}
                   onChange={(e, value) =>
                     act('edit', {
                       var: var_name,
@@ -348,7 +348,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
               <Stack.Item>
                 <Input
                   width={'70px'}
-                  value={iconstate}
+                  initialValue={iconstate}
                   onChange={(e, value) =>
                     act('edit', {
                       var: var_name,
@@ -393,7 +393,7 @@ export const EntryIconState = (props: EntryIconStateProps) => {
         ) : (
           <>
             <Input
-              value={icon_state ? icon_state : 'None'}
+              initialValue={icon_state ? icon_state : 'None'}
               onChange={(e, value) =>
                 act('edit', {
                   var: var_name,

@@ -113,7 +113,7 @@ export const SettingsGeneral = (props) => {
                 />
               )) || (
                 <Input
-                  value={fontFamily}
+                  initialValue={fontFamily}
                   onChange={(e, value) =>
                     dispatch(
                       updateSettings({
@@ -305,7 +305,7 @@ const TextHighlightSetting = (props) => {
             width="5em"
             monospace
             placeholder="#ffffff"
-            value={highlightColor}
+            initialValue={highlightColor}
             onInput={(e, value) =>
               dispatch(
                 updateHighlightSetting({

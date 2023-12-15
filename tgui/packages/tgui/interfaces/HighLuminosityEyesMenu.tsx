@@ -46,7 +46,7 @@ const LightColorDisplay = (props) => {
         tooltip="Randomizes the light color."
       />
       <Input
-        value={lightColor}
+        initialValue={lightColor}
         width={6}
         maxLength={7}
         onChange={(_, value) =>
@@ -122,7 +122,7 @@ const EyeColorDisplay = (props) => {
               tooltip="Randomizes the eye color."
             />
             <Input
-              value={eyeColor.left}
+              initialValue={eyeColor.left}
               width={6}
               maxLength={7}
               onChange={(_, value) =>
@@ -150,7 +150,7 @@ const EyeColorDisplay = (props) => {
               tooltip="Randomizes the eye color."
             />
             <Input
-              value={eyeColor.right}
+              initialValue={eyeColor.right}
               width={6}
               maxLength={7}
               onChange={(_, value) =>

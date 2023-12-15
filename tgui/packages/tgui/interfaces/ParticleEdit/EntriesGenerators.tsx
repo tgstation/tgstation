@@ -107,7 +107,7 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
           <Stack.Item>
             <Input
               animated
-              value={float}
+              initialValue={float}
               onChange={(e, value) =>
                 act('edit', {
                   var: var_name,

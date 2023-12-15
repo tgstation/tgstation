@@ -20,7 +20,7 @@ const Story = (props) => {
         <LabeledList.Item label="Use theme">
           <Input
             placeholder="theme_name"
-            value={theme}
+            initialValue={theme}
             onInput={(e, value) => setTheme(value)}
           />
         </LabeledList.Item>

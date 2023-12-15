@@ -72,7 +72,7 @@ const CentComName = (props) => {
         <Input
           width="100%"
           mt={1}
-          value={command_name}
+          initialValue={command_name}
           placeholder={command_name}
           onChange={(_, value) =>
             act('update_command_name', {
@@ -96,7 +96,7 @@ const SubHeader = (props) => {
       <Input
         width="100%"
         mt={1}
-        value={subheader}
+        initialValue={subheader}
         placeholder={subheader}
         onChange={(_, value) =>
           act('set_subheader', {

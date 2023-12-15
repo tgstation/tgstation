@@ -127,9 +127,9 @@ export class ComponentMenu extends Component {
           <Stack.Item>
             <Input
               placeholder="Search.."
-              value={currentSearch}
+              initialValue={currentSearch}
               fluid
-              onInput={(e, val) =>
+              onChange={(e, val) =>
                 this.setState({
                   currentSearch: val,
                   selectedTab: 'All',

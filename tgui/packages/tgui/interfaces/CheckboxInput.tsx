@@ -98,8 +98,8 @@ export const CheckboxInput = (props) => {
             <Stack.Item grow>
               <Input
                 fluid
-                value={searchQuery}
-                onInput={(_, value) => setSearchQuery(value)}
+                initialValue={searchQuery}
+                onChange={(_, value) => setSearchQuery(value)}
               />
             </Stack.Item>
           </Stack>

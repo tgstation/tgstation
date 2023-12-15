@@ -305,9 +305,9 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                     width="100%"
                     justify
                     id="input"
-                    value={message}
+                    initialValue={message}
                     maxLength={1024}
-                    onInput={this.handleMessageInput}
+                    onChange={this.handleMessageInput}
                     onEnter={this.handleSendMessage}
                   />
                 </Stack.Item>

@@ -64,8 +64,8 @@ export const SelectEquipment = (props) => {
                   fluid
                   autoFocus
                   placeholder="Search"
-                  value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
+                  initialValue={searchText}
+                  onChange={(e, value) => setSearchText(value)}
                 />
               </Stack.Item>
               <Stack.Item>

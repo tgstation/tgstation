@@ -90,7 +90,7 @@ export const FaxMainPanel = (props) => {
           <Input
             mb="5px"
             placeholder="Paper name..."
-            value={paperName}
+            initialValue={paperName}
             width="100%"
             onChange={(_, v) => setPaperName(v)}
           />
@@ -117,7 +117,7 @@ export const FaxMainPanel = (props) => {
               mb="5px"
               placeholder="From who..."
               tooltip="Name what be user in fax history"
-              value={fromWho}
+              initialValue={fromWho}
               width="100%"
               onChange={(_, v) => setFromWho(v)}
             />

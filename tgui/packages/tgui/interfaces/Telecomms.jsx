@@ -56,7 +56,7 @@ export const Telecomms = (props) => {
               buttons={
                 <Input
                   width={13}
-                  value={id}
+                  initialValue={id}
                   onChange={(e, value) => act('id', { value })}
                 />
               }
@@ -66,7 +66,7 @@ export const Telecomms = (props) => {
               buttons={
                 <Input
                   width={10}
-                  value={network}
+                  initialValue={network}
                   defaultValue={'tcommsat'}
                   onChange={(e, value) => act('network', { value })}
                 />

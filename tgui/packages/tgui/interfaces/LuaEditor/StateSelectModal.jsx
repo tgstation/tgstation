@@ -42,8 +42,8 @@ export const StateSelectModal = (props) => {
             <Input
               fluid
               placeholder="New State"
-              value={input}
-              onInput={(_, value) => {
+              initialValue={input}
+              onChange={(_, value) => {
                 setInput(value);
               }}
             />

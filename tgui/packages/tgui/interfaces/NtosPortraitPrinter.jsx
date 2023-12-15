@@ -25,7 +25,7 @@ export const NtosPortraitPrinter = (props) => {
               <Input
                 fluid
                 placeholder="Search Paintings..."
-                value={search_string}
+                initialValue={search_string}
                 onChange={(e, value) => {
                   act('search', {
                     to_search: value,

@@ -40,7 +40,7 @@ export const EditableText = (props: Props) => {
         setEditing(false);
         act('edit_field', { field: field, ref: target_ref, value: value });
       }}
-      value={text}
+      initialValue={text}
     />
   ) : (
     <Stack>
