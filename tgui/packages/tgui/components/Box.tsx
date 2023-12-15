@@ -5,58 +5,24 @@
  */
 
 import { BooleanLike, classes } from 'common/react';
-import { createElement, ReactNode } from 'react';
+import { createElement, MouseEvent, ReactNode } from 'react';
 import { CSS_COLORS } from '../constants';
 
-export type BoxProps = {
-  [key: string]: any;
-  as?: string;
-  className?: string | BooleanLike;
-  children?: ReactNode;
-  position?: string | BooleanLike;
-  overflow?: string | BooleanLike;
-  overflowX?: string | BooleanLike;
-  overflowY?: string | BooleanLike;
-  top?: string | BooleanLike;
-  bottom?: string | BooleanLike;
-  left?: string | BooleanLike;
-  right?: string | BooleanLike;
-  width?: string | BooleanLike;
-  minWidth?: string | BooleanLike;
-  maxWidth?: string | BooleanLike;
-  height?: string | BooleanLike;
-  minHeight?: string | BooleanLike;
-  maxHeight?: string | BooleanLike;
-  fontSize?: string | BooleanLike;
-  fontFamily?: string;
-  lineHeight?: string | BooleanLike;
-  opacity?: number;
-  textAlign?: string | BooleanLike;
-  verticalAlign?: string | BooleanLike;
-  inline?: BooleanLike;
-  bold?: BooleanLike;
-  italic?: BooleanLike;
-  nowrap?: BooleanLike;
-  preserveWhitespace?: BooleanLike;
-  m?: string | BooleanLike;
-  mx?: string | BooleanLike;
-  my?: string | BooleanLike;
-  mt?: string | BooleanLike;
-  mb?: string | BooleanLike;
-  ml?: string | BooleanLike;
-  mr?: string | BooleanLike;
-  p?: string | BooleanLike;
-  px?: string | BooleanLike;
-  py?: string | BooleanLike;
-  pt?: string | BooleanLike;
-  pb?: string | BooleanLike;
-  pl?: string | BooleanLike;
-  pr?: string | BooleanLike;
-  color?: string | BooleanLike;
-  textColor?: string | BooleanLike;
-  backgroundColor?: string | BooleanLike;
-  fillPositionedParent?: boolean;
-};
+type BooleanProps = Partial<Record<keyof typeof booleanStyleMap, boolean>>;
+type StringProps = Partial<
+  Record<keyof typeof stringStyleMap, string | BooleanLike>
+>;
+
+export type BoxProps = Partial<{
+  as: string;
+  children: ReactNode;
+  className: string | BooleanLike;
+  style: Partial<CSSStyleDeclaration>;
+  onClick: (e: MouseEvent<HTMLDivElement>) => void;
+  onMouseOver: (e: MouseEvent<HTMLDivElement>) => void;
+}> &
+  BooleanProps &
+  StringProps;
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
@@ -126,6 +92,7 @@ const mapColorPropTo = (attrName) => (style, value) => {
 
 // String / number props
 const stringStyleMap = {
+  align: mapRawPropTo('align'),
   bottom: mapUnitPropTo('bottom', unit),
   fontFamily: mapRawPropTo('fontFamily'),
   fontSize: mapUnitPropTo('fontSize', unit),
@@ -160,12 +127,12 @@ const stringStyleMap = {
     'Left',
     'Right',
   ]),
-  mx: mapDirectionalUnitPropTo('margin', halfUnit, ['Left', 'Right']),
-  my: mapDirectionalUnitPropTo('margin', halfUnit, ['Top', 'Bottom']),
-  mt: mapUnitPropTo('marginTop', halfUnit),
   mb: mapUnitPropTo('marginBottom', halfUnit),
   ml: mapUnitPropTo('marginLeft', halfUnit),
   mr: mapUnitPropTo('marginRight', halfUnit),
+  mt: mapUnitPropTo('marginTop', halfUnit),
+  mx: mapDirectionalUnitPropTo('margin', halfUnit, ['Left', 'Right']),
+  my: mapDirectionalUnitPropTo('margin', halfUnit, ['Top', 'Bottom']),
   // Padding
   p: mapDirectionalUnitPropTo('padding', halfUnit, [
     'Top',
@@ -173,18 +140,21 @@ const stringStyleMap = {
     'Left',
     'Right',
   ]),
-  px: mapDirectionalUnitPropTo('padding', halfUnit, ['Left', 'Right']),
-  py: mapDirectionalUnitPropTo('padding', halfUnit, ['Top', 'Bottom']),
-  pt: mapUnitPropTo('paddingTop', halfUnit),
   pb: mapUnitPropTo('paddingBottom', halfUnit),
   pl: mapUnitPropTo('paddingLeft', halfUnit),
   pr: mapUnitPropTo('paddingRight', halfUnit),
+  pt: mapUnitPropTo('paddingTop', halfUnit),
+  px: mapDirectionalUnitPropTo('padding', halfUnit, ['Left', 'Right']),
+  py: mapDirectionalUnitPropTo('padding', halfUnit, ['Top', 'Bottom']),
   // Color props
   color: mapColorPropTo('color'),
   textColor: mapColorPropTo('color'),
   backgroundColor: mapColorPropTo('backgroundColor'),
+} as const;
 
-  // Utility props
+// Boolean props
+const booleanStyleMap = {
+  bold: mapBooleanPropTo('fontWeight', 'bold'),
   fillPositionedParent: (style, value) => {
     if (value) {
       style['position'] = 'absolute';
@@ -194,11 +164,6 @@ const stringStyleMap = {
       style['right'] = 0;
     }
   },
-} as const;
-
-// Boolean props
-const booleanStyleMap = {
-  bold: mapBooleanPropTo('fontWeight', 'bold'),
   inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
