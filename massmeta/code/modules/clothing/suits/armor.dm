@@ -34,6 +34,10 @@
 	icon = 'massmeta/icons/obj/clothing/suits/armor.dmi'
 	worn_icon = 'massmeta/icons/mob/clothing/suits/armor.dmi'
 
+/obj/item/clothing/suit/armor/vest/russian_coat
+	icon = 'massmeta/icons/obj/clothing/suits/armor.dmi'
+	worn_icon = 'massmeta/icons/mob/clothing/suits/armor.dmi'
+
 /obj/item/clothing/suit/captunic
 	name = "captain's parade tunic"
 	desc = "Worn by a Captain to show their class."
