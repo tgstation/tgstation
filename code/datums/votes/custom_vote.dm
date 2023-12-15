@@ -41,7 +41,7 @@
 			winner_method = VOTE_WINNER_METHOD_SIMPLE
 
 		if("Weighted Random")
-			winner_method = VOTE_WINNER_METHOD_RANDOM
+			winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
 
 		if("No Winner")
 			winner_method = VOTE_WINNER_METHOD_NONE

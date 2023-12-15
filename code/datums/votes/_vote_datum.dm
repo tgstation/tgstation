@@ -132,7 +132,7 @@
 			return list()
 		if(VOTE_WINNER_METHOD_SIMPLE)
 			return get_simple_winner()
-		if(VOTE_WINNER_METHOD_RANDOM)
+		if(VOTE_WINNER_METHOD_WEIGHTED_RANDOM)
 			return get_random_winner()
 
 	stack_trace("invalid select winner method: [winner_method]. Defaulting to simple.")
@@ -181,8 +181,8 @@
 	switch(winner_method)
 		if(VOTE_WINNER_METHOD_NONE)
 			returned_text += "None"
-		if(VOTE_WINNER_METHOD_RANDOM)
-			returned_text += "Random"
+		if(VOTE_WINNER_METHOD_WEIGHTED_RANDOM)
+			returned_text += "Weighted Random"
 		else
 			returned_text += "Simple"
 
