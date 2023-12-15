@@ -1,10 +1,7 @@
 /client/proc/map_export()
 	set category = "Debug"
-	set name = "Export Map"
+	set name = "Map Export"
 	set desc = "Select a part of the map by coordinates and download it."
-	
-	if(!check_rights(R_DEBUG))
-		return
 
 	var/z_level = tgui_input_number(usr, "Export Which Z-Level?", "Map Exporter", 2)
 	var/start_x = tgui_input_number(usr, "Start X?", "Map Exporter", 1)
@@ -15,7 +12,7 @@
 	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exportedmap_[date]"))
 	var/confirm = tgui_alert(usr, "Are you sure you want to do this? This will cause extreme lag!", "Map Exporter", list("Yes", "No"))
 
-	if(confirm != "Yes")
+	if(confirm != "Yes" || !check_rights(R_DEBUG))
 		return
 
 	var/map_text = write_map(start_x, start_y, z_level, end_x, end_y, z_level)
@@ -33,13 +30,15 @@
 			index = findtext(text, char, index + length(char))
 	return text
 
-/obj/proc/on_object_saved(depth = 0)
+/**
+ * A procedure for saving non-standard properties of an object.
+ * For example, saving ore into a silo, and further spavn by coordinates of metal stacks objects
+ */
+/obj/proc/on_object_saved()
 	return ""
 
 // Save resources in silo
-/obj/machinery/ore_silo/on_object_saved(depth = 0)
-	if(depth >= 10)
-		return ""
+/obj/machinery/ore_silo/on_object_saved()
 	var/data
 	var/datum/component/material_container/material_holder = GetComponent(/datum/component/material_container)
 	for(var/each in material_holder.materials)
@@ -128,9 +127,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	. += ")"
 
 /**
- *
- *
- *
+ *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
  */
 /proc/write_map(
 			minx,
