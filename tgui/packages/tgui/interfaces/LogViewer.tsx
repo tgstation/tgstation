@@ -98,7 +98,7 @@ const CategoryBar = (props: CategoryBarProps) => {
         <Input
           grow
           placeholder="Search"
-          initialValue={categorySearch}
+          value={categorySearch}
           onChange={(_, value) => setCategorySearch(value)}
         />
       }
@@ -179,7 +179,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
             grow
             fill
             placeholder="Search"
-            initialValue={search}
+            value={search}
             onChange={(_, value) => setSearch(value)}
           />
           <Button

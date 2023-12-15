@@ -59,7 +59,7 @@ export const NetpodOutfits = (props) => {
                   autoFocus
                   onChange={(event, value) => setSearch(value)}
                   placeholder="Search"
-                  initialValue={search}
+                  value={search}
                 />
               }
             >

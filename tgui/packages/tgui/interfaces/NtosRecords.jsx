@@ -20,7 +20,7 @@ export const NtosRecords = (props) => {
         <Section>
           <Input
             placeholder={'Filter results...'}
-            initialValue={searchTerm}
+            value={searchTerm}
             fluid
             textAlign="center"
             onChange={(e, value) => setSearchTerm(value)}

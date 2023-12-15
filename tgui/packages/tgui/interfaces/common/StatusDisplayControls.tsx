@@ -79,7 +79,7 @@ export const StatusDisplayControls = (props) => {
             <Input
               fluid
               maxLength={maxStatusLineLength}
-              initialValue={upperText}
+              value={upperText}
               onChange={(_, value) => setUpperText(value)}
             />
           </Flex.Item>
@@ -88,7 +88,7 @@ export const StatusDisplayControls = (props) => {
             <Input
               fluid
               maxLength={maxStatusLineLength}
-              initialValue={lowerText}
+              value={lowerText}
               onChange={(_, value) => setLowerText(value)}
             />
           </Flex.Item>

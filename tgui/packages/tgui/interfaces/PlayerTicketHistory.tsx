@@ -171,7 +171,7 @@ const Cache = (props: CacheProps) => {
       <div>
         Query and cache:&nbsp;
         <Input
-          initialValue={props.cacheInput}
+          value={props.cacheInput}
           onChange={(_: any, value: string) =>
             props.setCacheInput(value.toLowerCase())
           }

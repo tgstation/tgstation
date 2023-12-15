@@ -153,7 +153,7 @@ const IdCardPage = (props) => {
             <Stack.Item grow={1} mr={1} ml={1}>
               <Input
                 width="100%"
-                initialValue={id_owner}
+                value={id_owner}
                 onChange={(e, value) =>
                   act('PRG_edit', {
                     name: value,
@@ -181,7 +181,7 @@ const IdCardPage = (props) => {
               <Input
                 fluid
                 mt={1}
-                initialValue={id_rank}
+                value={id_rank}
                 onChange={(e, value) =>
                   act('PRG_assign', {
                     assignment: value,

@@ -53,7 +53,7 @@ export const CyborgBootDebug = (props) => {
             >
               <Input
                 fluid
-                initialValue={designation || 'Default Cyborg'}
+                value={designation || 'Default Cyborg'}
                 onChange={(e, value) =>
                   act('rename', {
                     new_name: value,

@@ -134,12 +134,7 @@ const PortEntry = (props) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input
-            placeholder="Name"
-            initialValue={name}
-            onChange={onEnter}
-            fluid
-          />
+          <Input placeholder="Name" value={name} onChange={onEnter} fluid />
         </Stack.Item>
         <Stack.Item>
           <Dropdown

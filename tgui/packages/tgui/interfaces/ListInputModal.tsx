@@ -248,7 +248,7 @@ const SearchBar = (props) => {
       }}
       onChange={(_, value) => onSearch(value)}
       placeholder="Search..."
-      initialValue={searchQuery}
+      value={searchQuery}
     />
   );
 };

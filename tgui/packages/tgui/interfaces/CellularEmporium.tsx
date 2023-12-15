@@ -72,7 +72,7 @@ export const CellularEmporium = (props) => {
                   width="200px"
                   onChange={(event, value) => setSearchAbilities(value)}
                   placeholder="Search Abilities..."
-                  initialValue={searchAbilities}
+                  value={searchAbilities}
                 />
               </Stack.Item>
             </Stack>

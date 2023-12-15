@@ -75,7 +75,7 @@ const InputDisplay = (props) => {
           <Input
             fluid
             maxLength={41}
-            initialValue={name}
+            value={name}
             onChange={(e, value) => setInput({ ...input, name: value })}
           />
         </Stack.Item>
@@ -86,7 +86,7 @@ const InputDisplay = (props) => {
           <Input
             fluid
             maxLength={100}
-            initialValue={description}
+            value={description}
             onChange={(e, value) => setInput({ ...input, description: value })}
           />
         </Stack.Item>
@@ -97,7 +97,7 @@ const InputDisplay = (props) => {
           <Input
             fluid
             maxLength={100}
-            initialValue={comments}
+            value={comments}
             onChange={(e, value) => setInput({ ...input, comments: value })}
           />
         </Stack.Item>

@@ -118,7 +118,7 @@ export const StackCrafting = (_props) => {
               Search
               <Input
                 autoFocus
-                initialValue={searchText}
+                value={searchText}
                 onChange={(e, value) => setSearchText(value)}
                 mx={1}
               />

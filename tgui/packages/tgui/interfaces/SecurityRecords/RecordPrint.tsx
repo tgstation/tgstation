@@ -123,7 +123,7 @@ export const RecordPrint = (props) => {
           <Input
             onChange={(event, value) => setHeader(value)}
             maxLength={7}
-            initialValue={header}
+            value={header}
           />
           <Button
             icon="sync"
@@ -136,7 +136,7 @@ export const RecordPrint = (props) => {
           <Input
             onChange={(event, value) => setAlias(value)}
             maxLength={42}
-            initialValue={alias}
+            value={alias}
             width="55%"
           />
           <Button
@@ -153,7 +153,7 @@ export const RecordPrint = (props) => {
                 fluid
                 maxLength={150}
                 onChange={(event, value) => setDescription(value)}
-                initialValue={description}
+                value={description}
               />
             </Stack.Item>
             <Stack.Item>

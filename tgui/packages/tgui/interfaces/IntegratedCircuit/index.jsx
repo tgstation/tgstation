@@ -461,7 +461,7 @@ export class IntegratedCircuit extends Component {
                 <Input
                   fluid
                   placeholder="Name"
-                  initialValue={display_name}
+                  value={display_name}
                   onChange={(e, value) =>
                     act('set_display_name', { display_name: value })
                   }

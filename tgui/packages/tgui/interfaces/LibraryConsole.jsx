@@ -296,7 +296,7 @@ const CheckoutModal = (props) => {
         <LabeledList.Item label="Loan To">
           <Input
             width="160px"
-            initialValue={checkoutee}
+            value={checkoutee}
             onChange={(e, value) => setCheckoutee(value)}
           />
         </LabeledList.Item>
@@ -406,7 +406,7 @@ export const SearchAndDisplay = (props) => {
           <Stack>
             <Stack.Item>
               <Input
-                initialValue={book_id}
+                value={book_id}
                 placeholder={book_id === null ? 'ID' : book_id}
                 mt={0.5}
                 width="70px"
@@ -430,7 +430,7 @@ export const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Input
-                initialValue={title}
+                value={title}
                 placeholder={title || 'Title'}
                 mt={0.5}
                 onChange={(e, value) =>
@@ -442,7 +442,7 @@ export const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Input
-                initialValue={author}
+                value={author}
                 placeholder={author || 'Author'}
                 mt={0.5}
                 onChange={(e, value) =>
@@ -552,7 +552,7 @@ export const Upload = (props) => {
                 <Stack.Item>
                   <Input
                     fontSize="20px"
-                    initialValue={cache_title}
+                    value={cache_title}
                     placeholder={cache_title || 'Title'}
                     mt={0.5}
                     width={22}
@@ -571,7 +571,7 @@ export const Upload = (props) => {
                 <Stack.Item>
                   <Input
                     fontSize="20px"
-                    initialValue={cache_author}
+                    value={cache_author}
                     placeholder={cache_author || 'Author'}
                     mt={0.5}
                     onChange={(e, value) =>

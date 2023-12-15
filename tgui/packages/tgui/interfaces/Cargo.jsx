@@ -223,7 +223,7 @@ export const CargoCatalog = (props) => {
                   <Input
                     fluid
                     placeholder="Search..."
-                    initialValue={searchText}
+                    value={searchText}
                     onChange={(e, value) => {
                       if (value === searchText) {
                         return;
@@ -448,9 +448,7 @@ const CargoCart = (props) => {
                       })
                     }
                   />
-                )) || (
-                  <Input width="40px" initialValue={entry.amount} disabled />
-                )}
+                )) || <Input width="40px" value={entry.amount} disabled />}
               </Table.Cell>
               <Table.Cell inline ml="5px" width="10px">
                 {!!can_send && !!entry.can_be_cancelled && (

@@ -18,7 +18,7 @@ export const MechpadControl = (props) => {
     <Section
       title={
         <Input
-          initialValue={pad_name}
+          value={pad_name}
           width="200px"
           onChange={(e, value) =>
             act('rename', {

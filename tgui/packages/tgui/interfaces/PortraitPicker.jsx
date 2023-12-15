@@ -24,7 +24,7 @@ export const PortraitPicker = (props) => {
               <Input
                 fluid
                 placeholder="Search Paintings..."
-                initialValue={search_string}
+                value={search_string}
                 onChange={(e, value) => {
                   act('search', {
                     to_search: value,

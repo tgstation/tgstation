@@ -48,7 +48,7 @@ const Info = (props) => {
         {can_rename ? (
           <Input
             placeholder="Input a name"
-            initialValue={name === 'Unknown' ? '' : name}
+            value={name === 'Unknown' ? '' : name}
             onChange={(_, value) =>
               act('rename_disease', {
                 index: index,

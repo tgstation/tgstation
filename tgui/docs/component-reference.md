@@ -546,7 +546,7 @@ A basic text input, which allow users to enter text into a UI.
 **Props:**
 
 - See inherited props: [Box](#box)
-- `value: string` - The INITIAL value of an input.
+- `value: string` - The initial value displayed on the input.
 - `placeholder: string` - Text placed into Input box when it's empty,
   otherwise nothing. Clears automatically when focused.
 - `fluid: boolean` - Fill all available horizontal space.

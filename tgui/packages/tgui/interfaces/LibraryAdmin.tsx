@@ -133,7 +133,7 @@ const SearchAndDisplay = (props) => {
           <Stack>
             <Stack.Item>
               <Input
-                initialValue={book_id}
+                value={book_id}
                 placeholder={book_id === null ? 'ID' : String(book_id)}
                 width="70px"
                 onChange={(e, value) =>
@@ -156,7 +156,7 @@ const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Input
-                initialValue={title}
+                value={title}
                 placeholder={title || 'Title'}
                 mt={0.5}
                 onChange={(e, value) =>
@@ -168,7 +168,7 @@ const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Input
-                initialValue={author}
+                value={author}
                 placeholder={author || 'Author'}
                 mt={0.5}
                 onChange={(e, value) =>
@@ -180,7 +180,7 @@ const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Input
-                initialValue={author_ckey}
+                value={author_ckey}
                 placeholder={author_ckey || 'Ckey'}
                 mt={0.5}
                 onChange={(e, value) =>

@@ -129,7 +129,7 @@ export const OreRedemptionMachine = (props) => {
               height="20px"
               width="150px"
               placeholder="Search Material..."
-              initialValue={searchItem}
+              value={searchItem}
               onChange={(e, value) => {
                 setSearchItem(value);
 

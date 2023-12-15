@@ -77,11 +77,10 @@ export const Input = (props: Props) => {
   };
 
   useEffect(() => {
-    const nextValue = value;
     const input = inputRef.current;
     if (!input) return;
 
-    input.value = toInputValue(nextValue);
+    input.value = toInputValue(value);
     if (autoFocus || autoSelect) {
       setTimeout(() => {
         input.focus();

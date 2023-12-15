@@ -95,7 +95,7 @@ export const PanelOptions = (props) => {
           fluid
           onChange={(e, value) => setSearchQuery(value)}
           placeholder="Search..."
-          initialValue={searchQuery}
+          value={searchQuery}
         />
       </Stack.Item>
       <Stack.Item>

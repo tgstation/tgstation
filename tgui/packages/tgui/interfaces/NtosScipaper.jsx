@@ -54,7 +54,7 @@ const PaperPublishing = (props) => {
           <LabeledList.Item label="Title">
             <Input
               fluid
-              initialValue={title}
+              value={title}
               onChange={(e, value) =>
                 act('rewrite', {
                   title: value,
@@ -65,7 +65,7 @@ const PaperPublishing = (props) => {
           <LabeledList.Item label="Principal Author">
             <Input
               fluid
-              initialValue={author}
+              value={author}
               onChange={(e, value) =>
                 act('rewrite', {
                   author: value,
@@ -79,7 +79,7 @@ const PaperPublishing = (props) => {
           <LabeledList.Item label="Abstract">
             <Input
               fluid
-              initialValue={abstract}
+              value={abstract}
               onChange={(e, value) =>
                 act('rewrite', {
                   abstract: value,

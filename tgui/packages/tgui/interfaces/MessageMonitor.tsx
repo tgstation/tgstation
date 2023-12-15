@@ -171,7 +171,7 @@ const MainScreenAuth = (props) => {
       <Stack.Item>
         <Section>
           <Input
-            initialValue={auth_password}
+            value={auth_password}
             onChange={(e, value) => setPassword(value)}
             placeholder="Password"
           />
@@ -272,7 +272,7 @@ const MainScreenNotAuth = (props) => {
       <Stack.Item>
         <Section>
           <Input
-            initialValue={auth_password}
+            value={auth_password}
             onChange={(e, value) => setPassword(value)}
             placeholder="Password"
           />

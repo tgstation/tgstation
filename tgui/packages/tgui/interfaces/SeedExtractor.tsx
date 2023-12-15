@@ -81,7 +81,7 @@ export const SeedExtractor = (props) => {
                 <Input
                   autoFocus
                   placeholder={'Search...'}
-                  initialValue={searchText}
+                  value={searchText}
                   onChange={(e, value) => setSearchText(value)}
                   fluid
                 />

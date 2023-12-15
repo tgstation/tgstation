@@ -91,7 +91,7 @@ export const MultiNameInput = (props: {
                                 onEscape={() => {
                                   setCurrentlyEditingName(null);
                                 }}
-                                initialValue={props.names[key]}
+                                value={props.names[key]}
                               />
                             );
                           } else {
@@ -197,7 +197,7 @@ export const NameInput = (props: {
               onEscape={() => {
                 setLastNameBeforeEdit(null);
               }}
-              initialValue={props.name}
+              value={props.name}
             />
           )) || (
             <FitText maxFontSize={16} maxWidth={130}>

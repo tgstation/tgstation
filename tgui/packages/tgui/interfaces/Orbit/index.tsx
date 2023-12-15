@@ -99,7 +99,7 @@ const ObservableSearch = (props) => {
             onEnter={(event, value) => orbitMostRelevant(value)}
             onChange={(event, value) => setSearchQuery(value)}
             placeholder="Search..."
-            initialValue={searchQuery}
+            value={searchQuery}
           />
         </Stack.Item>
         <Stack.Divider />

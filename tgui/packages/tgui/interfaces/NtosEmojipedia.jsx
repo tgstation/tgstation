@@ -28,7 +28,7 @@ export const NtosEmojipedia = (props) => {
               <Input
                 type="text"
                 placeholder="Search by name"
-                initialValue={filter}
+                value={filter}
                 onChange={(_, value) => updatefilter(value)}
               />
               <Button

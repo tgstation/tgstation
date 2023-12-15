@@ -83,7 +83,7 @@ const FilterTextEntry = (props) => {
 
   return (
     <Input
-      initialValue={value}
+      value={value}
       width="250px"
       onChange={(e, value) =>
         act('modify_filter_value', {
@@ -112,7 +112,7 @@ const FilterColorEntry = (props) => {
       />
       <ColorBox color={value} mr={0.5} />
       <Input
-        initialValue={value}
+        value={value}
         width="90px"
         onChange={(e, value) =>
           act('transition_filter_value', {
@@ -302,7 +302,7 @@ export const Filteriffic = (props) => {
                   MASS EDIT:
                 </Box>
                 <Input
-                  initialValue={massApplyPath}
+                  value={massApplyPath}
                   width="100px"
                   onChange={(e, value) => setMassApplyPath(value)}
                 />

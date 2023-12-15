@@ -65,7 +65,7 @@ export class CircuitSignalHandler extends Component<
                 <Stack.Item grow>
                   <Input
                     placeholder="Signal ID"
-                    initialValue={signal_id}
+                    value={signal_id}
                     fluid
                     onChange={(e, value) => this.setState({ signal_id: value })}
                   />
@@ -215,12 +215,7 @@ const Entry = (props: EntryProps) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input
-            placeholder="Name"
-            initialValue={name}
-            onChange={onChange}
-            fluid
-          />
+          <Input placeholder="Name" value={name} onChange={onChange} fluid />
         </Stack.Item>
         <Stack.Item>
           {(options.length && (

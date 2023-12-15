@@ -127,7 +127,7 @@ export class ComponentMenu extends Component {
           <Stack.Item>
             <Input
               placeholder="Search.."
-              initialValue={currentSearch}
+              value={currentSearch}
               fluid
               onChange={(e, val) =>
                 this.setState({
