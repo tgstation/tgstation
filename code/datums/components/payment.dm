@@ -54,10 +54,10 @@
 		card = user.get_idcard(TRUE)
 	if(!card && istype(user.pulling, /obj/item/card/id))
 		card = user.pulling
-	if(handle_card(source, user, card, total_cost))
-		return //Only breaks here if the card can handle the cost of purchasing with someone's ID.
 	if(handle_cardless(source, user, total_cost)) //Here we attempt to handle the purchase physically, with held money first. Otherwise we default to below.
 		return
+	if(handle_card(source, user, card, total_cost))
+		return //Only breaks here if the card can handle the cost of purchasing with someone's ID.
 	return COMPONENT_OBJ_CANCEL_CHARGE
 
 /**
