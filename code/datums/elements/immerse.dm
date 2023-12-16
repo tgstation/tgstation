@@ -109,7 +109,7 @@
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
 		return
-	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE_UPPER_FOV_HIDDEN, source)))
+	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
 		return
 	if(is_type_in_typecache(movable, movables_to_ignore))
 		return

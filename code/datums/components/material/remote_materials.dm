@@ -124,8 +124,12 @@ handles linking back and forth.
 		_MakeLocal()
 
 ///Insert mats into silo
-/datum/component/remote_materials/proc/SiloAttackBy(datum/source, obj/item/target, mob/user)
+/datum/component/remote_materials/proc/SiloAttackBy(datum/source, obj/item/target, mob/living/user)
 	SIGNAL_HANDLER
+
+	//Allows you to attack the machine with iron sheets for e.g.
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
+		return
 
 	if(silo)
 		mat_container.user_insert(target, user, mat_container_flags, parent)

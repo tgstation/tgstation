@@ -392,6 +392,8 @@
 	if(markone.name != initial(markone.name))
 		newmech.name = markone.name
 	markone.wreckage = FALSE
+	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
+		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
 	playsound(get_turf(newmech),'sound/items/ratchet.ogg',50,TRUE)
 

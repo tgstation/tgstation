@@ -25,8 +25,7 @@
 
 /obj/item/organ/internal/zombie_infection/on_mob_insert(mob/living/carbon/M, special = FALSE, movement_flags)
 	. = ..()
-	if(!.)
-		return .
+
 	START_PROCESSING(SSobj, src)
 
 /obj/item/organ/internal/zombie_infection/on_mob_remove(mob/living/carbon/M, special = FALSE)
