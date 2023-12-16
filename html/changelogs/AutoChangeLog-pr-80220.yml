@@ -1,0 +1,5 @@
+author: "DATA-xPUNGED"
+delete-after: True
+changes:
+  - balance: "Exosuit Materials 1 now only requires one mech."
+  - qol: "Exosuit Materials 1 is much more lenient on the percentage it requires.\n/🆑"
