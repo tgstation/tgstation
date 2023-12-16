@@ -1,19 +1,51 @@
 ///Bloodsuckers spawning a Guardian will get the Bloodsucker one instead.
-/obj/item/guardian_creator/spawn_guardian(mob/living/user, mob/dead/candidate)
-	var/list/guardians = user.get_all_linked_holoparasites()
-	if(length(guardians))
-		to_chat(user, span_holoparasite("You already have a [mob_name]!"))
-		used = FALSE
-		return
-	if(IS_BLOODSUCKER(user))
-		var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = new(user, GUARDIAN_THEME_MAGIC)
+/obj/item/guardian_creator/attack_self(mob/living/user)
+	// If this code looks odd, it's because I'm intentionally inserting a hack,
+	// as I'm trying to avoid touching `guardian_creator.dm` in a major way. The
+	// intent with this hack is to force Bloodsuckers to always get a Timestop
+	// Guardian, no matter the item that a Bloodsucker uses to get a guardian.
+	//
+	// There is plans to refactor/modularization guardians, which will hopefully
+	// allow this all to happen without as much of a hack.
 
-		bloodsucker_guardian.set_summoner(user, different_person = TRUE)
-		bloodsucker_guardian.key = candidate.key
-		user.log_message("has summoned [key_name(bloodsucker_guardian)], a [bloodsucker_guardian.creator_name] holoparasite.", LOG_GAME)
-		bloodsucker_guardian.log_message("was summoned as a [bloodsucker_guardian.creator_name] holoparasite.", LOG_GAME)
-		to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
-		bloodsucker_guardian.client?.init_verbs()
+	// START COPIED CODE FROM guardian_creator.dm
+	if(isguardian(user) && !allow_guardian)
+		balloon_alert(user, "can't do that!")
+		return
+	var/list/guardians = user.get_all_linked_holoparasites()
+	if(length(guardians) && !allow_multiple)
+		balloon_alert(user, "already have one!")
+		return
+	if(user.mind && user.mind.has_antag_datum(/datum/antagonist/changeling) && !allow_changeling)
+		to_chat(user, ling_failure)
+		return
+	if(used)
+		to_chat(user, used_message)
+		return
+	// END COPIED CODE FROM guardian_creator.dm
+
+	if (IS_BLOODSUCKER(user))
+		//var/mob/living/basic/guardian/standard/timestop/guardian_path = new(user, GUARDIAN_THEME_MAGIC)
+		var/mob/living/basic/guardian/guardian_path = /mob/living/basic/guardian/standard/timestop
+
+		// START COPIED CODE FROM guardian_creator.dm
+		used = TRUE
+		to_chat(user, use_message)
+		var/guardian_type_name = capitalize(initial(guardian_path.creator_name))
+		var/list/mob/dead/observer/candidates = poll_ghost_candidates(
+			"Do you want to play as [user.real_name]'s [guardian_type_name] [mob_name]?",
+			jobban_type = ROLE_PAI,
+			poll_time = 10 SECONDS,
+			ignore_category = POLL_IGNORE_HOLOPARASITE,
+		)
+		if(LAZYLEN(candidates))
+			var/mob/dead/observer/candidate = pick(candidates)
+			spawn_guardian(user, candidate, guardian_path)
+		else
+			to_chat(user, failure_message)
+			used = FALSE
+		// END COPIED CODE FROM guardian_creator.dm
+
 		return
 
 	// Call parent to deal with everyone else
