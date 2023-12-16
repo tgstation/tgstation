@@ -345,7 +345,7 @@ Moving interrupts
 	. = ..()
 
 	if (!sculpting && prepared_block && ismovable(target) && prepared_block.completion == 0)
-		prepared_block.set_target(target,user)
+		prepared_block.set_target(target, user)
 
 	return . | AFTERATTACK_PROCESSED_ITEM
 
@@ -520,7 +520,6 @@ Moving interrupts
 
 	if(material.beauty_modifier)
 		beauty_value = material.beauty_modifier
-		//source.AddElement(/datum/element/beauty, beauty_modifier * amount)
 		if(user.mind)
 			sculpting_skill_level = user.mind.get_skill_level(/datum/skill/sculpting)
 			sculpting_beauty_muliplier *= user.mind.get_skill_modifier(/datum/skill/sculpting, SKILL_VALUE_MODIFIER)
@@ -545,6 +544,12 @@ Moving interrupts
 
 	user.add_mood_event("sculpting", /datum/mood_event/sculpting)
 	user.add_mob_memory(/datum/memory/sculpting, antagonist=src, statue_name=statue_name)
+
+	var/datum/antagonist/obsessed/creeper = user.mind?.has_antag_datum(/datum/antagonist/obsessed)
+	if(creeper && creeper.trauma.obsession)
+		if(current_target == creeper.trauma.obsession)
+			creeper.trauma.obsession_statue = TRUE
+
 	qdel(src)
 
 /obj/structure/carving_block/proc/set_completion(value, animate_statue=FALSE)

@@ -70,7 +70,7 @@
 	H.regenerate_icons()
 
 /datum/antagonist/obsessed/forge_objectives(datum/mind/obsessionmind)
-	var/list/objectives_left = list("spendtime", "polaroid", "hug")
+	var/list/objectives_left = list("spendtime", "polaroid", "hug", "statue")
 	var/datum/objective/assassinate/obsessed/kill = new
 	kill.owner = owner
 	kill.target = obsessionmind
@@ -118,6 +118,11 @@
 				jealous.owner = owner
 				jealous.target = obsessionmind//will reroll into a coworker on the objective itself
 				objectives += jealous
+			if("statue")
+				var/datum/objective/statue/statue = new
+				statue.owner = owner
+				statue.target = obsessionmind
+				objectives += statue
 
 	objectives += kill//finally add the assassinate last, because you'd have to complete it last to greentext.
 	for(var/datum/objective/O in objectives)
@@ -276,3 +281,20 @@
 		explanation_text = "Steal [target.name]'s family heirloom, [steal_target] they cherish."
 	else
 		explanation_text = "Free Objective"
+
+/datum/objective/statue // make a statue out of your obsession
+	name = "statue"
+
+/datum/objective/statue/update_explanation_text()
+	..()
+	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
+	if(target?.current && creeper)
+		explanation_text = "Make a statue out of [target.name] using a chisel and carving block."
+	else
+		explanation_text = "Free Objective"
+
+/datum/objective/statue/check_completion()
+	var/datum/antagonist/obsessed/creeper = owner.has_antag_datum(/datum/antagonist/obsessed)
+	if(!creeper || !creeper.trauma)
+		return TRUE // free objective
+	return creeper.trauma.obsession_statue

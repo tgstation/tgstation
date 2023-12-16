@@ -15,6 +15,8 @@
 	var/total_time_creeping = 0 //just for round end fun
 	var/time_spent_away = 0
 	var/obsession_hug_count = 0
+	/// if we made a statue out of our obession
+	var/obsession_statue
 
 /datum/brain_trauma/special/obsessed/on_gain()
 
