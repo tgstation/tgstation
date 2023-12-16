@@ -167,15 +167,18 @@ const QuestionArea = (props: Question) => {
     });
   };
 
-  const changedResponse = !!response && userInput !== response;
+  // Determine if the response has changed
+  const changedResponse = userInput !== response;
 
   return (
     <Section
       title={`Question ${qidx}`}
       buttons={
         <Button
-          color={!changedResponse && 'good'}
-          disabled={!changedResponse || read_only}
+          // Set color to null if userInput is empty or matches the response
+          color={!userInput || !changedResponse ? null : 'good'}
+          // Disable the button if read_only is true or if userInput is not changed and not empty
+          disabled={read_only || (!changedResponse && !!userInput)}
           onClick={saveResponse}
           icon={!changedResponse ? 'check' : 'save'}
         >
