@@ -124,7 +124,7 @@
 	outfit_weight = 5
 
 /datum/outfit/job/assistant/gimmick/hall_monitor
-	name = "Gimmick Assistant = Hall Monitor"
+	name = "Gimmick Assistant - Hall Monitor"
 	head = /obj/item/clothing/head/collectable/police
 	mask = /obj/item/clothing/mask/whistle
 	uniform = /obj/item/clothing/under/color/red
@@ -151,10 +151,12 @@
 
 /datum/outfit/job/assistant/gimmick/lightbringer
 	name = "Gimmick Assistant - Lightbringer"
+	uniform = /obj/item/clothing/under/color/yellow
+	head = /obj/item/clothing/head/costume/cueball
+	gloves = /obj/item/clothing/gloves/color/black
+
 	l_pocket = /obj/item/flashlight/lantern
 	r_pocket = /obj/item/lightreplacer
-
-	uniform = /obj/item/clothing/under/color/yellow
 
 	outfit_weight = 3
 
