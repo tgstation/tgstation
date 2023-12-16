@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { Component } from 'react';
+import { Component, KeyboardEvent } from 'react';
 import { useBackend } from '../backend';
 import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
 import { Window } from '../layouts';
@@ -93,7 +93,7 @@ export class CircuitSignalHandler extends Component<
                             responseList.splice(index, 1);
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onChange={(e, value) => {
                             const param = responseList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -142,7 +142,7 @@ export class CircuitSignalHandler extends Component<
                             param.datatype = type;
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onChange={(e, value) => {
                             const param = parameterList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -193,7 +193,7 @@ export class CircuitSignalHandler extends Component<
 
 type EntryProps = {
   onRemove: (e: MouseEvent) => any;
-  onEnter: (e: MouseEvent, value: string) => any;
+  onChange: (e: KeyboardEvent<HTMLInputElement>, value: string) => any;
   onSetOption?: (type: string) => any;
   name: string;
   current_option: string;
@@ -203,7 +203,7 @@ type EntryProps = {
 const Entry = (props: EntryProps) => {
   const {
     onRemove,
-    onEnter,
+    onChange,
     onSetOption,
     name,
     current_option,
@@ -215,7 +215,7 @@ const Entry = (props: EntryProps) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input placeholder="Name" value={name} onChange={onEnter} fluid />
+          <Input placeholder="Name" value={name} onChange={onChange} fluid />
         </Stack.Item>
         <Stack.Item>
           {(options.length && (

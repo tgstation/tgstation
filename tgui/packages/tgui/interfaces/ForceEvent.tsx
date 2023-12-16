@@ -93,7 +93,7 @@ export const PanelOptions = (props) => {
         <Input
           autoFocus
           fluid
-          onInput={(e) => setSearchQuery(e.target.value)}
+          onChange={(e, value) => setSearchQuery(value)}
           placeholder="Search..."
           value={searchQuery}
         />
