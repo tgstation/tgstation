@@ -6019,6 +6019,7 @@
 #include "monkestation\code\modules\client\preferences\species_features\secondary_mut_color.dm"
 #include "monkestation\code\modules\client\preferences\species_features\simians.dm"
 #include "monkestation\code\modules\clothing\accessories\accessories.dm"
+#include "monkestation\code\modules\clothing\costumes\gnome.dm"
 #include "monkestation\code\modules\clothing\gloves\gloves.dm"
 #include "monkestation\code\modules\clothing\head\costume.dm"
 #include "monkestation\code\modules\clothing\head\misc.dm"
