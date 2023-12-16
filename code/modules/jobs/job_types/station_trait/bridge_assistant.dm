@@ -6,7 +6,7 @@
 	faction = FACTION_STATION
 	total_positions = 0
 	spawn_positions = 0
-	supervisors = SUPERVISOR_CAPTAIN
+	supervisors = "the Captain, and in non-Bridge related situations the other heads"
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW

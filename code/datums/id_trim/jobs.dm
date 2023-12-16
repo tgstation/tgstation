@@ -204,7 +204,7 @@
 
 /datum/id_trim/job/bridge_assistant
 	assignment = "Bridge Assistant"
-	trim_state = "trim_bridgeassistant"
+	trim_state = "trim_assistant"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_COMMAND_BLUE
 	sechud_icon_state = SECHUD_BRIDGE_ASSISTANT
