@@ -65,6 +65,7 @@ export const Interview = (props) => {
   } = data;
 
   const allAnswered = questions.every((q) => q.response);
+  const numAnswered = questions.filter((q) => q.response)?.length;
 
   return (
     <Window
@@ -84,9 +85,13 @@ export const Interview = (props) => {
             <span>
               <Button
                 onClick={() => act('submit')}
-                disabled={read_only || !allAnswered}
+                disabled={read_only || !allAnswered || !questions.length}
                 icon="envelope"
-                tooltip={!allAnswered && 'Please answer all questions.'}
+                tooltip={
+                  !allAnswered &&
+                  `Please answer all questions.
+                     ${numAnswered} / ${questions.length}`
+                }
               >
                 {read_only ? 'Submitted' : 'Submit'}
               </Button>
@@ -167,22 +172,22 @@ const QuestionArea = (props: Question) => {
     });
   };
 
-  // Determine if the response has changed
   const changedResponse = userInput !== response;
+
+  const saveAvailable = !read_only && !!userInput && changedResponse;
+
+  const isSaved = !!response && !changedResponse;
 
   return (
     <Section
       title={`Question ${qidx}`}
       buttons={
         <Button
-          // Set color to null if userInput is empty or matches the response
-          color={!userInput || !changedResponse ? null : 'good'}
-          // Disable the button if read_only is true or if userInput is not changed and not empty
-          disabled={read_only || (!changedResponse && !!userInput)}
+          disabled={!saveAvailable}
           onClick={saveResponse}
-          icon={!changedResponse ? 'check' : 'save'}
+          icon={isSaved ? 'check' : 'save'}
         >
-          {!changedResponse ? 'Saved' : 'Save'}
+          {isSaved ? 'Saved' : 'Save'}
         </Button>
       }
     >
