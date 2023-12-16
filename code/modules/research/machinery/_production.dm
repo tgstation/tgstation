@@ -32,11 +32,8 @@
 	. = ..()
 
 	cached_designs = list()
-	materials = AddComponent(
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
+
 	AddComponent(
 		/datum/component/payment, \
 		0, \

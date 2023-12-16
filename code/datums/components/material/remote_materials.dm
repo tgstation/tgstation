@@ -132,7 +132,7 @@ handles linking back and forth.
 		return
 
 	if(silo)
-		mat_container.user_insert(target, user, mat_container_flags, parent)
+		mat_container.user_insert(target, user, parent)
 
 	return COMPONENT_NO_AFTERATTACK
 
