@@ -85,6 +85,7 @@
 	var/list/choices = list()
 	// Assoc list of [name] to [path] for after the radial, to spawn it
 	var/list/names_to_path = list()
+	var/list/which_list_to_pick = list()
 
 	// Assoc list of [name] to [image] for the radial, to choose between organs or bodyparts
 	var/list/organs_or_bodyparts = list()
@@ -101,13 +102,14 @@
 
 	switch(picked_type)
 		if("organs")
-			for(var/obj/item/organ/organs as anything in organs_list)
-				names_to_path[initial(organs.name)] = organs
-				choices[initial(organs.name)] = image(icon = initial(organs.icon), icon_state = initial(organs.icon_state))
+			which_list_to_pick = organs_list
+
 		if("bodyparts")
-			for(var/obj/item/bodypart/bodyparts as anything in bodyparts_list)
-				names_to_path[initial(bodyparts.name)] = bodyparts
-				choices[initial(bodyparts.name)] = image(icon = initial(bodyparts.icon), icon_state = initial(bodyparts.icon_state))
+			which_list_to_pick = bodyparts_list
+
+	for(var/obj/item/bodypart/stuff_to_spawn as anything in which_list_to_pick)
+		names_to_path[initial(stuff_to_spawn.name)] = stuff_to_spawn
+		choices[initial(stuff_to_spawn.name)] = image(icon = initial(stuff_to_spawn.icon), icon_state = initial(stuff_to_spawn.icon_state))
 
 	// Which Organs/Bodyparts would the heretic choose to spawn.
 	var/picked_choice = show_radial_menu(
