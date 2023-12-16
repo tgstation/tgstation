@@ -1,0 +1,4 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - bugfix: "removed the ability to break server rules from beepskies, medibots, spray tan and hailers"
