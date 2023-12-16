@@ -105,8 +105,11 @@
 
 	switch(action)
 		if("siphon")
-			say("Siphon of station credits has begun!")
-			start_siphon(ui.user)
+			if(is_station_level(src.z) || is_centcom_level(src.z))
+				say("Siphon of station credits has begun!")
+				start_siphon(ui.user)
+			else
+				say("Error: Console not in reach of station, withdrawal cannot begin.")
 			. = TRUE
 		if("halt")
 			say("Station credit withdrawal halted.")
