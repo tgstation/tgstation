@@ -6,7 +6,7 @@
 		used = FALSE
 		return
 	if(IS_BLOODSUCKER(user))
-		var/mob/living/basic/guardian/standard/bloodsucker_guardian = new(user, GUARDIAN_THEME_MAGIC)
+		var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = new(user, GUARDIAN_THEME_MAGIC)
 
 		bloodsucker_guardian.set_summoner(user, different_person = TRUE)
 		bloodsucker_guardian.key = candidate.key
@@ -22,7 +22,7 @@
 /**
  * The Guardian itself
  */
-/mob/living/basic/guardian/standard
+/mob/living/basic/guardian/standard/timestop
 	// Like Bloodsuckers do, you will take more damage to Burn and less to Brute
 	damage_coeff = list(BRUTE = 0.5, BURN = 2.5, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
 
@@ -30,7 +30,7 @@
 	creator_desc = "Devastating close combat attacks and high damage resistance. Can smash through weak walls and stop time."
 	creator_icon = "standard"
 
-/mob/living/basic/guardian/standard/Initialize(mapload, theme)
+/mob/living/basic/guardian/standard/timestop/Initialize(mapload, theme)
 	//Wizard Holoparasite theme, just to be more visibly stronger than regular ones
 	theme = GLOB.guardian_themes[GUARDIAN_THEME_TECH]
 	. = ..()
@@ -48,12 +48,12 @@
 
 /datum/action/cooldown/spell/timestop/guardian/Grant(mob/grant_to)
 	. = ..()
-	var/mob/living/basic/guardian/standard/bloodsucker_guardian = owner
+	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
 	if(bloodsucker_guardian && istype(bloodsucker_guardian) && bloodsucker_guardian.summoner)
 		ADD_TRAIT(bloodsucker_guardian.summoner, TRAIT_TIME_STOP_IMMUNE, REF(src))
 
 /datum/action/cooldown/spell/timestop/guardian/Remove(mob/remove_from)
-	var/mob/living/basic/guardian/standard/bloodsucker_guardian = owner
+	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
 	if(bloodsucker_guardian && istype(bloodsucker_guardian) && bloodsucker_guardian.summoner)
 		REMOVE_TRAIT(bloodsucker_guardian.summoner, TRAIT_TIME_STOP_IMMUNE, REF(src))
 	return ..()
