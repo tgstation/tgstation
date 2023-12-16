@@ -28,7 +28,7 @@
 
 	creator_name = "Timestop"
 	creator_desc = "Devastating close combat attacks and high damage resistance. Can smash through weak walls and stop time."
-	creator_icon = "standard"
+	creator_icon = "timestop"
 
 /mob/living/basic/guardian/standard/timestop/Initialize(mapload, theme)
 	//Wizard Holoparasite theme, just to be more visibly stronger than regular ones
