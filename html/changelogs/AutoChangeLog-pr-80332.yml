@@ -1,0 +1,7 @@
+author: "tralezab"
+delete-after: True
+changes:
+  - qol: "Added a confirmation prompt to breaking your vow of silence."
+  - balance: "Mimes can no longer repair the vow of silence once broken."
+  - balance: "The negative moodlet from breaking your vow of silence is now lighter, and no longer permanent."
+  - balance: "Mimes are back to being able to write while under a vow of silence."
