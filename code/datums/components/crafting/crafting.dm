@@ -214,8 +214,6 @@
 				if(result.atom_storage && recipe.delete_contents)
 					for(var/obj/item/thing in result)
 						qdel(thing)
-			if (IsEdible(result))
-				result.reagents?.clear_reagents()
 			result.CheckParts(parts, recipe)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)
