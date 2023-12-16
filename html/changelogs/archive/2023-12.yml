@@ -129,3 +129,7 @@
   - rscdel: Players can no longer initiate storyteller or map votes.
   wraith-54321:
   - rscadd: Added 3 new Storytellers
+2023-12-16:
+  DexeeXI:
+  - admin: no, the admins aren't telling you.
+  - qol: chameleon gun can't use admin-only weapons.
