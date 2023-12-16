@@ -52,9 +52,8 @@
 	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = FALSE
-	/// revival/defibrillation possibility flag that gathered from owner's .can_defib() proc
-	var/can_defib_owner
 	COOLDOWN_DECLARE(reviver_cooldown)
+	COOLDOWN_DECLARE(defib_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
 	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
@@ -72,6 +71,8 @@
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
+			if(COOLDOWN_FINISHED(src, defib_cooldown))
+				revive_dead()
 		return
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
@@ -81,19 +82,11 @@
 		revive_cost = 0
 		reviving = TRUE
 		to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
+		COOLDOWN_START(src, defib_cooldown, 8 SECONDS) // 5 seconds after heal proc delay
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
-	if(can_defib_owner == DEFIB_POSSIBLE)
-		revive_dead()
-		can_defib_owner = null
-		revive_cost += 10 MINUTES // Additional 10 minutes cooldown after revival.
-	// this check goes after revive_dead() to delay revival a bit
-	if(owner.stat == DEAD)
-		can_defib_owner = owner.can_defib()
-		if(can_defib_owner == DEFIB_POSSIBLE)
-			owner.notify_revival("You are being revived by [src]!")
-			owner.grab_ghost()
+
 	/// boolean that stands for if PHYSICAL damage being patched
 	var/body_damage_patched = FALSE
 	var/need_mob_update = FALSE
@@ -119,16 +112,21 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
-	owner.grab_ghost()
+	if(COOLDOWN_FINISHED(src, defib_cooldown) && owner.stat == DEAD && owner.can_defib() == DEFIB_POSSIBLE)
+		owner.notify_revival("You are being revived by [src]!")
+		revive_cost += 10 MINUTES // Additional 10 minutes cooldown after revival.
+		owner.grab_ghost()
 
-	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
-	playsound(owner, SFX_BODYFALL, 50, TRUE)
-	playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
-	owner.revive()
-	owner.emote("gasp")
-	owner.set_jitter_if_lower(200 SECONDS)
-	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
-	log_game("[owner] been revived by [src]")
+		defib_cooldown += 16 SECONDS // delay so it doesn't spam
+
+		owner.visible_message(span_warning("[owner]'s body convulses a bit."))
+		playsound(owner, SFX_BODYFALL, 50, TRUE)
+		playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+		owner.revive()
+		owner.emote("gasp")
+		owner.set_jitter_if_lower(200 SECONDS)
+		SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
+		log_game("[owner] been revived by [src]")
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/emp_act(severity)
