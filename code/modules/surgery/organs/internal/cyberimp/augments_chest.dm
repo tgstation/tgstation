@@ -71,8 +71,6 @@
 			to_chat(owner, span_notice("Your reviver implant shuts down and starts recharging. It will be ready again in [DisplayTimeText(revive_cost)]."))
 		else
 			addtimer(CALLBACK(src, PROC_REF(heal)), 3 SECONDS)
-			if(COOLDOWN_FINISHED(src, defib_cooldown))
-				revive_dead()
 		return
 
 	if(!COOLDOWN_FINISHED(src, reviver_cooldown) || HAS_TRAIT(owner, TRAIT_SUICIDED))
@@ -86,6 +84,8 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
+	if(COOLDOWN_FINISHED(src, defib_cooldown))
+		revive_dead()
 
 	/// boolean that stands for if PHYSICAL damage being patched
 	var/body_damage_patched = FALSE
