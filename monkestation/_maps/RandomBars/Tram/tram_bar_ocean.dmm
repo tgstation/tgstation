@@ -635,6 +635,7 @@
 /turf/open/floor/fake_seafloor/spawning,
 /area/station/commons/lounge)
 "Cr" = (
+/obj/structure/cable,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/theater)
 "Cw" = (
@@ -763,6 +764,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/table/reinforced/rglass,
 /obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/structure/cable,
 /turf/open/floor/fake_seafloor/heavy,
 /area/station/service/theater)
 "Ir" = (
@@ -807,6 +809,7 @@
 "KM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /turf/open/floor/fake_seafloor/ironsand,
 /area/station/service/theater)
 "KU" = (
@@ -935,7 +938,6 @@
 /area/station/service/kitchen)
 "QI" = (
 /obj/machinery/airalarm/directional/south,
-/obj/structure/cable,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
