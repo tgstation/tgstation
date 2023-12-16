@@ -297,8 +297,8 @@
 		/datum/element/venomous,\
 		/datum/reagent/peaceborg/confuse,\
 		injection_range,\
-		injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES,\ // Not really sure what a clown's injection medium is but let's assume it is piercing
-	)
+		injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES,\
+	) // I don't really know what a clown is using to inject people but let's assume it doesn't need to penetrate at all
 
 /mob/living/basic/clown/clownhulk/destroyer
 	name = "The Destroyer"
