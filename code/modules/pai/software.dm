@@ -208,7 +208,7 @@
 			if(!is_valid_z_level(get_turf(src), get_turf(resolved_master)))
 				balloon_alert(src, "master out of range!")
 				return FALSE
-			healthscan(src, target)
+			healthscan(src, resolved_master)
 			return TRUE
 
 	stack_trace("Invalid mode passed to host scan: [mode || "null"]")
