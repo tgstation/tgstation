@@ -252,6 +252,7 @@
 #include "code\__DEFINES\wires.dm"
 #include "code\__DEFINES\wounds.dm"
 #include "code\__DEFINES\xenobiology.dm"
+#include "code\__DEFINES\zoom.dm"
 #include "code\__DEFINES\ai\ai.dm"
 #include "code\__DEFINES\ai\ai_blackboard.dm"
 #include "code\__DEFINES\ai\bot_keys.dm"
