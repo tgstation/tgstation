@@ -589,6 +589,8 @@
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 3)
 				else
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell/mech)
+		else
+			occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)
 		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
