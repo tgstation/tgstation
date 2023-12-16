@@ -1,0 +1,4 @@
+author: "Diamond-74"
+delete-after: True
+changes:
+  - bugfix: "character setup screen no longer runtimes with all_nighter quirk"
