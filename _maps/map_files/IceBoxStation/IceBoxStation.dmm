@@ -3520,7 +3520,6 @@
 /obj/machinery/duct,
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "bhK" = (
@@ -61546,7 +61545,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/effect/mapping_helpers/airlock/access/all/medical/virology,
-/obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/pathology)
 "tMl" = (
@@ -75246,7 +75244,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply,
 /obj/structure/sign/warning/electric_shock/directional/north,
-/obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "ygv" = (
