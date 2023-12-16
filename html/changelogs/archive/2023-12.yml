@@ -498,3 +498,25 @@
   - rscadd: Adds a new discount experiment for unlocking the combat exosuit nodes
       - complete it by scanning two exosuits with equipment in the left and right
       hand slots. This replaces the prior discount experiment about destroying exosuits.
+2023-12-16:
+  Derpguy3:
+  - spellcheck: Fixed a minor grammar mistake in the RD's job description and the
+      encrypted cache crate.
+  Ghommie:
+  - balance: '"Scarves" and "Wallets!" are now neutral traits.'
+  LT3:
+  - bugfix: Internal action buttons on computer consoles should work again
+  TheWolfbringer:
+  - bugfix: 'Bitrunners can now access the Northstar ORM
+
+      :cl:'
+  distributivgesetz:
+  - balance: Delamination variants no longer change once the explosion point has been
+      reached.
+  jlsnow301:
+  - bugfix: Keybindings in prefs are able to be set again.
+  - bugfix: Fixed the weird spacing on buttons.
+  - bugfix: Confirmation buttons should be usable again. Bitrunning domains, command
+      reports, etc.
+  tralezab:
+  - qol: Anesthetics tank description now mentions a rare quirk of anesthetic.
