@@ -39,13 +39,10 @@
 	switch(custom_win_method)
 		if("Simple")
 			winner_method = VOTE_WINNER_METHOD_SIMPLE
-
 		if("Weighted Random")
 			winner_method = VOTE_WINNER_METHOD_WEIGHTED_RANDOM
-
 		if("No Winner")
 			winner_method = VOTE_WINNER_METHOD_NONE
-
 		else
 			to_chat(vote_creator, span_boldwarning("Unknown winner method. Contact a coder."))
 			return FALSE
