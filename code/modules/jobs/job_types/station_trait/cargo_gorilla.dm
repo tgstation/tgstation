@@ -16,7 +16,7 @@
 	)
 	rpg_title = "Beast of Burden"
 	allow_bureaucratic_error = FALSE
-	job_flags = JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_CANNOT_OPEN_SLOTS | JOB_HIDE_WHEN_EMPTY | JOB_LATEJOIN_ONLY
+	job_flags = STATION_TRAIT_JOB_FLAGS | JOB_ANNOUNCE_ARRIVAL | JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK
 
 /datum/job/cargo_gorilla/get_roundstart_spawn_point()
 	if (length(GLOB.gorilla_start))

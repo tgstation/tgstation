@@ -75,7 +75,7 @@ const SenderInfo = (props) => {
         <Input
           placeholder="Sender name..."
           fluid
-          onInput={(e, value) => {
+          onChange={(e, value) => {
             setName(value);
           }}
         />
@@ -84,7 +84,7 @@ const SenderInfo = (props) => {
         <Input
           placeholder="Sender's job..."
           fluid
-          onInput={(e, value) => {
+          onChange={(e, value) => {
             setJob(value);
           }}
         />

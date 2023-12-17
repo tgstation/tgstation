@@ -104,7 +104,7 @@ const ShoppingTab = (props) => {
                 width="150px"
                 placeholder="Search item..."
                 value={searchItem}
-                onInput={(e, value) => {
+                onChange={(e, value) => {
                   setSearchItem(value);
                 }}
               />
