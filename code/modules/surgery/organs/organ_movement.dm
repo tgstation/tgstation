@@ -118,7 +118,7 @@
 
 	item_flags |= ABSTRACT
 	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
-	anchored = TRUE
+	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 
 /*
  * Remove the organ from the select mob.
@@ -209,7 +209,7 @@
 
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
-	anchored = FALSE
+	interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()
