@@ -97,12 +97,12 @@ SUBSYSTEM_DEF(vote)
 	var/final_winner_string = !isnull(final_winner) ? "[final_winner]" : null
 	var/list/winners_string = list()
 	for(var/winner in winners)
-		vote_winners += "[winner]"
+		winners_string += "[winner]"
 
 	var/list/vote_log_data = list(
 		"choices" = vote_choice_data,
 		"total" = total_votes,
-		"winners" = vote_winners,
+		"winners" = winners_string,
 		"final_winner" = final_winner_string,
 	)
 	var/log_string = replacetext(to_display, "\n", "\\n") // 'keep' the newlines, but dont actually print them as newlines
