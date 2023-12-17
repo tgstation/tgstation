@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "If you throw a bee at someone it will hit them sting-first and inject that bee's reagent"
+  - balance: "Thick clothing can now protect you from the venom of bees, snakes, frogs, and (small) spiders"
