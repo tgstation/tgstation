@@ -143,10 +143,10 @@
 /mob/proc/can_equip(obj/item/I, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
 	return FALSE
 
-/mob/proc/can_put_in_hand(I, hand_index)
+/mob/proc/can_put_in_hand(obj/item/item, hand_index)
 	if(hand_index > held_items.len)
 		return FALSE
-	if(!put_in_hand_check(I))
+	if(!put_in_hand_check(item))
 		return FALSE
 	if(!has_hand_for_held_index(hand_index))
 		return FALSE
@@ -186,9 +186,9 @@
 /mob/proc/put_in_hand_check(obj/item/I)
 	return FALSE //nonliving mobs don't have hands
 
-/mob/living/put_in_hand_check(obj/item/I)
-	if(istype(I) && ((mobility_flags & MOBILITY_PICKUP) || (I.item_flags & ABSTRACT)) \
-		&& !(SEND_SIGNAL(src, COMSIG_LIVING_TRY_PUT_IN_HAND, I) & COMPONENT_LIVING_CANT_PUT_IN_HAND))
+/mob/living/put_in_hand_check(obj/item/item)
+	if(istype(item) && ((mobility_flags & MOBILITY_PICKUP) && !(item.item_flags & ABSTRACT)) \
+		&& !(SEND_SIGNAL(src, COMSIG_LIVING_TRY_PUT_IN_HAND, item) & COMPONENT_LIVING_CANT_PUT_IN_HAND))
 		return TRUE
 	return FALSE
 
