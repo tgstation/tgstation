@@ -11,12 +11,11 @@ env:
   browser: true
   node: true
 plugins:
-  - radar
   - react
   - unused-imports
 settings:
   react:
-    version: '16.10'
+    version: '18.20'
 rules:
   ## Possible Errors
   ## ----------------------------------------
@@ -568,7 +567,7 @@ rules:
   ## Enforce spacing between rest and spread operators and their expressions
   # rest-spread-spacing: error
   ## Enforce sorted import declarations within modules
-  # sort-imports: error
+  sort-imports: warn
   ## Require symbol descriptions
   # symbol-description: error
   ## Require or disallow spacing around embedded expressions of template
