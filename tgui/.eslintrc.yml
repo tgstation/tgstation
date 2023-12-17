@@ -13,6 +13,8 @@ env:
 plugins:
   - react
   - unused-imports
+  - simple-import-sort
+  - typescript-sort-keys
 settings:
   react:
     version: '18.20'
@@ -567,7 +569,7 @@ rules:
   ## Enforce spacing between rest and spread operators and their expressions
   # rest-spread-spacing: error
   ## Enforce sorted import declarations within modules
-  sort-imports: warn
+  # sort-imports: warn
   ## Require symbol descriptions
   # symbol-description: error
   ## Require or disallow spacing around embedded expressions of template
@@ -763,3 +765,9 @@ rules:
   ## Prevents the use of unused imports.
   ## This could be done by enabling no-unused-vars, but we're doing this for now
   unused-imports/no-unused-imports: error
+  ## https://github.com/lydell/eslint-plugin-simple-import-sort/
+  simple-import-sort/imports: error
+  simple-import-sort/exports: error
+  ## https://github.com/infctr/eslint-plugin-typescript-sort-keys
+  typescript-sort-keys/interface: error
+  typescript-sort-keys/string-enum: error

@@ -3,4 +3,7 @@
 /**/*.bundle.*
 /**/*.chunk.*
 /**/*.hot-update.*
-
+**.lock
+**.log
+**.json
+**.svg
