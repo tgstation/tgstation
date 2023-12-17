@@ -9,6 +9,13 @@
 	acid = 30
 	wound = 0
 
+/obj/item/clothing/head/soft/fishing_hat
+	///Do we add the skill reward element to this or not
+	var/add_element = TRUE
+
+/obj/item/clothing/head/soft/fishing_hat/lootbox
+	add_element = FALSE
+
 //versions of clothing with low armor to get given by lootboxes
 /obj/item/clothing/head/beanie/durathread/lootbox/Initialize(mapload)
 	. = ..()

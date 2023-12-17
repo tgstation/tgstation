@@ -169,4 +169,5 @@
 
 /obj/item/clothing/head/soft/fishing_hat/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
+	if(add_element) //monkestation edit
+		AddElement(/datum/element/skill_reward, /datum/skill/fishing)

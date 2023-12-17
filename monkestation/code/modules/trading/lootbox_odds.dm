@@ -211,7 +211,7 @@ GLOBAL_LIST_INIT(possible_lootbox_clothing, list(
 		/obj/item/clothing/head/rasta,
 		/obj/item/clothing/head/recruiter_cap/lootbox,
 		/obj/item/clothing/head/saints,
-		/obj/item/clothing/head/soft/fishing_hat, //im tempted to make this extra rare
+		/obj/item/clothing/head/soft/fishing_hat/lootbox, //im tempted to make this extra rare
 		/obj/item/clothing/head/soft/rainbow,
 		/obj/item/clothing/head/soft/sec/lootbox,
 		/obj/item/clothing/head/utility/hardhat/pumpkinhead/lootbox,
