@@ -785,7 +785,7 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/handle_picking_stroyteller()
 	if(length(GLOB.clients) > MAX_POP_FOR_STORYTELLER_VOTE)
 		secret_storyteller = TRUE
-		selected_storyteller = pick_weight(get_valid_storytellers())
+		selected_storyteller = pick_weight(get_valid_storytellers(TRUE))
 		return
 	SSvote.initiate_vote(/datum/vote/storyteller, "pick round storyteller", forced = TRUE)
 
@@ -821,8 +821,8 @@ SUBSYSTEM_DEF(gamemode)
 			selected_storyteller = storyteller_type
 			break
 
-//return a weighted list of all storytellers that are currently valid to roll
-/datum/controller/subsystem/gamemode/proc/get_valid_storytellers()
+//return a weighted list of all storytellers that are currently valid to roll, if return_paths is set then we will return types instead of instances
+/datum/controller/subsystem/gamemode/proc/get_valid_storytellers(return_types = FALSE)
 	var/client_amount = length(GLOB.clients)
 	var/list/valid_storytellers = list()
 	for(var/storyteller_type in storytellers)
@@ -830,7 +830,7 @@ SUBSYSTEM_DEF(gamemode)
 		if(storyboy.restricted || (storyboy.population_min && storyboy.population_min > client_amount) || (storyboy.population_max && storyboy.population_max < client_amount))
 			continue
 
-		valid_storytellers[storyboy] = storyboy.weight
+		valid_storytellers[return_types ? storyboy.type : storyboy] = storyboy.weight
 	return valid_storytellers
 
 /datum/controller/subsystem/gamemode/proc/init_storyteller()
