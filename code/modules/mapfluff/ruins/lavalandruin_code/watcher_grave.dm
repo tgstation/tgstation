@@ -143,7 +143,6 @@
 	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
 	icon_state = "watcher_baby"
 	layer = EDGED_TURF_LAYER // Don't render under lightbulbs
-	plane = GAME_PLANE_UPPER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	pixel_y = 22
 	alpha = 0

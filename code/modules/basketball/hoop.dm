@@ -53,9 +53,6 @@
 /obj/structure/hoop/update_overlays()
 	. = ..()
 
-	if(dir & NORTH)
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
-
 	var/dir_offset_x = 0
 	var/dir_offset_y = 0
 
@@ -72,7 +69,6 @@
 	var/mutable_appearance/scoreboard = mutable_appearance('icons/obj/signs.dmi', "basketball_scorecard")
 	scoreboard.pixel_x = dir_offset_x
 	scoreboard.pixel_y = dir_offset_y
-	SET_PLANE_EXPLICIT(scoreboard, GAME_PLANE, src)
 	. += scoreboard
 
 	var/ones = total_score % 10

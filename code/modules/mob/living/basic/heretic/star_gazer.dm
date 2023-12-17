@@ -34,7 +34,6 @@
 	can_buckle_to = FALSE
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	plane = GAME_PLANE_UPPER_FOV_HIDDEN
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer

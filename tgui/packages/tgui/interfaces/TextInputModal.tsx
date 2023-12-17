@@ -35,7 +35,8 @@ export const TextInputModal = (props) => {
     timeout,
     title,
   } = data;
-  const [input, setInput] = useState(placeholder);
+
+  const [input, setInput] = useState(placeholder || '');
   const onType = (value: string) => {
     if (value === input) {
       return;
@@ -92,7 +93,10 @@ export const TextInputModal = (props) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props) => {
+const InputArea = (props: {
+  input: string;
+  onType: (value: string) => void;
+}) => {
   const { act, data } = useBackend<TextInputData>();
   const { max_length, multiline } = data;
   const { input, onType } = props;
@@ -113,7 +117,7 @@ const InputArea = (props) => {
         event.preventDefault();
         act('submit', { entry: input });
       }}
-      onInput={(_, value) => onType(value)}
+      onChange={(_, value) => onType(value)}
       placeholder="Type something..."
       value={input}
     />

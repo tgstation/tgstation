@@ -65,7 +65,7 @@ export const SelectEquipment = (props) => {
                   autoFocus
                   placeholder="Search"
                   value={searchText}
-                  onInput={(e, value) => setSearchText(value)}
+                  onChange={(e, value) => setSearchText(value)}
                 />
               </Stack.Item>
               <Stack.Item>
@@ -140,7 +140,7 @@ const OutfitDisplay = (props) => {
               path: getOutfitKey(entry),
             })
           }
-          onDblClick={() =>
+          onDoubleClick={() =>
             act('applyoutfit', {
               path: getOutfitKey(entry),
             })

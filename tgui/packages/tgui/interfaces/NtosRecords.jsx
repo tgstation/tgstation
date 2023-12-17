@@ -23,7 +23,7 @@ export const NtosRecords = (props) => {
             value={searchTerm}
             fluid
             textAlign="center"
-            onInput={(e, value) => setSearchTerm(value)}
+            onChange={(e, value) => setSearchTerm(value)}
           />
         </Section>
         {mode === 'security' &&

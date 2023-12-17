@@ -200,7 +200,7 @@ export class LuaEditor extends Component {
                     height="100%"
                     value={scriptInput}
                     fontFamily="Consolas"
-                    onInput={(_, value) =>
+                    onChange={(_, value) =>
                       this.setState({ scriptInput: value })
                     }
                     displayedValue={

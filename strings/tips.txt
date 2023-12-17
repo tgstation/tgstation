@@ -252,6 +252,7 @@ When hacking doors, cutting and mending a "test light wire" will restore power t
 When in doubt about technical issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
 When placing floor tiles in space, you don't need to place down lattice if there is a piece of plating nearby.
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
+Working out improves your fitness which increases your size and faster times to fireman carry. Remember that a quality diet and sleep are essential!
 You can catch thrown items by toggling on your throw mode with an empty hand active.
 You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
 You can cheat games by baking dice in microwaves to make them loaded. Cards can be seen with x-ray vision or be marked with either a pen or crayon to gain an edge.
