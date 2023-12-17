@@ -821,7 +821,7 @@ SUBSYSTEM_DEF(gamemode)
 			selected_storyteller = storyteller_type
 			break
 
-//return a weighted list of all storytellers that are currently valid to roll, if return_types is set then we will return types instead of instances
+///return a weighted list of all storytellers that are currently valid to roll, if return_types is set then we will return types instead of instances
 /datum/controller/subsystem/gamemode/proc/get_valid_storytellers(return_types = FALSE)
 	var/client_amount = length(GLOB.clients)
 	var/list/valid_storytellers = list()
