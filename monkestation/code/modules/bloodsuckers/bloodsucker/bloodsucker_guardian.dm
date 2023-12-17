@@ -69,6 +69,20 @@
 	var/datum/action/cooldown/spell/timestop/guardian/timestop_ability = new()
 	timestop_ability.Grant(src)
 
+/mob/living/basic/guardian/standard/timestop/set_summoner(mob/living/to_who, different_person = FALSE)
+	..()
+	for(var/action in actions)
+		var/datum/action/cooldown/spell/timestop/guardian/timestop_ability = action
+		if(istype(timestop_ability))
+			timestop_ability.grant_summoner_immunity()
+
+/mob/living/basic/guardian/standard/timestop/cut_summoner(different_person = FALSE)
+	for(var/action in actions)
+		var/datum/action/cooldown/spell/timestop/guardian/timestop_ability = action
+		if(istype(timestop_ability))
+			timestop_ability.remove_summoner_immunity()
+	..()
+
 ///Guardian Timestop ability
 /datum/action/cooldown/spell/timestop/guardian
 	name = "Guardian Timestop"
@@ -78,14 +92,12 @@
 	spell_requirements = NONE
 	invocation_type = INVOCATION_NONE
 
-/datum/action/cooldown/spell/timestop/guardian/Grant(mob/grant_to)
-	. = ..()
+/datum/action/cooldown/spell/timestop/guardian/proc/grant_summoner_immunity()
 	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
 	if(bloodsucker_guardian && istype(bloodsucker_guardian) && bloodsucker_guardian.summoner)
 		ADD_TRAIT(bloodsucker_guardian.summoner, TRAIT_TIME_STOP_IMMUNE, REF(src))
 
-/datum/action/cooldown/spell/timestop/guardian/Remove(mob/remove_from)
+/datum/action/cooldown/spell/timestop/guardian/proc/remove_summoner_immunity()
 	var/mob/living/basic/guardian/standard/timestop/bloodsucker_guardian = owner
 	if(bloodsucker_guardian && istype(bloodsucker_guardian) && bloodsucker_guardian.summoner)
 		REMOVE_TRAIT(bloodsucker_guardian.summoner, TRAIT_TIME_STOP_IMMUNE, REF(src))
-	return ..()
