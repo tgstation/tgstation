@@ -36,9 +36,8 @@
  * * players - a list of all players to send the message to. defaults to all players (not including new players)
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
- * * send_to_world - if TRUE will send the announcement to the world rather than a list of players
  */
-/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override, send_to_world = FALSE)
+/proc/priority_announce(text, title = "", sound, type, sender_override, has_important_message = FALSE, list/mob/players = GLOB.player_list, encode_title = TRUE, encode_text = TRUE, color_override)
 	if(!text)
 		return
 
@@ -84,10 +83,7 @@
 	else
 		finalized_announcement = CHAT_ALERT_DEFAULT_SPAN(jointext(announcement_strings, ""))
 
-	if(send_to_world)
-		dispatch_announcement_to_world(finalized_announcement, sound)
-	else
-		dispatch_announcement_to_players(finalized_announcement, players, sound)
+	dispatch_announcement_to_players(finalized_announcement, players, sound)
 
 	if(isnull(sender_override) && players == GLOB.player_list)
 		if(length(title) > 0)
@@ -198,20 +194,6 @@
 
 		to_chat(target, announcement)
 		if(!should_play_sound)
-			continue
-
-		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-			SEND_SOUND(target, sound(sound_to_play))
-
-/proc/dispatch_announcement_to_world(announcement, sound_override = null, should_play_sound = TRUE)
-	to_chat(world, announcement)
-	if(!should_play_sound)
-		return
-
-	var/sound_to_play = !isnull(sound_override) ? sound_override : 'sound/misc/notice2.ogg'
-
-	for(var/mob/target in GLOB.player_list)
-		if(!target.can_hear())
 			continue
 
 		if(target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
