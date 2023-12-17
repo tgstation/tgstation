@@ -119,8 +119,8 @@ const CategoryBar = (props: CategoryBarProps) => {
           onClick={() => props.setActive(CATEGORY_ALL)}
         />
         {sorted
-          .filter(
-            (cat) => !cat.toLowerCase().includes(categorySearch.toLowerCase()),
+          .filter((cat) =>
+            cat.toLowerCase().includes(categorySearch.toLowerCase()),
           )
           .map((category) => {
             return (

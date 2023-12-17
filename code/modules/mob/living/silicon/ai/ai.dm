@@ -106,7 +106,7 @@
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
 	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
-	var/posibrain_inside = FALSE
+	var/posibrain_inside = TRUE
 	///whether its cover is opened, so you can wirecut it for deconstruction
 	var/opened = FALSE
 	///whether AI is anchored or not, used for checks
@@ -443,10 +443,9 @@
 	disconnect_shell()
 	ShutOffDoomsdayDevice()
 	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
-	if(!make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
-		return FALSE
-	qdel(src)
-	return TRUE
+	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
+		qdel(src)
+	return ai_core
 
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type

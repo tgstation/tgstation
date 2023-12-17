@@ -11,6 +11,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/list/selectable_traits_by_types = list(STATION_TRAIT_POSITIVE = list(), STATION_TRAIT_NEUTRAL = list(), STATION_TRAIT_NEGATIVE = list())
 	///Currently active announcer. Starts as a type but gets initialized after traits are selected
 	var/datum/centcom_announcer/announcer = /datum/centcom_announcer/default
+	///A list of trait roles that should be protected from antag
+	var/list/antag_protected_roles = list()
+	///A list of trait roles that should never be able to roll antag
+	var/list/antag_restricted_roles = list()
 
 /datum/controller/subsystem/processing/station/Initialize()
 

@@ -166,8 +166,10 @@
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	SSmove_manager.stop_looping(living_pawn)
 	controller.clear_blackboard_key(target_key)
+	if(QDELETED(living_pawn)) // pawn can be null at this point
+		return
+	SSmove_manager.stop_looping(living_pawn)
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm)
