@@ -94,8 +94,8 @@ $bg-map: colors.$bg-map !default;
 }
 
 .Button--ellipsis {
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Button--fluid {
@@ -169,4 +169,8 @@ $bg-map: colors.$bg-map !default;
 .Button__content {
   display: block;
   align-self: stretch;
+}
+
+.Button__textMargin {
+  margin-left: 0.4rem;
 }

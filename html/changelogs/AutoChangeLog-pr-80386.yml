@@ -1,0 +1,5 @@
+author: "Diamond-74"
+delete-after: True
+changes:
+  - bugfix: "Reviver no longer attempts to revive impossible to defib mobs."
+  - refactor: "Cleaned up unnecessary variables and re-arraigned code to have it perform altogether in one tick. Additionally added a proper cooldown to revivers."
