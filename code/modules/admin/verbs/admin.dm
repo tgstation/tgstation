@@ -37,7 +37,7 @@
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		to_chat(world, "[span_adminnotice("<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>")]\n \t [message]", confidential = TRUE)
+		priority_announce(message, title = "From [usr.client.holder.fakekey ? "Administrator" : usr.key]", sender_override = "Server Announcement", has_important_message = TRUE, color_override = "grey", send_to_world = TRUE)
 		log_admin("Announce: [key_name(usr)] : [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
