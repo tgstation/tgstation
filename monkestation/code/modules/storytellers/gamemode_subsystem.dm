@@ -838,7 +838,8 @@ SUBSYSTEM_DEF(gamemode)
 
 /datum/controller/subsystem/gamemode/proc/set_storyteller(passed_type)
 	if(!storytellers[passed_type])
-		message_admins("Attempted to set an invalid storyteller type: [passed_type].")
+		message_admins("Attempted to set an invalid storyteller type: [passed_type], force setting to guide instead.")
+		storyteller = storytellers[/datum/storyteller/guide] //if we dont have any then we brick, lets not do that
 		CRASH("Attempted to set an invalid storyteller type: [passed_type].")
 	storyteller = storytellers[passed_type]
 	if(!secret_storyteller)
