@@ -96,9 +96,9 @@
  */
 /obj/item/antag_spawner/nuke_ops
 	name = "syndicate operative beacon"
-	desc = "A single-use beacon designed to quickly launch reinforcement operatives into the field."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "locator"
+	desc = "MI13 designed one-use radio for calling immediate backup. Have no regards for safety of whom it summons - they are all inferior clones from Interdyne's genebanks anyway."
+	icon = 'icons/obj/devices/voice.dmi'
+	icon_state = "nukietalkie"
 	var/borg_to_spawn
 	/// The name of the special role given to the recruit
 	var/special_role_name = ROLE_NUCLEAR_OPERATIVE
@@ -182,8 +182,8 @@
 /obj/item/antag_spawner/nuke_ops/borg_tele
 	name = "syndicate cyborg beacon"
 	desc = "A single-use beacon designed to quickly launch reinforcement cyborgs into the field."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "locator"
+	icon = 'icons/obj/devices/remote.dmi'
+	icon_state = "gangtool-red"
 
 /obj/item/antag_spawner/nuke_ops/borg_tele/assault
 	name = "syndicate assault cyborg beacon"
@@ -291,8 +291,8 @@
 /obj/item/antag_spawner/loadout
 	name = "generic beacon"
 	desc = "A single-use beacon designed to quickly launch bad code into the field."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "locator"
+	icon = 'icons/obj/devices/voice.dmi'
+	icon_state = "walkietalkie"
 	/// The mob type to spawn.
 	var/mob/living/spawn_type = /mob/living/carbon/human
 	/// The species type to set a human spawn to.
@@ -375,9 +375,9 @@
 
 /obj/item/antag_spawner/loadout/monkey_man
 	name = "monkey agent beacon"
-	desc = "A single-use beacon designed to launch a specially-trained simian agent to the field for emergency support."
-	icon = 'icons/obj/device.dmi'
-	icon_state = "locator"
+	desc = "Call up some backup from ARC for monkey mayhem."
+	icon = 'icons/obj/devices/voice.dmi'
+	icon_state = "walkietalkie"
 	species_type = /datum/species/monkey
 	outfit = /datum/outfit/syndicate_monkey
 	antag_datum = /datum/antagonist/syndicate_monkey
@@ -385,7 +385,7 @@
 	poll_role_check = ROLE_TRAITOR
 	role_to_play = ROLE_SYNDICATE_MONKEY
 	poll_ignore_category = POLL_IGNORE_SYNDICATE
-	fail_text = "Unable to connect to the Syndicate Banana Department. Please wait and try again later or use the beacon on your uplink to get your points refunded."
+	fail_text = "Unable to connect to the Animal Rights Consortium's Banana Ops. Please wait and try again later or use the beacon on your uplink to get your points refunded."
 
 /obj/item/antag_spawner/loadout/monkey_man/do_special_things(mob/living/carbon/human/monkey_man, mob/user)
 

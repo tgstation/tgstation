@@ -12,6 +12,7 @@
 	var/transformed = 0
 	desc = "This disease transplants the genetic code of the initial vector into new hosts."
 	severity = DISEASE_SEVERITY_MEDIUM
+	bypasses_immunity = TRUE
 
 
 /datum/disease/dnaspread/stage_act(seconds_per_tick, times_fired)

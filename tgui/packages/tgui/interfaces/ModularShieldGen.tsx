@@ -1,6 +1,13 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Stack, Section, ProgressBar, Button, NumberInput, LabeledList } from '../components';
+import {
+  Stack,
+  Section,
+  ProgressBar,
+  Button,
+  NumberInput,
+  LabeledList,
+} from '../components';
 import { BooleanLike } from 'common/react';
 
 type ModularShieldGenData = {
@@ -16,9 +23,9 @@ type ModularShieldGenData = {
   initiating_field: BooleanLike;
 };
 
-export const ModularShieldGen = (props, context) => {
+export const ModularShieldGen = (props) => {
   const { topLevel } = props;
-  const { act, data } = useBackend<ModularShieldGenData>(context);
+  const { act, data } = useBackend<ModularShieldGenData>();
   const {
     max_strength,
     max_regeneration,
@@ -39,16 +46,18 @@ export const ModularShieldGen = (props, context) => {
           <Stack.Item grow={2}>
             <Section
               title="Shield Strength"
-              color={recovering ? 'red' : 'white'}>
+              color={recovering ? 'red' : 'white'}
+            >
               <ProgressBar
                 title="Shield Strength"
                 value={current_strength}
                 maxValue={max_strength}
                 ranges={{
-                  'good': [max_strength * 0.75, max_strength],
-                  'average': [max_strength * 0.25, max_strength * 0.75],
-                  'bad': [0, max_strength * 0.25],
-                }}>
+                  good: [max_strength * 0.75, max_strength],
+                  average: [max_strength * 0.25, max_strength * 0.75],
+                  bad: [0, max_strength * 0.25],
+                }}
+              >
                 {current_strength}/{max_strength}
               </ProgressBar>
             </Section>
@@ -58,10 +67,11 @@ export const ModularShieldGen = (props, context) => {
                 value={current_regeneration}
                 maxValue={max_regeneration}
                 ranges={{
-                  'good': [max_regeneration * 0.75, max_regeneration],
-                  'average': [max_regeneration * 0.25, max_regeneration * 0.75],
-                  'bad': [0, max_regeneration * 0.25],
-                }}>
+                  good: [max_regeneration * 0.75, max_regeneration],
+                  average: [max_regeneration * 0.25, max_regeneration * 0.75],
+                  bad: [0, max_regeneration * 0.25],
+                }}
+              >
                 Regeneration {current_regeneration}/{max_regeneration}
               </ProgressBar>
               <Section>
@@ -70,10 +80,11 @@ export const ModularShieldGen = (props, context) => {
                   value={current_radius}
                   maxValue={max_radius}
                   ranges={{
-                    'good': [max_radius * 0.75, max_radius],
-                    'average': [max_radius * 0.25, max_radius * 0.75],
-                    'bad': [0, max_radius * 0.25],
-                  }}>
+                    good: [max_radius * 0.75, max_radius],
+                    average: [max_radius * 0.25, max_radius * 0.75],
+                    bad: [0, max_radius * 0.25],
+                  }}
+                >
                   Radius {current_radius}/{max_radius}
                 </ProgressBar>
               </Section>
@@ -99,7 +110,8 @@ export const ModularShieldGen = (props, context) => {
                 <LabeledList.Item label="Limitations">
                   <Button
                     disabled={active}
-                    onClick={() => act('toggle_exterior')}>
+                    onClick={() => act('toggle_exterior')}
+                  >
                     {exterior_only ? 'External only' : 'Internal & External'}
                   </Button>
                 </LabeledList.Item>

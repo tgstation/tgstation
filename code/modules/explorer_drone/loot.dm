@@ -96,10 +96,10 @@ GLOBAL_LIST_INIT(adventure_loot_generator_index,generate_generator_index())
 	id = "pets"
 	var/carrier_type = /obj/item/pet_carrier/biopod
 	var/list/possible_pets = list(
+		/mob/living/basic/pet/cat/space,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/basic/pet/penguin/baby,
-		/mob/living/simple_animal/pet/cat/space,
 	)
 
 /datum/adventure_loot_generator/pet/generate()

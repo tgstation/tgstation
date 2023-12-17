@@ -219,5 +219,5 @@
 	if(default_unfasten_wrench(user, tool))
 		if(!movable)
 			on = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE

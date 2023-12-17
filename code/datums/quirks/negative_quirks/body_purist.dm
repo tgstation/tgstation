@@ -62,7 +62,7 @@
 		cybernetics_level++
 		update_mood()
 
-/datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special)
+/datum/quirk/body_purist/proc/on_limb_lose(datum/source, obj/item/bodypart/old_limb, special, dismembered)
 	SIGNAL_HANDLER
 	if(IS_ROBOTIC_LIMB(old_limb))
 		cybernetics_level--

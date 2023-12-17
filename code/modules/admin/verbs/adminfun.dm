@@ -31,7 +31,7 @@
 		explosion(O, devastation, heavy, light, flames, flash, explosion_cause = mob)
 		log_admin("[key_name(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
 		message_admins("[key_name_admin(usr)] created an explosion ([devastation],[heavy],[light],[flames]) at [AREACOORD(O)]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Explosion") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("Explosion")
 
 /client/proc/cmd_admin_emp(atom/O as obj|mob|turf in world)
 	set category = "Admin.Fun"
@@ -51,7 +51,7 @@
 		empulse(O, heavy, light)
 		log_admin("[key_name(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(O)]")
 		message_admins("[key_name_admin(usr)] created an EM Pulse ([heavy],[light]) at [AREACOORD(O)]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "EM Pulse") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("EM Pulse")
 
 /client/proc/cmd_admin_gib(mob/victim in GLOB.mob_list)
 	set category = "Admin.Fun"
@@ -82,7 +82,7 @@
 		else
 			living_victim.gib(DROP_ORGANS|DROP_BODYPARTS)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Gib")
 
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
@@ -93,7 +93,7 @@
 		return
 	log_admin("[key_name(usr)] used gibself.")
 	message_admins(span_adminnotice("[key_name_admin(usr)] used gibself."))
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Gib Self") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Gib Self")
 
 	var/mob/living/ourself = mob
 	if (istype(ourself))
@@ -128,7 +128,7 @@
 	to_chat(usr, "<i>Remember: you can always disable the randomness by using the verb again, assuming the round hasn't started yet</i>.", confidential = TRUE)
 
 	CONFIG_SET(flag/force_random_names, TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Make Everyone Random") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Make Everyone Random")
 
 /client/proc/mass_zombie_infection()
 	set category = "Admin.Fun"
@@ -149,7 +149,7 @@
 
 	message_admins("[key_name_admin(usr)] added a latent zombie infection to all humans.")
 	log_admin("[key_name(usr)] added a latent zombie infection to all humans.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Zombie Infection")
+	BLACKBOX_LOG_ADMIN_VERB("Mass Zombie Infection")
 
 /client/proc/mass_zombie_cure()
 	set category = "Admin.Fun"
@@ -167,7 +167,7 @@
 
 	message_admins("[key_name_admin(usr)] cured all zombies.")
 	log_admin("[key_name(usr)] cured all zombies.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Mass Zombie Cure")
+	BLACKBOX_LOG_ADMIN_VERB("Mass Zombie Cure")
 
 /client/proc/polymorph_all()
 	set category = "Admin.Fun"
@@ -186,7 +186,7 @@
 
 	message_admins("[key_name_admin(usr)] started polymorphed all living mobs.")
 	log_admin("[key_name(usr)] polymorphed all living mobs.")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Polymorph All")
+	BLACKBOX_LOG_ADMIN_VERB("Polymorph All")
 
 	for(var/mob/living/M in mobs)
 		CHECK_TICK

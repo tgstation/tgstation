@@ -1,4 +1,5 @@
-import { Component } from 'inferno';
+import { BooleanLike } from 'common/react';
+import { Component, KeyboardEvent } from 'react';
 import { useBackend } from '../backend';
 import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
 import { Window } from '../layouts';
@@ -17,7 +18,7 @@ type CircuitSignalHandlerState = {
   signal_id: string;
   responseList: Response[];
   parameterList: Parameter[];
-  global: Boolean;
+  global: BooleanLike;
 };
 
 type CircuitSignalHandlerData = {
@@ -51,7 +52,7 @@ export class CircuitSignalHandler extends Component<
   }
 
   render() {
-    const { act, data } = useBackend<CircuitSignalHandlerData>(this.context);
+    const { act, data } = useBackend<CircuitSignalHandlerData>();
     const { responseList, parameterList, signal_id, global } = this
       .state as CircuitSignalHandlerState;
     const { global_port_types } = data;
@@ -92,7 +93,7 @@ export class CircuitSignalHandler extends Component<
                             responseList.splice(index, 1);
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onChange={(e, value) => {
                             const param = responseList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -110,7 +111,7 @@ export class CircuitSignalHandler extends Component<
                             // have a number->key assoc array here, so we have
                             // to explicitly cast it to a number[] type.
                             const bitflag_keys = Object.keys(
-                              this.bitflags
+                              this.bitflags,
                             ) as unknown as number[];
                             responseList.push({
                               name: 'Response',
@@ -141,7 +142,7 @@ export class CircuitSignalHandler extends Component<
                             param.datatype = type;
                             this.setState({ parameterList });
                           }}
-                          onEnter={(e, value) => {
+                          onChange={(e, value) => {
                             const param = parameterList[index];
                             param.name = value;
                             this.setState({ parameterList });
@@ -192,17 +193,17 @@ export class CircuitSignalHandler extends Component<
 
 type EntryProps = {
   onRemove: (e: MouseEvent) => any;
-  onEnter: (e: MouseEvent, value: string) => any;
+  onChange: (e: KeyboardEvent<HTMLInputElement>, value: string) => any;
   onSetOption?: (type: string) => any;
   name: string;
   current_option: string;
   options?: string[];
 };
 
-const Entry = (props: EntryProps, context) => {
+const Entry = (props: EntryProps) => {
   const {
     onRemove,
-    onEnter,
+    onChange,
     onSetOption,
     name,
     current_option,
@@ -214,7 +215,7 @@ const Entry = (props: EntryProps, context) => {
     <Stack.Item {...rest}>
       <Stack>
         <Stack.Item grow>
-          <Input placeholder="Name" value={name} onChange={onEnter} fluid />
+          <Input placeholder="Name" value={name} onChange={onChange} fluid />
         </Stack.Item>
         <Stack.Item>
           {(options.length && (

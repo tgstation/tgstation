@@ -12,8 +12,8 @@ type ExosuitFabricatorData = FabricatorData & {
   processing: BooleanLike;
 };
 
-export const ExosuitFabricator = (props, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+export const ExosuitFabricator = (props) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { materials, SHEET_MATERIAL_AMOUNT } = data;
 
   const availableMaterials: MaterialMap = {};
@@ -46,7 +46,8 @@ export const ExosuitFabricator = (props, context) => {
                         act('build', {
                           designs: category.children.map((design) => design.id),
                         });
-                      }}>
+                      }}
+                    >
                       Queue All
                     </Button>
                   )}
@@ -83,13 +84,13 @@ type RecipeProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const Recipe = (props: RecipeProps, context) => {
-  const { act } = useBackend<ExosuitFabricatorData>(context);
+const Recipe = (props: RecipeProps) => {
+  const { act } = useBackend<ExosuitFabricatorData>();
   const { design, available, SHEET_MATERIAL_AMOUNT } = props;
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -100,7 +101,8 @@ const Recipe = (props: RecipeProps, context) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -113,7 +115,8 @@ const Recipe = (props: RecipeProps, context) => {
             SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
@@ -121,7 +124,8 @@ const Recipe = (props: RecipeProps, context) => {
           ])}
           onClick={() =>
             canPrint && act('build', { designs: [design.id], now: true })
-          }>
+          }
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}
@@ -141,7 +145,8 @@ const Recipe = (props: RecipeProps, context) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id] })}>
+          onClick={() => act('build', { designs: [design.id] })}
+        >
           <Icon name="plus-circle" />
         </div>
       </Tooltip>
@@ -154,7 +159,8 @@ const Recipe = (props: RecipeProps, context) => {
             !canPrint && 'FabricatorRecipe__Button--disabled',
           ])}
           color={'transparent'}
-          onClick={() => act('build', { designs: [design.id], now: true })}>
+          onClick={() => act('build', { designs: [design.id], now: true })}
+        >
           <Icon name="play" />
         </div>
       </Tooltip>
@@ -167,8 +173,8 @@ type QueueProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const Queue = (props: QueueProps, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+const Queue = (props: QueueProps) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
   const { designs, processing } = data;
 
@@ -221,7 +227,8 @@ const Queue = (props: QueueProps, context) => {
                   />
                 )}
               </>
-            }>
+            }
+          >
             <MaterialCostSequence
               SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
               available={availableMaterials}
@@ -230,7 +237,7 @@ const Queue = (props: QueueProps, context) => {
           </Section>
         </Stack.Item>
         <Stack.Item grow>
-          <Section fill style={{ 'overflow': 'auto' }}>
+          <Section fill style={{ overflow: 'auto' }}>
             <QueueList
               availableMaterials={availableMaterials}
               SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
@@ -247,8 +254,8 @@ type QueueListProps = {
   SHEET_MATERIAL_AMOUNT: number;
 };
 
-const QueueList = (props: QueueListProps, context) => {
-  const { act, data } = useBackend<ExosuitFabricatorData>(context);
+const QueueList = (props: QueueListProps) => {
+  const { act, data } = useBackend<ExosuitFabricatorData>();
   const { availableMaterials, SHEET_MATERIAL_AMOUNT } = props;
 
   const queue = data.queue || [];
@@ -305,12 +312,14 @@ const QueueList = (props: QueueListProps, context) => {
                   SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
                   available={availableMaterials}
                 />
-              }>
+              }
+            >
               <div
                 className={classes([
                   'FabricatorRecipe__Title',
                   !entry.canPrint && 'FabricatorRecipe__Title--disabled',
-                ])}>
+                ])}
+              >
                 <div className="FabricatorRecipe__Icon">
                   <Box
                     width={'32px'}
@@ -337,7 +346,8 @@ const QueueList = (props: QueueListProps, context) => {
                   act('del_queue_part', {
                     index: entry.index + (queue[0]!.processing ? 0 : 1),
                   });
-                }}>
+                }}
+              >
                 <Tooltip content={'Remove from Queue'}>
                   <Icon name="minus-circle" />
                 </Tooltip>

@@ -50,7 +50,6 @@
 	need_mob_update += owner.adjustFireLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 	need_mob_update += owner.adjustToxLoss(-grace_heal * seconds_between_ticks, forced = TRUE)
 	need_mob_update += owner.adjustOxyLoss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjustCloneLoss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 	if(need_mob_update)
 		owner.updatehealth()
 
@@ -92,7 +91,6 @@
 		human_owner.physiology.burn_mod *= 0.1
 		human_owner.physiology.tox_mod *= 0.1
 		human_owner.physiology.oxy_mod *= 0.1
-		human_owner.physiology.clone_mod *= 0.1
 		human_owner.physiology.stamina_mod *= 0.1
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
@@ -105,7 +103,6 @@
 		human_owner.physiology.burn_mod *= 10
 		human_owner.physiology.tox_mod *= 10
 		human_owner.physiology.oxy_mod *= 10
-		human_owner.physiology.clone_mod *= 10
 		human_owner.physiology.stamina_mod *= 10
 	REMOVE_TRAIT(owner, TRAIT_IGNOREDAMAGESLOWDOWN, BLOODDRUNK_TRAIT)
 	owner.remove_stun_absorption(id)
@@ -165,30 +162,33 @@
 
 /datum/status_effect/exercised
 	id = "Exercised"
-	duration = 30 SECONDS
+	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
 	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = /atom/movable/screen/alert/status_effect/exercised
 	/// Having any of these reagents in your system extends the duration
 	var/static/list/supplementary_reagents_bonus = list(
-		/datum/reagent/consumable/ethanol/protein_blend = 30 SECONDS, // protein shakes are very robust
-		/datum/reagent/consumable/eggwhite = 20 SECONDS,
-		/datum/reagent/consumable/eggyolk = 15 SECONDS,
-		/datum/reagent/consumable/nutriment/protein = 15 SECONDS,
-		/datum/reagent/consumable/nutriment/vitamin = 10 SECONDS,
-		/datum/reagent/consumable/rice = 10 SECONDS,
-		/datum/reagent/consumable/milk = 10 SECONDS,
-		/datum/reagent/consumable/soymilk = 5 SECONDS, // darn vegans!
-		/datum/reagent/consumable/nutraslop = 5 SECONDS, // prison food to bulk up with
+		/datum/reagent/consumable/ethanol/protein_blend = 10 SECONDS, // protein shakes are very robust
+		/datum/reagent/inverse/oxandrolone = 8 SECONDS,
+		/datum/reagent/consumable/nutriment/protein = 5 SECONDS,
+		/datum/reagent/consumable/nutriment/vitamin = 4 SECONDS,
+		/datum/reagent/consumable/milk = 4 SECONDS,
+		/datum/reagent/consumable/rice = 3 SECONDS,
+		// keep in mind you can eat a raw egg to acquire both these reagents at the same time
+		/datum/reagent/consumable/eggwhite = 3 SECONDS,
+		/datum/reagent/consumable/eggyolk = 2 SECONDS,
+		// weak workout food
+		/datum/reagent/consumable/nutraslop = 2 SECONDS, // prison food to bulk up with
+		/datum/reagent/consumable/soymilk = 1 SECONDS, // darn vegans!
 		// time for the bad stuff
-		/datum/reagent/consumable/sugar = -5 SECONDS,
-		/datum/reagent/consumable/monkey_energy = -5 SECONDS,
-		/datum/reagent/consumable/nutriment/fat = -5 SECONDS,
+		/datum/reagent/consumable/sugar = -1 SECONDS,
+		/datum/reagent/consumable/monkey_energy = -1 SECONDS, // the marketing was a lie
+		/datum/reagent/consumable/nutriment/fat = -1 SECONDS,
 	)
 
 /datum/status_effect/exercised/proc/workout_duration(mob/living/new_owner, bonus_time)
-	if(!bonus_time || !new_owner.mind)
+	if(!bonus_time || !new_owner.mind || !iscarbon(new_owner))
 		return 0 SECONDS
 
 	var/modifier = 1
@@ -201,12 +201,15 @@
 	if(new_owner.reagents.has_reagent(/datum/reagent/drug/pumpup)) // steriods? yes please!
 		modifier += 3
 
+	if(new_owner.reagents.has_reagent(/datum/reagent/inverse/oxandrolone)) // MOREEEEE
+		modifier += 2
+
 	var/food_boost = 0
 	for(var/datum/reagent/workout_reagent in supplementary_reagents_bonus)
 		if(new_owner.reagents.has_reagent(workout_reagent))
 			food_boost += supplementary_reagents_bonus[workout_reagent]
 
-	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 5 SECONDS
+	var/skill_level_boost = (new_owner.mind.get_skill_level(/datum/skill/fitness) - 1) * 2 SECONDS
 	bonus_time = (bonus_time + food_boost + skill_level_boost) * modifier
 
 	var/exhaustion_limit = new_owner.mind.get_skill_modifier(/datum/skill/fitness, SKILL_VALUE_MODIFIER) + world.time
@@ -218,15 +221,21 @@
 
 	return bonus_time
 
-/datum/status_effect/exercised/tick(seconds_between_ticks)
-	owner.reagents.metabolize(owner, seconds_between_ticks * SSMOBS_DT, 0) // doubles the metabolization rate
-
 /datum/status_effect/exercised/on_creation(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
 	return ..()
 
 /datum/status_effect/exercised/refresh(mob/living/new_owner, bonus_time)
 	duration += workout_duration(new_owner, bonus_time)
+	new_owner.clear_mood_event("exercise") // we need to reset the old mood event in case our fitness skill changes
+	new_owner.add_mood_event("exercise", /datum/mood_event/exercise, new_owner.mind.get_skill_level(/datum/skill/fitness))
+
+/datum/status_effect/exercised/on_apply()
+	owner.add_mood_event("exercise", /datum/mood_event/exercise, owner.mind.get_skill_level(/datum/skill/fitness))
+	return ..()
+
+/datum/status_effect/exercised/on_remove()
+	owner.clear_mood_event("exercise")
 
 /atom/movable/screen/alert/status_effect/exercised
 	name = "Exercise"
@@ -258,7 +267,6 @@
 		toxin_heal = 1.4, \
 		suffocation_heal = 1.4, \
 		stamina_heal = 1.4, \
-		clone_heal = 0.4, \
 		simple_heal = 1.4, \
 		organ_healing = organ_healing, \
 		healing_color = "#375637", \
@@ -329,7 +337,6 @@
 			need_mob_update += itemUser.adjustOxyLoss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustStaminaLoss(-0.6 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
 			need_mob_update += itemUser.adjustOrganLoss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
-			need_mob_update += itemUser.adjustCloneLoss(-0.2 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because apparently clone damage is the bastion of all health
 			if(need_mob_update)
 				itemUser.updatehealth()
 
@@ -551,13 +558,12 @@
 		owner_physiology.burn_mod *= 0.5
 		owner_physiology.tox_mod *= 0.5
 		owner_physiology.oxy_mod *= 0.5
-		owner_physiology.clone_mod *= 0.5
 		owner_physiology.stamina_mod *= 0.5
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
 	owner.add_stun_absorption(source = id, priority = 4)
-	add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.add_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
 	owner.playsound_local(get_turf(owner), 'sound/chemistry/ahaha.ogg', vol = 100, vary = TRUE, use_reverb = TRUE)
 	return TRUE
 
@@ -569,13 +575,12 @@
 		owner_physiology.burn_mod *= 2
 		owner_physiology.tox_mod *= 2
 		owner_physiology.oxy_mod *= 2
-		owner_physiology.clone_mod *= 2
 		owner_physiology.stamina_mod *= 2
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)
 	owner.remove_stun_absorption(id)
-	remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
+	owner.remove_traits(list(TRAIT_IGNOREDAMAGESLOWDOWN, TRAIT_FREE_HYPERSPACE_MOVEMENT), MAD_WIZARD_TRAIT)
 
 /// Gives you a brief period of anti-gravity
 /datum/status_effect/jump_jet

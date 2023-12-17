@@ -76,7 +76,7 @@
 
 	if(blocked || !istype(victim) || HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		return FALSE
-	
+
 	if(victim.status_flags & GODMODE)
 		return FALSE
 

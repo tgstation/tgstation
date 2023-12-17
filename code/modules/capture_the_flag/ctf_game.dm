@@ -9,7 +9,7 @@
 /obj/machinery/ctf
 	name = "CTF Controller"
 	desc = "Used for running friendly games of capture the flag."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	density = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -464,7 +464,7 @@
 
 /obj/structure/table/reinforced/ctf
 	resistance_flags = INDESTRUCTIBLE
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = NO_DECONSTRUCTION
 
 #define CTF_LOADING_UNLOADED 0
 #define CTF_LOADING_LOADING 1
@@ -518,14 +518,16 @@
 		message_admins("CTF has finished a round and automatically restarted.")
 		notify_ghosts(
 			"CTF has automatically restarted after a round finished in [initial(ctf_area.name)]!",
-			'sound/effects/ghost2.ogg',
+			ghost_sound = 'sound/effects/ghost2.ogg',
+			header = "CTF Restarted"
 		)
 	else
 		message_admins("The players have spoken! Voting has enabled CTF!")
 	if(!automated)
 		notify_ghosts(
 			"CTF has been [ctf_enabled? "enabled" : "disabled"] in [initial(ctf_area.name)]!",
-			'sound/effects/ghost2.ogg',
+			ghost_sound = 'sound/effects/ghost2.ogg',
+			header = "CTF [ctf_enabled? "Enabled" : "Disabled"]"
 		)
 
 #undef CTF_LOADING_UNLOADED

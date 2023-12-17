@@ -18,7 +18,8 @@
 	if(user && movement_dir) //If we're not moving, don't compensate, as byond will auto-fill dir otherwise
 		movement_dir = turn(movement_dir, -dir2angle(user.dir)) //By doing this we ensure that our input direction is offset by the client (camera) direction
 
-	if(user?.movement_locked)
+	//turn without moving while using the movement lock key, unless something wants to ignore it and move anyway
+	if(user?.movement_locked && !(SEND_SIGNAL(src, COMSIG_MOVABLE_KEYBIND_FACE_DIR, movement_dir) & COMSIG_IGNORE_MOVEMENT_LOCK))
 		keybind_face_direction(movement_dir)
 	else
 		user?.Move(get_step(src, movement_dir), movement_dir)

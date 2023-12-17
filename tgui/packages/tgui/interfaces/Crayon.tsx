@@ -2,6 +2,7 @@ import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
+import { ColorItem } from './RapidPipeDispenser';
 
 type Data = {
   has_cap: BooleanLike;
@@ -17,8 +18,8 @@ type Drawable = {
   name: string;
 };
 
-export const Crayon = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const Crayon = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     has_cap,
     can_change_colour,
@@ -43,11 +44,14 @@ export const Crayon = (props, context) => {
                   onClick={() => act('toggle_cap')}
                 />
               </LabeledList.Item>
+              <ColorItem />
+              <LabeledList.Item>
+                <Button
+                  content="Custom color"
+                  onClick={() => act('custom_color')}
+                />
+              </LabeledList.Item>
             </LabeledList>
-            <Button
-              content="Select New Color"
-              onClick={() => act('select_colour')}
-            />
           </Section>
         )}
         <Section title="Stencil">

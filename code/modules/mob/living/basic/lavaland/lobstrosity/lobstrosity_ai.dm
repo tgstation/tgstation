@@ -55,7 +55,7 @@
 	flee_behaviour = /datum/ai_behavior/run_away_from_target/lobster
 
 /datum/ai_planning_subtree/flee_target/lobster/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/datum/action/cooldown/using_action = controller.blackboard[BB_TARGETTED_ACTION]
+	var/datum/action/cooldown/using_action = controller.blackboard[BB_TARGETED_ACTION]
 	if (using_action?.IsAvailable())
 		return
 	return ..()
