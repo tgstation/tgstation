@@ -749,6 +749,11 @@ GLOBAL_LIST_EMPTY(TabletMessengers) // a list of all active messengers, similar 
 			return
 
 	if(istype(attacking_item, /obj/item/paper))
+		//MONKESTATION EDIT START
+		// Don't allow plastic cards (including the spare ID safe code biscuits!) to be inserted
+		if(istype(attacking_item, /obj/item/paper/paperslip/corporate))
+			return
+		//MONKESTATION EDIT END
 		if(stored_paper >= max_paper)
 			balloon_alert(user, "no more room!")
 			return
