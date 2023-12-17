@@ -3,7 +3,6 @@ import { createSearch } from 'common/string';
 import { useState } from 'react';
 import { useBackend } from '../backend';
 import { Button, Input, Section, Image } from '../components';
-import {} from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
