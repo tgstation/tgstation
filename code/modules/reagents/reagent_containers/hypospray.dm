@@ -28,7 +28,7 @@
 ///Handles all injection checks, injection and logging.
 /obj/item/reagent_containers/hypospray/proc/inject(mob/living/affected_mob, mob/user)
 	if(used_up)
-		to_chat(user, span_warning("[src] is empty!"))
+		to_chat(user, span_warning("[src] tip is broken and is now unusable!"))
 		return FALSE
 	if(!iscarbon(affected_mob))
 		return FALSE
