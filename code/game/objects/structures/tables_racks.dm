@@ -60,8 +60,8 @@
 
 	if(can_flip)
 		AddElement( \
-		/datum/element/contextual_screentip_bare_hands, \
-		rmb_text = "Flip", \
+			/datum/element/contextual_screentip_bare_hands, \
+			rmb_text = "Flip", \
 		)
 
 ///Adds the element used to make the object climbable, and also the one that shift the mob buckled to it up.
@@ -336,17 +336,22 @@
 	var/turf/throw_target = get_step(flipped_table, flipped_table.dir)
 	if (!isnull(throw_target) && !HAS_TRAIT(user, TRAIT_PACIFISM))
 		for (var/atom/movable/movable_entity in flipped_table.loc)
-			if (movable_entity == flipped_table)
-				continue
-			if (movable_entity.anchored)
-				continue
-			if (movable_entity.invisibility > SEE_INVISIBLE_LIVING)
-				continue
-			if(!ismob(movable_entity) && !isobj(movable_entity))
-				continue
-			if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING)))
-				continue
-			movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+			if(is_able_to_throw(flipped_table, movable_entity))
+				movable_entity.safe_throw_at(throw_target, range = 1, speed = 1, force = MOVE_FORCE_NORMAL, gentle = TRUE)
+
+/obj/structure/table/proc/is_able_to_throw(obj/structure/flippedtable/flipped_table, atom/movable/movable_entity)
+	if (movable_entity == flipped_table) //Thing is not the table
+		return FALSE
+	if (movable_entity.anchored) //Thing isn't anchored
+		return FALSE
+	if (movable_entity.invisibility > SEE_INVISIBLE_LIVING) //Thing isnt incorporeal ie. ghosts/revenants
+		return FALSE
+	if(!ismob(movable_entity) && !isobj(movable_entity)) //Thing isn't an obj or mob
+		return FALSE
+	if(movable_entity.throwing || (movable_entity.movement_type & (FLOATING|FLYING))) //Thing isn't flying/floating
+		return FALSE
+
+	return TRUE
 
 /obj/structure/table/proc/AfterPutItemOnTable(obj/item/thing, mob/living/user)
 	return
@@ -450,6 +455,7 @@
 			new_table.set_custom_materials(custom_materials)
 		playsound('sound/items/trayhit2.ogg', 100)
 		qdel()
+		return TRUE
 
 /obj/structure/table/greyscale
 	icon = 'icons/obj/smooth_structures/table_greyscale.dmi'
