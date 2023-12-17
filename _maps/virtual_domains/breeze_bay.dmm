@@ -1,29 +1,33 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
 /turf/closed/indestructible/binary,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "c" = (
 /obj/structure/flora/coconuts,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "d" = (
 /obj/structure/chair/wood,
 /turf/open/floor/wood/large,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "e" = (
 /turf/open/floor/carpet/red,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "g" = (
 /obj/item/toy/beach_ball/branded,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
+"h" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "i" = (
 /turf/open/water/beach,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "k" = (
 /obj/effect/landmark/bitrunning/loot_signal,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "m" = (
 /obj/item/fishing_rod{
 	pixel_x = 5;
@@ -36,68 +40,70 @@
 	},
 /obj/structure/table/wood,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "o" = (
 /obj/structure/flora/tree/jungle/style_5,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "p" = (
 /turf/open/floor/carpet/blue,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "s" = (
 /obj/structure/fluff/beach_umbrella/cap,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "t" = (
 /obj/structure/fluff/beach_umbrella/syndi,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "v" = (
 /obj/effect/baseturf_helper/virtual_domain,
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "wood"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "y" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "z" = (
 /mob/living/basic/crab,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "B" = (
 /obj/structure/flora/tree/jungle/style_6,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "C" = (
 /obj/structure/flora/tree/jungle/style_2,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "D" = (
 /turf/open/floor/carpet/green,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "F" = (
 /obj/structure/fluff/beach_umbrella/engine,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "G" = (
 /obj/structure/flora/bush/jungle/a/style_random,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "H" = (
 /obj/structure/flora/tree/jungle/style_4,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "I" = (
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "J" = (
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "K" = (
 /obj/structure/flora/tree/jungle,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "L" = (
 /obj/item/fishing_line,
 /obj/item/fishing_hook,
@@ -105,19 +111,25 @@
 /obj/item/fishing_hook,
 /obj/structure/closet/crate,
 /obj/item/bait_can/worm,
+/obj/item/bait_can/worm,
+/obj/item/bait_can/worm,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
+"N" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "O" = (
 /obj/structure/flora/rock/style_random,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "P" = (
 /turf/open/misc/beach/coast,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "Q" = (
 /obj/structure/flora/bush/stalky/style_random,
 /turf/open/water/beach,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "R" = (
 /obj/structure/closet/crate/freezer{
 	name = "Cooler"
@@ -142,22 +154,30 @@
 /obj/item/reagent_containers/cup/glass/bottle/beer/light,
 /obj/item/clothing/head/soft/fishing_hat,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "S" = (
 /obj/structure/flora/tree/jungle/style_3,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
+"T" = (
+/obj/machinery/light/small/directional/east,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "U" = (
 /obj/structure/flora/tree/palm/style_random,
 /turf/open/misc/beach/sand,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 "X" = (
 /turf/open/floor/wood/large,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
+"Y" = (
+/obj/machinery/light/small/directional/west,
+/turf/open/misc/beach/sand,
+/area/virtual_domain/fullbright)
 "Z" = (
 /obj/effect/baseturf_helper/virtual_domain,
 /turf/closed/indestructible/binary,
-/area/virtual_domain/powered)
+/area/virtual_domain/fullbright)
 
 (1,1,1) = {"
 a
@@ -192,12 +212,12 @@ K
 G
 y
 J
+T
 J
 J
 J
 J
-J
-J
+T
 z
 P
 i
@@ -218,14 +238,14 @@ a
 J
 O
 J
-J
+h
 I
 I
 I
 I
 I
 v
-J
+N
 P
 Q
 i
@@ -380,14 +400,14 @@ a
 G
 y
 J
-J
+h
 I
 I
 I
 I
 I
 I
-J
+N
 P
 i
 i
@@ -408,12 +428,12 @@ o
 J
 J
 J
+Y
 J
 J
 J
 J
-J
-J
+Y
 J
 P
 i

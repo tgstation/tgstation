@@ -1,11 +1,13 @@
 /datum/ai_behavior/basic_melee_attack
 	action_cooldown = 0.2 SECONDS // We gotta check unfortunately often because we're in a race condition with nextmove
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_REQUIRE_REACH | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	///do we finish this action after hitting once?
+	var/terminate_after_action = FALSE
 
 /datum/ai_behavior/basic_melee_attack/setup(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	if(!controller.blackboard[targeting_strategy_key])
-		CRASH("No target datum was supplied in the blackboard for [controller.pawn]")
+		CRASH("No targeting strategy was supplied in the blackboard for [controller.pawn]")
 
 	//Hiding location is priority
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
@@ -39,11 +41,20 @@
 	else
 		basic_mob.melee_attack(target)
 
+	if(terminate_after_action)
+		finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/basic_melee_attack/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	if(!succeeded)
 		controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/basic_melee_attack/interact_once
+	terminate_after_action = TRUE
+
+/datum/ai_behavior/basic_melee_attack/interact_once/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
+	. = ..()
+	controller.clear_blackboard_key(target_key)
 
 /datum/ai_behavior/basic_ranged_attack
 	action_cooldown = 0.6 SECONDS

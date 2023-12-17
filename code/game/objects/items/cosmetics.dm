@@ -188,7 +188,7 @@
 	icon = 'icons/obj/cosmetic.dmi'
 	icon_state = "razor"
 	inhand_icon_state = "razor"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 
 /obj/item/razor/suicide_act(mob/living/carbon/user)

@@ -8,8 +8,8 @@ type Data = {
   contents_ref: string;
 };
 
-export const FilingCabinet = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const FilingCabinet = (props) => {
+  const { act, data } = useBackend<Data>();
   const { cabinet_name, contents, contents_ref } = data;
 
   return (
@@ -21,7 +21,8 @@ export const FilingCabinet = (props, context) => {
             color="black"
             backgroundColor="white"
             style={{ padding: '2px' }}
-            mb={0.5}>
+            mb={0.5}
+          >
             <Stack.Item align="center" grow={1}>
               <Box align="center">{object}</Box>
             </Stack.Item>

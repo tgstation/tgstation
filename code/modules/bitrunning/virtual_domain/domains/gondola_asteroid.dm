@@ -1,13 +1,11 @@
 /datum/lazy_template/virtual_domain/gondola_asteroid
 	name = "Gondola Asteroid"
 	desc = "An asteroid home to a bountiful forest of gondolas. Peaceful."
-	map_name = "gondola_asteroid"
 	help_text = "What a lovely forest. There's a loot crate here in the middle of the map. \
 	Hmm... It doesn't budge. The gondolas don't seem to have any trouble moving it, though. \
 	I bet there's a way to move it myself."
 	key = "gondola_asteroid"
 	map_name = "gondola_asteroid"
-	safehouse_path = /datum/map_template/safehouse/shuttle_space
 
 /// Very pushy gondolas, great for moving loot crates.
 /obj/structure/closet/crate/secure/bitrunning/encrypted/gondola

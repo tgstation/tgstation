@@ -26,8 +26,8 @@
 	notify_ghosts(
 		"[parent] is edible by ghosts!",
 		source = parent,
-		action = NOTIFY_ORBIT,
-		header="Something Tasty!",
+		header = "Something Tasty!",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 	)
 
 /datum/component/ghost_edible/RegisterWithParent()

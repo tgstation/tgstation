@@ -13,6 +13,10 @@
 /obj/effect/decal/cleanable/blood/splatter/over_window,
 /turf/open/floor/iron/freezer,
 /area/virtual_domain/safehouse)
+"h" = (
+/obj/modular_map_connector,
+/turf/closed/wall/mineral/silver,
+/area/virtual_domain/safehouse)
 "q" = (
 /obj/structure/urinal/directional/west,
 /turf/open/floor/iron/freezer,
@@ -103,7 +107,7 @@ G
 G
 G
 G
-G
+h
 "}
 (2,1,1) = {"
 G

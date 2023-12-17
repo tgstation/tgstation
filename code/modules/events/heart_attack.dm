@@ -24,7 +24,7 @@
  * Performs initial analysis of which living players are eligible to be selected for a heart attack.
  *
  * Traverses player_list and checks entries against a series of reviews to see if they should even be considered for a heart attack,
- * and at what weight should they be eligible to recieve it. The check for whether or not a heart attack should be "blocked" by something is done
+ * and at what weight should they be eligible to receive it. The check for whether or not a heart attack should be "blocked" by something is done
  * later, at the round_event level, so this proc mostly just checks users for whether or not a heart attack should be possible.
  */
 /datum/round_event_control/heart_attack/proc/generate_candidates()
@@ -59,7 +59,7 @@
  * Picks a victim from a list and attempts to give them a heart attack
  *
  * Performs a pick_weight on a list of potential victims. Once selected, the "winner"
- * will recieve heart disease. Returns TRUE if a heart attack is successfully given, and
+ * will receive heart disease. Returns TRUE if a heart attack is successfully given, and
  * FALSE if something blocks it.
  */
 /datum/round_event/heart_attack/proc/attack_heart()
@@ -82,7 +82,7 @@
 	return FALSE
 
 /datum/event_admin_setup/minimum_candidate_requirement/heart_attack
-	output_text = "There are no candidates eligible to recieve a heart attack!"
+	output_text = "There are no candidates eligible to receive a heart attack!"
 
 /datum/event_admin_setup/minimum_candidate_requirement/heart_attack/count_candidates()
 	var/datum/round_event_control/heart_attack/heart_control = event_control

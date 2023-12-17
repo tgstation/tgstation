@@ -11,8 +11,8 @@ type Data = {
   powerLevel: number;
 };
 
-export const Electrolyzer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const Electrolyzer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { hasPowercell, on, open, anchored, powerLevel } = data;
 
   return (
@@ -36,13 +36,13 @@ export const Electrolyzer = (props, context) => {
                 onClick={() => act('power')}
               />
             </>
-          }>
+          }
+        >
           <LabeledList>
-            <LabeledList.Item label="Cell" color={!hasPowercell && 'bad'}>
+            <LabeledList.Item label="Cell" color={!hasPowercell ? 'bad' : ''}>
               {(hasPowercell && (
                 <ProgressBar
                   value={powerLevel / 100}
-                  content={powerLevel + '%'}
                   ranges={{
                     good: [0.6, Infinity],
                     average: [0.3, 0.6],

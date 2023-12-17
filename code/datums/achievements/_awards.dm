@@ -15,9 +15,6 @@
 	//Value returned on db connection failure, in case we want to differ 0 and nonexistent later on
 	var/default_value = FALSE
 
-	///Whether the award has to be loaded before or after other awards on [/datum/achievement_data/load_all_achievements()]
-	var/load_priority = AWARD_PRIORITY_DEFAULT
-
 ///This proc loads the achievement data from the hub.
 /datum/award/proc/load(key)
 	if(!SSdbcore.Connect())
@@ -109,7 +106,6 @@
 /datum/award/achievement/on_unlock(mob/user)
 	. = ..()
 	to_chat(user, span_greenannounce("<B>Achievement unlocked: [name]!</B>"))
-	user.client.give_award(/datum/award/score/achievements_score, user, 1)
 	var/sound/sound_to_send = LAZYACCESS(GLOB.achievement_sounds, user.client.prefs.read_preference(/datum/preference/choiced/sound_achievement))
 	if(sound_to_send)
 		SEND_SOUND(user, sound_to_send)
@@ -177,20 +173,45 @@
 	desc = "Don't worry, metagaming is all that matters."
 	icon = "elephant" //Obey the reference
 	database_id = ACHIEVEMENTS_SCORE
-	load_priority = AWARD_PRIORITY_LAST //See below
 
-/**
- * If the raw value is not numerical, it's likely this is the first time the score is being loaded for a ckey.
- * So, let's start counting how many achievements have been unlocked so far and return its value instead,
- * which is why this award should always be loaded last.
- */
+/datum/award/score/achievements_score/get_ui_data(key)
+	. = ..()
+	var/datum/db_query/get_unlocked_count = SSdbcore.NewQuery(
+		"SELECT COUNT(m.achievement_key) FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' WHERE a.ckey = :ckey",
+		list("ckey" = key)
+	)
+	if(!get_unlocked_count.Execute(async = TRUE))
+		qdel(get_unlocked_count)
+		.["value"] = default_value
+		return .
+	if(get_unlocked_count.NextRow())
+		.["value"] = text2num(get_unlocked_count.item[1])
+	qdel(get_unlocked_count)
+	return .
+
+/datum/award/score/achievements_score/LoadHighScores()
+	var/datum/db_query/get_unlocked_highscore = SSdbcore.NewQuery(
+		"SELECT ckey, COUNT(ckey) AS c FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' GROUP BY ckey ORDER BY c DESC LIMIT 50",
+	)
+	if(!get_unlocked_highscore.Execute(async = TRUE))
+		qdel(get_unlocked_highscore)
+		return
+	else
+		while(get_unlocked_highscore.NextRow())
+			var/key = get_unlocked_highscore.item[1]
+			var/score = text2num(get_unlocked_highscore.item[2])
+			high_scores[key] = score
+		qdel(get_unlocked_highscore)
+
 /datum/award/score/achievements_score/on_achievement_data_init(datum/achievement_data/holder, database_value)
-	if(isnum(database_value))
-		return ..()
-	//We need to keep the value differents so that it's properly saved at the end of the round.
-	holder.original_cached_data[type] = 0
-	var/value = 0
-	for(var/award_type in holder.data)
-		if(ispath(award_type, /datum/award/achievement) && holder.data[award_type])
-			value++
-	holder.data[type] = value
+	var/datum/db_query/get_unlocked_load = SSdbcore.NewQuery(
+		"SELECT COUNT(m.achievement_key) FROM [format_table_name("achievements")] AS a JOIN [format_table_name("achievement_metadata")] m ON a.achievement_key = m.achievement_key AND m.achievement_type = 'Achievement' WHERE a.ckey = :ckey",
+		list("ckey" = holder.owner_ckey)
+	)
+	if(!get_unlocked_load.Execute(async = TRUE))
+		qdel(get_unlocked_load)
+		return
+	if(get_unlocked_load.NextRow())
+		holder.data[type] = text2num(get_unlocked_load.item[1]) || 0
+		holder.original_cached_data[type] = 0
+	qdel(get_unlocked_load)

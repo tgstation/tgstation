@@ -16,7 +16,7 @@
 	response_help_simple = "pet"
 	response_disarm_continuous = "gently pushes aside"
 	response_disarm_simple = "gently push aside"
-	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, CLONE = 1, STAMINA = 1, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1.25, TOX = 1, STAMINA = 1, OXY = 1)
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = NONE
 	speed = -0.1
@@ -47,7 +47,7 @@
 	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
 	AddElement(/datum/element/cliff_walking)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
-	AddElement(/datum/element/venomous, /datum/reagent/toxin/hunterspider, 5)
+	AddElement(/datum/element/venomous, /datum/reagent/toxin/hunterspider, 5, injection_flags = INJECT_CHECK_PENETRATE_THICK)
 	AddElement(/datum/element/web_walker, /datum/movespeed_modifier/fast_web)
 	AddElement(/datum/element/nerfed_pulling, GLOB.typecache_general_bad_things_to_easily_move)
 	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!")

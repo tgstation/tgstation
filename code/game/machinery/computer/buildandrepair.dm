@@ -227,7 +227,7 @@
 	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 /obj/structure/frame/computer/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(state == 4)
 			new /obj/item/shard(drop_location())
 			new /obj/item/shard(drop_location())
@@ -242,7 +242,7 @@
 
 /obj/structure/frame/computer/rcd/Initialize(mapload)
 	name = "computer frame"
-	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon = 'icons/obj/devices/stock_parts.dmi'
 	icon_state = "0"
 
 	. = ..()

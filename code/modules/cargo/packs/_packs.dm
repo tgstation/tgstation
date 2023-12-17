@@ -122,3 +122,30 @@
 	name = "[purchaser]'s Materials Order"
 	src.cost = cost
 	src.contains = contains
+
+/datum/supply_pack/custom/minerals/fill(obj/structure/closet/crate/C)
+	for(var/obj/item/stack/sheet/possible_stack as anything in contains)
+		var/material_type = initial(possible_stack.material_type)
+		//in case we ordered more than what's in the market at the time due to market fluctuations
+		//we find the min of what was ordered & what's actually available in the market at this point of time
+		var/market_quantity = SSstock_market.materials_quantity[material_type]
+		var/available_quantity = min(contains[possible_stack], market_quantity)
+		if(!available_quantity)
+			continue
+
+		//spawn the ordered stack inside the crate
+		var/sheets_to_spawn = available_quantity
+		while(sheets_to_spawn)
+			var/spawn_quantity = min(sheets_to_spawn, MAX_STACK_SIZE)
+			var/obj/item/stack/sheet/ordered_stack = new possible_stack(C, spawn_quantity)
+			if(admin_spawned)
+				ordered_stack.flags_1 |= ADMIN_SPAWNED_1
+			sheets_to_spawn -= spawn_quantity
+
+		//Prices go up as material quantity becomes scarce
+		var/fraction = available_quantity
+		if(market_quantity != available_quantity) //to avoid division by zero error
+			fraction /= (market_quantity - available_quantity)
+		SSstock_market.materials_prices[material_type] += round(SSstock_market.materials_prices[material_type] * fraction)
+		//We decrease the quantity only after adjusting our prices for accurate values
+		SSstock_market.materials_quantity[material_type] -= available_quantity

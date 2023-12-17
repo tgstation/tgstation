@@ -82,6 +82,7 @@
 	new /obj/item/clothing/under/rank/security/head_of_security/grey(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/parade(src)
 	new /obj/item/clothing/under/rank/security/head_of_security/parade/female(src)
+	new /obj/item/clothing/gloves/tackler/combat(src)
 	new /obj/item/clothing/suit/armor/hos(src)
 	new /obj/item/clothing/suit/armor/hos/hos_formal(src)
 	new /obj/item/clothing/suit/armor/hos/trenchcoat/winter(src)

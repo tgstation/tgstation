@@ -161,8 +161,8 @@
 	notify_ghosts(
 		"[user] is shaking [src], hoping to get an answer to \"[selected_message]\"",
 		source = src,
-		action = NOTIFY_PLAY,
 		header = "Magic eightball",
+		click_interact = TRUE,
 	)
 
 /obj/item/toy/eightball/haunted/get_answer()

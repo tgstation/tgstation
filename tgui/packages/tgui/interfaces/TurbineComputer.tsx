@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Box, Modal, ProgressBar, NumberInput } from '../components';
+import {
+  Button,
+  LabeledList,
+  Section,
+  Box,
+  Modal,
+  ProgressBar,
+  NumberInput,
+} from '../components';
 import { Window } from '../layouts';
 
 type TurbineInfo = {
@@ -17,15 +25,16 @@ type TurbineInfo = {
   regulator: number;
 };
 
-export const TurbineComputer = (props, context) => {
-  const { act, data } = useBackend<TurbineInfo>(context);
+export const TurbineComputer = (props) => {
+  const { act, data } = useBackend<TurbineInfo>();
   const parts_not_connected = !data.parts_linked && (
     <Modal>
       <Box
         style={{ margin: 'auto' }}
         width="200px"
         textAlign="center"
-        minHeight="39px">
+        minHeight="39px"
+      >
         {
           'Parts not connected, use a multitool on the core rotor before trying again'
         }
@@ -38,7 +47,8 @@ export const TurbineComputer = (props, context) => {
         style={{ margin: 'auto' }}
         width="200px"
         textAlign="center"
-        minHeight="39px">
+        minHeight="39px"
+      >
         {
           'Some parts have open maintenance hatchet, please close them before starting'
         }
@@ -58,7 +68,8 @@ export const TurbineComputer = (props, context) => {
               disabled={!!(data.rpm >= 1000) || !data.parts_linked}
               onClick={() => act('toggle_power')}
             />
-          }>
+          }
+        >
           {parts_not_connected}
           {parts_not_ready}
           <LabeledList>

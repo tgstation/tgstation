@@ -59,8 +59,9 @@ SUBSYSTEM_DEF(persistence)
 
 ///Loads up Poly's speech buffer.
 /datum/controller/subsystem/persistence/proc/load_poly()
-	for(var/mob/living/simple_animal/parrot/poly/P in GLOB.alive_mob_list)
-		twitterize(P.speech_buffer, "polytalk")
+	for(var/mob/living/basic/parrot/poly/bird in GLOB.alive_mob_list)
+		var/list/list_to_read = bird.get_static_list_of_phrases()
+		twitterize(list_to_read, "polytalk")
 		break //Who's been duping the bird?!
 
 /// Loads up the amount of times maps appeared to alter their appearance in voting and rotation.

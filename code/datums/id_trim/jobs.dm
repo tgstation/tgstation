@@ -202,6 +202,28 @@
 		)
 	job = /datum/job/botanist
 
+/datum/id_trim/job/bridge_assistant
+	assignment = "Bridge Assistant"
+	trim_state = "trim_assistant"
+	department_color = COLOR_COMMAND_BLUE
+	subdepartment_color = COLOR_COMMAND_BLUE
+	sechud_icon_state = SECHUD_BRIDGE_ASSISTANT
+	minimal_access = list(
+		ACCESS_COMMAND,
+		ACCESS_EVA,
+		ACCESS_GATEWAY,
+		ACCESS_MAINT_TUNNELS,
+		ACCESS_RC_ANNOUNCE,
+		ACCESS_TELEPORTER,
+		ACCESS_WEAPONS,
+	)
+	extra_access = list()
+	template_access = list(
+		ACCESS_CAPTAIN,
+		ACCESS_CHANGE_IDS,
+	)
+	job = /datum/job/bridge_assistant
+
 /datum/id_trim/job/captain
 	assignment = "Captain"
 	intern_alt_name = "Captain-in-Training"
@@ -440,6 +462,7 @@
 	extra_access = list(
 		ACCESS_PSYCHOLOGY,
 		ACCESS_PHARMACY,
+		ACCESS_VIROLOGY,
 	)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -695,7 +718,6 @@
 	sechud_icon_state = SECHUD_MEDICAL_DOCTOR
 	extra_access = list(
 		ACCESS_PLUMBING,
-		ACCESS_VIROLOGY,
 		)
 	minimal_access = list(
 		ACCESS_MECH_MEDICAL,
@@ -704,6 +726,7 @@
 		ACCESS_MORGUE,
 		ACCESS_PHARMACY,
 		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -754,6 +777,7 @@
 		)
 	extra_access = list(
 		ACCESS_SURGERY,
+		ACCESS_VIROLOGY,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -775,6 +799,7 @@
 		ACCESS_HOS,
 		)
 	job = /datum/job/prisoner
+	threat_modifier = 1 // I'm watching you
 
 /datum/id_trim/job/prisoner/one
 	trim_state = "trim_prisoner_1"
@@ -1167,6 +1192,7 @@
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_VIROLOGY,
+		ACCESS_PHARMACY,
 		)
 	extra_access = list(
 		ACCESS_PLUMBING,

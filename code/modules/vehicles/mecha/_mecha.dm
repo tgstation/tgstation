@@ -10,7 +10,7 @@
  * AI also has special checks becaus it gets in and out of the mech differently
  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
  *
- * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * For multi-crew, you need to set how the occupants receive ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
  *
  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
@@ -521,7 +521,8 @@
 	if(!overclock_mode && overclock_temp > 0)
 		overclock_temp -= seconds_per_tick
 		return
-	overclock_temp = min(overclock_temp + seconds_per_tick, overclock_temp_danger * 2)
+	var/temp_gain = seconds_per_tick * (1 + 1 / movedelay)
+	overclock_temp = min(overclock_temp + temp_gain, overclock_temp_danger * 2)
 	if(overclock_temp < overclock_temp_danger)
 		return
 	if(overclock_temp >= overclock_temp_danger && overclock_safety)

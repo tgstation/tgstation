@@ -112,7 +112,9 @@
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "vz" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "ice"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "xB" = (

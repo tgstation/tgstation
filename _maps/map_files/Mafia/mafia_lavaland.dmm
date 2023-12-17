@@ -52,7 +52,7 @@
 "al" = (
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/fakebasalt,
 /area/centcom/mafia)
 "am" = (
@@ -72,7 +72,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "ap" = (
@@ -94,7 +94,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "as" = (
@@ -135,7 +135,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aB" = (
@@ -184,7 +184,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aI" = (
@@ -193,7 +193,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aJ" = (
@@ -211,7 +211,7 @@
 	},
 /obj/item/shovel,
 /obj/item/pickaxe,
-/obj/structure/closet/secure_closet/miner/unlocked,
+/obj/structure/closet/crate/miningcar,
 /turf/open/floor/iron,
 /area/centcom/mafia)
 "aM" = (

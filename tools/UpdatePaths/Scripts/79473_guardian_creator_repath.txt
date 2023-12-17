@@ -1,0 +1,5 @@
+/obj/item/guardiancreator/choose/wizard : /obj/item/guardian_creator/wizard{@OLD}
+/obj/item/guardiancreator/tech/@SUBTYPES : /obj/item/guardian_creator/tech/@SUBTYPES{@OLD}
+/obj/item/guardiancreator/carp/@SUBTYPES : /obj/item/guardian_creator/carp/@SUBTYPES{@OLD}
+/obj/item/guardian_creator/miner/@SUBTYPES : /obj/item/guardian_creator/miner/@SUBTYPES{@OLD}
+/obj/item/guardiancreator/@SUBTYPES : /obj/item/guardian_creator/@SUBTYPES{@OLD}

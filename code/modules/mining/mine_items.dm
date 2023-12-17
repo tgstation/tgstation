@@ -30,7 +30,7 @@
 
 /obj/structure/closet/wardrobe/miner
 	name = "mining wardrobe"
-	icon_door = "mixed"
+	icon_door = "mining_wardrobe"
 
 /obj/structure/closet/wardrobe/miner/PopulateContents()
 	new /obj/item/storage/backpack/duffelbag/explorer(src)
@@ -103,6 +103,13 @@
 	if (HAS_TRAIT(user, TRAIT_FORBID_MINING_SHUTTLE_CONSOLE_OUTSIDE_STATION) && !is_station_level(user.z))
 		to_chat(user, span_warning("You get the feeling you shouldn't mess with this."))
 		return
+
+	if(isliving(user))
+		var/mob/living/living_user = user
+		for(var/obj/item/implant/exile/exile_implant in living_user.implants)
+			to_chat(living_user, span_warning("A warning flashes across the screen, and the shuttle controls lock in response to your exile implant."))
+			return
+
 	return ..()
 
 /obj/machinery/computer/shuttle/mining/common

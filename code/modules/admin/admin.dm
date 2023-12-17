@@ -31,8 +31,7 @@
 	dat += "<hr/>"
 	if(SSticker.IsRoundInProgress())
 		dat += "<a href='?src=[REF(src)];[HrefToken()];gamemode_panel=1'>(Game Mode Panel)</a><BR>"
-		if(istype(SSticker.mode, /datum/game_mode/dynamic))
-			dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
+		dat += "<A href='?src=[REF(src)];[HrefToken()];f_dynamic_ruleset_manage=1'>(Manage Dynamic Rulesets)</A><br>"
 	dat += {"
 		<BR>
 		<A href='?src=[REF(src)];[HrefToken()];create_object=1'>Create Object</A><br>
@@ -76,7 +75,7 @@
 			A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] spawned [amount] x [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Atom") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Atom")
 
 /datum/admins/proc/podspawn_atom(object as text)
 	set category = "Debug"
@@ -103,7 +102,7 @@
 		A.flags_1 |= ADMIN_SPAWNED_1
 
 	log_admin("[key_name(usr)] pod-spawned [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Podspawn Atom") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Podspawn Atom")
 
 /datum/admins/proc/spawn_cargo(object as text)
 	set category = "Debug"
@@ -121,7 +120,7 @@
 	S.generate(get_turf(usr))
 
 	log_admin("[key_name(usr)] spawned cargo pack [chosen] at [AREACOORD(usr)]")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Spawn Cargo") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Spawn Cargo")
 
 /datum/admins/proc/dynamic_mode_options(mob/user)
 	var/dat = {"
@@ -147,9 +146,6 @@
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
 /datum/admins/proc/dynamic_ruleset_manager(mob/user)
-	if (SSticker.current_state > GAME_STATE_PREGAME && !istype(SSticker.mode, /datum/game_mode/dynamic))
-		return // Not running dynamic
-
 	var/dat = "<center><B><h2>Dynamic Ruleset Management</h2></B></center><hr>\
 		Change these options to forcibly enable or disable dynamic rulesets.<br/>\
 		Disabled rulesets will never run, even if they would otherwise be valid.<br/>\
@@ -172,11 +168,10 @@
 		user << browse(dat, "window=dyn_mode_options;size=900x650")
 		return
 
-	var/datum/game_mode/dynamic/current_mode = SSticker.mode
 	var/pop_count = length(GLOB.alive_player_list)
-	var/threat_level = current_mode.threat_level
-	dat += dynamic_ruleset_category_during_round_display("Latejoin", current_mode.latejoin_rules, pop_count, threat_level)
-	dat += dynamic_ruleset_category_during_round_display("Midround", current_mode.midround_rules, pop_count, threat_level)
+	var/threat_level = SSdynamic.threat_level
+	dat += dynamic_ruleset_category_during_round_display("Latejoin", SSdynamic.latejoin_rules, pop_count, threat_level)
+	dat += dynamic_ruleset_category_during_round_display("Midround", SSdynamic.midround_rules, pop_count, threat_level)
 	user << browse(dat, "window=dyn_mode_options;size=900x650")
 
 /datum/admins/proc/dynamic_ruleset_category_pre_start_display(title, list/rules)
@@ -304,7 +299,7 @@
 
 	message_admins(span_adminnotice("[key_name_admin(usr)] has put [frommob.key] in control of [tomob.name]."))
 	log_admin("[key_name(usr)] stuffed [frommob.key] into [tomob.name].")
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Ghost Drag Control")
+	BLACKBOX_LOG_ADMIN_VERB("Ghost Drag Control")
 
 	tomob.key = frommob.key
 	tomob.client?.init_verbs()

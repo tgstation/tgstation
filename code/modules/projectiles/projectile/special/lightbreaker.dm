@@ -4,7 +4,7 @@
 	damage = 0
 	damage_type = BRUTE
 	armor_flag = BOMB
-	range = 14
+	range = 21
 	projectile_phasing = PASSTABLE | PASSMOB | PASSMACHINE | PASSSTRUCTURE
 	hitscan = TRUE
 	var/disrupt_duration = 10 SECONDS
