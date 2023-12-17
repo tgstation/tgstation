@@ -59,6 +59,7 @@
 
 	final_hunt_list += controller.blackboard[BB_CLEANABLE_DECALS]
 	var/list/flag_list = controller.clean_flags
+	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
 	for(var/list_key in flag_list)
 		if(!(bot_pawn.janitor_mode_flags & flag_list[list_key]))
 			continue
