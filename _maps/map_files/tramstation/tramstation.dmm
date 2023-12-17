@@ -54377,6 +54377,16 @@
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
+"qwA" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 5
+	},
+/obj/machinery/cryopod{
+	dir = 8;
+	max_integrity = 10000
+	},
+/turf/open/floor/iron,
+/area/station/security/prison)
 "qwH" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/wood,
@@ -67275,6 +67285,10 @@
 "uyJ" = (
 /turf/open/floor/iron,
 /area/station/security/prison/workout)
+"uyS" = (
+/obj/machinery/cryopod/prison,
+/turf/closed/wall/r_wall,
+/area/station/security/prison/shower)
 "uyX" = (
 /obj/item/assembly/signaler,
 /obj/structure/cable,
@@ -97961,7 +97975,7 @@ wFT
 rZF
 kDo
 gvI
-wFT
+qwA
 rmm
 rBz
 fdr
@@ -100024,7 +100038,7 @@ lPU
 thG
 vRO
 vRO
-vRO
+uyS
 vRO
 vRO
 vRO

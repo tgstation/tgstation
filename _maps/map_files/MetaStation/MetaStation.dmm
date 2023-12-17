@@ -40831,6 +40831,10 @@
 	dir = 10
 	},
 /obj/machinery/light/directional/south,
+/obj/machinery/cryopod{
+	dir = 4;
+	max_integrity = 10000
+	},
 /turf/open/floor/iron/white,
 /area/station/security/prison)
 "oEx" = (
