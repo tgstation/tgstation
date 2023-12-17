@@ -260,12 +260,13 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
 	addiction_types = list(/datum/addiction/medicine = 1.5)
-	var/amount_of_blur_applied = 2.5 SECONDS
+	///The amount of blur applied per second. Given the average on_life interval is 2 seconds, that'd be 2.5s.
+	var/amount_of_blur_applied = 1.25 SECONDS
 	tox_damage = 0
 
 /datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
 	owner.adjustOrganLoss(ORGAN_SLOT_EYES, 0.1 * REM * delta_time)
-	owner.adjust_eye_blur(amount_of_blur_applied)
+	owner.adjust_eye_blur(amount_of_blur_applied * delta_time)
 	. = ..()
 	return TRUE
 
