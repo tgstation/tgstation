@@ -112,21 +112,22 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
-	if(COOLDOWN_FINISHED(src, defib_cooldown) && owner.stat == DEAD && owner.can_defib() == DEFIB_POSSIBLE)
-		owner.notify_revival("You are being revived by [src]!")
-		revive_cost += 10 MINUTES // Additional 10 minutes cooldown after revival.
-		owner.grab_ghost()
+	if(!COOLDOWN_FINISHED(src, defib_cooldown) || owner.stat != DEAD || owner.can_defib() != DEFIB_POSSIBLE)
+		return
+	owner.notify_revival("You are being revived by [src]!")
+	revive_cost += 10 MINUTES // Additional 10 minutes cooldown after revival.
+	owner.grab_ghost()
 
-		defib_cooldown += 16 SECONDS // delay so it doesn't spam
+	defib_cooldown += 16 SECONDS // delay so it doesn't spam
 
-		owner.visible_message(span_warning("[owner]'s body convulses a bit."))
-		playsound(owner, SFX_BODYFALL, 50, TRUE)
-		playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
-		owner.revive()
-		owner.emote("gasp")
-		owner.set_jitter_if_lower(200 SECONDS)
-		SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
-		log_game("[owner] been revived by [src]")
+	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
+	playsound(owner, SFX_BODYFALL, 50, TRUE)
+	playsound(owner, 'sound/machines/defib_zap.ogg', 75, TRUE, -1)
+	owner.revive()
+	owner.emote("gasp")
+	owner.set_jitter_if_lower(200 SECONDS)
+	SEND_SIGNAL(owner, COMSIG_LIVING_MINOR_SHOCK)
+	log_game("[owner] been revived by [src]")
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/emp_act(severity)
