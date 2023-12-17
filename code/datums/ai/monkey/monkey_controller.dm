@@ -149,7 +149,11 @@ have ways of interacting with a specific mob and control it.
 	return TRUE
 
 ///Reactive events to being hit
-/datum/ai_controller/monkey/proc/retaliate(mob/living/L)
+/datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
+	// just to be safe
+	if(QDELETED(living_mob))
+		return
+
 	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, L, MONKEY_HATRED_AMOUNT)
 
 /datum/ai_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
