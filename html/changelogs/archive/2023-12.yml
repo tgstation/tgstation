@@ -133,3 +133,7 @@
   DexeeXI:
   - admin: no, the admins aren't telling you.
   - qol: chameleon gun can't use admin-only weapons.
+2023-12-17:
+  KoboldCommando:
+  - bugfix: removed the ability to break server rules from beepskies, medibots, spray
+      tan and hailers
