@@ -36,7 +36,7 @@ export const MedicalRecordTabs = (props) => {
       <Stack.Item>
         <Input
           fluid
-          onInput={(_, value) => setSearch(value)}
+          onChange={(_, value) => setSearch(value)}
           placeholder="Name/Job/DNA"
         />
       </Stack.Item>

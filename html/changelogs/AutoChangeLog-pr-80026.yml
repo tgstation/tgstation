@@ -1,0 +1,6 @@
+author: "DarkHunter7756"
+delete-after: True
+changes:
+  - bugfix: "Aivime, Lentslurri, Eigenswap and Libitoil can now be cooked again."
+  - balance: "Aivime now can stack blur effects for the soapiest game ever."
+  - spellcheck: "Lenturri description become more actual"

@@ -39,7 +39,7 @@
 	var/y_offset = 397
 	var/y_button_offset = 27
 	for (var/datum/station_trait/trait as anything in GLOB.lobby_station_traits)
-		if (!trait.can_display_lobby_button())
+		if (!trait.can_display_lobby_button(mymob.client))
 			continue
 		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = new(our_hud = src)
 		sign_up_button.SlowInit()
