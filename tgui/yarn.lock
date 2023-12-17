@@ -3995,6 +3995,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-radar@npm:^0.2.1":
+  version: 0.2.1
+  resolution: "eslint-plugin-radar@npm:0.2.1"
+  peerDependencies:
+    eslint: ">= 3.0.0 <= 7.x.x"
+  checksum: dece5c02506ab40a4e231c813f1a8ecd7a57c0a4d177cd35dbfcf56222333d5434a8c06901e8b06409d919b7beeea870428a3574315419252a3698b3766d1a91
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-react@npm:^7.33.2":
   version: 7.33.2
   resolution: "eslint-plugin-react@npm:7.33.2"
@@ -9104,6 +9113,7 @@ resolve@^1.20.0:
     esbuild-loader: ^4.0.2
     eslint: ^8.56.0
     eslint-config-prettier: ^9.1.0
+    eslint-plugin-radar: ^0.2.1
     eslint-plugin-react: ^7.33.2
     eslint-plugin-simple-import-sort: ^10.0.0
     eslint-plugin-unused-imports: ^3.0.0

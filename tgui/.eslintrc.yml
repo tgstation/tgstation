@@ -11,6 +11,7 @@ env:
   browser: true
   node: true
 plugins:
+  - radar
   - react
   - unused-imports
   - simple-import-sort
