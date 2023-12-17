@@ -219,6 +219,7 @@
 			if(holder) //transfer reagents from ingredients to result
 				if(result.reagents)
 					holder.trans_to(result.reagents, holder.total_volume)
+				parts -= holder
 				qdel(holder)
 			result.CheckParts(parts, recipe)
 			if(send_feedback)
