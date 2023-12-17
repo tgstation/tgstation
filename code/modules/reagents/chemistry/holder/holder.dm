@@ -633,7 +633,7 @@
 	var/num_reagents = length(cached_reagents)
 	var/total_ph = 0
 	var/reagent_volume = 0
-	var/running_volume = 0
+	. = 0
 
 	//responsible for removing reagents and computing total ph & volume
 	//all it's code was taken out of del_reagent() initially for efficiency purposes
@@ -662,17 +662,17 @@
 			continue
 
 		//compute volume & ph like we would normally
-		running_volume += reagent_volume
+		. += reagent_volume
 		total_ph += (reagent.ph * reagent_volume)
 
 		//reasign rounded value
 		reagent.volume = reagent_volume
 
 	//assign the final values, rounding up can sometimes cause overflow so bring it down
-	total_volume = min(round(running_volume, CHEMICAL_VOLUME_ROUNDING), maximum_volume)
-	if(!running_volume)
+	total_volume = min(round(., CHEMICAL_VOLUME_ROUNDING), maximum_volume)
+	if(!total_volume)
 		ph = CHEMICAL_NORMAL_PH
-	else if(total_volume)
+	else
 		ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
 	//now send the signals after the volume & ph has been computed
