@@ -40,7 +40,7 @@
 /// Stop the automute from triggering for commands (unless the spoken text is suspiciously longer than the command)
 /datum/pet_command/proc/waive_automute(mob/living/speaker, client/client, last_message, mute_type)
 	SIGNAL_HANDLER
-	if(mute_type == MUTE_IC && find_command_in_text(spoken_text, check_verbosity = TRUE))
+	if(mute_type == MUTE_IC && find_command_in_text(last_message, check_verbosity = TRUE))
 		return WAIVE_AUTOMUTE_CHECK
 	return NONE
 
