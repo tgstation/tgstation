@@ -576,7 +576,7 @@
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
-		if(cell && cell.maxcharge != 0)
+		if(cell && cell.maxcharge)
 			var/cellcharge = cell.charge/cell.maxcharge
 			switch(cellcharge)
 				if(0.75 to INFINITY)

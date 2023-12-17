@@ -672,7 +672,7 @@
 	total_volume = min(round(running_volume, CHEMICAL_VOLUME_ROUNDING), maximum_volume)
 	if(!running_volume)
 		ph = CHEMICAL_NORMAL_PH
-	else if(total_volume != 0)
+	else if(total_volume)
 		ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
 	//now send the signals after the volume & ph has been computed
