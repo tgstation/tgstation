@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	/// The rate at which the internal air mixture cools
 	var/cooling_rate_per_second = 4
 	/// Minimum temperature of the internal air mixture
-	var/minimum_temperature = T0C - 60
+	var/minimum_temperature = T0C - 20
 
 
 /obj/structure/bodycontainer/morgue/Initialize(mapload)
