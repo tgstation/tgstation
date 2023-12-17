@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Adds a new shuttle event, where space shuttles can experience minor turbulance. Keep your belt on while the appropriate cabin light is lit."

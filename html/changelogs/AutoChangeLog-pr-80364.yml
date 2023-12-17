@@ -1,4 +1,0 @@
-author: "Exester509"
-delete-after: True
-changes:
-  - bugfix: "ED-209s can no longer be crafted with most instances of helmet, you need security ones just like Beepsky."

@@ -1,5 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - balance: "Last Resort can now be used while unconscious or dead."
-  - balance: "Last Resort stuns bystanders for slightly longer."

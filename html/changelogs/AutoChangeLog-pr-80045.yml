@@ -1,6 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Motorized wheelchairs will no longer spawn in a bugged state where they have no parts and can't be upgraded."
-  - bugfix: "Motorized wheelchairs will drop their power cell when destroyed or deconstructed."
-  - qol: "Power cells are now inserted into motorized wheelchairs as part of the crafting recipe, instead of as an extra step afterwards."
