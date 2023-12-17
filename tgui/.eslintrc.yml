@@ -14,10 +14,9 @@ plugins:
   - react
   - unused-imports
   - simple-import-sort
-  - typescript-sort-keys
 settings:
   react:
-    version: '18.20'
+    version: '16.10'
 rules:
   ## Possible Errors
   ## ----------------------------------------
@@ -768,6 +767,3 @@ rules:
   ## https://github.com/lydell/eslint-plugin-simple-import-sort/
   simple-import-sort/imports: error
   simple-import-sort/exports: error
-  ## https://github.com/infctr/eslint-plugin-typescript-sort-keys
-  typescript-sort-keys/interface: error
-  typescript-sort-keys/string-enum: error
