@@ -285,4 +285,5 @@
 	results = list(/datum/reagent/consumable/vinegar = 5)
 	required_reagents = list(/datum/reagent/consumable/ethanol/wine = 5)
 	required_catalysts = list(/datum/reagent/consumable/enzyme = 5)
+	mix_message = "The smell of the mixture reminds you of how you lost access to the country club..."
 	required_temp = 380
