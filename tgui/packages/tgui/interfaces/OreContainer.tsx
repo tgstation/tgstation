@@ -1,7 +1,8 @@
 import { createSearch, toTitleCase } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
-import { Box, Button, Input, Stack, Flex, Section } from '../components';
+import { Box, Button, Flex, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Ores = {

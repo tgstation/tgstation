@@ -2,11 +2,11 @@ import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
+  ColorBox,
+  Dropdown,
+  Input,
   LabeledList,
   NumberInput,
-  ColorBox,
-  Input,
-  Dropdown,
   Stack,
 } from '../../components';
 import {
@@ -16,10 +16,10 @@ import {
   EntryIconStateProps,
   EntryTransformProps,
   MatrixTypes,
-  ParticleUIData,
   P_DATA_ICON_ADD,
   P_DATA_ICON_REMOVE,
   P_DATA_ICON_WEIGHT,
+  ParticleUIData,
   SpaceToNum,
   SpaceTypes,
 } from './data';

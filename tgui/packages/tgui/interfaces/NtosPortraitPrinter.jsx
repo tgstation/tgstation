@@ -1,8 +1,9 @@
+import { useState } from 'react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, Stack, Input } from '../components';
+import { Box, Button, Input, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
-import { useState } from 'react';
 
 export const NtosPortraitPrinter = (props) => {
   const { act, data } = useBackend();

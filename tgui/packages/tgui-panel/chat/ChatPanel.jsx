@@ -7,6 +7,7 @@
 import { shallowDiffers } from 'common/react';
 import { Component, createRef } from 'react';
 import { Button } from 'tgui/components';
+
 import { chatRenderer } from './renderer';
 
 export class ChatPanel extends Component {

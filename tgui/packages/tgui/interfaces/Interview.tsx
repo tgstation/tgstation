@@ -1,13 +1,14 @@
+import { ReactNode } from 'react';
+
+import { useBackend } from '../backend';
 import {
-  Button,
-  TextArea,
-  Section,
   BlockQuote,
+  Button,
   NoticeBox,
+  Section,
+  TextArea,
 } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
-import { ReactNode } from 'react';
 
 type Data = {
   connected: boolean;

@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { Window } from './layouts';
 import { useBackend } from './backend';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
+import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 

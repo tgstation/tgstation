@@ -1,8 +1,8 @@
 import { classes } from 'common/react';
+
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Box, Button, Section, Stack } from '../../components';
-import { MutationInfo } from './MutationInfo';
 import {
   CLEAR_GENE,
   GENE_COLORS,
@@ -12,6 +12,7 @@ import {
   SUBJECT_DEAD,
   SUBJECT_TRANSFORMING,
 } from './constants';
+import { MutationInfo } from './MutationInfo';
 
 const GenomeImage = (props) => {
   const { url, selected, onClick } = props;

@@ -3,14 +3,14 @@ import {
   Box,
   Button,
   ColorBox,
+  Divider,
   Flex,
-  Stack,
   Icon,
   Input,
   LabeledList,
   Section,
+  Stack,
   Table,
-  Divider,
 } from '../components';
 import { Window } from '../layouts';
 

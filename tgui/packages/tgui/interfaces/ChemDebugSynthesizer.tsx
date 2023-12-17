@@ -1,7 +1,7 @@
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { useBackend } from '../backend';
 import { Button, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type Data = {
   amount: number;

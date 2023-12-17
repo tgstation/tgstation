@@ -1,6 +1,7 @@
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../backend';
-import { Icon, Box, Button, Dimmer, Section, Stack } from '../components';
+import { Box, Button, Dimmer, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const Trophycase = (props) => {
