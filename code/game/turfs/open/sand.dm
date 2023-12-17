@@ -53,6 +53,7 @@
 	name = "dirt"
 	desc = "Upon closer examination, it's still dirt."
 	icon = 'icons/turf/floors.dmi'
+	damaged_dmi = 'icons/turf/damaged.dmi'
 	icon_state = "sand"
 	base_icon_state = "sand"
 	bullet_bounce_sound = null
