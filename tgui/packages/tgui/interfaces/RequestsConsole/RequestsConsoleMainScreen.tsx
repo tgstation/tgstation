@@ -8,7 +8,8 @@ import { AnnouncementTab } from './AnnouncementTab';
 export const RequestMainScreen = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { can_send_announcements } = data;
-  const [tab, setTab] = useSharedState('tab', 1);
+  const [tab, setTab] = useSharedState('tab', RequestTabs.MESSAGE_VIEW);
+
   return (
     <Stack.Item grow>
       <Stack vertical fill>

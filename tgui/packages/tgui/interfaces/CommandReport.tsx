@@ -164,21 +164,21 @@ const ReportText = (props) => {
       <TextArea
         height="200px"
         mb={1}
-        onInput={(_, value) => setCommandReport(value)}
+        onChange={(_, value) => setCommandReport(value)}
         value={commandReport}
       />
       <Stack vertical>
         <Stack.Item>
           <Button.Checkbox
             fluid
-            checked={announce_contents}
+            checked={!!announce_contents}
             onClick={() => act('toggle_announce')}
           >
             Announce Contents
           </Button.Checkbox>
           <Button.Checkbox
             fluid
-            checked={print_report || !announce_contents}
+            checked={!!print_report || !announce_contents}
             disabled={!announce_contents}
             onClick={() => act('toggle_printing')}
             tooltip={

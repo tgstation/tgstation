@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Section,
   Stack,
@@ -92,7 +93,7 @@ const MachineScreen = (props) => {
 const MainScreen = (props) => {
   const { act, data } = useBackend<Data>();
   const { machinery = [], network } = data;
-  const [networkId, setNetworkId] = useLocalState('networkId', network);
+  const [networkId, setNetworkId] = useState(network);
 
   return (
     <Stack fill vertical>
@@ -100,13 +101,14 @@ const MainScreen = (props) => {
         <Section>
           <Input
             value={networkId}
-            onInput={(e, value) => setNetworkId(value)}
+            onChange={(e, value) => setNetworkId(value)}
             placeholder="Network ID"
           />
           <Button
-            content="Probe Network"
             onClick={() => act('probe_network', { network_id: networkId })}
-          />
+          >
+            Probe Network
+          </Button>
         </Section>
       </Stack.Item>
       <Stack.Item grow>

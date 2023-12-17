@@ -24,8 +24,6 @@
 
 	COOLDOWN_DECLARE(activation_cooldown)
 
-	///Trick to get the glowing overlay visible from a distance
-	luminosity = 1
 	///X offset for the overlay lights, so that they line up with the thin border firelocks
 	var/light_xoffset = 0
 	///Y offset for the overlay lights, so that they line up with the thin border firelocks

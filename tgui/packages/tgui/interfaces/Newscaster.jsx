@@ -6,7 +6,7 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
-import { useBackend, useSharedState, useLocalState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
 import {
@@ -23,6 +23,7 @@ import {
 } from '../components';
 import { marked } from 'marked';
 import { sanitizeText } from '../sanitize';
+import { useState } from 'react';
 
 const CENSOR_MESSAGE =
   'This channel has been deemed as threatening to \
@@ -36,6 +37,7 @@ export const Newscaster = (props) => {
     'tab_main',
     NEWSCASTER_SCREEN,
   );
+
   return (
     <>
       <NewscasterChannelCreation />
@@ -72,11 +74,12 @@ export const Newscaster = (props) => {
 /** The modal menu that contains the prompts to making new channels. */
 const NewscasterChannelCreation = (props) => {
   const { act, data } = useBackend();
-  const [lockedmode, setLockedmode] = useLocalState('lockedmode', 1);
+  const [lockedmode, setLockedmode] = useState(true);
   const { creating_channel, name, desc } = data;
   if (!creating_channel) {
     return null;
   }
+
   return (
     <Modal textAlign="center" mr={1.5}>
       <Stack vertical>
@@ -600,10 +603,9 @@ const NewscasterChannelMessages = (props) => {
                   the station and therefore marked with a <b>D-Notice</b>.
                 </Section>
               ) : (
-                <Section
-                  dangerouslySetInnerHTML={processedText(message.body)}
-                  pl={1}
-                />
+                <Section pl={1}>
+                  <Box dangerouslySetInnerHTML={processedText(message.body)} />
+                </Section>
               )}
               {message.photo !== null && !message.censored_message && (
                 <Box as="img" src={message.photo} />
@@ -615,10 +617,11 @@ const NewscasterChannelMessages = (props) => {
                       <Box italic textColor="white">
                         By: {comment.auth} at {comment.time}
                       </Box>
-                      <Section
-                        dangerouslySetInnerHTML={processedText(comment.body)}
-                        ml={2.5}
-                      />
+                      <Section ml={2.5}>
+                        <Box
+                          dangerouslySetInnerHTML={processedText(comment.body)}
+                        />
+                      </Section>
                     </BlockQuote>
                   ))}
                 </Box>
