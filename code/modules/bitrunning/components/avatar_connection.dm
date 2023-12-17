@@ -95,7 +95,7 @@
 		COMSIG_BITRUNNER_LADDER_SEVER,
 		COMSIG_LIVING_DEATH,
 		COMSIG_LIVING_PILL_CONSUMED,
-		COMSIG_MOB_APPLY_DAMAGE
+		COMSIG_MOB_APPLY_DAMAGE,
 	))
 
 /// Disconnects the avatar and returns the mind to the old_body.
