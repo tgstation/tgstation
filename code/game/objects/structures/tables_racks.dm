@@ -443,9 +443,9 @@
 	if(direction == dir)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/structure/flippedtable/CtrlShiftClick(mob/user)
+/obj/structure/flippedtable/attack_hand_secondary(mob/user)
 	. = ..()
-	if(!istype(user) || !user.can_interact_with())
+	if(!istype(user) || !user.can_interact_with(src))
 		return FALSE
 	user.balloon_alert_to_viewers("flipping table upright...")
 	if(do_after(user, max_integrity * 0.25, src))
@@ -454,7 +454,7 @@
 		if(custom_materials)
 			new_table.set_custom_materials(custom_materials)
 		playsound('sound/items/trayhit2.ogg', 100)
-		qdel()
+		qdel(src)
 		return TRUE
 
 /obj/structure/table/greyscale
