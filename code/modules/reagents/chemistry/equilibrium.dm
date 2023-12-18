@@ -320,7 +320,7 @@
 	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_VOLUME_ROUNDING)
 	if(delta_chem_factor <= 0)
 		to_delete = TRUE
-		return FALSE
+		return
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
