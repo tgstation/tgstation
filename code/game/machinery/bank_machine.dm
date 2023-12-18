@@ -67,7 +67,7 @@
 		say("Insufficient power. Halting siphon.")
 		end_siphon()
 		return
-	if (!is_station_level(src.z) && !is_centcom_level(src.z))
+	if (!(is_station_level(src.z) || is_centcom_level(src.z)))
 		say("Error: Console not in reach of station. Siphon halted.")
 		end_siphon()
 		return
