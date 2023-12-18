@@ -99,7 +99,7 @@ const CategoryBar = (props: CategoryBarProps) => {
           grow
           placeholder="Search"
           value={categorySearch}
-          onChange={(_: any, value: string) => setCategorySearch(value)}
+          onChange={(_, value) => setCategorySearch(value)}
         />
       }
     >
@@ -119,8 +119,8 @@ const CategoryBar = (props: CategoryBarProps) => {
           onClick={() => props.setActive(CATEGORY_ALL)}
         />
         {sorted
-          .filter(
-            (cat) => !cat.toLowerCase().includes(categorySearch.toLowerCase()),
+          .filter((cat) =>
+            cat.toLowerCase().includes(categorySearch.toLowerCase()),
           )
           .map((category) => {
             return (
@@ -180,7 +180,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
             fill
             placeholder="Search"
             value={search}
-            onChange={(_: any, value: string) => setSearch(value)}
+            onChange={(_, value) => setSearch(value)}
           />
           <Button
             icon={'code'}

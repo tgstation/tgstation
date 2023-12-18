@@ -164,9 +164,10 @@ const IdCardPage = (props) => {
             fluid
             ellipsis
             icon="eject"
-            content={authIDName}
             onClick={() => act('PRG_eject_id')}
-          />
+          >
+            {authIDName}
+          </Button>
         </Stack.Item>
         <Stack.Item width="100%" mt={1} ml={0}>
           Login: {authenticatedUser || '-----'}
@@ -180,7 +181,7 @@ const IdCardPage = (props) => {
               <Input
                 width="100%"
                 value={id_owner}
-                onInput={(e, value) =>
+                onChange={(e, value) =>
                   act('PRG_edit', {
                     name: value,
                   })
@@ -208,7 +209,7 @@ const IdCardPage = (props) => {
                 fluid
                 mt={1}
                 value={id_rank}
-                onInput={(e, value) =>
+                onChange={(e, value) =>
                   act('PRG_assign', {
                     assignment: value,
                   })

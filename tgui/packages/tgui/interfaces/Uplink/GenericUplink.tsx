@@ -43,14 +43,15 @@ export const GenericUplink = (props: GenericUplinkProps) => {
           <Input
             autoFocus
             value={searchText}
-            onInput={(e, value) => setSearchText(value)}
+            onChange={(e, value) => setSearchText(value)}
             mx={1}
           />
           <Button
             icon={compactMode ? 'list' : 'info'}
-            content={compactMode ? 'Compact' : 'Detailed'}
             onClick={() => setCompactMode(!compactMode)}
-          />
+          >
+            {compactMode ? 'Compact' : 'Detailed'}
+          </Button>
         </>
       }
     >

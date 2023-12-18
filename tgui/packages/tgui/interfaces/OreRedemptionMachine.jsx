@@ -8,6 +8,7 @@ import {
   Tabs,
   Input,
   Stack,
+  Image,
   Icon,
   Section,
   LabeledList,
@@ -130,7 +131,7 @@ export const OreRedemptionMachine = (props) => {
               width="150px"
               placeholder="Search Material..."
               value={searchItem}
-              onInput={(e, value) => {
+              onChange={(e, value) => {
                 setSearchItem(value);
 
                 if (value.length > 0) {
@@ -190,8 +191,7 @@ const MaterialRow = (props) => {
     <Table.Row className="candystripe" collapsing>
       {!compact && (
         <Table.Cell collapsing>
-          <Box
-            as="img"
+          <Image
             m={1}
             src={`data:image/jpeg;base64,${display.product_icon}`}
             height="18px"

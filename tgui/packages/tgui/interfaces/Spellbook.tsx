@@ -761,7 +761,7 @@ export const Spellbook = (props) => {
                     width={15}
                     placeholder="Search for a spell..."
                     icon="search"
-                    onInput={(e, val) => setSpellSearch(val)}
+                    onChange={(e, val) => setSpellSearch(val)}
                   />
                 </Stack.Item>
               </Stack>

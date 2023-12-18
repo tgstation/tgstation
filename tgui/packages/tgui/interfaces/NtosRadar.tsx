@@ -1,7 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, NoticeBox, Section, Stack } from '../components';
+import { Image, Button, Icon, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -125,8 +125,7 @@ const TargetDisplay = (props) => {
     );
   }
   return target.userot ? (
-    <Box
-      as="img"
+    <Image
       src={resolveAsset(target.arrowstyle)}
       position="absolute"
       top="20px"
