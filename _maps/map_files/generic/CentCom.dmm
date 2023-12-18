@@ -531,6 +531,12 @@
 	dir = 4
 	},
 /area/centcom/syndicate_mothership/control)
+"bz" = (
+/obj/structure/railing/wood,
+/obj/effect/turf_decal/trimline/green/line,
+/obj/machinery/composters,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/botany)
 "bA" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular{
@@ -56281,7 +56287,7 @@ dS
 dS
 rd
 LK
-RX
+bz
 WJ
 WC
 tv
