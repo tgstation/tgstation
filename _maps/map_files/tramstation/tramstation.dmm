@@ -20410,13 +20410,13 @@
 	autoclose = 0;
 	frequency = 1449;
 	id_tag = "virology_airlock_interior";
-	name = "Virology Interior Airlock"
+	name = "Pathology Interior Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door_buttons/access_button{
 	idDoor = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
+	name = "Pathology Access Button";
 	pixel_y = 24;
 	req_access = list("pathology")
 	},
@@ -23815,7 +23815,7 @@
 	idExterior = "virology_airlock_exterior";
 	idInterior = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Console";
+	name = "Pathology Access Console";
 	pixel_x = -24;
 	pixel_y = 24;
 	req_access = list("pathology")
@@ -32669,14 +32669,14 @@
 	autoclose = 0;
 	frequency = 1449;
 	id_tag = "virology_airlock_exterior";
-	name = "Virology Exterior Airlock"
+	name = "Pathology Exterior Airlock"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
 /obj/machinery/door_buttons/access_button{
 	dir = 1;
 	idDoor = "virology_airlock_exterior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
+	name = "Pathology Access Button";
 	pixel_y = -24;
 	req_access = list("pathology")
 	},

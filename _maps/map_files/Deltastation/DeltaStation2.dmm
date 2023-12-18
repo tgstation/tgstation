@@ -19502,7 +19502,7 @@
 "eJm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Access"
+	name = "Pathology Rooms"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -33647,7 +33647,7 @@
 "ifi" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Containment Cell"
+	name = "Pathology Containment Cell"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -54628,7 +54628,7 @@
 "nlm" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
-	name = "Virology Break Room"
+	name = "Break Room"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -59941,13 +59941,13 @@
 	autoclose = 0;
 	frequency = 1449;
 	id_tag = "virology_airlock_exterior";
-	name = "Virology Exterior Airlock"
+	name = "Pathology Exterior Airlock"
 	},
 /obj/machinery/door_buttons/access_button{
 	dir = 1;
 	idDoor = "virology_airlock_exterior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
+	name = "Pathology Access Button";
 	pixel_x = -24;
 	pixel_y = -2;
 	req_access = list("pathology")
@@ -62790,12 +62790,12 @@
 	autoclose = 0;
 	frequency = 1449;
 	id_tag = "virology_airlock_interior";
-	name = "Virology Interior Airlock"
+	name = "Pathology Interior Airlock"
 	},
 /obj/machinery/door_buttons/access_button{
 	idDoor = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Button";
+	name = "Pathology Access Button";
 	pixel_y = 22;
 	req_access = list("pathology")
 	},
@@ -68242,7 +68242,7 @@
 	idExterior = "virology_airlock_exterior";
 	idInterior = "virology_airlock_interior";
 	idSelf = "virology_airlock_control";
-	name = "Virology Access Console";
+	name = "Pathology Access Console";
 	pixel_x = 24;
 	pixel_y = -24;
 	req_access = list("pathology")
@@ -70626,7 +70626,7 @@
 "riB" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access"
+	name = "Pathology Access"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -72754,7 +72754,7 @@
 "rJQ" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Containment Cell"
+	name = "Pathology Containment Cell"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -77739,7 +77739,7 @@
 "sTV" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology/glass{
-	name = "Virology Lab"
+	name = "Pathology Lab"
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -92893,7 +92893,7 @@
 "wzO" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/virology{
-	name = "Virology Access"
+	name = "Pathology Access"
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
