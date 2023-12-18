@@ -38,7 +38,7 @@ export const SecurityRecordTabs = (props) => {
         <Input
           fluid
           placeholder="Name/Job/Fingerprints"
-          onInput={(event, value) => setSearch(value)}
+          onChange={(event, value) => setSearch(value)}
         />
       </Stack.Item>
       <Stack.Item grow>

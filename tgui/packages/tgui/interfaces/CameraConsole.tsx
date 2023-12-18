@@ -117,7 +117,7 @@ const CameraSelector = (props) => {
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onInput={(e, value) => setSearchText(value)}
+          onChange={(e, value) => setSearchText(value)}
         />
       </Stack.Item>
       <Stack.Item grow>
