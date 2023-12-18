@@ -182,9 +182,7 @@ export const EmotePanelContent = (props) => {
                   width={showIcons ? 16 : 8}
                   key={emote.name}
                   tooltip={
-                    showIcons ? (
-                      ''
-                    ) : (
+                    showIcons ? undefined : (
                       <EmoteIcons
                         visible={emote.visible}
                         audible={emote.audible}

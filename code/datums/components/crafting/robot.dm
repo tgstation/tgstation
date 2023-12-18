@@ -3,7 +3,7 @@
 	result = /mob/living/simple_animal/bot/secbot/ed209
 	reqs = list(
 		/obj/item/robot_suit = 1,
-		/obj/item/clothing/head/helmet = 1,
+		/obj/item/clothing/head/helmet/sec = 1,
 		/obj/item/clothing/suit/armor/vest = 1,
 		/obj/item/bodypart/leg/left/robot = 1,
 		/obj/item/bodypart/leg/right/robot = 1,

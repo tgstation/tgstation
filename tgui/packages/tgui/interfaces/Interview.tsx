@@ -7,53 +7,61 @@ import {
 } from '../components';
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
+import { ReactNode } from 'react';
+
+type Data = {
+  connected: boolean;
+  is_admin: boolean;
+  questions: Question[];
+  queue_pos: number;
+  read_only: boolean;
+  status: string;
+  welcome_message: string;
+};
+
+type Question = {
+  qidx: number;
+  question: string;
+  response: string;
+};
+
+enum STATUS {
+  Approved = 'interview_approved',
+  Denied = 'interview_denied',
+}
+
+// Matches a complete markdown-style link, capturing the whole [...](...)
+const linkRegex = /(\[[^[]+\]\([^)]+\))/;
+// Decomposes a markdown-style link into the link and display text
+const linkDecomposeRegex = /\[([^[]+)\]\(([^)]+)\)/;
+
+// Renders any markdown-style links within a provided body of text
+const linkifyText = (text: string) => {
+  let parts: ReactNode[] = text.split(linkRegex);
+  for (let i = 1; i < parts.length; i += 2) {
+    const match = linkDecomposeRegex.exec(parts[i] as string);
+    if (!match) continue;
+
+    parts[i] = (
+      <a key={'link' + i} href={match[2]}>
+        {match[1]}
+      </a>
+    );
+  }
+  return parts;
+};
 
 export const Interview = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
-    welcome_message,
-    questions,
-    read_only,
-    queue_pos,
-    is_admin,
-    status,
     connected,
+    is_admin,
+    questions = [], // TODO: Remove default
+    queue_pos,
+    read_only,
+    status,
+    welcome_message = '',
   } = data;
-
-  const rendered_status = (status) => {
-    switch (status) {
-      case 'interview_approved':
-        return <NoticeBox success>This interview was approved.</NoticeBox>;
-      case 'interview_denied':
-        return <NoticeBox danger>This interview was denied.</NoticeBox>;
-      default:
-        return (
-          <NoticeBox info>
-            Your answers have been submitted. You are position {queue_pos} in
-            queue.
-          </NoticeBox>
-        );
-    }
-  };
-
-  // Matches a complete markdown-style link, capturing the whole [...](...)
-  const link_regex = /(\[[^[]+\]\([^)]+\))/;
-  // Decomposes a markdown-style link into the link and display text
-  const link_decompose_regex = /\[([^[]+)\]\(([^)]+)\)/;
-
-  // Renders any markdown-style links within a provided body of text
-  const linkify_text = (text) => {
-    let parts = text.split(link_regex);
-    for (let i = 1; i < parts.length; i += 2) {
-      const match = link_decompose_regex.exec(parts[i]);
-      parts[i] = (
-        <a key={'link' + i} href={match[2]}>
-          {match[1]}
-        </a>
-      );
-    }
-    return parts;
-  };
 
   return (
     <Window
@@ -64,10 +72,9 @@ export const Interview = (props) => {
       <Window.Content scrollable>
         {(!read_only && (
           <Section title="Welcome!">
-            <p>{linkify_text(welcome_message)}</p>
+            <p>{linkifyText(welcome_message)}</p>
           </Section>
-        )) ||
-          rendered_status(status)}
+        )) || <RenderedStatus status={status} queue_pos={queue_pos} />}
         <Section
           title="Questionnaire"
           buttons={
@@ -110,7 +117,7 @@ export const Interview = (props) => {
           )}
           {questions.map(({ qidx, question, response }) => (
             <Section key={qidx} title={`Question ${qidx}`}>
-              <p>{linkify_text(question)}</p>
+              <p>{linkifyText(question)}</p>
               {((read_only || is_admin) && (
                 <BlockQuote>{response || 'No response.'}</BlockQuote>
               )) || (
@@ -119,11 +126,10 @@ export const Interview = (props) => {
                   fluid
                   height={10}
                   maxLength={500}
-                  placeholder="Write your response here, max of 500 characters."
-                  onChange={(e, input) =>
-                    input !== response &&
+                  placeholder="Write your response here, max of 500 characters. Press enter to submit."
+                  onEnter={(e, input) =>
                     act('update_answer', {
-                      qidx: qidx,
+                      qidx,
                       answer: input,
                     })
                   }
@@ -135,4 +141,22 @@ export const Interview = (props) => {
       </Window.Content>
     </Window>
   );
+};
+
+const RenderedStatus = (props: { status: string; queue_pos: number }) => {
+  const { status, queue_pos } = props;
+
+  switch (status) {
+    case STATUS.Approved:
+      return <NoticeBox success>This interview was approved.</NoticeBox>;
+    case STATUS.Denied:
+      return <NoticeBox danger>This interview was denied.</NoticeBox>;
+    default:
+      return (
+        <NoticeBox info>
+          Your answers have been submitted. You are position {queue_pos} in
+          queue.
+        </NoticeBox>
+      );
+  }
 };
