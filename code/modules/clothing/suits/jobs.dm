@@ -147,7 +147,7 @@
 /obj/item/clothing/suit/jacket/det_suit/brown
 	name = "brown suit jacket"
 	desc = "A suit jacket perfect for dinner dates and criminal investigations."
-	incon_state = "detsuit_brown"
+	icon_state = "detsuit_brown"
 	inhand_icon_state = null
 
 /obj/item/clothing/suit/jacket/det_suit/kim
