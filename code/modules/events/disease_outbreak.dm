@@ -61,7 +61,7 @@
 			continue
 		if(length(candidate.diseases)) //Is our candidate already sick?
 			continue
-		if(!is_station_level(candidate.z)) //Diseases can't really spread if the vector is in deep space.
+		if(!is_station_level(candidate.z) && !is_mining_level(candidate.z)) //Diseases can't really spread if the vector is in deep space.
 			continue
 		disease_candidates += candidate
 
