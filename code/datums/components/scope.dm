@@ -6,8 +6,6 @@
 	var/atom/movable/screen/fullscreen/cursor_catcher/scope/tracker
 	/// The owner of the tracker's ckey. For comparing with the current owner mob, in case the client has left it (e.g. ghosted).
 	var/tracker_owner_ckey
-	/// Are we zooming currently?
-	var/zooming
 	/// The method which we zoom in and out
 	var/zoom_method = ZOOM_METHOD_RIGHT_CLICK
 	/// if not null, an item action will be added. Redundant if the mode is ZOOM_METHOD_RIGHT_CLICK or ZOOM_METHOD_WIELD.
@@ -79,22 +77,22 @@
 	if(tracker)
 		stop_zooming(user)
 	else
-		start_zooming(user)
+		zoom(user)
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
-/datum/component/scope/proc/on_action_trigger(/datum/action/source)
+/datum/component/scope/proc/on_action_trigger(datum/action/source)
 	SIGNAL_HANDLER
 	var/obj/item/item = source.target
 	var/mob/living/user = item.loc
 	if(tracker)
 		stop_zooming(user)
 	else
-		start_zooming(user)
+		zoom(user)
 
 /datum/component/scope/proc/on_wielded(obj/item/source, trait)
 	SIGNAL_HANDLER
 	var/mob/living/user = source.loc
-	start_zooming(user)
+	zoom(user)
 
 /datum/component/scope/proc/on_unwielded(obj/item/source, trait)
 	SIGNAL_HANDLER
@@ -152,16 +150,6 @@
 	return target_turf
 
 /**
- * Wrapper for zoom(), so in case we runtime we do not get stuck in a bad state
- *
- * Arguments:
- * * user: The mob we are starting zooming on.
-*/
-/datum/component/scope/proc/start_zooming(mob/user)
-	if(zoom(user))
-		zooming = TRUE
-
-/**
  * We start zooming by hiding the mouse pointer, adding our tracker overlay and starting our processing.
  *
  * Arguments:
@@ -170,7 +158,8 @@
 /datum/component/scope/proc/zoom(mob/user)
 	if(isnull(user.client))
 		return
-	if(zooming)
+	if(HAS_TRAIT(user, TRAIT_USER_SCOPED))
+		user.balloon_alert(user, "already zoomed!")
 		return
 	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
 	user.update_mouse_pointer()
@@ -189,6 +178,7 @@
 		)
 		RegisterSignals(user, capacity_signals, PROC_REF(on_incapacitated))
 	START_PROCESSING(SSprojectiles, src)
+	ADD_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 	return TRUE
 
 /datum/component/scope/proc/on_incapacitated(mob/living/source, amount = 0, ignore_canstun = FALSE)
@@ -206,7 +196,7 @@
 /datum/component/scope/proc/stop_zooming(mob/user)
 	SIGNAL_HANDLER
 
-	if(!zooming)
+	if(!HAS_TRAIT(user, TRAIT_USER_SCOPED))
 		return
 
 	STOP_PROCESSING(SSprojectiles, src)
@@ -217,8 +207,7 @@
 		COMSIG_MOB_SWAP_HANDS,
 		COMSIG_QDELETING,
 	))
-
-	zooming = FALSE
+	REMOVE_TRAIT(user, TRAIT_USER_SCOPED, REF(src))
 
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE, frequency = -1)
 	user.clear_fullscreen("scope")
