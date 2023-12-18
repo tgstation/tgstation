@@ -300,7 +300,7 @@ const TechwebOverview = (props) => {
           <Flex.Item align={'center'}>
             <Input
               value={searchText}
-              onInput={(e, value) => setSearchText(value)}
+              onChange={(e, value) => setSearchText(value)}
               placeholder={'Search...'}
             />
           </Flex.Item>

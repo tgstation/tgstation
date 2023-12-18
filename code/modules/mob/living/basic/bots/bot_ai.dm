@@ -58,6 +58,8 @@
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
 	if(!isdatum(target)) //we dont need to check if its not a datum!
 		return TRUE
+	if(get_turf(pawn) == get_turf(target))
+		return TRUE
 	var/list/path = get_path_to(pawn, target, max_distance = distance, access = get_access())
 	if(!length(path))
 		return FALSE
@@ -177,6 +179,8 @@
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	if(QDELETED(bot_pawn)) // pawn can be null at this point
+		return ..()
 	bot_pawn.calling_ai_ref = null
 	bot_pawn.update_bot_mode(new_mode = BOT_IDLE)
 	return ..()

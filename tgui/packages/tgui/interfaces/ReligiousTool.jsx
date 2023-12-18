@@ -22,6 +22,7 @@ export const ReligiousTool = (props) => {
   const { act, data } = useBackend();
   const [tab, setTab] = useSharedState('tab', 1);
   const { sects, alignment, toolname } = data;
+
   return (
     <Window title={toolname} width={560} height={500}>
       <Window.Content scrollable>

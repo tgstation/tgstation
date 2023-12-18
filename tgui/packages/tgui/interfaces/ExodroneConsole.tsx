@@ -5,6 +5,7 @@ import {
   Button,
   Dimmer,
   Icon,
+  Image,
   LabeledList,
   Modal,
   ProgressBar,
@@ -738,8 +739,7 @@ const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
         <Stack.Item>
           <Stack fill>
             <Stack.Item>
-              <Box
-                as="img"
+              <Image
                 src={resolveAsset(event.image)}
                 height="125px"
                 width="250px"
@@ -808,7 +808,7 @@ export const AdventureScreen = (props: {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
-          <Box as="img" src={imgSource} height="100px" width="200px" />
+          <Image src={imgSource} height="100px" width="200px" />
           <Stack vertical>
             <Stack.Divider />
             <Stack.Item grow />

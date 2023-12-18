@@ -1,9 +1,10 @@
 import { Window } from '../layouts';
 import { BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
 import { AirLockMainSection } from './AirlockElectronics';
+import { useState } from 'react';
 
 type Data = {
   matterLeft: number;
@@ -88,13 +89,11 @@ export const InfoSection = (props) => {
 const DesignSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_design } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category,
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
@@ -113,7 +112,6 @@ const DesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           height="31px"
           color="transparent"
           selected={

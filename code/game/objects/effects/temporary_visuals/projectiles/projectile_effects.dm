@@ -3,7 +3,6 @@
 	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 	icon_state = "nothing"
 	layer = HITSCAN_PROJECTILE_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	anchored = TRUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = LONG_GLIDE

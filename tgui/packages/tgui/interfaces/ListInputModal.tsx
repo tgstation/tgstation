@@ -204,7 +204,7 @@ const ListDisplay = (props) => {
             id={index}
             key={index}
             onClick={() => onClick(index)}
-            onDblClick={(event) => {
+            onDoubleClick={(event) => {
               event.preventDefault();
               act('submit', { entry: filteredItems[selected] });
             }}
@@ -246,7 +246,7 @@ const SearchBar = (props) => {
         event.preventDefault();
         act('submit', { entry: filteredItems[selected] });
       }}
-      onInput={(_, value) => onSearch(value)}
+      onChange={(_, value) => onSearch(value)}
       placeholder="Search..."
       value={searchQuery}
     />
