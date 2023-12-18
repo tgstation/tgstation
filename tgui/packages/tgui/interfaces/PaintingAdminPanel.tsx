@@ -133,9 +133,8 @@ export const PaintingAdminPanel = (props) => {
                   setChosenPaintingRef(undefined);
                   act('delete', { ref: chosenPainting.ref });
                 }}
-              >
-                Delete
-              </Button.Confirm>
+                content="Delete"
+              />
               <Button
                 onClick={() => act('dumpit', { ref: chosenPainting.ref })}
               >

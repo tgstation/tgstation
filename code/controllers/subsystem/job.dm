@@ -753,7 +753,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/get_living_heads()
 	. = list()
 	for(var/datum/mind/head as anything in get_crewmember_minds())
-		if(!(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+		if(!(head.assigned_role.job_flags & JOB_HEAD_OF_STAFF))
 			continue
 		if(isnull(head.current) || head.current.stat == DEAD)
 			continue
@@ -763,7 +763,7 @@ SUBSYSTEM_DEF(job)
 /datum/controller/subsystem/job/proc/get_all_heads()
 	. = list()
 	for(var/datum/mind/head as anything in get_crewmember_minds())
-		if(head.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		if(head.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			. += head
 
 /// Returns a list of minds of all security members who are alive

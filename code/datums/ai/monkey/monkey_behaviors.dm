@@ -221,6 +221,12 @@
 	// note they might immediately reduce threat and drop from the list.
 	// this is fine, we're just giving them a love tap then leaving them alone.
 	// unless they fight back, then we retaliate
+
+	// Some mobs delete on death. If the target is no longer alive, go back to idle
+	if(QDELETED(target))
+		finish_action(controller, TRUE)
+		return
+
 	if(isnull(controller.blackboard[BB_MONKEY_ENEMIES][target]))
 		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, 1)
 
@@ -298,7 +304,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/nearby_monkey in view(living_pawn, MONKEY_ENEMY_VISION))
-		if(!HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/monkey))
+		if(QDELETED(nearby_monkey) || !HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/monkey))
 			continue
 		if(!SPT_PROB(MONKEY_RECRUIT_PROB, seconds_per_tick))
 			continue

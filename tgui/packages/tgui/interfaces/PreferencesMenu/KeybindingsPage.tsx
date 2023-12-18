@@ -293,7 +293,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     if (isStandardKey(event)) {
       this.setRebindingHotkey(formatKeyboardEvent(event));
       return;
-    } else if (event.key === 'Esc') {
+    } else if (event.key === KEY.Escape) {
       this.setRebindingHotkey(undefined);
       return;
     }
