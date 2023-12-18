@@ -19,12 +19,12 @@
 	log_reftracker("Beginning search for references to a [type], looking for [references_to_clear] refs.")
 
 	var/starting_time = world.time
-
-	log_reftracker("Refcount for [type]: [refcount(src)]")
 	//Time to search the whole game for our ref
 	DoSearchVar(GLOB, "GLOB", starting_time) //globals
 	log_reftracker("Finished searching globals")
-
+	if(src.references_to_clear == 0)
+		return
+		
 	//Yes we do actually need to do this. The searcher refuses to read weird lists
 	//And global.vars is a really weird list
 	var/global_vars = list()
