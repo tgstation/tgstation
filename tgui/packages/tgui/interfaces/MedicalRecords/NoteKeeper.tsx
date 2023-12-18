@@ -111,7 +111,6 @@ const NoteTabs = (props) => {
       {notes.map((note, index) => (
         <Tabs.Tab
           key={index}
-          label={index + 1}
           onClick={() => setNote(note)}
           selected={selectedNote?.note_ref === note.note_ref}
         >

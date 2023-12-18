@@ -24,8 +24,7 @@ type IconPropsUnique = { name: string } & Partial<{
 export type IconProps = IconPropsUnique & BoxProps;
 
 export const Icon = (props: IconProps) => {
-  let { style = {}, ...restlet } = props;
-  const { name, size, spin, className, rotation, ...rest } = restlet;
+  const { name, size, spin, className, rotation, style = {}, ...rest } = props;
 
   if (size) {
     style['fontSize'] = size * 100 + '%';
@@ -33,7 +32,6 @@ export const Icon = (props: IconProps) => {
   if (rotation) {
     style['transform'] = `rotate(${rotation}deg)`;
   }
-  rest.style = style;
 
   const boxProps = computeBoxProps(rest);
 

@@ -36,17 +36,18 @@ export const Input = (props: Props) => {
   const {
     autoFocus,
     autoSelect,
+    className,
+    fluid,
     maxLength,
+    monospace,
     onChange,
     onEnter,
     onEscape,
-    onInput,
     placeholder,
     selfClear,
     value,
-    ...boxProps
+    ...rest
   } = props;
-  const { className, fluid, monospace, ...rest } = boxProps;
 
   const inputRef = useRef<HTMLInputElement>(null);
 

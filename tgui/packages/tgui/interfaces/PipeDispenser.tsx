@@ -84,7 +84,7 @@ const PipeTypeSection = (props) => {
           key={recipe.pipe_index}
           fluid
           ellipsis
-          title={recipe.pipe_name}
+          tooltip={recipe.pipe_name}
           onClick={() =>
             act('pipe_type', {
               pipe_type: recipe.pipe_index,

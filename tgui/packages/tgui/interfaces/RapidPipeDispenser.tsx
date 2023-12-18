@@ -221,12 +221,12 @@ const PreviewSelect = (props) => {
         <Button
           ml={0}
           key={preview.dir}
-          title={preview.dir_name}
+          tooltip={preview.dir_name}
           selected={preview.selected}
           style={{
             width: '40px',
             height: '40px',
-            padding: 0,
+            padding: '0',
           }}
           onClick={() => {
             act('pipe_type', {

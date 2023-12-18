@@ -5,7 +5,13 @@
  */
 
 import { BooleanLike, classes } from 'common/react';
-import { createElement, KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import {
+  createElement,
+  KeyboardEventHandler,
+  MouseEventHandler,
+  ReactNode,
+  UIEventHandler,
+} from 'react';
 
 import { CSS_COLORS } from '../constants';
 import { logger } from '../logging';
@@ -16,12 +22,16 @@ type StringProps = Partial<
 >;
 
 export type EventHandlers = Partial<{
-  onClick: (event: MouseEvent<HTMLDivElement>) => void;
-  onContextMenu: (event: MouseEvent<HTMLDivElement>) => void;
-  onDoubleClick: (event: MouseEvent<HTMLDivElement>) => void;
-  onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => void;
-  onMouseOver: (event: MouseEvent<HTMLDivElement>) => void;
-  onMouseUp: (event: MouseEvent<HTMLDivElement>) => void;
+  onClick: MouseEventHandler<HTMLDivElement>;
+  onContextMenu: MouseEventHandler<HTMLDivElement>;
+  onDoubleClick: MouseEventHandler<HTMLDivElement>;
+  onKeyDown: KeyboardEventHandler<HTMLDivElement>;
+  onKeyUp: KeyboardEventHandler<HTMLDivElement>;
+  onMouseDown: MouseEventHandler<HTMLDivElement>;
+  onMouseMove: MouseEventHandler<HTMLDivElement>;
+  onMouseOver: MouseEventHandler<HTMLDivElement>;
+  onMouseUp: MouseEventHandler<HTMLDivElement>;
+  onScroll: UIEventHandler<HTMLDivElement>;
 }>;
 
 export type BoxProps = Partial<{
@@ -33,6 +43,13 @@ export type BoxProps = Partial<{
   BooleanProps &
   StringProps &
   EventHandlers;
+
+// Don't you dare put this elsewhere
+type DangerDoNotUse = {
+  dangerouslySetInnerHTML?: {
+    __html: any;
+  };
+};
 
 /**
  * Coverts our rem-like spacing unit into a CSS unit.
@@ -107,6 +124,7 @@ const stringStyleMap = {
   colSpan: mapRawPropTo('colSpan'),
   fontFamily: mapRawPropTo('fontFamily'),
   fontSize: mapUnitPropTo('fontSize', unit),
+  fontWeight: mapRawPropTo('fontWeight'),
   height: mapUnitPropTo('height', unit),
   left: mapUnitPropTo('left', unit),
   maxHeight: mapUnitPropTo('maxHeight', unit),
@@ -219,7 +237,7 @@ export const computeBoxClassName = (props: BoxProps) => {
   ]);
 };
 
-export const Box = (props: BoxProps) => {
+export const Box = (props: BoxProps & DangerDoNotUse) => {
   const { as = 'div', className, children, ...rest } = props;
 
   // Compute class name and styles
