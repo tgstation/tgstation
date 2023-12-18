@@ -67,6 +67,10 @@
 		say("Insufficient power. Halting siphon.")
 		end_siphon()
 		return
+	if (is_station_level(src.z) || is_centcom_level(src.z))
+		say("Error: Console not in reach of station. Siphon halted.")
+		end_siphon()
+		return
 	var/siphon_am = 100 * seconds_per_tick
 	if(!synced_bank_account.has_money(siphon_am))
 		say("[synced_bank_account.account_holder] depleted. Halting siphon.")
@@ -105,11 +109,8 @@
 
 	switch(action)
 		if("siphon")
-			if(is_station_level(src.z) || is_centcom_level(src.z))
-				say("Siphon of station credits has begun!")
-				start_siphon(ui.user)
-			else
-				say("Error: Console not in reach of station, withdrawal cannot begin.")
+			say("Siphon of station credits has begun!")
+			start_siphon(ui.user)
 			. = TRUE
 		if("halt")
 			say("Station credit withdrawal halted.")
