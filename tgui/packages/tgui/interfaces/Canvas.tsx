@@ -1,8 +1,9 @@
 import { Color } from 'common/color';
-import { multiline, decodeHtmlEntities } from 'common/string';
+import { decodeHtmlEntities, multiline } from 'common/string';
 import { Component, createRef, RefObject } from 'react';
+
 import { useBackend } from '../backend';
-import { Tooltip, Icon, Box, Button, Flex } from '../components';
+import { Box, Button, Flex, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;

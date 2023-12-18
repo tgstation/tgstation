@@ -14,6 +14,7 @@ plugins:
   - radar
   - react
   - unused-imports
+  - simple-import-sort
 settings:
   react:
     version: '16.10'
@@ -764,3 +765,6 @@ rules:
   ## Prevents the use of unused imports.
   ## This could be done by enabling no-unused-vars, but we're doing this for now
   unused-imports/no-unused-imports: error
+  ## https://github.com/lydell/eslint-plugin-simple-import-sort/
+  simple-import-sort/imports: error
+  simple-import-sort/exports: error

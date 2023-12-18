@@ -6,9 +6,10 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
+import { marked } from 'marked';
+import { useState } from 'react';
+
 import { useBackend, useSharedState } from '../backend';
-import { BountyBoardContent } from './BountyBoard';
-import { UserDetails } from './Vending';
 import {
   BlockQuote,
   Box,
@@ -22,9 +23,9 @@ import {
   Tabs,
   TextArea,
 } from '../components';
-import { marked } from 'marked';
 import { sanitizeText } from '../sanitize';
-import { useState } from 'react';
+import { BountyBoardContent } from './BountyBoard';
+import { UserDetails } from './Vending';
 
 const CENSOR_MESSAGE =
   'This channel has been deemed as threatening to \

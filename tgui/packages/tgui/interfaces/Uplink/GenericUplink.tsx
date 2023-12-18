@@ -1,13 +1,14 @@
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+
 import {
   Box,
   Button,
   Input,
-  Section,
-  Tabs,
   NoticeBox,
+  Section,
   Stack,
+  Tabs,
 } from '../../components';
 
 type GenericUplinkProps = {

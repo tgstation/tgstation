@@ -5,6 +5,7 @@
  */
 
 import { classes } from 'common/react';
+
 import { Box } from './Box';
 
 export const Dimmer = (props) => {

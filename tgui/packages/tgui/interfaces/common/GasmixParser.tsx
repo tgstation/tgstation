@@ -1,4 +1,4 @@
-import { LabeledList, Box, Button } from '../../components';
+import { Box, Button, LabeledList } from '../../components';
 
 export type Gasmix = {
   name?: string;

@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
-import { NtosWindow } from '../layouts';
 import { Button, Image, NoticeBox, Stack } from '../components';
+import { NtosWindow } from '../layouts';
 
 export const NtosCamera = (props) => {
   return (
