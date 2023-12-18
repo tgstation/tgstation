@@ -277,7 +277,7 @@
 	//Calculate DeltaT (Deviation of T from optimal)
 	if(!reaction.is_cold_recipe)
 		if (cached_temp < reaction.optimal_temp && cached_temp >= reaction.required_temp)
-			delta_t = (((cached_temp - reaction.required_temp) ** reaction.temp_exponent_factor) / ((reaction.optimal_temp - reaction.required_temp) ** reaction.temp_exponent_factor))
+			delta_t = ((cached_temp - reaction.required_temp) / (reaction.optimal_temp - reaction.required_temp)) ** reaction.temp_exponent_factor
 		else if (cached_temp >= reaction.optimal_temp)
 			delta_t = 1
 		else //too hot
@@ -286,7 +286,7 @@
 			return
 	else
 		if (cached_temp > reaction.optimal_temp && cached_temp <= reaction.required_temp)
-			delta_t = (((reaction.required_temp - cached_temp) ** reaction.temp_exponent_factor) / ((reaction.required_temp - reaction.optimal_temp) ** reaction.temp_exponent_factor))
+			delta_t = ((reaction.required_temp - cached_temp) / (reaction.required_temp - reaction.optimal_temp)) ** reaction.temp_exponent_factor
 		else if (cached_temp <= reaction.optimal_temp)
 			delta_t = 1
 		else //Too cold
@@ -312,7 +312,7 @@
 	purity *= purity_modifier
 
 	//Now we calculate how much to add - this is normalised to the rate up limiter
-	var/delta_chem_factor = (reaction.rate_up_lim * delta_t) * seconds_per_tick//add/remove factor
+	var/delta_chem_factor = reaction.rate_up_lim * delta_t * seconds_per_tick//add/remove factor
 	//keep limited
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
@@ -320,11 +320,13 @@
 	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_VOLUME_ROUNDING)
 	if(delta_chem_factor <= 0)
 		to_delete = TRUE
-		return
+		return FALSE
 
 	//Calculate how much product to make and how much reactant to remove factors..
 	for(var/reagent in reaction.required_reagents)
-		holder.remove_reagent(reagent, (delta_chem_factor * reaction.required_reagents[reagent]))
+		if(!holder.remove_reagent(reagent, delta_chem_factor * reaction.required_reagents[reagent]))
+			to_delete = TRUE
+			return
 		//Apply pH changes
 		var/pH_adjust
 		if(reaction.reaction_flags & REACTION_PH_VOL_CONSTANT)
@@ -339,7 +341,9 @@
 		//create the products
 		step_add = delta_chem_factor * reaction.results[product]
 		//Default handiling
-		holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE)
+		if(!holder.add_reagent(product, step_add, null, cached_temp, purity, override_base_ph = TRUE, no_react = TRUE))
+			to_delete = TRUE
+			return
 
 		//Apply pH changes
 		var/pH_adjust
