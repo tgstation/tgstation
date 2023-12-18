@@ -1,0 +1,6 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "The Spectre-Meter modular computer app. A little, amatuerishly coded app that, as the name implies, scan an area for spectral presence. It can be found amongst other apps in maintenance computer disks."
+  - rscadd: "An easier, lazier version of the Arcade app, also found in maintenance."
+  - rscadd: "Black market computer disks, which contains programs not readily available to the average assistant."

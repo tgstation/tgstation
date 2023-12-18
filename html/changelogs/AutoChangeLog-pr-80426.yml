@@ -1,0 +1,4 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - bugfix: "The bitrunner domain completion screen alert is once again properly clickable"
