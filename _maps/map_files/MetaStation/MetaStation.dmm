@@ -13166,15 +13166,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/service/theater)
-"eWI" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/machinery/door/airlock/glass{
-	name = "Cryogenic Storage"
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/aft/lesser)
 "eWO" = (
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 1
@@ -97171,7 +97162,7 @@ klu
 vjk
 qOs
 kZk
-eWI
+kZk
 kZk
 kZk
 kZk
