@@ -17,6 +17,7 @@
 	var/infinite = FALSE
 	/// If TRUE, won't play a noise when injecting.
 	var/stealthy = FALSE
+	/// If TRUE, the hypospray will be permanently unusable.
 	var/used_up = FALSE
 
 /obj/item/reagent_containers/hypospray/attack_paw(mob/user, list/modifiers)
