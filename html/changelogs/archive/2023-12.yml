@@ -559,3 +559,42 @@
   - balance: Mimes are back to being able to write while under a vow of silence.
   xXPawnStarrXx:
   - bugfix: fixed the oversight with martian food complexity.
+2023-12-18:
+  DarkHunter7756:
+  - bugfix: Aivime, Lentslurri, Eigenswap and Libitoil can now be cooked again.
+  - balance: Aivime now can stack blur effects for the soapiest game ever.
+  - spellcheck: Lenturri description become more actual
+  Diamond-74:
+  - bugfix: Reviver no longer attempts to revive impossible to defib mobs.
+  - refactor: Cleaned up unnecessary variables and re-arraigned code to have it perform
+      altogether in one tick. Additionally added a proper cooldown to revivers.
+  DrDiasyl:
+  - image: 'New Security clothing: Security High-Vis jacket!'
+  Fikou:
+  - rscadd: Bridge Assistant job accessible from a station trait.
+  Ical92:
+  - bugfix: fixed ghost role descriptions on NTTS Independence
+  Jacquerel:
+  - balance: Roundstart AIs are now made of positronic cubes, rather than brains inside
+      MMIs
+  LemonInTheDark:
+  - bugfix: Fire alarms no longer cause pitch blackness, instead creating a dark but
+      not black red light.
+  Melbert:
+  - bugfix: Fixes PAI health scan software
+  - bugfix: Fixes Laughter demons deleting the bodies of their friends.
+  Tattle:
+  - admin: obsession targets are logged
+  Time-Green:
+  - bugfix: Fixes losing HARS nullspacing your brain
+  - bugfix: Fixes AIize and borgize gibbing you
+  jlsnow301:
+  - bugfix: 'Interview UI should now be more obvious how it works: You must press
+      "enter" or save the answer.'
+  kawaiinick:
+  - code_imp: All nighters can now drink energy drinks to cope with their lack of
+      sleep.
+  uaioy:
+  - rscadd: Added 2 pocket quick equip keybinds
+  vvvv-vvvv:
+  - bugfix: Fix search categories in log viewer
