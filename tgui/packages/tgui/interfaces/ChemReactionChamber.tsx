@@ -1,3 +1,5 @@
+import { round, toFixed } from 'common/math';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   AnimatedNumber,
@@ -5,12 +7,11 @@ import {
   Button,
   LabeledList,
   NumberInput,
-  Section,
   RoundGauge,
+  Section,
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
 import { MixingData } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {

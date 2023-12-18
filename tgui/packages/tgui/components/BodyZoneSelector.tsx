@@ -1,4 +1,5 @@
 import { Component, createRef } from 'react';
+
 import { resolveAsset } from '../assets';
 import { Image } from './Image';
 

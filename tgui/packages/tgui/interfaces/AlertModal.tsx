@@ -1,5 +1,3 @@
-import { Loader } from './common/Loader';
-import { useBackend, useLocalState } from '../backend';
 import {
   KEY_ENTER,
   KEY_ESCAPE,
@@ -8,8 +6,10 @@ import {
   KEY_SPACE,
   KEY_TAB,
 } from '../../common/keycodes';
+import { useBackend, useLocalState } from '../backend';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { Loader } from './common/Loader';
 
 type AlertModalData = {
   autofocus: boolean;

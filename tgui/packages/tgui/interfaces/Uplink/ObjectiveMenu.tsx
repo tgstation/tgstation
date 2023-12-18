@@ -1,15 +1,16 @@
 import { BooleanLike, classes } from 'common/react';
 import { Component } from 'react';
+
 import {
-  Section,
-  Stack,
   Box,
   Button,
-  Flex,
-  Tooltip,
-  NoticeBox,
   Dimmer,
+  Flex,
   Icon,
+  NoticeBox,
+  Section,
+  Stack,
+  Tooltip,
 } from '../../components';
 import {
   calculateProgression,
