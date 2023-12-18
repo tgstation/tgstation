@@ -57581,6 +57581,11 @@
 /area/station/medical/virology)
 "nWw" = (
 /mob/living/basic/mouse/gray,
+/obj/machinery/computer/cryopod/directional/west{
+	pixel_x = -23;
+	dir = 4;
+	max_integrity = 10000
+	},
 /turf/open/floor/iron,
 /area/station/security/prison)
 "nWI" = (

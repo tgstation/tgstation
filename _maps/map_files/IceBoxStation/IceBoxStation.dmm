@@ -65177,6 +65177,14 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
+"uZd" = (
+/obj/machinery/computer/cryopod/directional/west{
+	pixel_x = -23;
+	dir = 4;
+	max_integrity = 10000
+	},
+/turf/open/floor/iron/dark/textured,
+/area/station/security/execution/transfer)
 "uZn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -169163,7 +169171,7 @@ hUz
 bjp
 bjp
 bBn
-ryu
+uZd
 kZt
 ryu
 dha

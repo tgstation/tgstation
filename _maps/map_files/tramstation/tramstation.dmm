@@ -23702,6 +23702,11 @@
 	c_tag = "Security - Prison Main South-West";
 	network = list("ss13","Security","prison")
 	},
+/obj/machinery/computer/cryopod/directional/west{
+	dir = 4;
+	pixel_x = -22;
+	max_integrity = 10000
+	},
 /turf/open/floor/iron,
 /area/station/security/prison)
 "gAY" = (

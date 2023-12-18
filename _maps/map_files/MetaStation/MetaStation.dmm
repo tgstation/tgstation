@@ -21732,6 +21732,11 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/computer/cryopod/directional/south{
+	dir = 1;
+	pixel_y = -22;
+	max_integrity = 10000
+	},
 /turf/open/floor/iron,
 /area/station/security/prison)
 "iep" = (
