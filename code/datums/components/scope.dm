@@ -82,9 +82,10 @@
 		start_zooming(user)
 	return COMPONENT_SECONDARY_CANCEL_ATTACK_CHAIN
 
-/datum/component/scope/proc/on_action_trigger(obj/item/source)
+/datum/component/scope/proc/on_action_trigger(/datum/action/source)
 	SIGNAL_HANDLER
-	var/mob/living/user = source.loc
+	var/obj/item/item = source.target
+	var/mob/living/user = item.loc
 	if(tracker)
 		stop_zooming(user)
 	else
@@ -179,10 +180,22 @@
 	tracker_owner_ckey = user.ckey
 	if(user.is_holding(parent))
 		RegisterSignals(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING), PROC_REF(stop_zooming))
-	else //The item is likely worn (eg. mothic cap)
+	else // The item is likely worn (eg. mothic cap)
 		RegisterSignal(user, COMSIG_QDELETING, PROC_REF(stop_zooming))
+		var/static/list/capacity_signals = list(
+			COMSIG_LIVING_STATUS_KNOCKDOWN,
+			COMSIG_LIVING_STATUS_PARALYZE,
+			COMSIG_LIVING_STATUS_STUN,
+		)
+		RegisterSignals(user, capacity_signals, PROC_REF(on_incapacitated))
 	START_PROCESSING(SSprojectiles, src)
 	return TRUE
+
+/datum/component/scope/proc/on_incapacitated(mob/living/source, amount = 0, ignore_canstun = FALSE)
+	SIGNAL_HANDLER
+
+	if(amount > 0)
+		stop_zooming(source)
 
 /**
  * We stop zooming, canceling processing, resetting stuff back to normal and deleting our tracker.
@@ -197,7 +210,13 @@
 		return
 
 	STOP_PROCESSING(SSprojectiles, src)
-	UnregisterSignal(user, list(COMSIG_MOB_SWAP_HANDS, COMSIG_QDELETING))
+	UnregisterSignal(user, list(
+		COMSIG_LIVING_STATUS_KNOCKDOWN,
+		COMSIG_LIVING_STATUS_PARALYZE,
+		COMSIG_LIVING_STATUS_STUN,
+		COMSIG_MOB_SWAP_HANDS,
+		COMSIG_QDELETING,
+	))
 
 	zooming = FALSE
 
