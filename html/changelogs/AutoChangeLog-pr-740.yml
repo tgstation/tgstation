@@ -1,4 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - bugfix: "Corporate plastic cards, as well as spare ID code cards, are no longer considered paper by computers that take paper (such as PDAs or the identification consoles)"
