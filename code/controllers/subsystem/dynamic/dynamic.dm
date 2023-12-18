@@ -931,6 +931,9 @@ SUBSYSTEM_DEF(dynamic)
 			stack_trace("Invalid dynamic configuration variable [variable] in [ruleset.ruletype] [ruleset.name].")
 			continue
 		ruleset.vars[variable] = rule_conf[variable]
+	ruleset.restricted_roles |= SSstation.antag_restricted_roles
+	if(length(ruleset.protected_roles)) //if we care to protect any role, we should protect station trait roles too
+		ruleset.protected_roles |= SSstation.antag_protected_roles
 	if(CONFIG_GET(flag/protect_roles_from_antagonist))
 		ruleset.restricted_roles |= ruleset.protected_roles
 	if(CONFIG_GET(flag/protect_assistant_from_antagonist))

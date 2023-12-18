@@ -14,6 +14,7 @@ import {
   Box,
   Button,
   Divider,
+  Image,
   LabeledList,
   Modal,
   Section,
@@ -256,10 +257,7 @@ const NewscasterWantedScreen = (props) => {
                 <Box bold>{activeWanted.criminal}</Box>
                 <Box italic>{activeWanted.crime}</Box>
               </Section>
-              <Box
-                as="img"
-                src={activeWanted.image ? activeWanted.image : null}
-              />
+              <Image src={activeWanted.image ? activeWanted.image : null} />
               <Box italic>
                 Posted by {activeWanted.author ? activeWanted.author : 'N/A'}
               </Box>
@@ -608,7 +606,7 @@ const NewscasterChannelMessages = (props) => {
                 </Section>
               )}
               {message.photo !== null && !message.censored_message && (
-                <Box as="img" src={message.photo} />
+                <Image src={message.photo} />
               )}
               {!!message.comments && (
                 <Box>
