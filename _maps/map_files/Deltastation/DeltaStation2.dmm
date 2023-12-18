@@ -66580,8 +66580,10 @@
 /area/station/ai_monitored/aisat/exterior)
 "qhy" = (
 /obj/structure/cable,
-/obj/machinery/door/airlock,
 /obj/effect/landmark/navigate_destination/common/cryogenics,
+/obj/machinery/door/airlock/glass{
+	name = "Cryogenic Storage"
+	},
 /turf/open/floor/iron/freezer,
 /area/station/hallway/secondary/exit/departure_lounge)
 "qhA" = (

@@ -20606,8 +20606,7 @@
 /area/station/maintenance/central/greater)
 "fvJ" = (
 /obj/effect/landmark/navigate_destination/common/cryogenics,
-/obj/machinery/door/airlock{
-	id_tag = "FitnessShower";
+/obj/machinery/door/airlock/glass{
 	name = "Cryogenic Storage"
 	},
 /turf/open/floor/iron/freezer,
