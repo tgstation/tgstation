@@ -539,7 +539,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
-				do_pipe_build(attack_target, user, params)
+				if(!do_pipe_build(attack_target, user, params))
+					return ..()
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
@@ -624,17 +625,17 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(layer_to_build != pipe_layer_numbers[1])
 			continued_build = TRUE
 		if(!layer_to_build)
-			continue
+			return FALSE
 		if(!can_make_pipe)
-			return
+			return FALSE
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, vary = TRUE)
 		if(!continued_build && !do_after(user, atmos_build_speed, target = atom_to_target))
-			return
+			return FALSE
 		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == 5))
 			balloon_alert(user, "can't build on layer [layer_to_build]!")
 			if(multi_layer)
 				continue
-			return
+			return FALSE
 		playsound(get_turf(src), RPD_USE_SOUND, 50, TRUE)
 		if(recipe.type == /datum/pipe_info/meter)
 			var/obj/item/pipe_meter/new_meter = new /obj/item/pipe_meter(get_turf(atom_to_target))
@@ -663,6 +664,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				pipe_type.add_atom_colour(GLOB.pipe_paint_colors[paint_color], FIXED_COLOUR_PRIORITY)
 			if(mode & WRENCH_MODE)
 				pipe_type.wrench_act(user, src)
+	return TRUE
 
 /obj/item/pipe_dispenser/attackby(obj/item/item, mob/user, params)
 	if(istype(item, /obj/item/rpd_upgrade))
