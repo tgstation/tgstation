@@ -1,11 +1,11 @@
 import { useBackend } from '../backend';
 import {
+  AnimatedNumber,
+  BlockQuote,
   Button,
+  ProgressBar,
   Section,
   Table,
-  BlockQuote,
-  ProgressBar,
-  AnimatedNumber,
 } from '../components';
 import { NtosWindow } from '../layouts';
 

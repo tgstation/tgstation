@@ -1,3 +1,5 @@
+import { capitalizeAll } from 'common/string';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -7,7 +9,6 @@ import {
   NumberInput,
   Section,
 } from '../components';
-import { capitalizeAll } from 'common/string';
 import { Window } from '../layouts';
 
 type Product = {

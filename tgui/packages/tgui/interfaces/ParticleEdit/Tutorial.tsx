@@ -1,14 +1,14 @@
+import { resolveAsset } from '../../assets';
 import { useLocalState } from '../../backend';
 import {
   Box,
   Button,
-  LabeledList,
-  Section,
-  Modal,
-  Stack,
   Image,
+  LabeledList,
+  Modal,
+  Section,
+  Stack,
 } from '../../components';
-import { resolveAsset } from '../../assets';
 
 export const ShowDesc = (props) => {
   const [desc, setdesc] = useLocalState('desc', '');

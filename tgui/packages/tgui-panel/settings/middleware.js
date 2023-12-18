@@ -5,16 +5,17 @@
  */
 
 import { storage } from 'common/storage';
+
 import { setClientTheme } from '../themes';
 import {
-  loadSettings,
-  updateSettings,
   addHighlightSetting,
+  loadSettings,
   removeHighlightSetting,
   updateHighlightSetting,
+  updateSettings,
 } from './actions';
-import { selectSettings } from './selectors';
 import { FONTS_DISABLED } from './constants';
+import { selectSettings } from './selectors';
 
 let overrideRule = null;
 let overrideFontFamily = null;

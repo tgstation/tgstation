@@ -1,3 +1,5 @@
+import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../../backend';
 import {
   BlockQuote,
@@ -7,7 +9,6 @@ import {
   Section,
   Stack,
 } from '../../components';
-import { decodeHtmlEntities } from 'common/string';
 import {
   RequestMessage,
   RequestPriority,

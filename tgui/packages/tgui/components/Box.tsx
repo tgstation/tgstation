@@ -5,7 +5,8 @@
  */
 
 import { BooleanLike, classes } from 'common/react';
-import { createElement, MouseEvent, ReactNode, KeyboardEvent } from 'react';
+import { createElement, KeyboardEvent, MouseEvent, ReactNode } from 'react';
+
 import { CSS_COLORS } from '../constants';
 import { logger } from '../logging';
 

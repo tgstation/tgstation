@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "monkeys will no longer cause other monkeys to get angry at the mobs they just poofed by attacking"

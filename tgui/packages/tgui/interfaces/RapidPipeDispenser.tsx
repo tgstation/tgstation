@@ -2,6 +2,7 @@ import { BooleanLike, classes } from 'common/react';
 import { multiline } from 'common/string';
 import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -10,8 +11,8 @@ import {
   LabeledList,
   Section,
   Stack,
-  Tabs,
   Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 

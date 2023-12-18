@@ -411,7 +411,7 @@
 
 	var/num_heads = 0
 	for(var/mob/player in GLOB.alive_player_list)
-		if(player.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		if(player.mind.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 			num_heads++
 
 	var/datum/objective/minor_sacrifice/sac_objective = new()

@@ -1,0 +1,4 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - qol: "Assistants with <10h of playtime are now \"Interns\""
