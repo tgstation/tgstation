@@ -9,10 +9,10 @@ import {
   Dimmer,
   Divider,
   Icon,
+  Image,
   Input,
   NumberInput,
   Section,
-  Image,
   Stack,
   Tabs,
 } from '../components';

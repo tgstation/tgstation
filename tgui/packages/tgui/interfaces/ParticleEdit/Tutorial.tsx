@@ -3,11 +3,11 @@ import { useLocalState } from '../../backend';
 import {
   Box,
   Button,
+  Image,
   LabeledList,
   Modal,
   Section,
   Stack,
-  Image,
 } from '../../components';
 
 export const ShowDesc = (props) => {
