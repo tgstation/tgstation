@@ -141,9 +141,7 @@
 			. += span_info("[real_name]'s tongue has been removed.")
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
-	if(owner.stat < HARD_CRIT)
-		return FALSE
-	return ..()
+	return FALSE
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
 	if(user)

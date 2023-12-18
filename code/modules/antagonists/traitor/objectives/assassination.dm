@@ -4,11 +4,11 @@
 		list(
 			list(
 				/datum/traitor_objective/target_player/assassinate/calling_card = 1,
-				/datum/traitor_objective/target_player/assassinate/behead = 1,
+				// /datum/traitor_objective/target_player/assassinate/behead = 1,
 			) = 1,
 			list(
 				/datum/traitor_objective/target_player/assassinate/calling_card/heads_of_staff = 1,
-				/datum/traitor_objective/target_player/assassinate/behead/heads_of_staff = 1,
+				// /datum/traitor_objective/target_player/assassinate/behead/heads_of_staff = 1,
 			) = 1,
 		) = 1,
 		list(
@@ -58,6 +58,7 @@
 
 	heads_of_staff = TRUE
 
+/*
 /datum/traitor_objective/target_player/assassinate/behead
 	name = "Behead %TARGET%, the %JOB TITLE%"
 	description = "Behead and hold %TARGET%'s head to succeed this objective. If the head gets destroyed before you can do this, you will fail this objective."
@@ -74,7 +75,7 @@
 	telecrystal_reward = list(2, 3)
 
 	heads_of_staff = TRUE
-
+*/
 
 /datum/traitor_objective/target_player/assassinate/calling_card/generate_ui_buttons(mob/user)
 	var/list/buttons = list()
@@ -117,6 +118,7 @@
 	//you cannot plant anything on someone who is gone gone, so even if this happens after you're still liable to fail
 	fail_objective(penalty_cost = telecrystal_penalty)
 
+/*
 /datum/traitor_objective/target_player/assassinate/behead/special_target_filter(list/possible_targets)
 	for(var/datum/mind/possible_target as anything in possible_targets)
 		var/mob/living/carbon/possible_current = possible_target.current
@@ -157,6 +159,7 @@
 	else
 		behead_goal = lost_head
 		RegisterSignal(behead_goal, COMSIG_ITEM_PICKUP, PROC_REF(on_head_pickup))
+*/
 
 /datum/traitor_objective/target_player/assassinate/New(datum/uplink_handler/handler)
 	. = ..()
