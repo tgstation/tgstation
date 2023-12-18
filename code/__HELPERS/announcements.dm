@@ -21,7 +21,17 @@
  * * color_override - optional, set a color for the announcement box
  */
 
-/proc/send_formatted_announcement(text, title = "", players, play_sound = TRUE, sound_override, sender_override, encode_title = TRUE, encode_text = TRUE, color_override)
+/proc/send_formatted_announcement(
+	text,
+	title = "",
+	players,
+	play_sound = TRUE,
+	sound_override = 'sound/ai/default/attention.ogg',
+	sender_override = "Server Admin Announcement",
+	encode_title = TRUE,
+	encode_text = TRUE,
+	color_override = "grey",
+)
 	if(isnull(text))
 		return
 
@@ -33,15 +43,6 @@
 			text = html_encode(text)
 			if(!length(text))
 				return
-
-		if(isnull(sender_override))
-			sender_override = "Server Admin Announcement"
-
-		if(isnull(sound_override)) // this is not an IC announcement, so we don't adjust for announcer station traits
-			sound_override = 'sound/ai/default/attention.ogg'
-
-		if(isnull(color_override))
-			color_override = "grey"
 
 		announcement_strings += span_announcement_header(generate_unique_announcement_header(title, sender_override))
 		announcement_strings += span_major_announcement_text(text)
@@ -70,9 +71,6 @@
  * * message - required, the message contents
  * * color - optional, set a div color other than default
  */
-/proc/create_announcement_div(message, color)
-	if(isnull(color))
-		color = "default"
-
+/proc/create_announcement_div(message, color = "default")
 	var/processed_message = "<div class='chat_alert_[color]'>[message]</div>"
 	return processed_message
