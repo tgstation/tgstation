@@ -35,7 +35,7 @@
 				return
 
 		if(isnull(sender_override))
-			sender_override = "Admin Announcement"
+			sender_override = "Server Admin Announcement"
 
 		if(isnull(sound_override)) // this is not an IC announcement, so we don't adjust for announcer station traits
 			sound_override = 'sound/ai/default/attention.ogg'
