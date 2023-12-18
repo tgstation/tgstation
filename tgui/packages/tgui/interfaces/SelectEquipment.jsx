@@ -2,7 +2,16 @@ import { filter, map, sortBy, uniq } from 'common/collections';
 import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Icon, Input, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  Input,
+  Section,
+  Stack,
+  Tabs,
+  Image,
+} from '../components';
 import { Window } from '../layouts';
 
 // here's an important mental define:
@@ -85,8 +94,7 @@ export const SelectEquipment = (props) => {
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section fill title={name} textAlign="center">
-                  <Box
-                    as="img"
+                  <Image
                     m={0}
                     src={`data:image/jpeg;base64,${icon64}`}
                     height="100%"

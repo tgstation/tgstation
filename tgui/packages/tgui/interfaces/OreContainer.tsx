@@ -1,7 +1,7 @@
 import { createSearch, toTitleCase } from 'common/string';
 import { useState } from 'react';
 import { useBackend } from '../backend';
-import { Box, Button, Input, Stack, Flex, Section } from '../components';
+import { Image, Button, Input, Stack, Flex, Section } from '../components';
 import { Window } from '../layouts';
 
 type Ores = {
@@ -98,8 +98,7 @@ const RetrieveIcon = (props) => {
   }
 
   return (
-    <Box
-      as="img"
+    <Image
       m={1}
       src={`data:image/jpeg;base64,${icon_display.icon}`}
       height="64px"
