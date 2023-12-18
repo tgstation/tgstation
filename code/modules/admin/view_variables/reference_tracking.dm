@@ -24,7 +24,7 @@
 	log_reftracker("Finished searching globals")
 	if(src.references_to_clear == 0)
 		return
-		
+
 	//Yes we do actually need to do this. The searcher refuses to read weird lists
 	//And global.vars is a really weird list
 	var/global_vars = list()
@@ -191,6 +191,7 @@
 					// So if it goes wrong we kill it
 					is_special_list = TRUE
 
+#undef REFSEARCH_RECURSE_LIMIT
 #endif
 
 // Kept outside the ifdef so overrides are easy to implement
