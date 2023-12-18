@@ -1,4 +1,3 @@
-import { classes } from 'common/react';
 import { ReactNode } from 'react';
 import { BoxProps, computeBoxProps } from './Box';
 import { Tooltip } from './Tooltip';
@@ -39,13 +38,7 @@ export const Image = (props: Props) => {
     objectFit,
   };
 
-  let content = (
-    <img
-      className={classes(['Image__Inner', className])}
-      src={src}
-      style={computedStyle}
-    />
-  );
+  let content = <img className={className} src={src} style={computedStyle} />;
 
   if (tooltip) {
     content = <Tooltip content={tooltip}>{content}</Tooltip>;
