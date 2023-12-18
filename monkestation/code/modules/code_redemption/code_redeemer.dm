@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(redeemed_codes, list())
 		to_chat(usr, span_boldnotice("You have successfully redeemed a giveaway code for: [path] Antag Token."))
 	else if(list_path["unusual_path"])
 		var/obj/item/unusual = text2path(list_path["unusual_path"])
-		unusual = new
+		unusual = new unusual
 		var/pulled_key =  usr.ckey
 		if(!pulled_key)
 			pulled_key = "MissingNo." // have fun trying to get this one lol
