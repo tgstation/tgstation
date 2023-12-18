@@ -30,6 +30,18 @@ have ways of interacting with a specific mob and control it.
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
 
+/datum/ai_controller/monkey/process(seconds_per_tick)
+
+	var/mob/living/living_pawn = src.pawn
+
+	if(!length(living_pawn.do_afters) && living_pawn.ai_controller.blackboard[BB_RESISTING])
+		living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, FALSE)
+
+	if(living_pawn.ai_controller.blackboard[BB_RESISTING])
+		return
+
+	. = ..()
+
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	var/static/list/control_examine = list(
 		ORGAN_SLOT_EYES = span_monkey("eyes have a primal look in them."),
