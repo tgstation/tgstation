@@ -76,7 +76,7 @@
 	to_chat(user, span_notice("You modify [src] to be installed on the [zone == BODY_ZONE_R_ARM ? "right" : "left"] arm."))
 	update_appearance()
 
-/obj/item/organ/internal/cyberimp/arm/on_insert(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
 	var/side = zone == BODY_ZONE_R_ARM? RIGHT_HANDS : LEFT_HANDS
 	hand = arm_owner.hand_bodyparts[side]
@@ -84,7 +84,7 @@
 		RegisterSignal(hand, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_item_attack_self)) //If the limb gets an attack-self, open the menu. Only happens when hand is empty
 		RegisterSignal(arm_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(dropkey)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
 
-/obj/item/organ/internal/cyberimp/arm/on_remove(mob/living/carbon/arm_owner)
+/obj/item/organ/internal/cyberimp/arm/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
 	Retract()
 	if(hand)
@@ -378,14 +378,14 @@
 	///How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS
 
-/obj/item/organ/internal/cyberimp/arm/muscle/Insert(mob/living/carbon/receiver, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
-	if(ishuman(receiver)) //Sorry, only humans
-		RegisterSignal(receiver, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
+	if(ishuman(arm_owner)) //Sorry, only humans
+		RegisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/obj/item/organ/internal/cyberimp/arm/muscle/Remove(mob/living/carbon/implant_owner, special = 0)
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_remove(mob/living/carbon/arm_owner)
 	. = ..()
-	UnregisterSignal(implant_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
+	UnregisterSignal(arm_owner, COMSIG_LIVING_EARLY_UNARMED_ATTACK)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/emp_act(severity)
 	. = ..()

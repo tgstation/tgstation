@@ -29,13 +29,13 @@
 	// grind_results = list(/datum/reagent/flightpotion = 5)
 	food_reagents = list(/datum/reagent/flightpotion = 5)
 
-/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, drop_if_replaced)
+/obj/item/organ/external/wings/functional/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	if(. && isnull(fly))
 		fly = new
 		fly.Grant(receiver)
 
-/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, moving)
+/obj/item/organ/external/wings/functional/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 
 	fly.Remove(organ_owner)

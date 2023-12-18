@@ -106,7 +106,7 @@
 		return "Skillchip is not active."
 
 	// Should not happen. Holding brain is destroyed and the chip hasn't had its state set appropriately.
-	if(QDELETED(holding_brain))
+	if(!holding_brain)
 		stack_trace("Skillchip's owner is null or qdeleted brain.")
 		return "Skillchip cannot detect viable brain."
 

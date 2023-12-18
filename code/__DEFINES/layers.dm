@@ -2,35 +2,31 @@
 //KEEP THESE IN A NICE ACSCENDING ORDER, PLEASE
 
 //NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
-#define LOWEST_EVER_PLANE -100
+#define LOWEST_EVER_PLANE -50
 
-#define FIELD_OF_VISION_BLOCKER_PLANE -90
+// Doesn't really layer, just throwing this in here cause it's the best place imo
+#define FIELD_OF_VISION_BLOCKER_PLANE -45
 #define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
-#define CLICKCATCHER_PLANE -80
+#define CLICKCATCHER_PLANE -40
 
-#define PLANE_SPACE -25
+#define PLANE_SPACE -21
 #define PLANE_SPACE_PARALLAX -20
 
-#define GRAVITY_PULSE_PLANE -13
+#define GRAVITY_PULSE_PLANE -12
 #define GRAVITY_PULSE_RENDER_TARGET "*GRAVPULSE_RENDER_TARGET"
 
-#define RENDER_PLANE_TRANSPARENT -12 //Transparent plane that shows openspace underneath the floor
+#define RENDER_PLANE_TRANSPARENT -11 //Transparent plane that shows openspace underneath the floor
 
-#define TRANSPARENT_FLOOR_PLANE -11
+#define TRANSPARENT_FLOOR_PLANE -10
 
-#define FLOOR_PLANE -10
+#define FLOOR_PLANE -6
 
-#define WALL_PLANE -9
-#define GAME_PLANE -8
-#define GAME_PLANE_FOV_HIDDEN -7
-#define GAME_PLANE_UPPER -6
-#define WALL_PLANE_UPPER -5
-#define GAME_PLANE_UPPER_FOV_HIDDEN -4
-
+#define WALL_PLANE -5
+#define GAME_PLANE -4
+#define ABOVE_GAME_PLANE -3
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
-#define SEETHROUGH_PLANE -3
-#define ABOVE_GAME_PLANE -2
+#define SEETHROUGH_PLANE -2
 
 #define RENDER_PLANE_GAME_WORLD -1
 
@@ -91,31 +87,36 @@
 
 //-------------------- HUD ---------------------
 //HUD layer defines
-#define HUD_PLANE 40
-#define ABOVE_HUD_PLANE 41
+#define HUD_PLANE 35
+#define ABOVE_HUD_PLANE 36
 
 ///Plane of the "splash" icon used that shows on the lobby screen
-#define SPLASHSCREEN_PLANE 50
+#define SPLASHSCREEN_PLANE 37
 
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 100
-#define RENDER_PLANE_NON_GAME 101
+#define RENDER_PLANE_GAME 40
+/// If fov is enabled we'll draw game to this and do shit to it
+#define RENDER_PLANE_GAME_MASKED 41
+/// The bit of the game plane that is let alone is sent here
+#define RENDER_PLANE_GAME_UNMASKED 42
+#define RENDER_PLANE_NON_GAME 45
 
 // Only VERY special planes should be here, as they are above not just the game, but the UI planes as well.
 
 /// Plane related to the menu when pressing Escape.
 /// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
-#define ESCAPE_MENU_PLANE 105
+#define ESCAPE_MENU_PLANE 46
 
-#define RENDER_PLANE_MASTER 110
+#define RENDER_PLANE_MASTER 50
 
 // Lummox I swear to god I will find you
 // NOTE! You can only ever have planes greater then -10000, if you add too many with large offsets you will brick multiz
 // Same can be said for large multiz maps. Tread carefully mappers
 #define HIGHEST_EVER_PLANE RENDER_PLANE_MASTER
 /// The range unique planes can be in
+/// Try and keep this to a nice whole number, so it's easy to look at a plane var and know what's going on
 #define PLANE_RANGE (HIGHEST_EVER_PLANE - LOWEST_EVER_PLANE)
 
 // PLANE_SPACE layer(s)
@@ -188,8 +189,6 @@
 #define NOT_HIGH_OBJ_LAYER 3.5
 #define HIGH_OBJ_LAYER 3.6
 #define BELOW_MOB_LAYER 3.7
-
-// GAME_PLANE_FOV_HIDDEN layers
 #define LOW_MOB_LAYER 3.75
 #define LYING_MOB_LAYER 3.8
 #define VEHICLE_LAYER 3.9
@@ -199,21 +198,16 @@
 #define MOB_ABOVE_PIGGYBACK_LAYER 4.06
 #define MOB_UPPER_LAYER 4.07
 #define HITSCAN_PROJECTILE_LAYER 4.09 //above all mob but still hidden by FoV
-
-// GAME_PLANE_UPPER layers
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
 #define TRAM_SIGNAL_LAYER 4.26
-// WALL_PLANE_UPPER layers
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
-
-// GAME_PLANE_UPPER_FOV_HIDDEN layers
 #define SPACEVINE_LAYER 4.4
 #define LARGE_MOB_LAYER 4.5
 #define SPACEVINE_MOB_LAYER 4.6
 
-// Intermediate layer used by both GAME_PLANE_FOV_HIDDEN and ABOVE_GAME_PLANE
+// Intermediate layer used by both GAME_PLANE and ABOVE_GAME_PLANE
 #define ABOVE_ALL_MOB_LAYER 4.7
 
 // ABOVE_GAME_PLANE layers
@@ -228,6 +222,8 @@
  * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
  */
 #define WATER_VISUAL_OVERLAY_LAYER 1000
+
+// SEETHROUGH_PLANE layers here, tho it has no layer values
 
 //---------- LIGHTING -------------
 

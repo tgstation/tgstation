@@ -33,7 +33,7 @@
 	. = ..()
 	icon_state = "[base_icon_state]-[beating ? "on" : "off"]"
 
-/obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special = 0)
+/obj/item/organ/internal/heart/Remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	if(!special)
 		addtimer(CALLBACK(src, PROC_REF(stop_if_unowned)), 12 SECONDS)
@@ -146,12 +146,14 @@
 	else
 		return ..()
 
-/obj/item/organ/internal/heart/cursed/on_insert(mob/living/carbon/accursed)
+/obj/item/organ/internal/heart/cursed/on_mob_insert(mob/living/carbon/accursed)
 	. = ..()
+
 	accursed.AddComponent(/datum/component/manual_heart, pump_delay = pump_delay, blood_loss = blood_loss, heal_brute = heal_brute, heal_burn = heal_burn, heal_oxy = heal_oxy)
 
-/obj/item/organ/internal/heart/cursed/Remove(mob/living/carbon/accursed, special = FALSE)
+/obj/item/organ/internal/heart/cursed/on_mob_remove(mob/living/carbon/accursed, special = FALSE)
 	. = ..()
+
 	qdel(accursed.GetComponent(/datum/component/manual_heart))
 
 /obj/item/organ/internal/heart/cybernetic

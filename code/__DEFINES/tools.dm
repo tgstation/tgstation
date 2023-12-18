@@ -28,7 +28,7 @@
 /// Return when an item interaction is successful.
 /// This cancels the rest of the chain entirely and indicates success.
 #define ITEM_INTERACT_SUCCESS (1<<0) // Same as TRUE, as most tool (legacy) tool acts return TRUE on success
-/// Return to prevent the rest of the attacck chain from being executed / preventing the item user from thwacking the target.
+/// Return to prevent the rest of the attack chain from being executed / preventing the item user from thwacking the target.
 /// Similar to [ITEM_INTERACT_SUCCESS], but does not necessarily indicate success.
 #define ITEM_INTERACT_BLOCKING (1<<1)
 /// Return to skip the rest of the interaction chain, going straight to attack.

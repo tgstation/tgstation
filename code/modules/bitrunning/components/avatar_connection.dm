@@ -82,7 +82,7 @@
 	 * - Mailed in a cache
 	 * - Click / Stand on the ladder
 	 */
-	RegisterSignals(parent, list(COMSIG_BITRUNNER_ALERT_SEVER, COMSIG_BITRUNNER_CACHE_SEVER, COMSIG_BITRUNNER_LADDER_SEVER), PROC_REF(on_safe_disconnect))
+	RegisterSignals(parent, list(COMSIG_BITRUNNER_ALERT_SEVER, COMSIG_BITRUNNER_CACHE_SEVER, COMSIG_BITRUNNER_LADDER_SEVER, COMSIG_BITRUNNER_RED_PILL_SEVER), PROC_REF(on_safe_disconnect))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(on_sever_connection))
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_linked_damage))
 
@@ -91,6 +91,7 @@
 	UnregisterSignal(parent, COMSIG_BITRUNNER_ALERT_SEVER)
 	UnregisterSignal(parent, COMSIG_BITRUNNER_CACHE_SEVER)
 	UnregisterSignal(parent, COMSIG_BITRUNNER_LADDER_SEVER)
+	UnregisterSignal(parent, COMSIG_BITRUNNER_RED_PILL_SEVER)
 	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 

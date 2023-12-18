@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
-import { useBackend, useSharedState } from '../backend';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Button,
   Dimmer,
@@ -211,8 +212,7 @@ const AbilitiesSection = (props) => {
 const MemoriesSection = (props) => {
   const { data } = useBackend<Info>();
   const { memories } = data;
-  const [selectedMemory, setSelectedMemory] = useSharedState(
-    'memory',
+  const [selectedMemory, setSelectedMemory] = useState(
     (!!memories && memories[0]) || null,
   );
   const memoryMap = {};
@@ -220,6 +220,7 @@ const MemoriesSection = (props) => {
     const memory = memories[index];
     memoryMap[memory.name] = memory;
   }
+
   return (
     <Section
       fill

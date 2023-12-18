@@ -1,5 +1,5 @@
 import { createSearch, toTitleCase } from 'common/string';
-import { useBackend, useLocalState, useSharedState } from '../backend';
+import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
@@ -8,24 +8,27 @@ import {
   Tabs,
   Input,
   Stack,
+  Image,
   Icon,
   Section,
   LabeledList,
 } from '../components';
 import { Window } from '../layouts';
 import { formatSiUnit } from '../format';
+import { useState } from 'react';
 
 export const OreRedemptionMachine = (props) => {
   const { act, data } = useBackend();
   const { disconnected, unclaimedPoints, materials, user } = data;
   const [tab, setTab] = useSharedState('tab', 1);
-  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
-  const [compact, setCompact] = useSharedState('compact', false);
+  const [searchItem, setSearchItem] = useState('');
+  const [compact, setCompact] = useState(false);
   const search = createSearch(searchItem, (materials) => materials.name);
   const material_filtered =
     searchItem.length > 0
       ? data.materials.filter(search)
       : materials.filter((material) => material && material.category === tab);
+
   return (
     <Window title="Ore Redemption Machine" width={435} height={500}>
       <Window.Content>
@@ -128,7 +131,7 @@ export const OreRedemptionMachine = (props) => {
               width="150px"
               placeholder="Search Material..."
               value={searchItem}
-              onInput={(e, value) => {
+              onChange={(e, value) => {
                 setSearchItem(value);
 
                 if (value.length > 0) {
@@ -143,6 +146,7 @@ export const OreRedemptionMachine = (props) => {
               <Table>
                 {material_filtered.map((material) => (
                   <MaterialRow
+                    compact={compact}
                     key={material.id}
                     material={material}
                     onRelease={(amount) => {
@@ -171,9 +175,9 @@ export const OreRedemptionMachine = (props) => {
 
 const MaterialRow = (props) => {
   const { data } = useBackend();
+  const { compact } = props;
   const { material_icons } = data;
   const { material, onRelease } = props;
-  const [compact, setCompact] = useLocalState('compact', false);
 
   const display = material_icons.find(
     (mat_icon) => mat_icon.id === material.id,
@@ -187,8 +191,7 @@ const MaterialRow = (props) => {
     <Table.Row className="candystripe" collapsing>
       {!compact && (
         <Table.Cell collapsing>
-          <Box
-            as="img"
+          <Image
             m={1}
             src={`data:image/jpeg;base64,${display.product_icon}`}
             height="18px"

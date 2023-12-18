@@ -213,7 +213,7 @@ const ContactsScreen = (props: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onInput={(_: any, value: string) => setSearchUser(value)}
+              onChange={(_, value) => setSearchUser(value)}
             />
           </Stack>
         </Section>
@@ -329,7 +329,7 @@ const SendToAllSection = (props) => {
           height={6}
           value={message}
           placeholder="Send message to everyone..."
-          onInput={(_: any, v: string) => setmessage(v)}
+          onChange={(event, value: string) => setmessage(value)}
         />
       </Section>
     </>

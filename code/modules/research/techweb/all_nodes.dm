@@ -2011,7 +2011,7 @@
 		"mech_proj_armor",
 	)
 	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_equipped_scan = 5000)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/mech_scattershot
@@ -2409,18 +2409,6 @@
 		"mod_joint_torsion",
 		"mod_recycler",
 		"mod_shooting",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/advanced_plastic_surgery
-	id = "plastic_surgery"
-	display_name = "Advanced Plastic Surgery"
-	description = "A Procedure long lost due to licensing problems now once again available."
-	prereq_ids = list("base")
-	design_ids = list(
-		"surgery_advanced_plastic_surgery"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

@@ -47,13 +47,15 @@
 	return on_consumption(M, user)
 
 ///Runs the consumption code, can be overriden for special effects
-/obj/item/reagent_containers/pill/proc/on_consumption(mob/M, mob/user)
-	if(icon_state == "pill4" && prob(5)) //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), M, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
+/obj/item/reagent_containers/pill/proc/on_consumption(mob/consumer, mob/giver)
+	if(icon_state == "pill4") //you take the red pill - you stay in Wonderland, and I show you how deep the rabbit hole goes
+		SEND_SIGNAL(consumer, COMSIG_BITRUNNER_RED_PILL_SEVER) //if your bitrunning avatar somehow manages to acquire and consume a red pill, they will be ejected from the Matrix
+		if(prob(5)) //the other kind of red pill
+			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), consumer, span_notice("[pick(strings(REDPILL_FILE, "redpill_questions"))]")), 50)
 	if(apply_type == INGEST)
-		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = M, feeder = user)
+		SEND_SIGNAL(src, COMSIG_PILL_CONSUMED, eater = consumer, feeder = giver)
 	if(reagents.total_volume)
-		reagents.trans_to(M, reagents.total_volume, transferred_by = user, methods = apply_type)
+		reagents.trans_to(consumer, reagents.total_volume, transferred_by = giver, methods = apply_type)
 	qdel(src)
 	return TRUE
 

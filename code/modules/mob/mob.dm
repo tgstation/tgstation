@@ -1338,10 +1338,6 @@
 			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
-	if(HAS_MIND_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
-		to_chat(src, span_warning("Your vow of silence is preventing you from talking with text."))
-		return FALSE
-
 	if(!is_literate())
 		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
 		return FALSE
@@ -1555,10 +1551,6 @@
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, control_object))
-			var/obj/O = var_value
-			if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
-				return FALSE
 		if(NAMEOF(src, machine))
 			set_machine(var_value)
 			. = TRUE
