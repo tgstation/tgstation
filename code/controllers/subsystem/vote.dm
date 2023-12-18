@@ -94,7 +94,7 @@ SUBSYSTEM_DEF(vote)
 
 	// stringify the winners to prevent potential unimplemented serialization errors.
 	// Perhaps this can be removed in the future and we assert that vote choices must implement serialization.
-	var/final_winner_string = !isnull(final_winner) ? "[final_winner]" : null
+	var/final_winner_string = final_winner && "[final_winner]"
 	var/list/winners_string = list()
 	for(var/winner in winners)
 		winners_string += "[winner]"
