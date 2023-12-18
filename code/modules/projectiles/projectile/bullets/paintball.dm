@@ -9,12 +9,10 @@
 	create_reagents(10, NO_REACT)
 
 /obj/projectile/paintball/on_hit(atom/target, blocked = 0, pierce_hit)
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		if(blocked != 100) // not completely blocked
-			..()
-			reagents.trans_to(M, reagents.total_volume, methods = VAPOR)
-			return BULLET_ACT_HIT
+	if(blocked != 100) // not completely blocked
+		..()
+		reagents.trans_to(target, reagents.total_volume, methods = VAPOR)
+		return BULLET_ACT_HIT
 
 	..()
 	reagents.flags &= ~(NO_REACT)
