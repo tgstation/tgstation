@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Input, NoticeBox, Section, Stack } from '../components';
+import { Button, Image, Input, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosPortraitPrinter = (props) => {
@@ -56,8 +56,7 @@ export const NtosPortraitPrinter = (props) => {
                 {got_paintings ? (
                   <>
                     <Stack.Item>
-                      <Box
-                        as="img"
+                      <Image
                         src={resolveAsset(current_portrait_asset_name)}
                         height="128px"
                         width={`${Math.round(128 * current_portrait_ratio)}px`}

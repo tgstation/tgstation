@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Stack } from '../components';
+import { Button, Image, NoticeBox, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 export const NtosCamera = (props) => {
@@ -35,7 +35,7 @@ export const NtosCameraContent = (props) => {
         />
       </Stack.Item>
       <Stack.Item>
-        <Box as="img" src={photo} />
+        <Image src={photo} />
       </Stack.Item>
     </Stack>
   );

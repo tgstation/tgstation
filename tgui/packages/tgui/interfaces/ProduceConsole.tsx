@@ -12,6 +12,7 @@ import {
   Input,
   NumberInput,
   Section,
+  Image,
   Stack,
   Tabs,
 } from '../components';
@@ -126,8 +127,7 @@ const ShoppingTab = (props) => {
                   />{' '}
                   {!condensed && (
                     <Stack.Item>
-                      <Box
-                        as="img"
+                      <Image
                         src={`data:image/jpeg;base64,${item.product_icon}`}
                         height="34px"
                         width="34px"
