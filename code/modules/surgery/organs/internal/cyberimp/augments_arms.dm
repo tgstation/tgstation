@@ -136,6 +136,7 @@
 		active_item.forceMove(src)
 
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 	active_item = null
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
 	return TRUE
@@ -177,7 +178,7 @@
 	playsound(get_turf(owner), extend_sound, 50, TRUE)
 
 	if(length(items_list) > 1)
-		RegisterSignals(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY), PROC_REF(swap_tools), override = TRUE) // secondary for welders
+		RegisterSignals(active_item, list(COMSIG_ITEM_ATTACK_SELF, COMSIG_ITEM_ATTACK_SELF_SECONDARY), PROC_REF(swap_tools)) // secondary for welders
 
 /obj/item/organ/internal/cyberimp/arm/proc/swap_tools(active_item)
 	SIGNAL_HANDLER
