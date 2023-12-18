@@ -218,7 +218,7 @@
 			var/datum/reagents/holder = locate() in parts
 			if(holder) //transfer reagents from ingredients to result
 				if(result.reagents)
-					holder.trans_to(result.reagents, holder.total_volume)
+					holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 				parts -= holder
 				qdel(holder)
 			result.CheckParts(parts, recipe)
