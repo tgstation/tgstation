@@ -1,4 +1,9 @@
+import { range, sortBy } from 'common/collections';
+import { KEY } from 'common/keys';
 import { Component } from 'react';
+
+import { resolveAsset } from '../../assets';
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -7,14 +12,10 @@ import {
   Tooltip,
   TrackOutsideClicks,
 } from '../../components';
-import { resolveAsset } from '../../assets';
-import { PreferencesMenuData } from './data';
-import { useBackend } from '../../backend';
-import { range, sortBy } from 'common/collections';
 import { KeyEvent } from '../../events';
-import { TabbedMenu } from './TabbedMenu';
 import { fetchRetry } from '../../http';
-import { KEY } from 'common/keys';
+import { PreferencesMenuData } from './data';
+import { TabbedMenu } from './TabbedMenu';
 
 type Keybinding = {
   name: string;
@@ -293,7 +294,7 @@ export class KeybindingsPage extends Component<{}, KeybindingsPageState> {
     if (isStandardKey(event)) {
       this.setRebindingHotkey(formatKeyboardEvent(event));
       return;
-    } else if (event.key === 'Esc') {
+    } else if (event.key === KEY.Escape) {
       this.setRebindingHotkey(undefined);
       return;
     }

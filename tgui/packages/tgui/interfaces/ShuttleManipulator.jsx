@@ -1,8 +1,9 @@
 import { map } from 'common/collections';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 export const ShuttleManipulator = (props) => {
   const [tab, setTab] = useState(1);

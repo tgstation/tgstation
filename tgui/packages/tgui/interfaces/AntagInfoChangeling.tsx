@@ -1,19 +1,20 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Button,
   Dimmer,
   Dropdown,
+  NoticeBox,
   Section,
   Stack,
-  NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
 import {
-  ObjectivePrintout,
   Objective,
+  ObjectivePrintout,
   ReplaceObjectivesButton,
 } from './common/Objectives';
 

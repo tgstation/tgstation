@@ -1,7 +1,8 @@
 import { BooleanLike } from 'common/react';
 import { Component, KeyboardEvent } from 'react';
+
 import { useBackend } from '../backend';
-import { Box, Stack, Section, Input, Button, Dropdown } from '../components';
+import { Box, Button, Dropdown, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Response = {

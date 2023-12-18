@@ -1,0 +1,4 @@
+author: "Diamond-74"
+delete-after: True
+changes:
+  - bugfix: "Observers observing themselves no longer floods admins' logs."
