@@ -55,3 +55,15 @@
 #define BB_ACID_SPRAY_TARGET "acid_spray_target"
 ///key that holds trash we will burn
 #define BB_HUNTABLE_TRASH "huntable_trash"
+
+//hygienebots
+///key that holds our threats
+#define BB_WASH_THREATS "wash_threats"
+///key that holds speech when we find our target
+#define BB_WASH_FOUND "wash_found"
+///key that holds speech when we cleaned our target
+#define BB_WASH_DONE "wash_done"
+///key that holds target we will wash
+#define BB_WASH_TARGET "wash_target"
+///key that holds how frustrated we are when target is running away
+#define BB_WASH_FRUSTRATION "wash_frustration"
