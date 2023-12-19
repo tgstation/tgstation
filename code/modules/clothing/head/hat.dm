@@ -177,9 +177,6 @@
 	desc = "A hat with bells, to add some merriness to the suit."
 	icon_state = "jester_hat"
 
-/obj/item/clothing/head/costume/jester/alt
-	icon_state = "jester2"
-
 /obj/item/clothing/head/costume/rice_hat
 	name = "rice hat"
 	desc = "Welcome to the rice fields, motherfucker."
