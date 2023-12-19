@@ -498,3 +498,64 @@
   - rscadd: Adds a new discount experiment for unlocking the combat exosuit nodes
       - complete it by scanning two exosuits with equipment in the left and right
       hand slots. This replaces the prior discount experiment about destroying exosuits.
+2023-12-16:
+  Derpguy3:
+  - spellcheck: Fixed a minor grammar mistake in the RD's job description and the
+      encrypted cache crate.
+  Ghommie:
+  - balance: '"Scarves" and "Wallets!" are now neutral traits.'
+  LT3:
+  - bugfix: Internal action buttons on computer consoles should work again
+  TheWolfbringer:
+  - bugfix: 'Bitrunners can now access the Northstar ORM
+
+      :cl:'
+  distributivgesetz:
+  - balance: Delamination variants no longer change once the explosion point has been
+      reached.
+  jlsnow301:
+  - bugfix: Keybindings in prefs are able to be set again.
+  - bugfix: Fixed the weird spacing on buttons.
+  - bugfix: Confirmation buttons should be usable again. Bitrunning domains, command
+      reports, etc.
+  tralezab:
+  - qol: Anesthetics tank description now mentions a rare quirk of anesthetic.
+2023-12-17:
+  DATA-xPUNGED:
+  - balance: Exosuit Materials 1 now only requires one mech.
+  - qol: "Exosuit Materials 1 is much more lenient on the percentage it requires.\n\
+      /\U0001F191"
+  Diamond-74:
+  - bugfix: character setup screen no longer runtimes with all_nighter quirk
+  Exester509:
+  - bugfix: ED-209s can no longer be crafted with most instances of helmet, you need
+      security ones just like Beepsky.
+  FlufflesTheDog:
+  - bugfix: Fixed a rare false positive with morgue tray alarms.
+  Ical92:
+  - bugfix: coffee cartridge racks start with a coffee cartridge in them
+  IndieanaJones:
+  - bugfix: Fixed runtime regarding thanking non-existent clown car drivers
+  Jacquerel:
+  - balance: Last Resort can now be used while unconscious or dead.
+  - balance: Last Resort stuns bystanders for slightly longer.
+  - rscadd: If you throw a bee at someone it will hit them sting-first and inject
+      that bee's reagent
+  - balance: Thick clothing can now protect you from the venom of bees, snakes, frogs,
+      and (small) spiders
+  - rscadd: Adds a new shuttle event, where space shuttles can experience minor turbulance.
+      Keep your belt on while the appropriate cabin light is lit.
+  lizardqueenlexi:
+  - bugfix: Motorized wheelchairs will no longer spawn in a bugged state where they
+      have no parts and can't be upgraded.
+  - bugfix: Motorized wheelchairs will drop their power cell when destroyed or deconstructed.
+  - qol: Power cells are now inserted into motorized wheelchairs as part of the crafting
+      recipe, instead of as an extra step afterwards.
+  tralezab:
+  - qol: Added a confirmation prompt to breaking your vow of silence.
+  - balance: Mimes can no longer repair the vow of silence once broken.
+  - balance: The negative moodlet from breaking your vow of silence is now lighter,
+      and no longer permanent.
+  - balance: Mimes are back to being able to write while under a vow of silence.
+  xXPawnStarrXx:
+  - bugfix: fixed the oversight with martian food complexity.
