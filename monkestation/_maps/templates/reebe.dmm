@@ -296,6 +296,10 @@
 /obj/structure/fluff/clockwork/alloy_shards/small,
 /turf/open/indestructible/reebe_flooring,
 /area/ruin/powered/reebe/city)
+"Ro" = (
+/obj/structure/destructible/clockwork/sigil/transmission,
+/turf/open/indestructible/reebe_flooring,
+/area/ruin/powered/reebe/city)
 "Rs" = (
 /obj/structure/table/bronze,
 /obj/item/clothing/gloves/clockwork,
@@ -5563,7 +5567,7 @@ To
 FD
 cg
 Ni
-oH
+Ro
 sN
 oH
 To

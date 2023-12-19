@@ -39,21 +39,14 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 		/obj/structure/fluff/clockwork/alloy_shards/medium = 2,
 		/obj/structure/fluff/clockwork/alloy_shards/small = 3,
 	)
-
 	/// How many hits the shield can take before it breaks.
 	var/shield_health = MARAUDER_SHIELD_MAX
-
 
 /mob/living/basic/clockwork_marauder/Initialize(mapload)
 	. = ..()
 	if(length(loot))
 		AddElement(/datum/element/death_drops, loot)
-
-	var/datum/action/innate/clockcult/comm/communicate = new
-	communicate.Grant(src)
-
 	GLOB.clockwork_marauders += src
-
 
 /mob/living/basic/clockwork_marauder/Destroy()
 	GLOB.clockwork_marauders -= src
@@ -67,6 +60,13 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 		if(shield_health < MARAUDER_SHIELD_MAX)
 			. += span_brass("It can be repaired with a <b>welding tool</b>.")
 
+/mob/living/basic/clockwork_marauder/UnarmedAttack(atom/attack_target, proximity_flag)
+	var/obj/structure/destructible/clockwork/structure = attack_target
+	if(istype(structure) && structure.immune_to_servant_attacks)
+		return ATTACK_DO_NOTHING
+	. = ..()
+
+
 /mob/living/basic/clockwork_marauder/attacked_by(obj/item/attacking_item, mob/living/user)
 	if(shield_health)
 		damage_shield()
@@ -79,7 +79,6 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 
 	return ..()
 
-
 /mob/living/basic/clockwork_marauder/bullet_act(obj/projectile/proj)
 	//Block Ranged Attacks
 	if(shield_health)
@@ -88,7 +87,6 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 		return BULLET_ACT_BLOCK
 	return ..()
 
-
 /// Damage the marauder's shield by one tick
 /mob/living/basic/clockwork_marauder/proc/damage_shield()
 	shield_health--
@@ -96,7 +94,6 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 	if(!shield_health)
 		to_chat(src, span_userdanger("Your shield breaks!"))
 		to_chat(src, span_brass("You require a <b>welding tool</b> to repair your damaged shield!"))
-
 
 /mob/living/basic/clockwork_marauder/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.use_tool(src, user, 2.5 SECONDS))
@@ -109,13 +106,10 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 		playsound(src, 'sound/magic/charge.ogg', 60, TRUE)
 	return TRUE
 
-
 /datum/language_holder/clockmob
 	understood_languages = list(/datum/language/common = list(LANGUAGE_ATOM),
 								/datum/language/ratvar = list(LANGUAGE_ATOM))
 	spoken_languages = list(/datum/language/ratvar = list(LANGUAGE_ATOM))
-
-
 
 /datum/ai_controller/basic_controller/clockwork_marauder
 	blackboard = list(
@@ -128,14 +122,11 @@ GLOBAL_LIST_EMPTY(clockwork_marauders)
 		/datum/ai_planning_subtree/basic_melee_attack_subtree/clockwork_marauder,
 	)
 
-
 /datum/ai_planning_subtree/basic_melee_attack_subtree/clockwork_marauder
 	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/clockwork_marauder
 
-
 /datum/ai_behavior/basic_melee_attack/clockwork_marauder
 	action_cooldown = 1.2 SECONDS
-
 
 /obj/item/nullrod/Initialize(mapload)
 	. = ..()

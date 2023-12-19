@@ -1,3 +1,5 @@
+///how damage damage do we heal when reviving someone before costing vitality
+#define FREE_DAMAGE_HEALED 20
 /obj/structure/destructible/clockwork/sigil/vitality
 	name = "vitality matrix"
 	desc = "A twisting, confusing artifact that drains the unenlightended on contact."
@@ -10,12 +12,8 @@
 	fail_color = "#525a80"
 	looping = TRUE
 
-
 /obj/structure/destructible/clockwork/sigil/vitality/can_affect(mob/living/affected_mob)
-	if(affected_mob.stat == DEAD && !IS_CLOCK(affected_mob))
-		return FALSE
-
-	if(HAS_TRAIT(affected_mob, TRAIT_NODEATH) || HAS_TRAIT(affected_mob, TRAIT_NO_SOUL))
+	if((HAS_TRAIT(affected_mob, TRAIT_HUSK) && !IS_CLOCK(affected_mob)) || HAS_TRAIT(affected_mob, TRAIT_NODEATH) || HAS_TRAIT(affected_mob, TRAIT_NO_SOUL))
 		return FALSE
 
 	if(!ishuman(affected_mob))
@@ -23,6 +21,10 @@
 
 	return TRUE
 
+/obj/structure/destructible/clockwork/sigil/vitality/dispel_check(mob/user)
+	if(active_timer)
+		if(IS_CLOCK(user) && tgui_alert(user, "Are you sure you want to dispel [src]? It is currently siphoning [currently_affecting].", "Confirm dispel", list("Yes", "No")) != "Yes")
+			return FALSE
 
 /obj/structure/destructible/clockwork/sigil/vitality/apply_effects(mob/living/affected_mob)
 	. = ..()
@@ -34,7 +36,7 @@
 		active_timer = null
 		var/revived = FALSE
 		if(affected_mob.stat == DEAD)
-			var/damage_healed = 20 + ((affected_mob.maxHealth - affected_mob.health) * 0.6)
+			var/damage_healed = FREE_DAMAGE_HEALED + ((affected_mob.maxHealth - affected_mob.health) * 0.6)
 			if(GLOB.clock_vitality >= damage_healed)
 				GLOB.clock_vitality -= damage_healed
 				affected_mob.revive(ADMIN_HEAL_ALL)
@@ -102,3 +104,5 @@
 		GLOB.clock_vitality = min(GLOB.clock_vitality + 30, GLOB.max_clock_vitality)
 	else
 		send_clock_message(null, span_clockred("[affected_mob] has had their vitality drained by [src], rejoice!"))
+
+#undef FREE_DAMAGE_HEALED

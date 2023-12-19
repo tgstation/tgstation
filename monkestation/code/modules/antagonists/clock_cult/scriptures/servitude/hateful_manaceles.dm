@@ -31,7 +31,7 @@
 	if(target_carbon.handcuffed)
 		return FALSE
 
-	target_carbon.handcuffed = new /obj/item/restraints/handcuffs/clockwork(target_carbon)
+	target_carbon.set_handcuffed(new /obj/item/restraints/handcuffs/clockwork(target_carbon))
 	target_carbon.update_handcuffed()
 	log_combat(invoker, target_carbon, "handcuffed")
 
