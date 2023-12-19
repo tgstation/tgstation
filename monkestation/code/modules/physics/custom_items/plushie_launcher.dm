@@ -3,6 +3,8 @@
 	desc = "High speed lizards coming your way!"
 	icon = 'icons/obj/weapons/guns/ballistic.dmi'
 	icon_state = "revolver"
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
 	inhand_icon_state = "gun"
 	worn_icon_state = "gun"
 	///the spawned path of our plushie
