@@ -893,7 +893,7 @@
 		/datum/reagent/consumable/nutriment/protein = 7,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/consumable/bbqsauce = 1,
-		)
+	)
 	tastes = list("bun" = 2, "pork patty" = 4)
 	foodtypes = NUTS | MEAT
 	venue_value = FOOD_PRICE_NORMAL
