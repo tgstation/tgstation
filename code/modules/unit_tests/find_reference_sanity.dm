@@ -15,6 +15,8 @@
 	return ..()
 
 /atom/movable/ref_test
+	// Gotta make sure we do a full check
+	references_to_clear = INFINITY
 	var/atom/movable/ref_test/self_ref
 
 /atom/movable/ref_test/Destroy(force)
@@ -48,6 +50,7 @@
 	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
 	victim.DoSearchVar(testbed, "First Run", search_time = 2)
 
+	log_world(json_encode(victim.found_refs))
 	TEST_ASSERT(victim.found_refs["test"], "The ref-tracking tool failed to find a regular value")
 	TEST_ASSERT(victim.found_refs[testbed.test_list], "The ref-tracking tool failed to find a list entry")
 	TEST_ASSERT(victim.found_refs[testbed.test_assoc_list], "The ref-tracking tool failed to find an assoc list value")

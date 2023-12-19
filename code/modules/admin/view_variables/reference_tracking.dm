@@ -66,11 +66,6 @@
 	log_reftracker("Completed search for references to a [type].")
 
 /datum/proc/DoSearchVar(potential_container, container_name, search_time, recursion_count, is_special_list)
-	#ifdef REFERENCE_TRACKING_DEBUG
-	if(SSgarbage.should_save_refs && !found_refs)
-		found_refs = list()
-	#endif
-
 	if(recursion_count >= REFSEARCH_RECURSE_LIMIT)
 		log_reftracker("Recursion limit reached. [container_name]")
 		return
@@ -114,6 +109,8 @@
 			else if(variable == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
+					if(!found_refs)
+						found_refs = list()
 					found_refs[varname] = TRUE
 					continue //End early, don't want these logging
 				else
@@ -139,7 +136,10 @@
 			else if(element_in_list == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
 				if(SSgarbage.should_save_refs)
+					if(!found_refs)
+						found_refs = list()
 					found_refs[potential_cache] = TRUE
+					continue
 				else
 					log_reftracker("Found [type] [text_ref(src)] in list [container_name].")
 				#else
@@ -177,7 +177,10 @@
 					else if(assoc_val == src)
 						#ifdef REFERENCE_TRACKING_DEBUG
 						if(SSgarbage.should_save_refs)
+							if(!found_refs)
+								found_refs = list()
 							found_refs[potential_cache] = TRUE
+							continue
 						else
 							log_reftracker("Found [type] [text_ref(src)] in list [container_name]\[[element_in_list]\]")
 						#else
