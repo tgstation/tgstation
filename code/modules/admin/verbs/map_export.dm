@@ -35,7 +35,7 @@
  * For example, saving ore into a silo, and further spavn by coordinates of metal stacks objects
  */
 /obj/proc/on_object_saved()
-	return ""
+	return null
 
 // Save resources in silo
 /obj/machinery/ore_silo/on_object_saved()
@@ -61,14 +61,14 @@
 **/
 /atom/proc/get_save_vars()
 	return list(
-			NAMEOF(src, color),
-			NAMEOF(src, dir),
-			NAMEOF(src, icon),
-			NAMEOF(src, icon_state),
-			NAMEOF(src, name),
-			NAMEOF(src, pixel_x),
-			NAMEOF(src, pixel_y),
-			)
+		NAMEOF(src, color),
+		NAMEOF(src, dir),
+		NAMEOF(src, icon),
+		NAMEOF(src, icon_state),
+		NAMEOF(src, name),
+		NAMEOF(src, pixel_x),
+		NAMEOF(src, pixel_y),
+	)
 
 /obj/get_save_vars()
 	return ..() + NAMEOF(src, req_access)
@@ -78,26 +78,26 @@
 
 /obj/docking_port/get_save_vars()
 	return ..() + list(
-				NAMEOF(src, dheight),
-				NAMEOF(src, dwidth),
-				NAMEOF(src, height),
-				NAMEOF(src, shuttle_id),
-				NAMEOF(src, width),
-				)
+		NAMEOF(src, dheight),
+		NAMEOF(src, dwidth),
+		NAMEOF(src, height),
+		NAMEOF(src, shuttle_id),
+		NAMEOF(src, width),
+	)
 /obj/docking_port/stationary/get_save_vars()
 	return ..() + NAMEOF(src, roundstart_template)
 
 /obj/machinery/atmospherics/get_save_vars()
 	return ..() + list(
-				NAMEOF(src, piping_layer),
-				NAMEOF(src, pipe_color),
-				)
+		NAMEOF(src, piping_layer),
+		NAMEOF(src, pipe_color),
+	)
 
 /obj/item/pipe/get_save_vars()
 	return ..() + list(
-				NAMEOF(src, piping_layer),
-				NAMEOF(src, pipe_color),
-				)
+		NAMEOF(src, piping_layer),
+		NAMEOF(src, pipe_color),
+	)
 
 GLOBAL_LIST_INIT(save_file_chars, list(
 	"a","b","c","d","e",
@@ -130,15 +130,15 @@ GLOBAL_LIST_INIT(save_file_chars, list(
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
  */
 /proc/write_map(
-			minx,
-			miny,
-			minz,
-			maxx,
-			maxy,
-			maxz,
-			save_flag = SAVE_ALL,
-			shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
-			list/obj_blacklist = list()
+	minx,
+	miny,
+	minz,
+	maxx,
+	maxy,
+	maxz,
+	save_flag = ALL,
+	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
+	list/obj_blacklist = list(),
 )
 
 	var/width = maxx - minx
@@ -146,8 +146,8 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	var/depth = maxz - minz
 
 	//Step 0: Calculate the amount of letters we need (26 ^ n > turf count)
-	var/turfsNeeded = width * height
-	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfsNeeded) + 0.999,1)
+	var/turfs_needed = width * height
+	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999,1)
 
 	//Step 1: Run through the area and generate file data
 	var/list/header_chars = list() //The characters of the header
@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 					place = /turf/template_noop
 				//====Generate Header Character====
 				var/header_char = calculate_tgm_header_index(index, layers)	//The characters of the header
-				var/current_header = "(\n"										//The actual stuff inside the header
+				var/current_header = "(\n" //The actual stuff inside the header
 				//Add objects to the header file
 				var/empty = TRUE
 				//====SAVING OBJECTS====
@@ -213,7 +213,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				if(save_flag & SAVE_MOBS)
 					for(var/mob/living/thing in objects)
 						CHECK_TICK
-						if(istype(thing, /mob/living/carbon))		//Ignore people, but not animals
+						if(istype(thing, /mob/living/carbon)) //Ignore people, but not animals
 							continue
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"

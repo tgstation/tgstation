@@ -1,19 +1,22 @@
 /datum/buildmode_mode/map_export
 	key = "mapexport"
 	use_corner_selection = TRUE
+	/// Variable with the flag value to understand how to treat the shuttle zones.
 	var/shuttle_flag = SAVE_SHUTTLEAREA_DONTCARE
-	var/save_flag = SAVE_ALL
+	/// Variable with a flag value to indicate what should be saved (for example, only objects or only mobs).
+	var/save_flag = ALL
+	/// A guard variable to prevent more than one map export process from occurring at the same time.
 	var/static/is_running = FALSE
 
 /datum/buildmode_mode/map_export/change_settings(client/builder)
 	var/static/list/options = list(
-								"Object Saving" = SAVE_OBJECTS,
-								"Mob Saving" = SAVE_MOBS,
-								"Turf Saving" = SAVE_TURFS,
-								"Area Saving" = SAVE_AREAS,
-								"Space Turf Saving" = SAVE_SPACE,
-								"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
-								)
+		"Object Saving" = SAVE_OBJECTS,
+		"Mob Saving" = SAVE_MOBS,
+		"Turf Saving" = SAVE_TURFS,
+		"Area Saving" = SAVE_AREAS,
+		"Space Turf Saving" = SAVE_SPACE,
+		"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
+	)
 	var/what_to_change = tgui_input_list(builder, "What export setting would you like to toggle?", "Map Exporter", options)
 	save_flag ^= options[what_to_change]
 	to_chat(builder, "<span class='notice'>[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"].</span>")
@@ -25,22 +28,22 @@
 	)
 
 /datum/buildmode_mode/map_export/handle_selected_area(client/builder, params)
-	var/list/pa = params2list(params)
-	var/left_click = pa.Find("left")
+	var/list/listed_params = params2list(params)
+	var/left_click = listed_params.Find("left")
 
 	//Ensure the selection is actually done
 	if(!left_click)
-		to_chat(usr, span_warning("Invalid selection."))
+		to_chat(builder, span_warning("Invalid selection."))
 		return
 
 	//If someone somehow gets build mode, stop them from using this.
 	if(!check_rights(R_DEBUG))
-		message_admins("[ckey(usr)] tried to run the map save generator but was rejected due to insufficient perms.")
-		to_chat(usr, span_warning("You must have +ADMIN rights to use this."))
+		message_admins("[ckey(builder)] tried to run the map save generator but was rejected due to insufficient perms.")
+		to_chat(builder, span_warning("You must have +ADMIN rights to use this."))
 		return
 	//Emergency check
 	if(get_dist(cornerA, cornerB) > 60 || cornerA.z != cornerB.z)
-		var/confirm = tgui_alert(usr, "Are you sure about this? Exporting large maps may take quite a while.", "Map Exporter", list("Yes", "No"))
+		var/confirm = tgui_alert(builder, "Are you sure about this? Exporting large maps may take quite a while.", "Map Exporter", list("Yes", "No"))
 		if(confirm != "Yes")
 			return
 
@@ -48,10 +51,10 @@
 		return
 
 	if(is_running)
-		to_chat(usr, span_warning("Someone is already running the generator! Try again in a little bit."))
+		to_chat(builder, span_warning("Someone is already running the generator! Try again in a little bit."))
 		return
 
-	to_chat(usr, span_warning("Saving, please wait..."))
+	to_chat(builder, span_warning("Saving, please wait..."))
 	is_running = TRUE
 
 	log_admin("Build Mode: [key_name(builder)] is exporting the map area from [AREACOORD(cornerA)] through [AREACOORD(cornerB)]") //I put this before the actual saving of the map because it likely won't log if it crashes the fucking server
@@ -76,9 +79,9 @@
 	WRITE_FILE(filedir, "[dat]")
 
 	//Step 3: Give the file to client for download
-	DIRECT_OUTPUT(usr, ftp(filedir))
+	DIRECT_OUTPUT(builder, ftp(filedir))
 
 	//Step 4: Remove the file from the server (hopefully we can find a way to avoid step)
 	fdel(filedir)
-	to_chat(usr, span_green("The map was successfully saved!"))
+	to_chat(builder, span_green("The map was successfully saved!"))
 	is_running = FALSE
