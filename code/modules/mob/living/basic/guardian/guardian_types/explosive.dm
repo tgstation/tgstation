@@ -41,7 +41,7 @@
 	/// After this amount of time passses, bomb deactivates.
 	var/decay_time = 1 MINUTES
 	/// Static list of signals that activate the bomb.
-	var/static/list/boom_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
+	var/static/list/boom_signals = list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_BUMPED, COMSIG_ATOM_ATTACK_HAND)
 
 /datum/action/cooldown/mob_cooldown/explosive_booby_trap/PreActivate(atom/target)
 	if (!isobj(target))

@@ -193,10 +193,10 @@
 		SSchallenges.apply_challenges(character.client)
 	for(var/processing_reward_bitflags in SSticker.bitflags_to_reward)//you really should use department bitflags if possible
 		if(character.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-			character.client.reward_this_person += 150
+			character.client.reward_this_person += 425
 	for(var/processing_reward_jobs in SSticker.jobs_to_reward)//just in case you really only want to reward a specific job
 		if(character.job == processing_reward_jobs)
-			character.client.reward_this_person += 150
+			character.client.reward_this_person += 425
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
@@ -262,6 +262,8 @@
 			if (item.restricted_roles && length(item.restricted_roles) && !(job.title in item.restricted_roles))
 				continue
 			item.post_equip_item(humanc.client?.prefs, humanc)
+
+	DiseaseCarrierCheck(humanc)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.
@@ -365,3 +367,23 @@
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	add_verb(src, /mob/dead/new_player/proc/open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
+
+/client/proc/register_for_interview()
+	// First we detain them by removing all the verbs they have on client
+	for (var/v in verbs)
+		var/procpath/verb_path = v
+		remove_verb(src, verb_path)
+
+	// Then remove those on their mob as well
+	for (var/v in mob.verbs)
+		var/procpath/verb_path = v
+		remove_verb(mob, verb_path)
+
+	// Then we create the interview form and show it to the client
+	var/datum/interview/I = GLOB.interviews.interview_for_client(mob)
+	if (I)
+		I.ui_interact(mob)
+
+	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
+	add_verb(mob, /mob/dead/new_player/proc/open_interview)
+	add_verb(src, /client/verb/fix_tgui_panel)

@@ -23884,6 +23884,13 @@
 	pixel_y = 3
 	},
 /obj/item/storage/box/syringes,
+/obj/machinery/reagentgrinder{
+	desc = "Used to grind things up into raw materials and liquids.";
+	pixel_y = 5
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	amount = 5
+	},
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "fLY" = (
@@ -33174,7 +33181,9 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/bot,
-/obj/structure/closet/l3closet/virology,
+/obj/machinery/computer/records/pathology{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/storage)
 "ibk" = (
@@ -33488,6 +33497,10 @@
 	pixel_y = -7
 	},
 /obj/machinery/power/apc/auto_name/directional/south,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron/checker,
 /area/station/service/janitor)
 "idu" = (
@@ -39201,7 +39214,7 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/siding/green,
 /obj/structure/cable,
-/obj/structure/filingcabinet/chestdrawer,
+/obj/machinery/computer/records/pathology,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "jyV" = (
@@ -40729,13 +40742,13 @@
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "jQq" = (
-/obj/structure/closet/l3closet/virology,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /obj/effect/turf_decal/siding/green,
 /obj/item/radio/intercom/directional/north,
 /obj/machinery/light/cold/directional/north,
 /obj/structure/cable,
+/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "jQw" = (
@@ -47772,10 +47785,10 @@
 "lBH" = (
 /obj/structure/reagent_dispensers/wall/virusfood/directional/east,
 /obj/structure/cable,
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
+/obj/machinery/computer/diseasesplicer,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "lBR" = (
@@ -51609,6 +51622,19 @@
 /obj/item/reagent_containers/dropper,
 /obj/item/reagent_containers/syringe/antiviral,
 /obj/item/reagent_containers/syringe/antiviral,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "mzu" = (
@@ -59907,7 +59933,7 @@
 	name = "Virology Access Button";
 	pixel_x = -24;
 	pixel_y = -2;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
@@ -61999,6 +62025,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/effect/turf_decal/trimline/green/filled/line,
 /obj/structure/cable,
+/obj/structure/closet/l3closet/virology,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "pfh" = (
@@ -62752,7 +62779,7 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
 	pixel_y = 22;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -68204,7 +68231,7 @@
 	name = "Virology Access Console";
 	pixel_x = 24;
 	pixel_y = -24;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -72678,6 +72705,11 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/glasses/science,
 /obj/item/clothing/glasses/hud/health,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "rJJ" = (
@@ -76875,7 +76907,6 @@
 /turf/open/floor/iron,
 /area/station/ai_monitored/command/storage/eva)
 "sKQ" = (
-/obj/machinery/computer/pandemic,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -76883,6 +76914,7 @@
 /obj/machinery/status_display/ai/directional/south,
 /obj/machinery/light/cold/directional/south,
 /obj/structure/cable,
+/obj/machinery/disease2/incubator,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "sKR" = (
@@ -84163,17 +84195,10 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "uxI" = (
-/obj/structure/table/glass,
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/machinery/reagentgrinder{
-	desc = "Used to grind things up into raw materials and liquids.";
-	pixel_y = 5
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	amount = 5
-	},
+/obj/machinery/disease2/centrifuge,
 /turf/open/floor/iron,
 /area/station/medical/virology)
 "uxY" = (

@@ -31,7 +31,7 @@
 	min_players = 35
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
-	weight = 4
+	weight = 0 //value was 3, we need to manually test if this works or not before allowing it normally
 	max_occurrences = 1
 
 /datum/antagonist/rev/head/event_trigger
@@ -51,23 +51,19 @@
 
 /datum/round_event/antagonist/solo/revolutionary/add_datum_to_mind(datum/mind/antag_mind)
 	antag_mind.add_antag_datum(antag_datum, revolution)
-	if(revolution.members.len)
+	if(length(revolution.members))
 		revolution.update_objectives()
 		revolution.update_heads()
 		SSshuttle.registerHostileEnvironment(revolution)
 
 
 /datum/round_event/antagonist/solo/revolutionary/round_end_report()
-	var/winner = revolution.process_victory()
-	if (isnull(winner))
-		return
-	finished = TRUE
 	revolution.round_result(finished)
 
 /datum/round_event/antagonist/solo/revolutionary/tick()
 	var/winner = revolution.process_victory()
-	if (isnull(winner))
+	if(isnull(winner))
 		return
 
 	finished = winner
-	revolution.round_result(finished)
+	end()

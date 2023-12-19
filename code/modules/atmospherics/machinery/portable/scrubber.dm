@@ -63,6 +63,8 @@
 	scrub(target.return_air())
 
 	for(var/turf/open/open_turf in view(3, src))
+		if(!isopenturf(open_turf))
+			continue
 		if(open_turf.pollution)
 			open_turf.pollution.scrub_amount(POLLUTION_HEIGHT_DIVISOR)
 

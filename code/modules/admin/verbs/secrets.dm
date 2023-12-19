@@ -94,12 +94,16 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 
 		//Buttons for helpful stuff. This is where people land in the tgui
 		if("clear_virus")
-			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease?",, list("Yes", "Cancel"))
+			var/choice = tgui_alert(usr, "Are you sure you want to cure all disease (Only clears players diseases)?",, list("Yes", "Cancel"))
 			if(choice == "Yes")
 				message_admins("[key_name_admin(holder)] has cured all diseases.")
-				for(var/thing in SSdisease.active_diseases)
-					var/datum/disease/D = thing
-					D.cure(0)
+				for(var/mob/living/living as anything in GLOB.alive_mob_list)
+					if(!isliving(living))
+						continue
+					if(!length(living.diseases))
+						continue
+					for(var/datum/disease/advanced/disease as anything in living.diseases)
+						disease.cure(living)
 
 		if("list_bombers")
 			holder.list_bombers()
@@ -207,12 +211,11 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				if("Make Your Own")
 					AdminCreateVirus(holder)
 				if("Random")
-					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					E = DC.runEvent()
+					force_event(/datum/round_event_control/disease_outbreak)
 				if("Choose")
 					var/virus = input("Choose the virus to spread", "BIOHAZARD") as null|anything in sort_list(typesof(/datum/disease), GLOBAL_PROC_REF(cmp_typepaths_asc))
 					var/datum/round_event_control/disease_outbreak/DC = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
-					var/datum/round_event/disease_outbreak/DO = DC.runEvent()
+					var/datum/round_event/disease_outbreak/DO = DC.run_event()
 					DO.virus_type = virus
 					E = DO
 		if("allspecies")
@@ -253,11 +256,6 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				return
 			holder.anon_names()
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anonymous Names"))
-		if("tripleAI")
-			if(!is_funmin)
-				return
-			holder.triple_ai()
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Triple AI"))
 		if("onlyone")
 			if(!is_funmin)
 				return

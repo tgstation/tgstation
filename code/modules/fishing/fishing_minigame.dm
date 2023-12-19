@@ -44,7 +44,7 @@
 	src.used_rod = rod
 	var/atom/spot = comp.parent
 	lure = new(get_turf(spot), spot)
-	RegisterSignal(spot, COMSIG_PARENT_QDELETING, PROC_REF(on_spot_gone))
+	RegisterSignal(spot, COMSIG_QDELETING, PROC_REF(on_spot_gone))
 	RegisterSignal(comp.fish_source, COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE, PROC_REF(interrupt_challenge))
 	comp.fish_source.RegisterSignal(src, COMSIG_FISHING_CHALLENGE_COMPLETED, TYPE_PROC_REF(/datum/fish_source, on_challenge_completed))
 	background = comp.fish_source.background

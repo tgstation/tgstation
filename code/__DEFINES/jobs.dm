@@ -59,7 +59,7 @@
 #define JOB_MEDICAL_DOCTOR "Medical Doctor"
 #define JOB_PARAMEDIC "Paramedic"
 #define JOB_CHEMIST "Chemist"
-#define JOB_VIROLOGIST "Virologist"
+#define JOB_VIROLOGIST "Pathologist"
 //Science
 #define JOB_SCIENTIST "Scientist"
 #define JOB_ROBOTICIST "Roboticist"
@@ -110,6 +110,11 @@
 #define JOB_CENTCOM_RESEARCH_OFFICER "Research Officer"
 #define JOB_CENTCOM_SPECIAL_OFFICER "Special Ops Officer"
 #define JOB_CENTCOM_PRIVATE_SECURITY "Private Security Force"
+
+#define JOB_GROUP_ENGINEERS list( \
+	JOB_STATION_ENGINEER, \
+	JOB_ATMOSPHERIC_TECHNICIAN, \
+)
 
 
 #define JOB_DISPLAY_ORDER_ASSISTANT 1

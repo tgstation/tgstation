@@ -314,7 +314,7 @@
 	else if(weapon.item_flags & NOBLUDGEON || (user.istate & ISTATE_HARM))
 		return ..()
 	else if(!(user.istate & ISTATE_HARM) && istype(weapon, /obj/item/stack/sheet/mineral/wood))
-		return ..() // we need this so our can_barricade element can be called using COMSIG_PARENT_ATTACKBY
+		return ..() // we need this so our can_barricade element can be called using COMSIG_ATOM_ATTACKBY
 	else if(try_to_activate_door(user))
 		return TRUE
 	return ..()

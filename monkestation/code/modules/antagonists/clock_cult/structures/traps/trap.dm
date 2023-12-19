@@ -4,7 +4,7 @@
 	name = "trap"
 	desc = "don't trust it"
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_SMALL
 	/// The path of the trap to make when this is set down
 	var/result_path = /obj/structure/destructible/clockwork/trap
 
@@ -48,16 +48,35 @@
 	desc = "It's a... Wait what?"
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
 	pixel_shift = 24
-	w_class = WEIGHT_CLASS_HUGE
+	w_class = WEIGHT_CLASS_SMALL
 	result_path = /obj/structure/destructible/clockwork/trap
 	/// What to show the user if they are a clock cultist
 	var/clockwork_desc = "It seems to be able to be placed on walls."
-
 
 /obj/item/wallframe/clocktrap/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/clockwork_description, clockwork_desc)
 
+/obj/item/wallframe/clocktrap/try_build(turf/on_wall, mob/user)
+	if(get_dist(on_wall, user) > 1)
+		balloon_alert(user, "you are too far!")
+		return
+
+	var/floor_to_wall = get_dir(user, on_wall)
+	if(!(floor_to_wall in GLOB.cardinals))
+		balloon_alert(user, "stand in line with wall!")
+		return
+
+	var/turf/user_turf = get_turf(user)
+	if(!isopenturf(user_turf))
+		balloon_alert(user, "cannot place here!")
+		return
+
+	if(check_wall_item(user_turf, floor_to_wall, wall_external))
+		balloon_alert(user, "already something here!")
+		return
+
+	return TRUE
 
 //Wall item (either spawned by a wallframe or directly)
 /obj/structure/destructible/clockwork/trap
@@ -72,11 +91,9 @@
 	/// The component used for the trap's back-end
 	var/component_datum = /datum/component/clockwork_trap
 
-
 /obj/structure/destructible/clockwork/trap/Initialize(mapload)
 	. = ..()
 	AddComponent(component_datum)
-
 
 /obj/structure/destructible/clockwork/trap/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -90,7 +107,6 @@
 
 	qdel(src)
 
-
 //Component
 /datum/component/clockwork_trap
 	/// A list of traps this sends a signal to when this is triggered
@@ -100,7 +116,6 @@
 	/// If this takes input (e.g. skewer)
 	var/takes_input = FALSE
 
-
 /datum/component/clockwork_trap/Initialize()
 	. = ..()
 
@@ -109,25 +124,21 @@
 
 	RegisterSignal(parent, COMSIG_CLOCKWORK_SIGNAL_RECEIVED, PROC_REF(trigger))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACK_HAND, PROC_REF(attack_hand))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(on_attackby))
-
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 
 /// Adds an input device to our own `outputs` list, to be sent when it triggers
 /datum/component/clockwork_trap/proc/add_input(datum/component/clockwork_trap/input)
 	outputs |= input.parent
 
-
 /// Adds this as an output to the targeted component's `outputs` list
 /datum/component/clockwork_trap/proc/add_output(datum/component/clockwork_trap/output)
 	output.outputs |= parent
-
 
 /// Signal proc for when the trap calls CLOCKWORK_SIGNAL_RECEIVED
 /datum/component/clockwork_trap/proc/trigger()
 	SIGNAL_HANDLER
 
 	return TRUE
-
 
 /// Signal proc for when the trap has ATOM_ATTACK_HAND called on it
 /datum/component/clockwork_trap/proc/attack_hand(mob/user)

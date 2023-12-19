@@ -10,7 +10,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	internal_shovel = new(null)
-	RegisterSignal(internal_shovel, COMSIG_PARENT_QDELETING, PROC_REF(shovel_destroyed))
+	RegisterSignal(internal_shovel, COMSIG_QDELETING, PROC_REF(shovel_destroyed))
 
 /datum/component/shovel_hands/RegisterWithParent()
 	. = ..()
@@ -22,7 +22,7 @@
 
 /datum/component/shovel_hands/Destroy(force, silent)
 	if (internal_shovel)
-		UnregisterSignal(internal_shovel, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(internal_shovel, COMSIG_QDELETING)
 	QDEL_NULL(internal_shovel)
 	return ..()
 
@@ -38,5 +38,5 @@
 /// Don't know how the fuck this happened but I guess you can't dig any more
 /datum/component/shovel_hands/proc/shovel_destroyed(atom/shovel)
 	SIGNAL_HANDLER
-	UnregisterSignal(shovel, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(shovel, COMSIG_QDELETING)
 	qdel(src)

@@ -236,7 +236,7 @@
 /obj/item/queen_bee/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_QUEEN_BEE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-	RegisterSignal(src, COMSIG_PARENT_ATTACKBY, PROC_REF(handle_needle))
+	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(handle_needle))
 
 /obj/item/queen_bee/Destroy()
 	QDEL_NULL(queen)

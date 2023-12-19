@@ -296,6 +296,7 @@
 		"swab",
 		"syringe",
 		"xlarge_beaker",
+		"vial",
 	)
 
 /datum/techweb_node/basic_circuitry
@@ -398,13 +399,18 @@
 		"defibrillator",
 		"genescanner",
 		"healthanalyzer",
+		"antibodyscanner",
 		"med_spray_bottle",
 		"medical_kiosk",
 		"medigel",
 		"medipen_refiller",
-		"pandemic",
 		"soda_dispenser",
 		"extrapolator",
+		"diseasesplicer",
+		"incubator",
+		"diseaseanalyzer",
+		"centrifuge",
+		"path_data",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	discount_experiments = list(/datum/experiment/dissection/human = 1000)

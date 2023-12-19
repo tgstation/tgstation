@@ -27,7 +27,7 @@
 		"Security" = /obj/machinery/door/airlock/security,
 		"Command" = /obj/machinery/door/airlock/command,
 		"Medical" = /obj/machinery/door/airlock/medical,
-		"Virology" = /obj/machinery/door/airlock/virology,
+		"Pathology" = /obj/machinery/door/airlock/virology,
 		"Research" = /obj/machinery/door/airlock/research,
 		"Hydroponics" = /obj/machinery/door/airlock/hydroponics,
 		"Freezer" = /obj/machinery/door/airlock/freezer,

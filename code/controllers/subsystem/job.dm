@@ -1119,6 +1119,29 @@ SUBSYSTEM_DEF(job)
 
 	return JOB_AVAILABLE
 
+/**
+ * Check if the station manifest has at least a certain amount of this staff type.
+ * If a matching head of staff is on the manifest, automatically passes (returns TRUE)
+ *
+ * Arguments:
+ * * crew_threshold - amount of crew to meet the requirement
+ * * jobs - a list of jobs that qualify the requirement
+ * * head_jobs - a list of head jobs that qualify the requirement
+ *
+*/
+/datum/controller/subsystem/job/proc/has_minimum_jobs(crew_threshold, list/jobs = list(), list/head_jobs = list())
+	var/employees = 0
+	for(var/datum/record/crew/target in GLOB.manifest.general)
+		if(target.trim in head_jobs)
+			return TRUE
+		if(target.trim in jobs)
+			employees++
+
+	if(employees > crew_threshold)
+		return TRUE
+
+	return FALSE
+
 ///trys to free up a job slot via the rank
 /datum/controller/subsystem/job/proc/FreeRole(rank)
 	if(!rank)

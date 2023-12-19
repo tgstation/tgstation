@@ -26,7 +26,7 @@ SUBSYSTEM_DEF(statpanels)
 		global_data = list(
 			"Map: [SSmapping.config?.map_name || "Loading..."]",
 			cached ? "Next Map: [cached.map_name]" : null,
-			"Storyteller: [SSgamemode.storyteller ? SSgamemode.storyteller.name : "N/A"]", //monkestation addition
+			"Storyteller: [!SSgamemode.secret_storyteller && SSgamemode.storyteller ? SSgamemode.storyteller.name : "Secret"]", //monkestation addition
 			"Round ID: [GLOB.round_id ? GLOB.round_id : "NULL"]",
 			"Server Time: [time2text(world.timeofday, "YYYY-MM-DD hh:mm:ss")]",
 			"Round Time: [ROUND_TIME()]",
@@ -233,7 +233,7 @@ SUBSYSTEM_DEF(statpanels)
 		// Now, we're gonna queue image generation out of those refs
 		to_make += turf_item
 		already_seen[turf_item] = OBJ_IMAGE_LOADING
-		obj_window.RegisterSignal(turf_item, COMSIG_PARENT_QDELETING, TYPE_PROC_REF(/datum/object_window_info,viewing_atom_deleted)) // we reset cache if anything in it gets deleted
+		obj_window.RegisterSignal(turf_item, COMSIG_QDELETING, TYPE_PROC_REF(/datum/object_window_info,viewing_atom_deleted)) // we reset cache if anything in it gets deleted
 	return turf_items
 
 #undef OBJ_IMAGE_LOADING

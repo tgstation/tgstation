@@ -40,8 +40,8 @@
 	/// Whether the storyteller has the distributions disabled. Important for ghost storytellers
 	var/disable_distribution = FALSE
 
-	/// Whether people can vote for the storyteller
-	var/votable = TRUE
+	/// Whether a storyteller is pickable/can be voted for
+	var/restricted = FALSE
 	/// If defined, will need a minimum of population to be votable
 	var/population_min
 	/// If defined, it will not be votable if exceeding the population
@@ -54,6 +54,10 @@
 	var/roundstart_prob = 25
 	///do we ignore ran_roundstart
 	var/ignores_roundstart = FALSE
+	///is a storyteller always able to be voted for(also does not count for the amount of storytellers to pick from)
+	var/always_votable = FALSE
+	///weight this has of being picked for random storyteller/showing up in the vote if not always_votable
+	var/weight = 0
 
 /datum/storyteller/process(delta_time)
 	if(!round_started) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
@@ -177,3 +181,5 @@
 /datum/storyteller/guide
 	name = "The Guide"
 	desc = "The Guide will provide a balanced and varied experience. Consider this the default experience."
+	weight = 8
+	always_votable = TRUE

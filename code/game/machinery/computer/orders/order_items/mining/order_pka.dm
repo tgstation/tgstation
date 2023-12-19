@@ -5,6 +5,30 @@
 	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator
 	cost_per_order = 750
 
+/datum/orderable_item/accelerator/gun/repeater //monke edit
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/repeater
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/shotgun //monke edit
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shotgun
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/shockwave //monke edit
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/shockwave
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/glock //monke edit
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/glock
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/railgun //monke edit
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/railgun
+	cost_per_order = 1250
+
+/datum/orderable_item/accelerator/gun/m79 //monke edit
+	item_path = /obj/item/gun/energy/recharge/kinetic_accelerator/m79
+	cost_per_order = 1250
+
 /datum/orderable_item/accelerator/range
 	item_path = /obj/item/borg/upgrade/modkit/range
 	cost_per_order = 1000

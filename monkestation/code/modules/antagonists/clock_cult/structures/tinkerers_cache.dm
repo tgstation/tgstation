@@ -55,17 +55,23 @@
 		to_chat(user, span_brass("This needs to be connected to a transmission sigil!"))
 		return
 
-	if(!use_power(initial(chosen_item.power_use)))
+	var/amount_to_create = 1
+	if(!initial(chosen_item.time_delay_mult))
+		amount_to_create = tgui_input_number(user, "How many would you like to create?", "Tinkerers Cache", max_value = 10, min_value = 1)
+
+	if(!use_power(initial(chosen_item.power_use) * amount_to_create))
 		to_chat(user, span_brass("You need more power to forge this item."))
 		return
 
 	COOLDOWN_START(src, use_cooldown, 4 MINUTES * initial(chosen_item.time_delay_mult))
 
 	var/crafting_item = initial(chosen_item.item_path)
-	new crafting_item(get_turf(src))
+	for(var/i in 1 to amount_to_create)
+		new crafting_item(get_turf(src))
 	playsound(src, 'sound/machines/clockcult/steam_whoosh.ogg', 50)
 
-	to_chat(user, span_brass("You craft [initial(chosen_item.name)] to near perfection, [src] cooling down. [initial(chosen_item.time_delay_mult) ? "It will be available in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]." : "It is ready to use again."]"))
+	to_chat(user, span_brass("You craft [initial(chosen_item.name)] to near perfection, \the [src] cooling down. \
+			[initial(chosen_item.time_delay_mult) ? "It will be available in [DisplayTimeText(COOLDOWN_TIMELEFT(src, use_cooldown))]." : "It is ready to use again."]"))
 
 
 // Assemble a list of subtype tinker cache datums

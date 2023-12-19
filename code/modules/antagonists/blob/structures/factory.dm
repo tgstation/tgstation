@@ -52,7 +52,7 @@
 	spores_and_zombies |= blob_mob
 	blob_mob.link_to_factory(src)
 	RegisterSignal(blob_mob, COMSIG_LIVING_DEATH, PROC_REF(on_spore_died))
-	RegisterSignal(blob_mob, COMSIG_PARENT_QDELETING, PROC_REF(on_spore_lost))
+	RegisterSignal(blob_mob, COMSIG_QDELETING, PROC_REF(on_spore_lost))
 
 /// When a spore or zombie dies reset our spawn cooldown so we don't instantly replace it
 /obj/structure/blob/special/factory/proc/on_spore_died(mob/living/dead_spore)
@@ -81,7 +81,7 @@
 
 	blobbernaut = new_naut
 	blobbernaut.link_to_factory(src)
-	RegisterSignals(new_naut, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_blobbernaut_death))
+	RegisterSignals(new_naut, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(on_blobbernaut_death))
 	update_appearance(UPDATE_ICON)
 
 /// When our brave soldier dies, reset our max integrity

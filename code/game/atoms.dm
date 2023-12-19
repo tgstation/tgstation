@@ -719,7 +719,7 @@
  * Default behaviour is to get the name and icon of the object and it's reagents where
  * the [TRANSPARENT] flag is set on the reagents holder
  *
- * Produces a signal [COMSIG_PARENT_EXAMINE]
+ * Produces a signal [COMSIG_ATOM_EXAMINE]
  */
 /atom/proc/examine(mob/user)
 	var/examine_string = get_examine_string(user, thats = TRUE)
@@ -741,7 +741,7 @@
 
 	if(reagents)
 		var/user_sees_reagents = user.can_see_reagents()
-		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_PARENT_REAGENT_EXAMINE, user, ., user_sees_reagents)
+		var/reagent_sigreturn = SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_EXAMINE, user, ., user_sees_reagents)
 		if(!(reagent_sigreturn & STOP_GENERIC_REAGENT_EXAMINE))
 			if(reagents.flags & TRANSPARENT)
 				if(reagents.total_volume > 0)
@@ -761,7 +761,7 @@
 				else
 					. += span_danger("It's empty.")
 
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE, user, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE, user, .)
 
 /**
  * Called when a mob examines (shift click or verb) this atom twice (or more) within EXAMINE_MORE_WINDOW (default 1 second)
@@ -769,14 +769,14 @@
  * This is where you can put extra information on something that may be superfluous or not important in critical gameplay
  * moments, while allowing people to manually double-examine to take a closer look
  *
- * Produces a signal [COMSIG_PARENT_EXAMINE_MORE]
+ * Produces a signal [COMSIG_ATOM_EXAMINE_MORE]
  */
 /atom/proc/examine_more(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	RETURN_TYPE(/list)
 
 	. = list()
-	SEND_SIGNAL(src, COMSIG_PARENT_EXAMINE_MORE, user, .)
+	SEND_SIGNAL(src, COMSIG_ATOM_EXAMINE_MORE, user, .)
 
 /**
  * Updates the appearence of the icon
@@ -1015,6 +1015,9 @@
 ///to add blood from a mob onto something, and transfer their dna info
 /atom/proc/add_mob_blood(mob/living/injected_mob)
 	var/list/blood_dna = injected_mob.get_blood_dna_list()
+	if(iscarbon(injected_mob))
+		var/mob/living/carbon/mob = injected_mob
+		try_infect_with_mobs_diseases(mob)
 	if(!blood_dna)
 		return FALSE
 	return add_blood_DNA(blood_dna)

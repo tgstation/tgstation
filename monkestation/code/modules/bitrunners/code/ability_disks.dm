@@ -9,7 +9,7 @@
 
 /obj/item/bitrunning_disk/ability/monkestation_override/Initialize(mapload)
 	granted_action = selectable_actions
-	RegisterSignal(src, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	RegisterSignal(src, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	return ..()
 
 /**

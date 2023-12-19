@@ -31,7 +31,7 @@
 	src.target = target
 	movement = SSmove_manager.move_towards(src, chasing = target, delay = move_speed, home = homing, timeout = duration, flags = MOVEMENT_LOOP_START_FAST)
 
-	RegisterSignal(target, COMSIG_PARENT_QDELETING, PROC_REF(on_target_invalid))
+	RegisterSignal(target, COMSIG_QDELETING, PROC_REF(on_target_invalid))
 	if (isliving(target))
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_invalid))
 

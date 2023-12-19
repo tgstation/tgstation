@@ -14,6 +14,14 @@
 /atom/proc/log_talk(message, message_type, tag = null, log_globally = TRUE, forced_by = null, custom_say_emote = null)
 	var/prefix = tag ? "([tag]) " : ""
 	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
+
+	var/voluntary = TRUE
+	if(forced_by)
+		voluntary = FALSE
+
+	if(!(message_type & LOG_OOC) && !(message_type & LOG_ASAY) && !(message_type & LOG_EMOTE))
+		add_event_to_buffer(src, data = "[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", log_key = "SAY", voluntary = voluntary)
+
 	log_message("[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", message_type, log_globally = log_globally)
 
 /// Logging for generic spoken messages

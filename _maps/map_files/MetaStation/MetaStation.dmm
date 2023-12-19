@@ -2779,6 +2779,9 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 1
 	},
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
+/obj/item/storage/box/monkeycubes/mousecubes,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "aWH" = (
@@ -5444,7 +5447,7 @@
 	name = "Virology Access Button";
 	pixel_x = 8;
 	pixel_y = -24;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -21245,7 +21248,7 @@
 	idSelf = "virology_airlock_control";
 	name = "Virology Access Button";
 	pixel_y = -24;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
@@ -23081,7 +23084,7 @@
 	name = "Virology Access Console";
 	pixel_x = 24;
 	pixel_y = -24;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -27900,6 +27903,9 @@
 	pixel_y = -2
 	},
 /obj/item/radio/intercom/directional/north,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "kbU" = (
@@ -28108,9 +28114,9 @@
 /turf/open/floor/iron,
 /area/station/security/office)
 "kgz" = (
-/obj/machinery/smartfridge/chemistry/virology/preloaded,
 /obj/machinery/firealarm/directional/south,
 /obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/machinery/computer/diseasesplicer,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kgC" = (
@@ -28255,6 +28261,10 @@
 	pixel_x = -8
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted,
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/healthanalyzer,
+/obj/item/clothing/gloves/latex,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kjZ" = (
@@ -28295,6 +28305,20 @@
 /obj/effect/turf_decal/tile/green/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/device/antibody_scanner,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/device/antibody_scanner,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/glasses/hud/health,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kkU" = (
@@ -30256,11 +30280,11 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "kVg" = (
-/obj/machinery/computer/pandemic,
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
 	},
+/obj/machinery/disease2/incubator,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "kVs" = (
@@ -50134,6 +50158,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/funeral)
+"rTO" = (
+/obj/effect/turf_decal/tile/green/half/contrasted{
+	dir = 8
+	},
+/obj/machinery/disease2/centrifuge,
+/turf/open/floor/iron/white,
+/area/station/medical/virology)
 "rTQ" = (
 /obj/effect/turf_decal/tile/bar,
 /obj/effect/turf_decal/tile/neutral{
@@ -53843,13 +53874,11 @@
 /turf/open/floor/wood/parquet,
 /area/station/medical/psychology)
 "tgD" = (
-/obj/structure/table/glass,
-/obj/item/clothing/gloves/latex,
-/obj/item/healthanalyzer,
-/obj/item/clothing/glasses/hud/health,
-/obj/item/clothing/glasses/science,
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
+	},
+/obj/machinery/computer/records/pathology{
+	dir = 4
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
@@ -54236,6 +54265,9 @@
 	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 1
+	},
+/obj/machinery/computer/records/pathology{
+	dir = 2
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
@@ -63722,6 +63754,7 @@
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 4
 	},
+/obj/machinery/disease2/diseaseanalyser,
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
 "wJv" = (
@@ -82214,7 +82247,7 @@ aaa
 aaa
 xjH
 vdJ
-wpi
+rTO
 kVg
 tgD
 kku

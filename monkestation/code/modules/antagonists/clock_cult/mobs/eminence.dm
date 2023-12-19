@@ -86,6 +86,7 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 	. = ..()
 	. += "Cogs: [cogs]"
 
+//and now: the great "list of things you dont care about"
 /mob/living/eminence/start_pulling(atom/movable/AM, state, force, supress_message)
 	return
 
@@ -110,6 +111,14 @@ GLOBAL_DATUM(current_eminence, /mob/living/eminence) //set to the current eminen
 
 /mob/living/eminence/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
 	return FALSE
+
+/mob/living/eminence/dust(just_ash, drop_items, force)
+	if(!force)
+		return FALSE
+	. = ..()
+
+/mob/living/eminence/gib(no_brain, no_organs, no_bodyparts)
+	return
 
 //eminence_act() stuff, might be a better way to do this
 /atom/proc/eminence_act(mob/living/eminence/user)

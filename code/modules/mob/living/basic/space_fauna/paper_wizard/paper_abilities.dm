@@ -29,13 +29,13 @@
 
 /datum/action/cooldown/spell/conjure/wizard_summon_minions/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/chosen_minion = summoned_object
-	RegisterSignals(chosen_minion, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
+	RegisterSignals(chosen_minion, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 	summoned_minions++
 
 /datum/action/cooldown/spell/conjure/wizard_summon_minions/proc/lost_minion(mob/source)
 	SIGNAL_HANDLER
 
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	summoned_minions--
 
 /datum/action/cooldown/spell/pointed/wizard_mimic
@@ -68,7 +68,7 @@
 	for(var/i in 1 to 3)
 		var/mob/living/basic/paper_wizard/copy/copy = new (get_step(cast_on, pick_n_take(directions)))
 		invocation(copy)
-		RegisterSignals(copy, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
+		RegisterSignals(copy, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 		copies += copy
 		QDEL_IN(copy, clone_lifespan)
 	owner.forceMove(get_step(cast_on, pick_n_take(directions)))
@@ -77,7 +77,7 @@
 	SIGNAL_HANDLER
 
 	copies -= source
-	UnregisterSignal(source, list(COMSIG_PARENT_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
+	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH), PROC_REF(lost_minion))
 
 /datum/action/cooldown/spell/pointed/wizard_mimic/proc/delete_clones(mob/source)
 	SIGNAL_HANDLER

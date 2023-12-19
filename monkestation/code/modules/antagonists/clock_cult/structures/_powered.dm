@@ -20,45 +20,24 @@
 	/// Has the ability to toggle power by using an empty hand on it
 	var/has_power_toggle = TRUE
 
-
 /obj/structure/destructible/clockwork/gear_base/powered/Initialize(mapload)
 	. = ..()
 	update_icon_state()
 	LAZYINITLIST(transmission_sigils)
 	for(var/obj/structure/destructible/clockwork/sigil/transmission/trans_sigil in range(src, SIGIL_TRANSMISSION_RANGE))
 		link_to_sigil(trans_sigil)
-
+	AddComponent(/datum/component/clockwork_trap/powered_structure)
 
 /obj/structure/destructible/clockwork/gear_base/powered/Destroy()
 	for(var/obj/structure/destructible/clockwork/sigil/transmission/trans_sigil as anything in transmission_sigils)
 		trans_sigil.linked_structures -= src
 	return ..()
 
-
 /obj/structure/destructible/clockwork/gear_base/powered/attack_hand(mob/user)
 	if(!IS_CLOCK(user))
 		return ..()
 
-	if(!anchored)
-		balloon_alert(user, "not fastened!")
-		return
-
-	if(!has_power_toggle)
-		return
-
-	if(!update_power() && !enabled)
-		balloon_alert(user, "not enough power!")
-		return
-
-	enabled = !enabled
-	balloon_alert(user, "turned [enabled ? "on" : "off"]")
-
-	if(enabled)
-		turn_on()
-
-	else
-		turn_off()
-
+	try_toggle_power(user)
 
 /obj/structure/destructible/clockwork/gear_base/powered/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -75,7 +54,6 @@
 		processing = FALSE
 		STOP_PROCESSING(SSobj, src)
 
-
 /obj/structure/destructible/clockwork/gear_base/powered/update_icon_state()
 	. = ..()
 	icon_state = base_icon_state || initial(icon_state)
@@ -90,7 +68,6 @@
 
 	if(has_on_icon && !depowered)
 		icon_state = base_icon_state + "_active"
-
 
 /obj/structure/destructible/clockwork/gear_base/powered/process(delta_time)
 	if(!use_power(passive_consumption))
@@ -111,6 +88,28 @@
 
 	return TRUE
 
+/obj/structure/destructible/clockwork/gear_base/powered/proc/try_toggle_power(mob/user)
+	if(!anchored)
+		if(user)
+			balloon_alert(user, "not fastened!")
+		return
+
+	if(!has_power_toggle)
+		return
+
+	if(!update_power() && !enabled)
+		if(user)
+			balloon_alert(user, "not enough power!")
+		return
+
+	enabled = !enabled
+	if(user)
+		balloon_alert(user, "turned [enabled ? "on" : "off"]")
+
+	if(enabled)
+		turn_on()
+	else
+		turn_off()
 
 /// Turn on the structure, letting it consume power and process again
 /obj/structure/destructible/clockwork/gear_base/powered/proc/turn_on()
@@ -118,13 +117,11 @@
 	processing = TRUE
 	START_PROCESSING(SSobj, src)
 
-
 /// Turn off the structure, ceasing its processing
 /obj/structure/destructible/clockwork/gear_base/powered/proc/turn_off()
 	depowered()
 	processing = FALSE
 	STOP_PROCESSING(SSobj, src)
-
 
 /// Checks if there's enough power to power it, calls repower() if changed from depowered to powered, vice versa
 /obj/structure/destructible/clockwork/gear_base/powered/proc/update_power()
@@ -146,7 +143,6 @@
 
 		return TRUE
 
-
 /// Checks if there's equal or greater power to the amount arg, TRUE if so, FALSE otherwise
 /obj/structure/destructible/clockwork/gear_base/powered/proc/check_power(amount)
 	if(!amount)
@@ -163,7 +159,6 @@
 
 	return TRUE
 
-
 /// Uses power if there's enough to do so
 /obj/structure/destructible/clockwork/gear_base/powered/proc/use_power(amount)
 	update_power()
@@ -175,13 +170,11 @@
 	update_power()
 	return TRUE
 
-
 /// Triggers when the structure runs out of power to use
 /obj/structure/destructible/clockwork/gear_base/powered/proc/depowered()
 	SHOULD_CALL_PARENT(TRUE)
 	depowered = TRUE
 	update_icon_state()
-
 
 /// Triggers when the structure regains power to use
 /obj/structure/destructible/clockwork/gear_base/powered/proc/repowered()
@@ -189,12 +182,10 @@
 	depowered = FALSE
 	update_icon_state()
 
-
 /// Adds a sigil to the linked structure list
 /obj/structure/destructible/clockwork/gear_base/powered/proc/link_to_sigil(obj/structure/destructible/clockwork/sigil/transmission/sigil)
 	LAZYOR(transmission_sigils, sigil)
 	sigil.linked_structures |= src
-
 
 /// Removes a sigil from the linked structure list
 /obj/structure/destructible/clockwork/gear_base/powered/proc/unlink_to_sigil(obj/structure/destructible/clockwork/sigil/transmission/sigil)
@@ -205,3 +196,16 @@
 	sigil.linked_structures -= src
 
 	check_power()
+
+/datum/component/clockwork_trap/powered_structure
+	takes_input = TRUE
+
+/datum/component/clockwork_trap/powered_structure/trigger()
+	if(!..())
+		return
+
+	var/obj/structure/destructible/clockwork/gear_base/powered/structure = parent
+	if(!istype(structure))
+		return
+
+	structure.try_toggle_power()

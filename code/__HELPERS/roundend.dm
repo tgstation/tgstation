@@ -367,6 +367,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 /datum/controller/subsystem/ticker/proc/build_roundend_report()
 	var/list/parts = list()
 
+	//might want to make this a full section
+	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.storyteller ? SSgamemode.storyteller.name : "N/A"]")]</span></div>" //monkestation edit
+
 	//AI laws
 	parts += law_report()
 
