@@ -21,9 +21,10 @@
 	if(!plushie_path)
 		return
 	for(var/num = 1 to fire_count)
-		var/bounce_angle = SIMPLIFY_DEGREES(dir2angle(user.dir))
-		var/obj/item/item = new plushie_path(get_turf(src))
-		bounce_angle = item.preparePixelProjectile(target, src, deviation = rand(1, 3))
+		var/obj/item = new plushie_path(get_turf(src))
+		var/list/calculated = calculate_projectile_angle_and_pixel_offsets(item, get_turf(target) && target)
+		var/spread = (num - (fire_count * 0.5)) * rand(10, 20)
+		var/bounce_angle = calculated[1] + spread
 		item.AddComponent(/datum/component/movable_physics, \
 				physics_flags = MPHYSICS_QDEL_WHEN_NO_MOVEMENT, \
 				angle = bounce_angle, \
