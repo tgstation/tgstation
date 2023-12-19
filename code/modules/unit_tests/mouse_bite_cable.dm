@@ -1,6 +1,5 @@
 /// Unit Test to ensure that a mouse bites a cable, gets shocked, and dies.
 /datum/unit_test/mouse_bite_cable
-TEST_FOCUS(/datum/unit_test/mouse_bite_cable)
 
 /datum/unit_test/mouse_bite_cable/Run()
 	// use dummy subtype that will bypass the probability check to bite on a cable
