@@ -18,13 +18,13 @@
 			var/mob/living/carbon/carbon_target = mob_target
 			SEND_SOUND(carbon_target, sound('sound/effects/screech.ogg'))
 
-			if(IS_TIGER_FANATIC(carbon_target))
-				var/datum/antagonist/tiger_fanatic/tiger_fanatic = carbon_target.mind.has_antag_datum(/datum/antagonist/tiger_fanatic)
+			if(IS_FANATIC(carbon_target))
+				var/datum/antagonist/fanatic/fanatic = carbon_target.mind.has_antag_datum(/datum/antagonist/fanatic)
 				to_chat(carbon_target, span_changeling("The scream invigorates you!"))
 				carbon_target.AdjustAllImmobility(-5 SECONDS)
 				carbon_target.adjustStaminaLoss(-60)
 				carbon_target.set_jitter_if_lower(20 SECONDS)
-				tiger_fanatic.receive_blessing()
+				fanatic.receive_blessing()
 				continue
 
 			if(!carbon_target.mind || !IS_CHANGELING(carbon_target))

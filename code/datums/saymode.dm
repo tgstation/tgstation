@@ -20,12 +20,12 @@
 	if(user.mind.has_antag_datum(/datum/antagonist/fallen_changeling))
 		to_chat(user, span_changeling("<b>We're cut off from the hivemind! We've lost everything! EVERYTHING!!</b>"))
 		return FALSE
-	if(!IS_CHANGELING(user) && !IS_TIGER_FANATIC(user))
+	if(!IS_CHANGELING(user) && !IS_FANATIC(user))
 		return FALSE
 
 	var/name
 
-	if(IS_TIGER_FANATIC(user))
+	if(IS_FANATIC(user))
 		name = "Unworthy Worshiper"
 
 	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
@@ -45,7 +45,7 @@
 		if(!ling_receiver.owner)
 			continue
 		var/mob/living/ling_mob = ling_receiver.owner.current
-		if(!IS_CHANGELING(ling_mob) && !IS_TIGER_FANATIC(ling_mob))
+		if(!IS_CHANGELING(ling_mob) && !IS_FANATIC(ling_mob))
 			continue
 		//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
 		if(!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob))

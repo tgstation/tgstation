@@ -1,8 +1,8 @@
 import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
 
-const TigerFanatic: Antagonist = {
-  key: 'tigerfanatic',
+const Fanatic: Antagonist = {
+  key: 'fanatic',
   name: 'Fanatic',
   description: [
     multiline`
@@ -22,4 +22,4 @@ const TigerFanatic: Antagonist = {
   category: Category.Midround,
 };
 
-export default TigerFanatic;
+export default Fanatic;

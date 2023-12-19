@@ -2450,7 +2450,7 @@
 
 /datum/reagent/consumable/ethanol/ritual_wine/on_mob_metabolize(mob/living/carbon/psychonaut, seconds_per_tick, times_fired)
 	. = ..()
-	if(!IS_TIGER_FANATIC(psychonaut))
+	if(!IS_FANATIC(psychonaut))
 		return
 	var/need_mob_update
 	var/healing = 1.5

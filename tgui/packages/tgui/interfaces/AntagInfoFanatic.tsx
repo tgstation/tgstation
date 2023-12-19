@@ -28,7 +28,7 @@ type Info = {
   objectives: Objective[];
 };
 
-export const AntagInfoTigerFanatic = (props) => {
+export const AntagInfoFanatic = (props) => {
   return (
     <Window width={540} height={540}>
       <Window.Content

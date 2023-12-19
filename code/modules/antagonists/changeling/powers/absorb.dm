@@ -138,7 +138,7 @@
 		fallen.objectives = copied_objectives
 
 
-	if(IS_TIGER_FANATIC(target))// If the target was a tiger cultist we get powered up.
+	if(IS_FANATIC(target))// If the target was a fanatic we get powered up.
 		to_chat(owner, span_changeling(span_boldnotice("[target] was a worshiper of the hive. Their DNA is prepared specifically for our tastes. We grow stronger.")))
 
 

@@ -1,7 +1,7 @@
-/datum/antagonist/tiger_fanatic
+/datum/antagonist/fanatic
 	name = "Fanatic"
 	antagpanel_category = "Other"
-	job_rank = ROLE_TIGER_FANATIC
+	job_rank = ROLE_FANATIC
 	show_name_in_check_antagonists = TRUE
 	preview_outfit = /datum/outfit/tiger_fanatic
 	antag_moodlet = /datum/mood_event/focused
@@ -10,19 +10,19 @@
 	ui_name = "AntagInfoTigerFanatic"
 	var/blessings = 0
 
-/datum/antagonist/tiger_fanatic/ui_data(mob/user)
+/datum/antagonist/fanatic/ui_data(mob/user)
 	var/list/data = list()
 	data["key"] = MODE_KEY_CHANGELING
 	data["objectives"] = get_objectives()
 	return data
 
-/datum/antagonist/tiger_fanatic/on_gain()
-	owner.special_role = ROLE_TIGER_FANATIC
+/datum/antagonist/fanatic/on_gain()
+	owner.special_role = ROLE_FANATIC
 	SEND_SOUND(owner.current, sound('sound/effects/tiger_greeting.ogg'))
 	forge_objectives()
 	. = ..()
 
-/datum/antagonist/tiger_fanatic/forge_objectives()
+/datum/antagonist/fanatic/forge_objectives()
 	var/datum/objective/be_absorbed/absorbed_escape/absorbed = new
 	var/datum/objective/changeling_blessed/blessed = new
 	absorbed.owner = owner
@@ -56,7 +56,7 @@
 		return TRUE
 	return FALSE
 
-/datum/antagonist/tiger_fanatic/proc/receive_blessing()
+/datum/antagonist/fanatic/proc/receive_blessing()
 	blessings += 1
 	if(iscarbon(owner.current))
 		var/mob/living/carbon/blessed_one = owner.current
@@ -71,9 +71,9 @@
 	var/blessings_required = 3
 
 /datum/objective/changeling_blessed/check_completion()
-	var/datum/antagonist/tiger_fanatic/tiger_fanatic = owner.has_antag_datum(/datum/antagonist/tiger_fanatic)
-	if(isnull(tiger_fanatic))
+	var/datum/antagonist/fanatic/fanatic = owner.has_antag_datum(/datum/antagonist/fanatic)
+	if(isnull(fanatic))
 		return FALSE
-	if(tiger_fanatic.blessings >= blessings_required)
+	if(fanatic.blessings >= blessings_required)
 		return TRUE
 	return FALSE
