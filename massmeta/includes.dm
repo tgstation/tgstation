@@ -49,7 +49,6 @@
 #include "code\modules\clothing\suits\wintercoats.dm"
 #include "code\modules\clothing\under\jobs\cargo.dm"
 #include "code\modules\clothing\under\jobs\command.dm"
-#include "code\modules\clothing\under\jobs\medical.dm"
 #include "code\modules\clothing\under\jobs\rnd.dm"
 #include "code\modules\clothing\under\jobs\civilian.dm"
 #include "code\modules\clothing\under\jobs\security.dm"

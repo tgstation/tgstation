@@ -771,6 +771,13 @@
 			if(!user.transferItemToLoc(weapon, src))
 				return
 			mod = weapon
+		else if(istype(weapon, /obj/item/choice_beacon/space_suit)) 						// MASSMETA EDIT
+			if(space_suit) 																	//
+				to_chat(user, span_warning("The unit already contains a delivery beacon!")) //
+				return																		//
+			if(!user.transferItemToLoc(weapon, src))										//
+				return																		//
+			space_suit = weapon																//
 		else
 			if(storage)
 				to_chat(user, span_warning("The auxiliary storage compartment is full!"))
