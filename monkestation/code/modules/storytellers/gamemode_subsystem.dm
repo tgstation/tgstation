@@ -846,7 +846,7 @@ SUBSYSTEM_DEF(gamemode)
 		send_to_playing_players(span_notice("<b>Storyteller is [storyteller.name]!</b>"))
 		send_to_playing_players(span_notice("[storyteller.welcome_text]"))
 	else
-		send_to_observers(span_boldnotice("<b>Storyteller is [storyteller.name]!</b>")) //observers still get to know
+		send_to_observers(span_boldbig("<b>Storyteller is [storyteller.name]!</b>")) //observers still get to know
 
 /// Panel containing information, variables and controls about the gamemode and scheduled event
 /datum/controller/subsystem/gamemode/proc/admin_panel(mob/user)
