@@ -176,6 +176,9 @@
 	cell_type = null
 	opened = TRUE
 
+/obj/item/inducer/orderable
+ cell_type = /obj/item/stock_parts/cell/inducer_supply
+ opened = FALSE
 
 /obj/item/inducer/sci
 	icon_state = "inducer-sci"
