@@ -160,19 +160,16 @@
 	if(stat)
 		to_chat(src, "<i>I must be conscious to do this...</i>")
 		return
-	if(is_adult)
+	if(life_stage == SLIME_LIFE_STAGE_ADULT)
 		to_chat(src, "<i>I have already evolved...</i>")
 		return
 	if(amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		to_chat(src, "<i>I am not ready to evolve yet...</i>")
 		return
 
-	is_adult = TRUE
-	maxHealth = 200
+	set_life_stage(SLIME_LIFE_STAGE_ADULT)
 	amount_grown = 0
-	for(var/datum/action/innate/slime/evolve/evolve_action in actions)
-		evolve_action.Remove(src)
-	GRANT_ACTION(/datum/action/innate/slime/reproduce)
+
 	regenerate_icons()
 	update_name()
 
@@ -196,7 +193,7 @@
 	if(!isopenturf(loc))
 		balloon_alert(src, "can't reproduce here!")
 
-	if(!is_adult)
+	if(life_stage != SLIME_LIFE_STAGE_ADULT)
 		balloon_alert(src, "not old enough to reproduce!")
 		return
 

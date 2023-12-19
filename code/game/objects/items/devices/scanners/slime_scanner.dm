@@ -27,7 +27,7 @@
 
 /proc/slime_scan(mob/living/simple_animal/slime/scanned_slime, mob/living/user)
 	var/to_render = "<b>Slime scan results:</b>\
-					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.is_adult ? "adult" : "baby"] slime")]\
+					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.life_stage] slime")]\
 					\nNutrition: [scanned_slime.nutrition]/[scanned_slime.get_max_nutrition()]"
 
 	if (scanned_slime.nutrition < scanned_slime.get_starve_nutrition())

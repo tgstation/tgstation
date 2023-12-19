@@ -1,7 +1,9 @@
+#define SLIME_LIFE_STAGE_BABY "baby"
+#define SLIME_LIFE_STAGE_ADULT "adult"
+
 // Just slimin' here.
-// Warning: These defines are used for slime cores and their icon states, so if you
-// touch these names, remember to update icons/mob/simple/slimes.dmi and the respective
-// slime core paths too!
+// Warning: These defines are used for slime icon states, so if you
+// touch these names, remember to update icons/mob/simple/slimes.dmi!
 
 #define SLIME_TYPE_ADAMANTINE "adamantine"
 #define SLIME_TYPE_BLACK "black"
