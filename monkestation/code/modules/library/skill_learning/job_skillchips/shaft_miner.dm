@@ -16,8 +16,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/structure/spawner/ice_moon/demonic_portal = list("Portal!", "Take out the portal!", "Beasts coming out of that portal!", ""),
 
 	//Mobs: Oshan
-	/mob/living/basic/aquatic/fish = list(),
-	/obj/structure/spawner/lavaland/ocean = list(),
+	/mob/living/basic/aquatic/fish = list("Fish!", "Feesh!", "Got a fish here!", "Watch out, fish!"),
 
 	//Mobs: Misc
 	/mob/living/carbon/alien/adult/royal = list("XENO ROYAL!!", "THICK XENO HERE!!", "WE'VE GOT COMPANY!!", "SHE'S A BIG ONE!!", "GLYPHID...I MEAN XENO ROYAL!!"),
@@ -32,23 +31,23 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/mob/living/basic/mining/goldgrub = list("Lootbug!", "I found a goldgrub!", "Pop that lootbug!", "Lets tame the goldgrub!"),
 	/mob/living/basic/mining/goliath = list("Goliath!", "Watch the tentacles!", "We got a goliath!", "Goliath! Don't let it grab you!", "Watch where you stick those tentacles, you blasted sack of hellspawn! "),
 	/mob/living/basic/mining/legion/dwarf = list("Legion! He's adorable!", "Little legion here!", "I'm gonna call you Steeve!"),
-	/mob/living/basic/mining/legion = list(),
+	/mob/living/basic/mining/legion = list("Legion!", "Don't let it create more!", "Watch the legion!", "We've got a legion!"),
 	/mob/living/basic/legion_brood = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
-	/mob/living/basic/mining/watcher  = list(),
-	/mob/living/basic/mining/brimdemon = list(),
-	/mob/living/basic/mining/bileworm = list(),
-	/obj/structure/spawner/lavaland = list(),
+	/mob/living/basic/mining/watcher  = list("Watcher!","Watcher spotted!", "Watcher! I hate these things!", "Break the watcher!", "Dodge the ice!"),
+	/mob/living/basic/mining/brimdemon = list("Brimdemon!", "Brimdemon, watch the beams!", "Spotted a brimdemon!", "Keep your distance!"),
+	/mob/living/basic/mining/bileworm = list("Bileworm!", "Take out that bileworm!", "Kill the bileworm before it melts us all!", "Acid spreader!"),
+	/obj/structure/spawner/lavaland = list("Tendril!", "Don't let it take you with it!", "We got a tendril!", "Watch for beasties coming out!"),
 
 	//Mobs: Megafauna
 	/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!"),
-	/mob/living/simple_animal/hostile/megafauna/colossus = list(),
-	/mob/living/simple_animal/hostile/megafauna/clockwork_defender = list(),
-	/mob/living/simple_animal/hostile/megafauna/bubblegum = list(),
-	/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner = list(),
-	/mob/living/simple_animal/hostile/megafauna/dragon = list(),
-	/mob/living/simple_animal/hostile/megafauna/hierophant = list(),
-	/mob/living/simple_animal/hostile/megafauna/legion = list(),
-	/mob/living/simple_animal/hostile/megafauna/wendigo = list(),
+	/mob/living/simple_animal/hostile/megafauna/colossus = list("COLOSSUS!!", "COLOSSUS SPOTTED!!", "DON'T GET JUDGED BY THE COLOSSUS!!", "COLOSSUS, DODGE THE SHOTS!!", "WE'VE GOT A COLOSSUS, BULLET HELL TIME!!"),
+	/mob/living/simple_animal/hostile/megafauna/clockwork_defender = list("A CLOCKWORK DEFENDER? AT THIS TIME OF YEAR? AT THIS TIME OF DAY? IN THIS PART OF THE GALAXY? LOCALIZED ENTIRELY WITHIN MY VISION?"), //This is an unused mob, write actual ones if we ever actually finish it.
+	/mob/living/simple_animal/hostile/megafauna/bubblegum = list("BUBBLEGUM, WATCH THE BLOOD!!", "KEEP YOUR DISTANCE, BUBBLEGUM IS LETHAL UP CLOSE!!", "BLOODY HELL, BUBBLEGUM SPOTTED!!", "STAY OUT OF THE BLOOD POOLS, BUBBLEGUM!!"),
+	/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner = list("DEMONIC MINER!!", "WATCH YOURSELVES, DEMON MINER SPOTTED!!", "DEMON MINER, DON'T LET IT STEAL YOUR SOUL!!", "FROST-CRAZED MINER, DODGE THE BASTARD!!"),
+	/mob/living/simple_animal/hostile/megafauna/dragon = list("BY THE BEARD, DRAGON!!", "WE'VE GOT A DRAGON ON OUR HANDS!!", "ASH DRAKE, DON'T LET IT BURN YOU!!", "THERE'S AN ASH DRAKE!!", "ASH DRAKE!!"),
+	/mob/living/simple_animal/hostile/megafauna/hierophant = list("HIEROPHANT IN SIGHT!!", "WATCH IT, HIEROPHANT ON RHYTHM!!", "DANCE TO THE HIEROPHANT'S BEAT IF YOU WANNA LIVE!!", "HIEROPHANT!!"),
+	/mob/living/simple_animal/hostile/megafauna/legion = list("LEGION!!", "SOMEONE WOKE THE LEGION!!", "THIS IS IT, LADS! LEGION SPOTTED!!", "A LEGION TO ONE, I LIKE THESE ODDS!!"),
+	/mob/living/simple_animal/hostile/megafauna/wendigo = list("WENDIGO!!", "WE'VE GOT A WENDIGO HERE!!", "KEEP THE WENDIGO AT RANGE, LADS!!", "KEEP MOVING, THIS WENDIGO IS FAST!!"),
 
 
 	//Items: Materials
