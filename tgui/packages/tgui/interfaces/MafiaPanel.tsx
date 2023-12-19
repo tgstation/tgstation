@@ -110,7 +110,7 @@ export const MafiaPanelData = (props) => {
                   <Stack.Item grow>
                     <MafiaPlayers />
                   </Stack.Item>
-                  <Stack.Item fluid grow>
+                  <Stack.Item grow>
                     <Stack.Item>
                       <Tabs fluid>
                         <Tabs.Tab

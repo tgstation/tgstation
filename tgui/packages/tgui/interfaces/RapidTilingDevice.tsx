@@ -109,7 +109,6 @@ const TileDesignSection = (props) => {
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.category_name}
             selected={category.category_name === categoryName}
             onClick={() => setCategoryName(category.category_name)}

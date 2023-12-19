@@ -193,7 +193,6 @@ const booleanStyleMap = {
       style['right'] = 0;
     }
   },
-  fluid: mapBooleanPropTo('width', '100%'),
   inline: mapBooleanPropTo('display', 'inline-block'),
   italic: mapBooleanPropTo('fontStyle', 'italic'),
   nowrap: mapBooleanPropTo('whiteSpace', 'nowrap'),
