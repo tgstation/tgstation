@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "bridge assistant no longer passes some head of staff checks"
-  - qol: "if you steal a command member's liver, you can now sabre better!"

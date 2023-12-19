@@ -1,5 +1,0 @@
-author: "Fikou"
-delete-after: True
-changes:
-  - bugfix: "qm's intern id is now \"quartermaster-in-training\""
-  - image: "qm's id and hud icons now use the cargo tech icons (but blue) to be consistent with the other heads of staff"
