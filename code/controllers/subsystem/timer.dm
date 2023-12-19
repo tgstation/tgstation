@@ -683,6 +683,30 @@ SUBSYSTEM_DEF(timer)
 	return FALSE
 
 /**
+ * Fetches a timer
+ * Only really acceptable in debug situations, should NEVER use this
+ * I will hunt you down
+ *
+ * Arguments:
+ * * id a timerid or a /datum/timedevent
+ * * timer_subsystem - Optional, the subsystem to pull from. Replaced w SStimer if none is given
+ */
+/proc/gettimer(id, datum/controller/subsystem/timer/timer_subsystem)
+	if (!id)
+		return null
+	if (id == TIMER_ID_NULL)
+		CRASH("Tried to delete a null timerid. Use TIMER_STOPPABLE flag")
+	if (istype(id, /datum/timedevent))
+		qdel(id)
+		return null
+	timer_subsystem = timer_subsystem || SStimer
+	//id is string
+	var/datum/timedevent/timer = timer_subsystem.timer_id_dict[id]
+	if (timer && (!timer.spent || timer.flags & TIMER_DELETE_ME))
+		return timer
+	return null
+
+/**
  * Get the remaining deciseconds on a timer
  *
  * Arguments:

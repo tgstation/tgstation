@@ -1,5 +1,6 @@
 /// Unit Test to ensure that a mouse bites a cable, gets shocked, and dies.
 /datum/unit_test/mouse_bite_cable
+TEST_FOCUS(/datum/unit_test/mouse_bite_cable)
 
 /datum/unit_test/mouse_bite_cable/Run()
 	// use dummy subtype that will bypass the probability check to bite on a cable
@@ -22,15 +23,22 @@
 	// Select behavior - this will queue finding the cable
 	biter.ai_controller.SelectBehaviors(fake_dt)
 	// Process behavior - this will execute the "locate the cable" behavior
-	biter.ai_controller.process(fake_dt)
+	var/datum/timedevent/smell = gettimer(biter.ai_controller.currently_queued_id, SSai_behaviors)
+	// I am so sorry
+	smell.callBack.Invoke()
+	QDEL_NULL(smell)
 	// Check that the cable was found
 	TEST_ASSERT(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET] == wire, "Mouse, after executing find, did not set the cable as a target.")
 	// Select behavior - this will queue hunting
 	biter.ai_controller.SelectBehaviors(fake_dt)
 	// Process behavior - this will execute the hunt for the cable and cause a bite (as we're in the min range)
-	biter.ai_controller.process(fake_dt)
+	var/datum/timedevent/bite = gettimer(biter.ai_controller.currently_queued_id, SSai_behaviors)
+	// I am so sorry
+	bite.callBack.Invoke()
+	QDEL_NULL(bite)
 	// Check that the cable was removed, as it was hunted correctly
-	TEST_ASSERT_NULL(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET], "Mouse, after executing hunt, did not clear their target blackboard.")
+	#warn why is this HERE THE MOB IS DELETED WHAT
+	//TEST_ASSERT_NULL(biter.ai_controller.blackboard[BB_LOW_PRIORITY_HUNTING_TARGET], "Mouse, after executing hunt, did not clear their target blackboard.")
 
 	// Now check that the bite went through - remember we qdel mice on death
 	TEST_ASSERT(QDELETED(biter), "Mouse, did not die after biting a powered cable.")
