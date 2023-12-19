@@ -1,5 +1,6 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
 import { ReactNode } from 'react';
+
 import { useBackend } from '../../backend';
 import { Box, Flex, Tooltip } from '../../components';
 import { PreferencesMenuData } from './data';

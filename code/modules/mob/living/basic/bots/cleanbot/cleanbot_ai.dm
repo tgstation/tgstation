@@ -41,7 +41,7 @@
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are DONE listening to orders
-	if(QDELETED(bot_pawn) || bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	return ..()
 
@@ -51,7 +51,7 @@
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
 
-	if(QDELETED(bot_pawn) || LAZYLEN(bot_pawn.do_afters))
+	if(LAZYLEN(bot_pawn.do_afters))
 		return SUBTREE_RETURN_FINISH_PLANNING
 
 	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
@@ -84,7 +84,7 @@
 
 /datum/ai_planning_subtree/acid_spray/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
-	if(QDELETED(bot_pawn) || !(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	if(controller.reachable_key(BB_ACID_SPRAY_TARGET, BOT_CLEAN_PATH_LIMIT))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)
@@ -140,6 +140,9 @@
 	if(!length(speech_list))
 		return
 	var/mob/living/living_pawn = controller.pawn
+	if(QDELETED(living_pawn)) // pawn can be null at this point
+		controller.clear_blackboard_key(target_key)
+		return
 	living_pawn.say(pick(controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
 
@@ -149,7 +152,7 @@
 
 /datum/ai_planning_subtree/use_mob_ability/foam_area/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(QDELETED(bot_pawn) || !(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	return ..()
 
@@ -158,7 +161,7 @@
 /datum/ai_planning_subtree/befriend_janitors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are now evil. dont befriend the janitors
-	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_FRIENDLY_JANITOR))
 		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE)

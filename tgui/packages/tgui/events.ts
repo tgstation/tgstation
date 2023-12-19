@@ -6,9 +6,8 @@
  * @license MIT
  */
 
-import { KEY_ALT, KEY_CTRL, KEY_F1, KEY_F12, KEY_SHIFT } from 'common/keycodes';
-
 import { EventEmitter } from 'common/events';
+import { KEY_ALT, KEY_CTRL, KEY_F1, KEY_F12, KEY_SHIFT } from 'common/keycodes';
 
 export const globalEvents = new EventEmitter();
 let ignoreWindowFocus = false;

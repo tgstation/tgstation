@@ -319,7 +319,7 @@
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 2
+	total_requirement = 1
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
@@ -331,7 +331,7 @@
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
 	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
-	return ..() && (found_percent <= (damage_percent + 2) && found_percent >= (damage_percent - 2))
+	return ..() && ISINRANGE(found_percent, damage_percent - 5, damage_percent + 5)
 
 /datum/experiment/scanning/random/mecha_equipped_scan
 	name = "Exosuit Materials 2: Load Strain Test"

@@ -6,7 +6,9 @@
 
 import { BooleanLike, classes } from 'common/react';
 import { createElement, ReactNode } from 'react';
+
 import { CSS_COLORS } from '../constants';
+import { logger } from '../logging';
 
 export type BoxProps = {
   [key: string]: any;
@@ -252,7 +254,9 @@ export const Box = (props: BoxProps) => {
   const computedProps = computeBoxProps(rest);
 
   if (as === 'img') {
-    computedProps.style['-ms-interpolation-mode'] = 'nearest-neighbor';
+    logger.error(
+      'Box component cannot be used as an image. Use Image component instead.',
+    );
   }
 
   // Render the component

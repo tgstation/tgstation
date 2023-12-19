@@ -1,6 +1,7 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { capitalize } from 'common/string';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -134,7 +135,7 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={book_id}
-                placeholder={book_id === null ? 'ID' : book_id}
+                placeholder={book_id === null ? 'ID' : String(book_id)}
                 width="70px"
                 onChange={(e, value) =>
                   act('set_search_id', {

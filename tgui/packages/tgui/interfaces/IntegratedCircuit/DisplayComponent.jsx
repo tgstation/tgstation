@@ -1,7 +1,8 @@
-import { Button, Stack, Box } from '../../components';
 import { Component, createRef } from 'react';
-import { Port } from './Port';
+
+import { Box, Button, Stack } from '../../components';
 import { noop } from './constants';
+import { Port } from './Port';
 
 export class DisplayComponent extends Component {
   constructor(props) {

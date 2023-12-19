@@ -1,8 +1,9 @@
-import { useBackend } from '../backend';
-import { Box, Button, Grid, Section, NoticeBox } from '../components';
-import { toTitleCase } from 'common/string';
-import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
+import { toTitleCase } from 'common/string';
+
+import { useBackend } from '../backend';
+import { Box, Button, Grid, NoticeBox, Section } from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   shaking: BooleanLike;

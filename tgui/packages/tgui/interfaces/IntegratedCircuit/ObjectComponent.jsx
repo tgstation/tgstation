@@ -1,6 +1,7 @@
-import { Box, Stack, Button } from '../../components';
 import { Component } from 'react';
+
 import { shallowDiffers } from '../../../common/react';
+import { Box, Button, Stack } from '../../components';
 import { ABSOLUTE_Y_OFFSET, noop } from './constants';
 import { Port } from './Port';
 
