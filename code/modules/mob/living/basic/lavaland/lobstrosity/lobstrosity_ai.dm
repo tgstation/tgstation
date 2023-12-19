@@ -158,9 +158,9 @@
 		return
 	var/perform_flags = target_step_away(controller, current_target, target_key)
 	if (perform_flags & AI_BEHAVIOR_SUCCEEDED)
-		finish_action(controller, TRUE, target_key)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 	else if(perform_flags & AI_BEHAVIOR_FAILED)
-		finish_action(controller, FALSE, target_key)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
 /// Find the next step to take away from the current target
 /datum/ai_behavior/hoard_fingers/proc/target_step_away(datum/ai_controller/controller, atom/current_target, target_key)

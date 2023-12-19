@@ -564,8 +564,8 @@ multiple modular subtrees with behaviors
 			UnregisterSignal(_tracked_datum, COMSIG_QDELETING); \
 		} \
 	} else if (islist(tracked_datum)) { \
-		for(var/_tracked_entry in tracked_datum) { \
-			var/datum/_tracked_datum = tracked_datum; \
+		/* Intentional type filter here */ \
+		for(var/datum/_tracked_datum in tracked_datum) { \
 			REMOVE_TRAIT(_tracked_datum, TRAIT_AI_TRACKING, "[REF(src)]_[key]"); \
 			if(!HAS_TRAIT(_tracked_datum, TRAIT_AI_TRACKING)) { \
 				UnregisterSignal(_tracked_datum, COMSIG_QDELETING); \
@@ -735,6 +735,7 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/proc/clear_blackboard_key(key)
 	if(isnull(blackboard[key]))
 		return
+
 	CLEAR_AI_DATUM_TARGET(blackboard[key], key)
 	blackboard[key] = null
 	if(isnull(pawn))

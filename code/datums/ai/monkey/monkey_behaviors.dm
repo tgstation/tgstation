@@ -216,8 +216,7 @@
 
 	// Some mobs delete on death. If the target is no longer alive, go back to idle
 	if(QDELETED(target))
-		finish_action(controller, TRUE)
-		return
+		return AI_BEHAVIOR_SUCCEEDED
 
 	if(isnull(controller.blackboard[BB_MONKEY_ENEMIES][target]))
 		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, 1)

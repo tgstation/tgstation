@@ -30,7 +30,19 @@
 		return
 	RegisterSignal(new_pawn, COMSIG_BOT_RESET, PROC_REF(reset_bot))
 
-/datum/ai_controller/basic_controller/bot/able_to_run()
+/datum/ai_controller/basic_controller/bot/setup_able_to_run()
+	. = ..()
+	RegisterSignal(pawn, COMSIG_BOT_SET_MODE_FLAGS, PROC_REF(mode_flags_changed))
+
+/datum/ai_controller/basic_controller/bot/proc/mode_flags_changed()
+	SIGNAL_HANDLER
+	update_able_to_run()
+
+/datum/ai_controller/basic_controller/bot/clear_able_to_run()
+	. = ..()
+	UnregisterSignal(pawn, list(COMSIG_BOT_SET_MODE_FLAGS))
+
+/datum/ai_controller/basic_controller/bot/get_able_to_run()
 	var/mob/living/basic/bot/bot_pawn = pawn
 	if(!(bot_pawn.bot_mode_flags & BOT_MODE_ON))
 		return FALSE
@@ -87,11 +99,9 @@
 	action_cooldown = 15 SECONDS
 
 /datum/ai_behavior/manage_unreachable_list/perform(seconds_per_tick, datum/ai_controller/controller, list_key)
-	. = ..()
 	if(!isnull(controller.blackboard[list_key]))
 		controller.clear_blackboard_key(list_key)
-	finish_action(controller, TRUE)
-
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_planning_subtree/find_patrol_beacon
 
@@ -114,7 +124,6 @@
 /datum/ai_behavior/find_first_beacon_target
 
 /datum/ai_behavior/find_first_beacon_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/closest_distance = INFINITY
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/atom/final_target
@@ -129,19 +138,16 @@
 		final_target = beacon
 
 	if(isnull(final_target))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	controller.set_blackboard_key(BB_BEACON_TARGET, final_target)
-	finish_action(controller, TRUE)
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/find_next_beacon_target/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	. = ..()
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	var/atom/final_target
 	var/obj/machinery/navbeacon/prev_beacon = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
 	if(QDELETED(prev_beacon))
-		finish_action(controller, FALSE)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	for(var/obj/machinery/navbeacon/beacon as anything in GLOB.navbeacons["[bot_pawn.z]"])
 		if(beacon.location == prev_beacon.codes[NAVBEACON_PATROL_NEXT])
@@ -150,11 +156,10 @@
 
 	if(isnull(final_target))
 		controller.clear_blackboard_key(BB_PREVIOUS_BEACON_TARGET)
-		finish_action(controller, FALSE)
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(BB_BEACON_TARGET, final_target)
-	finish_action(controller, TRUE)
-
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/travel_towards/beacon
 	clear_target = TRUE
@@ -217,14 +222,11 @@
 /datum/ai_behavior/salute_authority
 
 /datum/ai_behavior/salute_authority/perform(seconds_per_tick, datum/ai_controller/controller, target_key, salute_keys)
-	. = ..()
 	if(!controller.blackboard_key_exists(target_key))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/list/salute_list = controller.blackboard[salute_keys]
 	if(!length(salute_list))
-		finish_action(controller, FALSE, target_key)
-		return
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//special interaction if we are wearing a fedora
 	var/obj/item/our_hat = (locate(/obj/item/clothing/head) in bot_pawn)
@@ -232,8 +234,7 @@
 		salute_list += "tips [our_hat] at "
 
 	bot_pawn.manual_emote(pick(salute_list) + " [controller.blackboard[target_key]]")
-	finish_action(controller, TRUE, target_key)
-	return
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
 /datum/ai_behavior/salute_authority/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()

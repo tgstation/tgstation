@@ -163,7 +163,7 @@
 	var/mob/living/simple_animal/bot/polymorph_bot = new_shape
 	if (istype(polymorph_bot))
 		polymorph_bot.bot_cover_flags |= BOT_COVER_EMAGGED
-		polymorph_bot.bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED
+		polymorph_bot.set_bot_mode_flags(polymorph_bot.bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 
 	return new_shape
 

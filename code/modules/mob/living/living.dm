@@ -64,7 +64,7 @@
 		return .
 
 	// If you are incapped, you probably can't brace yourself
-	var/can_help_themselves = !incapacitated(IGNORE_RESTRAINTS)
+	var/can_help_themselves = !INCAPABLE_WITHOUT(src, INCAPABLE_RESTRAINTS)
 	if(levels <= 1 && can_help_themselves)
 		var/obj/item/organ/external/wings/gliders = get_organ_by_type(/obj/item/organ/external/wings)
 		if(HAS_TRAIT(src, TRAIT_FREERUNNING) || gliders?.can_soften_fall()) // the power of parkour or wings allows falling short distances unscathed

@@ -15,8 +15,8 @@
 	summoned_bot.name = "Wizard's Justicebot"
 
 	summoned_bot.security_mode_flags = ~SECBOT_DECLARE_ARRESTS
-	summoned_bot.bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED
-	summoned_bot.bot_mode_flags |= BOT_COVER_EMAGGED
+	summoned_bot.set_bot_mode_flags(summoned_bot.bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED)
+	summoned_bot.set_bot_mode_flags(summoned_bot.bot_mode_flags | BOT_COVER_EMAGGED)
 
 	summoned_bot.projectile = /obj/projectile/beam/laser
 	summoned_bot.shoot_sound = 'sound/weapons/laser.ogg'

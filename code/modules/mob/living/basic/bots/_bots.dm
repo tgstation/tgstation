@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	///All initial access this bot started with.
 	var/list/initial_access = list()
 	///Bot-related mode flags on the Bot indicating how they will act. BOT_MODE_ON | BOT_MODE_AUTOPATROL | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
+	///Do not set manually, use set_bot_mode_flags()
 	var/bot_mode_flags = BOT_MODE_ON | BOT_MODE_REMOTE_ENABLED | BOT_MODE_CAN_BE_SAPIENT | BOT_MODE_ROUNDSTART_POSSESSION
 	///Bot-related cover flags on the Bot to deal with what has been done to their cover, including emagging. BOT_MAINTS_PANEL_OPEN | BOT_CONTROL_PANEL_OPEN | BOT_COVER_EMAGGED | BOT_COVER_HACKED
 	var/bot_access_flags = NONE
@@ -166,7 +167,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/proc/turn_on()
 	if(stat == DEAD)
 		return FALSE
-	bot_mode_flags |= BOT_MODE_ON
+	set_bot_mode_flags(bot_mode_flags | BOT_MODE_ON)
 	remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	update_appearance()
@@ -175,7 +176,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return TRUE
 
 /mob/living/basic/bot/proc/turn_off()
-	bot_mode_flags &= ~BOT_MODE_ON
+	set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_ON)
 	add_traits(on_toggle_traits, POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
@@ -308,7 +309,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return FALSE
 	bot_access_flags |= BOT_COVER_EMAGGED
 	bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN
-	bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
+	set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED) //Manually emagging the bot also locks the AI from controlling it.
 	bot_reset()
 	turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 	to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
@@ -558,9 +559,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 	switch(command)
 		if("patroloff")
 			bot_reset() //HOLD IT!! //OBJECTION!!
-			bot_mode_flags &= ~BOT_MODE_AUTOPATROL
+			set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 		if("patrolon")
-			bot_mode_flags |= BOT_MODE_AUTOPATROL
+			set_bot_mode_flags(bot_mode_flags | BOT_MODE_AUTOPATROL)
 		if("summon")
 			summon_bot(user, user_access = user_access)
 		if("ejectpai")
@@ -799,6 +800,11 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return FALSE
 	calling_ai_ref = WEAKREF(caller)
 	return TRUE
+
+/mob/living/basic/bot/proc/set_bot_mode_flags(new_flags)
+	var/old_flags = bot_mode_flags
+	bot_mode_flags = new_flags
+	SEND_SIGNAL(src, COMSIG_BOT_SET_MODE_FLAGS, old_flags, new_flags)
 
 /mob/living/basic/bot/proc/update_bot_mode(new_mode, update_hud = TRUE)
 	mode = new_mode

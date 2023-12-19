@@ -45,6 +45,7 @@
 	speaking_pawn.say(modified_speech, forced = "AI Controller")
 	if(speech_sound)
 		playsound(speaking_pawn, speech_sound, 80, vary = TRUE)
-	finish_action(controller, TRUE)
+	#warn intended? this is odd
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 #undef HAS_CHANNEL_PREFIX

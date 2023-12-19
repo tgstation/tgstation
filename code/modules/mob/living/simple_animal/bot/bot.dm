@@ -141,7 +141,7 @@
 /mob/living/simple_animal/bot/proc/turn_on()
 	if(stat)
 		return FALSE
-	bot_mode_flags |= BOT_MODE_ON
+	set_bot_mode_flags(bot_mode_flags | BOT_MODE_ON)
 	remove_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	update_appearance()
@@ -150,7 +150,7 @@
 	return TRUE
 
 /mob/living/simple_animal/bot/proc/turn_off()
-	bot_mode_flags &= ~BOT_MODE_ON
+	set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_ON)
 	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
@@ -214,6 +214,10 @@
 	QDEL_NULL(access_card)
 	QDEL_NULL(path_hud)
 	return ..()
+
+///Exists for parity with basic bots
+/mob/living/simple_animal/bot/proc/set_bot_mode_flags(new_flags)
+	bot_mode_flags = new_flags
 
 /// Allows this bot to be controlled by a ghost, who will become its mind
 /mob/living/simple_animal/bot/proc/enable_possession(user, mapload = FALSE)
@@ -330,7 +334,7 @@
 	if(!(bot_cover_flags & BOT_COVER_LOCKED) && bot_cover_flags & BOT_COVER_OPEN) //Bot panel is unlocked by ID or emag, and the panel is screwed open. Ready for emagging.
 		bot_cover_flags |= BOT_COVER_EMAGGED
 		bot_cover_flags &= ~BOT_COVER_LOCKED //Manually emagging the bot locks out the panel.
-		bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED //Manually emagging the bot also locks the AI from controlling it.
+		set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED) //Manually emagging the bot also locks the AI from controlling it.
 		bot_reset()
 		turn_on() //The bot automatically turns on when emagged, unless recently hit with EMP.
 		to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
@@ -786,10 +790,9 @@ Pass a positive integer as an argument to override a bot's default speed.
 /mob/living/simple_animal/bot/proc/start_patrol()
 
 	if(tries >= BOT_STEP_MAX_RETRIES) //Bot is trapped, so stop trying to patrol.
-		bot_mode_flags &= ~BOT_MODE_AUTOPATROL
+		set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 		tries = 0
 		speak("Unable to start patrol.")
-
 		return
 
 	if(!(bot_mode_flags & BOT_MODE_AUTOPATROL)) //A bot not set to patrol should not be patrolling.
@@ -851,7 +854,7 @@ Pass a positive integer as an argument to override a bot's default speed.
 		patrol_target = nearest_beacon_loc
 		destination = next_destination
 	else
-		bot_mode_flags &= ~BOT_MODE_AUTOPATROL
+		set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 		mode = BOT_IDLE
 		speak("Disengaging patrol mode.")
 
@@ -891,10 +894,10 @@ Pass a positive integer as an argument to override a bot's default speed.
 	switch(command)
 		if("patroloff")
 			bot_reset() //HOLD IT!! //OBJECTION!!
-			bot_mode_flags &= ~BOT_MODE_AUTOPATROL
+			set_bot_mode_flags(bot_mode_flags & ~BOT_MODE_AUTOPATROL)
 
 		if("patrolon")
-			bot_mode_flags |= BOT_MODE_AUTOPATROL
+			set_bot_mode_flags(bot_mode_flags | BOT_MODE_AUTOPATROL)
 
 		if("summon")
 			bot_reset()

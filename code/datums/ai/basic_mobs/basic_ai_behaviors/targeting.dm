@@ -40,7 +40,7 @@
 		potential_targets += enemy_spotted
 
 	if(!potential_targets.len)
-		failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key)
+		failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/list/filtered_targets = list()
@@ -50,7 +50,7 @@
 		filtered_targets += pot_target
 
 	if(!filtered_targets.len)
-		failed_to_find_anyone(controller, target_key, targetting_datum_key, hiding_location_key)
+		failed_to_find_anyone(controller, target_key, targeting_strategy_key, hiding_location_key)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/atom/target = pick_final_target(controller, filtered_targets)
@@ -63,7 +63,7 @@
 
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 
-/datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/proc/failed_to_find_anyone(datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	var/aggro_range = controller.blackboard[aggro_range_key] || vision_range
 	// takes the larger between our range() input and our implicit hearers() input (world.view)
 	aggro_range = max(aggro_range, ROUND_UP(max(getviewsize(world.view)) / 2))
@@ -77,13 +77,13 @@
 		src,
 		controller,
 		target_key,
-		targetting_datum_key,
+		targeting_strategy_key,
 		hiding_location_key,
 	)
 	// We're gonna store this field in our blackboard, so we can clear it away if we end up finishing successsfully
 	controller.set_blackboard_key(BB_FIND_TARGETS_FIELD(type), detection_field)
 
-/datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targetting_datum/targetting_datum)
+/datum/ai_behavior/find_potential_targets/proc/new_turf_found(turf/found, datum/ai_controller/controller, datum/targeting_strategy/targeting_strategy)
 	var/valid_found = FALSE
 	var/mob/pawn = controller.pawn
 	for(var/maybe_target as anything in found)
@@ -91,7 +91,7 @@
 			continue
 		if(!is_type_in_typecache(maybe_target, interesting_atoms))
 			continue
-		if(!targetting_datum.can_attack(pawn, maybe_target))
+		if(!targeting_strategy.can_attack(pawn, maybe_target))
 			continue
 		valid_found = TRUE
 		break
@@ -103,16 +103,16 @@
 	// Fire instantly, you should find something I hope
 	controller.modify_cooldown(src, world.time)
 
-/datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targetting_datum/targetting_datum, mob/pawn)
+/datum/ai_behavior/find_potential_targets/proc/atom_allowed(atom/movable/checking, datum/targeting_strategy/targeting_strategy, mob/pawn)
 	if(checking == pawn)
 		return FALSE
 	if(!ismob(checking) && !is_type_in_typecache(checking, interesting_atoms))
 		return FALSE
-	if(!targetting_datum.can_attack(pawn, checking))
+	if(!targeting_strategy.can_attack(pawn, checking))
 		return FALSE
 	return TRUE
 
-/datum/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targetting_datum/targetting_datum, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/proc/new_atoms_found(list/atom/movable/found, datum/ai_controller/controller, target_key, datum/targeting_strategy/targeting_strategy, hiding_location_key)
 	var/mob/pawn = controller.pawn
 	var/list/accepted_targets = list()
 	for(var/maybe_target as anything in found)
@@ -121,7 +121,7 @@
 		// Need to better handle viewers here
 		if(!ismob(maybe_target) && !is_type_in_typecache(maybe_target, interesting_atoms))
 			continue
-		if(!targetting_datum.can_attack(pawn, maybe_target))
+		if(!targeting_strategy.can_attack(pawn, maybe_target))
 			continue
 		accepted_targets += maybe_target
 
@@ -129,14 +129,14 @@
 	var/atom/target = pick_final_target(controller, accepted_targets)
 	controller.set_blackboard_key(target_key, target)
 
-	var/atom/potential_hiding_location = targetting_datum.find_hidden_mobs(pawn, target)
+	var/atom/potential_hiding_location = targeting_strategy.find_hidden_mobs(pawn, target)
 
 	if(potential_hiding_location) //If they're hiding inside of something, we need to know so we can go for that instead initially.
 		controller.set_blackboard_key(hiding_location_key, potential_hiding_location)
 
 	finish_action(controller, succeeded = TRUE)
 
-/datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targetting_datum_key, hiding_location_key)
+/datum/ai_behavior/find_potential_targets/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
 	if (succeeded)
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]

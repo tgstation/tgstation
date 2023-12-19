@@ -6,3 +6,6 @@
 
 ///Signal sent when a bot is reset
 #define COMSIG_BOT_RESET "bot_reset"
+
+///From base of /mob/living/basic/bot/proc/set_bot_mode_flags(): (old_flags, new_flags)
+#define COMSIG_BOT_SET_MODE_FLAGS "bot_set_mode_flags"

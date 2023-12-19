@@ -436,7 +436,7 @@
 	// to the side while moving but could maybe still follow their path without needing a whole new path
 	if(get_turf(moving) == next_step)
 		movement_path.Cut(1,2)
-	else
+	else if(!QDELETED(src))
 		INVOKE_ASYNC(src, PROC_REF(recalculate_path))
 		return MOVELOOP_FAILURE
 
