@@ -419,7 +419,7 @@ multiple modular subtrees with behaviors
 	var/current_queue_time = -INFINITY
 	if(currently_queued_behavior)
 		current_queue_time = behavior_cooldowns[currently_queued_behavior.type]
- 	// If we were on idle and we are no longer, then stop yeah?
+	// If we were on idle and we are no longer, then stop yeah?
 	if(!length(current_behaviors) && able_to_run)
 		STOP_PROCESSING(SSai_idle, src)
 		// First behavior gets a timer, none else
