@@ -1,6 +1,7 @@
-import { useBackend, useLocalState } from '../backend';
-import { Input, NumberInput, Section, Button, Table } from '../components';
 import { toFixed } from 'common/math';
+
+import { useBackend, useLocalState } from '../backend';
+import { Button, Input, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 const MatrixMathTesterInput = (props: { value: number; varName: string }) => {

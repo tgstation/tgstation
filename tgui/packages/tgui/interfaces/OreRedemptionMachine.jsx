@@ -1,20 +1,22 @@
 import { createSearch, toTitleCase } from 'common/string';
+import { useState } from 'react';
+
 import { useBackend, useSharedState } from '../backend';
 import {
   BlockQuote,
   Box,
   Button,
+  Icon,
+  Image,
+  Input,
+  LabeledList,
+  Section,
+  Stack,
   Table,
   Tabs,
-  Input,
-  Stack,
-  Icon,
-  Section,
-  LabeledList,
 } from '../components';
-import { Window } from '../layouts';
 import { formatSiUnit } from '../format';
-import { useState } from 'react';
+import { Window } from '../layouts';
 
 export const OreRedemptionMachine = (props) => {
   const { act, data } = useBackend();
@@ -190,8 +192,7 @@ const MaterialRow = (props) => {
     <Table.Row className="candystripe" collapsing>
       {!compact && (
         <Table.Cell collapsing>
-          <Box
-            as="img"
+          <Image
             m={1}
             src={`data:image/jpeg;base64,${display.product_icon}`}
             height="18px"

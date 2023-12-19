@@ -1,7 +1,7 @@
 import { Flex } from '../../components';
-import { Design, MaterialMap } from './Types';
-import { MaterialIcon } from './MaterialIcon';
 import { formatSiUnit } from '../../format';
+import { MaterialIcon } from './MaterialIcon';
+import { Design, MaterialMap } from './Types';
 
 export type MaterialCostSequenceProps = {
   /**

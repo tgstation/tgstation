@@ -30,6 +30,8 @@
 	var/time_remaining
 	/// The counting method we use for votes.
 	var/count_method = VOTE_COUNT_METHOD_SINGLE
+	/// The method for selecting a winner.
+	var/winner_method = VOTE_WINNER_METHOD_SIMPLE
 
 /**
  * Used to determine if this vote is a possible
@@ -123,33 +125,41 @@
  */
 /datum/vote/proc/get_vote_result(list/non_voters)
 	RETURN_TYPE(/list)
+	SHOULD_CALL_PARENT(TRUE)
 
-	var/list/winners = list()
+	switch(winner_method)
+		if(VOTE_WINNER_METHOD_NONE)
+			return list()
+		if(VOTE_WINNER_METHOD_SIMPLE)
+			return get_simple_winner()
+		if(VOTE_WINNER_METHOD_WEIGHTED_RANDOM)
+			return get_random_winner()
+
+	stack_trace("invalid select winner method: [winner_method]. Defaulting to simple.")
+	return get_simple_winner()
+
+/// Gets the winner of the vote, selecting the choice with the most votes.
+/datum/vote/proc/get_simple_winner()
 	var/highest_vote = 0
+	var/list/current_winners = list()
 
 	for(var/option in choices)
-
 		var/vote_count = choices[option]
-		// If we currently have no winners...
-		if(!length(winners))
-			// And the current option has any votes, it's the new highest.
-			if(vote_count > 0)
-				winners += option
-				highest_vote = vote_count
+		if(vote_count < highest_vote)
 			continue
 
-		// If we're greater than, and NOT equal to, the highest vote,
-		// we are the new supreme winner - clear all others
 		if(vote_count > highest_vote)
-			winners.Cut()
-			winners += option
 			highest_vote = vote_count
+			current_winners = list(option)
+			continue
+		current_winners += option
 
-		// If we're equal to the highest vote, we tie for winner
-		else if(vote_count == highest_vote)
-			winners += option
+	return length(current_winners) ? current_winners : list()
 
-	return winners
+/// Gets the winner of the vote, selecting a random choice from all choices based on their vote count.
+/datum/vote/proc/get_random_winner()
+	var/winner = pick_weight(choices)
+	return winner ? list(winner) : list()
 
 /**
  * Gets the resulting text displayed when the vote is completed.
@@ -161,17 +171,46 @@
  * Return a formatted string of text to be displayed to everyone.
  */
 /datum/vote/proc/get_result_text(list/all_winners, real_winner, list/non_voters)
-	if(length(all_winners) <= 0 || !real_winner)
-		return span_bold("Vote Result: Inconclusive - No Votes!")
-
 	var/returned_text = ""
 	if(override_question)
 		returned_text += span_bold(override_question)
 	else
 		returned_text += span_bold("[capitalize(name)] Vote")
 
+	returned_text += "\nWinner Selection: "
+	switch(winner_method)
+		if(VOTE_WINNER_METHOD_NONE)
+			returned_text += "None"
+		if(VOTE_WINNER_METHOD_WEIGHTED_RANDOM)
+			returned_text += "Weighted Random"
+		else
+			returned_text += "Simple"
+
+	var/total_votes = 0 // for determining percentage of votes
 	for(var/option in choices)
-		returned_text += "\n[span_bold(option)]: [choices[option]]"
+		total_votes += choices[option]
+
+	if(total_votes <= 0)
+		return span_bold("Vote Result: Inconclusive - No Votes!")
+
+	returned_text += "\nResults:"
+	for(var/option in choices)
+		returned_text += "\n"
+		var/votes = choices[option]
+		var/percentage_text = ""
+		if(votes > 0)
+			var/actual_percentage = round((votes / total_votes) * 100, 0.1)
+			var/text = "[actual_percentage]"
+			var/spaces_needed = 5 - length(text)
+			for(var/_ in 1 to spaces_needed)
+				returned_text += " "
+			percentage_text += "[text]%"
+		else
+			percentage_text = "    0%"
+		returned_text += "[percentage_text] | [span_bold(option)]: [choices[option]]"
+
+	if(!real_winner) // vote has no winner or cannot be won, but still had votes
+		return returned_text
 
 	returned_text += "\n"
 	returned_text += get_winner_text(all_winners, real_winner, non_voters)

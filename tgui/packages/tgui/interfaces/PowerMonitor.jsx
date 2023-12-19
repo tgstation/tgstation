@@ -1,23 +1,24 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
   Chart,
   ColorBox,
+  Dimmer,
   Flex,
   Icon,
   LabeledList,
   ProgressBar,
   Section,
-  Table,
-  Dimmer,
   Stack,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const PEAK_DRAW = 500000;
 

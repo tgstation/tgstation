@@ -423,7 +423,7 @@
  * * ignore_stomach - when using methods INGEST will not use the stomach as the target
  */
 /datum/reagents/proc/trans_to(
-	obj/target,
+	atom/target,
 	amount = 1,
 	multiplier = 1,
 	datum/reagent/target_id,
