@@ -1,24 +1,25 @@
-import { useBackend, useLocalState } from '../backend';
-import {
-  InfinitePlane,
-  Stack,
-  Box,
-  Button,
-  Modal,
-  Dropdown,
-  Section,
-  LabeledList,
-  Tooltip,
-  Slider,
-} from '../components';
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes, shallowDiffers } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
-import { Window } from '../layouts';
+
 import { resolveAsset } from '../assets';
-import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
+import { useBackend, useLocalState } from '../backend';
+import {
+  Box,
+  Button,
+  Dropdown,
+  InfinitePlane,
+  LabeledList,
+  Modal,
+  Section,
+  Slider,
+  Stack,
+  Tooltip,
+} from '../components';
+import { Window } from '../layouts';
 import { Connection, Connections, Position } from './common/Connections';
+import { MOUSE_BUTTON_LEFT, noop } from './IntegratedCircuit/constants';
 
 enum ConnectionType {
   Relay,

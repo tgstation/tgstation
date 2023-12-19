@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - bugfix: "Fire alarms no longer cause pitch blackness, instead creating a dark but not black red light."

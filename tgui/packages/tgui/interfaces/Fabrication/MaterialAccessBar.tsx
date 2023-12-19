@@ -1,7 +1,8 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
+
 import { useLocalState } from '../../backend';
-import { Flex, Button, Stack, AnimatedNumber } from '../../components';
+import { AnimatedNumber, Button, Flex, Stack } from '../../components';
 import { formatSiUnit } from '../../format';
 import { MaterialIcon } from './MaterialIcon';
 import { Material } from './Types';

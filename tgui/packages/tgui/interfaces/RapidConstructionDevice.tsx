@@ -1,10 +1,11 @@
-import { Window } from '../layouts';
 import { BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend } from '../backend';
-import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
-import { AirLockMainSection } from './AirlockElectronics';
 import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
+import { Window } from '../layouts';
+import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
   matterLeft: number;

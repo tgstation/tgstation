@@ -1,4 +1,5 @@
 import { multiline } from 'common/string';
+
 import { CheckboxInput, FeatureToggle } from '../base';
 
 export const darkened_flash: FeatureToggle = {

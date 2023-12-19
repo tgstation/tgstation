@@ -1,3 +1,7 @@
+import { round, toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -8,9 +12,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
-import { useState } from 'react';
 
 type Reagent = {
   name: string;
