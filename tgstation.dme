@@ -6488,6 +6488,7 @@
 #include "monkestation\code\modules\storytellers\converted_events\solo\clown_operative.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\heretic.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\malf.dm"
+#include "monkestation\code\modules\storytellers\converted_events\solo\monsterhunter.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\nuclear_operative.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\obsessed.dm"
 #include "monkestation\code\modules\storytellers\converted_events\solo\revolutionary.dm"
