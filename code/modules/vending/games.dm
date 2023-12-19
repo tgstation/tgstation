@@ -56,7 +56,7 @@
 				/obj/item/skillchip/sabrage = 2,
 				/obj/item/skillchip/useless_adapter = 5,
 				/obj/item/skillchip/wine_taster = 2,
-				/obj/item/skillchip/job/shaft_miner = 2,
+				/obj/item/skillchip/drg_callout = 2,
 			),
 		),
 		list(

@@ -54,7 +54,6 @@
 
 	box = /obj/item/storage/box/survival/mining
 	chameleon_extras = /obj/item/gun/energy/recharge/kinetic_accelerator
-	skillchips = list(/obj/item/skillchip/job/shaft_miner)
 
 /datum/outfit/job/miner/equipped
 	name = "Shaft Miner (Equipment)"

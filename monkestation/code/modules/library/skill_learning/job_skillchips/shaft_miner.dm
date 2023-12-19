@@ -9,17 +9,14 @@
 GLOBAL_LIST_INIT(miner_callouts, list(
 	//Mobs: Icemoon
 	/mob/living/basic/mining/legion/snow = list("Legion!", "It's a snowy legion!", "Kill it before it creates more!"),
-	/mob/living/basic/legion_brood/snow = list("Little legion!", "Don't let it down you!", "Frost legion!", "Get the bigger one too!"),
 	/mob/living/basic/mining/wolf = list("Wolf!", "Winter wolf!", "It's hungry like the...", "Wolf pack!"),
 	/mob/living/simple_animal/hostile/asteroid/polarbear = list("Bear!", "Polar bear!", "I want the pelt!"),
-	/mob/living/basic/mining/ice_demon = list(),
-	/mob/living/basic/mining/ice_whelp = list(),
-	/obj/structure/spawner/ice_moon/demonic_portal = list(),
+	/mob/living/basic/mining/ice_demon = list("Frost demon!", "Slippery demon!", "Look up! Ice demon!", "Demon watching us!"),
+	/mob/living/basic/mining/ice_whelp = list("Ice whelp!", "Whelp above us!", "Bite-sized frost dragon!", "Watch out! It's small and it's dangerous!"),
+	/obj/structure/spawner/ice_moon/demonic_portal = list("Portal!", "Take out the portal!", "Beasts coming out of that portal!", ""),
 
 	//Mobs: Oshan
 	/mob/living/basic/aquatic/fish = list(),
-	/mob/living/basic/mining/brimdemon = list(),
-	/mob/living/basic/mining/bileworm = list(),
 	/obj/structure/spawner/lavaland/ocean = list(),
 
 	//Mobs: Misc
@@ -29,19 +26,30 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/structure/alien/egg = list("Watch the eggs!", "Stay back from the egg!", "There's an egg here!", "Egg! I found an egg!", "EGG!", "Egg found!", "Careful! We don't want to wake up what's in that egg!", "I don't ever wanna meet whatever laid these eggs..."),
 	/obj/item/food/egg = list("There's an egg here!", "Egg! I found an egg!", "EGG!", "Egg found!"),
 	/obj/item/clothing/mask/facehugger = list("Watch it!", "Don't let that touch you!", "Mouthgrabber!", "It's one of those headhuggers!", "Don't touch that unless you wanna be a mother!", "Hugger! Shoot it from a distance!", "Is it real?"),
+	/mob/living/carbon/human = list("Hey!", "You there!", "Hey you!", "Hello!", "You!"),
 
 	//Mobs: Lavaland
 	/mob/living/basic/mining/goldgrub = list("Lootbug!", "I found a goldgrub!", "Pop that lootbug!", "Lets tame the goldgrub!"),
-	/mob/living/basic/mining/goliath = list(),
-	/mob/living/basic/mining/legion/dwarf = list(),
+	/mob/living/basic/mining/goliath = list("Goliath!", "Watch the tentacles!", "We got a goliath!", "Goliath! Don't let it grab you!", "Watch where you stick those tentacles, you blasted sack of hellspawn! "),
+	/mob/living/basic/mining/legion/dwarf = list("Legion! He's adorable!", "Little legion here!", "I'm gonna call you Steeve!"),
 	/mob/living/basic/mining/legion = list(),
+	/mob/living/basic/legion_brood = list("Legion spawn!", "Don't let it down you!", "Watch the legion spawn!", "Get the bigger one too!"),
 	/mob/living/basic/mining/watcher  = list(),
+	/mob/living/basic/mining/brimdemon = list(),
+	/mob/living/basic/mining/bileworm = list(),
 	/obj/structure/spawner/lavaland = list(),
 
 	//Mobs: Megafauna
+	/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!"),
 	/mob/living/simple_animal/hostile/megafauna/colossus = list(),
+	/mob/living/simple_animal/hostile/megafauna/clockwork_defender = list(),
 	/mob/living/simple_animal/hostile/megafauna/bubblegum = list(),
+	/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner = list(),
 	/mob/living/simple_animal/hostile/megafauna/dragon = list(),
+	/mob/living/simple_animal/hostile/megafauna/hierophant = list(),
+	/mob/living/simple_animal/hostile/megafauna/legion = list(),
+	/mob/living/simple_animal/hostile/megafauna/wendigo = list(),
+
 
 	//Items: Materials
 	/obj/item/stack/sheet/mineral/diamond = list(),
@@ -64,7 +72,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/item/stack/ore/iron = list(),
 	/obj/item/stack/ore/plasma = list(),
 	/obj/item/stack/ore/silver = list(),
-	/obj/item/stack/ore/gold = list(),
+	/obj/item/stack/ore/gold = list("WE'RE RICH!"), //Yes, yes, you're rich... time to get a move on! I got Management breathing down my neck here!
 	/obj/item/stack/ore/diamond = list(),
 	/obj/item/stack/ore/bananium = list(),
 	/obj/item/stack/ore/titanium = list(),
@@ -111,6 +119,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 	//Machines
 	/obj/machinery/mineral/ore_redemption = list(),
+	/obj/machinery/computer/shuttle = list(),
 
 	//Static Objects: Icemoon
 	/obj/structure/flora/ash/chilly = list(),
@@ -134,27 +143,28 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 
 
-/obj/item/skillchip/job/shaft_miner
+/obj/item/skillchip/drg_callout
 	name = "D.R.G.R.A.S Skillchip" //Deep Rock Galactic Reactive Alert System (Or ROCK AND STONE)
 	desc = "Smells faintly of alcohol and has an odd coffee stain on it."
 	custom_price = PAYCHECK_CREW
+	complexity = 0
 	skill_name = "Miner Communication"
 	skill_description = "Understand the skills required to rapidly recognize and call out objects you've pointed at to teammates."
-	skill_icon = "pickaxe"
+	skill_icon = "person_digging"
 	cooldown = 5 SECONDS //Honestly, this should be easy to turn off at any time if you don't want it anymore.
 	activate_message = "<span class='notice'>You suddenly understand the need to shout about things you point at.</span>"
 	deactivate_message = "<span class='notice'>You no longer understand why you were yelling so much.</span>"
 	//5-10 second delay for radio messages
 	COOLDOWN_DECLARE(radio_cooldown)
-	//1.5 second delay for regular point shouts
+	//1 second delay for regular point shouts
 	COOLDOWN_DECLARE(shout_cooldown)
 
 
-/obj/item/skillchip/job/shaft_miner/on_activate(mob/living/carbon/user, silent)
+/obj/item/skillchip/drg_callout/on_activate(mob/living/carbon/user, silent)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_POINTED, PROC_REF(point_handler))
 
-/obj/item/skillchip/job/shaft_miner/proc/point_handler(mob/pointing_mob, atom/pointed_at)
+/obj/item/skillchip/drg_callout/proc/point_handler(mob/pointing_mob, atom/pointed_at)
 	SIGNAL_HANDLER
 
 	if(!COOLDOWN_FINISHED(src, shout_cooldown))
@@ -170,14 +180,14 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 	if(COOLDOWN_FINISHED(src, radio_cooldown))
 		pointing_mob.say(".h [pick(callouts)]", forced = "Miner Skillchip")
-		COOLDOWN_START(src, radio_cooldown, 5 SECONDS)
+		COOLDOWN_START(src, radio_cooldown, rand(5 SECONDS, 10 SECONDS))
 	else
 		pointing_mob.say("[pick(callouts)]", forced = "Miner Skillchip")
 
-	COOLDOWN_START(src, shout_cooldown, 1.5 SECONDS)
+	COOLDOWN_START(src, shout_cooldown, 1 SECONDS)
 
 
 
-/obj/item/skillchip/job/shaft_miner/on_deactivate(mob/living/carbon/user, silent)
+/obj/item/skillchip/drg_callout/on_deactivate(mob/living/carbon/user, silent)
 	. = ..()
 	UnregisterSignal(holding_brain.owner, COMSIG_MOB_POINTED)
