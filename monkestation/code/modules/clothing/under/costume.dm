@@ -46,7 +46,7 @@
 	icon_state = "worldchampion_gi"
 	can_adjust = FALSE
 
-	/obj/item/clothing/under/costume/streetmime
+/obj/item/clothing/under/costume/streetmime
 	name = "street mime suit"
 	desc = "Although unorthodoxly colorful, it is practical for standing out in space France."
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
