@@ -90,6 +90,24 @@
 	RegisterSignal(src, COMSIG_MACHINERY_POWER_LOST, PROC_REF(on_power_loss))
 	return INITIALIZE_HINT_LATELOAD
 
+/obj/machinery/door/firedoor/setDir(new_dir)
+	. = ..()
+	update_layering()
+
+/obj/machinery/door/firedoor/proc/update_layering()
+	switch(dir)
+		if(NORTH)
+			layer = BELOW_OPEN_DOOR_LAYER
+			closingLayer = CLOSED_FIREDOOR_LAYER
+		else
+			layer = ABOVE_MOB_LAYER
+			closingLayer = ABOVE_MOB_LAYER
+
+/obj/machinery/door/firedoor/set_init_door_layer()
+	update_layering()
+	if(density)
+		layer = closingLayer
+
 /obj/machinery/door/firedoor/LateInitialize()
 	. = ..()
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
@@ -599,16 +617,21 @@
 	if(active)
 		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
-/obj/machinery/door/firedoor/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("[base_icon_state]_opening", src)
-		if("closing")
-			flick("[base_icon_state]_closing", src)
-
 /obj/machinery/door/firedoor/update_icon_state()
 	. = ..()
-	icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+	if(animation)
+		icon_state = "[base_icon_state]_[animation]"
+	else
+		icon_state = "[base_icon_state]_[density ? "closed" : "open"]"
+
+/obj/machinery/door/firedoor/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.8 SECONDS
+		if("closing")
+			return 0.8 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 /obj/machinery/door/firedoor/update_overlays()
 	. = ..()

@@ -39,6 +39,8 @@
 	var/autoclose = FALSE //does it automatically close after some time
 	var/safe = TRUE //whether the door detects things and mobs in its way and reopen or crushes them.
 	var/locked = FALSE //whether the door is bolted or not.
+	/// The animation we're currently playing, if any
+	var/animation
 	var/datum/effect_system/spark_spread/spark_system
 	var/real_explosion_block //ignore this, just use explosion_block
 	var/red_alert_access = FALSE //if TRUE, this door will always open on red alert
@@ -242,7 +244,7 @@
 		if(check_access(I))
 			open()
 		else
-			do_animate("deny")
+			run_animation("deny")
 		return
 
 /obj/machinery/door/Move()
@@ -272,7 +274,7 @@
 	else if(requiresID() && allowed(user))
 		open()
 	else
-		do_animate("deny")
+		run_animation("deny")
 
 /obj/machinery/door/attack_hand(mob/user, list/modifiers)
 	. = ..()
@@ -300,7 +302,7 @@
 			close()
 		return TRUE
 	if(density)
-		do_animate("deny")
+		run_animation("deny")
 
 /obj/machinery/door/allowed(mob/M)
 	if(emergency)
@@ -395,24 +397,49 @@
 		INVOKE_ASYNC(src, PROC_REF(open))
 
 /obj/machinery/door/update_icon_state()
-	icon_state = "[base_icon_state][density]"
-	return ..()
-
-/obj/machinery/door/proc/do_animate(animation)
 	switch(animation)
 		if("opening")
 			if(panel_open)
-				flick("o_doorc0", src)
+				icon_state = "o_doorc0"
 			else
-				flick("doorc0", src)
+				icon_state = "doorc0"
 		if("closing")
 			if(panel_open)
-				flick("o_doorc1", src)
+				icon_state = "o_doorc1"
 			else
-				flick("doorc1", src)
+				icon_state = "doorc1"
 		if("deny")
 			if(!machine_stat)
-				flick("door_deny", src)
+				icon_state = "door_deny"
+		else
+			icon_state = "[base_icon_state][density]"
+	return ..()
+
+/// Returns the delay to use for the passed in animation
+/// We'll do our cleanup once the delay runs out
+/obj/machinery/door/proc/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.5 SECONDS
+		if("closing")
+			return 0.5 SECONDS
+		if("deny")
+			return 0.3 SECONDS
+
+/// Override this to do misc tasks on animation start
+/obj/machinery/door/proc/animation_effects(animation)
+	return
+
+/// Used to start a new animation
+/// Accepts the animation to start as an arg
+/obj/machinery/door/proc/run_animation(animation)
+	set_animation(animation)
+	addtimer(src, CALLBACK(PROC_REF(set_animation), null), animation_delay(animation), TIMER_UNIQUE|TIMER_OVERRIDE)
+
+// React to our animation changing
+/obj/machinery/door/proc/set_animation(animation)
+	src.animation = animation
+	update_appearance()
 
 /// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
 /// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
@@ -423,7 +450,7 @@
 		return FALSE
 	operating = TRUE
 	use_power(active_power_usage)
-	do_animate("opening")
+	run_animation("opening")
 	set_opacity(0)
 	SLEEP_NOT_DEL(0.5 SECONDS)
 	set_density(FALSE)
@@ -460,7 +487,7 @@
 
 	operating = TRUE
 
-	do_animate("closing")
+	run_animation("closing")
 	layer = closingLayer
 	SLEEP_NOT_DEL(0.5 SECONDS)
 	set_density(TRUE)

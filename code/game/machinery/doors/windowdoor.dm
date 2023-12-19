@@ -78,7 +78,10 @@
 
 /obj/machinery/door/window/update_icon_state()
 	. = ..()
-	icon_state = "[base_state][density ? null : "_open"]"
+	if(animation)
+		icon_state = "[base_state]_[animation]"
+	else
+		icon_state = "[base_state][density ? null : "_open"]"
 	refresh_hitbox_rendering()
 
 	if(hasPower() && unres_sides)
@@ -86,6 +89,15 @@
 		return
 
 	set_light(l_range = 0)
+
+/obj/machinery/door/window/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.9 SECONDS
+		if("closing")
+			return 0.9 SECONDS
+		if("deny")
+			return 0.3 SECONDS
 
 /obj/machinery/door/window/update_overlays()
 	. = ..()
@@ -171,7 +183,7 @@
 				if(allowed(occupant))
 					open_and_close()
 					return
-			do_animate("deny")
+			run_animation("deny")
 		return
 	if(!SSticker)
 		return
@@ -195,7 +207,7 @@
 		open_and_close()
 
 	else
-		do_animate("deny")
+		run_animation("deny")
 
 	return
 
@@ -254,7 +266,7 @@
 	if(!operating) //in case of emag
 		operating = TRUE
 
-	do_animate("opening")
+	run_animation("opening")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state ="[base_state]_open"
 	sleep(1 SECONDS)
@@ -297,7 +309,7 @@
 		return FALSE
 
 	operating = TRUE
-	do_animate("closing")
+	run_animation("closing")
 	playsound(src, 'sound/machines/windowdoor.ogg', 100, TRUE)
 	icon_state = base_state
 
@@ -467,14 +479,6 @@
 	else
 		to_chat(user, span_warning("The door's motors resist your efforts to force it!"))
 
-/obj/machinery/door/window/do_animate(animation)
-	switch(animation)
-		if("opening")
-			flick("[base_state]_opening", src)
-		if("closing")
-			flick("[base_state]_closing", src)
-		if("deny")
-			flick("[base_state]_deny", src)
 
 /obj/machinery/door/window/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	switch(the_rcd.mode)

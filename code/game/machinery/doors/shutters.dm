@@ -11,8 +11,32 @@
 	recipe_type = /datum/crafting_recipe/shutters
 	animation_sound = 'sound/machines/shutter.ogg'
 
+/obj/machinery/door/poddoor/shutters/update_icon_state()
+	. = ..()
+	if(animation)
+		icon_state = animation
+	else
+		icon_state = density ? "closed" : "open"
+
+/obj/machinery/door/poddoor/shutters/get_lower_overlay()
+	return mutable_appearance(icon, "[icon_state]_bottom", ABOVE_MOB_LAYER, appearance_flags = KEEP_APART)
+
+/obj/machinery/door/poddoor/shutters/animation_delay(animation)
+	switch(animation)
+		if("opening")
+			return 0.8 SECONDS
+		if("closing")
+			return 0.7 SECONDS
+
+/obj/machinery/door/poddoor/shutters/animation_effects(animation)
+	switch(animation)
+		if("opening")
+			playsound(src, animation_sound, 50, TRUE)
+		if("closing")
+			playsound(src, animation_sound, 50, TRUE)
+
 /obj/machinery/door/poddoor/shutters/preopen
-	icon_state = "open"
+	icon_state = "open_map"
 	density = FALSE
 	opacity = FALSE
 
@@ -21,7 +45,7 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/machinery/door/poddoor/shutters/indestructible/preopen
-	icon_state = "open"
+	icon_state = "open_map"
 	density = FALSE
 	opacity = FALSE
 
@@ -33,7 +57,7 @@
 	rad_insulation = RAD_EXTREME_INSULATION
 
 /obj/machinery/door/poddoor/shutters/radiation/preopen
-	icon_state = "open"
+	icon_state = "open_map"
 	density = FALSE
 	opacity = FALSE
 	rad_insulation = RAD_NO_INSULATION
@@ -64,5 +88,5 @@
 	glass = TRUE
 
 /obj/machinery/door/poddoor/shutters/window/preopen
-	icon_state = "open"
+	icon_state = "open_map"
 	density = FALSE
