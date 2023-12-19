@@ -7,7 +7,7 @@
 	antag_moodlet = /datum/mood_event/focused
 	suicide_cry = "FOR THE HIVE!!"
 	hardcore_random_bonus = TRUE
-	ui_name = "AntagInfoTigerFanatic"
+	ui_name = "AntagInfoFanatic"
 	var/blessings = 0
 
 /datum/antagonist/fanatic/ui_data(mob/user)
