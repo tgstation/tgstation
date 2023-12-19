@@ -1,6 +1,8 @@
 import { decodeHtmlEntities } from 'common/string';
+import { useState } from 'react';
+
 import { resolveAsset } from '../assets';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
 
@@ -27,11 +29,12 @@ type PaintingData = {
 
 export const PaintingAdminPanel = (props) => {
   const { act, data } = useBackend<PaintingAdminPanelData>();
-  const [chosenPaintingRef, setChosenPaintingRef] = useLocalState<
-    string | null
-  >('chosenPainting', null);
+  const [chosenPaintingRef, setChosenPaintingRef] = useState<
+    string | undefined
+  >();
   const { paintings } = data;
   const chosenPainting = paintings.find((p) => p.ref === chosenPaintingRef);
+
   return (
     <Window title="Painting Admin Panel" width={800} height={600}>
       <Window.Content scrollable>
@@ -39,21 +42,23 @@ export const PaintingAdminPanel = (props) => {
           <Section
             title="Painting Information"
             buttons={
-              <Button onClick={() => setChosenPaintingRef(null)}>Close</Button>
-            }>
+              <Button onClick={() => setChosenPaintingRef(undefined)}>
+                Close
+              </Button>
+            }
+          >
             <img
               src={resolveAsset(`paintings_${chosenPainting.md5}`)}
               height="96px"
               width="96px"
               style={{
-                'vertical-align': 'middle',
-                '-ms-interpolation-mode': 'nearest-neighbor',
+                verticalAlign: 'middle',
               }}
             />
             <LabeledList>
               <LabeledList.Item label="md5" content={chosenPainting.md5} />
               <LabeledList.Item label="title">
-                <Box inline style={{ 'word-break': 'break-all' }}>
+                <Box inline style={{ wordBreak: 'break-all' }}>
                   {decodeHtmlEntities(chosenPainting.title)}
                 </Box>
                 <Button
@@ -126,13 +131,14 @@ export const PaintingAdminPanel = (props) => {
             <Section title="Actions">
               <Button.Confirm
                 onClick={() => {
-                  setChosenPaintingRef(null);
+                  setChosenPaintingRef(undefined);
                   act('delete', { ref: chosenPainting.ref });
-                }}>
-                Delete
-              </Button.Confirm>
+                }}
+                content="Delete"
+              />
               <Button
-                onClick={() => act('dumpit', { ref: chosenPainting.ref })}>
+                onClick={() => act('dumpit', { ref: chosenPainting.ref })}
+              >
                 Reset Patronage
               </Button>
             </Section>
@@ -148,7 +154,7 @@ export const PaintingAdminPanel = (props) => {
             </Table.Row>
             {paintings.map((painting) => (
               <Table.Row key={painting.ref} className="candystripe">
-                <Table.Cell style={{ 'word-break': 'break-all' }}>
+                <Table.Cell style={{ wordBreak: 'break-all' }}>
                   {decodeHtmlEntities(painting.title)}
                 </Table.Cell>
                 <Table.Cell>{painting.creator_ckey}</Table.Cell>
@@ -158,8 +164,7 @@ export const PaintingAdminPanel = (props) => {
                     height="36px"
                     width="36px"
                     style={{
-                      'vertical-align': 'middle',
-                      '-ms-interpolation-mode': 'nearest-neighbor',
+                      verticalAlign: 'middle',
                     }}
                   />
                 </Table.Cell>

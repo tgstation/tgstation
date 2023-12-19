@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, ProgressBar, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -39,12 +47,14 @@ export const SmokeMachine = (props) => {
               content={active ? 'On' : 'Off'}
               onClick={() => act('power')}
             />
-          }>
+          }
+        >
           <ProgressBar
             value={tankCurrentVolume / tankMaxVolume}
             ranges={{
               bad: [-Infinity, 0.3],
-            }}>
+            }}
+          >
             <AnimatedNumber initial={0} value={tankCurrentVolume || 0} />
             {' / ' + tankMaxVolume}
           </ProgressBar>
@@ -69,7 +79,8 @@ export const SmokeMachine = (props) => {
           title="Contents"
           buttons={
             <Button icon="trash" content="Purge" onClick={() => act('purge')} />
-          }>
+          }
+        >
           {tankContents.map((chemical) => (
             <Box key={chemical.name} color="label">
               <AnimatedNumber initial={0} value={chemical.volume} /> units of{' '}

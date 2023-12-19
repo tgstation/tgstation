@@ -1,8 +1,9 @@
 import { useLocalState } from 'tgui/backend';
 import { Stack, Tabs } from 'tgui/components';
 import { Window } from 'tgui/layouts';
-import { PAI_TAB } from './constants';
+
 import { AvailableDisplay } from './Available';
+import { PAI_TAB } from './constants';
 import { DirectiveDisplay } from './Directives';
 import { InstalledDisplay } from './Installed';
 import { SystemDisplay } from './System';
@@ -41,25 +42,29 @@ const TabDisplay = (props) => {
       <Tabs.Tab
         icon="list"
         onClick={() => setTab(PAI_TAB.System)}
-        selected={tab === PAI_TAB.System}>
+        selected={tab === PAI_TAB.System}
+      >
         System
       </Tabs.Tab>
       <Tabs.Tab
         icon="list"
         onClick={() => setTab(PAI_TAB.Directive)}
-        selected={tab === PAI_TAB.Directive}>
+        selected={tab === PAI_TAB.Directive}
+      >
         Directives
       </Tabs.Tab>
       <Tabs.Tab
         icon="list"
         onClick={() => setTab(PAI_TAB.Installed)}
-        selected={tab === PAI_TAB.Installed}>
+        selected={tab === PAI_TAB.Installed}
+      >
         Installed
       </Tabs.Tab>
       <Tabs.Tab
         icon="list"
         onClick={() => setTab(PAI_TAB.Available)}
-        selected={tab === PAI_TAB.Available}>
+        selected={tab === PAI_TAB.Available}
+      >
         Download
       </Tabs.Tab>
     </Tabs>

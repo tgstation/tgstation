@@ -340,3 +340,17 @@
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/clothing/glasses/sunglasses = 1)
 	crate_name = "sunglasses crate"
+
+/datum/supply_pack/security/armory/beacon_imp
+	name = "Beacon Implants Crate"
+	desc = "Contains five Beacon implants."
+	cost = CARGO_CRATE_VALUE * 5.5
+	contains = list(/obj/item/storage/box/beaconimp)
+	crate_name = "beacon implant crate"
+
+/datum/supply_pack/security/armory/teleport_blocker_imp
+	name = "Bluespace Grounding Implants Crate"
+	desc = "Contains five Bluespace Grounding implants."
+	cost = CARGO_CRATE_VALUE * 7
+	contains = list(/obj/item/storage/box/teleport_blocker)
+	crate_name = "bluespace grounding implant crate"

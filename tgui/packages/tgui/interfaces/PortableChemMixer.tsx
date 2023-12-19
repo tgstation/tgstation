@@ -1,8 +1,9 @@
 import { sortBy } from 'common/collections';
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+
 import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type DispensableReagent = {
   title: string;
@@ -22,7 +23,7 @@ export const PortableChemMixer = (props) => {
   const { beaker } = data;
   const beakerTransferAmounts = beaker ? beaker.transferAmounts : [];
   const chemicals = sortBy((chem: DispensableReagent) => chem.id)(
-    data.chemicals
+    data.chemicals,
   );
   return (
     <Window width={500} height={500}>
@@ -41,7 +42,8 @@ export const PortableChemMixer = (props) => {
                 })
               }
             />
-          ))}>
+          ))}
+        >
           <Box>
             {chemicals.map((chemical) => (
               <Button
@@ -69,7 +71,8 @@ export const PortableChemMixer = (props) => {
               content={amount}
               onClick={() => act('remove', { amount })}
             />
-          ))}>
+          ))}
+        >
           <BeakerDisplay beaker={beaker} showpH />
         </Section>
       </Window.Content>

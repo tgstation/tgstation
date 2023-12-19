@@ -84,7 +84,6 @@
 	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
 
 /mob/living/remove_thinking_indicator()
-	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	if(!active_thinking_indicator)
 		return FALSE
 	cut_overlay(active_thinking_indicator)
@@ -104,6 +103,7 @@
 	active_typing_indicator = null
 
 /mob/living/remove_all_indicators()
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 

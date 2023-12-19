@@ -1,11 +1,19 @@
-import { multiline } from 'common/string';
-import { CheckboxInput, FeatureChoiced, FeatureChoicedServerData, FeatureDropdownInput, FeatureToggle, FeatureValueProps } from '../base';
-import { Box, Dropdown, Flex } from '../../../../../components';
-import { classes } from 'common/react';
-import { InfernoNode } from 'inferno';
 import { binaryInsertWith } from 'common/collections';
+import { classes } from 'common/react';
+import { multiline } from 'common/string';
+import { ReactNode } from 'react';
+
 import { useBackend } from '../../../../../backend';
+import { Box, Dropdown, Flex } from '../../../../../components';
 import { PreferencesMenuData } from '../../../data';
+import {
+  CheckboxInput,
+  FeatureChoiced,
+  FeatureChoicedServerData,
+  FeatureDropdownInput,
+  FeatureToggle,
+  FeatureValueProps,
+} from '../base';
 
 export const ghost_accs: FeatureChoiced = {
   name: 'Ghost accessories',
@@ -15,18 +23,18 @@ export const ghost_accs: FeatureChoiced = {
 };
 
 const insertGhostForm = binaryInsertWith<{
-  displayText: InfernoNode;
+  displayText: ReactNode;
   value: string;
 }>(({ value }) => value);
 
 const GhostFormInput = (
-  props: FeatureValueProps<string, string, FeatureChoicedServerData>
+  props: FeatureValueProps<string, string, FeatureChoicedServerData>,
 ) => {
   const { data } = useBackend<PreferencesMenuData>();
 
   const serverData = props.serverData;
   if (!serverData) {
-    return;
+    return <> </>;
   }
 
   const displayNames = serverData.display_names;
@@ -36,7 +44,7 @@ const GhostFormInput = (
 
   const displayTexts = {};
   let options: {
-    displayText: InfernoNode;
+    displayText: ReactNode;
     value: string;
   }[] = [];
 
@@ -102,7 +110,7 @@ export const ghost_orbit: FeatureChoiced = {
     Requires BYOND membership.
   `,
   component: (
-    props: FeatureValueProps<string, string, FeatureChoicedServerData>
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
   ) => {
     const { data } = useBackend<PreferencesMenuData>();
 

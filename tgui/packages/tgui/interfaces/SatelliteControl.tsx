@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
@@ -41,9 +42,6 @@ const ShieldInfo = (props) => {
         <LabeledList.Item label="Coverage">
           <ProgressBar
             value={meteor_shield_coverage / meteor_shield_coverage_max}
-            content={
-              (100 * meteor_shield_coverage) / meteor_shield_coverage_max + '%'
-            }
             ranges={{
               good: [1, Infinity],
               average: [0.3, 1],

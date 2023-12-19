@@ -1,31 +1,42 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Button, Collapsible, Dimmer, Flex, Icon, LabeledList, NoticeBox, Section, Stack } from '../components';
+import {
+  Button,
+  Collapsible,
+  Dimmer,
+  Flex,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 const lawtype_to_color = {
-  'inherent': 'white',
-  'supplied': 'purple',
-  'ion': 'green',
-  'hacked': 'orange',
-  'zeroth': 'red',
+  inherent: 'white',
+  supplied: 'purple',
+  ion: 'green',
+  hacked: 'orange',
+  zeroth: 'red',
 } as const;
 
 const lawtype_to_tooltip = {
-  'inherent': `Core laws.
+  inherent: `Core laws.
     Inherent laws are the "core" laws of the AI.
     Resetting the AI will not remove these,
     these are intrinsic to whatever lawset they are running.`,
-  'supplied': `Supplied laws.
+  supplied: `Supplied laws.
     Supplied laws are, well, supplied in addition to the inherent laws.
     These laws will go away when an AI is reset.`,
-  'ion': `Ion laws.
+  ion: `Ion laws.
     Special, (usually) randomized laws which are above all over laws.
     These laws will go away when an AI is reset.`,
-  'hacked': `Hacked laws.
+  hacked: `Hacked laws.
     Syndicate uploaded laws which are above all other laws.
     These laws will go away when an AI is reset.`,
-  'zeroth': `Zeroth law.
+  zeroth: `Zeroth law.
     A lawset can only have 1 zeroth law, it's the top dog.
     Given out by malfunctioning AIs to allow them to do whatever.
     Nothing will remove this, allegedly, unless it's admin forced.`,
@@ -191,7 +202,8 @@ export const LawPrintout = (props: { cyborg_ref: string; lawset: Law[] }) => {
                   </Stack.Item>
                 )}
               </Stack>
-            }>
+            }
+          >
             {law.law}
           </LabeledList.Item>
           <LabeledList.Divider />
@@ -290,7 +302,7 @@ export const Lawpanel = (props) => {
   const { all_silicons } = data;
 
   return (
-    <Window title="Law Panel" theme="admin" width="800" height="600">
+    <Window title="Law Panel" theme="admin" width={800} height={600}>
       <Window.Content>
         <Section
           fill
@@ -302,7 +314,8 @@ export const Lawpanel = (props) => {
               content="Logs"
               onClick={() => act('lawchange_logs')}
             />
-          }>
+          }
+        >
           <Stack vertical>
             {all_silicons.length ? (
               all_silicons.map((silicon, index) => (

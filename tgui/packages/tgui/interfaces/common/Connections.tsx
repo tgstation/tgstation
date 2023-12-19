@@ -1,5 +1,5 @@
-import { CSS_COLORS } from '../../constants';
 import { classes } from '../../../common/react';
+import { CSS_COLORS } from '../../constants';
 
 const SVG_CURVE_INTENSITY = 64;
 
@@ -44,10 +44,11 @@ export const Connections = (props: {
       width="100%"
       height="100%"
       style={{
-        'position': 'absolute',
-        'pointer-events': 'none',
-        'z-index': zLayer,
-      }}>
+        position: 'absolute',
+        pointerEvents: 'none',
+        zIndex: zLayer,
+      }}
+    >
       {connections.map((val, index) => {
         const from = val.from;
         const to = val.to;

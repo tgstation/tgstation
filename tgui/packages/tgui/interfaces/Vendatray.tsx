@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack } from '../components';
+import { Box, Button, Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -85,15 +86,13 @@ const VendingImage = (props) => {
 
   return (
     <Section height="100%">
-      <Box
-        as="img"
+      <Image
         m={1}
         src={`data:image/jpeg;base64,${product_icon}`}
         height="96px"
         width="96px"
         style={{
-          '-ms-interpolation-mode': 'nearest-neighbor',
-          'vertical-align': 'middle',
+          verticalAlign: 'middle',
         }}
       />
     </Section>

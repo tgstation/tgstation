@@ -1,6 +1,18 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
+
 import { useLocalState } from '../../backend';
-import { Box, Button, FitText, Icon, Input, LabeledList, Modal, Section, Stack, TrackOutsideClicks } from '../../components';
+import {
+  Box,
+  Button,
+  FitText,
+  Icon,
+  Input,
+  LabeledList,
+  Modal,
+  Section,
+  Stack,
+  TrackOutsideClicks,
+} from '../../components';
 import { Name } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -38,16 +50,17 @@ export const MultiNameInput = (props: {
             {
               key,
               name,
-            }
+            },
           );
         }
 
         return (
           <Modal
             style={{
-              'margin': '0 auto',
-              'width': '40%',
-            }}>
+              margin: '0 auto',
+              width: '40%',
+            }}
+          >
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
               <Section
                 buttons={
@@ -55,7 +68,8 @@ export const MultiNameInput = (props: {
                     Close
                   </Button>
                 }
-                title="Alternate names">
+                title="Alternate names"
+              >
                 <LabeledList>
                   {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
                     ([_, names], index, collection) => (
@@ -89,7 +103,8 @@ export const MultiNameInput = (props: {
                                   setCurrentlyEditingName(key);
                                   event.cancelBubble = true;
                                   event.stopPropagation();
-                                }}>
+                                }}
+                              >
                                 <FitText maxFontSize={12} maxWidth={130}>
                                   {props.names[key]}
                                 </FitText>
@@ -100,7 +115,8 @@ export const MultiNameInput = (props: {
                           return (
                             <LabeledList.Item
                               key={key}
-                              label={name.explanation}>
+                              label={name.explanation}
+                            >
                               <Stack fill>
                                 <Stack.Item grow>{content}</Stack.Item>
 
@@ -125,7 +141,7 @@ export const MultiNameInput = (props: {
                           <LabeledList.Divider />
                         )}
                       </>
-                    )
+                    ),
                   )}
                 </LabeledList>
               </Section>
@@ -160,13 +176,14 @@ export const NameInput = (props: {
       }}
       textAlign="center"
       width="100%"
-      height="28px">
+      height="28px"
+    >
       <Stack align="center" fill>
         <Stack.Item>
           <Icon
             style={{
-              'color': 'rgba(255, 255, 255, 0.5)',
-              'font-size': '17px',
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontSize: '17px',
             }}
             name="edit"
           />
@@ -191,7 +208,7 @@ export const NameInput = (props: {
 
           <Box
             style={{
-              'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
+              borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
               right: '50%',
               transform: 'translateX(50%)',
               position: 'absolute',
@@ -225,13 +242,14 @@ export const NameInput = (props: {
                     // Did you know that's against the W3C standard? :)
                     event.cancelBubble = true;
                     event.stopPropagation();
-                  }}>
+                  }}
+                >
                   <Icon
                     name="ellipsis-v"
                     style={{
-                      'position': 'relative',
-                      'left': '1px',
-                      'min-width': '0px',
+                      position: 'relative',
+                      left: '1px',
+                      minWidth: '0px',
                     }}
                   />
                 </Button>

@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dropdown, Input, Section, Stack, TextArea } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+  TextArea,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -22,7 +30,8 @@ export const CommandReport = () => {
       title="Create Command Report"
       width={325}
       height={685}
-      theme="admin">
+      theme="admin"
+    >
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -147,7 +156,7 @@ const ReportText = (props) => {
   const { announce_contents, print_report, command_report_content } = data;
   const [commandReport, setCommandReport] = useLocalState<string>(
     'textArea',
-    command_report_content
+    command_report_content,
   );
 
   return (
@@ -155,27 +164,29 @@ const ReportText = (props) => {
       <TextArea
         height="200px"
         mb={1}
-        onInput={(_, value) => setCommandReport(value)}
+        onChange={(_, value) => setCommandReport(value)}
         value={commandReport}
       />
       <Stack vertical>
         <Stack.Item>
           <Button.Checkbox
             fluid
-            checked={announce_contents}
-            onClick={() => act('toggle_announce')}>
+            checked={!!announce_contents}
+            onClick={() => act('toggle_announce')}
+          >
             Announce Contents
           </Button.Checkbox>
           <Button.Checkbox
             fluid
-            checked={print_report || !announce_contents}
+            checked={!!print_report || !announce_contents}
             disabled={!announce_contents}
             onClick={() => act('toggle_printing')}
             tooltip={
               !announce_contents &&
               "Printing the report is required since we aren't announcing its contents."
             }
-            tooltipPosition="top">
+            tooltipPosition="top"
+          >
             Print Report
           </Button.Checkbox>
         </Stack.Item>

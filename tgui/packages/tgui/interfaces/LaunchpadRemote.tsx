@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { NoticeBox } from '../components';
 import { Window } from '../layouts';
@@ -18,7 +19,8 @@ export const LaunchpadRemote = (props) => {
       title="Briefcase Launchpad Remote"
       width={300}
       height={240}
-      theme="syndicate">
+      theme="syndicate"
+    >
       <Window.Content>
         {(!has_pad && <NoticeBox>No Launchpad Connected</NoticeBox>) ||
           (pad_closed && <NoticeBox>Launchpad Closed</NoticeBox>) || (

@@ -1,6 +1,13 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Button, LabeledList, NoticeBox, Section } from '../components';
+import {
+  AnimatedNumber,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+} from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
 
@@ -29,7 +36,8 @@ export const BankMachine = (props) => {
                   selected={siphoning}
                   onClick={() => act(siphoning ? 'halt' : 'siphon')}
                 />
-              }>
+              }
+            >
               <AnimatedNumber
                 value={current_balance}
                 format={(value) => formatMoney(value)}

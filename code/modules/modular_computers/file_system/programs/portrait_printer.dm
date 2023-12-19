@@ -16,8 +16,8 @@
 	program_open_overlay = "dummy"
 	extended_desc = "This program connects to a Spinward Sector community art site for viewing and printing art."
 	download_access = list(ACCESS_LIBRARY)
-	usage_flags = PROGRAM_CONSOLE
-	requires_ntnet = TRUE
+	can_run_on_flags = PROGRAM_CONSOLE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 9
 	tgui_id = "NtosPortraitPrinter"
 	program_icon = "paint-brush"

@@ -1146,7 +1146,7 @@
 "MS" = (
 /obj/structure/mop_bucket,
 /obj/item/mop,
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "MT" = (
