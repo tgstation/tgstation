@@ -28,7 +28,7 @@
 		return
 	if(ishuman(attacked_mob))
 		var/mob/living/carbon/human/human = attacked_mob
-		if(human.check_shields(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
+		if(human.check_block(src, 0, "[attacked_mob]'s [name]", MELEE_ATTACK))
 			playsound(attacked_mob, 'sound/weapons/genhit.ogg', 50, TRUE)
 			return FALSE
 	if(iscyborg(user))
@@ -308,7 +308,7 @@
 /obj/item/harmalarm
 	name = "\improper Sonic Harm Prevention Tool"
 	desc = "Releases a harmless blast that confuses most organics. For when the harm is JUST TOO MUCH."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "megaphone"
 	/// Harm alarm cooldown
 	COOLDOWN_DECLARE(alarm_cooldown)

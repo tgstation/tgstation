@@ -17,7 +17,7 @@
 
 	if(holder.has_reagent(/datum/reagent/exotic_stabilizer,round(created_volume / 25, CHEMICAL_QUANTISATION_LEVEL)))
 		return
-	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume*2)
+	holder.remove_reagent(/datum/reagent/nitroglycerin, created_volume * 2)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/nitroglycerin_explosion
@@ -35,7 +35,7 @@
 /datum/chemical_reaction/reagent_explosion/rdx/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/rdx, created_volume*2)
+	holder.remove_reagent(/datum/reagent/rdx, created_volume * 2)
 	..()
 
 /datum/chemical_reaction/reagent_explosion/rdx_explosion
@@ -242,7 +242,7 @@
 /datum/chemical_reaction/sorium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/sorium, created_volume*4)
+	holder.remove_reagent(/datum/reagent/sorium, created_volume * 4)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = clamp(sqrt(created_volume*4), 1, 6)
 	goonchem_vortex(T, 1, range)
@@ -265,7 +265,7 @@
 /datum/chemical_reaction/liquid_dark_matter/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume*3)
+	holder.remove_reagent(/datum/reagent/liquid_dark_matter, created_volume * 3)
 	var/turf/T = get_turf(holder.my_atom)
 	var/range = clamp(sqrt(created_volume*3), 1, 6)
 	goonchem_vortex(T, 0, range)
@@ -301,7 +301,7 @@
 				C.Paralyze(60)
 			else
 				C.Stun(100)
-	holder.remove_reagent(/datum/reagent/flash_powder, created_volume*3)
+	holder.remove_reagent(/datum/reagent/flash_powder, created_volume * 3)
 
 /datum/chemical_reaction/flash_powder_flash
 	required_reagents = list(/datum/reagent/flash_powder = 1)
@@ -331,7 +331,7 @@
 /datum/chemical_reaction/smoke_powder/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume*3)
+	holder.remove_reagent(/datum/reagent/smoke_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	var/datum/effect_system/fluid_spread/smoke/chem/S = new
 	S.attach(location)
@@ -368,7 +368,7 @@
 /datum/chemical_reaction/sonic_powder/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
 	if(holder.has_reagent(/datum/reagent/stabilizing_agent))
 		return
-	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume*3)
+	holder.remove_reagent(/datum/reagent/sonic_powder, created_volume * 3)
 	var/location = get_turf(holder.my_atom)
 	playsound(location, 'sound/effects/bang.ogg', 25, TRUE)
 	for(var/mob/living/carbon/C in get_hearers_in_view(created_volume/3, location))
@@ -488,7 +488,7 @@
 	determin_ph_range = 0
 	temp_exponent_factor = 1
 	ph_exponent_factor = 1
-	thermic_constant = -50 //This is the part that cools things down now
+	thermic_constant = -5 //This is the part that cools things down now
 	H_ion_release = 0
 	rate_up_lim = 4
 	purity_min = 0.15
@@ -503,7 +503,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium_oxygen/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.chem_temp += 10*created_volume
+	holder.expose_temperature(holder.chem_temp + (10 * created_volume), 1)
 
 /datum/chemical_reaction/pyrosium
 	results = list(/datum/reagent/pyrosium = 3)
@@ -516,8 +516,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
 /datum/chemical_reaction/pyrosium/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.chem_temp = 20 // also cools the fuck down
-	return
+	holder.expose_temperature(20, 1) // also cools the fuck down
 
 /datum/chemical_reaction/teslium
 	results = list(/datum/reagent/teslium = 3)
@@ -574,7 +573,7 @@
 	modifier = 1
 
 /datum/chemical_reaction/reagent_explosion/nitrous_oxide/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
-	holder.remove_reagent(/datum/reagent/sorium, created_volume*2)
+	holder.remove_reagent(/datum/reagent/sorium, created_volume * 2)
 	var/turf/turfie = get_turf(holder.my_atom)
 	//generally half as strong as sorium.
 	var/range = clamp(sqrt(created_volume*2), 1, 6)

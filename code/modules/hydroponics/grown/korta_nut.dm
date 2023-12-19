@@ -39,7 +39,7 @@
 	production = 10
 	mutatelist = null
 	reagents_add = list(/datum/reagent/consumable/korta_nectar = 0.1, /datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 
 /obj/item/food/grown/korta_nut/sweet
 	seed = /obj/item/seeds/korta_nut/sweet

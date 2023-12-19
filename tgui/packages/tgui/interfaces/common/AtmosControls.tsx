@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../../backend';
 import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
@@ -33,8 +34,8 @@ export type ScrubberProps = {
   }[];
 };
 
-export const Vent = (props: VentProps, context) => {
-  const { act } = useBackend(context);
+export const Vent = (props: VentProps) => {
+  const { act } = useBackend();
   const {
     refID,
     long_name,
@@ -79,13 +80,15 @@ export const Vent = (props: VentProps, context) => {
             tooltip={`${overclock ? 'Disable' : 'Enable'} overclocking`}
           />
         </>
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Integrity">
           <p
             title={
               'Overclocking will allow the vent to overpower extreme pressure conditions. However, it will also cause the vent to become damaged over time and eventually fail. The lower the integrity, the less effective the vent will be when in normal operation.'
-            }>
+            }
+          >
             Integrity: {(integrity * 100).toFixed(2)}%
           </p>
         </LabeledList.Item>
@@ -187,8 +190,8 @@ export const Vent = (props: VentProps, context) => {
   );
 };
 
-export const Scrubber = (props: ScrubberProps, context) => {
-  const { act } = useBackend(context);
+export const Scrubber = (props: ScrubberProps) => {
+  const { act } = useBackend();
   const { long_name, power, scrubbing, refID, widenet, filter_types } = props;
   return (
     <Section
@@ -205,7 +208,8 @@ export const Scrubber = (props: ScrubberProps, context) => {
             })
           }
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button

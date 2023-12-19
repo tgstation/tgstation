@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Button, Section, Input, Dropdown, LabeledList } from '../components';
+import { Button, Dropdown, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -11,8 +12,8 @@ type Data = {
   name: string;
 };
 
-export const AiVoiceChanger = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AiVoiceChanger = (props) => {
+  const { act, data } = useBackend<Data>();
   const { loud, name, on, say_verb, voices } = data;
 
   return (

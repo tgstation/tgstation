@@ -60,7 +60,7 @@
 	if(length(validturfs))
 		var/turf/converted_turf = pick(validturfs)
 		if(isplatingturf(converted_turf))
-			converted_turf.PlaceOnTop(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
+			converted_turf.place_on_top(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
 		else
 			converted_turf.ChangeTurf(/turf/open/floor/engine/cult, flags = CHANGETURF_INHERIT_AIR)
 

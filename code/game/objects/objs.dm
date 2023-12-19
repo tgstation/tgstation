@@ -27,8 +27,6 @@
 
 	var/current_skin //Has the item been reskinned?
 	var/list/unique_reskin //List of options to reskin.
-	///If set to true, we can reskin this item as much as we want.
-	var/infinite_reskin = FALSE
 
 	// Access levels, used in modules\jobs\access.dm
 	/// List of accesses needed to use this object: The user must possess all accesses in this list in order to use the object.
@@ -42,8 +40,6 @@
 	var/custom_fire_overlay
 	/// Particles this obj uses when burning, if any
 	var/burning_particles
-
-	var/renamedByPlayer = FALSE //set when a player uses a pen on a renamable object
 
 	var/drag_slowdown // Amont of multiplicative slowdown applied if pulled. >1 makes you slower, <1 makes you faster.
 
@@ -195,6 +191,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	return
 
 /mob/proc/set_machine(obj/O)
+	if(QDELETED(src) || QDELETED(O))
+		return
 	if(machine)
 		unset_machine()
 	machine = O
@@ -227,50 +225,52 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	VV_DROPDOWN_OPTION(VV_HK_OSAY, "Object Say")
 
 /obj/vv_do_topic(list/href_list)
-	if(!(. = ..()))
+	. = ..()
+
+	if(!.)
 		return
+
 	if(href_list[VV_HK_OSAY])
-		if(check_rights(R_FUN, FALSE))
-			usr.client.object_say(src)
+		if(!check_rights(R_FUN, FALSE))
+			return
+		usr.client.object_say(src)
 
 	if(href_list[VV_HK_MASS_DEL_TYPE])
-		if(check_rights(R_DEBUG|R_SERVER))
-			var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
-			if(action_type == "Cancel" || !action_type)
-				return
-
-			if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [type]?",,list("Yes","No")) != "Yes")
-				return
-
-			if(tgui_alert(usr, "Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
-				return
-
-			var/O_type = type
-			switch(action_type)
-				if("Strict type")
-					var/i = 0
-					for(var/obj/Obj in world)
-						if(Obj.type == O_type)
-							i++
-							qdel(Obj)
-						CHECK_TICK
-					if(!i)
-						to_chat(usr, "No objects of this type exist")
-						return
-					log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
-					message_admins(span_notice("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) "))
-				if("Type and subtypes")
-					var/i = 0
-					for(var/obj/Obj in world)
-						if(istype(Obj,O_type))
-							i++
-							qdel(Obj)
-						CHECK_TICK
-					if(!i)
-						to_chat(usr, "No objects of this type exist")
-						return
-					log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
-					message_admins(span_notice("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) "))
+		if(!check_rights(R_DEBUG|R_SERVER))
+			return
+		var/action_type = tgui_alert(usr, "Strict type ([type]) or type and all subtypes?",,list("Strict type","Type and subtypes","Cancel"))
+		if(action_type == "Cancel" || !action_type)
+			return
+		if(tgui_alert(usr, "Are you really sure you want to delete all objects of type [type]?",,list("Yes","No")) != "Yes")
+			return
+		if(tgui_alert(usr, "Second confirmation required. Delete?",,list("Yes","No")) != "Yes")
+			return
+		var/O_type = type
+		switch(action_type)
+			if("Strict type")
+				var/i = 0
+				for(var/obj/Obj in world)
+					if(Obj.type == O_type)
+						i++
+						qdel(Obj)
+					CHECK_TICK
+				if(!i)
+					to_chat(usr, "No objects of this type exist")
+					return
+				log_admin("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) ")
+				message_admins(span_notice("[key_name(usr)] deleted all objects of type [O_type] ([i] objects deleted) "))
+			if("Type and subtypes")
+				var/i = 0
+				for(var/obj/Obj in world)
+					if(istype(Obj,O_type))
+						i++
+						qdel(Obj)
+					CHECK_TICK
+				if(!i)
+					to_chat(usr, "No objects of this type exist")
+					return
+				log_admin("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) ")
+				message_admins(span_notice("[key_name(usr)] deleted all objects of type or subtype of [O_type] ([i] objects deleted) "))
 
 /obj/examine(mob/user)
 	. = ..()
@@ -278,12 +278,12 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		. += span_notice(desc_controls)
 	if(obj_flags & UNIQUE_RENAME)
 		. += span_notice("Use a pen on it to rename it or change its description.")
-	if(unique_reskin && (!current_skin || infinite_reskin))
+	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)))
 		. += span_notice("Alt-click it to reskin it.")
 
 /obj/AltClick(mob/user)
 	. = ..()
-	if(unique_reskin && (!current_skin || infinite_reskin) && user.can_perform_action(src, NEED_DEXTERITY))
+	if(unique_reskin && (!current_skin || (obj_flags & INFINITE_RESKIN)) && user.can_perform_action(src, NEED_DEXTERITY))
 		reskin_obj(user)
 
 /**
@@ -292,7 +292,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
  * Arguments:
  * * M The mob choosing a reskin option
  */
-/obj/proc/reskin_obj(mob/M)
+/obj/proc/reskin_obj(mob/user)
 	if(!LAZYLEN(unique_reskin))
 		return
 
@@ -302,14 +302,15 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		items += list("[reskin_option]" = item_image)
 	sort_list(items)
 
-	var/pick = show_radial_menu(M, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), M), radius = 38, require_near = TRUE)
+	var/pick = show_radial_menu(user, src, items, custom_check = CALLBACK(src, PROC_REF(check_reskin_menu), user), radius = 38, require_near = TRUE)
 	if(!pick)
 		return
 	if(!unique_reskin[pick])
 		return
 	current_skin = pick
 	icon_state = unique_reskin[pick]
-	to_chat(M, "[src] is now skinned as '[pick].'")
+	to_chat(user, "[src] is now skinned as '[pick].'")
+	SEND_SIGNAL(src, COMSIG_OBJ_RESKIN, user, pick)
 
 /**
  * Checks if we are allowed to interact with a radial menu for reskins
@@ -320,7 +321,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 /obj/proc/check_reskin_menu(mob/user)
 	if(QDELETED(src))
 		return FALSE
-	if(!infinite_reskin && current_skin)
+	if(!(obj_flags & INFINITE_RESKIN) && current_skin)
 		return FALSE
 	if(!istype(user))
 		return FALSE
@@ -379,7 +380,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /// Try to unwrench an object in a WONDERFUL DYNAMIC WAY
 /obj/proc/default_unfasten_wrench(mob/user, obj/item/wrench, time = 20)
-	if((flags_1 & NODECONSTRUCT_1) || wrench.tool_behaviour != TOOL_WRENCH)
+	if((obj_flags & NO_DECONSTRUCTION) || wrench.tool_behaviour != TOOL_WRENCH)
 		return CANT_UNFASTEN
 
 	var/turf/ground = get_turf(src)

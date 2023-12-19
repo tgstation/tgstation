@@ -22,7 +22,7 @@
 	. = ..()
 	UnregisterSignal(source, COMSIG_LIVING_UNARMED_ATTACK)
 
-/// If we're targetting an airlock, open it
+/// If we're targeting an airlock, open it
 /datum/element/door_pryer/proc/on_attack(mob/living/basic/attacker, atom/target, proximity_flag)
 	SIGNAL_HANDLER
 	if(!proximity_flag || !istype(target, /obj/machinery/door/airlock))

@@ -824,7 +824,7 @@
 /turf/open/floor/carpet,
 /area/ruin/space/has_grav/derelictsulaco)
 "BQ" = (
-/mob/living/simple_animal/pet/cat{
+/mob/living/basic/pet/cat{
 	name = "Jonesy";
 	desc = "Old and grumpy cat- wait, how the hell is he still alive?!"
 	},

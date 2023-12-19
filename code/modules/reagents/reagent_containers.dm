@@ -61,13 +61,16 @@
 		reagents.add_reagent(/datum/reagent/blood, disease_amount, data)
 	add_initial_reagents()
 
-/obj/item/reagent_containers/examine()
+/obj/item/reagent_containers/examine(mob/user)
 	. = ..()
 	if(has_variable_transfer_amount)
 		if(possible_transfer_amounts.len > 1)
 			. += span_notice("Left-click or right-click in-hand to increase or decrease its transfer amount.")
 		else if(possible_transfer_amounts.len)
 			. += span_notice("Left-click or right-click in-hand to view its transfer amount.")
+	if(isliving(user) && HAS_TRAIT(user, TRAIT_REMOTE_TASTING))
+		var/mob/living/living_user = user
+		living_user.taste(reagents)
 
 /obj/item/reagent_containers/create_reagents(max_vol, flags)
 	. = ..()

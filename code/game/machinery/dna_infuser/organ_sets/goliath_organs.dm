@@ -66,7 +66,7 @@
 	AddElement(/datum/element/noticable_organ, "arm is just a mass of plate and tendrils.", BODY_ZONE_CHEST)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/goliath)
 
-/obj/item/organ/internal/brain/goliath/on_insert(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/goliath/on_mob_insert(mob/living/carbon/brain_owner)
 	. = ..()
 	if(!ishuman(brain_owner))
 		return
@@ -78,7 +78,7 @@
 	hammer = new/obj/item/goliath_infuser_hammer
 	brain_owner.put_in_hands(hammer)
 
-/obj/item/organ/internal/brain/goliath/on_remove(mob/living/carbon/brain_owner)
+/obj/item/organ/internal/brain/goliath/on_mob_remove(mob/living/carbon/brain_owner)
 	. = ..()
 	UnregisterSignal(brain_owner)
 	if(!ishuman(brain_owner))

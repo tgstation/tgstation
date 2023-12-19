@@ -238,7 +238,7 @@
 	potency = 30 //-> brightness
 	instability = 20
 	growthstages = 4
-	rarity = 20
+	rarity = PLANT_MODERATELY_RARE
 	genes = list(/datum/plant_gene/trait/glow, /datum/plant_gene/trait/plant_type/fungal_metabolism)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	mutatelist = list(/obj/item/seeds/glowshroom/glowcap, /obj/item/seeds/glowshroom/shadowshroom)

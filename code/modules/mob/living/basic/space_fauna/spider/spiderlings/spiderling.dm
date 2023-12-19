@@ -61,7 +61,7 @@
 /// Opportunistically hops in and out of vents, if it can find one. We aren't interested in attacking due to how weak we are, we gotta be quick and hidey.
 /datum/ai_controller/basic_controller/spiderling
 	blackboard = list(
-		BB_FLEE_TARGETTING_DATUM = new /datum/targetting_datum/basic/of_size/larger, // Run away from mobs bigger than we are
+		BB_FLEE_TARGETING_STRATEGY = /datum/targeting_strategy/basic/of_size/larger, // Run away from mobs bigger than we are
 		BB_VENTCRAWL_COOLDOWN = 20 SECONDS, // enough time to get splatted while we're out in the open.
 		BB_TIME_TO_GIVE_UP_ON_VENT_PATHING = 30 SECONDS,
 	)

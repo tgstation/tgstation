@@ -135,7 +135,7 @@
 		heal_brute = 10,\
 		heal_burn = 10,\
 		heal_time = 3 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tangle, /mob/living/basic/spider/giant/tangle)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\
@@ -163,7 +163,7 @@
 	icon_dead = "young_tank_dead"
 	maxHealth = 50
 	health = 50
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, CLONE = 0.5, STAMINA = 0.5, OXY = 1)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0.5, STAMINA = 0.5, OXY = 1)
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	speed = 1
@@ -174,7 +174,7 @@
 		heal_brute = 5,\
 		heal_burn = 5,\
 		heal_time = 2 SECONDS,\
-		self_targetting = HEALING_TOUCH_SELF_ONLY,\
+		self_targeting = HEALING_TOUCH_SELF_ONLY,\
 		interaction_key = DOAFTER_SOURCE_SPIDER,\
 		valid_targets_typecache = typecacheof(list(/mob/living/basic/spider/growing/young/tank, /mob/living/basic/spider/giant/tank)),\
 		extra_checks = CALLBACK(src, PROC_REF(can_mend)),\

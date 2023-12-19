@@ -278,7 +278,7 @@
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	var/turf/T = loc
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(stored)
 			var/obj/structure/disposalconstruct/construct = stored
 			stored = null
@@ -401,13 +401,6 @@
 	full_pressure = FALSE
 	pressure_charging = TRUE
 	update_appearance()
-
-/obj/machinery/disposal/bin/update_appearance(updates)
-	. = ..()
-	if((machine_stat & (BROKEN|NOPOWER)) || panel_open)
-		luminosity = 0
-		return
-	luminosity = 1
 
 /obj/machinery/disposal/bin/update_overlays()
 	. = ..()

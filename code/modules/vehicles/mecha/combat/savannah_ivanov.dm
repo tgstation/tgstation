@@ -147,7 +147,6 @@
 	chassis.movedelay = 1
 	chassis.density = FALSE
 	chassis.layer = ABOVE_ALL_MOB_LAYER
-	SET_PLANE(chassis, GAME_PLANE_UPPER_FOV_HIDDEN, launch_turf)
 	animate(chassis, alpha = 0, time = 8, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
 	animate(chassis, pixel_z = 400, time = 10, easing = QUAD_EASING|EASE_IN, flags = ANIMATION_PARALLEL) //Animate our rising mech (just like pods hehe)
 	addtimer(CALLBACK(src, PROC_REF(begin_landing)), 2 SECONDS)
@@ -292,7 +291,7 @@
 /**
  * ## end_missile_targeting
  *
- * Called by the ivanov strike datum action or other actions that would end targetting
+ * Called by the ivanov strike datum action or other actions that would end targeting
  * Unhooks signals into clicking to call drop_missile plus other flavor like the overlay
  */
 /datum/action/vehicle/sealed/mecha/ivanov_strike/proc/end_missile_targeting()

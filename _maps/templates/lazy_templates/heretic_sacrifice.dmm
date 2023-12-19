@@ -44,7 +44,7 @@
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "fO" = (
 /turf/open/indestructible,
 /area/space)
@@ -59,7 +59,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/toolbox/mechanical/old,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "hZ" = (
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/necropolis/air,
@@ -71,7 +71,7 @@
 /area/centcom/heretic_sacrifice/rust)
 "jt" = (
 /turf/closed/indestructible/reinforced,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "jB" = (
 /obj/machinery/light/very_dim/directional/south,
 /turf/open/misc/asteroid,
@@ -105,7 +105,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/spear,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "mZ" = (
 /obj/effect/decal/fakelattice{
 	density = 0
@@ -176,7 +176,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/storage/toolbox/mechanical/old,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "qu" = (
 /obj/effect/turf_decal/weather/dirt,
 /turf/open/misc/ashplanet/wateryrock{
@@ -234,7 +234,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/under/color/grey/ancient,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "uT" = (
 /obj/structure/cable,
 /turf/open/floor/plating/rust,
@@ -260,7 +260,7 @@
 /area/centcom/heretic_sacrifice/ash)
 "wo" = (
 /turf/closed/indestructible/grille,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "wt" = (
 /obj/structure/stone_tile/block{
 	dir = 1
@@ -285,7 +285,7 @@
 	start_on = 1
 	},
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "wS" = (
 /turf/open/misc/dirt/jungle/dark{
 	planetary_atmos = 0;
@@ -326,7 +326,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/mask/gas,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "AH" = (
 /obj/effect/turf_decal/trimline/brown/corner,
 /turf/open/floor/plating/rust,
@@ -345,11 +345,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/mask/gas/tiki_mask/yalp_elor,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "AY" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "Bv" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/brown/line,
@@ -405,7 +405,7 @@
 /area/centcom/heretic_sacrifice/ash)
 "En" = (
 /turf/closed/indestructible/fakedoor/maintenance,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "ER" = (
 /turf/open/misc/ironsand,
 /area/centcom/heretic_sacrifice/rust)
@@ -543,7 +543,7 @@
 	start_on = 1
 	},
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "Nh" = (
 /obj/effect/turf_decal/trimline/brown/line{
 	dir = 1
@@ -589,7 +589,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/clothing/under/color/grey/ancient,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "Pl" = (
 /obj/effect/turf_decal/weather/dirt{
 	dir = 6
@@ -712,9 +712,9 @@
 "Zw" = (
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/effect/landmark/heretic/knock,
+/obj/effect/landmark/heretic/lock,
 /turf/open/indestructible/plating,
-/area/centcom/heretic_sacrifice/knock)
+/area/centcom/heretic_sacrifice/lock)
 "ZA" = (
 /turf/closed/indestructible/riveted/boss,
 /area/centcom/heretic_sacrifice/ash)

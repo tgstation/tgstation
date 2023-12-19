@@ -112,7 +112,7 @@
 		if(mutation == /datum/mutation/human/race)
 			if(!ismonkey(target))
 				continue
-			target = target.dna.remove_mutation(mutation)
+			target.dna.remove_mutation(mutation)
 		else
 			target.dna.remove_mutation(mutation)
 	for(var/mutation in add_mutations)
@@ -120,7 +120,7 @@
 			continue //Skip permanent mutations we already have.
 		if(mutation == /datum/mutation/human/race && !ismonkey(target))
 			message_admins("[ADMIN_LOOKUPFLW(user)] injected [key_name_admin(target)] with the [name] [span_danger("(MONKEY)")]")
-			target = target.dna.add_mutation(mutation, MUT_OTHER, endtime)
+			target.dna.add_mutation(mutation, MUT_OTHER, endtime)
 		else
 			target.dna.add_mutation(mutation, MUT_OTHER, endtime)
 	if(fields)

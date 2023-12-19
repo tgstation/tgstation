@@ -1,8 +1,8 @@
 /datum/computer_file/program/maintenance/modsuit_control
 	filename = "modsuit_control"
 	filedesc = "MODsuit Control"
-	program_icon_state = "modsuit_control"
-	category = PROGRAM_CATEGORY_SCI
+	program_open_overlay = "modsuit_control"
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "This program allows people to connect a MODsuit to it, allowing remote control."
 	size = 2
 	tgui_id = "NtosMODsuit"
@@ -28,6 +28,7 @@
 	return TRUE
 
 /datum/computer_file/program/maintenance/modsuit_control/proc/unsync_modsuit(atom/source)
+	SIGNAL_HANDLER
 	UnregisterSignal(controlled_suit, COMSIG_QDELETING)
 	controlled_suit = null
 

@@ -34,7 +34,7 @@
 	var/list/turfs_to_shred
 	///A list of turfs directly under turfs_to_shred, for creating a proper chasm to the floor below.
 	var/list/underbelly = list()
-	///The edges of our fault line, to recieve light damage.
+	///The edges of our fault line, to receive light damage.
 	var/list/edges = list()
 
 /datum/round_event/earthquake/setup()
@@ -93,7 +93,11 @@
 	priority_announce("Planetary monitoring systems indicate a devastating seismic event in the near future.", "Seismic Report")
 
 /datum/round_event/earthquake/start()
-	notify_ghosts("The earthquake's epicenter has been located: [get_area_name(epicenter)]!", source = epicenter, header = "Rumble Rumble Rumble!")
+	notify_ghosts(
+		"The earthquake's epicenter has been located: [get_area_name(epicenter)]!",
+		source = epicenter,
+		header = "Rumble Rumble Rumble!",
+	)
 
 /datum/round_event/earthquake/tick()
 	if(ISMULTIPLE(activeFor, 5))

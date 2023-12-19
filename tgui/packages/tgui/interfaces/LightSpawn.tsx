@@ -1,5 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
 import { classes } from '../../common/react';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
@@ -37,18 +37,16 @@ type Data = {
   category_ids: CategoryList;
 };
 
-export const LightSpawn = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const LightSpawn = (props) => {
+  const { act, data } = useBackend<Data>();
   const { templates = [], default_id, default_category, category_ids } = data;
   const [currentTemplate, setCurrentTemplate] = useLocalState<string>(
-    context,
     'currentTemplate',
-    default_id
+    default_id,
   );
   const [currentCategory, setCurrentCategory] = useLocalState<string>(
-    context,
     'currentCategory',
-    default_category
+    default_category,
   );
 
   const category_keys = category_ids ? Object.keys(category_ids) : [];
@@ -67,7 +65,8 @@ export const LightSpawn = (props, context) => {
                     onClick={() => setCurrentCategory(category)}
                     fontSize="14px"
                     bold
-                    textColor="#eee">
+                    textColor="#eee"
+                  >
                     {category}
                   </Tabs.Tab>
                 ))}
@@ -77,7 +76,8 @@ export const LightSpawn = (props, context) => {
                   <Tabs.Tab
                     key={id}
                     selected={currentTemplate === id}
-                    onClick={() => setCurrentTemplate(id)}>
+                    onClick={() => setCurrentTemplate(id)}
+                  >
                     <Stack vertical>
                       <Stack.Item
                         align="center"
@@ -108,14 +108,13 @@ type LightInfoProps = {
   light: LightTemplate;
 };
 
-const LightInfo = (props: LightInfoProps, context) => {
-  const { act } = useBackend(context);
+const LightInfo = (props: LightInfoProps) => {
+  const { act } = useBackend();
   const { light } = props;
   const { light_info } = light;
   const [workingDir, setWorkingDir] = useLocalState<number>(
-    context,
     'workingDir',
-    Direction.North
+    Direction.North,
   );
   return (
     <Section>
@@ -217,13 +216,12 @@ type DirectedButtonProps = {
   icon: string;
 };
 
-const DirectionButton = (props: DirectedButtonProps, context) => {
-  const { act, data } = useBackend<Data>(context);
+const DirectionButton = (props: DirectedButtonProps) => {
+  const { act, data } = useBackend<Data>();
   const { dir, icon } = props;
   const [workingDir, setWorkingDir] = useLocalState<number>(
-    context,
     'workingDir',
-    Direction.North
+    Direction.North,
   );
   return (
     <Button
@@ -234,8 +232,8 @@ const DirectionButton = (props: DirectedButtonProps, context) => {
   );
 };
 
-const AngleSelect = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const AngleSelect = (props) => {
+  const { act, data } = useBackend<Data>();
   const { angle } = props;
   return (
     <Knob

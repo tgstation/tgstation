@@ -153,4 +153,9 @@
 /world/TgsSecurityLevel()
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
-		api.SecurityLevel()
+		return api.SecurityLevel()
+
+/world/TgsVisibility()
+	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
+	if(api)
+		return api.Visibility()

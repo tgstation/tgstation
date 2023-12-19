@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - refactor: "The way mobs get specialized actions (like revenants shocking lights or regal rats summoning rats to their side when you slap them) have been modified, please report any bugs."

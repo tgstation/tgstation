@@ -1,6 +1,6 @@
 /datum/ai_controller/basic_controller/living_limb_flesh
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 	)
 
@@ -78,13 +78,13 @@
 		return
 	step(victim, pick(GLOB.cardinals))
 	to_chat(victim, span_warning("Your [current_bodypart] moves on its own!"))
-	
+
 
 /mob/living/basic/living_limb_flesh/melee_attack(mob/living/carbon/human/target, list/modifiers, ignore_cooldown)
 	. = ..()
 	if (!ishuman(target) || target.stat == DEAD || HAS_TRAIT(target, TRAIT_NODISMEMBER))
 		return
-	
+
 	var/list/zone_candidates = target.get_missing_limbs()
 	for(var/obj/item/bodypart/bodypart in target.bodyparts)
 		if(bodypart.body_zone == BODY_ZONE_HEAD || bodypart.body_zone == BODY_ZONE_CHEST)
@@ -96,10 +96,10 @@
 		if(bodypart.brute_dam < 20)
 			continue
 		zone_candidates += bodypart.body_zone
-	
+
 	if(!length(zone_candidates))
 		return
-	
+
 	var/target_zone = pick(zone_candidates)
 	var/obj/item/bodypart/target_part = target.get_bodypart(target_zone)
 	if(isnull(target_part))
@@ -117,7 +117,7 @@
 			part_type = /obj/item/bodypart/leg/left/flesh
 		if(BODY_ZONE_R_LEG)
 			part_type = /obj/item/bodypart/leg/right/flesh
-	
+
 	target.visible_message(span_danger("[src] [target_part ? "tears off and attaches itself" : "attaches itself"] to where [target][target.p_s()] limb used to be!"))
 	current_bodypart = new part_type(TRUE) //dont_spawn_flesh, we cant use named arguments here
 	current_bodypart.replace_limb(target, TRUE)

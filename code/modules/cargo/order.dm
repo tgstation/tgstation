@@ -85,6 +85,10 @@
 	src.manifest_can_fail = manifest_can_fail
 	src.can_be_cancelled = can_be_cancelled
 
+/datum/supply_order/Destroy(force, ...)
+	QDEL_NULL(applied_coupon)
+	return ..()
+
 //returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
 /datum/supply_order/proc/get_final_cost()
 	var/cost = pack.get_cost()
@@ -201,10 +205,17 @@
 			pack.contains[i] = new_contents[i]
 	pack.cost += cost_increase
 
-//To append cargo crate value to final order cost
-/datum/supply_order/materials
+/// Custom type of order who's supply pack can be safely deleted
+/datum/supply_order/disposable
 
-/datum/supply_order/materials/get_final_cost()
+/datum/supply_order/disposable/Destroy(force, ...)
+	QDEL_NULL(pack)
+	return ..()
+
+/// Custom material order to append cargo crate value to the final order cost
+/datum/supply_order/disposable/materials
+
+/datum/supply_order/disposable/materials/get_final_cost()
 	return (..() + CARGO_CRATE_VALUE)
 
 #undef MANIFEST_ERROR_CHANCE

@@ -90,7 +90,7 @@
 			if(!event)
 				return
 			if(length(event.admin_setup))
-				for(var/datum/event_admin_setup/admin_setup_datum in event.admin_setup)
+				for(var/datum/event_admin_setup/admin_setup_datum as anything in event.admin_setup)
 					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
 						return
 			var/always_announce_chance = 100

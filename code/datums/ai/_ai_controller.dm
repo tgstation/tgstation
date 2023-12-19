@@ -87,6 +87,9 @@ multiple modular subtrees with behaviors
 /datum/ai_controller/Destroy(force, ...)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
+	set_movement_target(type, null)
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
 	return ..()
 
 ///Sets the current movement target, with an optional param to override the movement behavior
@@ -174,6 +177,7 @@ multiple modular subtrees with behaviors
 	RegisterSignal(pawn, COMSIG_MOB_STATCHANGE, PROC_REF(on_stat_changed))
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 	RegisterSignal(pawn, COMSIG_MOVABLE_MOVED, PROC_REF(check_movement_target))
+	RegisterSignal(pawn, COMSIG_QDELETING, PROC_REF(on_pawn_qdeleted))
 	update_able_to_run()
 	setup_able_to_run()
 
@@ -211,7 +215,7 @@ multiple modular subtrees with behaviors
 	if(isnull(pawn))
 		return // instantiated without an applicable pawn, fine
 
-	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_MOVABLE_MOVED))
+	UnregisterSignal(pawn, list(COMSIG_MOB_LOGIN, COMSIG_MOB_LOGOUT, COMSIG_MOB_STATCHANGE, COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
 	clear_able_to_run()
 	if(ai_movement.moving_controllers[src])
 		ai_movement.stop_moving_towards(src)
@@ -301,6 +305,8 @@ multiple modular subtrees with behaviors
 
 ///Determines whether the AI can currently make a new plan
 /datum/ai_controller/proc/able_to_plan()
+	if(QDELETED(pawn))
+		return FALSE
 	if(no_planning_sources > 0) //We have a behavior that blocks planning
 		return FALSE
 	return TRUE
@@ -491,6 +497,14 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
+// Turn the controller off if the pawn has been qdeleted
+/datum/ai_controller/proc/on_pawn_qdeleted()
+	SIGNAL_HANDLER
+	set_ai_status(AI_STATUS_OFF)
+	set_movement_target(type, null)
+	if(ai_movement.moving_controllers[src])
+		ai_movement.stop_moving_towards(src)
+
 /// Use this proc to define how your controller defines what access the pawn has for the sake of pathfinding. Return the access list you want to use
 /datum/ai_controller/proc/get_access()
 	return
@@ -509,7 +523,11 @@ multiple modular subtrees with behaviors
 /// Returns true if we have a blackboard key with the provided key and it is not qdeleting
 /datum/ai_controller/proc/blackboard_key_exists(key)
 	var/datum/key_value = blackboard[key]
-	return !QDELETED(key_value)
+	if (isdatum(key_value))
+		return !QDELETED(key_value)
+	if (islist(key_value))
+		return length(key_value) > 0
+	return !!key_value
 
 /**
  * Used to manage references to datum by AI controllers

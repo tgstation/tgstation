@@ -27,7 +27,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm
+          key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
+          restore-keys: |
+            ${{ runner.os }}-spacemandmm-
       - name: Restore Yarn cache
         uses: actions/cache@v3
         with:
@@ -53,13 +55,20 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.cargo
-          key: ${{ runner.os }}-rust
+          key: ${{ runner.os }}-rust-${{ hashFiles('tools/ci/ci_dependencies.sh')}}
+          restore-keys: |
+            ${{ runner.os }}-rust-
+      - name: Restore Cutter cache
+        uses: actions/cache@v3
+        with:
+          path: tools/icon_cutter/cache
+          key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
       - name: Install Tools
         run: |
           pip3 install setuptools
           bash tools/ci/install_node.sh
           bash tools/ci/install_spaceman_dmm.sh dreamchecker
-          cargo install ripgrep --features pcre2
+          bash tools/ci/install_ripgrep.sh
           tools/bootstrap/python -c ''
       - name: Give Linters A Go
         id: linter-setup
@@ -75,6 +84,9 @@ jobs:
       - name: Check Define Sanity
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m define_sanity.check
+      - name: Check Trait Validity
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: tools/bootstrap/python -m trait_validity.check
       - name: Run DreamChecker
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         shell: bash
@@ -84,6 +96,9 @@ jobs:
         run: |
           tools/bootstrap/python -m mapmerge2.dmm_test
           tools/bootstrap/python -m tools.maplint.source
+      - name: Check Cutter
+        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        run: tools/bootstrap/python -m tools.icon_cutter.check
       - name: Run DMI Tests
         if: steps.linter-setup.conclusion == 'success' && !cancelled()
         run: tools/bootstrap/python -m dmi.test
@@ -104,7 +119,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Compile Maps
     needs: [collect_data]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     concurrency:
       group: compile_all_maps-${{ github.head_ref || github.run_id }}
       cancel-in-progress: true
@@ -129,7 +144,7 @@ jobs:
   collect_data:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') )
     name: Collect data for other tasks
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     outputs:
       maps: ${{ steps.map_finder.outputs.maps }}
       alternate_tests: ${{ steps.alternate_test_finder.outputs.alternate_tests }}
@@ -174,7 +189,7 @@ jobs:
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   run_alternate_tests:
-    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]' )
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.collect_data.outputs.alternate_tests != '[]' )
     name: Alternate Tests
     needs: [collect_data]
     strategy:
@@ -192,10 +207,10 @@ jobs:
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   check_alternate_tests:
-    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]' )
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.collect_data.outputs.alternate_tests != '[]' )
     name: Check Alternate Tests
     needs: [run_alternate_tests]
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - run: echo Alternate tests passed.
 
@@ -203,7 +218,7 @@ jobs:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && (success() || failure()) )
     needs: [run_all_tests, run_alternate_tests]
     name: Compare Screenshot Tests
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       # If we ever add more artifacts, this is going to break, but it'll be obvious.

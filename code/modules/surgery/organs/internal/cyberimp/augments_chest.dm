@@ -52,9 +52,8 @@
 	slot = ORGAN_SLOT_HEART_AID
 	var/revive_cost = 0
 	var/reviving = FALSE
-	/// revival/defibrillation possibility flag that gathered from owner's .can_defib() proc
-	var/can_defib_owner
 	COOLDOWN_DECLARE(reviver_cooldown)
+	COOLDOWN_DECLARE(defib_cooldown)
 
 /obj/item/organ/internal/cyberimp/chest/reviver/on_death(seconds_per_tick, times_fired)
 	if(isnull(owner)) // owner can be null, on_death() gets called by /obj/item/organ/internal/process() for decay
@@ -81,19 +80,13 @@
 		revive_cost = 0
 		reviving = TRUE
 		to_chat(owner, span_notice("You feel a faint buzzing as your reviver implant starts patching your wounds..."))
+		COOLDOWN_START(src, defib_cooldown, 8 SECONDS) // 5 seconds after heal proc delay
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/heal()
-	if(can_defib_owner == DEFIB_POSSIBLE)
+	if(COOLDOWN_FINISHED(src, defib_cooldown))
 		revive_dead()
-		can_defib_owner = null
-		revive_cost += 10 MINUTES // Additional 10 minutes cooldown after revival.
-	// this check goes after revive_dead() to delay revival a bit
-	if(owner.stat == DEAD)
-		can_defib_owner = owner.can_defib()
-		if(can_defib_owner == DEFIB_POSSIBLE)
-			owner.notify_ghost_cloning("You are being revived by [src]!")
-			owner.grab_ghost()
+
 	/// boolean that stands for if PHYSICAL damage being patched
 	var/body_damage_patched = FALSE
 	var/need_mob_update = FALSE
@@ -119,7 +112,13 @@
 
 
 /obj/item/organ/internal/cyberimp/chest/reviver/proc/revive_dead()
+	if(!COOLDOWN_FINISHED(src, defib_cooldown) || owner.stat != DEAD || owner.can_defib() != DEFIB_POSSIBLE)
+		return
+	owner.notify_revival("You are being revived by [src]!")
+	revive_cost += 10 MINUTES // Additional 10 minutes cooldown after revival.
 	owner.grab_ghost()
+
+	defib_cooldown += 16 SECONDS // delay so it doesn't spam
 
 	owner.visible_message(span_warning("[owner]'s body convulses a bit."))
 	playsound(owner, SFX_BODYFALL, 50, TRUE)
@@ -182,7 +181,7 @@
 		/datum/effect_system/trail_follow/ion \
 	)
 
-/obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special = 0)
+/obj/item/organ/internal/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special, movement_flags)
 	if(on)
 		deactivate(silent = TRUE)
 	..()

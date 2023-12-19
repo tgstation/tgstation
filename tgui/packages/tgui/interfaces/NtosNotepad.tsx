@@ -4,12 +4,13 @@
  * @license MIT
  */
 
-import { NtosWindow } from '../layouts';
+import { Component, createRef, RefObject } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Box, Section, TextArea, MenuBar, Divider } from '../components';
-import { Component, createRef, RefObject } from 'inferno';
-import { createLogger } from '../logging';
+import { Box, Divider, MenuBar, Section, TextArea } from '../components';
 import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
+import { NtosWindow } from '../layouts';
+import { createLogger } from '../logging';
 
 const logger = createLogger('NtosNotepad');
 
@@ -28,7 +29,7 @@ const PartiallyUnderlined = (props: PartiallyUnderlinedProps) => {
   return (
     <>
       {start}
-      <span style={{ 'text-decoration': 'underline' }}>{underlined}</span>
+      <span style={{ textDecoration: 'underline' }}>{underlined}</span>
       {end}
     </>
   );
@@ -56,7 +57,7 @@ type MenuBarProps = {
   aboutNotepadDialog: () => void;
 };
 
-const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
+const NtosNotepadMenuBar = (props: MenuBarProps) => {
   const {
     onSave,
     onExit,
@@ -71,15 +72,10 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
     setWordWrap,
     aboutNotepadDialog,
   } = props;
-  const [openOnHover, setOpenOnHover] = useLocalState(
-    context,
-    'openOnHover',
-    false
-  );
+  const [openOnHover, setOpenOnHover] = useLocalState('openOnHover', false);
   const [openMenuBar, setOpenMenuBar] = useLocalState<string | null>(
-    context,
     'openMenuBar',
-    null
+    null,
   );
   const onMenuItemClick = (value) => {
     setOpenOnHover(false);
@@ -139,7 +135,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
         entry="file"
         openWidth="22rem"
         display={<PartiallyUnderlined str="File" indexStart={0} />}
-        {...itemProps}>
+        {...itemProps}
+      >
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('new', 'New')} />
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('save', 'Save')} />
         <MenuBar.Dropdown.Separator key="firstSep" />
@@ -149,7 +146,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
         entry="edit"
         openWidth="22rem"
         display={<PartiallyUnderlined str="Edit" indexStart={0} />}
-        {...itemProps}>
+        {...itemProps}
+      >
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('cut', 'Cut')} />
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('copy', 'Copy')} />
         <MenuBar.Dropdown.MenuItem {...getMenuItemProps('paste', 'Paste')} />
@@ -159,7 +157,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
         entry="format"
         openWidth="15rem"
         display={<PartiallyUnderlined str="Format" indexStart={1} />}
-        {...itemProps}>
+        {...itemProps}
+      >
         <MenuBar.Dropdown.MenuItemToggle
           checked={wordWrap}
           {...getMenuItemProps('wordWrap', 'Word Wrap')}
@@ -169,7 +168,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
         entry="view"
         openWidth="15rem"
         display={<PartiallyUnderlined str="View" indexStart={0} />}
-        {...itemProps}>
+        {...itemProps}
+      >
         <MenuBar.Dropdown.MenuItemToggle
           checked={showStatusBar}
           {...getMenuItemProps('statusBar', 'Status Bar')}
@@ -179,7 +179,8 @@ const NtosNotepadMenuBar = (props: MenuBarProps, context) => {
         entry="help"
         openWidth="17rem"
         display={<PartiallyUnderlined str="Help" indexStart={0} />}
-        {...itemProps}>
+        {...itemProps}
+      >
         <MenuBar.Dropdown.MenuItem
           {...getMenuItemProps('aboutNotepad', 'About Notepad')}
         />
@@ -275,7 +276,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
     const textarea = this.innerRef?.current;
     if (!textarea) {
       logger.error(
-        'NotePadTextArea.render(): Textarea RefObject should not be null'
+        'NotePadTextArea.render(): Textarea RefObject should not be null',
       );
       return;
     }
@@ -283,7 +284,7 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
     // Javascript – execute when textarea caret is moved
     // https://stackoverflow.com/a/53999418/5613731
     TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
-      textarea.addEventListener(trigger, this)
+      textarea.addEventListener(trigger, this),
     );
     // Slight hack: Keep selection when textarea loses focus so menubar actions can be used (i.e. cut, delete)
     textarea.onblur = this.onblur.bind(this);
@@ -293,12 +294,12 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
     const textarea = this.innerRef?.current;
     if (!textarea) {
       logger.error(
-        'NotePadTextArea.componentWillUnmount(): Textarea RefObject should not be null'
+        'NotePadTextArea.componentWillUnmount(): Textarea RefObject should not be null',
       );
       return;
     }
     TEXTAREA_UPDATE_TRIGGERS.forEach((trigger) =>
-      textarea.removeEventListener(trigger, this)
+      textarea.removeEventListener(trigger, this),
     );
   }
 
@@ -307,9 +308,9 @@ class NotePadTextArea extends Component<NotePadTextAreaProps> {
 
     return (
       <TextArea
-        innerRef={this.innerRef}
-        onInput={(_, value) => setText(value)}
-        className={'NtosNotepad__textarea'}
+        ref={this.innerRef}
+        onChange={(_, value) => setText(value)}
+        className="NtosNotepad__textarea"
         scroll
         nowrap={!wordWrap}
         value={text}
@@ -325,7 +326,7 @@ type AboutDialogProps = {
 
 const AboutDialog = (props: AboutDialogProps) => {
   const { close, clientName } = props;
-  const paragraphStyle = { 'padding': '.5rem 1rem 0 2rem' };
+  const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
   return (
     <Dialog title="About Notepad" onClose={close} width={'500px'}>
       <div className="Dialog__body">
@@ -339,19 +340,20 @@ const AboutDialog = (props: AboutDialogProps) => {
           <span style={paragraphStyle}>
             &copy; NT Corporation. All rights reserved.
           </span>
-          <span style={{ 'padding': '3rem 1rem 3rem 2rem' }}>
+          <span style={{ padding: '3rem 1rem 3rem 2rem' }}>
             The NtOS operating system and its user interface are protected by
             trademark and other pending or existing intellectual property rights
             in the Sol system and other regions.
           </span>
           <span
             style={{
-              'padding': '3rem 1rem 0.5rem 2rem',
-              'max-width': '35rem',
-            }}>
+              padding: '3rem 1rem 0.5rem 2rem',
+              maxWidth: '35rem',
+            }}
+          >
             This product is licensed under the NT Corporation Terms to:
           </span>
-          <span style={{ 'padding': '0 1rem 0 4rem' }}>{clientName}</span>
+          <span style={{ padding: '0 1rem 0 4rem' }}>{clientName}</span>
         </Box>
       </div>
       <div className="Dialog__footer">
@@ -366,45 +368,36 @@ type NoteData = {
 };
 type RetryActionType = (retrying?: boolean) => void;
 
-export const NtosNotepad = (props, context) => {
-  const { act, data, config } = useBackend<NoteData>(context);
+export const NtosNotepad = (props) => {
+  const { act, data, config } = useBackend<NoteData>();
   const { note } = data;
   const [documentName, setDocumentName] = useLocalState<string>(
-    context,
     'documentName',
-    DEFAULT_DOCUMENT_NAME
+    DEFAULT_DOCUMENT_NAME,
   );
   const [originalText, setOriginalText] = useLocalState<string>(
-    context,
     'originalText',
-    note
+    note,
   );
   console.log(note);
-  const [text, setText] = useLocalState<string>(context, 'text', note);
-  const [statuses, setStatuses] = useLocalState<Statuses>(context, 'statuses', {
+  const [text, setText] = useLocalState<string>('text', note);
+  const [statuses, setStatuses] = useLocalState<Statuses>('statuses', {
     line: 0,
     column: 0,
   });
   const [activeDialog, setActiveDialog] = useLocalState<Dialogs>(
-    context,
     'activeDialog',
-    Dialogs.NONE
+    Dialogs.NONE,
   );
   const [retryAction, setRetryAction] = useLocalState<RetryActionType | null>(
-    context,
     'activeAction',
-    null
+    null,
   );
   const [showStatusBar, setShowStatusBar] = useLocalState<boolean>(
-    context,
     'showStatusBar',
-    true
+    true,
   );
-  const [wordWrap, setWordWrap] = useLocalState<boolean>(
-    context,
-    'wordWrap',
-    true
-  );
+  const [wordWrap, setWordWrap] = useLocalState<boolean>('wordWrap', true);
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {
     logger.log(`Saving the document as ${newDocumentName}`);
@@ -424,7 +417,7 @@ export const NtosNotepad = (props, context) => {
   };
   const ensureUnsavedChangesAreHandled = (
     action: () => void,
-    retrying = false
+    retrying = false,
   ): boolean => {
     // This is a guard function that throws up the "unsaved changes" dialog if the user is
     // attempting to do something that will make them lose data
@@ -466,7 +459,8 @@ export const NtosNotepad = (props, context) => {
     <NtosWindow
       title={`${unsavedAsterisk}${documentName} - Notepad`}
       width={840}
-      height={900}>
+      height={900}
+    >
       <NtosWindow.Content>
         <Box className="NtosNotepad__layout">
           <NtosNotepadMenuBar

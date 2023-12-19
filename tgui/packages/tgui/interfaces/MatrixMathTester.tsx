@@ -1,13 +1,11 @@
-import { useBackend, useLocalState } from '../backend';
-import { Input, NumberInput, Section, Button, Table } from '../components';
 import { toFixed } from 'common/math';
+
+import { useBackend, useLocalState } from '../backend';
+import { Button, Input, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
 
-const MatrixMathTesterInput = (
-  props: { value: number; varName: string },
-  context
-) => {
-  const { act } = useBackend(context);
+const MatrixMathTesterInput = (props: { value: number; varName: string }) => {
+  const { act } = useBackend();
   return (
     <NumberInput
       value={props.value}
@@ -31,8 +29,8 @@ type MatrixData = {
   pixelated: boolean;
 };
 
-export const MatrixMathTester = (props, context) => {
-  const { act, data } = useBackend<MatrixData>(context);
+export const MatrixMathTester = (props) => {
+  const { act, data } = useBackend<MatrixData>();
   const {
     matrix_a,
     matrix_b,
@@ -42,13 +40,13 @@ export const MatrixMathTester = (props, context) => {
     matrix_f,
     pixelated,
   } = data;
-  const [scaleX, setScaleX] = useLocalState(context, 'scale_x', 1);
-  const [scaleY, setScaleY] = useLocalState(context, 'scale_y', 1);
-  const [translateX, setTranslateX] = useLocalState(context, 'translate_x', 0);
-  const [translateY, setTranslateY] = useLocalState(context, 'translate_y', 0);
-  const [shearX, setShearX] = useLocalState(context, 'shear_x', 0);
-  const [shearY, setShearY] = useLocalState(context, 'shear_y', 0);
-  const [angle, setAngle] = useLocalState(context, 'angle', 0);
+  const [scaleX, setScaleX] = useLocalState('scale_x', 1);
+  const [scaleY, setScaleY] = useLocalState('scale_y', 1);
+  const [translateX, setTranslateX] = useLocalState('translate_x', 0);
+  const [translateY, setTranslateY] = useLocalState('translate_y', 0);
+  const [shearX, setShearX] = useLocalState('shear_x', 0);
+  const [shearY, setShearY] = useLocalState('shear_y', 0);
+  const [angle, setAngle] = useLocalState('angle', 0);
   return (
     <Window title="Nobody Wants to Learn Matrix Math" width={290} height={270}>
       <Window.Content>

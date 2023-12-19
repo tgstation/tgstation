@@ -116,6 +116,7 @@
 	message = "salutes."
 	message_param = "salutes to %t."
 	hands_use_check = TRUE
+	sound = 'sound/misc/salute.ogg'
 
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"

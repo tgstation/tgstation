@@ -56,9 +56,6 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	///current timer for phase
 	var/next_phase_timer
 
-	///used for debugging in testing (doesn't put people out of the game, some other shit i forgot, who knows just don't set this in live) honestly kinda deprecated
-	var/debug = FALSE
-
 	///was our game forced to start early?
 	var/early_start = FALSE
 
@@ -110,6 +107,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/Destroy(force, ...)
 	. = ..()
 	end_game()
+	player_role_lookup.Cut()
 	QDEL_NULL(map_deleter)
 	if(GLOB.mafia_game == src)
 		GLOB.mafia_game = null
@@ -126,10 +124,9 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * * Puts players in each role randomly
  * Arguments:
  * * setup_list: list of all the datum setups (fancy list of roles) that would work for the game
- * * ready_ghosts: list of filtered, sane players (so not playing or disconnected) for the game to put into roles
- * * ready_pdas: list of PDAs wanting to play the Mafia game.
+ * * ready_ghosts_and_pdas: list of filtered, sane (so not playing or disconnected) ghost ckeys & PDAs for the game to put into roles.
  */
-/datum/mafia_controller/proc/prepare_game(setup_list, ready_ghosts, ready_pdas)
+/datum/mafia_controller/proc/prepare_game(setup_list, ready_ghosts_and_pdas)
 	var/static/list/possible_maps = subtypesof(/datum/map_template/mafia)
 	var/turf/spawn_area = get_turf(locate(/obj/effect/landmark/mafia_game_area) in GLOB.landmarks_list)
 
@@ -141,8 +138,11 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/list/bounds = current_map.load(spawn_area)
 	if(!bounds)
 		CRASH("Loading mafia map failed!")
-	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23,spawn_area.y + 23,spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
-
+#ifdef UNIT_TESTS //unit test map is smaller
+	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 7, spawn_area.y + 7, spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
+#else
+	map_deleter.defineRegion(spawn_area, locate(spawn_area.x + 23, spawn_area.y + 23, spawn_area.z), replace = TRUE) //so we're ready to mass delete when round ends
+#endif
 	if(!landmarks.len)//we grab town center when we grab landmarks, if there is none (the first game signed up for let's grab them post load)
 		for(var/obj/effect/landmark/mafia/possible_spawn in GLOB.landmarks_list)
 			if(istype(possible_spawn, /obj/effect/landmark/mafia/town_center))
@@ -161,23 +161,14 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	var/list/spawnpoints = landmarks.Copy()
 	for(var/datum/mafia_role/role as anything in all_roles)
 		role.assigned_landmark = pick_n_take(spawnpoints)
-		var/selected_player
-		if(!debug)
-			if(length(ready_pdas))
-				selected_player = pick(ready_pdas)
-			else
-				selected_player = pick(ready_ghosts)
-		else
-			if(length(ready_pdas))
-				selected_player = peek(ready_pdas)
-			else
-				selected_player = peek(ready_ghosts)
-		if(selected_player in ready_pdas)
-			role.player_pda = selected_player
-			ready_pdas -= selected_player
-		else
+		var/selected_player //this can be a ckey or a PDA
+		selected_player = pick(ready_ghosts_and_pdas)
+		var/client/player_client = GLOB.directory[selected_player]
+		if(player_client)
 			role.player_key = selected_player
-			ready_ghosts -= selected_player
+		else
+			role.player_pda = selected_player
+		ready_ghosts_and_pdas -= selected_player
 
 ///Sends a global message to all players, or just 'team' if set.
 /datum/mafia_controller/proc/send_message(msg, team, log_only = FALSE)
@@ -205,6 +196,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	for(var/datum/mafia_role/roles as anything in all_roles)
 		var/obj/item/modular_computer/modpc = roles.player_pda
 		if(!modpc)
+			update_static_data(roles.body)
 			continue
 		modpc.update_static_data_for_all_viewers()
 
@@ -400,11 +392,12 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 	if(!rewarded.player_pda)
 		return
 	for(var/datum/tgui/window as anything in rewarded.player_pda.open_uis)
-		window.user?.client?.give_award(award, rewarded.body)
+		window.user?.client?.give_award(award, window.user.client.mob)
 
 /**
  * The end of the game is in two procs, because we want a bit of time for players to see eachothers roles.
  * Because of how check_victory works, the game is halted in other places by this point.
+ * We won't delete ourselves in a certain amount of time in unit tests, as the unit test will handle our deletion instead.
  *
  * What players do in this phase:
  * * See everyone's role postgame
@@ -419,7 +412,9 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 			roles.mafia_alert.update_text("[message]")
 		roles.reveal_role(src)
 	phase = MAFIA_PHASE_VICTORY_LAP
+#ifndef UNIT_TESTS
 	next_phase_timer = QDEL_IN_STOPPABLE(src, VICTORY_LAP_PERIOD_LENGTH)
+#endif
 
 /**
  * Cleans up the game, resetting variables back to the beginning and removing the map with the generator.
@@ -586,7 +581,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 	if(phase != MAFIA_PHASE_VOTING)
 		return
-	var/v = get_vote_count(player_role_lookup[source],"Day")
+	var/v = get_vote_count(get_role_player(source),"Day")
 	var/mutable_appearance/MA = mutable_appearance('icons/obj/mafia.dmi',"vote_[v > 12 ? "over_12" : v]")
 	overlay_list += MA
 
@@ -612,310 +607,59 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		H.equipOutfit(outfit_to_distribute)
 		H.status_flags |= GODMODE
 		RegisterSignal(H, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(display_votes))
-		var/datum/action/innate/mafia_panel/mafia_panel = new(null,src)
-		mafia_panel.Grant(H)
 		var/obj/item/modular_computer/modpc = role.player_pda
 		role.register_body(H)
 		if(modpc)
 			player_role_lookup[modpc] = role
 		else
-			player_role_lookup[H] = role
+			player_role_lookup[role.player_key] = role
 		var/client/player_client = GLOB.directory[role.player_key]
 		if(player_client)
 			role.put_player_in_body(player_client)
 		role.greet()
 
-/datum/mafia_controller/ui_static_data(atom/user)
-	var/list/data = list()
-
-	if(usr.client?.holder)
-		data["admin_controls"] = TRUE //show admin buttons to start/setup/stop
-	data["is_observer"] = isobserver(user)
-	data["all_roles"] = current_setup_text
-
-	if(phase == MAFIA_PHASE_SETUP)
-		return data
-
-	var/datum/mafia_role/user_role = player_role_lookup[user]
-	if(user_role)
-		data["roleinfo"] = list(
-			"role" = user_role.name,
-			"desc" = user_role.desc,
-			"hud_icon" = user_role.hud_icon,
-			"revealed_icon" = user_role.revealed_icon,
-		)
-
-	return data
-
-/datum/mafia_controller/ui_data(atom/user)
-	var/list/data = list()
-
-	data["phase"] = phase
-	if(turn)
-		data["turn"] = " - Day [turn]"
-
-	if(phase == MAFIA_PHASE_SETUP)
-		data["lobbydata"] = list()
-		for(var/key in GLOB.mafia_signup + GLOB.mafia_bad_signup + GLOB.pda_mafia_signup)
-			var/list/lobby_member = list()
-			lobby_member["name"] = key
-			lobby_member["status"] = (key in GLOB.mafia_bad_signup) ? "Disconnected" : "Ready"
-			data["lobbydata"] += list(lobby_member)
-		return data
-
-	data["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0
-
-	var/datum/mafia_role/user_role = player_role_lookup[user]
-	if(user_role)
-		data["user_notes"] = user_role.written_notes
-		data["messages"] = list()
-		var/list/ui_messages = list()
-		for(var/i = user_role.role_messages.len to 1 step -1)
-			ui_messages.Add(list(list(
-				"msg" = user_role.role_messages[i],
-			)))
-		data["messages"] = ui_messages
-
-	data["players"] = list()
-	for(var/datum/mafia_role/role as anything in all_roles)
-		var/list/player_info = list()
-		player_info["name"] = role.body.real_name
-		player_info["ref"] = REF(role)
-		player_info["alive"] = role.game_status == MAFIA_ALIVE
-		player_info["possible_actions"] = list()
-
-		if(user_role) //not observer
-			for(var/datum/mafia_ability/action as anything in user_role.role_unique_actions)
-				if(action.validate_action_target(src, potential_target = role, silent = TRUE))
-					player_info["possible_actions"] += list(list("name" = action, "ref" = REF(action)))
-
-		data["players"] += list(player_info)
-
-	return data
-
-/datum/mafia_controller/ui_assets(mob/user)
-	return list(
-		get_asset_datum(/datum/asset/spritesheet/mafia),
-	)
-
-/datum/mafia_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	var/datum/mafia_role/user_role = player_role_lookup[usr]
-	var/obj/item/modular_computer/modpc = ui.src_object
+///From a 'user' (Either a mob or ModPC) or TGUI UI, will try to find the Mafia role from 'player_role_lookup'.
+/datum/mafia_controller/proc/get_role_player(atom/user, datum/tgui/ui)
+	var/obj/item/modular_computer/modpc = ui?.src_object || user
 	if(istype(modpc))
-		user_role = player_role_lookup[modpc]
+		return player_role_lookup[modpc]
+	var/mob/mob_user = user
+	if(!istype(mob_user))
+		CRASH("[user] is not a modPC nor a mob, but we are trying to find their role.")
+	return player_role_lookup[mob_user.ckey]
+
+/**
+ * Signs the player up for Mafia, or removes them from the list if they are already
+ * signed up.
+ * Args:
+ * - ghost_client: is the client of the observer signing up. This can be null in favor of modpc.
+ * - modpc: is a living player signing up through a PDA. This can be null in favor of ghost_client.
+ */
+/datum/mafia_controller/proc/signup_mafia(mob/user, client/ghost_client, obj/item/modular_computer/modpc)
+	if(!SSticker.HasRoundStarted())
+		to_chat(user, span_warning("Wait for the round to start."))
+		return FALSE
+	if(isnull(modpc))
+		if(GLOB.mafia_signup[ghost_client.ckey])
+			GLOB.mafia_signup -= ghost_client.ckey
+			GLOB.mafia_early_votes -= ghost_client.ckey //Remove their early start vote as well
+			to_chat(user, span_notice("You unregister from Mafia."))
+		else
+			GLOB.mafia_signup[ghost_client.ckey] = TRUE
+			to_chat(user, span_notice("You sign up for Mafia."))
 	else
-		modpc = null
-	//Admin actions
-	if(ui.user.client.holder)
-		switch(action)
-			if("new_game")
-				if(phase == MAFIA_PHASE_SETUP)
-					return
-				basic_setup()
-			if("nuke")
-				qdel(src)
-			if("next_phase")
-				if(phase == MAFIA_PHASE_SETUP)
-					return
-				var/datum/timedevent/timer = SStimer.timer_id_dict[next_phase_timer]
-				if(!timer.spent)
-					var/datum/callback/tc = timer.callBack
-					deltimer(next_phase_timer)
-					tc.InvokeAsync()
-				return TRUE
-			if("players_home")
-				var/list/failed = list()
-				for(var/datum/mafia_role/player in all_roles)
-					if(!player.body)
-						failed += player
-						continue
-					player.body.forceMove(get_turf(player.assigned_landmark))
-				if(failed.len)
-					to_chat(usr, "List of players who no longer had a body (if you see this, the game is runtiming anyway so just hit \"New Game\" to end it)")
-					for(var/datum/mafia_role/fail as anything in failed)
-						to_chat(usr, fail.player_key || fail.player_pda)
-			if("debug_setup")
-				var/list/debug_setup = list()
-				var/list/rolelist_dict = list("CANCEL", "FINISH") + GLOB.mafia_roles_by_name
-				var/done = FALSE
-
-				while(!done)
-					to_chat(usr, "You have a total player count of [assoc_value_sum(debug_setup)] in this setup.")
-					var/chosen_role_name = tgui_input_list(usr, "Select a role!", "Custom Setup Creation", rolelist_dict)
-					if(!chosen_role_name)
-						return
-					switch(chosen_role_name)
-						if("CANCEL")
-							done = TRUE
-							return
-						if("FINISH")
-							done = TRUE
-							break
-						else
-							var/found_path = rolelist_dict[chosen_role_name]
-							var/role_count = tgui_input_number(usr, "How many? Zero to cancel.", "Custom Setup Creation", 0, 12)
-							if(role_count > 0)
-								debug_setup[found_path] = role_count
-				custom_setup = debug_setup
-				early_start = TRUE
-				try_autostart()//don't worry, this fails if there's a game in progress
-			if("cancel_setup")
-				custom_setup = list()
-			if("start_now")
-				forced_setup()
-
-	switch(action) //both living and dead
-		if("mf_lookup")
-			var/role_lookup = params["role_name"]
-			var/datum/mafia_role/helper
-			for(var/datum/mafia_role/role as anything in all_roles)
-				if(role_lookup == role.name)
-					helper = role
-					break
-			helper.show_help(usr)
-
-	if(!user_role)//just the dead
-		switch(action)
-			if("mf_signup")
-				var/client/ghost_client = ui.user.client
-				if(!SSticker.HasRoundStarted())
-					to_chat(usr, span_warning("Wait for the round to start."))
-					return
-				if(isnull(modpc))
-					if(GLOB.mafia_signup[ghost_client.ckey])
-						GLOB.mafia_signup -= ghost_client.ckey
-						GLOB.mafia_early_votes -= ghost_client.ckey //Remove their early start vote as well
-						to_chat(usr, span_notice("You unregister from Mafia."))
-						return TRUE
-					else
-						GLOB.mafia_signup[ghost_client.ckey] = TRUE
-						to_chat(usr, span_notice("You sign up for Mafia."))
-				else
-					if(GLOB.pda_mafia_signup[modpc])
-						GLOB.pda_mafia_signup -= modpc
-						GLOB.mafia_early_votes -= modpc //Remove their early start vote as well
-						to_chat(usr, span_notice("You unregister from Mafia."))
-						return TRUE
-					else
-						GLOB.pda_mafia_signup[modpc] = TRUE
-						to_chat(usr, span_notice("You sign up for Mafia."))
-				if(phase == MAFIA_PHASE_SETUP)
-					check_signups()
-					try_autostart()
-				return TRUE
-			if("vote_to_start")
-				var/client/ghost_client = ui.user.client
-				if(phase != MAFIA_PHASE_SETUP)
-					to_chat(usr, span_notice("You cannot vote to start while a game is underway!"))
-					return
-				if(isnull(modpc))
-					if(!GLOB.mafia_signup[ghost_client.ckey])
-						to_chat(usr, span_notice("You must be signed up for this game to vote!"))
-						return
-					if(GLOB.mafia_early_votes[ghost_client.ckey])
-						GLOB.mafia_early_votes -= ghost_client.ckey
-						to_chat(usr, span_notice("You are no longer voting to start the game early."))
-					else
-						GLOB.mafia_early_votes[ghost_client.ckey] = ghost_client
-						to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [max(round(length(GLOB.mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))])."))
-						if(check_start_votes()) //See if we have enough votes to start
-							forced_setup()
-				else
-					if(!GLOB.pda_mafia_signup[modpc])
-						to_chat(usr, span_notice("You must be signed up for this game to vote!"))
-						return
-					if(GLOB.mafia_early_votes[modpc])
-						GLOB.mafia_early_votes -= modpc
-						to_chat(usr, span_notice("You are no longer voting to start the game early."))
-					else
-						GLOB.mafia_early_votes[modpc] = modpc
-						to_chat(usr, span_notice("You vote to start the game early ([length(GLOB.mafia_early_votes)] out of [max(round(length(GLOB.mafia_signup) / 2), round(MAFIA_MIN_PLAYER_COUNT / 2))])."))
-						if(check_start_votes()) //See if we have enough votes to start
-							forced_setup()
-				return TRUE
-
-	if(user_role && user_role.game_status == MAFIA_DEAD)
-		return
-
-	//User actions (just living)
-	switch(action)
-		if("change_notes")
-			if(user_role.game_status == MAFIA_DEAD)
-				return TRUE
-			user_role.written_notes = sanitize_text(params["new_notes"])
-			user_role.send_message_to_player("notes saved", balloon_alert = TRUE)
+		if(GLOB.pda_mafia_signup[modpc])
+			GLOB.pda_mafia_signup -= modpc
+			GLOB.mafia_early_votes -= modpc //Remove their early start vote as well
+			to_chat(user, span_notice("You unregister from Mafia."))
 			return TRUE
-		if("send_message_to_chat")
-			if(user_role.game_status == MAFIA_DEAD)
-				return TRUE
-			var/message_said = sanitize_text(params["message"])
-			user_role.body.say(message_said, forced = "mafia chat (sent by [ui.user.client])")
-			return TRUE
-		if("send_notes_to_chat")
-			if(user_role.game_status == MAFIA_DEAD || !user_role.written_notes)
-				return TRUE
-			if(phase == MAFIA_PHASE_NIGHT)
-				return TRUE
-			if(!COOLDOWN_FINISHED(user_role, note_chat_sending_cooldown))
-				return FALSE
-			COOLDOWN_START(user_role, note_chat_sending_cooldown, MAFIA_NOTE_SENDING_COOLDOWN)
-			user_role.body.say("[user_role.written_notes]", forced = "mafia notes sending")
-			return TRUE
-		if("perform_action")
-			var/datum/mafia_role/target = locate(params["target"]) in all_roles
-			if(!istype(target))
-				return
-			var/datum/mafia_ability/used_action = locate(params["action_ref"]) in user_role.role_unique_actions
-			if(!used_action)
-				return
-			switch(phase)
-				if(MAFIA_PHASE_DAY, MAFIA_PHASE_VOTING)
-					used_action.using_ability = TRUE
-					used_action.perform_action_target(src, target)
-				if(MAFIA_PHASE_NIGHT)
-					used_action.set_target(src, target)
-			return TRUE
-
-	if(user_role != on_trial)
-		switch(action)
-			if("vote_abstain")
-				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_abstain_votes))
-					return
-				user_role.send_message_to_player("You have decided to abstain.")
-				judgement_innocent_votes -= user_role
-				judgement_guilty_votes -= user_role
-				judgement_abstain_votes += user_role
-			if("vote_innocent")
-				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_innocent_votes))
-					return
-				user_role.send_message_to_player("Your vote on [on_trial.body.real_name] submitted as INNOCENT!")
-				judgement_abstain_votes -= user_role//no fakers, and...
-				judgement_guilty_votes -= user_role//no radical centrism
-				judgement_innocent_votes += user_role
-			if("vote_guilty")
-				if(phase != MAFIA_PHASE_JUDGEMENT || (user_role in judgement_guilty_votes))
-					return
-				user_role.send_message_to_player("Your vote on [on_trial.body.real_name] submitted as GUILTY!")
-				judgement_abstain_votes -= user_role//no fakers, and...
-				judgement_innocent_votes -= user_role//no radical centrism
-				judgement_guilty_votes += user_role
-
-/datum/mafia_controller/ui_state(mob/user)
-	return GLOB.always_state
-
-/datum/mafia_controller/ui_interact(mob/user, datum/tgui/ui)
-	ui = SStgui.try_update_ui(user, src, null)
-	if(!ui)
-		ui = new(user, src, "MafiaPanel")
-		ui.open()
-
-/proc/assoc_value_sum(list/L)
-	. = 0
-	for(var/key in L)
-		. += L[key]
+		else
+			GLOB.pda_mafia_signup[modpc] = TRUE
+			to_chat(user, span_notice("You sign up for Mafia."))
+	if(phase == MAFIA_PHASE_SETUP)
+		check_signups()
+		try_autostart()
+	return TRUE
 
 /**
  * Returns a standard setup, with certain important/unique roles guaranteed.
@@ -960,18 +704,16 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/basic_setup()
 	var/req_players = MAFIA_MAX_PLAYER_COUNT
 	var/list/setup = custom_setup
-	if(setup.len)
+	if(length(setup))
 		req_players = assoc_value_sum(setup)
 
-	var/list/filtered_pdas = GLOB.pda_mafia_signup
-	if(!isnull(filtered_pdas)) //pdas get priority
-		req_players -= length(GLOB.pda_mafia_signup)
-	var/list/filtered_keys = filter_players(req_players)
-	var/needed_players = length(filtered_keys) + length(filtered_pdas)
+	var/list/filtered_keys_and_pdas = filter_players(req_players)
 
-	if(!setup.len) //don't actually have one yet, so generate a max player random setup. it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
-		setup = generate_standard_setup(needed_players)
-	prepare_game(setup, filtered_keys, filtered_pdas)
+	//don't actually have one yet, so generate a max player random setup.
+	//it's good to do this here instead of above so it doesn't generate one every time a game could possibly start.
+	if(!length(setup))
+		setup = generate_standard_setup(length(filtered_keys_and_pdas))
+	prepare_game(setup, filtered_keys_and_pdas)
 	start_game()
 
 /**
@@ -982,17 +724,15 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 
 /datum/mafia_controller/proc/forced_setup()
 	check_signups() //Refresh the signup list, so our numbers are accurate and we only take active players into consideration.
-	var/list/filtered_pdas = GLOB.pda_mafia_signup
-	var/list/filtered_keys = filter_players(length(GLOB.mafia_signup))
-	var/req_players = length(filtered_keys) + length(filtered_pdas)
-
-	if(!req_players) //If we have nobody signed up, we give up on starting
+	var/players_needed = GLOB.mafia_signup.len + GLOB.pda_mafia_signup.len
+	var/list/filtered_keys_and_pdas = filter_players(players_needed)
+	if(!length(filtered_keys_and_pdas)) //If we have nobody signed up, we give up on starting
 		log_admin("Attempted to force a mafia game to start with nobody signed up!")
 		return
 
-	var/list/setup = generate_standard_setup(req_players)
+	var/list/setup = generate_standard_setup(length(filtered_keys_and_pdas))
 
-	prepare_game(setup, filtered_keys, filtered_pdas)
+	prepare_game(setup, filtered_keys_and_pdas)
 	early_start = TRUE
 	start_game()
 
@@ -1006,10 +746,10 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/mafia_controller/proc/check_start_votes()
 	check_signups() //Same as before. What a useful proc.
 
-	if(length(GLOB.mafia_signup) < MAFIA_MIN_PLAYER_COUNT)
+	if(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) < MAFIA_MIN_PLAYER_COUNT)
 		return FALSE //Make sure we have the minimum playercount to host a game first.
 
-	if(length(GLOB.mafia_early_votes) < round(length(GLOB.mafia_signup) / 2))
+	if(length(GLOB.mafia_early_votes) < round(length(GLOB.mafia_signup + GLOB.pda_mafia_signup) / 2))
 		return FALSE
 
 	return TRUE
@@ -1023,38 +763,44 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * This should only be run as we are in the process of starting a game.
  *
  * max_players - The maximum number of keys to put in our return list before we start telling people they're not getting in.
- * filtered_keys - A list of player ckeys, to be included in the game.
+ * filtered_keys_and_pdas - A list of player ckeys and PDAs, to be included in the game.
  */
 /datum/mafia_controller/proc/filter_players(max_players)
 	//final list for all the players who will be in this game
-	var/list/filtered_keys = list()
+	var/list/filtered_keys_and_pdas = list()
 	//cuts invalid players from signups (disconnected/not a ghost)
-	var/list/possible_keys = list()
+	var/list/possible_players = list()
 	for(var/key in GLOB.mafia_signup)
 		if(GLOB.directory[key])
 			var/client/C = GLOB.directory[key]
 			if(isobserver(C.mob))
-				possible_keys += key
+				possible_players += key
 				continue
 		GLOB.mafia_signup -= key //not valid to play when we checked so remove them from signups
 
-	//If we're not over capacity and don't need to notify anyone of their exclusion, return early.
-	if(length(possible_keys) < max_players)
-		return filtered_keys
+	for(var/obj/item/modular_computer/pda/pdas as anything in GLOB.pda_mafia_signup)
+		possible_players += pdas
 
 	//if there were too many players, still start but only make filtered keys as big as it needs to be (cut excess)
 	//also removes people who do get into final player list from the signup so they have to sign up again when game ends
 	for(var/i in 1 to max_players)
-		var/chosen_key = pick_n_take(possible_keys)
-		filtered_keys += chosen_key
-		GLOB.mafia_signup -= chosen_key
+		if(!length(possible_players))
+			break
+		var/chosen_key = pick_n_take(possible_players)
+		filtered_keys_and_pdas += chosen_key
+		if(chosen_key in GLOB.pda_mafia_signup)
+			GLOB.pda_mafia_signup -= chosen_key
+		else if(chosen_key in GLOB.mafia_signup)
+			GLOB.mafia_signup -= chosen_key
 	//small message about not getting into this game for clarity on why they didn't get in
-	for(var/unpicked in possible_keys)
+	for(var/unpicked in possible_players)
+		if(!(unpicked in GLOB.mafia_signup))
+			continue
 		var/client/unpicked_client = GLOB.directory[unpicked]
 		to_chat(unpicked_client, span_danger("Sorry, the starting mafia game has too many players and you were not picked."))
 		to_chat(unpicked_client, span_warning("You're still signed up, getting messages from the current round, and have another chance to join when the one starting now finishes."))
 
-	return filtered_keys
+	return filtered_keys_and_pdas
 
 /**
  * Called when someone signs up, and sees if there are enough people in the signup list to begin.
@@ -1073,6 +819,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
  * If a disconnected player gets a non-ghost mob and reconnects, they will be first put back into mafia_signup then filtered by that.
  */
 /datum/mafia_controller/proc/check_signups()
+#ifndef UNIT_TESTS
 	for(var/bad_key in GLOB.mafia_bad_signup)
 		if(GLOB.directory[bad_key])//they have reconnected if we can search their key and get a client
 			GLOB.mafia_bad_signup -= bad_key
@@ -1086,6 +833,7 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 		if(!isobserver(C.mob))
 			//they are back to playing the game, remove them from the signups
 			GLOB.mafia_signup -= key
+#endif
 
 /datum/action/innate/mafia_panel
 	name = "Mafia Panel"
@@ -1098,6 +846,10 @@ GLOBAL_LIST_INIT(mafia_role_by_alignment, setup_mafia_role_by_alignment())
 /datum/action/innate/mafia_panel/New(Target, datum/mafia_controller/controller)
 	. = ..()
 	controller_panel = controller
+
+/datum/action/innate/mafia_panel/Destroy()
+	. = ..()
+	controller_panel = null
 
 /datum/action/innate/mafia_panel/Activate()
 	controller_panel.ui_interact(owner)

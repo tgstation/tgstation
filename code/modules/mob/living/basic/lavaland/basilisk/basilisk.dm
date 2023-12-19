@@ -6,7 +6,7 @@
 	icon_living = "basilisk"
 	icon_dead = "basilisk_dead"
 	speak_emote = list("chimes")
-	damage_coeff = list(BRUTE = 1, BURN = 0.1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 0.1, TOX = 1, STAMINA = 0, OXY = 1)
 	speed = 20
 	maxHealth = 200
 	health = 200
@@ -77,7 +77,7 @@
 
 /datum/ai_controller/basic_controller/basilisk
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 5,
 	)
 

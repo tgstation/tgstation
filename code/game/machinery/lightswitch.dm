@@ -12,6 +12,8 @@
 	var/area/area = null
 	///Range of the light emitted when powered, but off
 	var/light_on_range = 1
+	/// Should this lightswitch automatically rename itself to match the area it's in?
+	var/autoname = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 
@@ -29,11 +31,21 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		area = GLOB.areas_by_type[area]
 	if(!area)
 		area = get_area(src)
-	if(!name)
+	if(autoname)
 		name = "light switch ([area.name])"
 	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), TRUE))
-
+	register_context()
 	update_appearance()
+
+/obj/machinery/light_switch/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(isnull(held_item))
+		context[SCREENTIP_CONTEXT_LMB] = area.lightswitch ? "Flick off" : "Flick on"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item.tool_behaviour != TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_RMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return .
 
 /obj/machinery/light_switch/update_appearance(updates=ALL)
 	. = ..()
@@ -62,6 +74,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	. = ..()
 	set_lights(!area.lightswitch)
 
+/obj/machinery/light_switch/attackby_secondary(obj/item/weapon, mob/user, params)
+	if(weapon.tool_behaviour == TOOL_SCREWDRIVER)
+		to_chat(user, "You pop \the [src] off the wall.")
+		deconstruct()
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+	return ..()
+
 /obj/machinery/light_switch/proc/set_lights(status)
 	if(area.lightswitch == status)
 		return
@@ -87,7 +106,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		power_change()
 
 /obj/machinery/light_switch/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/wallframe/light_switch(loc)
 	qdel(src)
 

@@ -4,7 +4,7 @@
 /obj/item/borg/upgrade
 	name = "borg upgrade module."
 	desc = "Protected by FRM."
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade"
 	w_class = WEIGHT_CLASS_SMALL
 	var/locked = FALSE
@@ -268,7 +268,7 @@
 /obj/item/borg/upgrade/lavaproof
 	name = "mining cyborg lavaproof chassis"
 	desc = "An upgrade kit to apply specialized coolant systems and insulation layers to a mining cyborg's chassis, enabling them to withstand exposure to molten rock and liquid plasma."
-	icon_state = "ash_plating"
+	icon_state = "cyborg_ash_tracks"
 	resistance_flags = LAVA_PROOF | FIRE_PROOF | FREEZE_PROOF
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/miner)
@@ -589,7 +589,6 @@
 /obj/item/borg/upgrade/rped/action(mob/living/silicon/robot/R, user = usr)
 	. = ..()
 	if(.)
-
 		var/obj/item/storage/part_replacer/cyborg/RPED = locate() in R
 		if(RPED)
 			to_chat(user, span_warning("This unit is already equipped with a RPED module!"))
@@ -606,10 +605,42 @@
 		if (RPED)
 			R.model.remove_module(RPED, TRUE)
 
+/obj/item/borg/upgrade/inducer
+	name = "engineering integrated power inducer"
+	desc = "An integrated inducer that can charge a device's internal cell from power provided by the cyborg."
+	require_model = TRUE
+	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
+	model_flags = BORG_MODEL_ENGINEERING
+
+/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if(.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in R
+		if(inter_inducer)
+			return FALSE
+		inter_inducer = new(R.model)
+		R.model.basic_modules += inter_inducer
+		R.model.add_module(inter_inducer, FALSE, TRUE)
+		inter_inducer.cell = R.cell
+
+/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/R, user = usr)
+	. = ..()
+	if (.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in R.model
+		if (inter_inducer)
+			R.model.remove_module(inter_inducer, TRUE)
+			inter_inducer.cell = null
+
+/obj/item/inducer/cyborg
+	name = "Internal inducer"
+	powertransfer = 1500
+	icon = 'icons/obj/tools.dmi'
+	icon_state = "inducer-engi"
+
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
 	desc = "A crew pinpointer module for the medical cyborg. Permits remote access to the crew monitor."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinpointer_crew"
 	require_model = TRUE
 	model_type = list(/obj/item/robot_model/medical, /obj/item/robot_model/syndicate_medical)
@@ -923,7 +954,7 @@
 	name = "cyborg emergency reboot module"
 	desc = "A reusable firmware reset tool that can force a reboot of a disabled-but-repaired cyborg, bringing it back online."
 	w_class = WEIGHT_CLASS_SMALL
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "cyborg_upgrade1"
 
 /obj/item/borg_restart_board/pre_attack(mob/living/silicon/robot/borgo, mob/living/user, params)

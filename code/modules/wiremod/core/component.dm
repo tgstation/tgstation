@@ -9,7 +9,7 @@
  */
 /obj/item/circuit_component
 	name = COMPONENT_DEFAULT_NAME
-	icon = 'icons/obj/assemblies/module.dmi'
+	icon = 'icons/obj/devices/circuitry_n_data.dmi'
 	icon_state = "component"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

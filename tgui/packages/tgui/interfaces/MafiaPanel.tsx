@@ -1,10 +1,21 @@
-import { classes } from 'common/react';
+import { BooleanLike, classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { multiline } from 'common/string';
+
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Collapsible, Flex, NoticeBox, Section, Stack, Tabs, TextArea } from '../components';
-import { Window } from '../layouts';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Flex,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+  TextArea,
+} from '../components';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 type RoleInfo = {
   role_theme: string;
@@ -16,6 +27,8 @@ type RoleInfo = {
 
 type PlayerInfo = {
   name: string;
+  role_revealed: string;
+  is_you: BooleanLike;
   ref: string;
   alive: string;
   possible_actions: ActionInfo[];
@@ -48,16 +61,14 @@ type MafiaData = {
   is_observer: boolean;
   all_roles: string[];
   admin_controls: boolean;
+  person_voted_up_ref: string;
+  player_voted_up: BooleanLike;
 };
 
-export const MafiaPanelData = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
-  const { phase, roleinfo, admin_controls, messages } = data;
-  const [mafia_tab, setMafiaMode] = useLocalState(
-    context,
-    'mafia_tab',
-    'Role list'
-  );
+export const MafiaPanelData = (props) => {
+  const { act, data } = useBackend<MafiaData>();
+  const { phase, roleinfo, admin_controls, messages, player_voted_up } = data;
+  const [mafia_tab, setMafiaMode] = useLocalState('mafia_tab', 'Role list');
 
   if (phase === 'No Game') {
     return (
@@ -89,7 +100,7 @@ export const MafiaPanelData = (props, context) => {
               <Stack.Item>
                 <MafiaRole />
               </Stack.Item>
-              {phase === 'Judgment' && (
+              {phase === 'Judgment' && !player_voted_up && (
                 <Stack.Item>
                   <MafiaJudgement />
                 </Stack.Item>
@@ -111,7 +122,8 @@ export const MafiaPanelData = (props, context) => {
                       <Tabs.Tab
                         align="center"
                         selected={mafia_tab === 'Role list'}
-                        onClick={() => setMafiaMode('Role list')}>
+                        onClick={() => setMafiaMode('Role list')}
+                      >
                         Role list
                         <Button
                           color="transparent"
@@ -126,7 +138,8 @@ export const MafiaPanelData = (props, context) => {
                       <Tabs.Tab
                         align="center"
                         selected={mafia_tab === 'Notes'}
-                        onClick={() => setMafiaMode('Notes')}>
+                        onClick={() => setMafiaMode('Notes')}
+                      >
                         Notes
                         <Button
                           color="transparent"
@@ -152,15 +165,16 @@ export const MafiaPanelData = (props, context) => {
   );
 };
 
-export const MafiaPanel = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+export const MafiaPanel = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { roleinfo } = data;
   return (
     <Window
       title="Mafia"
       theme={roleinfo && roleinfo.role_theme}
       width={900}
-      height={600}>
+      height={600}
+    >
       <Window.Content>
         <MafiaPanelData />
       </Window.Content>
@@ -168,10 +182,10 @@ export const MafiaPanel = (props, context) => {
   );
 };
 
-const MafiaChat = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaChat = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { messages } = data;
-  const [message_to_send, setMessagingBox] = useLocalState(context, 'Chat', '');
+  const [message_to_send, setMessagingBox] = useLocalState('Chat', '');
   return (
     <Stack vertical fill>
       {!!messages && (
@@ -188,7 +202,7 @@ const MafiaChat = (props, context) => {
             maxLength={300}
             className="Section__title candystripe"
             onChange={(e, value) => setMessagingBox(value)}
-            placeholder={'Type to chat'}
+            placeholder="Type to chat"
             value={message_to_send}
           />
           <Stack grow>
@@ -212,8 +226,8 @@ const MafiaChat = (props, context) => {
   );
 };
 
-const MafiaLobby = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaLobby = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { lobbydata = [], is_observer } = data;
   const readyGhosts = lobbydata
     ? lobbydata.filter((player) => player.status === 'Ready')
@@ -248,7 +262,8 @@ const MafiaLobby = (props, context) => {
             onClick={() => act('vote_to_start')}
           />
         </>
-      }>
+      }
+    >
       <NoticeBox info textAlign="center">
         The lobby currently has {readyGhosts ? readyGhosts.length : '0'}/12
         valid players signed up.
@@ -265,7 +280,8 @@ const MafiaLobby = (props, context) => {
           key={lobbyist.name}
           className="candystripe"
           p={1}
-          align="baseline">
+          align="baseline"
+        >
           <Stack.Item grow>
             {!is_observer ? 'Unknown Player' : lobbyist.name}
           </Stack.Item>
@@ -279,8 +295,8 @@ const MafiaLobby = (props, context) => {
   );
 };
 
-const MafiaRole = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaRole = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { phase, turn, roleinfo, timeleft } = data;
   return (
     <Section
@@ -291,14 +307,16 @@ const MafiaRole = (props, context) => {
       buttons={
         <Box
           style={{
-            'font-family': 'Consolas, monospace',
-            'font-size': '14px',
-            'line-height': 1.5,
-            'font-weight': 'bold',
-          }}>
+            fontFamily: 'Consolas, monospace',
+            fontSize: '14px',
+            lineHeight: 1.5,
+            fontWeight: 'bold',
+          }}
+        >
           {formatTime(timeleft)}
         </Box>
-      }>
+      }
+    >
       <Stack align="center">
         <Stack.Item grow>
           <Box bold>You are the {roleinfo.role}</Box>
@@ -308,15 +326,15 @@ const MafiaRole = (props, context) => {
           <Box
             className={classes(['mafia32x32', roleinfo.revealed_icon])}
             style={{
-              'transform': 'scale(2) translate(0px, 10%)',
-              'vertical-align': 'middle',
+              transform: 'scale(2) translate(0px, 10%)',
+              verticalAlign: 'middle',
             }}
           />
           <Box
             className={classes(['mafia32x32', roleinfo.hud_icon])}
             style={{
-              'transform': 'scale(2) translate(-5px, -5px)',
-              'vertical-align': 'middle',
+              transform: 'scale(2) translate(-5px, -5px)',
+              verticalAlign: 'middle',
             }}
           />
         </Stack.Item>
@@ -325,8 +343,8 @@ const MafiaRole = (props, context) => {
   );
 };
 
-const MafiaListOfRoles = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaListOfRoles = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { all_roles } = data;
   return (
     <Section fill>
@@ -354,14 +372,10 @@ const MafiaListOfRoles = (props, context) => {
   );
 };
 
-const MafiaNotesTab = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
+const MafiaNotesTab = (props) => {
+  const { act, data } = useBackend<MafiaData>();
   const { user_notes } = data;
-  const [note_message, setNotesMessage] = useLocalState(
-    context,
-    'Notes',
-    user_notes
-  );
+  const [note_message, setNotesMessage] = useLocalState('Notes', user_notes);
   return (
     <Section grow fill>
       <TextArea
@@ -369,7 +383,7 @@ const MafiaNotesTab = (props, context) => {
         maxLength={600}
         className="Section__title candystripe"
         onChange={(_, value) => setNotesMessage(value)}
-        placeholder={'Insert Notes...'}
+        placeholder="Insert Notes..."
         value={note_message}
       />
       <Stack grow>
@@ -396,21 +410,24 @@ const MafiaNotesTab = (props, context) => {
   );
 };
 
-const MafiaJudgement = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaJudgement = (props) => {
+  const { act, data } = useBackend();
   return (
     <Section title="Judgement">
-      <Flex justify="space-around">
+      <Flex>
         <Button
           icon="smile-beam"
-          content="INNOCENT!"
+          content="Innocent"
           color="good"
           onClick={() => act('vote_innocent')}
         />
         <Box>It is now time to vote, vote the accused innocent or guilty!</Box>
-        <Button icon="angry" color="bad" onClick={() => act('vote_guilty')}>
-          GUILTY!
-        </Button>
+        <Button
+          icon="angry"
+          content="Guilty"
+          color="bad"
+          onClick={() => act('vote_guilty')}
+        />
       </Flex>
       <Flex justify="center">
         <Button icon="meh" color="white" onClick={() => act('vote_abstain')}>
@@ -421,17 +438,25 @@ const MafiaJudgement = (props, context) => {
   );
 };
 
-const MafiaPlayers = (props, context) => {
-  const { act, data } = useBackend<MafiaData>(context);
-  const { players } = data;
+const MafiaPlayers = (props) => {
+  const { act, data } = useBackend<MafiaData>();
+  const { players = [], person_voted_up_ref } = data;
   return (
     <Section fill scrollable title="Players">
       <Flex direction="column" fill justify="space-around">
         {players?.map((player) => (
           <Flex.Item className="Section__title candystripe" key={player.ref}>
             <Stack align="center">
-              <Stack.Item grow color={!player.alive && 'red'}>
-                {player.name} {!player.alive && '(DEAD)'}
+              <Stack.Item
+                grow
+                color={!player.alive && 'red'}
+                backgroundColor={
+                  player.ref === person_voted_up_ref ? 'yellow' : null
+                }
+              >
+                {player.name}
+                {(!!player.is_you && ' (YOU)') ||
+                  (!!player.role_revealed && ' - ' + player.role_revealed)}
               </Stack.Item>
               <Stack.Item>
                 {player.votes !== undefined &&
@@ -447,7 +472,8 @@ const MafiaPlayers = (props, context) => {
                         action_ref: action.ref,
                         target: player.ref,
                       })
-                    }>
+                    }
+                  >
                     {action.name}
                   </Button>
                 ))}
@@ -460,8 +486,8 @@ const MafiaPlayers = (props, context) => {
   );
 };
 
-const MafiaAdmin = (props, context) => {
-  const { act, data } = useBackend(context);
+const MafiaAdmin = (props) => {
+  const { act, data } = useBackend();
   return (
     <Collapsible title="ADMIN CONTROLS" color="red">
       <Section>

@@ -1,6 +1,8 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -39,8 +41,8 @@ type Info = {
   possible_areas: Array<string>;
 };
 
-export const SparringContract = (props, context) => {
-  const { data, act } = useBackend<Info>(context);
+export const SparringContract = (props) => {
+  const { data, act } = useBackend<Info>();
   const {
     set_weapon,
     set_area,
@@ -52,9 +54,10 @@ export const SparringContract = (props, context) => {
     no_chaplains,
     stakes_holy_match,
   } = data;
-  const [weapon, setWeapon] = useLocalState(context, 'weapon', set_weapon);
-  const [area, setArea] = useLocalState(context, 'area', set_area);
-  const [stakes, setStakes] = useLocalState(context, 'stakes', set_stakes);
+  const [weapon, setWeapon] = useState(set_weapon);
+  const [area, setArea] = useState(set_area);
+  const [stakes, setStakes] = useState(set_stakes);
+
   return (
     <Window width={420} height={380}>
       <Window.Content>
@@ -78,7 +81,8 @@ export const SparringContract = (props, context) => {
                         signatures will erase and the new terms must be
                         re-agreed upon.
                         `}
-                        icon="info">
+                        icon="info"
+                      >
                         Contract?
                       </Button>
                     </Stack.Item>
@@ -91,7 +95,7 @@ export const SparringContract = (props, context) => {
                     options={weaponlist}
                     onSelected={(value) =>
                       setWeapon(
-                        weaponlist.findIndex((title) => title === value) + 1
+                        weaponlist.findIndex((title) => title === value) + 1,
                       )
                     }
                   />
@@ -130,7 +134,7 @@ export const SparringContract = (props, context) => {
                     options={stakelist}
                     onSelected={(value) =>
                       setStakes(
-                        stakelist.findIndex((title) => title === value) + 1
+                        stakelist.findIndex((title) => title === value) + 1,
                       )
                     }
                   />
@@ -148,12 +152,13 @@ export const SparringContract = (props, context) => {
                       icon="pen"
                       onClick={() =>
                         act('sign', {
-                          'weapon': weapon,
-                          'area': area,
-                          'stakes': stakes,
-                          'sign_position': 'left',
+                          weapon: weapon,
+                          area: area,
+                          stakes: stakes,
+                          sign_position: 'left',
                         })
-                      }>
+                      }
+                    >
                       Sign Here
                     </Button>
                   )) ||
@@ -166,11 +171,12 @@ export const SparringContract = (props, context) => {
                       icon="pen"
                       onClick={() =>
                         act('sign', {
-                          'weapon': weapon,
-                          'area': area,
-                          'stakes': stakes,
+                          weapon: weapon,
+                          area: area,
+                          stakes: stakes,
                         })
-                      }>
+                      }
+                    >
                       Sign Here
                     </Button>
                   )) ||
@@ -187,7 +193,8 @@ export const SparringContract = (props, context) => {
                       (no_chaplains && set_stakes === stakes_holy_match)
                     }
                     icon="fist-raised"
-                    onClick={() => act('fight')}>
+                    onClick={() => act('fight')}
+                  >
                     FIGHT!
                   </Button>
                   <Button
@@ -197,7 +204,8 @@ export const SparringContract = (props, context) => {
                       this button.
                     `}
                     icon="door-open"
-                    onClick={() => act('clear')}>
+                    onClick={() => act('clear')}
+                  >
                     Clear
                   </Button>
                 </Stack.Item>
@@ -209,7 +217,8 @@ export const SparringContract = (props, context) => {
                       'Both participants need to be in the arena!'
                     }
                     color={(in_area && 'green') || 'red'}
-                    icon="ring">
+                    icon="ring"
+                  >
                     Arena
                   </Button>
                   <Button
@@ -225,7 +234,8 @@ export const SparringContract = (props, context) => {
                         'green') ||
                       'red'
                     }
-                    icon="file-signature">
+                    icon="file-signature"
+                  >
                     Signatures
                   </Button>
                   <Button
@@ -235,7 +245,8 @@ export const SparringContract = (props, context) => {
                       'No chaplain present for this fight. No Holy Matches!'
                     }
                     color={(!no_chaplains && 'green') || 'yellow'}
-                    icon="cross">
+                    icon="cross"
+                  >
                     Chaplain
                   </Button>
                 </Stack.Item>

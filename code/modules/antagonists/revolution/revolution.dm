@@ -12,7 +12,7 @@
 	var/deconversion_source
 
 /datum/antagonist/rev/can_be_owned(datum/mind/new_owner)
-	if(new_owner.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	if(new_owner.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 		return FALSE
 	if(new_owner.unconvertable)
 		return FALSE
@@ -196,21 +196,14 @@
 /datum/antagonist/rev/head/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	RegisterSignal(real_mob, COMSIG_MOB_PRE_FLASHED_CARBON, PROC_REF(on_flash))
+	real_mob.AddComponentFrom(REF(src), /datum/component/can_flash_from_behind)
 	RegisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON, PROC_REF(on_flash_success))
 
 /datum/antagonist/rev/head/remove_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/real_mob = mob_override || owner.current
-	UnregisterSignal(real_mob, list(COMSIG_MOB_PRE_FLASHED_CARBON, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON))
-
-/// Signal proc for [COMSIG_MOB_PRE_FLASHED_CARBON].
-/// Flashes will always result in partial success even if it's from behind someone
-/datum/antagonist/rev/head/proc/on_flash(mob/living/source, mob/living/carbon/flashed, obj/item/assembly/flash/flash, deviation)
-	SIGNAL_HANDLER
-
-	// Always partial flash at the very least
-	return (deviation == DEVIATION_FULL) ? DEVIATION_OVERRIDE_PARTIAL : NONE
+	real_mob.RemoveComponentSource(REF(src), /datum/component/can_flash_from_behind)
+	UnregisterSignal(real_mob, COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON)
 
 /// Signal proc for [COMSIG_MOB_SUCCESSFUL_FLASHED_CARBON].
 /// Bread and butter of revolution conversion, successfully flashing a carbon will make them a revolutionary
@@ -359,31 +352,25 @@
 		return ..()
 
 /datum/antagonist/rev/head/equip_rev()
-	var/mob/living/carbon/C = owner.current
-	if(!ishuman(C))
+	var/mob/living/carbon/carbon_owner = owner.current
+	if(!ishuman(carbon_owner))
 		return
 
 	if(give_flash)
-		var/obj/item/assembly/flash/handheld/T = new(C)
-		var/list/slots = list (
-			"backpack" = ITEM_SLOT_BACKPACK,
-			"left pocket" = ITEM_SLOT_LPOCKET,
-			"right pocket" = ITEM_SLOT_RPOCKET
-		)
-		var/where = C.equip_in_one_of_slots(T, slots, indirect_action = TRUE)
-		if (!where)
-			to_chat(C, "The Syndicate were unfortunately unable to get you a flash.")
+		var/where = carbon_owner.equip_conspicuous_item(new /obj/item/assembly/flash/handheld)
+		if (where)
+			to_chat(carbon_owner, "The flash in your [where] will help you to persuade the crew to join your cause.")
 		else
-			to_chat(C, "The flash in your [where] will help you to persuade the crew to join your cause.")
+			to_chat(carbon_owner, "The Syndicate were unfortunately unable to get you a flash.")
 
 	if(give_hud)
-		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/S = new()
-		S.Insert(C)
-		if(C.get_quirk(/datum/quirk/body_purist))
-			to_chat(C, "Being a body purist, you would never accept cybernetic implants. Upon hearing this, your employers signed you up for a special program, which... for \
+		var/obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate/hud = new()
+		hud.Insert(carbon_owner)
+		if(carbon_owner.get_quirk(/datum/quirk/body_purist))
+			to_chat(carbon_owner, "Being a body purist, you would never accept cybernetic implants. Upon hearing this, your employers signed you up for a special program, which... for \
 			some odd reason, you just can't remember... either way, the program must have worked, because you have gained the ability to keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 		else
-			to_chat(C, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
+			to_chat(carbon_owner, "Your eyes have been implanted with a cybernetic security HUD which will help you keep track of who is mindshield-implanted, and therefore unable to be recruited.")
 
 /datum/team/revolution
 	name = "\improper Revolution"
@@ -554,7 +541,7 @@
 			add_memory_in_range(head_of_staff, 5, /datum/memory/revolution_heads_victory, protagonist = head_of_staff)
 
 	priority_announce("It appears the mutiny has been quelled. Please return yourself and your incapacitated colleagues to work. \
-		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "Central Command Loyalty Monitoring Division")
+		We have remotely blacklisted the head revolutionaries in your medical records to prevent accidental revival.", null, null, null, "[command_name()] Loyalty Monitoring Division")
 
 /// Mutates the ticker to report that the revs have won
 /datum/team/revolution/proc/round_result(finished)

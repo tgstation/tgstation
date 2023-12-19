@@ -7,4 +7,3 @@
 	key = "ash_drake"
 	map_name = "ash_drake"
 	reward_points = BITRUNNER_REWARD_MEDIUM
-	safehouse_path = /datum/map_template/safehouse/lavaland_boss

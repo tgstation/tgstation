@@ -3,6 +3,7 @@
 /obj/item/assembly/flash
 	name = "flash"
 	desc = "A powerful and versatile flashbulb device, with applications ranging from disorienting attackers to acting as visual receptors in robot production."
+	icon = 'icons/obj/devices/flash.dmi'
 	icon_state = "flash"
 	inhand_icon_state = "flashtool"
 	lefthand_file = 'icons/mob/inhands/equipment/security_lefthand.dmi'
@@ -193,7 +194,7 @@
 	// Tactical combat emote-spinning should not counter intended gameplay mechanics.
 	// This trumps same-loc checks to discourage floor spinning in general to counter flashes.
 	// In short, combat spinning is silly and you should feel silly for doing it.
-	if(victim.flags_1 & IS_SPINNING_1)
+	if(HAS_TRAIT(victim, TRAIT_SPINNING))
 		return DEVIATION_NONE
 
 	if(iscarbon(victim))
@@ -296,7 +297,6 @@
 /obj/item/assembly/flash/memorizer
 	name = "memorizer"
 	desc = "If you see this, you're not likely to remember it any time soon."
-	icon = 'icons/obj/device.dmi'
 	icon_state = "memorizer"
 	inhand_icon_state = "nullrod"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
@@ -342,7 +342,7 @@
 
 /obj/item/assembly/flash/hypnotic
 	desc = "A modified flash device, programmed to emit a sequence of subliminal flashes that can send a vulnerable target into a hypnotic trance."
-	flashing_overlay = "flash-hypno"
+	flashing_overlay = "mindflash"
 	light_color = LIGHT_COLOR_PINK
 	cooldown = 20
 

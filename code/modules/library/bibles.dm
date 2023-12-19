@@ -251,27 +251,30 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 		return ..()
 
 	if(target_mob.stat == DEAD)
-		target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+		if(!GLOB.religious_sect?.sect_dead_bless(target_mob, user))
+			target_mob.visible_message(span_danger("[user] smacks [target_mob]'s lifeless corpse with [src]."))
+			playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
 		return
 
 	if(user == target_mob)
 		balloon_alert(user, "can't heal yourself!")
 		return
 
-	var/smack = TRUE
-	if(prob(60) && bless(target_mob, user))
-		smack = FALSE
-	else if(iscarbon(target_mob))
+	var/smack_chance = DEFAULT_SMACK_CHANCE
+	if(GLOB.religious_sect)
+		smack_chance = GLOB.religious_sect.smack_chance
+	var/success = !prob(smack_chance) && bless(target_mob, user)
+	if(success)
+		return
+	if(iscarbon(target_mob))
 		var/mob/living/carbon/carbon_target = target_mob
 		if(!istype(carbon_target.head, /obj/item/clothing/head/helmet))
 			carbon_target.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5, 60)
 			carbon_target.balloon_alert(carbon_target, "you feel dumber!")
-	if(smack)
-		target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
-				span_userdanger("[user] beats [target_mob] over the head with [src]!"))
-		playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
-		log_combat(user, target_mob, "attacked", src)
+	target_mob.visible_message(span_danger("[user] beats [target_mob] over the head with [src]!"), \
+			span_userdanger("[user] beats [target_mob] over the head with [src]!"))
+	playsound(target_mob, SFX_PUNCH, 25, TRUE, -1)
+	log_combat(user, target_mob, "attacked", src)
 
 /obj/item/book/bible/attackby_storage_insert(datum/storage, atom/storage_holder, mob/user)
 	return !istype(storage_holder, /obj/item/book/bible)
@@ -323,13 +326,14 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/stone in sword.contents)
 				stone.required_role = null
-				for(var/mob/living/simple_animal/shade/shade in stone)
+				for(var/mob/living/basic/shade/shade in stone)
 					var/datum/antagonist/cult/cultist = shade.mind.has_antag_datum(/datum/antagonist/cult)
 					if(cultist)
 						cultist.silent = TRUE
 						cultist.on_removal()
-					shade.icon_state = "shade_holy"
-					shade.name = "Purified [shade.name]"
+					shade.theme = THEME_HOLY
+					shade.name = "Purified [shade.real_name]"
+					shade.update_appearance(UPDATE_ICON_STATE)
 				stone.release_shades(user)
 				qdel(stone)
 			new /obj/item/nullrod/claymore(get_turf(sword))

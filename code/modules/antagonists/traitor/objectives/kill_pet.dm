@@ -23,15 +23,15 @@
 			/mob/living/basic/pet/dog/corgi/puppy/ian
 		),
 		JOB_CAPTAIN = /mob/living/basic/pet/fox/renault,
-		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/simple_animal/pet/cat/runtime,
-		JOB_CHIEF_ENGINEER = /mob/living/simple_animal/parrot/poly,
+		JOB_CHIEF_MEDICAL_OFFICER = /mob/living/basic/pet/cat/runtime,
+		JOB_CHIEF_ENGINEER = /mob/living/basic/parrot/poly,
 		JOB_QUARTERMASTER = list(
 			/mob/living/basic/gorilla/cargorilla,
 			/mob/living/basic/sloth/citrus,
 			/mob/living/basic/sloth/paperwork,
 		)
 	)
-	/// The head that we are targetting
+	/// The head that we are targeting
 	var/datum/job/target
 	/// Whether or not we only take from the traitor's own department head or not.
 	var/limited_to_department_head = TRUE

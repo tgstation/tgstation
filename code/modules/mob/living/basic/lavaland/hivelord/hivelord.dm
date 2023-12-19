@@ -36,7 +36,7 @@
 	AddComponent(/datum/component/appearance_on_aggro, aggro_state = "hivelord_alert")
 	spawn_brood = new(src)
 	spawn_brood.Grant(src)
-	ai_controller.set_blackboard_key(BB_TARGETTED_ACTION, spawn_brood)
+	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, spawn_brood)
 
 /mob/living/basic/mining/hivelord/Destroy()
 	QDEL_NULL(spawn_brood)

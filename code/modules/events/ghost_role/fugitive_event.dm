@@ -134,9 +134,17 @@
 				var/mob/our_candidate = candidates[1]
 				var/mob/spawned_mob = spawner.create_from_ghost(our_candidate)
 				candidates -= our_candidate
-				notify_ghosts("[spawner.prompt_name] has awoken: [spawned_mob]!", source = spawned_mob, action = NOTIFY_ORBIT, header="Come look!")
+				notify_ghosts(
+					"[spawner.prompt_name] has awoken: [spawned_mob]!",
+					source = spawned_mob,
+					header = "Come look!",
+				)
 			else
-				notify_ghosts("[spawner.prompt_name] spawner has been created!", source = spawner, action = NOTIFY_ORBIT, header="Spawn Here!")
+				notify_ghosts(
+					"[spawner.prompt_name] spawner has been created!",
+					source = spawner,
+					header = "Spawn Here!",
+				)
 
 	priority_announce("Unidentified ship detected near the station.")
 

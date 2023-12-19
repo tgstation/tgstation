@@ -424,6 +424,7 @@
 							head.dismember()
 							victim_living.regenerate_icons()
 							add_overlay(mutable_appearance(icon, "blood_overlay"))
+							register_collision(points = 3)
 
 					if(FALSE)
 						log_combat(src, victim_living, "collided with")
@@ -452,16 +453,19 @@
 				victim_living.throw_at(throw_target, 200 * collision_lethality, 4 * collision_lethality, callback = land_slam)
 
 				//increment the hit counters
-				if(ismob(victim_living) && victim_living.client)
-					if(istype(transport_controller_datum, /datum/transport_controller/linear/tram))
-						SSpersistence.tram_hits_this_round++
-						SSblackbox.record_feedback("amount", "tram_collision", 1)
-						var/datum/transport_controller/linear/tram/tram_controller = transport_controller_datum
-						tram_controller.register_collision()
+				if(ismob(victim_living) && victim_living.client && istype(transport_controller_datum, /datum/transport_controller/linear/tram))
+					register_collision(points = 1)
 
 	unset_movement_registrations(exited_locs)
 	group_move(things_to_move, travel_direction)
 	set_movement_registrations(entering_locs)
+
+/obj/structure/transport/linear/proc/register_collision(points = 1)
+	SSpersistence.tram_hits_this_round += points
+	SSblackbox.record_feedback("amount", "tram_collision", points)
+	var/datum/transport_controller/linear/tram/tram_controller = transport_controller_datum
+	ASSERT(istype(tram_controller))
+	tram_controller.register_collision(points)
 
 ///move the movers list of movables on our tile to destination if we successfully move there first.
 ///this is like calling forceMove() on everything in movers and ourselves, except nothing in movers

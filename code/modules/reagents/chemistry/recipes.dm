@@ -46,7 +46,7 @@
 	var/temp_exponent_factor = 2
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
-	/// How much the temperature will change (with no intervention) (i.e. for 30u made the temperature will increase by 100, same with 300u. The final temp will always be start + this value, with the exception con beakers with different specific heats)
+	/// How much the temperature changes per unit of chem used. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
 	var/thermic_constant = 50
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
@@ -161,7 +161,7 @@
 		var/cached_purity = reagent.purity
 		if((reaction_flags & REACTION_CLEAR_INVERSE) && reagent.inverse_chem)
 			if(reagent.inverse_chem_val > reagent.purity)
-				holder.remove_reagent(reagent.type, cached_volume, FALSE)
+				holder.remove_reagent(reagent.type, cached_volume, safety = FALSE)
 				holder.add_reagent(reagent.inverse_chem, cached_volume, FALSE, added_purity = reagent.get_inverse_purity(cached_purity))
 				return
 
@@ -179,10 +179,10 @@
  */
 /datum/chemical_reaction/proc/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	for(var/id in results)
-		var/datum/reagent/reagent = holder.get_reagent(id)
+		var/datum/reagent/reagent = holder.has_reagent(id)
 		if(!reagent)
 			return
-		reagent.volume = round((reagent.volume*0.98), 0.01) //Slowly lower yield per tick
+		reagent.volume = round((reagent.volume * 0.98), CHEMICAL_QUANTISATION_LEVEL) //Slowly lower yield per tick
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
@@ -199,7 +199,7 @@
 /datum/chemical_reaction/proc/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	var/affected_list = results + required_reagents
 	for(var/_reagent in affected_list)
-		var/datum/reagent/reagent = holder.get_reagent(_reagent)
+		var/datum/reagent/reagent = holder.has_reagent(_reagent)
 		if(!reagent)
 			continue
 		reagent.purity = clamp((reagent.purity-0.01), 0, 1) //slowly reduce purity of reagents

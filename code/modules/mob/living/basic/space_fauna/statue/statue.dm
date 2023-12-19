@@ -141,7 +141,7 @@
 
 /datum/ai_controller/basic_controller/statue
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null, // lights
 	)
 

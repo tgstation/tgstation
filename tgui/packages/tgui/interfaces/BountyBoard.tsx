@@ -1,8 +1,18 @@
 import { useBackend } from '../backend';
-import { UserDetails } from './Vending';
-import { BlockQuote, Box, Button, Collapsible, Flex, NumberInput, Section, Stack, TextArea } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Collapsible,
+  Flex,
+  NumberInput,
+  Section,
+  Stack,
+  TextArea,
+} from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
+import { UserDetails } from './Vending';
 
 type Data = {
   accountName: string;
@@ -31,7 +41,7 @@ type User = {
   name: string;
 };
 
-export const BountyBoard = (props, context) => {
+export const BountyBoard = (props) => {
   return (
     <Window width={550} height={600}>
       <Window.Content scrollable>
@@ -41,8 +51,8 @@ export const BountyBoard = (props, context) => {
   );
 };
 
-export const BountyBoardContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const BountyBoardContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     accountName,
     requests = [],
@@ -63,7 +73,8 @@ export const BountyBoardContent = (props, context) => {
             content="Reset Account"
             onClick={() => act('clear')}
           />
-        }>
+        }
+      >
         <UserDetails />
       </Section>
       <Flex mb={1}>
@@ -110,7 +121,7 @@ export const BountyBoardContent = (props, context) => {
                   {applicants?.map(
                     (applicant) =>
                       applicant.request_id === request.acc_number && (
-                        <Flex>
+                        <Flex key={applicant.request_id}>
                           <Flex.Item
                             grow={1}
                             p={0.5}
@@ -119,7 +130,8 @@ export const BountyBoardContent = (props, context) => {
                             textAlign="center"
                             style={{
                               border: `2px solid ${color}`,
-                            }}>
+                            }}
+                          >
                             {applicant.name}
                           </Flex.Item>
                           <Flex.Item align="end">
@@ -137,7 +149,7 @@ export const BountyBoardContent = (props, context) => {
                             />
                           </Flex.Item>
                         </Flex>
-                      )
+                      ),
                   )}
                 </Section>
               </Section>

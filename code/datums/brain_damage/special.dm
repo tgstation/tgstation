@@ -100,12 +100,15 @@
 	image_icon = 'icons/effects/effects.dmi'
 	image_state = "bluestream"
 	image_layer = ABOVE_MOB_LAYER
-	image_plane = GAME_PLANE_UPPER
 	var/obj/effect/client_image_holder/bluespace_stream/linked_to
 
 /obj/effect/client_image_holder/bluespace_stream/Initialize(mapload, list/mobs_which_see_us)
 	. = ..()
 	QDEL_IN(src, 30 SECONDS)
+
+/obj/effect/client_image_holder/bluespace_stream/generate_image()
+	. = ..()
+	apply_wibbly_filters(.)
 
 /obj/effect/client_image_holder/bluespace_stream/Destroy()
 	if(!QDELETED(linked_to))

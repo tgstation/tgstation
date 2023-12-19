@@ -115,7 +115,7 @@
 	voice = target.voice
 	voice_filter = target.voice_filter
 
-/// Make the targetted human look like this
+/// Make the targeted human look like this
 /datum/human_appearance_profile/proc/apply_to(mob/living/carbon/human/target)
 	target.real_name = name
 	target.age = age

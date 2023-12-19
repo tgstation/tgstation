@@ -61,6 +61,11 @@
 	id = "comp_trigonometry"
 	build_path = /obj/item/circuit_component/trigonometry
 
+/datum/design/component/arctan2
+	name = "Arctangent 2 Component"
+	id = "comp_arctan2"
+	build_path = /obj/item/circuit_component/arctan2
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
