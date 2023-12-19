@@ -143,17 +143,19 @@
 	qdel(scanner_wand)
 	return ..()
 
-/obj/machinery/medical_kiosk/emag_act(mob/user)
-	..()
+/obj/machinery/medical_kiosk/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(obj_flags & EMAGGED)
 		return
 	if(user)
-		user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"),
-	span_notice("You overload the sensory electronics, the diagnostic readouts start jittering across the screen.."))
+		if (emag_card)
+			user.visible_message(span_warning("[user] waves a suspicious card by the [src]'s biometric scanner!"))
+		balloon_alert(user, "sensors overloaded")
 	obj_flags |= EMAGGED
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.obj_flags |= EMAGGED //Mirrors emag status onto the board as well.
 	pandemonium = TRUE
+	return TRUE
 
 /obj/machinery/medical_kiosk/examine(mob/user)
 	. = ..()

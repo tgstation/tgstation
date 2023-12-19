@@ -37,7 +37,7 @@
 	strength = severity
 
 	RegisterSignals(parent, list(COMSIG_ATOM_HULK_ATTACK, COMSIG_ATOM_ATTACK_ANIMAL, COMSIG_ATOM_ATTACK_HAND), PROC_REF(rot_react_touch))
-	RegisterSignal(parent, COMSIG_PARENT_ATTACKBY, PROC_REF(rot_hit_react))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(rot_hit_react))
 	if(ismovable(parent))
 		AddComponent(/datum/component/connect_loc_behalf, parent, loc_connections)
 		RegisterSignal(parent, COMSIG_MOVABLE_BUMP, PROC_REF(rot_react))
@@ -147,9 +147,26 @@
 		return
 
 	//We're running just under the "worst disease", since we don't want these to be too strong
-	var/datum/disease/advance/random/rand_disease = new(rand(4 * strength * time_scaling), rand(strength * 5 * time_scaling))
-	rand_disease.name = "Unknown"
-	react_to.ContactContractDisease(rand_disease, target_zone)
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 2,
+		ANTIGEN_COMMON	= 2,
+		ANTIGEN_RARE	= 1,
+		ANTIGEN_ALIEN	= 0,
+	)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_FLAVOR	= 2,
+		EFFECT_DANGER_ANNOYING	= 2,
+		EFFECT_DANGER_HINDRANCE	= 2,
+		EFFECT_DANGER_HARMFUL	= 2,
+		EFFECT_DANGER_DEADLY	= 0,
+	)
+	var/datum/disease/advanced/disease = new virus_choice
+	disease.makerandom(list(50,90),list(10,100),anti,bad,src)
+
+	var/note = "Rot Infection Contact [key_name(react_to)]"
+	react_to.try_contact_infect(disease, note = note)
 
 #undef REAGENT_BLOCKER
 #undef TEMPERATURE_BLOCKER

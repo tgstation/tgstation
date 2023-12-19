@@ -9,9 +9,33 @@
 
 /obj/item/organ/internal/heart/gland/viral/activate()
 	to_chat(owner, span_warning("You feel sick."))
-	var/datum/disease/advance/A = random_virus(pick(2,6),6)
-	A.carrier = TRUE
-	owner.ForceContractDisease(A, FALSE, TRUE)
+
+	var/list/anti = list(
+		ANTIGEN_BLOOD	= 1,
+		ANTIGEN_COMMON	= 1,
+		ANTIGEN_RARE	= 0,
+		ANTIGEN_ALIEN	= 0,
+	)
+	var/list/bad = list(
+		EFFECT_DANGER_HELPFUL	= 1,
+		EFFECT_DANGER_FLAVOR	= 4,
+		EFFECT_DANGER_ANNOYING	= 4,
+		EFFECT_DANGER_HINDRANCE	= 0,
+		EFFECT_DANGER_HARMFUL	= 0,
+		EFFECT_DANGER_DEADLY	= 0,
+	)
+	var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+	var/datum/disease/advanced/D = new virus_choice
+
+	D.makerandom(list(30,55),list(0,50),anti,bad,null)
+
+	D.log += "<br />[ROUND_TIME()] Infected [key_name(owner)]"
+	if(!length(owner))
+		owner.diseases = list()
+	owner.diseases += D
+
+	D.AddToGoggleView(owner)
+
 
 /obj/item/organ/internal/heart/gland/viral/proc/random_virus(max_symptoms, max_level)
 	if(max_symptoms > VIRUS_SYMPTOM_LIMIT)

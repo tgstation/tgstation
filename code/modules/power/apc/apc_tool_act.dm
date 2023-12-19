@@ -202,23 +202,27 @@
 	balloon_alert(user, "has both board and cell!")
 	return FALSE
 
-/obj/machinery/power/apc/emag_act(mob/user)
+/obj/machinery/power/apc/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if((obj_flags & EMAGGED) || malfhack)
-		return
+		return FALSE
 
 	if(opened)
 		balloon_alert(user, "close the cover first!")
+		return FALSE
 	else if(panel_open)
 		balloon_alert(user, "close the panel first!")
+		return FALSE
 	else if(machine_stat & (BROKEN|MAINT))
 		balloon_alert(user, "nothing happens!")
+		return FALSE
 	else
 		flick("apc-spark", src)
 		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
-		balloon_alert(user, "you emag the APC")
+		balloon_alert(user, "interface damaged")
 		update_appearance()
+		return TRUE
 
 // damage and destruction acts
 /obj/machinery/power/apc/emp_act(severity)

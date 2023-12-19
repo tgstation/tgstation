@@ -174,7 +174,7 @@
 /obj/item/reagent_containers/syringe/antiviral
 	name = "syringe (spaceacillin)"
 	desc = "Contains antiviral agents."
-	list_reagents = list(/datum/reagent/medicine/spaceacillin = 15)
+	list_reagents = list(/datum/reagent/medicine/antipathogenic/spaceacillin = 15)
 
 /obj/item/reagent_containers/syringe/bioterror
 	name = "bioterror syringe"

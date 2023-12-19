@@ -94,7 +94,7 @@
 	if(scanner)
 		if(!target.extrapolator_act(user, src, scan))
 
-			if(locate(/datum/component/infective) in target.datum_components)
+			if(locate(/datum/component/infective) in target._datum_components)
 				return //so the failure message does not show when we can actually extrapolate from a component
 			if(scan)
 				to_chat(user, "<span class='notice'>the extrapolator fails to return any data</span>")

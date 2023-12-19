@@ -420,7 +420,7 @@ SUBSYSTEM_DEF(timer)
 		CRASH("Invalid timer state: Timer created that would require a backtrack to run (addtimer would never let this happen): [SStimer.get_timer_debug_string(src)]")
 
 	if (callBack.object != GLOBAL_PROC && !QDESTROYING(callBack.object))
-		LAZYADD(callBack.object.active_timers, src)
+		LAZYADD(callBack.object._active_timers, src)
 
 	bucketJoin()
 
@@ -429,9 +429,9 @@ SUBSYSTEM_DEF(timer)
 	if (flags & TIMER_UNIQUE && hash)
 		timer_subsystem.hashes -= hash
 
-	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object.active_timers)
-		callBack.object.active_timers -= src
-		UNSETEMPTY(callBack.object.active_timers)
+	if (callBack && callBack.object && callBack.object != GLOBAL_PROC && callBack.object._active_timers)
+		callBack.object._active_timers -= src
+		UNSETEMPTY(callBack.object._active_timers)
 
 	callBack = null
 

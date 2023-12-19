@@ -241,6 +241,7 @@
 	cyborg.diag_hud_set_aishell()
 	cyborg.update_icons()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
+	add_event_to_buffer(cyborg, data ="has transformed into the [new_model] model.", log_key = "SILICON")
 
 	INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
 	qdel(src)
@@ -975,7 +976,7 @@
 	if(model)
 		model.storages |= src
 		RegisterSignal(model.robot, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(get_status_tab_item))
-		RegisterSignal(model, COMSIG_PARENT_QDELETING, PROC_REF(unregister_from_model))
+		RegisterSignal(model, COMSIG_QDELETING, PROC_REF(unregister_from_model))
 
 /datum/robot_energy_storage/proc/unregister_from_model(obj/item/robot_model/model)
 	SIGNAL_HANDLER

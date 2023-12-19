@@ -32,6 +32,7 @@
 	var/message = "[what_done] [starget][postfix]"
 	user.log_message(message, LOG_ATTACK, color="red")
 
+	add_event_to_buffer(user, target, message, "ATTACK")
 	if(user != target)
 		var/reverse_message = "was [what_done] by [ssource][postfix]"
 		target.log_message(reverse_message, LOG_VICTIM, color="orange", log_globally=FALSE)
@@ -67,6 +68,7 @@
 	if(dealt_bare_wound_bonus)
 		message += " | BWB: [dealt_bare_wound_bonus]"
 
+	add_event_to_buffer(victim, data = message, log_key = "WOUND")
 	victim.log_message(message, LOG_ATTACK, color="blue")
 
 /// Logging for bombs detonating
@@ -81,5 +83,6 @@
 
 	GLOB.bombers += bomb_message
 
+	add_event_to_buffer(user, data = bomb_message, log_key = "BOMB")
 	if(message_admins)
 		message_admins("[user ? "[ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(user)] " : ""][details][bomb ? " [bomb.name] at [ADMIN_VERBOSEJMP(bomb)]": ""][additional_details ? " [additional_details]" : ""].")

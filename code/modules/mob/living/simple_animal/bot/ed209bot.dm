@@ -26,10 +26,13 @@
 	..()
 	set_weapon()
 
-/mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/secbot/ed209/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	icon_state = "ed209[get_bot_flag(bot_mode_flags, BOT_MODE_ON)]"
 	set_weapon()
+	balloon_alert(user, "safeties disabled")
+	audible_message(span_bolddanger("[src] buzzes menacingly!"))
+	return TRUE
 
 /mob/living/simple_animal/bot/secbot/ed209/handle_automated_action()
 	var/judgement_criteria = judgement_criteria()

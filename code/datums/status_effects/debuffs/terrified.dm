@@ -74,9 +74,8 @@
 			span_alert("The shadows begin to creep up from the corners of your vision, and then there is nothing..."),
 			span_hear("You hear something heavy collide with the ground."),
 		)
-		var/datum/disease/heart_failure/heart_attack = new(src)
-		heart_attack.stage_prob = 2 //Advances twice as fast
-		owner.ForceContractDisease(heart_attack)
+		owner.infect_disease_predefined(DISEASE_HEART, TRUE)
+		//owner.ForceContractDisease(heart_attack)
 		owner.Unconscious(20 SECONDS)
 		qdel(src) //Victim passes out from fear, calming them down and permenantly damaging their heart.
 

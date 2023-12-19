@@ -88,6 +88,11 @@
 
 /// If the blob changes to distributed neurons then you can control the spores
 /mob/living/basic/blob_minion/spore/minion/on_strain_updated(mob/camera/blob/overmind, datum/blobstrain/new_strain)
+	if (isnull(overmind))
+		REMOVE_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
+	else
+		ADD_TRAIT(src, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
+
 	if (istype(new_strain, /datum/blobstrain/reagent/distributed_neurons))
 		AddComponent(\
 			/datum/component/ghost_direct_control,\

@@ -104,12 +104,12 @@
 	last_found = world.time
 	update_appearance()
 
-/mob/living/simple_animal/bot/firebot/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/firebot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 
-	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targeting safeties.")) // heheehe. funny
+	to_chat(user, span_warning("You enable the very ironically named \"fighting with fire\" mode, and disable the targetting safeties.")) // heheehe. funny
 
 	audible_message(span_danger("[src] buzzes oddly!"))
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -125,6 +125,7 @@
 	internal_ext.precision = FALSE
 	internal_ext.max_water = INFINITY
 	internal_ext.refill()
+	return TRUE
 
 // Variables sent to TGUI
 /mob/living/simple_animal/bot/firebot/ui_data(mob/user)

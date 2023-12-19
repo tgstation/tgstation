@@ -227,18 +227,18 @@
 	if(health < current_health) //if medbot took some damage
 		step_to(src, (get_step_away(src,user)))
 
-/mob/living/simple_animal/bot/medbot/emag_act(mob/user)
-	..()
+/mob/living/simple_animal/bot/medbot/emag_act(mob/user, obj/item/card/emag/emag_card)
+	. = ..()
 	if(!(bot_cover_flags & BOT_COVER_EMAGGED))
 		return
 	medical_mode_flags &= ~MEDBOT_DECLARE_CRIT
-	if(user)
-		to_chat(user, span_notice("You short out [src]'s reagent synthesis circuits."))
+	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick("medibot_spark", src)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	if(user)
 		oldpatient = user
+	return TRUE
 
 /mob/living/simple_animal/bot/medbot/process_scan(mob/living/carbon/human/H)
 	if(H.stat == DEAD)

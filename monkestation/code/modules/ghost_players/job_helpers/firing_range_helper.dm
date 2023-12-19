@@ -8,6 +8,7 @@
 	blacklisted_items = list(
 		/obj/item/gun/ballistic,
 		/obj/item/gun/ballistic/automatic,
+		/obj/item/gun/ballistic/shotgun/doublebarrel/brazil/death,
 		/obj/item/gun/blastcannon,
 		/obj/item/gun/energy,
 		/obj/item/gun/energy/minigun, //might runtime
@@ -50,7 +51,12 @@
 		/obj/item/gun/magic/wand/death,
 		/obj/item/gun/magic/wand/safety,
 		/obj/item/gun/medbeam,
+		/obj/item/gun/energy/recharge/kinetic_accelerator/meme,
 	)
+
+/obj/structure/centcom_item_spawner/gun_and_ammo_creator/spawn_chosen_item(type_to_spawn)
+	var/obj/spawned_obj = new type_to_spawn(get_turf(src))
+	spawned_obj.AddElement(/datum/element/area_locked, list(/area/centcom/central_command_areas/firing_range))
 
 /obj/structure/centcom_item_spawner/gun_and_ammo_creator/build_items_to_spawn()
 	items_to_spawn["Ballistic"] = subtypesof(/obj/item/gun/ballistic)
@@ -81,4 +87,3 @@
 		if(istype(object, /obj/item/gun))
 			return FALSE
 	return ..()
-

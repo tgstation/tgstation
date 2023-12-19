@@ -46,10 +46,10 @@
 	return ..()
 
 /datum/component/radioactive_emitter/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /datum/component/radioactive_emitter/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_PARENT_EXAMINE)
+	UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 /datum/component/radioactive_emitter/InheritComponent(
 	datum/component/new_comp,

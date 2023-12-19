@@ -6,7 +6,7 @@
 		/datum/reagent/medicine/c2/libital,\
 		/datum/reagent/medicine/c2/multiver,\
 		/datum/reagent/medicine/salglu_solution,\
-		/datum/reagent/medicine/spaceacillin\
+		/datum/reagent/medicine/antipathogenic/spaceacillin\
 	)
 #define EXPANDED_MEDICAL_REAGENTS list(\
 		/datum/reagent/medicine/haloperidol,\

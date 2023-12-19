@@ -75,6 +75,7 @@
 /// Grows a new segment behind the passed mob
 /mob/living/basic/heretic_summon/armsy/proc/new_segment(mob/living/basic/heretic_summon/armsy/behind)
 	var/mob/living/segment = new type(drop_location(), FALSE)
+	ADD_TRAIT(segment, TRAIT_PERMANENTLY_MORTAL, INNATE_TRAIT)
 	segment.AddComponent(/datum/component/mob_chain, front = behind, vary_icon_state = TRUE)
 	behind.register_behind(segment)
 	return segment
@@ -82,11 +83,11 @@
 /// Record that we got another guy on our ass
 /mob/living/basic/heretic_summon/armsy/proc/register_behind(mob/living/tail)
 	if(!isnull(back)) // Shouldn't happen but just in case
-		UnregisterSignal(back, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(back, COMSIG_QDELETING)
 	back = tail
 	update_appearance(UPDATE_ICON_STATE)
 	if(!isnull(back))
-		RegisterSignal(back, COMSIG_PARENT_QDELETING, PROC_REF(tail_deleted))
+		RegisterSignal(back, COMSIG_QDELETING, PROC_REF(tail_deleted))
 
 /// When our tail is gone stop holding a reference to it
 /mob/living/basic/heretic_summon/armsy/proc/tail_deleted()

@@ -20,7 +20,7 @@
 	expire_time = 1 MINUTES,
 	glow_colour = COLOR_RED,
 	datum/callback/explosive_checks,
-	list/triggering_signals = list(COMSIG_PARENT_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BUMPED)
+	list/triggering_signals = list(COMSIG_ATOM_ATTACKBY, COMSIG_ATOM_ATTACK_HAND, COMSIG_ATOM_BUMPED)
 )
 	. = ..()
 	if (!isatom(parent))
@@ -35,21 +35,21 @@
 		addtimer(CALLBACK(src, PROC_REF(bomb_expired)), expire_time, TIMER_DELETE_ME)
 
 /datum/component/direct_explosive_trap/RegisterWithParent()
-	if (!(COMSIG_PARENT_EXAMINE in triggering_signals)) // Maybe you're being extra mean with this one
-		RegisterSignal(parent, COMSIG_PARENT_EXAMINE, PROC_REF(on_examined))
+	if (!(COMSIG_ATOM_EXAMINE in triggering_signals)) // Maybe you're being extra mean with this one
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
 	RegisterSignals(parent, triggering_signals, PROC_REF(explode))
 	if (!isnull(saboteur))
-		RegisterSignal(saboteur, COMSIG_PARENT_QDELETING, PROC_REF(on_bomber_deleted))
+		RegisterSignal(saboteur, COMSIG_QDELETING, PROC_REF(on_bomber_deleted))
 
 /datum/component/direct_explosive_trap/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_PARENT_EXAMINE) + triggering_signals)
+	UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE) + triggering_signals)
 	if (!isnull(saboteur))
-		UnregisterSignal(saboteur, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(saboteur, COMSIG_QDELETING)
 
 /datum/component/direct_explosive_trap/Destroy(force, silent)
 	if (isnull(saboteur))
 		return ..()
-	UnregisterSignal(saboteur, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(saboteur, COMSIG_QDELETING)
 	saboteur = null
 	return ..()
 

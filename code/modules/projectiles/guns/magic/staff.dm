@@ -210,8 +210,6 @@
 		/obj/projectile/plasma,
 	) //if you ever try to expand this list, avoid adding bullets/energy projectiles, this ain't supposed to be a gun... unless it's funny
 
-
-
 /obj/item/gun/magic/staff/door
 	name = "staff of door creation"
 	desc = "An artefact that spits bolts of transformative magic that can create doors in walls."

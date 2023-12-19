@@ -83,7 +83,7 @@
 		user_client = user.client
 		add_prog_bar_image_to_client()
 
-	RegisterSignal(user, COMSIG_PARENT_QDELETING, PROC_REF(on_user_delete))
+	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_user_delete))
 	RegisterSignal(user, COMSIG_MOB_LOGOUT, PROC_REF(clean_user_client))
 	RegisterSignal(user, COMSIG_MOB_LOGIN, PROC_REF(on_user_login))
 
@@ -301,8 +301,8 @@
 	if(has_outline)
 		src.add_filter("outline", 1, list(type = "outline", size = 1,  color = "#FFFFFF"))
 
-	RegisterSignal(bar_loc, COMSIG_PARENT_QDELETING, PROC_REF(bar_loc_delete), override = TRUE)
-	RegisterSignal(owner, COMSIG_PARENT_QDELETING, PROC_REF(owner_delete), override = TRUE)
+	RegisterSignal(bar_loc, COMSIG_QDELETING, PROC_REF(bar_loc_delete), override = TRUE)
+	RegisterSignal(owner, COMSIG_QDELETING, PROC_REF(owner_delete), override = TRUE)
 
 /obj/effect/world_progressbar/Destroy()
 	owner = null

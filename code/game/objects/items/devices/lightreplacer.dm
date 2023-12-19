@@ -135,12 +135,14 @@
 
 		to_chat(user, span_notice("You fill \the [src] with lights from \the [storage_to_empty]. " + status_string() + ""))
 
-/obj/item/lightreplacer/emag_act()
+/obj/item/lightreplacer/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
-		return
+		return FALSE
 	obj_flags |= EMAGGED
 	playsound(loc, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	update_appearance()
+	to_chat(user, span_warning("[src]'s lights are now filled with plasma! Be careful to only install them in disabled light fixtures, lest they explode!"))
+	return FALSE
 
 /obj/item/lightreplacer/update_name(updates)
 	. = ..()
@@ -275,7 +277,7 @@
 	bluespace_toggle = TRUE
 
 /obj/item/lightreplacer/blue/emag_act()
-	return  // balancing against longrange explosions
+	return FALSE  // balancing against longrange explosions
 
 #undef GLASS_SHEET_USES
 #undef LIGHTBULB_COST

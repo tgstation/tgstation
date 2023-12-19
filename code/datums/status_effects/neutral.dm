@@ -185,8 +185,8 @@
 		return
 
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_owner_in_range))
-	RegisterSignals(offered_item, list(COMSIG_PARENT_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_item))
-	//RegisterSignal(owner, COMSIG_PARENT_EXAMINE_MORE, PROC_REF(check_fake_out))
+	RegisterSignals(offered_item, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(dropped_item))
+	//RegisterSignal(owner, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(check_fake_out))
 
 /datum/status_effect/offering/Destroy()
 	for(var/i in possible_takers)
@@ -379,7 +379,7 @@
 
 /datum/status_effect/eigenstasium/Destroy()
 	if(alt_clone)
-		UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
+		UnregisterSignal(alt_clone, COMSIG_QDELETING)
 		QDEL_NULL(alt_clone)
 	return ..()
 
@@ -466,7 +466,7 @@
 					alt_clone = new typepath(owner.loc)
 					alt_clone.appearance = owner.appearance
 					alt_clone.real_name = owner.real_name
-					RegisterSignal(alt_clone, COMSIG_PARENT_QDELETING, PROC_REF(remove_clone_from_var))
+					RegisterSignal(alt_clone, COMSIG_QDELETING, PROC_REF(remove_clone_from_var))
 					owner.visible_message("[owner] splits into seemingly two versions of themselves!")
 					do_teleport(alt_clone, get_turf(alt_clone), 2, no_effects=TRUE) //teleports clone so it's hard to find the real one!
 					do_sparks(5,FALSE,alt_clone)
@@ -515,7 +515,7 @@
 
 /datum/status_effect/eigenstasium/proc/remove_clone_from_var()
 	SIGNAL_HANDLER
-	UnregisterSignal(alt_clone, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(alt_clone, COMSIG_QDELETING)
 
 /datum/status_effect/eigenstasium/on_remove()
 	if(!QDELETED(alt_clone))//catch any stragilers

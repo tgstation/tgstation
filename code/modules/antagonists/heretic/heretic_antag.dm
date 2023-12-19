@@ -438,11 +438,11 @@
 		return FALSE
 
 	LAZYREMOVE(sac_targets, target)
-	UnregisterSignal(target, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(target, COMSIG_QDELETING)
 	return TRUE
 
 /**
- * Signal proc for [COMSIG_PARENT_QDELETING] registered on sac targets
+ * Signal proc for [COMSIG_QDELETING] registered on sac targets
  * if sacrifice targets are deleted (gibbed, dusted, whatever), free their slot and reference
  */
 /datum/antagonist/heretic/proc/on_target_deleted(mob/living/carbon/human/source)

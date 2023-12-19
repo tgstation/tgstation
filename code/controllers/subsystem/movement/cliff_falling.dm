@@ -15,7 +15,7 @@ MOVEMENT_SUBSYSTEM_DEF(cliff_falling)
 	cliff_grinders[faller] = mover
 
 	RegisterSignal(faller, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	RegisterSignal(faller, COMSIG_PARENT_QDELETING, PROC_REF(clear_references))
+	RegisterSignal(faller, COMSIG_QDELETING, PROC_REF(clear_references))
 	RegisterSignal(faller, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(check_move))
 
 /// We just moved, so check if we're still moving right
@@ -45,7 +45,7 @@ MOVEMENT_SUBSYSTEM_DEF(cliff_falling)
 /datum/controller/subsystem/movement/cliff_falling/proc/clear_references(atom/movable/deletee)
 	cliff_grinders -= deletee
 
-	UnregisterSignal(deletee, list(COMSIG_MOVABLE_MOVED, COMSIG_PARENT_QDELETING, COMSIG_MOVABLE_PRE_MOVE))
+	UnregisterSignal(deletee, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_MOVABLE_PRE_MOVE))
 
 /// Check if we can move! We do this mostly to determine falling behaviour and make sure we're moving to valid tiles
 /datum/controller/subsystem/movement/cliff_falling/proc/check_move(atom/movable/mover, turf/target)

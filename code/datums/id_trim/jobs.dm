@@ -1109,7 +1109,7 @@
 	job = /datum/job/station_engineer
 
 /datum/id_trim/job/virologist
-	assignment = "Virologist"
+	assignment = "Pathologist"
 	trim_state = "trim_virologist"
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE

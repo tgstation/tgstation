@@ -45,8 +45,6 @@
 		var/turf/assistant_turf = pick_n_take(empty_shuttle_turfs)
 		new infected_assistant(assistant_turf)
 	spawn_list.Add(/obj/structure/closet/crate)
-	spawn_list.Add(/obj/item/reagent_containers/cup/bottle/pierrot_throat)
-	spawn_list.Add(/obj/item/reagent_containers/cup/bottle/magnitis)
 
 /datum/shuttle_loan_situation/department_resupply
 	sender = "CentCom Supply Department"

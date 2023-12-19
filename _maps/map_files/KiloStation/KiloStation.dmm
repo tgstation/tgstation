@@ -11374,7 +11374,7 @@
 	id = "virologysurgery";
 	name = "Virology Privacy Toggle";
 	pixel_y = 6;
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/tile/green/half/contrasted{
 	dir = 8
@@ -48898,7 +48898,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/window/left/directional/east{
 	name = "Monkey Pen";
-	req_access = list("virology")
+	req_access = list("pathology")
 	},
 /obj/effect/turf_decal/delivery,
 /turf/open/floor/iron/dark,

@@ -518,6 +518,10 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	//This is down here because of the browse() calls in tooltip/New()
 	if(!tooltips)
 		tooltips = new /datum/tooltip(src)
+	
+	if(((player_age != -1) && player_age < CONFIG_GET(number/minimum_age)) && !(ckey in GLOB.interviews.approved_ckeys))
+		interviewee = TRUE
+		register_for_interview()
 
 	if (!interviewee)
 		initialize_menus()
@@ -543,7 +547,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	if(!gc_destroyed)
 		// Yes this is the same as what's found in qdel(). Yes it does need to be here
 		// Get off my back
-		SEND_SIGNAL(src, COMSIG_PARENT_QDELETING, TRUE)
+		SEND_SIGNAL(src, COMSIG_QDELETING, TRUE)
 		Destroy() //Clean up signals and timers.
 	return ..()
 

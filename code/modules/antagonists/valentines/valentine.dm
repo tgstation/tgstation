@@ -6,6 +6,8 @@
 	suicide_cry = "FOR MY LOVE!!"
 	var/datum/mind/date
 	count_against_dynamic_roll_chance = FALSE
+	// Not 'true' antags, this disables certain interactions that assume the owner is a baddie
+	antag_flags = FLAG_FAKE_ANTAG
 
 /datum/antagonist/valentine/forge_objectives()
 	var/datum/objective/protect/protect_objective = new /datum/objective/protect

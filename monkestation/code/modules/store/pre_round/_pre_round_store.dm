@@ -106,5 +106,6 @@ GLOBAL_LIST_EMPTY(cached_preround_items)
 		backpack.atom_storage.attempt_insert(created_item, new_player_mob, force = TRUE)
 
 	owners_prefs.adjust_metacoins(new_player_mob.client.ckey, (-initial(bought_item.item_cost)), donator_multipler = FALSE)
+	add_event_to_buffer(new_player_mob,  data = "spawned in with a [created_item] (Pre-round Store).", log_key = "META")
 	ui_close()
 	qdel(new_player_mob.client.readied_store)
