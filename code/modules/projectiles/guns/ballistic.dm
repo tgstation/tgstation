@@ -237,7 +237,7 @@
 		. += "[icon_state]_mag_[capacity_number]"
 
 
-/obj/item/gun/ballistic/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
+/obj/item/gun/ballistic/handle_chamber(mob/living/user, empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	if(!semi_auto && from_firing)
 		return
 	var/obj/item/ammo_casing/casing = chambered //Find chambered round
@@ -246,10 +246,15 @@
 			stack_trace("Trying to move a qdeleted casing of type [casing.type]!")
 			chambered = null
 		else if(casing_ejector || !from_firing)
-			casing.forceMove(drop_location()) //Eject casing onto ground.
-			casing.bounce_away(TRUE)
-			SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 			chambered = null
+			casing.forceMove(drop_location()) //Eject casing onto ground.
+			if(!QDELETED(casing))
+				var/bounce_angle
+				if(user)
+					var/sign_x = (istype(user) && !(user.get_held_index_of_item(src) % RIGHT_HANDS)) ? 1 : -1
+					bounce_angle = SIMPLIFY_DEGREES(dir2angle(user.dir) + (sign_x * 90) + rand(-45, 45))
+				casing.bounce_away(bounce_angle = bounce_angle, still_warm = TRUE)
+				SEND_SIGNAL(casing, COMSIG_CASING_EJECTED)
 		else if(empty_chamber)
 			chambered = null
 	if (chamber_next_round && (magazine?.max_ammo > 1))
@@ -278,7 +283,7 @@
 		bolt_locked = FALSE
 	if (user)
 		balloon_alert(user, "[bolt_wording] racked")
-	process_chamber(!chambered, FALSE)
+	process_chamber(user = user, empty_chamber = !chambered, from_firing = FALSE)
 	if (bolt_type == BOLT_TYPE_LOCKING && !chambered)
 		bolt_locked = TRUE
 		playsound(src, lock_back_sound, lock_back_sound_volume, lock_back_sound_vary)
@@ -486,13 +491,17 @@
 	if(bolt_type == BOLT_TYPE_NO_BOLT)
 		chambered = null
 		var/num_unloaded = 0
-		for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
-			CB.forceMove(drop_location())
-			CB.bounce_away(FALSE, NONE)
+		for(var/obj/item/ammo_casing/casing in get_ammo_list(FALSE, TRUE))
+			casing.forceMove(drop_location())
+			var/bounce_angle
+			if(user)
+				var/sign_x = (istype(user) && !(user.get_held_index_of_item(src) % RIGHT_HANDS)) ? 1 : -1
+				bounce_angle = SIMPLIFY_DEGREES(dir2angle(user.dir) + (sign_x * 90) + rand(-45, 45))
+			casing.bounce_away(bounce_angle = bounce_angle, still_warm = FALSE, sound_delay = 0)
 			num_unloaded++
-			var/turf/T = get_turf(drop_location())
-			if(T && is_station_level(T.z))
-				SSblackbox.record_feedback("tally", "station_mess_created", 1, CB.name)
+			var/turf/our_turf = get_turf(drop_location())
+			if(our_turf && is_station_level(our_turf.z))
+				SSblackbox.record_feedback("tally", "station_mess_created", 1, casing.name)
 		if (num_unloaded)
 			balloon_alert(user, "[num_unloaded] [cartridge_wording] unloaded")
 			playsound(user, eject_sound, eject_sound_volume, eject_sound_vary)
