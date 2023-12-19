@@ -110,6 +110,9 @@
 	///The max amount of paper that can be held at once.
 	var/max_paper = 30
 
+	/// The capacity of the circuit shell component of this item
+	var/shell_capacity = SHELL_CAPACITY_MEDIUM
+
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20
@@ -119,6 +122,7 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(!physical)
+		AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/modpc), shell_capacity)
 		physical = src
 	set_light_color(comp_light_color)
 	set_light_range(comp_light_luminosity)
@@ -438,29 +442,32 @@
 /obj/item/modular_computer/proc/turn_on(mob/user, open_ui = TRUE)
 	var/issynth = issilicon(user) // Robots and AIs get different activation messages.
 	if(atom_integrity <= integrity_failure * max_integrity)
-		if(issynth)
-			to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
-		else
-			to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
+		if(user)
+			if(issynth)
+				to_chat(user, span_warning("You send an activation signal to \the [src], but it responds with an error code. It must be damaged."))
+			else
+				to_chat(user, span_warning("You press the power button, but the computer fails to boot up, displaying variety of errors before shutting down again."))
 		return FALSE
 
 	if(use_power()) // checks if the PC is powered
-		if(issynth)
-			to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
-		else
-			to_chat(user, span_notice("You press the power button and start up \the [src]."))
 		if(looping_sound)
 			soundloop.start()
 		enabled = TRUE
 		update_appearance()
-		if(open_ui)
-			update_tablet_open_uis(user)
+		if(user)
+			if(issynth)
+				to_chat(user, span_notice("You send an activation signal to \the [src], turning it on."))
+			else
+				to_chat(user, span_notice("You press the power button and start up \the [src]."))
+			if(open_ui)
+				update_tablet_open_uis(user)
 		return TRUE
 	else // Unpowered
-		if(issynth)
-			to_chat(user, span_warning("You send an activation signal to \the [src] but it does not respond."))
-		else
-			to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
+		if(user)
+			if(issynth)
+				to_chat(user, span_warning("You send an activation signal to \the [src] but it does not respond."))
+			else
+				to_chat(user, span_warning("You press the power button but \the [src] does not respond."))
 		return FALSE
 
 // Process currently calls handle_power(), may be expanded in future if more things are added.
@@ -916,3 +923,61 @@
 /obj/item/modular_computer/debug/Initialize(mapload)
 	starting_programs += subtypesof(/datum/computer_file/program)
 	return ..()
+
+///The sweet, sweet modular computer circuit, compatible with stationary consoles, laptops and PDAs.
+/obj/item/circuit_component/modpc
+	display_name = "Modular Computer"
+	desc = "Circuit of a modular computer. Ports depend on the programs installed. Only open (idle or active) programs will receive inputs."
+	var/obj/item/modular_computer/computer
+
+	///Turns the PC on/off
+	var/datum/port/input/on_off
+
+/obj/item/circuit_component/modpc/register_shell(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/machinery/modular_computer))
+		var/obj/machinery/modular_computer/console = shell
+		computer = console.cpu
+	else
+		computer = shell
+	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(on_file_stored))
+	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_DELETE, PROC_REF(on_file_deleted))
+
+/obj/item/circuit_component/modpc/unregister_shell(atom/movable/shell)
+	UnregisterSignal(computer, list(COMSIG_MODULAR_COMPUTER_FILE_STORE, COMSIG_MODULAR_COMPUTER_FILE_DELETE))
+	computer = null
+	return ..()
+
+/obj/item/circuit_component/modpc/populate_ports()
+	on_off = add_input_port("Turn On/Off", PORT_TYPE_SIGNAL)
+
+///Ports are dynamic and change with the programs installed. A stationary console won't have the messenger ports for example.
+/obj/item/circuit_component/modpc/proc/on_file_stored(datum/computer_file/file)
+	SIGNAL_HANDLER
+	if(!istype(file, /datum/computer_file/program))
+		return
+	var/datum/computer_file/program/program = file
+	program.populate_modular_ports(src)
+
+///Remove ports that won't be used any longer.
+/obj/item/circuit_component/modpc/proc/on_file_deleted(datum/computer_file/file)
+	SIGNAL_HANDLER
+	if(!istype(file, /datum/computer_file/program))
+		return
+	var/datum/computer_file/program/program = file
+	program.depopulate_modular_ports(src)
+
+///Defer the inputs to the active and idle programs (Yes, that means closed programs won't do).
+/obj/item/circuit_component/modpc/input_received(datum/port/input/port)
+	if(isnull(computer))
+		return
+	if(COMPONENT_TRIGGERED_BY(on_off, port))
+		if(computer.enabled)
+			computer.shutdown_computer()
+		else
+			computer.turn_on()
+		return
+
+	computer.active_program?.on_input_received(port)
+	for(var/datum/computer_file/program/idle_program as anything in computer.idle_threads)
+		idle_program.on_input_received(port)

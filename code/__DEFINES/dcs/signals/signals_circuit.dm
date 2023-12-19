@@ -73,5 +73,8 @@
 /// Called when a ui action is sent for the circuit component
 #define COMSIG_CIRCUIT_COMPONENT_PERFORM_ACTION "circuit_component_perform_action"
 
+/// Called when notices have to be displayed in the CircuitInfo panel: (list/notices)
+#define COMSIG_CIRCUIT_GET_UI_NOTICES "circuit_get_ui_notices"
+
 ///Called when an Ntnet sender is sending Ntnet data
 #define COMSIG_GLOB_CIRCUIT_NTNET_DATA_SENT "!circuit_ntnet_data_sent"

@@ -14,6 +14,13 @@
 	var/mob/living/silicon/robot/DL_source ///reference of a borg if we're downloading a log, or null if not.
 	var/DL_progress = -1 ///Progress of current download, 0 to 100, -1 for no current download
 
+	///Circuit input for the robot we want to message
+	var/datum/port/input/target_robot
+	///The message we want to send
+	var/datum/port/input/set_message
+	///Output the message when triggered
+	var/datum/port/output/send
+
 /datum/computer_file/program/borg_monitor/Destroy()
 	loglist = null
 	DL_source = null
@@ -107,26 +114,33 @@
 /datum/computer_file/program/borg_monitor/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	switch(action)
 		if("messagebot")
-			var/mob/living/silicon/robot/R = locate(params["ref"]) in GLOB.silicon_mobs
-			if(!istype(R))
-				return TRUE
-			var/ID = checkID()
-			if(!ID)
-				return TRUE
-			if(R.stat == DEAD) //Dead borgs will listen to you no longer
-				to_chat(usr, span_warning("Error -- Could not open a connection to unit:[R]"))
-			var/message = tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
-			if(!message)
-				return TRUE
-			to_chat(R, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
-			to_chat(usr, "Message sent to [R]: [message]")
-			R.logevent("Message from [ID] -- \"[message]\"")
-			SEND_SOUND(R, 'sound/machines/twobeep_high.ogg')
-			if(R.connected_ai)
-				to_chat(R.connected_ai, "<br><br>[span_notice("Message from [ID] to [R] -- \"[message]\"")]<br>")
-				SEND_SOUND(R.connected_ai, 'sound/machines/twobeep_high.ogg')
-			usr.log_talk(message, LOG_PDA, tag="Cyborg Monitor Program: ID name \"[ID]\" to [R]")
+			var/mob/living/silicon/robot/robot = locate(params["ref"]) in GLOB.silicon_mobs
+			message_robot(robot, usr)
 			return TRUE
+
+/datum/computer_file/program/borg_monitor/proc/message_robot(mob/living/silicon/robot/robot, mob/user, message, silent = FALSE)
+	if(!istype(robot))
+		return TRUE
+	var/ID = checkID()
+	if(!ID)
+		return
+	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
+		if(!silent)
+			to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
+		return
+	if(!message)
+		tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
+		if(!message)
+			return
+	to_chat(robot, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
+	if(!silent)
+		to_chat(user, "Message sent to [robot]: [message]")
+	robot.logevent("Message from [ID] -- \"[message]\"")
+	SEND_SOUND(robot, 'sound/machines/twobeep_high.ogg')
+	if(robot.connected_ai)
+		to_chat(robot.connected_ai, "<br><br>[span_notice("Message from [ID] to [robot] -- \"[message]\"")]<br>")
+		SEND_SOUND(robot.connected_ai, 'sound/machines/twobeep_high.ogg')
+	user.log_talk(message, LOG_PDA, tag = "Cyborg Monitor Program: ID name \"[ID]\" to [robot]")
 
 ///This proc is used to determin if a borg should be shown in the list (based on the borg's scrambledcodes var). Syndicate version overrides this to show only syndicate borgs.
 /datum/computer_file/program/borg_monitor/proc/evaluate_borg(mob/living/silicon/robot/R)
@@ -144,6 +158,24 @@
 			return "STDERR:UNDF"
 		return FALSE
 	return ID.registered_name
+
+/datum/computer_file/program/borg_monitor/populate_modular_ports(obj/item/circuit_component/comp)
+	. = ..()
+	target_robot = comp.add_input_port("SiliConnect Receiver", PORT_TYPE_ATOM)
+	set_message = comp.add_input_port("SiliConnect Set Msg", PORT_TYPE_STRING)
+	send = comp.add_input_port("SiliConnect Send Msg", PORT_TYPE_SIGNAL)
+
+/datum/computer_file/program/borg_monitor/depopulate_modular_ports(obj/item/circuit_component/comp)
+	. = ..()
+	target_robot = comp.remove_input_port(target_robot)
+	set_message = comp.remove_input_port(set_message)
+	send = comp.remove_input_port(send)
+
+/datum/computer_file/program/borg_monitor/on_input_received(datum/port/port)
+	if(!COMPONENT_TRIGGERED_BY(send, port) || !length(set_message.value))
+		return
+	var/mob/living/silicon/robot/robot = target_robot.value
+	message_robot(robot, usr, set_message.value, TRUE)
 
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"

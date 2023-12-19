@@ -215,4 +215,21 @@
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
 
+///Modular computers are quite special. Their ports are populated and removed as programs are installed and uninstalled.
+/datum/computer_file/program/proc/populate_modular_ports(obj/item/circuit_component/comp)
+	SHOULD_CALL_PARENT(TRUE)
+	RegisterSignal(comp, COMSIG_CIRCUIT_GET_UI_NOTICES, PROC_REF(get_ui_notices))
+
+///Hopefully remove all the ports that were previously added by populate_modular_ports()
+/datum/computer_file/program/proc/depopulate_modular_ports(obj/item/circuit_component/comp)
+	SHOULD_CALL_PARENT(TRUE)
+	UnregisterSignal(comp, COMSIG_CIRCUIT_GET_UI_NOTICES)
+
+/datum/computer_file/program/proc/get_ui_notices(obj/item/circuit_component/comp, list/notices)
+	SIGNAL_HANDLER
+
+///Called when an input is received by the modular computer, that is, if the program is open (even idle), not closed.
+/datum/computer_file/program/proc/on_input_received(datum/port/port)
+	return
+
 #undef PROGRAM_BASIC_CELL_USE

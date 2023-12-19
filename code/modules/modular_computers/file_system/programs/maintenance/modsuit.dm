@@ -11,6 +11,9 @@
 	///The suit we have control over.
 	var/obj/item/mod/control/controlled_suit
 
+	///Circuit port for loading a new suit to control
+	var/datum/port/input/suit_port
+
 /datum/computer_file/program/maintenance/modsuit_control/Destroy()
 	if(controlled_suit)
 		unsync_modsuit()
@@ -43,3 +46,25 @@
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	return controlled_suit?.ui_act(action, params, ui, state)
+
+/datum/computer_file/program/maintenance/modsuit_control/populate_modular_ports(obj/item/circuit_component/comp)
+	. = ..()
+	suit_port = comp.add_input_port("MODsuit Controlled", PORT_TYPE_ATOM)
+
+/datum/computer_file/program/maintenance/modsuit_control/depopulate_modular_ports(obj/item/circuit_component/comp)
+	. = ..()
+	suit_port = comp.remove_input_port(suit_port)
+
+/datum/computer_file/program/maintenance/modsuit_control/on_input_received(datum/port/port)
+	if(!COMPONENT_TRIGGERED_BY(suit_port, port))
+		return
+	var/obj/item/mod/control/mod = suit_port.value
+	if(isnull(mod) && controlled_suit)
+		unsync_modsuit()
+		return
+	if(!istype(mod))
+		return
+	if(controlled_suit)
+		unsync_modsuit()
+	controlled_suit = mod
+	RegisterSignal(controlled_suit, COMSIG_QDELETING, PROC_REF(unsync_modsuit))
