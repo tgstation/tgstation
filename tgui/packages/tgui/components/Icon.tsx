@@ -38,7 +38,7 @@ export const Icon = (props: IconProps) => {
   const boxProps = computeBoxProps(rest);
 
   let iconClass = '';
-if (name.startsWith('tg-')) {
+  if (name.startsWith('tg-')) {
     // tgfont icon
     iconClass = name;
   } else {
