@@ -1,0 +1,4 @@
+author: "LT3"
+delete-after: True
+changes:
+  - admin: "Server wide admin announcements now use an alert box like other announcements"
