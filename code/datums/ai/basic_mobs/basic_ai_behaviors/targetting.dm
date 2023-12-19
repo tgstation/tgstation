@@ -70,7 +70,7 @@
 	// Alright, here's the interesting bit
 	// We're gonna use this max range to hook into a proximity field so we can just await someone interesting to come along
 	// Rather then trying to check every few seconds
-	var/datum/proximity_monitor/detection_field = new /datum/proximity_monitor/advanced/ai_target_tracking(
+	var/datum/proximity_monitor/advanced/ai_target_tracking/detection_field = new(
 		controller.pawn,
 		aggro_range,
 		TRUE,
@@ -142,6 +142,7 @@
 		var/datum/proximity_monitor/field = controller.blackboard[BB_FIND_TARGETS_FIELD(type)]
 		qdel(field) // autoclears so it's fine
 		controller.CancelActions() // On retarget cancel any further queued actions so that they will setup again with new target
+		controller.modify_cooldown(controller, get_cooldown(controller))
 
 /// Returns the desired final target from the filtered list of targets
 /datum/ai_behavior/find_potential_targets/proc/pick_final_target(datum/ai_controller/controller, list/filtered_targets)

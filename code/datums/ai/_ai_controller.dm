@@ -264,6 +264,11 @@ multiple modular subtrees with behaviors
 
 	if(!current_movement_target)
 		stack_trace("[pawn] wants to perform action type [current_behavior.type] which requires movement, but has no current movement target!")
+		var/list/arguments = list(src, FALSE)
+		var/list/stored_arguments = behavior_args[current_behavior.type]
+		if(stored_arguments)
+			arguments += stored_arguments
+		current_behavior.finish_action(arglist(arguments))
 		decide_on_behavior()
 		return //This can cause issues, so don't let these slide.
 	///Stops pawns from performing such actions that should require the target to be adjacent.
@@ -342,8 +347,9 @@ multiple modular subtrees with behaviors
 	update_able_to_run()
 	addtimer(CALLBACK(src, PROC_REF(update_able_to_run)), time, timer_subsystem = SSai_behaviors)
 
+// Doesn't work so good, why?
 /datum/ai_controller/proc/modify_cooldown(datum/ai_behavior/behavior, new_cooldown)
-	if(currently_queued_id)
+	if(currently_queued_id != TIMER_ID_NULL)
 		deltimer(currently_queued_id)
 	behavior_cooldowns[behavior.type] = new_cooldown
 	decide_on_behavior()
@@ -411,13 +417,14 @@ multiple modular subtrees with behaviors
 	if(!length(current_behaviors) && able_to_run)
 		STOP_PROCESSING(SSai_idle, src)
 		// First behavior gets a timer, none else
-		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), max(world.time - cooldown, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), max(cooldown - world.time, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
 		currently_queued_id = id
 		currently_queued_behavior = behavior
 	// If we queue with a delay lower then anything else (and everything else is delayed) then we can safely queue
 	else if(cooldown < current_queue_time && current_queue_time >= world.time && able_to_run)
-		deltimer(currently_queued_id, SSai_behaviors)
-		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), max(world.time - cooldown, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
+		if(currently_queued_id != TIMER_ID_NULL)
+			deltimer(currently_queued_id, SSai_behaviors)
+		var/id = addtimer(CALLBACK(src, PROC_REF(handle_behavior), behavior), max(cooldown - world.time, world.tick_lag), TIMER_STOPPABLE, timer_subsystem = SSai_behaviors)
 		currently_queued_id = id
 		currently_queued_behavior = behavior
 	// Implied, if we're trying to run then we go based off insert order, and we'd always lose anyway
@@ -452,6 +459,7 @@ multiple modular subtrees with behaviors
 		arguments[2] = TRUE
 		behavior.finish_action(arglist(arguments))
 	else
+		currently_queued_id = TIMER_ID_NULL
 		decide_on_behavior()
 
 /datum/ai_controller/proc/CancelActions()

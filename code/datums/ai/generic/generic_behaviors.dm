@@ -332,6 +332,8 @@
 			continue
 		if(thing.IsObscured())
 			continue
+		if(thing == controller.pawn)
+			continue
 		possible_targets += thing
 	if(!possible_targets.len)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED

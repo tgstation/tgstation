@@ -38,6 +38,8 @@
 
 /datum/proximity_monitor/advanced/ai_target_tracking/Destroy()
 	. = ..()
+	if(!QDELETED(controller) && owning_behavior)
+		controller.modify_cooldown(owning_behavior, owning_behavior.get_cooldown(controller))
 	owning_behavior = null
 	controller = null
 	target_key = null
