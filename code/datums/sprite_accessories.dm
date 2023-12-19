@@ -1753,9 +1753,12 @@
 
 /datum/sprite_accessory/tails
 	em_block = TRUE
+	/// Describes which tail spine sprites to use, if any.
+	var/spine_key = NONE
 
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'
+	spine_key = SPINE_KEY_LIZARD
 
 /datum/sprite_accessory/tails/lizard/smooth
 	name = "Smooth"
@@ -1776,6 +1779,7 @@
 /datum/sprite_accessory/tails/lizard/short
 	name = "Short"
 	icon_state = "short"
+	spine_key = NONE
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"

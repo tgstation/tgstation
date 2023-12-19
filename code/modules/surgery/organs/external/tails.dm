@@ -35,7 +35,7 @@
 			receiver.add_mood_event("wrong_tail_regained", /datum/mood_event/tail_regained_wrong)
 
 /obj/item/organ/external/tail/on_bodypart_insert(obj/item/bodypart/bodypart)
-	var/obj/item/organ/external/spines/our_spines = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
+	var/obj/item/organ/external/spines/our_spines = bodypart.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
 	if(!isnull(our_spines))
 		try_insert_tail_spines(bodypart)
 	return ..()
@@ -46,9 +46,20 @@
 
 /// If the owner has spines and an appropriate overlay exists, add a tail spines overlay.
 /obj/item/organ/external/tail/proc/try_insert_tail_spines(obj/item/bodypart/bodypart)
-	//TODO: DETERMINE IF WE CAN SUPPORT TAIL SPINES
+	// Don't insert another overlay if there already is one.
+	if(!isnull(tail_spines_overlay))
+		return
+	// If this tail doesn't have a valid set of tail spines, don't insert them
+	var/datum/sprite_accessory/tails/tail_sprite_datum = bodypart_overlay.sprite_datum
+	if(!istype(tail_sprite_datum))
+		return
+	var/tail_spine_key = tail_sprite_datum?.spine_key
+	if(isnull(tail_spine_key))
+		return
+
 	tail_spines_overlay = new
-	var/feature_name = owner.dna.features["spines"] //tail spines don't live in DNA, but share feature names with regular spines
+	tail_spines_overlay.tail_spine_key = tail_spine_key
+	var/feature_name = bodypart.owner.dna.features["spines"] //tail spines don't live in DNA, but share feature names with regular spines
 	tail_spines_overlay.set_appearance_from_name(feature_name)
 	bodypart.add_bodypart_overlay(tail_spines_overlay)
 
@@ -179,12 +190,14 @@
 	feature_key = "tailspines"
 	///Spines wag when the tail does
 	var/wagging = FALSE
+	/// Key for tail spine states, depends on the shape of the tail. Defined in the tail sprite datum.
+	var/tail_spine_key = NONE
 
 /datum/bodypart_overlay/mutant/tail_spines/get_global_feature_list()
 	return GLOB.tail_spines_list
 
 /datum/bodypart_overlay/mutant/tail_spines/get_base_icon_state()
-	return (wagging ? "wagging_" : "") + sprite_datum.icon_state // Select the wagging state if appropriate
+	return (!isnull(tail_spine_key) ? "[tail_spine_key]_" : "") + (wagging ? "wagging_" : "") + sprite_datum.icon_state // Select the wagging state if appropriate
 
 /datum/bodypart_overlay/mutant/tail_spines/can_draw_on_bodypart(mob/living/carbon/human/human)
 	. = ..()
