@@ -56,12 +56,10 @@ export const configureStore = (options: ConfigureStoreOptions = {}): Store => {
         ...(middleware?.post || []),
       ];
 
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' && sideEffects) {
     // We are using two if statements because Webpack is capable of
     // removing this specific block as dead code.
-    if (sideEffects) {
-      middlewares.unshift(loggingMiddleware, debugMiddleware, relayMiddleware);
-    }
+    middlewares.unshift(loggingMiddleware, debugMiddleware, relayMiddleware);
   }
 
   const enhancer = applyMiddleware(...middlewares);

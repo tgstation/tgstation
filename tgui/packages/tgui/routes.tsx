@@ -59,12 +59,11 @@ export const getRoutedComponent = () => {
   if (config?.refreshing) {
     return RefreshingWindow;
   }
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'production' && debug?.kitchenSink) {
     // Show a kitchen sink
-    if (debug?.kitchenSink) {
-      return require('./debug').KitchenSink;
-    }
+    return require('./debug').KitchenSink;
   }
+
   const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,

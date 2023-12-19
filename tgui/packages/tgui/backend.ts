@@ -20,6 +20,13 @@ import { focusMap } from './focus';
 import { createLogger } from './logging';
 import { resumeRenderer, suspendRenderer } from './renderer';
 
+enum Action {
+  Update = 'backend/update',
+  SetSharedState = 'backend/setSharedState',
+  SuspendStart = 'backend/suspendStart',
+  SuspendSuccess = 'backend/suspendSuccess',
+}
+
 const logger = createLogger('backend');
 
 export let globalStore;
@@ -28,12 +35,12 @@ export const setGlobalStore = (store) => {
   globalStore = store;
 };
 
-export const backendUpdate = createAction('backend/update');
-export const backendSetSharedState = createAction('backend/setSharedState');
-export const backendSuspendStart = createAction('backend/suspendStart');
+export const backendUpdate = createAction(Action.Update);
+export const backendSetSharedState = createAction(Action.SetSharedState);
+export const backendSuspendStart = createAction(Action.SuspendStart);
 
 export const backendSuspendSuccess = () => ({
-  type: 'backend/suspendSuccess',
+  type: Action.SuspendSuccess,
   payload: {
     timestamp: Date.now(),
   },
@@ -51,7 +58,7 @@ const initialState = {
 export const backendReducer = (state = initialState, action) => {
   const { type, payload } = action;
 
-  if (type === 'backend/update') {
+  if (type === Action.Update) {
     // Merge config
     const config = {
       ...state.config,
@@ -85,7 +92,7 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
-  if (type === 'backend/setSharedState') {
+  if (type === Action.SetSharedState) {
     const { key, nextState } = payload;
     return {
       ...state,
@@ -96,14 +103,14 @@ export const backendReducer = (state = initialState, action) => {
     };
   }
 
-  if (type === 'backend/suspendStart') {
+  if (type === Action.SuspendStart) {
     return {
       ...state,
       suspending: true,
     };
   }
 
-  if (type === 'backend/suspendSuccess') {
+  if (type === Action.SuspendSuccess) {
     const { timestamp } = payload;
     return {
       ...state,
@@ -161,7 +168,7 @@ export const backendMiddleware = (store) => {
       globalEvents.emit('byond/ctrlup');
     }
 
-    if (type === 'backend/suspendStart' && !suspendInterval) {
+    if (type === Action.SuspendStart && !suspendInterval) {
       logger.log(`suspending (${Byond.windowId})`);
       // Keep sending suspend messages until it succeeds.
       // It may fail multiple times due to topic rate limiting.
@@ -170,7 +177,7 @@ export const backendMiddleware = (store) => {
       suspendInterval = setInterval(suspendFn, 2000);
     }
 
-    if (type === 'backend/suspendSuccess') {
+    if (type === Action.SuspendSuccess) {
       suspendRenderer();
       clearInterval(suspendInterval);
       suspendInterval = undefined;
@@ -180,7 +187,7 @@ export const backendMiddleware = (store) => {
       setImmediate(() => focusMap());
     }
 
-    if (type === 'backend/update') {
+    if (type === Action.Update) {
       const fancy = payload.config?.window?.fancy;
       // Initialize fancy state
       if (fancyState === undefined) {
@@ -198,9 +205,9 @@ export const backendMiddleware = (store) => {
     }
 
     // Resume on incoming update
-    if (type === 'backend/update' && suspended) {
+    if (type === Action.Update && suspended) {
       // Show the payload
-      logger.log('backend/update', payload);
+      logger.log(Action.Update, payload);
       // Signal renderer that we have resumed
       resumeRenderer();
       // Setup drag
