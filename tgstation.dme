@@ -6315,7 +6315,7 @@
 #include "monkestation\code\modules\physics\physics_component.dm"
 #include "monkestation\code\modules\physics\physics_SS.dm"
 #include "monkestation\code\modules\physics\physics_tester.dm"
-#include "monkestation\code\modules\physics\custom_items.dm\plushie_launcher.dm"
+#include "monkestation\code\modules\physics\custom_items\plushie_launcher.dm"
 #include "monkestation\code\modules\pissing\bladder.dm"
 #include "monkestation\code\modules\pissing\emote.dm"
 #include "monkestation\code\modules\pissing\piss_effect.dm"
