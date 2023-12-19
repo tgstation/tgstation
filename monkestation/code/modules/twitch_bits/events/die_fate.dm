@@ -3,7 +3,7 @@
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_STREAMER
 	id_tag = T_EVENT_OOK_DIE_FATE
-	token_cost = 2500
+	token_cost = 1000
 
 /datum/twitch_event/free_wiz/run_event(name)
 	. = ..()
