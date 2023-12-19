@@ -3,7 +3,8 @@ import { Window } from '../../layouts';
 import { KeybindingsPage } from './KeybindingsPage';
 import { GamePreferencesPage } from './GamePreferencesPage';
 import { PageButton } from './PageButton';
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
+import { useState } from 'react';
 import { GamePreferencesSelectedPage, PreferencesMenuData } from './data';
 import { exhaustiveCheck } from 'common/exhaustive';
 
@@ -12,9 +13,8 @@ export const GamePreferenceWindow = (props: {
 }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [currentPage, setCurrentPage] = useLocalState(
-    'currentPage',
-    props.startingPage ?? GamePreferencesSelectedPage.Settings,
+  const [currentPage, setCurrentPage] = useState(
+    props.startingPage ?? GamePreferencesSelectedPage.Settings
   );
 
   let pageContents;

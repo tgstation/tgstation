@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import { round } from '../../common/math';
 import { BooleanLike, classes } from '../../common/react';
 import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
@@ -50,13 +51,9 @@ export const LightController = (props) => {
     default_category,
     category_ids,
   } = data;
-  const [currentTemplate, setCurrentTemplate] = useLocalState<string>(
-    'currentTemplate',
-    default_id,
-  );
-  const [currentCategory, setCurrentCategory] = useLocalState<string>(
-    'currentCategory',
-    default_category,
+  const [currentTemplate, setCurrentTemplate] = useState<string>(default_id);
+  const [currentCategory, setCurrentCategory] = useState<string>(
+    default_category
   );
 
   const category_keys = category_ids ? Object.keys(category_ids) : [];

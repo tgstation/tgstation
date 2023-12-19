@@ -5,7 +5,7 @@
  */
 
 import { toFixed } from 'common/math';
-import { useLocalState } from 'tgui/backend';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'tgui/backend';
 import {
   Box,
@@ -79,7 +79,7 @@ export const SettingsGeneral = (props) => {
   const { theme, fontFamily, fontSize, lineHeight } =
     useSelector(selectSettings);
   const dispatch = useDispatch();
-  const [freeFont, setFreeFont] = useLocalState('freeFont', false);
+  const [freeFont, setFreeFont] = useState(false);
   return (
     <Section>
       <LabeledList>

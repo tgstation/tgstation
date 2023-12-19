@@ -1,7 +1,8 @@
 import { filter, map, sortBy, uniq } from 'common/collections';
 import { flow } from 'common/fp';
 import { createSearch } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import { Box, Button, Icon, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
@@ -10,7 +11,7 @@ import { Window } from '../layouts';
 const getOutfitKey = (outfit) => outfit.path || outfit.ref;
 
 const useOutfitTabs = (categories) => {
-  return useLocalState('selected-tab', categories[0]);
+  return useState(categories[0]);
 };
 
 export const SelectEquipment = (props) => {
@@ -32,7 +33,7 @@ export const SelectEquipment = (props) => {
   ]);
   const [tab] = useOutfitTabs(categories);
 
-  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [searchText, setSearchText] = useState('');
   const searchFilter = createSearch(
     searchText,
     (entry) => entry.name + entry.path,

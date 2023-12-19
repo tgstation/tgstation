@@ -4,6 +4,7 @@
 
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
@@ -314,7 +315,7 @@ export class PrimaryView extends Component {
       {},
     );
 
-    const [textAreaText, setTextAreaText] = useLocalState('textAreaText', '');
+    const [textAreaText, setTextAreaText] = useState('');
 
     const interactMode =
       held_item_details?.interaction_mode || InteractionType.reading;

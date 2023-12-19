@@ -1,4 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Button,
   Icon,
@@ -379,11 +380,8 @@ const RecipeLibrary = (props) => {
     linkedBeaker,
   } = data;
 
-  const [reagentFilter, setReagentFilter] = useLocalState(
-    'reagentFilter',
-    true,
-  );
-  const [bookmarkMode, setBookmarkMode] = useLocalState('bookmarkMode', false);
+  const [reagentFilter, setReagentFilter] = useState(true);
+  const [bookmarkMode, setBookmarkMode] = useState(false);
 
   const matchReagents = (reaction) => {
     if (!reagentFilter || currentReagents === null) {

@@ -2,6 +2,7 @@ import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { capitalize } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -336,7 +337,7 @@ const ModifyPage = (props) => {
   const { can_db_request, view_raw, history } = data;
   const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', '');
   const [modifyTarget, setModifyTarget] = useLocalState('ModifyTarget', 0);
-  const [reason, setReason] = useLocalState('Reason', 'null');
+  const [reason, setReason] = useState('null');
 
   const entries = history[modifyTarget.toString()]
     ? history[modifyTarget.toString()].sort((a, b) => b.id - a.id)

@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
+import { useState } from 'react';
 import { Input, LabeledList, Section } from '../components';
 
 export const meta = {
@@ -13,7 +13,7 @@ export const meta = {
 };
 
 const Story = (props) => {
-  const [theme, setTheme] = useLocalState('kitchenSinkTheme');
+  const [theme, setTheme] = useState();
   return (
     <Section>
       <LabeledList>

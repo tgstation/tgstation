@@ -1,7 +1,8 @@
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import { Box, Button, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { capitalize } from 'common/string';
@@ -39,10 +40,7 @@ export const FishCatalog = (props) => {
   const fish_by_name = flow([sortBy((fish: FishInfo) => fish.name)])(
     fish_info || [],
   );
-  const [currentFish, setCurrentFish] = useLocalState<FishInfo | null>(
-    'currentFish',
-    null,
-  );
+  const [currentFish, setCurrentFish] = useState<FishInfo | null>(null);
   return (
     <Window width={500} height={300}>
       <Window.Content>

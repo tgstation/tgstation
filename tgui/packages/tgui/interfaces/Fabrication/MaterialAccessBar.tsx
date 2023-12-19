@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
-import { useLocalState } from '../../backend';
+import { useState } from 'react';
 import { Flex, Button, Stack, AnimatedNumber } from '../../components';
 import { formatSiUnit } from '../../format';
 import { MaterialIcon } from './MaterialIcon';
@@ -80,10 +80,7 @@ type MaterialCounterProps = {
 const MaterialCounter = (props: MaterialCounterProps) => {
   const { material, onEjectRequested, SHEET_MATERIAL_AMOUNT } = props;
 
-  const [hovering, setHovering] = useLocalState(
-    `MaterialCounter__${material.name}`,
-    false,
-  );
+  const [hovering, setHovering] = useState(false);
 
   const sheets = material.amount / SHEET_MATERIAL_AMOUNT;
 

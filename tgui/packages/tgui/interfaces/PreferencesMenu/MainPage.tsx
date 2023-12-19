@@ -1,5 +1,6 @@
 import { classes } from 'common/react';
-import { sendAct, useBackend, useLocalState } from '../../backend';
+import { sendAct, useBackend } from '../../backend';
+import { useState } from 'react';
 import {
   Autofocus,
   Box,
@@ -189,10 +190,7 @@ const GenderButton = (props: {
   handleSetGender: (gender: Gender) => void;
   gender: Gender;
 }) => {
-  const [genderMenuOpen, setGenderMenuOpen] = useLocalState(
-    'genderMenuOpen',
-    false,
-  );
+  const [genderMenuOpen, setGenderMenuOpen] = useState(false);
 
   return (
     <Popper
@@ -463,13 +461,10 @@ export const getRandomization = (
 
 export const MainPage = (props: { openSpecies: () => void }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const [currentClothingMenu, setCurrentClothingMenu] = useLocalState<
+  const [currentClothingMenu, setCurrentClothingMenu] = useState<
     string | null
-  >('currentClothingMenu', null);
-  const [multiNameInputOpen, setMultiNameInputOpen] = useLocalState(
-    'multiNameInputOpen',
-    false,
-  );
+  >(null);
+  const [multiNameInputOpen, setMultiNameInputOpen] = useState(false);
   const [randomToggleEnabled] = useRandomToggleState();
 
   return (

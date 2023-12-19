@@ -1,5 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Button, Section, Box, NoticeBox, Table } from '../components';
+import { useState } from 'react';
 import { Window } from '../layouts';
 import { AdventureDataProvider, AdventureScreen } from './ExodroneConsole';
 import { formatTime } from '../format';
@@ -25,10 +26,7 @@ type AdventureBrowserData = AdventureDataProvider & {
 
 const AdventureList = (props) => {
   const { data, act } = useBackend<AdventureBrowserData>();
-  const [openAdventure, setOpenAdventure] = useLocalState<string | null>(
-    'openAdventure',
-    null,
-  );
+  const [openAdventure, setOpenAdventure] = useState<string | null>(null);
 
   return (
     <Table>

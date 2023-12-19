@@ -6,6 +6,7 @@
 
 import { decodeHtmlEntities } from 'common/string';
 import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import { Button, Input, Section, Table } from '../components';
 import { Popper } from '../components/Popper';
 import { Window } from '../layouts';
@@ -19,7 +20,7 @@ export const RequestManager = (props) => {
       Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
     ),
   );
-  const [searchText, setSearchText] = useLocalState('searchText');
+  const [searchText, setSearchText] = useState();
 
   // Handle filtering
   let displayedRequests = requests.filter(
@@ -130,10 +131,7 @@ const RequestControls = (props) => {
 };
 
 const FilterPanel = (props) => {
-  const [filterVisible, setFilterVisible] = useLocalState(
-    'filterVisible',
-    false,
-  );
+  const [filterVisible, setFilterVisible] = useState(false);
   const [filteredTypes, setFilteredTypes] = useLocalState(
     'filteredTypes',
     Object.fromEntries(

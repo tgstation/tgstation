@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import {
   NoticeBox,
   Section,
@@ -40,13 +41,12 @@ enum Pages {
 export const PlayerTicketHistory = (props: any) => {
   const { act, data } = useBackend<PthData>();
 
-  const [page, setPage] = useLocalState(
-    'page',
-    data.target_ckey ? Pages.TicketHistory : Pages.Cache,
+  const [page, setPage] = useState(
+    data.target_ckey ? Pages.TicketHistory : Pages.Cache
   );
 
-  const [cacheInput, setCacheInput] = useLocalState('cacheInput', '');
-  const [cacheCount, setCacheCount] = useLocalState('cacheCount', 5);
+  const [cacheInput, setCacheInput] = useState('');
+  const [cacheCount, setCacheCount] = useState(5);
 
   if (!data.db_connected) {
     return (
@@ -108,9 +108,8 @@ const TicketHistory = (props: any) => {
     );
   }
 
-  const [activeTicket, setActiveTicket] = useLocalState<TicketData | undefined>(
-    'ticket',
-    undefined,
+  const [activeTicket, setActiveTicket] = useState<TicketData | undefined>(
+    undefined
   );
 
   // sory by round then ticket number, descending
@@ -216,7 +215,7 @@ type TicketViewProps = {
 
 const TicketView = (props: TicketViewProps) => {
   const { act, data } = useBackend<PthData>();
-  const [forceExpand, setForceExpand] = useLocalState('forceExpand', false);
+  const [forceExpand, setForceExpand] = useState(false);
 
   // sort by timestamp
   props.ticket.ticket_log.sort((a, b) => {

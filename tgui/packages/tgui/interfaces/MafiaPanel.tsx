@@ -1,7 +1,8 @@
 import { BooleanLike, classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { multiline } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -67,7 +68,7 @@ type MafiaData = {
 export const MafiaPanelData = (props) => {
   const { act, data } = useBackend<MafiaData>();
   const { phase, roleinfo, admin_controls, messages, player_voted_up } = data;
-  const [mafia_tab, setMafiaMode] = useLocalState('mafia_tab', 'Role list');
+  const [mafia_tab, setMafiaMode] = useState('Role list');
 
   if (phase === 'No Game') {
     return (
@@ -184,7 +185,7 @@ export const MafiaPanel = (props) => {
 const MafiaChat = (props) => {
   const { act, data } = useBackend<MafiaData>();
   const { messages } = data;
-  const [message_to_send, setMessagingBox] = useLocalState('Chat', '');
+  const [message_to_send, setMessagingBox] = useState('');
   return (
     <Stack vertical fill>
       {!!messages && (
@@ -374,7 +375,7 @@ const MafiaListOfRoles = (props) => {
 const MafiaNotesTab = (props) => {
   const { act, data } = useBackend<MafiaData>();
   const { user_notes } = data;
-  const [note_message, setNotesMessage] = useLocalState('Notes', user_notes);
+  const [note_message, setNotesMessage] = useState(user_notes);
   return (
     <Section grow fill>
       <TextArea

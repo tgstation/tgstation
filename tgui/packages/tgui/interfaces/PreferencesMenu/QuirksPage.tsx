@@ -1,6 +1,7 @@
 import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk, RandomSetting, ServerData } from './data';
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
+import { useState } from 'react';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 import { filterMap } from 'common/collections';
 import { getRandomization, PreferenceList } from './MainPage';
@@ -50,7 +51,7 @@ const QuirkList = (props: {
     <Box className="PreferencesMenu__Quirks__QuirkList">
       {props.quirks.map(([quirkKey, quirk]) => {
         const [customizationExpanded, setCustomizationExpanded] =
-          useLocalState<boolean>(quirk.name + ' customization', false);
+          useState<boolean>(false);
 
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 
@@ -248,9 +249,8 @@ export const QuirksPage = (props) => {
     data.character_preferences.non_contextual.random_body !==
       RandomSetting.Disabled || randomToggleEnabled;
 
-  const [selectedQuirks, setSelectedQuirks] = useLocalState(
-    `selectedQuirks_${data.active_slot}`,
-    data.selected_quirks,
+  const [selectedQuirks, setSelectedQuirks] = useState(
+    data.selected_quirks
   );
 
   return (

@@ -9,7 +9,8 @@ import {
   Dimmer,
   Divider,
 } from '../../components';
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
+import { useState } from 'react';
 import { createSearch } from 'common/string';
 import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../../layouts';
@@ -97,7 +98,7 @@ const ContactsScreen = (props: any) => {
     sending_virus,
   } = data;
 
-  const [searchUser, setSearchUser] = useLocalState('searchUser', '');
+  const [searchUser, setSearchUser] = useState('');
 
   const sortByUnreads = sortBy<NtChat>((chat) => chat.unread_messages);
 
@@ -298,7 +299,7 @@ const SendToAllSection = (props) => {
   const { data, act } = useBackend<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
-  const [message, setmessage] = useLocalState('everyoneMessage', '');
+  const [message, setmessage] = useState('');
 
   return (
     <>

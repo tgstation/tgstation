@@ -1,4 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
+import { useState } from 'react';
 import { sortStrings } from 'common/collections';
 import {
   Box,
@@ -31,15 +32,9 @@ export const MessageWriteTab = (props) => {
     setRequestType(RequestType.ASSISTANCE);
   };
   const [messageText, setMessageText] = useLocalState('messageText', '');
-  const [requestType, setRequestType] = useLocalState(
-    'requestType',
-    RequestType.ASSISTANCE,
-  );
-  const [priority, setPriority] = useLocalState(
-    'priority',
-    RequestPriority.NORMAL,
-  );
-  const [recipient, setRecipient] = useLocalState('recipient', '');
+  const [requestType, setRequestType] = useState(RequestType.ASSISTANCE);
+  const [priority, setPriority] = useState(RequestPriority.NORMAL);
+  const [recipient, setRecipient] = useState('');
   return (
     <Section>
       <Stack fill mb={2}>

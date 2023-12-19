@@ -2,7 +2,8 @@ import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import {
   Divider,
   Button,
@@ -167,30 +168,27 @@ export const PersonalCrafting = (props) => {
     craftability,
     diet,
   } = data;
-  const [searchText, setSearchText] = useLocalState('searchText', '');
-  const [pages, setPages] = useLocalState('pages', 1);
+  const [searchText, setSearchText] = useState('');
+  const [pages, setPages] = useState(1);
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
-  const [activeCategory, setCategory] = useLocalState<string>(
-    'category',
+  const [activeCategory, setCategory] = useState<string>(
     Object.keys(craftability).length
       ? 'Can Make'
       : mode === MODE.cooking
         ? DEFAULT_CAT_COOKING
-        : DEFAULT_CAT_CRAFTING,
+        : DEFAULT_CAT_CRAFTING
   );
-  const [activeType, setFoodType] = useLocalState(
-    'foodtype',
-    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
+  const [activeType, setFoodType] = useState(
+    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0]
   );
   const material_occurences = flow([
     sortBy<Material>((material) => -material.occurences),
   ])(data.material_occurences);
-  const [activeMaterial, setMaterial] = useLocalState(
-    'material',
-    material_occurences[0].atom_id,
+  const [activeMaterial, setMaterial] = useState(
+    material_occurences[0].atom_id
   );
-  const [tabMode, setTabMode] = useLocalState('tabMode', 0);
+  const [tabMode, setTabMode] = useState(0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);
   let recipes = flow([
     filter<Recipe>(

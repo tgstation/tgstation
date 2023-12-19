@@ -1,4 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import { Window } from '../layouts';
 import {
   BlockQuote,
@@ -143,7 +144,7 @@ const CitationManager = (props) => {
 
   const { crew_ref } = foundRecord;
 
-  const [paying, setPaying] = useLocalState('citationAmount', 5);
+  const [paying, setPaying] = useState(5);
 
   return (
     <Collapsible

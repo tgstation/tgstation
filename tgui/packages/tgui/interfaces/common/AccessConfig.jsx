@@ -1,6 +1,6 @@
 import { sortBy } from 'common/collections';
 import { Section, Button, Flex, Tabs, Grid } from '../../components';
-import { useLocalState } from '../../backend';
+import { useState } from 'react';
 
 export const AccessConfig = (props) => {
   const {
@@ -12,9 +12,8 @@ export const AccessConfig = (props) => {
     grantDep,
     denyDep,
   } = props;
-  const [selectedAccessName, setSelectedAccessName] = useLocalState(
-    'accessName',
-    accesses[0]?.name,
+  const [selectedAccessName, setSelectedAccessName] = useState(
+    accesses[0]?.name
   );
   const selectedAccess = accesses.find(
     (access) => access.name === selectedAccessName,

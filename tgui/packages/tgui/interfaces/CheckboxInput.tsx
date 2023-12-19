@@ -10,7 +10,8 @@ import {
 } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -37,12 +38,9 @@ export const CheckboxInput = (props) => {
     title,
   } = data;
 
-  const [selections, setSelections] = useLocalState<string[]>('selections', []);
+  const [selections, setSelections] = useState<string[]>([]);
 
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    'searchQuery',
-    '',
-  );
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const search = createSearch(searchQuery, (item: string) => item);
   const toDisplay = items.filter(search);
 

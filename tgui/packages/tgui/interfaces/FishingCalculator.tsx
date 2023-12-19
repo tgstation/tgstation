@@ -1,5 +1,6 @@
 import { round } from 'common/math';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import { Button, Dropdown, Input, Stack, Table } from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { Window } from '../layouts';
@@ -22,14 +23,11 @@ type FishingCalculatorData = {
 export const FishingCalculator = (props) => {
   const { act, data } = useBackend<FishingCalculatorData>();
 
-  const [bait, setBait] = useLocalState<string>(
-    'bait',
-    '/obj/item/food/bait/worm',
-  );
-  const [spot, setSpot] = useLocalState<string>('spot', data.spot_types[0]);
-  const [rod, setRod] = useLocalState<string>('rod', data.rod_types[0]);
-  const [hook, setHook] = useLocalState<string>('hook', data.hook_types[0]);
-  const [line, setLine] = useLocalState<string>('line', data.line_types[0]);
+  const [bait, setBait] = useState<string>('/obj/item/food/bait/worm');
+  const [spot, setSpot] = useState<string>(data.spot_types[0]);
+  const [rod, setRod] = useState<string>(data.rod_types[0]);
+  const [hook, setHook] = useState<string>(data.hook_types[0]);
+  const [line, setLine] = useState<string>(data.line_types[0]);
 
   const weight_sum = data.info?.reduce((s, w) => s + w.weight, 0) || 1;
 

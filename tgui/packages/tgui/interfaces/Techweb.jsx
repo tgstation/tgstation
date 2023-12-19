@@ -1,5 +1,6 @@
 import { map, sortBy } from 'common/collections';
 import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Button,
   Section,
@@ -153,7 +154,7 @@ export const TechwebContent = (props) => {
     locked,
   } = data;
   const [techwebRoute, setTechwebRoute] = useLocalState('techwebRoute', null);
-  const [lastPoints, setLastPoints] = useLocalState('lastPoints', {});
+  const [lastPoints, setLastPoints] = useState({});
 
   return (
     <Flex direction="column" className="Techweb__Viewport" height="100%">
@@ -236,8 +237,8 @@ const TechwebRouter = (props) => {
 const TechwebOverview = (props) => {
   const { act, data } = useRemappedBackend();
   const { nodes, node_cache, design_cache } = data;
-  const [tabIndex, setTabIndex] = useLocalState('overviewTabIndex', 1);
-  const [searchText, setSearchText] = useLocalState('searchText');
+  const [tabIndex, setTabIndex] = useState(1);
+  const [searchText, setSearchText] = useState('searchText');
 
   // Only search when 3 or more characters have been input
   const searching = searchText && searchText.trim().length > 1;

@@ -1,4 +1,5 @@
 import { useLocalState, useBackend } from 'tgui/backend';
+import { useState } from 'react';
 import { SECURETAB, Crime, SecurityRecordsData } from './types';
 import { getSecurityRecord } from './helpers';
 import {
@@ -115,7 +116,7 @@ const CrimeDisplay = ({ item }: { item: Crime }) => {
     displayTitle = name.slice(0, 18) + showFine;
   }
 
-  const [editing, setEditing] = useLocalState(`editing_${crime_ref}`, false);
+  const [editing, setEditing] = useState(false);
 
   return (
     <Stack.Item>
@@ -209,9 +210,9 @@ const CrimeAuthor = (props) => {
   const { crew_ref } = foundRecord;
   const { act } = useBackend<SecurityRecordsData>();
 
-  const [crimeName, setCrimeName] = useLocalState('crimeName', '');
-  const [crimeDetails, setCrimeDetails] = useLocalState('crimeDetails', '');
-  const [crimeFine, setCrimeFine] = useLocalState('crimeFine', 0);
+  const [crimeName, setCrimeName] = useState('');
+  const [crimeDetails, setCrimeDetails] = useState('');
+  const [crimeFine, setCrimeFine] = useState(0);
   const [selectedTab, setSelectedTab] = useLocalState<SECURETAB>(
     'selectedTab',
     SECURETAB.Crimes,

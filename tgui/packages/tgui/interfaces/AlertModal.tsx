@@ -1,5 +1,6 @@
 import { Loader } from './common/Loader';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import {
   KEY_ENTER,
   KEY_ESCAPE,
@@ -34,7 +35,7 @@ export const AlertModal = (props) => {
     timeout,
     title,
   } = data;
-  const [selected, setSelected] = useLocalState<number>('selected', 0);
+  const [selected, setSelected] = useState<number>(0);
   // Dynamically sets window dimensions
   const windowHeight =
     115 +

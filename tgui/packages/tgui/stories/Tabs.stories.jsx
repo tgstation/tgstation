@@ -5,6 +5,7 @@
  */
 
 import { useLocalState } from '../backend';
+import { useState } from 'react';
 import { Button, Section, Tabs } from '../components';
 
 export const meta = {
@@ -102,7 +103,7 @@ const Story = (props) => {
 };
 
 const TabsPrefab = (props) => {
-  const [tabIndex, setTabIndex] = useLocalState('tabIndex', 0);
+  const [tabIndex, setTabIndex] = useState(0);
   const [tabProps] = useLocalState('tabProps', {});
   return (
     <Tabs

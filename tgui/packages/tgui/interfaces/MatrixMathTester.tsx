@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import { Input, NumberInput, Section, Button, Table } from '../components';
 import { toFixed } from 'common/math';
 import { Window } from '../layouts';
@@ -39,13 +40,13 @@ export const MatrixMathTester = (props) => {
     matrix_f,
     pixelated,
   } = data;
-  const [scaleX, setScaleX] = useLocalState('scale_x', 1);
-  const [scaleY, setScaleY] = useLocalState('scale_y', 1);
-  const [translateX, setTranslateX] = useLocalState('translate_x', 0);
-  const [translateY, setTranslateY] = useLocalState('translate_y', 0);
-  const [shearX, setShearX] = useLocalState('shear_x', 0);
-  const [shearY, setShearY] = useLocalState('shear_y', 0);
-  const [angle, setAngle] = useLocalState('angle', 0);
+  const [scaleX, setScaleX] = useState(1);
+  const [scaleY, setScaleY] = useState(1);
+  const [translateX, setTranslateX] = useState(0);
+  const [translateY, setTranslateY] = useState(0);
+  const [shearX, setShearX] = useState(0);
+  const [shearY, setShearY] = useState(0);
+  const [angle, setAngle] = useState(0);
   return (
     <Window title="Nobody Wants to Learn Matrix Math" width={290} height={270}>
       <Window.Content>

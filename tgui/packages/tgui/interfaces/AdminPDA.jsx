@@ -1,4 +1,5 @@
 import { Section, Dropdown, Input, Box, TextArea } from '../components';
+import { useState } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import { Button } from '../components/Button';
 import { Window } from '../layouts';
@@ -22,10 +23,7 @@ const ReceiverChoice = (props) => {
 
   const [user, setUser] = useLocalState('user', '');
   const [spam, setSpam] = useLocalState('spam', false);
-  const [showInvisible, setShowInvisible] = useLocalState(
-    'showInvisible',
-    false,
-  );
+  const [showInvisible, setShowInvisible] = useState(false);
 
   return (
     <Section title="To Who?" textAlign="center">
@@ -99,13 +97,10 @@ const MessageInput = (props) => {
   const [user, setUser] = useLocalState('user', '');
   const [name, setName] = useLocalState('name', '');
   const [job, setJob] = useLocalState('job', '');
-  const [messageText, setMessageText] = useLocalState('message', '');
+  const [messageText, setMessageText] = useState('');
   const [spam, setSpam] = useLocalState('spam', false);
-  const [force, setForce] = useLocalState('force', false);
-  const [showInvisible, setShowInvisible] = useLocalState(
-    'showInvisible',
-    false,
-  );
+  const [force, setForce] = useState(false);
+  const [showInvisible, setShowInvisible] = useState(false);
 
   const tooltipText = function (name, job, message, target) {
     let reasonList = [];

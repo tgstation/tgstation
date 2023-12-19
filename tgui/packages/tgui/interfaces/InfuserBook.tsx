@@ -1,4 +1,5 @@
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
+import { useState } from 'react';
 import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { multiline } from 'common/string';
@@ -72,8 +73,7 @@ export const InfuserBook = (props) => {
   const { data, act } = useBackend<DnaInfuserData>();
   const { entries } = data;
 
-  const [bookPosition, setBookPosition] = useLocalState<BookPosition>(
-    'bookPosition',
+  const [bookPosition, setBookPosition] = useState<BookPosition>(
     {
       chapter: 0,
       pageInChapter: 0,

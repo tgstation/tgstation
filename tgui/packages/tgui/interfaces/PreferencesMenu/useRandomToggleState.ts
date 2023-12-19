@@ -1,3 +1,3 @@
-import { useLocalState } from '../../backend';
+import { useState } from 'react';
 
-export const useRandomToggleState = () => useLocalState('randomToggle', false);
+export const useRandomToggleState = () => useState(false);

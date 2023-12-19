@@ -1,4 +1,5 @@
 import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   InfinitePlane,
   Stack,
@@ -381,10 +382,7 @@ export class PlaneMasterDebug extends Component {
     const { plane_info, mob_name } = data;
     const [showAdd, setShowAdd] = useLocalState('showAdd', false);
 
-    const [connectSources, setConnectSouces] = useLocalState<AssocConnected>(
-      'connectionSources',
-      {},
-    );
+    const [connectSources, setConnectSouces] = useState<AssocConnected>({});
 
     positionPlanes(connectSources);
 
@@ -930,10 +928,7 @@ const AddModal = (props) => {
     'currentPlane',
     {} as Plane,
   );
-  const [currentTarget, setCurrentTarget] = useLocalState<Plane>(
-    'currentTarget',
-    {} as Plane,
-  );
+  const [currentTarget, setCurrentTarget] = useState<Plane>({} as Plane);
 
   const plane_list = Object.keys(plane_info).map((plane) => plane_info[plane]);
   const planes = sortBy((plane: Plane) => -plane.plane)(plane_list);

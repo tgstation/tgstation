@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { useLocalState } from '../backend';
+import { useState } from 'react';
 import {
   Box,
   Button,
@@ -20,8 +20,8 @@ export const meta = {
 };
 
 const Story = (props) => {
-  const [progress, setProgress] = useLocalState('progress', 0.5);
-  const [color, setColor] = useLocalState('color', '');
+  const [progress, setProgress] = useState(0.5);
+  const [color, setColor] = useState('');
 
   const color_data = color
     ? { color: color }

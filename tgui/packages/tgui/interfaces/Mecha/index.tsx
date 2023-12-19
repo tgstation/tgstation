@@ -1,5 +1,6 @@
 import { Window } from '../../layouts';
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
+import { useState } from 'react';
 import {
   ByondUi,
   Stack,
@@ -27,7 +28,7 @@ export const Mecha = (props) => {
 
 export const Content = (props) => {
   const { act, data } = useBackend<MainData>();
-  const [edit_access, editAccess] = useLocalState('edit_access', false);
+  const [edit_access, editAccess] = useState(false);
   const {
     name,
     mecha_flags,
