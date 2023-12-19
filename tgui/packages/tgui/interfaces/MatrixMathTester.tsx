@@ -67,7 +67,7 @@ export const MatrixMathTester = (props) => {
                 <MatrixMathTesterInput value={matrix_d} varName="d" />
               </Table.Cell>
               <Table.Cell>
-                <Input placeholder="0 (fixed value)" fluid />
+                <Input disabled placeholder="0 (fixed value)" fluid />
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -78,7 +78,7 @@ export const MatrixMathTester = (props) => {
                 <MatrixMathTesterInput value={matrix_e} varName="e" />
               </Table.Cell>
               <Table.Cell>
-                <Input placeholder="0 (fixed value)" fluid />
+                <Input disabled placeholder="0 (fixed value)" fluid />
               </Table.Cell>
             </Table.Row>
             <Table.Row>
@@ -89,7 +89,7 @@ export const MatrixMathTester = (props) => {
                 <MatrixMathTesterInput value={matrix_f} varName="f" />
               </Table.Cell>
               <Table.Cell>
-                <Input placeholder="1 (fixed value)" fluid />
+                <Input disabled placeholder="1 (fixed value)" fluid />
               </Table.Cell>
             </Table.Row>
           </Table>

@@ -129,6 +129,7 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
+        color="transparent"
         onCommit={(_e, value: string) =>
           act('build', {
             ref: design.id,

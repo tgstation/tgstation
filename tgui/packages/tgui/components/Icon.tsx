@@ -24,19 +24,21 @@ type IconPropsUnique = { name: string } & Partial<{
 export type IconProps = IconPropsUnique & BoxProps;
 
 export const Icon = (props: IconProps) => {
-  const { name, size, spin, className, rotation, style = {}, ...rest } = props;
+  const { name, size, spin, className, rotation, ...rest } = props;
 
+  const customStyle = rest.style || {};
   if (size) {
-    style['fontSize'] = size * 100 + '%';
+    customStyle.fontSize = size * 100 + '%';
   }
   if (rotation) {
-    style['transform'] = `rotate(${rotation}deg)`;
+    customStyle.transform = `rotate(${rotation}deg)`;
   }
+  rest.style = customStyle;
 
   const boxProps = computeBoxProps(rest);
 
   let iconClass = '';
-  if (name.startsWith('tg-')) {
+if (name.startsWith('tg-')) {
     // tgfont icon
     iconClass = name;
   } else {

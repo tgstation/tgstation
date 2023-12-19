@@ -74,7 +74,7 @@ export const MafiaPanelData = (props) => {
     return (
       <Stack fill vertical>
         <MafiaLobby />
-        <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
+        {!!admin_controls && <MafiaAdmin />}
       </Stack>
     );
   }

@@ -119,7 +119,7 @@ const mapColorPropTo = (attrName) => (style, value) => {
 
 // String / number props
 const stringStyleMap = {
-  align: mapRawPropTo('align'),
+  align: mapRawPropTo('textAlign'),
   bottom: mapUnitPropTo('bottom', unit),
   colSpan: mapRawPropTo('colSpan'),
   fontFamily: mapRawPropTo('fontFamily'),

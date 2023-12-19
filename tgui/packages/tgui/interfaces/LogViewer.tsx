@@ -97,7 +97,6 @@ const CategoryBar = (props: CategoryBarProps) => {
       scrollableHorizontal
       buttons={
         <Input
-          fluid
           placeholder="Search"
           value={categorySearch}
           onChange={(_, value) => setCategorySearch(value)}
@@ -123,19 +122,15 @@ const CategoryBar = (props: CategoryBarProps) => {
           .filter((cat) =>
             cat.toLowerCase().includes(categorySearch.toLowerCase()),
           )
-          .map((category) => {
-            return (
-              <Stack.Item key={category}>
-                <Button
-                  textAlign="left"
-                  selected={category === props.active}
-                  onClick={() => props.setActive(category)}
-                >
-                  {category}
-                </Button>
-              </Stack.Item>
-            );
-          })}
+          .map((category) => (
+            <Button
+              key={category}
+              selected={category === props.active}
+              onClick={() => props.setActive(category)}
+            >
+              {category}
+            </Button>
+          ))}
       </Stack>
     </Section>
   );
@@ -178,7 +173,6 @@ const CategoryViewer = (props: CategoryViewerProps) => {
       buttons={
         <>
           <Input
-            fluid
             placeholder="Search"
             value={search}
             onChange={(_, value) => setSearch(value)}
