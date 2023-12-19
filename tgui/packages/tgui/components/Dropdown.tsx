@@ -2,6 +2,7 @@ import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
 import { Component, ReactNode } from 'react';
 import { findDOMNode, render } from 'react-dom';
+
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';

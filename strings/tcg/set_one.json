@@ -441,7 +441,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Syndicate Soldier",
 			"rarity": "rare",
-			"summon_icon_file": "icons/mob/simple/simple_human.dmi",
+			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
 			"summon_icon_state": "syndicate_stormtrooper_sword"
 		},
 		{
@@ -837,7 +837,7 @@
 			"cardtype": "Creature",
 			"cardsubtype": "Syndicate Soldier",
 			"rarity": "rare",
-			"summon_icon_file": "icons/mob/simple/simple_human.dmi",
+			"summon_icon_file": "icons/obj/toys/tcgsummons.dmi",
 			"summon_icon_state": "syndicate_space_shotgun"
 		},
 		{

@@ -1,10 +1,11 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
+import { KEY } from 'common/keys';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
-import { KEY } from 'common/keys';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 type TextInputData = {
   large_buttons: boolean;
@@ -117,7 +118,7 @@ const InputArea = (props: {
         event.preventDefault();
         act('submit', { entry: input });
       }}
-      onInput={(_, value) => onType(value)}
+      onChange={(_, value) => onType(value)}
       placeholder="Type something..."
       value={input}
     />

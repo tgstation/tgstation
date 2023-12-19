@@ -1,7 +1,8 @@
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
-import { TextArea, Stack, Button, NoticeBox, Input, Box } from '../components';
+import { Box, Button, Input, NoticeBox, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
 
 type AdminhelpData = {
@@ -71,7 +72,6 @@ export const Adminhelp = (props) => {
                 )) || (
                   <Button
                     mt={1}
-                    content="Alert admins?"
                     onClick={() => {
                       if (requestForAdmin) {
                         setRequestForAdmin(false);
@@ -85,11 +85,13 @@ export const Adminhelp = (props) => {
                     tooltip={
                       bannedFromUrgentAhelp
                         ? 'You are banned from using urgent ahelps.'
-                        : null
+                        : undefined
                     }
                     fluid
                     textAlign="center"
-                  />
+                  >
+                    Alert admins?
+                  </Button>
                 )}
               </NoticeBox>
             </Stack.Item>

@@ -396,7 +396,7 @@
 		return 0
 	else if(FACTION_PIRATE in ransomee.faction) //can't ransom your fellow pirates to CentCom!
 		return 0
-	else if(ransomee.mind.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+	else if(HAS_TRAIT(ransomee, TRAIT_HIGH_VALUE_RANSOM))
 		return 3000
 	else
 		return 1000

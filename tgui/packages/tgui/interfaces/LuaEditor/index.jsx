@@ -1,28 +1,29 @@
+import hljs from 'highlight.js/lib/core';
+import lua from 'highlight.js/lib/languages/lua';
+import { marked } from 'marked';
+import { Component, createRef } from 'react';
+
 import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
   Flex,
+  Modal,
+  NoticeBox,
+  ProgressBar,
   Section,
+  Stack,
   Tabs,
   TextArea,
-  Modal,
-  Stack,
-  ProgressBar,
-  NoticeBox,
 } from '../../components';
 import { Window } from '../../layouts';
+import { sanitizeText } from '../../sanitize';
 import { CallModal } from './CallModal';
 import { ChunkViewModal } from './ChunkViewModal';
-import { StateSelectModal } from './StateSelectModal';
 import { ListMapper } from './ListMapper';
 import { Log } from './Log';
+import { StateSelectModal } from './StateSelectModal';
 import { TaskManager } from './TaskManager';
-import { sanitizeText } from '../../sanitize';
-import { marked } from 'marked';
-import { Component, createRef } from 'react';
-import hljs from 'highlight.js/lib/core';
-import lua from 'highlight.js/lib/languages/lua';
 hljs.registerLanguage('lua', lua);
 
 export class LuaEditor extends Component {
@@ -200,7 +201,7 @@ export class LuaEditor extends Component {
                     height="100%"
                     value={scriptInput}
                     fontFamily="Consolas"
-                    onInput={(_, value) =>
+                    onChange={(_, value) =>
                       this.setState({ scriptInput: value })
                     }
                     displayedValue={

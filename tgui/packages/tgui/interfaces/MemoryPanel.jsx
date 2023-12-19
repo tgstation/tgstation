@@ -1,6 +1,7 @@
+import { multiline } from 'common/string';
+
 import { useBackend } from '../backend';
 import { Button, Dimmer, Section, Stack } from '../components';
-import { multiline } from 'common/string';
 import { Window } from '../layouts';
 
 const STORY_VALUE_KEY = -1;

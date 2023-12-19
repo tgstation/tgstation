@@ -1,8 +1,9 @@
+import { useState } from 'react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Button, Flex, NoticeBox, Section, Input } from '../components';
+import { Button, Flex, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 export const PortraitPicker = (props) => {
   const { act, data } = useBackend();

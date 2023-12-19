@@ -18,7 +18,6 @@
 	// pointless if it only takes 2 seconds to cross but updates every 2 seconds
 	subsystem_type = /datum/controller/subsystem/processing/transport
 	light_color = LIGHT_COLOR_BABY_BLUE
-	luminosity = 1
 	/// green, amber, or red for tram, blue if it's emag, tram missing, etc.
 	var/signal_state = XING_STATE_MALF
 	/// the sensor we use
@@ -82,7 +81,6 @@
 	light_range = 1.5
 	light_power = 3
 	light_color = COLOR_VIBRANT_LIME
-	luminosity = 1
 	var/sign_dir = INBOUND
 
 /obj/machinery/static_signal/northwest

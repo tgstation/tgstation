@@ -1,6 +1,7 @@
 import { BooleanLike, classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { multiline } from 'common/string';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -13,8 +14,8 @@ import {
   Tabs,
   TextArea,
 } from '../components';
-import { Window } from '../layouts';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 type RoleInfo = {
   role_theme: string;
@@ -201,7 +202,7 @@ const MafiaChat = (props) => {
             maxLength={300}
             className="Section__title candystripe"
             onChange={(e, value) => setMessagingBox(value)}
-            placeholder={'Type to chat'}
+            placeholder="Type to chat"
             value={message_to_send}
           />
           <Stack grow>
@@ -382,7 +383,7 @@ const MafiaNotesTab = (props) => {
         maxLength={600}
         className="Section__title candystripe"
         onChange={(_, value) => setNotesMessage(value)}
-        placeholder={'Insert Notes...'}
+        placeholder="Insert Notes..."
         value={note_message}
       />
       <Stack grow>

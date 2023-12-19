@@ -1,16 +1,17 @@
 import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
 import {
   Box,
-  Icon,
-  Stack,
   Button,
-  Section,
-  NoticeBox,
-  LabeledList,
   Collapsible,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
 
 enum VoteConfig {
   None = -1,
