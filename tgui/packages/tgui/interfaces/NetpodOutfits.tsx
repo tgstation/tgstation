@@ -1,8 +1,17 @@
-import { Button, Divider, Input, NoticeBox, Section, Stack, Tabs } from '../components';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
 
-import { Window } from '../layouts';
 import { createSearch } from '../../common/string';
+import { useBackend } from '../backend';
+import {
+  Button,
+  Divider,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
+import { Window } from '../layouts';
 
 type Data = {
   netsuit: string;
@@ -24,11 +33,8 @@ type Outfit = {
 export const NetpodOutfits = (props) => {
   const { act, data } = useBackend<Data>();
   const { netsuit, collections = [] } = data;
-  const [selectedType, setSelectedType] = useLocalState<Collection>(
-    'selectedType',
-    collections[0]
-  );
-  const [search, setSearch] = useLocalState<string>('outfitSearch', '');
+  const [selectedType, setSelectedType] = useState(collections[0]);
+  const [search, setSearch] = useState('');
 
   const searchFn = createSearch(search, (outfit: Outfit) => outfit.name);
 
@@ -51,11 +57,12 @@ export const NetpodOutfits = (props) => {
               buttons={
                 <Input
                   autoFocus
-                  onInput={(event, value) => setSearch(value)}
+                  onChange={(event, value) => setSearch(value)}
                   placeholder="Search"
                   value={search}
                 />
-              }>
+              }
+            >
               <Stack fill>
                 <Stack.Item grow>
                   <Tabs vertical>
@@ -64,7 +71,8 @@ export const NetpodOutfits = (props) => {
                         <Tabs.Tab
                           key={collection.name}
                           onClick={() => setSelectedType(collection)}
-                          selected={selectedType === collection}>
+                          selected={selectedType === collection}
+                        >
                           {collection.name}
                         </Tabs.Tab>
                         {index > 0 && <Divider />}
@@ -80,9 +88,8 @@ export const NetpodOutfits = (props) => {
                         <Button
                           selected={netsuit === path}
                           color="transparent"
-                          onClick={() =>
-                            act('select_outfit', { outfit: path })
-                          }>
+                          onClick={() => act('select_outfit', { outfit: path })}
+                        >
                           {name}
                         </Button>
                       </Stack.Item>

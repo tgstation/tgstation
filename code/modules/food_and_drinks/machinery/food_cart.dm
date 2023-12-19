@@ -8,7 +8,7 @@
 	anchored = FALSE
 	use_power = NO_POWER_USE
 	req_access = list(ACCESS_KITCHEN)
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = NO_DECONSTRUCTION
 	var/unpacked = FALSE
 	var/obj/machinery/griddle/stand/cart_griddle
 	var/obj/machinery/smartfridge/food/cart_smartfridge
@@ -137,4 +137,3 @@
 	icon = 'icons/obj/fluff/3x3.dmi'
 	icon_state = "stand"
 	layer = ABOVE_MOB_LAYER//big mobs will still go over the tent, this is fine and cool
-	plane = GAME_PLANE_UPPER

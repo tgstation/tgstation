@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "tgui-dev-server",
-  "version": "4.4.0",
+  "version": "5.0.0",
   "type": "module",
   "dependencies": {
     "axios": "^1.6.2",

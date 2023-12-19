@@ -16,12 +16,14 @@
 	on_drop = on_drop_callback
 
 /datum/component/wall_mounted/RegisterWithParent()
+	ADD_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	RegisterSignal(hanging_wall_turf, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(hanging_wall_turf, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(drop_wallmount))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_linked_destroyed))
 
 /datum/component/wall_mounted/UnregisterFromParent()
+	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, REF(src))
 	UnregisterSignal(hanging_wall_turf, list(COMSIG_ATOM_EXAMINE, COMSIG_TURF_CHANGE))
 	UnregisterSignal(parent, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
 	hanging_wall_turf = null

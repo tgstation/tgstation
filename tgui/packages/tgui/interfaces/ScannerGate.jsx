@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from '../components';
-import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 import { Window } from '../layouts';
+import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
 
 const DISEASE_THEASHOLD_LIST = [
   'Positive',
@@ -128,7 +128,8 @@ const ScannerGateControl = (props) => {
             onClick={() => act('set_mode', { new_mode: 'Off' })}
           />
         )
-      }>
+      }
+    >
       <Component />
     </Section>
   );

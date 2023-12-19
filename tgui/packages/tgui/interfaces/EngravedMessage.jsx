@@ -1,4 +1,5 @@
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -80,7 +81,8 @@ export const EngravedMessage = (props) => {
                 color="bad"
                 onClick={() => act('delete')}
               />
-            }>
+            }
+          >
             <LabeledList>
               <LabeledList.Item label="Creator Ckey">
                 {creator_key}

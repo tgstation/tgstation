@@ -130,7 +130,7 @@
 		if(welder.use_tool(src, user, 4 SECONDS, volume = 50))
 			update_integrity(min(atom_integrity += 50,max_integrity))
 			balloon_alert(user, "repaired")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	//disassembling the frame
 	if(!opened || has_electronics || terminal)
@@ -220,6 +220,7 @@
 		locked = FALSE
 		balloon_alert(user, "interface damaged")
 		update_appearance()
+		flicker_hacked_icon()
 		return TRUE
 
 // damage and destruction acts

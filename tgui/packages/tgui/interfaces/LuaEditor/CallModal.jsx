@@ -11,7 +11,8 @@ export const CallModal = (props) => {
   return (
     <Modal
       height={`${window.innerHeight * 0.8}px`}
-      width={`${window.innerWidth * 0.5}px`}>
+      width={`${window.innerWidth * 0.5}px`}
+    >
       <Section
         fill
         scrollable
@@ -25,17 +26,20 @@ export const CallModal = (props) => {
               setModal(null);
               setToCall(null);
               act('clearArgs');
-            }}>
+            }}
+          >
             Cancel
           </Button>
-        }>
+        }
+      >
         <ListMapper name="Arguments" list={callArguments} editable />
         <Button
           onClick={() => {
             setModal(null);
             setToCall(null);
             act(type, params);
-          }}>
+          }}
+        >
           Call
         </Button>
       </Section>

@@ -1,6 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
 import { round } from '../../common/math';
 import { BooleanLike, classes } from '../../common/react';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
@@ -52,11 +52,11 @@ export const LightController = (props) => {
   } = data;
   const [currentTemplate, setCurrentTemplate] = useLocalState<string>(
     'currentTemplate',
-    default_id
+    default_id,
   );
   const [currentCategory, setCurrentCategory] = useLocalState<string>(
     'currentCategory',
-    default_category
+    default_category,
   );
 
   const category_keys = category_ids ? Object.keys(category_ids) : [];
@@ -72,7 +72,8 @@ export const LightController = (props) => {
                   <Tabs.Tab
                     key={category}
                     selected={currentCategory === category}
-                    onClick={() => setCurrentCategory(category)}>
+                    onClick={() => setCurrentCategory(category)}
+                  >
                     <Box fontSize="14px" bold textColor="#eee">
                       {category}
                     </Box>
@@ -84,7 +85,8 @@ export const LightController = (props) => {
                   <Tabs.Tab
                     key={id}
                     selected={currentTemplate === id}
-                    onClick={() => setCurrentTemplate(id)}>
+                    onClick={() => setCurrentTemplate(id)}
+                  >
                     <Box fontSize="14px" textColor="#cee">
                       {templates[id].light_info.name}
                     </Box>
@@ -134,7 +136,8 @@ const LightControl = (props: LightControlProps) => {
                 icon="brush"
                 tooltip="Change light color"
                 textColor={info.color}
-                onClick={() => act('change_color')}>
+                onClick={() => act('change_color')}
+              >
                 {info.color}
               </Button>
               <Button

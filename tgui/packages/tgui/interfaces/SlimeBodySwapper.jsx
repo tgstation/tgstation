@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, LabeledList, Button, Box } from '../components';
+import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 const statusMap = {
@@ -31,7 +31,8 @@ export const BodyEntry = (props) => {
           color={body.occupied === 'stranger' && 'bad'}
           onClick={() => swapFunc()}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Status" bold color={statusMap[body.status]}>
           {body.status}

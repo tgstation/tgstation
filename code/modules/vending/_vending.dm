@@ -301,7 +301,7 @@
 /obj/machinery/vending/deconstruct(disassembled = TRUE)
 	if(refill_canister)
 		return ..()
-	if(!(flags_1 & NODECONSTRUCT_1)) //the non constructable vendors drop metal instead of a machine frame.
+	if(!(obj_flags & NO_DECONSTRUCTION)) //the non constructable vendors drop metal instead of a machine frame.
 		new /obj/item/stack/sheet/iron(loc, 3)
 	qdel(src)
 
@@ -620,7 +620,7 @@
 		return FALSE
 	if(default_unfasten_wrench(user, tool, time = 6 SECONDS))
 		unbuckle_all_mobs(TRUE)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	return FALSE
 
 /obj/machinery/vending/screwdriver_act(mob/living/user, obj/item/attack_item)
@@ -746,7 +746,6 @@
 			tilted = TRUE
 			tilted_rotation = picked_rotation
 			layer = ABOVE_MOB_LAYER
-			SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER)
 
 	if(get_turf(fatty) != get_turf(src))
 		throw_at(get_turf(fatty), 1, 1, spin = FALSE, quickstart = FALSE)
@@ -1016,7 +1015,6 @@
 
 	tilted = FALSE
 	layer = initial(layer)
-	SET_PLANE_IMPLICIT(src, initial(plane))
 
 	var/matrix/to_turn = turn(transform, -tilted_rotation)
 	animate(src, transform = to_turn, 0.2 SECONDS)
@@ -1068,7 +1066,7 @@
 /obj/machinery/vending/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer)
 	if(!istype(replacer))
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) && !replacer.works_from_distance)
+	if((obj_flags & NO_DECONSTRUCTION) && !replacer.works_from_distance)
 		return FALSE
 	if(!component_parts || !refill_canister)
 		return FALSE

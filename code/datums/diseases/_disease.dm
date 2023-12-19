@@ -78,6 +78,7 @@
 /datum/disease/proc/stage_act(seconds_per_tick, times_fired)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 	var/recovery_prob = 0
+	var/cure_mod
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
@@ -85,13 +86,16 @@
 			return FALSE
 
 	if(has_cure())
-		if(disease_flags & CHRONIC && SPT_PROB(cure_chance, seconds_per_tick))
+		cure_mod = cure_chance
+		if(istype(src, /datum/disease/advance))
+			cure_mod = max(cure_chance, DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE)
+		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
 			return
-		if(SPT_PROB(cure_chance, seconds_per_tick))
+		if(SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(max(stage - 1, 1))
-		if(disease_flags & CURABLE && SPT_PROB(cure_chance, seconds_per_tick))
+		if(disease_flags & CURABLE && SPT_PROB(cure_mod, seconds_per_tick))
 			cure()
 			return FALSE
 
@@ -105,7 +109,7 @@
 		switch(severity)
 			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE) //because of the way we later check for recovery_prob, we need to floor this at least equal to the scaling to avoid infinitely getting less likely to cure
-				if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) || affected_mob.nutrition < NUTRITION_LEVEL_STARVING || affected_mob.satiety < 0 || slowdown == 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
+				if(((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) || ((affected_mob.nutrition > NUTRITION_LEVEL_STARVING) && (affected_mob.satiety >= 0))) && slowdown == 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
 					return TRUE
 			if(DISEASE_SEVERITY_NONTHREAT)
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_NONTHREAT)

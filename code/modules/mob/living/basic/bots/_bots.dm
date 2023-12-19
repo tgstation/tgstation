@@ -80,11 +80,20 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/datum/action/cooldown/bot_announcement/pa_system
 	/// Type of bot_announcement ability we want
 	var/announcement_type
+	///list of traits we apply and remove when turning on/off
+	var/static/list/on_toggle_traits = list(
+		TRAIT_INCAPACITATED,
+		TRAIT_IMMOBILIZED,
+		TRAIT_HANDS_BLOCKED,
+	)
 	/// If true we will offer this
 	COOLDOWN_DECLARE(offer_ghosts_cooldown)
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
+	AddElement(/datum/element/relay_attackers)
+
+	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
 	GLOB.bots_list += src
@@ -167,7 +176,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/proc/turn_off()
 	bot_mode_flags &= ~BOT_MODE_ON
-	add_traits(list(TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), POWER_LACK_TRAIT)
+	add_traits(on_toggle_traits, POWER_LACK_TRAIT)
 	set_light_on(bot_mode_flags & BOT_MODE_ON ? TRUE : FALSE)
 	bot_reset() //Resets an AI's call, should it exist.
 	balloon_alert(src, "turned off")
@@ -175,6 +184,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/Destroy()
 	GLOB.bots_list -= src
+	calling_ai_ref = null
 	QDEL_NULL(paicard)
 	QDEL_NULL(pa_system)
 	QDEL_NULL(internal_radio)
@@ -381,7 +391,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return TRUE
 
 /mob/living/basic/bot/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 	if(!(bot_access_flags & BOT_CONTROL_PANEL_OPEN))
 		to_chat(user, span_warning("The maintenance panel is locked!"))
 		return
@@ -395,7 +405,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	if(user.combat_mode)
 		return FALSE
 
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
+	. = ITEM_INTERACT_SUCCESS
 
 	if(health >= maxHealth)
 		user.balloon_alert(user, "no repairs needed!")
@@ -515,8 +525,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		return
 
 	if(istype(item_to_drop, /obj/item/storage))
-		var/obj/item/storage/storage_to_drop = item_to_drop
-		storage_to_drop.emptyStorage()
+		item_to_drop.contents = list()
 		return
 
 	if(!istype(item_to_drop, /obj/item/gun/energy))
@@ -550,10 +559,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("patroloff")
 			bot_reset() //HOLD IT!! //OBJECTION!!
 			bot_mode_flags &= ~BOT_MODE_AUTOPATROL
-
 		if("patrolon")
 			bot_mode_flags |= BOT_MODE_AUTOPATROL
-
 		if("summon")
 			summon_bot(user, user_access = user_access)
 		if("ejectpai")
@@ -573,8 +580,8 @@ GLOBAL_LIST_INIT(command_strings, list(
 	data["has_access"] = check_access(user)
 	data["locked"] = !(bot_access_flags & BOT_CONTROL_PANEL_OPEN)
 	data["settings"] = list()
-	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN || issilicon(user) || isAdminGhostAI(user))
-		data["settings"]["pai_inserted"] = !!paicard
+	if((bot_access_flags & BOT_CONTROL_PANEL_OPEN) || issilicon(user) || isAdminGhostAI(user))
+		data["settings"]["pai_inserted"] = !isnull(paicard)
 		data["settings"]["allow_possession"] = bot_mode_flags & BOT_MODE_CAN_BE_SAPIENT
 		data["settings"]["possession_enabled"] = can_be_possessed
 		data["settings"]["airplane_mode"] = !(bot_mode_flags & BOT_MODE_REMOTE_ENABLED)
@@ -584,12 +591,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 	return data
 
 // Actions received from TGUI
-/mob/living/basic/bot/ui_act(action, params)
+/mob/living/basic/bot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if(. || !isliving(ui.user))
 		return
-	if(!check_access(usr))
-		to_chat(usr, span_warning("Access denied."))
+	var/mob/living/the_user = ui.user
+	if(!check_access(the_user))
+		balloon_alert(the_user, "access denied!")
 		return
 
 	if(action == "lock")
@@ -609,39 +617,39 @@ GLOBAL_LIST_INIT(command_strings, list(
 		if("airplane")
 			bot_mode_flags ^= BOT_MODE_REMOTE_ENABLED
 		if("hack")
-			if(!(issilicon(usr) || isAdminGhostAI(usr)))
+			if(!(issilicon(the_user) || isAdminGhostAI(the_user)))
 				return
 			if(!(bot_access_flags & BOT_COVER_EMAGGED))
 				bot_access_flags |= (BOT_COVER_EMAGGED|BOT_COVER_HACKED)
 				bot_access_flags &= ~BOT_CONTROL_PANEL_OPEN
-				to_chat(usr, span_warning("You overload [src]'s [hackables]."))
-				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(usr)] in [ADMIN_VERBOSEJMP(src)]")
-				usr.log_message("disabled safety lock of [src]", LOG_GAME)
+				to_chat(the_user, span_warning("You overload [src]'s [hackables]."))
+				message_admins("Safety lock of [ADMIN_LOOKUPFLW(src)] was disabled by [ADMIN_LOOKUPFLW(the_user)] in [ADMIN_VERBOSEJMP(the_user)]")
+				the_user.log_message("disabled safety lock of [the_user]", LOG_GAME)
 				bot_reset()
 				to_chat(src, span_userdanger("(#$*#$^^( OVERRIDE DETECTED"))
 				to_chat(src, span_boldnotice(get_emagged_message()))
 				return
 			if(!(bot_access_flags & BOT_COVER_HACKED))
-				to_chat(usr, span_boldannounce("You fail to repair [src]'s [hackables]."))
+				to_chat(the_user, span_boldannounce("You fail to repair [src]'s [hackables]."))
 				return
 			bot_access_flags &= ~(BOT_COVER_EMAGGED|BOT_COVER_HACKED)
-			to_chat(usr, span_notice("You reset the [src]'s [hackables]."))
-			usr.log_message("re-enabled safety lock of [src]", LOG_GAME)
+			to_chat(the_user, span_notice("You reset the [src]'s [hackables]."))
+			the_user.log_message("re-enabled safety lock of [src]", LOG_GAME)
 			bot_reset()
 			to_chat(src, span_userdanger("Software restored to standard."))
 			to_chat(src, span_boldnotice(possessed_message))
 		if("eject_pai")
 			if(!paicard)
 				return
-			to_chat(usr, span_notice("You eject [paicard] from [initial(src.name)]."))
-			ejectpai(usr)
+			to_chat(the_user, span_notice("You eject [paicard] from [initial(src.name)]."))
+			ejectpai(the_user)
 		if("toggle_personality")
 			if (can_be_possessed)
-				disable_possession(usr)
+				disable_possession(the_user)
 			else
-				enable_possession(usr)
+				enable_possession(the_user)
 		if("rename")
-			rename(usr)
+			rename(the_user)
 
 /mob/living/basic/bot/update_icon_state()
 	icon_state = "[isnull(base_icon_state) ? initial(icon_state) : base_icon_state][bot_mode_flags & BOT_MODE_ON]"
@@ -773,11 +781,12 @@ GLOBAL_LIST_INIT(command_strings, list(
 	initial_access = access_card.access.Copy()
 
 
-/mob/living/basic/bot/proc/summon_bot(atom/caller, user_access = list(), grant_all_access = FALSE)
+/mob/living/basic/bot/proc/summon_bot(atom/caller, turf/turf_destination, user_access = list(), grant_all_access = FALSE)
 	if(isAI(caller) && !set_ai_caller(caller))
 		return FALSE
 	bot_reset(bypass_ai_reset = isAI(caller))
-	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, get_turf(caller))
+	var/turf/destination = turf_destination ? turf_destination : get_turf(caller)
+	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, destination)
 	var/list/access_to_grant = grant_all_access ? REGION_ACCESS_ALL_STATION : user_access + initial_access
 	access_card.set_access(access_to_grant)
 	speak("Responding.", radio_channel)
@@ -796,3 +805,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	update_appearance()
 	if(update_hud)
 		diag_hud_set_botmode()
+
+/mob/living/basic/bot/proc/after_attacked(datum/source, atom/attacker, attack_flags)
+	if(attack_flags & ATTACKER_DAMAGING_ATTACK)
+		do_sparks(number = 5, cardinal_only = TRUE, source = src)

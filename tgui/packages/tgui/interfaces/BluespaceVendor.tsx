@@ -3,8 +3,15 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
+
 import { useBackend } from '../backend';
-import { Button, NumberInput, ProgressBar, Section, Stack } from '../components';
+import {
+  Button,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
 import { Table, TableCell, TableRow } from '../components/Table';
 import { getGasColor } from '../constants';
 import { Window } from '../layouts';
@@ -74,7 +81,8 @@ export const BluespaceVendor = (props) => {
                     onClick={() => act('tank_expel')}
                   />
                 </>
-              }>
+              }
+            >
               <Stack>
                 <Stack.Item>
                   <NumberInput
@@ -122,7 +130,8 @@ export const BluespaceVendor = (props) => {
                   and finally press start on the gas of your choice!
                 `}
                 />
-              }>
+              }
+            >
               <Table>
                 <thead>
                   <TableRow>

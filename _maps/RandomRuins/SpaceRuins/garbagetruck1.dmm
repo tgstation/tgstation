@@ -140,8 +140,8 @@
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/storage/bag/tray/cafeteria,
 /obj/item/knife/butcher{
-	desc = "A huge thing used for chopping and chopping up meat. Years of service has scarred its metal and worn groves into the handle, but its blade is well-maintained and sharp.";
-	name = "antique cleaver"
+	name = "antique cleaver";
+	desc = "A huge knife for chopping up and slicing meat. Years of service has scarred its metal and worn grooves into the handle, but its blade is well-maintained and very sharp."
 	},
 /mob/living/basic/cockroach,
 /turf/open/floor/plating/dumpsterair,
@@ -402,6 +402,7 @@
 /obj/item/book/manual/chef_recipes,
 /obj/item/trash/semki/healthy,
 /mob/living/basic/mouse/rat,
+/obj/item/clothing/shoes/galoshes,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "rL" = (
@@ -571,6 +572,13 @@
 /obj/item/broken_bottle{
 	pixel_x = 8;
 	pixel_y = 2
+	},
+/turf/open/floor/plating/dumpsterair,
+/area/ruin/space/has_grav/garbagetruck/foodwaste)
+"Ad" = (
+/obj/item/food/canned/beans{
+	desc = "Probably still good.";
+	name = "rust-covered tin of beans"
 	},
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
@@ -772,7 +780,7 @@
 "GP" = (
 /obj/effect/decal/cleanable/garbage,
 /obj/item/crowbar/hammer{
-	desc = "It's a heavy iron hammer with a plastic grip. A triangle has been chiselled into the handle.";
+	desc = "It's a heavy iron hammer with a wooden handle. A triangle has been chiselled into it.";
 	name = "heirloom hammer"
 	},
 /turf/open/floor/plating/dumpsterair,
@@ -911,7 +919,7 @@
 /obj/effect/decal/cleanable/glass,
 /obj/effect/spawner/random/engineering/material_cheap,
 /obj/item/crowbar/hammer{
-	desc = "It's a heavy claw hammer. The handle is covered in fangmarks of varying sizes.";
+	desc = "It's a heavy claw hammer. The handle is covered in bite marks of varying sizes.";
 	name = "old hammer"
 	},
 /obj/item/food/deadmouse,
@@ -1053,7 +1061,6 @@
 	},
 /obj/effect/decal/cleanable/ants,
 /obj/effect/decal/cleanable/food/tomato_smudge,
-/obj/item/organ/internal/heart/rat,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "PU" = (
@@ -1222,9 +1229,9 @@
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Zb" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/obj/item/grown/bananapeel,
 /obj/item/food/deadmouse,
 /mob/living/basic/mouse/rat,
+/obj/item/organ/internal/heart/rat,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 
@@ -1303,7 +1310,7 @@ kS
 OD
 Sa
 xf
-ku
+An
 OZ
 Fp
 Ok
@@ -1331,7 +1338,7 @@ zK
 aP
 GU
 KT
-An
+Ad
 TX
 ki
 Fp

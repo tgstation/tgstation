@@ -11,9 +11,8 @@
 	program_open_overlay = "command"
 	extended_desc = "This program allows communication over NTNRC network"
 	size = 8
-	requires_ntnet = TRUE
 	ui_header = "ntnrc_idle.gif"
-	available_on_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	tgui_id = "NtosNetChat"
 	program_icon = "comment-alt"
 	alert_able = TRUE

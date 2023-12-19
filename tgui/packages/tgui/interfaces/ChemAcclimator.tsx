@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -77,7 +78,8 @@ export const ChemAcclimator = (props) => {
               selected={enabled}
               onClick={() => act('toggle_power')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Volume">
               <NumberInput

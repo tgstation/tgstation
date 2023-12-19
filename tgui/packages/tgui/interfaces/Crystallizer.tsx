@@ -1,10 +1,17 @@
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from '../components';
-
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
-import { getGasColor } from '../constants';
 import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from '../components';
+import { getGasColor } from '../constants';
+import { Window } from '../layouts';
 
 type Data = {
   on: BooleanLike;
@@ -123,7 +130,8 @@ const Requirements = (props) => {
               good: [logScale(80), logScale(600)],
               average: [logScale(600), logScale(5000)],
               bad: [logScale(5000), Infinity],
-            }}>
+            }}
+          >
             {toFixed(internal_temperature) + ' K'}
           </ProgressBar>
         </LabeledList.Item>
@@ -145,7 +153,8 @@ const Gases = (props) => {
               color={getGasColor(id)}
               value={amount}
               minValue={0}
-              maxValue={1000}>
+              maxValue={1000}
+            >
               {toFixed(amount, 2) + ' moles'}
             </ProgressBar>
           </LabeledList.Item>

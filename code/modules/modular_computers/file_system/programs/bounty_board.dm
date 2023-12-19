@@ -4,7 +4,7 @@
 	downloader_category = PROGRAM_CATEGORY_SUPPLY
 	program_open_overlay = "bountyboard"
 	extended_desc = "A multi-platform network for placing requests across the station, with payment across the network being possible.."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 10
 	tgui_id = "NtosBountyBoard"
 	///Reference to the currently logged in user.

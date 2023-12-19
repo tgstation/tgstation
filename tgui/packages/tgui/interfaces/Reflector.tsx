@@ -1,5 +1,14 @@
 import { useBackend } from '../backend';
-import { Box, Button, Stack, Icon, LabeledControls, Section, NumberInput, Table } from '../components';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledControls,
+  NumberInput,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {

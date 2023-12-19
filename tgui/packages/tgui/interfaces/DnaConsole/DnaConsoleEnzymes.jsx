@@ -1,7 +1,18 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Collapsible, Dimmer, Divider, Icon, LabeledList, NumberInput, Section, Stack } from '../../components';
-import { GeneticMakeupInfo } from './GeneticMakeupInfo';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Dimmer,
+  Divider,
+  Icon,
+  LabeledList,
+  NumberInput,
+  Section,
+  Stack,
+} from '../../components';
 import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
+import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 
 const GeneticMakeupBufferInfo = (props) => {
   const { index, makeup } = props;
@@ -39,7 +50,8 @@ const GeneticMakeupBufferInfo = (props) => {
                 index,
                 type: 'ue',
               })
-            }>
+            }
+          >
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -63,7 +75,8 @@ const GeneticMakeupBufferInfo = (props) => {
                 index,
                 type: 'ui',
               })
-            }>
+            }
+          >
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -87,7 +100,8 @@ const GeneticMakeupBufferInfo = (props) => {
                 index,
                 type: 'uf',
               })
-            }>
+            }
+          >
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -111,7 +125,8 @@ const GeneticMakeupBufferInfo = (props) => {
                 index,
                 type: 'mixed',
               })
-            }>
+            }
+          >
             Transfer
             {!isViableSubject && ' (Delayed)'}
           </Button>
@@ -184,7 +199,8 @@ const GeneticMakeupBuffers = (props) => {
               }
             />
           </>
-        }>
+        }
+      >
         <GeneticMakeupBufferInfo index={i} makeup={makeup} />
       </Collapsible>
     );

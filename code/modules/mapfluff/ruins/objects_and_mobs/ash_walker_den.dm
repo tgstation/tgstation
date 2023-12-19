@@ -50,12 +50,12 @@
 		if(offeredmob.loc == src)
 			continue //Ashwalker Revive in Progress...
 		if(offeredmob.stat)
-			for(var/obj/item/W in offeredmob)
-				if(!offeredmob.dropItemToGround(W))
-					qdel(W)
+			offeredmob.unequip_everything()
+
 			if(issilicon(offeredmob)) //no advantage to sacrificing borgs...
 				offeredmob.investigate_log("has been gibbed by the necropolis tendril.", INVESTIGATE_DEATHS)
 				visible_message(span_notice("Serrated tendrils eagerly pull [offeredmob] apart, but find nothing of interest."))
+				offeredmob.gib()
 				return
 
 			if(offeredmob.mind?.has_antag_datum(/datum/antagonist/ashwalker) && (offeredmob.ckey || offeredmob.get_ghost(FALSE, TRUE))) //special interactions for dead lava lizards with ghosts attached

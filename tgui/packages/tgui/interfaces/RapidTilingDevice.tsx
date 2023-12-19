@@ -1,9 +1,11 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Section, Tabs, Stack } from '../components';
-import { InfoSection } from './RapidConstructionDevice';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Box, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
+import { InfoSection } from './RapidConstructionDevice';
 
 type Data = {
   selected_icon: string;
@@ -40,7 +42,8 @@ const TilePreview = (props) => {
       style={{
         width: '50px',
         height: '50px',
-      }}>
+      }}
+    >
       <Box
         className={classes(['rtd32x32', selected_icon])}
         style={{
@@ -96,13 +99,11 @@ const TileRotateSection = (props) => {
 const TileDesignSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.category_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
@@ -111,7 +112,8 @@ const TileDesignSection = (props) => {
             fluid
             key={category.category_name}
             selected={category.category_name === categoryName}
-            onClick={() => setCategoryName(category.category_name)}>
+            onClick={() => setCategoryName(category.category_name)}
+          >
             {category.category_name}
           </Tabs.Tab>
         ))}
@@ -120,7 +122,6 @@ const TileDesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           color="transparent"
           selected={
             recipe.name === selected_recipe &&
@@ -134,7 +135,8 @@ const TileDesignSection = (props) => {
               category_name: shownCategory.category_name,
               id: i + 1,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"

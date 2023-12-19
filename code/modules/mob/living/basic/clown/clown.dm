@@ -112,7 +112,12 @@
 	var/static/list/injection_range
 	if(!injection_range)
 		injection_range = string_numbers_list(list(1, 5))
-	AddElement(/datum/element/venomous, /datum/reagent/consumable/laughter, injection_range)
+	AddElement(\
+		/datum/element/venomous,\
+		/datum/reagent/consumable/laughter,\
+		injection_range,\
+		injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES,\
+	)
 
 /mob/living/basic/clown/fleshclown
 	name = "Fleshclown"
@@ -288,7 +293,12 @@
 	var/static/list/injection_range
 	if(!injection_range)
 		injection_range = string_numbers_list(list(1, 5))
-	AddElement(/datum/element/venomous, /datum/reagent/peaceborg/confuse, injection_range)
+	AddElement(\
+		/datum/element/venomous,\
+		/datum/reagent/peaceborg/confuse,\
+		injection_range,\
+		injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES,\
+	) // I don't really know what a clown is using to inject people but let's assume it doesn't need to penetrate at all
 
 /mob/living/basic/clown/clownhulk/destroyer
 	name = "The Destroyer"

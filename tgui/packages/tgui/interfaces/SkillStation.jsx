@@ -1,6 +1,17 @@
 import { toFixed } from 'common/math';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, NoticeBox, Section, Stack, Table } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 export const InsertedSkillchip = (props) => {
@@ -44,7 +55,8 @@ export const InsertedSkillchip = (props) => {
             content="Eject"
           />
         </>
-      }>
+      }
+    >
       <Stack fill align="center">
         <Stack.Item>
           <Icon m={1} size={3} name={skill_icon} />
@@ -68,7 +80,8 @@ export const InsertedSkillchip = (props) => {
             {!!implantable_reason && (
               <LabeledList.Item
                 label="Error"
-                color={implantable ? 'good' : 'bad'}>
+                color={implantable ? 'good' : 'bad'}
+              >
                 {implantable_reason}
               </LabeledList.Item>
             )}
@@ -156,7 +169,8 @@ export const ImplantedSkillchips = (props) => {
                     'bad') ||
                   'grey'
                 }
-                textAlign="center">
+                textAlign="center"
+              >
                 {skill.complexity}
               </Table.Cell>
               <Table.Cell bold color="good" textAlign="center">
@@ -174,7 +188,7 @@ export const ImplantedSkillchips = (props) => {
               </Table.Cell>
               <Table.Cell textAlign="center">
                 <Button
-                  onClick={() => act('remove', { 'ref': skill.ref })}
+                  onClick={() => act('remove', { ref: skill.ref })}
                   icon={skill.removable ? 'eject' : 'trash'}
                   color={skill.removable ? 'good' : 'bad'}
                   tooltip={skill.removable ? 'Extract' : 'Destroy'}
@@ -182,7 +196,7 @@ export const ImplantedSkillchips = (props) => {
                   disabled={skill.cooldown || working}
                 />
                 <Button
-                  onClick={() => act('toggle_activate', { 'ref': skill.ref })}
+                  onClick={() => act('toggle_activate', { ref: skill.ref })}
                   icon={skill.active ? 'check-square-o' : 'square-o'}
                   color={skill.active ? 'good' : 'default'}
                   tooltip={
@@ -215,11 +229,11 @@ export const TimeFormat = (props) => {
   const seconds = toFixed(Math.floor((value / 10) % 60)).padStart(2, '0');
   const minutes = toFixed(Math.floor((value / (10 * 60)) % 60)).padStart(
     2,
-    '0'
+    '0',
   );
   const hours = toFixed(Math.floor((value / (10 * 60 * 60)) % 24)).padStart(
     2,
-    '0'
+    '0',
   );
   const formattedValue = `${hours}:${minutes}:${seconds}`;
   return formattedValue;

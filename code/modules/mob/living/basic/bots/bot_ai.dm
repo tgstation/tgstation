@@ -12,7 +12,7 @@
 	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/respond_to_summon,
-		/datum/ai_planning_subtree/salute_beepsky,
+		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
 		/datum/ai_planning_subtree/manage_unreachable_list,
 	)
@@ -57,6 +57,8 @@
 
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
 	if(!isdatum(target)) //we dont need to check if its not a datum!
+		return TRUE
+	if(get_turf(pawn) == get_turf(target))
 		return TRUE
 	var/list/path = get_path_to(pawn, target, max_distance = distance, access = get_access())
 	if(!length(path))
@@ -177,39 +179,44 @@
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	if(QDELETED(bot_pawn)) // pawn can be null at this point
+		return ..()
 	bot_pawn.calling_ai_ref = null
 	bot_pawn.update_bot_mode(new_mode = BOT_IDLE)
 	return ..()
 
-/datum/ai_planning_subtree/salute_beepsky
+/datum/ai_planning_subtree/salute_authority
 
-/datum/ai_planning_subtree/salute_beepsky/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/salute_authority/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are criminals, dont salute the dirty pigs
 	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_SALUTE_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/salute_beepsky, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)
+		controller.queue_behavior(/datum/ai_behavior/salute_authority, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_beepsky, BB_SALUTE_TARGET)
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/valid_authority, BB_SALUTE_TARGET)
 
 
-/datum/ai_behavior/find_and_set/valid_beepsky
+/datum/ai_behavior/find_and_set/valid_authority
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 	action_cooldown = 30 SECONDS
 
-/datum/ai_behavior/find_and_set/valid_beepsky/search_tactic(datum/ai_controller/controller, locate_path, search_range)
-	for(var/mob/living/simple_animal/bot/secbot/robot in oview(search_range, controller.pawn))
-		if(!(robot.bot_mode_flags & BOT_MODE_ON))
+/datum/ai_behavior/find_and_set/valid_authority/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	for(var/mob/living/robot in oview(search_range, controller.pawn))
+		if(istype(robot, /mob/living/simple_animal/bot/secbot))
+			return robot
+		if(!istype(robot, /mob/living/basic/bot/cleanbot))
 			continue
-		return robot
-
+		var/mob/living/basic/bot/cleanbot/potential_bot = robot
+		if(potential_bot.comissioned)
+			return potential_bot
 	return null
 
-/datum/ai_behavior/salute_beepsky
+/datum/ai_behavior/salute_authority
 
-/datum/ai_behavior/salute_beepsky/perform(seconds_per_tick, datum/ai_controller/controller, target_key, salute_keys)
+/datum/ai_behavior/salute_authority/perform(seconds_per_tick, datum/ai_controller/controller, target_key, salute_keys)
 	. = ..()
 	if(!controller.blackboard_key_exists(target_key))
 		finish_action(controller, FALSE, target_key)
@@ -228,6 +235,6 @@
 	finish_action(controller, TRUE, target_key)
 	return
 
-/datum/ai_behavior/salute_beepsky/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/ai_behavior/salute_authority/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	controller.clear_blackboard_key(target_key)

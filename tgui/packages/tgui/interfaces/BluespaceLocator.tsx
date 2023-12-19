@@ -1,4 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Icon, ProgressBar, Tabs } from '../components';
 import { Window } from '../layouts';
 
@@ -25,26 +27,33 @@ const DIRECTION_TO_ICON = {
   northwest: 315,
 } as const;
 
+enum TAB {
+  Implant,
+  Beacon,
+}
+
 export const BluespaceLocator = (props) => {
-  const [tab, setTab] = useLocalState('tab', 'implant');
+  const [tab, setTab] = useState(TAB.Implant);
 
   return (
     <Window width={300} height={300}>
       <Window.Content scrollable>
         <Tabs>
           <Tabs.Tab
-            selected={tab === 'implant'}
-            onClick={() => setTab('implant')}>
+            selected={tab === TAB.Implant}
+            onClick={() => setTab(TAB.Implant)}
+          >
             Implants
           </Tabs.Tab>
           <Tabs.Tab
-            selected={tab === 'beacon'}
-            onClick={() => setTab('beacon')}>
+            selected={tab === TAB.Beacon}
+            onClick={() => setTab(TAB.Beacon)}
+          >
             Teleporter Beacons
           </Tabs.Tab>
         </Tabs>
-        {(tab === 'beacon' && <TeleporterBeacons />) ||
-          (tab === 'implant' && <TrackingImplants />)}
+        {(TAB.Beacon && <TeleporterBeacons />) ||
+          (TAB.Implant && <TrackingImplants />)}
       </Window.Content>
     </Window>
   );
@@ -101,7 +110,8 @@ const SignalLocator = (props) => {
         red: [0, trackingrange / 3],
         yellow: [trackingrange / 3, 2 * (trackingrange / 3)],
         green: [2 * (trackingrange / 3), trackingrange],
-      }}>
+      }}
+    >
       {name}
       <Icon ml={2} name="arrow-up" rotation={direction} />
     </ProgressBar>
