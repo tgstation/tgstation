@@ -36,12 +36,12 @@ GLOBAL_LIST_INIT(redeemed_codes, list())
 		if(!pulled_key)
 			pulled_key = "MissingNo." // have fun trying to get this one lol
 		var/static/list/valid_effects = subtypesof(/datum/component/particle_spewer) - /datum/component/particle_spewer/movement
-		var/effect = text2path(list_path["effect_path"])
-		if(!is_type_in_list(effect, valid_effects))
+		var/effect_path = text2path(list_path["effect_path"])
+		if(!is_path_in_list(effect_path, valid_effects))
 			var/fallback_effect = pick(valid_effects)
-			stack_trace("Redemption for an unusual code tried pass an invalid particle_path [effect]. Replacing with [fallback_effect].")
-			effect = fallback_effect
-		unusual.AddComponent(/datum/component/unusual_handler, particle_path = effect, fresh_unusual = TRUE, client_ckey = pulled_key)
+			stack_trace("Redemption for an unusual code tried pass an invalid particle_path [effect_path]. Replacing with [fallback_effect].")
+			effect_path = fallback_effect
+		unusual.AddComponent(/datum/component/unusual_handler, particle_path = effect_path, fresh_unusual = TRUE, client_ckey = pulled_key)
 		usr.client.prefs.save_new_unusual(unusual)
 		to_chat(usr, span_greenannounce("You have successfully redeemed a giveaway code for: [unusual]"))
 		if(isliving(usr))
