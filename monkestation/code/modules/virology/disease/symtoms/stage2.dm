@@ -436,6 +436,12 @@
 	badness = EFFECT_DANGER_ANNOYING
 
 /datum/symptom/cyborg_vomit/activate(mob/living/mob)
+	if((HAS_TRAIT(src, TRAIT_NOHUNGER)))
+		return TRUE
+
+	if(!has_mouth())
+		return TRUE
+
 	if(prob(90))		//90% chance for just oil
 		mob.visible_message(span_danger("[mob.name] vomits up some oil!"))
 		mob.adjustToxLoss(-3)
@@ -532,12 +538,9 @@
 	sleep(10 SECONDS)
 	to_chat(mob, span_danger("You feel an agonizing pain in your throat!"))
 	sleep(10 SECONDS)
-	mob.visible_message(span_danger("[mob] vomits up blood!"), span_danger("You vomit up blood!"))
-	var/obj/effect/decal/cleanable/blood/S = new(loc = get_turf(mob))
+	mob.vomit(10, TRUE)
 	S.count = 1
 	playsound(mob, 'sound/effects/splat.ogg', 50, 1)
-	mob.Stun(5)
-	mob.blood_volume -= 8
 	active = 0
 
 /datum/symptom/choking
