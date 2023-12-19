@@ -1,0 +1,4 @@
+author: "Diamond-74"
+delete-after: True
+changes:
+  - bugfix: "Fixes runtime from augments not unregistering a signal."
