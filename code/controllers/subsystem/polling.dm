@@ -32,7 +32,7 @@ SUBSYSTEM_DEF(polling)
 		question = "Do you want to play as [full_capitalize(role_name_text)]?"
 	if(!question)
 		question = "Do you want to play as a special role?"
-	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [poll_time / 10] seconds")
+	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [DisplayTimeText(poll_time)] seconds")
 
 	// Start firing
 	polls_active = TRUE
@@ -47,7 +47,7 @@ SUBSYSTEM_DEF(polling)
 	if(!next_poll_to_finish || poll_time < next_poll_to_finish.time_left())
 		next_poll_to_finish = new_poll
 
-	var/category = "[new_poll.hash]_poll_alert"
+	var/category = "[new_poll.poll_key]_poll_alert"
 
 	for(var/mob/candidate_mob as anything in group)
 		// Universal opt-out for all players.
@@ -82,15 +82,16 @@ SUBSYSTEM_DEF(polling)
 		poll_alert_button.show_time_left = TRUE
 		poll_alert_button.poll = alert_poll
 		poll_alert_button.poll.alert_button = poll_alert_button
+		poll_alert_button.set_role_overlay()
+		poll_alert_button.update_stacks_overlay()
 
 		// Sign up inheritance and stacking
 		var/inherited_sign_up = FALSE
 		for(var/existing_poll in currently_polling)
 			var/datum/candidate_poll/other_poll = existing_poll
-			if(new_poll != other_poll && new_poll.hash == other_poll.hash)
+			if(new_poll != other_poll && new_poll.poll_key == other_poll.poll_key)
 				// If there's already a poll for an identical mob type ongoing and the client is signed up for it, sign them up for this one
 				if(!inherited_sign_up && (candidate_mob in other_poll.signed_up) && new_poll.sign_up(candidate_mob, TRUE))
-					poll_alert_button.update_signed_up_alert()
 					inherited_sign_up = TRUE
 
 		// Image to display
@@ -123,7 +124,7 @@ SUBSYSTEM_DEF(polling)
 		var/act_never = ""
 		if(ignore_category)
 			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round]</a>"
-		to_chat(candidate_mob, span_boldnotice("<big>Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]</big>"))
+		to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, poll_alert_button)
@@ -171,7 +172,7 @@ SUBSYSTEM_DEF(polling)
 	return candidate_list
 
 /datum/controller/subsystem/polling/proc/is_eligible(mob/potential_candidate, role, check_jobban, the_ignore_category)
-	if(!potential_candidate.key || !potential_candidate.client)
+	if(isnull(potential_candidate.key) || isnull(potential_candidate.client))
 		return FALSE
 	if(the_ignore_category)
 		if(potential_candidate.ckey in GLOB.poll_ignore[the_ignore_category])
@@ -194,12 +195,12 @@ SUBSYSTEM_DEF(polling)
 	var/length_pre_trim = length(finishing_poll.signed_up)
 	finishing_poll.trim_candidates()
 	log_game("Candidate poll [finishing_poll.role ? "for [finishing_poll.role]" : "\"[finishing_poll.question]\""] finished. [length_pre_trim] players signed up, [length(finishing_poll.signed_up)] after trimming")
-
 	finishing_poll.finished = TRUE
+	finishing_poll.alert_button.update_stacks_overlay()
 	currently_polling -= finishing_poll
 
 	// Determine which is the next poll closest the completion or "disable" firing if there's none
-	if(!length(currently_polling))
+	if(currently_polling.len <= 0)
 		polls_active = FALSE
 		next_poll_to_finish = null
 	else if(finishing_poll == next_poll_to_finish)

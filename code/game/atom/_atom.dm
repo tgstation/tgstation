@@ -863,7 +863,7 @@
 	var/extra_lines = 0
 	var/extra_context = ""
 
-	if(isliving(user) || isovermind(user) || isaicamera(user) || (isobserver(user) && ghost_screentips))
+	if(isliving(user) || isovermind(user) || isaicamera(user) || (ghost_screentips && isobserver(user)))
 		var/obj/item/held_item = user.get_active_held_item()
 
 		if (flags_1 & HAS_CONTEXTUAL_SCREENTIPS_1 || held_item?.item_flags & ITEM_HAS_CONTEXTUAL_SCREENTIPS)

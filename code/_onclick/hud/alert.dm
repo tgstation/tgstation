@@ -40,6 +40,8 @@
 				return thealert
 			// Reset timeout of existing alert
 			var/timeout = initial(thealert.timeout)
+			if(timeout_override)
+				timeout = timeout_override
 			addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
 			thealert.timeout = world.time + timeout - world.tick_lag
 			return thealert
@@ -809,17 +811,41 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	icon_state = "template"
 	timeout = 30 SECONDS
 	ghost_screentips = TRUE
-	var/show_time_left = FALSE // If true you need to call START_PROCESSING manually
-	var/image/time_left_overlay // The last image showing the time left
-	var/image/signed_up_overlay // image showing that you're signed up
-	var/image/stacks_overlay
-	var/image/candidates_num_overlay
-	var/image/role_name_overlay
-	var/datum/candidate_poll/poll // If set, on Click() it'll register the player as a candidate
+	/// If true you need to call START_PROCESSING manually
+	var/show_time_left = FALSE
+	/// MA for maptext showing time left for poll
+	var/mutable_appearance/time_left_overlay
+	/// MA for overlay showing that you're signed up to poll
+	var/mutable_appearance/signed_up_overlay
+	/// MA for maptext overlay showing how many polls are stacked together
+	var/mutable_appearance/stacks_overlay
+	/// MA for maptext overlay showing how many candidates are signed up to a poll
+	var/mutable_appearance/candidates_num_overlay
+	/// MA for maptext overlay of poll's role name or question
+	var/mutable_appearance/role_overlay
+	/// If set, on Click() it'll register the player as a candidate
+	var/datum/candidate_poll/poll
 
 /atom/movable/screen/alert/poll_alert/Initialize(mapload)
 	. = ..()
 	register_context()
+
+/atom/movable/screen/alert/poll_alert/proc/set_role_overlay()
+	var/role_or_only_question = poll.role || "?"
+	role_overlay = new
+	role_overlay.screen_loc = screen_loc
+	role_overlay.maptext = MAPTEXT("<span style='text-align: right; color: #B3E3FC; -dm-text-outline: 1px black'>[full_capitalize(role_or_only_question)]</span>")
+	role_overlay.maptext_width = 128
+	role_overlay.transform = role_overlay.transform.Translate(-128, 0)
+	add_overlay(role_overlay)
+
+/atom/movable/screen/alert/poll_alert/Destroy()
+	. = ..()
+	QDEL_NULL(role_overlay)
+	QDEL_NULL(time_left_overlay)
+	QDEL_NULL(stacks_overlay)
+	QDEL_NULL(candidates_num_overlay)
+	QDEL_NULL(signed_up_overlay)
 
 /atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -845,63 +871,39 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		if(timeleft <= 0)
 			return PROCESS_KILL
 		cut_overlay(time_left_overlay)
-		var/obj/abstract_object = new
-		abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; font-weight: bold; font-size: 8px; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>"
-		var/matrix/move_matrix = new
-		move_matrix.Translate(4, 16)
-		abstract_object.transform = move_matrix
-		time_left_overlay = image(abstract_object)
-		time_left_overlay.plane = plane
+		time_left_overlay = new
+		time_left_overlay.maptext = MAPTEXT("<span style='font-weight: bold; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>")
+		time_left_overlay.transform = time_left_overlay.transform.Translate(4, 19)
 		add_overlay(time_left_overlay)
-		qdel(abstract_object)
-	if(poll)
-		if(!role_name_overlay)
-			var/only_question = poll.role ? poll.role : "?"
-			var/obj/abstract_object = new
-			abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; text-align: right; font-size: 7px; color: #B3E3FC; -dm-text-outline: 1px black'>[full_capitalize(only_question)]</span>"
-			abstract_object.maptext_width = 128
-			var/matrix/move_matrix = new
-			move_matrix.Translate(-128, 0)
-			abstract_object.transform = move_matrix
-			role_name_overlay = image(abstract_object)
-			role_name_overlay.plane = plane
-			add_overlay(role_name_overlay)
-			qdel(abstract_object)
-		var/num_same = 1
-		for(var/datum/candidate_poll/other_poll in SSpolling.currently_polling)
-			if(other_poll != poll && other_poll.hash == poll.hash && !other_poll.finished)
-				num_same++
-		display_stacks(num_same)
-		update_signed_up_alert()
+	if(isnull(poll))
+		return
 	..()
 
 /atom/movable/screen/alert/poll_alert/Click(location, control, params)
 	. = ..()
-	if(!.)
+	if(!. || isnull(poll))
 		return
-	if(poll)
-		var/list/modifiers = params2list(params)
-		if((LAZYACCESS(modifiers, ALT_CLICK)) && poll.ignoring_category)
-			set_never_round()
-			return
-		if((LAZYACCESS(modifiers, CTRL_CLICK)) && poll.jump_to_me)
-			jump_to_pic_source()
-			return
-		var/success
-		if(owner in poll.signed_up)
-			success = poll.remove_candidate(owner)
-		else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
-			success = poll.sign_up(owner)
-		if(success)
-			// Add a small overlay to indicate we've signed up
-			update_signed_up_alert()
+	var/list/modifiers = params2list(params)
+	if((LAZYACCESS(modifiers, ALT_CLICK)) && poll.ignoring_category)
+		set_never_round()
+		return
+	if((LAZYACCESS(modifiers, CTRL_CLICK)) && poll.jump_to_me)
+		jump_to_pic_source()
+		return
+	handle_sign_up()
+
+/atom/movable/screen/alert/poll_alert/proc/handle_sign_up()
+	if(owner in poll.signed_up)
+		poll.remove_candidate(owner)
+	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+		poll.sign_up(owner)
 
 /atom/movable/screen/alert/poll_alert/proc/set_never_round()
 	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
-		poll.never_for_this_round(owner)
+		poll.do_never_for_this_round(owner)
 		color = "red"
 		return
-	poll.never_for_this_round(owner, undoing = TRUE)
+	poll.undo_never_for_this_round(owner)
 	color = initial(color)
 
 /atom/movable/screen/alert/poll_alert/proc/jump_to_pic_source()
@@ -912,25 +914,17 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		owner.abstract_move(target_turf)
 
 /atom/movable/screen/alert/poll_alert/Topic(href, href_list)
-	if(!poll)
-		return
 	if(href_list["never"])
 		set_never_round()
 		return
 	if(href_list["signup"])
-		if(owner in poll.signed_up)
-			poll.remove_candidate(owner)
-		else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
-			poll.sign_up(owner)
-		update_signed_up_alert()
+		handle_sign_up()
 	if(href_list["jump"])
 		jump_to_pic_source()
 		return
 
-/atom/movable/screen/alert/poll_alert/proc/update_signed_up_alert()
-	if(!signed_up_overlay)
-		signed_up_overlay = image('icons/hud/screen_gen.dmi', icon_state = "selector")
-		signed_up_overlay.plane = plane
+/atom/movable/screen/alert/poll_alert/proc/update_signed_up_overlay()
+	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
 	if(owner in poll.signed_up)
 		add_overlay(signed_up_overlay)
 	else
@@ -940,29 +934,24 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	cut_overlay(candidates_num_overlay)
 	if(!length(poll.signed_up))
 		return
-	var/obj/abstract_object = new
-	abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: aqua; -dm-text-outline: 1px black'>[length(poll.signed_up)]</span>"
-	var/matrix/move_matrix = new
-	move_matrix.Translate(18, 2)
-	abstract_object.transform = move_matrix
-	candidates_num_overlay = image(abstract_object)
-	candidates_num_overlay.plane = plane
+	candidates_num_overlay = new
+	candidates_num_overlay.maptext = MAPTEXT("<span style='text-align: right; color: aqua; -dm-text-outline: 1px black'>[length(poll.signed_up)]</span>")
+	candidates_num_overlay.transform = candidates_num_overlay.transform.Translate(-4, 2)
 	add_overlay(candidates_num_overlay)
-	qdel(abstract_object)
 
-/atom/movable/screen/alert/poll_alert/proc/display_stacks(stacks = 1)
+/atom/movable/screen/alert/poll_alert/proc/update_stacks_overlay()
 	cut_overlay(stacks_overlay)
-	if(stacks <= 1)
+	var/stack_number = 1
+	for(var/datum/candidate_poll/other_poll as anything in SSpolling.currently_polling)
+		if(other_poll != poll && other_poll.poll_key == poll.poll_key && !other_poll.finished)
+			stack_number++
+	if(stack_number <= 1)
 		return
-	var/obj/abstract_object = new
-	abstract_object.maptext = "<span style='font-family: \"Small Fonts\"; font-size: 7px; color: yellow; -dm-text-outline: 1px black'>[stacks]x</span>"
-	var/matrix/move_matrix = new
-	move_matrix.Translate(3, 2)
-	abstract_object.transform = move_matrix
-	stacks_overlay = image(abstract_object)
-	stacks_overlay.plane = plane
+	stacks_overlay = new
+	stacks_overlay.maptext = MAPTEXT("<span style='color: yellow; -dm-text-outline: 1px black'>[stack_number]x</span>")
+	stacks_overlay.transform = stacks_overlay.transform.Translate(3, 2)
+	stacks_overlay.layer = layer
 	add_overlay(stacks_overlay)
-	qdel(abstract_object)
 
 //OBJECT-BASED
 
