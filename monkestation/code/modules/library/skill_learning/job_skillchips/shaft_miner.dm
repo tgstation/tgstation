@@ -39,7 +39,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/structure/spawner/lavaland = list("Tendril!", "Don't let it take you with it!", "We got a tendril!", "Watch for beasties coming out!"),
 
 	//Mobs: Megafauna
-	/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!"),
+	/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!", "BLOOD-DRUNK MINER! THAT'S WHAT HAPPENS WHEN YOU DRINK LEAFLOVER'S!!"),
 	/mob/living/simple_animal/hostile/megafauna/colossus = list("COLOSSUS!!", "COLOSSUS SPOTTED!!", "DON'T GET JUDGED BY THE COLOSSUS!!", "COLOSSUS, DODGE THE SHOTS!!", "WE'VE GOT A COLOSSUS, BULLET HELL TIME!!"),
 	/mob/living/simple_animal/hostile/megafauna/clockwork_defender = list("A CLOCKWORK DEFENDER? AT THIS TIME OF YEAR? AT THIS TIME OF DAY? IN THIS PART OF THE GALAXY? LOCALIZED ENTIRELY WITHIN MY VISION?"), //This is an unused mob, write actual ones if we ever actually finish it.
 	/mob/living/simple_animal/hostile/megafauna/bubblegum = list("BUBBLEGUM, WATCH THE BLOOD!!", "KEEP YOUR DISTANCE, BUBBLEGUM IS LETHAL UP CLOSE!!", "BLOODY HELL, BUBBLEGUM SPOTTED!!", "STAY OUT OF THE BLOOD POOLS, BUBBLEGUM!!"),
@@ -51,37 +51,36 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 
 	//Items: Materials
-	/obj/item/stack/sheet/mineral/diamond = list(),
-	/obj/item/stack/sheet/mineral/uranium = list(),
-	/obj/item/stack/sheet/mineral/plasma = list(),
-	/obj/item/stack/sheet/mineral/gold = list(),
-	/obj/item/stack/sheet/mineral/silver = list(),
-	/obj/item/stack/sheet/mineral/bananium = list(),
-	/obj/item/stack/sheet/mineral/titanium = list(),
-	/obj/item/stack/sheet/mineral/plastitanium = list(),
-	/obj/item/stack/sheet/mineral/adamantine = list(),
-	/obj/item/stack/sheet/mineral/abductor = list(),
-	/obj/item/stack/sheet/mineral/coal = list(),
-	/obj/item/stack/sheet/mineral = list(),
+	/obj/item/stack/sheet/iron = list("Iron sheets!", "Got some iron!", "Iron, cold iron!", "Master of metals!", "Let all who build beware!"),
+	/obj/item/stack/sheet/glass = list("Glass sheets!", "Glass, clear and crystal!", "Glass, ready to be made into mugs!"),
+	/obj/item/stack/sheet/mineral/diamond = list("Diamonds!", "Got some diamonds!", "I like the sound of these!", "I wonder if it's edible..."),
+	/obj/item/stack/sheet/mineral/uranium = list("Uranium!", "Enriched uranium!", "You and U-235!", "Radical! Uranium!"),
+	/obj/item/stack/sheet/mineral/plasma = list("Plasma!", "That's why we're here!", "They call it \'phoron\' in some sectors! Bloody weird!", "Plasma sheets!", "No smoking near the plasma!"),
+	/obj/item/stack/sheet/mineral/gold = list("Gold!", "Gold for the mistress!", "All that is gold does not glitter, but this does!", "Gold bars!", "Precious aurum!", "We're rich!"),
+	/obj/item/stack/sheet/mineral/silver = list("Silver!", "Silver for the maid!", "Beautiful silver!", "Silver bars!", "Pure silver!"),
+	/obj/item/stack/sheet/mineral/bananium = list("Bananium!", "Prayers for the clown!", "Bananium sheets...I probably should give this to a clown!", "Sheets of bananium!"),
+	/obj/item/stack/sheet/mineral/titanium = list("Titanium!"),
+	/obj/item/stack/sheet/mineral/coal = list("Coal!", "Someone got on the naughty list!", "If only it were a diamond!"),
+	/obj/item/stack/sheet = list("Materials!", "Got some materials!", "Some materials here!", "Look, materials!"),
 
 
 	//Items: Raw Ore
-	/obj/item/stack/ore/glass = list(),
-	/obj/item/stack/ore/uranium = list(),
-	/obj/item/stack/ore/iron = list(),
-	/obj/item/stack/ore/plasma = list(),
-	/obj/item/stack/ore/silver = list(),
+	/obj/item/stack/ore/glass = list("Sand!"),
+	/obj/item/stack/ore/uranium = list("Uranium ore!", "I've got uranium fever!"),
+	/obj/item/stack/ore/iron = list("Iron ore!"),
+	/obj/item/stack/ore/plasma = list("Plasma ore!"),
+	/obj/item/stack/ore/silver = list("Silver ore!"),
 	/obj/item/stack/ore/gold = list("WE'RE RICH!"), //Yes, yes, you're rich... time to get a move on! I got Management breathing down my neck here!
-	/obj/item/stack/ore/diamond = list(),
-	/obj/item/stack/ore/bananium = list(),
-	/obj/item/stack/ore/titanium = list(),
-	/obj/item/gibtonite = list(),
-	/obj/item/stack/ore = list(),
+	/obj/item/stack/ore/diamond = list("Raw diamond!"),
+	/obj/item/stack/ore/bananium = list("Bananium ore!"),
+	/obj/item/stack/ore/titanium = list("Titanium ore!"),
+	/obj/item/gibtonite = list("Gibtonite!"),
+	/obj/item/stack/ore = list("Ore!"),
 
 	//Items: Mining
 	/obj/item/pickaxe = list("Rock and stone!", "For rock and stone!", "For Karl!", "Rock and stone forever!", "We are unbreakable!", "Rock and roll and stone!", "If you don't rock and stone, you ain't comin' home!", "Rock solid!"),
 	/obj/item/shovel = list("Can you dig it?", "Oh yeah, I dig it.", "Lets dig up some sand!"),
-	/obj/structure/closet = list(),
+	/obj/structure/closet = list("Storage here!", "Check inside!", "I bet there's loot in here!"),
 	/obj/structure/ore_box = list("My grandpa told me they used real mules back in the day!", "Drag this behind you!", "Ore box!", "Throw the ores in here, lads!", "Grab an ore crate!", "Minerals in here!"),
 	/obj/item/storage/bag/ore/holding = list("Finally, I can hold all of my rocks AND stones!", "Infinite ore storage!", "Why don't we make these for everything?", "Ore bag!", "Mineral bag!"),
 
@@ -117,8 +116,8 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/item/toy/plush/moth = list("Bug!", "Found a bug!", "There's a bug here!", "Moth!", "Moth here!", "🐛"),
 
 	//Machines
-	/obj/machinery/mineral/ore_redemption = list(),
-	/obj/machinery/computer/shuttle = list(),
+	/obj/machinery/mineral/ore_redemption = list("ORM! Drop off your rocks and stones!", "It's a mystery to me how all these minerals fit inside!", "Making a deposit!", "Molly!", "Bloody scientists never upgrade this thing..."),
+	/obj/machinery/computer/shuttle = list("Shuttle console!", "Away we go!"),
 
 	//Static Objects: Icemoon
 	/obj/structure/flora/ash/chilly = list(),
@@ -169,7 +168,6 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	if(!COOLDOWN_FINISHED(src, shout_cooldown))
 		return
 
-	//Note that the reason I'm using this proc is because is_path_in_list actually only returns "list()", or "TRUE" rather than the list itself.
 	var/type = is_path_in_list_return_path(pointed_at.type, GLOB.miner_callouts)
 	if(!type)
 		return
