@@ -367,10 +367,10 @@
 
 /datum/symptom/famine/activate(mob/living/mob)
 	if(ishuman(mob))
-		var/mob/living/carbon/human/H = mob
-		if(H.dna)
-			if(ispodperson(H)) //Plantmen take a LOT of damage
-				H.adjustCloneLoss(5 * multiplier)
+		var/mob/living/carbon/human/victim = mob
+		if(victim.dna)
+			if(ispodperson(victim)) //Plantmen take a LOT of damage
+				victim.adjustCloneLoss(5 * multiplier)
 
 	for(var/obj/machinery/hydroponics/plantbox in range(3*multiplier,mob))
 		switch(rand(1,3))

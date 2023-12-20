@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	//the percentage of the strength at which effects will start getting disabled by antibodies.
 	var/robustness = 100
 	//chance to cure the disease at every proc when the body is getting cooked alive.
-	var/max_bodytemperature = 1000
+	var/max_bodytemperature = T0C+100
 	//very low temperatures will stop the disease from activating/progressing
 	var/min_bodytemperature = 120
 	///split category used for predefined diseases atm
