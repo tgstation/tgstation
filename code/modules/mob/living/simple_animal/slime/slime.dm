@@ -390,7 +390,7 @@
 /mob/living/simple_animal/slime/proc/slime_pre_attack(mob/living/simple_animal/slime/our_slime, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 	if(isAI(target)) //The aI is not tasty!
-		to_chat(our_slime, "This being is incompatible, and not tasty.")
+		target.balloon_alert(our_slime, "not tasty!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(our_slime.buckled == target) //If you try to attack the creature you are latched on, you instead cancel feeding
@@ -415,7 +415,7 @@
 		var/mob/living/carbon/carbon_target = target
 		var/stunprob = our_slime.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
 		if(!prob(stunprob))
-			return
+			return NONE // normal attack
 
 		carbon_target.visible_message(span_danger("The [our_slime.name] shocks [carbon_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
 
@@ -424,7 +424,7 @@
 		carbon_target.Paralyze(power * 2 SECONDS)
 		carbon_target.set_stutter_if_lower(power * 2 SECONDS)
 		if (prob(stunprob) && our_slime.powerlevel >= 8)
-			carbon_target.adjustFireLoss(our_slime.powerlevel * rand(6,10))
+			carbon_target.apply_damage(our_slime.powerlevel * rand(6, 10), BURN, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 			carbon_target.updatehealth()
 
 	if(isslime(target))
@@ -435,12 +435,13 @@
 			target_slime.stop_feeding(silent = TRUE)
 			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
 				span_danger("You pull [target_slime] off!"))
-			return
+			return NONE // normal attack
 		target_slime.attacked_stacks += 5
+		var/is_adult_slime = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT
 		if(target_slime.nutrition >= 100) //steal some nutrition. negval handled in life()
-			var/stolen_nutrition = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT ? 90 : 50
+			var/stolen_nutrition = is_adult_slime ? 90 : 50
 			target_slime.adjust_nutrition(-stolen_nutrition)
 			our_slime.add_nutrition(stolen_nutrition)
 		if(target_slime.health > 0)
-			our_slime.adjustBruteLoss(our_slime.life_stage == SLIME_LIFE_STAGE_ADULT ? -20 : -10)
+			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
 			our_slime.updatehealth()
