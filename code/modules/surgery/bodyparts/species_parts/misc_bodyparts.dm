@@ -184,6 +184,9 @@
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
 
+/obj/item/bodypart/head/zombie/can_dismember(obj/item/item)
+	return owner.stat >= HARD_CRIT
+
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
 	is_dimorphic = FALSE
