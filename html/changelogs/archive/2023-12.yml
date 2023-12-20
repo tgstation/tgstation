@@ -655,3 +655,20 @@
   vinylspiders:
   - bugfix: monkeys will no longer cause other monkeys to get angry at the mobs they
       just poofed by attacking
+2023-12-20:
+  LT3:
+  - admin: Server wide admin announcements now use an alert box like other announcements
+  Majkl-J:
+  - balance: Disallows siphoning credits outside of station
+  MelokGleb:
+  - image: cyborg tools became animated
+  MrMelbert, Ghommie:
+  - bugfix: Alien nests, and some other stuff, can be physically attacked again.
+  - balance: x-mas trees (the ones with presents), are indestructibles. Truly protected
+      by a yuletide spirit.
+  Rhials:
+  - bugfix: Icebox escape pods will now land randomly on the surface, instead of only
+      in certain ruins.
+  jlsnow301:
+  - bugfix: Fixed a bluescreen while inputting a global variable in the circuit UI.
+  - bugfix: Emojipedia should copy the text on click properly, now
