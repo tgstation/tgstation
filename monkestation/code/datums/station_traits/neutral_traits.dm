@@ -17,7 +17,7 @@
 /datum/station_trait/announcement_dagoth
 	name = "Announcement Dagoth Ur"
 	trait_type = STATION_TRAIT_NEUTRAL
-	weight = 1000
+	weight = 10
 	show_in_report = TRUE
 	report_message = "I am bestowing upon you my presence, Nerevar."
 	blacklist = list(/datum/station_trait/announcement_medbot,
