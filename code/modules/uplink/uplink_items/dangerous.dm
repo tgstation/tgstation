@@ -20,7 +20,7 @@
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
 	item = /obj/item/gun/ballistic/automatic/pistol
-	cost = 7
+	cost = 4
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 
 /datum/uplink_item/dangerous/throwingweapons
@@ -93,7 +93,7 @@
 	name = "Syndicate Revolver"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
-	cost = 13
+	cost = 7
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //nukies get their own version
 
