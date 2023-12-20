@@ -68,7 +68,7 @@
 	if(!tail_spines_overlay)
 		return
 	bodypart.remove_bodypart_overlay(tail_spines_overlay)
-	qdel(tail_spines_overlay)
+	QDEL_NULL(tail_spines_overlay)
 
 /obj/item/organ/external/tail/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
