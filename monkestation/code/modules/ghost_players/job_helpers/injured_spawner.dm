@@ -1,6 +1,6 @@
 /obj/structure/injured_spawner
-	name = "injured personell transporter"
-	desc = "Sends over injured personell from other Centcomm facilities for you to treat."
+	name = "injured personel transporter"
+	desc = "Sends over injured personel from other Centcomm facilities for you to treat."
 
 	resistance_flags = INDESTRUCTIBLE
 	anchored = TRUE
