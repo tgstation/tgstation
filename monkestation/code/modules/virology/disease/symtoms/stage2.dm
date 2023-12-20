@@ -436,11 +436,11 @@
 	badness = EFFECT_DANGER_ANNOYING
 
 /datum/symptom/cyborg_vomit/activate(mob/living/mob)
-	if((HAS_TRAIT(src, TRAIT_NOHUNGER)))
-		return TRUE
+	if((HAS_TRAIT(mob, TRAIT_NOHUNGER)))
+		return
 
-	if(!has_mouth())
-		return TRUE
+	if(!(mob.has_mouth()))
+		return
 
 	if(prob(90))		//90% chance for just oil
 		mob.visible_message(span_danger("[mob.name] vomits up some oil!"))
@@ -539,7 +539,6 @@
 	to_chat(mob, span_danger("You feel an agonizing pain in your throat!"))
 	sleep(10 SECONDS)
 	mob.vomit(10, TRUE)
-	S.count = 1
 	playsound(mob, 'sound/effects/splat.ogg', 50, 1)
 	active = 0
 
