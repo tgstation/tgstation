@@ -1,8 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - bugfix: "You can once again select a Standard Guardian when using a guardian creator item (such as the Holoparasite Injector)."
-  - rscadd: "All Guardian Creator items now allow you to get a Timestop Guardian, even if you're not a Bloodsucker. Bloodsuckers, however, are still locked to only getting a Timestop Guardian, because haha funny anime reference."
-  - image: "The radial icon for the Timestop Guardian was created by `camriod_core` on Discord."
-  - bugfix: "The Timestop Guardian's timestop ability will no longer freeze the guardian's summoner."
-  - bugfix: "The Power Miner shard no longer has a chance to spawn Support Guardians, as a stopgap due to Support Guardians being unable to heal, severely limiting their usefulness and causing many an ahelp. This change will be reverted once we figure out how to fix Support Guardian's heal."

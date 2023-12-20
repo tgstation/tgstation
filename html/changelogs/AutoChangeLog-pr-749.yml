@@ -1,0 +1,4 @@
+author: "KoboldCommando"
+delete-after: True
+changes:
+  - bugfix: "removed the sec hailer's ability to break server rules, for real this time"
