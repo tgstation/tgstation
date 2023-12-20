@@ -129,7 +129,7 @@
 		if(need_mob_update)
 			animal_victim.updatehealth()
 
-		if(totaldamage <= 0) //if we did no(or negative!) damage to it, stop
+		if(totaldamage >= 0) // AdjustBruteLoss returns a negative value on succesful damage adjustment
 			stop_feeding(FALSE, FALSE)
 			return
 
