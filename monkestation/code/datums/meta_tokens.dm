@@ -3,7 +3,7 @@ GLOBAL_LIST_INIT(used_monthly_token, list())
 ///assoc list of how many event tokens each role gets each month
 GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	NO_RANK = 0,
-	RANK_TANKS = 100,
+	THANKS_RANK = 100,
 	ASSISTANT_RANK = 500,
 	COMMAND_RANK = 1000,
 	TRAITOR_RANK = 2500,
