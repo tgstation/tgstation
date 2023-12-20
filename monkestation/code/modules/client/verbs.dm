@@ -88,46 +88,26 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	if(!isobserver(mob))
 		to_chat(src, "You can only trigger events as a ghost.")
 		return
-	//I SURE DO LOVE WORKS ON LOCAL
-	var/static/list/logged = list()
-	if(!logged["one"])
-		stack_trace("ONE")
-		logged["one"] = TRUE
+
 	var/static/list/event_list
 	if(!event_list)
-		if(!logged["two"])
-			stack_trace("TWO")
-			logged["two"] = TRUE
 		event_list = list()
 		for(var/event as anything in SStwitch.twitch_events_by_type)
 			var/datum/twitch_event/event_instance = SStwitch.twitch_events_by_type[event]
 			if(!event_instance.token_cost)
 				continue
 			event_list += event_instance
-	if(!logged["three"])
-		stack_trace("THREE")
-		logged["three"] = TRUE
+
 	client_token_holder.check_event_tokens(src)
-	if(!logged["four"])
-		stack_trace("FOUR")
-		logged["four"] = TRUE
+
 	var/datum/twitch_event/selected_event = tgui_input_list(src, "Event tokens: [client_token_holder.event_tokens]", "Choose an event to trigger", event_list)
 	if(!selected_event)
-		if(!logged["five"])
-			stack_trace("FIVE")
-			logged["five"] = TRUE
 		return
 
 	var/confirm = tgui_alert(src, "Are you sure you want to trigger [selected_event.event_name]? It will cost [selected_event.token_cost] event tokens.", "Trigger token event", \
 							list("Yes", "No"))
 	if(confirm == "Yes")
-		if(!logged["six"])
-			stack_trace("SIX")
-			logged["six"] = TRUE
 		if(client_token_holder.event_tokens >= selected_event.token_cost)
-			if(!logged["seven"])
-				stack_trace("SEVEN")
-				logged["seven"] = TRUE
 			client_token_holder.queued_token_event = selected_event
 			to_chat(src, "Your request has been sent.")
 			add_event_to_buffer(usr,  data = "has requested to use their event tokens to be a [selected_event].", log_key =  "META")
@@ -135,9 +115,6 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \
 																				[src] has requested use their event tokens to trigger [selected_event].")]")
 			return
-		if(!logged["eight"])
-			stack_trace("EIGHT")
-			logged["eight"] = TRUE
 		to_chat(src, "You dont have enough tokens to trigger this event.")
 
 #undef ADMIN_APPROVE_ANTAG_TOKEN
