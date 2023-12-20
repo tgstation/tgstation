@@ -1,6 +1,6 @@
 /// Makes an atom a shell that is able to take in an attached circuit.
 /datum/component/shell
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	/// The circuitboard attached to this shell
 	var/obj/item/integrated_circuit/attached_circuit
@@ -52,6 +52,8 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, PROC_REF(on_atom_usb_cable_try_attach))
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
+	if(istype(parent, /obj/item/modular_computer))
+		RegisterSignal(parent, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(on_file_stored))
 
 /datum/component/shell/proc/set_unremovable_circuit_components(list/components)
 	if(unremovable_circuit_components)
@@ -60,12 +62,15 @@
 	unremovable_circuit_components = list()
 
 	for(var/obj/item/circuit_component/circuit_component as anything in components)
-		if(ispath(circuit_component))
-			circuit_component = new circuit_component()
-		circuit_component.removable = FALSE
-		circuit_component.set_circuit_size(0)
-		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
-		unremovable_circuit_components += circuit_component
+		add_unremovable_circuit_component(circuit_component)
+
+/datum/component/shell/proc/add_unremovable_circuit_component(obj/item/circuit_component/component)
+	if(ispath(component))
+		component = new component()
+	component.removable = FALSE
+	component.set_circuit_size(0)
+	RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
+	unremovable_circuit_components += component
 
 /datum/component/shell/proc/save_component(datum/source, list/objects)
 	SIGNAL_HANDLER
@@ -96,6 +101,7 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
+		COMSIG_MODULAR_COMPUTER_FILE_STORE,
 		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
 
@@ -104,6 +110,27 @@
 /datum/component/shell/Destroy(force, silent)
 	QDEL_LIST(unremovable_circuit_components)
 	return ..()
+
+///Modular computers have different unremovable components depending on the program installed
+/datum/component/shell/proc/on_file_stored(datum/source, datum/computer_file/file)
+	SIGNAL_HANDLER
+	if(!istype(file, /datum/computer_file/program))
+		return
+	var/datum/computer_file/program/program = file
+	if(isnull(program.circuit_comp_type))
+		return
+	if(!(locate(program.circuit_comp_type) in unremovable_circuit_components))
+		var/obj/item/circuit_component/mod_program/comp = new program.circuit_comp_type()
+		add_unremovable_circuit_component(comp)
+	RegisterSignal(program, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(on_file_deleted))
+
+/datum/component/shell/proc/on_file_deleted(datum/computer_file/program/program)
+	SIGNAL_HANDLER
+	for(var/obj/item/circuit_component/mod_program/comp in unremovable_circuit_components)
+		if(comp.associated_program == program)
+			unremovable_circuit_components -= comp
+			qdel(comp)
+			break
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER

@@ -50,9 +50,37 @@
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
+	if(istype(parent, /obj/machinery/modular_computer))
+		var/obj/machinery/modular_computer/computer = parent
+		RegisterSignal(computer.cpu, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(on_file_stored))
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.register_usb_parent(parent)
+
+///Modular computers have different unremovable components depending on the program installed
+/datum/component/usb_port/proc/on_file_stored(datum/source, datum/computer_file/file)
+	SIGNAL_HANDLER
+	if(!istype(file, /datum/computer_file/program))
+		return
+	var/datum/computer_file/program/program = file
+	if(isnull(program.circuit_comp_type))
+		return
+	circuit_component_types |= program.circuit_comp_type
+	RegisterSignal(program, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(on_file_deleted))
+	if(!length(circuit_components))
+		return
+	var/obj/item/circuit_component/mod_program/circuit_comp = new program.circuit_comp_type()
+	RegisterSignal(circuit_comp, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
+	circuit_components += circuit_comp
+
+/datum/component/usb_port/proc/on_file_deleted(datum/computer_file/program/program)
+	SIGNAL_HANDLER
+	circuit_component_types -= program.circuit_comp_type
+	for(var/obj/item/circuit_component/mod_program/comp in circuit_components)
+		if(comp.associated_program == program)
+			circuit_components -= comp
+			qdel(comp)
+			break
 
 /datum/component/usb_port/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -61,6 +89,9 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
+	if(istype(parent, /obj/machinery/modular_computer))
+		var/obj/machinery/modular_computer/computer = parent
+		UnregisterSignal(computer.cpu, COMSIG_MODULAR_COMPUTER_FILE_STORE)
 
 	for(var/obj/item/circuit_component/component as anything in circuit_components)
 		component.unregister_usb_parent(parent)

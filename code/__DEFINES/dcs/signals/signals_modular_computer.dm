@@ -13,3 +13,6 @@
 #define COMSIG_MODULAR_PDA_IMPRINT_UPDATED "comsig_modular_pda_imprint_updated"
 /// from /obj/item/modular_computer/reset_id(): ()
 #define COMSIG_MODULAR_PDA_IMPRINT_RESET "comsig_modular_pda_imprint_reset"
+
+/// From /datum/computer_file/program/nt_pay/make_payment: (payment_result)
+#define COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT "comsig_modular_program_nt_pay_result"

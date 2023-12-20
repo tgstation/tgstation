@@ -47,6 +47,14 @@
 	var/alert_pending = FALSE
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
+	/// Unremovable circuit componentn added to the physical computer while the program is installed
+	var/obj/item/circuit_component/mod_program/circuit_comp_type
+
+/datum/computer_file/program/New()
+	..()
+	///We need to ensure that different programs (subtypes mostly) won't try to load in the same circuit comps into the shell or usb port of the modpc.
+	if(circuit_comp_type && initial(circuit_comp_type.associated_program) != type)
+		stack_trace("[type] has a set circuit comp type ([circuit_comp_type]), however its associated program var is different ([initial(circuit_comp_type.type)]).")
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
@@ -215,21 +223,67 @@
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
 
-///Modular computers are quite special. Their ports are populated and removed as programs are installed and uninstalled.
-/datum/computer_file/program/proc/populate_modular_ports(obj/item/circuit_component/comp)
+#undef PROGRAM_BASIC_CELL_USE
+
+
+/**
+ * Circuit components of modular programs are special.
+ * They're spawned added to the unremovable components of the shell/usb when the prog is installed and deleted when uninstalled.
+ * This means they don't work like normal unremovable comps that live and die along with their shell.
+ * They're also used in both usb ports and shells (stationary and portable computers), unlike the wide majority of objects-specific circuits.
+ */
+/obj/item/circuit_component/mod_program
+	display_name = "Abstract Modular Program"
+	desc = "I've spent lot of time thinking how to get this to work. If you see this, I either failed or someone else did, so report it."
+	/**
+	 * The program that installed us into the shell/usb_port comp. Needed to avoid having too many signals for every program.
+	 * This is also the program we need to install on the modular computer if the circuit is admin-loaded.
+	 * Just make sure each of these components is associated to one and only type of program, no subtypes of anything.
+	 */
+	var/datum/computer_file/program/associated_program
+
+/obj/item/circuit_component/mod_program/register_shell(atom/movable/shell)
+	. = ..()
+	if(istype(shell, /obj/item/modular_computer))
+		register_program(shell)
+
+/obj/item/circuit_component/mod_program/register_usb_parent(atom/movable/shell)
+	. = ..()
+	if(!istype(shell, /obj/machinery/modular_computer))
+		return
+	var/obj/machinery/modular_computer/console = shell
+	if(console.cpu)
+		register_program(console.cpu)
+
+///Find the associated program in the computer's stored_files (install it otherwise) and store a reference to it.
+/obj/item/circuit_component/mod_program/proc/register_program(obj/item/modular_computer/computer)
 	SHOULD_CALL_PARENT(TRUE)
-	RegisterSignal(comp, COMSIG_CIRCUIT_GET_UI_NOTICES, PROC_REF(get_ui_notices))
+	var/datum/computer_file/program/found_program = locate(associated_program) in computer.stored_files
+	///The integrated circuit was loaded/duplicated
+	if(isnull(found_program))
+		associated_program = new associated_program()
+		computer.store_file(associated_program)
+	else
+		associated_program = found_program
 
-///Hopefully remove all the ports that were previously added by populate_modular_ports()
-/datum/computer_file/program/proc/depopulate_modular_ports(obj/item/circuit_component/comp)
-	SHOULD_CALL_PARENT(TRUE)
-	UnregisterSignal(comp, COMSIG_CIRCUIT_GET_UI_NOTICES)
+/obj/item/circuit_component/mod_program/unregister_usb_parent()
+	unregister_program()
+	associated_program = null
+	return ..()
 
-/datum/computer_file/program/proc/get_ui_notices(obj/item/circuit_component/comp, list/notices)
-	SIGNAL_HANDLER
+/obj/item/circuit_component/mod_program/unregister_shell()
+	unregister_program()
+	associated_program = null
+	return ..()
 
-///Called when an input is received by the modular computer, that is, if the program is open (even idle), not closed.
-/datum/computer_file/program/proc/on_input_received(datum/port/port)
+/obj/item/circuit_component/mod_program/proc/unregister_program()
 	return
 
-#undef PROGRAM_BASIC_CELL_USE
+///For most programs, triggers only work if they're open (either active or idle).
+/obj/item/circuit_component/mod_program/should_receive_input(datum/port/input/port)
+	if(isnull(associated_program))
+		return FALSE
+	var/obj/item/modular_computer/computer = associated_program.computer
+	if(computer.active_program == associated_program || (associated_program in computer.idle_threads))
+		return TRUE
+	return FALSE

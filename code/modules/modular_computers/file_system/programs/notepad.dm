@@ -8,6 +8,7 @@
 	tgui_id = "NtosNotepad"
 	program_icon = "book"
 	can_run_on_flags = PROGRAM_ALL
+	circuit_comp_type = /obj/item/circuit_component/mod_program/notepad
 
 	var/written_note = "Congratulations on your station upgrading to the new NtOS and Thinktronic based collaboration effort, \
 		bringing you the best in electronics and software since 2467!\n\
@@ -18,13 +19,6 @@
 		Starboard - Right side of ship\n\
 		Quarter - Either sides of Aft\n\
 		Bow - Either sides of Fore"
-
-	///When the input is received, the written note will be set to its value.
-	var/datum/port/input/set_text
-	///Send out the written note
-	var/datum/port/input/send
-	///The written note output
-	var/datum/port/output/sent_text
 
 /datum/computer_file/program/notepad/ui_act(action, list/params, datum/tgui/ui)
 	switch(action)
@@ -39,21 +33,26 @@
 
 	return data
 
-/datum/computer_file/program/notepad/populate_modular_ports(obj/item/circuit_component/comp)
-	. = ..()
-	set_text = comp.add_input_port("Set Notes", PORT_TYPE_STRING)
-	send = comp.add_input_port("Send Notes", PORT_TYPE_SIGNAL)
-	sent_text = comp.add_output_port("Sent Notes", PORT_TYPE_STRING)
+/obj/item/circuit_component/mod_program/notepad
+	name = "Notepad Program"
+	desc = /datum/computer_file/program/notepad::extended_desc
+	associated_program = /datum/computer_file/program/notepad
+	///When the input is received, the written note will be set to its value.
+	var/datum/port/input/set_text
+	///Send out the written note
+	var/datum/port/input/send
+	///The written note output
+	var/datum/port/output/sent_text
 
-/datum/computer_file/program/notepad/depopulate_modular_ports(obj/item/circuit_component/comp)
-	. = ..()
-	set_text = comp.remove_input_port(set_text)
-	send = comp.remove_input_port(send)
-	sent_text = comp.remove_output_port(sent_text)
+/obj/item/circuit_component/mod_program/notepad/populate_ports()
+	set_text = add_input_port("Set Notes", PORT_TYPE_STRING)
+	send = add_input_port("Send Notes", PORT_TYPE_SIGNAL)
+	sent_text = add_output_port("Sent Notes", PORT_TYPE_STRING)
 
-/datum/computer_file/program/notepad/on_input_received(datum/port/port)
+/obj/item/circuit_component/mod_program/notepad/input_received(datum/port/port)
+	var/datum/computer_file/program/notepad/pad = associated_program
 	if(COMPONENT_TRIGGERED_BY(set_text, port))
-		written_note = set_text.value
-		SStgui.update_uis(computer)
+		pad.written_note = set_text.value
+		SStgui.update_uis(associated_program.computer)
 	if(COMPONENT_TRIGGERED_BY(send, port))
-		sent_text.set_output(written_note)
+		sent_text.set_output(pad.written_note)

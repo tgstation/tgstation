@@ -15,27 +15,18 @@
 	tgui_id = "NtosPay"
 	program_icon = "money-bill-wave"
 	can_run_on_flags = PROGRAM_ALL
+	circuit_comp_type = /obj/item/circuit_component/mod_program/nt_pay
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///Pay token what we want to find
 	var/wanted_token
-
-	///Circuit variables. This one is for the token we want to pay
-	var/datum/port/input/token_port
-	///The port for the money to send
-	var/datum/port/input/money_port
-	///Attempt payment when triggered
-	var/datum/port/input/attempt_payment
-	///Let's us know if the payment has gone through or not.
-	var/datum/port/output/payment_status
 
 /datum/computer_file/program/nt_pay/ui_act(action, list/params, datum/tgui/ui)
 	switch(action)
 		if("Transaction")
 			var/token = params["token"]
 			var/money_to_send = params["amount"]
-			var/transaction_result = pay(token, money_to_send, usr)
-			payment_status.set_output(transaction_result)
+			make_payment(token, money_to_send, usr)
 
 		if("GetPayToken")
 			wanted_token = null
@@ -62,7 +53,12 @@
 
 	return data
 
-/datum/computer_file/program/nt_pay/proc/pay(token, money_to_send, mob/user)
+///Wrapper and signal for the main payment function of this program
+/datum/computer_file/program/nt_pay/proc/make_payment(token, money_to_send, mob/user)
+	var/payment_result = _pay(token, money_to_send, user)
+	SEND_SIGNAL(src, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT, payment_result)
+
+/datum/computer_file/program/nt_pay/proc/_pay(token, money_to_send, mob/user)
 	if(IS_DEPARTMENTAL_ACCOUNT(current_user))
 		if(user)
 			to_chat(user, span_notice("The app is unable to withdraw from that card."))
@@ -103,35 +99,52 @@
 	return NT_PAY_STATUS_SUCCESS
 
 
-/datum/computer_file/program/nt_pay/populate_modular_ports(obj/item/circuit_component/comp)
-	. = ..()
-	token_port = comp.add_input_port("NT-Pay Token", PORT_TYPE_STRING)
-	money_port = comp.add_input_port("NT-Pay Amount", PORT_TYPE_NUMBER)
-	attempt_payment = comp.add_input_port("NT-Pay Trigger", PORT_TYPE_SIGNAL)
-	payment_status = comp.add_output_port("NT-Pay Status", PORT_TYPE_NUMBER)
+/obj/item/circuit_component/mod_program/nt_pay
+	name = "Nanotrasen Pay System Program"
+	desc = /datum/computer_file/program/nt_pay::extended_desc
+	associated_program = /datum/computer_file/program/nt_pay
 
-/datum/computer_file/program/nt_pay/depopulate_modular_ports(obj/item/circuit_component/comp)
-	. = ..()
-	token_port = comp.remove_input_port(token_port)
-	money_port = comp.remove_input_port(money_port)
-	attempt_payment = comp.remove_input_port(attempt_payment)
-	payment_status = comp.remove_output_port(payment_status)
+	///Circuit variables. This one is for the token we want to pay
+	var/datum/port/input/token_port
+	///The port for the money to send
+	var/datum/port/input/money_port
+	///Attempt payment when triggered
+	var/datum/port/input/attempt_payment
+	///Let's us know if the payment has gone through or not.
+	var/datum/port/output/payment_status
 
-/datum/computer_file/program/nt_pay/get_ui_notices(obj/item/circuit_component/comp, list/notices)
-	notices += comp.create_ui_notice("NT-Pay Statuses: \
+/obj/item/circuit_component/mod_program/nt_pay/register_program()
+	. = ..()
+	RegisterSignal(associated_program, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT, PROC_REF(on_payment_result))
+
+/obj/item/circuit_component/mod_program/nt_pay/unregister_program()
+	UnregisterSignal(associated_program, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT)
+
+/obj/item/circuit_component/mod_program/nt_pay/populate_ports()
+	. = ..()
+	token_port = add_input_port("NT-Pay Token", PORT_TYPE_STRING)
+	money_port = add_input_port("NT-Pay Amount", PORT_TYPE_NUMBER)
+	attempt_payment = add_input_port("NT-Pay Trigger", PORT_TYPE_SIGNAL)
+	payment_status = add_output_port("NT-Pay Status", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/mod_program/nt_pay/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("NT-Pay Statuses: \
 		Fail (No Account) - [NT_PAY_STATUS_NO_ACCOUNT], \
 		Fail (Dept Account) - [NT_PAY_STATUS_DEPT_ACCOUNT], \
 		Fail (Invalid Token) - [NT_PAY_STATUS_INVALID_TOKEN], \
 		Fail (Sender = Receiver) - [NT_PAY_SATUS_SENDER_IS_RECEIVER], \
 		Fail (Invalid Amount) - [NT_PAY_STATUS_INVALID_MONEY], \
-		Success - [NT_PAY_STATUS_SUCCESS]\
-	")
+		Success - [NT_PAY_STATUS_SUCCESS]")
 
-/datum/computer_file/program/nt_pay/on_input_received(datum/port/port)
+/obj/item/circuit_component/mod_program/nt_pay/input_received(datum/port/port)
 	if(COMPONENT_TRIGGERED_BY(attempt_payment, port))
-		var/transaction_result = pay(token_port.value, money_port.value)
-		payment_status.set_output(transaction_result)
+		var/datum/computer_file/program/nt_pay/program = associated_program
+		program.make_payment(token_port.value, money_port.value)
 
+/obj/item/circuit_component/mod_program/nt_pay/proc/on_payment_result(datum/source, payment_result)
+	SIGNAL_HANDLER
+	payment_status.set_output(payment_result)
 
 #undef NT_PAY_STATUS_NO_ACCOUNT
 #undef NT_PAY_STATUS_DEPT_ACCOUNT

@@ -10,16 +10,10 @@
 	size = 5
 	tgui_id = "NtosCyborgRemoteMonitor"
 	program_icon = "project-diagram"
+	circuit_comp_type = /obj/item/circuit_component/mod_program/borg_monitor
 	var/list/loglist = list() ///A list to copy a borg's IC log list into
 	var/mob/living/silicon/robot/DL_source ///reference of a borg if we're downloading a log, or null if not.
 	var/DL_progress = -1 ///Progress of current download, 0 to 100, -1 for no current download
-
-	///Circuit input for the robot we want to message
-	var/datum/port/input/target_robot
-	///The message we want to send
-	var/datum/port/input/set_message
-	///Output the message when triggered
-	var/datum/port/output/send
 
 /datum/computer_file/program/borg_monitor/Destroy()
 	loglist = null
@@ -159,24 +153,6 @@
 		return FALSE
 	return ID.registered_name
 
-/datum/computer_file/program/borg_monitor/populate_modular_ports(obj/item/circuit_component/comp)
-	. = ..()
-	target_robot = comp.add_input_port("SiliConnect Receiver", PORT_TYPE_ATOM)
-	set_message = comp.add_input_port("SiliConnect Set Msg", PORT_TYPE_STRING)
-	send = comp.add_input_port("SiliConnect Send Msg", PORT_TYPE_SIGNAL)
-
-/datum/computer_file/program/borg_monitor/depopulate_modular_ports(obj/item/circuit_component/comp)
-	. = ..()
-	target_robot = comp.remove_input_port(target_robot)
-	set_message = comp.remove_input_port(set_message)
-	send = comp.remove_input_port(send)
-
-/datum/computer_file/program/borg_monitor/on_input_received(datum/port/port)
-	if(!COMPONENT_TRIGGERED_BY(send, port) || !length(set_message.value))
-		return
-	var/mob/living/silicon/robot/robot = target_robot.value
-	message_robot(robot, usr, set_message.value, TRUE)
-
 /datum/computer_file/program/borg_monitor/syndicate
 	filename = "roboverlord"
 	filedesc = "Roboverlord"
@@ -186,6 +162,7 @@
 	extended_desc = "This program allows for remote monitoring of mission-assigned cyborgs."
 	program_flags = PROGRAM_ON_SYNDINET_STORE
 	download_access = list()
+	circuit_comp_type = /obj/item/circuit_component/mod_program/borg_monitor/syndie
 
 /datum/computer_file/program/borg_monitor/syndicate/evaluate_borg(mob/living/silicon/robot/R)
 	if(!is_valid_z_level(get_turf(computer), get_turf(R)))
@@ -196,3 +173,31 @@
 
 /datum/computer_file/program/borg_monitor/syndicate/checkID()
 	return "\[CLASSIFIED\]" //no ID is needed for the syndicate version's message function, and the borg will see "[CLASSIFIED]" as the message sender.
+
+
+/obj/item/circuit_component/mod_program/borg_monitor
+	name = "SiliConnect Program"
+	desc = /datum/computer_file/program/borg_monitor::extended_desc
+	associated_program = /datum/computer_file/program/borg_monitor
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+
+	///Circuit input for the robot we want to message
+	var/datum/port/input/target_robot
+	///The message we want to send
+	var/datum/port/input/set_message
+
+/obj/item/circuit_component/mod_program/borg_monitor/populate_ports()
+	target_robot = add_input_port("SiliConnect Receiver", PORT_TYPE_ATOM)
+	set_message = add_input_port("SiliConnect Set Msg", PORT_TYPE_STRING)
+
+/obj/item/circuit_component/mod_program/borg_monitor/input_received(datum/port/port)
+	if(!length(set_message.value) || !iscyborg(target_robot.value))
+		return
+	var/mob/living/silicon/robot/robot = target_robot.value
+	var/datum/computer_file/program/borg_monitor/monitor = associated_program
+	monitor.message_robot(robot, usr, set_message.value, TRUE)
+
+/obj/item/circuit_component/mod_program/borg_monitor/syndie
+	name = "Roboverlord Program"
+	desc = /datum/computer_file/program/borg_monitor/syndicate::extended_desc
+	associated_program = /datum/computer_file/program/borg_monitor/syndicate

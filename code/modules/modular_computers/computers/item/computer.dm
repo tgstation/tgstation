@@ -924,50 +924,36 @@
 	starting_programs += subtypesof(/datum/computer_file/program)
 	return ..()
 
-///The sweet, sweet modular computer circuit, compatible with stationary consoles, laptops and PDAs.
+///A simple circuit component compatible with stationary consoles, laptops and PDAs, independent from programs.
 /obj/item/circuit_component/modpc
 	display_name = "Modular Computer"
 	desc = "Circuit of a modular computer. Ports depend on the programs installed. Only open (idle or active) programs will receive inputs."
 	var/obj/item/modular_computer/computer
-
 	///Turns the PC on/off
 	var/datum/port/input/on_off
 
 /obj/item/circuit_component/modpc/register_shell(atom/movable/shell)
 	. = ..()
+	if(istype(shell, /obj/item/modular_computer))
+		computer = shell
+
+/obj/item/circuit_component/modpc/register_usb_parent(atom/movable/shell)
+	. = ..()
 	if(istype(shell, /obj/machinery/modular_computer))
 		var/obj/machinery/modular_computer/console = shell
 		computer = console.cpu
-	else
-		computer = shell
-	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(on_file_stored))
-	RegisterSignal(computer, COMSIG_MODULAR_COMPUTER_FILE_DELETE, PROC_REF(on_file_deleted))
 
 /obj/item/circuit_component/modpc/unregister_shell(atom/movable/shell)
-	UnregisterSignal(computer, list(COMSIG_MODULAR_COMPUTER_FILE_STORE, COMSIG_MODULAR_COMPUTER_FILE_DELETE))
 	computer = null
+	return ..()
+
+/obj/item/circuit_component/mod_program/unregister_usb_parent()
+	associated_program = null
 	return ..()
 
 /obj/item/circuit_component/modpc/populate_ports()
 	on_off = add_input_port("Turn On/Off", PORT_TYPE_SIGNAL)
 
-///Ports are dynamic and change with the programs installed. A stationary console won't have the messenger ports for example.
-/obj/item/circuit_component/modpc/proc/on_file_stored(datum/computer_file/file)
-	SIGNAL_HANDLER
-	if(!istype(file, /datum/computer_file/program))
-		return
-	var/datum/computer_file/program/program = file
-	program.populate_modular_ports(src)
-
-///Remove ports that won't be used any longer.
-/obj/item/circuit_component/modpc/proc/on_file_deleted(datum/computer_file/file)
-	SIGNAL_HANDLER
-	if(!istype(file, /datum/computer_file/program))
-		return
-	var/datum/computer_file/program/program = file
-	program.depopulate_modular_ports(src)
-
-///Defer the inputs to the active and idle programs (Yes, that means closed programs won't do).
 /obj/item/circuit_component/modpc/input_received(datum/port/input/port)
 	if(isnull(computer))
 		return
@@ -977,7 +963,3 @@
 		else
 			computer.turn_on()
 		return
-
-	computer.active_program?.on_input_received(port)
-	for(var/datum/computer_file/program/idle_program as anything in computer.idle_threads)
-		idle_program.on_input_received(port)
