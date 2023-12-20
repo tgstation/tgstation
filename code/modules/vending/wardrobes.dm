@@ -171,6 +171,9 @@
 		/obj/item/storage/backpack/messenger = 3,
 		/obj/item/storage/bag/mail = 3,
 		/obj/item/radio/headset/headset_cargo = 3,
+		/obj/item/clothing/accessory/pocketprotector = 3,
+		/obj/item/clothing/head/utility/hardhat/orange = 3,
+		/obj/item/clothing/suit/hazardvest = 3,
 	)
 	premium = list(
 		/obj/item/clothing/head/costume/mailman = 1,

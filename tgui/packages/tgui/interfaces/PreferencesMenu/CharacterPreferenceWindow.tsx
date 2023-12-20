@@ -1,14 +1,15 @@
 import { exhaustiveCheck } from 'common/exhaustive';
+
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { PreferencesMenuData } from './data';
-import { PageButton } from './PageButton';
 import { AntagsPage } from './AntagsPage';
+import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
 import { MainPage } from './MainPage';
-import { SpeciesPage } from './SpeciesPage';
+import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';
+import { SpeciesPage } from './SpeciesPage';
 
 enum Page {
   Antags,

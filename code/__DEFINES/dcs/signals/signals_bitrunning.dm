@@ -4,9 +4,6 @@
 /// from /obj/effect/bitrunning/loot_signal: (points)
 #define COMSIG_BITRUNNER_GOAL_POINT "bitrunner_goal_point"
 
-/// from /obj/item/reagent_containers/pill
-#define COMSIG_BITRUNNER_RED_PILL_SEVER "bitrunner_red_pill_sever"
-
 // Netpods
 
 /// from /obj/machinery/netpod/sever_connection()

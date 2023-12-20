@@ -6,8 +6,8 @@ import {
   ProgressBar,
   Section,
 } from '../components';
-import { BeakerContents } from './common/BeakerContents';
 import { Window } from '../layouts';
+import { BeakerContents } from './common/BeakerContents';
 
 const damageTypes = [
   {
