@@ -1,5 +1,6 @@
-import { useBackend } from 'tgui/backend';
 import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
+
 import { MedicalRecord, MedicalRecordData } from './types';
 
 /** Splits a medical string on <br> into a string array */

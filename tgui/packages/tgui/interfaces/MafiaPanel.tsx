@@ -1,8 +1,8 @@
 import { BooleanLike, classes } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
 import { multiline } from 'common/string';
-import { useBackend } from '../backend';
 import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -14,8 +14,8 @@ import {
   Tabs,
   TextArea,
 } from '../components';
-import { Window } from '../layouts';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 type RoleInfo = {
   role_theme: string;

@@ -1,17 +1,17 @@
-import { useBackend } from '../backend';
+import { round, toFixed } from 'common/math';
 import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
   LabeledList,
   NumberInput,
-  Section,
   RoundGauge,
+  Section,
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
 import { MixingData } from './ChemMixingChamber';
 
 type ReactingData = MixingData & {

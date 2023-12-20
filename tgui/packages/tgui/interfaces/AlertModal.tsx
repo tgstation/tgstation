@@ -1,6 +1,3 @@
-import { Loader } from './common/Loader';
-import { useBackend } from '../backend';
-import { useState } from 'react';
 import {
   KEY_ENTER,
   KEY_ESCAPE,
@@ -9,8 +6,11 @@ import {
   KEY_SPACE,
   KEY_TAB,
 } from '../../common/keycodes';
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import { Autofocus, Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { Loader } from './common/Loader';
 
 type AlertModalData = {
   autofocus: boolean;

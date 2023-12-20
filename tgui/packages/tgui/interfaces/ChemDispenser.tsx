@@ -2,6 +2,7 @@ import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Box,

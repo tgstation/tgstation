@@ -1,3 +1,7 @@
+import { createSearch, decodeHtmlEntities } from 'common/string';
+
+import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Button,
   Icon,
@@ -9,13 +13,9 @@ import {
   Tooltip,
 } from '../components';
 import { TableCell, TableRow } from '../components/Table';
-import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend } from '../backend';
-import { useState } from 'react';
-
+import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
-import { Window } from '../layouts';
 
 type Data = {
   items: string[];
@@ -97,7 +97,7 @@ export const CheckboxInput = (props) => {
               <Input
                 fluid
                 value={searchQuery}
-                onInput={(_, value) => setSearchQuery(value)}
+                onChange={(_, value) => setSearchQuery(value)}
               />
             </Stack.Item>
           </Stack>

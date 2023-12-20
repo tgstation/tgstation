@@ -4,13 +4,13 @@
  * @license MIT
  */
 
-import { NtosWindow } from '../layouts';
-import { useBackend, useLocalState } from '../backend';
-import { useState } from 'react';
-import { Box, Section, TextArea, MenuBar, Divider } from '../components';
 import { Component, createRef, RefObject } from 'react';
-import { createLogger } from '../logging';
+import { useState } from 'react';
+import { useBackend, useLocalState } from '../backend';
+import { Box, Divider, MenuBar, Section, TextArea } from '../components';
 import { Dialog, UnsavedChangesDialog } from '../components/Dialog';
+import { NtosWindow } from '../layouts';
+import { createLogger } from '../logging';
 
 const logger = createLogger('NtosNotepad');
 

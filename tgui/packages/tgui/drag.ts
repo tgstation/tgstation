@@ -4,10 +4,10 @@
  * @license MIT
  */
 
+import { storage } from 'common/storage';
 import { vecAdd, vecMultiply, vecScale, vecSubtract } from 'common/vector';
 
 import { createLogger } from './logging';
-import { storage } from 'common/storage';
 
 const logger = createLogger('drag');
 const pixelRatio = window.devicePixelRatio ?? 1;

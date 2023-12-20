@@ -1,14 +1,14 @@
 import { useBackend } from '../backend';
 import { useState } from 'react';
 import {
-  NoticeBox,
-  Section,
-  Tabs,
-  Input,
   Button,
-  NumberInput,
-  Stack,
   Collapsible,
+  Input,
+  NoticeBox,
+  NumberInput,
+  Section,
+  Stack,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 

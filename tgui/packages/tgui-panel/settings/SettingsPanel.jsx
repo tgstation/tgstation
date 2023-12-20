@@ -22,22 +22,23 @@ import {
   Tabs,
   TextArea,
 } from 'tgui/components';
+
 import { ChatPageSettings } from '../chat';
 import { rebuildChat, saveChatToDisk } from '../chat/actions';
 import { THEMES } from '../themes';
 import {
-  changeSettingsTab,
-  updateSettings,
   addHighlightSetting,
+  changeSettingsTab,
   removeHighlightSetting,
   updateHighlightSetting,
+  updateSettings,
 } from './actions';
-import { SETTINGS_TABS, FONTS, MAX_HIGHLIGHT_SETTINGS } from './constants';
+import { FONTS, MAX_HIGHLIGHT_SETTINGS, SETTINGS_TABS } from './constants';
 import {
   selectActiveTab,
-  selectSettings,
-  selectHighlightSettings,
   selectHighlightSettingById,
+  selectHighlightSettings,
+  selectSettings,
 } from './selectors';
 
 export const SettingsPanel = (props) => {

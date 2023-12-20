@@ -1,5 +1,6 @@
-import { useBackend } from '../backend';
+import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -8,7 +9,6 @@ import {
   NumberInput,
   Section,
 } from '../components';
-import { capitalizeAll } from 'common/string';
 import { Window } from '../layouts';
 
 type Product = {

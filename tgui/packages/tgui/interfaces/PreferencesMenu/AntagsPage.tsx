@@ -1,7 +1,7 @@
 import { binaryInsertWith } from 'common/collections';
 import { classes } from 'common/react';
-import { useBackend } from '../../backend';
 import { useState } from 'react';
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,

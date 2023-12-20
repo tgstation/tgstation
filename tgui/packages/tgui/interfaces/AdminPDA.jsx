@@ -1,6 +1,6 @@
-import { Section, Dropdown, Input, Box, TextArea } from '../components';
 import { useState } from 'react';
 import { useBackend, useLocalState } from '../backend';
+import { Box, Dropdown, Input, Section, TextArea } from '../components';
 import { Button } from '../components/Button';
 import { Window } from '../layouts';
 
@@ -73,7 +73,7 @@ const SenderInfo = (props) => {
         <Input
           placeholder="Sender name..."
           fluid
-          onInput={(e, value) => {
+          onChange={(e, value) => {
             setName(value);
           }}
         />
@@ -82,7 +82,7 @@ const SenderInfo = (props) => {
         <Input
           placeholder="Sender's job..."
           fluid
-          onInput={(e, value) => {
+          onChange={(e, value) => {
             setJob(value);
           }}
         />

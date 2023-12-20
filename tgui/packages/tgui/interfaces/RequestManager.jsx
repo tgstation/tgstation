@@ -5,6 +5,7 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend, useLocalState } from '../backend';
 import { useState } from 'react';
 import { Button, Input, Section, Table } from '../components';
@@ -46,7 +47,7 @@ export const RequestManager = (props) => {
             <>
               <Input
                 value={searchText}
-                onInput={(_, value) => setSearchText(value)}
+                onChange={(_, value) => setSearchText(value)}
                 placeholder={'Search...'}
                 mr={1}
               />

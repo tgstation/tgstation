@@ -1,14 +1,15 @@
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
-import {
-  Stack,
-  Section,
-  ProgressBar,
-  Button,
-  NumberInput,
-  LabeledList,
-} from '../components';
 import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
+import {
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
+import { Window } from '../layouts';
 
 type ModularShieldGenData = {
   max_strength: number;

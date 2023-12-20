@@ -1,16 +1,16 @@
 import { useBackend } from '../backend';
 import { useState } from 'react';
 import {
-  Section,
   Box,
-  Dropdown,
   Button,
-  Input,
-  TextArea,
   Divider,
-  NumberInput,
-  Tooltip,
+  Dropdown,
+  Input,
   Knob,
+  NumberInput,
+  Section,
+  TextArea,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 

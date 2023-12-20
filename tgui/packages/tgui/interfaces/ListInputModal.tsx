@@ -1,17 +1,17 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
-import { Button, Input, Section, Stack } from '../components';
-import { useBackend } from '../backend';
-import { useState } from 'react';
 import {
   KEY_A,
   KEY_DOWN,
-  KEY_ESCAPE,
   KEY_ENTER,
+  KEY_ESCAPE,
   KEY_UP,
   KEY_Z,
 } from '../../common/keycodes';
+import { useState } from 'react';
+import { useBackend } from '../backend';
+import { Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 type ListInputData = {
   init_value: string;
@@ -240,7 +240,7 @@ const SearchBar = (props) => {
         event.preventDefault();
         act('submit', { entry: filteredItems[selected] });
       }}
-      onInput={(_, value) => onSearch(value)}
+      onChange={(_, value) => onSearch(value)}
       placeholder="Search..."
       value={searchQuery}
     />

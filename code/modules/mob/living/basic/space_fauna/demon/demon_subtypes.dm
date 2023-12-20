@@ -22,7 +22,7 @@
 
 	antag_type = /datum/antagonist/slaughter
 
-	/// Datum that stores the action for us to crawl around.
+	/// Which blood crawl do we give to the demon
 	var/crawl_type = /datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon
 	/// How long it takes for the alt-click slam attack to come off cooldown
 	var/slam_cooldown_time = 45 SECONDS
@@ -37,7 +37,7 @@
 
 /mob/living/basic/demon/slaughter/Initialize(mapload)
 	. = ..()
-	GRANT_ACTION(/datum/action/cooldown/spell/jaunt/bloodcrawl/slaughter_demon)
+	GRANT_ACTION(crawl_type)
 	RegisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack))
 	RegisterSignals(src, list(COMSIG_MOB_ENTER_JAUNT, COMSIG_MOB_AFTER_EXIT_JAUNT), PROC_REF(on_crawl))
 

@@ -1,16 +1,16 @@
-import { useBackend } from '../backend';
-import { useState } from 'react';
-import { BooleanLike } from 'common/react';
-import {
-  Stack,
-  Section,
-  LabeledList,
-  ProgressBar,
-  Button,
-  NoticeBox,
-  Dropdown,
-} from '../components';
 import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+import { useBackend } from '../backend';
+import {
+  Button,
+  Dropdown,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {

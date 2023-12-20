@@ -1,4 +1,5 @@
 import { toFixed } from 'common/math';
+
 import { useBackend } from '../backend';
 import { LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';

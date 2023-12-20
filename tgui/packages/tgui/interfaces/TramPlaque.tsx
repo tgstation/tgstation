@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { NoticeBox, Section, LabeledList, Stack } from '../components';
+import { LabeledList, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

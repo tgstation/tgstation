@@ -4,10 +4,11 @@
  * @license MIT
  */
 
-import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { forwardRef, ReactNode, RefObject, useEffect } from 'react';
-import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
+import { forwardRef, ReactNode, RefObject, useEffect } from 'react';
+
+import { addScrollableNode, removeScrollableNode } from '../events';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 export type SectionProps = Partial<{
   buttons: ReactNode;

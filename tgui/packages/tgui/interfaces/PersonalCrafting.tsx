@@ -1,20 +1,20 @@
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
-import { flow } from 'common/fp';
-import { filter, sortBy } from 'common/collections';
-import { useBackend } from '../backend';
 import { useState } from 'react';
+import { useBackend } from '../backend';
 import {
-  Divider,
-  Button,
-  Section,
-  Tabs,
-  Stack,
   Box,
-  Input,
+  Button,
+  Divider,
   Icon,
-  Tooltip,
+  Input,
   NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
@@ -254,7 +254,7 @@ export const PersonalCrafting = (props) => {
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
-                    onInput={(e, value) => {
+                    onChange={(e, value) => {
                       setPages(1);
                       setSearchText(value);
                     }}

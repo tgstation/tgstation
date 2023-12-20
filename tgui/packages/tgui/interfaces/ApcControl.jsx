@@ -1,5 +1,6 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+
 import { useBackend, useLocalState } from '../backend';
 import { useState } from 'react';
 import {
@@ -7,10 +8,10 @@ import {
   Button,
   Dimmer,
   Icon,
+  Section,
+  Stack,
   Table,
   Tabs,
-  Stack,
-  Section,
 } from '../components';
 import { Window } from '../layouts';
 import { AreaCharge, powerRank } from './PowerMonitor';

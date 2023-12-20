@@ -3,15 +3,16 @@ import { flow } from 'common/fp';
 import { useBackend } from 'tgui/backend';
 import { useState } from 'react';
 import {
-  Stack,
-  Input,
-  Section,
-  Tabs,
-  NoticeBox,
   Box,
-  Icon,
   Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
 } from 'tgui/components';
+
 import { JOB2ICON } from '../common/JobToIcon';
 import { isRecordMatch } from '../SecurityRecords/helpers';
 import { MedicalRecord, MedicalRecordData } from './types';
@@ -37,7 +38,7 @@ export const MedicalRecordTabs = (props) => {
       <Stack.Item>
         <Input
           fluid
-          onInput={(_, value) => setSearch(value)}
+          onChange={(_, value) => setSearch(value)}
           placeholder="Name/Job/DNA"
         />
       </Stack.Item>

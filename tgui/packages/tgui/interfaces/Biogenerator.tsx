@@ -1,20 +1,21 @@
 import { BooleanLike } from 'common/react';
 import { classes } from 'common/react';
+
 import { useState } from 'react';
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import {
   Box,
-  Section,
-  NumberInput,
-  Table,
-  Tabs,
+  Button,
   LabeledList,
   NoticeBox,
-  Button,
+  NumberInput,
   ProgressBar,
+  Section,
   Stack,
+  Table,
+  Tabs,
 } from '../components';
+import { Window } from '../layouts';
 
 type BiogeneratorData = {
   processing: BooleanLike;
