@@ -368,12 +368,10 @@ type RetryActionType = (retrying?: boolean) => void;
 export const NtosNotepad = (props) => {
   const { act, data, config } = useBackend<NoteData>();
   const { note } = data;
-  const [documentName, setDocumentName] = useState<string>(
-    DEFAULT_DOCUMENT_NAME
-  );
-  const [originalText, setOriginalText] = useState<string>(note);
+  const [documentName, setDocumentName] = useState(DEFAULT_DOCUMENT_NAME);
+  const [originalText, setOriginalText] = useState(note);
   console.log(note);
-  const [text, setText] = useState<string>(note);
+  const [text, setText] = useState(note);
   const [statuses, setStatuses] = useState<Statuses>({
     line: 0,
     column: 0,
@@ -382,7 +380,7 @@ export const NtosNotepad = (props) => {
   const [retryAction, setRetryAction] = useState<RetryActionType | null>(
     null
   );
-  const [showStatusBar, setShowStatusBar] = useState<boolean>(true);
+  const [showStatusBar, setShowStatusBar] = useState(true);
   const [wordWrap, setWordWrap] = useLocalState<boolean>('wordWrap', true);
   const handleCloseDialog = () => setActiveDialog(Dialogs.NONE);
   const handleSave = (newDocumentName: string = documentName) => {

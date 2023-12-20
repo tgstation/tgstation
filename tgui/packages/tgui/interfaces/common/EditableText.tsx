@@ -25,7 +25,7 @@ export const EditableText = (props: Props) => {
   if (!field) return <> </>;
 
   const { act } = useBackend();
-  const [editing, setEditing] = useState<boolean>(false);
+  const [editing, setEditing] = useState(false);
 
   return editing ? (
     <Input

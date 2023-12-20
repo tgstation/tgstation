@@ -51,7 +51,7 @@ const QuirkList = (props: {
     <Box className="PreferencesMenu__Quirks__QuirkList">
       {props.quirks.map(([quirkKey, quirk]) => {
         const [customizationExpanded, setCustomizationExpanded] =
-          useState<boolean>(false);
+          useState(false);
 
         const className = 'PreferencesMenu__Quirks__QuirkList__quirk';
 

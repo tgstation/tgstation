@@ -10,7 +10,7 @@ export const getQuirkStrings = (string: string) => {
 
 /** We need an active reference and this a pain to rewrite */
 export const getMedicalRecord = () => {
-  const [selectedRecord] = useState<MedicalRecord | undefined>(undefined);
+  const [selectedRecord] = useState<MedicalRecord | undefined>();
   if (!selectedRecord) return;
   const { data } = useBackend<MedicalRecordData>();
   const { records = [] } = data;

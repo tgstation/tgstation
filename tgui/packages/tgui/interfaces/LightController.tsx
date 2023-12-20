@@ -51,10 +51,8 @@ export const LightController = (props) => {
     default_category,
     category_ids,
   } = data;
-  const [currentTemplate, setCurrentTemplate] = useState<string>(default_id);
-  const [currentCategory, setCurrentCategory] = useState<string>(
-    default_category
-  );
+  const [currentTemplate, setCurrentTemplate] = useState(default_id);
+  const [currentCategory, setCurrentCategory] = useState(default_category);
 
   const category_keys = category_ids ? Object.keys(category_ids) : [];
 

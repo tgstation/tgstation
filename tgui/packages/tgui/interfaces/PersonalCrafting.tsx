@@ -172,7 +172,7 @@ export const PersonalCrafting = (props) => {
   const [pages, setPages] = useState(1);
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
-  const [activeCategory, setCategory] = useState<string>(
+  const [activeCategory, setCategory] = useState(
     Object.keys(craftability).length
       ? 'Can Make'
       : mode === MODE.cooking

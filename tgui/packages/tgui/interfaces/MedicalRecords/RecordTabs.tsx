@@ -85,7 +85,7 @@ export const MedicalRecordTabs = (props) => {
 const CrewTab = (props: { record: MedicalRecord }) => {
   const [selectedRecord, setSelectedRecord] = useState<
     MedicalRecord | undefined
-  >(undefined);
+  >();
 
   const { act, data } = useBackend<MedicalRecordData>();
   const { assigned_view } = data;

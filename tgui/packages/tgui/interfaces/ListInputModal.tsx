@@ -32,11 +32,11 @@ export const ListInputModal = (props) => {
     timeout,
     title,
   } = data;
-  const [selected, setSelected] = useState<number>(items.indexOf(init_value));
-  const [searchBarVisible, setSearchBarVisible] = useState<boolean>(
+  const [selected, setSelected] = useState(items.indexOf(init_value));
+  const [searchBarVisible, setSearchBarVisible] = useState(
     items.length > 9,
   );
-  const [searchQuery, setSearchQuery] = useState<string>('');
+  const [searchQuery, setSearchQuery] = useState('');
   // User presses up or down on keyboard
   // Simulates clicking an item
   const onArrowKey = (key: number) => {

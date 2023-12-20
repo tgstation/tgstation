@@ -6,7 +6,7 @@ import { Window } from '../layouts';
 
 export const Achievements = (props) => {
   const { data } = useBackend();
-  const { categories } = data;
+  const { categories = [] } = data;
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const achievements = data.achievements.filter(
     (x) => x.category === selectedCategory,

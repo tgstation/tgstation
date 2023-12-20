@@ -9,7 +9,7 @@ type Data = {
 
 export const LingMMITalk = (props) => {
   const { data, act } = useBackend<Data>();
-  const [mmiMessage, setmmiMessage] = useState<string>('');
+  const [mmiMessage, setmmiMessage] = useState('');
 
   return (
     <Window title="Decoy Brain MMI View" height={360} width={360}>

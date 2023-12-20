@@ -155,9 +155,7 @@ const AnnouncementSound = (props) => {
 const ReportText = (props) => {
   const { act, data } = useBackend<Data>();
   const { announce_contents, print_report, command_report_content } = data;
-  const [commandReport, setCommandReport] = useState<string>(
-    command_report_content,
-  );
+  const [commandReport, setCommandReport] = useState(command_report_content);
 
   return (
     <Section title="Set report text" textAlign="center">

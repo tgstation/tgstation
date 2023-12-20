@@ -21,7 +21,7 @@ export const RequestManager = (props) => {
       Object.entries(displayTypeMap).map(([type, _]) => [type, true]),
     ),
   );
-  const [searchText, setSearchText] = useState();
+  const [searchText, setSearchText] = useState('');
 
   // Handle filtering
   let displayedRequests = requests.filter(
