@@ -88,5 +88,5 @@
 /obj/item/circuit_component/equipment_action/proc/update_actions()
 	for(var/ref in granted_to)
 		var/datum/action/granted_action = granted_to[ref]
-		granted_action.name = button_name.value
+		granted_action.name = button_name.value || "Action"
 		granted_action.button_icon_state = "bci_[replacetextEx(lowertext(icon_options.value), " ", "_")]"

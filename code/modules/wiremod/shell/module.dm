@@ -63,8 +63,9 @@
 
 /obj/item/mod/module/circuit/get_configuration(mob/user)
 	. = ..()
+	var/unnamed_action_index = 1
 	for(var/obj/item/circuit_component/equipment_action/action_comp in action_comps)
-		.[REF(action_comp)] = add_ui_configuration(action_comp.button_name.value, "pin", !!action_comp.granted_to[REF(user)])
+		.[REF(action_comp)] = add_ui_configuration(action_comp.button_name.value || "Unnamed Action [unnamed_action_index++]", "pin", !!action_comp.granted_to[REF(user)])
 
 /obj/item/mod/module/circuit/configure_edit(key, value)
 	. = ..()
