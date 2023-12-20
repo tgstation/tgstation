@@ -98,7 +98,7 @@
 	for(var/single_reagent in reaction.required_reagents)
 		multiplier = min(multiplier, holder.get_reagent_amount(single_reagent) / reaction.required_reagents[single_reagent])
 	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
-	if(!multiplier) //we have no more reagents left
+	if(!multiplier) //we have no more or very little reagents left
 		return FALSE
 
 	//To prevent reactions outside of the pH window from starting.
@@ -153,7 +153,8 @@
 	multiplier = INFINITY
 	for(var/reagent in reaction.required_reagents)
 		multiplier = min(multiplier, holder.get_reagent_amount(reagent) / reaction.required_reagents[reagent])
-	if(!multiplier) //we have no more reagents left
+	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
+	if(!multiplier) //we have no more or very little reagents left
 		return FALSE
 
 	//Incase of no reagent product
