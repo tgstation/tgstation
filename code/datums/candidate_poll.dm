@@ -55,10 +55,9 @@
 	if(!silent)
 		to_chat(candidate, span_notice("You have signed up for [role]! A candidate will be picked randomly soon."))
 		// Sign them up for any other polls with the same mob type
-		for(var/existing_poll in SSpolling.currently_polling)
-			var/datum/candidate_poll/the_existing_poll = existing_poll
-			if(src != the_existing_poll && poll_key == the_existing_poll.poll_key && !(candidate in the_existing_poll.signed_up))
-				the_existing_poll.sign_up(candidate, TRUE)
+		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
+			if(src != existing_poll && poll_key == existing_poll.poll_key && !(candidate in existing_poll.signed_up))
+				existing_poll.sign_up(candidate, TRUE)
 	if(alert_button)
 		alert_button.update_candidates_number_overlay()
 		alert_button.update_signed_up_overlay()
@@ -81,10 +80,9 @@
 	if(!silent)
 		to_chat(candidate, span_danger("You have been unregistered as a candidate for [role]. You can sign up again before the poll ends."))
 
-		for(var/existing_poll in SSpolling.currently_polling)
-			var/datum/candidate_poll/the_existing_poll = existing_poll
-			if(src != the_existing_poll && poll_key == the_existing_poll.poll_key && (candidate in the_existing_poll.signed_up))
-				the_existing_poll.remove_candidate(candidate, TRUE)
+		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
+			if(src != existing_poll && poll_key == existing_poll.poll_key && (candidate in existing_poll.signed_up))
+				existing_poll.remove_candidate(candidate, TRUE)
 	if(alert_button)
 		alert_button.update_candidates_number_overlay()
 		alert_button.update_signed_up_overlay()
