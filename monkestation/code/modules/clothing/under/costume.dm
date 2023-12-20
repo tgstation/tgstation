@@ -46,6 +46,14 @@
 	icon_state = "worldchampion_gi"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/streetmime
+	name = "street mime suit"
+	desc = "Although unorthodoxly colorful, it is practical for standing out in space France."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "streetmime"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/tragic
 	name = "tragic mime suit"
 	desc = "A skin-tight black suit for theatre actors. You feel the need to remind a doctor to eat food and sleep."
