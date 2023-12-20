@@ -6580,6 +6580,7 @@
 #include "monkestation\code\modules\virology\__base_procs.dm"
 #include "monkestation\code\modules\virology\__effects.dm"
 #include "monkestation\code\modules\virology\fullscreen.dm"
+#include "monkestation\code\modules\virology\cargo\pathology.dm"
 #include "monkestation\code\modules\virology\disease\_disease.dm"
 #include "monkestation\code\modules\virology\disease\premades\_base_premades.dm"
 #include "monkestation\code\modules\virology\disease\premades\adrenal_crisis.dm"
