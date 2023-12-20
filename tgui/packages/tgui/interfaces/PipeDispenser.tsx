@@ -2,7 +2,8 @@ import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Button, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { ICON_BY_CATEGORY_NAME, ColorItem, LayerSelect, SmartPipeBlockSection } from './RapidPipeDispenser';
+import { ICON_BY_CATEGORY_NAME, ColorItem, SmartPipeBlockSection } from './RapidPipeDispenser';
+import { LayerSelect } from './RapidPlumbingDevice';
 
 type Data = {
   // Dynamic

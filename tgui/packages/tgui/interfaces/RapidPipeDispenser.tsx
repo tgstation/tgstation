@@ -204,7 +204,7 @@ const SelectionSection = (props) => {
   );
 };
 
-export const LayerSelect = (props) => {
+const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
   const { pipe_layers } = data;
   const { multi_layer } = data;
@@ -226,7 +226,7 @@ export const LayerSelect = (props) => {
         key="multilayer"
         checked={multi_layer}
         content="Multi"
-        tooltip="Build on multiple pipe layers simultaneously."
+        tooltip="Build on multiple pipe layers simultaneously"
         onClick={() => {
           act('toggle_multi_layer');
         }}

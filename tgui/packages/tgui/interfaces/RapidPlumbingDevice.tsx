@@ -2,8 +2,8 @@ import { useBackend, useLocalState } from '../backend';
 import { capitalizeAll } from 'common/string';
 import { BooleanLike, classes } from 'common/react';
 import { Window } from '../layouts';
-import { Section, Tabs, Button, Stack, Box } from '../components';
-import { ColorItem, LayerSelect } from './RapidPipeDispenser';
+import { Section, Tabs, Button, Stack, Box, LabeledList } from '../components';
+import { ColorItem } from './RapidPipeDispenser';
 import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
@@ -12,6 +12,7 @@ type Data = {
   categories: Category[];
   selected_category: string;
   selected_recipe: string;
+  piping_layer: number;
 };
 
 type Category = {
@@ -76,6 +77,27 @@ const PlumbingTypeSection = (props) => {
         </Button>
       ))}
     </Section>
+  );
+};
+
+export const LayerSelect = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { piping_layer } = data;
+  return (
+    <LabeledList.Item label="Layer">
+      {[1, 2, 3, 4, 5].map((layer) => (
+        <Button.Checkbox
+          key={layer}
+          checked={layer === piping_layer}
+          content={layer}
+          onClick={() =>
+            act('piping_layer', {
+              piping_layer: layer,
+            })
+          }
+        />
+      ))}
+    </LabeledList.Item>
   );
 };
 
