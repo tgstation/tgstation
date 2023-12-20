@@ -80,7 +80,6 @@
 /obj/item/circuit_component/equipment_action/unregister_shell(atom/movable/shell)
 	. = ..()
 	SEND_SIGNAL(shell, COMSIG_CIRCUIT_ACTION_COMPONENT_UNREGISTERED, src)
-	QDEL_LIST_ASSOC_VAL(granted_to)
 
 /obj/item/circuit_component/equipment_action/input_received(datum/port/input/port)
 	if (length(granted_to))

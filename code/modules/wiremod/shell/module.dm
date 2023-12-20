@@ -38,6 +38,7 @@
 	action_comps -= action_comp
 	for(var/ref in action_comp.granted_to)
 		unpin_action(action_comp, locate(ref))
+	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /obj/item/mod/module/circuit/on_install()
 	if(!shell?.attached_circuit)
@@ -67,7 +68,7 @@
 
 /obj/item/mod/module/circuit/configure_edit(key, value)
 	. = ..()
-	var/obj/item/circuit_component/equipment_action/action_comp = locate(key)
+	var/obj/item/circuit_component/equipment_action/action_comp = locate(key) in action_comps
 	if(!istype(action_comp))
 		return
 	if(text2num(value))
@@ -77,8 +78,6 @@
 
 /obj/item/mod/module/circuit/proc/pin_action(obj/item/circuit_component/equipment_action/action_comp, mob/user)
 	if(!istype(user))
-		return
-	if(!shell.attached_circuit?.attached_components?.Find(action_comp)) // Sanity check - don't pin an action from a component that isn't even in this module
 		return
 	if(action_comp.granted_to[REF(user)]) // Sanity check - don't pin an action for a mob that has already pinned it
 		return
@@ -109,9 +108,7 @@
 	button_icon_state = "bci_[replacetextEx(lowertext(action_comp.icon_options.value), " ", "_")]"
 
 /datum/action/item_action/mod/pinnable/circuit/Destroy()
-	for(var/ref in circuit_component.granted_to)
-		if (circuit_component.granted_to[ref] == src)
-			circuit_component.granted_to -= ref
+	circuit_component.granted_to -= REF(pinner)
 	circuit_component = null
 
 	return ..()

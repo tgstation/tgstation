@@ -41,7 +41,7 @@
 	if(!istype(action))
 		return
 	LAZYREMOVE(actions, action)
-	qdel(action)
+	QDEL_LIST_ASSOC_VAL(action_comp.granted_to)
 
 /datum/action/innate/bci_action
 	name = "Action"
@@ -49,17 +49,17 @@
 	check_flags = AB_CHECK_CONSCIOUS
 	button_icon_state = "bci_power"
 
+	var/obj/item/organ/internal/cyberimp/bci/bci
 	var/obj/item/circuit_component/equipment_action/circuit_component
 
-/datum/action/innate/bci_action/New(obj/item/organ/internal/cyberimp/bci/bci, obj/item/circuit_component/equipment_action/circuit_component)
+/datum/action/innate/bci_action/New(obj/item/organ/internal/cyberimp/bci/_bci, obj/item/circuit_component/equipment_action/circuit_component)
 	..()
-	circuit_component.granted_to[REF(bci)] = src
+	bci = _bci
+	circuit_component.granted_to[REF(_bci)] = src
 	src.circuit_component = circuit_component
 
 /datum/action/innate/bci_action/Destroy()
-	for(var/ref in circuit_component.granted_to)
-		if (circuit_component.granted_to[ref] == src)
-			circuit_component.granted_to -= ref
+	circuit_component.granted_to -= REF(bci)
 	circuit_component = null
 
 	return ..()
