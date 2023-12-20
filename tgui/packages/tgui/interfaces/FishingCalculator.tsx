@@ -1,4 +1,5 @@
 import { round } from 'common/math';
+
 import { useBackend, useLocalState } from '../backend';
 import { Button, Dropdown, Input, Stack, Table } from '../components';
 import { TableCell, TableRow } from '../components/Table';
@@ -24,7 +25,7 @@ export const FishingCalculator = (props) => {
 
   const [bait, setBait] = useLocalState<string>(
     'bait',
-    '/obj/item/food/bait/worm'
+    '/obj/item/food/bait/worm',
   );
   const [spot, setSpot] = useLocalState<string>('spot', data.spot_types[0]);
   const [rod, setRod] = useLocalState<string>('rod', data.rod_types[0]);
@@ -71,13 +72,14 @@ export const FishingCalculator = (props) => {
             <Button
               onClick={() =>
                 act('recalc', {
-                  'rod': rod,
-                  'bait': bait,
-                  'hook': hook,
-                  'line': line,
-                  'spot': spot,
+                  rod: rod,
+                  bait: bait,
+                  hook: hook,
+                  line: line,
+                  spot: spot,
                 })
-              }>
+              }
+            >
               Calculate
             </Button>
           </Stack.Item>

@@ -23180,7 +23180,7 @@
 /turf/open/floor/iron,
 /area/station/science/xenobiology)
 "fIY" = (
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
 "fJj" = (
@@ -69413,7 +69413,7 @@
 /area/station/medical/cryo)
 "roI" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/morgue)
 "roX" = (
@@ -89412,7 +89412,7 @@
 /area/station/hallway/secondary/entry)
 "wnI" = (
 /obj/item/sign,
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /obj/item/screwdriver,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/bar)

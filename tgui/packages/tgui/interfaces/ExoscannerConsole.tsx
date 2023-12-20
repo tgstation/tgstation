@@ -1,7 +1,17 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Box, Button, Icon, Modal, Section, LabeledList, NoticeBox, Stack } from '../components';
-import { Window } from '../layouts';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 type SiteData = {
   name: string;
@@ -61,9 +71,10 @@ const ScanSelectionSection = (props) => {
           buttons={
             <Button
               content="Back"
-              onClick={() => act('select_site', { 'site_ref': null })}
+              onClick={() => act('select_site', { site_ref: null })}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Name">{site.name}</LabeledList.Item>
             <LabeledList.Item label="Description">
@@ -234,12 +245,14 @@ export const ExoscannerConsole = (props) => {
                     <Button
                       icon="search"
                       disabled={!can_start_wide_scan}
-                      onClick={() => act('start_wide_scan')}>
+                      onClick={() => act('start_wide_scan')}
+                    >
                       Scan
                     </Button>
                   }
                   fill
-                  title="Configure Wide Scan">
+                  title="Configure Wide Scan"
+                >
                   <Stack>
                     <Stack.Item>
                       <BlockQuote>
@@ -267,14 +280,15 @@ export const ExoscannerConsole = (props) => {
                       onClick={() => act('open_experiments')}
                       icon="tasks"
                     />
-                  }>
+                  }
+                >
                   <Stack vertical>
                     {possible_sites.map((site) => (
                       <Stack.Item key={site.ref}>
                         <Button
                           content={site.name}
                           onClick={() =>
-                            act('select_site', { 'site_ref': site.ref })
+                            act('select_site', { site_ref: site.ref })
                           }
                         />
                       </Stack.Item>

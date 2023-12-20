@@ -1,13 +1,13 @@
-import { Button, Collapsible, Flex, Section, Stack } from 'tgui/components';
-import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
-
 import { BooleanLike } from 'common/react';
+import { useBackend } from 'tgui/backend';
+import { Button, Collapsible, Flex, Section, Stack } from 'tgui/components';
+import { Window } from 'tgui/layouts';
+
+import { HypertorusSecondaryControls, HypertorusWasteRemove } from './Controls';
 import { HypertorusGases } from './Gases';
 import { HypertorusParameters } from './Parameters';
 import { HypertorusRecipes } from './Recipes';
 import { HypertorusTemperatures } from './Temperatures';
-import { Window } from 'tgui/layouts';
-import { useBackend } from 'tgui/backend';
 
 export type HypertorusData = {
   start_power: number;
@@ -142,7 +142,8 @@ export const Hypertorus = (props) => {
     <Window
       title="Hypertorus Fusion Reactor control panel"
       width={width}
-      height={height}>
+      height={height}
+    >
       <Window.Content scrollable>
         <HypertorusLayout />
       </Window.Content>

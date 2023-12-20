@@ -1,6 +1,14 @@
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, LabeledList, NumberInput, Section } from '../components';
 import { capitalizeAll } from 'common/string';
+
+import { useBackend, useLocalState } from '../backend';
+import {
+  Box,
+  Button,
+  Input,
+  LabeledList,
+  NumberInput,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type Product = {
@@ -36,7 +44,7 @@ export const ChemPress = (props) => {
   } = data;
   const [categoryName, setCategoryName] = useLocalState(
     'categoryName',
-    packaging_category
+    packaging_category,
   );
   const shownCategory =
     packaging_types.find((category) => category.cat_name === categoryName) ||
@@ -93,7 +101,8 @@ export const ChemPress = (props) => {
                     act('change_product', {
                       ref: design.ref,
                     })
-                  }>
+                  }
+                >
                   <Box
                     className={design.class_name}
                     style={{

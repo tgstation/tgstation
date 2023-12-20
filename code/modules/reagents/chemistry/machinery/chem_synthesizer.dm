@@ -6,7 +6,7 @@
 	base_icon_state = "dispenser"
 	amount = 10
 	resistance_flags = INDESTRUCTIBLE | FIRE_PROOF | ACID_PROOF | LAVA_PROOF
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 	use_power = NO_POWER_USE
 	var/static/list/shortcuts = list(
 		"meth" = /datum/reagent/drug/methamphetamine

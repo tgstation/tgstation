@@ -1,4 +1,5 @@
 import { toTitleCase } from 'common/string';
+
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';
@@ -28,7 +29,8 @@ export const LaborClaimConsole = (props) => {
                   disabled={!unclaimed_points}
                   onClick={() => act('claim_points')}
                 />
-              }>
+              }
+            >
               {unclaimed_points}
             </LabeledList.Item>
           </LabeledList>

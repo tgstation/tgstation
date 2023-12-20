@@ -1,7 +1,20 @@
-import { useBackend } from '../../backend';
-import { BlockQuote, Button, LabeledList, NoticeBox, Section, Stack } from '../../components';
 import { decodeHtmlEntities } from 'common/string';
-import { RequestMessage, RequestPriority, RequestsData, RequestType } from './types';
+
+import { useBackend } from '../../backend';
+import {
+  BlockQuote,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../../components';
+import {
+  RequestMessage,
+  RequestPriority,
+  RequestsData,
+  RequestType,
+} from './types';
 
 export const MessageViewTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -32,7 +45,8 @@ const MessageDisplay = (props: { message: RequestMessage }) => {
           message.sender_department +
           ', ' +
           message.received_time
-        }>
+        }
+      >
         {message.priority === RequestPriority.HIGH && (
           <NoticeBox warning>High Priority</NoticeBox>
         )}

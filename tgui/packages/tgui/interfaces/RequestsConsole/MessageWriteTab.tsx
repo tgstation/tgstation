@@ -1,7 +1,15 @@
-import { useBackend, useLocalState } from '../../backend';
 import { sortStrings } from 'common/collections';
-import { Box, Button, Dropdown, Section, Stack, TextArea } from '../../components';
-import { RequestsData, RequestType, RequestPriority } from './types';
+
+import { useBackend, useLocalState } from '../../backend';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Section,
+  Stack,
+  TextArea,
+} from '../../components';
+import { RequestPriority, RequestsData, RequestType } from './types';
 
 export const MessageWriteTab = (props) => {
   const { act, data } = useBackend<RequestsData>();
@@ -26,11 +34,11 @@ export const MessageWriteTab = (props) => {
   const [messageText, setMessageText] = useLocalState('messageText', '');
   const [requestType, setRequestType] = useLocalState(
     'requestType',
-    RequestType.ASSISTANCE
+    RequestType.ASSISTANCE,
   );
   const [priority, setPriority] = useLocalState(
     'priority',
-    RequestPriority.NORMAL
+    RequestPriority.NORMAL,
   );
   const [recipient, setRecipient] = useLocalState('recipient', '');
   return (

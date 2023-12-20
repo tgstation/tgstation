@@ -5,6 +5,8 @@
 #define NARSIE_MESMERIZE_EFFECT 60
 #define NARSIE_SINGULARITY_SIZE 12
 
+#define ADMIN_WARNING_MESSAGE "Invoking this will begin the Nar'Sie roundender. Assume that this WILL end the round in a few minutes. Are you sure?"
+
 /// Nar'Sie, the God of the blood cultists
 /obj/narsie
 	name = "Nar'Sie"
@@ -39,6 +41,19 @@
 /obj/narsie/Initialize(mapload)
 	. = ..()
 
+	narsie_spawn_animation()
+
+/obj/narsie/Destroy()
+	if (GLOB.cult_narsie == src)
+		fall_of_the_harbinger()
+		GLOB.cult_narsie = null
+
+	return ..()
+
+/// This proc sets up all of Nar'Sie's abilities, stats, and begins her round-ending capabilities. She does not do anything unless this proc is invoked.
+/// This is only meant to be invoked after this instance is initialized in specific pro-sumer procs, as it WILL derail the entire round.
+/obj/narsie/proc/start_ending_the_round()
+	GLOB.cult_narsie = src
 	SSpoints_of_interest.make_point_of_interest(src)
 
 	singularity = WEAKREF(AddComponent(
@@ -66,9 +81,6 @@
 			alert_overlay = alert_overlay,
 		)
 
-	narsie_spawn_animation()
-
-	GLOB.cult_narsie = src
 	var/list/all_cults = list()
 
 	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
@@ -95,10 +107,8 @@
 	soul_goal = round(1 + LAZYLEN(souls_needed) * 0.75)
 	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(begin_the_end))
 
-/obj/narsie/Destroy()
-	send_to_playing_players(span_narsie("\"<b>[pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-")]\"</b>"))
-	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
-
+/// Cleans up all of Nar'Sie's abilities, stats, and ends her round-ending capabilities. This should only be called if `start_ending_the_round()` successfully started.
+/obj/narsie/proc/fall_of_the_harbinger()
 	var/list/all_cults = list()
 
 	for (var/datum/antagonist/cult/cultist in GLOB.antagonists)
@@ -113,10 +123,28 @@
 			summon_objective.summoned = FALSE
 			summon_objective.killed = TRUE
 
-	if (GLOB.cult_narsie == src)
-		GLOB.cult_narsie = null
+	send_to_playing_players(span_narsie(span_bold(pick("Nooooo...", "Not die. How-", "Die. Mort-", "Sas tyen re-"))))
+	sound_to_playing_players('sound/magic/demon_dies.ogg', 50)
 
-	return ..()
+/obj/narsie/vv_get_dropdown()
+	. = ..()
+	VV_DROPDOWN_OPTION("", "---------")
+	VV_DROPDOWN_OPTION(VV_HK_BEGIN_NARSIE_ROUNDEND, "Begin Nar'Sie Roundender")
+
+/obj/narsie/vv_do_topic(list/href_list)
+	. = ..()
+
+	if(!.)
+		return
+
+	if(isnull(usr) || !href_list[VV_HK_BEGIN_NARSIE_ROUNDEND] || !check_rights(R_FUN, show_msg = TRUE))
+		return
+
+	if(tgui_alert(usr, ADMIN_WARNING_MESSAGE, "Begin Nar'Sie Roundender", list("I'm Sure", "Abort")) != "I'm Sure")
+		return
+
+	log_admin("[key_name(usr)] has triggered the Nar'Sie roundender.")
+	start_ending_the_round()
 
 /obj/narsie/attack_ghost(mob/user)
 	makeNewConstruct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
@@ -300,3 +328,5 @@
 #undef NARSIE_MESMERIZE_CHANCE
 #undef NARSIE_MESMERIZE_EFFECT
 #undef NARSIE_SINGULARITY_SIZE
+
+#undef ADMIN_WARNING_MESSAGE

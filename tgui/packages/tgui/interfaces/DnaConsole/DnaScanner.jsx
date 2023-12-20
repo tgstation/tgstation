@@ -1,6 +1,19 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, LabeledList, ProgressBar, Section } from '../../components';
-import { SUBJECT_CONCIOUS, SUBJECT_DEAD, SUBJECT_SOFT_CRIT, SUBJECT_TRANSFORMING, SUBJECT_UNCONSCIOUS } from './constants';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  ProgressBar,
+  Section,
+} from '../../components';
+import {
+  SUBJECT_CONCIOUS,
+  SUBJECT_DEAD,
+  SUBJECT_SOFT_CRIT,
+  SUBJECT_TRANSFORMING,
+  SUBJECT_UNCONSCIOUS,
+} from './constants';
 
 const DnaScannerButtons = (props) => {
   const { data, act } = useBackend();
@@ -33,7 +46,8 @@ const DnaScannerButtons = (props) => {
       {!!isViableSubject && (
         <Button
           disabled={!isScrambleReady || isPulsing}
-          onClick={() => act('scramble_dna')}>
+          onClick={() => act('scramble_dna')}
+        >
           Scramble DNA
           {!isScrambleReady && ` (${scrambleSeconds}s)`}
         </Button>
@@ -131,7 +145,8 @@ const DnaScannerContent = (props) => {
             good: [70, 101],
             average: [30, 70],
             bad: [-Infinity, 30],
-          }}>
+          }}
+        >
           {subjectHealth}%
         </ProgressBar>
       </LabeledList.Item>
@@ -145,7 +160,8 @@ const DnaScannerContent = (props) => {
             average: [30, 71],
             good: [0, 30],
             olive: [-Infinity, 0],
-          }}>
+          }}
+        >
           {subjectDamage}%
         </ProgressBar>
       </LabeledList.Item>

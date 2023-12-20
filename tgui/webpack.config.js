@@ -7,7 +7,6 @@
 const webpack = require('webpack');
 const path = require('path');
 const ExtractCssPlugin = require('mini-css-extract-plugin');
-const { createBabelConfig } = require('./babel.config.js');
 
 const createStats = (verbose) => ({
   assets: verbose,
@@ -32,7 +31,7 @@ module.exports = (env = {}, argv) => {
     context: path.resolve(__dirname),
     target: ['web', 'es5', 'browserslist:ie 11'],
     entry: {
-      'tgui': ['./packages/tgui-polyfill', './packages/tgui'],
+      tgui: ['./packages/tgui-polyfill', './packages/tgui'],
       'tgui-panel': ['./packages/tgui-polyfill', './packages/tgui-panel'],
       'tgui-say': ['./packages/tgui-polyfill', './packages/tgui-say'],
     },
@@ -52,13 +51,10 @@ module.exports = (env = {}, argv) => {
     module: {
       rules: [
         {
-          test: /\.(js(x)?|cjs|ts(x)?)$/,
+          test: /\.([tj]s(x)?|cjs)$/,
           use: [
             {
-              loader: require.resolve('babel-loader'),
-              options: createBabelConfig({
-                removeConsole: !bench,
-              }),
+              loader: require.resolve('swc-loader'),
             },
           ],
         },

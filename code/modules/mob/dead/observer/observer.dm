@@ -429,13 +429,13 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	to_chat(src, span_boldnotice("You can no longer be brought back into your body."))
 	return TRUE
 
-/mob/dead/observer/proc/notify_cloning(message, sound, atom/source, flashwindow = TRUE)
+/mob/dead/observer/proc/send_revival_notification(message, sound, atom/source, flashwindow)
 	if(flashwindow)
 		window_flash(client)
 	if(message)
 		to_chat(src, span_ghostalert("[message]"))
 		if(source)
-			var/atom/movable/screen/alert/A = throw_alert("[REF(source)]_notify_cloning", /atom/movable/screen/alert/notify_cloning)
+			var/atom/movable/screen/alert/A = throw_alert("[REF(source)]_revival", /atom/movable/screen/alert/revival)
 			if(A)
 				var/ui_style = client?.prefs?.read_preference(/datum/preference/choiced/ui_style)
 				if(ui_style)
@@ -711,10 +711,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
-	if(!GLOB.crew_manifest_tgui)
-		GLOB.crew_manifest_tgui = new /datum/crew_manifest(src)
-
-	GLOB.crew_manifest_tgui.ui_interact(src)
+	GLOB.manifest.ui_interact(src)
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)
@@ -970,7 +967,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		if(is_secret_level(mob_eye.z) && !client?.holder)
 			set_sight(null) //we dont want ghosts to see through walls in secret areas
 		RegisterSignal(mob_eye, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_observing_z_changed))
-		if(mob_eye.hud_used)
+		if(mob_eye.hud_used && src != usr) // can't view your own inventory and hud but you're either A: permanently ghosted out. Or B: dead and it barely matters.
 			client.clear_screen()
 			LAZYOR(mob_eye.observers, src)
 			mob_eye.hud_used.show_hud(mob_eye.hud_used.hud_version, src)

@@ -69,8 +69,6 @@
 #define COMSIG_LIVING_ADJUST_OXY_DAMAGE "living_adjust_oxy_damage"
 /// Send when toxloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_TOX_DAMAGE "living_adjust_tox_damage"
-/// Send when cloneloss is modified (type, amount, forced)
-#define COMSIG_LIVING_ADJUST_CLONE_DAMAGE "living_adjust_clone_damage"
 /// Send when staminaloss is modified (type, amount, forced)
 #define COMSIG_LIVING_ADJUST_STAMINA_DAMAGE "living_adjust_stamina_damage"
 
@@ -78,7 +76,6 @@
 #define COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES list(\
 	COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_BURN_DAMAGE,\
-	COMSIG_LIVING_ADJUST_CLONE_DAMAGE,\
 	COMSIG_LIVING_ADJUST_OXY_DAMAGE,\
 	COMSIG_LIVING_ADJUST_TOX_DAMAGE,\
 )
@@ -150,7 +147,12 @@
 #define COMSIG_LIVING_WALL_EXITED "living_wall_exited"
 ///From base of mob/living/ZImpactDamage() (mob/living, levels, turf/t)
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
-	#define NO_Z_IMPACT_DAMAGE (1<<0)
+	/// Just for the signal return, does not run normal living handing of z fall damage for mobs
+	#define ZIMPACT_CANCEL_DAMAGE (1<<0)
+	/// Do not show default z-impact message
+	#define ZIMPACT_NO_MESSAGE (1<<1)
+	/// Do not do the spin animation when landing
+	#define ZIMPACT_NO_SPIN (1<<2)
 
 /// From mob/living/try_speak(): (message, ignore_spam, forced)
 #define COMSIG_LIVING_TRY_SPEECH "living_vocal_speech"
@@ -232,6 +234,9 @@
 #define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
+
+/// Sent from `obj/item/reagent_containers/pill/on_consumption`: (obj/item/reagent_containers/pill/pill, mob/feeder)
+#define COMSIG_LIVING_PILL_CONSUMED "living_pill_consumed"
 
 /// Sent from a mob to their loc when starting to remove cuffs on itself
 #define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"

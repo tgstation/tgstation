@@ -1,9 +1,9 @@
-import { Button, LabeledList, NumberInput, Section } from '../components';
-
 import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
+
 import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
 import { getGasLabel } from '../constants';
+import { Window } from '../layouts';
 
 type Data = {
   filter_types: Filter[];
@@ -34,7 +34,8 @@ export const AtmosFilter = (props) => {
             />
           }
           fill
-          title="Gas Filter">
+          title="Gas Filter"
+        >
           <LabeledList>
             <LabeledList.Item label="Transfer Rate">
               <NumberInput
@@ -72,7 +73,8 @@ export const AtmosFilter = (props) => {
                     act('toggle_filter', {
                       val: gas_id,
                     })
-                  }>
+                  }
+                >
                   {getGasLabel(gas_id)}
                 </Button>
               ))}

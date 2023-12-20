@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
@@ -33,7 +34,8 @@ export const BrigTimer = (props) => {
                 onClick={() => act('flash')}
               />
             </>
-          }>
+          }
+        >
           <Button
             icon="fast-backward"
             onClick={() => act('time', { adjust: -600 })}

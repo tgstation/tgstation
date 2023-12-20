@@ -1,11 +1,25 @@
 import { useBackend } from '../../backend';
-import { Box, Button, Dimmer, Icon, LabeledList, Section, Stack } from '../../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  LabeledList,
+  Section,
+  Stack,
+} from '../../components';
 import { Window } from '../../layouts';
+import {
+  CONSOLE_MODE_ENZYMES,
+  CONSOLE_MODE_FEATURES,
+  CONSOLE_MODE_SEQUENCER,
+  CONSOLE_MODE_STORAGE,
+  STORAGE_MODE_CONSOLE,
+} from './constants';
 import { DnaConsoleEnzymes } from './DnaConsoleEnzymes';
 import { DnaConsoleSequencer } from './DnaConsoleSequencer';
 import { DnaConsoleStorage } from './DnaConsoleStorage';
 import { DnaScanner } from './DnaScanner';
-import { CONSOLE_MODE_ENZYMES, CONSOLE_MODE_FEATURES, CONSOLE_MODE_SEQUENCER, CONSOLE_MODE_STORAGE, STORAGE_MODE_CONSOLE } from './constants';
 
 export const DnaConsole = (props) => {
   const { data } = useBackend();
@@ -68,7 +82,8 @@ const DnaConsoleCommands = (props) => {
             Injector on cooldown ({injectorSeconds}s)
           </Box>
         )
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Mode">
           <Button

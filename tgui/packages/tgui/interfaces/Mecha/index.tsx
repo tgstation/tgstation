@@ -1,11 +1,18 @@
-import { Window } from '../../layouts';
 import { useBackend, useLocalState } from '../../backend';
-import { ByondUi, Stack, Button, Section, ProgressBar, LabeledList } from '../../components';
+import {
+  Button,
+  ByondUi,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../../components';
 import { formatSiUnit } from '../../format';
-import { ModulesPane } from './ModulesPane';
-import { AlertPane } from './AlertPane';
+import { Window } from '../../layouts';
 import { AccessConfig } from '../common/AccessConfig';
+import { AlertPane } from './AlertPane';
 import { MainData } from './data';
+import { ModulesPane } from './ModulesPane';
 
 export const Mecha = (props) => {
   const { data } = useBackend<MainData>();
@@ -46,7 +53,8 @@ export const Content = (props) => {
                   tooltipPosition="left"
                   onClick={() => act('changename')}
                 />
-              }>
+              }
+            >
               <Stack fill vertical>
                 <Stack.Item>
                   <ByondUi
@@ -148,17 +156,18 @@ const PowerBar = (props) => {
           bad: [-Infinity, 0.25],
         }}
         style={{
-          'text-shadow': '1px 1px 0 black',
-        }}>
+          textShadow: '1px 1px 0 black',
+        }}
+      >
         {power_max === null
           ? 'Power cell missing'
           : power_level === 1e31
             ? 'Infinite'
             : `${formatSiUnit(power_level * 1000, 0, 'J')} of ${formatSiUnit(
-              power_max * 1000,
-              0,
-              'J'
-            )}`}
+                power_max * 1000,
+                0,
+                'J',
+              )}`}
       </ProgressBar>
     </LabeledList.Item>
   );
@@ -177,8 +186,9 @@ const IntegrityBar = (props) => {
           bad: [-Infinity, 0.25],
         }}
         style={{
-          'text-shadow': '1px 1px 0 black',
-        }}>
+          textShadow: '1px 1px 0 black',
+        }}
+      >
         {!scanmod_rating ? 'Unknown' : `${integrity} of ${integrity_max}`}
       </ProgressBar>
     </LabeledList.Item>
@@ -261,7 +271,8 @@ const CabinSeal = (props) => {
             />
           </>
         )
-      }>
+      }
+    >
       <Button
         icon={cabin_sealed ? 'mask-ventilator' : 'wind'}
         content={cabin_sealed ? 'Sealed' : 'Exposed'}

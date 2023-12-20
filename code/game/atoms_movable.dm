@@ -318,18 +318,15 @@
 		overlays.Insert(1, emissive_block)
 	return overlays
 
-/atom/movable/proc/onZImpact(turf/impacted_turf, levels, message = TRUE)
+/atom/movable/proc/onZImpact(turf/impacted_turf, levels, impact_flags = NONE)
 	SHOULD_CALL_PARENT(TRUE)
-	if(message)
-		visible_message(span_danger("[src] crashes into [impacted_turf]!"))
-	var/atom/highest = impacted_turf
-	for(var/atom/hurt_atom as anything in impacted_turf.contents)
-		if(!hurt_atom.density)
-			continue
-		if(isobj(hurt_atom) || ismob(hurt_atom))
-			if(hurt_atom.layer > highest.layer)
-				highest = hurt_atom
-	INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
+	if(!(impact_flags & ZIMPACT_NO_MESSAGE))
+		visible_message(
+			span_danger("[src] crashes into [impacted_turf]!"),
+			span_userdanger("You crash into [impacted_turf]!"),
+		)
+	if(!(impact_flags & ZIMPACT_NO_SPIN))
+		INVOKE_ASYNC(src, PROC_REF(SpinAnimation), 5, 2)
 	SEND_SIGNAL(src, COMSIG_ATOM_ON_Z_IMPACT, impacted_turf, levels)
 	return TRUE
 
@@ -1245,7 +1242,7 @@
 /atom/movable/proc/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	set waitfor = FALSE
 	var/hitpush = TRUE
-	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
+	var/impact_signal = SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum)
 	if(impact_signal & COMPONENT_MOVABLE_IMPACT_FLIP_HITPUSH)
 		hitpush = FALSE // hacky, tie this to something else or a proper workaround later
 
@@ -1253,6 +1250,7 @@
 		return // in case a signal interceptor broke or deleted the thing before we could process our hit
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
 		return
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	return hit_atom.hitby(src, throwingdatum=throwingdatum, hitpush=hitpush)
 
 /atom/movable/hitby(atom/movable/hitting_atom, skipcatch, hitpush = TRUE, blocked, datum/thrownthing/throwingdatum)

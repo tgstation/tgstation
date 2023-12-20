@@ -697,7 +697,7 @@
 
 /obj/machinery/transport/tram_controller/hilbert
 	configured_transport_id = HILBERT_LINE_1
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
@@ -848,7 +848,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	var/turf/drop_location = find_obstruction_free_location(1, src)

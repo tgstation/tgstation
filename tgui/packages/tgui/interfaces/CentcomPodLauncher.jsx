@@ -3,9 +3,21 @@ import { classes } from 'common/react';
 import { storage } from 'common/storage';
 import { multiline } from 'common/string';
 import { createUuid } from 'common/uuid';
-import { Component, Fragment } from 'inferno';
+import { Component, Fragment } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, ByondUi, Divider, Input, Knob, LabeledControls, NumberInput, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  ByondUi,
+  Divider,
+  Input,
+  Knob,
+  LabeledControls,
+  NumberInput,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 const pod_grey = {
@@ -24,7 +36,8 @@ export const CentcomPodLauncher = (props) => {
     <Window
       title="Supply Pod Menu (Use against Helen Weinstein)"
       width={compact ? 460 : 730}
-      height={compact ? 360 : 440}>
+      height={compact ? 360 : 440}
+    >
       <CentcomPodLauncherContent />
     </Window>
   );
@@ -481,7 +494,8 @@ const ViewTabHolder = (props) => {
             }}
           />
         </>
-      }>
+      }
+    >
       <Stack fill vertical>
         <Stack.Item>
           <TabPageComponent />
@@ -575,10 +589,10 @@ const PodStatusPage = (props) => {
                           effect.details
                             ? data.effectShrapnel
                               ? effect.title +
-                              '\n' +
-                              data.shrapnelType +
-                              '\nMagnitude:' +
-                              data.shrapnelMagnitude
+                                '\n' +
+                                data.shrapnelType +
+                                '\nMagnitude:' +
+                                data.shrapnelMagnitude
                               : effect.title
                             : effect.title
                         }
@@ -596,11 +610,11 @@ const PodStatusPage = (props) => {
                             : act(effect.act)
                         }
                         style={{
-                          'vertical-align': 'middle',
-                          'margin-left': j !== 0 ? '1px' : '0px',
-                          'margin-right':
+                          verticalAlign: 'middle',
+                          marginLeft: j !== 0 ? '1px' : '0px',
+                          marginRight:
                             j !== list.list.length - 1 ? '1px' : '0px',
-                          'border-radius': '5px',
+                          borderRadius: '5px',
                         }}
                       />
                     )}
@@ -693,7 +707,8 @@ const ReverseMenu = (props) => {
             }
           }}
         />
-      }>
+      }
+    >
       {data.effectReverse === 1 && (
         <Stack fill vertical>
           <Stack.Item maxHeight="20px">
@@ -755,8 +770,8 @@ const ReverseMenu = (props) => {
 };
 
 class PresetsPage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       presets: [],
     };
@@ -862,7 +877,8 @@ class PresetsPage extends Component {
               onClick={() => this.deletePreset(presetIndex)}
             />
           </>
-        }>
+        }
+      >
         {settingName === 1 && (
           <>
             <Button
@@ -913,24 +929,24 @@ class PresetsPage extends Component {
         )}
         {presets
           ? presets.map((preset, i) => (
-            <Button
-              key={i}
-              width="100%"
-              backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
-              onClick={() => setSelectedPreset(preset.id)}
-              onDblClick={() => this.loadDataFromPreset(preset.id)}
-              content={preset.title}
-              style={
-                presetIndex === preset.id
-                  ? {
-                    'border-width': '1px',
-                    'border-style': 'solid',
-                    'border-color': `hsl(${preset.hue}, 80%, 80%)`,
-                  }
-                  : ''
-              }
-            />
-          ))
+              <Button
+                key={i}
+                width="100%"
+                backgroundColor={`hsl(${preset.hue}, 50%, 50%)`}
+                onClick={() => setSelectedPreset(preset.id)}
+                onDoubleClick={() => this.loadDataFromPreset(preset.id)}
+                content={preset.title}
+                style={
+                  presetIndex === preset.id
+                    ? {
+                        borderWidth: '1px',
+                        borderStyle: 'solid',
+                        borderColor: `hsl(${preset.hue}, 80%, 80%)`,
+                      }
+                    : ''
+                }
+              />
+            ))
           : ''}
         <span style={pod_grey}>
           <br />
@@ -983,7 +999,8 @@ const StylePage = (props) => {
           tooltipPosition="bottom-start"
           onClick={() => act('effectName')}
         />
-      }>
+      }
+    >
       {STYLES.map((page, i) => (
         <Button
           key={i}
@@ -1000,17 +1017,18 @@ const StylePage = (props) => {
           }
           tooltip={page.title}
           style={{
-            'vertical-align': 'middle',
-            'margin-right': '5px',
-            'border-radius': '20px',
+            verticalAlign: 'middle',
+            marginRight: '5px',
+            borderRadius: '20px',
           }}
           selected={data.styleChoice - 1 === i}
-          onClick={() => act('setStyle', { style: i })}>
+          onClick={() => act('setStyle', { style: i })}
+        >
           <Box
             className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
-              'transform': 'rotate(45deg) translate(-25%,-10%)',
-              'pointer-events': 'none',
+              transform: 'rotate(45deg) translate(-25%,-10%)',
+              pointerEvents: 'none',
             }}
           />
         </Button>
@@ -1051,7 +1069,8 @@ const Bays = (props) => {
             tooltipPosition="bottom-end"
           />
         </>
-      }>
+      }
+    >
       {BAYS.map((bay, i) => (
         <Button
           key={i}
@@ -1096,7 +1115,8 @@ const Timing = (props) => {
             onClick={() => act('toggleRevDelays')}
           />
         </>
-      }>
+      }
+    >
       <DelayHelper delay_list={DELAYS} />
       {(data.custom_rev_delay && (
         <>
@@ -1117,7 +1137,8 @@ const DelayHelper = (props) => {
       {delay_list.map((delay, i) => (
         <LabeledControls.Item
           key={i}
-          label={data.custom_rev_delay ? '' : delay.title}>
+          label={data.custom_rev_delay ? '' : delay.title}
+        >
           <Knob
             inline
             step={0.02}
@@ -1164,7 +1185,8 @@ const Sounds = (props) => {
           }
           onClick={() => act('soundVolume')}
         />
-      }>
+      }
+    >
       {SOUNDS.map((sound, i) => (
         <Button
           key={i}

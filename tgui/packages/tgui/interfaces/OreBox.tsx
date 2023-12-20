@@ -1,6 +1,7 @@
 import { toTitleCase } from 'common/string';
-import { Box, Button, Section, Table } from '../components';
+
 import { useBackend } from '../backend';
+import { Box, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -25,7 +26,8 @@ export const OreBox = (props) => {
       <Window.Content scrollable>
         <Section
           title="Ores"
-          buttons={<Button content="Empty" onClick={() => act('removeall')} />}>
+          buttons={<Button content="Empty" onClick={() => act('removeall')} />}
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Ore</Table.Cell>

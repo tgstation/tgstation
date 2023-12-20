@@ -1,4 +1,5 @@
 import { multiline } from 'common/string';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, Icon, Section, Stack } from '../components';
@@ -77,8 +78,8 @@ const ApprenticeSelection = (props) => {
               <img
                 src={resolveAsset(assetName)}
                 style={{
-                  'border-style': 'solid',
-                  'border-color': '#7e90a7',
+                  borderStyle: 'solid',
+                  borderColor: '#7e90a7',
                 }}
               />
             </Stack.Item>
@@ -90,7 +91,8 @@ const ApprenticeSelection = (props) => {
                   act('buy', {
                     school: schoolTitle,
                   })
-                }>
+                }
+              >
                 Select
               </Button>
             </Stack.Item>

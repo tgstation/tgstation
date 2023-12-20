@@ -1,10 +1,12 @@
-import { useBackend, useLocalState } from '../backend';
-import { capitalizeAll } from 'common/string';
 import { BooleanLike, classes } from 'common/react';
+import { capitalizeAll } from 'common/string';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { Section, Tabs, Button, Stack, Box, LabeledList } from '../components';
+import { MatterItem, SiloItem } from './RapidConstructionDevice';
 import { ColorItem } from './RapidPipeDispenser';
-import { SiloItem, MatterItem } from './RapidConstructionDevice';
 
 type Data = {
   silo_upgraded: BooleanLike;
@@ -30,13 +32,11 @@ type Recipe = {
 const PlumbingTypeSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
@@ -45,7 +45,8 @@ const PlumbingTypeSection = (props) => {
             fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -54,7 +55,6 @@ const PlumbingTypeSection = (props) => {
         <Button
           key={index}
           fluid
-          ellipsis
           color="transparent"
           selected={recipe.name === selected_recipe}
           onClick={() =>
@@ -62,7 +62,8 @@ const PlumbingTypeSection = (props) => {
               category: shownCategory.cat_name,
               id: index,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"

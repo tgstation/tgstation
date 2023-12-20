@@ -1,11 +1,13 @@
+import { useState } from 'react';
+
 import { resolveAsset } from '../assets';
-import { useBackend, useLocalState } from '../backend';
-import { Button, Flex, NoticeBox, Section, Input } from '../components';
+import { useBackend } from '../backend';
+import { Button, Flex, Input, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const PortraitPicker = (props) => {
   const { act, data } = useBackend();
-  const [listIndex, setListIndex] = useLocalState('listIndex', 0);
+  const [listIndex, setListIndex] = useState(0);
   const { paintings, search_string, search_mode } = data;
   const got_paintings = !!paintings.length;
   const current_portrait_title = got_paintings && paintings[listIndex]['title'];
@@ -13,6 +15,7 @@ export const PortraitPicker = (props) => {
     got_paintings && 'By ' + paintings[listIndex]['creator'];
   const current_portrait_asset_name =
     got_paintings && 'paintings' + '_' + paintings[listIndex]['md5'];
+
   return (
     <Window theme="ntos" title="Portrait Picker" width={400} height={406}>
       <Window.Content>
@@ -47,7 +50,8 @@ export const PortraitPicker = (props) => {
                 height="100%"
                 align="center"
                 justify="center"
-                direction="column">
+                direction="column"
+              >
                 {got_paintings ? (
                   <>
                     <Flex.Item>
@@ -56,8 +60,7 @@ export const PortraitPicker = (props) => {
                         height="128px"
                         width="128px"
                         style={{
-                          'vertical-align': 'middle',
-                          '-ms-interpolation-mode': 'nearest-neighbor',
+                          verticalAlign: 'middle',
                         }}
                       />
                     </Flex.Item>

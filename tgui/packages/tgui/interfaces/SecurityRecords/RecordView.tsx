@@ -1,11 +1,21 @@
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, LabeledList, NoticeBox, RestrictedInput, Section, Stack, Table } from 'tgui/components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  RestrictedInput,
+  Section,
+  Stack,
+  Table,
+} from 'tgui/components';
+
 import { CharacterPreview } from '../common/CharacterPreview';
 import { EditableText } from '../common/EditableText';
-import { CrimeWatcher } from './CrimeWatcher';
-import { RecordPrint } from './RecordPrint';
 import { CRIMESTATUS2COLOR, CRIMESTATUS2DESC } from './constants';
+import { CrimeWatcher } from './CrimeWatcher';
 import { getSecurityRecord } from './helpers';
+import { RecordPrint } from './RecordPrint';
 import { SecurityRecordsData } from './types';
 
 /** Views a selected record. */
@@ -72,7 +82,8 @@ const RecordInfo = (props) => {
                   height="1.7rem"
                   icon="print"
                   onClick={() => setOpen(true)}
-                  tooltip="Print a rapsheet or poster.">
+                  tooltip="Print a rapsheet or poster."
+                >
                   Print
                 </Button>
               </Stack.Item>
@@ -92,7 +103,8 @@ const RecordInfo = (props) => {
               {name}
             </Table.Cell>
           }
-          wrap>
+          wrap
+        >
           <LabeledList>
             <LabeledList.Item
               buttons={available_statuses.map((button, index) => {
@@ -111,12 +123,14 @@ const RecordInfo = (props) => {
                     }
                     pl={!isSelected ? '1.8rem' : 1}
                     tooltip={CRIMESTATUS2DESC[button] || ''}
-                    tooltipPosition="bottom-start">
+                    tooltipPosition="bottom-start"
+                  >
                     {button[0]}
                   </Button>
                 );
               })}
-              label="Status">
+              label="Status"
+            >
               <Box color={CRIMESTATUS2COLOR[wanted_status]}>
                 {wanted_status}
               </Box>

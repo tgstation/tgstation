@@ -1,7 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 type Data = {
   comments: string;
@@ -21,12 +22,11 @@ alert pAI cards of your candidacy.`;
 export const PaiSubmit = (props) => {
   const { data } = useBackend<Data>();
   const { comments, description, name } = data;
-  const [input, setInput] = useLocalState<Data>('input', {
+  const [input, setInput] = useState({
     comments,
     description,
     name,
   });
-  logger.log(input);
 
   return (
     <Window width={400} height={460} title="pAI Candidacy Menu">
@@ -119,14 +119,16 @@ const ButtonsDisplay = (props) => {
         <Stack.Item>
           <Button
             onClick={() => act('save', { comments, description, name })}
-            tooltip="Saves your candidate data locally.">
+            tooltip="Saves your candidate data locally."
+          >
             SAVE
           </Button>
         </Stack.Item>
         <Stack.Item>
           <Button
             onClick={() => act('load')}
-            tooltip="Loads saved candidate data, if any.">
+            tooltip="Loads saved candidate data, if any."
+          >
             LOAD
           </Button>
         </Stack.Item>
@@ -138,7 +140,8 @@ const ButtonsDisplay = (props) => {
                 description,
                 name,
               })
-            }>
+            }
+          >
             SUBMIT
           </Button>
         </Stack.Item>

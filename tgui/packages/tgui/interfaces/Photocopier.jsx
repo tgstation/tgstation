@@ -1,6 +1,15 @@
 import { sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Flex, NumberInput, ProgressBar, Section } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Flex,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const Photocopier = (props) => {
@@ -66,7 +75,8 @@ const Toner = (props) => {
         <Button onClick={() => act('remove_toner')} icon="eject">
           Eject
         </Button>
-      }>
+      }
+    >
       <ProgressBar
         ranges={{
           good: [average_toner, max_toner],
@@ -113,7 +123,8 @@ const Options = (props) => {
             ml={0.2}
             icon="copy"
             textAlign="center"
-            onClick={() => act('make_copy')}>
+            onClick={() => act('make_copy')}
+          >
             Copy
           </Button>
         </Flex.Item>
@@ -129,7 +140,8 @@ const Options = (props) => {
                 act('color_mode', {
                   mode: 'Greyscale',
                 })
-              }>
+              }
+            >
               Greyscale
             </Button>
           </Flex.Item>
@@ -142,7 +154,8 @@ const Options = (props) => {
                 act('color_mode', {
                   mode: 'Color',
                 })
-              }>
+              }
+            >
               Color
             </Button>
           </Flex.Item>
@@ -153,7 +166,8 @@ const Options = (props) => {
         textAlign="center"
         icon="reply"
         fluid
-        onClick={() => act('remove')}>
+        onClick={() => act('remove')}
+      >
         Remove item
       </Button>
     </Section>
@@ -168,7 +182,7 @@ const Blanks = (props) => {
 
   const selectedCategory = category ?? categories[0];
   const visibleBlanks = sortedBlanks.filter(
-    (blank) => blank.category === selectedCategory
+    (blank) => blank.category === selectedCategory,
   );
 
   return (
@@ -192,7 +206,8 @@ const Blanks = (props) => {
               act('print_blank', {
                 code: blank.code,
               })
-            }>
+            }
+          >
             {blank.code}
           </Button>
         ))}
@@ -213,7 +228,8 @@ const AIOptions = (props) => {
           icon="images"
           textAlign="center"
           disabled={!can_AI_print}
-          onClick={() => act('ai_photo')}>
+          onClick={() => act('ai_photo')}
+        >
           Print photo from database
         </Button>
       </Box>

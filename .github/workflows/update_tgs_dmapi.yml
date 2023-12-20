@@ -7,7 +7,7 @@ on:
 
 jobs:
   update-dmapi:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     name: Update the TGS DMAPI
     steps:
     - name: Clone

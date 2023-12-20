@@ -78,7 +78,7 @@
 
 /obj/structure/window/examine(mob/user)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	switch(state)
@@ -190,16 +190,16 @@
 		return
 	return ..()
 
-/obj/structure/window/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/structure/window/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	if(!can_be_reached(user))
-		return TRUE //skip the afterattack
+		return ITEM_INTERACT_SKIP_TO_ATTACK // Guess you get to hit it
 	add_fingerprint(user)
 	return ..()
 
 /obj/structure/window/welder_act(mob/living/user, obj/item/tool)
 	if(atom_integrity >= max_integrity)
 		to_chat(user, span_warning("[src] is already in good condition!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!tool.tool_start_check(user, amount = 0))
 		return FALSE
 	to_chat(user, span_notice("You begin repairing [src]..."))
@@ -207,10 +207,10 @@
 		atom_integrity = max_integrity
 		update_nearby_icons()
 		to_chat(user, span_notice("You repair [src]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/screwdriver_act(mob/living/user, obj/item/tool)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	switch(state)
@@ -235,27 +235,27 @@
 				if(tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 					set_anchored(TRUE)
 					to_chat(user, span_notice("You fasten the frame to the floor."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/wrench_act(mob/living/user, obj/item/tool)
 	if(anchored)
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) || (reinf && state >= RWINDOW_FRAME_BOLTED))
+	if((obj_flags & NO_DECONSTRUCTION) || (reinf && state >= RWINDOW_FRAME_BOLTED))
 		return FALSE
 
 	to_chat(user, span_notice("You begin to disassemble [src]..."))
 	if(!tool.use_tool(src, user, decon_speed, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	var/obj/item/stack/sheet/G = new glass_type(user.loc, glass_amount)
 	if (!QDELETED(G))
 		G.add_fingerprint(user)
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	to_chat(user, span_notice("You successfully disassemble [src]."))
 	qdel(src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/crowbar_act(mob/living/user, obj/item/tool)
-	if(!anchored || (flags_1 & NODECONSTRUCT_1))
+	if(!anchored || (obj_flags & NO_DECONSTRUCTION))
 		return FALSE
 
 	switch(state)
@@ -272,7 +272,7 @@
 		else
 			return FALSE
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/attackby(obj/item/I, mob/living/user, params)
 	if(!can_be_reached(user))
@@ -335,7 +335,7 @@
 		return
 	if(!disassembled)
 		playsound(src, break_sound, 70, TRUE)
-		if(!(flags_1 & NODECONSTRUCT_1))
+		if(!(obj_flags & NO_DECONSTRUCTION))
 			for(var/obj/item/shard/debris in spawn_debris(drop_location()))
 				transfer_fingerprints_to(debris) // transfer fingerprints to shards only
 	qdel(src)
@@ -480,7 +480,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 	return FALSE
 
 /obj/structure/window/reinforced/attackby_secondary(obj/item/tool, mob/user, params)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return ..()
 
 	switch(state)
@@ -546,13 +546,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 /obj/structure/window/reinforced/crowbar_act(mob/living/user, obj/item/tool)
 	if(!anchored)
 		return FALSE
-	if((flags_1 & NODECONSTRUCT_1) || (state != WINDOW_OUT_OF_FRAME))
+	if((obj_flags & NO_DECONSTRUCTION) || (state != WINDOW_OUT_OF_FRAME))
 		return FALSE
 	to_chat(user, span_notice("You begin to lever the window back into the frame..."))
 	if(tool.use_tool(src, user, 10 SECONDS, volume = 75, extra_checks = CALLBACK(src, PROC_REF(check_state_and_anchored), state, anchored)))
 		state = RWINDOW_SECURE
 		to_chat(user, span_notice("You pry the window back into the frame."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/window/proc/cool_bolts()
 	if(state == RWINDOW_BOLTS_HEATED)
@@ -561,7 +561,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/unanchored/spawner, 0)
 
 /obj/structure/window/reinforced/examine(mob/user)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	switch(state)
 		if(RWINDOW_SECURE)
@@ -803,7 +803,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 
 /obj/structure/window/reinforced/shuttle/indestructible
 	name = "hardened shuttle window"
-	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	flags_1 = PREVENT_CLICK_UNDER_1
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/window/reinforced/shuttle/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -867,8 +868,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	bash_sound = 'sound/weapons/slashmiss.ogg'
 	break_sound = 'sound/items/poster_ripped.ogg'
 	hit_sound = 'sound/weapons/slashmiss.ogg'
-	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "torn", layer = ABOVE_OBJ_LAYER - 0.1)
-	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/paperframes.dmi',icon_state = "paper", layer = ABOVE_OBJ_LAYER - 0.1)
+	var/static/mutable_appearance/torn = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-torn", layer = ABOVE_OBJ_LAYER - 0.1)
+	var/static/mutable_appearance/paper = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-whole", layer = ABOVE_OBJ_LAYER - 0.1)
 
 /obj/structure/window/paperframe/Initialize(mapload)
 	. = ..()
@@ -927,14 +928,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 /obj/structure/window/bronze
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
-	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
-	icon_state = "clockwork_window_single"
+	icon = 'icons/obj/smooth_structures/structure_variations.dmi'
+	icon_state = "clockwork_window-single"
 	glass_type = /obj/item/stack/sheet/bronze
 
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE
 
 /obj/structure/window/bronze/fulltile
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window-0"
 	base_icon_state = "clockwork_window"
 	smoothing_flags = SMOOTH_BITMASK

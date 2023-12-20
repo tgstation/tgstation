@@ -1,6 +1,13 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -44,7 +51,8 @@ export const CargoHoldTerminal = (props) => {
                 onClick={() => act(sending ? 'stop' : 'send')}
               />
             </>
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Status" color={pad ? 'good' : 'bad'}>
               {pad ? 'Online' : 'Not Found'}

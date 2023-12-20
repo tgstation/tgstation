@@ -14,6 +14,8 @@
 #define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
 #define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
 #define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
+#define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
+#define NO_DECONSTRUCTION (1<<14) //! Prevent deconstruction of this object.
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 

@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
-import { AnimatedNumber, Box, Button, LabeledList } from '../../components';
+
 import { useBackend } from '../../backend';
+import { AnimatedNumber, Box, Button, LabeledList } from '../../components';
 
 type BeakerReagent = {
   name: string;
@@ -35,7 +36,8 @@ export const BeakerDisplay = (props: BeakerProps) => {
           !!beaker && (
             <Button icon="eject" content="Eject" onClick={() => act('eject')} />
           )
-        }>
+        }
+      >
         {title_label ||
           (!!beaker && (
             <>
