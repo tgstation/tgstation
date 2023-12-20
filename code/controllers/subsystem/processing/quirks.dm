@@ -89,7 +89,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		var/datum/quirk/quirk_type = quirks[quirk_name]
 		if(ispath(quirk_type))
 			if(user.add_quirk(quirk_type, override_client = applied_client))
-				SSblackbox.record_feedback("nested tally", "quirks_taken", 1, list("[quirk_name]"))
+				SSblackbox.record_feedback("tally", "quirks_taken", 1, "[quirk_name]")
 		else
 			stack_trace("Invalid quirk \"[quirk_name]\" in client [applied_client.ckey] preferences")
 			applied_client.prefs.all_quirks -= quirk_name
