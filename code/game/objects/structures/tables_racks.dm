@@ -319,6 +319,10 @@
 	flipped_table.desc = "[desc]<br> It's been flipped on its side!"
 	flipped_table.icon_state = base_icon_state
 	var/new_dir = get_dir(user, flipped_table)
+	if(new_dir == NORTHEAST || new_dir == SOUTHEAST) // Dirs need to be part of the 4 main cardinal directions so proc/CanAllowThrough isn't fucky wucky
+		new_dir = EAST
+	if(new_dir == NORTHWEST || new_dir == SOUTHWEST)
+		new_dir = WEST
 	flipped_table.dir = new_dir
 	if(new_dir == NORTH)
 		flipped_table.layer = BELOW_MOB_LAYER
