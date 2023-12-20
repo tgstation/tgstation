@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - balance: "Disallows siphoning credits outside of station"

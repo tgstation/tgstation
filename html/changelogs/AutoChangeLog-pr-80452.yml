@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Icebox escape pods will now land randomly on the surface, instead of only in certain ruins."
