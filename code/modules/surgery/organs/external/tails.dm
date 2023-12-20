@@ -36,7 +36,7 @@
 
 /obj/item/organ/external/tail/on_bodypart_insert(obj/item/bodypart/bodypart)
 	var/obj/item/organ/external/spines/our_spines = bodypart.owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_SPINES)
-	if(!isnull(our_spines))
+	if(our_spines)
 		try_insert_tail_spines(bodypart)
 	return ..()
 
@@ -47,14 +47,14 @@
 /// If the owner has spines and an appropriate overlay exists, add a tail spines overlay.
 /obj/item/organ/external/tail/proc/try_insert_tail_spines(obj/item/bodypart/bodypart)
 	// Don't insert another overlay if there already is one.
-	if(!isnull(tail_spines_overlay))
+	if(tail_spines_overlay)
 		return
 	// If this tail doesn't have a valid set of tail spines, don't insert them
 	var/datum/sprite_accessory/tails/tail_sprite_datum = bodypart_overlay.sprite_datum
 	if(!istype(tail_sprite_datum))
 		return
-	var/tail_spine_key = tail_sprite_datum?.spine_key
-	if(isnull(tail_spine_key))
+	var/tail_spine_key = tail_sprite_datum.spine_key
+	if(!tail_spine_key)
 		return
 
 	tail_spines_overlay = new
@@ -65,7 +65,7 @@
 
 /// If we have a tail spines overlay, delete it
 /obj/item/organ/external/tail/proc/remove_tail_spines(obj/item/bodypart/bodypart)
-	if(isnull(tail_spines_overlay))
+	if(!tail_spines_overlay)
 		return
 	bodypart.remove_bodypart_overlay(tail_spines_overlay)
 	qdel(tail_spines_overlay)
@@ -102,7 +102,7 @@
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags |= WAG_WAGGING
 	accessory.wagging = TRUE
-	if(!isnull(tail_spines_overlay)) //if there are spines, they should wag with the tail
+	if(tail_spines_overlay) //if there are spines, they should wag with the tail
 		tail_spines_overlay.wagging = TRUE
 	organ_owner.update_body_parts()
 	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(stop_wag))
@@ -115,7 +115,7 @@
 	var/datum/bodypart_overlay/mutant/tail/accessory = bodypart_overlay
 	wag_flags &= ~WAG_WAGGING
 	accessory.wagging = FALSE
-	if(!isnull(tail_spines_overlay)) //if there are spines, they should stop wagging with the tail
+	if(tail_spines_overlay) //if there are spines, they should stop wagging with the tail
 		tail_spines_overlay.wagging = FALSE
 	if(isnull(organ_owner))
 		return

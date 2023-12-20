@@ -53,13 +53,13 @@
 	if(restyle_flags)
 		RegisterSignal(src, COMSIG_ATOM_RESTYLE, PROC_REF(on_attempt_feature_restyle))
 
-/obj/item/organ/external/Insert(mob/living/carbon/receiver, special = FALSE, movement_flags)
+/obj/item/organ/external/Insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	receiver.update_body_parts()
 
-/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special = FALSE, movement_flags)
+/obj/item/organ/external/Remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(special == FALSE)
+	if(!special)
 		organ_owner.update_body_parts()
 
 /obj/item/organ/external/mob_insert(mob/living/carbon/receiver, special, movement_flags)
