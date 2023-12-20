@@ -19,7 +19,7 @@ export const RecordPrint = (props) => {
   const { act } = useBackend<SecurityRecordsData>();
 
   const [open, setOpen] = useLocalState<boolean>('printOpen', true);
-  const [alias, setAlias] = useState<string>(name);
+  const [alias, setAlias] = useState(name);
 
   const [printType, setPrintType] = useState<PRINTOUT>(PRINTOUT.Missing);
   const [header, setHeader] = useState<string>('');
