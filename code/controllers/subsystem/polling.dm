@@ -5,21 +5,14 @@ SUBSYSTEM_DEF(polling)
 	runlevels = RUNLEVEL_GAME
 	/// List of polls currently ongoing, to be checked on next fire()
 	var/list/datum/candidate_poll/currently_polling
-	/// Whether there are active polls or not
-	var/polls_active = FALSE
 	/// Number of polls performed since the start
 	var/total_polls = 0
-	/// The poll that's closest to finishing
-	var/datum/candidate_poll/next_poll_to_finish
 
 /datum/controller/subsystem/polling/fire()
-	if(!polls_active)
-		return
 	if(!currently_polling) // if polls_active is TRUE then this shouldn't happen, but still..
 		currently_polling = list()
 
-	for(var/poll in currently_polling)
-		var/datum/candidate_poll/running_poll = poll
+	for(var/datum/candidate_poll/running_poll as anything in currently_polling)
 		if(running_poll.time_left() <= 0)
 			polling_finished(running_poll)
 
@@ -35,17 +28,12 @@ SUBSYSTEM_DEF(polling)
 	log_game("Polling candidates [role_name_text ? "for [role_name_text]" : "\"[question]\""] for [DisplayTimeText(poll_time)] seconds")
 
 	// Start firing
-	polls_active = TRUE
 	total_polls++
 
 	var/jumpable = isatom(pic_source) ? pic_source : null
 
 	var/datum/candidate_poll/new_poll = new(role_name_text, question, poll_time, ignore_category, jumpable)
 	LAZYADD(currently_polling, new_poll)
-
-	// We're the poll closest to completion
-	if(!next_poll_to_finish || poll_time < next_poll_to_finish.time_left())
-		next_poll_to_finish = new_poll
 
 	var/category = "[new_poll.poll_key]_poll_alert"
 
@@ -199,19 +187,24 @@ SUBSYSTEM_DEF(polling)
 	finishing_poll.alert_button.update_stacks_overlay()
 	currently_polling -= finishing_poll
 
-	// Determine which is the next poll closest the completion or "disable" firing if there's none
-	if(currently_polling.len <= 0)
-		polls_active = FALSE
-		next_poll_to_finish = null
-	else if(finishing_poll == next_poll_to_finish)
-		next_poll_to_finish = null
-		for(var/poll in currently_polling)
-			var/datum/candidate_poll/other_poll = poll
-			if(!next_poll_to_finish || other_poll.time_left() < next_poll_to_finish.time_left())
-				next_poll_to_finish = other_poll
-
 /datum/controller/subsystem/polling/stat_entry(msg)
 	msg += "Active: [length(currently_polling)] | Total: [total_polls]"
-	if(next_poll_to_finish)
-		msg += " | Next: [DisplayTimeText(next_poll_to_finish.time_left())] ([length(next_poll_to_finish.signed_up)] candidates)"
+	var/datum/candidate_poll/soonest_to_complete = get_next_poll_to_finish()
+	if(soonest_to_complete)
+		msg += " | Next: [DisplayTimeText(soonest_to_complete.time_left())] ([length(soonest_to_complete.signed_up)] candidates)"
 	return ..()
+
+/datum/controller/subsystem/polling/proc/get_next_poll_to_finish()
+	var/lowest_time_left = INFINITY
+	var/next_poll_to_finish
+	for(var/datum/candidate_poll/poll as anything in currently_polling)
+		var/time_left = poll.time_left()
+		if(time_left >= lowest_time_left)
+			continue
+		lowest_time_left = time_left
+		next_poll_to_finish = poll
+
+	if(isnull(next_poll_to_finish))
+		return FALSE
+
+	return next_poll_to_finish
