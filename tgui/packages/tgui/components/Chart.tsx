@@ -50,11 +50,13 @@ const normalizeData = (
     max[1] = rangeY[1];
   }
 
-  return map((point: Point) => {
+  const normalized = map((point: Point) => {
     return zipWith((value: number, min: number, max: number, scale: number) => {
       return ((value - min) / (max - min)) * scale;
     })(point, min, max, scale);
   })(data);
+
+  return normalized;
 };
 
 const dataToPolylinePoints = (data) => {

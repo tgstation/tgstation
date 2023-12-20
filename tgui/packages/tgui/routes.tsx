@@ -59,9 +59,11 @@ export const getRoutedComponent = () => {
   if (config?.refreshing) {
     return RefreshingWindow;
   }
-  if (process.env.NODE_ENV !== 'production' && debug?.kitchenSink) {
+  if (process.env.NODE_ENV !== 'production') {
     // Show a kitchen sink
-    return require('./debug').KitchenSink;
+    if (debug?.kitchenSink) {
+      return require('./debug').KitchenSink;
+    }
   }
 
   const name = config?.interface;
