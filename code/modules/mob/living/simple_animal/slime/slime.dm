@@ -133,7 +133,7 @@
 	set_leader(null)
 	clear_friends()
 
-	UnregisterSignal(COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
 
 ///Random slime subtype
