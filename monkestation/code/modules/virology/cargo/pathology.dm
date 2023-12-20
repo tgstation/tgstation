@@ -4,11 +4,11 @@
 	cost = CARGO_CRATE_VALUE * 10
 	access = ACCESS_VIROLOGY
 	contains = list(
-		/obj/item/weapon/virusdish,
-		/obj/item/weapon/virusdish,
-		/obj/item/weapon/virusdish,
-		/obj/item/weapon/virusdish,
-		/obj/item/weapon/virusdish,
+		/obj/item/weapon/virusdish/random,
+		/obj/item/weapon/virusdish/random,
+		/obj/item/weapon/virusdish/random,
+		/obj/item/weapon/virusdish/random,
+		/obj/item/weapon/virusdish/random,
 	)
 	crate_name = "virus samples crates"
 	crate_type = /obj/structure/closet/crate/secure/science
