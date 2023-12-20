@@ -113,6 +113,7 @@
 				/obj/item/clothing/under/suit/white_on_white = 1,
 				/obj/item/clothing/head/tragic = 2,
 				/obj/item/clothing/under/costume/tragic = 2,
+				/obj/item/clothing/under/costume/streetmime = 1,
 				/obj/item/clothing/mask/gas/clown_hat/yellow = 1,
 				/obj/item/clothing/shoes/clown_shoes/yellow = 1,
 				/obj/item/clothing/head/knowingclown = 2,

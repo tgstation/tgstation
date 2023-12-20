@@ -2,7 +2,7 @@
 	name = "Human Transformation"
 	desc = "Turns the target into a human."
 	restricted = 1
-	max_count = 1
+	max_count = 10
 	stage = 1
 	badness = EFFECT_DANGER_HARMFUL
 	max_chance = 10
