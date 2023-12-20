@@ -354,6 +354,13 @@
 	if(radio_freq || !broadcasting || get_dist(src, speaker) > canhear_range)
 		return
 	var/filtered_mods = list()
+
+	var/radio_message = raw_message
+	if(message_mods[WHISPER_MODE])
+		// radios don't pick up whispers very well
+		radio_message = stars(radio_message)
+		spans |= SPAN_ITALICS
+
 	if (message_mods[SAY_MOD_VERB])
 		filtered_mods[SAY_MOD_VERB] = message_mods[SAY_MOD_VERB]
 	if (message_mods[MODE_CUSTOM_SAY_EMOTE])
@@ -368,7 +375,7 @@
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
 
-	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
+	talk_into(speaker, radio_message, , spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
 /obj/item/radio/proc/can_receive(input_frequency, list/levels)
