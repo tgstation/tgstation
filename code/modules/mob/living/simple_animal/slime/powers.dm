@@ -133,25 +133,27 @@
 
 ///The slime will stop feeding
 /mob/living/simple_animal/slime/proc/stop_feeding(silent = FALSE, living=TRUE)
-	if(buckled)
-		if(!living)
-			to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
-			"This subject does not have life energy", "This subject is empty", \
-			"I am not satisified", "I can not feed from this subject", \
-			"I do not feel nourished", "This subject is not food")]!</span>")
+	if(!buckled)
+		return
 
-		var/mob/living/victim = buckled
+	if(!living)
+		to_chat(src, "<span class='warning'>[pick("This subject is incompatible", \
+		"This subject does not have life energy", "This subject is empty", \
+		"I am not satisified", "I can not feed from this subject", \
+		"I do not feel nourished", "This subject is not food")]!</span>")
 
-		if(istype(victim))
-			var/bio_protection = 100 - victim.getarmor(null, BIO)
-			if(prob(bio_protection))
-				victim.apply_status_effect(/datum/status_effect/slimed, slime_type.rgb_code, slime_type.colour == SLIME_TYPE_RAINBOW)
+	var/mob/living/victim = buckled
 
-		if(!silent)
-			visible_message(span_warning("[src] lets go of [buckled]!"), \
-							span_notice("<i>I stopped feeding.</i>"))
-		layer = initial(layer)
-		buckled.unbuckle_mob(src,force=TRUE)
+	if(istype(victim))
+		var/bio_protection = 100 - victim.getarmor(null, BIO)
+		if(prob(bio_protection))
+			victim.apply_status_effect(/datum/status_effect/slimed, slime_type.rgb_code, slime_type.colour == SLIME_TYPE_RAINBOW)
+
+	if(!silent)
+		visible_message(span_warning("[src] lets go of [buckled]!"), \
+						span_notice("<i>I stopped feeding.</i>"))
+	layer = initial(layer)
+	buckled.unbuckle_mob(src,force=TRUE)
 
 /mob/living/simple_animal/slime/verb/Evolve()
 	set category = "Slime"

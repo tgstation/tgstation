@@ -123,6 +123,8 @@
 	ADD_TRAIT(src, TRAIT_CANT_RIDE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
+	RegisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(slime_pre_attack))
+
 /mob/living/simple_animal/slime/Destroy()
 	for (var/A in actions)
 		var/datum/action/AC = A
@@ -130,6 +132,8 @@
 	set_target(null)
 	set_leader(null)
 	clear_friends()
+
+	UnregisterSignal(COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
 
 ///Random slime subtype
@@ -249,16 +253,6 @@
 /mob/living/simple_animal/slime/attack_ui(slot, params)
 	return
 
-/mob/living/simple_animal/slime/proc/apply_water()
-	adjustBruteLoss(rand(15,20))
-	if(client)
-		return
-
-	if(Target) // Like cats
-		set_target(null)
-		++discipline_stacks
-	return
-
 /mob/living/simple_animal/slime/get_mob_buckling_height(mob/seat)
 	if(..())
 		return 3
@@ -293,15 +287,15 @@
 
 	. += "</span>"
 
-/mob/living/simple_animal/slime/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	if(isAI(attack_target))  //The aI is not tasty!
+/mob/living/simple_animal/slime/proc/apply_water()
+	adjustBruteLoss(rand(15,20))
+	if(client)
 		return
 
-	if(buckled == attack_target)
-		stop_feeding()
-		return // can't attack while eating, but we can stop feeding in the meanwhile
-
-	..()
+	if(Target) // Like cats
+		set_target(null)
+		++discipline_stacks
+	return
 
 ///Changes the slime's current life state
 /mob/living/simple_animal/slime/proc/set_life_stage(new_life_stage = SLIME_LIFE_STAGE_BABY)
@@ -391,3 +385,62 @@
 	else
 		visible_message(span_warning("The mutated core shudders, and collapses into a puddle, unable to maintain its form."))
 	qdel(src)
+
+///Handles slime attacking restrictions, and any extra effects that would trigger
+/mob/living/simple_animal/slime/proc/slime_pre_attack(mob/living/simple_animal/slime/our_slime, atom/target, proximity, modifiers)
+	SIGNAL_HANDLER
+	if(isAI(target)) //The aI is not tasty!
+		to_chat(our_slime, "This being is incompatible, and not tasty.")
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(our_slime.buckled == target) //If you try to attack the creature you are latched on, you instead cancel feeding
+		our_slime.stop_feeding()
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(iscyborg(target))
+		var/mob/living/silicon/robot/borg_target = target
+		borg_target.flash_act()
+		do_sparks(5, TRUE, borg_target)
+		var/stunprob = our_slime.powerlevel * 7 + 10
+		if(prob(stunprob) && our_slime.powerlevel >= 8)
+			our_slime.powerlevel -= 3
+			borg_target.adjustBruteLoss(our_slime.powerlevel * rand(6,10))
+			borg_target.visible_message(span_danger("The [our_slime.name] shocks [borg_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+		else
+			borg_target.visible_message(span_danger("The [our_slime.name] fails to hurt [borg_target]!"), span_userdanger("The [our_slime.name] failed to hurt you!"))
+
+		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	if(iscarbon(target) && our_slime.powerlevel > 0)
+		var/mob/living/carbon/carbon_target = target
+		var/stunprob = our_slime.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
+		if(!prob(stunprob))
+			return
+
+		carbon_target.visible_message(span_danger("The [our_slime.name] shocks [carbon_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
+
+		do_sparks(5, TRUE, carbon_target)
+		var/power = our_slime.powerlevel + rand(0,3)
+		carbon_target.Paralyze(power * 2 SECONDS)
+		carbon_target.set_stutter_if_lower(power * 2 SECONDS)
+		if (prob(stunprob) && our_slime.powerlevel >= 8)
+			carbon_target.adjustFireLoss(our_slime.powerlevel * rand(6,10))
+			carbon_target.updatehealth()
+
+	if(isslime(target))
+		if(target == our_slime)
+			return COMPONENT_CANCEL_ATTACK_CHAIN
+		var/mob/living/simple_animal/slime/target_slime = target
+		if(target_slime.buckled)
+			target_slime.stop_feeding(silent = TRUE)
+			visible_message(span_danger("[our_slime] pulls [target_slime] off!"), \
+				span_danger("You pull [target_slime] off!"))
+			return
+		target_slime.attacked_stacks += 5
+		if(target_slime.nutrition >= 100) //steal some nutrition. negval handled in life()
+			var/stolen_nutrition = our_slime.life_stage == SLIME_LIFE_STAGE_ADULT ? 90 : 50
+			target_slime.adjust_nutrition(-stolen_nutrition)
+			our_slime.add_nutrition(stolen_nutrition)
+		if(target_slime.health > 0)
+			our_slime.adjustBruteLoss(our_slime.life_stage == SLIME_LIFE_STAGE_ADULT ? -20 : -10)
+			our_slime.updatehealth()
