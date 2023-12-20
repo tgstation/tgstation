@@ -1,5 +1,0 @@
-author: "OrionTheFox"
-delete-after: True
-changes:
-  - image: "the SpacePol bounty hunters have finally had a new run of Uniforms made, bringing them back to the forefront of enforcement fashion! Wardens will find their Police Jackets/Hats have been updated match SpacePol's new look as well."
-  - bugfix: "fixed the Mafia Warden having a hat that didn't match his jacket, and fixed SpacePol masks not covering the nose"

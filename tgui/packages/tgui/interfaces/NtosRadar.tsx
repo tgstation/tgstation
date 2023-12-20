@@ -1,7 +1,8 @@
 import { BooleanLike, classes } from 'common/react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Image, Button, Icon, NoticeBox, Section, Stack } from '../components';
+import { Button, Icon, Image, NoticeBox, Section, Stack } from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {

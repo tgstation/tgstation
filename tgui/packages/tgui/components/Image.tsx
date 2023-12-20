@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+
 import { BoxProps, computeBoxProps } from './Box';
 import { Tooltip } from './Tooltip';
 
@@ -32,13 +33,14 @@ export const Image = (props: Props) => {
     ...rest
   } = props;
 
-  const computedStyle = {
-    ...computeBoxProps(rest).style,
+  const computedProps = computeBoxProps(rest);
+  computedProps['style'] = {
+    ...computedProps.style,
     '-ms-interpolation-mode': fixBlur ? 'nearest-neighbor' : 'auto',
     objectFit,
   };
 
-  let content = <img className={className} src={src} style={computedStyle} />;
+  let content = <img className={className} src={src} {...computedProps} />;
 
   if (tooltip) {
     content = <Tooltip content={tooltip}>{content}</Tooltip>;

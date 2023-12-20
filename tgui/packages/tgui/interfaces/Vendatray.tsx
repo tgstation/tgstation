@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Image } from '../components';
+import { Box, Button, Image, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Data = {

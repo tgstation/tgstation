@@ -1,6 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - rscadd: "Map Votes are now weighted random."
-  - rscadd: "Custom Votes can now take advantage of Weighted Random winner selection"
-  - rscdel: "Removed Herobrine from the game"
