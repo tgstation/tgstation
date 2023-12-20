@@ -94,6 +94,8 @@ SUBSYSTEM_DEF(sql_logging)
 			else
 				target_name = target.name
 				target_ckey = "Non Client Target"
+		else if(IS_CLIENT_OR_MOCK(target))
+			target_name = target.ckey
 
 	if(source && !isnull(source))
 		if(ismob(source))
@@ -102,8 +104,11 @@ SUBSYSTEM_DEF(sql_logging)
 				source_ckey = mob.client.ckey
 			source_name = mob.real_name
 
+		else if(IS_CLIENT_OR_MOCK(source))
+			source_name = source.ckey
 		else
 			source_name = source.name
+
 		source_x = source.x
 		source_y = source.y
 		source_z = source.z
