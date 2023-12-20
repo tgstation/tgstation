@@ -17,7 +17,7 @@
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
-	attack_vis_effect = ATTACK_EFFECT_BITE // Closer than a scratch to a crustacean pinching effect
+	attack_vis_effect = ATTACK_EFFECT_BITE //  Closer than a scratch to a crustacean pinching effect
 	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(
 		/obj/item/food/meat/crab = 2,
