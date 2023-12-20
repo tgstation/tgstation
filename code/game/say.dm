@@ -176,9 +176,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	if(!input)
 		input = "..."
 
-	var/say_mod = message_mods[MODE_CUSTOM_SAY_EMOTE]
-	if (!say_mod)
-		say_mod = say_mod(input, message_mods)
+	var/say_mod = message_mods[MODE_CUSTOM_SAY_EMOTE] || message_mods[SAY_MOD_VERB] || say_mod(input, message_mods)
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_SAY_QUOTE, args)
 
