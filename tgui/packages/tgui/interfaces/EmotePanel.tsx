@@ -24,23 +24,23 @@ export const EmotePanelContent = (props) => {
   const { act, data } = useBackend<EmotePanelData>();
   const { emotes } = data;
 
-  const [filterVisible, toggleVisualFilter] = useState<boolean>(false);
+  const [filterVisible, toggleVisualFilter] = useState(false);
 
-  const [filterAudible, toggleAudibleFilter] = useState<boolean>(false);
+  const [filterAudible, toggleAudibleFilter] = useState(false);
 
-  const [filterSound, toggleSoundFilter] = useState<boolean>(false);
+  const [filterSound, toggleSoundFilter] = useState(false);
 
-  const [filterHands, toggleHandsFilter] = useState<boolean>(false);
+  const [filterHands, toggleHandsFilter] = useState(false);
 
-  const [filterUseParams, toggleUseParamsFilter] = useState<boolean>(false);
+  const [filterUseParams, toggleUseParamsFilter] = useState(false);
 
-  const [useParams, toggleUseParams] = useState<boolean>(false);
+  const [useParams, toggleUseParams] = useState(false);
 
-  const [searchText, setSearchText] = useState<string>('');
+  const [searchText, setSearchText] = useState('');
 
-  const [showNames, toggleShowNames] = useState<boolean>(true);
+  const [showNames, toggleShowNames] = useState(true);
 
-  const [showIcons, toggleShowIcons] = useState<boolean>(false);
+  const [showIcons, toggleShowIcons] = useState(false);
 
   return (
     <Section>
