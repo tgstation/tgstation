@@ -20,7 +20,7 @@
 					beard_name = "Beard (Very Long)"
 				if(multiplier >= 4)
 					beard_name = "Beard (Dwarf)"
-				if(beard_name != "" && H.facial_hairstyle != beard_name)
+				if(beard_name != "" && victim.facial_hairstyle != beard_name)
 					victim.facial_hairstyle = beard_name
 					to_chat(victim, span_warning("Your chin itches."))
 					victim.update_body_parts()
@@ -230,7 +230,7 @@
 	badness = EFFECT_DANGER_ANNOYING
 
 /datum/symptom/vitreous/activate(mob/living/carbon/human/victim)
-	H.Shake(3, 3, 3 SECONDS)
+	victim.Shake(3, 3, 3 SECONDS)
 	if(ishuman(victim))
 		addtimer(CALLBACK(src, PROC_REF(shatter), victim), 0.5 SECONDS)
 
@@ -288,7 +288,7 @@
 	else	//someone else bumped into us
 		if(ishuman(toucher))
 			target = toucher
-			bodypartTarget = H.get_bodypart(target.get_random_valid_zone())
+			bodypartTarget = target.get_bodypart(target.get_random_valid_zone())
 
 	if(toucher == mob)
 		if(bodypartTarget)
@@ -298,7 +298,7 @@
 			to_chat(mob, span_warning("As you bump into \the [touched], your spines dig into \him!"))
 			var/mob/living/impaled = touched
 			if(istype(impaled) && !istype(impaled, /mob/living/silicon))
-				impaled.apply_damage(multiplier, BRUTE, E)
+				impaled.apply_damage(multiplier, BRUTE, bodypartTarget)
 	else
 		if(bodypartTarget)
 			to_chat(mob, span_warning("As \the [toucher] [touch_type == DISEASE_BUMP ? "bumps into" : "touches"] you, your spines dig into \his [bodypartTarget]!"))
