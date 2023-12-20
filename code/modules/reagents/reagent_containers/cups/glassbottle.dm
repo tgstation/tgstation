@@ -601,9 +601,11 @@
 	if(!do_after(user, 2 SECONDS, src)) //takes longer because you are supposed to take the foil off the bottle first
 		return
 
-	///The bonus to success chance that the user gets for being a command role
-	var/command_bonus = user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND ? 20 : 0
-	///The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
+	//The bonus to success chance that the user gets for being a command role
+	var/obj/item/organ/internal/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	var/command_bonus = (!isnull(liver) && HAS_TRAIT(liver, TRAIT_ROYAL_METABOLISM)) ? 20 : 0
+
+	//The bonus to success chance that the user gets for having a sabrage skillchip installed/otherwise having the trait through other means
 	var/skillchip_bonus = HAS_TRAIT(user, TRAIT_SABRAGE_PRO) ? 35 : 0
 	//calculate success chance. example: captain's sabre - 15 force = 75% chance
 	var/sabrage_chance = (attacking_item.force * sabrage_success_percentile) + command_bonus + skillchip_bonus

@@ -5,6 +5,7 @@
  */
 
 import { clamp01, scale } from 'common/math';
+
 import { pingFail, pingSuccess } from './actions';
 import {
   PING_MAX_FAILS,

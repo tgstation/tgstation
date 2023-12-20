@@ -13,6 +13,7 @@ import {
   Stack,
 } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+
 import { JOB2ICON } from '../common/JobToIcon';
 import { ANTAG2COLOR } from './constants';
 import {

@@ -1,23 +1,24 @@
-import { BooleanLike } from 'common/react';
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { scale, toFixed } from 'common/math';
-import { useBackend } from '../backend';
+import { BooleanLike } from 'common/react';
 import { createSearch } from 'common/string';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  Stack,
   Icon,
   Input,
   LabeledList,
   NoticeBox,
   ProgressBar,
   Section,
+  Stack,
   Tabs,
 } from '../components';
-import { flow } from 'common/fp';
-import { filter, sortBy } from 'common/collections';
 import { NtosWindow } from '../layouts';
-import { useState } from 'react';
 
 type Data = {
   disk_size: number;

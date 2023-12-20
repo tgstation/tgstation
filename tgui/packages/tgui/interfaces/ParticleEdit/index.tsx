@@ -3,20 +3,20 @@ import { useBackend, useLocalState } from '../../backend';
 import { Button, LabeledList, Section } from '../../components';
 import { Window } from '../../layouts';
 import { ParticleUIData } from './data';
-import { ShowDesc } from './Tutorial';
 import {
-  EntryFloat,
   EntryCoord,
+  EntryFloat,
   EntryGradient,
-  EntryTransform,
   EntryIcon,
   EntryIconState,
+  EntryTransform,
 } from './EntriesBasic';
 import {
+  EntryGeneratorNumbersList,
   FloatGenerator,
   FloatGeneratorColor,
-  EntryGeneratorNumbersList,
 } from './EntriesGenerators';
+import { ShowDesc } from './Tutorial';
 
 export const ParticleEdit = (props) => {
   const { act, data } = useBackend<ParticleUIData>();

@@ -68,7 +68,7 @@
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
 	. = ..()
-	if(!isbasicmob(source))
+	if(!isbasicmob(source) || !isliving(target))
 		return
 	var/mob/living/basic/basic_source = source
 	var/mob/living/living_target = target

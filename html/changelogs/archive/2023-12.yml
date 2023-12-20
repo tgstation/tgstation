@@ -598,3 +598,77 @@
   - rscadd: Added 2 pocket quick equip keybinds
   vvvv-vvvv:
   - bugfix: Fix search categories in log viewer
+2023-12-19:
+  Diamond-74:
+  - bugfix: Fixes runtime from augments not unregistering a signal.
+  - bugfix: Observers observing themselves no longer floods admins' logs.
+  Exester509:
+  - bugfix: Made Syndicate Stormtrooper and Nuclear Operative TGC card holograms visible
+      again
+  Fikou:
+  - bugfix: bridge assistant no longer passes some head of staff checks
+  - qol: if you steal a command member's liver, you can now sabre better!
+  - bugfix: qm's intern id is now "quartermaster-in-training"
+  - image: qm's id and hud icons now use the cargo tech icons (but blue) to be consistent
+      with the other heads of staff
+  Ghommie:
+  - rscadd: The Spectre-Meter modular computer app. A little, amatuerishly coded app
+      that, as the name implies, scan an area for spectral presence. It can be found
+      amongst other apps in maintenance computer disks.
+  - rscadd: An easier, lazier version of the Arcade app, also found in maintenance.
+  - rscadd: Black market computer disks, which contains programs not readily available
+      to the average assistant.
+  Mothblocks:
+  - bugfix: Fixed pressing Esc not unbinding keys in preferences.
+  OrionTheFox:
+  - image: the SpacePol bounty hunters have finally had a new run of Uniforms made,
+      bringing them back to the forefront of enforcement fashion! Wardens will find
+      their Police Jackets/Hats have been updated match SpacePol's new look as well.
+  - bugfix: fixed the Mafia Warden having a hat that didn't match his jacket, and
+      fixed SpacePol masks not covering the nose
+  Profakos:
+  - bugfix: The bitrunner domain completion screen alert is once again properly clickable
+  RedBaronFlyer:
+  - rscadd: Added orange hardhats, hazard vests, and pocket protectors to the cargo
+      drobe
+  Seven:
+  - bugfix: Ashwalkers can respawn fellow ashwalkers by bringing them back to their
+      tendril again.
+  - bugfix: Ashwalker tendrils no longer break hooded suits and modsuits.
+  - bugfix: Ashwalkers can sacrifice silicons, it wont give anything though.
+  SyncIt21:
+  - bugfix: crafting now transfers reagents from ingredients to final product making
+      previously inedible foods (toasted seeds, kasei dango & snow cones) edible.
+      Other crafted food products/items now differ in reagents based on the ingredients
+      required.
+  Timberpoes:
+  - admin: Delete painting button is once again visible.
+  Time-Green:
+  - qol: Assistants with <10h of playtime are now "Interns"
+  - bugfix: Monkeys will no longer eat your organs while they're still inside of you
+  ZephyrTFA:
+  - rscadd: Map Votes are now weighted random.
+  - rscadd: Custom Votes can now take advantage of Weighted Random winner selection
+  - rscdel: Removed Herobrine from the game
+  jlsnow301:
+  - bugfix: Emojipedia shouldn't bluescreen anymore.
+  vinylspiders:
+  - bugfix: monkeys will no longer cause other monkeys to get angry at the mobs they
+      just poofed by attacking
+2023-12-20:
+  LT3:
+  - admin: Server wide admin announcements now use an alert box like other announcements
+  Majkl-J:
+  - balance: Disallows siphoning credits outside of station
+  MelokGleb:
+  - image: cyborg tools became animated
+  MrMelbert, Ghommie:
+  - bugfix: Alien nests, and some other stuff, can be physically attacked again.
+  - balance: x-mas trees (the ones with presents), are indestructibles. Truly protected
+      by a yuletide spirit.
+  Rhials:
+  - bugfix: Icebox escape pods will now land randomly on the surface, instead of only
+      in certain ruins.
+  jlsnow301:
+  - bugfix: Fixed a bluescreen while inputting a global variable in the circuit UI.
+  - bugfix: Emojipedia should copy the text on click properly, now

@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -8,10 +9,10 @@ import {
   Dimmer,
   Divider,
   Icon,
+  Image,
   Input,
   NumberInput,
   Section,
-  Image,
   Stack,
   Tabs,
 } from '../components';

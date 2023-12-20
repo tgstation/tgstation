@@ -1,13 +1,14 @@
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../backend';
 import {
-  Icon,
   Box,
   Button,
   Dimmer,
+  Icon,
+  Image,
   Section,
   Stack,
-  Image,
 } from '../components';
 import { Window } from '../layouts';
 
