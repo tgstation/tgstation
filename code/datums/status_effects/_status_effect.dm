@@ -73,7 +73,7 @@
 		var/status_effect_highscore = owner.client.get_award_status(/datum/award/score/status_effects_stacked)
 
 		if(status_effect_highscore < status_effect_count)
-			owner.client.give_award(/datum/award/score/status_effects_stacked, owner, floor(0, status_effect_count - status_effect_highscore))
+			owner.client.give_award(/datum/award/score/status_effects_stacked, owner, max(0, status_effect_count - status_effect_highscore))
 
 	return TRUE
 
