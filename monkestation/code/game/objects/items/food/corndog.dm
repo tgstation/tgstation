@@ -81,7 +81,7 @@
 	food_flags = FOOD_FINGER_FOOD
 	eatverbs = list("bite", "chew", "nibble", "gobble", "chomp")
 	w_class = WEIGHT_CLASS_SMALL
-	burns_on_grill = TRUE
+	burns_in_oven = TRUE
 	venue_value = FOOD_PRICE_NORMAL
 
 /obj/item/food/corndog/rod
