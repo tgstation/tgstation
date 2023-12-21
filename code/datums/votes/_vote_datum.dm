@@ -186,28 +186,12 @@
 		else
 			returned_text += "Simple"
 
-	var/total_votes = 0 // for determining percentage of votes
-	for(var/option in choices)
-		total_votes += choices[option]
-
-	if(total_votes <= 0)
+	if(!get_total_votes())
 		return span_bold("Vote Result: Inconclusive - No Votes!")
 
 	returned_text += "\nResults:"
 	for(var/option in choices)
-		returned_text += "\n"
-		var/votes = choices[option]
-		var/percentage_text = ""
-		if(votes > 0)
-			var/actual_percentage = round((votes / total_votes) * 100, 0.1)
-			var/text = "[actual_percentage]"
-			var/spaces_needed = 5 - length(text)
-			for(var/_ in 1 to spaces_needed)
-				returned_text += " "
-			percentage_text += "[text]%"
-		else
-			percentage_text = "    0%"
-		returned_text += "[percentage_text] | [span_bold(option)]: [choices[option]]"
+		returned_text += "[span_bold(option)]: [choices[option]]"
 
 	if(!real_winner) // vote has no winner or cannot be won, but still had votes
 		return returned_text
@@ -233,8 +217,36 @@
 		for(var/a_winner in all_winners)
 			returned_text += "\n\t[a_winner]"
 
-	returned_text += span_bold("\nVote Result: [real_winner]")
+	switch(winner_method)
+		if(VOTE_WINNER_METHOD_NONE)
+			CRASH("call to get_winner_text when no winner is possible")
+		if(VOTE_WINNER_METHOD_SIMPLE)
+			returned_text += "\n[span_bold("Vote Winner:")] [real_winner]"
+		if(VOTE_WINNER_METHOD_WEIGHTED_RANDOM)
+			var/winner_percentage = get_vote_percentage(real_winner)
+			returned_text += "\n[span_bold("Rolled Winner:")] [real_winner] ([winner_percentage]% of the vote)"
+
 	return returned_text
+
+/**
+ * Returns the total number of votes cast in this vote.
+ */
+/datum/vote/proc/get_total_votes()
+	var/total_votes = 0
+	for(var/option in choices)
+		total_votes += choices[option]
+	return total_votes
+
+/**
+ * Returns the percentage of total votes cast for the given option.
+ */
+/datum/vote/proc/get_vote_percentage(option)
+	if(!(option in choices))
+		CRASH("Invalid option passed to get_vote_percentage(): [option]")
+	var/total_votes = get_total_votes()
+	if(!total_votes) // no votes?
+		return 0
+	return round(choices[option] / total_votes * 100, 0.1) // always round down
 
 /**
  * How this vote handles a tiebreaker between multiple winners.
