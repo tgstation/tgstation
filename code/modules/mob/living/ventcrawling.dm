@@ -73,6 +73,10 @@
 	else
 		var/datum/pipeline/vent_parent = ventcrawl_target.parents[1]
 		if(vent_parent && (vent_parent.members.len || vent_parent.other_atmos_machines))
+			var/datum/gas_mixture/internal_air = vent_parent.air
+			if(internal_air.temperature > get_body_temp_heat_damage_limit() || internal_air.temperature < get_body_temp_cold_damage_limit())
+				if(tgui_alert(src, "The air in this machine is hazardous to your health! (Temperature: [internal_air.temperature]). Are you sure you want to enter?", "This will PROBABLY kill you!", list("Yes", "No")) != "Yes")
+					return
 			ventcrawl_target.flick_overlay_static(image('icons/effects/vent_indicator.dmi', "arrow", ABOVE_MOB_LAYER, dir = get_dir(src.loc, ventcrawl_target.loc)), 2 SECONDS)
 			visible_message(span_notice("[src] begins climbing into the ventilation system...") ,span_notice("You begin climbing into the ventilation system..."))
 			if(!do_after(src, 2.5 SECONDS, target = ventcrawl_target, extra_checks = CALLBACK(src, PROC_REF(can_enter_vent), ventcrawl_target)))
