@@ -672,3 +672,11 @@
   jlsnow301:
   - bugfix: Fixed a bluescreen while inputting a global variable in the circuit UI.
   - bugfix: Emojipedia should copy the text on click properly, now
+2023-12-21:
+  Rhials:
+  - bugfix: Disease Outbreak events will only select players on the station/lavaland
+      as patient zero.
+  ZephyrTFA:
+  - bugfix: Examine text on disconnected players is no longer accidentally subtle
+  vinylspiders:
+  - bugfix: fixes some dropdowns not displaying the right text after selecting something

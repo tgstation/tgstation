@@ -1675,6 +1675,7 @@
 #include "code\datums\quirks\positive_quirks\apathetic.dm"
 #include "code\datums\quirks\positive_quirks\bilingual.dm"
 #include "code\datums\quirks\positive_quirks\clown_enjoyer.dm"
+#include "code\datums\quirks\positive_quirks\cyborg_lover.dm"
 #include "code\datums\quirks\positive_quirks\drunk_healing.dm"
 #include "code\datums\quirks\positive_quirks\empath.dm"
 #include "code\datums\quirks\positive_quirks\freerunning.dm"
