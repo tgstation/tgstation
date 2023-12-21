@@ -583,9 +583,13 @@
 	animate(our_client, pixel_x = 0, pixel_y = 0, time = 0.05 SECONDS)
 	our_client.move_delay = world.time + 0.05 SECONDS
 
-/obj/machinery/atmospherics/AltClick(mob/living/L)
-	if(vent_movement & VENTCRAWL_ALLOWED && istype(L))
-		L.handle_ventcrawl(src)
+/obj/machinery/atmospherics/AltClick(mob/living/living_mob)
+	if(vent_movement & VENTCRAWL_ALLOWED && istype(living_mob))
+		var/datum/gas_mixture/internal_air = return_air()
+		if(internal_air.temperature > living_mob.get_body_temp_heat_damage_limit() || internal_air.temperature < living_mob.get_body_temp_cold_damage_limit())
+			if(!tgui_alert(living_mob, "The air in this machine is [internal_air.temperature]. Are you sure you want to enter?", "This WILL kill you!", list("Yes")) == "Yes")
+				return
+		living_mob.handle_ventcrawl(src)
 		return
 	return ..()
 
