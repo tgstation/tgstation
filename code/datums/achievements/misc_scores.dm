@@ -25,5 +25,5 @@
 /// What is the most status effects have you had stacked at once?
 /datum/award/score/status_effects_stacked
 	name = "Status Effects Stacked"
-	desc = "Do you feel good? Bad? Probably both after all that."
+	desc = "Suffering isn't a contest, but if it was you'd TOTALLY be winning right now."
 	database_id = STATUS_EFFECT_HIGHSCORE
