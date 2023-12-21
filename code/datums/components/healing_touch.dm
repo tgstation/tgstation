@@ -202,7 +202,16 @@
 	)
 	healed += target.adjustOxyLoss(-heal_oxy, updating_health = FALSE, required_biotype = valid_biotypes)
 	healed += target.adjustToxLoss(-heal_tox, updating_health = FALSE, required_biotype = valid_biotypes)
-	//MONKESTATION REMOVAL START - While removing this could cause some issues, keeping it seems to cause more than it would solve. In particular, the above procs are somewhat bugged and don't return the values we expect - meaning this could cause a return even if the target was actually healed. Due to this, and because the UI update is behind this check, I've opted to remove it for now. Maybe later when the above procs are fixed, we can revisit this removal. (As an aside: If we ever undo this removal, we should probably include a balloon alert saying "nothing to heal!")
+	//MONKESTATION REMOVAL START
+	// While removing this could cause some issues, keeping it seems to cause more than it would
+	// solve. In particular, the above procs are somewhat bugged and don't return the values we
+	// expect - meaning this could cause a return even if the target was actually healed.
+	//
+	// Because of this, and because the UI update is behind this check, I've opted to remove it for
+	// now. Maybe later when the above procs are fixed, we can revisit this removal.
+	//
+	// (As an aside: If we ever undo this removal, we should probably include a balloon alert
+	// saying "nothing to heal!")
 	/*
 	if (healed <= 0)
 		return

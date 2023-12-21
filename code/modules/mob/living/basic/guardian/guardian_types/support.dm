@@ -14,8 +14,16 @@
 
 /mob/living/basic/guardian/support/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
-	//MONKESTATION EDIT START - Fixes support guardian not being able to heal. The original `required_modifier` check is bugged due to our codebase having both Combat Mode and Intents. We instead use the `extra_checks` feature here, to check if the user is right-clicking, by checking to see if they're performing a secondary action.
-	// Note: You may notice the original AddComponent macro is entirely commented out, instead of just the relevant part. I tried to only comment out the relevant part, but no matter what I do, it just kept returning errors about the macro syntax. So instead of trying to fix it, I opted for... this.
+	//MONKESTATION EDIT START
+	// Fixes support guardian not being able to heal. The original `required_modifier` check is
+	// bugged due to our codebase having both Combat Mode and Intents. We instead use the
+	// `extra_checks` feature here, to check if the user is right-clicking, by checking to see if
+	// they're performing a secondary action.
+	//
+	// Note: You may notice the original AddComponent macro is entirely commented out, instead of
+	// just the relevant part. I tried to only comment out the relevant part, but no matter what I
+	// do, it just kept returning errors about the macro syntax. So instead of trying to fix it, I
+	// opted for... this.
 	/*
 	AddComponent(\
 		/datum/component/healing_touch,\
