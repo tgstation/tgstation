@@ -346,11 +346,16 @@
 				ROLE_ALIEN,
 				ROLE_BLOB,
 				ROLE_BROTHER,
+				ROLE_BLOODSUCKER,
+				ROLE_BLOODSUCKERBREAKOUT,
 				ROLE_CHANGELING,
+				ROLE_CLOCK_CULTIST,
 				ROLE_CULTIST,
 				ROLE_HERETIC,
 				ROLE_HIVE,
+				ROLE_INFILTRATOR,
 				ROLE_MALF,
+				ROLE_MONSTERHUNTER,
 				ROLE_NINJA,
 				ROLE_OPERATIVE,
 				ROLE_OVERTHROW,
@@ -358,9 +363,11 @@
 				ROLE_REVENANT,
 				ROLE_REV_HEAD,
 				ROLE_SENTIENT_DISEASE,
+				ROLE_SLASHER,
 				ROLE_SPIDER,
 				ROLE_SYNDICATE,
 				ROLE_TRAITOR,
+				ROLE_VAMPIRICACCIDENT,
 				ROLE_WIZARD,
 			),
 		)
@@ -368,7 +375,7 @@
 			output += "<div class='column'><label class='rolegroup long [ckey(department)]'>[tgui_fancy ? "<input type='checkbox' name='[department]' class='hidden' onClick='header_click_all_checkboxes(this)'>" : ""][department]</label><div class='content'>"
 			break_counter = 0
 			for(var/job in long_job_lists[department])
-				if(break_counter > 0 && (break_counter % 10 == 0))
+				if(break_counter > 0 && (break_counter % 8 == 0))
 					output += "<br>"
 				output += {"<label class='inputlabel checkbox'>[job]
 							<input type='checkbox' name='[job]' class='[department]' value='1'>

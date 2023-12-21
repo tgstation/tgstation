@@ -440,7 +440,8 @@
 	With the NTSS Independence at your side, you can face any crisis head-on, knowing that the lives of your crew and survivors are in the hands of a vessel built on the principles of strength, bravery, and American ideals. \
 	Please note, In the face of a catastrophic event, the NTSS Independence shines as a true hero. Engineered to withstand extreme conditions, this shuttle fearlessly crashes into the space station, carving out a beachhead to facilitate the rescue and evacuation of survivors."
 	admin_notes = "This motherfucker is BIG. You might need to force dock it."
-	credit_cost = CARGO_CRATE_VALUE * 125
+	credit_cost = EMAG_LOCKED_SHUTTLE_COST * 3.5
+	emag_only = TRUE
 
 /datum/map_template/shuttle/emergency/monkey
 	suffix = "nature"

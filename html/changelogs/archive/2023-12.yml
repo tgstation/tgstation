@@ -137,3 +137,50 @@
   KoboldCommando:
   - bugfix: removed the ability to break server rules from beepskies, medibots, spray
       tan and hailers
+2023-12-18:
+  MichiRecRoom:
+  - bugfix: Corporate plastic cards, as well as spare ID code cards, are no longer
+      considered paper by computers that take paper (such as PDAs or the identification
+      consoles)
+2023-12-20:
+  MichiRecRoom:
+  - bugfix: You can once again select a Standard Guardian when using a guardian creator
+      item (such as the Holoparasite Injector).
+  - rscadd: All Guardian Creator items now allow you to get a Timestop Guardian, even
+      if you're not a Bloodsucker. Bloodsuckers, however, are still locked to only
+      getting a Timestop Guardian, because haha funny anime reference.
+  - image: The radial icon for the Timestop Guardian was created by `camriod_core`
+      on Discord.
+  - bugfix: The Timestop Guardian's timestop ability will no longer freeze the guardian's
+      summoner.
+  - bugfix: The Power Miner shard no longer has a chance to spawn Support Guardians,
+      as a stopgap due to Support Guardians being unable to heal, severely limiting
+      their usefulness and causing many an ahelp. This change will be reverted once
+      we figure out how to fix Support Guardian's heal.
+  Skelessant:
+  - rscadd: Green jester shoes added
+  - rscadd: Alternate jester outfit added
+  - rscadd: Clown jester shoes squeak and jingle
+  - rscadd: Jester things in autodrobe
+2023-12-21:
+  CannibalHunter:
+  - rscadd: Added new Gnome Outfit to the MonkeCoin shop!
+  KoboldCommando:
+  - bugfix: removed the sec hailer's ability to break server rules, for real this
+      time
+  MonstieHuntie:
+  - rscadd: Nanotrasen chefs have now been authorized to create corndogs after lengthy
+      legal debate in fear of past incidents regarding them.
+  - rscadd: Popsicle sticks can now be found in the form of small packs in the Chef's
+      Dinnerware Vendor.
+  NicoDeLuna:
+  - rscadd: Adds Street Mime Suit
+  Sealed101:
+  - bugfix: fixed third person throw verbs displaying as just an s
+  SeeBeeSee:
+  - balance: forced NTSS Independence to require emagging to purchase
+  - balance: increased the cost to purchase the NTSS Independence
+  Senri:
+  - admin: admin ban panel updates
+  ma44, Dwasint:
+  - rscadd: Ejected bullet casings now bounce around with the power of simulated physics

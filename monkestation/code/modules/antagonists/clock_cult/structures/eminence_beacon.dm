@@ -15,6 +15,7 @@
 	if(vote_active)
 		if(vote_timer)
 			deltimer(vote_timer?.resolve())
+			vote_timer = null
 		vote_active = FALSE
 		send_clock_message(null, "[user] has cancelled the Eminence vote.")
 		return
@@ -26,10 +27,10 @@
 								   If you choose to do so, your old form with be destroyed.", "Who shall control the Eminence?", list("Yourself", "A ghost", "Cancel"))
 	if(option == "Yourself")
 		send_clock_message(null, span_bigbrass("[user] has elected themselves to become the Eminence. Interact with \the [src] to object."))
-		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed), user), 60 SECONDS, TIMER_STOPPABLE))
+		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed), user), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE))
 	else if(option == "A ghost")
 		send_clock_message(null, span_bigbrass("[user] has elected for a ghost to become the Eminence. Interact with \the [src] to object."))
-		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed)), 60 SECONDS, TIMER_STOPPABLE))
+		vote_timer = WEAKREF(addtimer(CALLBACK(src, PROC_REF(vote_succeed)), 60 SECONDS, TIMER_UNIQUE | TIMER_STOPPABLE))
 	else
 		return
 	vote_active = TRUE
@@ -60,4 +61,4 @@
 
 	if(isliving(eminence))
 		var/mob/living/living_eminence = eminence
-		living_eminence.dust()
+		living_eminence.dust(TRUE, TRUE)

@@ -36,6 +36,16 @@
 	if(light_effect.is_open)
 		light_effect.close()
 
+/obj/structure/destructible/clockwork/gear_base/stargazer/wrench_act(mob/living/user, obj/item/tool)
+	. = ..()
+	if(!.)
+		return
+
+	if(anchored && !light_effect)
+		light_effect = new /obj/effect/stargazer_light(get_turf(src))
+	else if(light_effect)
+		QDEL_NULL(light_effect)
+
 /obj/structure/destructible/clockwork/gear_base/stargazer/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.istate)
 		. = ..()
