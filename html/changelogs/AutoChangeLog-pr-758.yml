@@ -1,0 +1,6 @@
+author: "MichiRecRoom"
+delete-after: True
+changes:
+  - bugfix: "Support Guardian's heal works once more!"
+  - bugfix: "Due to how the Support Guardian heal fix was implemented, this also fixes Spider's health display not updating when another spider heals you."
+  - bugfix: "Previously, the Power Miner shard was temporarily blocked from spawning Support Guardians due to its healing being nonfunctional. Since its healing works once more, Power Miner shards can once again spawn Support Guardians."
