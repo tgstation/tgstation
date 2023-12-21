@@ -50,4 +50,4 @@
 /datum/orderable_item/consumables/surplusnecro //monke edit
 	item_path = /obj/structure/closet/crate/necropolis/surplus
 	desc = "A leftover necropolis crate from the Mining RND storage warehouse. Content quality not guranteed, but you dont need a key."
-	cost_per_order = 15000 //your literally buying a necropolis crate, for no key, and no risk of combat or being dumped in a pit
+	cost_per_order = 6750 //your literally buying a necropolis crate, for no key, and no risk of combat or being dumped in a pit
