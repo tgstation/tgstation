@@ -47,6 +47,7 @@ export const Input = (props: Props) => {
     onChange,
     onEnter,
     onEscape,
+    onInput,
     placeholder,
     selfClear,
     value,
