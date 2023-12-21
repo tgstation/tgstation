@@ -343,7 +343,7 @@ export class Dropdown extends Component<Props, State> {
                 overflow: clipSelectedText ? 'hidden' : 'visible',
               }}
             >
-              {this.state.selected || displayText}
+              {displayText || this.state.selected}
             </span>
             {nochevron || (
               <span className="Dropdown__arrow-button">

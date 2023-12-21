@@ -1,6 +1,0 @@
-author: "Seven"
-delete-after: True
-changes:
-  - bugfix: "Ashwalkers can respawn fellow ashwalkers by bringing them back to their tendril again."
-  - bugfix: "Ashwalker tendrils no longer break hooded suits and modsuits."
-  - bugfix: "Ashwalkers can sacrifice silicons, it wont give anything though."

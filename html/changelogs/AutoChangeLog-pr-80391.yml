@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "crafting now transfers reagents from ingredients to final product making previously inedible foods (toasted seeds, kasei dango & snow cones) edible. Other crafted food products/items now differ in reagents based on the ingredients required."

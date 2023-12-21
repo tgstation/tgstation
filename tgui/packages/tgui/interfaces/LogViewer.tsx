@@ -175,7 +175,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
           <Input
             placeholder="Search"
             value={search}
-            onChange={(_, value) => setSearch(value)}
+            onInput={(_, value) => setSearch(value)}
           />
           <Button
             icon="code"

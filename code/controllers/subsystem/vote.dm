@@ -90,6 +90,7 @@ SUBSYSTEM_DEF(vote)
 	var/list/vote_choice_data = list()
 	for(var/choice in current_vote.choices)
 		var/choice_votes = current_vote.choices[choice]
+		total_votes += choice_votes
 		vote_choice_data["[choice]"] = choice_votes
 
 	// stringify the winners to prevent potential unimplemented serialization errors.
