@@ -39,16 +39,15 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/structure/spawner/lavaland = list("Tendril!", "Don't let it take you with it!", "We got a tendril!", "Watch for beasties coming out!"),
 
 	//Mobs: Megafauna
-	/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!", "BLOOD-DRUNK MINER! THAT'S WHAT HAPPENS WHEN YOU DRINK LEAFLOVER'S!!"),
+	/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner = list("BLOOD-DRUNK MINER! WATCH YOURSELVES!!", "THAT MINER WENT BLOOD-DRUNK!!", "WATCH THE BLOOD-DRUNK MINER!!", "BLOOD-DRUNK MINER! THAT'S WHAT HAPPENS WHEN YOU DRINK LEAFLOVERS!!"),
 	/mob/living/simple_animal/hostile/megafauna/colossus = list("COLOSSUS!!", "COLOSSUS SPOTTED!!", "DON'T GET JUDGED BY THE COLOSSUS!!", "COLOSSUS, DODGE THE SHOTS!!", "WE'VE GOT A COLOSSUS, BULLET HELL TIME!!"),
-	/mob/living/simple_animal/hostile/megafauna/clockwork_defender = list("A CLOCKWORK DEFENDER? AT THIS TIME OF YEAR? AT THIS TIME OF DAY? IN THIS PART OF THE GALAXY? LOCALIZED ENTIRELY WITHIN MY VISION?"), //This is an unused mob, write actual ones if we ever actually finish it.
+	/mob/living/simple_animal/hostile/megafauna/clockwork_defender = list("CLOCKWORK DEFENDER!!", "CLOCKWORK! TICK TOCK, HEAVY LIKE AN AFTERSHOCK!!", "RATVARIAN KNIGHT! WATCH IT!!", "DAMN, BRASS BEAST IN SIGHT!!"),
 	/mob/living/simple_animal/hostile/megafauna/bubblegum = list("BUBBLEGUM, WATCH THE BLOOD!!", "KEEP YOUR DISTANCE, BUBBLEGUM IS LETHAL UP CLOSE!!", "BLOODY HELL, BUBBLEGUM SPOTTED!!", "STAY OUT OF THE BLOOD POOLS, BUBBLEGUM!!"),
 	/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner = list("DEMONIC MINER!!", "WATCH YOURSELVES, DEMON MINER SPOTTED!!", "DEMON MINER, DON'T LET IT STEAL YOUR SOUL!!", "FROST-CRAZED MINER, DODGE THE BASTARD!!"),
 	/mob/living/simple_animal/hostile/megafauna/dragon = list("BY THE BEARD, DRAGON!!", "WE'VE GOT A DRAGON ON OUR HANDS!!", "ASH DRAKE, DON'T LET IT BURN YOU!!", "THERE'S AN ASH DRAKE!!", "ASH DRAKE!!"),
 	/mob/living/simple_animal/hostile/megafauna/hierophant = list("HIEROPHANT IN SIGHT!!", "WATCH IT, HIEROPHANT ON RHYTHM!!", "DANCE TO THE HIEROPHANT'S BEAT IF YOU WANNA LIVE!!", "HIEROPHANT!!"),
 	/mob/living/simple_animal/hostile/megafauna/legion = list("LEGION!!", "SOMEONE WOKE THE LEGION!!", "THIS IS IT, LADS! LEGION SPOTTED!!", "A LEGION TO ONE, I LIKE THESE ODDS!!"),
 	/mob/living/simple_animal/hostile/megafauna/wendigo = list("WENDIGO!!", "WE'VE GOT A WENDIGO HERE!!", "KEEP THE WENDIGO AT RANGE, LADS!!", "KEEP MOVING, THIS WENDIGO IS FAST!!"),
-
 
 	//Items: Materials
 	/obj/item/stack/sheet/iron = list("Iron sheets!", "Got some iron!", "Iron, cold iron!", "Master of metals!", "Let all who build beware!"),
@@ -58,42 +57,41 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/item/stack/sheet/mineral/plasma = list("Plasma!", "That's why we're here!", "They call it \'phoron\' in some sectors! Bloody weird!", "Plasma sheets!", "No smoking near the plasma!"),
 	/obj/item/stack/sheet/mineral/gold = list("Gold!", "Gold for the mistress!", "All that is gold does not glitter, but this does!", "Gold bars!", "Precious aurum!", "We're rich!"),
 	/obj/item/stack/sheet/mineral/silver = list("Silver!", "Silver for the maid!", "Beautiful silver!", "Silver bars!", "Pure silver!"),
-	/obj/item/stack/sheet/mineral/bananium = list("Bananium!", "Prayers for the clown!", "Bananium sheets...I probably should give this to a clown!", "Sheets of bananium!"),
-	/obj/item/stack/sheet/mineral/titanium = list("Titanium!"),
+	/obj/item/stack/sheet/mineral/bananium = list("Bananium!", "Prayers for the clown!", "By the beard, Bananium sheets...", "Sheets of bananium!"),
+	/obj/item/stack/sheet/mineral/titanium = list("Titanium!", "Strong as steel, beautiful as silver!", "Titanium sheets right here!"),
 	/obj/item/stack/sheet/mineral/coal = list("Coal!", "Someone got on the naughty list!", "If only it were a diamond!"),
 	/obj/item/stack/sheet = list("Materials!", "Got some materials!", "Some materials here!", "Look, materials!"),
 
-
 	//Items: Raw Ore
-	/obj/item/stack/ore/glass = list("Sand!"),
-	/obj/item/stack/ore/uranium = list("Uranium ore!", "I've got uranium fever!"),
-	/obj/item/stack/ore/iron = list("Iron ore!"),
-	/obj/item/stack/ore/plasma = list("Plasma ore!"),
-	/obj/item/stack/ore/silver = list("Silver ore!"),
+	/obj/item/stack/ore/glass = list("Sand!", "Some sand!", "Wow, sand!", "Rough, coarse, and gets into everything!", "Common sand!"),
+	/obj/item/stack/ore/uranium = list("Uranium ore!", "I've got uranium fever!", "Found uranium!", "It's nuclear, it's wild!"),
+	/obj/item/stack/ore/iron = list("Iron ore!", "Raw iron!", "There is iron here!", "Iron!"),
+	/obj/item/stack/ore/plasma = list("Plasma ore!", "Fuel for the cutters here!", "What we're here for!", "Raw plasma!"),
+	/obj/item/stack/ore/silver = list("Silver ore!", "I'm so glad to announce that I found some silver!", "Silver here!", "Silver!"),
 	/obj/item/stack/ore/gold = list("WE'RE RICH!"), //Yes, yes, you're rich... time to get a move on! I got Management breathing down my neck here!
-	/obj/item/stack/ore/diamond = list("Raw diamond!"),
-	/obj/item/stack/ore/bananium = list("Bananium ore!"),
-	/obj/item/stack/ore/titanium = list("Titanium ore!"),
-	/obj/item/gibtonite = list("Gibtonite!"),
-	/obj/item/stack/ore = list("Ore!"),
+	/obj/item/stack/ore/diamond = list("Raw diamond!", "Uncut diamonds!", "Found some diamonds!", "There's a diamond here!"),
+	/obj/item/stack/ore/bananium = list("Bananium ore!", "Raw and slippery bananium!", "The clown will be pleased!", "Bananium! We know what comes next!"),
+	/obj/item/stack/ore/titanium = list("Titanium ore!", "Raw titanium!", "You ever wonder how we smelt this without magnesium?", "Titanium deposit!"),
+	/obj/item/gibtonite = list("Gibtonite!", "Watch it, gibtonite!", "When this glows, you better go!", "Is it stable?"),
+	/obj/item/stack/ore = list("Ore!", "Some ore!", "Got ore here!"),
 
 	//Items: Mining
 	/obj/item/pickaxe = list("Rock and stone!", "For rock and stone!", "For Karl!", "Rock and stone forever!", "We are unbreakable!", "Rock and roll and stone!", "If you don't rock and stone, you ain't comin' home!", "Rock solid!"),
 	/obj/item/shovel = list("Can you dig it?", "Oh yeah, I dig it.", "Lets dig up some sand!"),
 	/obj/structure/closet = list("Storage here!", "Check inside!", "I bet there's loot in here!"),
-	/obj/structure/ore_box = list("My grandpa told me they used real mules back in the day!", "Drag this behind you!", "Ore box!", "Throw the ores in here, lads!", "Grab an ore crate!", "Minerals in here!"),
+	/obj/structure/ore_box = list("My grandpa told me they used mules back in the day!", "Drag this behind you!", "Ore box!", "Throw the ores in here, lads!", "Grab an ore crate!", "Minerals in here!"),
 	/obj/item/storage/bag/ore/holding = list("Finally, I can hold all of my rocks AND stones!", "Infinite ore storage!", "Why don't we make these for everything?", "Ore bag!", "Mineral bag!"),
 
-	/obj/item/gun/energy/recharge/kinetic_accelerator = list(),
-	/obj/item/borg/upgrade/modkit = list(),
+	/obj/item/gun/energy/recharge/kinetic_accelerator = list("Kinetic accelerator!", "You modern wonder, you!", "Miner's best friend.", "Hit 'em where it hurts!", "No pressure, no problem!", "Infinite ammo, and no bandana needed!"),
+	/obj/item/borg/upgrade/modkit = list("Upgrades!", "Want something done right, you do it yourself!", "I almost feel bad putting this on a weapon...almost!", "Just the mod I needed!", "Mod time is fun time!"),
 
-	/obj/item/kinetic_crusher = list(),
-	/obj/item/crusher_trophy = list(),
+	/obj/item/kinetic_crusher = list("Kinetic crusher!", "Aerodynamic, I like it!", "Keeping this for close encounters!", "Oh, nice shape!", "Time to hunt!", "Bloody deadly weapon!", "I'm back and brutal!"),
+	/obj/item/crusher_trophy = list("Crusher trophy!", "Earned this one!", "Crusher getting stronger every day!", "Slap this on a crusher!", "Going to hunt them all with this!"),
 
 	/mob/living/basic/mining_drone = list("My reliable drone!", "Bosco!", "Bosco, buddy!", "My all-purpose drone!"),
 	/obj/item/slimepotion/slime/sentience/mining = list("Lets upgrade Bosco!", "Time to make Bosco smarter!"),
 
-	/obj/item/skeleton_key = list(),
+	/obj/item/skeleton_key = list("Skeleton key!", "Key! Time to crack a crate!", "Time for some rewards!", "Key here!"),
 	/obj/item/mining_voucher = list(),
 	/obj/item/wormhole_jaunter = list(),
 
