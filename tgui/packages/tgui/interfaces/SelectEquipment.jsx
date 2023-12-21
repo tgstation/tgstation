@@ -7,11 +7,11 @@ import {
   Box,
   Button,
   Icon,
+  Image,
   Input,
   Section,
   Stack,
   Tabs,
-  Image,
 } from '../components';
 import { Window } from '../layouts';
 
