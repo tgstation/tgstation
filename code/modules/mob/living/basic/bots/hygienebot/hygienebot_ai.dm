@@ -1,4 +1,4 @@
-#define BOT_FRUSTRATION_LIMIT 2
+#define BOT_FRUSTRATION_LIMIT 8
 
 /datum/ai_controller/basic_controller/bot/hygienebot
 	blackboard = list(
@@ -26,7 +26,7 @@
 	. = ..()
 	if(. & AI_CONTROLLER_INCOMPATIBLE)
 		return
-	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_WASH_TARGET), PROC_REF(reset_anger))
+	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_WASH_TARGET), PROC_REF(reset_anger))
 
 /datum/ai_controller/basic_controller/bot/hygienebot/proc/reset_anger()
 	SIGNAL_HANDLER
@@ -93,7 +93,7 @@
 /datum/ai_behavior/wash_target
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION | AI_BEHAVIOR_MOVE_AND_PERFORM
 	required_distance = 0
-	action_cooldown = 4 SECONDS
+	action_cooldown = 1 SECONDS
 
 /datum/ai_behavior/wash_target/setup(datum/ai_controller/controller, target_key)
 	. = ..()
