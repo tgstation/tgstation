@@ -6,7 +6,7 @@
 #define COMSIG_BORG_TOUCH_MOB "borg_touch_mob"
 ///called from /obj/item/borg/cyborghug/attack proc 
 #define COMSIG_BORG_HUG_MOB "borg_hug_mob"
-	///returned if this action were handled by signal handler.
+	///returned if this action was handled by signal handler.
 	#define COMSIG_BORG_HUG_HANDLED 1
 ///called from /mob/living/silicon/attack_hand proc
 #define COMSIG_MOB_PAT_BORG "mob_pat_borg"
