@@ -39,9 +39,7 @@
 				// No need to update existing alert
 				return thealert
 			// Reset timeout of existing alert
-			var/timeout = initial(thealert.timeout)
-			if(timeout_override)
-				timeout = timeout_override
+			var/timeout = timeout_override || initial(thealert.timeout)
 			addtimer(CALLBACK(src, PROC_REF(alert_timeout), thealert, category), timeout)
 			thealert.timeout = world.time + timeout - world.tick_lag
 			return thealert
@@ -834,18 +832,18 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	var/role_or_only_question = poll.role || "?"
 	role_overlay = new
 	role_overlay.screen_loc = screen_loc
-	role_overlay.maptext = MAPTEXT("<span style='text-align: right; color: #B3E3FC; -dm-text-outline: 1px black'>[full_capitalize(role_or_only_question)]</span>")
+	role_overlay.maptext = MAPTEXT("<span style='text-align: right; color: #B3E3FC'>[full_capitalize(role_or_only_question)]</span>")
 	role_overlay.maptext_width = 128
 	role_overlay.transform = role_overlay.transform.Translate(-128, 0)
 	add_overlay(role_overlay)
 
 /atom/movable/screen/alert/poll_alert/Destroy()
-	. = ..()
 	QDEL_NULL(role_overlay)
 	QDEL_NULL(time_left_overlay)
 	QDEL_NULL(stacks_overlay)
 	QDEL_NULL(candidates_num_overlay)
 	QDEL_NULL(signed_up_overlay)
+	return ..()
 
 /atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -872,7 +870,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 			return PROCESS_KILL
 		cut_overlay(time_left_overlay)
 		time_left_overlay = new
-		time_left_overlay.maptext = MAPTEXT("<span style='font-weight: bold; color: [(timeleft <= 10 SECONDS) ? "red" : "white"]; -dm-text-outline: 1px black'>[CEILING(timeleft / 10, 1)]</span>")
+		time_left_overlay.maptext = MAPTEXT("<span style='color: [(timeleft <= 10 SECONDS) ? "red" : "white"]'><b>[CEILING(timeleft / (1 SECONDS), 1)]</b></span>")
 		time_left_overlay.transform = time_left_overlay.transform.Translate(4, 19)
 		add_overlay(time_left_overlay)
 	if(isnull(poll))
@@ -884,10 +882,10 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!. || isnull(poll))
 		return
 	var/list/modifiers = params2list(params)
-	if((LAZYACCESS(modifiers, ALT_CLICK)) && poll.ignoring_category)
+	if(LAZYACCESS(modifiers, ALT_CLICK) && poll.ignoring_category)
 		set_never_round()
 		return
-	if((LAZYACCESS(modifiers, CTRL_CLICK)) && poll.jump_to_me)
+	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
 		jump_to_pic_source()
 		return
 	handle_sign_up()
@@ -935,7 +933,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(!length(poll.signed_up))
 		return
 	candidates_num_overlay = new
-	candidates_num_overlay.maptext = MAPTEXT("<span style='text-align: right; color: aqua; -dm-text-outline: 1px black'>[length(poll.signed_up)]</span>")
+	candidates_num_overlay.maptext = MAPTEXT("<span style='text-align: right; color: aqua'>[length(poll.signed_up)]</span>")
 	candidates_num_overlay.transform = candidates_num_overlay.transform.Translate(-4, 2)
 	add_overlay(candidates_num_overlay)
 
@@ -948,7 +946,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(stack_number <= 1)
 		return
 	stacks_overlay = new
-	stacks_overlay.maptext = MAPTEXT("<span style='color: yellow; -dm-text-outline: 1px black'>[stack_number]x</span>")
+	stacks_overlay.maptext = MAPTEXT("<span style='color: yellow'>[stack_number]x</span>")
 	stacks_overlay.transform = stacks_overlay.transform.Translate(3, 2)
 	stacks_overlay.layer = layer
 	add_overlay(stacks_overlay)
