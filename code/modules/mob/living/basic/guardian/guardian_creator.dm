@@ -216,14 +216,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/protector, // Bodyblocks projectiles for you
 		/mob/living/basic/guardian/ranged, // Shoots the bad guys
 		/mob/living/basic/guardian/standard, // Can mine walls
-		//MONKESTATION REMOVAL START
-		/// The Support Power Miner is being made temporarily unavailable to the
-		/// Power Miner shard to limit frustration (and the number of ahelps),
-		/// as Support's heal is currently bugged, severely limiting its
-		/// usefulness. This removal will be undone when we figure out how to
-		/// fix such an issue.
-		// /mob/living/basic/guardian/support, // Heals and teleports you
-		//MONKESTATION REMOVAL END
+		/mob/living/basic/guardian/support, // Heals and teleports you
 		//MONKESTATION EDIT START
 		/mob/living/basic/guardian/standard/timestop,
 		//MONKESTATION EDIT END
