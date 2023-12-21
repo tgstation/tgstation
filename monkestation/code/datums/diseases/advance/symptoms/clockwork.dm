@@ -145,16 +145,16 @@
 	if(replacebody)
 		for(var/obj/item/bodypart/Oldlimb in Host.bodyparts)
 			if(!IS_ORGANIC_LIMB(Oldlimb))
-				if(robustbits && Oldlimb.brute_reduction < 3 || Oldlimb.burn_reduction < 2)
-					Oldlimb.burn_reduction = max(4, Oldlimb.burn_reduction)
-					Oldlimb.brute_reduction = max(5, Oldlimb.brute_reduction)
+				if(robustbits && Oldlimb.brute_modifier < 3 || Oldlimb.burn_modifier < 2)
+					Oldlimb.burn_modifier = max(4, Oldlimb.burn_modifier)
+					Oldlimb.brute_modifier = max(5, Oldlimb.brute_modifier)
 				continue
 			switch(Oldlimb.body_zone)
 				if(BODY_ZONE_HEAD)//i wish i knew how to transfer external organs from old limb to new limb, but i dont.
 					var/obj/item/bodypart/head/robot/clockwork/newlimb = new()
 					if(robustbits)
-						newlimb.brute_reduction = 5
-						newlimb.burn_reduction = 4
+						newlimb.brute_modifier = 5
+						newlimb.burn_modifier = 4
 					newlimb.replace_limb(Host, TRUE)
 					Host.visible_message("<span_class='userdanger'>Your head feels numb, and cold.</span>")
 					qdel(Oldlimb)
@@ -162,8 +162,8 @@
 				if(BODY_ZONE_CHEST)//i wish i knew how to transfer external organs from old limb to new limb, but i dont.
 					var/obj/item/bodypart/chest/robot/clockwork/newlimb = new()
 					if(robustbits)
-						newlimb.brute_reduction = 5
-						newlimb.burn_reduction = 4
+						newlimb.brute_modifier = 5
+						newlimb.burn_modifier = 4
 					newlimb.replace_limb(Host, TRUE)
 					Host.visible_message("<span_class='userdanger'>Your [Oldlimb] feels numb, and cold.</span>")
 					qdel(Oldlimb)
@@ -171,8 +171,8 @@
 				if(BODY_ZONE_L_ARM)
 					var/obj/item/bodypart/arm/left/robot/clockwork/newlimb = new()
 					if(robustbits)
-						newlimb.brute_reduction = 5
-						newlimb.burn_reduction = 4
+						newlimb.brute_modifier = 5
+						newlimb.burn_modifier = 4
 					newlimb.replace_limb(Host, TRUE)
 					Host.visible_message("<span_class='userdanger'>Your [Oldlimb] feels numb, and cold.</span>")
 					qdel(Oldlimb)
@@ -180,8 +180,8 @@
 				if(BODY_ZONE_R_ARM)
 					var/obj/item/bodypart/arm/right/robot/clockwork/newlimb = new()
 					if(robustbits)
-						newlimb.brute_reduction = 5
-						newlimb.burn_reduction = 4
+						newlimb.brute_modifier = 5
+						newlimb.burn_modifier = 4
 					newlimb.replace_limb(Host, TRUE)
 					Host.visible_message("<span_class='userdanger'>Your [Oldlimb] feels numb, and cold.</span>")
 					qdel(Oldlimb)
@@ -189,8 +189,8 @@
 				if(BODY_ZONE_L_LEG)
 					var/obj/item/bodypart/leg/left/robot/clockwork/newlimb = new()
 					if(robustbits)
-						newlimb.brute_reduction = 5
-						newlimb.burn_reduction = 4
+						newlimb.brute_modifier = 5
+						newlimb.burn_modifier = 4
 					newlimb.replace_limb(Host, TRUE)
 					Host.visible_message("<span_class='userdanger'>Your [Oldlimb] feels numb, and cold.</span>")
 					qdel(Oldlimb)
@@ -198,8 +198,8 @@
 				if(BODY_ZONE_R_LEG)
 					var/obj/item/bodypart/leg/right/robot/clockwork/newlimb = new()
 					if(robustbits)
-						newlimb.brute_reduction = 5
-						newlimb.burn_reduction = 4
+						newlimb.brute_modifier = 5
+						newlimb.burn_modifier = 4
 					newlimb.replace_limb(Host, TRUE)
 					Host.visible_message("<span_class='userdanger'>Your [Oldlimb] feels numb, and cold.</span>")
 					qdel(Oldlimb)
@@ -215,8 +215,8 @@
 		Host.dna.species.regenerate_organs(Host, replace_current = TRUE)
 		for(var/obj/item/bodypart/Oldlimb in Host.bodyparts)
 			if(!IS_ORGANIC_LIMB(Oldlimb))
-				Oldlimb.burn_reduction = initial(Oldlimb.burn_reduction)
-				Oldlimb.brute_reduction = initial(Oldlimb.brute_reduction)
+				Oldlimb.burn_modifier = initial(Oldlimb.burn_modifier)
+				Oldlimb.brute_modifier = initial(Oldlimb.brute_modifier)
 
 /datum/symptom/robotic_adaptation/OnRemove(datum/disease/advance/advanced_disease)
 	advanced_disease.infectable_biotypes -= MOB_ROBOTIC

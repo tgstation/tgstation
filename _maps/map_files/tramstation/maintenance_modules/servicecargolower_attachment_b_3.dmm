@@ -5,11 +5,6 @@
 "b" = (
 /turf/closed/wall/rust,
 /area/station/maintenance/starboard/greater)
-"d" = (
-/obj/item/relic,
-/obj/item/stack/ore/glass,
-/turf/open/misc/asteroid/dug,
-/area/station/maintenance/starboard/greater)
 "i" = (
 /obj/modular_map_root/tramstation{
 	key = "servicecargolower_attachment_b";
@@ -106,7 +101,7 @@ W
 i
 t
 n
-d
+Q
 n
 "}
 (7,1,1) = {"

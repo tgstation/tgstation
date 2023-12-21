@@ -485,6 +485,11 @@ em {
   font-size: 90%;
 }
 
+.bolditalic {
+  font-style: italic;
+  font-weight: bold;
+}
+
 .boldnotice {
   color: #6685f5;
   font-weight: bold;
@@ -540,6 +545,10 @@ em {
 }
 
 .blob {
+  color: #ee4000;
+}
+
+.blobannounce {
   color: #556b2f;
   font-weight: bold;
   font-size: 185%;

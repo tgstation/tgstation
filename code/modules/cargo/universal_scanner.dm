@@ -169,6 +169,9 @@
 /obj/item/universal_scanner/proc/export_scan(obj/target, mob/user)
 	// Before you fix it:
 	// yes, checking manifests is a part of intended functionality.
+	if(HAS_TRAIT(target, TRAIT_HIDDEN_EXPORT_VALUE))
+		to_chat(user, span_warning("Scanned [target], export value unknown."))
+		return
 	var/datum/export_report/ex = export_item_and_contents(target, dry_run = TRUE)
 	var/price = 0
 	for(var/x in ex.total_amount)

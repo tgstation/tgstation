@@ -113,7 +113,7 @@
 		to_chat(user, span_userdanger("You are now a member of [src.team]. Get the enemy flag and bring it back to your team's controller!"))
 		ctf_game.add_player(team, user.ckey)
 		var/client/new_team_member = user.client
-		spawn_team_member(new_team_member)	
+		spawn_team_member(new_team_member)
 
 /obj/machinery/ctf/spawner/Topic(href, href_list)
 	if(href_list["join"])
@@ -259,6 +259,15 @@
 	user.set_anchored(TRUE)
 	user.status_flags &= ~CANPUSH
 
+/obj/item/ctf_flag/attackby(obj/item/item, mob/user, params)
+	if(!istype(item, /obj/item/ctf_flag))
+		return ..()
+
+	var/obj/item/ctf_flag/flag = item
+	if(flag.team != team)
+		to_chat(user, span_userdanger("Take \the [initial(flag.name)] to your team's controller!"))
+		user.playsound_local(get_turf(user), 'sound/machines/buzz-sigh.ogg', 100, vary = FALSE, use_reverb = FALSE)
+
 /obj/item/ctf_flag/dropped(mob/user)
 	..()
 	user.anchored = FALSE // Hacky usage that bypasses set_anchored()
@@ -340,7 +349,7 @@
 /obj/machinery/ctf/control_point/process(seconds_per_tick)
 	if(controlling_team)
 		ctf_game.control_point_scoring(controlling_team, point_rate * seconds_per_tick)
-	
+
 	var/scores
 
 	if(ctf_game.ctf_enabled)
@@ -348,10 +357,10 @@
 			var/datum/ctf_team/ctf_team = ctf_game.teams[team]
 			scores += UNLINT("<span style='color: [ctf_team.team_color]'>[ctf_team.team_color] - [ctf_team.points]/[ctf_game.points_to_win]</span>\n")
 		balloon_alert_to_viewers(scores)
-	
+
 /obj/machinery/ctf/control_point/attackby(mob/user, params)
 	capture(user)
-	
+
 /obj/machinery/ctf/control_point/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(.)

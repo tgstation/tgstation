@@ -215,7 +215,7 @@
 
 /turf/closed/mineral/random
 	var/mineralChance = 13
-	var/turf_transforms
+	var/turf_transforms = TRUE
 
 /// Returns a list of the chances for minerals to spawn.
 /// Will only run once, and will then be cached.
@@ -231,6 +231,7 @@
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite = 4,
+		/turf/closed/mineral/artifact = 1,
 	)
 
 /turf/closed/mineral/random/Initialize(mapload)
@@ -315,6 +316,7 @@
 		/obj/item/stack/ore/titanium = 4,
 		/obj/item/stack/ore/uranium = 2,
 		/turf/closed/mineral/gibtonite = 2,
+		/turf/closed/mineral/artifact = 2,
 	)
 
 //extremely low chance of rare ores, meant mostly for populating stations with large amounts of asteroid
@@ -352,6 +354,7 @@
 		/obj/item/stack/ore/titanium = 11,
 		/obj/item/stack/ore/uranium = 5,
 		/turf/closed/mineral/gibtonite/volcanic = 4,
+		/turf/closed/mineral/artifact/volcanic = 1,
 	)
 
 /// A turf that can't we can't build openspace chasms on or spawn ruins in.
@@ -853,5 +856,31 @@
 
 /turf/closed/mineral/strong/ex_act(severity, target)
 	return FALSE
+
+//Artifact spawning rock
+
+/turf/closed/mineral/artifact
+	mineralAmt = 1
+	//icon_state = "rock_Gibtonite_inactive"
+	scan_state = "rock_Artifact"
+
+/turf/closed/mineral/artifact/gets_drilled(mob/user, give_exp = FALSE, triggered_by_explosion = FALSE)
+	if(istype(user))
+		SEND_SIGNAL(user, COMSIG_MOB_MINED, src, give_exp)
+
+	if(!triggered_by_explosion) //if someone maxcaps lavaland and promptly unearths every single artifact thats gonna fuck up and activate some of them which is not good
+		new /obj/effect/artifact_spawner(src)
+
+	var/flags = NONE
+	if(defer_change)
+		flags = CHANGETURF_DEFER_CHANGE
+	var/turf/open/mined = ScrapeAway(null, flags)
+	mined.update_visuals()
+
+/turf/closed/mineral/artifact/volcanic
+	turf_type = /turf/open/misc/asteroid/basalt/lava_land_surface
+	baseturfs = /turf/open/misc/asteroid/basalt/lava_land_surface
+	initial_gas_mix = LAVALAND_DEFAULT_ATMOS
+	defer_change = TRUE
 
 #undef MINING_MESSAGE_COOLDOWN

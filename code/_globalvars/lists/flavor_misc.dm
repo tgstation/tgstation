@@ -50,6 +50,7 @@ GLOBAL_LIST_EMPTY(anime_bottom_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(arachnid_appendages_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(arachnid_chelicerae_list) //Monkestation Addition
 GLOBAL_LIST_EMPTY(goblin_ears_list) //Monkestation Addition
+GLOBAL_LIST_EMPTY(floran_leaves_list) //Monkestation Addition
 
 GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Blue" = "#3399ff",
@@ -58,6 +59,7 @@ GLOBAL_LIST_INIT(color_list_ethereal, list(
 	"Cyan Blue" = "#00ffff",
 	"Dark Blue" = "#6666ff",
 	"Dark Fuschia" = "#cc0066",
+
 	"Dark Green" = "#37835b",
 	"Dark Red" = "#9c3030",
 	"Dull Yellow" = "#fbdf56",
@@ -239,6 +241,8 @@ GLOBAL_LIST_INIT(backpacklist, list(
 
 	//Female Uniforms
 GLOBAL_LIST_EMPTY(female_clothing_icons)
+	//Auto-generated 'fallback' clothing icons
+GLOBAL_LIST_EMPTY(fallback_clothing_icons)
 
 GLOBAL_LIST_INIT(scarySounds, list(
 	'sound/effects/footstep/clownstep1.ogg',

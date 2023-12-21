@@ -40,6 +40,8 @@ DEFINE_BITFIELD(turret_flags, list(
 	armor_type = /datum/armor/machinery_porta_turret
 	base_icon_state = "standard"
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	// Same faction mobs will never be shot at, no matter the other settings
+	faction = list(FACTION_TURRET)
 
 	///if TRUE this will cause the turret to stop working if the stored_gun var is null in process()
 	var/uses_stored = TRUE
@@ -89,8 +91,6 @@ DEFINE_BITFIELD(turret_flags, list(
 	var/on = TRUE
 	/// Determines if our projectiles hit our faction
 	var/ignore_faction = FALSE
-	/// Same faction mobs will never be shot at, no matter the other settings
-	var/list/faction = list(FACTION_TURRET)
 	/// The spark system, used for generating... sparks?
 	var/datum/effect_system/spark_spread/spark_system
 	/// The turret will try to shoot from a turf in that direction when in a wall
@@ -387,7 +387,7 @@ DEFINE_BITFIELD(turret_flags, list(
 
 		addtimer(CALLBACK(src, PROC_REF(toggle_on), TRUE), rand(60,600))
 
-/obj/machinery/porta_turret/take_damage(damage, damage_type = BRUTE, damage_flag = 0, sound_effect = 1)
+/obj/machinery/porta_turret/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armour_penetration = 0)
 	. = ..()
 	if(. && atom_integrity > 0) //damage received
 		if(prob(30))

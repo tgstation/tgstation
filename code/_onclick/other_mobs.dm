@@ -16,7 +16,7 @@
 	Otherwise pretty standard.
 */
 /mob/living/carbon/human/UnarmedAttack(atom/A, proximity_flag)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && stat < SOFT_CRIT)
 		if(src == A)
 			check_self_for_injuries()
 		return
@@ -245,14 +245,14 @@
 	Drones
 */
 
-/mob/living/simple_animal/drone/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
+/mob/living/basic/drone/resolve_unarmed_attack(atom/attack_target, proximity_flag, list/modifiers)
 	attack_target.attack_drone(src, modifiers)
 
-/mob/living/simple_animal/drone/resolve_right_click_attack(atom/target, list/modifiers)
+/mob/living/basic/drone/resolve_right_click_attack(atom/target, list/modifiers)
 	return target.attack_drone_secondary(src, modifiers)
 
 /// Defaults to attack_hand. Override it when you don't want drones to do same stuff as humans.
-/atom/proc/attack_drone(mob/living/simple_animal/drone/user, list/modifiers)
+/atom/proc/attack_drone(mob/living/basic/drone/user, list/modifiers)
 	attack_hand(user, modifiers)
 
 /**
@@ -260,7 +260,7 @@
  * Defaults to attack_hand_secondary.
  * When overriding it, remember that it ought to return a SECONDARY_ATTACK_* value.
  */
-/atom/proc/attack_drone_secondary(mob/living/simple_animal/drone/user, list/modifiers)
+/atom/proc/attack_drone_secondary(mob/living/basic/drone/user, list/modifiers)
 	return attack_hand_secondary(user, modifiers)
 
 /*
@@ -296,14 +296,14 @@
 */
 
 /mob/living/simple_animal/resolve_unarmed_attack(atom/attack_target, list/modifiers)
-	if(dextrous && (isitem(attack_target) || !(istate & ISTATE_HARM)))
+	if((isitem(attack_target) || !(istate & ISTATE_HARM)))
 		attack_target.attack_hand(src, modifiers)
 		update_held_items()
 	else
 		return ..()
 
 /mob/living/simple_animal/resolve_right_click_attack(atom/target, list/modifiers)
-	if(dextrous && (isitem(target) || !(istate & ISTATE_HARM)))
+	if((isitem(target) || !(istate & ISTATE_HARM)))
 		. = target.attack_hand_secondary(src, modifiers)
 		update_held_items()
 	else
@@ -315,10 +315,7 @@
 
 /mob/living/simple_animal/hostile/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	GiveTarget(attack_target)
-	if(dextrous && (isitem(attack_target) || !(istate & ISTATE_HARM)))
-		return ..()
-	else
-		AttackingTarget(attack_target)
+	INVOKE_ASYNC(src, PROC_REF(AttackingTarget), attack_target)
 
 #undef LIVING_UNARMED_ATTACK_BLOCKED
 

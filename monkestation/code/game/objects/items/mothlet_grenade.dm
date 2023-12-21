@@ -26,9 +26,9 @@
 	embedding = list(embed_chance=0, ignore_throwspeed_threshold=TRUE, fall_chance=1)
 
 
-/obj/projectile/bullet/shrapnel/mothlet/on_hit(owner)
+/obj/projectile/bullet/shrapnel/mothlet/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
-	if(iscarbon(owner) && prob(50))
-		var/mob/living/carbon/carbon_owner = owner
+	if(iscarbon(target) && prob(50))
+		var/mob/living/carbon/carbon_owner = target
 		carbon_owner.unequip_everything()
 

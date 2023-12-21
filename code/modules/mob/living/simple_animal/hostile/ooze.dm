@@ -295,7 +295,7 @@
 /mob/living/simple_animal/hostile/ooze/grapes/add_cell_sample()
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GRAPE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
-///Ability that allows the owner to fire healing globules at mobs, targetting specific limbs.
+///Ability that allows the owner to fire healing globules at mobs, targeting specific limbs.
 /datum/action/cooldown/globules
 	name = "Fire Mending globule"
 	desc = "Fires a mending globule at someone, healing a specific limb of theirs."

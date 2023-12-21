@@ -10,6 +10,7 @@
 	supervisors = "the head of personnel"
 	minimal_player_age = 7
 	supervisors = SUPERVISOR_CAPTAIN
+	exp_requirements = 120
 	exp_required_type_department = EXP_TYPE_SUPPLY
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "QUARTERMASTER"

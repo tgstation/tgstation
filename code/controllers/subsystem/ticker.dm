@@ -1,4 +1,5 @@
 #define ROUND_START_MUSIC_LIST "strings/round_start_sounds.txt"
+#define SS_TICKER_TRAIT "SS_Ticker"
 
 SUBSYSTEM_DEF(ticker)
 	name = "Ticker"
@@ -10,8 +11,10 @@ SUBSYSTEM_DEF(ticker)
 
 	/// state of current round (used by process()) Use the defines GAME_STATE_* !
 	var/current_state = GAME_STATE_STARTUP
-	/// Boolean to track if round was ended by admin intervention or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc.
-	var/force_ending = FALSE
+	/// Boolean to track if round should be forcibly ended next ticker tick.
+	/// Set by admin intervention ([ADMIN_FORCE_END_ROUND])
+	/// or a "round-ending" event, like summoning Nar'Sie, a blob victory, the nuke going off, etc. ([FORCE_END_ROUND])
+	var/force_ending = END_ROUND_AS_NORMAL
 	/// If TRUE, there is no lobby phase, the game starts immediately.
 	var/start_immediately = FALSE
 	/// Boolean to track and check if our subsystem setup is done.
@@ -211,7 +214,7 @@ SUBSYSTEM_DEF(ticker)
 			mode.process(wait * 0.1)
 			check_queue()
 
-			if(!roundend_check_paused && mode.check_finished(force_ending) || force_ending)
+			if(!roundend_check_paused && (mode.check_finished() || force_ending))
 				current_state = GAME_STATE_FINISHED
 				toggle_ooc(TRUE) // Turn it on
 				toggle_dooc(TRUE)
@@ -282,7 +285,12 @@ SUBSYSTEM_DEF(ticker)
 	INVOKE_ASYNC(SSdbcore, TYPE_PROC_REF(/datum/controller/subsystem/dbcore,SetRoundStart))
 
 	to_chat(world, span_notice("<B>Welcome to [station_name()], enjoy your stay!</B>"))
-	SEND_SOUND(world, sound(SSstation.announcer.get_rand_welcome_sound()))
+	
+	for(var/mob/M as anything in GLOB.player_list)
+		if(!M.client)
+			SEND_SOUND(M, sound(SSstation.announcer.get_rand_welcome_sound(), volume = 100))
+		else if("[CHANNEL_VOX]" in M.client.prefs.channel_volume)
+			SEND_SOUND(M, sound(SSstation.announcer.get_rand_welcome_sound(), volume = M.client.prefs.channel_volume["[CHANNEL_VOX]"] * (M.client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01)))
 
 	current_state = GAME_STATE_PLAYING
 	Master.SetRunLevel(RUNLEVEL_GAME)
@@ -482,7 +490,7 @@ SUBSYSTEM_DEF(ticker)
 		var/mob/living = player.transfer_character()
 		if(living)
 			qdel(player)
-			living.notransform = TRUE
+			ADD_TRAIT(living, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 			if(living.client)
 				var/atom/movable/screen/splash/S = new(null, living.client, TRUE)
 				S.Fade(TRUE)
@@ -497,12 +505,11 @@ SUBSYSTEM_DEF(ticker)
 				if(living.job == processing_reward_jobs)
 					living.client.reward_this_person += 150
 	if(livings.len)
-		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 30, TIMER_CLIENT_TIME)
+		addtimer(CALLBACK(src, PROC_REF(release_characters), livings), 3 SECONDS, TIMER_CLIENT_TIME)
 
 /datum/controller/subsystem/ticker/proc/release_characters(list/livings)
-	for(var/I in livings)
-		var/mob/living/L = I
-		L.notransform = FALSE
+	for(var/mob/living/living_mob as anything in livings)
+		REMOVE_TRAIT(living_mob, TRAIT_NO_TRANSFORM, SS_TICKER_TRAIT)
 
 /datum/controller/subsystem/ticker/proc/check_queue()
 	if(!queued_players.len)
@@ -766,3 +773,4 @@ SUBSYSTEM_DEF(ticker)
 		return "[global.config.directory]/reboot_themes/[pick(possible_themes)]"
 
 #undef ROUND_START_MUSIC_LIST
+#undef SS_TICKER_TRAIT

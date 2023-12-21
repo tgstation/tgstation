@@ -110,6 +110,7 @@
 		name = pai.name,
 		transmit = pai.can_transmit,
 		receive = pai.can_receive,
+		range = pai.leash.distance,
 	)
 	return data
 

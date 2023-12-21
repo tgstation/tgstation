@@ -67,7 +67,7 @@
 	progression_minimum = 30 MINUTES
 	item = /obj/item/pizzabox/bomb
 	cost = 6
-	surplus = 8
+	surplus = 30 //monkestation edit: from 8 to 30
 
 /datum/uplink_item/explosives/syndicate_minibomb
 	name = "Syndicate Minibomb"

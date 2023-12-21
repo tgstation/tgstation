@@ -10,10 +10,3 @@
 					/obj/item/circuitboard/machine/processor/slime)
 	crate_name = "xenobiology starter crate"
 	crate_type = /obj/structure/closet/crate/secure/science
-
-/datum/supply_pack/science/strange_objects
-	name = "Strange Object Crate"
-	desc = "We aren't quite sure what these are, but you're dumb enough to buy them anyway!"
-	cost = CARGO_CRATE_VALUE * 6
-	contains = list(/obj/item/relic = 5)
-	crate_name = "strange object crate"

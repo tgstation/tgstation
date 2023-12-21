@@ -16,6 +16,8 @@
 	var/hunt_range = 2
 	/// What are the chances we hunt something at any given moment
 	var/hunt_chance = 100
+	///do we finish planning subtree
+	var/finish_planning = TRUE
 
 /datum/ai_planning_subtree/find_and_hunt_target/New()
 	. = ..()
@@ -35,13 +37,15 @@
 	// We're not hunting anything, look around for something
 	if(isnull(hunted))
 		controller.queue_behavior(finding_behavior, target_key, hunt_targets, hunt_range)
+		return
 
 	// We ARE hunting something, execute the hunt.
 	// Note that if our AI controller has multiple hunting subtrees set,
 	// we may accidentally be executing another tree's hunt - not ideal,
 	// try to set a unique target key if you have multiple
-	else
-		controller.queue_behavior(hunting_behavior, target_key, BB_HUNTING_COOLDOWN)
+
+	controller.queue_behavior(hunting_behavior, target_key, BB_HUNTING_COOLDOWN)
+	if(finish_planning)
 		return SUBTREE_RETURN_FINISH_PLANNING //If we're hunting we're too busy for anything else
 
 /// Finds a specific atom type to hunt.
@@ -77,6 +81,7 @@
 	/// Do we reset the target after attacking something, so we can check for status changes.
 	var/always_reset_target = FALSE
 
+
 /datum/ai_behavior/hunt_target/setup(datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
 	. = ..()
 	var/atom/hunt_target = controller.blackboard[hunting_target_key]
@@ -89,7 +94,7 @@
 	var/mob/living/hunter = controller.pawn
 	var/atom/hunted = controller.blackboard[hunting_target_key]
 
-	if(isnull(hunted))
+	if(QDELETED(hunted))
 		//Target is gone for some reason. forget about this task!
 		controller[hunting_target_key] = null
 		finish_action(controller, FALSE, hunting_target_key)
@@ -121,6 +126,37 @@
 		controller.clear_blackboard_key(hunting_target_key)
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target
+	///do we toggle combat mode before interacting with the object?
+	var/switch_combat_mode = FALSE
 
 /datum/ai_behavior/hunt_target/unarmed_attack_target/target_caught(mob/living/hunter, obj/structure/cable/hunted)
 	hunter.UnarmedAttack(hunted, TRUE)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/finish_action(datum/ai_controller/controller, succeeded, hunting_target_key, hunting_cooldown_key)
+	. = ..()
+	if(!switch_combat_mode)
+		return
+	var/mob/living/living_pawn = controller.pawn
+	living_pawn.istate = initial(living_pawn.istate)
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/switch_combat_mode
+	switch_combat_mode = TRUE
+
+/datum/ai_behavior/hunt_target/unarmed_attack_target/reset_target
+	always_reset_target = TRUE
+
+/datum/ai_behavior/hunt_target/use_ability_on_target
+	always_reset_target = TRUE
+	///the ability we will use
+	var/ability_key
+
+/datum/ai_behavior/hunt_target/use_ability_on_target/perform(seconds_per_tick, datum/ai_controller/controller, hunting_target_key, hunting_cooldown_key)
+	var/datum/action/cooldown/ability = controller.blackboard[ability_key]
+	if(!ability?.IsAvailable())
+		finish_action(controller, FALSE, hunting_target_key)
+	return ..()
+
+/datum/ai_behavior/hunt_target/use_ability_on_target/target_caught(mob/living/hunter, atom/hunted)
+	var/datum/action/cooldown/ability = hunter.ai_controller.blackboard[ability_key]
+	ability.InterceptClickOn(hunter, null, hunted)
+

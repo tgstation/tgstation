@@ -96,6 +96,14 @@
 								'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci1.ogg',
 								'monkestation/sound/voice/screams/misc/HL1 Scientist/scream_sci2.ogg')
 
+/obj/item/clothing/suit/armor/guardmanvest
+	name = "guardman's vest"
+	desc = "It keeps your guts intact, thats really all that matters"
+	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon_state = "guardman_vest"
+
+
 //Only basic and scientist labcoats get to STAPH
 
 /obj/item/clothing/suit/toggle/labcoat/cmo

@@ -11,8 +11,6 @@
 	var/mob_name
 	///the type of the mob, you best inherit this
 	var/mob_type = /mob/living/basic/cockroach
-	///Lazy string list of factions that the spawned mob will be in upon spawn
-	var/list/faction
 
 	////Human specific stuff. Don't set these if you aren't using a human, the unit tests will put a stop to your sinful hand.
 

@@ -193,7 +193,7 @@
 		qdel(src)
 
 /// Signal proc for [COMSIG_MOB_APPLY_DAMAGE], being damaged past a threshold will roll a chance to stop the effect
-/datum/status_effect/shadow_cloak/proc/on_damaged(datum/source, damage, damagetype)
+/datum/status_effect/shadow_cloak/proc/on_damaged(datum/source, damage, damagetype, ...)
 	SIGNAL_HANDLER
 
 	// Stam damage is generally bursty, so we'll half it

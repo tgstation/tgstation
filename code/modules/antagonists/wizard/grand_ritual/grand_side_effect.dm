@@ -352,12 +352,12 @@
 	abstract = FALSE
 	/// Typepaths of mobs to create
 	var/static/list/permitted_mobs = list(
-		/mob/living/basic/wumborian_fugu,
-		/mob/living/simple_animal/hostile/skeleton,
-		/mob/living/basic/killer_tomato,
-		/mob/living/simple_animal/hostile/ooze,
-		/mob/living/simple_animal/hostile/illusion,
 		/mob/living/basic/carp,
+		/mob/living/basic/killer_tomato,
+		/mob/living/basic/skeleton,
+		/mob/living/basic/wumborian_fugu,
+		/mob/living/simple_animal/hostile/illusion,
+		/mob/living/simple_animal/hostile/ooze,
 	)
 
 /datum/grand_side_effect/spawn_delayed_mobs/trigger(potency, turf/ritual_location, mob/invoker)

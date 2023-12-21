@@ -1,4 +1,5 @@
 #define GET_AI_BEHAVIOR(behavior_type) SSai_behaviors.ai_behaviors[behavior_type]
+#define GET_TARGETING_STRATEGY(targeting_type) SSai_behaviors.targeting_strategies[targeting_type]
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 #define AI_STATUS_ON 1
@@ -29,7 +30,11 @@
 /// Don't move if being pulled
 #define STOP_MOVING_WHEN_PULLED (1<<0)
 /// Continue processing even if dead
-#define CAN_ACT_WHILE_DEAD	(1<<1)
+#define CAN_ACT_WHILE_DEAD (1<<1)
+/// Stop processing while in a progress bar
+#define PAUSE_DURING_DO_AFTER (1<<2)
+/// Continue processing while in stasis
+#define CAN_ACT_IN_STASIS (1<<3)
 
 //Base Subtree defines
 

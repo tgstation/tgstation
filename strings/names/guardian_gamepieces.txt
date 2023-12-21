@@ -1,0 +1,13 @@
+Ace
+Bishop
+Club
+Diamond
+Heart
+Jack
+Joker
+King
+Knight
+Pawn
+Queen
+Rook
+Spade

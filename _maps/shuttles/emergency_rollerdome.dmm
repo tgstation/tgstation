@@ -238,6 +238,10 @@
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/plating/airless,
 /area/shuttle/escape)
+"KO" = (
+/mob/living/basic/drone/snowflake/bardrone,
+/turf/open/floor/wood,
+/area/shuttle/escape)
 "Ow" = (
 /obj/structure/table,
 /obj/item/storage/box/drinkingglasses,
@@ -268,10 +272,6 @@
 /obj/machinery/computer/crew{
 	dir = 4
 	},
-/turf/open/floor/wood,
-/area/shuttle/escape)
-"Qv" = (
-/mob/living/simple_animal/drone/snowflake/bardrone,
 /turf/open/floor/wood,
 /area/shuttle/escape)
 "QO" = (
@@ -469,7 +469,7 @@ Cg
 Cg
 ce
 ns
-Qv
+KO
 JR
 KJ
 od
@@ -517,7 +517,7 @@ Cg
 Cg
 ce
 uN
-Ky
+KO
 Ow
 KJ
 od

@@ -8,7 +8,6 @@
 	foodtypes = MEAT | SUGAR
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_TINY
-	var/faction
 	var/spawned_mob = /mob/living/carbon/human/species/monkey
 
 /obj/item/food/monkeycube/proc/Expand()
@@ -62,7 +61,7 @@
 		/datum/reagent/medicine/strange_reagent = 5,
 	)
 	tastes = list("the jungle" = 1, "bananas" = 1, "jimmies" = 1)
-	spawned_mob = /mob/living/simple_animal/hostile/gorilla
+	spawned_mob = /mob/living/basic/gorilla
 
 /obj/item/food/monkeycube/chicken
 	name = "chicken cube"

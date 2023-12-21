@@ -74,7 +74,8 @@
 					heal_amt = 3
 				if(WOUND_SEVERITY_CRITICAL)
 					heal_amt = 6
-			if(wound.wound_type == WOUND_BURN)
+			var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[wound.type]
+			if (pregen_data.wounding_types_valid(list(WOUND_BURN)))
 				carbie.adjustFireLoss(-heal_amt)
 			else
 				carbie.adjustBruteLoss(-heal_amt)

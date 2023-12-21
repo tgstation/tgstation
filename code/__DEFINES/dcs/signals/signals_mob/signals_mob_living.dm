@@ -40,11 +40,49 @@
 #define COMSIG_LIVING_TRY_SYRINGE "living_try_syringe"
 ///From living/Life(). (deltatime, times_fired)
 #define COMSIG_LIVING_LIFE "living_life"
+	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
+	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
 ///From living/set_resting(): (new_resting, silent, instant)
 #define COMSIG_LIVING_RESTING "living_resting"
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
+
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_PRE_BANING "obj_pre_baning"
+	#define COMPONENT_CANCEL_BANING (1<<0)
+
+///from base of element/bane/activate(): (item/weapon, mob/user)
+#define COMSIG_OBJECT_ON_BANING "obj_on_baning"
+
+// adjust_x_loss messages sent from /mob/living/proc/adjust[x]Loss
+/// Returned from all the following messages if you actually aren't going to apply any change
+#define COMPONENT_IGNORE_CHANGE (1<<0)
+// Each of these messages sends the damagetype even though it is inferred by the signal so you can pass all of them to the same proc if required
+/// Send when bruteloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_BRUTE_DAMAGE "living_adjust_brute_damage"
+/// Send when fireloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_BURN_DAMAGE "living_adjust_burn_damage"
+/// Send when oxyloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_OXY_DAMAGE "living_adjust_oxy_damage"
+/// Send when toxloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_TOX_DAMAGE "living_adjust_tox_damage"
+/// Send when cloneloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_CLONE_DAMAGE "living_adjust_clone_damage"
+/// Send when staminaloss is modified (type, amount, forced)
+#define COMSIG_LIVING_ADJUST_STAMINA_DAMAGE "living_adjust_stamina_damage"
+
+/// List of signals sent when you receive any damage except stamina
+#define COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES list(\
+	COMSIG_LIVING_ADJUST_BRUTE_DAMAGE,\
+	COMSIG_LIVING_ADJUST_BURN_DAMAGE,\
+	COMSIG_LIVING_ADJUST_CLONE_DAMAGE,\
+	COMSIG_LIVING_ADJUST_OXY_DAMAGE,\
+	COMSIG_LIVING_ADJUST_TOX_DAMAGE,\
+)
+/// List of signals sent when you receive any kind of damage at all
+#define COMSIG_LIVING_ADJUST_ALL_DAMAGE_TYPES (COMSIG_LIVING_ADJUST_STANDARD_DAMAGE_TYPES + COMSIG_LIVING_ADJUST_STAMINA_DAMAGE)
+
 
 /// from base of mob/living/updatehealth()
 #define COMSIG_LIVING_HEALTH_UPDATE "living_health_update"
@@ -97,6 +135,10 @@
 #define COMSIG_LIVING_UNARMED_ATTACK "living_unarmed_attack"
 ///From base of mob/living/MobBump() (mob/living)
 #define COMSIG_LIVING_MOB_BUMP "living_mob_bump"
+///From base of mob/living/Bump() (turf/closed)
+#define COMSIG_LIVING_WALL_BUMP "living_wall_bump"
+///From base of turf/closed/Exited() (turf/closed)
+#define COMSIG_LIVING_WALL_EXITED "living_wall_exited"
 ///From base of mob/living/ZImpactDamage() (mob/living, levels, turf/t)
 #define COMSIG_LIVING_Z_IMPACT "living_z_impact"
 	#define NO_Z_IMPACT_DAMAGE (1<<0)
@@ -168,3 +210,10 @@
 
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
+
+/// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
+#define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
+/// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
+#define COMSIG_MOB_LOST_CHAIN_TAIL "living_detached_chain_tail"
+/// Sent from a 'contract chain' button on a mob chain
+#define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"

@@ -4,6 +4,12 @@
 /obj/item/storage/box/syndie_kit/imp_hard_spear/PopulateContents()
 	new /obj/item/implanter/hard_spear(src)
 
+/obj/item/storage/box/syndie_kit/imp_hard_spear/max
+	name = "commanding hardlight spear implant box"
+
+/obj/item/storage/box/syndie_kit/imp_hard_spear/max/PopulateContents()
+	new /obj/item/implanter/hard_spear/max(src)
+
 
 
 /obj/item/storage/box/syndimaid

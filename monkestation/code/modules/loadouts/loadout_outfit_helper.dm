@@ -38,6 +38,7 @@
 
 	var/list/loadout_datums = loadout_list_to_datums(preference_source?.loadout_list)
 
+
 	if(override_preference == LOADOUT_OVERRIDE_CASE && !visuals_only)
 		var/obj/item/storage/briefcase/empty/briefcase = new(loc)
 
@@ -48,6 +49,15 @@
 				continue
 
 			new item.item_path(briefcase)
+		var/list/numbers = list()
+		for(var/num as anything in preference_source?.special_loadout_list["unusual"])
+			if(num in numbers)
+				continue
+			numbers += text2num(num)
+			var/list/data = preference_source?.extra_stat_inventory["unusual"][num]
+			var/item_path = text2path(data["unusual_type"])
+			var/obj/item/new_item = new item_path(briefcase)
+			new_item.AddComponent(/datum/component/unusual_handler, data)
 
 		briefcase.name = "[preference_source.read_preference(/datum/preference/name/real_name)]'s travel suitcase"
 		equipOutfit(equipped_outfit, visuals_only)
@@ -66,6 +76,16 @@
 
 
 		equipOutfit(equipped_outfit, visuals_only)
+	
+	for(var/num as anything in preference_source?.special_loadout_list["unusual"])
+		var/list/data = preference_source?.extra_stat_inventory["unusual"][text2num(num)]
+		var/item_path = text2path(data["unusual_type"])
+		var/obj/item/new_item = new item_path
+		new_item.AddComponent(/datum/component/unusual_handler, data)
+		if(!new_item.equip_to_best_slot(src))
+			if(!put_in_hands(new_item))
+				new_item.forceMove(get_turf(src))
+
 	for(var/datum/loadout_item/item as anything in loadout_datums)
 		if(istype(item, /datum/loadout_item/effects))
 			continue

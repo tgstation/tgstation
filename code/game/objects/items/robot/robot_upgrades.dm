@@ -545,30 +545,31 @@
 
 /obj/item/borg/upgrade/expand/action(mob/living/silicon/robot/robot, user = usr)
 	. = ..()
-	if(.)
+	if(!. || HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
+		return FALSE
 
-		if(robot.hasExpanded)
-			to_chat(usr, span_warning("This unit already has an expand module installed!"))
-			return FALSE
+	if(robot.hasExpanded)
+		to_chat(usr, span_warning("This unit already has an expand module installed!"))
+		return FALSE
 
-		robot.notransform = TRUE
-		var/prev_lockcharge = robot.lockcharge
-		robot.SetLockdown(TRUE)
-		robot.set_anchored(TRUE)
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(1, holder = robot, location = robot.loc)
-		smoke.start()
-		sleep(0.2 SECONDS)
-		for(var/i in 1 to 4)
-			playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
-			sleep(1.2 SECONDS)
-		if(!prev_lockcharge)
-			robot.SetLockdown(FALSE)
-		robot.set_anchored(FALSE)
-		robot.notransform = FALSE
-		robot.resize = 2
-		robot.hasExpanded = TRUE
-		robot.update_transform()
+	ADD_TRAIT(robot, TRAIT_NO_TRANSFORM, REF(src))
+	var/prev_lockcharge = robot.lockcharge
+	robot.SetLockdown(TRUE)
+	robot.set_anchored(TRUE)
+	var/datum/effect_system/fluid_spread/smoke/smoke = new
+	smoke.set_up(1, holder = robot, location = robot.loc)
+	smoke.start()
+	sleep(0.2 SECONDS)
+	for(var/i in 1 to 4)
+		playsound(robot, pick('sound/items/drill_use.ogg', 'sound/items/jaws_cut.ogg', 'sound/items/jaws_pry.ogg', 'sound/items/welder.ogg', 'sound/items/ratchet.ogg'), 80, TRUE, -1)
+		sleep(1.2 SECONDS)
+	if(!prev_lockcharge)
+		robot.SetLockdown(FALSE)
+	robot.set_anchored(FALSE)
+	REMOVE_TRAIT(robot, TRAIT_NO_TRANSFORM, REF(src))
+	robot.resize = 2
+	robot.hasExpanded = TRUE
+	robot.update_transform()
 
 /obj/item/borg/upgrade/expand/deactivate(mob/living/silicon/robot/R, user = usr)
 	. = ..()

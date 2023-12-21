@@ -30,6 +30,8 @@
 #define IGNORE_STASIS (1<<1)
 /// If the incapacitated status effect will ignore a mob being agressively grabbed
 #define IGNORE_GRAB (1<<2)
+/// If the incapacited status effect will ignore a mob in cirt
+#define IGNORE_CRIT (1<<3)
 
 // Grouped effect sources, see also code/__DEFINES/traits.dm
 
@@ -38,6 +40,8 @@
 #define STASIS_CHEMICAL_EFFECT "stasis_chemical"
 
 #define STASIS_SHAPECHANGE_EFFECT "stasis_shapechange"
+#define STASIS_ADMIN "stasis_admin"
+#define STASIS_LEGION_EATEN "stasis_eaten"
 
 #define STASIS_NETPOD_EFFECT "stasis_netpod"
 

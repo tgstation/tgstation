@@ -1,4 +1,3 @@
-
 /datum/storyteller/jester
 	name = "The Jester"
 	desc = "The Jester will create much more events, with higher possibilities of them repeating."
@@ -10,5 +9,5 @@
 		EVENT_TRACK_ROLESET = 1,
 		EVENT_TRACK_OBJECTIVES = 1
 		)
-	population_min = 10
+	population_min = 40
 	ignores_roundstart = TRUE

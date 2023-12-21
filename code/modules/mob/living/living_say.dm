@@ -261,6 +261,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	return TRUE
 
 /mob/living/Hear(message, atom/movable/speaker, datum/language/message_language, raw_message, radio_freq, list/spans, list/message_mods = list(), message_range=0)
+	if((SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_HEAR, args) & COMSIG_MOVABLE_CANCEL_HEARING) || !GET_CLIENT(src))
+		return FALSE
 	if(!GET_CLIENT(src))
 		return
 	//monkestation edit
@@ -473,7 +475,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 				I.talk_into(src, message, , spans, language, message_mods)
 			return ITALICS | REDUCE_RANGE
 
-	return 0
+	return NONE
 
 /mob/living/say_mod(input, list/message_mods = list())
 	if(message_mods[WHISPER_MODE] == MODE_WHISPER)

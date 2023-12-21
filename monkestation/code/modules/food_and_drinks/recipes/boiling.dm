@@ -4,3 +4,4 @@
 	outputted_ingredients = list(/obj/item/food/spaghetti/boiledspaghetti = 1)
 	results = list(/datum/reagent/water = 5)
 	max_outputs = 10
+	Nonsouprecipe = TRUE

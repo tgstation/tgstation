@@ -62,7 +62,7 @@
 			newbot["mule_check"] = TRUE
 		botlist += list(newbot)
 
-	for(var/mob/living/simple_animal/drone/all_drones as anything in GLOB.drones_list)
+	for(var/mob/living/basic/drone/all_drones as anything in GLOB.drones_list)
 		if(all_drones.hacked)
 			continue
 		if(!is_valid_z_level(current_turf, get_turf(all_drones)))

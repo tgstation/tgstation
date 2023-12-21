@@ -18,16 +18,6 @@
 /turf/closed/wall/mineral/cult/devastate_wall()
 	new sheet_type(get_turf(src), sheet_amount)
 
-/turf/closed/wall/mineral/cult/Exited(atom/movable/gone, direction)
-	. = ..()
-	if(istype(gone, /mob/living/simple_animal/hostile/construct/harvester)) //harvesters can go through cult walls, dragging something with
-		var/mob/living/simple_animal/hostile/construct/harvester/H = gone
-		var/atom/movable/stored_pulling = H.pulling
-		if(stored_pulling)
-			stored_pulling.setDir(direction)
-			stored_pulling.forceMove(src)
-			H.start_pulling(stored_pulling, supress_message = TRUE)
-
 /turf/closed/wall/mineral/cult/artificer
 	name = "runed stone wall"
 	desc = "A cold stone wall engraved with indecipherable symbols. Studying them causes your head to pound."

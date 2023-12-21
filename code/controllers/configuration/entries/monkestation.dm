@@ -9,6 +9,7 @@
 
 /datum/config_entry/string/patreon_link_website
 
+/datum/config_entry/string/twitch_link_website
 
 /datum/config_entry/string/regular_roundend_webhook_url
 

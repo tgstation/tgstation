@@ -235,7 +235,7 @@ GLOBAL_LIST_INIT(bibleitemstates, list("bible", "koran", "scrapbook", "burning",
 			playsound(src,'sound/effects/pray_chaplain.ogg',60,TRUE)
 			for(var/obj/item/soulstone/SS in sword.contents)
 				SS.required_role = null
-				for(var/mob/living/simple_animal/shade/EX in SS)
+				for(var/mob/living/basic/shade/EX in SS)
 					var/datum/antagonist/cult/cultist = EX.mind.has_antag_datum(/datum/antagonist/cult)
 					if (cultist)
 						cultist.silent = TRUE

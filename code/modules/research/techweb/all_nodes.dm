@@ -46,7 +46,6 @@
 		"earmuffs",
 		"electropack",
 		"experi_scanner",
-		"experimentor",
 		"extinguisher",
 		"fax",
 		"fishing_rod",
@@ -119,6 +118,7 @@
 		"titaniumglass",
 		"toner_large",
 		"toner",
+		"tongs",
 		"toy_armblade",
 		"toy_balloon",
 		"toygun",
@@ -641,6 +641,8 @@
 	design_ids = list(
 		"anomaly_neutralizer",
 		"reactive_armour",
+		"artifact_heater",
+		"artifact_xray",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
 

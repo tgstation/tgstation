@@ -13,6 +13,7 @@
 	attack_verb_simple = "punch"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
+	melee_attack_cooldown = 1.5 SECONDS
 	attack_sound = 'sound/weapons/punch1.ogg'
 	istate = ISTATE_HARM|ISTATE_BLOCKING
 	faction = list(FACTION_STICKMAN)
@@ -28,21 +29,15 @@
 
 /datum/ai_controller/basic_controller/stickman
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic()
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/stickman
+		/datum/ai_planning_subtree/basic_melee_attack_subtree
 	)
-
-/datum/ai_planning_subtree/basic_melee_attack_subtree/stickman
-	melee_attack_behavior = /datum/ai_behavior/basic_melee_attack/stickman
-
-/datum/ai_behavior/basic_melee_attack/stickman
-	action_cooldown = 1.5 SECONDS
 
 /mob/living/basic/stickman/dog
 	name = "Angry Stick Dog"

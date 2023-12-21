@@ -38,6 +38,15 @@
 	///The config type to use for greyscaled belt overlays. Both this and greyscale_colors must be assigned to work.
 	var/greyscale_config_belt
 
+	//Overrides for digitigrade and snouted clothing handling
+	//Icon file for mob worn overlays, if the user is digitigrade.
+	var/icon/worn_icon_digitigrade
+	//Same as above, but for if the user is snouted.
+	var/icon/worn_icon_snouted
+
+	var/greyscale_config_worn_digitigrade
+	var/greyscale_config_worn_snouted
+
 	/// Used for BODYTYPE_CUSTOM: Needs to follow this syntax: a list() with the x and y coordinates of the pixel you want to get the color from. Colors are filled in as GAGs values for fallback.
 	var/list/species_clothing_color_coords[3]
 	/* !!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!
@@ -212,9 +221,13 @@
 	var/offensive_notes
 	/// Used in obj/item/examine to determines whether or not to detail an item's statistics even if it does not meet the force requirements
 	var/override_notes = FALSE
+	/// Used if we want to have a custom verb text for throwing. "John Spaceman flicks the ciggerate" for example.
+	var/throw_verb
+
+	/// A lazylist used for applying fantasy values, contains the actual modification applied to a variable.
+	var/list/fantasy_modifications
 
 /obj/item/Initialize(mapload)
-
 	if(attack_verb_continuous)
 		attack_verb_continuous = string_list(attack_verb_continuous)
 	if(attack_verb_simple)
@@ -359,6 +372,10 @@
 		return
 	if(greyscale_config_worn)
 		worn_icon = SSgreyscale.GetColoredIconByType(greyscale_config_worn, greyscale_colors)
+	if(greyscale_config_worn_digitigrade)
+		worn_icon_digitigrade = SSgreyscale.GetColoredIconByType(greyscale_config_worn_digitigrade, greyscale_colors)
+	if(greyscale_config_worn_snouted)
+		worn_icon_snouted = SSgreyscale.GetColoredIconByType(greyscale_config_worn_snouted, greyscale_colors)
 	if(greyscale_config_inhand_left)
 		lefthand_file = SSgreyscale.GetColoredIconByType(greyscale_config_inhand_left, greyscale_colors)
 	if(greyscale_config_inhand_right)
@@ -1195,7 +1212,7 @@
 	return src
 
 /**
- * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targetting the target.
+ * tryEmbed() is for when you want to try embedding something without dealing with the damage + hit messages of calling hitby() on the item while targeting the target.
  *
  * Really, this is used mostly with projectiles with shrapnel payloads, from [/datum/element/embed/proc/checkEmbedProjectile], and called on said shrapnel. Mostly acts as an intermediate between different embed elements.
  *
@@ -1584,3 +1601,41 @@
 /obj/item/update_atom_colour()
 	. = ..()
 	update_slot_icon()
+
+/// Modifies the fantasy variable
+/obj/item/proc/modify_fantasy_variable(variable_key, value, bonus, minimum = 0)
+	if(LAZYACCESS(fantasy_modifications, variable_key) != null)
+		stack_trace("modify_fantasy_variable was called twice for the same key '[variable_key]' on type '[type]' before reset_fantasy_variable could be called!")
+	var/intended_target = value + bonus
+	value = max(minimum, intended_target)
+
+	var/difference = intended_target - value
+	var/modified_amount = bonus - difference
+	LAZYSET(fantasy_modifications, variable_key, modified_amount)
+	return value
+
+/// Returns the original fantasy variable value
+/obj/item/proc/reset_fantasy_variable(variable_key, current_value)
+	var/modification = LAZYACCESS(fantasy_modifications, variable_key)
+	LAZYREMOVE(fantasy_modifications, variable_key)
+	if(!modification)
+		return current_value
+	return current_value - modification
+
+/obj/item/proc/apply_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_ITEM_APPLY_FANTASY_BONUSES, bonus)
+	force = modify_fantasy_variable("force", force, bonus)
+	throwforce = modify_fantasy_variable("throwforce", throwforce, bonus)
+	wound_bonus = modify_fantasy_variable("wound_bonus", wound_bonus, bonus)
+	bare_wound_bonus = modify_fantasy_variable("bare_wound_bonus", bare_wound_bonus, bonus)
+	toolspeed = modify_fantasy_variable("toolspeed", toolspeed, -bonus/10, minimum = 0.1)
+
+/obj/item/proc/remove_fantasy_bonuses(bonus)
+	SHOULD_CALL_PARENT(TRUE)
+	force = reset_fantasy_variable("force", force)
+	throwforce = reset_fantasy_variable("throwforce", throwforce)
+	wound_bonus = reset_fantasy_variable("wound_bonus", wound_bonus)
+	bare_wound_bonus = reset_fantasy_variable("bare_wound_bonus", bare_wound_bonus)
+	toolspeed = reset_fantasy_variable("toolspeed", toolspeed)
+	SEND_SIGNAL(src, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, bonus)

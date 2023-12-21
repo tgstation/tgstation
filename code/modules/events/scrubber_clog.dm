@@ -6,8 +6,6 @@
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_JANITORIAL
 	description = "Harmless mobs climb out of a scrubber."
-	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_COMMUNAL)
 
 /datum/round_event/scrubber_clog
 	announce_when = 10
@@ -42,7 +40,7 @@
 	end_when = rand(300, 600)
 	maximum_spawns = rand(3, 5)
 	spawn_delay = rand(10, 15)
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/scrubber_clog/start() //Sets the scrubber up for unclogging/mob production.
 	scrubber.clog()
@@ -89,7 +87,7 @@
 			scrubber_list += scrubber
 	return pick(scrubber_list)
 
-/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/scrubber_clog/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return
@@ -187,6 +185,7 @@
 		/mob/living/basic/carp,
 		/mob/living/basic/bee/toxin,
 		/mob/living/basic/cockroach/glockroach,
+		/mob/living/basic/bear,  //monkestation addition
 	)
 	return pick(mob_list)
 
@@ -213,7 +212,7 @@
 /datum/round_event/scrubber_clog/strange/get_mob()
 	var/static/list/mob_list = list(
 		/mob/living/basic/lightgeist,
-		/mob/living/basic/bear,
+		///mob/living/basic/bear,  monkestation removal
 		/mob/living/basic/mushroom,
 		/mob/living/simple_animal/hostile/retaliate/goose, //Janitors HATE geese.
 		/mob/living/simple_animal/pet/gondola,

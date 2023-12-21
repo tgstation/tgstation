@@ -26,10 +26,34 @@
 	requires_purchase = FALSE
 
 //ttnt
-
 /datum/loadout_item/head/pot
 	name = "Dented Pot"
 	item_path = /obj/item/clothing/head/costume/pot
+
+/datum/loadout_item/pocket_items/donator/spycrab
+	name = "Pet Delivery Beacon - Spycrab"
+	item_path = /obj/item/choice_beacon/pet/donator/spycrab
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("TTNT789")
+
+/datum/loadout_item/effects/spycrab
+	ckeywhitelist = list("TTNT789")
+	name = "Spycrab Transformation"
+	item_path = /obj/item/effect_granter/donator/spycrab
+	requires_purchase = FALSE
+
+/datum/loadout_item/mask/krieg
+	name = "Krieg's Mask"
+	item_path = /obj/item/clothing/mask/krieg
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/under/miscellaneous/krieg
+	name = "Krieg's attire"
+	item_path = /obj/item/clothing/under/costume/krieg
+	donator_only = TRUE
+	requires_purchase = FALSE
 
 //spinnermaster
 
@@ -200,4 +224,25 @@
 	ckeywhitelist = list("Senri08")
 	name = "Slime Transformation"
 	item_path = /obj/item/effect_granter/donator/slime
+	requires_purchase = FALSE
+
+//odie
+/datum/loadout_item/head/space_marine
+	name = "Space Marine Helmet"
+	item_path = /obj/item/clothing/head/costume/space_marine
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//rickdude
+/datum/loadout_item/suit/aotcloak
+	name = "Survey Corps Cloak"
+	item_path = /obj/item/clothing/suit/hooded/aotcloak
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+//kon chieko
+/datum/loadout_item/head/bells
+	name = "Hair ribbons with bells"
+	item_path = /obj/item/clothing/head/costume/bells
+	donator_only = TRUE
 	requires_purchase = FALSE

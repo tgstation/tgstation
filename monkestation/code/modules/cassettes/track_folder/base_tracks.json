@@ -515,7 +515,7 @@
 	"duration": 1340,
 	"artist": "Leslie Fish",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Folk and Indie"
 	},
@@ -525,7 +525,7 @@
 	"duration": 2660,
 	"artist": "Duane Elms",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Folk and Indie"
 	},
@@ -535,7 +535,7 @@
 	"duration": 1700,
 	"artist": "Leslie Fish",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Folk and Indie"
 	},
@@ -2255,7 +2255,7 @@
 	"duration": 3180,
 	"artist": "David Bowie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Rock"
 	},
@@ -2285,7 +2285,7 @@
 	"duration": 3330,
 	"artist": "Chris Hadfield",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Pop"
 	},
@@ -2895,7 +2895,7 @@
 	"duration": 2730,
 	"artist": "Hall & Oates",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true,
 	"genre": "Pop"
 	},
@@ -4363,7 +4363,7 @@
 	"artist": "Network Music Ensemble",
 	"genre": "Rock",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4423,7 +4423,7 @@
 	"artist": "Fiona Apple",
 	"genre": "Electronic",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4433,7 +4433,7 @@
 	"artist": "Kamil Hala, Slovak Philharmonic Orchestra, Libor Pešek",
 	"genre": "Classical and Orchestral",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4573,7 +4573,7 @@
 	"artist": "Julia Ecklar & Anne Prather",
 	"genre": "Folk and Indie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4623,7 +4623,7 @@
 	"artist": "Free Fall & Other Delights",
 	"genre": "Folk and Indie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4643,7 +4643,7 @@
 	"artist": "Duane Elms",
 	"genre": "Folk and Indie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4653,7 +4653,7 @@
 	"artist": "Duane Elms",
 	"genre": "Folk and Indie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4663,7 +4663,7 @@
 	"artist": "Duane Elms",
 	"genre": "Folk and Indie",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4763,6 +4763,96 @@
 	"genre": "Folk and Indie",
 	"secret": true,
 	"lobby": false,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/mvdhbk.mp3",
+	"title": "HoverGoat",
+	"duration": 1810,
+	"artist": "Madducks",
+	"genre": "Electronic",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/cul20c.mp3",
+	"title": "Flowing Uphill",
+	"duration": 3050,
+	"artist": "Chronoquest",
+	"genre": "Electronic",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/cdf7ab.mp3",
+	"title": "Future Imperfect",
+	"duration": 1820,
+	"artist": "Chronoquest",
+	"genre": "Electronic",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/aude0k.mp3",
+	"title": "Space Station 3",
+	"duration": 1960,
+	"artist": "Chronoquest",
+	"genre": "Electronic",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/cjx1lj.mp3",
+	"title": "Sitar Warriors",
+	"duration": 1400,
+	"artist": "Chronoquest",
+	"genre": "Electronic",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/ebcxxz.mp3",
+	"title": "Rare Brotherman Bill",
+	"duration": 1870,
+	"artist": "Terrible Tim",
+	"genre": "Folk and Indie",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/b9i0yh.mp3",
+	"title": "Paleorock",
+	"duration": 930,
+	"artist": "Bizaonacci",
+	"genre": "Folk and Indie",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/a6osd4.mp3",
+	"title": "Modern Day Ouroborus",
+	"duration": 3050,
+	"artist": "LISA:The Pointless",
+	"genre": "Electronic",
+	"secret": false,
+	"lobby": true,
+	"jukebox": true
+	},
+	{
+	"url" : "https://files.catbox.moe/oe3r2f.mp3",
+	"title": "Look Forward",
+	"duration": 2470,
+	"artist": "Skyline",
+	"genre": "Electronic",
+	"secret": false,
+	"lobby": true,
 	"jukebox": true
 	}
 	]

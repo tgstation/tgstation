@@ -772,7 +772,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/light/directional/east,
-/mob/living/basic/syndicate/ranged/smg/space,
+/mob/living/basic/trooper/syndicate/ranged/smg/space,
 /turf/open/floor/iron/dark/textured,
 /area/ruin/space/has_grav/hotel/security)
 "gQ" = (
@@ -875,7 +875,7 @@
 "hH" = (
 /obj/structure/cable,
 /obj/machinery/airalarm/directional/north,
-/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "hI" = (
@@ -1645,7 +1645,7 @@
 /obj/effect/turf_decal/trimline/yellow/warning{
 	dir = 10
 	},
-/mob/living/basic/syndicate/ranged/shotgun/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/ranged/shotgun/space/stormtrooper,
 /obj/effect/decal/cleanable/blood/drip,
 /obj/effect/decal/cleanable/blood,
 /turf/open/floor/iron/dark/textured,
@@ -1907,7 +1907,7 @@
 /area/ruin/space/has_grav/hotel/security)
 "pr" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/mob/living/basic/syndicate/melee/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/melee/space/stormtrooper,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/hotel/dock)
 "pz" = (
@@ -1993,7 +1993,7 @@
 /turf/open/misc/beach/sand,
 /area/ruin/space/has_grav/hotel/pool)
 "qx" = (
-/mob/living/basic/syndicate/melee/sword/space/stormtrooper,
+/mob/living/basic/trooper/syndicate/melee/sword/space/stormtrooper,
 /turf/open/floor/glass/reinforced,
 /area/ruin/space/has_grav/hotel/security)
 "qz" = (

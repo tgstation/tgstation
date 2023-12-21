@@ -18,15 +18,32 @@
 // DOES NOT EFFECT THE BASE 1 DECISECOND DELAY OF NEXT_CLICK
 
 /mob/proc/changeNext_move(num)
-	next_move = world.time + ((num+next_move_adjust)*next_move_modifier)
+	var/stat_multi = 1
+	switch(stat)
+		if(SOFT_CRIT)
+			stat_multi = 8
+		if(HARD_CRIT)
+			stat_multi = 16
+		else
+			stat_multi = 1
+	next_move = world.time + ((num+next_move_adjust) * next_move_modifier * stat_multi)
 
 /mob/living/changeNext_move(num)
 	var/mod = next_move_modifier
 	var/adj = next_move_adjust
+	var/stat_multi = 1
+	switch(stat)
+		if(SOFT_CRIT)
+			stat_multi = 4
+		if(HARD_CRIT)
+			stat_multi = 8
+		else
+			stat_multi = 1
+
 	for(var/datum/status_effect/effect as anything in status_effects)
 		mod *= effect.nextmove_modifier()
 		adj += effect.nextmove_adjust()
-	next_move = world.time + ((num + adj)*mod)
+	next_move = world.time + ((num + adj)*mod * stat_multi)
 
 /**
  * Before anything else, defer these calls to a per-mobtype handler.  This allows us to
@@ -69,7 +86,7 @@
 		return
 	next_click = world.time + 1
 
-	if(check_click_intercept(params,A) || notransform)
+	if(check_click_intercept(params,A) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	var/list/modifiers = params2list(params)
@@ -106,7 +123,7 @@
 			CtrlClickOn(A)
 			return
 
-	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS))
+	if(incapacitated(IGNORE_RESTRAINTS|IGNORE_STASIS|IGNORE_CRIT))
 		return
 
 	face_atom(A)
@@ -117,7 +134,7 @@
 	if(!LAZYACCESS(modifiers, "catcher") && A.IsObscured())
 		return
 
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED) && !((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS))))
 		changeNext_move(CLICK_CD_HANDCUFFED)   //Doing shit in cuffs shall be vey slow
 		UnarmedAttack(A, FALSE)
 		return

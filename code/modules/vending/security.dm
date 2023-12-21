@@ -32,6 +32,9 @@
 		/obj/item/watertank/pepperspray = 2,
 		/obj/item/storage/belt/holster/energy = 4,
 		/obj/item/ammo_box/magazine/m35 = 5, //monkestation edit: Paco sec
+		/obj/item/clothing/head/guardmanhelmet = 1, //monkestation edit: Guardman
+		/obj/item/clothing/under/guardmanuniform = 1, //monkestation edit: Guardman
+		/obj/item/clothing/suit/armor/guardmanvest = 1, //monkestation edit: Guardman
 	)
 	refill_canister = /obj/item/vending_refill/security
 	default_price = PAYCHECK_CREW

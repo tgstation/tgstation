@@ -5450,6 +5450,10 @@
 	heat_capacity = 1e+006
 	},
 /area/awaymission/moonoutpost19/research)
+"pO" = (
+/mob/living/basic/construct/proteon/hostile,
+/turf/open/space,
+/area/space)
 "qr" = (
 /obj/effect/decal/cleanable/blood/tracks{
 	desc = "Your instincts say you shouldn't be following these.";
@@ -13954,7 +13958,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -14731,6 +14735,7 @@ aa
 aa
 aa
 aa
+pO
 aa
 aa
 aa
@@ -14741,8 +14746,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+pO
 aa
 aa
 aa
@@ -17041,7 +17045,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -17310,13 +17314,13 @@ aa
 aa
 aa
 aa
+pO
 aa
 aa
 aa
 aa
 aa
-aa
-aa
+pO
 aa
 aa
 aa
@@ -18312,7 +18316,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -18838,6 +18842,7 @@ aa
 aa
 aa
 aa
+pO
 aa
 aa
 aa
@@ -18851,8 +18856,7 @@ aa
 aa
 aa
 aa
-aa
-aa
+pO
 aa
 aa
 aa
@@ -20107,7 +20111,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -20400,7 +20404,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -21644,7 +21648,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa
@@ -21900,7 +21904,7 @@ aa
 aa
 aa
 aa
-aa
+pO
 aa
 aa
 aa

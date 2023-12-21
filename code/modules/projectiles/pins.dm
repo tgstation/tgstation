@@ -30,19 +30,19 @@
 	if(proximity_flag)
 		if(isgun(target))
 			. |= AFTERATTACK_PROCESSED_ITEM
-			var/obj/item/gun/targetted_gun = target
-			var/obj/item/firing_pin/old_pin = targetted_gun.pin
+			var/obj/item/gun/targeted_gun = target
+			var/obj/item/firing_pin/old_pin = targeted_gun.pin
 			if(old_pin?.pin_removable && (force_replace || old_pin.pin_hot_swappable))
 				if(Adjacent(user))
 					user.put_in_hands(old_pin)
 				else
-					old_pin.forceMove(targetted_gun.drop_location())
+					old_pin.forceMove(targeted_gun.drop_location())
 				old_pin.gun_remove(user)
 
-			if(!targetted_gun.pin)
+			if(!targeted_gun.pin)
 				if(!user.temporarilyRemoveItemFromInventory(src))
 					return .
-				if(gun_insert(user, targetted_gun))
+				if(gun_insert(user, targeted_gun))
 					if(old_pin)
 						balloon_alert(user, "swapped firing pin")
 					else
@@ -223,12 +223,12 @@
 	color = "#FFD700"
 	fail_message = ""
 	///list of account IDs which have accepted the license prompt. If this is the multi-payment pin, then this means they accepted the waiver that each shot will cost them money
-	var/list/gun_owners = list() 
+	var/list/gun_owners = list()
 	///how much gets paid out to license yourself to the gun
-	var/payment_amount 
+	var/payment_amount
 	var/datum/bank_account/pin_owner
 	///if true, user has to pay everytime they fire the gun
-	var/multi_payment = FALSE 
+	var/multi_payment = FALSE
 	var/owned = FALSE
 	///purchase prompt to prevent spamming it, set to the user who opens to prompt to prevent locking the gun up for other users.
 	var/active_prompt_user
@@ -321,10 +321,10 @@
 					pin_owner.adjust_money(payment_amount, "Firing Pin: Gun License Bought")
 				gun_owners += credit_card_details
 				to_chat(user, span_notice("Gun license purchased, have a secure day!"))
-					
-			else 
+
+			else
 				to_chat(user, span_warning("ERROR: User balance insufficent for successful transaction!"))
- 
+
 		if("No", null)
 			to_chat(user, span_warning("ERROR: User has declined to purchase gun license!"))
 	active_prompt_user = null

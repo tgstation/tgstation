@@ -65,7 +65,7 @@
 	fugu.melee_damage_upper = 20
 	fugu.status_flags |= GODMODE
 	fugu.obj_damage = 60
-	fugu.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, FALSE)
+	fugu.ai_controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
 	fugu.ai_controller.CancelActions()
 
 /datum/status_effect/inflated/on_remove()
@@ -84,7 +84,7 @@
 	if (fugu.stat != DEAD)
 		fugu.icon_state = "Fugu0"
 	fugu.obj_damage = 0
-	fugu.ai_controller.set_blackboard_key(BB_BASIC_MOB_FLEEING, TRUE)
+	fugu.ai_controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
 	fugu.ai_controller.CancelActions()
 
 /// Remove status effect if we die

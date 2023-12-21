@@ -41,3 +41,19 @@
 	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
 	icon_state = "beecloak"
 	worn_icon_state = "beecloak"
+
+/obj/item/clothing/neck/ascot
+	name = "Ascot"
+	desc = "A fancy scarf to keep your neck warm and ward off sharp objects"
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_state = "ascot"
+	worn_icon_state = "ascot"
+
+/obj/item/clothing/neck/worldchampioncape
+	name = "World Champion's Cape"
+	desc = "I'll give him one last chance to back out. He might think he's a champ, but he's just a chump!."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon_state = "worldchampion_cape"
+	worn_icon_state = "worldchampion_cape"

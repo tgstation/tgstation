@@ -84,7 +84,7 @@
 
 /datum/ai_controller/basic_controller/penguin
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED
@@ -178,7 +178,7 @@
 
 /datum/ai_controller/basic_controller/penguin/baby
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/pet/penguin),
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/pet/penguin/baby),
 	)

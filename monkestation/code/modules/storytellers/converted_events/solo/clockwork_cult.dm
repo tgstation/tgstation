@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/clockcult
 	name = "Clock Cult"
-	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
+	tags = list(TAG_SPOOKY, TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL)
 	antag_flag = ROLE_CLOCK_CULTIST
 	antag_datum = /datum/antagonist/clock_cultist
 	typepath = /datum/round_event/antagonist/solo/clockcult

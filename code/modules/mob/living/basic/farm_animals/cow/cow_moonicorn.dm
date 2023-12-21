@@ -34,7 +34,7 @@
 	var/static/list/food_types
 	if(!food_types)
 		food_types = src.food_types.Copy()
-	AddElement(/datum/element/basic_eating, 10, 0, null, food_types)
+	AddElement(/datum/element/basic_eating, food_types = food_types)
 	AddComponent(/datum/component/tameable, food_types = food_types, tame_chance = 25, bonus_tame_chance = 15, after_tame = CALLBACK(src, PROC_REF(tamed)))
 
 /mob/living/basic/cow/moonicorn/tamed(mob/living/tamer)
@@ -44,7 +44,7 @@
 
 /datum/ai_controller/basic_controller/cow/moonicorn
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items/moonicorn(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/moonicorn,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
 	)
@@ -60,14 +60,14 @@
 	)
 
 ///moonicorns will not attack people holding something that could tame them.
-/datum/targetting_datum/basic/allow_items/moonicorn
+/datum/targeting_strategy/basic/allow_items/moonicorn
 
-/datum/targetting_datum/basic/allow_items/moonicorn/can_attack(mob/living/living_mob, atom/the_target)
+/datum/targeting_strategy/basic/allow_items/moonicorn/can_attack(mob/living/living_mob, atom/the_target, vision_range)
 	. = ..()
 	if(!.)
 		return FALSE
 
-	if(isliving(the_target)) //Targetting vs living mobs
+	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target
 		for(var/obj/item/food/grown/galaxythistle/tame_food in living_target.held_items)
 			return FALSE //heyyy this can tame me! let's NOT fight

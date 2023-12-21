@@ -27,4 +27,4 @@
 		return
 	if(arrived.GetComponent(/datum/component/player_sink))
 		return
-	arrived.AddComponent(/datum/component/player_sink)
+	arrived.AddComponent(/datum/component/player_sink, type_to_add = src.type)

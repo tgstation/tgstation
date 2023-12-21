@@ -989,7 +989,7 @@
 		healing_types += CLONE
 
 	if(length(healing_types))
-		owner.apply_damage_type(-heal_amount, damagetype = pick(healing_types))
+		owner.heal_damage_type(heal_amount, damagetype = pick(healing_types))
 
 	owner.adjust_nutrition(3)
 	drained.adjustCloneLoss(heal_amount * DRAIN_DAMAGE_MULTIPLIER)

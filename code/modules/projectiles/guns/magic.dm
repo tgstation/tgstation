@@ -29,6 +29,17 @@
 	. = ..()
 	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
 
+/obj/item/gun/magic/apply_fantasy_bonuses(bonus)
+	. = ..()
+	recharge_rate = modify_fantasy_variable("recharge_rate", recharge_rate, -bonus, minimum = 1)
+	max_charges = modify_fantasy_variable("max_charges", max_charges, bonus)
+	charges = modify_fantasy_variable("charges", charges, bonus)
+
+/obj/item/gun/magic/remove_fantasy_bonuses(bonus)
+	recharge_rate = reset_fantasy_variable("recharge_rate", recharge_rate)
+	max_charges = reset_fantasy_variable("max_charges", max_charges)
+	charges = reset_fantasy_variable("charges", charges)
+	return ..()
 
 /obj/item/gun/magic/fire_sounds()
 	var/frequency_to_use = sin((90/max_charges) * charges)

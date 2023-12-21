@@ -5,12 +5,24 @@
 	///the filters name path for locating
 	var/filter_name = "sinkable"
 	var/current_size = 0
+	///Static list of turf types that are sinkable
+	var/static/list/sinking_turf_types
 
-/datum/component/player_sink/Initialize(...)
+//type_to_add is a type to try and add to sinking_turf_types
+/datum/component/player_sink/Initialize(max_sinkage, type_to_add)
 	RegisterSignal(parent, COMSIG_MOVABLE_PRE_MOVE, TYPE_PROC_REF(/datum/component/player_sink, recheck_state))
 	RegisterSignal(parent, COMSIG_ITEM_PICKUP, TYPE_PROC_REF(/datum/component/player_sink,remove_state))
 	START_PROCESSING(SSobj, src)
-	max_sinkage = rand(16,20)
+	if(max_sinkage)
+		src.max_sinkage = max_sinkage
+	else
+		max_sinkage = rand(16,20)
+
+	if(!sinking_turf_types)
+		sinking_turf_types = list()
+
+	if(!locate(type_to_add) in sinking_turf_types)
+		sinking_turf_types |= type_to_add
 
 /datum/component/player_sink/UnregisterFromParent()
 	. = ..()
@@ -19,7 +31,7 @@
 	UnregisterSignal(parent, COMSIG_ITEM_PICKUP)
 
 /datum/component/player_sink/proc/recheck_state(atom/movable/moved, atom/new_location)
-	if(!isopenturf(new_location) || !istype(new_location, /turf/open/ballpit))
+	if(!isopenturf(new_location) || !is_type_in_list(new_location, sinking_turf_types))
 		var/datum/component/meh = parent.GetComponent(/datum/component/player_sink)
 		if(meh)
 			var/filter = parent.get_filter("sinkable")

@@ -66,7 +66,7 @@
 		/obj/item/book = 1,
 		/obj/item/bodypart/head = 1,
 	)
-	mob_to_summon = /mob/living/simple_animal/hostile/heretic_summon/rust_spirit
+	mob_to_summon = /mob/living/basic/heretic_summon/rust_walker
 	cost = 1
 	route = PATH_SIDE
 

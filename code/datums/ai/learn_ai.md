@@ -25,7 +25,7 @@ First, let's look at the blackboard.
 ```dm
 /datum/ai_controller/basic/cow
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic/allow_items(),
+		BB_TARGETING_STRATEGY = GET_TARGETING_STRATEGY(/datum/targeting_strategy/basic/allow_items),
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
 	)
@@ -81,7 +81,7 @@ Okay, so we have blackboard variables, which are considered by subtrees to plan 
 
 	//now we know we have a target but should let a hostile subtree plan attacking humans. let's check if it's actually food
 	if(target in wanted)
-		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETTING_DATUM, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
+		controller.queue_behavior(/datum/ai_behavior/basic_melee_attack, BB_BASIC_MOB_CURRENT_TARGET, BB_TARGETING_STRATEGY, BB_BASIC_MOB_CURRENT_TARGET_HIDING_LOCATION)
 		return SUBTREE_RETURN_FINISH_PLANNING //this prevents further subtrees from planning since we want to focus on eating the food
 ```
 
@@ -113,7 +113,7 @@ And one of those behaviors, `basic_melee_attack`. As I have been doing so far, I
 	//targetting datum will kill the action if not real anymore
 	var/datum/weakref/weak_target = controller.blackboard[target_key]
 	var/atom/target = weak_target?.resolve()
-	var/datum/targetting_datum/targetting_datum = controller.blackboard[targetting_datum_key]
+	var/datum/targeting_strategy/targetting_datum = controller.blackboard[targetting_datum_key]
 
 	if(!targetting_datum.can_attack(basic_mob, target))
 		///We have a target that is no longer valid to attack. Remember that returning doesn't end the behavior, JUST this single performance. So we call "finish_action" with whether it succeeded in doing what it wanted to do (it didn't, so FALSE) and the blackboard keys passed into this behavior.

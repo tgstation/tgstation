@@ -116,7 +116,7 @@
 				carbon_pulled.adjustOrganLoss(ORGAN_SLOT_BRAIN, 150, 150) //large amount of brain damage but it will never give you brain death
 				carbon_pulled.apply_damage(150, BRUTE, HEAD)
 			else
-				pulled.apply_damage_type(150, BRUTE)
+				pulled.apply_damage(150, BRUTE)
 
 			if(pulled.client && !killed_list[pulled])
 				killed_list[pulled] = TRUE
@@ -130,7 +130,7 @@
 	if(blood_hunger)
 		. += "It's glaring at you."
 
-/mob/living/basic/monkey_animatronic/melee_attack(atom/target, list/modifiers)
+/mob/living/basic/monkey_animatronic/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	. = ..()
 	var/mob/living/living_target = target
 	if(!istype(living_target))
@@ -162,7 +162,7 @@
 
 /datum/ai_controller/basic_controller/animatronic
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic(),
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_LOW_PRIORITY_HUNTING_TARGET = null,
 	)
 

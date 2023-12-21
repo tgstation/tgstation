@@ -15,7 +15,11 @@
 	var/tk_throw_range = 10
 	var/mob/pulledby = null
 	var/initial_language_holder = /datum/language_holder
-	var/datum/language_holder/language_holder // Mindless mobs and objects need language too, some times. Mind holder takes prescedence.
+	/// Holds all languages this mob can speak and understand
+	var/datum/language_holder/language_holder
+	/// The list of factions this atom belongs to
+	var/list/faction
+
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
@@ -411,7 +415,7 @@
 			else
 				to_chat(src, span_warning("You are not Superman."))
 		return FALSE
-	if(!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(src, direction, destination, (z_move_flags & ZMOVE_ALLOW_ANCHORED)) && destination.zPassIn(src, direction, start)))
+	if((!(z_move_flags & ZMOVE_IGNORE_OBSTACLES) && !(start.zPassOut(direction) && destination.zPassIn(direction))) || (!(z_move_flags & ZMOVE_ALLOW_ANCHORED) && anchored))
 		if(z_move_flags & ZMOVE_FEEDBACK)
 			to_chat(rider || src, span_warning("You couldn't move there!"))
 		return FALSE
@@ -1589,6 +1593,11 @@
 			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
 			if(. >= GRAB_NECK) // Previous state was a a neck-grab or higher.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
+			if(ismob(src))
+				var/mob/grabbed = src
+				if(grabbed.stat == SOFT_CRIT || grabbed.stat == HARD_CRIT)
+					pulling.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)
+
 		if(GRAB_AGGRESSIVE)
 			if(. >= GRAB_NECK) // Grab got downgraded.
 				REMOVE_TRAIT(pulling, TRAIT_FLOORED, CHOKEHOLD_TRAIT)
@@ -1664,3 +1673,20 @@
 */
 /atom/movable/proc/keybind_face_direction(direction)
 	setDir(direction)
+
+/**
+ * Check if the other atom/movable has any factions the same as us. Defined at the atom/movable level so it can be defined for just about anything.
+ *
+ * If exact match is set, then all our factions must match exactly
+ */
+/atom/movable/proc/faction_check_atom(atom/movable/target, exact_match)
+	if(!exact_match)
+		return faction_check(faction, target.faction, FALSE)
+
+	var/list/faction_src = LAZYCOPY(faction)
+	var/list/faction_target = LAZYCOPY(target.faction)
+	if(!("[REF(src)]" in faction_target)) //if they don't have our ref faction, remove it from our factions list.
+		faction_src -= "[REF(src)]" //if we don't do this, we'll never have an exact match.
+	if(!("[REF(target)]" in faction_src))
+		faction_target -= "[REF(target)]" //same thing here.
+	return faction_check(faction_src, faction_target, TRUE)

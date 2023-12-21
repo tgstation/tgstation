@@ -1,5 +1,5 @@
 /mob/living/simple_animal/slime/Life(seconds_per_tick = SSMOBS_DT, times_fired)
-	if (notransform)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 	. = ..()
 	if(!.)

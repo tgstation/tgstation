@@ -27,7 +27,6 @@ SUBSYSTEM_DEF(hotspots)
 		return SS_INIT_NO_NEED
 	generate_hotspots()
 	generate_map()
-	generate_finalized_map()
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/hotspots/fire()
@@ -38,7 +37,6 @@ SUBSYSTEM_DEF(hotspots)
 		if(generated_hotspot.drift_count >= generated_hotspot.drift_speed)
 			generated_hotspot.drift_count = 0
 			generated_hotspot.move_center(get_step(generated_hotspot.center.return_turf(), generated_hotspot.drift_direction))
-			generate_finalized_map()
 
 /datum/controller/subsystem/hotspots/proc/generate_hotspots()
 	var/datum/hotspot/new_hotspot
@@ -129,7 +127,6 @@ SUBSYSTEM_DEF(hotspots)
 			. = TRUE
 		else
 			listed_hotspot.can_drift = FALSE
-			generate_finalized_map()
 
 		///we handle movement and recentering here
 		listed_hotspot.drift_direction = angle2dir(arctan(hotspot_center.x - stomped.x, hotspot_center.y - stomped.y))

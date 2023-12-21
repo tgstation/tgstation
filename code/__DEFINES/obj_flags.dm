@@ -42,6 +42,8 @@
 #define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 19)
 /// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
 #define NO_BLOOD_ON_ITEM (1 << 20)
+/// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
+#define SKIP_FANTASY_ON_SPAWN (1<<21)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

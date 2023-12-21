@@ -174,15 +174,12 @@
 
 /obj/item/bodypart/head/update_limb(dropping_limb, is_creating)
 	. = ..()
-
-	real_name = owner.real_name
-	if(HAS_TRAIT(owner, TRAIT_HUSK))
-		real_name = "Unknown"
-		hair_style = "Bald"
-		facial_hairstyle = "Shaved"
-		lip_style = null
-		stored_lipstick_trait = null
-	update_hair_and_lips()
+	if(!isnull(owner))
+		if(HAS_TRAIT(owner, TRAIT_HUSK))
+			real_name = "Unknown"
+		else
+			real_name = owner.real_name
+	update_hair_and_lips(dropping_limb, is_creating)
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

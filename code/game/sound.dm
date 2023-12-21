@@ -1,4 +1,5 @@
 GLOBAL_LIST_INIT(used_sound_channels, list(
+	CHANNEL_MASTER_VOLUME,
 	CHANNEL_LOBBYMUSIC,
 	CHANNEL_ADMIN,
 	CHANNEL_VOX,
@@ -145,6 +146,8 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	sound_to_use.wait = 0 //No queue
 	sound_to_use.channel = channel || SSsounds.random_available_channel()
 	sound_to_use.volume = vol
+	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
+		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
 
 	if(vary)
 		if(frequency)
@@ -246,6 +249,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	if("[CHANNEL_LOBBYMUSIC]" in prefs.channel_volume)
 		if(prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] != 0)
 			vol *= prefs.channel_volume["[CHANNEL_LOBBYMUSIC]"] * 0.01
+			vol *= prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
 
 	if((prefs && (!prefs.read_preference(/datum/preference/toggle/sound_lobby))) || CONFIG_GET(flag/disallow_title_music))
 		return

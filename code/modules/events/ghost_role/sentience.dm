@@ -4,14 +4,20 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	/mob/living/basic/lizard,
 	/mob/living/basic/carp/pet/cayenne,
 	/mob/living/basic/cow,
-	/mob/living/basic/spider/giant/sgt_araneus,
+	/mob/living/basic/goat,
 	/mob/living/basic/lizard,
 	/mob/living/basic/mouse/brown/tom,
+	/mob/living/basic/parrot,
 	/mob/living/basic/pet,
 	/mob/living/basic/pig,
 	/mob/living/basic/rabbit,
 	/mob/living/basic/sheep,
+	/mob/living/basic/sloth,
+	/mob/living/basic/snake,
+	/mob/living/basic/spider/giant/sgt_araneus,
 	/mob/living/simple_animal/bot/secbot/beepsky,
+	/mob/living/simple_animal/hostile/retaliate/goose/vomit,
+	/mob/living/simple_animal/pet,
 )))
 
 /datum/round_event_control/sentience
@@ -22,8 +28,6 @@ GLOBAL_LIST_INIT(high_priority_sentience, typecacheof(list(
 	description = "An animal or robot becomes sentient!"
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 7
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_COMMUNAL, TAG_SPOOKY)
 
 
 /datum/round_event/ghost_role/sentience

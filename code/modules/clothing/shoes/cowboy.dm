@@ -17,7 +17,7 @@
 
 	if(prob(2))
 		//There's a snake in my boot
-		new /mob/living/simple_animal/hostile/retaliate/snake(src)
+		new /mob/living/basic/snake(src)
 
 
 /obj/item/clothing/shoes/cowboy/equipped(mob/living/carbon/user, slot)
@@ -56,7 +56,7 @@
 	if(contents.len >= max_occupants)
 		to_chat(user, span_warning("[src] are full!"))
 		return
-	if(istype(target, /mob/living/simple_animal/hostile/retaliate/snake) || istype(target, /mob/living/basic/headslug) || islarva(target))
+	if(istype(target, /mob/living/basic/snake) || istype(target, /mob/living/basic/headslug) || islarva(target))
 		target.forceMove(src)
 		to_chat(user, span_notice("[target] slithers into [src]."))
 

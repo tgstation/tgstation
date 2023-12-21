@@ -92,6 +92,7 @@ export type QuirkInfo = {
 export type LoadoutInfo = {
   user_is_donator: BooleanLike;
   selected_loadout: string[];
+  selected_unusuals: string[];
 };
 
 export enum RandomSetting {
@@ -178,6 +179,7 @@ export type PreferencesMenuData = {
 
   user_is_donator: BooleanLike;
   selected_loadout: string[];
+  selected_unusuals: string[];
   total_coins: number;
   loadout_tabs: LoadoutData[];
   window: Window;
@@ -191,12 +193,14 @@ type LoadoutData = {
 type LoadoutItem = {
   name: string;
   path: string;
+  unusual_placement: number;
   is_greyscale: boolean;
   is_renamable: boolean;
   is_job_restricted: boolean;
   is_donator_only: boolean;
   is_ckey_whitelisted: boolean;
   tooltip_text: string;
+  unusual_spawning_requirements: boolean;
 };
 export type ServerData = {
   jobs: {

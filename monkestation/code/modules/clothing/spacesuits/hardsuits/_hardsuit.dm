@@ -13,7 +13,6 @@
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/t_scanner, /obj/item/construction/rcd, /obj/item/pipe_dispenser)
 	siemens_coefficient = 0
 	actions_types = list(/datum/action/item_action/toggle_helmet)
-	supports_variations_flags = NONE
 
 	var/obj/item/clothing/head/helmet/space/hardsuit/helmet
 	var/helmettype = /obj/item/clothing/head/helmet/space/hardsuit

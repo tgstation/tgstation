@@ -13,10 +13,7 @@
 				return ..()
 			return
 	else if(istype(user, /mob/living/simple_animal))
-		if(!user.dextrous)
-			if (obj_flags & CAN_BE_HIT)
-				return ..()
-			return
+		return
 
 	. = TRUE
 

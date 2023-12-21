@@ -27,7 +27,7 @@
 		/mob/living/brain,
 		/mob/living/silicon/pai,
 		/mob/living/simple_animal/hostile/megafauna,
-		/mob/living/simple_animal/hostile/guardian,
+		/mob/living/basic/guardian,
 	))
 	//has the spell made a fake wizard yet
 	var/made_false_wizard = FALSE

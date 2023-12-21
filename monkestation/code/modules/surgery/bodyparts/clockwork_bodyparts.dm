@@ -11,8 +11,8 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
-	brute_reduction = 3
-	burn_reduction = 2
+	brute_modifier = 0.9
+	burn_modifier = 0.95
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 
@@ -29,8 +29,8 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
-	brute_reduction = 3
-	burn_reduction = 2
+	brute_modifier = 0.9
+	burn_modifier = 0.95
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 
@@ -47,8 +47,8 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
-	brute_reduction = 3
-	burn_reduction = 2
+	brute_modifier = 0.9
+	burn_modifier = 0.95
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 
@@ -65,8 +65,8 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
-	brute_reduction = 3
-	burn_reduction = 2
+	brute_modifier = 0.9
+	burn_modifier = 0.95
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 
@@ -84,8 +84,8 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
-	brute_reduction = 3
-	burn_reduction = 2
+	brute_modifier = 0.9
+	burn_modifier = 0.95
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 
@@ -103,7 +103,7 @@
 	bodytype = BODYTYPE_HUMANOID | BODYTYPE_ROBOTIC
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
-	brute_reduction = 3
-	burn_reduction = 2
+	brute_modifier = 0.9
+	burn_modifier = 0.95
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT, CLONE = DEFAULT_CLONE_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1

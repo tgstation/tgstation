@@ -123,7 +123,7 @@
 		mesmerized_target.adjust_silence(power_time)
 		//mesmerized_target.silent += power_time / 10 // Silent isn't based on ticks.
 		mesmerized_target.next_move = world.time + power_time // <--- Use direct change instead. We want an unmodified delay to their next move // mesmerized_target.changeNext_move(power_time) // check click.dm
-		mesmerized_target.notransform = TRUE // <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
+		ADD_TRAIT(mesmerized_target, TRAIT_NO_TRANSFORM, BLOODSUCKER_TRAIT)// <--- Fuck it. We tried using next_move, but they could STILL resist. We're just doing a hard freeze.
 		addtimer(CALLBACK(src, PROC_REF(end_mesmerize), user, mesmerized_target), power_time)
 	power_activated_sucessfully() // PAY COST! BEGIN COOLDOWN!
 
@@ -132,7 +132,7 @@
 	. = ..()
 
 /datum/action/cooldown/bloodsucker/targeted/mesmerize/proc/end_mesmerize(mob/living/user, mob/living/target)
-	target.notransform = FALSE
+	REMOVE_TRAIT(target, TRAIT_NO_TRANSFORM, BLOODSUCKER_TRAIT)
 	REMOVE_TRAIT(target, TRAIT_MUTE, BLOODSUCKER_TRAIT)
 	// They Woke Up! (Notice if within view)
 	if(istype(user) && target.stat == CONSCIOUS && (target in view(6, get_turf(user))))

@@ -142,3 +142,12 @@
 	)
 	time = 10 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/sharpmop
+	name = "Sharpened Mop"
+	result = /obj/item/mop/sharp
+	time = 30
+	reqs = list(/obj/item/mop = 1,
+				/obj/item/shard = 1)
+	category = CAT_WEAPON_MELEE
+	tool_behaviors = list(TOOL_WIRECUTTER)

@@ -1,0 +1,77 @@
+#define SPECIAL_LAUNCH "launch"
+#define SPECIAL_IGNITE "ignite"
+#define SPECIAL_TELEPORT "teleport"
+
+/datum/component/artifact/melee
+	associated_object = /obj/item/melee/artifact
+	artifact_size = ARTIFACT_SIZE_SMALL
+	type_name = "Melee Weapon"
+	weight = ARTIFACT_VERYUNCOMMON //rare
+	xray_result = "DENSE"
+	valid_activators = list(
+		/datum/artifact_activator/touch/silicon,
+		/datum/artifact_activator/range/heat,
+		/datum/artifact_activator/range/shock,
+		/datum/artifact_activator/range/radiation
+	)
+	valid_faults = list(
+		/datum/artifact_fault/ignite = 10,
+		/datum/artifact_fault/warp = 10,
+		/datum/artifact_fault/reagent/poison = 10,
+		/datum/artifact_fault/death = 2,
+		/datum/artifact_fault/tesla_zap = 5,
+		/datum/artifact_fault/grow = 10,
+		/datum/artifact_fault/explosion = 2,
+	)
+	var/active_force //force when active
+	var/active_reach
+	var/active_woundbonus = 0
+
+/datum/component/artifact/melee/setup() //RNG incarnate
+	var/obj/item/melee/artifact/weapon = holder
+	weapon.special_cooldown_time = rand(3,8) SECONDS
+	active_force = rand(-10,30)
+	weapon.demolition_mod = rand(-1.0, 2.0)
+	weapon.force = active_force / 3
+	weapon.throwforce = weapon.force
+	potency += abs(active_force)
+	if(prob(40))
+		weapon.sharpness = pick(SHARP_EDGED,SHARP_POINTY)
+		if(weapon.sharpness == SHARP_POINTY)
+			weapon.attack_verb_continuous = list("stabs", "shanks", "pokes")
+			weapon.attack_verb_simple = list("stab", "shank", "poke")
+		else
+			weapon.attack_verb_continuous = list("slashes", "slices", "cuts")
+			weapon.attack_verb_simple = list("slash", "slice", "cut")
+		weapon.hitsound = 'sound/weapons/bladeslice.ogg'
+		potency += 9
+	if(prob(30))
+		active_woundbonus = rand(3,20)
+	if(prob(30))
+		weapon.armour_penetration = rand(5,15)//this barely does anything inactive so its fine to have it always
+	if(prob(50))
+		weapon.damtype = pick(BRUTE, BURN, TOX, STAMINA)
+	if(prob(10))
+		active_reach = rand(1,3) // this CANT possibly backfire
+		potency += 20
+	if(prob(30))
+		potency += 15
+		weapon.special = pick(SPECIAL_LAUNCH, SPECIAL_IGNITE, SPECIAL_TELEPORT)
+
+/datum/component/artifact/melee/effect_activate()
+	var/obj/item/melee/artifact/weapon = holder
+	weapon.reach = active_reach
+	weapon.force = active_force
+	weapon.wound_bonus = active_woundbonus
+	weapon.throwforce = weapon.force
+
+/datum/component/artifact/melee/effect_deactivate()
+	var/obj/item/melee/artifact/weapon = holder
+	weapon.force = active_force / 3
+	weapon.throwforce = weapon.force
+	weapon.reach = 1
+	weapon.wound_bonus = 0
+
+#undef SPECIAL_LAUNCH
+#undef SPECIAL_IGNITE
+#undef SPECIAL_TELEPORT

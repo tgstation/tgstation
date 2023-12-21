@@ -115,7 +115,7 @@
 	return ..()
 
 /obj/narsie/attack_ghost(mob/user)
-	makeNewConstruct(/mob/living/simple_animal/hostile/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
+	makeNewConstruct(/mob/living/basic/construct/harvester, user, cultoverride = TRUE, loc_override = loc)
 
 /obj/narsie/process()
 	var/datum/component/singularity/singularity_component = singularity.resolve()
@@ -292,7 +292,7 @@
 
 ///Helper to set the round to end asap. Current usage Cult round end code
 /proc/ending_helper()
-	SSticker.force_ending = TRUE
+	SSticker.force_ending = FORCE_END_ROUND
 
 /**
  * Selects cinematic to play as part of the cult end depending on the outcome then ends the round afterward

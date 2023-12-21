@@ -6,10 +6,8 @@
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_FRIENDLY
 	description = "A colourful display can be seen through select windows. And the kitchen."
-	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_COMMUNAL, TAG_POSITIVE, TAG_SPACE)
 
-/datum/round_event_control/aurora_caelus/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/aurora_caelus/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	if(!SSmapping.empty_space)
 		return FALSE
 	return ..()

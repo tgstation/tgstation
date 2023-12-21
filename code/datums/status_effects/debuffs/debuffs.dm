@@ -397,7 +397,9 @@
 
 	var/still_bleeding = FALSE
 	for(var/datum/wound/bleeding_thing as anything in throat.wounds)
-		if(bleeding_thing.wound_type == WOUND_SLASH && bleeding_thing.severity > WOUND_SEVERITY_MODERATE)
+		var/datum/wound_pregen_data/pregen_data = GLOB.all_wound_pregen_data[bleeding_thing.type]
+
+		if(pregen_data.wounding_types_valid(list(WOUND_SLASH)) && bleeding_thing.severity > WOUND_SEVERITY_MODERATE && bleeding_thing.blood_flow > 0)
 			still_bleeding = TRUE
 			break
 	if(!still_bleeding)

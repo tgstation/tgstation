@@ -22,6 +22,10 @@
 	/// the shifted x offset of the head
 	var/list/head_x_shift
 
+/mob/living/basic/proc/apply_overlay(cache_index)
+	if((. = possession_overlays[cache_index]))
+		add_overlay(.)
+
 /mob/living/basic/proc/create_overlay_index()
 	var/list/overlays[1]
 	possession_overlays = overlays
@@ -39,6 +43,7 @@
 	update_held_items()
 
 /mob/living/basic/update_held_items()
+	. = ..()
 	remove_overlay(1)
 	var/list/hands_overlays = list()
 
@@ -83,10 +88,6 @@
 	if(hands_overlays.len)
 		possession_overlays[1] = hands_overlays
 	apply_overlay(1)
-
-/mob/living/basic/proc/apply_overlay(cache_index)
-	if((. = possession_overlays[cache_index]))
-		add_overlay(.)
 
 /mob/living/basic/proc/remove_overlay(cache_index)
 	var/I = possession_overlays[cache_index]

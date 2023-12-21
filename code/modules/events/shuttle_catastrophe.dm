@@ -6,10 +6,8 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "Replaces the emergency shuttle with a random one."
 	admin_setup = list(/datum/event_admin_setup/warn_admin/shuttle_catastrophe, /datum/event_admin_setup/listed_options/shuttle_catastrophe)
-	track = EVENT_TRACK_MODERATE
-	tags = list(TAG_COMMUNAL)
 
-/datum/round_event_control/shuttle_catastrophe/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/shuttle_catastrophe/can_spawn_event(players, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .
@@ -48,7 +46,7 @@
 		if(!isnull(template.who_can_purchase) && template.credit_cost < INFINITY) //if we could get it from the communications console, it's cool for us to get it here
 			valid_shuttle_templates += template
 	new_shuttle = pick(valid_shuttle_templates)
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/shuttle_catastrophe/start()
 	if(SSshuttle.shuttle_insurance)

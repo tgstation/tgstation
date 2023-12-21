@@ -10,12 +10,13 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	tint = 2
 	armor_type = /datum/armor/utility_welding
-	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
+	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	actions_types = list(/datum/action/item_action/toggle)
-	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
+	visor_flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE
 	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = FIRE_PROOF
 	clothing_flags = SNUG_FIT | PLASMAMAN_HELMET_EXEMPT
+	supports_variations_flags = CLOTHING_SNOUTED_VARIATION
 
 /datum/armor/utility_welding
 	melee = 10

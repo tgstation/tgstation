@@ -119,3 +119,106 @@
 #define BB_ORE_TARGET "BB_ore_target"
 /// which ore types we will not eat
 #define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"
+
+// minebot keys
+/// key that stores our toggle light ability
+#define BB_MINEBOT_LIGHT_ABILITY "minebot_light_ability"
+/// key that stores our dump ore ability
+#define BB_MINEBOT_DUMP_ABILITY "minebot_dump_ability"
+/// key that stores our target turf
+#define BB_TARGET_MINERAL_TURF "target_mineral_turf"
+/// key that stores list of the turfs we ignore
+#define BB_BLACKLIST_MINERAL_TURFS "blacklist_mineral_turfs"
+/// key that stores the previous blocked wall
+#define BB_PREVIOUS_UNREACHABLE_WALL "previous_unreachable_wall"
+/// key that stores our mining mode
+#define BB_AUTOMATED_MINING "automated_mining"
+/// key that stores the nearest dead human
+#define BB_NEARBY_DEAD_MINER "nearby_dead_miner"
+
+//seedling keys
+/// the water can we will pick up
+#define BB_WATERCAN_TARGET "watercan_target"
+/// the hydrotray we will heal
+#define BB_HYDROPLANT_TARGET "hydroplant_target"
+/// minimum weed levels for us to cure
+#define BB_WEEDLEVEL_THRESHOLD "weedlevel_threshold"
+/// minimum water levels for us to refill
+#define BB_WATERLEVEL_THRESHOLD "waterlevel_threshold"
+/// key holds our solarbeam ability
+#define BB_SOLARBEAM_ABILITY "solarbeam_ability"
+/// key holds our rapid seeds ability
+#define BB_RAPIDSEEDS_ABILITY "rapidseeds_ability"
+/// key holds the tray we will beam
+#define BB_BEAMABLE_HYDROPLANT_TARGET "beamable_hydroplant_target"
+
+//ice demons
+///the list of items we are afraid of
+#define BB_LIST_SCARY_ITEMS "list_scary_items"
+///our teleportation ability
+#define BB_DEMON_TELEPORT_ABILITY "demon_teleport_ability"
+///the destination of our teleport ability
+#define BB_TELEPORT_DESTINATION "teleport_destination"
+///the ability to clone ourself
+#define BB_DEMON_CLONE_ABILITY "demon_clone_ability"
+///our slippery ice ability
+#define BB_DEMON_SLIP_ABILITY "demon_slip_ability"
+///the turf we are escaping to
+#define BB_ESCAPE_DESTINATION "escape_destination"
+
+/// Corpse we have consumed
+#define BB_LEGION_CORPSE "legion_corpse"
+/// Things our target recently said
+#define BB_LEGION_RECENT_LINES "legion_recent_lines"
+/// The creator of our legion skull
+#define BB_LEGION_BROOD_CREATOR "legion_brood_creator"
+
+//mook keys
+/// our home landmark
+#define BB_HOME_VILLAGE "home_village"
+/// maximum distance we can be from home during a storm
+#define BB_MAXIMUM_DISTANCE_TO_VILLAGE "maximum_distance_to_village"
+/// stand where we deposit our ores
+#define BB_MATERIAL_STAND_TARGET "material_stand_target"
+/// our jump ability
+#define BB_MOOK_JUMP_ABILITY "mook_jump_ability"
+/// our leap ability
+#define BB_MOOK_LEAP_ABILITY "mook_leap_ability"
+/// the chief we must obey
+#define BB_MOOK_TRIBAL_CHIEF "mook_tribal_chief"
+/// the injured mook we must heal
+#define BB_INJURED_MOOK "injured_mook"
+/// the player we will follow and play music for
+#define BB_MOOK_MUSIC_AUDIENCE "music_audience"
+/// the bonfire we will light up
+#define BB_MOOK_BONFIRE_TARGET "bonfire_target"
+
+//gutlunch keys
+///the trough we will eat from
+#define BB_TROUGH_TARGET "trough_target"
+//leaper keys
+///key holds our volley ability
+#define BB_LEAPER_VOLLEY "leaper_volley"
+///key holds our flop ability
+#define BB_LEAPER_FLOP "leaper_flop"
+///key holds our bubble ability
+#define BB_LEAPER_BUBBLE "leaper_bubble"
+///key holds our summon ability
+#define BB_LEAPER_SUMMON "leaper_summon"
+///key holds the world timer for swimming
+#define BB_KEY_SWIM_TIME "key_swim_time"
+///key holds the water or land target turf
+#define BB_SWIM_ALTERNATE_TURF "swim_alternate_turf"
+///key holds our state of swimming
+#define BB_CURRENTLY_SWIMMING "currently_swimming"
+///key holds how long we will be swimming for
+#define BB_KEY_SWIMMER_COOLDOWN "key_swimmer_cooldown"
+//Wizard AI keys
+/// Key where we store our main targeted spell
+#define BB_WIZARD_TARGETED_SPELL "BB_wizard_targeted_spell"
+/// Key where we store our secondary, untargeted spell
+#define BB_WIZARD_SECONDARY_SPELL "BB_wizard_secondary_spell"
+/// Key where we store our blink spell
+#define BB_WIZARD_BLINK_SPELL "BB_wizard_blink_spell"
+/// Key for the next time we can cast a spell
+#define BB_WIZARD_SPELL_COOLDOWN "BB_wizard_spell_cooldown"

@@ -35,17 +35,19 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/fly,
 	)
 
-/datum/species/fly/handle_chemicals(datum/reagent/chem, mob/living/carbon/human/H, seconds_per_tick, times_fired)
-	if(chem.type == /datum/reagent/toxin/pestkiller)
-		H.adjustToxLoss(3 * REM * seconds_per_tick)
-		H.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
-		return TRUE
-	return ..()
+/datum/species/fly/on_species_gain(mob/living/carbon/human/human_who_gained_species, datum/species/old_species, pref_load)
+	. = ..()
+	RegisterSignal(human_who_gained_species, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(damage_weakness))
 
-/datum/species/fly/check_species_weakness(obj/item/weapon, mob/living/attacker)
-	if(istype(weapon, /obj/item/melee/flyswatter))
-		return 30 //Flyswatters deal 30x damage to flypeople.
-	return 1
+/datum/species/fly/on_species_loss(mob/living/carbon/human/C, datum/species/new_species, pref_load)
+	. = ..()
+	UnregisterSignal(C, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS)
+
+/datum/species/fly/proc/damage_weakness(datum/source, list/damage_mods, damage_amount, damagetype, def_zone, sharpness, attack_direction, obj/item/attacking_item)
+	SIGNAL_HANDLER
+
+	if(istype(attacking_item, /obj/item/melee/flyswatter))
+		damage_mods += 30 // Yes, a 30x damage modifier
 
 /datum/species/fly/get_species_description()
 	return "With no official documentation or knowledge of the origin of \

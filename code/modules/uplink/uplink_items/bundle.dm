@@ -17,19 +17,26 @@
 
 /datum/uplink_item/bundles_tc/random/purchase(mob/user, datum/uplink_handler/handler, atom/movable/source)
 	var/list/possible_items = list()
+	var/ignore_locked = check_ignore_locked(handler) //monkestation edit
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
 		if(src == uplink_item || !uplink_item.item)
 			continue
-		if(!handler.can_purchase_item(user, uplink_item))
+		if(!handler.can_purchase_item(user, uplink_item, ignore_locked)) //monkestation edit: adds ignore_locked
 			continue
 		possible_items += uplink_item
 
+//monkestation edit start, this is the less snowflakey more janky way to handle this
+	var/debug_mode = handler.debug_mode
+	if(ignore_locked)
+		handler.debug_mode = TRUE
+//monkestation edit end
 	if(possible_items.len)
 		var/datum/uplink_item/uplink_item = pick(possible_items)
 		log_uplink("[key_name(user)] purchased a random uplink item from [handler.owner]'s uplink with [handler.telecrystals] telecrystals remaining")
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(uplink_item.name))
 		handler.purchase_item(user, uplink_item)
+	handler.debug_mode = debug_mode //monkestation edit
 
 /datum/uplink_item/bundles_tc/telecrystal
 	name = "1 Raw Telecrystal"
@@ -80,24 +87,25 @@
 	name = "Syndicate Surplus Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse delivered directly to you via Supply Pod. \
 			If the rumors are true, it will fill it's contents based on your current reputation. Get on that grind. \
-			Contents are sorted to always be worth 30 TC. The Syndicate will only provide one surplus item per agent."
+			Contents are sorted to always be worth 40 TC. The Syndicate will only provide one surplus item per agent."
 	item = /obj/structure/closet/crate // will be replaced in purchase()
 	cost = 20
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
 	/// Value of items inside the crate in TC
-	var/crate_tc_value = 30
+	var/crate_tc_value = 40 //monkestation edit: from 30 to 40
 	/// crate that will be used for the surplus crate
 	var/crate_type = /obj/structure/closet/crate
 
 /// generates items that can go inside crates, edit this proc to change what items could go inside your specialized crate
-/datum/uplink_item/bundles_tc/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler)
+/// monkestation edit: set unrestricted to TRUE if you want to pick from all uplink items
+/datum/uplink_item/bundles_tc/surplus/proc/generate_possible_items(mob/user, datum/uplink_handler/handler, unrestricted = FALSE) //monkestation edit: adds unrestricted
 	var/list/possible_items = list()
 	for(var/datum/uplink_item/item_path as anything in SStraitor.uplink_items_by_type)
 		var/datum/uplink_item/uplink_item = SStraitor.uplink_items_by_type[item_path]
 		if(src == uplink_item || !uplink_item.item)
 			continue
-		if(!handler.check_if_restricted(uplink_item))
+		if(!unrestricted && !handler.check_if_restricted(uplink_item)) //monkestation edit: adds the unrestricted check
 			continue
 		if(!uplink_item.surplus)
 			continue
@@ -130,6 +138,13 @@
 		CRASH("crate_type is not a crate")
 	var/list/possible_items = generate_possible_items(user, handler)
 
+//monkestation edit start
+	if(!possible_items || !length(possible_items))
+		handler.telecrystals += cost
+		to_chat(user, span_warning("You get the feeling something went wrong and that you should inform syndicate command"))
+		qdel(surplus_crate)
+		CRASH("surplus crate failed to generate possible items")
+//monkestation edit end
 	fill_crate(surplus_crate, possible_items)
 
 	podspawn(list(
@@ -143,13 +158,13 @@
 	name = "United Surplus Crate"
 	desc = "A shiny and large crate to be delivered directly to you via Supply Pod. It has an advanced locking mechanism with an anti-tampering protocol. \
 			It is recommended that you only attempt to open it by having another agent purchase a Surplus Crate Key. Unite and fight. \
-			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 80 TC. \
+			Rumored to contain a valuable assortment of items based on your current reputation, but you never know. Contents are sorted to always be worth 100 TC. \
 			The Syndicate will only provide one surplus item per agent."
 	cost = 20
 	item = /obj/structure/closet/crate/syndicrate
 	progression_minimum = 30 MINUTES
 	stock_key = UPLINK_SHARED_STOCK_SURPLUS
-	crate_tc_value = 80
+	crate_tc_value = 100 //monkestation edit: from 80 to 100
 	crate_type = /obj/structure/closet/crate/syndicrate
 
 /// edited version of fill crate for super surplus to ensure it can only be unlocked with the syndicrate key

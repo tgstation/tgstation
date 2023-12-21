@@ -41,15 +41,5 @@
 	C.fully_replace_character_name(null, pick(GLOB.nightmare_names))
 	C.set_safe_hunger_level()
 
-/datum/species/shadow/nightmare/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
-	var/turf/T = H.loc
-	if(istype(T))
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
-			H.visible_message(span_danger("[H] dances in the shadows, evading [P]!"))
-			playsound(T, SFX_BULLET_MISS, 75, TRUE)
-			return BULLET_ACT_FORCE_PIERCE
-	return ..()
-
 /datum/species/shadow/nightmare/check_roundstart_eligible()
 	return FALSE

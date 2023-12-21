@@ -695,7 +695,7 @@
       multiple targets.
   - balance: 'The immovable rod deals a LOT more damage to non-mobs that it passes
       through. feature: The immovable rod can now traverse z-level to chase its targets
-      down when used as both a targetted smite and as an option from the admin event
+      down when used as both a targeted smite and as an option from the admin event
       menu. feature: The immovable rod will subtly grow as it consumes the souls of
       sentients it hits.'
   - bugfix: The immovable rod no longer stalls on Icebox and will now spawn on the

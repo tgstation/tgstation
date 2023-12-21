@@ -6,6 +6,8 @@
 /datum/ai_behavior/travel_towards
 	required_distance = 0
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT | AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+	/// If true we will get rid of our target on completion
+	var/clear_target = FALSE
 
 /datum/ai_behavior/travel_towards/setup(datum/ai_controller/controller, target_key)
 	. = ..()
@@ -16,7 +18,15 @@
 
 /datum/ai_behavior/travel_towards/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
 	. = ..()
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE, target_key)
+
+/datum/ai_behavior/travel_towards/finish_action(datum/ai_controller/controller, succeeded, target_key)
+	. = ..()
+	if (clear_target)
+		controller.clear_blackboard_key(target_key)
+
+/datum/ai_behavior/travel_towards/stop_on_arrival
+	clear_target = TRUE
 
 /**
  * # Travel Towards Atom

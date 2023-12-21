@@ -42,7 +42,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		OFFSET_SUIT = list(0,0),
 		OFFSET_NECK = list(0,0),
 	)
-
+	///If this species needs special 'fallback' sprites, what is the path to the file that contains them?
+	var/fallback_clothing_path
 	///The maximum number of bodyparts this species can have.
 	var/max_bodypart_count = 6
 	///This allows races to have specific hair colors. If null, it uses the H's hair/facial hair colors. If "mutcolor", it uses the H's mutant_color. If "fixedmutcolor", it uses fixedmutcolor
@@ -111,28 +112,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/brutemod = 1
 	///multiplier for burn damage
 	var/burnmod = 1
-	///multiplier for damage from cold temperature
-	var/coldmod = 1
-	///multiplier for damage from hot temperature
-	var/heatmod = 1
-	///multiplier for stun durations
-	var/stunmod = 1
-	///multiplier for money paid at payday
-	var/payday_modifier = 1
-	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
-	var/siemens_coeff = 1
-	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
-	var/fixed_mut_color = ""
-	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
-	var/inert_mutation = /datum/mutation/human/dwarfism
-	///Used to set the mob's death_sound upon species change
-	var/death_sound
-	///Sounds to override barefeet walking
-	var/list/special_step_sounds
-	///Special sound for grabbing
-	var/grab_sound
-	/// A path to an outfit that is important for species life e.g. plasmaman outfit
-	var/datum/outfit/outfit_important_for_life
 	//Used for metabolizing reagents. We're going to assume you're a meatbag unless you say otherwise.
 	var/reagent_tag = PROCESS_ORGANIC
 
@@ -204,6 +183,33 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Replaces default bladder with a different organ
 	var/obj/item/organ/internal/bladder/mutantbladder = /obj/item/organ/internal/bladder
+	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
+	/// IE: 10 = 10% less damage taken.
+	var/damage_modifier = 0
+	///multiplier for damage from cold temperature
+	var/coldmod = 1
+	///multiplier for damage from hot temperature
+	var/heatmod = 1
+	///multiplier for stun durations
+	var/stunmod = 1
+	///multiplier for money paid at payday
+	var/payday_modifier = 1.0
+	///Base electrocution coefficient.  Basically a multiplier for damage from electrocutions.
+	var/siemens_coeff = 1
+	///To use MUTCOLOR with a fixed color that's independent of the mcolor feature in DNA.
+	var/fixed_mut_color = ""
+	///A fixed hair color that's independent of the mcolor feature in DNA.
+	var/fixed_hair_color = ""
+	///Special mutation that can be found in the genepool exclusively in this species. Dont leave empty or changing species will be a headache
+	var/inert_mutation = /datum/mutation/human/dwarfism
+	///Used to set the mob's death_sound upon species change
+	var/death_sound
+	///Sounds to override barefeet walking
+	var/list/special_step_sounds
+	///Special sound for grabbing
+	var/grab_sound
+	/// A path to an outfit that is important for species life e.g. plasmaman outfit
+	var/datum/outfit/outfit_important_for_life
 
 	///Bitflag that controls what in game ways something can select this species as a spawnable source, such as magic mirrors. See [mob defines][code/__DEFINES/mobs.dm] for possible sources.
 	var/changesource_flags = NONE
@@ -761,7 +767,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
 				var/mutable_appearance/working_shirt
-				if(species_human.dna.species.sexes && species_human.physique == FEMALE)
+				if(species_human.dna.species.sexes && species_human.physique == FEMALE && species_human.get_bodypart(BODY_ZONE_CHEST)?.is_dimorphic)
 					working_shirt = wear_female_version(undershirt.icon_state, undershirt.icon, BODY_LAYER)
 				else
 					working_shirt = mutable_appearance(undershirt.icon, undershirt.icon_state, -BODY_LAYER)
@@ -1157,9 +1163,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		chem.overdose_start(H)
 		H.log_message("has started overdosing on [chem.name] at [chem.volume] units.", LOG_GAME)
 
-/datum/species/proc/check_species_weakness(obj/item, mob/living/attacker)
-	return 1 //This is not a boolean, it's the multiplier for the damage that the user takes from the item. The force of the item is multiplied by this value
-
 /**
  * Equip the outfit required for life. Replaces items currently worn.
  */
@@ -1407,28 +1410,36 @@ GLOBAL_LIST_EMPTY(features_by_species)
 						span_userdanger("You block [weapon]!"))
 		return FALSE
 
-	var/hit_area
-	if(!affecting) //Something went wrong. Maybe the limb is missing?
-		affecting = human.bodyparts[1]
+	affecting ||= human.bodyparts[1] //Something went wrong. Maybe the limb is missing?
+	var/hit_area = affecting.plaintext_zone
+	var/armor_block = min(human.run_armor_check(
+		def_zone = affecting,
+		attack_flag = MELEE,
+		absorb_text = span_notice("Your armor has protected your [hit_area]!"),
+		soften_text = span_warning("Your armor has softened a hit to your [hit_area]!"),
+		armour_penetration = weapon.armour_penetration,
+		weak_against_armour = weapon.weak_against_armour,
+	), ARMOR_MAX_BLOCK) //cap damage reduction at 90%
 
-	hit_area = affecting.plaintext_zone
-	var/def_zone = affecting.body_zone
-
-	var/armor_block = human.run_armor_check(affecting, MELEE, span_notice("Your armor has protected your [hit_area]!"), span_warning("Your armor has softened a hit to your [hit_area]!"),weapon.armour_penetration, weak_against_armour = weapon.weak_against_armour)
-	armor_block = min(ARMOR_MAX_BLOCK, armor_block) //cap damage reduction at 90%
-	var/Iwound_bonus = weapon.wound_bonus
-
+	var/modified_wound_bonus = weapon.wound_bonus
 	// this way, you can't wound with a surgical tool on help intent if they have a surgery active and are lying down, so a misclick with a circular saw on the wrong limb doesn't bleed them dry (they still get hit tho)
 	if((weapon.item_flags & SURGICAL_TOOL) && !(user.istate & ISTATE_HARM) && human.body_position == LYING_DOWN && (LAZYLEN(human.surgeries) > 0))
-		Iwound_bonus = CANT_WOUND
-
-	var/weakness = check_species_weakness(weapon, user)
+		modified_wound_bonus = CANT_WOUND
 
 	human.send_item_attack_message(weapon, user, hit_area, affecting)
+	human.apply_damage(
+		damage = weapon.force,
+		damagetype = weapon.damtype,
+		def_zone = affecting,
+		blocked = armor_block,
+		wound_bonus = modified_wound_bonus,
+		bare_wound_bonus = weapon.bare_wound_bonus,
+		sharpness = weapon.get_sharpness(),
+		attack_direction = get_dir(user, human),
+		attacking_item = weapon,
+	)
 
 
-	var/attack_direction = get_dir(user, human)
-	apply_damage(weapon.force * weakness, weapon.damtype, def_zone, armor_block, human, wound_bonus = Iwound_bonus, bare_wound_bonus = weapon.bare_wound_bonus, sharpness = weapon.get_sharpness(), attack_direction = attack_direction)
 
 	if(!weapon.force)
 		return FALSE //item force is zero
@@ -1438,7 +1449,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!(prob(25 + (weapon.force * 2))))
 		return TRUE
 
-	if(IS_ORGANIC_LIMB(affecting))
+	if(affecting.can_bleed())
 		weapon.add_mob_blood(human) //Make the weapon bloody, not the person.
 		if(prob(weapon.force * 2)) //blood spatter!
 			bloody = TRUE
@@ -1499,73 +1510,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		human.force_say(user)
 
 	return TRUE
-
-/datum/species/proc/apply_damage(damage, damagetype = BRUTE, def_zone = null, blocked, mob/living/carbon/human/H, forced = FALSE, spread_damage = FALSE, wound_bonus = 0, bare_wound_bonus = 0, sharpness = NONE, attack_direction = null)
-	SEND_SIGNAL(H, COMSIG_MOB_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
-	var/hit_percent = (100-(blocked+armor))/100
-	hit_percent = (hit_percent * (100-H.physiology.damage_resistance))/100
-	if(!damage || (!forced && hit_percent <= 0))
-		return 0
-
-	var/obj/item/bodypart/BP = null
-	if(!spread_damage)
-		if(isbodypart(def_zone))
-			BP = def_zone
-		else
-			if(!def_zone)
-				def_zone = H.get_random_valid_zone(def_zone)
-			BP = H.get_bodypart(check_zone(def_zone))
-			if(!BP)
-				BP = H.bodyparts[1]
-
-	switch(damagetype)
-		if(BRUTE)
-			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * brutemod * H.physiology.brute_mod
-			if(BP)
-				if(BP.receive_damage(damage_amount, 0, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					H.update_damage_overlays()
-			else//no bodypart, we deal damage with a more general method.
-				H.adjustBruteLoss(damage_amount)
-		if(BURN)
-			H.damageoverlaytemp = 20
-			var/damage_amount = forced ? damage : damage * hit_percent * burnmod * H.physiology.burn_mod
-			if(BP)
-				if(BP.receive_damage(0, damage_amount, wound_bonus = wound_bonus, bare_wound_bonus = bare_wound_bonus, sharpness = sharpness, attack_direction = attack_direction))
-					H.update_damage_overlays()
-			else
-				H.adjustFireLoss(damage_amount)
-		if(TOX)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.tox_mod
-			H.adjustToxLoss(damage_amount)
-		if(OXY)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.oxy_mod
-			H.adjustOxyLoss(damage_amount)
-		if(CLONE)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.clone_mod
-			H.adjustCloneLoss(damage_amount)
-		if(STAMINA)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.stamina_mod
-			H.stamina.adjust(-damage_amount)
-		if(BRAIN)
-			var/damage_amount = forced ? damage : damage * hit_percent * H.physiology.brain_mod
-			H.adjustOrganLoss(ORGAN_SLOT_BRAIN, damage_amount)
-	SEND_SIGNAL(H, COMSIG_MOB_AFTER_APPLY_DAMAGE, damage, damagetype, def_zone, blocked, wound_bonus, bare_wound_bonus, sharpness, attack_direction)
-	return 1
-
-/datum/species/proc/on_hit(obj/projectile/P, mob/living/carbon/human/H)
-	// called when hit by a projectile
-	switch(P.type)
-		if(/obj/projectile/energy/floramut) // overwritten by plants/pods
-			H.show_message(span_notice("The radiation beam dissipates harmlessly through your body."))
-		if(/obj/projectile/energy/florayield)
-			H.show_message(span_notice("The radiation beam dissipates harmlessly through your body."))
-		if(/obj/projectile/energy/florarevolution)
-			H.show_message(span_notice("The radiation beam dissipates harmlessly through your body."))
-
-/datum/species/proc/bullet_act(obj/projectile/P, mob/living/carbon/human/H)
-	// called before a projectile hit
-	return 0
 
 //////////////////////////
 // ENVIRONMENT HANDLERS //
@@ -1807,19 +1751,26 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// Lets pick a random body part and check for an existing burn
 	var/obj/item/bodypart/bodypart = pick(humi.bodyparts)
-	var/datum/wound/burn/existing_burn = locate(/datum/wound/burn) in bodypart.wounds
-
+	var/datum/wound/existing_burn
+	for (var/datum/wound/iterated_wound as anything in bodypart.wounds)
+		var/datum/wound_pregen_data/pregen_data = iterated_wound.get_pregen_data()
+		if (pregen_data.wound_series in GLOB.wounding_types_to_series[WOUND_BURN])
+			existing_burn = iterated_wound
+			break
 	// If we have an existing burn try to upgrade it
+	var/severity
 	if(existing_burn)
 		switch(existing_burn.severity)
 			if(WOUND_SEVERITY_MODERATE)
 				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 400) // 800k
-					bodypart.force_wound_upwards(/datum/wound/burn/severe)
+					severity = WOUND_SEVERITY_SEVERE
 			if(WOUND_SEVERITY_SEVERE)
 				if(humi.bodytemperature > BODYTEMP_HEAT_WOUND_LIMIT + 2800) // 3200k
-					bodypart.force_wound_upwards(/datum/wound/burn/critical)
+					severity = WOUND_SEVERITY_CRITICAL
 	else // If we have no burn apply the lowest level burn
-		bodypart.force_wound_upwards(/datum/wound/burn/moderate)
+		severity = WOUND_SEVERITY_MODERATE
+
+	humi.cause_wound_of_type_and_severity(WOUND_BURN, bodypart, severity, wound_source = "hot temperatures")
 
 	// always take some burn damage
 	var/burn_damage = HEAT_DAMAGE_LEVEL_1
@@ -1839,11 +1790,12 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(!HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
-				H.adjustBruteLoss(min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC)
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
-			else
+			if(HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
+			else
+				var/pressure_damage = min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
+				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
+				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
@@ -1867,7 +1819,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
 				H.clear_alert(ALERT_PRESSURE)
 			else
-				H.adjustBruteLoss(LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * seconds_per_tick)
+				var/pressure_damage = LOW_PRESSURE_DAMAGE * H.physiology.pressure_mod * H.physiology.brute_mod * seconds_per_tick
+				H.adjustBruteLoss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
 				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
 
 
@@ -2322,9 +2275,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	new_species ||= target.dna.species //If no new species is provided, assume its src.
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
+	var/is_digitigrade = FALSE
 	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features["legs"] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		new_species.bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		new_species.bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
+		is_digitigrade = TRUE
 
 	for(var/obj/item/bodypart/old_part as anything in target.bodyparts)
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
@@ -2334,6 +2287,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		var/obj/item/bodypart/new_part
 		if(path)
 			new_part = new path()
+			if(istype(new_part, /obj/item/bodypart/leg) && is_digitigrade)
+				new_part:set_digitigrade(TRUE)
 			new_part.replace_limb(target, TRUE)
 			new_part.update_limb(is_creating = TRUE)
 		qdel(old_part)

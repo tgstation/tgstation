@@ -1,0 +1,1 @@
+/mob/living/simple_animal/hostile/construct/proteon/@SUBTYPES : /mob/living/basic/construct/proteon/@SUBTYPES{@OLD}

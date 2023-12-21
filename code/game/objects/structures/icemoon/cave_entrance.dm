@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	faction = list(FACTION_MINING)
 	max_mobs = 3
 	max_integrity = 250
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/wolf)
+	mob_types = list(/mob/living/basic/mining/wolf)
 	move_resist = INFINITY
 	anchored = TRUE
 
@@ -76,7 +76,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	name = "demonic portal"
 	desc = "A portal that goes to another world, normal creatures couldn't survive there."
 	icon_state = "nether"
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/ice_demon)
+	mob_types = list(/mob/living/basic/mining/ice_demon)
 	light_outer_range = 1
 	light_color = COLOR_SOFT_RED
 
@@ -102,7 +102,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 	mob_types = list(/mob/living/basic/mining/ice_whelp)
 
 /obj/structure/spawner/ice_moon/demonic_portal/snowlegion
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow)
+	mob_types = list(/mob/living/basic/mining/legion/snow/spawner_made)
 
 /obj/effect/collapsing_demonic_portal
 	name = "collapsing demonic portal"
@@ -164,7 +164,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(13)
 			new /obj/item/gun/magic/hook (loc)
 		if(14)
-			new /obj/item/guardiancreator/miner(loc)
+			new /obj/item/guardian_creator/miner(loc)
 		if(15)
 			new /obj/item/ship_in_a_bottle(loc)
 		if(16)
@@ -186,7 +186,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(24)
 			new /obj/structure/elite_tumor(loc)
 		if(25)
-			new /mob/living/simple_animal/hostile/retaliate/clown/clownhulk(loc)
+			new /mob/living/basic/clown/clownhulk(loc)
 		if(26)
 			new /obj/item/book/granter/action/spell/sacredflame(loc)
 		if(27)

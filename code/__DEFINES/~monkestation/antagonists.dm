@@ -14,6 +14,6 @@
 /// maximum amount of cogscarabs the clock cult can have
 #define MAXIMUM_COGSCARABS 9
 /// is something a cogscarab
-#define iscogscarab(checked) (istype(checked, /mob/living/simple_animal/drone/cogscarab))
+#define iscogscarab(checked) (istype(checked, /mob/living/basic/drone/cogscarab))
 /// is something an eminence
 #define iseminence(checked) (istype(checked, /mob/living/eminence))

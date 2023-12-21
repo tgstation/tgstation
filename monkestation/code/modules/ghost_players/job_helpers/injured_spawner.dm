@@ -61,20 +61,23 @@
 		runs--
 		tested_part = victim.get_bodypart(pick(zones))
 		i = 1
-		for(iter_test_wound_list in list(list(/datum/wound/blunt/moderate, /datum/wound/blunt/severe, /datum/wound/blunt/critical),\
-											list(/datum/wound/slash/moderate, /datum/wound/slash/severe, /datum/wound/slash/critical),\
-											list(/datum/wound/pierce/moderate, /datum/wound/pierce/severe, /datum/wound/pierce/critical),\
-											list(/datum/wound/burn/moderate, /datum/wound/burn/severe, /datum/wound/burn/critical)))
+		for(iter_test_wound_list in list(list(/datum/wound/blunt/bone/moderate, /datum/wound/blunt/bone/severe, /datum/wound/blunt/bone/critical),\
+										list(/datum/wound/slash/flesh/moderate, /datum/wound/slash/flesh/severe, /datum/wound/slash/flesh/critical),\
+										list(/datum/wound/pierce/bleed/moderate, /datum/wound/pierce/bleed/severe, /datum/wound/pierce/bleed/critical),\
+										list(/datum/wound/burn/flesh/moderate, /datum/wound/burn/flesh/severe, /datum/wound/burn/flesh/critical)))
 			if(prob(20))
 				continue
 
-			var/datum/wound/iter_test_wound
-			for(iter_test_wound as anything in iter_test_wound_list)
-				var/threshold = initial(iter_test_wound.threshold_minimum) + rand(40, 60) // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
-				if(dam_types[i] == BRUTE)
-					tested_part.receive_damage(WOUND_MINIMUM_DAMAGE + 15, 0, wound_bonus = threshold, sharpness=sharps[i])
-				else if(dam_types[i] == BURN)
-					tested_part.receive_damage(0, WOUND_MINIMUM_DAMAGE + 15, wound_bonus = threshold, sharpness=sharps[i])
+		var/datum/wound/iter_test_wound
+		var/datum/wound_pregen_data/iter_pregen_data = GLOB.all_wound_pregen_data[iter_test_wound]
+		var/threshold_penalty = 0
+
+		for(iter_test_wound in iter_test_wound_list)
+			var/threshold = iter_pregen_data.threshold_minimum - threshold_penalty // just enough to guarantee the next tier of wound, given the existing wound threshold penalty
+			if(dam_types[i] == BRUTE)
+				tested_part.receive_damage(WOUND_MINIMUM_DAMAGE, 0, wound_bonus = threshold, sharpness=sharps[i])
+			else if(dam_types[i] == BURN)
+				tested_part.receive_damage(0, WOUND_MINIMUM_DAMAGE, wound_bonus = threshold, sharpness=sharps[i])
 			i++
 
 /obj/structure/injured_spawner/proc/rot_organs(mob/living/carbon/human/victim)

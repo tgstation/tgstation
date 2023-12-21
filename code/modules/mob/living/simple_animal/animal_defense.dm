@@ -98,20 +98,20 @@
 		var/damage = rand(user.melee_damage_lower, user.melee_damage_upper)
 		return attack_threshold_check(damage, user.melee_damage_type)
 
-/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
+/mob/living/simple_animal/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
 	if(..()) //successful slime attack
 		var/damage = rand(15, 25)
-		if(M.is_adult)
+		if(user.is_adult)
 			damage = rand(20, 35)
 		return attack_threshold_check(damage)
 
-/mob/living/simple_animal/attack_drone(mob/living/simple_animal/drone/M)
-	if((M.istate & ISTATE_HARM)) //No kicking dogs even as a rogue drone. Use a weapon.
+/mob/living/simple_animal/attack_drone(mob/living/basic/drone/user)
+	if(user.istate & ISTATE_HARM) //No kicking dogs even as a rogue drone. Use a weapon.
 		return
 	return ..()
 
-/mob/living/simple_animal/attack_drone_secondary(mob/living/simple_animal/drone/M)
-	if((M.istate & ISTATE_HARM))
+/mob/living/simple_animal/attack_drone_secondary(mob/living/basic/drone/user)
+	if(user.istate & ISTATE_HARM)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
 

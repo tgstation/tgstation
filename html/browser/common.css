@@ -31,6 +31,10 @@ a:hover
 	background: #ffffff;
 }
 
+a.inlineblock {
+	display: inline-block;
+}
+
 a.white, a.white:link, a.white:visited, a.white:active
 {
 	color: #40628a;
@@ -408,4 +412,8 @@ ul.sparse {
 .severity img {
     display: inline-block;
     vertical-align: middle;
+}
+
+.highlighter:hover {
+	background-color: #f0c400 !important;
 }

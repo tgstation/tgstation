@@ -7,9 +7,6 @@
 	description = "Spawns a hungry shapeshifting blobby creature."
 	min_wizard_trigger_potency = 4
 	max_wizard_trigger_potency = 7
-	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_SPOOKY)
-	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/morph
 	minimum_required = 1

@@ -198,14 +198,14 @@
 				continue
 			regurgitate_guardian(guardian)
 
-/obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+/obj/item/clothing/neck/necklace/memento_mori/proc/consume_guardian(mob/living/basic/guardian/guardian)
 	new /obj/effect/temp_visual/guardian/phase/out(get_turf(guardian))
 	guardian.locked = TRUE
 	guardian.forceMove(src)
 	to_chat(guardian, span_userdanger("You have been locked away in your summoner's pendant!"))
 	guardian.playsound_local(get_turf(guardian), 'sound/magic/summonitems_generic.ogg', 50, TRUE)
 
-/obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/simple_animal/hostile/guardian/guardian)
+/obj/item/clothing/neck/necklace/memento_mori/proc/regurgitate_guardian(mob/living/basic/guardian/guardian)
 	guardian.locked = FALSE
 	guardian.recall(forced = TRUE)
 	to_chat(guardian, span_notice("You have been returned back from your summoner's pendant!"))
@@ -421,7 +421,7 @@
 		return
 
 	user.status_flags &= ~GODMODE
-	user.notransform = FALSE
+	REMOVE_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 	user.forceMove(get_turf(src))
 	user.visible_message(span_danger("[user] pops back into reality!"))
 
@@ -432,7 +432,7 @@
 	setDir(user.dir)
 
 	user.forceMove(src)
-	user.notransform = TRUE
+	ADD_TRAIT(user, TRAIT_NO_TRANSFORM, REF(src))
 	user.status_flags |= GODMODE
 
 	user_ref = WEAKREF(user)
@@ -446,8 +446,8 @@
 	return
 
 /obj/effect/immortality_talisman/relaymove(mob/living/user, direction)
-	// Won't really come into play since our mob has notransform and cannot move,
-	// but regardless block all relayed moves, becuase no, you cannot move in the void.
+	// Won't really come into play since our mob has TRAIT_NO_TRANSFORM and cannot move,
+	// but regardless block all relayed moves, because no, you cannot move in the void.
 	return
 
 /obj/effect/immortality_talisman/singularity_pull()

@@ -1,8 +1,4 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
-"a" = (
-/obj/item/relic,
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
 "b" = (
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
@@ -150,7 +146,7 @@ n
 "}
 (9,1,1) = {"
 b
-a
+b
 b
 i
 V

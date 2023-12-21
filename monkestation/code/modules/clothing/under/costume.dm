@@ -38,6 +38,14 @@
 	icon_state = "decking_jumpsuit"
 	can_adjust = FALSE
 
+/obj/item/clothing/under/costume/worldchampiongi
+	name = "World Champion Gi"
+	desc = "Only the strongest wears this Gi, everyone else are just using tricks."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "worldchampion_gi"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/costume/tragic
 	name = "tragic mime suit"
 	desc = "A skin-tight black suit for theatre actors. You feel the need to remind a doctor to eat food and sleep."

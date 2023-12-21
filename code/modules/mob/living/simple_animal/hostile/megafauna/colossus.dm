@@ -55,7 +55,6 @@
 	loot = list(/obj/structure/closet/crate/necropolis/colossus)
 	death_message = "disintegrates, leaving a glowing core in its wake."
 	death_sound = 'sound/magic/demon_dies.ogg'
-	small_sprite_type = /datum/action/small_sprite/megafauna/colossus
 	/// Spiral shots ability
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/spiral_shots/colossus/spiral_shots
 	/// Random shots ablity
@@ -187,7 +186,6 @@
 	damage = 25
 	armour_penetration = 50
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 	plane = GAME_PLANE
@@ -198,7 +196,7 @@
 		direct_target = TRUE
 	return ..(target, direct_target, ignore_loc, cross_failed)
 
-/obj/projectile/colossus/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/colossus/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(isliving(target))
 		var/mob/living/dust_mob = target
@@ -598,11 +596,10 @@
 
 /obj/structure/closet/stasis/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	if(isliving(arrived) && holder_animal)
-		var/mob/living/L = arrived
-		L.notransform = 1
-		ADD_TRAIT(L, TRAIT_MUTE, STASIS_MUTE)
-		L.status_flags |= GODMODE
-		L.mind.transfer_to(holder_animal)
+		var/mob/living/possessor = arrived
+		possessor.add_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
+		possessor.status_flags |= GODMODE
+		possessor.mind.transfer_to(holder_animal)
 		var/datum/action/exit_possession/escape = new(holder_animal)
 		escape.Grant(holder_animal)
 		remove_verb(holder_animal, /mob/living/verb/pulled)
@@ -610,9 +607,8 @@
 /obj/structure/closet/stasis/dump_contents(kill = TRUE)
 	STOP_PROCESSING(SSobj, src)
 	for(var/mob/living/possessor in src)
-		REMOVE_TRAIT(possessor, TRAIT_MUTE, STASIS_MUTE)
+		possessor.remove_traits(list(TRAIT_UNDENSE, TRAIT_NO_TRANSFORM), STASIS_MUTE)
 		possessor.status_flags &= ~GODMODE
-		possessor.notransform = FALSE
 		if(kill || !isanimal_or_basicmob(loc))
 			possessor.investigate_log("has died from [src].", INVESTIGATE_DEATHS)
 			possessor.death(FALSE)

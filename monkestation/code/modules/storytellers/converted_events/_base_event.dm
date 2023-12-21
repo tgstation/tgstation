@@ -153,7 +153,7 @@
 	var/living_players_arg = round_started ? TRUE : FALSE
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 
-	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, ready_newplayers = new_players_arg, living_players = living_players_arg, midround_antag_pref = midround_antag_pref_arg, restricted_roles = restricted_roles)
+	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, ready_newplayers = new_players_arg, living_players = living_players_arg, midround_antag_pref = midround_antag_pref_arg, restricted_roles = restricted_roles, required_roles = exclusive_roles)
 	candidates = trim_candidates(candidates)
 	return candidates
 
@@ -229,11 +229,10 @@
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
-		setup_minds += candidate.mind
 		var/mob/living/carbon/human/new_human = make_body(candidate)
-		candidate.mind.set_current(new_human)
-		candidate.mind.special_role = antag_flag
-		candidate.mind.restricted_roles = restricted_roles
+		new_human.mind.special_role = antag_flag
+		new_human.mind.restricted_roles = restricted_roles
+		setup_minds += new_human.mind
 	setup = TRUE
 
 

@@ -9,11 +9,11 @@
  * Pretty simple, adds armor, you can choose against what
  * ## Internal damage
  * When taking damage will force you to take some time to repair, encourages improvising in a fight
- * Targetting different def zones will damage them to encurage a more strategic approach to fights
+ * Targeting different def zones will damage them to encurage a more strategic approach to fights
  * where they target the "dangerous" modules
  */
 
-/// tries to damage mech equipment depending on damage and where is being targetted
+/// tries to damage mech equipment depending on damage and where is being targeted
 /obj/vehicle/sealed/mecha/proc/try_damage_component(damage, def_zone)
 	if(damage < component_damage_threshold)
 		return
@@ -114,10 +114,19 @@
 	return ..()
 
 /obj/vehicle/sealed/mecha/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit) //wrapper
-	if(!enclosed && LAZYLEN(occupants) && !(mecha_flags  & SILICON_PILOT) && (hitting_projectile.def_zone == BODY_ZONE_HEAD || hitting_projectile.def_zone == BODY_ZONE_CHEST)) //allows bullets to hit the pilot of open-canopy mechs
+	. = ..()
+	if(. != BULLET_ACT_HIT)
+		return .
+
+	//allows bullets to hit the pilot of open-canopy mechs
+	if(!enclosed \
+		&& LAZYLEN(occupants) \
+		&& !(mecha_flags & SILICON_PILOT) \
+		&& (def_zone == BODY_ZONE_HEAD || def_zone == BODY_ZONE_CHEST))
 		for(var/mob/living/hitmob as anything in occupants)
 			hitmob.bullet_act(hitting_projectile, def_zone, piercing_hit) //If the sides are open, the occupant can be hit
 		return BULLET_ACT_HIT
+
 	log_message("Hit by projectile. Type: [hitting_projectile]([hitting_projectile.damage_type]).", LOG_MECHA, color="red")
 	// yes we *have* to run the armor calc proc here I love tg projectile code too
 	try_damage_component(run_atom_armor(
@@ -126,8 +135,7 @@
 		damage_flag = hitting_projectile.armor_flag,
 		attack_dir = REVERSE_DIR(hitting_projectile.dir),
 		armour_penetration = hitting_projectile.armour_penetration,
-	), hitting_projectile.def_zone)
-	return ..()
+	), def_zone)
 
 /obj/vehicle/sealed/mecha/ex_act(severity, target)
 	log_message("Affected by explosion of severity: [severity].", LOG_MECHA, color="red")

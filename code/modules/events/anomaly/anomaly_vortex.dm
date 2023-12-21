@@ -4,7 +4,7 @@
 
 	min_players = 20
 	max_occurrences = 2
-	weight = 10
+	weight = 4 //monkestation edit: 10 ==> 4
 	description = "This anomaly sucks in and detonates items."
 	min_wizard_trigger_potency = 3
 	max_wizard_trigger_potency = 7

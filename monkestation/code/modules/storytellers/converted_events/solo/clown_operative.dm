@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/clown_operative
 	name = "Roundstart Clown Operative"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL)
 	antag_flag = ROLE_CLOWN_OPERATIVE
 	antag_datum = /datum/antagonist/nukeop/clownop
 	typepath = /datum/round_event/antagonist/solo/clown_operative
@@ -41,7 +41,6 @@
 	excute_round_end_reports = TRUE
 	end_when = 60000 /// we will end on our own when revs win
 	var/static/datum/team/nuclear/nuke_team
-	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	var/set_leader = FALSE
 	var/required_role = ROLE_CLOWN_OPERATIVE
 
@@ -71,8 +70,11 @@
 
 	if(!set_leader)
 		set_leader = TRUE
-		var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
-		nuke_team = leader.nuke_team
+		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
+		nuke_team = leader_antag_datum.nuke_team
+		most_experienced.add_antag_datum(leader_antag_datum)
+		var/mob/living/carbon/human/leader = most_experienced.current
+		leader.equip_species_outfit(/datum/outfit/syndicate/clownop/leader)
 
 	if(antag_mind == most_experienced)
 		return

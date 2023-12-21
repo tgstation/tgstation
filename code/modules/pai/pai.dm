@@ -65,6 +65,8 @@
 	var/ram = 100
 	/// Toggles whether the Security HUD is active or not
 	var/secHUD = FALSE
+	/// The current leash to the owner
+	var/datum/component/leash/leash
 
 	// Onboard Items
 	/// Atmospheric analyzer
@@ -225,14 +227,17 @@
 		var/newcardloc = pai_card
 		pai_card = new(newcardloc)
 		pai_card.set_personality(src)
-	forceMove(pai_card)
 	card = pai_card
+	forceMove(pai_card)
+	leash = AddComponent(/datum/component/leash, pai_card, HOLOFORM_DEFAULT_RANGE, force_teleport_out_effect = /obj/effect/temp_visual/guardian/phase/out)
 	addtimer(VARSET_WEAK_CALLBACK(src, holochassis_ready, TRUE), HOLOCHASSIS_INIT_TIME)
 	if(!holoform)
 		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), PAI_FOLDED)
 	desc = "A pAI hard-light holographics emitter. This one appears in the form of a [chassis]."
 
 	RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
+	RegisterSignals(src, list(COMSIG_LIVING_ADJUST_BRUTE_DAMAGE, COMSIG_LIVING_ADJUST_BURN_DAMAGE), PROC_REF(on_shell_damaged))
+	RegisterSignal(src, COMSIG_LIVING_ADJUST_STAMINA_DAMAGE, PROC_REF(on_shell_weakened))
 
 /mob/living/silicon/pai/make_laws()
 	laws = new /datum/ai_laws/pai()
@@ -434,3 +439,10 @@
 	for(var/mob/living/cultist as anything in invokers)
 		to_chat(cultist, span_cultitalic("You don't think this is what Nar'Sie had in mind when She asked for blood sacrifices..."))
 	return STOP_SACRIFICE
+
+/// Updates the distance we can be from our pai card
+/mob/living/silicon/pai/proc/increment_range(increment_amount)
+	var/new_distance = leash.distance + increment_amount
+	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
+		return
+	leash.set_distance(new_distance)

@@ -119,7 +119,7 @@
 				surgery.complete(user)
 
 	if(target.stat == DEAD && was_sleeping && user.client)
-		user.client.give_award(/datum/award/achievement/misc/sandman, user)
+		user.client.give_award(/datum/award/achievement/jobs/sandman, user)
 
 	surgery.step_in_progress = FALSE
 	return advance

@@ -1,3 +1,5 @@
+#define DONATOR_ROUNDEND_BONUS 25 //25 monkecoin for donators
+
 /datum/preferences/proc/load_inventory(ckey)
 	if(!ckey || !SSdbcore.IsConnected())
 		return
@@ -32,13 +34,24 @@
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 
+	//RoundCap Checks
 	if(!max_round_coins && respects_roundcap)
 		to_chat(parent, "You've hit the Monkecoin limit for this shift, please try again next shift.")
 		return
+	if(respects_roundcap)
+		if(max_round_coins <= amount)
+			amount = max_round_coins
+		max_round_coins -= amount
 
-	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET metacoins = metacoins + '[amount]' WHERE ckey = '[ckey]'")
-	query_inc_metacoins.warn_execute()
+	//Patreon Flat Roundend Bonus
+	if((parent.patreon?.has_access(2)) && donator_multipler)
+		amount += DONATOR_ROUNDEND_BONUS
 
+	//Twitch Flat Roundend Bonus
+	if((parent.twitch?.has_access(1)) && donator_multipler)
+		amount += DONATOR_ROUNDEND_BONUS
+
+	//Donator Multiplier
 	if(amount > 0 && donator_multipler)
 		switch(parent.patreon.access_rank)
 			if(ACCESS_COMMAND_RANK)
@@ -48,14 +61,15 @@
 			if(ACCESS_NUKIE_RANK)
 				amount *= 3
 
-	if(respects_roundcap)
-		if(max_round_coins <= amount)
-			amount = max_round_coins
-		max_round_coins -= amount
+	amount = round(amount, 1) //make sure whole number
+	metacoins += amount //store the updated metacoins in a variable, but not the actual game-to-game storage mechanism (load_metacoins() pulls from database)
 
-	amount = round(amount, 1)
-	metacoins += amount
+	//SQL query - updates the metacoins in the database (this is where the storage actually happens)
+	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET metacoins = metacoins + '[amount]' WHERE ckey = '[ckey]'")
+	query_inc_metacoins.warn_execute()
 	qdel(query_inc_metacoins)
+
+	//Output to chat
 	if(announces)
 		if(reason)
 			to_chat(parent, "<span class='rose bold'>[abs(amount)] Monkecoins have been [amount >= 0 ? "deposited to" : "withdrawn from"] your account! Reason: [reason]</span>")

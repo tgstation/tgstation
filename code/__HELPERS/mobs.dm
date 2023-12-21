@@ -110,6 +110,8 @@
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/arachnid_chelicerae, GLOB.arachnid_chelicerae_list)
 	if(!GLOB.goblin_ears_list.len)
 		init_sprite_accessory_subtypes(/datum/sprite_accessory/goblin_ears, GLOB.goblin_ears_list)
+	if(!GLOB.floran_leaves_list.len)
+		init_sprite_accessory_subtypes(/datum/sprite_accessory/floran_leaves, GLOB.floran_leaves_list)
 //Monkestation Addition End
 
 	//For now we will always return none for tail_human and ears. | "For now" he says.
@@ -142,7 +144,8 @@
 		"arachnid_appendages" = pick(GLOB.arachnid_appendages_list), //Monkestation Addition
 		"arachnid_chelicerae" = pick(GLOB.arachnid_chelicerae_list), //Monkestation Addition
 		"animecolor" = "#[pick("7F","FF")][pick("7F","FF")][pick("7F","FF")]", //Monkestation Addition
-		"goblin_ears" = pick(GLOB.goblin_ears_list) //Monkestation Addition
+		"goblin_ears" = pick(GLOB.goblin_ears_list), //Monkestation Addition
+		"floran_leaves" = pick(GLOB.floran_leaves_list), //Monkestation Addition
 	))
 
 /proc/random_hairstyle(gender)

@@ -6,8 +6,6 @@
 	alert_observers = FALSE
 	category = EVENT_CATEGORY_ENGINEERING
 	description = "Turns off a random amount of cameras."
-	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_COMMUNAL, TAG_SPOOKY)
 
 /datum/round_event/camera_failure
 	fakeable = FALSE

@@ -67,7 +67,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
 		for(var/obj/item/bodypart/limbs in user.bodyparts)
-			limbs.brute_reduction += 3
+			limbs.brute_modifier -= 0.1
 	return ..()
 
 /datum/status_effect/food/resistance/on_remove()
@@ -75,7 +75,7 @@
 	if(ishuman(owner))
 		var/mob/living/carbon/user = owner
 		for(var/obj/item/bodypart/limbs in user.bodyparts)
-			limbs.brute_reduction -= 3
+			limbs.brute_modifier += 0.1
 
 
 #define DURATION_LOSS 250

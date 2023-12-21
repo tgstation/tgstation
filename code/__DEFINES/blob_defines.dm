@@ -32,7 +32,6 @@
 #define BLOB_CORE_EXPAND_RANGE 3 // Radius of automatic expansion
 #define BLOB_CORE_STRONG_REINFORCE_RANGE 1 // The radius of tiles surrounding the core that get upgraded
 #define BLOB_CORE_REFLECTOR_REINFORCE_RANGE 0
-#define BLOB_CORE_MAX_SPORES 0 // Spores that the core can produce for free
 
 #define BLOB_NODE_MAX_HP 200
 #define BLOB_NODE_HP_REGEN 3
@@ -42,7 +41,6 @@
 #define BLOB_NODE_EXPAND_RANGE 2 // Radius of automatic expansion
 #define BLOB_NODE_STRONG_REINFORCE_RANGE 0 // The radius of tiles surrounding the node that get upgraded
 #define BLOB_NODE_REFLECTOR_REINFORCE_RANGE 0
-#define BLOB_NODE_MAX_SPORES 0 // Spores that nodes can maintain
 
 #define BLOB_FACTORY_MAX_HP 200
 #define BLOB_FACTORY_HP_REGEN 1

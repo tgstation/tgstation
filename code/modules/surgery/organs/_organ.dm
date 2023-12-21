@@ -41,10 +41,30 @@
 	var/failure_time = 0
 	///Do we effect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
+	///If the organ is cosmetic only, it loses all organ functionality.
+	var/cosmetic_only = FALSE
 	/// Traits that are given to the holder of the organ. If you want an effect that changes this, don't add directly to this. Use the add_organ_trait() proc
-	var/list/organ_traits
+	var/list/organ_traits = list()
 	/// Status Effects that are given to the holder of the organ.
 	var/list/organ_effects
+	///Sometimes we need multiple layers, for like the back, middle and front of the person
+	var/list/layers
+	///Defines what kind of 'organ' we're looking at. Sprites have names like 'm_mothwings_firemoth'. 'mothwings' would then be feature_key
+	var/feature_key = ""
+	///Similar to feature key, but overrides it in the case you need more fine control over the iconstate, like with Tails.
+	var/render_key = ""
+	///Stores the dna.features[feature_key], used for external organs that can be surgically removed or inserted.
+	var/stored_feature_id = ""
+	/// The savefile_key of the preference this relates to. Used for the preferences UI.
+	var/preference
+	///Sprite datum we use to draw on the bodypart
+	var/datum/sprite_accessory/sprite_datum
+	///With what DNA block do we mutate in mutate_feature() ? For genetics
+	var/dna_block
+	///Does this organ have any bodytypes to pass to it's ownerlimb?
+	var/external_bodytypes = NONE
+	/// String displayed when the organ has decayed.
+	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -52,7 +72,7 @@
 // any nonhumans created in that time would experience the same effect.
 INITIALIZE_IMMEDIATE(/obj/item/organ)
 
-/obj/item/organ/Initialize(mapload)
+/obj/item/organ/Initialize(mapload, mob_sprite)
 	. = ..()
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponent(/datum/component/edible,\
@@ -60,6 +80,20 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			foodtypes = RAW | MEAT | GORE,\
 			volume = reagent_vol,\
 			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
+
+	if(cosmetic_only) //Cosmetic organs don't process.
+		if(mob_sprite)
+			set_sprite(mob_sprite)
+
+/obj/item/organ/proc/set_sprite(sprite_name)
+	stored_feature_id = sprite_name
+	sprite_datum = get_global_feature_list()[sprite_name]
+	if(!sprite_datum && stored_feature_id)
+		stack_trace("External organ has no valid sprite datum for name [sprite_name]")
+
+///Return a dumb glob list for this specific feature (called from parse_sprite)
+/obj/item/organ/proc/get_global_feature_list()
+	CRASH("External organ has no feature list, it will render invisible")
 
 /*
  * Insert the organ into the select mob.

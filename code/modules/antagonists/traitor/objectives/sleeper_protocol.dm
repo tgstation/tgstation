@@ -101,7 +101,13 @@
 		"The Captain is a lizardperson.",
 		"Nanotrasen isn't real.",
 		"They put something in the food to make you forget.",
-		"You are the only real person on the station."
+		"You are the only real person on the station.",
+		"Things would be a lot better on the station if more people were screaming, someone should do something about that.",
+		"The people in charge around here have only ill intentions for the crew.",
+		"Help the crew? What have they ever done for you anyways?",
+		"Does your bag feel lighter? I bet those guys in Security stole something from it. Go get it back.",
+		"Command is incompetent, someone with some REAL authority should take over around here.",
+		"The cyborgs and the AI are stalking you. What are they planning?",
 	)
 
 /datum/surgery_step/brainwash/sleeper_agent/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)

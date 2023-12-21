@@ -504,6 +504,9 @@
  * * IGNORE_GRAB - mob that is agressively grabbed is not considered incapacitated
 **/
 /mob/living/incapacitated(flags)
+	if((flags & IGNORE_CRIT) && ((stat >= SOFT_CRIT && (stat != DEAD && stat != UNCONSCIOUS)) && !src.pulledby))
+		return FALSE
+		
 	if(HAS_TRAIT(src, TRAIT_INCAPACITATED))
 		return TRUE
 
@@ -571,6 +574,15 @@
 		held_item = get_inactive_held_item()
 		if(held_item)
 			. = held_item.GetID()
+
+/**
+ * Returns the access list for this mob
+ */
+/mob/living/proc/get_access()
+	var/obj/item/card/id/id = get_idcard()
+	if(isnull(id))
+		return list()
+	return id.GetAccess()
 
 /mob/living/proc/get_id_in_hand()
 	var/obj/item/held_item = get_active_held_item()
@@ -660,8 +672,7 @@
 /mob/living/proc/on_lying_down(new_lying_angle)
 	if(layer == initial(layer)) //to avoid things like hiding larvas.
 		layer = LYING_MOB_LAYER //so mob lying always appear behind standing mobs
-	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), LYING_DOWN_TRAIT)
-	set_density(FALSE) // We lose density and stop bumping passable dense things.
+	add_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
 	if(HAS_TRAIT(src, TRAIT_FLOORED) && !(dir & (NORTH|SOUTH)))
 		setDir(pick(NORTH, SOUTH)) // We are and look helpless.
 	body_position_pixel_y_offset = PIXEL_Y_OFFSET_LYING
@@ -672,9 +683,15 @@
 /mob/living/proc/on_standing_up()
 	if(layer == LYING_MOB_LAYER)
 		layer = initial(layer)
-	set_density(initial(density)) // We were prone before, so we become dense and things can bump into us again.
-	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED), LYING_DOWN_TRAIT)
-	body_position_pixel_y_offset = 0
+	remove_traits(list(TRAIT_UI_BLOCKED, TRAIT_PULL_BLOCKED, TRAIT_UNDENSE), LYING_DOWN_TRAIT)
+	// Make sure it doesn't go out of the southern bounds of the tile when standing.
+	body_position_pixel_y_offset = (resize-1) * world.icon_size/2
+
+/mob/living/proc/update_density()
+	if(HAS_TRAIT(src, TRAIT_UNDENSE))
+		set_density(FALSE)
+	else
+		set_density(TRUE)
 
 //Recursive function to find everything a mob is holding. Really shitty proc tbh.
 /mob/living/get_contents()
@@ -1242,7 +1259,7 @@
 	return
 
 /mob/living/can_hold_items(obj/item/I)
-	return usable_hands && ..()
+	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
 
 /mob/living/can_perform_action(atom/movable/target, action_bitflags)
 	if(!istype(target))
@@ -1324,14 +1341,13 @@
  * Returns a mob (what our mob turned into) or null (if we failed).
  */
 /mob/living/proc/wabbajack(what_to_randomize, change_flags = WABBAJACK)
-	if(stat == DEAD || notransform || (GODMODE & status_flags))
+	if(stat == DEAD || (GODMODE & status_flags) || HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	if(SEND_SIGNAL(src, COMSIG_LIVING_PRE_WABBAJACKED, what_to_randomize) & STOP_WABBAJACK)
 		return
 
-	notransform = TRUE
-	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), MAGIC_TRAIT)
+	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_NO_TRANSFORM), MAGIC_TRAIT)
 	icon = null
 	cut_overlays()
 	invisibility = INVISIBILITY_ABSTRACT
@@ -1374,7 +1390,7 @@
 		if(WABBAJACK_ROBOT)
 			var/static/list/robot_options = list(
 				/mob/living/silicon/robot = 200,
-				/mob/living/simple_animal/drone/polymorphed = 200,
+				/mob/living/basic/drone/polymorphed = 200,
 				/mob/living/silicon/robot/model/syndicate = 1,
 				/mob/living/silicon/robot/model/syndicate/medical = 1,
 				/mob/living/silicon/robot/model/syndicate/saboteur = 1,
@@ -1415,6 +1431,7 @@
 			var/picked_animal = pick(
 				/mob/living/basic/bat,
 				/mob/living/basic/bear,
+				/mob/living/basic/blob_minion/blobbernaut,
 				/mob/living/basic/butterfly,
 				/mob/living/basic/carp,
 				/mob/living/basic/carp/magic,
@@ -1422,9 +1439,8 @@
 				/mob/living/basic/chicken,
 				/mob/living/basic/cow,
 				/mob/living/basic/crab,
-				/mob/living/basic/spider/giant,
-				/mob/living/basic/spider/giant/hunter,
-				/mob/living/basic/mining/goliath,
+				/mob/living/basic/goat,
+				/mob/living/basic/gorilla,
 				/mob/living/basic/headslug,
 				/mob/living/basic/killer_tomato,
 				/mob/living/basic/lizard,
@@ -1433,6 +1449,7 @@
 				/mob/living/basic/morph,
 				/mob/living/basic/mouse,
 				/mob/living/basic/mushroom,
+				/mob/living/basic/parrot,
 				/mob/living/basic/pet/dog/breaddog,
 				/mob/living/basic/pet/dog/corgi,
 				/mob/living/basic/pet/dog/pug,
@@ -1442,14 +1459,7 @@
 				/mob/living/basic/statue,
 				/mob/living/basic/stickman,
 				/mob/living/basic/stickman/dog,
-				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-				/mob/living/simple_animal/hostile/gorilla,
 				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-				/mob/living/simple_animal/hostile/retaliate/goat,
-				/mob/living/simple_animal/hostile/blob/blobbernaut/independent,
-				/mob/living/simple_animal/hostile/megafauna/dragon/lesser,
-				/mob/living/simple_animal/hostile/gorilla,
-				/mob/living/simple_animal/parrot,
 				/mob/living/simple_animal/pet/cat,
 				/mob/living/simple_animal/pet/cat/cak,
 			)
@@ -1747,10 +1757,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			return//dont open the mobs inventory if you are picking them up
 	. = ..()
 
-/mob/living/proc/mob_pickup(mob/living/L)
+/mob/living/proc/mob_pickup(mob/living/user)
 	var/obj/item/clothing/head/mob_holder/holder = new(get_turf(src), src, held_state, head_icon, held_lh, held_rh, worn_slot_flags)
-	L.visible_message(span_warning("[L] scoops up [src]!"))
-	L.put_in_hands(holder)
+	user.visible_message(span_warning("[user] scoops up [src]!"))
+	user.put_in_hands(holder)
 
 /mob/living/proc/set_name()
 	numba = rand(1, 1000)
@@ -2117,26 +2127,26 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if(CONSCIOUS)
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_CRITICAL_CONDITION), STAT_TRAIT)
+			remove_traits(list(TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED, TRAIT_FLOORED, TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 		if(SOFT_CRIT)
 			if(pulledby)
 				ADD_TRAIT(src, TRAIT_IMMOBILIZED, PULLED_WHILE_SOFTCRIT_TRAIT) //adding trait sources should come before removing to avoid unnecessary updates
 			if(. >= UNCONSCIOUS)
 				REMOVE_TRAIT(src, TRAIT_IMMOBILIZED, TRAIT_KNOCKEDOUT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 		if(UNCONSCIOUS)
 			if(. != HARD_CRIT)
 				become_blind(UNCONSCIOUS_TRAIT)
 			if(health <= crit_threshold && !HAS_TRAIT(src, TRAIT_NOSOFTCRIT))
-				ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+				add_traits( list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 			else
-				REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+				remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 		if(HARD_CRIT)
 			if(. != UNCONSCIOUS)
 				become_blind(UNCONSCIOUS_TRAIT)
-			ADD_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			add_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 		if(DEAD)
-			REMOVE_TRAIT(src, TRAIT_CRITICAL_CONDITION, STAT_TRAIT)
+			remove_traits(list(TRAIT_CRITICAL_CONDITION, TRAIT_POOR_AIM), STAT_TRAIT)
 			remove_from_alive_mob_list()
 			add_to_dead_mob_list()
 
@@ -2482,7 +2492,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/compare_sentience_type(compare_type)
 	return FALSE
 
-/// Proc called when targetted by a lazarus injector
+/// Proc called when targeted by a lazarus injector
 /mob/living/proc/lazarus_revive(mob/living/reviver, malfunctioning)
 	revive(HEAL_ALL)
 	befriend(reviver)
@@ -2490,7 +2500,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if (malfunctioning)
 		reviver.log_message("has revived mob [key_name(src)] with a malfunctioning lazarus injector.", LOG_GAME)
 
-/// Proc for giving a mob a new 'friend', generally used for AI control and targetting. Returns false if already friends.
+/// Proc for giving a mob a new 'friend', generally used for AI control and targeting. Returns false if already friends.
 /mob/living/proc/befriend(mob/living/new_friend)
 	SHOULD_CALL_PARENT(TRUE)
 	var/friend_ref = REF(new_friend)
@@ -2550,14 +2560,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		return
 	var/del_mob = FALSE
 	var/mob/old_mob
-	var/ai_control = FALSE
-	var/list/possible_players = list("None", "Poll Ghosts") + sort_list(GLOB.clients)
+	var/list/possible_players = list("Poll Ghosts") + sort_list(GLOB.clients)
 	var/client/guardian_client = tgui_input_list(admin, "Pick the player to put in control.", "Guardian Controller", possible_players)
-	if(!guardian_client)
+	if(isnull(guardian_client))
 		return
-	else if(guardian_client == "None")
-		guardian_client = null
-		ai_control = (tgui_alert(admin, "Do you want to give the spirit AI control?", "Guardian Controller", list("Yes", "No")) == "Yes")
 	else if(guardian_client == "Poll Ghosts")
 		var/list/candidates = poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
 		if(LAZYLEN(candidates))
@@ -2570,7 +2576,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		old_mob = guardian_client.mob
 		if(isobserver(old_mob) || tgui_alert(admin, "Do you want to delete [guardian_client]'s old mob?", "Guardian Controller", list("Yes"," No")) == "Yes")
 			del_mob = TRUE
-	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/simple_animal/hostile/guardian))
+	var/picked_type = tgui_input_list(admin, "Pick the guardian type.", "Guardian Controller", subtypesof(/mob/living/basic/guardian))
 	var/picked_theme = tgui_input_list(admin, "Pick the guardian theme.", "Guardian Controller", list(GUARDIAN_THEME_TECH, GUARDIAN_THEME_MAGIC, GUARDIAN_THEME_CARP, GUARDIAN_THEME_MINER, "Random"))
 	if(picked_theme == "Random")
 		picked_theme = null //holopara code handles not having a theme by giving a random one
@@ -2578,20 +2584,16 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/picked_color = input(admin, "Set the guardian's color, cancel to let player set it.", "Guardian Controller", "#ffffff") as color|null
 	if(tgui_alert(admin, "Confirm creation.", "Guardian Controller", list("Yes", "No")) != "Yes")
 		return
-	var/mob/living/simple_animal/hostile/guardian/summoned_guardian = new picked_type(src, picked_theme)
+	var/mob/living/basic/guardian/summoned_guardian = new picked_type(src, picked_theme)
 	summoned_guardian.set_summoner(src, different_person = TRUE)
 	if(picked_name)
 		summoned_guardian.fully_replace_character_name(null, picked_name)
 	if(picked_color)
-		summoned_guardian.set_guardian_color(picked_color)
+		summoned_guardian.set_guardian_colour(picked_color)
 	summoned_guardian.key = guardian_client?.key
 	guardian_client?.init_verbs()
 	if(del_mob)
 		qdel(old_mob)
-	if(ai_control)
-		summoned_guardian.can_have_ai = TRUE
-		summoned_guardian.toggle_ai(AI_ON)
-		summoned_guardian.manifest()
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Give Guardian Spirit")

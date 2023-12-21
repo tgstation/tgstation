@@ -5,6 +5,8 @@
 #define CHANGETURF_INHERIT_AIR (1<<4) // Inherit air from previous turf. Implies CHANGETURF_IGNORE_AIR
 #define CHANGETURF_RECALC_ADJACENT (1<<5) //Immediately recalc adjacent atmos turfs instead of queuing.
 #define CHANGETURF_TRAPDOOR_INDUCED (1<<6) // Caused by a trapdoor, for trapdoor to know that this changeturf was caused by itself
+/// Use the baseturfs of the provided type
+#define CHANGETURF_DEFAULT_BASETURF (1<<7)
 
 #define IS_OPAQUE_TURF(turf) (turf.directional_opacity == ALL_CARDINALS)
 
@@ -15,8 +17,8 @@
 
 #define RECT_TURFS(H_RADIUS, V_RADIUS, CENTER) \
 	block( \
-	locate(max(CENTER.x-(H_RADIUS),1), max(CENTER.y-(V_RADIUS),1), CENTER.z), \
-	locate(min(CENTER.x+(H_RADIUS),world.maxx), min(CENTER.y+(V_RADIUS),world.maxy), CENTER.z) \
+	locate(max((CENTER).x-(H_RADIUS),1), max((CENTER).y-(V_RADIUS),1), (CENTER).z), \
+	locate(min((CENTER).x+(H_RADIUS),world.maxx), min((CENTER).y+(V_RADIUS),world.maxy), (CENTER).z) \
 	)
 
 ///Returns all turfs in a zlevel

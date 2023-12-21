@@ -138,9 +138,7 @@
 	if(target)
 		H.original = target
 	H.fire(set_angle)
-	if(is_trishot)
-		shoot_projectile(marker, set_angle + 15, FALSE, FALSE)
-		shoot_projectile(marker, set_angle - 15, FALSE, FALSE)
+	//monke edit - removed heralds shotgun BS from his tri shot
 
 /mob/living/simple_animal/hostile/asteroid/elite/herald/proc/herald_trishot(target)
 	ranged_cooldown = world.time + 30
@@ -227,14 +225,13 @@
 	damage = 20
 	armour_penetration = 25 //was 50 changed because 50 was waay too much monkestation 20 edit
 	speed = 2
-	eyeblur = 0
 	damage_type = BRUTE
 	pass_flags = PASSTABLE
 
-/obj/projectile/herald/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(ismob(target) && ismob(firer))
 		var/mob/living/mob_target = target
-		if(mob_target.faction_check_mob(firer))
+		if(mob_target.faction_check_atom(firer))
 			damage = 0
 
 	. = ..()
@@ -247,7 +244,7 @@
 	damage = 0
 	color = rgb(255,255,102)
 
-/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/herald/teleshot/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	firer.forceMove(get_turf(src))
 

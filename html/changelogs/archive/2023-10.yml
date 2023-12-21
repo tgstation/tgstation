@@ -233,3 +233,52 @@
   - qol: moved APC, fixed wires.
   dwasint:
   - rscadd: votable story tellers
+2023-10-26:
+  Dexee:
+  - qol: even more doors audited and names fixed.
+  - rscadd: Custodial Closet/Janitor now on NAVIGATE VERB
+  - qol: 'moved the prisoner spawners to the brig bridge next to the hole so they
+      can throw themselves in. (note: if an AI main is reading this, no, you are not
+      allowed to release the prisoners under Law 1 unless the HOS/Captain gives you
+      specific position. This is to help the prisoners that start on Oshan don''t
+      just fucking die)'
+  - qol: 'There are now patient rooms. Yay.
+
+      Tram:'
+  - rscadd: a single missing disposal pipe in front of det's office so now trash doesn't
+      come flying out of the floor.
+  DexeeXI:
+  - qol: fixed some bad door perms (one v all)
+  - qol: fixed tiles in science being marked as AIRLESS tiles instead of... well,
+      not.
+  - qol: some lights replaced in maints with maints varients. offsets should be getting
+      adjusted so they look less like shit.
+  MomoBerri:
+  - bugfix: sprite ffix
+  scriptis:
+  - rscadd: don't blink. don't blink not even for a second
+2023-10-27:
+  Dexee:
+  - rscadd: New navmakers for some lesser known places, as well as most station solar
+      platforms
+  - qol: 'Moved/replaced a ton of existing markers to better common sense spots.
+
+      Tram:'
+  - qol: 'Aseembly lab door renamed to Assembly Lab.
+
+      Ice Box Coggers Bar:'
+  - rscadd: added the missing Booze-O-Mat. (thanks Skell Bones II)
+2023-10-28:
+  DexeeXI:
+  - rscadd: Centcom map now has nav support
+  - rscadd: Icebox now has cryo signs in spots to point towards the room, because
+      its on lower Z level.
+  - bugfix: Fixed railings on Delta, Meta, Icebox.
+  - rscdel: Lots of railings on Northstar
+  - rscadd: Icebox now has signs next to the stairs to the morgue to help indicate
+      where the Morgue is (z level problems and navigate)
+  - qol: updated interview link for da rulez.
+  Salted-Zen:
+  - balance: Machete now has 25 block instead of 50
+  dwasint:
+  - bugfix: malf ai should roll again

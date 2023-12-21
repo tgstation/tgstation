@@ -384,10 +384,6 @@
 		if(!in_range(source, victim))
 			return FALSE
 
-	if(victim.wearing_shock_proof_gloves())
-		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
-		return FALSE //to avoid spamming with insulated gloves on
-
 	var/list/powernet_info = get_powernet_info_from_source(power_source)
 	if (!powernet_info)
 		return FALSE
@@ -395,20 +391,38 @@
 	var/datum/powernet/PN = powernet_info["powernet"]
 	var/obj/item/stock_parts/cell/cell = powernet_info["cell"]
 
-	var/PN_damage = 0
-	var/cell_damage = 0
-	if (PN)
-		PN_damage = PN.get_electrocute_damage()
-	if (cell)
-		cell_damage = cell.get_electrocute_damage()
-	var/shock_damage = 0
-	if (PN_damage >= cell_damage)
-		power_source = PN
-		shock_damage = PN_damage
+	if(victim.wearing_shock_proof_gloves() && (PN && PN?.netexcess < 100 MW))
+		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
+		return FALSE //to avoid spamming with insulated gloves on
+
+	var/drained_hp = 0
+	if(!PN || (PN?.netexcess < 150 MW))
+		var/PN_damage = 0
+		var/cell_damage = 0
+		if (PN)
+			PN_damage = PN.get_electrocute_damage()
+		if (cell)
+			cell_damage = cell.get_electrocute_damage()
+		var/shock_damage = 0
+		if (PN_damage >= cell_damage)
+			power_source = PN
+			shock_damage = PN_damage
+		else
+			power_source = cell
+			shock_damage = cell_damage
+		drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
+	else if(PN && (PN?.netexcess < 250 MW))
+		tesla_zap(victim, 7, PN.netexcess)
+		drained_hp = PN.netexcess * 0.01
 	else
-		power_source = cell
-		shock_damage = cell_damage
-	var/drained_hp = victim.electrocute_act(shock_damage, source, siemens_coeff) //zzzzzzap!
+		var/obj/item/organ/internal/brain/carbon_brain = victim.get_organ_slot(ORGAN_SLOT_BRAIN)
+		var/turf/turf = get_turf(victim)
+		playsound(victim.loc, 'sound/magic/lightningbolt.ogg', 100, TRUE, extrarange = 30)
+		carbon_brain.forceMove(turf)
+		victim.visible_message(span_danger("[victim] turns to ash from the electrical shock!"))
+		victim.dust()
+		drained_hp = PN.netexcess * 0.1
+
 	log_combat(source, victim, "electrocuted")
 
 	var/drained_energy = drained_hp*20

@@ -226,6 +226,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	var/obj/item/robot_model/new_model = new new_config_type(cyborg)
 	new_model.robot = cyborg
+	cyborg.icon = 'icons/mob/silicon/robots.dmi' //reset our icon to default, but before a new custom icon may be applied by be_transformed_to
 	if(!new_model.be_transformed_to(src, forced))
 		qdel(new_model)
 		return
@@ -238,6 +239,7 @@
 	cyborg.diag_hud_set_status()
 	cyborg.diag_hud_set_borgcell()
 	cyborg.diag_hud_set_aishell()
+	cyborg.update_icons()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
 
 	INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
@@ -245,6 +247,9 @@
 	return new_model
 
 /obj/item/robot_model/proc/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
+	if(HAS_TRAIT(robot, TRAIT_NO_TRANSFORM))
+		robot.balloon_alert(robot, "can't transform right now!")
+		return FALSE
 	if(islist(borg_skins) && !forced)
 		var/mob/living/silicon/robot/cyborg = loc
 		var/list/reskin_icons = list()
@@ -286,7 +291,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	sleep(0.1 SECONDS)
 	flick("[cyborg_base_icon]_transform", cyborg)
-	cyborg.notransform = TRUE
+	ADD_TRAIT(cyborg, TRAIT_NO_TRANSFORM, REF(src))
 	if(locked_transform)
 		cyborg.SetLockdown(TRUE)
 		cyborg.set_anchored(TRUE)
@@ -298,7 +303,7 @@
 	cyborg.SetLockdown(FALSE)
 	cyborg.setDir(SOUTH)
 	cyborg.set_anchored(FALSE)
-	cyborg.notransform = FALSE
+	REMOVE_TRAIT(cyborg, TRAIT_NO_TRANSFORM, REF(src))
 	cyborg.updatehealth()
 	cyborg.update_icons()
 	cyborg.notify_ai(AI_NOTIFICATION_NEW_MODEL)

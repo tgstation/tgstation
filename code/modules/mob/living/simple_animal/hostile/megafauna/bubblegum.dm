@@ -67,7 +67,6 @@ Difficulty: Hard
 	score_achievement_type = /datum/award/score/bubblegum_score
 	death_message = "sinks into a pool of blood, fleeing the battle. You've won, for now... "
 	death_sound = 'sound/magic/enter_blood.ogg'
-	small_sprite_type = /datum/action/small_sprite/megafauna/bubblegum
 	faction = list(FACTION_MINING, FACTION_BOSS, FACTION_HELL)
 	/// Check to see if we should spawn blood
 	var/spawn_blood = TRUE
@@ -138,7 +137,7 @@ Difficulty: Hard
 	. = list()
 	for(var/mob/living/L in targets)
 		var/list/bloodpool = get_bloodcrawlable_pools(get_turf(L), 0)
-		if(bloodpool.len && (!faction_check_mob(L) || L.stat == DEAD))
+		if(bloodpool.len && (!faction_check_atom(L) || L.stat == DEAD))
 			. += L
 
 /**
@@ -154,7 +153,7 @@ Difficulty: Hard
 /mob/living/simple_animal/hostile/megafauna/bubblegum/attackby(obj/item/W, mob/user, params)
 	. = ..()
 	if(istype(W, /obj/item/organ/internal/tongue))
-		user.client?.give_award(/datum/award/achievement/misc/frenching, user)
+		user.client?.give_award(/datum/award/achievement/jobs/frenching, user)
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/proc/try_bloodattack()
 	var/list/targets = get_mobs_on_blood()
@@ -202,7 +201,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/leftsmack(T)
 	SLEEP_CHECK_DEATH(4, src)
 	for(var/mob/living/L in T)
-		if(!faction_check_mob(L))
+		if(!faction_check_atom(L))
 			to_chat(L, span_userdanger("[src] rends you!"))
 			playsound(T, attack_sound, 100, TRUE, -1)
 			var/limb_to_hit = L.get_bodypart(L.get_random_valid_zone(even_weights = TRUE))
@@ -218,7 +217,7 @@ Difficulty: Hard
 		new /obj/effect/temp_visual/bubblegum_hands/leftthumb(T)
 	SLEEP_CHECK_DEATH(6, src)
 	for(var/mob/living/L in T)
-		if(!faction_check_mob(L))
+		if(!faction_check_atom(L))
 			if(L.stat != CONSCIOUS)
 				to_chat(L, span_userdanger("[src] drags you through the blood!"))
 				playsound(T, 'sound/magic/enter_blood.ogg', 100, TRUE, -1)

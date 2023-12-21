@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 
 //====Cogscarab====
 
-/mob/living/simple_animal/drone/cogscarab
+/mob/living/basic/drone/cogscarab
 	name = "Cogscarab"
 	desc = "A mechanical device, filled with twisting cogs and mechanical parts, built to maintain Reebe."
 	icon_state = "drone_clock"
@@ -31,7 +31,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	var/stay_on_reebe = TRUE
 
 //No you can't go wielding guns like that.
-/mob/living/simple_animal/drone/cogscarab/Initialize(mapload)
+/mob/living/basic/drone/cogscarab/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NOGUNS, "cogscarab")
 	GLOB.cogscarabs += src
@@ -40,16 +40,16 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 /datum/actionspeed_modifier/cogscarab
 	multiplicative_slowdown = 0.6
 
-/mob/living/simple_animal/drone/cogscarab/death(gibbed)
+/mob/living/basic/drone/cogscarab/death(gibbed)
 	GLOB.cogscarabs -= src
 	. = ..()
 
-/mob/living/simple_animal/drone/cogscarab/Life(seconds, times_fired)
+/mob/living/basic/drone/cogscarab/Life(seconds, times_fired)
 	if(!on_reebe(src) && !GLOB.ratvar_risen && GLOB.abscond_markers && stay_on_reebe)
 		try_servant_warp(src, get_turf(pick(GLOB.abscond_markers)))
 	. = ..()
 
-/mob/living/simple_animal/drone/cogscarab/Destroy()
+/mob/living/basic/drone/cogscarab/Destroy()
 	GLOB.cogscarabs -= src
 	return ..()
 
@@ -61,7 +61,7 @@ GLOBAL_LIST_EMPTY(cogscarabs)
 	icon = 'monkestation/icons/obj/clock_cult/clockwork_objects.dmi'
 	icon_state = "cogscarab_shell"
 	mob_name = "cogscarab"
-	mob_type = /mob/living/simple_animal/drone/cogscarab
+	mob_type = /mob/living/basic/drone/cogscarab
 	role_ban = ROLE_CLOCK_CULTIST
 	prompt_name = "a cogscarab"
 	you_are_text = "You are a cogscarab!"

@@ -8,8 +8,6 @@
 	category = EVENT_CATEGORY_BUREAUCRATIC
 	description = "A pod containing a random supply crate lands on the station."
 	admin_setup = list(/datum/event_admin_setup/set_location/stray_cargo, /datum/event_admin_setup/listed_options/stray_cargo)
-	track = EVENT_TRACK_MUNDANE
-	tags = list(TAG_COMMUNAL)
 
 /datum/event_admin_setup/set_location/stray_cargo
 	input_text = "Aim pod at turf we're on?"
@@ -68,7 +66,7 @@
 			var/datum/supply_pack/pack_type = pack
 			if(initial(pack_type.special))
 				stray_spawnable_supply_packs -= pack
-	setup = TRUE
+	setup = TRUE //MONKESTATION ADDITION
 
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
 /datum/round_event/stray_cargo/start()

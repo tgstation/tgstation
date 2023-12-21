@@ -7,7 +7,7 @@
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/neurotoxin
 
-/obj/projectile/neurotoxin/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/neurotoxin/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isalien(target))
 		knockdown = 0 SECONDS //monkestation edit: from paralyze to knockdown
 		damage = 0

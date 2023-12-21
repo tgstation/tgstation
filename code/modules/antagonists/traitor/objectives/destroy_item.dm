@@ -34,6 +34,27 @@
 		/datum/objective_item/steal/blackbox,
 	)
 
+/// Super early-game destroy objective intended to be items easily tided that the crew tends to value.
+/datum/traitor_objective/destroy_item/demoralise
+	description = "Find %ITEM% and destroy it using any means necessary. \
+		We believe this luxury item is important for crew morale. \
+		Destruction of this item will help our recruitment efforts."
+
+	progression_minimum = 0 MINUTES
+	progression_maximum = 10 MINUTES
+	progression_reward = list(4 MINUTES, 8 MINUTES)
+	telecrystal_reward = list(0, 1)
+
+	possible_items = list(
+		/datum/objective_item/steal/traitor/rpd,
+		/datum/objective_item/steal/traitor/space_law,
+		/datum/objective_item/steal/traitor/granted_stamp,
+		/datum/objective_item/steal/traitor/denied_stamp,
+		/datum/objective_item/steal/traitor/lizard_plush,
+		/datum/objective_item/steal/traitor/moth_plush,
+		/datum/objective_item/steal/traitor/insuls,
+	)
+
 /datum/traitor_objective/destroy_item/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	for(var/datum/traitor_objective/destroy_item/objective as anything in possible_duplicates)
 		possible_items -= objective.target_item.type

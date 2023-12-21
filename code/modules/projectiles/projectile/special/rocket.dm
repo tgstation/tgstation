@@ -5,7 +5,7 @@
 	embedding = null
 	shrapnel_type = null
 
-/obj/projectile/bullet/gyro/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/gyro/on_hit(atom/target, blocked = 0, pierce_hit)
 	..()
 	explosion(target, devastation_range = -1, light_impact_range = 2, explosion_cause = src)
 	return BULLET_ACT_HIT
@@ -22,7 +22,7 @@
 	/// Whether the rocket is capable of instantly killing a living target
 	var/random_crits_enabled = TRUE // Worst thing Valve ever added
 
-/obj/projectile/bullet/rocket/on_hit(atom/target, blocked = FALSE)
+/obj/projectile/bullet/rocket/on_hit(atom/target, blocked = 0, pierce_hit)
 	if(isliving(target) && prob(1) && random_crits_enabled)
 		var/mob/living/gibbed_dude = target
 		if(gibbed_dude.stat < HARD_CRIT)

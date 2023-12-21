@@ -592,13 +592,7 @@
 	if(!isliving(user))
 		return FALSE //no ghosts allowed, sorry
 
-	var/is_dextrous = FALSE
-	if(isanimal(user))
-		var/mob/living/simple_animal/user_as_animal = user
-		if (user_as_animal.dextrous)
-			is_dextrous = TRUE
-
-	if(!issilicon(user) && !is_dextrous && !user.can_hold_items())
+	if(!issilicon(user) && !user.can_hold_items())
 		return FALSE //spiders gtfo
 
 	if(issilicon(user)) // If we are a silicon, make sure the machine allows silicons to interact with it
@@ -745,7 +739,7 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type)
+/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
 		return TOOL_ACT_MELEE_CHAIN_BLOCKING
 	. = ..()

@@ -50,7 +50,7 @@
 	..()
 	//TODO: root the firer until the chain returns
 
-/obj/projectile/hook/on_hit(atom/target)
+/obj/projectile/hook/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
 	if(ismovable(target))
 		var/atom/movable/A = target

@@ -9,7 +9,7 @@
 	max_wizard_trigger_potency = 7
 
 ///behold... the only reason sticky is a subtype...
-/datum/round_event_control/wizard/embedpocalypse/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
+/datum/round_event_control/wizard/embedpocalypse/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE) //MONKESTATION ADDITION: fake_check = FALSE
 	. = ..()
 	if(!.)
 		return .

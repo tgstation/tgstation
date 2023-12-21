@@ -9,7 +9,7 @@
  * Pretty simple, adds armor, you can choose against what
  * ## Internal damage
  * When taking damage will force you to take some time to repair, encourages improvising in a fight
- * Targetting different def zones will damage them to encurage a more strategic approach to fights
+ * Targeting different def zones will damage them to encurage a more strategic approach to fights
  * where they target the "dangerous" modules
  */
 

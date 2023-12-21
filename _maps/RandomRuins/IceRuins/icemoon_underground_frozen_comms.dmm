@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"al" = (
+/mob/living/basic/mining/wolf,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
 "aD" = (
 /obj/structure/fence/cut/medium,
 /turf/open/misc/asteroid/snow/icemoon,
@@ -6,10 +10,6 @@
 "aU" = (
 /turf/open/genturf,
 /area/icemoon/underground/unexplored/rivers)
-"bh" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/explored)
 "cv" = (
 /obj/structure/flora/rock/pile/icy/style_random,
 /obj/machinery/light/small/directional/north,
@@ -43,6 +43,12 @@
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
+"fD" = (
+/mob/living/basic/mining/wolf,
+/turf/open/floor/iron/showroomfloor{
+	initial_gas_mix = "ICEMOON_ATMOS"
+	},
+/area/ruin/powered/shuttle)
 "gz" = (
 /turf/closed/wall/ice,
 /area/ruin/powered/shuttle)
@@ -65,12 +71,6 @@
 /obj/structure/bed,
 /obj/item/bedsheet/dorms,
 /turf/open/floor/iron/grimy{
-	initial_gas_mix = "ICEMOON_ATMOS"
-	},
-/area/ruin/powered/shuttle)
-"oD" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
-/turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
 /area/ruin/powered/shuttle)
@@ -97,10 +97,6 @@
 /turf/open/floor/iron/showroomfloor{
 	initial_gas_mix = "ICEMOON_ATMOS"
 	},
-/area/ruin/powered/shuttle)
-"rn" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
-/turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
 "rS" = (
 /obj/structure/flora/tree/pine/style_random,
@@ -130,6 +126,13 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
+"tx" = (
+/obj/structure/window/reinforced/spawner,
+/obj/structure/grille,
+/obj/item/shard,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/plating/icemoon,
+/area/ruin/powered/shuttle)
 "uz" = (
 /obj/structure/tank_dispenser,
 /turf/open/floor/iron/smooth{
@@ -226,7 +229,7 @@
 /obj/structure/fence/cut/large,
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
-"CH" = (
+"DV" = (
 /obj/structure/window/reinforced/spawner,
 /obj/effect/spawner/structure/window/hollow/reinforced/directional{
 	dir = 1
@@ -247,11 +250,6 @@
 	req_access = list("research")
 	},
 /turf/open/floor/plating/icemoon,
-/area/ruin/powered/shuttle)
-"FK" = (
-/mob/living/simple_animal/hostile/asteroid/wolf,
-/obj/machinery/light/small/broken/directional/north,
-/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/shuttle)
 "FP" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
@@ -276,12 +274,10 @@
 /obj/effect/decal/cleanable/glass,
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
-"GQ" = (
-/obj/structure/window/reinforced/spawner,
-/obj/structure/grille,
-/obj/item/shard,
-/obj/effect/decal/cleanable/glass,
-/turf/open/floor/plating/icemoon,
+"GX" = (
+/mob/living/basic/mining/wolf,
+/obj/machinery/light/small/broken/directional/north,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
 /area/ruin/powered/shuttle)
 "HT" = (
 /obj/structure/closet/wardrobe/grey,
@@ -347,6 +343,10 @@
 	},
 /turf/open/floor/plating/icemoon,
 /area/ruin/powered/shuttle)
+"Ok" = (
+/mob/living/basic/mining/wolf,
+/turf/open/floor/plating/snowed/smoothed/icemoon,
+/area/icemoon/underground/explored)
 "OM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -530,7 +530,7 @@ aU
 aU
 qS
 TG
-CH
+DV
 Gl
 gz
 Cr
@@ -553,7 +553,7 @@ GH
 NO
 MS
 oT
-oD
+fD
 oT
 oT
 eC
@@ -568,7 +568,7 @@ qS
 aU
 qS
 qS
-GQ
+tx
 oj
 gz
 wJ
@@ -613,7 +613,7 @@ Et
 gz
 SR
 wP
-bh
+Ok
 qS
 th
 yl
@@ -645,7 +645,7 @@ aU
 aU
 gz
 wg
-rn
+al
 Qj
 te
 RK
@@ -668,7 +668,7 @@ OM
 yW
 Kh
 gz
-FK
+GX
 wP
 qS
 wP

@@ -25,7 +25,6 @@
 "r" = (
 /obj/structure/table,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/relic,
 /obj/item/pen{
 	pixel_x = -4
 	},

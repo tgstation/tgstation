@@ -11,7 +11,7 @@
 	the same technology into a smaller more portable package. The machete design was chosen as to make a much easier to handle and less cumbersome frame. Of course \
 	the smaller package means that the power is not as high as the original crusher design, but the different shell makes it capable of blocking basic attacks."
 	force = 15
-	block_chance = 50
+	block_chance = 25
 	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_BELT
 	throwforce = 5

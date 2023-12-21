@@ -1,6 +1,6 @@
 /datum/round_event_control/antagonist/solo/from_ghosts/nuclear_operative
 	name = "Nuclear Assault"
-	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG)
+	tags = list(TAG_DESTRUCTIVE, TAG_COMBAT, TAG_TEAM_ANTAG, TAG_EXTERNAL)
 	antag_flag = ROLE_OPERATIVE_MIDROUND
 	antag_datum = /datum/antagonist/nukeop
 	typepath = /datum/round_event/antagonist/solo/ghost/nuclear_operative
@@ -41,7 +41,6 @@
 	excute_round_end_reports = TRUE
 	end_when = 60000 /// we will end on our own when revs win
 	var/static/datum/team/nuclear/nuke_team
-	var/datum/antagonist/antag_leader_datum = /datum/antagonist/nukeop/leader
 	var/set_leader = FALSE
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
 
@@ -53,13 +52,17 @@
 		qdel(item)
 
 	var/datum/mind/most_experienced = get_most_experienced(setup_minds, required_role)
+	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
+	antag_mind.special_role = ROLE_NUCLEAR_OPERATIVE
+
 	if(!most_experienced)
 		most_experienced = antag_mind
 
 	if(!set_leader)
 		set_leader = TRUE
-		var/datum/antagonist/nukeop/leader/leader = most_experienced.add_antag_datum(antag_leader_datum)
-		nuke_team = leader.nuke_team
+		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
+		nuke_team = leader_antag_datum.nuke_team
+		most_experienced.add_antag_datum(leader_antag_datum)
 
 	if(antag_mind == most_experienced)
 		return

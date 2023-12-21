@@ -187,3 +187,33 @@
 	juice_results = list(/datum/reagent/consumable/toechtauese_juice = 0)
 	tastes = list("fiery itchy pain" = 1)
 	distill_reagent = /datum/reagent/toxin/itching_powder
+
+/obj/item/seeds/lanternfruit
+	name = "pack of lanternfruit seeds"
+	desc = "These seeds grow into lanternfruit pods."
+	icon_state = "seed-lanternfruit"
+	species = "lanternfruit"
+	plantname = "Lanternfruit Pod"
+	product = /obj/item/food/grown/lanternfruit
+	lifespan = 50
+	endurance = 30
+	maturation = 25
+	production = 25
+	growthstages = 3
+	growing_icon = 'icons/obj/hydroponics/growing_fruits.dmi'
+	icon_grow = "lanternfruit-grow"
+	icon_dead = "lanternfruit-dead"
+	icon_harvest = "lanternfruit-harvest"
+	genes = list(/datum/plant_gene/trait/glow/yellow)
+	mutatelist = null
+	reagents_add = list(/datum/reagent/sulfur = 0.07, /datum/reagent/consumable/sugar = 0.07, /datum/reagent/consumable/liquidelectricity = 0.07)
+	graft_gene = /datum/plant_gene/trait/glow/yellow
+
+/obj/item/food/grown/lanternfruit
+	seed = /obj/item/seeds/lanternfruit
+	name = "lanternfruits"
+	desc = "A sofly glowing fruit with a handle-shaped stem, an Ethereal favorite!"
+	icon_state = "lanternfruit"
+	foodtypes = FRUIT
+	tastes = list("tv static" = 1, "sour pear" = 1, "grapefruit" = 1)
+	distill_reagent = /datum/reagent/consumable/ethanol/fruit_wine

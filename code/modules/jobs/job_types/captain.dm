@@ -11,7 +11,7 @@
 	supervisors = "Nanotrasen officials and Space Law"
 	req_admin_notify = 1
 	minimal_player_age = 14
-	exp_requirements = 180
+	exp_requirements = 1500
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_COMMAND
 	exp_granted_type = EXP_TYPE_CREW

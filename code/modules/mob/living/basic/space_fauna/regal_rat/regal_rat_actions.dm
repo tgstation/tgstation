@@ -53,15 +53,17 @@
 	var/static/list/mouse_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/protect_owner,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/mouse
+		/datum/pet_command/point_targeting/attack/mouse
 	)
 	/// Commands you can give to glockroaches
 	var/static/list/glockroach_commands = list(
 		/datum/pet_command/idle,
 		/datum/pet_command/free,
+		/datum/pet_command/protect_owner/glockroach,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/attack/glockroach
+		/datum/pet_command/point_targeting/attack/glockroach
 	)
 
 /datum/action/cooldown/mob_cooldown/riot/Activate(atom/target)
@@ -158,6 +160,7 @@
 		nearby_roach.melee_damage_upper += 4
 		nearby_roach.obj_damage += 5
 		nearby_roach.ai_controller = new /datum/ai_controller/basic_controller/cockroach/sewer(nearby_roach)
+		nearby_roach.melee_attack_cooldown = 0.8 SECONDS
 
 	nearby_roach.icon_state += "_sewer"
 	nearby_roach.maxHealth += 1
@@ -189,7 +192,7 @@
 	return TRUE
 
 // Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targetting/attack/mouse
+/datum/pet_command/point_targeting/attack/mouse
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!" // Frogs and roaches can squeak too it's fine
 	pointed_reaction = "and squeaks aggressively"
@@ -197,7 +200,7 @@
 	attack_behaviour = /datum/ai_behavior/basic_melee_attack
 
 // Command you can give to a mouse to make it kill someone
-/datum/pet_command/point_targetting/attack/glockroach
+/datum/pet_command/point_targeting/attack/glockroach
 	speech_commands = list("attack", "sic", "kill", "cheese em")
 	command_feedback = "squeak!"
 	pointed_reaction = "and cocks its gun"
@@ -242,3 +245,6 @@
 	else if(prob(5))
 		C.vomit()
 	return ..()
+
+/datum/pet_command/protect_owner/glockroach
+	protect_behavior = /datum/ai_behavior/basic_ranged_attack/glockroach

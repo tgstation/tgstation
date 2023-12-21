@@ -3,14 +3,11 @@
 	typepath = /datum/round_event/ghost_role/nightmare
 	max_occurrences = 1
 	min_players = 20
-	dynamic_should_hijack = TRUE
+	//dynamic_should_hijack = TRUE
 	category = EVENT_CATEGORY_ENTITIES
 	description = "Spawns a nightmare, aiming to darken the station."
 	min_wizard_trigger_potency = 6
 	max_wizard_trigger_potency = 7
-	track = EVENT_TRACK_ROLESET
-	tags = list(TAG_COMBAT, TAG_SPOOKY)
-	checks_antag_cap = TRUE
 
 /datum/round_event/ghost_role/nightmare
 	minimum_required = 1

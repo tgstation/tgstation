@@ -22,10 +22,6 @@
 "s" = (
 /turf/open/misc/asteroid/dug,
 /area/station/asteroid)
-"v" = (
-/obj/item/relic,
-/turf/open/misc/asteroid/dug,
-/area/station/asteroid)
 "w" = (
 /turf/template_noop,
 /area/template_noop)
@@ -135,7 +131,7 @@ w
 "}
 (5,1,1) = {"
 F
-v
+s
 A
 T
 T
