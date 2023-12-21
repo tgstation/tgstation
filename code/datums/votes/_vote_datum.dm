@@ -191,7 +191,7 @@
 
 	returned_text += "\nResults:"
 	for(var/option in choices)
-		returned_text += "[span_bold(option)]: [choices[option]]"
+		returned_text += "\n\t[span_bold(option)]: [choices[option]]"
 
 	if(!real_winner) // vote has no winner or cannot be won, but still had votes
 		return returned_text
