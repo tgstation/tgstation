@@ -1,4 +1,0 @@
-author: "ma44, Dwasint"
-delete-after: True
-changes:
-  - rscadd: "Ejected bullet casings now bounce around with the power of simulated physics"
