@@ -219,3 +219,8 @@
 	database_id = MEDAL_DEBT_EXTINGUISHED
 	icon = "outdebted"
 
+/datum/award/achievement/misc/status_effect_overload
+	name = "How Did We Get Here?"
+	desc = "Have an absurd number of status effects active at once!" //change this
+	database_id = MEDAL_STATUS_EFFECTS
+	icon = "earthquake" //CHANGE THIS

@@ -67,6 +67,9 @@
 
 	update_particles()
 
+	if(length(owner.status_effects) >= 20)
+		owner.client?.give_award(/datum/award/achievement/misc/status_effect_overload, owner)
+
 	return TRUE
 
 /datum/status_effect/Destroy()
