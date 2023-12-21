@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - bugfix: "Disease Outbreak events will only select players on the station/lavaland as patient zero."
