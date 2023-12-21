@@ -24,10 +24,8 @@
 	RegisterSignal(new_holder, COMSIG_BORG_HUG_MOB, PROC_REF(hugged_by_cyborg), override = TRUE)
 
 /datum/quirk/cyborg_lover/remove_from_current_holder(quirk_transfer)
-	UnregisterSignal(quirk_holder, COMSIG_MOB_PAT_BORG)
-	UnregisterSignal(quirk_holder, COMSIG_BORG_TOUCH_MOB)
-	UnregisterSignal(quirk_holder, COMSIG_BORG_HUG_MOB)
-	. = ..()
+	UnregisterSignal(quirk_holder, list(COMSIG_MOB_PAT_BORG, COMSIG_BORG_TOUCH_MOB, COMSIG_BORG_HUG_MOB))
+	return ..()
 
 /datum/quirk/cyborg_lover/proc/pat_cyborg()
 	SIGNAL_HANDLER
@@ -44,4 +42,4 @@
 		span_notice("You hug [quirk_holder] firmly to make [quirk_holder.p_them()] feel better! [quirk_holder] looks satisfied!"),
 	)
 	quirk_holder.add_mood_event("borg_hug", /datum/mood_event/borg_hug)
-	return COMSIG_BORG_HUG_SUCCESS
+	return COMSIG_BORG_HUG_HANDLED

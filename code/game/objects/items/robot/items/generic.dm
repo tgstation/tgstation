@@ -163,7 +163,7 @@
 					SEND_SIGNAL(attacked_mob, COMSIG_BORG_TOUCH_MOB)
 					user.do_attack_animation(attacked_mob, ATTACK_EFFECT_PUNCH)
 				else
-					if(~SEND_SIGNAL(attacked_mob, COMSIG_BORG_HUG_MOB, user) & COMSIG_BORG_HUG_SUCCESS)
+					if(!(SEND_SIGNAL(attacked_mob, COMSIG_BORG_HUG_MOB, user) & COMSIG_BORG_HUG_HANDLED))
 						user.visible_message(
 							span_warning("[user] hugs [attacked_mob] in a firm bear-hug! [attacked_mob] looks uncomfortable..."),
 							span_warning("You hug [attacked_mob] firmly to make [attacked_mob.p_them()] feel better! [attacked_mob] looks uncomfortable..."),
