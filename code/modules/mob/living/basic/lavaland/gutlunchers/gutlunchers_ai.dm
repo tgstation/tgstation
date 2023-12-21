@@ -44,9 +44,8 @@
 			continue
 		living_pawn.befriend(potential_friend)
 		to_chat(potential_friend, span_nicegreen("[living_pawn] looks at you with endearing eyes!"))
-	#warn intended? this is odd
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
-	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
+	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 
 
