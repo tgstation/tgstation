@@ -33,7 +33,7 @@
 		if(23,24)
 			new /obj/item/jacobs_ladder(src)
 		if(25,26)
-			new /obj/item/guardiancreator/miner(src)
+			new /obj/item/guardian_creator/miner(src)
 		if(27,28)
 			new /obj/item/warp_cube/red(src)
 		if(29,30)
