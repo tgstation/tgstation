@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "When you place a beaker in a chem-master, you no longer thwack it."
