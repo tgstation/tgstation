@@ -5042,6 +5042,7 @@
 #include "code\modules\modular_computers\file_system\programs\maintenance\modsuit.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\phys_scanner.dm"
 #include "code\modules\modular_computers\file_system\programs\maintenance\themes.dm"
+#include "code\modules\modular_computers\file_system\programs\messenger\messenger_circuit.dm"
 #include "code\modules\modular_computers\file_system\programs\messenger\messenger_data.dm"
 #include "code\modules\modular_computers\file_system\programs\messenger\messenger_program.dm"
 #include "code\modules\movespeed\_movespeed_modifier.dm"

@@ -100,32 +100,29 @@
 
 
 /obj/item/circuit_component/mod_program/nt_pay
-	name = "Nanotrasen Pay System Program"
-	desc = /datum/computer_file/program/nt_pay::extended_desc
 	associated_program = /datum/computer_file/program/nt_pay
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
 	///Circuit variables. This one is for the token we want to pay
 	var/datum/port/input/token_port
 	///The port for the money to send
 	var/datum/port/input/money_port
-	///Attempt payment when triggered
-	var/datum/port/input/attempt_payment
 	///Let's us know if the payment has gone through or not.
 	var/datum/port/output/payment_status
 
-/obj/item/circuit_component/mod_program/nt_pay/register_program()
+/obj/item/circuit_component/mod_program/nt_pay/register_shell(atom/movable/shell)
 	. = ..()
 	RegisterSignal(associated_program, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT, PROC_REF(on_payment_result))
 
-/obj/item/circuit_component/mod_program/nt_pay/unregister_program()
+/obj/item/circuit_component/mod_program/nt_pay/unregister_shell()
 	UnregisterSignal(associated_program, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT)
+	return ..()
 
 /obj/item/circuit_component/mod_program/nt_pay/populate_ports()
 	. = ..()
-	token_port = add_input_port("NT-Pay Token", PORT_TYPE_STRING)
-	money_port = add_input_port("NT-Pay Amount", PORT_TYPE_NUMBER)
-	attempt_payment = add_input_port("NT-Pay Trigger", PORT_TYPE_SIGNAL)
-	payment_status = add_output_port("NT-Pay Status", PORT_TYPE_NUMBER)
+	token_port = add_input_port("Token", PORT_TYPE_STRING)
+	money_port = add_input_port("Amount", PORT_TYPE_NUMBER)
+	payment_status = add_output_port("Status", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/mod_program/nt_pay/get_ui_notices()
 	. = ..()
@@ -138,9 +135,8 @@
 		Success - [NT_PAY_STATUS_SUCCESS]")
 
 /obj/item/circuit_component/mod_program/nt_pay/input_received(datum/port/port)
-	if(COMPONENT_TRIGGERED_BY(attempt_payment, port))
-		var/datum/computer_file/program/nt_pay/program = associated_program
-		program.make_payment(token_port.value, money_port.value)
+	var/datum/computer_file/program/nt_pay/program = associated_program
+	program.make_payment(token_port.value, money_port.value)
 
 /obj/item/circuit_component/mod_program/nt_pay/proc/on_payment_result(datum/source, payment_result)
 	SIGNAL_HANDLER

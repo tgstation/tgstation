@@ -112,29 +112,30 @@
 			message_robot(robot, usr)
 			return TRUE
 
-/datum/computer_file/program/borg_monitor/proc/message_robot(mob/living/silicon/robot/robot, mob/user, message, silent = FALSE)
+/datum/computer_file/program/borg_monitor/proc/message_robot(mob/living/silicon/robot/robot, message, mob/user)
 	if(!istype(robot))
 		return TRUE
 	var/ID = checkID()
 	if(!ID)
-		return
+		return FALSE
 	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
-		if(!silent)
+		if(user)
 			to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
-		return
+		return FALSE
+	if(!message && user)
+		message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message")
 	if(!message)
-		tgui_input_text(usr, "Message to be sent to remote cyborg", "Send Message")
-		if(!message)
-			return
+		return FALSE
 	to_chat(robot, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
-	if(!silent)
+	if(user)
 		to_chat(user, "Message sent to [robot]: [message]")
 	robot.logevent("Message from [ID] -- \"[message]\"")
 	SEND_SOUND(robot, 'sound/machines/twobeep_high.ogg')
 	if(robot.connected_ai)
 		to_chat(robot.connected_ai, "<br><br>[span_notice("Message from [ID] to [robot] -- \"[message]\"")]<br>")
 		SEND_SOUND(robot.connected_ai, 'sound/machines/twobeep_high.ogg')
-	user.log_talk(message, LOG_PDA, tag = "Cyborg Monitor Program: ID name \"[ID]\" to [robot]")
+	user?.log_talk(message, LOG_PDA, tag = "Cyborg Monitor Program: ID name \"[ID]\" to [robot]")
+	return TRUE
 
 ///This proc is used to determin if a borg should be shown in the list (based on the borg's scrambledcodes var). Syndicate version overrides this to show only syndicate borgs.
 /datum/computer_file/program/borg_monitor/proc/evaluate_borg(mob/living/silicon/robot/R)
@@ -176,8 +177,6 @@
 
 
 /obj/item/circuit_component/mod_program/borg_monitor
-	name = "SiliConnect Program"
-	desc = /datum/computer_file/program/borg_monitor::extended_desc
 	associated_program = /datum/computer_file/program/borg_monitor
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
@@ -187,17 +186,16 @@
 	var/datum/port/input/set_message
 
 /obj/item/circuit_component/mod_program/borg_monitor/populate_ports()
-	target_robot = add_input_port("SiliConnect Receiver", PORT_TYPE_ATOM)
-	set_message = add_input_port("SiliConnect Set Msg", PORT_TYPE_STRING)
+	target_robot = add_input_port("Receiver", PORT_TYPE_ATOM)
+	set_message = add_input_port("Set Message", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/mod_program/borg_monitor/input_received(datum/port/port)
 	if(!length(set_message.value) || !iscyborg(target_robot.value))
 		return
 	var/mob/living/silicon/robot/robot = target_robot.value
 	var/datum/computer_file/program/borg_monitor/monitor = associated_program
-	monitor.message_robot(robot, usr, set_message.value, TRUE)
+	if(monitor.message_robot(robot, set_message.value))
+		monitor.computer.log_talk("Cyborg Monitor message (ID name \"[monitor.checkID()]\") sent to [key_name(robot)] by [parent.get_creator()]: [set_message.value]")
 
 /obj/item/circuit_component/mod_program/borg_monitor/syndie
-	name = "Roboverlord Program"
-	desc = /datum/computer_file/program/borg_monitor/syndicate::extended_desc
 	associated_program = /datum/computer_file/program/borg_monitor/syndicate

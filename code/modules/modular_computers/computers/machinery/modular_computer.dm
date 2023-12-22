@@ -41,9 +41,7 @@
 	. = ..()
 	cpu = new(src)
 	cpu.screen_on = TRUE
-	AddComponent(/datum/component/usb_port, list(
-		/obj/item/circuit_component/modpc,
-	))
+	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/modpc), SHELL_CAPACITY_LARGE)
 	update_appearance()
 
 /obj/machinery/modular_computer/Destroy()

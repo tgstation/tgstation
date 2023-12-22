@@ -122,6 +122,9 @@
 	if(!(locate(program.circuit_comp_type) in unremovable_circuit_components))
 		var/obj/item/circuit_component/mod_program/comp = new program.circuit_comp_type()
 		add_unremovable_circuit_component(comp)
+		if(attached_circuit)
+			comp.forceMove(attached_circuit)
+			attached_circuit.add_component(comp)
 	RegisterSignal(program, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(on_file_deleted))
 
 /datum/component/shell/proc/on_file_deleted(datum/computer_file/program/program)

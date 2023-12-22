@@ -50,8 +50,6 @@
 
 
 /obj/item/circuit_component/mod_program/modsuit_control
-	name = "MODsuit Control Program"
-	desc = /datum/computer_file/program/maintenance/modsuit_control::extended_desc
 	associated_program = /datum/computer_file/program/maintenance/modsuit_control
 
 	///Circuit port for loading a new suit to control

@@ -342,7 +342,6 @@
 	if(length(input_ports))
 		. += create_ui_notice("Power Usage Per Input: [power_usage_per_input]", "orange", "bolt")
 
-	SEND_SIGNAL(src, COMSIG_CIRCUIT_GET_UI_NOTICES, .)
 
 /**
  * Called when a special button is pressed on this component in the UI.

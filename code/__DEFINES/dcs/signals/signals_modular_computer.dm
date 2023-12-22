@@ -16,3 +16,6 @@
 
 /// From /datum/computer_file/program/nt_pay/make_payment: (payment_result)
 #define COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT "comsig_modular_program_nt_pay_result"
+
+/// From /datum/computer_file/program/messenger/receive_message, sent to the computer: (signal/subspace/messaging/tablet_message/signal, sender_job, sender_name)
+#define COMSIG_MODULAR_PDA_MESSAGE_RECEIVED "comsig_modular_pda_message_received"

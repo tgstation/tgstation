@@ -34,8 +34,6 @@
 	return data
 
 /obj/item/circuit_component/mod_program/notepad
-	name = "Notepad Program"
-	desc = /datum/computer_file/program/notepad::extended_desc
 	associated_program = /datum/computer_file/program/notepad
 	///When the input is received, the written note will be set to its value.
 	var/datum/port/input/set_text
@@ -53,6 +51,6 @@
 	var/datum/computer_file/program/notepad/pad = associated_program
 	if(COMPONENT_TRIGGERED_BY(set_text, port))
 		pad.written_note = set_text.value
-		SStgui.update_uis(associated_program.computer)
+		SStgui.update_uis(pad.computer)
 	if(COMPONENT_TRIGGERED_BY(send, port))
 		sent_text.set_output(pad.written_note)
