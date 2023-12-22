@@ -140,10 +140,10 @@
 /// DB ID for the amount of achievements unlocked by the player.
 #define ACHIEVEMENTS_SCORE "Achievements Score"
 
-/// DB ID for most status effects owned
+/// DB ID for most status effects owned.
 #define STATUS_EFFECT_HIGHSCORE "Status Effects Stacked"
-/// Minimum number of status effects for tracking to start.
-#define STATUS_HIGHSCORE_MINIMUM 18
+/// Number of status effects required for the How Did We Get Here achievement.
+#define STATUS_ACHIEVEMENT_LIMIT 18
 
 // Tourist related achievements and scores
 

@@ -68,12 +68,13 @@
 	update_particles()
 
 	var/status_effect_count = length(owner.status_effects)
-	if(status_effect_count >= STATUS_HIGHSCORE_MINIMUM)
-		owner.client?.give_award(/datum/award/achievement/misc/status_effect_overload, owner)
-		var/status_effect_highscore = owner.client.get_award_status(/datum/award/score/status_effects_stacked)
 
-		if(status_effect_highscore < status_effect_count)
-			owner.client.give_award(/datum/award/score/status_effects_stacked, owner, max(0, status_effect_count - status_effect_highscore))
+	if(status_effect_count >= STATUS_ACHIEVEMENT_LIMIT)
+		owner.client?.give_award(/datum/award/achievement/misc/status_effect_overload, owner)
+
+	var/status_effect_highscore = owner.client.get_award_status(/datum/award/score/status_effects_stacked)
+	if(status_effect_highscore < status_effect_count)
+		owner.client.give_award(/datum/award/score/status_effects_stacked, owner, max(0, status_effect_count - status_effect_highscore))
 
 	return TRUE
 
