@@ -88,10 +88,10 @@
 	var/scanner_stack = 0
 	var/laser_stack = 0
 	for(var/datum/stock_part/scanning_module/scanner in component_parts)
-		scanner_stack += (scanner.tier)
+		scanner_stack += scanner.tier
 	boulders_processing_max = scanner_stack
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
-		laser_stack += (laser.tier)
+		laser_stack += laser.tier
 	boulders_held_max = laser_stack + 1
 
 /obj/machinery/bouldertech/brm/update_icon_state()

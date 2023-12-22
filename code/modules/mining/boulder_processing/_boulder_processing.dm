@@ -136,8 +136,6 @@
 
 /obj/machinery/bouldertech/deconstruct(disassembled)
 	. = ..()
-	if(holds_minerals)
-		qdel(silo_materials)
 	if(length(contents))
 		for(var/obj/item/boulder/boulder in contents)
 			remove_boulder(boulder)
@@ -237,6 +235,7 @@
 		weapon = disposable_boulder,\
 		multiplier = refining_efficiency,\
 		breakdown_flags = BREAKDOWN_FLAGS_ORM,\
+		context = src,\
 		)
 	qdel(disposable_boulder)
 

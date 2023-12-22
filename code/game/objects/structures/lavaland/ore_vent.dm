@@ -155,11 +155,9 @@
  * Then assigns custom_materials based on boulder_size, assigned via the ore_quantity_function
  */
 /obj/structure/ore_vent/proc/create_mineral_contents()
-
 	var/list/refined_list = list()
 	for(var/iteration in 1 to minerals_per_boulder)
 		var/datum/material/material = pick_weight(mineral_breakdown)
-		refined_list.Insert(refined_list.len, material)
 		refined_list[material] += ore_quantity_function(iteration)
 	return refined_list
 
@@ -168,7 +166,7 @@
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
 	while(iterator <= max_minerals)
-		if(SSore_generation.ore_vent_minerals.len == 0 && map_loading)
+		if(!SSore_generation.ore_vent_minerals.len && map_loading)
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material
 		if(map_loading)
@@ -179,8 +177,8 @@
 		if(map_loading)
 			SSore_generation.ore_vent_minerals[material] -= 1 //We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
 			if(SSore_generation.ore_vent_minerals[material] <= 0)
-				SSore_generation.ore_vent_minerals.Remove(material)
-		mineral_breakdown[material] = rand(1,4)
+				SSore_generation.ore_vent_minerals -= material
+		mineral_breakdown[material] = rand(1, 4)
 		iterator++
 
 
@@ -188,9 +186,7 @@
  * Returns the quantity of mineral sheets in each ore's boulder contents roll. First roll can produce the most ore, with subsequent rolls scaling lower logarithmically.
  */
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
-	var/mineral_count = boulder_size * (log(rand(1+ore_floor, 4 + ore_floor)) ** -1)
-	mineral_count = SHEET_MATERIAL_AMOUNT * round(mineral_count)
-	return mineral_count
+	return SHEET_MATERIAL_AMOUNT * round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1))
 
 /**
  * Starts the wave defense event, which will spawn a number of lavaland mobs based on the size of the ore vent.

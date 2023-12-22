@@ -77,7 +77,6 @@
 	data["materials"] = list()
 
 	for(var/obj/item/stone as anything in item_contents)
-		say("found [stone]")
 		if(ispath(stone, /obj/item/stack/ore))
 			var/obj/item/stack/ore/found_ore = stone
 			var/name = initial(found_ore.name)

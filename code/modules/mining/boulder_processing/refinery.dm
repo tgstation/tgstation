@@ -33,7 +33,7 @@
 	var/manipulator_stack = 0
 	var/matter_bin_stack = 0
 	for(var/datum/stock_part/servo/servo in component_parts)
-		manipulator_stack += ((servo.tier - 1))
+		manipulator_stack += servo.tier - 1
 	boulders_processing_max = clamp(manipulator_stack, 1, 6)
 	for(var/datum/stock_part/matter_bin/bin in component_parts)
 		matter_bin_stack += bin.tier
