@@ -31,7 +31,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	spans |= speech_span
 	if(!language)
 		language = get_selected_language()
-	send_speech(message, message_range, src, bubble_type, spans, message_language = language, forced = forced)
+	var/list/message_mods = list()
+	message_mods[SAY_MOD_VERB] = say_mod(message, message_mods)
+	send_speech(message, message_range, src, bubble_type, spans, language, message_mods, forced = forced)
 
 /// Called when this movable hears a message from a source.
 /// Returns TRUE if the message was received and understood.
