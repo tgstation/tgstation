@@ -1,5 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Feature manipulation surgery will now properly update the patient's appearance."
-  - refactor: "The tail portion of lizard spines will no longer draw on people who do not have a tail."

@@ -680,3 +680,22 @@
   - bugfix: Examine text on disconnected players is no longer accidentally subtle
   vinylspiders:
   - bugfix: fixes some dropdowns not displaying the right text after selecting something
+2023-12-22:
+  LT3:
+  - qol: Roundstart intercept report and security level announcements are combined
+      into a single announcement
+  Melbert:
+  - bugfix: Crewmembers immune to viruses won't be picked by the fake virus event.
+  - qol: When you place a beaker in a chem-master, you no longer thwack it.
+  Profakos:
+  - qol: The bitrunning equipment vending machine now has a unique description for
+      each of the bitrunning disks
+  SSensum:
+  - rscadd: 'Added new quirk: Cyborg Lover!'
+  jlsnow301:
+  - bugfix: Name input in character setup should work properly now.
+  - bugfix: Many inputs should feel more responsive.
+  lizardqueenlexi:
+  - bugfix: Feature manipulation surgery will now properly update the patient's appearance.
+  - refactor: The tail portion of lizard spines will no longer draw on people who
+      do not have a tail.
