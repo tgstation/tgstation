@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - balance: "Doing experiments AFTER their tech is researched now gives full 100% points instead of 66%."
