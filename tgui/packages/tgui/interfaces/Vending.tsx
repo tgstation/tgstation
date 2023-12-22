@@ -65,6 +65,7 @@ type StockItem = {
 };
 
 type CustomInput = {
+  path: string;
   name: string;
   price: number;
   img: string;
@@ -219,7 +220,7 @@ const ProductDisplay = (props: {
           })
           .map((product) => (
             <VendingRow
-              key={product.name}
+              key={product.path || product.name}
               custom={custom}
               product={product}
               productStock={stock[product.name]}
