@@ -1,89 +1,62 @@
 import { createPopper } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import {
-  Component,
-  CSSProperties,
-  JSXElementConstructor,
-  PropsWithChildren,
-  ReactElement,
-  RefObject,
-} from 'react';
-import { findDOMNode, render } from 'react-dom';
+import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import { CSSProperties, JSXElementConstructor, ReactElement } from 'react';
+import { createPortal } from 'react-dom';
 
-type PopperProps = {
-  popperContent: ReactElement<any, string | JSXElementConstructor<any>>;
-  options?: ArgumentsOf<typeof createPopper>[2];
+type Props = {
   additionalStyles?: CSSProperties;
+  className?: string;
+  options?: ArgumentsOf<typeof createPopper>[2];
+  popperContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
 } & PropsWithChildren;
 
-export class Popper extends Component<PopperProps> {
-  static id: number = 0;
-  popperRef: RefObject<HTMLDivElement>;
+export function Popper(props: Props) {
+  const { className, popperContent, options, additionalStyles, children } =
+    props;
 
-  renderedContent: HTMLDivElement;
-  popperInstance: ReturnType<typeof createPopper>;
+  const referenceElement = useRef<HTMLDivElement | null>(null);
+  const popperElement = useRef<HTMLDivElement | null>(null);
+  const [popperInstance, setPopperInstance] = useState<ReturnType<
+    typeof createPopper
+  > | null>(null);
 
-  constructor(props) {
-    super(props);
-
-    Popper.id += 1;
-  }
-
-  componentDidMount() {
-    const { additionalStyles, options } = this.props;
-
-    this.renderedContent = document.createElement('div');
-
-    if (additionalStyles) {
-      for (const [attribute, value] of Object.entries(additionalStyles)) {
-        this.renderedContent.style[attribute] = value;
-      }
-    }
-
-    this.renderPopperContent(() => {
-      document.body.appendChild(this.renderedContent);
-
-      // HACK: We don't want to create a wrapper, as it could break the layout
-      // of consumers, so we use findDOMNode.
-      // This is usually bad as refs are usually better, but refs did
-      // not work in this case, as they weren't propagating correctly.
-      // A previous attempt was made as a render prop that passed an ID,
-      // but this made consuming use too unwieldly.
-      // Because this component is written in TypeScript, we will know
-      // immediately if this internal variable is removed.
-      //
-      // eslint-disable-next-line react/no-find-dom-node
-      const domNode = findDOMNode(this) as Element;
-      if (!domNode) {
-        return;
-      }
-
-      this.popperInstance = createPopper(
-        domNode,
-        this.renderedContent,
+  useEffect(() => {
+    if (referenceElement.current && popperElement.current) {
+      const instance = createPopper(
+        referenceElement.current,
+        popperElement.current,
         options,
       );
-    });
-  }
+      setPopperInstance(instance);
 
-  componentDidUpdate() {
-    this.renderPopperContent(() => this.popperInstance?.update());
-  }
+      return () => {
+        instance.destroy();
+      };
+    }
+  }, [options]);
 
-  componentWillUnmount() {
-    this.popperInstance?.destroy();
-    render(<> </>, this.renderedContent, () => {
-      this.renderedContent.remove();
-    });
-  }
+  useEffect(() => {
+    if (popperInstance) {
+      popperInstance.update();
+    }
+  }, [popperContent]);
 
-  renderPopperContent(callback: () => void) {
-    // `render` errors when given false, so we convert it to `null`,
-    // which is supported.
-    render(this.props.popperContent || null, this.renderedContent, callback);
-  }
+  const contentStyle = {
+    ...additionalStyles,
+    position: 'absolute',
+    zIndex: 1000,
+  } as CSSProperties;
 
-  render() {
-    return this.props.children;
-  }
+  return (
+    <>
+      <div ref={referenceElement}>{children}</div>
+      {createPortal(
+        <div className={className} ref={popperElement} style={contentStyle}>
+          {popperContent}
+        </div>,
+        document.body,
+      )}
+    </>
+  );
 }
