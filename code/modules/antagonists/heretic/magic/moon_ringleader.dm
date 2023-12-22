@@ -19,9 +19,8 @@
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
 	var/list/stuff = list()
-	for(var/mob/living/carbon/nearby_mob in orange(center, radius_override || aoe_radius))
-		if(nearby_mob == owner || nearby_mob == center)
-			continue
+	var/list/o_range = orange(center, radius_override || aoe_radius) - list(owner, center)
+	for(var/mob/living/carbon/nearby_mob in o_range)
 		if(nearby_mob.stat == DEAD)
 			continue
 		if(!nearby_mob.mob_mood)

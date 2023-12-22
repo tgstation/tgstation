@@ -225,7 +225,7 @@
 		if(HAS_TRAIT(crewmate, TRAIT_MINDSHIELD) || crewmate.can_block_magic(MAGIC_RESISTANCE))
 			to_chat(crewmate, span_boldwarning("You feel shielded from something." ))
 			continue
-		if(amount_of_lunatics > length(GLOB.human_list) / 5)
+		if(amount_of_lunatics > length(GLOB.human_list) * 0.2)
 			to_chat(crewmate, span_boldwarning("You feel uneasy, as if for a brief moment something was gazing at you." ))
 			continue
 		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
@@ -250,7 +250,7 @@
 		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
 		if(carbon_sanity < 30)
-			to_chat(carbon_view, span_warning("you feel your mind begining to rend!"))
+			to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
 			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(carbon_sanity < 10)
 			to_chat(carbon_view, span_warning("it echoes through you!"))

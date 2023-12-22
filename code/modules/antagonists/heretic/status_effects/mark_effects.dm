@@ -286,7 +286,7 @@
 
 	damage_sustained += damage
 
-	if(damage_sustained<15)
+	if(damage_sustained < 15)
 		return
 
 	// Removes the trait in here since we don't wanna destroy the mark before its detonated or allow detonation triggers with other weapons

@@ -73,14 +73,13 @@
 		return
 	if(!hit.mob_mood)
 		return
-	switch(hit.mob_mood.sanity_level)
-		if(SANITY_LEVEL_GREAT, SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_DISTURBED)
-			user.balloon_alert(user, "their mind is too strong!")
-			hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
-			hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)
-		if(SANITY_LEVEL_CRAZY, SANITY_LEVEL_INSANE)
-			user.balloon_alert(user, "their mind bends to see the truth!")
-			hit.apply_status_effect(/datum/status_effect/moon_converted)
-			user.log_message("made [target] insane.", LOG_GAME)
-			hit.log_message("was driven insane by [user]")
+	if(hit.mob_mood.sanity_level < SANITY_LEVEL_CRAZY)
+		user.balloon_alert(user, "their mind is too strong!")
+		hit.add_mood_event("Moon Amulette Insanity", /datum/mood_event/amulette_insanity)
+		hit.mob_mood.set_sanity(hit.mob_mood.sanity - sanity_damage)
+	else
+		user.balloon_alert(user, "their mind bends to see the truth!")
+		hit.apply_status_effect(/datum/status_effect/moon_converted)
+		user.log_message("made [target] insane.", LOG_GAME)
+		hit.log_message("was driven insane by [user]")
 	. = ..()
