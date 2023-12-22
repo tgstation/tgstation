@@ -114,14 +114,10 @@
 			continue
 
 		if(target.mob_biotypes & MOB_ORGANIC)
-			if(target.stat == DEAD)
-				organics_nearby += 0.25
-			else
-				organics_nearby += 1
+			organics_nearby += 1
 		else if(target.mob_biotypes & MOB_ROBOTIC)
-			if(target.stat == DEAD)
-				silicons_nearby += 0.25
-			else
+			// Dead silicons don't count, they're basically just machinery
+			if(target.stat != DEAD)
 				silicons_nearby += 1
 
 	var/mood_result = silicons_nearby - organics_nearby

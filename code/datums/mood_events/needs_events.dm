@@ -107,7 +107,7 @@
 
 /datum/mood_event/very_robotic
 	description = "I'm more robot than organic!"
-	mood_change = 4
+	mood_change = 2
 
 /datum/mood_event/balanced_robotic
 	description = "I'm part machine, part organic."
