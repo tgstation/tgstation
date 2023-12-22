@@ -67,6 +67,9 @@
 	. = ..()
 	icon_state = "sand_damaged"
 
+/turf/open/misc/asteroid/broken_states()
+	return list("sand_damaged")
+
 /turf/open/misc/ironsand
 	gender = PLURAL
 	name = "iron sand"
