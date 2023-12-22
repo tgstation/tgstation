@@ -99,6 +99,8 @@
 		var/mob/living/carbon/human/human_holder = quirk_holder
 		human_holder.del_and_replace_bodypart(old_limb, special = TRUE)
 		old_limb = null
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
+	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
 
 /datum/quirk/transhumanist/process(seconds_per_tick)
 	var/organics_nearby = 0
