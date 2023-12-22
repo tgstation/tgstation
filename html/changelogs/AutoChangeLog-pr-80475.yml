@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "Roundstart intercept report and security level announcements are combined into a single announcement"
