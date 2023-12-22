@@ -234,6 +234,8 @@
 /// Called by hook projectile when hitting things
 /obj/item/fishing_rod/proc/hook_hit(atom/atom_hit_by_hook_projectile)
 	var/mob/user = loc
+	if(!anchored)
+		return
 	if(!istype(user))
 		return
 	if(SEND_SIGNAL(atom_hit_by_hook_projectile, COMSIG_FISHING_ROD_CAST, src, user) & FISHING_ROD_CAST_HANDLED)
