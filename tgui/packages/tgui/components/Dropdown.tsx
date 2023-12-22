@@ -1,7 +1,7 @@
-import { createPopper, VirtualElement } from '@popperjs/core';
+import { createPopper } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, ReactNode } from 'react';
-import { findDOMNode, render } from 'react-dom';
+import React, { useEffect } from 'react';
+import { ReactNode, useRef, useState } from 'react';
 
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
@@ -13,7 +13,9 @@ type DropdownEntry = {
   value: string | number | Enumerator;
 };
 
-type Props = { options: string[] | DropdownEntry[] } & Partial<{
+type DropdownOption = string | DropdownEntry;
+
+type Props = { options: DropdownOption[] } & Partial<{
   buttons: boolean;
   clipSelectedText: boolean;
   color: string;
@@ -34,357 +36,186 @@ type Props = { options: string[] | DropdownEntry[] } & Partial<{
 }> &
   BoxProps;
 
-type State = {
-  selected?: string;
-  open: boolean;
-};
+function getOptionValue(option: DropdownOption) {
+  return typeof option === 'string' ? option : option.value;
+}
 
-const DEFAULT_OPTIONS = {
-  placement: 'left-start',
-  modifiers: [
-    {
-      name: 'eventListeners',
-      enabled: false,
-    },
-  ],
-};
+export function Dropdown(props: Props) {
+  const {
+    buttons,
+    className,
+    clipSelectedText = true,
+    color = 'default',
+    disabled,
+    displayText,
+    dropdownStyle,
+    icon,
+    iconRotation,
+    iconSpin,
+    menuWidth,
+    nochevron,
+    onClick,
+    onSelected,
+    options = [],
+    over,
+    width,
+    ...rest
+  } = props;
 
-const NULL_RECT: DOMRect = {
-  width: 0,
-  height: 0,
-  top: 0,
-  right: 0,
-  bottom: 0,
-  left: 0,
-  x: 0,
-  y: 0,
-  toJSON: () => null,
-} as const;
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState(props.selected);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const menuRef = useRef<HTMLDivElement>(null);
 
-const DROPDOWN_DEFAULT_CLASSNAMES = 'Layout Dropdown__menu';
-const DROPDOWN_SCROLL_CLASSNAMES = 'Layout Dropdown__menu-scroll';
-
-export class Dropdown extends Component<Props, State> {
-  static renderedMenu: HTMLDivElement | undefined;
-  static singletonPopper: ReturnType<typeof createPopper> | undefined;
-  static currentOpenMenu: Element | undefined;
-  static virtualElement: VirtualElement = {
-    getBoundingClientRect: () =>
-      Dropdown.currentOpenMenu?.getBoundingClientRect() ?? NULL_RECT,
-  };
-  menuContents: any;
-  state: State = {
-    open: false,
-    selected: this.props.selected,
-  };
-
-  handleClick = () => {
-    if (this.state.open) {
-      this.setOpen(false);
-    }
-  };
-
-  getDOMNode() {
-    // eslint-disable-next-line react/no-find-dom-node
-    return findDOMNode(this) as Element;
-  }
-
-  componentDidMount() {
-    const domNode = this.getDOMNode();
-
-    if (!domNode) {
-      return;
-    }
-  }
-
-  openMenu() {
-    let renderedMenu = Dropdown.renderedMenu;
-    if (renderedMenu === undefined) {
-      renderedMenu = document.createElement('div');
-      renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
-      document.body.appendChild(renderedMenu);
-      Dropdown.renderedMenu = renderedMenu;
-    }
-
-    const domNode = this.getDOMNode()!;
-    Dropdown.currentOpenMenu = domNode;
-
-    renderedMenu.scrollTop = 0;
-    renderedMenu.style.width = this.props.menuWidth || '10rem';
-    renderedMenu.style.opacity = '1';
-    renderedMenu.style.pointerEvents = 'auto';
-
-    // ie hack
-    // ie has this bizarre behavior where focus just silently fails if the
-    // element being targeted "isn't ready"
-    // 400 is probably way too high, but the lack of hotloading is testing my
-    // patience on tuning it
-    // I'm beyond giving a shit at this point it fucking works whatever
-    setTimeout(() => {
-      Dropdown.renderedMenu?.focus();
-    }, 400);
-    this.renderMenuContent();
-  }
-
-  closeMenu() {
-    if (Dropdown.currentOpenMenu !== this.getDOMNode()) {
-      return;
-    }
-
-    Dropdown.currentOpenMenu = undefined;
-    Dropdown.renderedMenu!.style.opacity = '0';
-    Dropdown.renderedMenu!.style.pointerEvents = 'none';
-  }
-
-  componentWillUnmount() {
-    this.closeMenu();
-    this.setOpen(false);
-  }
-
-  renderMenuContent() {
-    const renderedMenu = Dropdown.renderedMenu;
-    if (!renderedMenu) {
-      return;
-    }
-    if (renderedMenu.offsetHeight > 200) {
-      renderedMenu.className = DROPDOWN_SCROLL_CLASSNAMES;
-    } else {
-      renderedMenu.className = DROPDOWN_DEFAULT_CLASSNAMES;
-    }
-
-    const { options = [] } = this.props;
-    const ops = options.map((option) => {
-      let value, displayText;
-
-      if (typeof option === 'string') {
-        displayText = option;
-        value = option;
-      } else if (option !== null) {
-        displayText = option.displayText;
-        value = option.value;
-      }
-
-      return (
-        <div
-          key={value}
-          className={classes([
-            'Dropdown__menuentry',
-            this.state.selected === value && 'selected',
-          ])}
-          onClick={() => {
-            this.setSelected(value);
-          }}
-        >
-          {displayText}
-        </div>
-      );
-    });
-
-    const to_render = ops.length ? ops : 'No Options Found';
-
-    render(<div>{to_render}</div>, renderedMenu, () => {
-      let singletonPopper = Dropdown.singletonPopper;
-      if (singletonPopper === undefined) {
-        singletonPopper = createPopper(Dropdown.virtualElement, renderedMenu!, {
-          ...DEFAULT_OPTIONS,
-          placement: 'bottom-start',
-        });
-
-        Dropdown.singletonPopper = singletonPopper;
-      } else {
-        singletonPopper.setOptions({
-          ...DEFAULT_OPTIONS,
-          placement: 'bottom-start',
-        });
-
-        singletonPopper.update();
-      }
-    });
-  }
-
-  setOpen(open: boolean) {
-    this.setState((state) => ({
-      ...state,
-      open,
-    }));
-    if (open) {
-      setTimeout(() => {
-        this.openMenu();
-        window.addEventListener('click', this.handleClick);
-      });
-    } else {
-      this.closeMenu();
-      window.removeEventListener('click', this.handleClick);
-    }
-  }
-
-  setSelected(selected: string) {
-    this.setState((state) => ({
-      ...state,
-      selected,
-    }));
-    this.setOpen(false);
-    if (this.props.onSelected) {
-      this.props.onSelected(selected);
-    }
-  }
-
-  getOptionValue(option): string {
-    return typeof option === 'string' ? option : option.value;
-  }
-
-  getSelectedIndex(): number {
-    const selected = this.state.selected || this.props.selected;
-    const { options = [] } = this.props;
-
+  function getSelectedIndex() {
     return options.findIndex((option) => {
-      return this.getOptionValue(option) === selected;
+      return getOptionValue(option) === selected;
     });
   }
 
-  toPrevious(): void {
-    if (this.props.options.length < 1) {
+  function updateSelected(direction: 'previous' | 'next') {
+    if (options.length < 1) {
       return;
     }
 
-    let selectedIndex = this.getSelectedIndex();
+    let selectedIndex = getSelectedIndex();
     const startIndex = 0;
-    const endIndex = this.props.options.length - 1;
+    const endIndex = options.length - 1;
 
     const hasSelected = selectedIndex >= 0;
     if (!hasSelected) {
-      selectedIndex = startIndex;
+      selectedIndex = direction === 'next' ? endIndex : startIndex;
     }
 
-    const previousIndex =
-      selectedIndex === startIndex ? endIndex : selectedIndex - 1;
+    const newIndex =
+      direction === 'next'
+        ? selectedIndex === endIndex
+          ? startIndex
+          : selectedIndex + 1
+        : selectedIndex === startIndex
+          ? endIndex
+          : selectedIndex - 1;
 
-    this.setSelected(this.getOptionValue(this.props.options[previousIndex]));
+    setSelected(getOptionValue(options[newIndex]));
   }
 
-  toNext(): void {
-    if (this.props.options.length < 1) {
-      return;
+  useEffect(() => {
+    setSelected(props.selected);
+  }, [props.selected]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener('click', handleClickOutside);
+    return () => {
+      window.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (dropdownRef.current && menuRef.current) {
+      createPopper(dropdownRef.current, menuRef.current, {
+        placement: 'bottom-start',
+      });
     }
+  }, [open]);
 
-    let selectedIndex = this.getSelectedIndex();
-    const startIndex = 0;
-    const endIndex = this.props.options.length - 1;
-
-    const hasSelected = selectedIndex >= 0;
-    if (!hasSelected) {
-      selectedIndex = endIndex;
-    }
-
-    const nextIndex =
-      selectedIndex === endIndex ? startIndex : selectedIndex + 1;
-
-    this.setSelected(this.getOptionValue(this.props.options[nextIndex]));
-  }
-
-  render() {
-    const { props } = this;
-    const {
-      icon,
-      iconRotation,
-      iconSpin,
-      clipSelectedText = true,
-      color = 'default',
-      dropdownStyle,
-      over,
-      nochevron,
-      width,
-      onClick,
-      onSelected,
-      selected,
-      disabled,
-      displayText,
-      buttons,
-      ...boxProps
-    } = props;
-    const { className, ...rest } = boxProps;
-
-    const adjustedOpen = over ? !this.state.open : this.state.open;
-
-    return (
-      <Stack fill>
-        <Stack.Item width={width}>
-          <Box
-            width={'100%'}
-            className={classes([
-              'Dropdown__control',
-              'Button',
-              'Button--color--' + color,
-              disabled && 'Button--disabled',
-              className,
-            ])}
-            onClick={(event) => {
-              if (disabled && !this.state.open) {
-                return;
-              }
-              this.setOpen(!this.state.open);
-              if (onClick) {
-                onClick(event);
-              }
+  return (
+    <Stack fill>
+      <Stack.Item width={width}>
+        <Box
+          ref={dropdownRef}
+          width="100%"
+          className={classes([
+            'Dropdown__control',
+            'Button',
+            'Button--color--' + color,
+            disabled && 'Button--disabled',
+            className,
+          ])}
+          onClick={(event) => {
+            if (disabled && !open) {
+              return;
+            }
+            setOpen(!open);
+            if (onClick) {
+              onClick(event);
+            }
+          }}
+          {...rest}
+        >
+          {icon && (
+            <Icon name={icon} rotation={iconRotation} spin={iconSpin} mr={1} />
+          )}
+          <span
+            className="Dropdown__selected-text"
+            style={{
+              overflow: clipSelectedText ? 'hidden' : 'visible',
             }}
-            {...rest}
           >
-            {icon && (
-              <Icon
-                name={icon}
-                rotation={iconRotation}
-                spin={iconSpin}
-                mr={1}
-              />
-            )}
-            <span
-              className="Dropdown__selected-text"
-              style={{
-                overflow: clipSelectedText ? 'hidden' : 'visible',
-              }}
-            >
-              {displayText || this.state.selected}
+            {displayText || selected}
+          </span>
+          {!nochevron && (
+            <span className="Dropdown__arrow-button">
+              <Icon name={open ? 'chevron-up' : 'chevron-down'} />
             </span>
-            {nochevron || (
-              <span className="Dropdown__arrow-button">
-                <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
-              </span>
-            )}
-          </Box>
-        </Stack.Item>
-        {buttons && (
-          <>
-            <Stack.Item height={'100%'}>
-              <Button
-                height={'100%'}
-                icon="chevron-left"
-                disabled={disabled}
-                onClick={() => {
-                  if (disabled) {
-                    return;
-                  }
+          )}
+        </Box>
+      </Stack.Item>
+      {buttons && (
+        <>
+          <Stack.Item height="100%">
+            <Button
+              height="100%"
+              icon="chevron-left"
+              disabled={disabled}
+              onClick={() => {
+                if (disabled) {
+                  return;
+                }
 
-                  this.toPrevious();
-                }}
-              />
-            </Stack.Item>
-            <Stack.Item height={'100%'}>
-              <Button
-                height={'100%'}
-                icon="chevron-right"
-                disabled={disabled}
-                onClick={() => {
-                  if (disabled) {
-                    return;
-                  }
+                updateSelected('previous');
+              }}
+            />
+          </Stack.Item>
+          <Stack.Item height="100%">
+            <Button
+              height="100%"
+              icon="chevron-right"
+              disabled={disabled}
+              onClick={() => {
+                if (disabled) {
+                  return;
+                }
 
-                  this.toNext();
-                }}
-              />
-            </Stack.Item>
-          </>
-        )}
-      </Stack>
-    );
-  }
+                updateSelected('next');
+              }}
+            />
+          </Stack.Item>
+        </>
+      )}
+      {open && <DropDownMenu options={options} onSelected={setSelected} />}
+    </Stack>
+  );
+}
+
+function DropDownMenu(props: {
+  options: DropdownOption[];
+  onSelected: (selected: any) => void;
+}) {
+  const { options, onSelected } = props;
+
+  return (
+    <div>
+      {options.map((option, index) => (
+        <div key={index} onClick={() => onSelected(getOptionValue(option))}>
+          {typeof option === 'string' ? option : option.displayText}
+        </div>
+      ))}
+    </div>
+  );
 }
