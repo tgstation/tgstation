@@ -218,12 +218,12 @@ const ProductDisplay = (props: {
               return true;
             }
           })
-          .map((product) => (
+          .map((product, index) => (
             <VendingRow
               key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[product.name]}
+              productStock={stock[index]}
             />
           ))}
       </Table>

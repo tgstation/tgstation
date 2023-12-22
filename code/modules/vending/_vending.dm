@@ -1210,7 +1210,7 @@
 			colorable = product_record.colorable,
 		)
 
-		.["stock"][product_record.name] = product_data
+		.["stock"] += list(product_data)
 
 	.["extended_inventory"] = extended_inventory
 
