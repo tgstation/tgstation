@@ -3,21 +3,35 @@
 	set name = "Map Export"
 	set desc = "Select a part of the map by coordinates and download it."
 
-	var/z_level = tgui_input_number(usr, "Export Which Z-Level?", "Map Exporter", 2)
-	var/start_x = tgui_input_number(usr, "Start X?", "Map Exporter", 1)
-	var/start_y = tgui_input_number(usr, "Start Y?", "Map Exporter", 1)
-	var/end_x = tgui_input_number(usr, "End X?", "Map Exporter", world.maxx-1)
-	var/end_y = tgui_input_number(usr, "End Y?", "Map Exporter", world.maxy-1)
+	var/z_level = tgui_input_number(usr, "Export Which Z-Level?", "Map Exporter", usr.z || 2)
+	var/start_x = tgui_input_number(usr, "Start X?", "Map Exporter", usr.x || 1, world.maxx, 1)
+	var/start_y = tgui_input_number(usr, "Start Y?", "Map Exporter", usr.y || 1, world.maxy, 1)
+	var/end_x = tgui_input_number(usr, "End X?", "Map Exporter", usr.x || 1, world.maxx, 1)
+	var/end_y = tgui_input_number(usr, "End Y?", "Map Exporter", usr.y || 1, world.maxy, 1)
 	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
-	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exportedmap_[date]"))
+	var/file_name = sanitize_filename(tgui_input_text(usr, "Filename?", "Map Exporter", "exported_map_[date]"))
 	var/confirm = tgui_alert(usr, "Are you sure you want to do this? This will cause extreme lag!", "Map Exporter", list("Yes", "No"))
 
 	if(confirm != "Yes" || !check_rights(R_DEBUG))
 		return
 
 	var/map_text = write_map(start_x, start_y, z_level, end_x, end_y, z_level)
-	text2file(map_text, "data/[file_name].dmm")
-	DIRECT_OUTPUT(usr, ftp("data/[file_name].dmm", "[file_name].dmm"))
+	log_admin("Build Mode: [key_name(usr)] is exporting the map area from ([start_x], [start_y], [z_level]) through ([end_x], [end_y], [z_level])")
+	send_exported_map(usr, file_name, map_text)
+
+/**
+ * A procedure for saving DMM text to a file and then sending it to the user.
+ * Arguments:
+ * * user - a user which get map
+ * * name - name of file + .dmm
+ * * map - text with DMM format
+ */
+/proc/send_exported_map(user, name, map)
+	var/file_path = "data/[name].dmm"
+	rustg_file_write(map, file_path)
+	DIRECT_OUTPUT(user, ftp(file_path, "[name].dmm"))
+	var/file_to_delete = file(file_path)
+	fdel(file_to_delete)
 
 /proc/sanitize_filename(text)
 	return hashtag_newlines_and_tabs(text, list("\n"="", "\t"="", "/"="", "\\"="", "?"="", "%"="", "*"="", ":"="", "|"="", "\""="", "<"="", ">"=""))

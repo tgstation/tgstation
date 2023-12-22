@@ -72,16 +72,9 @@
 	//Step 1: Get the data (This can take a while)
 	var/dat = write_map(minx, miny, minz, maxx, maxy, maxz, save_flag, shuttle_flag)
 
-	//Step 2: Write the data to a file
-	var/filedir = file("data/exported-map.dmm")
-	if(fexists(filedir))
-		fdel(filedir)
-	WRITE_FILE(filedir, "[dat]")
-
-	//Step 3: Give the file to client for download
-	DIRECT_OUTPUT(builder, ftp(filedir))
-
-	//Step 4: Remove the file from the server (hopefully we can find a way to avoid step)
-	fdel(filedir)
+	//Step 2: Write the data to a file and give map to client 
+	var/date = time2text(world.timeofday, "YYYY-MM-DD_hh-mm-ss")
+	var/file_name = sanitize_filename(tgui_input_text(builder, "Filename?", "Map Exporter", "exported_map_[date]"))
+	send_exported_map(builder, file_name, dat)
 	to_chat(builder, span_green("The map was successfully saved!"))
 	is_running = FALSE
