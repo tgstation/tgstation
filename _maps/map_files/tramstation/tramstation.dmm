@@ -55559,7 +55559,9 @@
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "qPF" = (
-/obj/machinery/mecha_part_fabricator/maint,
+/obj/machinery/mecha_part_fabricator/maint{
+	dir = 1
+	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/central)
