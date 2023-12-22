@@ -150,7 +150,7 @@
 	return target_turf
 
 /**
- * We start zooming by hiding the mouse pointer, adding our tracker overlay and starting our processing.
+ * We start zooming by adding our tracker overlay and starting our processing.
  *
  * Arguments:
  * * user: The mob we are starting zooming on.
@@ -161,8 +161,6 @@
 	if(HAS_TRAIT(user, TRAIT_USER_SCOPED))
 		user.balloon_alert(user, "already zoomed!")
 		return
-	user.client.mouse_override_icon = 'icons/effects/mouse_pointers/scope_hide.dmi'
-	user.update_mouse_pointer()
 	user.playsound_local(parent, 'sound/weapons/scope.ogg', 75, TRUE)
 	tracker = user.overlay_fullscreen("scope", /atom/movable/screen/fullscreen/cursor_catcher/scope, isgun(parent))
 	tracker.assign_to_mob(user, range_modifier)
@@ -222,8 +220,6 @@
 
 	if(user.client)
 		animate(user.client, 0.2 SECONDS, pixel_x = 0, pixel_y = 0)
-		user.client.mouse_override_icon = null
-		user.update_mouse_pointer()
 	tracker = null
 	tracker_owner_ckey = null
 
