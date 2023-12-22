@@ -92,15 +92,16 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/item/slimepotion/slime/sentience/mining = list("Lets upgrade Bosco!", "Time to make Bosco smarter!"),
 
 	/obj/item/skeleton_key = list("Skeleton key!", "Key! Time to crack a crate!", "Time for some rewards!", "Key here!"),
-	/obj/item/mining_voucher = list(),
-	/obj/item/wormhole_jaunter = list(),
+	/obj/item/mining_voucher = list("Voucher!", "Freebie time!", "Mining voucher, time to spend it wisely!"),
+	/obj/item/wormhole_jaunter = list("Jaunter!", "Yeesh, never liked traveling by wormhole!", "Safe...ish wormholes!", "Saves your rear from a chasm if you keep it on you!", "Ready to open a wormhole!"),
 
-	/obj/item/organ/internal/monster_core = list(),
-	/obj/item/reagent_containers/hypospray/medipen/survival = list(),
-	/obj/item/extinguisher = list(),
-	/obj/item/lazarus_injector = list(),
-	/obj/item/extraction_pack = list(),
-	/obj/item/fulton_core = list(),
+	/obj/item/organ/internal/monster_core = list("Got some beast organs!", "Organ here!", "Crush this in a pinch!", "Monster organ, grab it before it goes bad!", "Organ! I prefer red sugar..."),
+	/obj/item/reagent_containers/hypospray/medipen/survival = list("Survival pen!", "Medipen here!", "Keep one of these in your pocket!", "With this, the fight goes on!", "No time for a lie-down!"),
+	/obj/item/extinguisher = list("Fire extinguisher!", "Extinguisher here!", "Works against magma fires too!", "Never know when you'll need this!", "Where's the fire?"),
+	/obj/item/lazarus_injector = list("Lazarus Injector!", "Wish I had this for my goldfish!", "Lazarus here!", "Lets go revive some pets!"),
+	/obj/item/extraction_pack = list("Fulton Pack!", "They're coming too?", "Use this, it's a fulton recovery device.", "Time to grab everything not nailed down!","Heard about a guy that brought home a bear with one of these!", "Link this to a beacon!"),
+	/obj/item/fulton_core = list("Fulton beacon!", "Get this beacon set up!", "Ready to place beacon!", "Extraction beacon here!"),
+	/obj/structure/extraction_point = list("Fulton beacon!", "Beacon ready to bring things home!", "Extraction beacon here!"),
 
 	/obj/item/t_scanner/adv_mining_scanner = list(),
 	/obj/item/mining_scanner = list(),
@@ -108,7 +109,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/item/survivalcapsule/luxuryelite = list(),
 	/obj/item/survivalcapsule = list(),
 	/obj/item/style_meter = list(),
-	/obj/item/stack/spacecash = list(),
+	/obj/item/stack/spacecash = list("Loads of money!", "Money, money, money~", "It's raining money!", "Dosh!", "Dosh! Grab it while you can, lads!", "Cash here!", "My name is loadsamoney!", "Wallets, watch out for the ladies!", "Right, whop it out!", "Money makes the world go 'round!", "All this mining's making me rich!", "Sorry mate, don't take cheques! Just loads of money!"), //Yes, you get a Killing Floor reference too, as a treat.
 
 	//Items: Misc
 	/obj/item/toy/plush/moth = list("Bug!", "Found a bug!", "There's a bug here!", "Moth!", "Moth here!", "🐛"),
@@ -124,7 +125,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 	//Static Objects: Lavaland & Other
 	/obj/structure/flora/rock = list("Rock! Or stone?", "Rock!", "Pioneers used to ride these babies for miles."),
-	/obj/structure/geyser = list(),
+	/obj/structure/geyser = list("Chemical geyser!", "Geyser here! Get the chemists!", "Found a geyser!", "Got some mystery chems here!", "Geyser! Probably tastes better than the chef's cooking..."),
 	/obj/structure/flora/ash/cacti = list(),
 	/obj/structure/flora/ash/fireblossom = list(),
 	/obj/structure/flora/ash/seraka = list(),
