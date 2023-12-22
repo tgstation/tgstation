@@ -51,6 +51,10 @@ map pubbystation
 	votable
 endmap
 
+map boxstation
+	votable
+endmap
+
 # Debug-only maps.
 
 map gateway_test
