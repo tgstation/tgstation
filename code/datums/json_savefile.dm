@@ -57,7 +57,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 /datum/json_savefile/proc/save()
 	if(path)
-		rustg_file_write(json_encode(tree), path)
+		rustg_file_write(json_encode(tree, JSON_PRETTY_PRINT), path)
 
 /datum/json_savefile/serialize_list(list/options, list/semvers)
 	SHOULD_CALL_PARENT(FALSE)
