@@ -220,7 +220,7 @@ const ProductDisplay = (props: {
           })
           .map((product) => (
             <VendingRow
-              key={product.path || product.name}
+              key={product.path}
               custom={custom}
               product={product}
               productStock={stock[product.name]}
@@ -351,7 +351,7 @@ const ProductButton = (props) => {
       disabled={disabled}
       onClick={() =>
         act('dispense', {
-          item: product.name,
+          item: product.path,
         })
       }
     >
