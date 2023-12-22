@@ -285,6 +285,12 @@
 	if(use_command)
 		spans |= SPAN_COMMAND
 
+	var/radio_message = message
+	if(message_mods[WHISPER_MODE])
+		// Radios don't pick up whispers very well
+		radio_message = stars(radio_message)
+		spans |= SPAN_ITALICS
+
 	flick_overlay_view(overlay_mic_active, 5 SECONDS)
 
 	/*
@@ -317,7 +323,7 @@
 	var/atom/movable/virtualspeaker/speaker = new(null, talking_movable, src)
 
 	// Construct the signal
-	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, message, spans, message_mods)
+	var/datum/signal/subspace/vocal/signal = new(src, freq, speaker, language, radio_message, spans, message_mods)
 
 	// Independent radios, on the CentCom frequency, reach all independent radios
 	if (independent && (freq == FREQ_CENTCOM || freq == FREQ_CTF_RED || freq == FREQ_CTF_BLUE || freq == FREQ_CTF_GREEN || freq == FREQ_CTF_YELLOW))
@@ -355,12 +361,6 @@
 		return
 	var/filtered_mods = list()
 
-	var/radio_message = raw_message
-	if(message_mods[WHISPER_MODE])
-		// radios don't pick up whispers very well
-		radio_message = stars(radio_message)
-		spans |= SPAN_ITALICS
-
 	if (message_mods[MODE_SING])
 		filtered_mods[MODE_SING] = message_mods[MODE_SING]
 	if (message_mods[WHISPER_MODE])
@@ -379,7 +379,7 @@
 			if (idx && (idx % 2) == (message_mods[RADIO_EXTENSION] == MODE_L_HAND))
 				return
 
-	talk_into(speaker, radio_message, , spans, language=message_language, message_mods=filtered_mods)
+	talk_into(speaker, raw_message, , spans, language=message_language, message_mods=filtered_mods)
 
 /// Checks if this radio can receive on the given frequency.
 /obj/item/radio/proc/can_receive(input_frequency, list/levels)

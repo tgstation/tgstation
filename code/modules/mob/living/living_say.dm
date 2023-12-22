@@ -219,10 +219,6 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
 	var/radio_message = message
-	if(message_mods[WHISPER_MODE])
-		// radios don't pick up whispers very well
-		radio_message = stars(radio_message)
-		spans |= SPAN_ITALICS
 
 	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & ITALICS)
