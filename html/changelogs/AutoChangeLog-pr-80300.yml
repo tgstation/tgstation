@@ -1,0 +1,5 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Nightmares retain their ability to dodge projectiles for a brief period after leaving a dark area, meaning it is now possible to dodge lasers."
+  - qol: "Nightmares and Shadow People now receive a screen alert when they are in a sufficiently dark location that their abilities are active."
