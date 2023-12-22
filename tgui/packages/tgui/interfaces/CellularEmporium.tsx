@@ -1,15 +1,16 @@
 import { useState } from 'react';
+
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
-  Section,
   Icon,
   Input,
-  Stack,
   LabeledList,
-  Box,
   NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -70,7 +71,7 @@ export const CellularEmporium = (props) => {
               <Stack.Item>
                 <Input
                   width="200px"
-                  onChange={(event, value) => setSearchAbilities(value)}
+                  onInput={(event, value) => setSearchAbilities(value)}
                   placeholder="Search Abilities..."
                   value={searchAbilities}
                 />

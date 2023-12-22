@@ -384,35 +384,30 @@
 	return null
 
 /obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_dispenser/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_dispenser/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(default_deconstruction_crowbar(tool))
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/B = I
-		. = TRUE //no afterattack
-		if(!user.transferItemToLoc(B, src))
-			return
-		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
+/obj/machinery/chem_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
+		if(!user.transferItemToLoc(tool, src))
+			return ..()
+		replace_beaker(user, tool)
 		ui_interact(user)
-	else if(!user.combat_mode && !istype(I, /obj/item/card/emag))
-		to_chat(user, span_warning("You can't load [I] into [src]!"))
-		return ..()
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/machinery/chem_dispenser/get_cell()
 	return cell
@@ -664,7 +659,7 @@
 /obj/machinery/chem_dispenser/mutagensaltpeter
 	name = "botanical chemical dispenser"
 	desc = "Creates and dispenses chemicals useful for botany."
-	obj_flags = NO_DECONSTRUCTION
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
 
 	/// The default list of dispensable reagents available in the mutagensaltpeter chem dispenser

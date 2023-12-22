@@ -2,14 +2,15 @@
  * @license MIT
  */
 
+import { clamp } from 'common/math';
 import { classes } from 'common/react';
+import { marked } from 'marked';
+import { Component, createRef, RefObject } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
-import { marked } from 'marked';
-import { Component, createRef, RefObject } from 'react';
-import { clamp } from 'common/math';
 
 const Z_INDEX_STAMP = 1;
 const Z_INDEX_STAMP_PREVIEW = 2;

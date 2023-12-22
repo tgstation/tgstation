@@ -1,5 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
+import { ReactNode } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -14,7 +16,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { ReactNode } from 'react';
 
 enum SpellCategory {
   Offensive = 'Offensive',
@@ -761,7 +762,7 @@ export const Spellbook = (props) => {
                     width={15}
                     placeholder="Search for a spell..."
                     icon="search"
-                    onChange={(e, val) => setSpellSearch(val)}
+                    onInput={(e, val) => setSpellSearch(val)}
                   />
                 </Stack.Item>
               </Stack>

@@ -1,11 +1,12 @@
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Button, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import {
-  ICON_BY_CATEGORY_NAME,
   ColorItem,
+  ICON_BY_CATEGORY_NAME,
   LayerSelect,
   SmartPipeBlockSection,
 } from './RapidPipeDispenser';

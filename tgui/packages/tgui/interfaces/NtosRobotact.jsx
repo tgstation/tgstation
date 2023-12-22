@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -11,7 +13,6 @@ import {
   Tabs,
 } from '../components';
 import { NtosWindow } from '../layouts';
-import { useState } from 'react';
 
 export const NtosRobotact = (props) => {
   return (

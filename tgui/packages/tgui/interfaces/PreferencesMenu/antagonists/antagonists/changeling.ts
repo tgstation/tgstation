@@ -1,5 +1,6 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 export const CHANGELING_MECHANICAL_DESCRIPTION = multiline`
 Transform yourself or others into different identities, and buy from an

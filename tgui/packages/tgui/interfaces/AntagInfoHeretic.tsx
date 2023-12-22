@@ -1,13 +1,14 @@
-import { useBackend } from '../backend';
-import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
-import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
+import { Window } from '../layouts';
 import {
-  ObjectivePrintout,
   Objective,
+  ObjectivePrintout,
   ReplaceObjectivesButton,
 } from './common/Objectives';
-import { useState } from 'react';
 
 const hereticRed = {
   color: '#e03c3c',

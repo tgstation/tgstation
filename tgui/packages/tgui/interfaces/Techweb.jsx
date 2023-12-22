@@ -1,19 +1,20 @@
 import { map, sortBy } from 'common/collections';
+
 import { useBackend, useLocalState } from '../backend';
 import {
-  Button,
-  Section,
-  Modal,
-  Tabs,
   Box,
-  Input,
-  Flex,
-  ProgressBar,
+  Button,
   Collapsible,
-  Icon,
   Divider,
+  Flex,
+  Icon,
+  Input,
+  Modal,
+  ProgressBar,
+  Section,
+  Tabs,
 } from '../components';
-import { Window, NtosWindow } from '../layouts';
+import { NtosWindow, Window } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
@@ -300,7 +301,7 @@ const TechwebOverview = (props) => {
           <Flex.Item align={'center'}>
             <Input
               value={searchText}
-              onChange={(e, value) => setSearchText(value)}
+              onInput={(e, value) => setSearchText(value)}
               placeholder={'Search...'}
             />
           </Flex.Item>

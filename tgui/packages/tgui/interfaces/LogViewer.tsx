@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Button,
@@ -180,7 +181,7 @@ const CategoryViewer = (props: CategoryViewerProps) => {
             fill
             placeholder="Search"
             value={search}
-            onChange={(_, value) => setSearch(value)}
+            onInput={(_, value) => setSearch(value)}
           />
           <Button
             icon={'code'}

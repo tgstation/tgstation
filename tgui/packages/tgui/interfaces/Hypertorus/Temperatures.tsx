@@ -1,8 +1,8 @@
-import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui/components';
-import { HypertorusFuel } from '.';
-
-import { to_exponential_if_big } from './helpers';
 import { useBackend } from 'tgui/backend';
+import { Box, Flex, Icon, Section, Stack, Tooltip } from 'tgui/components';
+
+import { HypertorusFuel } from '.';
+import { to_exponential_if_big } from './helpers';
 
 type Data = {
   base_max_temperature: number;

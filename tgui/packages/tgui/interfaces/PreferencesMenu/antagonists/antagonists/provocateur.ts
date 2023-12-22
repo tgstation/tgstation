@@ -1,5 +1,6 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 import { REVOLUTIONARY_MECHANICAL_DESCRIPTION } from './headrevolutionary';
 
 const Provocateur: Antagonist = {
