@@ -184,3 +184,13 @@
   - admin: admin ban panel updates
   ma44, Dwasint:
   - rscadd: Ejected bullet casings now bounce around with the power of simulated physics
+2023-12-22:
+  MichiRecRoom:
+  - bugfix: Support Guardian's heal works once more!
+  - bugfix: Due to how the Support Guardian heal fix was implemented, this also fixes
+      Spider's health display not updating when another spider heals you.
+  - bugfix: Previously, the Power Miner shard was temporarily blocked from spawning
+      Support Guardians due to its healing being nonfunctional. Since its healing
+      works once more, Power Miner shards can once again spawn Support Guardians.
+  MonstieHuntie:
+  - bugfix: Corndogs are no longer condemned to Hell upon being born
