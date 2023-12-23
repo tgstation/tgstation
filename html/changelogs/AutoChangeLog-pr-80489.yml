@@ -1,0 +1,4 @@
+author: "SSensum"
+delete-after: True
+changes:
+  - rscadd: "Added weapon recharger boards to designs available to print on sec techfab."
