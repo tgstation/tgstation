@@ -1,5 +1,6 @@
 /datum/asset/simple/portraits
 	assets = list()
+	cross_round_cachable = FALSE
 
 /datum/asset/simple/portraits/New()
 	if(!length(SSpersistent_paintings.paintings))

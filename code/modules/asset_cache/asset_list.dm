@@ -26,6 +26,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	/// Whether or not this asset can be cached across rounds of the same commit under the `CACHE_ASSETS` config.
 	/// This is not a *guarantee* the asset will be cached. Not all asset subtypes respect this field, and the
 	/// config can, of course, be disabled.
+	/// Disable this if your asset can change between rounds on the same exact version of the code.
 	var/cross_round_cachable = FALSE
 
 /datum/asset/New()
@@ -133,6 +134,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/spritesheet
 	_abstract = /datum/asset/spritesheet
+	cross_round_cachable = TRUE
 	var/name
 	/// List of arguments to pass into queuedInsert
 	/// Exists so we can queue icon insertion, mostly for stuff like preferences
@@ -145,6 +147,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	/// If this asset should be fully loaded on new
 	/// Defaults to false so we can process this stuff nicely
 	var/load_immediately = FALSE
+	VAR_PRIVATE
+		// Kept in state so that the result is the same, even when the files are created, for this run
+		should_refresh = null
 
 /datum/asset/spritesheet/proc/should_load_immediately()
 #ifdef DO_NOT_DEFER_ASSETS
@@ -157,9 +162,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/should_refresh()
 	if (..())
 		return TRUE
-
-	// Static so that the result is the same, even when the files are created, for this run
-	var/static/should_refresh = null
 
 	if (isnull(should_refresh))
 		// `fexists` seems to always fail on static-time
