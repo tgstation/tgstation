@@ -78,7 +78,7 @@
 /mob/living/carbon/human/proc/get_face_name(if_no_face = "Unknown")
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return if_no_face //We're Unknown, no face information for you
-	for(var/obj/item/worn_item in get_all_worn_items())
+	for(var/obj/item/worn_item in get_equipped_items())
 		if(!(worn_item.flags_inv & HIDEFACE))
 			continue
 		return if_no_face

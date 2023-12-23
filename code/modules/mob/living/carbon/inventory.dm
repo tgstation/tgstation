@@ -39,16 +39,6 @@
 
 	return ..()
 
-/mob/living/carbon/proc/get_all_worn_items()
-	return list(
-		back,
-		wear_mask,
-		wear_neck,
-		head,
-		handcuffed,
-		legcuffed,
-	)
-
 /mob/living/carbon/proc/equip_in_one_of_slots(obj/item/equipping, list/slots, qdel_on_fail = TRUE, indirect_action = FALSE)
 	for(var/slot in slots)
 		if(equip_to_slot_if_possible(equipping, slots[slot], disable_warning = TRUE, indirect_action = indirect_action))
@@ -435,7 +425,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_all_worn_items()
+	var/list/all_worn_items = get_equipped_items()
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 
@@ -446,7 +436,7 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	var/covered_flags = NONE
-	var/list/all_worn_items = get_all_worn_items()
+	var/list/all_worn_items = get_equipped_items()
 	for(var/obj/item/worn_item in all_worn_items)
 		covered_flags |= worn_item.body_parts_covered
 

@@ -9,7 +9,7 @@
 	hair_hidden = FALSE
 	facial_hair_hidden = FALSE
 	if(human_head_owner)
-		for(var/obj/item/worn_item in human_head_owner.get_all_worn_items())
+		for(var/obj/item/worn_item in human_head_owner.get_equipped_items())
 			if(worn_item.flags_inv & HIDEHAIR)
 				hair_hidden = TRUE
 			if(worn_item.flags_inv & HIDEFACIALHAIR)

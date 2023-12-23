@@ -611,7 +611,7 @@
  */
 /mob/living/carbon/proc/update_tint()
 	var/tint = 0
-	for(var/obj/item/clothing/worn_item in get_all_worn_items())
+	for(var/obj/item/clothing/worn_item in get_equipped_items())
 		tint += worn_item.tint
 
 	var/obj/item/organ/internal/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)

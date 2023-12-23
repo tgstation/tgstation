@@ -70,9 +70,6 @@
 
 	return ..()
 
-/mob/living/carbon/human/get_all_worn_items()
-	. = get_head_slots() | get_body_slots()
-
 /mob/living/carbon/human/proc/get_body_slots()
 	return list(
 		back,
@@ -231,7 +228,7 @@
 
 /mob/living/carbon/human/equipped_speed_mods()
 	. = ..()
-	for(var/sloties in get_all_worn_items() - list(l_store, r_store, s_store))
+	for(var/sloties in get_equipped_items())
 		var/obj/item/thing = sloties
 		. += thing?.slowdown
 
@@ -389,10 +386,10 @@
 
 //delete all equipment without dropping anything
 /mob/living/carbon/human/proc/delete_equipment()
-	for(var/slot in get_all_worn_items())//order matters, dependant slots go first
+	for(var/slot in get_equipped_items(include_pockets = TRUE))//order matters, dependant slots go first
 		qdel(slot)
-	for(var/obj/item/I in held_items)
-		qdel(I)
+	for(var/obj/item/held_item in held_items)
+		qdel(held_item)
 
 /// take the most recent item out of a slot or place held item in a slot
 
