@@ -113,8 +113,8 @@
 
 /obj/item/circuit_component/mod_program/status/proc/set_picture(datum/port/port)
 	var/datum/computer_file/program/status/status = associated_program
-	status.post_picture(status_display_pics.value, parent.get_creator())
+	INVOKE_ASYNC(status, TYPE_PROC_REF(/datum/computer_file/program/status, post_picture), status_display_pics.value, parent.get_creator())
 
 /obj/item/circuit_component/mod_program/status/input_received(datum/port/port)
 	var/datum/computer_file/program/status/status = associated_program
-	status.post_message(upper_text.value, bottom_text.value, parent.get_creator())
+	INVOKE_ASYNC(status, TYPE_PROC_REF(/datum/computer_file/program/status, post_message), upper_text.value, bottom_text.value, parent.get_creator())
