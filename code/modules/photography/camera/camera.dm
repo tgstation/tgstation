@@ -121,7 +121,7 @@
 			return FALSE
 		else if(!(get_turf(target) in get_hear(world.view, user)))
 			return FALSE
-	else if(istype(loc, /mob/living/carbon))
+	else if(isliving(loc))
 		if(!(get_turf(target) in view(world.view, loc)))
 			return FALSE
 	else //user is an atom or null
@@ -264,8 +264,8 @@
 					picture.caption = caption
 			else if(default_picture_name)
 				picture.picture_name = default_picture_name
-	else if(istype(loc, /mob/living/carbon))
-		var/mob/living/carbon/holder = loc
+	else if(isliving(loc))
+		var/mob/living/holder = loc
 		if(holder.put_in_hands(new_photo))
 			to_chat(holder, span_notice("[pictures_left] photos left."))
 
