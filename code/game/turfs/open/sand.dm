@@ -67,7 +67,7 @@
 	. = ..()
 	icon_state = "sand_damaged"
 
-/turf/open/misc/asteroid/broken_states()
+/turf/open/misc/sandy_dirt/broken_states()
 	return list("sand_damaged")
 
 /turf/open/misc/ironsand
