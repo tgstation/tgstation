@@ -12,17 +12,17 @@
 		return
 	switch(wire)
 		if(WIRE_VALVE)
-			the_canister.toggle_valve(usr)
+			the_canister.toggle_valve(usr, wire_pulsed = TRUE)
 		if(WIRE_SHIELDING)
-			the_canister.toggle_shielding(usr)
+			the_canister.toggle_shielding(usr, wire_pulsed = TRUE)
 		if(WIRE_TANK_EJECT)
-			the_canister.eject_tank(usr)
+			the_canister.eject_tank(usr, wire_pulsed = TRUE)
 		if(WIRE_REGULATOR_MIN)
 			the_canister.release_pressure = CAN_MIN_RELEASE_PRESSURE
-			the_canister.investigate_log("was set to [the_canister.release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
+			the_canister.investigate_log("was set to [the_canister.release_pressure] kPa by [key_name(usr)] via wire pulse.", INVESTIGATE_ATMOS)
 		if(WIRE_REGULATOR_MAX)
 			the_canister.release_pressure = CAN_MAX_RELEASE_PRESSURE
-			the_canister.investigate_log("was set to [the_canister.release_pressure] kPa by [key_name(usr)].", INVESTIGATE_ATMOS)
+			the_canister.investigate_log("was set to [the_canister.release_pressure] kPa by [key_name(usr)] via wire pulse.", INVESTIGATE_ATMOS)
 		if(WIRE_REACTION_SUPPRESSION)
 			the_canister.toggle_reaction_suppression(usr, wire_pulsed = TRUE)
 

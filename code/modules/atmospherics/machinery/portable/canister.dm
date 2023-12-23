@@ -41,7 +41,7 @@
 	/// An assembly attached to the canister
 	var/obj/item/assembly_holder/rig = null
 	/// The person who attached an assembly to this canister, usually for ignition purposes in tandem with valve wire pulse
-	var/last_rigger = ""
+	var/mob/last_rigger = ""
 	//overlay of attached assemblies
 	var/mutable_appearance/assemblies_overlay
 
@@ -83,7 +83,13 @@
 
 /obj/machinery/portable_atmospherics/canister/Destroy()
 	QDEL_NULL(wires)
-	QDEL_NULL(rig)
+	return ..()
+
+/obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone)
+	if(gone == rig)
+		rig = null
+		last_rigger = null
+		cut_overlays(assemblies_overlay)
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
@@ -447,9 +453,6 @@
 	user.log_message("detached [rig] from [src].", LOG_GAME)
 	if(!user.put_in_hands(rig))
 		rig.forceMove(get_turf(user))
-	rig = null
-	last_rigger = null
-	cut_overlays(assemblies_overlay)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
@@ -722,7 +725,7 @@
 
 
 /// Opens/closes the canister valve
-/obj/machinery/portable_atmospherics/canister/proc/toggle_valve(mob/user)
+/obj/machinery/portable_atmospherics/canister/proc/toggle_valve(mob/user, wire_pulsed = FALSE)
 	var/logmsg
 	var/admin_msg
 	var/danger = FALSE
@@ -730,7 +733,7 @@
 	valve_open = !valve_open
 	if(valve_open)
 		SSair.start_processing_machine(src)
-		logmsg = "Valve was <b>opened</b> by [key_name(user)], starting a transfer into \the [holding || "air"].<br>"
+		logmsg = "Valve was <b>opened</b> by [key_name(user)] [wire_pulsed ? "via wire pulse" : ""], starting a transfer into \the [holding || "air"].<br>"
 		if(!holding)
 			var/list/gaseslog = list() //list for logging all gases in canister
 			for(var/id in air_contents.gases)
@@ -740,8 +743,8 @@
 					continue
 				if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
 					danger = TRUE //at least 1 danger gas
-			logmsg = "[key_name(user)] <b>opened</b> a canister that contains the following:"
-			admin_msg = "[ADMIN_LOOKUPFLW(user)] <b>opened</b> a canister that contains the following at [ADMIN_VERBOSEJMP(src)]:"
+			logmsg = "[key_name(user)] <b>opened</b> a canister [wire_pulsed ? "via wire pulse" : ""] that contains the following:"
+			admin_msg = "[ADMIN_LOOKUPFLW(user)] <b>opened</b> a canister [wire_pulsed ? "via wire pulse" : ""] that contains the following at [ADMIN_VERBOSEJMP(src)]:"
 			for(var/name in gaseslog)
 				n = n + 1
 				logmsg += "\n[name]: [gaseslog[name]] moles."
@@ -752,24 +755,24 @@
 			if(danger) //sent to admin's chat if contains dangerous gases
 				message_admins(admin_msg)
 	else
-		logmsg = "valve was <b>closed</b> by [key_name(user)], stopping the transfer into \the [holding || "air"].<br>"
+		logmsg = "valve was <b>closed</b> by [key_name(user)] [wire_pulsed ? "via wire pulse" : ""], stopping the transfer into \the [holding || "air"].<br>"
 	investigate_log(logmsg, INVESTIGATE_ATMOS)
 	release_log += logmsg
 
 /// Turns canister shielding on or off
-/obj/machinery/portable_atmospherics/canister/proc/toggle_shielding(mob/user)
+/obj/machinery/portable_atmospherics/canister/proc/toggle_shielding(mob/user, wire_pulsed = FALSE)
 	shielding_powered = !shielding_powered
 	SSair.start_processing_machine(src)
-	message_admins("[ADMIN_LOOKUPFLW(user)] turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
-	user.investigate_log("turned [shielding_powered ? "on" : "off"] the [src] powered shielding.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] turned [shielding_powered ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] powered shielding.")
+	user.investigate_log("turned [shielding_powered ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] powered shielding.")
 	update_appearance()
 
 /// Ejects tank from canister, if any
-/obj/machinery/portable_atmospherics/canister/proc/eject_tank(mob/user)
+/obj/machinery/portable_atmospherics/canister/proc/eject_tank(mob/user, wire_pulsed = FALSE)
 	if(holding)
 		if(valve_open)
-			message_admins("[ADMIN_LOOKUPFLW(user)] removed [holding] from [src] with valve still open at [ADMIN_VERBOSEJMP(src)] releasing contents into the [span_boldannounce("air")].")
-			user.investigate_log("removed the [holding], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
+			message_admins("[ADMIN_LOOKUPFLW(user)] removed [holding] from [src] with valve still open [wire_pulsed ? "via wire pulse" : ""] at [ADMIN_VERBOSEJMP(src)] releasing contents into the [span_boldannounce("air")].")
+			user.investigate_log("removed the [holding] [wire_pulsed ? "via wire pulse" : ""], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
 		replace_tank(user, FALSE)
 		return TRUE
 
@@ -781,8 +784,8 @@
 		return
 	suppress_reactions = !suppress_reactions
 	SSair.start_processing_machine(src)
-	message_admins("[ADMIN_LOOKUPFLW(user)] turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
-	user.investigate_log("turned [suppress_reactions ? "on" : "off"] the [src] reaction suppression.")
+	message_admins("[ADMIN_LOOKUPFLW(user)] turned [suppress_reactions ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] reaction suppression.")
+	user.investigate_log("turned [suppress_reactions ? "on" : "off"] [wire_pulsed ? "via wire pulse" : ""] the [src] reaction suppression.")
 
 /obj/machinery/portable_atmospherics/canister/proc/recolor(datum/greyscale_modify_menu/menu)
 	set_greyscale(menu.split_colors, menu.config.type)
