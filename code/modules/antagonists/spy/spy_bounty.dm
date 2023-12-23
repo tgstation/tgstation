@@ -117,6 +117,9 @@
  * * thing - The item to put up on the black market.
  */
 /datum/spy_bounty/proc/send_to_black_market(atom/movable/thing)
+	if(QDELETED(thing)) // Just in case anything does anything weird
+		return FALSE
+
 	thing.interaction_flags_atom = initial(thing.interaction_flags_atom)
 	thing.anchored = initial(thing.anchored)
 	thing.moveToNullspace()
@@ -127,6 +130,7 @@
 	new_item.desc = "A [thing.name], stolen from somewhere on the station."
 	new_item.category = "Fenced Goods"
 	new_item.stock = 1
+	new_item.availability_prob = 100
 
 	switch(difficulty)
 		if(SPY_DIFFICULTY_EASY)
@@ -140,7 +144,7 @@
 	if(thing.resistance_flags & INDESTRUCTIBLE)
 		new_item.price *= 2
 
-	SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
+	return SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
 
 /// Steal an item
 /datum/spy_bounty/item
@@ -213,11 +217,28 @@
 	var/find_machine_help
 
 /datum/spy_bounty/machine/send_to_black_market(obj/machinery/thing)
-	// Sell the circuitboard, not the whole thing, if possible
-	if(istype(thing.circuit, /obj/item/circuitboard/machine))
-		return ..(thing.circuit)
+	if(!istype(thing.circuit, /obj/item/circuitboard))
+		qdel(thing)
+		return FALSE
 
-	qdel(thing)
+	var/obj/item/circuitboard/selling = thing.circuit
+	var/turf/machine_turf = get_turf(thing)
+
+	// Sell the circuitboard, take the rest apart
+	thing.deconstruct(FALSE)
+	if(!..(selling))
+		return FALSE
+
+	// Clean up leftover parts from deconstruction
+	for(var/obj/structure/frame/leftover in machine_turf)
+		qdel(leftover)
+		break
+	for(var/obj/item/stock_parts/part in machine_turf)
+		if(prob(part.rating * 20))
+			continue
+		qdel(part)
+
+	return TRUE
 
 /datum/spy_bounty/machine/init_bounty(datum/spy_bounty_handler/handler)
 	if(isnull(target_type))
@@ -438,6 +459,7 @@
 
 /datum/spy_bounty/some_bot
 	theft_time = 10 SECONDS
+	black_market_prob = 0
 	/// What typepath of bot we want to steal.
 	var/mob/living/simple_animal/bot/bot_type
 	/// Help text to describe what bot we want to steal.
