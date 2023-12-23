@@ -59,17 +59,18 @@
 		return
 
 	var/mob/living/carbon/carbon_holder = quirk_holder
-	var/datum/reagent/sugar = carbon_holder.reagents.has_reagent(/datum/reagent/consumable/sugar)
 
-	if(sugar != FALSE)
-		// Diabetics metabolize sugar much slower than normal.
-		if(sugar.volume > 0)
-			sugar.metabolization_rate = 0.02
+	// Quirk holder contracts hypoglycemia if their Sugar volume reaches zero.
+	if(carbon_holder.reagents.get_reagent_amount(/datum/reagent/consumable/sugar) == 0)
+		if(is_type_in_list(/datum/disease/hypoglycemia, carbon_holder.diseases))
 			return
 
-	// No sugar, get hypoglycemia.
-	if(is_type_in_list(/datum/disease/hypoglycemia, carbon_holder.diseases))
+		var/datum/disease/hypoglycemic_shock = new /datum/disease/hypoglycemia()
+		carbon_holder.ForceContractDisease(hypoglycemic_shock, FALSE, TRUE)
 		return
 
-	var/datum/disease/hypoglycemic_shock = new /datum/disease/hypoglycemia()
-	carbon_holder.ForceContractDisease(hypoglycemic_shock, FALSE, TRUE)
+	// Diabetics metabolize sugar much slower than normal.
+	var/datum/reagent/consumable/sugar = carbon_holder.reagents.has_reagent(/datum/reagent/consumable/sugar)
+	if(sugar != FALSE)
+		sugar.metabolization_rate = 0.02
+		sugar.nutriment_factor = 0.02
