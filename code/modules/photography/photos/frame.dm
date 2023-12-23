@@ -112,7 +112,7 @@
 	if (isnull(persistence_id))
 		return
 
-	SSpersistence.photo_frames_database.set_key(persistence_id, photo.picture?.id)
+	SSpersistence.photo_frames_database.set_key(persistence_id, photo?.picture?.id)
 
 /obj/structure/sign/picture_frame/examine(mob/user)
 	. = ..()
