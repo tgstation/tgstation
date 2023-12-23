@@ -189,6 +189,7 @@
 			blood.diseases |= virus_copylist(mob.diseases)
 
 
+/*	//commented out until i can figure out how to make this work without shoving static lights on moving objects
 /datum/symptom/lantern
 	name = "Lantern Syndrome"
 	desc = "Causes the infected to glow."
@@ -214,6 +215,7 @@
 		to_chat(mob, span_notice("You are glowing!"))
 		flavortext = 1
 	mob.set_light(multiplier, multiplier, multiplier/3, l_color = color)
+*/
 
 /datum/symptom/lantern/deactivate(mob/living/mob)
 	mob.set_light(0, 0, 0, l_color = rgb(0,0,0))
