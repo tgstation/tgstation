@@ -1,10 +1,11 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { ReactNode } from 'react';
-import { Stack, Section, Icon, Dimmer } from '../../components';
-import { Design, MaterialMap } from './Types';
-import { SearchBar } from './SearchBar';
+
 import { useSharedState } from '../../backend';
+import { Dimmer, Icon, Section, Stack } from '../../components';
+import { SearchBar } from './SearchBar';
+import { Design, MaterialMap } from './Types';
 
 /**
  * A function that does nothing.
@@ -198,6 +199,10 @@ export const DesignBrowser = <T extends Design = Design>(
     }
   }
 
+  const designWrapper = (design: T) => {
+    buildRecipeElement(design, availableMaterials || {}, onPrintDesign || NOOP);
+  };
+
   return (
     <Stack fill>
       {/* Left Column */}
@@ -278,24 +283,12 @@ export const DesignBrowser = <T extends Design = Design>(
                         .toLowerCase()
                         .includes(searchText.toLowerCase()),
                     )
-                    .map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )
+                    .map((design) => designWrapper(design))
                 ) : selectedCategory === ALL_CATEGORY ? (
                   <>
                     {sortBy((design: T) => design.name)(
                       Object.values(root.descendants),
-                    ).map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )}
+                    ).map((design) => designWrapper(design))}
                   </>
                 ) : (
                   root.subcategories[selectedCategory] && (

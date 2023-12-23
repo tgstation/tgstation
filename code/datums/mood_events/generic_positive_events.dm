@@ -185,12 +185,6 @@
 	mood_change = 6
 	timeout = 5 MINUTES
 
-/datum/mood_event/pet_borg
-	description = "I just love my robotic friends!"
-	mood_change = 3
-	timeout = 5 MINUTES
-	required_job = list(/datum/job/research_director, /datum/job/scientist, /datum/job/roboticist, /datum/job/geneticist)
-
 /datum/mood_event/bottle_flip
 	description = "The bottle landing like that was satisfying."
 	mood_change = 2

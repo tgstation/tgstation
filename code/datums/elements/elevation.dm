@@ -72,7 +72,8 @@
 	post_change_callbacks += CALLBACK(src, PROC_REF(post_change_turf), trait_sources)
 
 /datum/element/elevation/proc/post_change_turf(list/trait_sources, turf/changed)
-	ADD_TRAIT(changed, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), trait_sources)
+	for(var/source in trait_sources)
+		ADD_TRAIT(changed, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), source)
 	reset_elevation(changed)
 
 #define ELEVATE_TIME 0.2 SECONDS

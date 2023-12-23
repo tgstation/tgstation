@@ -166,7 +166,7 @@
 		return FALSE
 
 	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>'s personality..."))
-	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", ROLE_PAI, FALSE, 100)
+	var/list/mob/dead/observer/ghost_candidates = SSpolling.poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, pic_source = chosen_guardian, role_name_text = chosen_guardian.theme.name)
 	if (!LAZYLEN(ghost_candidates))
 		to_chat(owner, span_holoparasite("Your attempt to reset the personality of \
 			<font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font> appears to have failed... \

@@ -1,5 +1,6 @@
 import { Component } from 'react';
-import { Stack, Input, Icon } from '../../components';
+
+import { Icon, Input, Stack } from '../../components';
 
 /**
  * The properties of a search bar.

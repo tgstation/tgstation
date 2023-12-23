@@ -23,6 +23,20 @@
 	///Determines which boss image to use on the UI.
 	var/boss_id = 1
 
+///Lazy version of the arade that can be found in maintenance disks
+/datum/computer_file/program/arcade/eazy
+	filename = "dsarcadeez"
+	filedesc = "Donksoft Micro Arcade Ez"
+	filetype = "MNT"
+	program_flags = PROGRAM_UNIQUE_COPY
+	extended_desc = "Some sort of fan-made conversion of the classic game 'Outbomb Cuban Pete'. This one has you fight the weaker 'George Melon' instead."
+	boss_hp = 40
+	boss_mp = 10
+	player_hp = 35
+	player_mp = 15
+	heads_up = "Are you a bad enough dude to grief the station?"
+	boss_name = "George Melon"
+
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(0.5 SECONDS)
 	user?.mind?.adjust_experience(/datum/skill/gaming, 1)
@@ -159,9 +173,9 @@
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE
-			boss_hp = 45
-			player_hp = 30
-			player_mp = 10
+			boss_hp = initial(boss_hp)
+			player_hp = initial(player_hp)
+			player_mp = initial(player_mp)
 			heads_up = "You stand before [boss_name]! Prepare for battle!"
 			program_open_overlay = "arcade"
 			boss_id = rand(1,6)

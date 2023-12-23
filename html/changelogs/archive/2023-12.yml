@@ -446,3 +446,285 @@
       the `BASIC` tag instead (like with carbons, reagent containers, turfs, etc.).
       So, instead of having to scroll through and try and figure out what that weird
       subtype of Poly is, it should now be easier to read in that smaller screen.
+2023-12-15:
+  ATHATH:
+  - rscadd: If your bitrunning avatar somehow acquires and consumes a red pill, they
+      will be disconnected from the Matrix.
+  Higgin:
+  - bugfix: Chemicals are now no longer less effective at curing advanced viruses
+      than they used to be.
+  IndieanaJones:
+  - bugfix: The clown car once again obtains the accesses of kidnapped crew within
+      the car. Supermatter crystals beware!
+  Profakos:
+  - bugfix: Away lathes can now print robot navigational beacons
+  Singul0:
+  - bugfix: Advanced Plastic Surgery is now unavailable shiftstart
+  SyncIt21:
+  - bugfix: mobs that have the `TRAIT_PERMANENTLY_ONFIRE` trait cannot be extinguished
+      by anything.
+  - bugfix: stuff thrown into lava should not runtime. it currently does not but if
+      there is a slight chance it does not happen
+  - bugfix: items that are rejected by the mat container will display the chat message
+      saying that.
+  - bugfix: ORM will generate points regardless of how the ore enters it.
+  - bugfix: Machines like autolathe, techfab etc can now be hit with iron sheets (or
+      any other material item type those machines accept) when in combat mode rather
+      than inserting them because it makes sense.
+  - bugfix: Mat container won't display chats fully if the `MATCONTAINER_SILENT` flag
+      is passed.
+  - refactor: Machines like autolathe, techfab etc now display summed up material
+      inserts to chats rather than each item individually. Also, will skip items &
+      its contents if it cannot be processed thus saving time
+  Time-Green:
+  - bugfix: fixes zombie tumor not reviving
+  jlsnow301:
+  - bugfix: Admin interview panel should feel snappier.
+  - bugfix: Newscaster shouldn't bluescreen anymore.
+  - bugfix: Tram controls should work again.
+  timothymtorres:
+  - balance: Fitness level decreases the time it takes to firemany carry someone.
+      Fitness level determines how much of a positive mood the workout grants. Working
+      out is now more difficult and requires more nutrition.
+  - balance: Exercise no longer triggers double metabolism.
+  vinylspiders:
+  - bugfix: fixes a bug which was causing certain mutations to only get partially
+      removed
+  vvvv-vvvv:
+  - bugfix: Fix double-clicking in various UIs
+  zxaber:
+  - balance: Emagged and Hacked APCs now occasionally flicker a blue effect, and the
+      effect is not visible with cameras.
+  - rscadd: Adds a new discount experiment for unlocking the combat exosuit nodes
+      - complete it by scanning two exosuits with equipment in the left and right
+      hand slots. This replaces the prior discount experiment about destroying exosuits.
+2023-12-16:
+  Derpguy3:
+  - spellcheck: Fixed a minor grammar mistake in the RD's job description and the
+      encrypted cache crate.
+  Ghommie:
+  - balance: '"Scarves" and "Wallets!" are now neutral traits.'
+  LT3:
+  - bugfix: Internal action buttons on computer consoles should work again
+  TheWolfbringer:
+  - bugfix: 'Bitrunners can now access the Northstar ORM
+
+      :cl:'
+  distributivgesetz:
+  - balance: Delamination variants no longer change once the explosion point has been
+      reached.
+  jlsnow301:
+  - bugfix: Keybindings in prefs are able to be set again.
+  - bugfix: Fixed the weird spacing on buttons.
+  - bugfix: Confirmation buttons should be usable again. Bitrunning domains, command
+      reports, etc.
+  tralezab:
+  - qol: Anesthetics tank description now mentions a rare quirk of anesthetic.
+2023-12-17:
+  DATA-xPUNGED:
+  - balance: Exosuit Materials 1 now only requires one mech.
+  - qol: "Exosuit Materials 1 is much more lenient on the percentage it requires.\n\
+      /\U0001F191"
+  Diamond-74:
+  - bugfix: character setup screen no longer runtimes with all_nighter quirk
+  Exester509:
+  - bugfix: ED-209s can no longer be crafted with most instances of helmet, you need
+      security ones just like Beepsky.
+  FlufflesTheDog:
+  - bugfix: Fixed a rare false positive with morgue tray alarms.
+  Ical92:
+  - bugfix: coffee cartridge racks start with a coffee cartridge in them
+  IndieanaJones:
+  - bugfix: Fixed runtime regarding thanking non-existent clown car drivers
+  Jacquerel:
+  - balance: Last Resort can now be used while unconscious or dead.
+  - balance: Last Resort stuns bystanders for slightly longer.
+  - rscadd: If you throw a bee at someone it will hit them sting-first and inject
+      that bee's reagent
+  - balance: Thick clothing can now protect you from the venom of bees, snakes, frogs,
+      and (small) spiders
+  - rscadd: Adds a new shuttle event, where space shuttles can experience minor turbulance.
+      Keep your belt on while the appropriate cabin light is lit.
+  lizardqueenlexi:
+  - bugfix: Motorized wheelchairs will no longer spawn in a bugged state where they
+      have no parts and can't be upgraded.
+  - bugfix: Motorized wheelchairs will drop their power cell when destroyed or deconstructed.
+  - qol: Power cells are now inserted into motorized wheelchairs as part of the crafting
+      recipe, instead of as an extra step afterwards.
+  tralezab:
+  - qol: Added a confirmation prompt to breaking your vow of silence.
+  - balance: Mimes can no longer repair the vow of silence once broken.
+  - balance: The negative moodlet from breaking your vow of silence is now lighter,
+      and no longer permanent.
+  - balance: Mimes are back to being able to write while under a vow of silence.
+  xXPawnStarrXx:
+  - bugfix: fixed the oversight with martian food complexity.
+2023-12-18:
+  DarkHunter7756:
+  - bugfix: Aivime, Lentslurri, Eigenswap and Libitoil can now be cooked again.
+  - balance: Aivime now can stack blur effects for the soapiest game ever.
+  - spellcheck: Lenturri description become more actual
+  Diamond-74:
+  - bugfix: Reviver no longer attempts to revive impossible to defib mobs.
+  - refactor: Cleaned up unnecessary variables and re-arraigned code to have it perform
+      altogether in one tick. Additionally added a proper cooldown to revivers.
+  DrDiasyl:
+  - image: 'New Security clothing: Security High-Vis jacket!'
+  Fikou:
+  - rscadd: Bridge Assistant job accessible from a station trait.
+  Ical92:
+  - bugfix: fixed ghost role descriptions on NTTS Independence
+  Jacquerel:
+  - balance: Roundstart AIs are now made of positronic cubes, rather than brains inside
+      MMIs
+  LemonInTheDark:
+  - bugfix: Fire alarms no longer cause pitch blackness, instead creating a dark but
+      not black red light.
+  Melbert:
+  - bugfix: Fixes PAI health scan software
+  - bugfix: Fixes Laughter demons deleting the bodies of their friends.
+  Tattle:
+  - admin: obsession targets are logged
+  Time-Green:
+  - bugfix: Fixes losing HARS nullspacing your brain
+  - bugfix: Fixes AIize and borgize gibbing you
+  jlsnow301:
+  - bugfix: 'Interview UI should now be more obvious how it works: You must press
+      "enter" or save the answer.'
+  kawaiinick:
+  - code_imp: All nighters can now drink energy drinks to cope with their lack of
+      sleep.
+  uaioy:
+  - rscadd: Added 2 pocket quick equip keybinds
+  vvvv-vvvv:
+  - bugfix: Fix search categories in log viewer
+2023-12-19:
+  Diamond-74:
+  - bugfix: Fixes runtime from augments not unregistering a signal.
+  - bugfix: Observers observing themselves no longer floods admins' logs.
+  Exester509:
+  - bugfix: Made Syndicate Stormtrooper and Nuclear Operative TGC card holograms visible
+      again
+  Fikou:
+  - bugfix: bridge assistant no longer passes some head of staff checks
+  - qol: if you steal a command member's liver, you can now sabre better!
+  - bugfix: qm's intern id is now "quartermaster-in-training"
+  - image: qm's id and hud icons now use the cargo tech icons (but blue) to be consistent
+      with the other heads of staff
+  Ghommie:
+  - rscadd: The Spectre-Meter modular computer app. A little, amatuerishly coded app
+      that, as the name implies, scan an area for spectral presence. It can be found
+      amongst other apps in maintenance computer disks.
+  - rscadd: An easier, lazier version of the Arcade app, also found in maintenance.
+  - rscadd: Black market computer disks, which contains programs not readily available
+      to the average assistant.
+  Mothblocks:
+  - bugfix: Fixed pressing Esc not unbinding keys in preferences.
+  OrionTheFox:
+  - image: the SpacePol bounty hunters have finally had a new run of Uniforms made,
+      bringing them back to the forefront of enforcement fashion! Wardens will find
+      their Police Jackets/Hats have been updated match SpacePol's new look as well.
+  - bugfix: fixed the Mafia Warden having a hat that didn't match his jacket, and
+      fixed SpacePol masks not covering the nose
+  Profakos:
+  - bugfix: The bitrunner domain completion screen alert is once again properly clickable
+  RedBaronFlyer:
+  - rscadd: Added orange hardhats, hazard vests, and pocket protectors to the cargo
+      drobe
+  Seven:
+  - bugfix: Ashwalkers can respawn fellow ashwalkers by bringing them back to their
+      tendril again.
+  - bugfix: Ashwalker tendrils no longer break hooded suits and modsuits.
+  - bugfix: Ashwalkers can sacrifice silicons, it wont give anything though.
+  SyncIt21:
+  - bugfix: crafting now transfers reagents from ingredients to final product making
+      previously inedible foods (toasted seeds, kasei dango & snow cones) edible.
+      Other crafted food products/items now differ in reagents based on the ingredients
+      required.
+  Timberpoes:
+  - admin: Delete painting button is once again visible.
+  Time-Green:
+  - qol: Assistants with <10h of playtime are now "Interns"
+  - bugfix: Monkeys will no longer eat your organs while they're still inside of you
+  ZephyrTFA:
+  - rscadd: Map Votes are now weighted random.
+  - rscadd: Custom Votes can now take advantage of Weighted Random winner selection
+  - rscdel: Removed Herobrine from the game
+  jlsnow301:
+  - bugfix: Emojipedia shouldn't bluescreen anymore.
+  vinylspiders:
+  - bugfix: monkeys will no longer cause other monkeys to get angry at the mobs they
+      just poofed by attacking
+2023-12-20:
+  LT3:
+  - admin: Server wide admin announcements now use an alert box like other announcements
+  Majkl-J:
+  - balance: Disallows siphoning credits outside of station
+  MelokGleb:
+  - image: cyborg tools became animated
+  MrMelbert, Ghommie:
+  - bugfix: Alien nests, and some other stuff, can be physically attacked again.
+  - balance: x-mas trees (the ones with presents), are indestructibles. Truly protected
+      by a yuletide spirit.
+  Rhials:
+  - bugfix: Icebox escape pods will now land randomly on the surface, instead of only
+      in certain ruins.
+  jlsnow301:
+  - bugfix: Fixed a bluescreen while inputting a global variable in the circuit UI.
+  - bugfix: Emojipedia should copy the text on click properly, now
+2023-12-21:
+  Rhials:
+  - bugfix: Disease Outbreak events will only select players on the station/lavaland
+      as patient zero.
+  ZephyrTFA:
+  - bugfix: Examine text on disconnected players is no longer accidentally subtle
+  vinylspiders:
+  - bugfix: fixes some dropdowns not displaying the right text after selecting something
+2023-12-22:
+  LT3:
+  - qol: Roundstart intercept report and security level announcements are combined
+      into a single announcement
+  Melbert:
+  - bugfix: Crewmembers immune to viruses won't be picked by the fake virus event.
+  - qol: When you place a beaker in a chem-master, you no longer thwack it.
+  Profakos:
+  - qol: The bitrunning equipment vending machine now has a unique description for
+      each of the bitrunning disks
+  SSensum:
+  - rscadd: 'Added new quirk: Cyborg Lover!'
+  jlsnow301:
+  - bugfix: Name input in character setup should work properly now.
+  - bugfix: Many inputs should feel more responsive.
+  lizardqueenlexi:
+  - bugfix: Feature manipulation surgery will now properly update the patient's appearance.
+  - refactor: The tail portion of lizard spines will no longer draw on people who
+      do not have a tail.
+2023-12-23:
+  13spacemen:
+  - balance: Doing experiments AFTER their tech is researched now gives full 100%
+      points instead of 66%.
+  - refactor: Ghost roles now offer ghosts a clickable poll button. Ghosts can select
+      a role, deselect it, alt-click it for "Never For This Round", can cancel "Never",
+      can see the countdown, and can see how many other people are signed up for the
+      role poll.
+  Iamgoofball:
+  - bugfix: Fixes Holy Water giving you more blood and making you less drunk than
+      water normally does.
+  Jacquerel:
+  - rscadd: Nightmares retain their ability to dodge projectiles for a brief period
+      after leaving a dark area, meaning it is now possible to dodge lasers.
+  - qol: Nightmares and Shadow People now receive a screen alert when they are in
+      a sufficiently dark location that their abilities are active.
+  Melbert:
+  - bugfix: Gibbing a bot will no longer spawn bloody gibs.
+  Rhials:
+  - qol: Wizard apprentices now spawn on the same tile as the contract that summoned
+      them.
+  SyncIt21:
+  - bugfix: Reactions whose temps/ph values fall way below their optimal values no
+      longer restart & prevents infinite loops. Made reaction code slightly faster
+  xXPawnStarrXx:
+  - rscadd: Added new GaGs santahats.
+  zeroisthebiggay:
+  - bugfix: '''A whole bunch of spiders in a SWAT suit'' to ''A whole bunch of spiders
+      in a MODsuit'''

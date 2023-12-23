@@ -1,8 +1,9 @@
 import { createSearch } from 'common/string';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Box, Icon, Input, Section } from '../components';
 import { NtosWindow } from '../layouts';
-import { useState } from 'react';
 
 export const NtosRecords = (props) => {
   const { act, data } = useBackend();
@@ -23,7 +24,7 @@ export const NtosRecords = (props) => {
             value={searchTerm}
             fluid
             textAlign="center"
-            onInput={(e, value) => setSearchTerm(value)}
+            onChange={(e, value) => setSearchTerm(value)}
           />
         </Section>
         {mode === 'security' &&

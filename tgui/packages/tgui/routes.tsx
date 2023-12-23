@@ -4,9 +4,9 @@
  * @license MIT
  */
 
-import { Window } from './layouts';
 import { useBackend } from './backend';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
+import { Window } from './layouts';
 
 const requireInterface = require.context('./interfaces');
 
@@ -65,6 +65,7 @@ export const getRoutedComponent = () => {
       return require('./debug').KitchenSink;
     }
   }
+
   const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,

@@ -97,7 +97,7 @@
 
 /datum/ai_planning_subtree/find_patrol_beacon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(QDELETED(bot_pawn) || !(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
+	if(!(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
 		return
 
 	if(controller.blackboard_key_exists(BB_BEACON_TARGET))
@@ -179,6 +179,8 @@
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	if(QDELETED(bot_pawn)) // pawn can be null at this point
+		return ..()
 	bot_pawn.calling_ai_ref = null
 	bot_pawn.update_bot_mode(new_mode = BOT_IDLE)
 	return ..()
@@ -188,7 +190,7 @@
 /datum/ai_planning_subtree/salute_authority/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are criminals, dont salute the dirty pigs
-	if(QDELETED(bot_pawn) || bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_SALUTE_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/salute_authority, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)

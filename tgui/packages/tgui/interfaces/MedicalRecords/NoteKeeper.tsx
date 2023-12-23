@@ -11,6 +11,7 @@ import {
   TextArea,
   Tooltip,
 } from 'tgui/components';
+
 import { getMedicalRecord } from './helpers';
 import { MedicalNote, MedicalRecordData } from './types';
 

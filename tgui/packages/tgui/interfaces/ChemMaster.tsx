@@ -1,20 +1,21 @@
 import { BooleanLike, classes } from 'common/react';
 import { capitalize } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
   Button,
-  Section,
-  Table,
-  NumberInput,
-  Tooltip,
-  LabeledList,
   ColorBox,
-  ProgressBar,
-  Stack,
   Divider,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+  Stack,
+  Table,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
