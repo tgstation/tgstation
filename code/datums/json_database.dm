@@ -5,7 +5,7 @@
 /datum/json_database
 	VAR_PRIVATE
 		filepath
-		cached_filepath
+		backup_filepath
 
 		cached_data
 		save_queued = FALSE
@@ -18,27 +18,23 @@
 	existing_json_database[filepath] = TRUE
 
 	src.filepath = filepath
-	cached_filepath = "[filepath].savebac"
+	backup_filepath = "[filepath].savebac"
 
 	if (fexists(filepath))
 		cached_data = safe_json_decode(file2text(filepath))
 		if (isnull(cached_data))
-			if (fexists(cached_filepath))
-				var/cached_contents = file2text(cached_filepath)
-				var/list/backed_up_data = safe_json_decode(cached_contents)
+			var/scenario = "[filepath] existed, but did not have valid JSON"
 
-				if (isnull(backed_up_data))
-					stack_trace("[filepath] existed, but did not have valid JSON. Backup existed, but also did not have valid JSON.")
-					cached_data = list()
-				else
-					stack_trace("[filepath] existed, but did not have valid JSON. Backup existed and was used instead. The JSON file has been updated.")
-					cached_data = backed_up_data
-					rustg_file_write(cached_contents, filepath)
+			if (fexists(backup_filepath))
+				load_backup(scenario)
 			else
-				stack_trace("[filepath] existed, but did not have valid JSON. No backup could be found.")
+				stack_trace("[scenario]. No backup could be found.")
 				cached_data = list()
 	else
-		cached_data = list()
+		if (fexists(backup_filepath))
+			load_backup("[filepath] didn't exist")
+		else
+			cached_data = list()
 
 /datum/json_database/Destroy()
 	if (save_queued)
@@ -98,10 +94,24 @@
 	save_queued = FALSE
 
 	if (fexists(filepath))
-		rustg_file_write(file2text(filepath), cached_filepath)
+		rustg_file_write(file2text(filepath), backup_filepath)
 
 	rustg_file_write(json_encode(cached_data, JSON_PRETTY_PRINT), filepath)
 
 	ASSERT(!isnull(safe_json_decode(file2text(filepath))), "JSON written to [filepath] was not valid. Backup will be preserved.")
 
-	fdel(cached_filepath)
+	fdel(backup_filepath)
+
+/datum/json_database/proc/load_backup(scenario)
+	PRIVATE_PROC(TRUE)
+
+	var/cached_contents = file2text(backup_filepath)
+	var/list/backed_up_data = safe_json_decode(cached_contents)
+
+	if (isnull(backed_up_data))
+		stack_trace("[scenario]. Backup existed, but also did not have valid JSON.")
+		cached_data = list()
+	else
+		stack_trace("[scenario]. Backup existed and was used instead. The JSON file has been updated.")
+		cached_data = backed_up_data
+		rustg_file_write(cached_contents, filepath)
