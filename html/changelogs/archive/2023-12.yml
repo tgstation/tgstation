@@ -699,3 +699,32 @@
   - bugfix: Feature manipulation surgery will now properly update the patient's appearance.
   - refactor: The tail portion of lizard spines will no longer draw on people who
       do not have a tail.
+2023-12-23:
+  13spacemen:
+  - balance: Doing experiments AFTER their tech is researched now gives full 100%
+      points instead of 66%.
+  - refactor: Ghost roles now offer ghosts a clickable poll button. Ghosts can select
+      a role, deselect it, alt-click it for "Never For This Round", can cancel "Never",
+      can see the countdown, and can see how many other people are signed up for the
+      role poll.
+  Iamgoofball:
+  - bugfix: Fixes Holy Water giving you more blood and making you less drunk than
+      water normally does.
+  Jacquerel:
+  - rscadd: Nightmares retain their ability to dodge projectiles for a brief period
+      after leaving a dark area, meaning it is now possible to dodge lasers.
+  - qol: Nightmares and Shadow People now receive a screen alert when they are in
+      a sufficiently dark location that their abilities are active.
+  Melbert:
+  - bugfix: Gibbing a bot will no longer spawn bloody gibs.
+  Rhials:
+  - qol: Wizard apprentices now spawn on the same tile as the contract that summoned
+      them.
+  SyncIt21:
+  - bugfix: Reactions whose temps/ph values fall way below their optimal values no
+      longer restart & prevents infinite loops. Made reaction code slightly faster
+  xXPawnStarrXx:
+  - rscadd: Added new GaGs santahats.
+  zeroisthebiggay:
+  - bugfix: '''A whole bunch of spiders in a SWAT suit'' to ''A whole bunch of spiders
+      in a MODsuit'''

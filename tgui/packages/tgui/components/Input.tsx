@@ -70,8 +70,6 @@ export const Input = (props: Props) => {
 
       event.currentTarget.value = toInputValue(value);
       event.currentTarget.blur();
-
-      return;
     }
   };
 
