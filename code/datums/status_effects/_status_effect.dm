@@ -67,14 +67,16 @@
 
 	update_particles()
 
+	//Now we know the status effect has been added properly, and can check how many they have stacked.
 	var/status_effect_count = length(owner.status_effects)
 
-	if(status_effect_count >= STATUS_ACHIEVEMENT_LIMIT)
-		owner.client?.give_award(/datum/award/achievement/misc/status_effect_overload, owner)
+	if(status_effect_count > STATUS_SCORE_MINIMUM)
+		var/status_effect_highscore = owner.client.get_award_status(/datum/award/score/status_effects_stacked)
+		if(status_effect_highscore < status_effect_count)
+			owner.client.give_award(/datum/award/score/status_effects_stacked, owner, max(0, status_effect_count - status_effect_highscore))
 
-	var/status_effect_highscore = owner.client.get_award_status(/datum/award/score/status_effects_stacked)
-	if(status_effect_highscore < status_effect_count)
-		owner.client.give_award(/datum/award/score/status_effects_stacked, owner, max(0, status_effect_count - status_effect_highscore))
+		if(status_effect_count >= STATUS_ACHIEVEMENT_LIMIT) //This is only nested because it's a higher value than STATUS_SCORE_MINIMUM.
+			owner.client?.give_award(/datum/award/achievement/misc/status_effect_overload, owner)
 
 	return TRUE
 
