@@ -268,7 +268,6 @@
 		var/mob/living/carbon/holder = loc
 		if(holder.put_in_hands(new_photo))
 			to_chat(holder, span_notice("[pictures_left] photos left."))
-		
 
 	new_photo.set_picture(picture, TRUE, TRUE)
 	if(CONFIG_GET(flag/picture_logging_camera))
