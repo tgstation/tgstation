@@ -170,6 +170,11 @@
 	else
 		display = span_notice("The dogtag is all scratched up.")
 
+/obj/item/clothing/accessory/dogtag/diabetic
+	name = "diabetes dogtag"
+	desc = "Indicates that the wearer is diabetic."
+	display = "The dogtag states that the wearer has diabetes."
+
 /// Reskins for the pride pin accessory, mapped by display name to icon state
 GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	"Rainbow Pride" = "pride",
