@@ -13,7 +13,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/mob/living/simple_animal/hostile/asteroid/polarbear = list("Bear!", "Polar bear!", "I want the pelt!"),
 	/mob/living/basic/mining/ice_demon = list("Frost demon!", "Slippery demon!", "Look up! Ice demon!", "Demon watching us!"),
 	/mob/living/basic/mining/ice_whelp = list("Ice whelp!", "Whelp above us!", "Bite-sized frost dragon!", "Watch out! It's small and it's dangerous!"),
-	/obj/structure/spawner/ice_moon/demonic_portal = list("Portal!", "Take out the portal!", "Beasts coming out of that portal!", ""),
+	/obj/structure/spawner/ice_moon/demonic_portal = list("Portal!", "Take out the portal!", "Beasts coming out of that portal!"),
 
 	//Mobs: Oshan
 	/mob/living/basic/aquatic/fish = list("Fish!", "Feesh!", "Got a fish here!", "Watch out, fish!"),
@@ -44,19 +44,19 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/mob/living/simple_animal/hostile/megafauna/clockwork_defender = list("CLOCKWORK DEFENDER!!", "CLOCKWORK! TICK TOCK, HEAVY LIKE AN AFTERSHOCK!!", "RATVARIAN KNIGHT! WATCH IT!!", "DAMN, BRASS BEAST IN SIGHT!!"),
 	/mob/living/simple_animal/hostile/megafauna/bubblegum = list("BUBBLEGUM, WATCH THE BLOOD!!", "KEEP YOUR DISTANCE, BUBBLEGUM IS LETHAL UP CLOSE!!", "BLOODY HELL, BUBBLEGUM SPOTTED!!", "STAY OUT OF THE BLOOD POOLS, BUBBLEGUM!!"),
 	/mob/living/simple_animal/hostile/megafauna/demonic_frost_miner = list("DEMONIC MINER!!", "WATCH YOURSELVES, DEMON MINER SPOTTED!!", "DEMON MINER, DON'T LET IT STEAL YOUR SOUL!!", "FROST-CRAZED MINER, DODGE THE BASTARD!!"),
-	/mob/living/simple_animal/hostile/megafauna/dragon = list("BY THE BEARD, DRAGON!!", "WE'VE GOT A DRAGON ON OUR HANDS!!", "ASH DRAKE, DON'T LET IT BURN YOU!!", "THERE'S AN ASH DRAKE!!", "ASH DRAKE!!"),
+	/mob/living/simple_animal/hostile/megafauna/dragon = list("BY THE BEARD, DRAGON!!", "WE'VE GOT A DRAGON ON OUR HANDS!!", "ASH DRAKE, DON'T LET IT BURN YOU!!", "THERE'S AN ASH DRAKE!!", "ASH DRAKE!!", "WHERE'S A DRAGONBORN WHEN YOU NEED THEM?!!"),
 	/mob/living/simple_animal/hostile/megafauna/hierophant = list("HIEROPHANT IN SIGHT!!", "WATCH IT, HIEROPHANT ON RHYTHM!!", "DANCE TO THE HIEROPHANT'S BEAT IF YOU WANNA LIVE!!", "HIEROPHANT!!"),
 	/mob/living/simple_animal/hostile/megafauna/legion = list("LEGION!!", "SOMEONE WOKE THE LEGION!!", "THIS IS IT, LADS! LEGION SPOTTED!!", "A LEGION TO ONE, I LIKE THESE ODDS!!"),
-	/mob/living/simple_animal/hostile/megafauna/wendigo = list("WENDIGO!!", "WE'VE GOT A WENDIGO HERE!!", "KEEP THE WENDIGO AT RANGE, LADS!!", "KEEP MOVING, THIS WENDIGO IS FAST!!"),
+	/mob/living/simple_animal/hostile/megafauna/wendigo = list("WENDIGO!!", "WE'VE GOT A WENDIGO HERE!!", "KEEP THE WENDIGO AT RANGE, LADS!!", "KEEP MOVING, THIS WENDIGO IS FAST!!", "WENDIGO, GO, GO!!"),
 
 	//Items: Materials
 	/obj/item/stack/sheet/iron = list("Iron sheets!", "Got some iron!", "Iron, cold iron!", "Master of metals!", "Let all who build beware!"),
 	/obj/item/stack/sheet/glass = list("Glass sheets!", "Glass, clear and crystal!", "Glass, ready to be made into mugs!"),
 	/obj/item/stack/sheet/mineral/diamond = list("Diamonds!", "Got some diamonds!", "I like the sound of these!", "I wonder if it's edible..."),
 	/obj/item/stack/sheet/mineral/uranium = list("Uranium!", "Enriched uranium!", "You and U-235!", "Radical! Uranium!"),
-	/obj/item/stack/sheet/mineral/plasma = list("Plasma!", "That's why we're here!", "They call it \'phoron\' in some sectors! Bloody weird!", "Plasma sheets!", "No smoking near the plasma!"),
+	/obj/item/stack/sheet/mineral/plasma = list("Plasma!", "That's why we're here!", "They call it 'phoron' in some sectors! Bloody weird!", "Plasma sheets!", "No smoking near the plasma!"),
 	/obj/item/stack/sheet/mineral/gold = list("Gold!", "Gold for the mistress!", "All that is gold does not glitter, but this does!", "Gold bars!", "Precious aurum!", "We're rich!"),
-	/obj/item/stack/sheet/mineral/silver = list("Silver!", "Silver for the maid!", "Beautiful silver!", "Silver bars!", "Pure silver!"),
+	/obj/item/stack/sheet/mineral/silver = list("Silver!", "Silver for the maid!", "Beautiful silver!", "Silver bars!", "Pure silver!", "Silver for sterile floors!"),
 	/obj/item/stack/sheet/mineral/bananium = list("Bananium!", "Prayers for the clown!", "By the beard, Bananium sheets...", "Sheets of bananium!"),
 	/obj/item/stack/sheet/mineral/titanium = list("Titanium!", "Strong as steel, beautiful as silver!", "Titanium sheets right here!"),
 	/obj/item/stack/sheet/mineral/coal = list("Coal!", "Someone got on the naughty list!", "If only it were a diamond!"),
@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 	//Items: Mining
 	/obj/item/pickaxe = list("Rock and stone!", "For rock and stone!", "For Karl!", "Rock and stone forever!", "We are unbreakable!", "Rock and roll and stone!", "If you don't rock and stone, you ain't comin' home!", "Rock solid!"),
-	/obj/item/shovel = list("Can you dig it?", "Oh yeah, I dig it.", "Lets dig up some sand!"),
+	/obj/item/shovel = list("Can you dig it?", "Oh yeah, I dig it.", "Lets dig up some sand!", "May they bury you deep!"),
 	/obj/structure/closet = list("Storage here!", "Check inside!", "I bet there's loot in here!"),
 	/obj/structure/ore_box = list("My grandpa told me they used mules back in the day!", "Drag this behind you!", "Ore box!", "Throw the ores in here, lads!", "Grab an ore crate!", "Minerals in here!"),
 	/obj/item/storage/bag/ore/holding = list("Finally, I can hold all of my rocks AND stones!", "Infinite ore storage!", "Why don't we make these for everything?", "Ore bag!", "Mineral bag!"),
@@ -87,6 +87,8 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 
 	/obj/item/kinetic_crusher = list("Kinetic crusher!", "Aerodynamic, I like it!", "Keeping this for close encounters!", "Oh, nice shape!", "Time to hunt!", "Bloody deadly weapon!", "I'm back and brutal!"),
 	/obj/item/crusher_trophy = list("Crusher trophy!", "Earned this one!", "Crusher getting stronger every day!", "Slap this on a crusher!", "Going to hunt them all with this!"),
+
+	/obj/item/gun/energy/plasmacutter = list("Plasma cutter!", "Got a cutter here!", "My trusty 211-V!", "Hot plasma ready to go!", "The good ol' breach cutter!", "Perfect for minerals and limbs alike!"),
 
 	/mob/living/basic/mining_drone = list("My reliable drone!", "Bosco!", "Bosco, buddy!", "My all-purpose drone!"),
 	/obj/item/slimepotion/slime/sentience/mining = list("Lets upgrade Bosco!", "Time to make Bosco smarter!"),
@@ -103,12 +105,12 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/item/fulton_core = list("Fulton beacon!", "Get this beacon set up!", "Ready to place beacon!", "Extraction beacon here!"),
 	/obj/structure/extraction_point = list("Fulton beacon!", "Beacon ready to bring things home!", "Extraction beacon here!"),
 
-	/obj/item/t_scanner/adv_mining_scanner = list(),
-	/obj/item/mining_scanner = list(),
-	/obj/item/clothing/glasses/meson = list(),
-	/obj/item/survivalcapsule/luxuryelite = list(),
-	/obj/item/survivalcapsule = list(),
-	/obj/item/style_meter = list(),
+	/obj/item/t_scanner/adv_mining_scanner = list("Mining scanner!", "Scanner! Get the ores revealed!", "Ready to find those minerals!", "Ore scanner at the ready!"),
+	/obj/item/mining_scanner = list("Mining scanner!", "A manual scanner?!", "Doesn't NT have better than this?", "This is trash!", "I wish I had better!"),
+	/obj/item/clothing/glasses/meson = list("Meson goggles!", "Mesons! I can see my house with these!", "Mesons here, perfect for mining!", "Mesons! You know, false walls don't show up on 'em!"),
+	/obj/item/survivalcapsule/luxuryelite = list("Survival, in style!", "Finally, my own bar!", "Survival capsule!", "Earned a drink in here, I think!", "Survive the storms with a few drinks!"),
+	/obj/item/survivalcapsule = list("Survival capsule!", "Capsule! Pop it when the storms come!", "Just like my cabin on the rig!", "Capsule here!", "Ready for the storms!"),
+	/obj/item/style_meter = list("Style meter!", "Now I'm stylish!", "Lookin' cool!", "Only way to mine!", "Time to beat my high score!"),
 	/obj/item/stack/spacecash = list("Loads of money!", "Money, money, money~", "It's raining money!", "Dosh!", "Dosh! Grab it while you can, lads!", "Cash here!", "My name is loadsamoney!", "Wallets, watch out for the ladies!", "Right, whop it out!", "Money makes the world go 'round!", "All this mining's making me rich!", "Sorry mate, don't take cheques! Just loads of money!"), //Yes, you get a Killing Floor reference too, as a treat.
 
 	//Items: Misc
@@ -119,26 +121,19 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/machinery/computer/shuttle = list("Shuttle console!", "Away we go!"),
 
 	//Static Objects: Icemoon
-	/obj/structure/flora/ash/chilly = list(),
+	/obj/structure/flora/ash/chilly = list("Got some fruit here!", "Ice pepper plant!", "Cold as ice!", "Frosty peppers!", "Time for some chilly chili!"),
 
 	//Static Objects: Oshan
+	//None yet, but I am leaving it open.
 
 	//Static Objects: Lavaland & Other
 	/obj/structure/flora/rock = list("Rock! Or stone?", "Rock!", "Pioneers used to ride these babies for miles."),
 	/obj/structure/geyser = list("Chemical geyser!", "Geyser here! Get the chemists!", "Found a geyser!", "Got some mystery chems here!", "Geyser! Probably tastes better than the chef's cooking..."),
-	/obj/structure/flora/ash/cacti = list(),
-	/obj/structure/flora/ash/fireblossom = list(),
-	/obj/structure/flora/ash/seraka = list(),
-	/turf/closed/mineral = list("Dig through here.", "Minerals inside?", "We need to dig here.", "Drill here?"),
-
-	//You just know I had to do this.
-	/obj/structure/flora/ash/cap_shroom = list("Mushroom!"),
-	/obj/structure/flora/ash/leaf_shroom = list("Mushroom!"),
-	/obj/structure/flora/ash/stem_shroom = list("Mushroom!"),
-	/obj/structure/flora/ash/tall_shroom = list("Mushroom!")
+	/obj/structure/flora/ash/cacti = list("Cacti here!", "Don't step on this one!", "Yeast Cones?", "Cactus right here!"),
+	/obj/structure/flora/ash/fireblossom = list("Fireblossom here!", "Got a fireblossom plant!", "Fireblossom, for when you need to glow!"),
+	/obj/structure/flora/ash = list("Mushroom!"), //You just know I had to do this.
+	/turf/closed/mineral = list("Dig through here.", "Minerals inside?", "We need to dig here.", "Drill here?")
 ))
-
-
 
 /obj/item/skillchip/drg_callout
 	name = "D.R.G.R.A.S Skillchip" //Deep Rock Galactic Reactive Alert System (Or ROCK AND STONE)
