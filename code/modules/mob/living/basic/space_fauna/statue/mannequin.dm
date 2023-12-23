@@ -9,6 +9,7 @@
 	maxHealth = 300
 	melee_damage_lower = 30
 	melee_damage_upper = 30
+	sentience_type = SENTIENCE_ARTIFICIAL
 	ai_controller = /datum/ai_controller/basic_controller/stares_at_people
 	/// the path to a fake item we will hold in our right hand
 	var/obj/item/held_item
@@ -65,6 +66,20 @@
 	else
 		we.face_atom(target)
 	
+/mob/living/basic/statue/mannequin/alert_linked
+	var/id = "museumalert"
+
+/mob/living/basic/statue/mannequin/alert_linked/Initialize(mapload)
+	. = ..()
+	SSqueuelinks.add_to_queue(src, museumalert)
+
+/mob/living/basic/statue/mannequin/alert_linked/MatchedLinks(id, list/partners) //partners would also include fellow mannequins but god
+	for(var/partner in partners) //this does not typecheck because that is practically unnecessary because only mapper puzzle elements can set off this signal
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(oh_shit_murder_woohoo))
+
+/mob/living/basic/statue/mannequin/alert_linked/proc/oh_shit_murder_woohoo(datum/source, try_id)
+	SIGNAL_HANDLER
+	ai_controller = new /datum/ai_controller/basic_controller/suspicious_mannequin(src)
 
 /mob/living/basic/statue/mannequin/suspicious
 	name = "mannequin?"
@@ -76,7 +91,7 @@
 /datum/ai_controller/basic_controller/suspicious_mannequin
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_AGGRO_RANGE = 5,
+		BB_AGGRO_RANGE = 14,
 		BB_EMOTE_KEY = "scream", //spooky
 	)
 
@@ -84,7 +99,6 @@
 	idle_behavior = null
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
 		/datum/ai_planning_subtree/run_emote,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 	)
