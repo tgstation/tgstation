@@ -21,10 +21,20 @@ SUBSYSTEM_DEF(persistence)
 	var/list/saved_trophies = list()
 	var/list/picture_logging_information = list()
 
+	/// A json_database linking to data/photo_frames.json.
+	/// Schema is persistence_id => array of photo names.
 	var/datum/json_database/photo_frames_database
+
+	/// A lazy list of every picture frame that is going to be loaded with persistent photos.
+	/// Will be null'd once the persistence system initializes, and never read from again.
 	var/list/obj/structure/sign/picture_frame/queued_photo_frames
 
+	/// A json_database linking to data/photo_albums.json.
+	/// Schema is persistence_id => array of photo names.
 	var/datum/json_database/photo_albums_database
+
+	/// A lazy list of every photo album that is going to be loaded with persistent photos.
+	/// Will be null'd once the persistence system initializes, and never read from again.
 	var/list/obj/item/storage/photo_album/queued_photo_albums
 
 	var/rounds_since_engine_exploded = 0
