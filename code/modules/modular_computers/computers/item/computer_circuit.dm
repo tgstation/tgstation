@@ -29,9 +29,9 @@
 		return
 	if(COMPONENT_TRIGGERED_BY(on_off, port))
 		if(computer.enabled)
-			computer.shutdown_computer()
+			INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, shutdown_computer))
 		else
-			computer.turn_on()
+			INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, turn_on))
 		return
 
 	if(!computer.enabled)

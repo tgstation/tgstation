@@ -31,3 +31,5 @@
 
 /// From /datum/computer_file/program/messenger/receive_message, sent to the computer: (signal/subspace/messaging/tablet_message/signal, sender_job, sender_name)
 #define COMSIG_MODULAR_PDA_MESSAGE_RECEIVED "comsig_modular_pda_message_received"
+/// From /datum/computer_file/program/messenger/send_message_signal, sent to the computer: (atom/origin, datum/signal/subspace/messaging/tablet_message/signal)
+#define COMSIG_MODULAR_PDA_MESSAGE_SENT "comsig_modular_pda_message_sent"

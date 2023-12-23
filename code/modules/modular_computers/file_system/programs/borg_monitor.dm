@@ -112,20 +112,28 @@
 			message_robot(robot, usr)
 			return TRUE
 
-/datum/computer_file/program/borg_monitor/proc/message_robot(mob/living/silicon/robot/robot, message, mob/user)
+/datum/computer_file/program/borg_monitor/proc/message_robot(mob/living/silicon/robot/robot, mob/user)
 	if(!istype(robot))
 		return TRUE
 	var/ID = checkID()
 	if(!ID)
 		return FALSE
 	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
-		if(user)
-			to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
+		to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
 		return FALSE
-	if(!message && user)
-		message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message")
+	var/message = tgui_input_text(user, "Message to be sent to remote cyborg", "Send Message")
 	if(!message)
 		return FALSE
+	send_message(message, robot, user)
+
+/datum/computer_file/program/borg_monitor/proc/send_message(message, mob/living/silicon/robot/robot, mob/user)
+	var/ID = checkID()
+	if(!ID)
+		return FALSE
+	if(robot.stat == DEAD) //Dead borgs will listen to you no longer
+		if(user)
+			to_chat(user, span_warning("Error -- Could not open a connection to unit:[robot]"))
+			return FALSE
 	to_chat(robot, "<br><br>[span_notice("Message from [ID] -- \"[message]\"")]<br>")
 	if(user)
 		to_chat(user, "Message sent to [robot]: [message]")
@@ -194,7 +202,7 @@
 		return
 	var/mob/living/silicon/robot/robot = target_robot.value
 	var/datum/computer_file/program/borg_monitor/monitor = associated_program
-	if(monitor.message_robot(robot, set_message.value))
+	if(monitor.send_message(set_message.value, robot))
 		monitor.computer.log_talk("Cyborg Monitor message (ID name \"[monitor.checkID()]\") sent to [key_name(robot)] by [parent.get_creator()]: [set_message.value]")
 
 /obj/item/circuit_component/mod_program/borg_monitor/syndie

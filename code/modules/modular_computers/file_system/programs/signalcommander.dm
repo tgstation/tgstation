@@ -106,8 +106,8 @@
 	var/datum/port/input/code
 
 /obj/item/circuit_component/mod_program/signaler/populate_ports()
-	freq = add_input_port("Frequency", PORT_TYPE_NUMBER, default = FREQ_SIGNALER, trigger = PROC_REF(set_freq))
-	code = add_input_port("Code", PORT_TYPE_NUMBER, default = DEFAULT_SIGNALER_CODE, , trigger = PROC_REF(set_code))
+	freq = add_input_port("Frequency", PORT_TYPE_NUMBER, trigger = PROC_REF(set_freq), default = FREQ_SIGNALER)
+	code = add_input_port("Code", PORT_TYPE_NUMBER, trigger = PROC_REF(set_code), default = DEFAULT_SIGNALER_CODE)
 
 /obj/item/circuit_component/mod_program/signaler/proc/set_freq(datum/port/port)
 	var/datum/computer_file/program/signal_commander/signaler = associated_program

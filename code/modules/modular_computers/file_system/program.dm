@@ -51,7 +51,7 @@
 	..()
 	///We need to ensure that different programs (subtypes mostly) won't try to load in the same circuit comps into the shell or usb port of the modpc.
 	if(circuit_comp_type && initial(circuit_comp_type.associated_program) != type)
-		stack_trace("[type] has a set circuit comp type ([circuit_comp_type]), however its associated program var is different ([initial(circuit_comp_type.type)]).")
+		stack_trace("circuit comp type mismatch: [type] has circuit comp type \[[circuit_comp_type]\], while \[[circuit_comp_type]\] has associated program \[[initial(circuit_comp_type.associated_program)]\].")
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()

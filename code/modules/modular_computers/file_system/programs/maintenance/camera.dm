@@ -8,7 +8,7 @@
 	can_run_on_flags = PROGRAM_PDA
 	tgui_id = "NtosCamera"
 	program_icon = "camera"
-	circuit_comp_type = /obj/item/circuit_component/mod_program/messenger
+	circuit_comp_type = /obj/item/circuit_component/mod_program/camera
 
 	/// Camera built-into the tablet.
 	var/obj/item/camera/internal_camera
@@ -18,7 +18,7 @@
 	var/picture_number = 1
 
 /obj/item/circuit_component/mod_program/camera
-	associated_program = /datum/computer_file/program/messenger
+	associated_program = /datum/computer_file/program/maintenance/camera
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
 
 	///A target to take a picture of.

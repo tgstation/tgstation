@@ -45,24 +45,23 @@
 	if(!messenger_length)
 		return
 	var/datum/computer_file/program/messenger/messenger = associated_program
-	if(messenger.send_message(src, message.value, messenger_targets))
-		COOLDOWN_START(messenger, last_text, max(messenger_length * 1.5 SECONDS, MESSENGER_CIRCUIT_MIN_COOLDOWN))
+	if(is_ic_filtered_for_pdas(message.value) || is_soft_ic_filtered_for_pdas(message.value))
+		return
+	///We need to async send_message() because some tcomms devices might sleep. Also because of (non-existent) user tgui alerts.
+	INVOKE_ASYNC(messenger, TYPE_PROC_REF(/datum/computer_file/program/messenger, send_message), src, message.value, messenger_targets)
 
 /obj/item/circuit_component/mod_program/messenger/register_shell(atom/movable/shell)
 	. = ..()
 	RegisterSignal(associated_program.computer, COMSIG_MODULAR_PDA_MESSAGE_RECEIVED, PROC_REF(message_received))
+	RegisterSignal(associated_program.computer, COMSIG_MODULAR_PDA_MESSAGE_SENT, PROC_REF(message_sent))
 
 /obj/item/circuit_component/mod_program/messenger/unregister_shell()
-	UnregisterSignal(associated_program.computer, COMSIG_MODULAR_PDA_MESSAGE_RECEIVED)
+	UnregisterSignal(associated_program.computer, list(COMSIG_MODULAR_PDA_MESSAGE_RECEIVED, COMSIG_MODULAR_PDA_MESSAGE_SENT))
 	return ..()
 
-/obj/item/circuit_component/mod_program/messenger/proc/set_ringtone(datum/port/port)
-	var/datum/computer_file/program/messenger/messenger = associated_program
-	messenger.set_ringtone(set_ring.value)
-
-/obj/item/circuit_component/mod_program/messenger/proc/play_ringtone(datum/port/port)
-	var/datum/computer_file/program/messenger/messenger = associated_program
-	messenger.computer.ring(messenger.ringtone)
+/obj/item/circuit_component/mod_program/messenger/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Sending a message with this circuit will result in a longer cooldown that scales with the number of recepients.")
 
 /obj/item/circuit_component/mod_program/messenger/proc/message_received(datum/source, datum/signal/subspace/messaging/tablet_message/signal, message_job, message_name)
 	SIGNAL_HANDLER
@@ -79,8 +78,21 @@
 
 	sender_device.set_value(source_device)
 
-/obj/item/circuit_component/mod_program/messenger/get_ui_notices()
-	. = ..()
-	. += create_ui_notice("Sending a message with this circuit will result in a longer cooldown that scales with the number of recepients.")
+///Set the cooldown after the message was sent (by us)
+/obj/item/circuit_component/mod_program/messenger/proc/message_sent(datum/source, atom/origin, datum/signal/subspace/messaging/tablet_message/signal)
+	SIGNAL_HANDLER
+	if(origin != src)
+		return
+	var/targets_length = length(signal.data["targets"])
+	var/datum/computer_file/program/messenger/messenger = associated_program
+	COOLDOWN_START(messenger, last_text, max(targets_length * 1.5 SECONDS, MESSENGER_CIRCUIT_MIN_COOLDOWN))
+
+/obj/item/circuit_component/mod_program/messenger/proc/set_ringtone(datum/port/port)
+	var/datum/computer_file/program/messenger/messenger = associated_program
+	messenger.set_ringtone(set_ring.value)
+
+/obj/item/circuit_component/mod_program/messenger/proc/play_ringtone(datum/port/port)
+	var/datum/computer_file/program/messenger/messenger = associated_program
+	messenger.computer.ring(messenger.ringtone)
 
 #undef MESSENGER_CIRCUIT_MIN_COOLDOWN

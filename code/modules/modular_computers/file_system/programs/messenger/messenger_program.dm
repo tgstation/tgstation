@@ -643,6 +643,8 @@
 
 	COOLDOWN_START(src, last_text, 1 SECONDS)
 
+	SEND_SIGNAL(computer, COMSIG_MODULAR_PDA_MESSAGE_SENT, source, signal)
+
 	selected_image = null
 	return TRUE
 

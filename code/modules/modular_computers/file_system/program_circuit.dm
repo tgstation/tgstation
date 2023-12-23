@@ -16,10 +16,10 @@
 	var/datum/computer_file/program/associated_program
 
 /obj/item/circuit_component/mod_program/Initialize(mapload)
-	. = ..()
 	if(associated_program)
 		display_name = initial(associated_program.filedesc)
 		desc = initial(associated_program.extended_desc)
+	return ..() // Set the name correctly
 
 /obj/item/circuit_component/mod_program/register_shell(atom/movable/shell)
 	. = ..()
