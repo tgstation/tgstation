@@ -1,12 +1,11 @@
 import { classes } from 'common/react';
-import React, { useEffect } from 'react';
-import { ReactNode, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { ReactNode, useState } from 'react';
+import { Popover } from 'react-tiny-popover';
 
-import { Box, BoxProps } from './Box';
+import { BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
-import { Popper } from './Popper';
-import { Stack } from './Stack';
 
 type DropdownEntry = {
   displayText: ReactNode;
@@ -31,7 +30,6 @@ type Props = { options: DropdownOption[] } & Partial<{
   onSelected: (selected: any) => void;
   over: boolean;
   selected: string;
-  width: string;
 }> &
   BoxProps;
 
@@ -47,30 +45,18 @@ export function Dropdown(props: Props) {
     color = 'default',
     disabled,
     displayText,
-    dropdownStyle,
     icon,
     iconRotation,
     iconSpin,
-    menuWidth = '15rem',
-    nochevron,
+    menuWidth = '10rem',
+    noChevron,
     onClick,
-    onSelected,
     options = [],
-    over,
-    width,
-    ...rest
   } = props;
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(props.selected);
   const dropdownRef = useRef<HTMLDivElement>(null);
-
-  const style = {
-    pointerEvents: 'auto',
-    width: menuWidth,
-    overflowY: 'auto',
-    ...dropdownStyle,
-  } as const;
 
   function getSelectedIndex() {
     return options.findIndex((option) => {
@@ -109,101 +95,96 @@ export function Dropdown(props: Props) {
   }, [props.selected]);
 
   return (
-    <Popper
-      additionalStyles={style}
-      className={`Layout Dropdown__menu`}
-      options={{ placement: 'bottom' }}
-      popperContent={
-        open ? (
-          <>
-            {options.map((option, index) => {
-              const value = getOptionValue(option);
+    <Popover
+      isOpen={!!dropdownRef.current && open}
+      positions="bottom"
+      onClickOutside={() => setOpen(false)}
+      ref={dropdownRef}
+      content={
+        <div className="Layout Dropdown__menu" style={{ minWidth: menuWidth }}>
+          {options.length === 0 && (
+            <div className="Dropdown__menuentry">No options</div>
+          )}
 
-              return (
-                <div
-                  className={classes([
-                    'Dropdown__menuentry',
-                    selected === value && 'selected',
-                  ])}
-                  key={index}
-                  onClick={() => setSelected(value)}
-                >
-                  {typeof option === 'string' ? option : option.displayText}
-                </div>
-              );
-            })}
-          </>
-        ) : null
+          {options.map((option) => {
+            const value = getOptionValue(option);
+
+            return (
+              <div
+                className={classes([
+                  'Dropdown__menuentry',
+                  selected === value && 'selected',
+                ])}
+                key={value}
+                onClick={() => setSelected(value)}
+              >
+                {typeof option === 'string' ? option : option.displayText}
+              </div>
+            );
+          })}
+        </div>
       }
     >
-      <Stack fill>
-        <Stack.Item width={width}>
-          <Box
-            ref={dropdownRef}
-            width="100%"
-            className={classes([
-              'Dropdown__control',
-              'Button',
-              'Button--color--' + color,
-              disabled && 'Button--disabled',
-              className,
-            ])}
-            onClick={(event) => {
-              if (disabled && !open) {
-                return;
-              }
-              setOpen(!open);
-              onClick?.(event);
-            }}
-            {...rest}
-          >
-            {icon && (
-              <Icon
-                mr={1}
-                name={icon}
-                rotation={iconRotation}
-                spin={iconSpin}
-              />
-            )}
-            <span
-              className="Dropdown__selected-text"
-              style={{
-                overflow: clipSelectedText ? 'hidden' : 'visible',
-              }}
-            >
-              {displayText || selected}
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'flex-start',
+          minWidth: '5rem',
+        }}
+        ref={dropdownRef}
+      >
+        <div
+          className={classes([
+            'Dropdown__control',
+            'Button',
+            'Button--color--' + color,
+            disabled && 'Button--disabled',
+            className,
+          ])}
+          onClick={(event) => {
+            if (disabled && !open) {
+              return;
+            }
+            setOpen(!open);
+            onClick?.(event);
+          }}
+          style={{
+            flex: 1,
+          }}
+        >
+          {icon && (
+            <Icon mr={1} name={icon} rotation={iconRotation} spin={iconSpin} />
+          )}
+          <span className="Dropdown__selected-text">
+            {displayText || selected}
+          </span>
+          {!noChevron && (
+            <span className="Dropdown__arrow-button">
+              <Icon name={open ? 'chevron-up' : 'chevron-down'} />
             </span>
-            {!nochevron && (
-              <span className="Dropdown__arrow-button">
-                <Icon name={open ? 'chevron-up' : 'chevron-down'} />
-              </span>
-            )}
-          </Box>
-        </Stack.Item>
+          )}
+        </div>
 
         {buttons && (
           <>
-            <Stack.Item>
-              <Button
-                disabled={disabled}
-                icon="chevron-left"
-                onClick={() => {
-                  updateSelected('previous');
-                }}
-              />
-            </Stack.Item>
-            <Stack.Item>
-              <Button
-                disabled={disabled}
-                icon="chevron-right"
-                onClick={() => {
-                  updateSelected('next');
-                }}
-              />
-            </Stack.Item>
+            <Button
+              disabled={disabled}
+              icon="chevron-left"
+              onClick={() => {
+                updateSelected('previous');
+              }}
+            />
+
+            <Button
+              disabled={disabled}
+              icon="chevron-right"
+              onClick={() => {
+                updateSelected('next');
+              }}
+            />
           </>
         )}
-      </Stack>
-    </Popper>
+      </div>
+    </Popover>
   );
 }
