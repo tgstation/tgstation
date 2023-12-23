@@ -143,7 +143,7 @@
 /// DB ID for most status effects owned.
 #define STATUS_EFFECT_HIGHSCORE "Status Effects Stacked"
 /// Number of status effects required for the status effect highscore to start tracking.
-#define STATUS_SCORE_MINIMUM 12
+#define STATUS_SCORE_MINIMUM 5
 
 /// Number of status effects required for the How Did We Get Here achievement.
 #define STATUS_ACHIEVEMENT_LIMIT 18
