@@ -96,5 +96,5 @@
 		)
 		return TRUE
 
-	user.balloon_alert(user, "No additional atom present!")
+	user.balloon_alert(user, "no additional atom present!")
 	return FALSE
