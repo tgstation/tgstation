@@ -1,10 +1,10 @@
 #define MOOD_CATEGORY_TRANSHUMANIST_PEOPLE "transhumanist_people"
 #define MOOD_CATEGORY_TRANSHUMANIST_BODYPART "transhumanist_bodypart"
 // The number of silicons minus the number of organics determines the level
-#define TRANSHUMANIST_LEVEL_ECSTATIC 5
-#define TRANSHUMANIST_LEVEL_HAPPY 2
+#define TRANSHUMANIST_LEVEL_ECSTATIC 4
+#define TRANSHUMANIST_LEVEL_HAPPY 1
 #define TRANSHUMANIST_LEVEL_NEUTRAL 0
-#define TRANSHUMANIST_LEVEL_UNHAPPY -3
+#define TRANSHUMANIST_LEVEL_UNHAPPY -2
 #define TRANSHUMANIST_LEVEL_ANGRY -5
 
 
@@ -57,7 +57,7 @@
 			organic_bodytypes += 0.02
 
 	if(!other_bodytypes)
-		if(organic_bodytypes == 0)
+		if(organic_bodytypes <= 0.02)
 			quirk_holder.add_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART, /datum/mood_event/completely_robotic)
 			return
 		else if(silicon_bodytypes == 0)
@@ -92,7 +92,7 @@
 
 /datum/quirk/transhumanist/post_add()
 	if(slot_string)
-		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robot arm. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 
 /datum/quirk/transhumanist/remove()
 	if(old_limb)
