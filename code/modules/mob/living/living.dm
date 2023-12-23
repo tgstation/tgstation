@@ -1526,6 +1526,8 @@
 
 	// Some forms can still wear some items
 	for(var/obj/item/item as anything in item_contents)
+		if(item.item_flags & ABSTRACT)
+			continue
 		new_mob.equip_to_appropriate_slot(item)
 
 	// I don't actually know why we do this
