@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "Wizard apprentices now spawn on the same tile as the contract that summoned them."

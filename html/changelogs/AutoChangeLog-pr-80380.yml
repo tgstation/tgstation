@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "Reactions whose temps/ph values fall way below their optimal values no longer restart & prevents infinite loops. Made reaction code slightly faster"

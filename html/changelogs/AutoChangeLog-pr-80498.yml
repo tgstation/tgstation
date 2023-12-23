@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Gibbing a bot will no longer spawn bloody gibs."
