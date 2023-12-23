@@ -20,8 +20,13 @@ SUBSYSTEM_DEF(persistence)
 	var/list/blocked_maps = list()
 	var/list/saved_trophies = list()
 	var/list/picture_logging_information = list()
-	var/list/obj/structure/sign/picture_frame/photo_frames
-	var/list/obj/item/storage/photo_album/photo_albums
+
+	var/datum/json_database/photo_frames_database
+	var/list/obj/structure/sign/picture_frame/queued_photo_frames
+
+	var/datum/json_database/photo_albums_database
+	var/list/obj/item/storage/photo_album/queued_photo_albums
+
 	var/rounds_since_engine_exploded = 0
 	var/delam_highscore = 0
 	var/tram_hits_this_round = 0
@@ -47,7 +52,6 @@ SUBSYSTEM_DEF(persistence)
 	save_prisoner_tattoos()
 	collect_trophies()
 	collect_maps()
-	save_photo_persistence() //THIS IS PERSISTENCE, NOT THE LOGGING PORTION.
 	save_randomized_recipes()
 	save_scars()
 	save_custom_outfits()
