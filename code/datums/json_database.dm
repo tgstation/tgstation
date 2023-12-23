@@ -13,6 +13,10 @@
 		static/existing_json_database = list()
 
 /datum/json_database/New(filepath)
+	if (IsAdminAdvancedProcCall())
+		to_chat(usr, "<span class='admin prefix'>json_database creation, linking to [html_encode(filepath)], was blocked.</span>", confidential = TRUE)
+		return
+
 	ASSERT(isnull(existing_json_database[filepath]), "[filepath] already has an associated json_database. You must expose it somehow and use that instead of making a new one.")
 
 	existing_json_database[filepath] = TRUE
@@ -66,7 +70,7 @@
 /// For dictionaries, this can be the key.
 /// For arrays, this can be the value.
 /datum/json_database/proc/remove(item)
-	cached_data -= item
+	UNTYPED_LIST_REMOVE(cached_data, item)
 	queue_save()
 
 /// Inserts the data at the end of what is assumed to be an array, and queues a save.
@@ -115,3 +119,10 @@
 		stack_trace("[scenario]. Backup existed and was used instead. The JSON file has been updated.")
 		cached_data = backed_up_data
 		rustg_file_write(cached_contents, filepath)
+
+/datum/json_database/vv_edit_var(var_name, var_value)
+	switch (var_name)
+		if (nameof(filepath), nameof(backup_filepath))
+			return FALSE
+		else
+			return ..()
