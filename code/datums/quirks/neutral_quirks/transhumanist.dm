@@ -92,7 +92,7 @@
 
 /datum/quirk/transhumanist/post_add()
 	if(slot_string)
-		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robot arm. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 
 /datum/quirk/transhumanist/remove()
 	if(old_limb)
