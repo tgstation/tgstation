@@ -27,6 +27,4 @@ GLOBAL_LIST_INIT(drug_container_type, list(
 	"Robust Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robust,
 	"Robust Gold Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 	"Syndicate Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
-
-
 ))

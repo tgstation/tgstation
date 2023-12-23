@@ -95,7 +95,7 @@
 	value = -4
 	gain_text = span_danger("You could really go for a smoke right about now.")
 	lose_text = span_notice("You don't feel nearly as hooked to nicotine anymore.")
-	medical_record_text = "Patient is a current smoker."
+	medical_record_text = "Patient is addicted to nicotine."
 	reagent_type = /datum/reagent/drug/nicotine
 	accessory_type = /obj/item/lighter/greyscale
 	mob_trait = TRAIT_SMOKER
@@ -108,15 +108,9 @@
 		/obj/item/clothing/mask/cigarette/pipe,
 	)
 
-/datum/quirk/item_quirk/junkie/smoker/New()
-	drug_container_type = pick(
-		/obj/item/storage/fancy/cigarettes,
-		/obj/item/storage/fancy/cigarettes/cigpack_midori,
-		/obj/item/storage/fancy/cigarettes/cigpack_uplift,
-		/obj/item/storage/fancy/cigarettes/cigpack_robust,
-		/obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-		/obj/item/storage/fancy/cigarettes/cigpack_carp)
-	return ..()
+/datum/quirk_constant_data/smoker
+	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
+	customization_options = list(/datum/preference/choiced/smoker)
 
 /datum/quirk/item_quirk/junkie/smoker/post_add()
 	. = ..()
