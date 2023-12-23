@@ -7,6 +7,11 @@
 #define TRANSHUMANIST_LEVEL_UNHAPPY -2
 #define TRANSHUMANIST_LEVEL_ANGRY -5
 
+#define BODYPART_SCORE_ORGANIC 1
+#define BODYPART_SCORE_SILICON 2
+#define BODYPART_SCORE_OTHER_BODYTYPES 3
+#define BODYPART_SCORE_OVERALL 4
+
 
 /datum/quirk/transhumanist
 	name = "Transhumanist"
@@ -36,13 +41,11 @@
 /datum/quirk/transhumanist/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_CARBON_ATTACH_LIMB))
 
-/datum/quirk/transhumanist/proc/calculate_bodypart_score()
-	SIGNAL_HANDLER
-	var/mob/living/carbon/human/human_holder = quirk_holder
+/datum/quirk/transhumanist/proc/get_bodypart_score(mob/living/carbon/target, limbs_only = FALSE)
 	var/organic_bodytypes = 0
 	var/silicon_bodytypes = 0
 	var/other_bodytypes = FALSE
-	for(var/obj/item/bodypart/part as anything in human_holder.bodyparts)
+	for(var/obj/item/bodypart/part as anything in target.bodyparts)
 		if(part.bodytype & BODYTYPE_ROBOTIC)
 			silicon_bodytypes += 1
 		else if(part.bodytype & BODYTYPE_ORGANIC)
@@ -50,11 +53,27 @@
 		else
 			other_bodytypes = TRUE
 
-	for(var/obj/item/organ/organ as anything in human_holder.organs)
-		if(organ.organ_flags & ORGAN_ROBOTIC)
-			silicon_bodytypes += 0.25
-		else if(organ.organ_flags & ORGAN_ORGANIC)
-			organic_bodytypes += 0.02
+	if(!limbs_only)
+		for(var/obj/item/organ/organ as anything in target.organs)
+			if(organ.organ_flags & ORGAN_ROBOTIC)
+				silicon_bodytypes += 0.25
+			else if(organ.organ_flags & ORGAN_ORGANIC)
+				organic_bodytypes += 0.02
+
+	return list(
+		BODYPART_SCORE_ORGANIC = organic_bodytypes,
+		BODYPART_SCORE_SILICON = silicon_bodytypes,
+		BODYPART_SCORE_OTHER_BODYTYPES = other_bodytypes,
+		BODYPART_SCORE_OVERALL = silicon_bodytypes - organic_bodytypes
+	)
+
+
+/datum/quirk/transhumanist/proc/calculate_bodypart_score()
+	SIGNAL_HANDLER
+	var/list/score = get_bodypart_score(quirk_holder)
+	var/organic_bodytypes = score[BODYPART_SCORE_ORGANIC]
+	var/silicon_bodytypes = score[BODYPART_SCORE_SILICON]
+	var/other_bodytypes = score[BODYPART_SCORE_OTHER_BODYTYPES]
 
 	if(!other_bodytypes)
 		if(organic_bodytypes <= 0.02)
@@ -67,7 +86,7 @@
 		quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
 		return
 
-	var/bodypart_score = silicon_bodytypes - organic_bodytypes
+	var/bodypart_score = score[BODYPART_SCORE_OVERALL]
 	switch(bodypart_score)
 		if(3 to INFINITY)
 			quirk_holder.add_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART, /datum/mood_event/very_robotic)
@@ -83,9 +102,7 @@
 		limb_type = GLOB.limb_choice_transhuman[pick(GLOB.limb_choice_transhuman)]
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
-
 	var/obj/item/bodypart/new_part = new limb_type()
-	var/obj/item/bodypart/current_zone = human_holder.get_bodypart(new_part.body_zone)
 
 	slot_string = "[new_part.plaintext_zone]"
 	old_limb = human_holder.return_and_replace_bodypart(new_part, special = TRUE)
@@ -114,7 +131,13 @@
 			continue
 
 		if(target.mob_biotypes & MOB_ORGANIC)
-			organics_nearby += 1
+			var/list/score = get_bodypart_score(target, limbs_only = TRUE)
+			// For an average human, they'll need 2 augmented limbs to not get counted as an organic nor a silicon.
+			// If some monstrosity has 20-30 organic limbs, they'll likely need more.
+			if(score[BODYPART_SCORE_OVERALL] < 1)
+				organics_nearby += 1
+			else if(score[BODYPART_SCORE_ORGANIC] == 0)
+				silicons_nearby += 1
 		else if(target.mob_biotypes & MOB_ROBOTIC)
 			// Dead silicons don't count, they're basically just machinery
 			if(target.stat != DEAD)
@@ -145,3 +168,7 @@
 #undef TRANSHUMANIST_LEVEL_NEUTRAL
 #undef TRANSHUMANIST_LEVEL_UNHAPPY
 #undef TRANSHUMANIST_LEVEL_ANGRY
+#undef BODYPART_SCORE_ORGANIC
+#undef BODYPART_SCORE_SILICON
+#undef BODYPART_SCORE_OTHER_BODYTYPES
+#undef BODYPART_SCORE_OVERALL
