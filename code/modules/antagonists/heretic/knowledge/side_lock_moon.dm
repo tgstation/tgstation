@@ -56,45 +56,45 @@
 	route = PATH_SIDE
 
 /datum/heretic_knowledge/painting/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	for(var/atom/nearby_atom as anything in atoms)
-		if(istype(nearby_atom, /obj/item/organ/internal/eyes))
-			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/weeping)
-			src.required_atoms = list(
-				/obj/item/canvas = 1,
-				/obj/item/organ/internal/eyes = 1,
-			)
-			selected_atoms |= nearby_atom
-			continue
-		if(istype(nearby_atom, /obj/item/bodypart))
-			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/desire)
-			src.required_atoms = list(
-				/obj/item/canvas = 1,
-				/obj/item/bodypart = 1,
-			)
-			selected_atoms |= nearby_atom
-			continue
-		if(istype(nearby_atom, /obj/item/food/grown))
-			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/vines)
-			src.required_atoms = list(
-				/obj/item/canvas = 1,
-				/obj/item/food/grown = 1,
-			)
-			selected_atoms |= nearby_atom
-			continue
-		if(istype(nearby_atom, /obj/item/clothing/gloves))
-			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/beauty)
-			src.required_atoms = list(
-				/obj/item/canvas = 1,
-				/obj/item/clothing/gloves = 1,
-			)
-			selected_atoms |= nearby_atom
-			continue
-		if(istype(nearby_atom, /obj/item/trash))
-			src.result_atoms = list(/obj/item/wallframe/painting/eldritch/rust)
-			src.required_atoms = list(
-				/obj/item/canvas = 1,
-				/obj/item/trash = 1,
-			)
-			selected_atoms |= nearby_atom
-			continue
-	return TRUE
+	if(locate(/obj/item/organ/internal/eyes) in atoms)
+		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/weeping)
+		src.required_atoms = list(
+			/obj/item/canvas = 1,
+			/obj/item/organ/internal/eyes = 1,
+		)
+		return TRUE
+
+	if(locate(/obj/item/bodypart) in atoms)
+		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/desire)
+		src.required_atoms = list(
+			/obj/item/canvas = 1,
+			/obj/item/bodypart = 1,
+		)
+		return TRUE
+
+	if(locate(/obj/item/food/grown) in atoms)
+		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/vines)
+		src.required_atoms = list(
+			/obj/item/canvas = 1,
+			/obj/item/food/grown = 1,
+		)
+		return TRUE
+
+	if(locate(/obj/item/clothing/gloves) in atoms)
+		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/beauty)
+		src.required_atoms = list(
+			/obj/item/canvas = 1,
+			/obj/item/clothing/gloves = 1,
+		)
+		return TRUE
+
+	if(locate(/obj/item/trash) in atoms)
+		src.result_atoms = list(/obj/item/wallframe/painting/eldritch/rust)
+		src.required_atoms = list(
+			/obj/item/canvas = 1,
+			/obj/item/trash = 1,
+		)
+		return TRUE
+
+	user.balloon_alert(user, "No additional atom present!")
+	return FALSE

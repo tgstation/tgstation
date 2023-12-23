@@ -215,10 +215,12 @@
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		// How many lunatics we have
 		var/amount_of_lunatics = 0
-		if (isnull(crewmate.mind))
+		if(isnull(crewmate.mind))
+			continue
+		if(crewmate.stat == DEAD || crewmate.stat == UNCONSCIOUS)
 			continue
 		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
-		if (IS_HERETIC_OR_MONSTER(crewmate))
+		if(IS_HERETIC_OR_MONSTER(crewmate))
 			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
 			continue
 		// Mindshielded and anti-magic folks are immune against this effect because this is a magical mind effect
@@ -243,17 +245,21 @@
 		hallucination_duration = 60 SECONDS
 	)
 
-	for(var/mob/living/carbon/carbon_view in view(7, source))
+	for(var/mob/living/carbon/carbon_view in view(5, source))
 		var/carbon_sanity = carbon_view.mob_mood.sanity
+		if(carbon_view.stat == DEAD || carbon_view.stat == UNCONSCIOUS)
+			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
 		carbon_view.adjust_confusion(2 SECONDS)
 		carbon_view.mob_mood.set_sanity(carbon_sanity - 5)
 		if(carbon_sanity < 30)
-			to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
+			if(SPT_PROB(20, seconds_per_tick))
+				to_chat(carbon_view, span_warning("you feel your mind beginning to rend!"))
 			carbon_view.adjustOrganLoss(ORGAN_SLOT_BRAIN, 5)
 		if(carbon_sanity < 10)
-			to_chat(carbon_view, span_warning("it echoes through you!"))
+			if(SPT_PROB(20, seconds_per_tick))
+				to_chat(carbon_view, span_warning("it echoes through you!"))
 			visible_hallucination_pulse(
 				center = get_turf(carbon_view),
 				radius = 7,
