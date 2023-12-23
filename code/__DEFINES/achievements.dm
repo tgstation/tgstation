@@ -146,7 +146,7 @@
 #define STATUS_SCORE_MINIMUM 5
 
 /// Number of status effects required for the How Did We Get Here achievement.
-#define STATUS_ACHIEVEMENT_LIMIT 18
+#define STATUS_ACHIEVEMENT_LIMIT 15
 
 // Tourist related achievements and scores
 
