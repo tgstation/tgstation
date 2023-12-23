@@ -20,6 +20,9 @@
 	var/difficulty = "unset"
 	/// How long of a do-after must be completed by the Spy to turn in the bounty.
 	var/theft_time = 2 SECONDS
+	/// Probability that the stolen item will be sent to the black market instead of destroyed.
+	/// Guaranteed if the item is indestructible.
+	var/black_market_prob = 50
 
 	/// Whether the bounty's been fully initialized. If this is not set, the bounty will be rerolled.
 	VAR_FINAL/initalized = FALSE
@@ -36,15 +39,20 @@
 	select_reward(handler)
 
 /// Helper that translates the bounty into UI data for TGUI
-/datum/spy_bounty/proc/to_ui_data()
+/datum/spy_bounty/proc/to_ui_data(mob/user)
 	SHOULD_CALL_PARENT(TRUE)
 	return list(
 		"name" = name,
 		"help" = help,
 		"difficulty" = difficulty,
-		"reward" = reward_item.name, // melbert todo : description as tooltip?
+		"reward" = reward_item.name,
 		"claimed" = claimed,
+		"can_claim" = can_claim(user),
 	)
+
+/// Check if the passed mob can claim this bounty.
+/datum/spy_bounty/proc/can_claim(mob/user)
+	return TRUE
 
 /**
  * Initializes the bounty, setting up targets and etc.
@@ -90,35 +98,75 @@
 /datum/spy_bounty/proc/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
 	do_sparks(3, FALSE, stealing)
 
-	if(stealing.resistance_flags & INDESTRUCTIBLE)
-		return // melbert todo : how to handle indestructible items (put them on the black market?)
-
 	// Don't mess with it while it's going away
 	stealing.interaction_flags_atom &= ~INTERACT_ATOM_ATTACK_HAND
 	stealing.anchored = TRUE
 	// Add some pizzazz
 	animate(stealing, time = 0.5 SECONDS, transform = matrix(stealing.transform).Scale(0.01), easing = CUBIC_EASING)
-	QDEL_IN(stealing, 0.5 SECONDS)
+
+	if((stealing.resistance_flags & INDESTRUCTIBLE) || prob(black_market_prob))
+		addtimer(CALLBACK(src, PROC_REF(send_to_black_market), stealing), 0.5 SECONDS)
+	else
+		QDEL_IN(stealing, 0.5 SECONDS)
+
+/**
+ * Handles putting the passed movable up on the black market.
+ *
+ * By the end of this proc, the item should either be deleted (if failure) or in nullspace (on the black market).
+ *
+ * * thing - The item to put up on the black market.
+ */
+/datum/spy_bounty/proc/send_to_black_market(atom/movable/thing)
+	thing.interaction_flags_atom = initial(thing.interaction_flags_atom)
+	thing.anchored = initial(thing.anchored)
+	thing.moveToNullspace()
+
+	var/datum/market_item/new_item = new()
+	new_item.item = thing
+	new_item.name = "Stolen [thing.name]"
+	new_item.desc = "A [thing.name], stolen from somewhere on the station."
+	new_item.category = "Fenced Goods"
+	new_item.stock = 1
+
+	switch(difficulty)
+		if(SPY_DIFFICULTY_EASY)
+			new_item.price = PAYCHECK_COMMAND * 2.5
+		if(SPY_DIFFICULTY_MEDIUM)
+			new_item.price = PAYCHECK_COMMAND * 5
+		if(SPY_DIFFICULTY_HARD)
+			new_item.price = PAYCHECK_COMMAND * 10
+
+	new_item.price += rand(0, PAYCHECK_COMMAND * 5)
+	if(thing.resistance_flags & INDESTRUCTIBLE)
+		new_item.price *= 2
+
+	SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
 
 /// Steal an item
 /datum/spy_bounty/item
-	difficulty = SPY_DIFFICULTY_EASY // melbert todo : re-add objective item difficulty
+	difficulty = SPY_DIFFICULTY_EASY
 
 	/// Reference to an objective item datum that we want stolen.
 	VAR_FINAL/datum/objective_item/desired_item
-	/// List of typepaths disallowed from being selected as the desired item.
+	/// Typecache of objective items that should not be selected.
 	var/static/list/blacklisted_item_types = typecacheof(list(
-		/obj/item/aicard,
-		/obj/item/disk/nuclear,
+		/datum/objective_item/steal/functionalai,
+		/datum/objective_item/steal/nukedisc,
 	))
+
+/datum/spy_bounty/item/can_claim(mob/user)
+	return !(user.mind?.assigned_role.title in desired_item.excludefromjob)
 
 /datum/spy_bounty/item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
-		if(length(item.special_equipment) || item.difficulty <= 0)
+		if(length(item.special_equipment) || item.difficulty <= 0 || item.difficulty >= 6)
 			continue
-		if(!item.target_exists() || is_type_in_typecache(item.targetitem, blacklisted_item_types))
+		if(is_type_in_typecache(item, blacklisted_item_types))
 			continue
+		if(!item.target_exists())
+			continue
+		// Has some overlap, which is fine
 		switch(difficulty)
 			if(SPY_DIFFICULTY_EASY)
 				if(item.difficulty >= 3)
@@ -164,7 +212,17 @@
 	/// Help text to describe what machine we want to steal.
 	var/find_machine_help
 
+/datum/spy_bounty/machine/send_to_black_market(obj/machinery/thing)
+	// Sell the circuitboard, not the whole thing, if possible
+	if(istype(thing.circuit, /obj/item/circuitboard/machine))
+		return ..(thing.circuit)
+
+	qdel(thing)
+
 /datum/spy_bounty/machine/init_bounty(datum/spy_bounty_handler/handler)
+	if(isnull(target_type))
+		return FALSE
+
 	// Blacklisting maintenance in general, as well as any areas that already have a bounty in them.
 	var/list/blacklisted_areas = typecacheof(/area/station/maintenance)
 	for(var/datum/spy_bounty/machine/existing_bounty in handler.get_all_bounties())
@@ -230,12 +288,18 @@
 	difficulty = SPY_DIFFICULTY_HARD
 	target_type = /obj/machinery/computer/communications
 
+/datum/spy_bounty/machine/comms_console/can_claim(mob/user)
+	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+
 /// Subtype for a bounty that targets a specific crew member
 /datum/spy_bounty/targets_person
 	difficulty = SPY_DIFFICULTY_HARD
 	theft_time = 12 SECONDS
 	/// Weakref to the mob target of the bounty
 	VAR_FINAL/datum/weakref/target_ref
+
+/datum/spy_bounty/targets_person/can_claim(mob/user)
+	return !IS_WEAKREF_OF(user, target_ref)
 
 /datum/spy_bounty/targets_person/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/mob/possible_targets = list()
@@ -301,12 +365,14 @@
 	if(IS_WEAKREF_OF(stealing, target_original_desired_ref))
 		return ..()
 
+	ASSERT(ishuman(stealing), "steal some item bounty called clean_up_stolen_item with something that isn't a human and isn't the original item.")
+
 	do_sparks(2, FALSE, stealing)
 	var/mob/living/carbon/human/stolen_from = stealing
 	var/obj/item/real_stolen_item = find_desired_thing(stealing)
 	stolen_from.Unconscious(10 SECONDS)
 	to_chat(stolen_from, span_warning("You feel something missing where your [real_stolen_item.name] once was."))
-	qdel(real_stolen_item)
+	return ..(real_stolen_item, spy)
 
 /datum/spy_bounty/targets_person/some_item/target_found(mob/crewmember)
 	var/obj/item/desired_thing = find_desired_thing(crewmember)
@@ -330,7 +396,7 @@
 
 // Steal someone's heirloom
 /datum/spy_bounty/targets_person/some_item/heirloom
-	desired_type = /obj/item
+	desired_type = /obj/item // melbert todo : prevent spies from getting their own heirloom
 
 /datum/spy_bounty/targets_person/some_item/heirloom/is_valid_crewmember(mob/living/carbon/human/crewmember)
 	return ..() && crewmember.has_quirk(/datum/quirk/item_quirk/family_heirloom)
@@ -373,7 +439,7 @@
 /datum/spy_bounty/some_bot
 	theft_time = 10 SECONDS
 	/// What typepath of bot we want to steal.
-	var/bot_type
+	var/mob/living/simple_animal/bot/bot_type
 	/// Help text to describe what bot we want to steal.
 	var/find_bot_help
 	/// Weakref to the bot we want to steal.
@@ -381,7 +447,7 @@
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
-		if(ispath(bot_type, existing_bounty.bot_type::parent_type)) // ensure we don't get two similar bounties.
+		if(ispath(bot_type, initial(existing_bounty.bot_type.parent_type))) // ensures we don't get two similar bounties.
 			return FALSE
 
 	var/list/mob/living/possible_bots = list()
@@ -418,3 +484,6 @@
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/basic/bot/cleanbot/medbay
 	help = "Steal Scrubbs MD, commonly found mopping up blood in Medbay."
+
+/datum/spy_bounty/some_bot/scrubbs/can_claim(mob/user)
+	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)

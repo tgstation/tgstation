@@ -30,6 +30,8 @@
 	 * 3 - Usually on someone's person, or in a locked locker or otherwise secure area
 	 * 4 - Always on someone's person, or in a secure area
 	 * 5 - You know it when you see it. Things like the Nuke Disc which have a pointer to it at all times.
+	 *
+	 * Also accepts 0 as "extremely easy to steal" and >5 as "almost impossible to steal"
 	 */
 	var/difficulty = 0
 	/// A hint explaining how one may find the target item.

@@ -73,7 +73,7 @@
 /datum/uplink_item/spy_unique/cycler_shotgun
 	name = "Cycler Shotgun"
 	desc = "A cycler shotgun. It's a shotgun that cycles between two barrels."
-	item = /obj/item/gun/ballistic/shotgun/automatic/dual_tube // melbert todo : test
+	item = /obj/item/gun/ballistic/shotgun/automatic/dual_tube
 	cost = SPY_UPPER_COST_THRESHOLD
 
 /datum/uplink_item/spy_unique/bulldog_shotgun

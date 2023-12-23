@@ -9,6 +9,7 @@ type Bounty = {
   difficulty: string;
   reward: string;
   claimed: BooleanLike;
+  can_claim: BooleanLike;
 };
 
 type Data = {
@@ -22,22 +23,32 @@ const difficulty_to_color = {
   hard: 'bad',
 };
 
+const BountyDimmer = (props: { text: string; color: string }) => {
+  return (
+    <Dimmer>
+      <Stack>
+        <Stack.Item>
+          <Icon name="user-secret" size={2} color={props.color} />
+        </Stack.Item>
+        <Stack.Item align={'center'}>
+          <i>{props.text}</i>
+        </Stack.Item>
+      </Stack>
+    </Dimmer>
+  );
+};
+
 const BountyDisplay = (props: { bounty: Bounty }) => {
   const { bounty } = props;
 
   return (
     <Section>
-      {!!bounty.claimed && (
-        <Dimmer>
-          <Stack>
-            <Stack.Item>
-              <Icon name="user-secret" size={2} color="bad" />
-            </Stack.Item>
-            <Stack.Item align={'center'}>
-              <i>Claimed!</i>
-            </Stack.Item>
-          </Stack>
-        </Dimmer>
+      {!!bounty.claimed && <BountyDimmer color="bad" text="Claimed!" />}
+      {!bounty.can_claim && !bounty.claimed && (
+        <BountyDimmer
+          color="average"
+          text="Your benefactors see you unfit to complete this."
+        />
       )}
       <Stack vertical ml={1}>
         <Stack.Item>

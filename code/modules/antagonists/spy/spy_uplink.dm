@@ -66,32 +66,46 @@
 	for(var/datum/spy_bounty/bounty as anything in handler.get_all_bounties())
 		if(bounty.claimed)
 			continue
-		if(bounty.is_stealable(stealing))
-			if(DOING_INTERACTION(spy, REF(src)))
-				spy.balloon_alert(spy, "already scanning!") // Only shown if they're trying to scan two valid targets
-			else
-				INVOKE_ASYNC(src, PROC_REF(start_stealing), stealing, spy, bounty)
-			return TRUE
+		if(!bounty.can_claim(spy))
+			continue
+		if(!bounty.is_stealable(stealing))
+			continue
+		if(DOING_INTERACTION(spy, REF(src)))
+			spy.balloon_alert(spy, "already scanning!") // Only shown if they're trying to scan two valid targets
+		else
+			INVOKE_ASYNC(src, PROC_REF(start_stealing), stealing, spy, bounty)
+		return TRUE
 
 	return FALSE
 
 /// Wraps the stealing process in a scanning effect.
 /datum/component/spy_uplink/proc/start_stealing(atom/movable/stealing, mob/living/spy, datum/spy_bounty/bounty)
 	if(!isturf(stealing.loc) && stealing.loc != spy)
-		to_chat(spy, span_warning("You can't scan [stealing] from there!"))
+		to_chat(spy, span_warning("Your uplinks blinks red: [stealing] cannot be extracted from there."))
 		return FALSE
+
+	playsound(stealing, 'sound/items/pshoom.ogg', 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, frequency = 0.33, ignore_walls = FALSE)
 
 	var/obj/effect/scan_effect/active_scan_effect = new(stealing.loc)
 	active_scan_effect.appearance = stealing.appearance
 	active_scan_effect.dir = stealing.dir
 	active_scan_effect.makeHologram()
+	SET_PLANE_EXPLICIT(active_scan_effect, stealing.plane, stealing)
+	active_scan_effect.layer = stealing.layer + 0.1
 
 	var/obj/effect/scan_effect/cone/active_scan_cone
 	if(isturf(stealing.loc) && isturf(spy.loc)) // Cone doesn't make sense if its being held or something
 		active_scan_cone = new(spy.loc)
-		active_scan_cone.transform = active_scan_cone.transform.Turn(get_angle(spy, stealing))
-		active_scan_cone.pixel_x -= 48
-		active_scan_cone.pixel_y -= 72
+		var/angle = round(get_angle(spy, stealing), 10)
+		if(angle > 180 && angle < 360)
+			active_scan_cone.pixel_x -= 16
+		else if(angle < 180 && angle > 0)
+			active_scan_cone.pixel_x += 16
+		if(angle > 90 && angle < 270)
+			active_scan_cone.pixel_y -= 16
+		else if(angle < 90 || angle > 270)
+			active_scan_cone.pixel_y += 16
+		active_scan_cone.transform = active_scan_cone.transform.Turn(angle)
 		active_scan_cone.alpha = 0
 		animate(active_scan_cone, time = 0.5 SECONDS, alpha = initial(active_scan_cone.alpha))
 
@@ -111,7 +125,10 @@
 	if(!do_after(spy, bounty.theft_time, stealing, interaction_key = REF(src)))
 		return FALSE
 	if(bounty.claimed)
-		to_chat(spy, span_warning("The bounty for [stealing] has been claimed by another spy!"))
+		to_chat(spy, span_warning("Your uplinks blinks red: The bounty for [stealing] has been claimed by another spy!"))
+		return FALSE
+	if(spy.is_holding(stealing) && !spy.dropItemToGround(stealing))
+		to_chat(spy, span_warning("Your uplinks blinks red: [stealing] seems stuck to your hand!"))
 		return FALSE
 
 	bounty.clean_up_stolen_item(stealing, spy)
@@ -140,7 +157,7 @@
 
 	data["bounties"] = list()
 	for(var/datum/spy_bounty/bounty as anything in handler.get_all_bounties())
-		UNTYPED_LIST_ADD(data["bounties"], bounty.to_ui_data())
+		UNTYPED_LIST_ADD(data["bounties"], bounty.to_ui_data(user))
 	data["time_left"] = timeleft(handler.refresh_timer)
 
 	return data
@@ -153,7 +170,7 @@
 
 /obj/effect/scan_effect/cone
 	name = "holoray"
-	icon = 'icons/effects/96x96.dmi'
-	icon_state = "holoray"
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "scan_beam"
 	color = "#3ba0ff"
-	alpha = 125
+	alpha = 200
