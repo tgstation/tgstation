@@ -194,3 +194,29 @@
       works once more, Power Miner shards can once again spawn Support Guardians.
   MonstieHuntie:
   - bugfix: Corndogs are no longer condemned to Hell upon being born
+2023-12-23:
+  DexeeXI:
+  - qol: All stations now have cryogenics at or next to Departures. Navigation was
+      adjusted as well to point to the door in each case
+  - bugfix: Centcom got some small fixes. A big fix is readding the cube machine that
+      went missing!
+  - rscadd: two new Wikibooks added
+  - rscadd: all Stations now have the new Wikibooks (Art Sci specifically!)
+  - rscadd: new Pathology zone under departmental maintenance for current and future
+      use
+  - qol: The "maintenance closets" for pathology on Icebox and Tram are now marked
+      as maintenance so the pathologists aren't completely screwed for radiation storms
+  - balance: changed the wrestling belt in lavaland to be the player belt and not
+      the admin belt (TG problem, monke solution)
+  - qol: 'Prisoners now have access to cryo in their chambers. Don''t try to destroy
+      it. It''ll only increase your sentence. (TODO: add tag IDs to cryo cells so
+      send to cryo sends people to normal station cryo not prison cryo)'
+  - qol: all sorts of small fixes all over the place between all maps.
+  - rscdel: Removed Detroit.
+  - qol: fixed the silly mech machine in tram maints
+  - qol: All station former virology clinics renamed to pathology.
+  - bugfix: missing cables and catwalks that should be there on tram are now back.
+  MichiRecRoom:
+  - spellcheck: Two store tabs had errant right parenthesis, which are now removed.
+  Wisemonster:
+  - bugfix: Fix mulebots receiving the wrong message when thier cell is added/removed.
