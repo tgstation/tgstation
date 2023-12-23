@@ -1,0 +1,4 @@
+author: "KannaLisvern"
+delete-after: True
+changes:
+  - qol: "Removed Bluespace Crystals and Diamonds from medical emergency bed's recipe."
