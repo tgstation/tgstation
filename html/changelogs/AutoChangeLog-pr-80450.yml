@@ -1,0 +1,5 @@
+author: "Rhials"
+delete-after: True
+changes:
+  - qol: "Obsessed crewmembers are now displayed in the orbit panel."
+  - qol: "The Paradox Clone orbit menu tab is now white. Neat!"
