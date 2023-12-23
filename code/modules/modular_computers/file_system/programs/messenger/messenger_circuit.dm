@@ -18,6 +18,11 @@
 	///A list of PDA targets for the message to be sent
 	var/datum/port/input/targets
 
+	///Plays the ringtone when the input is received
+	var/datum/port/input/ring
+	///Set the ringtone to the input
+	var/datum/port/input/set_ring
+
 /obj/item/circuit_component/mod_program/messenger/populate_ports()
 	received_message = add_output_port("Received Message", PORT_TYPE_STRING)
 	sender_name = add_output_port("Sender Name", PORT_TYPE_STRING)
@@ -26,6 +31,9 @@
 
 	message = add_input_port("Message", PORT_TYPE_STRING)
 	targets = add_input_port("Targets", PORT_TYPE_LIST(PORT_TYPE_ATOM))
+
+	ring = add_input_port("Play Ringtone", PORT_TYPE_SIGNAL, trigger = PROC_REF(play_ringtone))
+	set_ring = add_input_port("Set Ringtone", PORT_TYPE_STRING, trigger = PROC_REF(set_ringtone))
 
 /obj/item/circuit_component/mod_program/messenger/input_received(datum/port/port)
 	var/list/messenger_targets = list()
@@ -47,6 +55,14 @@
 /obj/item/circuit_component/mod_program/messenger/unregister_shell()
 	UnregisterSignal(associated_program.computer, COMSIG_MODULAR_PDA_MESSAGE_RECEIVED)
 	return ..()
+
+/obj/item/circuit_component/mod_program/messenger/proc/set_ringtone(datum/port/port)
+	var/datum/computer_file/program/messenger/messenger = associated_program
+	messenger.set_ringtone(set_ring.value)
+
+/obj/item/circuit_component/mod_program/messenger/proc/play_ringtone(datum/port/port)
+	var/datum/computer_file/program/messenger/messenger = associated_program
+	messenger.computer.ring(messenger.ringtone)
 
 /obj/item/circuit_component/mod_program/messenger/proc/message_received(datum/source, datum/signal/subspace/messaging/tablet_message/signal, message_job, message_name)
 	SIGNAL_HANDLER

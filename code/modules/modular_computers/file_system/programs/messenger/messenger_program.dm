@@ -139,6 +139,14 @@
 	for(var/datum/tgui/window as anything in computer.open_uis)
 		SSassets.transport.send_assets(window.user, data)
 
+/// Set the ringtone if possible
+/datum/computer_file/program/messenger/proc/set_ringtone(new_ringtone, mob/user)
+	if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, user, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
+		return FALSE
+
+	ringtone = new_ringtone
+	return TRUE
+
 /datum/computer_file/program/messenger/ui_interact(mob/user, datum/tgui/ui)
 	var/list/data = get_picture_assets()
 	SSassets.transport.send_assets(user, data)
@@ -155,12 +163,7 @@
 			var/mob/living/usr_mob = usr
 			if(!new_ringtone || !in_range(computer, usr_mob) || computer.loc != usr_mob)
 				return FALSE
-
-			if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, usr_mob, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
-				return FALSE
-
-			ringtone = new_ringtone
-			return TRUE
+			return set_ringtone(new_ringtone, usr_mob)
 
 		if("PDA_toggleAlerts")
 			alert_silenced = !alert_silenced

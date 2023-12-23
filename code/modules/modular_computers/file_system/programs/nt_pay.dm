@@ -56,7 +56,7 @@
 ///Wrapper and signal for the main payment function of this program
 /datum/computer_file/program/nt_pay/proc/make_payment(token, money_to_send, mob/user)
 	var/payment_result = _pay(token, money_to_send, user)
-	SEND_SIGNAL(src, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT, payment_result)
+	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, payment_result)
 
 /datum/computer_file/program/nt_pay/proc/_pay(token, money_to_send, mob/user)
 	if(IS_DEPARTMENTAL_ACCOUNT(current_user))
@@ -112,10 +112,10 @@
 
 /obj/item/circuit_component/mod_program/nt_pay/register_shell(atom/movable/shell)
 	. = ..()
-	RegisterSignal(associated_program, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT, PROC_REF(on_payment_result))
+	RegisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT, PROC_REF(on_payment_result))
 
 /obj/item/circuit_component/mod_program/nt_pay/unregister_shell()
-	UnregisterSignal(associated_program, COMSIG_MODULAR_PROGRAM_NT_PAY_RESULT)
+	UnregisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT)
 	return ..()
 
 /obj/item/circuit_component/mod_program/nt_pay/populate_ports()
