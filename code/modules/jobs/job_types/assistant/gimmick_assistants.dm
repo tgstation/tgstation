@@ -20,7 +20,6 @@
 	outfit_weight = 2
 
 /obj/item/coupon/bee
-	name = "coupon - 70% off Beekeeping Starter Crate"
 	desc = "BEEEES???? AT AN AFFORDAbLE PORICE?!!!" //wordcoders seething
 
 	discounted_pack = /datum/supply_pack/organic/hydroponics/beekeeping_fullkit
