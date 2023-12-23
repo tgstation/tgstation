@@ -1,6 +1,8 @@
 import { createSearch, toTitleCase } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, Stack, Flex, Section } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Button, Flex, Image, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type Ores = {
@@ -22,10 +24,11 @@ type Data = {
 export const OreContainer = (props) => {
   const { act, data } = useBackend<Data>();
   const { ores = [] } = data;
-  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
+  const [searchItem, setSearchItem] = useState('');
   const search = createSearch(searchItem, (ore: Ores) => ore.name);
   const ores_filtered =
     searchItem.length > 0 ? ores.filter((ore) => search(ore)) : ores;
+
   return (
     <Window title="Ore Container" width={550} height={400}>
       <Window.Content>
@@ -96,15 +99,13 @@ const RetrieveIcon = (props) => {
   }
 
   return (
-    <Box
-      as="img"
+    <Image
       m={1}
       src={`data:image/jpeg;base64,${icon_display.icon}`}
       height="64px"
       width="64px"
       style={{
-        '-ms-interpolation-mode': 'nearest-neighbor',
-        'vertical-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   );

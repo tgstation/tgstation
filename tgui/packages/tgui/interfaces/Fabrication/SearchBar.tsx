@@ -1,5 +1,6 @@
-import { Component } from 'inferno';
-import { Stack, Input, Icon } from '../../components';
+import { Component } from 'react';
+
+import { Icon, Input, Stack } from '../../components';
 
 /**
  * The properties of a search bar.

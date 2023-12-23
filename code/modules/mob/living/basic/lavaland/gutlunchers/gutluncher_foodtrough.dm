@@ -23,7 +23,7 @@
 	return ..()
 
 /obj/structure/ore_container/gutlunch_trough/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 5)
 	qdel(src)

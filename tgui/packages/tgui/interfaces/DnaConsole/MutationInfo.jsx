@@ -1,8 +1,22 @@
 import { filter, uniqBy } from 'common/collections';
 import { flow } from 'common/fp';
+
 import { useBackend } from '../../backend';
-import { Box, Button, Divider, Dropdown, LabeledList, Stack } from '../../components';
-import { CHROMOSOME_NEVER, CHROMOSOME_NONE, CHROMOSOME_USED, MUT_COLORS, MUT_EXTRA } from './constants';
+import {
+  Box,
+  Button,
+  Divider,
+  Dropdown,
+  LabeledList,
+  Stack,
+} from '../../components';
+import {
+  CHROMOSOME_NEVER,
+  CHROMOSOME_NONE,
+  CHROMOSOME_USED,
+  MUT_COLORS,
+  MUT_EXTRA,
+} from './constants';
 
 /**
  * The following predicate tests if two mutations are functionally
@@ -105,7 +119,7 @@ export const MutationInfo = (props) => {
     );
   }
   const savedToConsole = mutationStorage.find((x) =>
-    isSameMutation(x, mutation)
+    isSameMutation(x, mutation),
   );
   const savedToDisk = diskMutations.find((x) => isSameMutation(x, mutation));
   const combinedMutations = flow([
@@ -171,7 +185,8 @@ export const MutationInfo = (props) => {
                           is_activator: 1,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       Print Activator
                     </Button>
                   </Stack.Item>
@@ -185,7 +200,8 @@ export const MutationInfo = (props) => {
                           is_activator: 0,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       Print Mutator
                     </Button>
                   </Stack.Item>
@@ -198,7 +214,8 @@ export const MutationInfo = (props) => {
                           mutref: mutation.ByondRef,
                           source: mutation.Source,
                         })
-                      }>
+                      }
+                    >
                       CRISPR [{crisprCharges}]
                     </Button>
                   </Stack.Item>

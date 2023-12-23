@@ -50,7 +50,7 @@
 	animate(transform = matrix(), time = 0.5 SECONDS / speed_divider, easing = SINE_EASING | EASE_IN)
 	animate(transform = matrix(), time = 2 SECONDS / speed_divider)
 
-/obj/item/organ/internal/legion_tumour/Remove(mob/living/carbon/egg_owner, special)
+/obj/item/organ/internal/legion_tumour/Remove(mob/living/carbon/egg_owner, special, movement_flags)
 	. = ..()
 	stage = 0
 	elapsed_time = 0

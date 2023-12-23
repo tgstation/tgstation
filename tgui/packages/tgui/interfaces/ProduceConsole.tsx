@@ -1,7 +1,21 @@
 import { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, Input, NumberInput, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Divider,
+  Icon,
+  Image,
+  Input,
+  NumberInput,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 const buttonWidth = 2;
@@ -53,15 +67,12 @@ const findAmount = (item_amts, name) => {
 const ShoppingTab = (props) => {
   const { data, act } = useBackend<Data>();
   const { credit_type, order_categories, order_datums, item_amts } = data;
-  const [shopCategory, setShopCategory] = useLocalState(
-    'shopCategory',
-    order_categories[0]
-  );
+  const [shopCategory, setShopCategory] = useState(order_categories[0]);
   const [condensed] = useLocalState('condensed', false);
-  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
+  const [searchItem, setSearchItem] = useState('');
   const search = createSearch<OrderDatum>(
     searchItem,
-    (order_datums) => order_datums.name
+    (order_datums) => order_datums.name,
   );
   let goods =
     searchItem.length > 0
@@ -82,7 +93,8 @@ const ShoppingTab = (props) => {
                   if (searchItem.length > 0) {
                     setSearchItem('');
                   }
-                }}>
+                }}
+              >
                 {category}
               </Tabs.Tab>
             ))}
@@ -110,19 +122,17 @@ const ShoppingTab = (props) => {
                 <Stack>
                   <span
                     style={{
-                      'vertical-align': 'middle',
+                      verticalAlign: 'middle',
                     }}
                   />{' '}
                   {!condensed && (
                     <Stack.Item>
-                      <Box
-                        as="img"
+                      <Image
                         src={`data:image/jpeg;base64,${item.product_icon}`}
                         height="34px"
                         width="34px"
                         style={{
-                          '-ms-interpolation-mode': 'nearest-neighbor',
-                          'vertical-align': 'middle',
+                          verticalAlign: 'middle',
                         }}
                       />
                     </Stack.Item>
@@ -199,7 +209,7 @@ const CheckoutTab = (props) => {
   } = data;
   const total_cargo_cost = Math.floor(total_cost * cargo_cost_multiplier);
   const checkout_list = order_datums.filter(
-    (food) => food && (findAmount(item_amts, food.name) || 0)
+    (food) => food && (findAmount(item_amts, food.name) || 0),
   );
   return (
     <Stack vertical fill>
@@ -320,9 +330,10 @@ const OrderSent = (props) => {
 export const ProduceConsole = (props) => {
   const { data } = useBackend<Data>();
   const { credit_type, points, off_cooldown, order_categories } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [tabIndex, setTabIndex] = useState(1);
   const [condensed, setCondensed] = useLocalState('condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
+
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>
       <Window.Content>

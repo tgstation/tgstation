@@ -1,7 +1,8 @@
 import { paginate } from 'common/collections';
 import { BooleanLike } from 'common/react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Stack, Button, Icon, Input, Section, Tabs } from '../components';
+import { Button, Icon, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const CATEGORY_PAGE_ITEMS = 4;
@@ -93,7 +94,7 @@ export const PanelOptions = (props) => {
         <Input
           autoFocus
           fluid
-          onInput={(e) => setSearchQuery(e.target.value)}
+          onInput={(e, value) => setSearchQuery(value)}
           placeholder="Search..."
           value={searchQuery}
         />
@@ -102,7 +103,8 @@ export const PanelOptions = (props) => {
         <Button.Checkbox
           fluid
           checked={announce}
-          onClick={() => setAnnounce(!announce)}>
+          onClick={() => setAnnounce(!announce)}
+        >
           Announce
         </Button.Checkbox>
       </Stack.Item>
@@ -130,7 +132,7 @@ export const EventSection = (props) => {
       }
       return true;
     }),
-    EVENT_PAGE_ITEMS
+    EVENT_PAGE_ITEMS,
   );
 
   const sectionTitle = searchQuery ? 'Searching...' : category.name + ' Events';
@@ -159,7 +161,8 @@ export const EventSection = (props) => {
                         type: event.type,
                         announce: announce,
                       })
-                    }>
+                    }
+                  >
                     {event.name}
                   </Button>
                 </Stack.Item>
@@ -189,7 +192,8 @@ export const EventTabs = (props) => {
               selected={category === cat}
               icon={cat.icon}
               key={cat.icon}
-              onClick={() => setCategory(cat)}>
+              onClick={() => setCategory(cat)}
+            >
               {cat.name}
             </Tabs.Tab>
           ))}

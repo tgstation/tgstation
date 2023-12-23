@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Modal, Input, Section, Stack } from '../../components';
+import { Button, Input, Modal, Section, Stack } from '../../components';
 
 export const StateSelectModal = (props) => {
   const { act, data } = useBackend();
@@ -9,7 +9,8 @@ export const StateSelectModal = (props) => {
   return (
     <Modal
       height={`${window.innerHeight * 0.5}px`}
-      width={`${window.innerWidth * 0.3}px`}>
+      width={`${window.innerWidth * 0.3}px`}
+    >
       <Section
         fill
         title="States"
@@ -19,17 +20,20 @@ export const StateSelectModal = (props) => {
             icon="window-close"
             onClick={() => {
               setModal(null);
-            }}>
+            }}
+          >
             Cancel
           </Button>
-        }>
+        }
+      >
         {states.map((value, i) => (
           <Button
             key={i}
             onClick={() => {
               setModal(null);
               act('switchState', { index: i + 1 });
-            }}>
+            }}
+          >
             {value}
           </Button>
         ))}

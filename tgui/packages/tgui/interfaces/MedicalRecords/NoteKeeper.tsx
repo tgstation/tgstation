@@ -1,6 +1,17 @@
 import { multiline } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { BlockQuote, Box, Button, Icon, LabeledList, Section, Tabs, TextArea, Tooltip } from 'tgui/components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  Section,
+  Tabs,
+  TextArea,
+  Tooltip,
+} from 'tgui/components';
+
 import { getMedicalRecord } from './helpers';
 import { MedicalNote, MedicalRecordData } from './types';
 
@@ -51,9 +62,8 @@ export const NoteKeeper = (props) => {
           <LabeledList>
             <LabeledList.Item
               label="Author"
-              buttons={
-                <Button color="bad" icon="trash" onClick={deleteNote} />
-              }>
+              buttons={<Button color="bad" icon="trash" onClick={deleteNote} />}
+            >
               {selectedNote.author}
             </LabeledList.Item>
             <LabeledList.Item label="Time">
@@ -103,13 +113,15 @@ const NoteTabs = (props) => {
           key={index}
           label={index + 1}
           onClick={() => setNote(note)}
-          selected={selectedNote?.note_ref === note.note_ref}>
+          selected={selectedNote?.note_ref === note.note_ref}
+        >
           {index + 1}
         </Tabs.Tab>
       ))}
       <Tooltip
         content={multiline`Add a new note. Press enter or escape to exit view.`}
-        position="bottom">
+        position="bottom"
+      >
         <Tabs.Tab onClick={composeNew} selected={writing}>
           <Icon name="plus" /> New
         </Tabs.Tab>

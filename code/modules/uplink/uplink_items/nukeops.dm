@@ -47,12 +47,12 @@
 
 /datum/uplink_item/weapon_kits/core
 	name = "Core Equipment Box (Essential)"
-	desc = "This box contains an airlock authentification override card, a C-4 explosive charge, a freedom implant and a stimpack injector. \
+	desc = "This box contains an airlock authentification override card, a MODsuit energy shield module, a C-4 explosive charge, a freedom implant and a stimpack injector. \
 		The most important support items for most operatives to succeed in their mission, bundled together. It is highly recommend you buy this kit. \
 		Note: This bundle is not at a discount. You can purchase all of these items separately. You do not NEED these items, but most operatives fail WITHOUT at \
 		least SOME of these items. More experienced operatives can do without."
 	item = /obj/item/storage/box/syndie_kit/core_gear
-	cost = 14 //freedom 5, doormag 3, c-4 1, stimpack 5
+	cost = 22 //freedom 5, doormag 3, c-4 1, stimpack 5, shield modsuit module 8
 	limited_stock = 1
 	cant_discount = TRUE
 	purchasable_from = UPLINK_NUKE_OPS
@@ -172,8 +172,8 @@
 
 /datum/uplink_item/weapon_kits/medium_cost/sword_and_board
 	name = "Energy Shield and Sword Case (Very Hard)"
-	desc = "A case containing an energy sword and energy shield. The shield is capable of deflecting \
-		energy and laser projectiles, and the sword most forms of attack. Perfect for the enterprising nuclear knight. "
+	desc = "A case containing an energy sword and energy shield. Paired together, it provides considerable defensive power without lethal potency. \
+		Perfect for the enterprising nuclear knight. Comes with a medieval helmet for your MODsuit!"
 	item = /obj/item/storage/toolbox/guncase/sword_and_board
 
 /datum/uplink_item/weapon_kits/medium_cost/cqc
@@ -354,8 +354,8 @@
 	item = /obj/item/ammo_box/magazine/sniper_rounds/marksman
 
 /datum/uplink_item/weapon_kits/high_cost/doublesword
-	name = "Double-Energy Sword Case (Very Hard)"
-	desc = "A case containing a double-energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
+	name = "Double-Bladed Energy Sword Case (Very Hard)"
+	desc = "A case containing a double-bladed energy sword, anti-slip module, meth autoinjector, and a bar of soap. \
 		Some say the most infamous nuclear operatives utilized this combination of equipment to slaughter hundreds \
 		of Nanotrasen employees. However, some also say this is an embellishment from the Tiger Co-operative. \
 		The soap did most of the work. Comes with a prisoner uniform so you fit the part."
@@ -595,10 +595,10 @@
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
-	desc = "An energy shield module for a MODsuit. The shields can handle up to three impacts \
-		within a short duration and will rapidly recharge while not under fire."
+	desc = "An energy shield module for a MODsuit. The shields can stop a single impact \
+		before needing to recharge. Used wisely, this module will keep you alive for a lot longer."
 	item = /obj/item/mod/module/energy_shield
-	cost = 15
+	cost = 8
 	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 
 /datum/uplink_item/suits/emp_shield

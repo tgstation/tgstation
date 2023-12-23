@@ -1,11 +1,20 @@
-import { useBackend } from '../backend';
-import { Stack, Section, Icon, Dimmer, Box, Tooltip, Button } from '../components';
-import { Window } from '../layouts';
-import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
 import { classes } from 'common/react';
+
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
+} from '../components';
+import { Window } from '../layouts';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
@@ -49,7 +58,7 @@ export const Fabricator = (props) => {
           </Stack.Item>
         </Stack>
         {!!onHold && (
-          <Dimmer style={{ 'font-size': '2em', 'text-align': 'center' }}>
+          <Dimmer style={{ fontSize: '2em', textAlign: 'center' }}>
             Mineral access is on hold, please contact the quartermaster.
           </Dimmer>
         )}
@@ -71,7 +80,7 @@ const PrintButton = (props: PrintButtonProps) => {
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount * quantity > (available[material] ?? 0)
+      !available[material] || amount * quantity > (available[material] ?? 0),
   );
 
   return (
@@ -83,14 +92,16 @@ const PrintButton = (props: PrintButtonProps) => {
           SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
           available={available}
         />
-      }>
+      }
+    >
       <div
         className={classes([
           'FabricatorRecipe__Button',
           !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
         color={'transparent'}
-        onClick={() => act('build', { ref: design.id, amount: quantity })}>
+        onClick={() => act('build', { ref: design.id, amount: quantity })}
+      >
         &times;{quantity}
       </div>
     </Tooltip>
@@ -107,7 +118,7 @@ const CustomPrint = (props: CustomPrintProps) => {
   const { design, available } = props;
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -115,7 +126,8 @@ const CustomPrint = (props: CustomPrintProps) => {
       className={classes([
         'FabricatorRecipe__Button',
         !canPrint && 'FabricatorRecipe__Button--disabled',
-      ])}>
+      ])}
+    >
       <Button.Input
         content={'[Max: ' + design.maxmult + ']'}
         color={'transparent'}
@@ -143,7 +155,7 @@ const Recipe = (props: RecipeProps) => {
 
   const canPrint = !Object.entries(design.cost).some(
     ([material, amount]) =>
-      !available[material] || amount > (available[material] ?? 0)
+      !available[material] || amount > (available[material] ?? 0),
   );
 
   return (
@@ -154,7 +166,8 @@ const Recipe = (props: RecipeProps) => {
             'FabricatorRecipe__Button',
             'FabricatorRecipe__Button--icon',
             !canPrint && 'FabricatorRecipe__Button--disabled',
-          ])}>
+          ])}
+        >
           <Icon name="question-circle" />
         </div>
       </Tooltip>
@@ -166,7 +179,8 @@ const Recipe = (props: RecipeProps) => {
             SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
             available={available}
           />
-        }>
+        }
+      >
         <div
           className={classes([
             'FabricatorRecipe__Title',
@@ -174,7 +188,8 @@ const Recipe = (props: RecipeProps) => {
           ])}
           onClick={() =>
             canPrint && act('build', { ref: design.id, amount: 1 })
-          }>
+          }
+        >
           <div className="FabricatorRecipe__Icon">
             <Box
               width={'32px'}

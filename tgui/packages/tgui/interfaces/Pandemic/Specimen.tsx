@@ -1,7 +1,8 @@
 import { useBackend, useLocalState } from 'tgui/backend';
 import { Button, NoticeBox, Section, Stack, Tabs } from 'tgui/components';
-import { Data } from './types';
+
 import { SymptomDisplay } from './Symptom';
+import { Data } from './types';
 import { VirusDisplay } from './Virus';
 
 export const SpecimenDisplay = (props) => {
@@ -44,7 +45,8 @@ const Buttons = (props) => {
                 <Tabs.Tab
                   selected={tab === index}
                   onClick={() => setTab(index)}
-                  key={index}>
+                  key={index}
+                >
                   {virus.name}
                 </Tabs.Tab>
               );

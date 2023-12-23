@@ -1,9 +1,16 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
-import { Button, Input, Section, Stack } from '../components';
+import {
+  KEY_A,
+  KEY_DOWN,
+  KEY_ENTER,
+  KEY_ESCAPE,
+  KEY_UP,
+  KEY_Z,
+} from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
-import { KEY_A, KEY_DOWN, KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_Z } from '../../common/keycodes';
+import { Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 type ListInputData = {
   init_value: string;
@@ -26,15 +33,15 @@ export const ListInputModal = (props) => {
   } = data;
   const [selected, setSelected] = useLocalState<number>(
     'selected',
-    items.indexOf(init_value)
+    items.indexOf(init_value),
   );
   const [searchBarVisible, setSearchBarVisible] = useLocalState<boolean>(
     'searchBarVisible',
-    items.length > 9
+    items.length > 9,
   );
   const [searchQuery, setSearchQuery] = useLocalState<string>(
     'searchQuery',
-    ''
+    '',
   );
   // User presses up or down on keyboard
   // Simulates clicking an item
@@ -96,8 +103,8 @@ export const ListInputModal = (props) => {
     setSearchBarVisible(!searchBarVisible);
     setSearchQuery('');
   };
-  const filteredItems = items.filter((item) =>
-    item?.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredItems = items.filter(
+    (item) => item?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
   // Dynamically changes the window height based on the message.
   const windowHeight =
@@ -129,7 +136,8 @@ export const ListInputModal = (props) => {
             event.preventDefault();
             act('cancel');
           }
-        }}>
+        }}
+      >
         <Section
           buttons={
             <Button
@@ -147,7 +155,8 @@ export const ListInputModal = (props) => {
           }
           className="ListInput__Section"
           fill
-          title={message}>
+          title={message}
+        >
           <Stack fill vertical>
             <Stack.Item grow>
               <ListDisplay
@@ -195,7 +204,7 @@ const ListDisplay = (props) => {
             id={index}
             key={index}
             onClick={() => onClick(index)}
-            onDblClick={(event) => {
+            onDoubleClick={(event) => {
               event.preventDefault();
               act('submit', { entry: filteredItems[selected] });
             }}
@@ -208,9 +217,10 @@ const ListDisplay = (props) => {
             }}
             selected={index === selected}
             style={{
-              'animation': 'none',
-              'transition': 'none',
-            }}>
+              animation: 'none',
+              transition: 'none',
+            }}
+          >
             {item.replace(/^\w/, (c) => c.toUpperCase())}
           </Button>
         );

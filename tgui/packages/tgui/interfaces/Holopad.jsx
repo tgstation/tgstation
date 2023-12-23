@@ -1,5 +1,14 @@
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 
 export const Holopad = (props) => {
@@ -59,7 +68,8 @@ const HolopadContent = (props) => {
             disabled={!on_network || on_cooldown}
             onClick={() => act('AIrequest')}
           />
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Communicator">
             <Button
@@ -73,7 +83,8 @@ const HolopadContent = (props) => {
             return (
               <LabeledList.Item
                 label={call.connected ? 'Current Call' : 'Incoming Call'}
-                key={call.ref}>
+                key={call.ref}
+              >
                 <Button
                   icon={call.connected ? 'phone-slash' : 'phone-alt'}
                   content={
@@ -113,7 +124,8 @@ const HolopadContent = (props) => {
             disabled={!disk || replay_mode || record_mode}
             onClick={() => act('disk_eject')}
           />
-        }>
+        }
+      >
         {(!disk && <NoticeBox>No holodisk</NoticeBox>) || (
           <LabeledList>
             <LabeledList.Item label="Disk Player">

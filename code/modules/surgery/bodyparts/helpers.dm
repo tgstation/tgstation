@@ -15,6 +15,7 @@
 /mob/living/carbon/proc/del_and_replace_bodypart(obj/item/bodypart/new_limb, special)
 	var/obj/item/bodypart/old_limb = get_bodypart(new_limb.body_zone)
 	if(old_limb)
+		old_limb.drop_limb(special = TRUE)
 		qdel(old_limb)
 	new_limb.try_attach_limb(src, special = special)
 
@@ -172,7 +173,7 @@
 /mob/living/carbon/proc/synchronize_bodytypes()
 	var/all_limb_flags = NONE
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		for(var/obj/item/organ/external/ext_organ as anything in limb.external_organs)
+		for(var/obj/item/organ/external/ext_organ in limb)
 			all_limb_flags |= ext_organ.external_bodytypes
 		all_limb_flags |= limb.bodytype
 

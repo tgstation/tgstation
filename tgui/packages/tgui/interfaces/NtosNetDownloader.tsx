@@ -1,10 +1,23 @@
-import { BooleanLike } from 'common/react';
-import { scale, toFixed } from 'common/math';
-import { useBackend, useLocalState } from '../backend';
-import { createSearch } from 'common/string';
-import { Box, Button, Stack, Icon, Input, LabeledList, NoticeBox, ProgressBar, Section, Tabs } from '../components';
-import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { scale, toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { createSearch } from 'common/string';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Icon,
+  Input,
+  LabeledList,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -49,27 +62,24 @@ export const NtosNetDownloader = (props) => {
   } = data;
   const all_categories = categories;
   const downloadpercentage = toFixed(
-    scale(downloadcompletion, 0, downloadsize) * 100
+    scale(downloadcompletion, 0, downloadsize) * 100,
   );
-  const [selectedCategory, setSelectedCategory] = useLocalState(
-    'category',
-    categories[0]
-  );
-  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [searchItem, setSearchItem] = useState('');
   const search = createSearch<ProgramData>(
     searchItem,
-    (program) => program.filedesc
+    (program) => program.filedesc,
   );
   const items = flow([
     searchItem.length > 0
       ? // If we have a query, search everything for it.
-      filter(search)
+        filter(search)
       : // Otherwise, show respective programs for the category.
-      filter((program: ProgramData) => program.category === selectedCategory),
+        filter((program: ProgramData) => program.category === selectedCategory),
     // This sorts all programs in the lists by name and compatibility
     sortBy(
       (program: ProgramData) => !program.compatible,
-      (program: ProgramData) => program.filedesc
+      (program: ProgramData) => program.filedesc,
     ),
     // This filters the list to only contain verified programs
     !emagged && filter((program: ProgramData) => program.verifiedsource === 1),
@@ -77,6 +87,7 @@ export const NtosNetDownloader = (props) => {
   const disk_free_space = downloading
     ? disk_size - Number(toFixed(disk_used + downloadcompletion))
     : disk_size - disk_used;
+
   return (
     <NtosWindow width={600} height={600}>
       <NtosWindow.Content scrollable>
@@ -110,11 +121,13 @@ export const NtosNetDownloader = (props) => {
                     tooltip={`${downloadname}.prg downloaded`}
                   />
                 ))
-              }>
+              }
+            >
               <ProgressBar
                 value={downloading ? disk_used + downloadcompletion : disk_used}
                 minValue={0}
-                maxValue={disk_size}>
+                maxValue={disk_size}
+              >
                 <Box textAlign="left">
                   {`${disk_free_space} GQ free of ${disk_size} GQ`}
                 </Box>
@@ -142,7 +155,8 @@ export const NtosNetDownloader = (props) => {
                 <Tabs.Tab
                   key={category}
                   selected={category === selectedCategory}
-                  onClick={() => setSelectedCategory(category)}>
+                  onClick={() => setSelectedCategory(category)}
+                >
                   {category}
                 </Tabs.Tab>
               ))}
@@ -183,7 +197,8 @@ const Program = (props) => {
           width="48px"
           textAlign="right"
           color="label"
-          nowrap>
+          nowrap
+        >
           {program.size} GQ
         </Stack.Item>
         <Stack.Item shrink={0} width="134px" textAlign="right">

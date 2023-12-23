@@ -1,8 +1,10 @@
-import { Window } from '../layouts';
 import { BooleanLike, classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-import { LabeledList, Section, Button, Tabs, Stack, Box } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
+import { Window } from '../layouts';
 import { AirLockMainSection } from './AirlockElectronics';
 
 type Data = {
@@ -88,13 +90,11 @@ export const InfoSection = (props) => {
 const DesignSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_design } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section fill scrollable>
       <Tabs>
@@ -103,7 +103,8 @@ const DesignSection = (props) => {
             fluid
             key={category.cat_name}
             selected={category.cat_name === shownCategory.cat_name}
-            onClick={() => setCategoryName(category.cat_name)}>
+            onClick={() => setCategoryName(category.cat_name)}
+          >
             {category.cat_name}
           </Tabs.Tab>
         ))}
@@ -112,7 +113,6 @@ const DesignSection = (props) => {
         <Button
           key={i + 1}
           fluid
-          ellipsis
           height="31px"
           color="transparent"
           selected={
@@ -124,7 +124,8 @@ const DesignSection = (props) => {
               category: shownCategory.cat_name,
               index: i + 1,
             })
-          }>
+          }
+        >
           <Box
             inline
             verticalAlign="middle"

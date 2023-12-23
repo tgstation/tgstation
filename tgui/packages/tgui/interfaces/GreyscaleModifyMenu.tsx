@@ -1,5 +1,18 @@
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Flex, Stack, Icon, Input, LabeledList, Section, Table, Divider } from '../components';
+import {
+  Box,
+  Button,
+  ColorBox,
+  Divider,
+  Flex,
+  Icon,
+  Image,
+  Input,
+  LabeledList,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 type ColorEntry = {
@@ -96,7 +109,8 @@ const ColorDisplay = (props) => {
           <LabeledList.Item
             key={`colorgroup${item.index}${item.value}`}
             label={`Color Group ${item.index}`}
-            color={item.value}>
+            color={item.value}
+          >
             <ColorBox color={item.value} />{' '}
             <Button
               icon="palette"
@@ -201,24 +215,12 @@ const PreviewDisplay = (props) => {
           </Table.Cell>
           {data.sprites?.finished ? (
             <Table.Cell>
-              <Box
-                as="img"
-                src={data.sprites.finished}
-                m={0}
-                width="75%"
-                mx="10%"
-                style={{ '-ms-interpolation-mode': 'nearest-neighbor' }}
-              />
+              <Image m={0} mx="10%" src={data.sprites.finished} width="75%" />
             </Table.Cell>
           ) : (
             <Table.Cell>
-              <Box grow>
-                <Icon
-                  name="image"
-                  ml="25%"
-                  size={5}
-                  style={{ '-ms-interpolation-mode': 'nearest-neighbor' }}
-                />
+              <Box>
+                <Icon name="image" ml="25%" size={5} />
               </Box>
             </Table.Cell>
           )}
@@ -264,14 +266,7 @@ const PreviewDisplay = (props) => {
 
 const SingleSprite = (props) => {
   const { source } = props;
-  return (
-    <Box
-      as="img"
-      src={source}
-      width="100%"
-      style={{ '-ms-interpolation-mode': 'nearest-neighbor' }}
-    />
-  );
+  return <Image src={source} />;
 };
 
 const LoadingAnimation = () => {

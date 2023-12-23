@@ -1,9 +1,18 @@
 import { classes } from 'common/react';
+
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
-import { Box, Button, Section, Stack } from '../../components';
+import { Box, Button, Image, Section, Stack } from '../../components';
+import {
+  CLEAR_GENE,
+  GENE_COLORS,
+  MUT_NORMAL,
+  NEXT_GENE,
+  PREV_GENE,
+  SUBJECT_DEAD,
+  SUBJECT_TRANSFORMING,
+} from './constants';
 import { MutationInfo } from './MutationInfo';
-import { CLEAR_GENE, GENE_COLORS, MUT_NORMAL, NEXT_GENE, PREV_GENE, SUBJECT_DEAD, SUBJECT_TRANSFORMING } from './constants';
 
 const GenomeImage = (props) => {
   const { url, selected, onClick } = props;
@@ -12,13 +21,12 @@ const GenomeImage = (props) => {
     outline = '2px solid #22aa00';
   }
   return (
-    <Box
-      as="img"
+    <Image
       src={url}
       style={{
         width: '64px',
         margin: '2px',
-        'margin-left': '4px',
+        marginLeft: '4px',
         outline,
       }}
       onClick={onClick}
@@ -53,7 +61,7 @@ const GeneCycler = (props) => {
 
         return;
       }}
-      oncontextmenu={(e) => {
+      onContextMenu={(e) => {
         e.preventDefault();
 
         act('pulse_gene', {
@@ -61,7 +69,8 @@ const GeneCycler = (props) => {
           pulseAction: PREV_GENE,
           alias: alias,
         });
-      }}>
+      }}
+    >
       {gene}
     </Button>
   );
@@ -130,7 +139,7 @@ const GenomeSequencer = (props) => {
           width="8px"
           height="2px"
           backgroundColor="label"
-        />
+        />,
       );
     }
 
@@ -153,7 +162,7 @@ export const DnaConsoleSequencer = (props) => {
   const { isJokerReady, isMonkey, jokerSeconds, subjectStatus } = data;
   const { sequencerMutation, jokerActive } = data.view;
   const mutation = mutations.find(
-    (mutation) => mutation.Alias === sequencerMutation
+    (mutation) => mutation.Alias === sequencerMutation,
   );
   return (
     <>
@@ -162,7 +171,8 @@ export const DnaConsoleSequencer = (props) => {
           <Section
             title="Sequences"
             height="214px"
-            overflowY={mutations.length > 8 && 'scroll'}>
+            overflowY={mutations.length > 8 && 'scroll'}
+          >
             {mutations.map((mutation) => (
               <GenomeImage
                 key={mutation.Alias}
@@ -235,7 +245,8 @@ export const DnaConsoleSequencer = (props) => {
                   }
                 />
               )
-            }>
+            }
+          >
             <GenomeSequencer mutation={mutation} />
           </Section>
         )}

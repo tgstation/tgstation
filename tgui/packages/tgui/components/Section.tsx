@@ -4,59 +4,26 @@
  * @license MIT
  */
 
-import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { Component, InfernoNode, RefObject, createRef } from 'inferno';
-import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
+import { forwardRef, ReactNode, RefObject, useEffect } from 'react';
 
-export type SectionProps = BoxProps & {
-  className?: string;
-  title?: InfernoNode;
-  buttons?: InfernoNode;
-  fill?: boolean;
-  fitted?: boolean;
-  scrollable?: boolean;
-  scrollableHorizontal?: boolean;
-  /** @deprecated This property no longer works, please remove it. */
-  level?: never;
-  /** @deprecated Please use `scrollable` property */
-  overflowY?: never;
-  /** @member Allows external control of scrolling. */
-  scrollableRef?: RefObject<HTMLDivElement>;
-  /** @member Callback function for the `scroll` event */
-  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
-};
+import { addScrollableNode, removeScrollableNode } from '../events';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
-export class Section extends Component<SectionProps> {
-  scrollableRef: RefObject<HTMLDivElement>;
+export type SectionProps = Partial<{
+  buttons: ReactNode;
+  fill: boolean;
+  fitted: boolean;
   scrollable: boolean;
-  onScroll?: (this: GlobalEventHandlers, ev: Event) => any;
   scrollableHorizontal: boolean;
+  title: ReactNode;
+  /** @member Callback function for the `scroll` event */
+  onScroll: ((this: GlobalEventHandlers, ev: Event) => any) | null;
+}> &
+  BoxProps;
 
-  constructor(props) {
-    super(props);
-    this.scrollableRef = props.scrollableRef || createRef();
-    this.scrollable = props.scrollable;
-    this.onScroll = props.onScroll;
-    this.scrollableHorizontal = props.scrollableHorizontal;
-  }
-
-  componentDidMount() {
-    if (this.scrollable || this.scrollableHorizontal) {
-      addScrollableNode(this.scrollableRef.current as HTMLElement);
-      if (this.onScroll && this.scrollableRef.current) {
-        this.scrollableRef.current.onscroll = this.onScroll;
-      }
-    }
-  }
-
-  componentWillUnmount() {
-    if (this.scrollable || this.scrollableHorizontal) {
-      removeScrollableNode(this.scrollableRef.current as HTMLElement);
-    }
-  }
-
-  render() {
+export const Section = forwardRef(
+  (props: SectionProps, ref: RefObject<HTMLDivElement>) => {
     const {
       className,
       title,
@@ -68,13 +35,32 @@ export class Section extends Component<SectionProps> {
       children,
       onScroll,
       ...rest
-    } = this.props;
+    } = props;
+
     const hasTitle = canRender(title) || canRender(buttons);
+
+    useEffect(() => {
+      if (!ref?.current) return;
+
+      if (scrollable || scrollableHorizontal) {
+        addScrollableNode(ref.current);
+        if (onScroll && ref.current) {
+          ref.current.onscroll = onScroll;
+        }
+      }
+      return () => {
+        if (!ref?.current) return;
+
+        if (scrollable || scrollableHorizontal) {
+          removeScrollableNode(ref.current);
+        }
+      };
+    }, []);
+
     return (
       <div
         className={classes([
           'Section',
-          Byond.IS_LTE_IE8 && 'Section--iefix',
           fill && 'Section--fill',
           fitted && 'Section--fitted',
           scrollable && 'Section--scrollable',
@@ -82,7 +68,9 @@ export class Section extends Component<SectionProps> {
           className,
           computeBoxClassName(rest),
         ])}
-        {...computeBoxProps(rest)}>
+        {...computeBoxProps(rest)}
+        ref={ref}
+      >
         {hasTitle && (
           <div className="Section__title">
             <span className="Section__titleText">{title}</span>
@@ -90,14 +78,11 @@ export class Section extends Component<SectionProps> {
           </div>
         )}
         <div className="Section__rest">
-          <div
-            ref={this.scrollableRef}
-            onScroll={onScroll}
-            className="Section__content">
+          <div onScroll={onScroll as any} className="Section__content">
             {children}
           </div>
         </div>
       </div>
     );
-  }
-}
+  },
+);

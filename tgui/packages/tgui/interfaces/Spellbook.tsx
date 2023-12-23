@@ -1,9 +1,21 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
+import { ReactNode } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dimmer, Divider, Icon, Input, NoticeBox, ProgressBar, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Divider,
+  Icon,
+  Input,
+  NoticeBox,
+  ProgressBar,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
-import { InfernoNode } from 'inferno';
 
 enum SpellCategory {
   Offensive = 'Offensive',
@@ -49,7 +61,7 @@ type Data = {
 type TabType = {
   title: string;
   blurb?: string;
-  component?: () => InfernoNode;
+  component?: () => ReactNode;
   locked?: boolean;
   scrollable?: boolean;
 };
@@ -138,7 +150,8 @@ const EnscribedName = (props) => {
         fontSize="50px"
         color="bad"
         textAlign="center"
-        fontFamily="Ink Free">
+        fontFamily="Ink Free"
+      >
         {owner}
       </Box>
       <Divider />
@@ -449,7 +462,7 @@ const SearchSpells = (props) => {
         entry.desc.toLowerCase().includes(searchStatement) ||
         // Also opting to include category
         // so you can search "rituals" to see them all at once
-        entry.cat.toLowerCase().includes(searchStatement)
+        entry.cat.toLowerCase().includes(searchStatement),
     );
   };
 
@@ -673,7 +686,8 @@ export const Spellbook = (props) => {
                         icon="arrow-rotate-left"
                         onClick={() => setSpellSearch('')}
                       />
-                    }>
+                    }
+                  >
                     <SearchSpells />
                   </Section>
                 </Stack.Item>
@@ -700,7 +714,8 @@ export const Spellbook = (props) => {
                             {tabIndex}
                           </Box>
                         </>
-                      }>
+                      }
+                    >
                       <CategoryDisplay ActiveCat={ActiveCat} />
                     </Section>
                   </Stack.Item>
@@ -725,7 +740,8 @@ export const Spellbook = (props) => {
                             {tabIndex + 1}
                           </Box>
                         </>
-                      }>
+                      }
+                    >
                       <CategoryDisplay ActiveCat={ActiveNextCat} />
                     </Section>
                   </Stack.Item>

@@ -1,4 +1,5 @@
 import { sortBy } from 'common/collections';
+
 import { useSharedState } from '../../backend';
 import { Button, Flex, Section, Tabs } from '../../components';
 
@@ -18,7 +19,7 @@ export const AccessList = (props) => {
 
   const [wildcardTab, setWildcardTab] = useSharedState(
     'wildcardSelected',
-    showBasic ? 'None' : Object.keys(wildcardSlots)[0]
+    showBasic ? 'None' : Object.keys(wildcardSlots)[0],
   );
 
   let selectedWildcard;
@@ -134,7 +135,7 @@ export const FormatWildcards = (props) => {
 
   const [wildcardTab, setWildcardTab] = useSharedState(
     'wildcardSelected',
-    showBasic ? 'None' : Object.keys(wildcardSlots)[0]
+    showBasic ? 'None' : Object.keys(wildcardSlots)[0],
   );
 
   let selectedWildcard;
@@ -151,7 +152,8 @@ export const FormatWildcards = (props) => {
       {showBasic && (
         <Tabs.Tab
           selected={selectedWildcard === 'None'}
-          onClick={() => setWildcardTab('None')}>
+          onClick={() => setWildcardTab('None')}
+        >
           Trim:
           <br />
           {basicUsed + '/' + basicMax}
@@ -171,7 +173,8 @@ export const FormatWildcards = (props) => {
           <Tabs.Tab
             key={wildcard}
             selected={selectedWildcard === wildcard}
-            onClick={() => setWildcardTab(wildcard)}>
+            onClick={() => setWildcardTab(wildcard)}
+          >
             {wildcard + ':'}
             <br />
             {wcLeftStr}
@@ -187,7 +190,7 @@ const RegionTabList = (props) => {
 
   const [selectedAccessName, setSelectedAccessName] = useSharedState(
     'accessName',
-    accesses[0]?.name
+    accesses[0]?.name,
   );
 
   return (
@@ -204,7 +207,8 @@ const RegionTabList = (props) => {
             minWidth={'100%'}
             altSelection
             selected={access.name === selectedAccessName}
-            onClick={() => setSelectedAccessName(access.name)}>
+            onClick={() => setSelectedAccessName(access.name)}
+          >
             {access.name}
           </Tabs.Tab>
         );
@@ -227,7 +231,7 @@ const RegionAccessList = (props) => {
 
   const [wildcardTab, setWildcardTab] = useSharedState(
     'wildcardSelected',
-    showBasic ? 'None' : Object.keys(wildcardSlots)[0]
+    showBasic ? 'None' : Object.keys(wildcardSlots)[0],
   );
 
   let selWildcard;
@@ -242,10 +246,10 @@ const RegionAccessList = (props) => {
   const [selectedAccessName] = useSharedState('accessName', accesses[0]?.name);
 
   const selectedAccess = accesses.find(
-    (access) => access.name === selectedAccessName
+    (access) => access.name === selectedAccessName,
   );
   const selectedAccessEntries = sortBy((entry) => entry.desc)(
-    selectedAccess?.accesses || []
+    selectedAccess?.accesses || [],
   );
 
   const allWildcards = Object.keys(wildcardSlots);

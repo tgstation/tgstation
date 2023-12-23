@@ -195,6 +195,7 @@
 #include "objectives.dm"
 #include "operating_table.dm"
 #include "orderable_items.dm"
+#include "organ_bodypart_shuffle.dm"
 #include "organ_set_bonus.dm"
 #include "organs.dm"
 #include "outfit_sanity.dm"

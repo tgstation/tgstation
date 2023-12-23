@@ -21,7 +21,8 @@ export const FilingCabinet = (props) => {
             color="black"
             backgroundColor="white"
             style={{ padding: '2px' }}
-            mb={0.5}>
+            mb={0.5}
+          >
             <Stack.Item align="center" grow={1}>
               <Box align="center">{object}</Box>
             </Stack.Item>

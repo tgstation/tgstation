@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Table } from '../components';
 import { Window } from '../layouts';
@@ -27,11 +28,13 @@ export const SmartVend = (props) => {
             !!data.isdryer && (
               <Button
                 icon={data.drying ? 'stop' : 'tint'}
-                onClick={() => act('Dry')}>
+                onClick={() => act('Dry')}
+              >
                 {data.drying ? 'Stop drying' : 'Dry'}
               </Button>
             )
-          }>
+          }
+        >
           {contents.length === 0 ? (
             <NoticeBox>Unfortunately, this {data.name} is empty.</NoticeBox>
           ) : (

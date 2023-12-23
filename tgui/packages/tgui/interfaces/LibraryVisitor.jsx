@@ -1,7 +1,17 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+
 import { useBackend } from '../backend';
-import { Box, Button, Dropdown, Input, NoticeBox, Section, Stack, Table } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 import { PageSelect } from './LibraryConsole';
 
@@ -130,7 +140,8 @@ const SearchAndDisplay = (props) => {
             textAlign="right"
             onClick={() => act('search')}
             color={params_changed ? 'good' : ''}
-            icon="book">
+            icon="book"
+          >
             Search
           </Button>
           <Button
@@ -138,7 +149,8 @@ const SearchAndDisplay = (props) => {
             textAlign="right"
             onClick={() => act('clear_data')}
             color="bad"
-            icon="fire">
+            icon="fire"
+          >
             Reset Search
           </Button>
         </Stack.Item>

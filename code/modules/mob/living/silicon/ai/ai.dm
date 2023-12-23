@@ -106,7 +106,7 @@
 
 	var/atom/movable/screen/ai/modpc/interfaceButton
 	///whether its mmi is a posibrain or regular mmi when going ai mob to ai core structure
-	var/posibrain_inside = FALSE
+	var/posibrain_inside = TRUE
 	///whether its cover is opened, so you can wirecut it for deconstruction
 	var/opened = FALSE
 	///whether AI is anchored or not, used for checks
@@ -443,10 +443,9 @@
 	disconnect_shell()
 	ShutOffDoomsdayDevice()
 	var/obj/structure/ai_core/deactivated/ai_core = new(get_turf(src), /* skip_mmi_creation = */ TRUE)
-	if(!make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
-		return FALSE
-	qdel(src)
-	return TRUE
+	if(make_mmi_drop_and_transfer(ai_core.core_mmi, the_core = ai_core))
+		qdel(src)
+	return ai_core
 
 /mob/living/silicon/ai/proc/make_mmi_drop_and_transfer(obj/item/mmi/the_mmi, the_core)
 	var/mmi_type
@@ -606,7 +605,7 @@
 	var/summon_success
 	if(isbasicbot(bot))
 		var/mob/living/basic/bot/basic_bot = bot
-		summon_success = basic_bot.summon_bot(src, grant_all_access = TRUE)
+		summon_success = basic_bot.summon_bot(src, waypoint, grant_all_access = TRUE)
 	else
 		var/mob/living/simple_animal/bot/simple_bot = bot
 		call_bot_cooldown = world.time + CALL_BOT_COOLDOWN
@@ -1044,10 +1043,10 @@
 	apc.malfhack = TRUE
 	apc.locked = TRUE
 	apc.coverlocked = TRUE
-
+	apc.flicker_hacked_icon()
+	apc.set_hacked_hud()
 	playsound(get_turf(src), 'sound/machines/ding.ogg', 50, TRUE, ignore_walls = FALSE)
 	to_chat(src, "Hack complete. [apc] is now under your exclusive control.")
-	apc.update_appearance()
 
 /mob/living/silicon/ai/verb/deploy_to_shell(mob/living/silicon/robot/target)
 	set category = "AI Commands"

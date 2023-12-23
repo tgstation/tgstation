@@ -1,6 +1,14 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Box, Button, LabeledList, NoticeBox, Section, Stack } from '../components';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -93,7 +101,8 @@ const WireMap = (props) => {
                 }
               />
             </>
-          }>
+          }
+        >
           {!!wire.wire && <i>({wire.wire})</i>}
         </LabeledList.Item>
       ))}

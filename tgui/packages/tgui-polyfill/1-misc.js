@@ -8,11 +8,6 @@
 (function () {
   'use strict';
 
-  // Inferno needs Int32Array, and it is not covered by core-js.
-  if (!window.Int32Array) {
-    window.Int32Array = Array;
-  }
-
   // ie11 polyfills
   !(function () {
     // append

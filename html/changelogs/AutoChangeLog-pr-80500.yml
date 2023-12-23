@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "the boozeomat ui will stop duplicating space beer bottles"
+  - refactor: "refactored vending machine backend to have unique keys for their data structures. should fix bugs related to items that happen to have the same name."
