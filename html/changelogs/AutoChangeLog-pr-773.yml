@@ -1,0 +1,4 @@
+author: "MichiRecRoom"
+delete-after: True
+changes:
+  - spellcheck: "Two store tabs had errant right parenthesis, which are now removed."
