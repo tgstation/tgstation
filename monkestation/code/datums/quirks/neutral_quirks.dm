@@ -92,7 +92,7 @@
 	desc = "You arrive with a strange skillchip that teaches you how to reflexively call out mining-related entities you point at."
 	mob_trait = TRAIT_MINING_CALLOUTS
 	value = 0
-	icon = "person_digging"
+	icon = "bullhorn"
 	quirk_flags = QUIRK_HIDE_FROM_SCAN
 
 /datum/quirk/drg_callout/add(client/client_source)
