@@ -191,7 +191,7 @@
 	colour = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/0,-130,0,0) // Matrix colors
 
 /datum/client_colour/monochrome
-	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	colour = COLOR_MATRIX_GRAYSCALE
 	priority = PRIORITY_HIGH //we can't see colors anyway!
 	override = TRUE
 	fade_in = 20
