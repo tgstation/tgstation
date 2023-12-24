@@ -25,7 +25,7 @@ type Props = { options: DropdownOption[] } & Partial<{
   iconRotation: number;
   iconSpin: boolean;
   menuWidth: string;
-  nochevron: boolean;
+  noChevron: boolean;
   onClick: (event) => void;
   onSelected: (selected: any) => void;
   over: boolean;
