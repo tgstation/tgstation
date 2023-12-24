@@ -69,9 +69,11 @@
 	if (!can_see(parent, thrown_thing, length = sense_radius))
 		return
 
-	try_activate_command(throwing_datum.thrower)
+	var/mob/thrower = throwingdatum?.get_thrower()
+	try_activate_command(thrower)
 	set_command_target(parent, thrown_thing)
-	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, throwing_datum.thrower)
+	var/mob/thrower = throwingdatum?.get_thrower()
+	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, thrower)
 
 // Don't try and fetch turfs or anchored objects if someone points at them
 /datum/pet_command/point_targeting/fetch/look_for_target(mob/living/pointing_friend, obj/item/pointed_atom)

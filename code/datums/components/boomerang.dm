@@ -39,10 +39,11 @@
  */
 /datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/thrown_thing, spin)
 	SIGNAL_HANDLER
-	if(thrower_easy_catch_enabled && thrown_thing?.thrower)
-		if(iscarbon(thrown_thing.thrower))
-			var/mob/living/carbon/Carbon = thrown_thing.thrower
-			Carbon.throw_mode_on(THROW_MODE_TOGGLE)
+	var/mob/thrower = thrown_thing?.get_thrower()
+	if(thrower_easy_catch_enabled && thrower)
+		if(iscarbon(thrower))
+			var/mob/living/carbon/carbon_mob = thrower
+			carbon_mob.throw_mode_on(THROW_MODE_TOGGLE)
 	return
 
 /**
@@ -80,7 +81,8 @@
 	if(thrown_by)
 		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwing_datum.speed, null, TRUE), 1)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
-	true_parent.visible_message(span_danger("[true_parent] is flying back at [throwing_datum.thrower]!"), \
+	var/mob/thrower = throwingdatum?.get_thrower()
+	true_parent.visible_message(span_danger("[true_parent] is flying back at [thrower]!"), \
 						span_danger("You see [true_parent] fly back at you!"), \
 						span_hear("You hear an aerodynamic woosh!"))
 
