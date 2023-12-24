@@ -1,0 +1,5 @@
+author: "MrMelbert, Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Alien nests, and some other stuff, can be physically attacked again."
+  - balance: "x-mas trees (the ones with presents), are indestructibles. Truly protected by a yuletide spirit."
