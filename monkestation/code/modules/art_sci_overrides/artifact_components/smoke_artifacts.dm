@@ -29,11 +29,9 @@
 		chemicals += pick(valid_chemicals)
 
 /datum/component/artifact/smoke/effect_activate(silent)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), 5 SECONDS)
-
-/datum/component/artifact/smoke/effect_process()
 	for(var/chemical in chemicals)
 		do_chem_smoke(smoke_range, holder = holder, location = get_turf(holder), reagent_type = chemical, reagent_volume = per_chemical_amount, log = TRUE)
+	artifact_deactivate()
 
 /datum/component/artifact/smoke/toxin
 	associated_object = /obj/structure/artifact/smoke/toxin
