@@ -366,6 +366,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
+
+	var/start_usage = world.tick_usage
+
 	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
 	I = ModifyInserted(I)
 	var/size_id = "[I.Width()]x[I.Height()]"
@@ -392,6 +395,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+	SSblackbox.record_feedback("tally", "spritesheet_queued_insert_time", TICK_USAGE_TO_MS(start_usage), name)
 
 /**
  * A simple proc handing the Icon for you to modify before it gets turned into an asset.

@@ -1,5 +1,0 @@
-author: "Diamond-74"
-delete-after: True
-changes:
-  - bugfix: "Injecting yourself twice with a luxury medipen in pressure doesn't runtime and mechs with a cell with no max charge won't runtime."
-  - refactor: "Gives hyposprays a var to check if they're fully used up rather than setting total_volume to 0."
