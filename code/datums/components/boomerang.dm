@@ -37,7 +37,7 @@
  * * thrown_thing: The thrownthing datum from the parent object's latest throw. Updates thrown_boomerang.
  * * spin: Carry over from POST_THROW, the speed of rotation on the boomerang when thrown.
  */
-/datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/throwningdatum, spin)
+/datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/throwingdatum, spin)
 	SIGNAL_HANDLER
 	var/mob/thrower = throwingdatum?.get_thrower()
 	if(thrower_easy_catch_enabled && thrower)
@@ -79,7 +79,7 @@
 /datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwingdatum, obj/item/true_parent)
 	var/mob/thrown_by = true_parent.thrownby?.resolve()
 	if(thrown_by)
-		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwing_datum.speed, null, TRUE), 1)
+		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwingdatum.speed, null, TRUE), 1)
 		COOLDOWN_START(src, last_boomerang_throw, BOOMERANG_REBOUND_INTERVAL)
 	var/mob/thrower = throwingdatum?.get_thrower()
 	true_parent.visible_message(span_danger("[true_parent] is flying back at [thrower]!"), \
