@@ -25,8 +25,11 @@
 	smoke_range = rand(1, 5)
 	potency += per_chemical_amount * 3 + chemicals_chosen * 3 + smoke_range * 2
 
-	for(var/i = 1 to chemicals)
+	for(var/i = 1 to chemicals_chosen)
 		chemicals += pick(valid_chemicals)
+
+/datum/component/artifact/smoke/effect_activate(silent)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/component/artifact, artifact_deactivate)), 5 SECONDS)
 
 /datum/component/artifact/smoke/effect_process()
 	for(var/chemical in chemicals)
