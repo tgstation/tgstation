@@ -90,7 +90,7 @@ const TransferSection = (props) => {
   return (
     <Stack>
       <Stack.Item>
-        <Section vertical title="Transfer Money">
+        <Section title="Transfer Money">
           <Box>
             <Tooltip
               content="Enter the pay token of the account you want to transfer credits to."
