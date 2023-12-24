@@ -58,7 +58,7 @@ SUBSYSTEM_DEF(throwing)
 	///Turfs to travel per tick
 	var/speed
 	///If a mob is the one who has thrown the object, then it's moved here. This can be null and must be null checked before trying to use it.
-	var/mob/thrower
+	var/datum/weakref/thrower
 	///A variable that helps in describing objects thrown at an angle, if it should be moved diagonally first or last.
 	var/diagonals_first
 	///Set to TRUE if the throw is exclusively diagonal (45 Degree angle throws for example)
@@ -101,9 +101,8 @@ SUBSYSTEM_DEF(throwing)
 	src.init_dir = init_dir
 	src.maxrange = maxrange
 	src.speed = speed
-	src.thrower = thrower
 	if(thrower)
-		RegisterSignal(thrower, COMSIG_QDELETING, PROC_REF(on_thrower_qdel))
+		src.thrower = WEAKREF(thrower)
 	src.diagonals_first = diagonals_first
 	src.force = force
 	src.gentle = gentle
@@ -126,12 +125,6 @@ SUBSYSTEM_DEF(throwing)
 
 	qdel(src)
 
-///Defines the datum behavior on the thrower's qdeletion event.
-/datum/thrownthing/proc/on_thrower_qdel(atom/movable/source, force)
-	SIGNAL_HANDLER
-
-	thrower = null
-
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
 	if (!isturf(AM.loc) || !AM.throwing)
@@ -143,10 +136,13 @@ SUBSYSTEM_DEF(throwing)
 		return
 
 	var/atom/movable/actual_target = initial_target?.resolve()
+	var/mob/mob_thrower = thrower?.resolve()
+	if(isnull(mob_thrower))
+		thrower = null
 
 	if(dist_travelled) //to catch sneaky things moving on our tile while we slept
 		for(var/atom/movable/obstacle as anything in get_turf(thrownthing))
-			if (obstacle == thrownthing || (obstacle == thrower && !ismob(thrownthing)))
+			if (obstacle == thrownthing || (obstacle == mob_thrower && !ismob(thrownthing)))
 				continue
 			if(ismob(obstacle) && thrownthing.pass_flags & PASSMOB && (obstacle != actual_target))
 				continue
