@@ -1,5 +1,0 @@
-author: "jlsnow301"
-delete-after: True
-changes:
-  - bugfix: "Camera console search should update automatically"
-  - bugfix: "Autolathe search should now properly show designs"

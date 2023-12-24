@@ -1,5 +1,0 @@
-author: "Y0SH1M4S73R"
-delete-after: True
-changes:
-  - qol: "MOD wearers and internal AIs can pin the individual actions in a MOD circuit module in a similar way to how they can pin modules. Circuit module actions can be pinned from the configuration menu of the circuit"
-  - refactor: "The MOD action and BCI action components have been merged into one component - the Equipment Action component."
