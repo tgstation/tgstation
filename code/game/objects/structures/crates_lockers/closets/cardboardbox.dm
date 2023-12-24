@@ -31,6 +31,10 @@
 	/// If the speed multiplier should be applied to mobs inside this box
 	var/move_delay = FALSE
 
+/obj/structure/closet/cardboard/Destroy()
+	alerted = null
+	return ..()
+
 /obj/structure/closet/cardboard/relaymove(mob/living/user, direction)
 	if(opened || move_delay || user.incapacitated() || !isturf(loc) || !has_gravity(loc))
 		return
@@ -50,15 +54,19 @@
 	if(!.)
 		return FALSE
 
-	alerted = null
+	clear_alerted()
 	var/do_alert = (COOLDOWN_FINISHED(src, alert_cooldown) && (locate(/mob/living) in contents))
 	if(!do_alert)
-
 		return TRUE
+
 	// Cache the list before we open the box.
-	alerted = viewers(7, src)
-	// There are no mobs to alert? clear the list & prevent further action after opening the box
-	if(!(locate(/mob/living) in alerted))
+	alerted = list()
+	for(var/mob/living/alerted_mob in viewers(7, src))
+		alerted += alerted_mob
+		RegisterSignal(alerted_mob, COMSIG_QDELETING, PROC_REF(remove_from_alerted)) // so we don't get hard dels
+
+	// There are no mobs to alert? null the list & prevent further action after opening the box
+	if(!length(alerted))
 		alerted = null
 
 	return TRUE
@@ -78,6 +86,21 @@
 		alerted_mob.do_alert_animation()
 
 	playsound(loc, 'sound/machines/chime.ogg', 50, FALSE, -5)
+
+/// Clears and nulls the alerted list and unregisters signals from the mobs therein
+/obj/structure/closet/cardboard/proc/clear_alerted()
+	if(length(alerted))
+		for(var/mob/living/alerted_mob as anything in alerted)
+			UnregisterSignal(alerted_mob, COMSIG_QDELETING)
+
+	alerted = null
+
+/// Removes the mob from the alerted list
+/obj/structure/closet/cardboard/proc/remove_from_alerted(mob/alerted_mob)
+	SIGNAL_HANDLER
+
+	alerted -= alerted_mob
+	UnregisterSignal(alerted_mob, COMSIG_QDELETING)
 
 /// Does the MGS ! animation
 /atom/proc/do_alert_animation()
