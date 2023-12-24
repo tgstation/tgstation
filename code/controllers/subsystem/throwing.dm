@@ -102,6 +102,8 @@ SUBSYSTEM_DEF(throwing)
 	src.maxrange = maxrange
 	src.speed = speed
 	src.thrower = thrower
+	if(thrower)
+		RegisterSignal(thrower, COMSIG_QDELETING, PROC_REF(on_thrower_qdel))
 	src.diagonals_first = diagonals_first
 	src.force = force
 	src.gentle = gentle
@@ -123,6 +125,12 @@ SUBSYSTEM_DEF(throwing)
 	SIGNAL_HANDLER
 
 	qdel(src)
+
+///Defines the datum behavior on the thrower's qdeletion event.
+/datum/thrownthing/proc/on_thrower_qdel(atom/movable/source, force)
+	SIGNAL_HANDLER
+
+	thrower = null
 
 /datum/thrownthing/proc/tick()
 	var/atom/movable/AM = thrownthing
