@@ -643,7 +643,7 @@
 		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
-		if((reagent_volume <= 0.05 && !is_reacting) || reagent_volume <= CHEMICAL_QUANTISATION_LEVEL)
+		if(!reagent_volume || (reagent_volume <= 0.05 && !is_reacting))
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
@@ -663,14 +663,14 @@
 
 		//compute volume & ph like we would normally
 		. += reagent_volume
-		total_ph += (reagent.ph * reagent_volume)
+		total_ph += reagent.ph * reagent_volume
 
 		//reasign rounded value
 		reagent.volume = reagent_volume
 
 	//assign the final values, rounding up can sometimes cause overflow so bring it down
 	total_volume = min(round(., CHEMICAL_VOLUME_ROUNDING), maximum_volume)
-	if(!.)
+	if(!total_volume)
 		ph = CHEMICAL_NORMAL_PH
 	else
 		ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)

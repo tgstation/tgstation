@@ -65,6 +65,7 @@ type StockItem = {
 };
 
 type CustomInput = {
+  path: string;
   name: string;
   price: number;
   img: string;
@@ -217,12 +218,12 @@ const ProductDisplay = (props: {
               return true;
             }
           })
-          .map((product) => (
+          .map((product, index) => (
             <VendingRow
-              key={product.name}
+              key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[product.name]}
+              productStock={stock[index]}
             />
           ))}
       </Table>
@@ -350,7 +351,7 @@ const ProductButton = (props) => {
       disabled={disabled}
       onClick={() =>
         act('dispense', {
-          item: product.name,
+          item: product.path,
         })
       }
     >

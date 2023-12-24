@@ -47,11 +47,6 @@
 	/// Completing these experiments will have a refund.
 	var/list/datum/experiment/skipped_experiment_types = list()
 
-	/// If science researches something without completing its discount experiments,
-	/// they have the option to complete them later for a refund
-	/// This ratio determines how much of the original discount is refunded
-	var/skipped_experiment_refund_ratio = 0.66
-
 	///All RD consoles connected to this individual techweb.
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	///All research servers connected to this individual techweb.
@@ -353,7 +348,7 @@
 	for(var/missed_experiment in node.discount_experiments)
 		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
 			continue
-		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment] * skipped_experiment_refund_ratio
+		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment]
 
 	// Gain the experiments from the new node
 	for(var/id in node.unlock_ids)

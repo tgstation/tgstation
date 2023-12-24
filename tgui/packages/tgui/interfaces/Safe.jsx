@@ -2,7 +2,7 @@ import { Fragment } from 'react';
 
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Section, Image } from '../components';
+import { Box, Button, Icon, Image, Section } from '../components';
 import { Window } from '../layouts';
 
 export const Safe = (properties) => {

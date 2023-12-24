@@ -129,10 +129,9 @@ const textWidth = (text, font, fontsize) => {
   // default font height is 12 in tgui
   font = fontsize + 'x ' + font;
   const c = document.createElement('canvas');
-  const ctx = c.getContext('2d') as any;
+  const ctx = c.getContext('2d') as CanvasRenderingContext2D;
   ctx.font = font;
-  const width = ctx.measureText(text).width;
-  return width;
+  return ctx.measureText(text).width;
 };
 
 const planeToPosition = function (plane: Plane, index, is_incoming): Position {
@@ -673,6 +672,13 @@ const PlaneWindow = (props) => {
   const doc_html = {
     __html: workingPlane.documentation,
   };
+
+  const setAlpha = (event, value) =>
+    act('set_alpha', {
+      edit: workingPlane.our_ref,
+      alpha: value,
+    });
+
   return (
     <Section
       top="27px"
@@ -776,18 +782,8 @@ const PlaneWindow = (props) => {
           maxValue={255}
           step={1}
           stepPixelSize={1.9}
-          onDrag={(e, value) =>
-            act('set_alpha', {
-              edit: workingPlane.our_ref,
-              alpha: value,
-            })
-          }
-          onChange={(e, value) =>
-            act('set_alpha', {
-              edit: workingPlane.our_ref,
-              alpha: value,
-            })
-          }
+          onDrag={setAlpha}
+          onChange={setAlpha}
         >
           Alpha ({workingPlane.alpha})
         </Slider>

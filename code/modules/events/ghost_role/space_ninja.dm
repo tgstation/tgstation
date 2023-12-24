@@ -19,7 +19,7 @@
 		return MAP_ERROR
 
 	//selecting a candidate player
-	var/list/candidates = get_candidates(ROLE_NINJA, ROLE_NINJA)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_NINJA, role = ROLE_NINJA, pic_source = /obj/item/energy_katana)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 
