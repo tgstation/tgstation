@@ -57,7 +57,7 @@
 	RegisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED, PROC_REF(listen_throw_land))
 
 /// A throw we were listening to has finished, see if it's in range for us to try grabbing it
-/datum/pet_command/point_targeting/fetch/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwing_datum)
+/datum/pet_command/point_targeting/fetch/proc/listen_throw_land(obj/item/thrown_thing, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 
 	UnregisterSignal(thrown_thing, COMSIG_MOVABLE_THROW_LANDED)

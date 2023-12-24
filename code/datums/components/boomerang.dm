@@ -37,9 +37,9 @@
  * * thrown_thing: The thrownthing datum from the parent object's latest throw. Updates thrown_boomerang.
  * * spin: Carry over from POST_THROW, the speed of rotation on the boomerang when thrown.
  */
-/datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/thrown_thing, spin)
+/datum/component/boomerang/proc/prepare_throw(datum/source, datum/thrownthing/throwningdatum, spin)
 	SIGNAL_HANDLER
-	var/mob/thrower = thrown_thing?.get_thrower()
+	var/mob/thrower = throwingdatum?.get_thrower()
 	if(thrower_easy_catch_enabled && thrower)
 		if(iscarbon(thrower))
 			var/mob/living/carbon/carbon_mob = thrower
@@ -64,19 +64,19 @@
  * * source: Datum src from original signal call.
  * * throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
  */
-/datum/component/boomerang/proc/return_missed_throw(datum/source, datum/thrownthing/throwing_datum)
+/datum/component/boomerang/proc/return_missed_throw(datum/source, datum/thrownthing/throwingdatum)
 	SIGNAL_HANDLER
 	if(!COOLDOWN_FINISHED(src, last_boomerang_throw))
 		return
 	var/obj/item/true_parent = parent
-	aerodynamic_swing(throwing_datum, true_parent)
+	aerodynamic_swing(throwingdatum, true_parent)
 
 /**
  * Proc that triggers when the thrown boomerang has been fully thrown, rethrowing the boomerang back to the thrower, and producing visible feedback.
  * * throwing_datum: The thrownthing datum that originally impacted the object, that we use to build the new throwing datum for the rebound.
  * * hit_atom: The atom that has been hit by the boomerang'd object.
  */
-/datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwing_datum, obj/item/true_parent)
+/datum/component/boomerang/proc/aerodynamic_swing(datum/thrownthing/throwingdatum, obj/item/true_parent)
 	var/mob/thrown_by = true_parent.thrownby?.resolve()
 	if(thrown_by)
 		addtimer(CALLBACK(true_parent, TYPE_PROC_REF(/atom/movable, throw_at), thrown_by, boomerang_throw_range, throwing_datum.speed, null, TRUE), 1)
