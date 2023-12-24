@@ -60,6 +60,8 @@
 				/obj/item/clothing/under/costume/gi = 1,
 				/obj/item/clothing/neck/worldchampioncape = 1,
 				/obj/item/clothing/under/costume/worldchampiongi = 1,
+				/obj/item/clothing/head/milkmanhat = 2,
+				/obj/item/clothing/under/costume/milkman = 2,
 			),
 		),
 		list(
