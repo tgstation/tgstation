@@ -22,7 +22,6 @@
 	var/command_feedback
 	/// How close a mob needs to be to a target to respond to a command
 	var/sense_radius = 7
-	var/last_activate
 
 /datum/pet_command/New(mob/living/parent)
 	. = ..()
