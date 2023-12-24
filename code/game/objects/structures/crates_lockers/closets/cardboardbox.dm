@@ -55,7 +55,7 @@
 	if(!do_alert)
 		return TRUE
 
-	alerted.Cut()
+	alerted.Cut() // just in case we runtimed and the list didn't get cleared in after_open
 	// Cache the list before we open the box.
 	for(var/mob/living/alerted_mob in viewers(7, src))
 		alerted += alerted_mob
