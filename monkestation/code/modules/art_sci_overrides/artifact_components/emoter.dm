@@ -32,7 +32,6 @@
 	for(var/i = 1 to rand(3,4))
 		picked_emotes += pick(all_emotes)
 
-	shield_iconstate = pick("shieldsparkles","empdisable","shield2","shield-old","shield-red","shield-green","shield-yellow")
 	activation_sound = pick('sound/mecha/mech_shield_drop.ogg')
 	deactivation_sound = pick('sound/mecha/mech_shield_raise.ogg','sound/magic/forcewall.ogg')
 	shield_time = rand(10,40) SECONDS
