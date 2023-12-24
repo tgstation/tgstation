@@ -110,7 +110,7 @@
 	weight = 1
 	show_in_report = TRUE
 	report_message = "Please be nice to him."
-	blacklist = list(/datum/station_trait/announcement_medbot, /datum/station_trait/birthday, /datum/station_trait/announcement_duke)
+	blacklist = list(/datum/station_trait/announcement_medbot, /datum/station_trait/birthday, /datum/station_trait/announcement_duke, /datum/station_trait/announcement_dagoth)
 
 /datum/station_trait/announcement_intern/New()
 	. = ..()
@@ -122,7 +122,7 @@
 	weight = 1
 	show_in_report = TRUE
 	report_message = "Our announcement system is under scheduled maintanance at the moment. Thankfully, we have a backup."
-	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/birthday, /datum/station_trait/announcement_duke)
+	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/birthday, /datum/station_trait/announcement_duke, /datum/station_trait/announcement_dagoth)
 
 /datum/station_trait/announcement_medbot/New()
 	. = ..()
@@ -202,7 +202,7 @@
 	show_in_report = TRUE
 	report_message = "We here at Nanotrasen would all like to wish Employee Name a very happy birthday"
 	trait_to_give = STATION_TRAIT_BIRTHDAY
-	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot, /datum/station_trait/announcement_duke) //Overiding the annoucer hides the birthday person in the annoucement message.
+	blacklist = list(/datum/station_trait/announcement_intern, /datum/station_trait/announcement_medbot, /datum/station_trait/announcement_duke, /datum/station_trait/announcement_dagoth) //Overiding the annoucer hides the birthday person in the annoucement message.
 	///Variable that stores a reference to the person selected to have their birthday celebrated.
 	var/mob/living/carbon/human/birthday_person
 	///Variable that holds the real name of the birthday person once selected, just incase the birthday person's real_name changes.

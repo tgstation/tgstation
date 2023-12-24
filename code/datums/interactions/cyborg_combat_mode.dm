@@ -16,4 +16,4 @@
 		if (4)
 			combat_mode = !combat_mode
 	update_istate(owner.mob, null)
-	UI.update_icon_state()
+	UI?.update_icon_state()
