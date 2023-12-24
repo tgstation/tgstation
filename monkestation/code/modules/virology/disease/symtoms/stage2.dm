@@ -215,12 +215,12 @@
 		to_chat(mob, span_notice("You are glowing!"))
 		flavortext = 1
 	mob.set_light(multiplier, multiplier, multiplier/3, l_color = color)
-*/
 
 /datum/symptom/lantern/deactivate(mob/living/mob)
 	mob.set_light(0, 0, 0, l_color = rgb(0,0,0))
 	to_chat(mob, span_notice("You don't feel as bright."))
 	flavortext = 0
+*/
 
 /datum/symptom/vitreous
 	name = "Vitreous resonance"
