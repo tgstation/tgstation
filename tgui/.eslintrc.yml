@@ -11,7 +11,7 @@ env:
   browser: true
   node: true
 plugins:
-  - radar
+  - sonarjs
   - react
   - unused-imports
   - simple-import-sort

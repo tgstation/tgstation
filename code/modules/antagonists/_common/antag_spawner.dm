@@ -55,7 +55,7 @@
 /obj/item/antag_spawner/contract/proc/poll_for_student(mob/living/carbon/human/teacher, apprentice_school)
 	balloon_alert(teacher, "contacting apprentice...")
 	polling = TRUE
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as a wizard's [apprentice_school] apprentice?", ROLE_WIZARD, ROLE_WIZARD, 15 SECONDS, src)
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a wizard's [apprentice_school] apprentice?", check_jobban = ROLE_WIZARD, role = ROLE_WIZARD, poll_time = 15 SECONDS, target_mob = src, pic_source = teacher, role_name_text = "wizard apprentice")
 	polling = FALSE
 	if(!LAZYLEN(candidates))
 		to_chat(teacher, span_warning("Unable to reach your apprentice! You can either attack the spellbook with the contract to refund your points, or wait and try again later."))
@@ -134,7 +134,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/list/nuke_candidates = poll_ghost_candidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", ROLE_OPERATIVE, ROLE_OPERATIVE, 150, POLL_IGNORE_SYNDICATE)
+	var/list/nuke_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a syndicate [borg_to_spawn ? "[lowertext(borg_to_spawn)] cyborg":"operative"]?", check_jobban = ROLE_OPERATIVE, role = ROLE_OPERATIVE, poll_time = 15 SECONDS, ignore_category = POLL_IGNORE_SYNDICATE, pic_source = src, role_name_text = "syndicate [borg_to_spawn ? "[borg_to_spawn] cyborg":"operative"]")
 	if(LAZYLEN(nuke_candidates))
 		if(QDELETED(src) || !check_usability(user))
 			return
@@ -252,7 +252,7 @@
 		return
 	if(used)
 		return
-	var/list/candidates = poll_candidates_for_mob("Do you want to play as a [initial(demon_type.name)]?", ROLE_ALIEN, ROLE_ALIEN, 5 SECONDS, src)
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a [initial(demon_type.name)]?", check_jobban = ROLE_ALIEN, role = ROLE_ALIEN, poll_time = 5 SECONDS, target_mob = src, pic_source = src, role_name_text = initial(demon_type.name))
 	if(LAZYLEN(candidates))
 		if(used || QDELETED(src))
 			return
@@ -332,7 +332,7 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/list/baddie_candidates = poll_ghost_candidates("Do you want to play as a [role_to_play]?", poll_role_check, poll_role_check, 10 SECONDS, poll_ignore_category)
+	var/list/baddie_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a [role_to_play]?", check_jobban = poll_role_check, role = poll_role_check, poll_time = 10 SECONDS, ignore_category = poll_ignore_category, pic_source = src, role_name_text = role_to_play)
 	if(!LAZYLEN(baddie_candidates))
 		to_chat(user, span_warning(fail_text))
 		return

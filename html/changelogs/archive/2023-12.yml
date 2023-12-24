@@ -680,3 +680,84 @@
   - bugfix: Examine text on disconnected players is no longer accidentally subtle
   vinylspiders:
   - bugfix: fixes some dropdowns not displaying the right text after selecting something
+2023-12-22:
+  LT3:
+  - qol: Roundstart intercept report and security level announcements are combined
+      into a single announcement
+  Melbert:
+  - bugfix: Crewmembers immune to viruses won't be picked by the fake virus event.
+  - qol: When you place a beaker in a chem-master, you no longer thwack it.
+  Profakos:
+  - qol: The bitrunning equipment vending machine now has a unique description for
+      each of the bitrunning disks
+  SSensum:
+  - rscadd: 'Added new quirk: Cyborg Lover!'
+  jlsnow301:
+  - bugfix: Name input in character setup should work properly now.
+  - bugfix: Many inputs should feel more responsive.
+  lizardqueenlexi:
+  - bugfix: Feature manipulation surgery will now properly update the patient's appearance.
+  - refactor: The tail portion of lizard spines will no longer draw on people who
+      do not have a tail.
+2023-12-23:
+  13spacemen:
+  - balance: Doing experiments AFTER their tech is researched now gives full 100%
+      points instead of 66%.
+  - refactor: Ghost roles now offer ghosts a clickable poll button. Ghosts can select
+      a role, deselect it, alt-click it for "Never For This Round", can cancel "Never",
+      can see the countdown, and can see how many other people are signed up for the
+      role poll.
+  Iamgoofball:
+  - bugfix: Fixes Holy Water giving you more blood and making you less drunk than
+      water normally does.
+  Jacquerel:
+  - rscadd: Nightmares retain their ability to dodge projectiles for a brief period
+      after leaving a dark area, meaning it is now possible to dodge lasers.
+  - qol: Nightmares and Shadow People now receive a screen alert when they are in
+      a sufficiently dark location that their abilities are active.
+  Melbert:
+  - bugfix: Gibbing a bot will no longer spawn bloody gibs.
+  Rhials:
+  - qol: Wizard apprentices now spawn on the same tile as the contract that summoned
+      them.
+  SyncIt21:
+  - bugfix: Reactions whose temps/ph values fall way below their optimal values no
+      longer restart & prevents infinite loops. Made reaction code slightly faster
+  xXPawnStarrXx:
+  - rscadd: Added new GaGs santahats.
+  zeroisthebiggay:
+  - bugfix: '''A whole bunch of spiders in a SWAT suit'' to ''A whole bunch of spiders
+      in a MODsuit'''
+2023-12-24:
+  BurgerBB:
+  - balance: Miasma is now filtered through gas mask filters, at medium strength.
+  Deadgebert:
+  - qol: Head of Security beret added to their garmet bag
+  - qol: Head of Security bowman added to their locker
+  Diamond-74:
+  - bugfix: Injecting yourself twice with a luxury medipen in pressure doesn't runtime
+      and mechs with a cell with no max charge won't runtime.
+  - refactor: Gives hyposprays a var to check if they're fully used up rather than
+      setting total_volume to 0.
+  KannaLisvern:
+  - qol: Removed Bluespace Crystals and Diamonds from medical emergency bed's recipe.
+  Rex9001:
+  - balance: Ai's using the mech domination ability can now eject from the mech
+  Rhials:
+  - qol: Obsessed crewmembers are now displayed in the orbit panel.
+  - qol: The Paradox Clone orbit menu tab is now white. Neat!
+  SSensum:
+  - rscadd: Added weapon recharger boards to designs available to print on sec techfab.
+  Y0SH1M4S73R:
+  - qol: MOD wearers and internal AIs can pin the individual actions in a MOD circuit
+      module in a similar way to how they can pin modules. Circuit module actions
+      can be pinned from the configuration menu of the circuit
+  - refactor: The MOD action and BCI action components have been merged into one component
+      - the Equipment Action component.
+  jlsnow301:
+  - bugfix: Camera console search should update automatically
+  - bugfix: Autolathe search should now properly show designs
+  vinylspiders:
+  - bugfix: the boozeomat ui will stop duplicating space beer bottles
+  - refactor: refactored vending machine backend to have unique keys for their data
+      structures. should fix bugs related to items that happen to have the same name.
