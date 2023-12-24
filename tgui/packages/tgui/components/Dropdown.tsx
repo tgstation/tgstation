@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import React, { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { ReactNode, useState } from 'react';
 import { Popover } from 'react-tiny-popover';
 
@@ -48,15 +48,15 @@ export function Dropdown(props: Props) {
     icon,
     iconRotation,
     iconSpin,
-    menuWidth = '10rem',
+    menuWidth = '15rem',
     noChevron,
     onClick,
+    onSelected,
     options = [],
   } = props;
 
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState(props.selected);
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   function getSelectedIndex() {
     return options.findIndex((option) => {
@@ -87,19 +87,18 @@ export function Dropdown(props: Props) {
           ? endIndex
           : selectedIndex - 1;
 
-    setSelected(getOptionValue(options[newIndex]));
+    onSelected?.(getOptionValue(options[newIndex]));
   }
 
   useEffect(() => {
-    setSelected(props.selected);
-  }, [props.selected]);
+    onSelected?.(props.selected);
+  }, [onSelected, props.selected]);
 
   return (
     <Popover
-      isOpen={!!dropdownRef.current && open}
+      isOpen={open}
       positions="bottom"
       onClickOutside={() => setOpen(false)}
-      ref={dropdownRef}
       content={
         <div className="Layout Dropdown__menu" style={{ minWidth: menuWidth }}>
           {options.length === 0 && (
@@ -131,7 +130,6 @@ export function Dropdown(props: Props) {
           alignItems: 'flex-start',
           minWidth: '5rem',
         }}
-        ref={dropdownRef}
       >
         <div
           className={classes([
@@ -169,6 +167,7 @@ export function Dropdown(props: Props) {
           <>
             <Button
               disabled={disabled}
+              height={1.8}
               icon="chevron-left"
               onClick={() => {
                 updateSelected('previous');
@@ -177,6 +176,7 @@ export function Dropdown(props: Props) {
 
             <Button
               disabled={disabled}
+              height={1.8}
               icon="chevron-right"
               onClick={() => {
                 updateSelected('next');
