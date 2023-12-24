@@ -11,6 +11,8 @@
 	SIGNAL_HANDLER
 	if(examine_hint)
 		examine_list += examine_hint
+	if(explict_examine)
+		examine_list += explict_examine
 
 /datum/component/artifact/proc/on_sticker(atom/source, obj/item/sticker/sticker, mob/user)
 	SIGNAL_HANDLER

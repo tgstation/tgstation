@@ -111,12 +111,13 @@ SUBSYSTEM_DEF(sql_logging)
 		else
 			source_name = source.name
 
-		source_x = source.x
-		source_y = source.y
-		source_z = source.z
-		var/area/area = get_area(source)
-		if(!isnull(area))
-			source_area = area.name
+		if(!IS_CLIENT_OR_MOCK(source))
+			source_x = source.x
+			source_y = source.y
+			source_z = source.z
+			var/area/area = get_area(source)
+			if(!isnull(area))
+				source_area = area.name
 
 	if(isnull(source_name))
 		source_name = target_ckey
