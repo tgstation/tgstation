@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(sql_logging)
 		else
 			source_name = source.name
 
-		if(!isclient(source))
+		if(!IS_CLIENT_OR_MOCK(source))
 			source_x = source.x
 			source_y = source.y
 			source_z = source.z

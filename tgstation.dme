@@ -5849,6 +5849,8 @@
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\lamp.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\melee.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\repulsor.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_components\smoke_artifacts.dm"
+#include "monkestation\code\modules\art_sci_overrides\artifact_components\surgery.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_components\vomit.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_items\artifact_cell.dm"
 #include "monkestation\code\modules\art_sci_overrides\artifact_items\artifact_gun.dm"
