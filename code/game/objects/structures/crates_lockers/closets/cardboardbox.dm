@@ -55,6 +55,7 @@
 	if(!do_alert)
 		return TRUE
 
+	alerted.Cut()
 	// Cache the list before we open the box.
 	for(var/mob/living/alerted_mob in viewers(7, src))
 		alerted += alerted_mob
