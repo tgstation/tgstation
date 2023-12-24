@@ -212,6 +212,7 @@
 			// Loses a bit from the foam
 			for(var/datum/reagent/reagent as anything in holder.reagent_list)
 				reagent.volume *= 0.5
+			holder.update_total()
 
 /datum/chemical_reaction/food/soup/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()

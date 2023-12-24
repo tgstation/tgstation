@@ -183,6 +183,7 @@
 		if(!reagent)
 			return
 		reagent.volume *= 0.98 //Slowly lower yield per tick
+	holder.update_total()
 
 /**
  * Occurs when a reation is too impure (i.e. it's below purity_min)
