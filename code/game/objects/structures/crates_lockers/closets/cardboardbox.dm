@@ -60,10 +60,6 @@
 	for(var/mob/living/alerted_mob in viewers(7, src))
 		alerted += alerted_mob
 
-	// There are no mobs to alert? null the list & prevent further action after opening the box
-	if(!length(alerted))
-		alerted = null
-
 	return TRUE
 
 /obj/structure/closet/cardboard/after_open(mob/living/user, force)
