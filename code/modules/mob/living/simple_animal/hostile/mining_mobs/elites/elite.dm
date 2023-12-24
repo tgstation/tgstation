@@ -187,7 +187,7 @@ While using this makes the system rely on OnFire, it still gives options for tim
 				addtimer(CALLBACK(src, PROC_REF(spawn_elite)), 30)
 				return
 			visible_message(span_boldwarning("Something within [src] stirs..."))
-			var/list/candidates = poll_candidates_for_mob("Do you want to play as a lavaland elite?", ROLE_SENTIENCE, ROLE_SENTIENCE, 5 SECONDS, src, POLL_IGNORE_LAVALAND_ELITE)
+			var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a lavaland elite?", check_jobban = ROLE_SENTIENCE, role = ROLE_SENTIENCE, poll_time = 5 SECONDS, target_mob = src, ignore_category = POLL_IGNORE_LAVALAND_ELITE, pic_source = src, role_name_text = "lavaland elite")
 			if(candidates.len)
 				audible_message(span_boldwarning("The stirring sounds increase in volume!"))
 				elitemind = pick(candidates)
