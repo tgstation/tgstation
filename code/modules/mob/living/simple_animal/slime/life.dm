@@ -157,7 +157,7 @@
 		if(SPT_PROB(50, seconds_per_tick))
 			adjustBruteLoss(rand(0,5))
 
-	else if (nutrition >= get_grow_nutrition() && amount_grown < SLIME_EVOLUTION_THRESHOLD)
+	else if (nutrition >= grow_nutrition && amount_grown < SLIME_EVOLUTION_THRESHOLD)
 		adjust_nutrition(-10 * seconds_per_tick)
 		amount_grown++
 		update_mob_action_buttons()
@@ -170,40 +170,12 @@
 
 ///Adds nutrition to the slime's nutrition level. Has a chance to increase its electric levels.
 /mob/living/simple_animal/slime/proc/add_nutrition(nutrition_to_add = 0)
-	set_nutrition(min((nutrition + nutrition_to_add), get_max_nutrition()))
-	if(nutrition >= get_grow_nutrition())
-		if(powerlevel<10)
+	set_nutrition(min((nutrition + nutrition_to_add), max_nutrition))
+	if(nutrition >= grow_nutrition)
+		if(powerlevel<SLIME_MAX_POWER)
 			if(prob(30-powerlevel*2))
 				powerlevel++
-	else if(nutrition >= get_hunger_nutrition() + 100) //can't get power levels unless you're a bit above hunger level.
-		if(powerlevel<5)
+	else if(nutrition >= hunger_nutrition + 100) //can't get power levels unless you're a bit above hunger level.
+		if(powerlevel<SLIME_MEDIUM_POWER)
 			if(prob(25-powerlevel*5))
 				powerlevel++
-
-/// Can't go above it
-/mob/living/simple_animal/slime/proc/get_max_nutrition()
-	if (life_stage == SLIME_LIFE_STAGE_ADULT)
-		return 1200
-	else
-		return 1000
-
-/// Above it we grow, below it we can eat
-/mob/living/simple_animal/slime/proc/get_grow_nutrition()
-	if (life_stage == SLIME_LIFE_STAGE_ADULT)
-		return 1000
-	else
-		return 800
-
-/// Below it we will always eat
-/mob/living/simple_animal/slime/proc/get_hunger_nutrition()
-	if (life_stage == SLIME_LIFE_STAGE_ADULT)
-		return 600
-	else
-		return 500
-
-/// Below it we will eat before everything else
-/mob/living/simple_animal/slime/proc/get_starve_nutrition()
-	if(life_stage == SLIME_LIFE_STAGE_ADULT)
-		return 300
-	else
-		return 200

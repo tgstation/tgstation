@@ -158,20 +158,20 @@
 			if (seen_mob in Friends)
 				speech_chance += 20
 				friends_near += seen_mob
-		if (nutrition < get_hunger_nutrition())
+		if (nutrition < hunger_nutrition)
 			speech_chance += 10
-		if (nutrition < get_starve_nutrition())
+		if (nutrition < starve_nutrition)
 			speech_chance += 10
 		if (SPT_PROB(1, seconds_per_tick) && prob(speech_chance))
 			var/phrases = list()
 			if (Target)
 				phrases += "[Target]... look yummy..."
-			if (nutrition < get_starve_nutrition())
+			if (nutrition < starve_nutrition)
 				phrases += "So... hungry..."
 				phrases += "Very... hungry..."
 				phrases += "Need... food..."
 				phrases += "Must... eat..."
-			else if (nutrition < get_hunger_nutrition())
+			else if (nutrition < hunger_nutrition)
 				phrases += "Hungry..."
 				phrases += "Where food?"
 				phrases += "I want to eat..."
@@ -215,7 +215,7 @@
 				phrases += "Lonely..."
 			for (var/friend in friends_near)
 				phrases += "[friend]... friend..."
-				if (nutrition < get_hunger_nutrition())
+				if (nutrition < hunger_nutrition)
 					phrases += "[friend]... feed me..."
 			if(!stat)
 				say (pick(phrases))
@@ -315,9 +315,9 @@
 
 	var/hungry = SLIME_HUNGER_NONE // determines if the slime is hungry
 
-	if (nutrition < get_starve_nutrition())
+	if (nutrition < starve_nutrition)
 		hungry = SLIME_HUNGER_STARVING
-	else if (nutrition < get_grow_nutrition() && SPT_PROB(13, seconds_per_tick) || nutrition < get_hunger_nutrition())
+	else if (nutrition < grow_nutrition && SPT_PROB(13, seconds_per_tick) || nutrition < hunger_nutrition)
 		hungry = SLIME_HUNGER_HUNGRY
 
 	if(hungry == SLIME_HUNGER_STARVING && !client) // if a slime is starving, it starts losing its friends
@@ -416,9 +416,9 @@
 		return
 
 	var/hungry = SLIME_HUNGER_NONE
-	if (nutrition < get_starve_nutrition())
+	if (nutrition < starve_nutrition)
 		hungry = SLIME_HUNGER_STARVING
-	else if (nutrition < get_grow_nutrition() && prob(25) || nutrition < get_hunger_nutrition())
+	else if (nutrition < grow_nutrition && prob(25) || nutrition < hunger_nutrition)
 		hungry = SLIME_HUNGER_HUNGRY
 
 	slime_ai_processing = TRUE

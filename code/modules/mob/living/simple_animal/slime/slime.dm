@@ -1,3 +1,8 @@
+#define SLIME_EXTRA_SHOCK_COST 3
+#define SLIME_EXTRA_SHOCK_THRESHOLD 8
+#define SLIME_BASE_SHOCK_PERCENTAGE 10
+#define SLIME_SHOCK_PERCENTAGE_PER_LEVEL 7
+
 /mob/living/simple_animal/slime
 	name = "grey baby slime (123)"
 	icon = 'icons/mob/simple/slimes.dmi'
@@ -52,9 +57,17 @@
 	///Chance of mutating, should be between 25 and 35
 	var/mutation_chance = 30
 	///1-10 controls how much electricity they are generating
-	var/powerlevel = 0
+	var/powerlevel = SLIME_MIN_POWER
 	///Controls how long the slime has been overfed, if 10, grows or reproduces
 	var/amount_grown = 0
+	///The maximum amount of nutrition a slime can contain
+	var/max_nutrition = 1000
+	/// Above it we grow our amount_grown and our power_level, below it we can eat
+	var/grow_nutrition = 800
+	/// Below this, we feel hungry
+	var/hunger_nutrition = 500
+	/// Below this, we feel starving
+	var/starve_nutrition = 200
 
 	///Has a mutator been used on the slime? Only one is allowed
 	var/mutator_used = FALSE
@@ -187,7 +200,7 @@
 		add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/slime_tempmod, multiplicative_slowdown = mod)
 
 /mob/living/simple_animal/slime/ObjBump(obj/bumped_object)
-	if(client || powerlevel <= 0) // slimes with people in control can't accidentally attack
+	if(client || powerlevel <= SLIME_MIN_POWER) // slimes with people in control can't accidentally attack
 		return
 
 	if (life_stage != SLIME_LIFE_STAGE_ADULT && !prob(5)) //its rare for baby slimes to actually damage windows
@@ -213,7 +226,7 @@
 	if(!istype(bumped_object, /obj/structure/window) && !istype(bumped_object, /obj/structure/grille))
 		return
 
-	if(nutrition > get_hunger_nutrition() || is_attack_on_cooldown) //hungry slimes and slimes on cooldown will not attack
+	if(nutrition > hunger_nutrition || is_attack_on_cooldown) //hungry slimes and slimes on cooldown will not attack
 		return
 
 	bumped_object.attack_animal(src)
@@ -223,7 +236,7 @@
 /mob/living/simple_animal/slime/get_status_tab_items()
 	. = ..()
 	if(!docile)
-		. += "Nutrition: [nutrition]/[get_max_nutrition()]"
+		. += "Nutrition: [nutrition]/[max_nutrition]"
 	if(amount_grown >= SLIME_EVOLUTION_THRESHOLD)
 		if(life_stage == SLIME_LIFE_STAGE_ADULT)
 			. += "You can reproduce!"
@@ -316,6 +329,11 @@
 			melee_damage_upper = initial(melee_damage_upper)
 			wound_bonus = initial(wound_bonus)
 
+			max_nutrition = initial(max_nutrition)
+			grow_nutrition = initial(grow_nutrition)
+			hunger_nutrition = initial(hunger_nutrition)
+			starve_nutrition = initial(starve_nutrition)
+
 		if(SLIME_LIFE_STAGE_ADULT)
 
 			for(var/datum/action/innate/slime/evolve/evolve_action in actions)
@@ -330,6 +348,11 @@
 			melee_damage_lower += 10
 			melee_damage_upper += 10
 			wound_bonus = -90
+
+			max_nutrition += 200
+			grow_nutrition += 200
+			hunger_nutrition += 100
+			starve_nutrition += 100
 
 ///Sets the slime's type, name and its icons
 /mob/living/simple_animal/slime/proc/set_slime_type(new_type)
@@ -401,9 +424,9 @@
 		var/mob/living/silicon/robot/borg_target = target
 		borg_target.flash_act()
 		do_sparks(5, TRUE, borg_target)
-		var/stunprob = our_slime.powerlevel * 7 + 10
-		if(prob(stunprob) && our_slime.powerlevel >= 8)
-			our_slime.powerlevel -= 3
+		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE
+		if(prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
+			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
 			borg_target.adjustBruteLoss(our_slime.powerlevel * rand(6,10))
 			borg_target.visible_message(span_danger("The [our_slime.name] shocks [borg_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
 		else
@@ -411,9 +434,9 @@
 
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(iscarbon(target) && our_slime.powerlevel > 0)
+	if(iscarbon(target) && our_slime.powerlevel > SLIME_MIN_POWER)
 		var/mob/living/carbon/carbon_target = target
-		var/stunprob = our_slime.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
+		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE  // 17 at level 1, 80 at level 10
 		if(!prob(stunprob))
 			return NONE // normal attack
 
@@ -423,7 +446,8 @@
 		var/power = our_slime.powerlevel + rand(0,3)
 		carbon_target.Paralyze(power * 2 SECONDS)
 		carbon_target.set_stutter_if_lower(power * 2 SECONDS)
-		if (prob(stunprob) && our_slime.powerlevel >= 8)
+		if (prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
+			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
 			carbon_target.apply_damage(our_slime.powerlevel * rand(6, 10), BURN, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 			carbon_target.updatehealth()
 
@@ -445,3 +469,8 @@
 		if(target_slime.health > 0)
 			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
 			our_slime.updatehealth()
+
+#undef SLIME_EXTRA_SHOCK_COST
+#undef SLIME_EXTRA_SHOCK_THRESHOLD
+#undef SLIME_BASE_SHOCK_PERCENTAGE
+#undef SLIME_SHOCK_PERCENTAGE_PER_LEVEL

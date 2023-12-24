@@ -1,6 +1,10 @@
 #define SLIME_LIFE_STAGE_BABY "baby"
 #define SLIME_LIFE_STAGE_ADULT "adult"
 
+#define SLIME_MIN_POWER 0
+#define SLIME_MEDIUM_POWER 5
+#define SLIME_MAX_POWER 10
+
 // Just slimin' here.
 // Warning: These defines are used for slime icon states, so if you
 // touch these names, remember to update icons/mob/simple/slimes.dmi!
