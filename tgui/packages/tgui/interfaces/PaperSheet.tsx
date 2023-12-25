@@ -285,7 +285,7 @@ export class PrimaryView extends Component {
     this.scrollableRef = createRef();
     this.lastDistanceFromBottom = 0;
 
-    this.onScrollHandler = (ev: Event) => {
+    this.onScrollHandler = (ev) => {
       const scrollable = ev.currentTarget as HTMLDivElement;
       if (scrollable) {
         this.lastDistanceFromBottom =
@@ -411,6 +411,34 @@ export class PrimaryView extends Component {
   }
 }
 
+const tokenizer = (src: string) => {
+  const rule = /^\[_+\]/;
+  const match = src.match(rule);
+  if (match) {
+    return {
+      type: 'inputField',
+      raw: match[0],
+    };
+  }
+};
+
+// Override function, any links and images should
+// kill any other marked tokens we don't want here
+const walkTokens = (token) => {
+  switch (token.type) {
+    case 'url':
+    case 'autolink':
+    case 'reflink':
+    case 'link':
+    case 'image':
+      token.type = 'text';
+      // Once asset system is up change to some default image
+      // or rewrite for icon images
+      token.href = '';
+      break;
+  }
+};
+
 /**
  * Real-time text preview section. When not editing, this is simply
  * the component that builds and renders the final HTML output.
@@ -458,38 +486,13 @@ export class PreviewView extends Component<PreviewViewProps> {
         return src.match(/\[/)?.index;
       },
 
-      tokenizer(src: string) {
-        const rule = /^\[_+\]/;
-        const match = src.match(rule);
-        if (match) {
-          const token = {
-            type: 'inputField',
-            raw: match[0],
-          };
-          return token;
-        }
-      },
+      tokenizer,
 
       renderer(token) {
         return `${token.raw}`;
       },
-    };
 
-    // Override function, any links and images should
-    // kill any other marked tokens we don't want here
-    const walkTokens = (token) => {
-      switch (token.type) {
-        case 'url':
-        case 'autolink':
-        case 'reflink':
-        case 'link':
-        case 'image':
-          token.type = 'text';
-          // Once asset system is up change to some default image
-          // or rewrite for icon images
-          token.href = '';
-          break;
-      }
+      walkTokens,
     };
 
     marked.use({
@@ -679,20 +682,7 @@ export class PreviewView extends Component<PreviewViewProps> {
   runMarkedDefault = (rawText: string): string => {
     // Override function, any links and images should
     // kill any other marked tokens we don't want here
-    const walkTokens = (token) => {
-      switch (token.type) {
-        case 'url':
-        case 'autolink':
-        case 'reflink':
-        case 'link':
-        case 'image':
-          token.type = 'text';
-          // Once asset system is up change to some default image
-          // or rewrite for icon images
-          token.href = '';
-          break;
-      }
-    };
+    walkTokens;
 
     // This is an extension for marked defining a complete custom tokenizer.
     // This tokenizer should run before the the non-custom ones, and gives us
@@ -709,17 +699,7 @@ export class PreviewView extends Component<PreviewViewProps> {
         return src.match(/\[/)?.index;
       },
 
-      tokenizer(src: string) {
-        const rule = /^\[_+\]/;
-        const match = src.match(rule);
-        if (match) {
-          const token = {
-            type: 'inputField',
-            raw: match[0],
-          };
-          return token;
-        }
-      },
+      tokenizer,
 
       renderer(token) {
         return `${token.raw}`;
@@ -958,12 +938,12 @@ export class PreviewView extends Component<PreviewViewProps> {
         fitted
         scrollable
         ref={scrollableRef}
-        onScroll={handleOnScroll}
+        onScroll={handleOnScroll as any}
       >
         <Box
           fillPositionedParent
           position="relative"
-          bottom={'100%'}
+          bottom="100%"
           minHeight="100%"
           backgroundColor={paper_color}
           className="Paper__Page"

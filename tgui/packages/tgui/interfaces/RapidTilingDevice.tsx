@@ -60,7 +60,7 @@ const DirectionSelect = (props) => {
   const { act, data } = useBackend<Data>();
   const { tile_dirs = [], selected_direction } = data;
   return (
-    <Section fill vertical>
+    <Section fill>
       <Stack vertical>
         {tile_dirs.map((dir) => (
           <Stack.Item key={dir}>
@@ -109,7 +109,6 @@ const TileDesignSection = (props) => {
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.category_name}
             selected={category.category_name === categoryName}
             onClick={() => setCategoryName(category.category_name)}
