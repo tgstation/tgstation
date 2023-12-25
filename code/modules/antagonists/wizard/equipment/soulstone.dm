@@ -180,7 +180,7 @@
 	if(M == user)
 		return
 	if(IS_CULTIST(M) && IS_CULTIST(user))
-		to_chat(user, span_cultlarge("\"Come now, do not capture your bretheren's soul.\""))
+		to_chat(user, span_cult_large("\"Come now, do not capture your bretheren's soul.\""))
 		return
 	if(theme == THEME_HOLY && IS_CULTIST(user))
 		hot_potato(user)

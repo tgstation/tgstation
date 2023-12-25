@@ -398,7 +398,7 @@
 
 	new /obj/item/cult_bastard(source.loc)
 	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultlarge("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
+		to_chat(cultist, span_cult_large("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
 	return SILENCE_SACRIFICE_MESSAGE
 
 /**

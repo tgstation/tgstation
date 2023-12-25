@@ -10,9 +10,12 @@
 	var/collar_icon_state = null
 	/// We have a seperate _rest collar icon state when the pet is resting.
 	var/has_collar_resting_icon_state = FALSE
-
 	/// Our collar
 	var/obj/item/clothing/neck/petcollar/collar
+	///can we become cultists?
+	var/can_cult_convert = TRUE
+	///whether we have a custom icon state when we get culted
+	var/cult_icon_state
 
 /mob/living/basic/pet/Initialize(mapload)
 	. = ..()
@@ -22,6 +25,8 @@
 		collar = new(src)
 
 	update_icon(UPDATE_OVERLAYS)
+	if(can_cult_convert)
+		RegisterSignal(src, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(become_cultist))
 
 /mob/living/basic/pet/Destroy()
 	. = ..()
@@ -40,6 +45,15 @@
 
 	return ..()
 
+/mob/living/basic/pet/proc/activate_rune(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!istype(target, /obj/effect/rune/convert))
+		return NONE
+
+	target.attack_hand(src)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
 /mob/living/basic/pet/update_overlays()
 	. = ..()
 
@@ -53,6 +67,11 @@
 
 	. += mutable_appearance(icon, "[collar_icon_state][stat_tag]collar")
 	. += mutable_appearance(icon, "[collar_icon_state][stat_tag]tag")
+
+/mob/living/basic/pet/update_icon_state()
+	if(cult_icon_state && (FACTION_CULT in faction))
+		icon_state = cult_icon_state
+	return ..()
 
 /mob/living/basic/pet/gib()
 	remove_collar(drop_location(), update_visuals = FALSE)

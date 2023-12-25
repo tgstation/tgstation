@@ -51,3 +51,5 @@
 /// key that holds items we arent interested in hoarding
 #define BB_IGNORE_ITEMS "ignore_items"
 
+// Cultist pet keys
+#define BB_RUNE_ABILITY "rune_ability"
