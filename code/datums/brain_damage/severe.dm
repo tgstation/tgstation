@@ -361,10 +361,10 @@
 //This one is for "The First Desire" or /obj/structure/sign/painting/eldritch/desire
 /datum/brain_trauma/severe/flesh_desire
 	name = "The Desire for Flesh"
-	desc = "Patient seems to only be able to eat organs or raw flesh for nutrients, also seems to become hungrier at a faster rate"
+	desc = "Patient appears hungrier and only wishes to eat meats."
 	scan_desc = "H_(82882)G3E:__))9R"
 	gain_text = span_warning("I feel a hunger, only organs and flesh will feed it...")
-	lose_text = span_notice("Your stomach no longer craves flesh, and your tongue feels duller.")
+	lose_text = span_notice("You no longer feel the hunger for flesh...")
 	random_gain = FALSE
 	/// How much faster we loose hunger
 	var/hunger_rate = 15
@@ -378,7 +378,7 @@
 /datum/brain_trauma/severe/flesh_desire/on_life(seconds_per_tick, times_fired)
 	// Causes them to need to eat at 10x the normal rate
 	owner.adjust_nutrition(-hunger_rate * HUNGER_FACTOR)
-	if(SPT_PROB(20, seconds_per_tick))
+	if(SPT_PROB(10, seconds_per_tick))
 		to_chat(owner, span_notice("You feel a ravenous hunger for flesh..."))
 	owner.overeatduration = max(owner.overeatduration - 200 SECONDS, 0)
 

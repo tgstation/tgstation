@@ -87,7 +87,7 @@
 	if(!tongue)
 		return TOXIC
 	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
-		return VEGETABLES | DAIRY | FRUIT
+		return VEGETABLES | DAIRY | FRUIT | FRIED
 	return tongue.toxic_foodtypes
 
 /**
