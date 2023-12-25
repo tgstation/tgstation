@@ -1,4 +1,4 @@
-obj/item/clothing/suit/hooded/wintercoat/security/fluffy
+/obj/item/clothing/suit/hooded/wintercoat/security/fluffy
 	name = "Security Winter Coat"
 	icon = 'massmeta/icons/obj/clothing/suits/wintercoat.dmi'
 	worn_icon = 'massmeta/icons/mob/clothing/suits/wintercoat.dmi'

@@ -29,6 +29,5 @@
 		/obj/item/clothing/gloves/fingerless = 3,
 		/obj/item/clothing/head/beret/cargo = 3,
 		/obj/item/clothing/mask/bandana/striped/cargo = 3,
-		/obj/item/clothing/head/soft/cargo = 3,
 		/obj/item/radio/headset/headset_cargo = 3,
 	)
