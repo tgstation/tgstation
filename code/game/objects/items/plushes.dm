@@ -809,4 +809,4 @@
 	icon_state = "plushie_securitron"
 	attack_verb_continuous = list("stuns", "cuffs", "arrests")
 	attack_verb_simple = list("stun", "cuff", "arrest")
-	squeak_override = list('sound/voice/beepsky/iamthelaw.ogg', 'sound/voice/beepsky/freeze.ogg', 'sound/voice/beepsky/justice.ogg')
+	squeak_override = list('sound/voice/beepsky/iamthelaw.ogg' = 1, 'sound/voice/beepsky/freeze.ogg' = 1, 'sound/voice/beepsky/justice.ogg' = 1)
