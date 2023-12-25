@@ -65,8 +65,8 @@ const PlumbingTypeSection = (props) => {
           <Box
             inline
             verticalAlign="middle"
-            height="40px"
             mr="20px"
+            mb="10px"
             className={classes(['plumbing-tgui32x32', recipe.icon])}
             style={{
               transform: 'scale(1.3) translate(9.5%, 11.2%)',
