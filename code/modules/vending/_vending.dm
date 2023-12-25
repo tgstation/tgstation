@@ -1039,10 +1039,10 @@
 			LAZYADD(product_datum.returned_products, inserted_item)
 			return
 
-	if(vending_machine_input[inserted_item.type])
-		vending_machine_input[inserted_item.type]++
+	if(vending_machine_input[format_text(inserted_item.name)])
+		vending_machine_input[format_text(inserted_item.name)]++
 	else
-		vending_machine_input[inserted_item.type] = 1
+		vending_machine_input[format_text(inserted_item.name)] = 1
 	loaded_items++
 
 /obj/machinery/vending/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
@@ -1210,7 +1210,7 @@
 			colorable = product_record.colorable,
 		)
 
-		.["stock"] += list(product_data)
+		.["stock"][product_record.name] = product_data
 
 	.["extended_inventory"] = extended_inventory
 
@@ -1599,12 +1599,12 @@
 	. = ..()
 	.["access"] = compartmentLoadAccessCheck(user)
 	.["vending_machine_input"] = list()
-	for (var/obj/item/stocked_item as anything in vending_machine_input)
+	for (var/stocked_item in vending_machine_input)
 		if(vending_machine_input[stocked_item] > 0)
 			var/base64
 			var/price = 0
 			for(var/obj/item/stored_item in contents)
-				if(stored_item.type == stocked_item)
+				if(format_text(stored_item.name) == stocked_item)
 					price = stored_item.custom_price
 					if(!base64) //generate an icon of the item to use in UI
 						if(base64_cache[stored_item.type])
@@ -1614,8 +1614,7 @@
 							base64_cache[stored_item.type] = base64
 					break
 			var/list/data = list(
-				path = stocked_item,
-				name = initial(stocked_item.name),
+				name = stocked_item,
 				price = price,
 				img = base64,
 				amount = vending_machine_input[stocked_item],
@@ -1630,8 +1629,8 @@
 	switch(action)
 		if("dispense")
 			if(isliving(usr))
-				vend_act(usr, params)
-				vend_ready = TRUE
+				vend_act(usr, params["item"])
+			vend_ready = TRUE
 			return TRUE
 
 /obj/machinery/vending/custom/attackby(obj/item/attack_item, mob/user, params)
@@ -1669,10 +1668,9 @@
  * Updating stock, account transactions, alerting users.
  * @return -- TRUE if a valid condition was met, FALSE otherwise.
  */
-/obj/machinery/vending/custom/proc/vend_act(mob/living/user, list/params)
+/obj/machinery/vending/custom/proc/vend_act(mob/living/user, choice)
 	if(!vend_ready)
 		return
-	var/obj/item/choice = text2path(params["item"]) // typepath is a string coming from javascript, we need to convert it back
 	var/obj/item/dispensed_item
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	vend_ready = FALSE
@@ -1681,8 +1679,8 @@
 		flick(icon_deny, src)
 		return TRUE
 	var/datum/bank_account/payee = id_card.registered_account
-	for(var/obj/item/stock in contents)
-		if(istype(stock, choice))
+	for(var/obj/stock in contents)
+		if(format_text(stock.name) == choice)
 			dispensed_item = stock
 			break
 	if(!dispensed_item)

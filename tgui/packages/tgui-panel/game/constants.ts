@@ -4,4 +4,4 @@
  * @license MIT
  */
 
-export const CONNECTION_LOST_AFTER = 45000;
+export const CONNECTION_LOST_AFTER = 20000;

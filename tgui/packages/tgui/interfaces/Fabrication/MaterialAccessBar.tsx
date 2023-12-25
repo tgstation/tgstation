@@ -98,7 +98,7 @@ const MaterialCounter = (props: MaterialCounterProps) => {
         sheets < 1 && 'MaterialDock--disabled',
       ])}
     >
-      <Stack vertical direction="column-reverse">
+      <Stack vertial direction={'column-reverse'}>
         <Flex
           direction="column"
           textAlign="center"

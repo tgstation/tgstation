@@ -340,7 +340,7 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="ellipsis-h"
-          tooltip="Custom amount"
+          title="Custom amount"
           disabled={isPrinting}
           onClick={() =>
             act('transfer', {
@@ -352,7 +352,7 @@ const ReagentEntry = (props) => {
         />
         <Button
           icon="question"
-          tooltip="Analyze"
+          title="Analyze"
           onClick={() =>
             act('analyze', {
               reagentRef: chemical.ref,

@@ -203,7 +203,7 @@ const ChoicesPanel = (props) => {
                   {user.singleSelection &&
                     choice.name === user.singleSelection && (
                       <Icon
-                        align="right"
+                        alignSelf="right"
                         mr={2}
                         color="green"
                         name="vote-yea"
@@ -240,7 +240,12 @@ const ChoicesPanel = (props) => {
                 >
                   {user.multiSelection &&
                   user.multiSelection[user.ckey.concat(choice.name)] === 1 ? (
-                    <Icon align="right" mr={2} color="blue" name="vote-yea" />
+                    <Icon
+                      alignSelf="right"
+                      mr={2}
+                      color="blue"
+                      name="vote-yea"
+                    />
                   ) : null}
                   {choice.votes} Votes
                 </LabeledList.Item>

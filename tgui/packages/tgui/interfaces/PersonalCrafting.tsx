@@ -492,7 +492,8 @@ export const PersonalCrafting = (props) => {
           </Stack.Item>
           <Stack.Item grow my={-1}>
             <Box
-              height="100%"
+              id="content"
+              height={'100%'}
               pr={1}
               pt={1}
               mr={-1}

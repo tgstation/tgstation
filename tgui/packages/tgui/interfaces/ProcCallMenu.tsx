@@ -37,7 +37,7 @@ export const ProcCallMenu = (props) => {
   return (
     <Window width={500} height={400}>
       <Window.Content scrollable>
-        <Stack fill>
+        <Stack grow height="100%">
           <Stack.Item>
             <Section fill title="Options">
               <Stack vertical width="180px">

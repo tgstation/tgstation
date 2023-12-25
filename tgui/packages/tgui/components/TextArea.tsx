@@ -25,7 +25,6 @@ type Props = Partial<{
   autoSelect: boolean;
   displayedValue: string;
   dontUseTabForIndent: boolean;
-  fluid: boolean;
   maxLength: number;
   noborder: boolean;
   // This fires when: value changes

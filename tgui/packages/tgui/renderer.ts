@@ -23,14 +23,9 @@ type CreateRenderer = <T extends unknown[] = [unknown]>(
   getVNode?: (...args: T) => any,
 ) => (...args: T) => void;
 
-enum Render {
-  Start = 'render/start',
-  Finish = 'render/finish',
-}
-
 // prettier-ignore
 export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
-  perf.mark(Render.Start);
+  perf.mark('render/start');
   // Start rendering
   if (!reactRoot) {
     reactRoot = document.getElementById('react-root');
@@ -41,7 +36,7 @@ export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   else {
     render(args[0] as any, reactRoot);
   }
-  perf.mark(Render.Finish);
+  perf.mark('render/finish');
   if (suspended) {
     return;
   }
@@ -49,22 +44,22 @@ export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   if (process.env.NODE_ENV !== 'production') {
     if (initialRender === 'resumed') {
       logger.log('rendered in',
-        perf.measure(Render.Start, Render.Finish));
+        perf.measure('render/start', 'render/finish'));
     }
     else if (initialRender) {
       logger.debug('serving from:', location.href);
       logger.debug('bundle entered in',
         perf.measure('inception', 'init'));
       logger.debug('initialized in',
-        perf.measure('init', Render.Start));
+        perf.measure('init', 'render/start'));
       logger.log('rendered in',
-        perf.measure(Render.Start, Render.Finish));
+        perf.measure('render/start', 'render/finish'));
       logger.log('fully loaded in',
-        perf.measure('inception', Render.Finish));
+        perf.measure('inception', 'render/finish'));
     }
     else {
       logger.debug('rendered in',
-        perf.measure(Render.Start, Render.Finish));
+        perf.measure('render/start', 'render/finish'));
     }
   }
   if (initialRender) {

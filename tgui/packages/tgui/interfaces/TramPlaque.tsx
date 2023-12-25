@@ -47,7 +47,7 @@ export const TramPlaque = (props) => {
           </LabeledList>
         </Section>
         <Section title="Tram History">
-          <Stack fill>
+          <Stack horizontal fill>
             <Stack.Item m={1} grow>
               <b>Serial</b>
             </Stack.Item>

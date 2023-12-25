@@ -129,6 +129,7 @@
 		amount = adjusted_vol
 		has_split = TRUE
 
+	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
 		amount = maximum_volume - cached_total //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
@@ -194,7 +195,7 @@
 			set_temperature(reagtemp)
 
 	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
-	if(!no_react && !is_reacting)
+	if(!no_react)
 		handle_reactions()
 	return amount
 
@@ -642,7 +643,7 @@
 		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
-		if(!reagent_volume || (reagent_volume <= 0.05 && !is_reacting))
+		if((reagent_volume <= 0.05 && !is_reacting) || reagent_volume <= CHEMICAL_QUANTISATION_LEVEL)
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
@@ -662,14 +663,14 @@
 
 		//compute volume & ph like we would normally
 		. += reagent_volume
-		total_ph += reagent.ph * reagent_volume
+		total_ph += (reagent.ph * reagent_volume)
 
 		//reasign rounded value
 		reagent.volume = reagent_volume
 
 	//assign the final values, rounding up can sometimes cause overflow so bring it down
 	total_volume = min(round(., CHEMICAL_VOLUME_ROUNDING), maximum_volume)
-	if(!total_volume)
+	if(!.)
 		ph = CHEMICAL_NORMAL_PH
 	else
 		ph = clamp(total_ph / total_volume, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)

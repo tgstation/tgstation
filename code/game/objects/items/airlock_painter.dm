@@ -327,6 +327,7 @@
 
 /datum/asset/spritesheet/decals
 	name = "floor_decals"
+	cross_round_cachable = TRUE
 
 	/// The floor icon used for blend_preview_floor()
 	var/preview_floor_icon = 'icons/turf/floors.dmi'

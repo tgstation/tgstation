@@ -48,20 +48,20 @@ export const Smes = (props) => {
             }}
           />
         </Section>
-        <Section
-          title="Input"
-          buttons={
-            <Button
-              icon={inputAttempt ? 'sync-alt' : 'times'}
-              selected={inputAttempt}
-              onClick={() => act('tryinput')}
-            >
-              {inputAttempt ? 'Auto' : 'Off'}
-            </Button>
-          }
-        >
+        <Section title="Input">
           <LabeledList>
-            <LabeledList.Item label="Charge Mode">
+            <LabeledList.Item
+              label="Charge Mode"
+              buttons={
+                <Button
+                  icon={inputAttempt ? 'sync-alt' : 'times'}
+                  selected={inputAttempt}
+                  onClick={() => act('tryinput')}
+                >
+                  {inputAttempt ? 'Auto' : 'Off'}
+                </Button>
+              }
+            >
               <Box color={inputState}>
                 {(capacityPercent >= 100 && 'Fully Charged') ||
                   (inputting && 'Charging') ||
@@ -133,20 +133,20 @@ export const Smes = (props) => {
             </LabeledList.Item>
           </LabeledList>
         </Section>
-        <Section
-          title="Output"
-          buttons={
-            <Button
-              icon={outputAttempt ? 'power-off' : 'times'}
-              selected={outputAttempt}
-              onClick={() => act('tryoutput')}
-            >
-              {outputAttempt ? 'On' : 'Off'}
-            </Button>
-          }
-        >
+        <Section title="Output">
           <LabeledList>
-            <LabeledList.Item label="Output Mode">
+            <LabeledList.Item
+              label="Output Mode"
+              buttons={
+                <Button
+                  icon={outputAttempt ? 'power-off' : 'times'}
+                  selected={outputAttempt}
+                  onClick={() => act('tryoutput')}
+                >
+                  {outputAttempt ? 'On' : 'Off'}
+                </Button>
+              }
+            >
               <Box color={outputState}>
                 {outputting
                   ? 'Sending'

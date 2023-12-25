@@ -65,7 +65,6 @@ export const getRoutedComponent = () => {
       return require('./debug').KitchenSink;
     }
   }
-
   const name = config?.interface;
   const interfacePathBuilders = [
     (name: string) => `./${name}.tsx`,

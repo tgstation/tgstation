@@ -37,8 +37,8 @@ export class DisplayComponent extends Component {
     return false;
   }
 
-  render() {
-    const { component, fixedSize, ...rest } = this.props;
+  render(props) {
+    const { component, fixedSize, ...rest } = props;
     return (
       <Box {...rest}>
         <div ref={this.ref}>

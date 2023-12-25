@@ -40,7 +40,7 @@ export const AiVoiceChanger = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Verb">
             <Input
-              value={say_verb}
+              default={say_verb}
               onChange={(e, value) =>
                 act('verb', {
                   verb: value,
@@ -58,7 +58,7 @@ export const AiVoiceChanger = (props) => {
           </LabeledList.Item>
           <LabeledList.Item label="Fake name">
             <Input
-              value={name}
+              default={name}
               onChange={(e, value) =>
                 act('name', {
                   name: value,

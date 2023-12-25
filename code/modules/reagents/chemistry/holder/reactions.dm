@@ -190,6 +190,7 @@
 	if(!LAZYLEN(reaction_list))
 		finish_reacting()
 	else
+		update_total()
 		handle_reactions()
 
 /*
@@ -228,6 +229,8 @@
 	is_reacting = FALSE
 	LAZYNULL(previous_reagent_list) //reset it to 0 - because any change will be different now.
 	update_total()
+	if(!QDELING(src))
+		handle_reactions() //Should be okay without. Each step checks.
 
 /*
 * Force stops the current holder/reagents datum from reacting

@@ -1,9 +1,8 @@
 /datum/antagonist/obsessed
 	name = "Obsessed"
 	show_in_antagpanel = TRUE
-	antagpanel_category = ANTAG_GROUP_CREW
+	antagpanel_category = "Other"
 	job_rank = ROLE_OBSESSED
-	show_to_ghosts = TRUE
 	antag_hud_name = "obsessed"
 	show_name_in_check_antagonists = TRUE
 	roundend_category = "obsessed"

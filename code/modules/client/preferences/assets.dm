@@ -2,6 +2,7 @@
 /datum/asset/spritesheet/preferences
 	name = "preferences"
 	early = TRUE
+	cross_round_cachable = TRUE
 
 /datum/asset/spritesheet/preferences/create_spritesheets()
 	var/list/to_insert = list()

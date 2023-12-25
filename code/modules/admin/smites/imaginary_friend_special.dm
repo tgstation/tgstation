@@ -57,12 +57,11 @@
 	if (isnull(how_many) || how_many < 1)
 		return FALSE
 
-	var/list/volunteers = SSpolling.poll_ghost_candidates(
+	var/list/volunteers = poll_ghost_candidates(
 		question = "Do you want to play as an imaginary friend?",
-		check_jobban = ROLE_PAI,
+		jobban_type = ROLE_PAI,
 		poll_time = 10 SECONDS,
 		ignore_category = POLL_IGNORE_IMAGINARYFRIEND,
-		role_name_text = "imaginary friend",
 	)
 	var/volunteer_count = length(volunteers)
 	if (volunteer_count == 0)

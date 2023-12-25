@@ -50,7 +50,8 @@ export const CellularEmporium = (props) => {
           buttons={
             <Stack>
               <Stack.Item fontSize="16px">
-                {genetic_points_count} <Icon name="dna" color="#DD66DD" />
+                {genetic_points_count && genetic_points_count}{' '}
+                <Icon name="dna" color="#DD66DD" />
               </Stack.Item>
               <Stack.Item>
                 <Button

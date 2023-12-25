@@ -52,7 +52,11 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	materials = AddComponent(/datum/component/remote_materials, mapload)
+	materials = AddComponent(
+		/datum/component/remote_materials, \
+		mapload, \
+		mat_container_flags = BREAKDOWN_FLAGS_ORM \
+	)
 
 	RegisterSignal(src, COMSIG_MATCONTAINER_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, redeem_points))
 
@@ -156,7 +160,7 @@
 		if(isnull(gathered_ore.refined_type))
 			continue
 
-		if(materials.mat_container.insert_item(gathered_ore, ore_multiplier, context = src) <= 0)
+		if(materials.mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM, context = src) <= 0)
 			unload_mineral(gathered_ore) //if rejected unload
 
 		SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
