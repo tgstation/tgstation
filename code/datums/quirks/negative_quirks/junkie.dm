@@ -108,9 +108,14 @@
 		/obj/item/clothing/mask/cigarette/pipe,
 	)
 
-/datum/quirk_constant_data/smoker
+/datum/quirk_constant_data/item_quirk/junkie/smoker
 	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
-	customization_options = list(/datum/preference/choiced/smoker)
+	customization_options = list(/datum/preference/choiced/item_quirk/junkie/smoker)
+
+/datum/quirk/item_quirk/junkie/smoker/add_unique(client/client_source)
+	var/drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/item_quirk/junkie/smoker)]
+	if(isnull(drug_container_type))
+		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
 
 /datum/quirk/item_quirk/junkie/smoker/post_add()
 	. = ..()

@@ -19,12 +19,12 @@ GLOBAL_LIST_INIT(limb_choice, list(
 ))
 
 ///Options for the SMOKER quirk to choose from
-GLOBAL_LIST_INIT(drug_container_type, list(
+GLOBAL_LIST_INIT(favorite_brand, list(
 	"Space Cigarettes" = /obj/item/storage/fancy/cigarettes,
 	"Midori Tabako" = /obj/item/storage/fancy/cigarettes/cigpack_midori,
 	"Uplift Smooth" = /obj/item/storage/fancy/cigarettes/cigpack_uplift,
 	"Carp Classic" = /obj/item/storage/fancy/cigarettes/cigpack_carp,
 	"Robust Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robust,
 	"Robust Gold Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
-	"Syndicate Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_syndicate
+	"Syndicate Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 ))
