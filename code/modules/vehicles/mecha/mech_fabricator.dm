@@ -50,7 +50,11 @@
 	var/list/datum/design/cached_designs
 
 /obj/machinery/mecha_part_fabricator/Initialize(mapload)
-	rmat = AddComponent(/datum/component/remote_materials, mapload && link_on_init)
+	rmat = AddComponent( \
+		/datum/component/remote_materials, \
+		mapload && link_on_init, \
+		mat_container_flags = BREAKDOWN_FLAGS_LATHE \
+	)
 	cached_designs = list()
 	RefreshParts() //Recalculating local material sizes if the fab isn't linked
 	return ..()

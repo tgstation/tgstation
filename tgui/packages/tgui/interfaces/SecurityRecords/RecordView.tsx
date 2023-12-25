@@ -103,6 +103,7 @@ const RecordInfo = (props) => {
               {name}
             </Table.Cell>
           }
+          wrap
         >
           <LabeledList>
             <LabeledList.Item

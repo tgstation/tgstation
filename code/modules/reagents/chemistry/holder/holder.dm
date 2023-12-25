@@ -129,6 +129,7 @@
 		amount = adjusted_vol
 		has_split = TRUE
 
+	update_total()
 	var/cached_total = total_volume
 	if(cached_total + amount > maximum_volume)
 		amount = maximum_volume - cached_total //Doesnt fit in. Make it disappear. shouldn't happen. Will happen.
@@ -194,7 +195,7 @@
 			set_temperature(reagtemp)
 
 	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
-	if(!no_react && !is_reacting)
+	if(!no_react)
 		handle_reactions()
 	return amount
 

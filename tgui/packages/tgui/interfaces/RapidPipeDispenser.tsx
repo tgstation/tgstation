@@ -221,12 +221,12 @@ const PreviewSelect = (props) => {
         <Button
           ml={0}
           key={preview.dir}
-          tooltip={preview.dir_name}
+          title={preview.dir_name}
           selected={preview.selected}
           style={{
             width: '40px',
             height: '40px',
-            padding: '0',
+            padding: 0,
           }}
           onClick={() => {
             act('pipe_type', {
@@ -267,6 +267,7 @@ const PipeTypeSection = (props) => {
       <Tabs>
         {categories.map((category, i) => (
           <Tabs.Tab
+            fluid
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}

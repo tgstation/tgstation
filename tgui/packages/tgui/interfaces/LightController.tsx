@@ -67,7 +67,7 @@ export const LightController = (props) => {
         <Stack fill>
           <Stack.Item>
             <Section fitted fill scrollable width="170px">
-              <Tabs fluid align="center">
+              <Tabs fluid centered>
                 {category_keys.map((category, index) => (
                   <Tabs.Tab
                     key={category}

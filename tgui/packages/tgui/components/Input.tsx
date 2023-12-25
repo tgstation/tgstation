@@ -14,7 +14,6 @@ type Props = Partial<{
   autoFocus: boolean;
   autoSelect: boolean;
   className: string;
-  disabled: boolean;
   fluid: boolean;
   maxLength: number;
   monospace: boolean;
@@ -39,11 +38,7 @@ export const Input = (props: Props) => {
   const {
     autoFocus,
     autoSelect,
-    className,
-    disabled,
-    fluid,
     maxLength,
-    monospace,
     onChange,
     onEnter,
     onEscape,
@@ -51,8 +46,9 @@ export const Input = (props: Props) => {
     placeholder,
     selfClear,
     value,
-    ...rest
+    ...boxProps
   } = props;
+  const { className, fluid, monospace, ...rest } = boxProps;
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -106,7 +102,6 @@ export const Input = (props: Props) => {
       <div className="Input__baseline">.</div>
       <input
         className="Input__input"
-        disabled={disabled}
         maxLength={maxLength}
         onBlur={(event) => onChange?.(event, event.target.value)}
         onChange={(event) => onInput?.(event, event.target.value)}

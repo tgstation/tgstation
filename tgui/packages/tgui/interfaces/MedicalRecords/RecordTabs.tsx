@@ -104,10 +104,11 @@ const CrewTab = (props: { record: MedicalRecord }) => {
   return (
     <Tabs.Tab
       className="candystripe"
+      label={name}
       onClick={() => selectRecord(record)}
       selected={selectedRecord?.crew_ref === crew_ref}
     >
-      <Box>
+      <Box wrap>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>

@@ -489,7 +489,7 @@ const CategoryView = <T extends Design = Design>(
   return (
     <Section
       title={category.title}
-      key={category.anchorKey}
+      id={category.anchorKey}
       buttons={categoryButtons && categoryButtons(category)}
     >
       {body}

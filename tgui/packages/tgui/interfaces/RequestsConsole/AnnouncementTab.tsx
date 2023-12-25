@@ -12,6 +12,7 @@ export const AnnouncementTab = (props) => {
         fluid
         height={20}
         maxLength={1025}
+        multiline
         value={messageText}
         onChange={(_, value) => setMessageText(value)}
         placeholder="Type your announcement..."
