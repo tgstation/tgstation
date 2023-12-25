@@ -1,10 +1,10 @@
 import { classes } from 'common/react';
-import { ReactNode, useState } from 'react';
-import { Popover } from 'react-tiny-popover';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 
 import { BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
+import { Popper } from './Popper';
 
 type DropdownEntry = {
   displayText: ReactNode;
@@ -13,7 +13,10 @@ type DropdownEntry = {
 
 type DropdownOption = string | DropdownEntry;
 
-type Props = { options: DropdownOption[] } & Partial<{
+type Props = {
+  options: DropdownOption[];
+  onSelected: (selected: any) => void;
+} & Partial<{
   buttons: boolean;
   clipSelectedText: boolean;
   color: string;
@@ -26,7 +29,6 @@ type Props = { options: DropdownOption[] } & Partial<{
   menuWidth: string;
   noChevron: boolean;
   onClick: (event) => void;
-  onSelected: (selected: any) => void;
   over: boolean;
   selected: string | number;
 }> &
@@ -40,6 +42,7 @@ export function Dropdown(props: Props) {
   const {
     buttons,
     className,
+    clipSelectedText = true,
     color = 'default',
     disabled,
     displayText,
@@ -55,13 +58,17 @@ export function Dropdown(props: Props) {
   } = props;
 
   const [open, setOpen] = useState(false);
+  const parentRef = useRef<HTMLDivElement>(null);
+  const popperRef = useRef<HTMLDivElement>(null);
 
+  /** Get the index of the selected option */
   function getSelectedIndex() {
     return options.findIndex((option) => {
       return getOptionValue(option) === selected;
     });
   }
 
+  /** Update the selected value when clicking the left/right buttons */
   function updateSelected(direction: 'previous' | 'next') {
     if (options.length < 1 || disabled) {
       return;
@@ -88,43 +95,72 @@ export function Dropdown(props: Props) {
     onSelected?.(getOptionValue(options[newIndex]));
   }
 
-  return (
-    <Popover
-      positions="bottom"
-      isOpen={open}
-      onClickOutside={() => {
+  /** Close the dropdown menu when clicking outside of it */
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (
+        parentRef.current &&
+        !parentRef.current.contains(event.target as Node) &&
+        popperRef.current &&
+        !popperRef.current.contains(event.target as Node)
+      ) {
         setOpen(false);
-      }}
-      content={
-        <div className="Layout Dropdown__menu" style={{ minWidth: menuWidth }}>
-          {options.length === 0 && (
-            <div className="Dropdown__menuentry">No options</div>
-          )}
+      }
+    }
 
-          {options.map((option) => {
-            const value = getOptionValue(option);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
-            return (
-              <div
-                className={classes([
-                  'Dropdown__menuentry',
-                  selected === value && 'selected',
-                ])}
-                key={value}
-                onClick={() => {
-                  setOpen(false);
-                  onSelected?.(value);
-                }}
-              >
-                {typeof option === 'string' ? option : option.displayText}
-              </div>
-            );
-          })}
-        </div>
+  /** Focus the dropdown menu when opening it */
+  useEffect(() => {
+    if (open && popperRef.current) {
+      popperRef.current.focus();
+    }
+  }, [open]);
+
+  return (
+    <Popper
+      options={{ placement: 'bottom-start' }}
+      popperContent={
+        open ? (
+          <div
+            className="Layout Dropdown__menu"
+            style={{ minWidth: menuWidth }}
+            ref={popperRef}
+          >
+            {options.length === 0 && (
+              <div className="Dropdown__menuentry">No options</div>
+            )}
+
+            {options.map((option) => {
+              const value = getOptionValue(option);
+
+              return (
+                <div
+                  className={classes([
+                    'Dropdown__menuentry',
+                    selected === value && 'selected',
+                  ])}
+                  key={value}
+                  onClick={() => {
+                    setOpen(false);
+                    onSelected?.(value);
+                  }}
+                >
+                  {typeof option === 'string' ? option : option.displayText}
+                </div>
+              );
+            })}
+          </div>
+        ) : null
       }
     >
       <div
         className="Dropdown"
+        ref={parentRef}
         style={{
           minWidth: menuWidth,
         }}
@@ -148,7 +184,12 @@ export function Dropdown(props: Props) {
           {icon && (
             <Icon mr={1} name={icon} rotation={iconRotation} spin={iconSpin} />
           )}
-          <span className="Dropdown__selected-text">
+          <span
+            className="Dropdown__selected-text"
+            style={{
+              overflow: clipSelectedText ? 'hidden' : 'visible',
+            }}
+          >
             {displayText || selected}
           </span>
           {!noChevron && (
@@ -180,6 +221,6 @@ export function Dropdown(props: Props) {
           </>
         )}
       </div>
-    </Popover>
+    </Popper>
   );
 }
