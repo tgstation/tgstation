@@ -245,7 +245,7 @@ Simple datum which is instanced once per type and is used for every object of sa
  *
  * Arguments:
  * - amount: The amount of the material to break down.
- * - breakdown_flags: Some flags dictating how exactly this material is being broken down.
  */
-/datum/material/proc/return_composition(amount=1, breakdown_flags=NONE)
-	return list((src) = amount) // Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
+/datum/material/proc/return_composition(amount = 1)
+	// Yes we need the parenthesis, without them BYOND stringifies src into "src" and things break.
+	return list((src) = amount)

@@ -97,44 +97,40 @@ const CategoryBar = (props: CategoryBarProps) => {
       scrollableHorizontal
       buttons={
         <Input
-          grow
           placeholder="Search"
           value={categorySearch}
           onChange={(_, value) => setCategorySearch(value)}
         />
       }
     >
-      <Stack scrollableHorizontal>
+      <Stack>
         {/** these are not in stack items to have them directly next to eachother */}
         <Button
-          textAlign="left"
-          content="None"
           selected={props.active === ''}
           onClick={() => props.setActive('')}
-        />
+        >
+          None
+        </Button>
         <Button
-          textAlign="left"
-          content="All"
           tooltip="This can be slow!"
           selected={props.active === CATEGORY_ALL}
           onClick={() => props.setActive(CATEGORY_ALL)}
-        />
+        >
+          All
+        </Button>
         {sorted
           .filter((cat) =>
             cat.toLowerCase().includes(categorySearch.toLowerCase()),
           )
-          .map((category) => {
-            return (
-              <Stack.Item key={category}>
-                <Button
-                  textAlign="left"
-                  content={category}
-                  selected={category === props.active}
-                  onClick={() => props.setActive(category)}
-                />
-              </Stack.Item>
-            );
-          })}
+          .map((category) => (
+            <Button
+              key={category}
+              selected={category === props.active}
+              onClick={() => props.setActive(category)}
+            >
+              {category}
+            </Button>
+          ))}
       </Stack>
     </Section>
   );
@@ -177,20 +173,18 @@ const CategoryViewer = (props: CategoryViewerProps) => {
       buttons={
         <>
           <Input
-            grow
-            fill
             placeholder="Search"
             value={search}
             onInput={(_, value) => setSearch(value)}
           />
           <Button
-            icon={'code'}
+            icon="code"
             tooltip="RegEx Search"
             selected={searchRegex}
             onClick={() => setSearchRegex(!searchRegex)}
           />
           <Button
-            icon={'font'}
+            icon="font"
             selected={caseSensitive}
             tooltip="Case Sensitive"
             onClick={() => setCaseSensitive(!caseSensitive)}
