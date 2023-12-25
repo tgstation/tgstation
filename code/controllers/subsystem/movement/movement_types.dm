@@ -362,7 +362,7 @@
 	var/turf/avoid
 	///Should we skip the first step? This is the tile we're currently on, which breaks some things
 	var/skip_first
-	///how do we handle diagonals
+	///Whether we replace diagonal movements with cardinal movements or follow through with them
 	var/diagonal_handling
 	///A list for the path we're currently following
 	var/list/movement_path
@@ -423,7 +423,7 @@
 /datum/move_loop/has_target/jps/proc/on_finish_pathing(list/path)
 	movement_path = path
 	is_pathing = FALSE
-	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING)
+	SEND_SIGNAL(src, COMSIG_MOVELOOP_JPS_FINISHED_PATHING, path)
 
 /datum/move_loop/has_target/jps/move()
 	if(!length(movement_path))

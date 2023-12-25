@@ -4,7 +4,7 @@
 /datum/ai_movement/jps
 	max_pathing_attempts = 20
 	var/maximum_length = AI_MAX_PATH_LENGTH
-	///can we move diagonally?
+	///how we deal with diagonal movement, whether we try to avoid them or follow through with them
 	var/diagonal_flags = DIAGONAL_REMOVE_CLUNKY
 
 /datum/ai_movement/jps/start_moving_towards(datum/ai_controller/controller, atom/current_movement_target, min_distance)

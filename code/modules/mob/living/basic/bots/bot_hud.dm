@@ -38,6 +38,7 @@
 		else
 			holder.icon_state = ""
 
+///proc that handles drawing and transforming the bot's path onto diagnostic huds
 /mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source)
 	SIGNAL_HANDLER
 
@@ -88,6 +89,7 @@
 	for(var/datum/atom_hud/hud as anything in path_huds_watching_me)
 		hud.add_atom_to_hud(src)
 
+///proc that handles moving along the bot's drawn path
 /mob/living/basic/bot/proc/handle_loop_movement(atom/movable/source)
 	SIGNAL_HANDLER
 
@@ -106,6 +108,7 @@
 	current_pathed_turfs -= our_turf
 	return
 
+///proc that handles deleting the bot's drawn path when needed
 /mob/living/basic/bot/proc/clear_path_hud()
 	for(var/turf/index in current_pathed_turfs)
 		var/image/our_image = current_pathed_turfs[index]
