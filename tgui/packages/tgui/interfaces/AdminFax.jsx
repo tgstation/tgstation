@@ -1,15 +1,15 @@
 import { useBackend, useLocalState } from '../backend';
 import {
-  Section,
   Box,
-  Dropdown,
   Button,
-  Input,
-  TextArea,
   Divider,
-  NumberInput,
-  Tooltip,
+  Dropdown,
+  Input,
   Knob,
+  NumberInput,
+  Section,
+  TextArea,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -140,7 +140,7 @@ export const FaxMainPanel = (props) => {
             placeholder="Your message here..."
             height="200px"
             value={rawText}
-            onInput={(e, value) => {
+            onChange={(e, value) => {
               setRawText(value);
             }}
           />

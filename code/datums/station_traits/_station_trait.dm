@@ -33,6 +33,8 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	var/dynamic_threat_id
 	/// If ran during dynamic, do we reduce the total threat? Will be overriden by config if set
 	var/threat_reduction = 0
+	/// Trait should not be instantiated in a round if its type matches this type
+	var/abstract_type = /datum/station_trait
 
 /datum/station_trait/New()
 	. = ..()
@@ -81,7 +83,7 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 	return
 
 /// Return TRUE if we want to show a lobby button, by default we assume we don't want it after the round begins
-/datum/station_trait/proc/can_display_lobby_button()
+/datum/station_trait/proc/can_display_lobby_button(client/player)
 	return sign_up_button && !SSticker.HasRoundStarted()
 
 /// Apply any additional handling we need to our lobby button

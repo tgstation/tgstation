@@ -1,5 +1,6 @@
-import { Antagonist, Category } from '../base';
 import { multiline } from 'common/string';
+
+import { Antagonist, Category } from '../base';
 
 export const WIZARD_MECHANICAL_DESCRIPTION = multiline`
       Choose between a variety of powerful spells in order to cause chaos

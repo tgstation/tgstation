@@ -50,7 +50,8 @@
 	var/hurt = TRUE
 	var/extra_speed = 0
 	var/oof_noise = FALSE //We smacked something with denisty, so play a noise
-	if(throwingdatum.thrower != src)
+	var/mob/thrower = throwingdatum?.get_thrower()
+	if(thrower != src)
 		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 
 	if(istype(throwingdatum))
@@ -792,7 +793,6 @@
 	if(hud_used?.spacesuit)
 		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
 
-
 /mob/living/carbon/set_health(new_value)
 	. = ..()
 	if(. > hardcrit_threshold)
@@ -952,6 +952,9 @@
 		return DEFIB_NOGRAB_AGHOST
 
 	return DEFIB_POSSIBLE
+
+/mob/living/carbon/proc/can_defib_client()
+	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
 
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))

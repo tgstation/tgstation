@@ -1,9 +1,9 @@
-import { Button, LabeledList, NumberInput, Section } from '../components';
-
 import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
+
 import { useBackend } from '../backend';
+import { Button, LabeledList, NumberInput, Section } from '../components';
 import { getGasLabel } from '../constants';
+import { Window } from '../layouts';
 
 type Data = {
   filter_types: Filter[];

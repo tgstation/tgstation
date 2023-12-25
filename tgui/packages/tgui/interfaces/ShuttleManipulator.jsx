@@ -1,10 +1,13 @@
 import { map } from 'common/collections';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Button, Flex, LabeledList, Section, Table, Tabs } from '../components';
 import { Window } from '../layouts';
 
 export const ShuttleManipulator = (props) => {
-  const [tab, setTab] = useLocalState('tab', 1);
+  const [tab, setTab] = useState(1);
+
   return (
     <Window title="Shuttle Manipulator" width={800} height={600} theme="admin">
       <Window.Content scrollable>
@@ -91,11 +94,11 @@ export const ShuttleManipulatorTemplates = (props) => {
   const { act, data } = useBackend();
   const templateObject = data.templates || {};
   const selected = data.selected || {};
-  const [selectedTemplateId, setSelectedTemplateId] = useLocalState(
-    'templateId',
+  const [selectedTemplateId, setSelectedTemplateId] = useState(
     Object.keys(templateObject)[0],
   );
   const actualTemplates = templateObject[selectedTemplateId]?.templates || [];
+
   return (
     <Section>
       <Flex>

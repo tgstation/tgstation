@@ -11,8 +11,8 @@ import {
   Section,
   Stack,
 } from '../../components';
-import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 import { PULSE_DURATION_MAX, PULSE_STRENGTH_MAX } from './constants';
+import { GeneticMakeupInfo } from './GeneticMakeupInfo';
 
 const GeneticMakeupBufferInfo = (props) => {
   const { index, makeup } = props;

@@ -1,6 +1,0 @@
-author: "Jacquerel and Fikou"
-delete-after: True
-changes:
-  - qol: "If the station rolls the \"Cargo Gorilla\" station trait. you will be able to sign up for the role from the game lobby."
-  - qol: "If nobody signs up to be the Cargo Gorilla then you can select it from the Late Join menu and arrive on the arrival shuttle."
-  - bugfix: "The Cargo Gorilla will actually spawn."

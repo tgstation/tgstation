@@ -36,15 +36,13 @@
  * Arguments:
  * - flags: A set of flags determining how exactly the materials are broken down.
  */
-/atom/proc/get_material_composition(breakdown_flags=NONE)
+/atom/proc/get_material_composition()
 	. = list()
-	if(!(breakdown_flags & BREAKDOWN_INCLUDE_ALCHEMY) && HAS_TRAIT(src, TRAIT_MAT_TRANSMUTED))
-		return
 
 	var/list/cached_materials = custom_materials
 	for(var/mat in cached_materials)
 		var/datum/material/material = GET_MATERIAL_REF(mat)
-		var/list/material_comp = material.return_composition(cached_materials[mat], breakdown_flags)
+		var/list/material_comp = material.return_composition(cached_materials[mat])
 		for(var/comp_mat in material_comp)
 			.[comp_mat] += material_comp[comp_mat]
 

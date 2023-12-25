@@ -347,7 +347,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_TUMOR_SUPPRESSED "brain_tumor_suppressed"
 /// Prevents hallucinations from the hallucination brain trauma (RDS)
 #define TRAIT_RDS_SUPPRESSED "rds_suppressed"
-/// overrides the update_fire proc to always add fire (for lava)
+/// mobs that have this trait cannot be extinguished
 #define TRAIT_PERMANENTLY_ONFIRE "permanently_onfire"
 /// Indicates if the mob is currently speaking with sign language
 #define TRAIT_SIGN_LANG "sign_language"
@@ -415,6 +415,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 // Being close enough to the supermatter makes it heal at higher temperatures
 // and emit less heat. Present on /mob or /datum/mind
 #define TRAIT_SUPERMATTER_SOOTHER "supermatter_soother"
+/// Mob has fov applied to it
+#define TRAIT_FOV_APPLIED "fov_applied"
 
 /// Trait added when a revenant is visible.
 #define TRAIT_REVENANT_REVEALED "revenant_revealed"
@@ -486,6 +488,15 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Is the mob standing on an elevated surface? This prevents them from dropping down if not elevated first.
 #define TRAIT_ON_ELEVATED_SURFACE "on_elevated_surface"
+
+/// Prevents you from twohanding weapons.
+#define TRAIT_NO_TWOHANDING "no_twohanding"
+
+/// Halves the time of tying a tie.
+#define TRAIT_FAST_TYING "fast_tying"
+
+/// Sells for more money on the pirate bounty pad.
+#define TRAIT_HIGH_VALUE_RANSOM "high_value_ransom"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -611,9 +622,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 ///Used for managing KEEP_TOGETHER in [/atom/var/appearance_flags]
 #define TRAIT_KEEP_TOGETHER "keep-together"
-
-///Marks the item as having been transmuted. Functionally blacklists the item from being recycled or sold for materials.
-#define TRAIT_MAT_TRANSMUTED "transmuted"
 
 // cargo traits
 ///If the item will block the cargo shuttle from flying to centcom
@@ -815,8 +823,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Similar trait given to temporary bodies inhabited by players
 #define TRAIT_TEMPORARY_BODY "temporary_body"
 
+/// Trait given to objects with the wallmounted component
+#define TRAIT_WALLMOUNTED "wallmounted"
+
 /// Trait given to mechs that can have orebox functionality on movement
 #define TRAIT_OREBOX_FUNCTIONAL "orebox_functional"
+
+///A trait for mechs that were created through the normal construction process, and not spawned by map or other effects.
+#define TRAIT_MECHA_CREATED_NORMALLY "trait_mecha_created_normally"
 
 ///fish traits
 #define TRAIT_RESIST_EMULSIFY "resist_emulsify"

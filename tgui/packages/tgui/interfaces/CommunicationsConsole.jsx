@@ -1,5 +1,6 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Blink,
@@ -12,9 +13,9 @@ import {
   Section,
   TextArea,
 } from '../components';
-import { StatusDisplayControls } from './common/StatusDisplayControls';
 import { Window } from '../layouts';
 import { sanitizeText } from '../sanitize';
+import { StatusDisplayControls } from './common/StatusDisplayControls';
 
 const STATE_BUYING_SHUTTLE = 'buying_shuttle';
 const STATE_CHANGING_STATUS = 'changing_status';
@@ -84,7 +85,7 @@ const MessageModal = (props) => {
             width="80vw"
             backgroundColor="black"
             textColor="white"
-            onInput={(_, value) => {
+            onChange={(_, value) => {
               setInput(value.substring(0, maxMessageLength));
             }}
             value={input}

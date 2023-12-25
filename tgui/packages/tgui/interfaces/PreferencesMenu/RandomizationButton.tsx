@@ -1,6 +1,7 @@
+import { exhaustiveCheck } from 'common/exhaustive';
+
 import { Dropdown, Icon } from '../../components';
 import { RandomSetting } from './data';
-import { exhaustiveCheck } from 'common/exhaustive';
 
 export const RandomizationButton = (props: {
   dropdownProps?: Record<string, unknown>;

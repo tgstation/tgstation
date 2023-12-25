@@ -19,7 +19,7 @@
 		return 0
 
 	var/obj/item/I = O
-	var/list/mat_comp = I.get_material_composition(BREAKDOWN_FLAGS_EXPORT)
+	var/list/mat_comp = I.get_material_composition()
 	var/datum/material/mat_ref = ispath(material_id) ? locate(material_id) in mat_comp : GET_MATERIAL_REF(material_id)
 	if(isnull(mat_comp[mat_ref]))
 		return 0

@@ -1,19 +1,20 @@
+import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
-import { flow } from 'common/fp';
-import { filter, sortBy } from 'common/collections';
+
 import { useBackend, useLocalState } from '../backend';
 import {
-  Divider,
-  Button,
-  Section,
-  Tabs,
-  Stack,
   Box,
-  Input,
+  Button,
+  Divider,
   Icon,
-  Tooltip,
+  Input,
   NoticeBox,
+  Section,
+  Stack,
+  Tabs,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 import { Food } from './PreferencesMenu/data';
@@ -491,8 +492,7 @@ export const PersonalCrafting = (props) => {
           </Stack.Item>
           <Stack.Item grow my={-1}>
             <Box
-              id="content"
-              height={'100%'}
+              height="100%"
               pr={1}
               pt={1}
               mr={-1}
