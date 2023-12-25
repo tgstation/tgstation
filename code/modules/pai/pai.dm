@@ -267,6 +267,15 @@
 	held_state = "[chassis]"
 	return ..()
 
+/mob/living/silicon/pai/set_stat(new_stat)
+	. = ..()
+	update_stat()
+
+/mob/living/silicon/pai/on_knockedout_trait_loss(datum/source)
+	. = ..()
+	set_stat(CONSCIOUS)
+	update_stat()
+
 /**
  * Resolves the weakref of the pai's master.
  * If the master has been deleted, calls reset_software().
