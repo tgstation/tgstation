@@ -145,7 +145,7 @@ export const SparringContract = (props) => {
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
-              <Stack grow textAlign="center">
+              <Stack textAlign="center">
                 <Stack.Item fontSize={left_sign !== 'none' && '14px'} grow>
                   {(left_sign === 'none' && (
                     <Button
