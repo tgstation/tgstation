@@ -59,7 +59,7 @@ export const ChemHeater = (props) => {
   const isBeakerLoaded = beaker !== null;
 
   return (
-    <Window width={330} height={350}>
+    <Window width={350} height={350}>
       <Window.Content scrollable>
         <Section
           title="Controls"
@@ -293,19 +293,28 @@ export const ChemHeater = (props) => {
                         />
                       )}
                     </Table.Cell>
-                    <Table.Cell width={'70px'}>
+                    <Table.Cell width={'100px'}>
                       {(upgradeLevel > 2 && (
-                        <ProgressBar
-                          value={reaction.reactedVol}
-                          minValue={0}
-                          maxValue={reaction.targetVol}
-                          textAlign={'center'}
-                          icon={reaction.overheat && 'thermometer-full'}
-                          width={7}
-                          color={reaction.overheat ? 'red' : 'label'}
-                        >
-                          {reaction.targetVol}u
-                        </ProgressBar>
+                        <>
+                          {!!reaction.overheat && (
+                            <Icon
+                              name="thermometer-full"
+                              color="red"
+                              style={{ transform: 'scale(1.7)' }}
+                              mr="5px"
+                            />
+                          )}
+                          <ProgressBar
+                            value={reaction.reactedVol}
+                            minValue={0}
+                            maxValue={reaction.targetVol}
+                            textAlign="center"
+                            width={8}
+                            color={reaction.overheat ? 'red' : 'label'}
+                          >
+                            {reaction.targetVol}u
+                          </ProgressBar>
+                        </>
                       )) || (
                         <Box color={reaction.danger && 'red'} ml={2}>
                           {reaction.targetVol}u
