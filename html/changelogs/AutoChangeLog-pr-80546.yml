@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - bugfix: "Fixed a bug that would give you the chat message \"/datum/element/damage_threshold looks unharmed!\""
