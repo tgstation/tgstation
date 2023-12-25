@@ -6,7 +6,17 @@ about: Create a report to help reproduce and fix the issue
 
 ## Issue Summary
 
-<!-- Briefly explain your issue in a few plain sentences, e.g. "X has Y issue" "When I do X, Y happens instead of Z" "X on Y map has Z issue". You may copy and paste the issue title here if it is suitable. -->
+<!-- Briefly explain your issue in a few plain sentences, e.g. "X has Y issue" "When I do X, Y happens instead of Z" "X on Y map has Z issue". You may copy and paste the issue title here if it is suitable. Screenshots can be especially helpful. -->
+
+<!-- Please help cull duplicate and confusing issues. Your answers here are not required unless specifically marked as such. -->
+
+## Checklist
+
+[] Yes, I have searched for this issue. (REQUIRED)
+[] This occurs every time.
+[] This occurred once.
+[] The issue affects something in BYOND.
+[] The issue affects TGUI.
 
 ## Round ID:
 
@@ -22,7 +32,7 @@ If you discovered this issue from playing tgstation hosted servers:
 
 ## Reproduction:
 
-<!-- Explain your issue in detail, including the steps to reproduce it. Issues without proper reproduction steps or explanation are open to being ignored/closed by maintainers.-->
+<!-- Write the steps you took (or what was occurring) to encounter the issue. Issues without proper reproduction steps or explanation are open to being ignored/closed by maintainers.-->
 
 <!-- **For Admins:** Oddities induced by var-edits and other admin tools are not necessarily bugs. Verify that your issues occur under regular circumstances before reporting them. -->
 
