@@ -1,5 +1,5 @@
 import { classes } from 'common/react';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { BoxProps } from './Box';
 import { Button } from './Button';
@@ -58,7 +58,6 @@ export function Dropdown(props: Props) {
   } = props;
 
   const [open, setOpen] = useState(false);
-  const popperRef = useRef<HTMLDivElement>(null);
 
   /** Get the index of the selected option */
   function getSelectedIndex() {
@@ -94,29 +93,18 @@ export function Dropdown(props: Props) {
     onSelected?.(getOptionValue(options[newIndex]));
   }
 
-  /** Focus the dropdown menu when opening it */
-  useEffect(() => {
-    if (open && popperRef.current) {
-      popperRef.current.focus();
-    }
-  }, [open]);
-
   return (
     <Popper
       isOpen={open}
       onClickOutside={() => setOpen(false)}
       placement="bottom-start"
       popperContent={
-        <div
-          className="Layout Dropdown__menu"
-          style={{ minWidth: menuWidth }}
-          ref={popperRef}
-        >
+        <div className="Layout Dropdown__menu" style={{ minWidth: menuWidth }}>
           {options.length === 0 && (
             <div className="Dropdown__menuentry">No options</div>
           )}
 
-          {options.map((option) => {
+          {options.map((option, index) => {
             const value = getOptionValue(option);
 
             return (
@@ -125,6 +113,7 @@ export function Dropdown(props: Props) {
                   'Dropdown__menuentry',
                   selected === value && 'selected',
                 ])}
+                id="dropdown-item"
                 key={value}
                 onClick={() => {
                   setOpen(false);

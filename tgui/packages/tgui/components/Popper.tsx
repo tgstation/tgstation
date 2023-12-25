@@ -9,8 +9,8 @@ type Props = {
   popperContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
 } & Partial<{
   additionalStyles: CSSProperties;
-  options: ArgumentsOf<typeof createPopper>[2];
   onClickOutside: () => void;
+  options: ArgumentsOf<typeof createPopper>[2];
   placement: Placement;
 }> &
   PropsWithChildren;
@@ -34,20 +34,20 @@ export function Popper(props: Props) {
 
   /** Create the popper instance when the component mounts */
   useEffect(() => {
-    if (parentRef.current && popperRef.current) {
-      if (placement) options.placement = placement;
+    if (!parentRef.current || !popperRef.current) return;
+    if (placement) options.placement = placement;
 
-      const instance = createPopper(
-        parentRef.current,
-        popperRef.current,
-        options,
-      );
-      setPopperInstance(instance);
+    const instance = createPopper(
+      parentRef.current,
+      popperRef.current,
+      options,
+    );
+    setPopperInstance(instance);
 
-      return () => {
-        instance.destroy();
-      };
-    }
+    return () => {
+      instance.destroy();
+      setPopperInstance(null);
+    };
   }, [options]);
 
   /** Update the popper instance when the content changes */
@@ -56,6 +56,15 @@ export function Popper(props: Props) {
 
     popperInstance.update();
   }, [popperContent]);
+
+  /** Focus when opened */
+  useEffect(() => {
+    if (!isOpen) return;
+
+    // focus the first element in the popper content
+    const focusable = popperRef.current?.firstChild as HTMLElement | null;
+    focusable?.focus();
+  }, [isOpen]);
 
   /** Close the dropdown menu when clicking outside of it */
   useEffect(() => {
@@ -85,13 +94,12 @@ export function Popper(props: Props) {
   return (
     <>
       <div ref={parentRef}>{children}</div>
-      {isOpen &&
-        createPortal(
-          <div ref={popperRef} style={contentStyle}>
-            {popperContent}
-          </div>,
-          document.body,
-        )}
+      {createPortal(
+        <div ref={popperRef} style={contentStyle}>
+          {isOpen && popperContent}
+        </div>,
+        document.body,
+      )}
     </>
   );
 }
