@@ -728,3 +728,79 @@
   zeroisthebiggay:
   - bugfix: '''A whole bunch of spiders in a SWAT suit'' to ''A whole bunch of spiders
       in a MODsuit'''
+2023-12-24:
+  BurgerBB:
+  - balance: Miasma is now filtered through gas mask filters, at medium strength.
+  Deadgebert:
+  - qol: Head of Security beret added to their garmet bag
+  - qol: Head of Security bowman added to their locker
+  Diamond-74:
+  - bugfix: Injecting yourself twice with a luxury medipen in pressure doesn't runtime
+      and mechs with a cell with no max charge won't runtime.
+  - refactor: Gives hyposprays a var to check if they're fully used up rather than
+      setting total_volume to 0.
+  KannaLisvern:
+  - qol: Removed Bluespace Crystals and Diamonds from medical emergency bed's recipe.
+  Rex9001:
+  - balance: Ai's using the mech domination ability can now eject from the mech
+  Rhials:
+  - qol: Obsessed crewmembers are now displayed in the orbit panel.
+  - qol: The Paradox Clone orbit menu tab is now white. Neat!
+  SSensum:
+  - rscadd: Added weapon recharger boards to designs available to print on sec techfab.
+  Y0SH1M4S73R:
+  - qol: MOD wearers and internal AIs can pin the individual actions in a MOD circuit
+      module in a similar way to how they can pin modules. Circuit module actions
+      can be pinned from the configuration menu of the circuit
+  - refactor: The MOD action and BCI action components have been merged into one component
+      - the Equipment Action component.
+  jlsnow301:
+  - bugfix: Camera console search should update automatically
+  - bugfix: Autolathe search should now properly show designs
+  vinylspiders:
+  - bugfix: the boozeomat ui will stop duplicating space beer bottles
+  - refactor: refactored vending machine backend to have unique keys for their data
+      structures. should fix bugs related to items that happen to have the same name.
+2023-12-25:
+  00-Steven:
+  - bugfix: Camera circuits actually print pictures again!
+  - qol: Camera circuits can now take pictures while on a carbon, whether held, hung
+      around the neck, or sneakily hidden in either pocket. When held they try to
+      deposit their pictures into the holder's hands if possible.
+  - bugfix: Camera circuits should now actually use the camera's x axis picture size,
+      rather than using the camera's y axis picture size setting for both axis.
+  A.C.M.O.:
+  - bugfix: Fixed Personal AI cards, allowing them to wake up from sleep.
+  Iamgoofball:
+  - rscadd: Adds a mint condition clear PDA to the Goodies menu for 100,000 credits.
+  LT3:
+  - qol: TGUI will now wait longer trying to reconnect to a new round
+  Mothblocks:
+  - bugfix: Cut down a significant amount of time that caused the start of rounds
+      to lag.
+  - bugfix: Fixed a bug that would give you the chat message "/datum/element/damage_threshold
+      looks unharmed!"
+  SyncIt21:
+  - code_imp: removed excess calls to `update_total()` making reaction code slightly
+      faster.
+  - code_imp: removed excessive use of chemical constants (quantisation & rounding
+      constants) in places where they were not needed i.e. plumbing buffer, reaction
+      chamber, pyrotechnics & the liver.
+  Timberpoes:
+  - bugfix: Fixed an issue with polling ghost roles to control multiple mobs that
+      prevented Sentience Fun Balloons from working as intended.
+  Time-Green:
+  - bugfix: polymorphing into drone no longer gibs
+  Vermidia:
+  - rscadd: You can now look up and down through the IC menu
+  Watermelon914:
+  - balance: Cyborg lover has been replaced with Transhumanist. Transhumanists start
+      with a robotic limb and get mood buffs by being near to silicon-based lifeforms.
+      However, they get mood debuffs by being near organics, so there is a tradeoff
+      to taking this quirk. The cost for this quirk has been reduced from 2 to 0.
+  - bugfix: Fixed integrated circuit UI breaking.
+  jlsnow301:
+  - bugfix: AI voice changer UI should show defaults properly
+  - bugfix: NTOS Software Hub should focus on the input immediately now
+  - bugfix: Ore container UI should autofocus on the search bar now
+  - bugfix: Vend-a-tray registration text should display as intended

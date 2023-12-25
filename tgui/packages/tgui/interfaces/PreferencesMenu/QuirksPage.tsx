@@ -66,8 +66,6 @@ const QuirkList = (props: {
           <Box
             className={className}
             key={quirkKey}
-            role="button"
-            tabIndex="1"
             onClick={() => {
               if (props.selected) {
                 setCustomizationExpanded(false);

@@ -190,7 +190,6 @@
 	if(!LAZYLEN(reaction_list))
 		finish_reacting()
 	else
-		update_total()
 		handle_reactions()
 
 /*
