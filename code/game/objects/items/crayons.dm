@@ -769,7 +769,7 @@
 	. = ..()
 
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return NONE
+		return .
 
 	if(has_cap)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle cap"
@@ -780,7 +780,7 @@
 	. = ..()
 
 	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
-		return NONE
+		return .
 
 	context[SCREENTIP_CONTEXT_LMB] = "Paint"
 	context[SCREENTIP_CONTEXT_RMB] = "Copy color"
