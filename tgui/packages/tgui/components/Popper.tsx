@@ -1,6 +1,6 @@
 import { createPopper, Placement } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import React, {
+import {
   PropsWithChildren,
   useCallback,
   useEffect,
