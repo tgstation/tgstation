@@ -257,7 +257,6 @@ const CrimeAuthor = (props) => {
           fluid
           height={4}
           maxLength={1025}
-          multiline
           onChange={(_, value) => setCrimeDetails(value)}
           placeholder="Type some details..."
         />

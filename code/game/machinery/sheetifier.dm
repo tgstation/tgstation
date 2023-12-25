@@ -15,7 +15,7 @@
 		/datum/component/material_container, \
 		list(/datum/material/meat, /datum/material/hauntium), \
 		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
-		MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_SHEETIFIER, \
+		MATCONTAINER_EXAMINE, \
 		typesof(/datum/material/meat) + /datum/material/hauntium, list(/obj/item/food/meat, /obj/item/photo), \
 		container_signals = list(
 			COMSIG_MATCONTAINER_PRE_USER_INSERT = TYPE_PROC_REF(/obj/machinery/sheetifier, CanInsertMaterials),

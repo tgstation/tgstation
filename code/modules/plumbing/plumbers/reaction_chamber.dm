@@ -43,7 +43,7 @@
 /obj/machinery/plumbing/reaction_chamber/proc/on_reagent_change(datum/reagents/holder, ...)
 	SIGNAL_HANDLER
 
-	if(holder.total_volume <= CHEMICAL_VOLUME_ROUNDING && emptying) //we were emptying, but now we aren't
+	if(!holder.total_volume && emptying) //we were emptying, but now we aren't
 		emptying = FALSE
 		holder.flags |= NO_REACT
 	return NONE

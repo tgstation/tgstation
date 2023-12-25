@@ -364,7 +364,7 @@
 			var/datum/antagonist/A = M.mind.has_antag_datum(/datum/antagonist/)
 			if(A)
 				poll_message = "[poll_message] Status: [A.name]."
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob(poll_message, ROLE_PAI, FALSE, 10 SECONDS, M)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob(poll_message, check_jobban = ROLE_PAI, poll_time = 10 SECONDS, target_mob = M, pic_source = M, role_name_text = "ghost control")
 
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
