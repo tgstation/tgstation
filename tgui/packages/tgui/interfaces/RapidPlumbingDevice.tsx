@@ -3,10 +3,10 @@ import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
 
 import { useBackend } from '../backend';
-import { Box, Button, Section, Stack, Tabs } from '../components';
+import { Box, Button, LabeledList, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 import { MatterItem, SiloItem } from './RapidConstructionDevice';
-import { ColorItem, LayerSelect } from './RapidPipeDispenser';
+import { ColorItem } from './RapidPipeDispenser';
 
 type Data = {
   silo_upgraded: BooleanLike;
@@ -14,6 +14,7 @@ type Data = {
   categories: Category[];
   selected_category: string;
   selected_recipe: string;
+  piping_layer: number;
 };
 
 type Category = {
@@ -76,6 +77,27 @@ const PlumbingTypeSection = (props) => {
         </Button>
       ))}
     </Section>
+  );
+};
+
+export const LayerSelect = (props) => {
+  const { act, data } = useBackend<Data>();
+  const { piping_layer } = data;
+  return (
+    <LabeledList.Item label="Layer">
+      {[1, 2, 3, 4, 5].map((layer) => (
+        <Button.Checkbox
+          key={layer}
+          checked={layer === piping_layer}
+          content={layer}
+          onClick={() =>
+            act('piping_layer', {
+              piping_layer: layer,
+            })
+          }
+        />
+      ))}
+    </LabeledList.Item>
   );
 };
 
