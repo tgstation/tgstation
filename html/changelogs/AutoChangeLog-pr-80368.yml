@@ -1,0 +1,7 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "AI voice changer UI should show defaults properly"
+  - bugfix: "NTOS Software Hub should focus on the input immediately now"
+  - bugfix: "Ore container UI should autofocus on the search bar now"
+  - bugfix: "Vend-a-tray registration text should display as intended"

@@ -1,0 +1,6 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Camera circuits actually print pictures again!"
+  - qol: "Camera circuits can now take pictures while on a carbon, whether held, hung around the neck, or sneakily hidden in either pocket. When held they try to deposit their pictures into the holder's hands if possible."
+  - bugfix: "Camera circuits should now actually use the camera's x axis picture size, rather than using the camera's y axis picture size setting for both axis."

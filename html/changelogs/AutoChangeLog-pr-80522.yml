@@ -1,0 +1,4 @@
+author: "Mothblocks"
+delete-after: True
+changes:
+  - bugfix: "Cut down a significant amount of time that caused the start of rounds to lag."
