@@ -739,7 +739,9 @@ Popper lets you position elements so that they don't go out of the bounds of the
 **Props:**
 
 - `popperContent: ReactNode` - The content that will be put inside the popper.
-- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options], but the one you want most is `placement`. Valid placements are "bottom", "top", "left", and "right". You can affix "-start" and "-end" to achieve something like top left or top right respectively. You can also use "auto" (with an optional "-start" or "-end"), where a best fit will be chosen.
+- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options]
+- `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
+- `onClickOutside?: (e) => void` - A function that will be called when the user clicks outside of the popper.
 - `additionalStyles: { ... }` - A map of CSS styles to add to the element that will contain the popper.
 
 ### `ProgressBar`

@@ -95,25 +95,6 @@ export function Dropdown(props: Props) {
     onSelected?.(getOptionValue(options[newIndex]));
   }
 
-  /** Close the dropdown menu when clicking outside of it */
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        parentRef.current &&
-        !parentRef.current.contains(event.target as Node) &&
-        popperRef.current &&
-        !popperRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
-
   /** Focus the dropdown menu when opening it */
   useEffect(() => {
     if (open && popperRef.current) {
@@ -123,7 +104,8 @@ export function Dropdown(props: Props) {
 
   return (
     <Popper
-      options={{ placement: 'bottom-start' }}
+      placement="bottom-start"
+      onClickOutside={() => setOpen(false)}
       popperContent={
         open ? (
           <div
@@ -169,6 +151,7 @@ export function Dropdown(props: Props) {
           className={classes([
             'Dropdown__control',
             'Button',
+            'Button--dropdown',
             'Button--color--' + color,
             disabled && 'Button--disabled',
             className,
