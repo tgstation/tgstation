@@ -3246,7 +3246,6 @@
 #include "code\modules\asset_cache\assets\supplypods.dm"
 #include "code\modules\asset_cache\assets\tgfont.dm"
 #include "code\modules\asset_cache\assets\tgui.dm"
-#include "code\modules\asset_cache\assets\tutorial_advisors.dm"
 #include "code\modules\asset_cache\assets\uplink.dm"
 #include "code\modules\asset_cache\assets\vending.dm"
 #include "code\modules\asset_cache\assets\vv.dm"
