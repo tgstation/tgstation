@@ -61,7 +61,6 @@ export function Popper(props: Props) {
   useEffect(() => {
     if (!isOpen) return;
 
-    // focus the first element in the popper content
     const focusable = popperRef.current?.firstChild as HTMLElement | null;
     focusable?.focus();
   }, [isOpen]);
@@ -95,7 +94,7 @@ export function Popper(props: Props) {
     <>
       <div ref={parentRef}>{children}</div>
       {createPortal(
-        <div ref={popperRef} style={contentStyle}>
+        <div ref={popperRef} style={isOpen ? contentStyle : {}}>
           {isOpen && popperContent}
         </div>,
         document.body,
