@@ -1,6 +1,12 @@
 import { createPopper, Placement } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
-import React, { PropsWithChildren, useEffect, useRef, useState } from 'react';
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+} from 'react';
 import { CSSProperties, JSXElementConstructor, ReactElement } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -30,9 +36,15 @@ export function Popper(props: Props) {
 
   const parentRef = useRef<HTMLDivElement | null>(null);
   const popperRef = useRef<HTMLDivElement | null>(null);
-  const [popperInstance, setPopperInstance] = useState<ReturnType<
-    typeof createPopper
-  > | null>(null);
+
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (
+      !parentRef.current?.contains(event.target as Node) &&
+      !popperRef.current?.contains(event.target as Node)
+    ) {
+      onClickOutside?.();
+    }
+  }, []);
 
   /** Create the popper instance when the component mounts */
   useEffect(() => {
@@ -44,53 +56,36 @@ export function Popper(props: Props) {
       popperRef.current,
       options,
     );
-    setPopperInstance(instance);
 
     return () => {
       instance.destroy();
-      setPopperInstance(null);
     };
   }, [options]);
 
-  /** Update the popper instance when the content changes */
+  /** Focus when opened, adds click outside listener */
   useEffect(() => {
-    if (!popperInstance) return;
+    if (!isOpen) return;
 
-    popperInstance.update();
-  }, [popperContent]);
-
-  /** Focus when opened */
-  useEffect(() => {
-    if (!isOpen || !autoFocus) return;
-
-    const focusable = popperRef.current?.firstChild as HTMLElement | null;
-    focusable?.focus();
-  }, [isOpen]);
-
-  /** Close the dropdown menu when clicking outside of it */
-  useEffect(() => {
-    if (!onClickOutside) return;
-
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        !parentRef.current?.contains(event.target as Node) &&
-        !popperRef.current?.contains(event.target as Node)
-      ) {
-        onClickOutside?.();
-      }
+    if (autoFocus) {
+      const focusable = popperRef.current?.firstChild as HTMLElement | null;
+      focusable?.focus();
     }
+
+    if (!onClickOutside) return;
 
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, []);
+  }, [isOpen]);
 
-  const contentStyle = {
-    ...additionalStyles,
-    position: 'absolute',
-    zIndex: 1000,
-  } as CSSProperties;
+  const contentStyle = useMemo(() => {
+    return {
+      ...additionalStyles,
+      position: 'absolute',
+      zIndex: 1000,
+    } as CSSProperties;
+  }, [additionalStyles]);
 
   return (
     <>
