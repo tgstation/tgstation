@@ -220,3 +220,11 @@
   - spellcheck: Two store tabs had errant right parenthesis, which are now removed.
   Wisemonster:
   - bugfix: Fix mulebots receiving the wrong message when thier cell is added/removed.
+2023-12-25:
+  CannibalHunter:
+  - balance: changes the price of gnome outfits in monkeshop
+  NicoDeLuna:
+  - rscadd: Added Milkman Outfit
+  Sord213:
+  - rscadd: Dagoth Ur has been hired by NT to make announcements on a station near
+      YOU
