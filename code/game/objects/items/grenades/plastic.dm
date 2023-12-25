@@ -119,7 +119,12 @@
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
 		user.log_message("planted [name] on [target.name] with a [det_time] second fuse.", LOG_ATTACK)
-		notify_ghosts("[user] has planted \a [src] on [target] with a [det_time] second fuse!", source = bomb_target, action = (isturf(target) ? NOTIFY_JUMP : NOTIFY_ORBIT), flashwindow = FALSE, header = "Explosive Planted")
+		notify_ghosts(
+			"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
+			source = bomb_target,
+			header = "Explosive Planted",
+			notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		)
 
 		moveToNullspace() //Yep
 

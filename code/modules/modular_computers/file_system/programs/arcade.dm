@@ -1,9 +1,9 @@
 /datum/computer_file/program/arcade
 	filename = "dsarcade"
 	filedesc = "Donksoft Micro Arcade"
-	program_icon_state = "arcade"
+	program_open_overlay = "arcade"
 	extended_desc = "This port of the classic game 'Outbomb Cuban Pete', redesigned to run on tablets, with thrilling graphics and chilling storytelling."
-	requires_ntnet = FALSE
+	downloader_category = PROGRAM_CATEGORY_GAMES
 	size = 6
 	tgui_id = "NtosArcade"
 	program_icon = "gamepad"
@@ -23,6 +23,20 @@
 	///Determines which boss image to use on the UI.
 	var/boss_id = 1
 
+///Lazy version of the arade that can be found in maintenance disks
+/datum/computer_file/program/arcade/eazy
+	filename = "dsarcadeez"
+	filedesc = "Donksoft Micro Arcade Ez"
+	filetype = "MNT"
+	program_flags = PROGRAM_UNIQUE_COPY
+	extended_desc = "Some sort of fan-made conversion of the classic game 'Outbomb Cuban Pete'. This one has you fight the weaker 'George Melon' instead."
+	boss_hp = 40
+	boss_mp = 10
+	player_hp = 35
+	player_mp = 15
+	heads_up = "Are you a bad enough dude to grief the station?"
+	boss_name = "George Melon"
+
 /datum/computer_file/program/arcade/proc/game_check(mob/user)
 	sleep(0.5 SECONDS)
 	user?.mind?.adjust_experience(/datum/skill/gaming, 1)
@@ -30,7 +44,7 @@
 		heads_up = "You have crushed [boss_name]! Rejoice!"
 		playsound(computer.loc, 'sound/arcade/win.ogg', 50)
 		game_active = FALSE
-		program_icon_state = "arcade_off"
+		program_open_overlay = "arcade_off"
 		if(istype(computer))
 			computer.update_appearance()
 		ticket_count += 1
@@ -41,7 +55,7 @@
 		heads_up = "You have been defeated... how will the station survive?"
 		playsound(computer.loc, 'sound/arcade/lose.ogg', 50)
 		game_active = FALSE
-		program_icon_state = "arcade_off"
+		program_open_overlay = "arcade_off"
 		if(istype(computer))
 			computer.update_appearance()
 		user?.mind?.adjust_experience(/datum/skill/gaming, 10)
@@ -159,11 +173,11 @@
 				return TRUE
 		if("Start_Game")
 			game_active = TRUE
-			boss_hp = 45
-			player_hp = 30
-			player_mp = 10
+			boss_hp = initial(boss_hp)
+			player_hp = initial(player_hp)
+			player_mp = initial(player_mp)
 			heads_up = "You stand before [boss_name]! Prepare for battle!"
-			program_icon_state = "arcade"
+			program_open_overlay = "arcade"
 			boss_id = rand(1,6)
 			pause_state = FALSE
 			if(istype(computer))

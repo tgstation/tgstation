@@ -46,7 +46,11 @@
 	if(owner)
 		ADD_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 		owner.med_hud_set_status()
-		notify_ghosts("[owner] has developed spontaneous appendicitis!", source = owner, action = NOTIFY_ORBIT, header = "Whoa, Sick!")
+		notify_ghosts(
+			"[owner] has developed spontaneous appendicitis!",
+			source = owner,
+			header = "Whoa, Sick!",
+		)
 
 /obj/item/organ/internal/appendix/proc/inflamation(seconds_per_tick)
 	var/mob/living/carbon/organ_owner = owner
@@ -72,12 +76,12 @@
 /obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantappendix
 
-/obj/item/organ/internal/appendix/on_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	REMOVE_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	organ_owner.med_hud_set_status()
 
-/obj/item/organ/internal/appendix/on_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	if(inflamation_stage)
 		ADD_TRAIT(organ_owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)

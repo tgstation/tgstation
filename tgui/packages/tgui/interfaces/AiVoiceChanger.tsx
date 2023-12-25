@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Button, Section, Input, Dropdown, LabeledList } from '../components';
+import { Button, Dropdown, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -11,8 +12,8 @@ type Data = {
   name: string;
 };
 
-export const AiVoiceChanger = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const AiVoiceChanger = (props) => {
+  const { act, data } = useBackend<Data>();
   const { loud, name, on, say_verb, voices } = data;
 
   return (
@@ -39,7 +40,7 @@ export const AiVoiceChanger = (props, context) => {
           </LabeledList.Item>
           <LabeledList.Item label="Verb">
             <Input
-              default={say_verb}
+              value={say_verb}
               onChange={(e, value) =>
                 act('verb', {
                   verb: value,
@@ -57,7 +58,7 @@ export const AiVoiceChanger = (props, context) => {
           </LabeledList.Item>
           <LabeledList.Item label="Fake name">
             <Input
-              default={name}
+              value={name}
               onChange={(e, value) =>
                 act('name', {
                   name: value,

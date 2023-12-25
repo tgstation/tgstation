@@ -226,8 +226,7 @@
 
 	var/current_option = air_alarm_options.value
 
-	var/turf/alarm_turf = get_turf(connected_alarm)
-	var/datum/gas_mixture/environment = alarm_turf.return_air()
+	var/datum/gas_mixture/environment = connected_alarm.get_enviroment()
 	pressure.set_output(round(environment.return_pressure()))
 	temperature.set_output(round(environment.temperature))
 	if(ispath(options_map[current_option]))

@@ -31,7 +31,7 @@
 	var/datum/port/output/entity
 
 /obj/item/circuit_component/bot/populate_ports()
-	entity = add_output_port("User", PORT_TYPE_ATOM)
+	entity = add_output_port("User", PORT_TYPE_USER)
 	signal = add_output_port("Signal", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/bot/register_shell(atom/movable/shell)
@@ -46,4 +46,3 @@
 	playsound(source, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
 	entity.set_output(user)
 	signal.set_output(COMPONENT_SIGNAL)
-

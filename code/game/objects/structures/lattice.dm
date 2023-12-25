@@ -58,7 +58,7 @@
 		return T.attackby(C, user) //hand this off to the turf instead (for building plating, catwalks, etc)
 
 /obj/structure/lattice/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new build_material(get_turf(src), number_of_mats)
 	qdel(src)
 
@@ -73,7 +73,7 @@
 		if(design_structure == /turf/open/floor/plating)
 			var/turf/T = src.loc
 			if(isgroundlessturf(T))
-				T.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				T.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 				qdel(src)
 				return TRUE
 		if(design_structure == /obj/structure/lattice/catwalk)

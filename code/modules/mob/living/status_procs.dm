@@ -497,18 +497,28 @@
 
 /mob/living/proc/cure_husk(source)
 	REMOVE_TRAIT(src, TRAIT_HUSK, source)
-	if(!HAS_TRAIT(src, TRAIT_HUSK))
-		REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
-		update_body()
-		return TRUE
+	if(HAS_TRAIT(src, TRAIT_HUSK))
+		return FALSE
+	REMOVE_TRAIT(src, TRAIT_DISFIGURED, "husk")
+	update_body()
+	UnregisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNHUSKABLE))
+	return TRUE
 
 /mob/living/proc/become_husk(source)
-	if(!HAS_TRAIT(src, TRAIT_HUSK))
-		ADD_TRAIT(src, TRAIT_HUSK, source)
-		ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
-		update_body()
-	else
-		ADD_TRAIT(src, TRAIT_HUSK, source)
+	if(HAS_TRAIT(src, TRAIT_UNHUSKABLE))
+		return
+	var/was_husk = HAS_TRAIT(src, TRAIT_HUSK)
+	ADD_TRAIT(src, TRAIT_HUSK, source)
+	if (was_husk)
+		return
+	ADD_TRAIT(src, TRAIT_DISFIGURED, "husk")
+	update_body()
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNHUSKABLE), PROC_REF(became_unhuskable))
+
+/// Called when we become unhuskable while already husked
+/mob/living/proc/became_unhuskable()
+	SIGNAL_HANDLER
+	cure_husk()
 
 /mob/living/proc/cure_fakedeath(source)
 	remove_traits(list(TRAIT_FAKEDEATH, TRAIT_DEATHCOMA), source)

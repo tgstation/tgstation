@@ -14,6 +14,10 @@
 		/obj/item/canvas/twentythree_twentythree
 	)
 
+/datum/quirk_constant_data/tagger
+	associated_typepath = /datum/quirk/item_quirk/tagger
+	customization_options = list(/datum/preference/color/paint_color)
+
 /datum/quirk/item_quirk/tagger/add_unique(client/client_source)
 	var/obj/item/toy/crayon/spraycan/can = new
 	can.set_painting_tool_color(client_source?.prefs.read_preference(/datum/preference/color/paint_color))

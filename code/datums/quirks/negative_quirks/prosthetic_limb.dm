@@ -11,6 +11,10 @@
 	/// the original limb from before the prosthetic was applied
 	var/obj/item/bodypart/old_limb
 
+/datum/quirk_constant_data/prosthetic_limb
+	associated_typepath = /datum/quirk/prosthetic_limb
+	customization_options = list(/datum/preference/choiced/prosthetic)
+
 /datum/quirk/prosthetic_limb/add_unique(client/client_source)
 	var/limb_type = GLOB.limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
 	if(isnull(limb_type))  //Client gone or they chose a random prosthetic
@@ -24,7 +28,7 @@
 	old_limb = human_holder.return_and_replace_bodypart(surplus, special = TRUE)
 
 /datum/quirk/prosthetic_limb/post_add()
-	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It is fragile and will easily come apart under duress. Additionally, \
+	to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a surplus prosthetic. It has almost no muscle force, and makes you unhealthier by just having it. Additionally, \
 	you need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 
 /datum/quirk/prosthetic_limb/remove()

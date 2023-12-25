@@ -6,11 +6,6 @@
 #define ACHIEVEMENT_DEFAULT "default"
 #define ACHIEVEMENT_SCORE "score"
 
-///the priority for which awards are orded on [/datum/achievement_data/load_all_achievements()]
-#define AWARD_PRIORITY_DEFAULT 100
-///the priority of the achievements score. NO achievement should have a priority equal or lower than this.
-#define AWARD_PRIORITY_LAST 0
-
 /// preferences for the sound played when unlocking an achievement
 #define CHEEVO_SOUND_TADA "Tada Fanfare"
 #define CHEEVO_SOUND_JINGLE "Beeps Jingle"
@@ -46,7 +41,7 @@
 #define MEDAL_VOID_ASCENSION "Void"
 #define MEDAL_BLADE_ASCENSION "Blade"
 #define MEDAL_COSMOS_ASCENSION "Cosmos"
-#define MEDAL_KNOCK_ASCENSION "Knock"
+#define MEDAL_LOCK_ASCENSION "Knock"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"

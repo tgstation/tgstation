@@ -39,6 +39,8 @@
 #define BODYPART_PSEUDOPART (1<<1)
 /// Bodypart did not match the owner's default bodypart limb_id when surgically implanted
 #define BODYPART_IMPLANTED (1<<2)
+/// Bodypart never displays as a husk
+#define BODYPART_UNHUSKABLE (1<<3)
 
 // Bodypart change blocking flags
 ///Bodypart does not get replaced during set_species()

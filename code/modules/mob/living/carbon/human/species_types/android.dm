@@ -8,11 +8,13 @@
 		TRAIT_LIVERLESS_METABOLISM,
 		TRAIT_NOBLOOD,
 		TRAIT_NOBREATH,
-		TRAIT_NOCLONELOSS,
+		TRAIT_NOCRITDAMAGE,
 		TRAIT_NOFIRE,
 		TRAIT_NOHUNGER,
 		TRAIT_NO_DNA_COPY,
+		TRAIT_NO_PLASMA_TRANSFORM,
 		TRAIT_NO_UNDERWEAR,
+		TRAIT_OVERDOSEIMMUNE,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
@@ -20,11 +22,11 @@
 		TRAIT_RESISTHIGHPRESSURE,
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
-		TRAIT_NOCRITDAMAGE,
 	)
 
 	inherent_biotypes = MOB_ROBOTIC|MOB_HUMANOID
 	meat = null
+	mutantbrain = /obj/item/organ/internal/brain/cybernetic
 	mutanttongue = /obj/item/organ/internal/tongue/robot
 	mutantstomach = null
 	mutantappendix = null

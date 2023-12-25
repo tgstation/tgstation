@@ -1,11 +1,11 @@
 /datum/computer_file/program/maintenance/camera
 	filename = "camera_app"
 	filedesc = "Camera"
-	program_icon_state = "camera"
-	category = PROGRAM_CATEGORY_MISC
+	program_open_overlay = "camera"
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "This program allows the taking of pictures."
 	size = 4
-	usage_flags = PROGRAM_TABLET
+	can_run_on_flags = PROGRAM_PDA
 	tgui_id = "NtosCamera"
 	program_icon = "camera"
 
@@ -33,6 +33,8 @@
 	if(internal_picture)
 		QDEL_NULL(internal_picture)
 	var/turf/our_turf = get_turf(tapped_atom)
+	var/spooky_camera = locate(/datum/computer_file/program/maintenance/spectre_meter) in computer.stored_files
+	internal_camera.see_ghosts = spooky_camera ?  CAMERA_SEE_GHOSTS_BASIC : CAMERA_NO_GHOSTS
 	internal_picture = internal_camera.captureimage(our_turf, user, internal_camera.picture_size_x + 1, internal_camera.picture_size_y + 1)
 	picture_number++
 	computer.save_photo(internal_picture.picture_image)

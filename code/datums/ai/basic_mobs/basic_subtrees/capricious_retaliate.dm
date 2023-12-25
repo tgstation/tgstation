@@ -1,19 +1,19 @@
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_planning_subtree/capricious_retaliate
 	/// Blackboard key which tells us how to select valid targets
-	var/targetting_datum_key = BB_TARGETTING_DATUM
+	var/targeting_strategy_key = BB_TARGETING_STRATEGY
 	/// Whether we should skip checking faction for our decision
 	var/ignore_faction = TRUE
 
 /datum/ai_planning_subtree/capricious_retaliate/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	. = ..()
-	controller.queue_behavior(/datum/ai_behavior/capricious_retaliate, targetting_datum_key, ignore_faction)
+	controller.queue_behavior(/datum/ai_behavior/capricious_retaliate, targeting_strategy_key, ignore_faction)
 
 /// Add or remove people to our retaliation shitlist just on an arbitrary whim
 /datum/ai_behavior/capricious_retaliate
 	action_cooldown = 1 SECONDS
 
-/datum/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targetting_datum_key, ignore_faction)
+/datum/ai_behavior/capricious_retaliate/perform(seconds_per_tick, datum/ai_controller/controller, targeting_strategy_key, ignore_faction)
 	. = ..()
 	var/atom/pawn = controller.pawn
 	if (controller.blackboard_key_exists(BB_BASIC_MOB_RETALIATE_LIST))
@@ -35,10 +35,10 @@
 	var/aggro_range = controller.blackboard[BB_AGGRO_RANGE] || 9
 	var/list/potential_targets = hearers(aggro_range, get_turf(pawn)) - pawn
 	if (!length(potential_targets))
-		failed_targetting(controller, pawn, ignore_faction)
+		failed_targeting(controller, pawn, ignore_faction)
 		return
 
-	var/datum/targetting_datum/target_helper = controller.blackboard[targetting_datum_key]
+	var/datum/targeting_strategy/target_helper = GET_TARGETING_STRATEGY(controller.blackboard[targeting_strategy_key])
 
 	var/mob/living/final_target = null
 	if (ignore_faction)
@@ -49,7 +49,7 @@
 			final_target = test_target
 
 	if (isnull(final_target))
-		failed_targetting(controller, pawn, ignore_faction)
+		failed_targeting(controller, pawn, ignore_faction)
 		return
 
 	controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, final_target)
@@ -57,7 +57,7 @@
 	finish_action(controller, TRUE, ignore_faction)
 
 /// Called if we try but fail to target something
-/datum/ai_behavior/capricious_retaliate/proc/failed_targetting(datum/ai_controller/controller, atom/pawn, ignore_faction)
+/datum/ai_behavior/capricious_retaliate/proc/failed_targeting(datum/ai_controller/controller, atom/pawn, ignore_faction)
 	finish_action(controller, FALSE, ignore_faction)
 	pawn.visible_message(span_notice("[pawn] grumbles.")) // We're pissed off but with no outlet to vent our frustration upon
 

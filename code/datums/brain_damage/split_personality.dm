@@ -25,11 +25,11 @@
 
 /datum/brain_trauma/severe/split_personality/proc/make_backseats()
 	stranger_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/stranger_spell = new(src)
+	var/datum/action/personality_commune/stranger_spell = new(src)
 	stranger_spell.Grant(stranger_backseat)
 
 	owner_backseat = new(owner, src)
-	var/datum/action/cooldown/spell/personality_commune/owner_spell = new(src)
+	var/datum/action/personality_commune/owner_spell = new(src)
 	owner_spell.Grant(owner_backseat)
 
 /// Attempts to get a ghost to play the personality
@@ -211,7 +211,7 @@
 
 /datum/brain_trauma/severe/split_personality/brainwashing/get_ghost()
 	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", null, null, 7.5 SECONDS, stranger_backseat)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as [owner.real_name]'s brainwashed mind?", poll_time = 7.5 SECONDS, target_mob = stranger_backseat, pic_source = owner, role_name_text = "brainwashed mind")
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		stranger_backseat.key = C.key
@@ -256,13 +256,19 @@
 	gain_text = span_warning("Crap, that was one drink too many. You black out...")
 	lose_text = "You wake up very, very confused and hungover. All you can remember is drinking a lot of alcohol... what happened?"
 	poll_role = "blacked out drunkard"
+	random_gain = FALSE
 	/// Duration of effect, tracked in seconds, not deciseconds. qdels when reaching 0.
 	var/duration_in_seconds = 180
 
 /datum/brain_trauma/severe/split_personality/blackout/on_gain()
 	. = ..()
 	RegisterSignal(owner, COMSIG_ATOM_SPLASHED, PROC_REF(on_splashed))
-	notify_ghosts("[owner] is blacking out!", source = owner, action = NOTIFY_ORBIT, flashwindow = FALSE, header = "Bro I'm not even drunk right now")
+	notify_ghosts(
+		"[owner] is blacking out!",
+		source = owner,
+		header = "Bro I'm not even drunk right now",
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+	)
 
 /datum/brain_trauma/severe/split_personality/blackout/on_lose()
 	. = ..()
@@ -287,8 +293,8 @@
 	if(duration_in_seconds <= 0)
 		qdel(src)
 		return
-	else if(duration_in_seconds <= 50)
-		to_chat(owner, span_warning("You have 50 seconds left before sobering up!"))
+	else if(duration_in_seconds <= 60 && !(duration_in_seconds % 20))
+		to_chat(owner, span_warning("You have [duration_in_seconds] seconds left before sobering up!"))
 	if(prob(10) && !HAS_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER))
 		ADD_TRAIT(owner, TRAIT_DISCOORDINATED_TOOL_USER, TRAUMA_TRAIT)
 		owner.balloon_alert(owner, "dexterity reduced temporarily!")

@@ -32,11 +32,8 @@
 	. = ..()
 
 	cached_designs = list()
-	materials = AddComponent(
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
+
 	AddComponent(
 		/datum/component/payment, \
 		0, \
@@ -107,10 +104,7 @@
 	)
 
 /obj/machinery/rnd/production/ui_interact(mob/user, datum/tgui/ui)
-	user.set_machine(src)
-
 	ui = SStgui.try_update_ui(user, src, ui)
-
 	if(!ui)
 		ui = new(user, src, "Fabricator")
 		ui.open()

@@ -1,6 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - code_imp: "Emergency shuttle announcements no longer use hardcoded values"
-  - code_imp: "Central Command announcements now correctly use its new name when changed"
-  - spellcheck: "Consistency pass on event announcements"

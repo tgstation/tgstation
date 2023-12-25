@@ -20,9 +20,15 @@
 	if(!is_freq_listening(signal))
 		return
 
-	// send the signal to the hub if possible, or a bus otherwise
-	if(!relay_information(signal, /obj/machinery/telecomms/hub))
-		relay_information(signal, /obj/machinery/telecomms/bus)
+	// Make a copy of the signal so that other receivers can still receive this signal
+	var/datum/signal/subspace/signal_copy = signal.copy()
+
+	// Signal has been received, so remove receiving levels. This list will be used later on to determine broadcasting levels.
+	signal_copy.levels = list()
+
+	// Send the signal to a hub if possible, or a bus otherwise.
+	if(!relay_information(signal_copy, /obj/machinery/telecomms/hub))
+		relay_information(signal_copy, /obj/machinery/telecomms/bus)
 
 	use_power(idle_power_usage)
 

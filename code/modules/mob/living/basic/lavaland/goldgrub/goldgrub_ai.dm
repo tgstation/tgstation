@@ -1,7 +1,7 @@
 /datum/ai_controller/basic_controller/goldgrub
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
-		BB_PET_TARGETTING_DATUM = new /datum/targetting_datum/basic/not_friends,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
 		BB_ORE_IGNORE_TYPES = list(/obj/item/stack/ore/iron, /obj/item/stack/ore/glass),
 		BB_STORM_APPROACHING = FALSE,
 	)
@@ -20,7 +20,7 @@
 
 /datum/ai_controller/basic_controller/babygrub
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_ORE_IGNORE_TYPES = list(/obj/item/stack/ore/glass),
 		BB_FIND_MOM_TYPES = list(/mob/living/basic/mining/goldgrub),
 		BB_IGNORE_MOM_TYPES = list(/mob/living/basic/mining/goldgrub/baby),

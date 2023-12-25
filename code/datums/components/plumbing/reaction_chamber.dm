@@ -18,20 +18,21 @@
 	if(chamber.emptying)
 		return
 
+	//take in reagents
 	var/present_amount
 	var/diff
 	for(var/required_reagent in chamber.required_reagents)
-		//find how much amount is already present if at all
+		//find how much amount is already present if at all and get the reagent reference
 		present_amount = 0
-		for(var/datum/reagent/containg_reagent as anything in reagents.reagent_list)
-			if(required_reagent == containg_reagent.type)
-				present_amount = containg_reagent.volume
+		for(var/datum/reagent/present_reagent as anything in reagents.reagent_list)
+			if(required_reagent == present_reagent.type)
+				present_amount = present_reagent.volume
 				break
 
-		//compute how much more is needed and round it
-		diff = chamber.required_reagents[required_reagent] - present_amount
-		if(diff >= 0.01)
-			process_request(min(diff, MACHINE_REAGENT_TRANSFER), required_reagent, dir)
+		//compute how much more is needed
+		diff = min(chamber.required_reagents[required_reagent] - present_amount, MACHINE_REAGENT_TRANSFER)
+		if(diff >= CHEMICAL_QUANTISATION_LEVEL) // the closest we can ask for so values like 0.9999 become 1
+			process_request(diff, required_reagent, dir)
 			return
 
 	reagents.flags &= ~NO_REACT

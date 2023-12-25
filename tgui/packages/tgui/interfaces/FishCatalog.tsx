@@ -1,10 +1,11 @@
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
+import { capitalize } from 'common/string';
+
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { capitalize } from 'common/string';
 
 type FishingTips = {
   spots: string;
@@ -33,16 +34,15 @@ type FishCatalogData = {
   sponsored_by: string;
 };
 
-export const FishCatalog = (props, context) => {
-  const { act, data } = useBackend<FishCatalogData>(context);
+export const FishCatalog = (props) => {
+  const { act, data } = useBackend<FishCatalogData>();
   const { fish_info, sponsored_by } = data;
   const fish_by_name = flow([sortBy((fish: FishInfo) => fish.name)])(
-    fish_info || []
+    fish_info || [],
   );
   const [currentFish, setCurrentFish] = useLocalState<FishInfo | null>(
-    context,
     'currentFish',
-    null
+    null,
   );
   return (
     <Window width={500} height={300}>
@@ -58,7 +58,8 @@ export const FishCatalog = (props, context) => {
                   selected={f === currentFish}
                   onClick={() => {
                     setCurrentFish(f);
-                  }}>
+                  }}
+                >
                   {f.name}
                 </Button>
               ))}
@@ -72,7 +73,8 @@ export const FishCatalog = (props, context) => {
                 currentFish
                   ? capitalize(currentFish.name)
                   : sponsored_by + ' Fish Index'
-              }>
+              }
+            >
               {currentFish && (
                 <LabeledList>
                   <LabeledList.Item label="Description">

@@ -26,7 +26,7 @@
 	melee_attack_cooldown = CLICK_CD_MELEE
 	melee_damage_lower = 15
 	melee_damage_upper = 18
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, CLONE = 0, STAMINA = 0, OXY = 1.5)
+	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, STAMINA = 0, OXY = 1.5)
 	obj_damage = 20
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
@@ -65,7 +65,7 @@
 	)
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
-	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, gorilla_food)
+	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(gorilla_food))
 
 /mob/living/basic/gorilla/update_overlays()
 	. = ..()
@@ -157,26 +157,5 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_PACIFISM, INNATE_TRAIT)
 	AddComponent(/datum/component/crate_carrier)
-
-/**
- * Poll ghosts for control of the gorilla. Not added in init because we only want to poll when the round starts.
- * Preferably in future we can replace this with a popup on the lobby to queue to become a gorilla.
- */
-/mob/living/basic/gorilla/cargorilla/proc/poll_for_gorilla()
-	AddComponent(\
-		/datum/component/ghost_direct_control,\
-		poll_candidates = TRUE,\
-		poll_length = 30 SECONDS,\
-		role_name = "Cargorilla",\
-		assumed_control_message = "You are Cargorilla, a pacifist friend of the station and carrier of freight.",\
-		poll_ignore_key = POLL_IGNORE_CARGORILLA,\
-		after_assumed_control = CALLBACK(src, PROC_REF(became_player_controlled)),\
-	)
-
-/// Called once a ghost assumes control
-/mob/living/basic/gorilla/cargorilla/proc/became_player_controlled()
-	mind.set_assigned_role(SSjob.GetJobType(/datum/job/cargo_technician))
-	mind.special_role = "Cargorilla"
-	to_chat(src, span_notice("You can pick up crates by clicking on them, and drop them by clicking on the ground."))
 
 #undef GORILLA_HANDS_LAYER

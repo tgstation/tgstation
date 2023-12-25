@@ -180,9 +180,6 @@
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/surface/outdoors/nospawn)
-"Bv" = (
-/turf/open/misc/snow,
-/area/icemoon/surface/outdoors/nospawn)
 "Dd" = (
 /turf/closed/mineral/random/snow,
 /area/icemoon/surface/outdoors/nospawn)
@@ -264,9 +261,6 @@
 "Ot" = (
 /obj/structure/railing/corner,
 /turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/surface/outdoors/nospawn)
-"PT" = (
-/turf/template_noop,
 /area/icemoon/surface/outdoors/nospawn)
 "Qi" = (
 /obj/effect/turf_decal/stripes/corner,
@@ -414,7 +408,7 @@ fl
 fl
 "}
 (4,1,1) = {"
-Bv
+lH
 eu
 jQ
 vJ
@@ -532,7 +526,7 @@ fl
 (8,1,1) = {"
 Dd
 Dd
-PT
+Dd
 nT
 kd
 yA

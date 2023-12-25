@@ -182,7 +182,7 @@
 			if(alert_sfx)
 				SEND_SOUND(player, sound(alert_sfx))
 
-// the checks for if a mob should recieve alerts, returns TRUE if can
+// the checks for if a mob should receive alerts, returns TRUE if can
 /datum/weather/proc/can_get_alert(mob/player)
 	var/turf/mob_turf = get_turf(player)
 	return !isnull(mob_turf)

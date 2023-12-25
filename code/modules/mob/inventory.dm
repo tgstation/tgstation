@@ -485,6 +485,19 @@
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_quick_equip)))
 
+/// Safely drop everything, without deconstructing the mob
+/mob/proc/drop_everything(del_on_drop, force, del_if_nodrop)
+	. = list()
+	for(var/obj/item/item in src)
+		if(!dropItemToGround(item, force))
+			if(del_if_nodrop && !(item.item_flags & ABSTRACT))
+				qdel(item)
+		if(del_on_drop)
+			qdel(item)
+		//Anything thats not deleted and isn't in the mob, so everything that is succesfully dropped to the ground, is returned
+		if(!QDELETED(item) && !(item in src))
+			. += item
+
 ///proc extender of [/mob/verb/quick_equip] used to make the verb queuable if the server is overloaded
 /mob/proc/execute_quick_equip()
 	var/obj/item/I = get_active_held_item()
@@ -504,8 +517,6 @@
 
 /mob/proc/getBeltSlot()
 	return ITEM_SLOT_BELT
-
-
 
 //Inventory.dm is -kind of- an ok place for this I guess
 
@@ -544,14 +555,21 @@
 	..() //Don't redraw hands until we have organs for them
 
 //GetAllContents that is reasonable and not stupid
-/mob/living/carbon/proc/get_all_gear()
+/mob/living/proc/get_all_gear()
 	var/list/processing_list = get_equipped_items(include_pockets = TRUE, include_accessories = TRUE) + held_items
 	list_clear_nulls(processing_list) // handles empty hands
 	var/i = 0
-	while(i < length(processing_list) )
+	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
 		if(A.atom_storage)
 			var/list/item_stuff = list()
 			A.atom_storage.return_inv(item_stuff)
 			processing_list += item_stuff
 	return processing_list
+
+/// Returns a list of things that the provided mob has, including any storage-capable implants.
+/mob/living/proc/gather_belongings()
+	var/list/belongings = get_all_gear()
+	for (var/obj/item/implant/storage/internal_bag in implants)
+		belongings += internal_bag.contents
+	return belongings

@@ -35,7 +35,9 @@
 	src.key = "[key]_[mock_client_uid]"
 	ckey = ckey(key)
 
+#ifdef UNIT_TESTS // otherwise this shit can leak into production servers which is drather bad
 	GLOB.directory[ckey] = src
+#endif
 
 /datum/client_interface/Destroy(force, ...)
 	GLOB.directory -= ckey

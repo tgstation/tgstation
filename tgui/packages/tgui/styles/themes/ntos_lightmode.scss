@@ -9,12 +9,12 @@
 $nanotrasen: #ffffff;
 
 @use '../colors.scss' with (
-   $primary: #000000,
-   $label: #000000,
- );
+  $primary: #000000,
+  $label: #000000
+);
 @use '../base.scss' with (
-   $color-bg: white,
- );
+  $color-bg: white
+);
 
 .theme-ntos_lightmode {
   @include meta.load-css('../atomic/color.scss', $with: ());

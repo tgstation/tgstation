@@ -10,6 +10,10 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	/// Selected barsign being used
 	var/datum/barsign/chosen_sign
+	/// Do we attempt to rename the area we occupy when the chosen sign is changed?
+	var/change_area_name = FALSE
+	/// What kind of sign do we drop upon being disassembled?
+	var/disassemble_result = /obj/item/wallframe/barsign
 
 /datum/armor/sign_barsign
 	melee = 20
@@ -23,6 +27,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/Initialize(mapload)
 	. = ..()
+	//Roundstart/map specific barsigns "belong" in their area and should be renaming it, signs created from wallmounts will not.
+	change_area_name = mapload
 	set_sign(new /datum/barsign/hiddensigns/signoff)
 	find_and_hang_on_wall()
 
@@ -30,15 +36,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	if(!istype(sign))
 		return
 
-	if(sign.rename_area)
+	if(change_area_name && sign.rename_area)
 		rename_area(src, sign.name)
 
 	chosen_sign = sign
 	update_appearance()
 
 /obj/machinery/barsign/update_icon_state()
-	if(!(machine_stat & (NOPOWER|BROKEN)) && chosen_sign && chosen_sign.icon)
-		icon_state = chosen_sign.icon
+	if(!(machine_stat & BROKEN) && (!(machine_stat & NOPOWER) || machine_stat & EMPED) && chosen_sign && chosen_sign.icon_state)
+		icon_state = chosen_sign.icon_state
 	else
 		icon_state = "empty"
 
@@ -60,11 +66,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 /obj/machinery/barsign/update_overlays()
 	. = ..()
 
-	if(machine_stat & (NOPOWER|BROKEN))
+	if(((machine_stat & NOPOWER) && !(machine_stat & EMPED)) || (machine_stat & BROKEN))
 		return
 
 	if(chosen_sign && chosen_sign.light_mask)
-		. += emissive_appearance(icon, "[chosen_sign.icon]-light-mask", src)
+		. += emissive_appearance(icon, "[chosen_sign.icon_state]-light-mask", src)
 
 /obj/machinery/barsign/update_appearance(updates=ALL)
 	. = ..()
@@ -82,12 +88,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /obj/machinery/barsign/atom_break(damage_flag)
 	. = ..()
-	if((machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if((machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
 		set_sign(new /datum/barsign/hiddensigns/signoff)
 
 /obj/machinery/barsign/deconstruct(disassembled = TRUE)
-	new /obj/item/stack/sheet/iron(drop_location(), 2)
-	new /obj/item/stack/cable_coil(drop_location(), 2)
+	if(!(obj_flags & NO_DECONSTRUCTION))
+		if(disassembled)
+			new disassemble_result(drop_location())
+		else
+			new /obj/item/stack/sheet/iron(drop_location(), 2)
+			new /obj/item/stack/cable_coil(drop_location(), 2)
+
 	qdel(src)
 
 /obj/machinery/barsign/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
@@ -118,7 +129,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	if(panel_open)
 		balloon_alert(user, "panel opened")
 		set_sign(new /datum/barsign/hiddensigns/signoff)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	balloon_alert(user, "panel closed")
 
@@ -127,11 +138,34 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	else
 		set_sign(chosen_sign)
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/barsign/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/stack/cable_coil) && panel_open)
-		var/obj/item/stack/cable_coil/wire = I
+/obj/machinery/barsign/wrench_act(mob/living/user, obj/item/tool)
+	if(!panel_open)
+		balloon_alert(user, "open the panel first!")
+		return ITEM_INTERACT_BLOCKING
+
+	tool.play_tool_sound(src)
+	if(!do_after(user, (10 SECONDS), target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	tool.play_tool_sound(src)
+	deconstruct(disassembled = TRUE)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/barsign/attackby(obj/item/attacking_item, mob/user)
+
+	if(istype(attacking_item, /obj/item/areaeditor/blueprints) && !change_area_name)
+		if(!panel_open)
+			balloon_alert(user, "open the panel first!")
+			return TRUE
+
+		change_area_name = TRUE
+		balloon_alert(user, "sign registered")
+		return TRUE
+
+	if(istype(attacking_item, /obj/item/stack/cable_coil) && panel_open)
+		var/obj/item/stack/cable_coil/wire = attacking_item
 
 		if(atom_integrity >= max_integrity)
 			balloon_alert(user, "doesn't need repairs!")
@@ -145,10 +179,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_appearance()
-		return TRUE
-
-	// if barsigns ever become a craftable or techweb wall mount then remove this
-	if(machine_stat & BROKEN)
 		return TRUE
 
 	return ..()
@@ -202,7 +232,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 	/// User-visible name of the sign.
 	var/name
 	/// Icon state associated with this sign
-	var/icon
+	var/icon_state
 	/// Description shown in the sign's examine text.
 	var/desc
 	/// Hidden from list of selectable options.
@@ -222,171 +252,231 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /datum/barsign/maltesefalcon
 	name = "Maltese Falcon"
-	icon = "maltesefalcon"
+	icon_state = "maltesefalcon"
 	desc = "The Maltese Falcon, Space Bar and Grill."
 	neon_color = "#5E8EAC"
 
 /datum/barsign/thebark
 	name = "The Bark"
-	icon = "thebark"
+	icon_state = "thebark"
 	desc = "Ian's bar of choice."
 	neon_color = "#f7a604"
 
 /datum/barsign/harmbaton
 	name = "The Harmbaton"
-	icon = "theharmbaton"
+	icon_state = "theharmbaton"
 	desc = "A great dining experience for both security members and assistants."
 	neon_color = "#ff7a4d"
 
 /datum/barsign/thesingulo
 	name = "The Singulo"
-	icon = "thesingulo"
+	icon_state = "thesingulo"
 	desc = "Where people go that'd rather not be called by their name."
 	neon_color = "#E600DB"
 
 /datum/barsign/thedrunkcarp
 	name = "The Drunk Carp"
-	icon = "thedrunkcarp"
+	icon_state = "thedrunkcarp"
 	desc = "Don't drink and swim."
 	neon_color = "#a82196"
 
 /datum/barsign/scotchservinwill
 	name = "Scotch Servin Willy's"
-	icon = "scotchservinwill"
+	icon_state = "scotchservinwill"
 	desc = "Willy sure moved up in the world from clown to bartender."
 	neon_color = "#fee4bf"
 
 /datum/barsign/officerbeersky
 	name = "Officer Beersky's"
-	icon = "officerbeersky"
+	icon_state = "officerbeersky"
 	desc = "Man eat a dong, these drinks are great."
 	neon_color = "#16C76B"
 
 /datum/barsign/thecavern
 	name = "The Cavern"
-	icon = "thecavern"
+	icon_state = "thecavern"
 	desc = "Fine drinks while listening to some fine tunes."
 	neon_color = "#0fe500"
 
 /datum/barsign/theouterspess
 	name = "The Outer Spess"
-	icon = "theouterspess"
+	icon_state = "theouterspess"
 	desc = "This bar isn't actually located in outer space."
 	neon_color = "#30f3cc"
 
 /datum/barsign/slipperyshots
 	name = "Slippery Shots"
-	icon = "slipperyshots"
+	icon_state = "slipperyshots"
 	desc = "Slippery slope to drunkeness with our shots!"
 	neon_color = "#70DF00"
 
 /datum/barsign/thegreytide
 	name = "The Grey Tide"
-	icon = "thegreytide"
+	icon_state = "thegreytide"
 	desc = "Abandon your toolboxing ways and enjoy a lazy beer!"
 	neon_color = "#00F4D6"
 
 /datum/barsign/honkednloaded
 	name = "Honked 'n' Loaded"
-	icon = "honkednloaded"
+	icon_state = "honkednloaded"
 	desc = "Honk."
 	neon_color = "#FF998A"
 
+/datum/barsign/le_cafe_silencieux
+	name = "Le Café Silencieux"
+	icon_state = "le_cafe_silencieux"
+	desc = "..."
+	neon_color = "#ffffff"
+
 /datum/barsign/thenest
 	name = "The Nest"
-	icon = "thenest"
+	icon_state = "thenest"
 	desc = "A good place to retire for a drink after a long night of crime fighting."
 	neon_color = "#4d6796"
 
 /datum/barsign/thecoderbus
 	name = "The Coderbus"
-	icon = "thecoderbus"
+	icon_state = "thecoderbus"
 	desc = "A very controversial bar known for its wide variety of constantly-changing drinks."
 	neon_color = "#ffffff"
 
 /datum/barsign/theadminbus
 	name = "The Adminbus"
-	icon = "theadminbus"
+	icon_state = "theadminbus"
 	desc = "An establishment visited mainly by space-judges. It isn't bombed nearly as much as court hearings."
 	neon_color = "#ffffff"
 
 /datum/barsign/oldcockinn
 	name = "The Old Cock Inn"
-	icon = "oldcockinn"
+	icon_state = "oldcockinn"
 	desc = "Something about this sign fills you with despair."
 	neon_color = "#a4352b"
 
 /datum/barsign/thewretchedhive
 	name = "The Wretched Hive"
-	icon = "thewretchedhive"
+	icon_state = "thewretchedhive"
 	desc = "Legally obligated to instruct you to check your drinks for acid before consumption."
 	neon_color = "#26b000"
 
 /datum/barsign/robustacafe
 	name = "The Robusta Cafe"
-	icon = "robustacafe"
+	icon_state = "robustacafe"
 	desc = "Holder of the 'Most Lethal Barfights' record 5 years uncontested."
 	neon_color = "#c45f7a"
 
 /datum/barsign/emergencyrumparty
 	name = "The Emergency Rum Party"
-	icon = "emergencyrumparty"
+	icon_state = "emergencyrumparty"
 	desc = "Recently relicensed after a long closure."
 	neon_color = "#f90011"
 
 /datum/barsign/combocafe
 	name = "The Combo Cafe"
-	icon = "combocafe"
+	icon_state = "combocafe"
 	desc = "Renowned system-wide for their utterly uncreative drink combinations."
 	neon_color = "#33ca40"
 
 /datum/barsign/vladssaladbar
 	name = "Vlad's Salad Bar"
-	icon = "vladssaladbar"
+	icon_state = "vladssaladbar"
 	desc = "Under new management. Vlad was always a bit too trigger happy with that shotgun."
 	neon_color = "#306900"
 
 /datum/barsign/theshaken
 	name = "The Shaken"
-	icon = "theshaken"
+	icon_state = "theshaken"
 	desc = "This establishment does not serve stirred drinks."
 	neon_color = "#dcd884"
 
 /datum/barsign/thealenath
 	name = "The Ale' Nath"
-	icon = "thealenath"
+	icon_state = "thealenath"
 	desc = "All right, buddy. I think you've had EI NATH. Time to get a cab."
 	neon_color = "#ed0000"
 
 /datum/barsign/thealohasnackbar
 	name = "The Aloha Snackbar"
-	icon = "alohasnackbar"
+	icon_state = "alohasnackbar"
 	desc = "A tasteful, inoffensive tiki bar sign."
 	neon_color = ""
 
 /datum/barsign/thenet
 	name = "The Net"
-	icon = "thenet"
+	icon_state = "thenet"
 	desc = "You just seem to get caught up in it for hours."
 	neon_color = "#0e8a00"
 
 /datum/barsign/maidcafe
 	name = "Maid Cafe"
-	icon = "maidcafe"
+	icon_state = "maidcafe"
 	desc = "Welcome back, master!"
 	neon_color = "#ff0051"
 
 /datum/barsign/the_lightbulb
 	name = "The Lightbulb"
-	icon = "the_lightbulb"
+	icon_state = "the_lightbulb"
 	desc = "A cafe popular among moths and moffs. Once shut down for a week after the bartender used mothballs to protect her spare uniforms."
 	neon_color = "#faff82"
 
 /datum/barsign/goose
 	name = "The Loose Goose"
-	icon = "goose"
+	icon_state = "goose"
 	desc = "Drink till you puke and/or break the laws of reality!"
 	neon_color = "#00cc33"
+
+/datum/barsign/maltroach
+	name = "Maltroach"
+	icon_state = "maltroach"
+	desc = "Mothroaches politely greet you into the bar, or are they greeting eachother?"
+	neon_color = "#649e8a"
+
+/datum/barsign/rock_bottom
+	name = "Rock Bottom"
+	icon_state = "rock-bottom"
+	desc = "When it feels like you're stuck in a pit, might as well have a drink."
+	neon_color = "#aa2811"
+
+/datum/barsign/orangejuice
+	name = "Oranges' Juicery"
+	icon_state = "orangejuice"
+	desc = "For those who wish to be optimally tactful to the non-alcoholic population."
+	neon_color = COLOR_ORANGE
+
+/datum/barsign/tearoom
+	name = "Little Treats Tea Room"
+	icon_state = "little_treats"
+	desc = "A delightfully relaxing tearoom for all the fancy lads in the cosmos."
+	neon_color = COLOR_LIGHT_ORANGE
+
+/datum/barsign/assembly_line
+	name = "The Assembly Line"
+	icon_state = "the-assembly-line"
+	desc = "Where every drink is masterfully crafted with industrial efficiency!"
+	neon_color = "#ffffff"
+
+/datum/barsign/bargonia
+	name = "Bargonia"
+	icon_state = "bargonia"
+	desc = "The warehouse yearns for a higher calling... so Supply has declared BARGONIA!"
+	neon_color = COLOR_WHITE
+
+/datum/barsign/cult_cove
+	name = "Cult Cove"
+	icon_state = "cult-cove"
+	desc = "Nar'Sie's favourite retreat"
+	neon_color = COLOR_RED
+
+/datum/barsign/neon_flamingo
+	name = "Neon Flamingo"
+	icon_state = "neon-flamingo"
+	desc = "A bus for all but the flamboyantly challenged."
+	neon_color = COLOR_PINK
+
+/datum/barsign/slowdive
+	name = "Slowdive"
+	icon_state = "slowdive"
+	desc = "First stop out of hell, last stop before heaven."
+	neon_color = COLOR_RED
 
 // Hidden signs list below this point
 
@@ -395,19 +485,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 
 /datum/barsign/hiddensigns/empbarsign
 	name = "EMP'd"
-	icon = "empbarsign"
+	icon_state = "empbarsign"
 	desc = "Something has gone very wrong."
 	rename_area = FALSE
 
 /datum/barsign/hiddensigns/syndibarsign
 	name = "Syndi Cat"
-	icon = "syndibarsign"
+	icon_state = "syndibarsign"
 	desc = "Syndicate or die."
 	neon_color = "#ff0000"
 
 /datum/barsign/hiddensigns/signoff
 	name = "Off"
-	icon = "empty"
+	icon_state = "empty"
 	desc = "This sign doesn't seem to be on."
 	rename_area = FALSE
 	light_mask = FALSE
@@ -415,5 +505,34 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign, 32)
 // For other locations that aren't in the main bar
 /obj/machinery/barsign/all_access
 	req_access = null
+	disassemble_result = /obj/item/wallframe/barsign/all_access
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/barsign/all_access, 32)
+
+/obj/item/wallframe/barsign
+	name = "bar sign frame"
+	desc = "Used to help draw the rabble into your bar. Some assembly required."
+	icon = 'icons/obj/machines/wallmounts.dmi'
+	icon_state = "barsign"
+	result_path = /obj/machinery/barsign
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+	)
+	pixel_shift = 32
+
+/obj/item/wallframe/barsign/Initialize(mapload)
+	. = ..()
+	desc += " Can be registered with a set of [span_bold("station blueprints")] to associate the sign with the area it occupies."
+
+/obj/item/wallframe/barsign/try_build(turf/on_wall, mob/user)
+	. = ..()
+	if(!.)
+		return .
+
+	if(isopenturf(get_step(on_wall, EAST))) //This takes up 2 tiles so we want to make sure we have two tiles to hang it from.
+		balloon_alert(user, "needs more support!")
+		return FALSE
+
+/obj/item/wallframe/barsign/all_access
+	desc = "Used to help draw the rabble into your bar. Some assembly required. This one doesn't have an access lock."
+	result_path = /obj/machinery/barsign/all_access

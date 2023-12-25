@@ -1,7 +1,7 @@
 /// The most basic AI tree which just finds a guy and then runs at them to click them
 /datum/ai_controller/basic_controller/simple_hostile
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
@@ -14,7 +14,7 @@
 /// Find a target, walk at target, attack intervening obstacles
 /datum/ai_controller/basic_controller/simple_hostile_obstacles
 	blackboard = list(
-		BB_TARGETTING_DATUM = new /datum/targetting_datum/basic,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance

@@ -12,6 +12,17 @@
 	time = 0.5 SECONDS
 	category = CAT_WEAPON_AMMO
 
+/datum/crafting_recipe/rebarsyndie
+	name = "jagged iron rod"
+	result = /obj/item/ammo_casing/rebar/syndie
+	reqs = list(
+		/obj/item/stack/rods = 1,
+	)
+	tool_behaviors = list(TOOL_WIRECUTTER)
+	time = 0.5 SECONDS
+	always_available = FALSE
+	category = CAT_WEAPON_AMMO
+
 /datum/crafting_recipe/pulseslug
 	name = "Pulse Slug Shell"
 	result = /obj/item/ammo_casing/shotgun/pulseslug
