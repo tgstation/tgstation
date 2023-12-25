@@ -1,4 +1,4 @@
-/datum/component/particle_spewer/movement/galaxies
+/datum/component/particle_spewer/galaxies
 	unusual_description = "galactic"
 	duration = 5 SECONDS
 	spawn_interval = 0.5 SECONDS
@@ -8,11 +8,11 @@
 
 /datum/component/particle_spewer/galaxies/animate_particle(obj/effect/abstract/particle/spawned)
 	var/can_be_shooting = TRUE
-	if(prob(10))
+	if(prob(5))
 		spawned.icon_state = "moon"
 		can_be_shooting = FALSE
 
-	if(prob(10) && can_be_shooting)
+	if(prob(5) && can_be_shooting)
 		spawned.icon_state = "ringed_planet"
 		can_be_shooting = FALSE
 
