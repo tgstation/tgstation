@@ -72,16 +72,9 @@ export const MafiaPanelData = (props) => {
 
   if (phase === 'No Game') {
     return (
-      <Stack fill>
-        <Stack.Item grow={1}>
-          <Stack fill vertical>
-            <MafiaLobby />
-
-            <Stack grow>
-              <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
-            </Stack>
-          </Stack>
-        </Stack.Item>
+      <Stack fill vertical>
+        <MafiaLobby />
+        {!!admin_controls && <MafiaAdmin />}
       </Stack>
     );
   }
@@ -89,11 +82,11 @@ export const MafiaPanelData = (props) => {
   return (
     <Stack fill>
       {!!roleinfo && (
-        <Stack.Item grow={1}>
+        <Stack.Item grow>
           <MafiaChat />
         </Stack.Item>
       )}
-      <Stack.Item grow={1}>
+      <Stack.Item grow>
         <Stack fill vertical>
           {!!roleinfo && (
             <>
@@ -107,57 +100,59 @@ export const MafiaPanelData = (props) => {
               )}
             </>
           )}
-          <Stack grow>
-            <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
-          </Stack>
+
+          <Stack.Item>{!!admin_controls && <MafiaAdmin />}</Stack.Item>
+
           {phase !== 'No Game' && (
-            <Stack grow fill>
-              <>
-                <Stack.Item grow>
-                  <MafiaPlayers />
-                </Stack.Item>
-                <Stack.Item fluid grow>
-                  <Stack.Item>
-                    <Tabs fluid>
-                      <Tabs.Tab
-                        align="center"
-                        selected={mafia_tab === 'Role list'}
-                        onClick={() => setMafiaMode('Role list')}
-                      >
-                        Role list
-                        <Button
-                          color="transparent"
-                          icon="address-book"
-                          tooltipPosition="bottom-start"
-                          tooltip={multiline`
+            <Stack.Item>
+              <Stack fill>
+                <>
+                  <Stack.Item grow>
+                    <MafiaPlayers />
+                  </Stack.Item>
+                  <Stack.Item grow>
+                    <Stack.Item>
+                      <Tabs fluid>
+                        <Tabs.Tab
+                          align="center"
+                          selected={mafia_tab === 'Role list'}
+                          onClick={() => setMafiaMode('Role list')}
+                        >
+                          Role list
+                          <Button
+                            color="transparent"
+                            icon="address-book"
+                            tooltipPosition="bottom-start"
+                            tooltip={multiline`
                             This is the list of roles in the game. You can
                             press the question mark to get a quick blurb
                             about the role itself.`}
-                        />
-                      </Tabs.Tab>
-                      <Tabs.Tab
-                        align="center"
-                        selected={mafia_tab === 'Notes'}
-                        onClick={() => setMafiaMode('Notes')}
-                      >
-                        Notes
-                        <Button
-                          color="transparent"
-                          icon="pencil"
-                          tooltipPosition="bottom-start"
-                          tooltip={multiline`
+                          />
+                        </Tabs.Tab>
+                        <Tabs.Tab
+                          align="center"
+                          selected={mafia_tab === 'Notes'}
+                          onClick={() => setMafiaMode('Notes')}
+                        >
+                          Notes
+                          <Button
+                            color="transparent"
+                            icon="pencil"
+                            tooltipPosition="bottom-start"
+                            tooltip={multiline`
                             This is your notes, anything you want to write
                             can be saved for future reference. You can
                             also send it to chat with a button.`}
-                        />
-                      </Tabs.Tab>
-                    </Tabs>
+                          />
+                        </Tabs.Tab>
+                      </Tabs>
+                    </Stack.Item>
+                    {mafia_tab === 'Role list' && <MafiaListOfRoles />}
+                    {mafia_tab === 'Notes' && <MafiaNotesTab />}
                   </Stack.Item>
-                  {mafia_tab === 'Role list' && <MafiaListOfRoles />}
-                  {mafia_tab === 'Notes' && <MafiaNotesTab />}
-                </Stack.Item>
-              </>
-            </Stack>
+                </>
+              </Stack>
+            </Stack.Item>
           )}
         </Stack>
       </Stack.Item>
@@ -190,7 +185,6 @@ const MafiaChat = (props) => {
     <Stack vertical fill>
       {!!messages && (
         <>
-          {' '}
           <Section fill scrollable title="Chat Logs">
             {messages.map((message) => (
               <Box key={message.msg}>{decodeHtmlEntities(message.msg)}</Box>
@@ -205,21 +199,18 @@ const MafiaChat = (props) => {
             placeholder="Type to chat"
             value={message_to_send}
           />
-          <Stack grow>
-            <Stack.Item grow fill>
-              <Button
-                color="bad"
-                fluid
-                content="Send to Chat"
-                textAlign="center"
-                tooltip="Sends your message to chat."
-                onClick={() => {
-                  setMessagingBox('');
-                  act('send_message_to_chat', { message: message_to_send });
-                }}
-              />
-            </Stack.Item>
-          </Stack>
+          <Button
+            color="bad"
+            fluid
+            textAlign="center"
+            tooltip="Sends your message to chat."
+            onClick={() => {
+              setMessagingBox('');
+              act('send_message_to_chat', { message: message_to_send });
+            }}
+          >
+            Send to Chat
+          </Button>
         </>
       )}
     </Stack>
@@ -306,12 +297,10 @@ const MafiaRole = (props) => {
       maxHeight="50px"
       buttons={
         <Box
-          style={{
-            fontFamily: 'Consolas, monospace',
-            fontSize: '14px',
-            lineHeight: 1.5,
-            fontWeight: 'bold',
-          }}
+          lineHeight={1.5}
+          fontFamily="Consolas, monospace"
+          fontSize="14px"
+          fontWeight="bold"
         >
           {formatTime(timeleft)}
         </Box>
@@ -377,7 +366,7 @@ const MafiaNotesTab = (props) => {
   const { user_notes } = data;
   const [note_message, setNotesMessage] = useLocalState('Notes', user_notes);
   return (
-    <Section grow fill>
+    <Section fill>
       <TextArea
         height="80%"
         maxLength={600}
@@ -386,26 +375,23 @@ const MafiaNotesTab = (props) => {
         placeholder="Insert Notes..."
         value={note_message}
       />
-      <Stack grow>
-        <Stack.Item grow fill>
-          <Button
-            color="good"
-            fluid
-            content="Save"
-            textAlign="center"
-            onClick={() => act('change_notes', { new_notes: note_message })}
-            tooltip="Saves whatever is written as your notepad. This can't be done while dead."
-          />
-          <Button.Confirm
-            color="bad"
-            fluid
-            content="Send to Chat"
-            textAlign="center"
-            onClick={() => act('send_notes_to_chat')}
-            tooltip="Sends your notes immediately into the chat for everyone to hear."
-          />
-        </Stack.Item>
-      </Stack>
+
+      <Button
+        color="good"
+        fluid
+        textAlign="center"
+        onClick={() => act('change_notes', { new_notes: note_message })}
+        tooltip="Saves whatever is written as your notepad. This can't be done while dead."
+      >
+        Save
+      </Button>
+      <Button.Confirm
+        color="bad"
+        fluid
+        content="Send to Chat"
+        textAlign="center"
+        onClick={() => act('send_notes_to_chat')}
+      />
     </Section>
   );
 };
@@ -417,17 +403,15 @@ const MafiaJudgement = (props) => {
       <Flex>
         <Button
           icon="smile-beam"
-          content="Innocent"
           color="good"
           onClick={() => act('vote_innocent')}
-        />
+        >
+          Innocent
+        </Button>
         <Box>It is now time to vote, vote the accused innocent or guilty!</Box>
-        <Button
-          icon="angry"
-          content="Guilty"
-          color="bad"
-          onClick={() => act('vote_guilty')}
-        />
+        <Button icon="angry" color="bad" onClick={() => act('vote_guilty')}>
+          Guilty
+        </Button>
       </Flex>
       <Flex justify="center">
         <Button icon="meh" color="white" onClick={() => act('vote_abstain')}>

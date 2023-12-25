@@ -147,8 +147,8 @@ SUBSYSTEM_DEF(polling)
 
 	return possible_candidates
 
-/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, check_jobban, poll_time = 30 SECONDS, list/mobs, ignore_category = null, pic_source, role_name_text)
-	var/list/candidate_list = poll_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, pic_source, role_name_text)
+/datum/controller/subsystem/polling/proc/poll_ghost_candidates_for_mobs(question, role, check_jobban, poll_time = 30 SECONDS, list/mobs, ignore_category = null, flashwindow = TRUE, pic_source, role_name_text)
+	var/list/candidate_list = poll_ghost_candidates(question, role, check_jobban, poll_time, ignore_category, flashwindow, pic_source, role_name_text)
 
 	for(var/mob/potential_mob as anything in mobs)
 		if(QDELETED(potential_mob) || !potential_mob.loc)
