@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - qol: "TGUI will now wait longer trying to reconnect to a new round"

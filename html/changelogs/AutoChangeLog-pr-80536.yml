@@ -1,4 +1,0 @@
-author: "Timberpoes"
-delete-after: True
-changes:
-  - bugfix: "Fixed an issue with polling ghost roles to control multiple mobs that prevented Sentience Fun Balloons from working as intended."
