@@ -71,7 +71,7 @@
 
 /mob/living/basic/statue/mannequin/alert_linked/Initialize(mapload)
 	. = ..()
-	SSqueuelinks.add_to_queue(src, museumalert)
+	SSqueuelinks.add_to_queue(src, id)
 
 /mob/living/basic/statue/mannequin/alert_linked/MatchedLinks(id, list/partners) //partners would also include fellow mannequins but god
 	for(var/partner in partners) //this does not typecheck because that is practically unnecessary because only mapper puzzle elements can set off this signal

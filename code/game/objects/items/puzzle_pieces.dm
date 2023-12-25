@@ -403,3 +403,29 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	playsound(src, SFX_SPARKS, 100, vary = TRUE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	do_sparks(3, cardinal_only = FALSE, source = src)
 	qdel(src)
+
+/obj/structure/puzzle_blockade/oneway
+	name = "one-way gate"
+	desc = "A wall of solid light, likely defending something important. Virtually indestructible."
+	icon = 'icons/obj/structures.dmi'
+	icon_state = "oneway"
+	base_icon_state = "oneway"
+	light_color = COLOR_BIOLUMINESCENCE_BLUE
+	light_range = 1
+	density = FALSE
+
+/obj/structure/puzzle_blockade/oneway/update_icon_state()
+	icon_state = "[base_icon_state][density ? "" : "-off"]"
+	return ..()
+
+/obj/structure/puzzle_blockade/oneway/CanAllowThrough(atom/movable/mover, border_dir)
+	. = ..()
+	return . && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
+
+/obj/structure/puzzle_blockade/oneway/CanAStarPass(border_dir, datum/can_pass_info/pass_info)
+	return REVERSE_DIR(border_dir) == dir
+
+/obj/structure/puzzle_blockade/oneway/try_signal(datum/source)
+	SIGNAL_HANDLER
+	density = FALSE
+	update_appearance(UPDATE_ICON)

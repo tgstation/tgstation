@@ -27,12 +27,13 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/effect/replica_spawner/proc/create_replica()
-	var/appearance_object = new target_path()
-	var/new_replica = new replica_path(loc)
+	var/atom/appearance_object = new target_path
+	var/atom/new_replica = new replica_path(loc)
 
-	new_replica.icon = 'icons/blanks/32x32.dmi'
-	new_replica.icon_state = "nothing"
+	new_replica.icon = appearance_object.icon
+	new_replica.icon_state = appearance_object.icon_state
 	new_replica.copy_overlays(appearance_object.appearance, cut_old = TRUE)
+	new_replica.density = appearance_object.density //for like nondense showers and stuff
 
 	new_replica.name = "[appearance_object.name] [obvious_replica ? "replica" : ""]"
 	new_replica.desc = "[appearance_object.desc] [obvious_replica ? "..except this one is a replica.": ""]"
