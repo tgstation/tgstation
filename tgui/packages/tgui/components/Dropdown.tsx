@@ -22,7 +22,6 @@ type Props = {
   color: string;
   disabled: boolean;
   displayText: ReactNode;
-  dropdownStyle: any;
   icon: string;
   iconRotation: number;
   iconSpin: boolean;
@@ -54,10 +53,12 @@ export function Dropdown(props: Props) {
     onClick,
     onSelected,
     options = [],
+    over,
     selected,
   } = props;
 
   const [open, setOpen] = useState(false);
+  const adjustedOpen = over ? !open : open;
 
   /** Get the index of the selected option */
   function getSelectedIndex() {
@@ -98,7 +99,7 @@ export function Dropdown(props: Props) {
       autoFocus
       isOpen={open}
       onClickOutside={() => setOpen(false)}
-      placement="bottom-start"
+      placement={over ? 'top-start' : 'bottom-start'}
       popperContent={
         <div className="Layout Dropdown__menu" style={{ minWidth: menuWidth }}>
           {options.length === 0 && (
@@ -164,7 +165,7 @@ export function Dropdown(props: Props) {
           </span>
           {!noChevron && (
             <span className="Dropdown__arrow-button">
-              <Icon name={open ? 'chevron-up' : 'chevron-down'} />
+              <Icon name={adjustedOpen ? 'chevron-up' : 'chevron-down'} />
             </span>
           )}
         </div>

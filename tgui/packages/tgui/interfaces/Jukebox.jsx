@@ -34,7 +34,6 @@ export const Jukebox = (props) => {
           <LabeledList>
             <LabeledList.Item label="Track Selected">
               <Dropdown
-                overflow-y="scroll"
                 width="240px"
                 options={songs.map((song) => song.name)}
                 disabled={active}

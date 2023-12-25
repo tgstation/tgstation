@@ -363,8 +363,8 @@ and displays selected entry.
 - `width: string` - Width of dropdown button and resulting menu; css width value
 - `over: boolean` - Dropdown renders over instead of below
 - `color: string` - Color of dropdown button
-- `nochevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
-- `displayText: string | number | ReactNode` - Text to always display in place of the selected text
+- `noChevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
+- `displayText: ReactNode` - Text to always display in place of the selected text
 - `onClick: (e) => void` - Called when dropdown button is clicked
 - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
