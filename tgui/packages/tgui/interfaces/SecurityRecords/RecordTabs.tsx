@@ -2,19 +2,20 @@ import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
-  Stack,
-  Input,
-  Section,
-  Tabs,
-  NoticeBox,
   Box,
-  Icon,
   Button,
+  Icon,
+  Input,
+  NoticeBox,
+  Section,
+  Stack,
+  Tabs,
 } from 'tgui/components';
+
 import { JOB2ICON } from '../common/JobToIcon';
 import { CRIMESTATUS2COLOR } from './constants';
 import { isRecordMatch } from './helpers';
-import { SecurityRecordsData, SecurityRecord } from './types';
+import { SecurityRecord, SecurityRecordsData } from './types';
 
 /** Tabs on left, with search bar */
 export const SecurityRecordTabs = (props) => {
@@ -106,11 +107,10 @@ const CrewTab = (props: { record: SecurityRecord }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label={record.name}
       onClick={() => selectRecord(record)}
       selected={isSelected}
     >
-      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]} wrap>
+      <Box bold={isSelected} color={CRIMESTATUS2COLOR[wanted_status]}>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>

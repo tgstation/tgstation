@@ -1,6 +1,6 @@
 import { multiline } from '../../common/string';
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Stack, Section } from '../components';
+import { Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type BasketballPanelData = {
@@ -40,7 +40,7 @@ export const BasketballPanel = (props) => {
                   />
                   <Button
                     icon="basketball"
-                    disabled={!(data.total_votes >= data.players_min)}
+                    disabled={data.total_votes < data.players_min}
                     onClick={() => act('basketball_start')}
                   >
                     Start

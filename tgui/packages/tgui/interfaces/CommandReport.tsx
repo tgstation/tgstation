@@ -56,17 +56,19 @@ const CentComName = (props) => {
   const { act, data } = useBackend<Data>();
   const { command_name, command_name_presets = [], custom_name } = data;
 
+  const sendName = (value) => {
+    act('update_command_name', {
+      updated_name: value,
+    });
+  };
+
   return (
     <Section title="Set Central Command name" textAlign="center">
       <Dropdown
         width="100%"
         selected={command_name}
         options={command_name_presets}
-        onSelected={(value) =>
-          act('update_command_name', {
-            updated_name: value,
-          })
-        }
+        onSelected={(value) => sendName(value)}
       />
       {!!custom_name && (
         <Input
@@ -74,11 +76,7 @@ const CentComName = (props) => {
           mt={1}
           value={command_name}
           placeholder={command_name}
-          onChange={(_, value) =>
-            act('update_command_name', {
-              updated_name: value,
-            })
-          }
+          onChange={(_, value) => sendName(value)}
         />
       )}
     </Section>
@@ -164,21 +162,21 @@ const ReportText = (props) => {
       <TextArea
         height="200px"
         mb={1}
-        onInput={(_, value) => setCommandReport(value)}
+        onChange={(_, value) => setCommandReport(value)}
         value={commandReport}
       />
       <Stack vertical>
         <Stack.Item>
           <Button.Checkbox
             fluid
-            checked={announce_contents}
+            checked={!!announce_contents}
             onClick={() => act('toggle_announce')}
           >
             Announce Contents
           </Button.Checkbox>
           <Button.Checkbox
             fluid
-            checked={print_report || !announce_contents}
+            checked={!!print_report || !announce_contents}
             disabled={!announce_contents}
             onClick={() => act('toggle_printing')}
             tooltip={

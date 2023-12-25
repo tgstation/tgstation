@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { Button, Box, Section, NoticeBox } from '../components';
+import { Box, Button, Image, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -68,14 +69,11 @@ export const DestructiveAnalyzer = (props) => {
             />
           }
         >
-          <Box
-            as="img"
+          <Image
             src={`data:image/jpeg;base64,${item_icon}`}
             height="64px"
             width="64px"
-            style={{
-              verticalAlign: 'middle',
-            }}
+            verticalAlign="middle"
           />
         </Section>
         <Section title="Deconstruction Methods">

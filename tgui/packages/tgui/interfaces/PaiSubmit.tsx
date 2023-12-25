@@ -1,7 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { logger } from '../logging';
 
 type Data = {
   comments: string;
@@ -21,12 +22,11 @@ alert pAI cards of your candidacy.`;
 export const PaiSubmit = (props) => {
   const { data } = useBackend<Data>();
   const { comments, description, name } = data;
-  const [input, setInput] = useLocalState<Data>('input', {
+  const [input, setInput] = useState({
     comments,
     description,
     name,
   });
-  logger.log(input);
 
   return (
     <Window width={400} height={460} title="pAI Candidacy Menu">

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "When using an item on a mob, you will always attempt to fix wounds AFTER surgery, BUT BEFORE the item's own interactions. As an example, this means using a mesh on a mob will attempt to progress surgery first, then attempt to fix any burn wounds, then heal burn damage."

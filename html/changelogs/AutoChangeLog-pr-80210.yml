@@ -1,4 +1,0 @@
-author: "Rhials"
-delete-after: True
-changes:
-  - qol: "Blackout drunkard personalities will now recieve a \"you are about to sober up\" warning at the 60/40/20 second mark, instead of repeatedly at the 50 second mark."

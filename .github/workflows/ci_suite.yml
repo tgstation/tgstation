@@ -189,7 +189,7 @@ jobs:
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   run_alternate_tests:
-    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]' )
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.collect_data.outputs.alternate_tests != '[]' )
     name: Alternate Tests
     needs: [collect_data]
     strategy:
@@ -207,7 +207,7 @@ jobs:
       max_required_byond_client: ${{needs.collect_data.outputs.max_required_byond_client}}
 
   check_alternate_tests:
-    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.find_all_maps.outputs.alternate_tests != '[]' )
+    if: ( !contains(github.event.head_commit.message, '[ci skip]') && needs.collect_data.outputs.alternate_tests != '[]' )
     name: Check Alternate Tests
     needs: [run_alternate_tests]
     runs-on: ubuntu-22.04

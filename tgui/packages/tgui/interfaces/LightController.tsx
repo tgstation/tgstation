@@ -1,6 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
 import { round } from '../../common/math';
 import { BooleanLike, classes } from '../../common/react';
+import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Knob, Section, Slider, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
@@ -67,7 +67,7 @@ export const LightController = (props) => {
         <Stack fill>
           <Stack.Item>
             <Section fitted fill scrollable width="170px">
-              <Tabs fluid centered>
+              <Tabs fluid align="center">
                 {category_keys.map((category, index) => (
                   <Tabs.Tab
                     key={category}

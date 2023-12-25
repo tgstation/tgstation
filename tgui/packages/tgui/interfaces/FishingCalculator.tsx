@@ -1,4 +1,5 @@
 import { round } from 'common/math';
+
 import { useBackend, useLocalState } from '../backend';
 import { Button, Dropdown, Input, Stack, Table } from '../components';
 import { TableCell, TableRow } from '../components/Table';
@@ -64,7 +65,7 @@ export const FishingCalculator = (props) => {
             />
             <Input
               value={bait}
-              label="Bait"
+              placeholder="Bait"
               onChange={(_, value) => setBait(value)}
               width="100%"
             />

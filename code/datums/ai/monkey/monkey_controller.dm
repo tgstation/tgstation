@@ -97,8 +97,6 @@ have ways of interacting with a specific mob and control it.
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
 	var/mob/living/carbon/regressed_monkey = pawn
-	if(QDELETED(regressed_monkey))
-		return
 	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(istype(brain, /obj/item/organ/internal/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
 		var/obj/item/organ/internal/brain/primate/monkeybrain = brain
@@ -149,8 +147,12 @@ have ways of interacting with a specific mob and control it.
 	return TRUE
 
 ///Reactive events to being hit
-/datum/ai_controller/monkey/proc/retaliate(mob/living/L)
-	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, L, MONKEY_HATRED_AMOUNT)
+/datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
+	// just to be safe
+	if(QDELETED(living_mob))
+		return
+
+	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, living_mob, MONKEY_HATRED_AMOUNT)
 
 /datum/ai_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
 	SIGNAL_HANDLER
