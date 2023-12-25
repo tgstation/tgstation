@@ -740,6 +740,7 @@ Popper lets you position elements so that they don't go out of the bounds of the
 
 - `popperContent: ReactNode` - The content that will be put inside the popper.
 - `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options]
+- `isOpen: boolean` - Whether or not the popper is open.
 - `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
 - `onClickOutside?: (e) => void` - A function that will be called when the user clicks outside of the popper.
 - `additionalStyles: { ... }` - A map of CSS styles to add to the element that will contain the popper.

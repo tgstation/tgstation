@@ -5,6 +5,7 @@ import { CSSProperties, JSXElementConstructor, ReactElement } from 'react';
 import { createPortal } from 'react-dom';
 
 type Props = {
+  isOpen: boolean;
   popperContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
 } & Partial<{
   additionalStyles: CSSProperties;
@@ -18,6 +19,7 @@ export function Popper(props: Props) {
   const {
     additionalStyles,
     children,
+    isOpen,
     placement,
     popperContent,
     options = {},
@@ -83,12 +85,13 @@ export function Popper(props: Props) {
   return (
     <>
       <div ref={parentRef}>{children}</div>
-      {createPortal(
-        <div ref={popperRef} style={contentStyle}>
-          {popperContent}
-        </div>,
-        document.body,
-      )}
+      {isOpen &&
+        createPortal(
+          <div ref={popperRef} style={contentStyle}>
+            {popperContent}
+          </div>,
+          document.body,
+        )}
     </>
   );
 }

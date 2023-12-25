@@ -58,7 +58,6 @@ export function Dropdown(props: Props) {
   } = props;
 
   const [open, setOpen] = useState(false);
-  const parentRef = useRef<HTMLDivElement>(null);
   const popperRef = useRef<HTMLDivElement>(null);
 
   /** Get the index of the selected option */
@@ -104,45 +103,43 @@ export function Dropdown(props: Props) {
 
   return (
     <Popper
-      placement="bottom-start"
+      isOpen={open}
       onClickOutside={() => setOpen(false)}
+      placement="bottom-start"
       popperContent={
-        open ? (
-          <div
-            className="Layout Dropdown__menu"
-            style={{ minWidth: menuWidth }}
-            ref={popperRef}
-          >
-            {options.length === 0 && (
-              <div className="Dropdown__menuentry">No options</div>
-            )}
+        <div
+          className="Layout Dropdown__menu"
+          style={{ minWidth: menuWidth }}
+          ref={popperRef}
+        >
+          {options.length === 0 && (
+            <div className="Dropdown__menuentry">No options</div>
+          )}
 
-            {options.map((option) => {
-              const value = getOptionValue(option);
+          {options.map((option) => {
+            const value = getOptionValue(option);
 
-              return (
-                <div
-                  className={classes([
-                    'Dropdown__menuentry',
-                    selected === value && 'selected',
-                  ])}
-                  key={value}
-                  onClick={() => {
-                    setOpen(false);
-                    onSelected?.(value);
-                  }}
-                >
-                  {typeof option === 'string' ? option : option.displayText}
-                </div>
-              );
-            })}
-          </div>
-        ) : null
+            return (
+              <div
+                className={classes([
+                  'Dropdown__menuentry',
+                  selected === value && 'selected',
+                ])}
+                key={value}
+                onClick={() => {
+                  setOpen(false);
+                  onSelected?.(value);
+                }}
+              >
+                {typeof option === 'string' ? option : option.displayText}
+              </div>
+            );
+          })}
+        </div>
       }
     >
       <div
         className="Dropdown"
-        ref={parentRef}
         style={{
           minWidth: menuWidth,
         }}
