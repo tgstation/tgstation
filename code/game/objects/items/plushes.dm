@@ -790,7 +790,7 @@
 /obj/item/toy/plush/cleanbot
 	name = "cleanbot plushie"
 	desc = "a plushie version of a cleanbot, it has an exited expression!"
-	icon_state = "Plushie_Cleanbot"
+	icon_state = "plushie_cleanbot"
 	attack_verb_continuous = list("scrubs", "cleans", "polishes")
 	attack_verb_simple = list("scrub", "clean", "polish")
 	squeak_override = list('sound/effects/bubbles2.ogg' = 1)
@@ -798,7 +798,15 @@
 /obj/item/toy/plush/medibot
 	name = "medibot plushie"
 	desc = "a plushie version of a medibot, it has an underwhelming expression."
-	icon_state = "Plushie_Medibot"
+	icon_state = "plushie_medibot"
 	attack_verb_continuous = list("heals", "patches", "fixes")
 	attack_verb_simple = list("heal", "patch", "fix")
 	squeak_override = list('sound/voice/medbot/coming.ogg' = 1, 'sound/voice/medbot/injured.ogg' = 1, 'sound/voice/medbot/feelbetter.ogg' = 1, 'sound/voice/medbot/flies.ogg' = 1, 'sound/voice/medbot/catch.ogg' = 1)
+
+/obj/item/toy/plush/secbot
+	name = "securitron plushie"
+	desc = "a plushie version of a securitron, it has a less than thrilled expression."
+	icon_state = "plushie_securitron"
+	attack_verb_continuous = list("stuns", "cuffs", "arrests")
+	attack_verb_simple = list("stun", "cuff", "arrest")
+	squeak_override = list('sound/voice/beepsky/iamthelaw.ogg' = 1, 'sound/voice/beepsky/freeze.ogg' = 1, 'sound/voice/beepsky/justice.ogg' = 1)
