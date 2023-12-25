@@ -38,7 +38,7 @@
 			var/path = pick_weight(events)
 			events -= path
 			mobile.event_list.Add(new path(mobile))
-	
+
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
 	name = "Backup Shuttle"
@@ -490,5 +490,18 @@
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
+
+/datum/map_template/shuttle/emergency/lavaland
+	suffix = "lavaland"
+	name = "Lavaland Ferry"
+	description = "A massive shuttle that is overflowing with lava. Comes with lifeboats to navigate."
+	admin_notes = "Burn baby burn! Fire-extinguishers not included."
+	prerequisites = "The source of the Echoing Signal must be tracked down and eliminated to unlock this shuttle."
+	credit_cost = CARGO_CRATE_VALUE * 35
+	movement_force = list("KNOCKDOWN" = 3, "THROW" = 0)
+	occupancy_limit = "†††"
+
+/datum/map_template/shuttle/emergency/lavaland/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_LEGION]
 
 #undef EMAG_LOCKED_SHUTTLE_COST

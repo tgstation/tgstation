@@ -102,6 +102,8 @@
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
 // Needs bubblegum to die.
 #define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
+// Needs legion to die.
+#define SHUTTLE_UNLOCK_LEGION "legion"
 // Needs one to set the holodeck to Medieval Sim.
 #define SHUTTLE_UNLOCK_MEDISIM "holodeck"
 // Needs a rune to be cleared by a null rod.

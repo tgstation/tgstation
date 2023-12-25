@@ -221,6 +221,11 @@
 	set_varspeed(2)
 	charging = FALSE
 
+/mob/living/simple_animal/hostile/megafauna/legion/grant_achievement(medaltype,scoretype)
+	. = ..()
+	if(!(flags_1 & ADMIN_SPAWNED_1))
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_LEGION] = TRUE
+
 ///Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.
 /mob/living/simple_animal/hostile/megafauna/legion/death()
 	//Make sure we didn't get cheesed

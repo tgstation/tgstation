@@ -1,0 +1,3091 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/stone_tile/block/cracked,
+/turf/open/lava,
+/area/shuttle/escape)
+"aS" = (
+/obj/item/pickaxe,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"bR" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"bT" = (
+/obj/structure/railing{
+	dir = 9
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"ct" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"cu" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"cw" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"cF" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"cV" = (
+/obj/structure/closet/crate/coffin,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"dh" = (
+/obj/structure/lattice/lava,
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"dr" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"dy" = (
+/obj/structure/stone_tile/surrounding,
+/turf/open/lava,
+/area/shuttle/escape)
+"el" = (
+/obj/structure/stone_tile/surrounding,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape)
+"ep" = (
+/obj/effect/decal/cleanable/shreds,
+/turf/open/misc/basalt/safe,
+/area/shuttle/escape)
+"et" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/headpike,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"eW" = (
+/obj/structure/flora/rock,
+/turf/open/misc/basalt/safe,
+/area/shuttle/escape)
+"fi" = (
+/mob/living/simple_animal/hostile/alien/maid/barmaid,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"fm" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"ga" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"gm" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"gE" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 8
+	},
+/obj/item/storage/fancy/cigarettes/cigars/havana,
+/obj/effect/spawner/random/entertainment/lighter,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"gI" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"hg" = (
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"it" = (
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"iy" = (
+/obj/structure/statue/bone/skull,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"iz" = (
+/obj/structure/healingfountain,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"iN" = (
+/obj/structure/stone_tile/surrounding,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"iV" = (
+/obj/item/surgery_tray/full,
+/obj/structure/table/wood,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"jE" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/closed/indestructible/riveted/boss,
+/area/shuttle/escape)
+"jH" = (
+/obj/structure/railing,
+/obj/structure/table/wood,
+/obj/item/construction/rcd/loaded,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"jQ" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/flora/rock,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"jS" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 2
+	},
+/obj/item/reagent_containers/cup/glass/shaker,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"kk" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"kz" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"kA" = (
+/obj/structure/table/wood,
+/obj/item/construction/rcd/loaded,
+/obj/structure/railing,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"la" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"lo" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"lr" = (
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"lx" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/kitchenspike,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"ly" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"lA" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/basalt/safe,
+/area/shuttle/escape)
+"lB" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/lava,
+/area/shuttle/escape)
+"lV" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"mm" = (
+/mob/living/basic/drone/snowflake/bardrone,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"mn" = (
+/obj/structure/closet/crate/grave/filled,
+/obj/item/ship_in_a_bottle,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"mt" = (
+/obj/item/restraints/handcuffs/cable/sinew,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"mz" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"mT" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"mZ" = (
+/obj/effect/spawner/random/food_or_drink/booze,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"nx" = (
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/cup/bottle/epinephrine{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/cup/bottle/multiver{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 4;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/syringe/epinephrine{
+	pixel_x = 2;
+	pixel_y = 8
+	},
+/obj/structure/table/wood,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"oc" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"ok" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"oz" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/lava,
+/area/shuttle/escape)
+"pg" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"pp" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 2
+	},
+/obj/item/storage/box/drinkingglasses,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"px" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"qd" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"qj" = (
+/obj/structure/fluff/big_chain,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"qr" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 10
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"qx" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/item/skeleton_key,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"qG" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"qM" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"rH" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"rV" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/item/fish/boned,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"sd" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/basalt/safe,
+/area/shuttle/escape)
+"si" = (
+/obj/structure/stone_tile/surrounding,
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"so" = (
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"tk" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"vi" = (
+/obj/item/flashlight/flare/candle,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"vv" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"vK" = (
+/obj/structure/stone_tile/surrounding,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"vL" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/structure/barricade/wooden,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"vM" = (
+/obj/structure/headpike/bone,
+/obj/structure/stone_tile/block,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"vQ" = (
+/obj/structure/stone_tile/block,
+/turf/open/lava,
+/area/shuttle/escape)
+"vT" = (
+/obj/structure/headpike/bone,
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"we" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/fishing_line/sinew,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"wK" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/block,
+/obj/structure/kitchenspike,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"xc" = (
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/table/wood,
+/obj/item/construction/rcd/loaded,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"xg" = (
+/obj/item/defibrillator/loaded,
+/obj/structure/table/wood,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"xl" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"xt" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"xI" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"yc" = (
+/obj/structure/stone_tile/slab/cracked,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"ye" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"yl" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"yo" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"yF" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 2
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"yH" = (
+/obj/structure/railing,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"yJ" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"zc" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"zp" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Ab" = (
+/turf/closed/mineral/random/volcanic,
+/area/shuttle/escape)
+"Ac" = (
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"Aw" = (
+/obj/structure/stone_tile/block/burnt{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"AA" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"AS" = (
+/obj/machinery/vending/boozeomat,
+/obj/machinery/light/directional/east,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Bb" = (
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"Bf" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"Bj" = (
+/turf/template_noop,
+/area/template_noop)
+"BY" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"Ch" = (
+/obj/structure/table/wood,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/item/oar,
+/obj/structure/railing{
+	dir = 10
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Cz" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/block{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Dv" = (
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"DA" = (
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"DO" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"Ew" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/table/wood,
+/obj/item/construction/rcd/loaded,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Fl" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"Fv" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"FJ" = (
+/obj/structure/table/optable,
+/obj/item/surgical_drapes,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"FZ" = (
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/item/wirecutters,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Gf" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"Gs" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"Gz" = (
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Hl" = (
+/obj/structure/lattice/lava,
+/turf/open/lava,
+/area/shuttle/escape)
+"Hy" = (
+/obj/docking_port/mobile/emergency{
+	dir = 2;
+	name = "Lavaland emergency shuttle"
+	},
+/obj/structure/fans/tiny/invisible,
+/obj/structure/mineral_door,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape)
+"HS" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"HZ" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Ih" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"JZ" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Km" = (
+/obj/item/shovel,
+/turf/open/misc/basalt/safe,
+/area/shuttle/escape)
+"Kx" = (
+/obj/structure/chair/stool/bar/directional/east{
+	can_buckle = 1;
+	name = "buckleable bar stool"
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"KG" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/obj/structure/stone_tile,
+/turf/open/lava,
+/area/shuttle/escape)
+"Lb" = (
+/obj/item/storage/medkit/regular{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/storage/medkit/fire,
+/obj/item/storage/medkit/toxin{
+	pixel_x = -3
+	},
+/obj/item/storage/medkit/o2{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/structure/table/wood,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"Ll" = (
+/obj/structure/water_source/puddle,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Lv" = (
+/obj/structure/flora/ash/cap_shroom,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"LL" = (
+/turf/closed/indestructible/riveted/boss,
+/area/shuttle/escape)
+"LR" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Mb" = (
+/obj/structure/railing{
+	dir = 6
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"MS" = (
+/turf/closed/indestructible/necropolis,
+/area/shuttle/escape)
+"MT" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/structure/chair/wood,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"MX" = (
+/obj/structure/stone_tile/block{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"Nw" = (
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"Ny" = (
+/obj/structure/chair/comfy/shuttle/tactical{
+	dir = 4
+	},
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"NN" = (
+/obj/structure/fans/tiny/invisible,
+/obj/structure/mineral_door,
+/turf/open/indestructible/necropolis/air,
+/area/shuttle/escape)
+"NU" = (
+/obj/structure/stone_tile/block/cracked,
+/obj/structure/headpike,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"NV" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"Oa" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"Or" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/stone_tile/cracked{
+	dir = 1
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+"Ow" = (
+/obj/item/stack/rods,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"OA" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/lava,
+/area/shuttle/escape)
+"Pb" = (
+/turf/open/lava,
+/area/shuttle/escape)
+"Pu" = (
+/obj/machinery/computer/emergency_shuttle{
+	dir = 8
+	},
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"PM" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"PQ" = (
+/obj/structure/closet/crate/necropolis/tendril,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"PS" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Qk" = (
+/obj/item/fireaxe/boneaxe,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Ru" = (
+/obj/machinery/power/shuttle_engine/huge{
+	dir = 8
+	},
+/turf/open/floor/plating/airless,
+/area/shuttle/escape)
+"RQ" = (
+/obj/structure/stone_tile/block,
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"RZ" = (
+/obj/structure/stone_tile,
+/turf/open/lava,
+/area/shuttle/escape)
+"Sb" = (
+/obj/structure/spirit_board,
+/obj/item/storage/box/matches,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"Sk" = (
+/obj/structure/table/wood/shuttle_bar{
+	boot_dir = 9
+	},
+/obj/item/instrument/guitar,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Uu" = (
+/obj/structure/stone_tile/slab/cracked,
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/item/fishing_rod/bone,
+/obj/effect/spawner/random/food_or_drink/refreshing_beverage,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Vl" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/cracked{
+	dir = 8
+	},
+/obj/item/fishing_hook/bone,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Wp" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Ws" = (
+/obj/effect/decal/cleanable/brimdust,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"WW" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Xg" = (
+/turf/open/misc/basalt/safe,
+/area/shuttle/escape)
+"Xl" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape/brig)
+"Xr" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Xv" = (
+/obj/structure/stone_tile/block{
+	dir = 8
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"XR" = (
+/turf/closed/indestructible/riveted/boss/see_through,
+/area/shuttle/escape)
+"XY" = (
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Yc" = (
+/obj/structure/bonfire/dense,
+/obj/item/toy/plush/goatplushie,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"Yl" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/stone_tile/cracked,
+/obj/structure/railing,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Yp" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 4
+	},
+/obj/structure/stone_tile/block/cracked{
+	dir = 8
+	},
+/obj/effect/decal/remains/human,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"Yt" = (
+/obj/structure/mineral_door,
+/turf/open/indestructible{
+	icon_state = "cult"
+	},
+/area/shuttle/escape)
+"YE" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"YF" = (
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 4
+	},
+/obj/structure/stone_tile,
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/obj/structure/railing,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape/brig)
+"YN" = (
+/obj/item/flashlight/lantern,
+/turf/open/misc/asteroid/basalt/lava,
+/area/shuttle/escape)
+"YS" = (
+/obj/structure/stone_tile/block,
+/obj/structure/stone_tile{
+	dir = 1
+	},
+/obj/vehicle/ridden/lavaboat,
+/obj/item/oar,
+/turf/open/lava,
+/area/shuttle/escape)
+"YX" = (
+/obj/structure/stone_tile/block/cracked{
+	dir = 1
+	},
+/obj/structure/stone_tile{
+	dir = 8
+	},
+/turf/open/lava,
+/area/shuttle/escape)
+
+(1,1,1) = {"
+Bj
+Bj
+Bj
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+Bj
+Dv
+Dv
+Ru
+Bj
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+Bj
+Bj
+Bj
+"}
+(2,1,1) = {"
+Bj
+Bj
+Bj
+MS
+Pb
+Pb
+Ab
+qx
+Ab
+Ab
+Pb
+Pb
+MS
+Bj
+Dv
+Dv
+Dv
+Bj
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+Bj
+Bj
+Bj
+"}
+(3,1,1) = {"
+Bj
+Bj
+Bj
+MS
+Pb
+Pb
+KG
+Ab
+Ab
+Pb
+Pb
+Pb
+MS
+Ih
+Dv
+Dv
+Dv
+Ih
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+Bj
+Bj
+Bj
+"}
+(4,1,1) = {"
+MS
+MS
+MS
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+XR
+XR
+XR
+XR
+XR
+MS
+Pb
+Pb
+Ab
+Ab
+Ab
+Ab
+Pb
+Pb
+MS
+MS
+MS
+MS
+"}
+(5,1,1) = {"
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+Ab
+Ab
+Pb
+Pb
+tk
+it
+lx
+Yp
+wK
+it
+Xr
+Pb
+Pb
+Ab
+Km
+Ab
+Ab
+Pb
+Pb
+Fv
+Vl
+we
+MS
+"}
+(6,1,1) = {"
+MS
+Pb
+Pb
+Fl
+Pb
+Pb
+Ab
+Ab
+Lv
+Ab
+Pb
+Pb
+YE
+it
+it
+dh
+it
+it
+YF
+Pb
+Pb
+Pb
+Ab
+lA
+Pb
+Pb
+Pb
+Ac
+Uu
+rV
+MS
+"}
+(7,1,1) = {"
+MS
+mn
+JZ
+sd
+Pb
+Pb
+Pb
+YN
+hg
+Pb
+Pb
+Pb
+HS
+iN
+yl
+FZ
+gm
+iN
+Yl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+pg
+MS
+"}
+(8,1,1) = {"
+MS
+Pb
+Pb
+kk
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+YE
+yc
+Xv
+Cz
+Wp
+yc
+YF
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(9,1,1) = {"
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+xI
+zp
+iN
+ly
+yc
+Gz
+iN
+zp
+ok
+Pb
+Pb
+Pb
+Pb
+Pb
+hg
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(10,1,1) = {"
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+qd
+fm
+BY
+LL
+LL
+LL
+NV
+Xl
+mT
+Pb
+Pb
+Pb
+Pb
+hg
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(11,1,1) = {"
+MS
+DO
+DO
+DO
+DO
+DO
+kz
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(12,1,1) = {"
+MS
+dy
+Or
+dy
+Or
+dy
+RQ
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(13,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+Or
+dr
+Pb
+Pb
+Ab
+Pb
+Pb
+Pb
+eW
+Ab
+Ab
+Pb
+Pb
+Pb
+Pb
+Pb
+rH
+Bf
+Pb
+Pb
+mz
+Pb
+HZ
+hg
+Pb
+MS
+"}
+(14,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+dy
+yJ
+Pb
+Pb
+Ab
+Ab
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+Ab
+Pb
+Pb
+Gs
+hg
+Ab
+Bf
+Pb
+Pb
+Pb
+dy
+Pb
+Pb
+MS
+"}
+(15,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+Or
+dr
+Pb
+Pb
+Pb
+Ab
+hg
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Or
+pg
+kz
+RZ
+Ab
+Pb
+Pb
+oz
+Pb
+Pb
+MS
+"}
+(16,1,1) = {"
+MS
+zc
+zc
+hg
+hg
+dy
+RQ
+Pb
+Pb
+Pb
+Pb
+hg
+Ab
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Pb
+Pb
+Pb
+Pb
+hg
+MS
+"}
+(17,1,1) = {"
+MS
+Pb
+Pb
+cu
+hg
+Or
+dr
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Pb
+Pb
+Pb
+hg
+Pb
+Pb
+Pb
+Pb
+Ab
+Pb
+Ab
+MS
+"}
+(18,1,1) = {"
+MS
+qj
+Pb
+cu
+yH
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+hg
+oz
+Pb
+Pb
+Pb
+Ab
+MS
+"}
+(19,1,1) = {"
+MS
+Pb
+Pb
+cu
+hg
+Ch
+yJ
+AA
+cF
+DO
+DO
+DO
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Pb
+Pb
+Pb
+Pb
+ye
+Lv
+MS
+"}
+(20,1,1) = {"
+MS
+XY
+XY
+hg
+hg
+hg
+el
+px
+dy
+bR
+dy
+ye
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+MS
+"}
+(21,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+yH
+YS
+Bb
+Gf
+Nw
+Nw
+Nw
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Pb
+Pb
+hg
+MS
+"}
+(22,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+yH
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(23,1,1) = {"
+NN
+hg
+hg
+hg
+hg
+yH
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+LL
+LL
+LL
+LL
+LL
+"}
+(24,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+yH
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+bT
+lB
+rH
+Aw
+qM
+Pb
+Pb
+Pb
+Pb
+Pb
+LL
+nx
+FJ
+xg
+XR
+"}
+(25,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+yH
+yJ
+AA
+cF
+DO
+DO
+DO
+Pb
+Pb
+Pb
+bT
+hg
+hg
+hg
+hg
+hg
+la
+Pb
+Pb
+Pb
+YX
+LL
+iV
+DA
+DA
+XR
+"}
+(26,1,1) = {"
+MS
+zc
+zc
+hg
+hg
+hg
+el
+px
+dy
+bR
+dy
+ye
+Pb
+Pb
+Pb
+cu
+hg
+hg
+hg
+hg
+hg
+yH
+Pb
+Pb
+Pb
+qG
+LL
+DA
+DA
+iz
+XR
+"}
+(27,1,1) = {"
+MS
+Pb
+Pb
+cu
+hg
+Mb
+YS
+Bb
+Gf
+Nw
+Nw
+Nw
+Pb
+Pb
+Pb
+WW
+hg
+lr
+Ow
+lr
+hg
+yH
+Pb
+Pb
+Pb
+qG
+LL
+DA
+DA
+iz
+XR
+"}
+(28,1,1) = {"
+MS
+qj
+Pb
+cu
+yH
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+cu
+hg
+hg
+Yc
+hg
+hg
+yH
+Pb
+Pb
+Pb
+PS
+Yt
+DA
+DA
+iz
+XR
+"}
+(29,1,1) = {"
+MS
+Pb
+Pb
+cu
+hg
+xc
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+cu
+lV
+lr
+mt
+lr
+hg
+yH
+Pb
+Pb
+Pb
+oc
+LL
+DA
+DA
+iz
+XR
+"}
+(30,1,1) = {"
+MS
+XY
+XY
+hg
+hg
+jH
+Hl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+cu
+Qk
+hg
+hg
+hg
+hg
+yH
+Pb
+Pb
+Pb
+oc
+LL
+DA
+DA
+iz
+XR
+"}
+(31,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+jH
+Hl
+Hl
+Hl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+so
+hg
+hg
+hg
+hg
+lV
+Mb
+Pb
+Pb
+Pb
+KG
+LL
+DA
+DA
+DA
+XR
+"}
+(32,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+hg
+Hl
+Hl
+Hl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+so
+Oa
+xt
+KG
+Mb
+Pb
+Pb
+Pb
+Pb
+Pb
+LL
+cV
+Lb
+cV
+XR
+"}
+(33,1,1) = {"
+Hy
+hg
+hg
+hg
+hg
+hg
+Hl
+Hl
+Hl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+LL
+LL
+LL
+LL
+LL
+"}
+(34,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+hg
+Hl
+Hl
+Hl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(35,1,1) = {"
+MS
+hg
+hg
+hg
+hg
+kA
+Hl
+Hl
+Hl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(36,1,1) = {"
+MS
+zc
+zc
+hg
+hg
+jH
+Hl
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Xg
+Xg
+eW
+Xg
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+xl
+rH
+xl
+Pb
+Pb
+Pb
+MS
+"}
+(37,1,1) = {"
+MS
+Pb
+Pb
+cu
+hg
+Ew
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+ep
+Ab
+Pb
+Pb
+Pb
+Pb
+Pb
+ga
+vi
+vi
+vi
+lB
+Pb
+Pb
+MS
+"}
+(38,1,1) = {"
+MS
+qj
+Pb
+cu
+yH
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Pb
+Pb
+Pb
+Pb
+Fv
+vi
+DA
+vK
+DA
+vi
+vQ
+Pb
+MS
+"}
+(39,1,1) = {"
+MS
+Pb
+Pb
+cu
+yH
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Pb
+Pb
+Pb
+Pb
+MX
+vi
+MT
+Sb
+ct
+vi
+aj
+Pb
+MS
+"}
+(40,1,1) = {"
+MS
+XY
+XY
+hg
+hg
+qM
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MX
+vi
+DA
+si
+DA
+vi
+aj
+Pb
+MS
+"}
+(41,1,1) = {"
+MS
+Kx
+Kx
+Kx
+Kx
+Mb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+KG
+vi
+vi
+vi
+gI
+Pb
+Pb
+MS
+"}
+(42,1,1) = {"
+MS
+Sk
+PM
+gE
+PM
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+Pb
+Pb
+Pb
+Pb
+hg
+lV
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+hg
+hg
+hg
+Pb
+Pb
+Pb
+MS
+"}
+(43,1,1) = {"
+MS
+cw
+fi
+hg
+qr
+Pb
+Pb
+Pb
+Pb
+Pb
+hg
+Ab
+Pb
+Pb
+Pb
+hg
+YN
+Ws
+Pb
+Pb
+Pb
+Ab
+Ab
+hg
+hg
+hg
+hg
+hg
+Pb
+hg
+MS
+"}
+(44,1,1) = {"
+MS
+AS
+hg
+hg
+yF
+Pb
+Pb
+Pb
+Pb
+Pb
+hg
+hg
+Pb
+Pb
+Pb
+Pb
+hg
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+hg
+hg
+Lv
+hg
+hg
+hg
+hg
+MS
+"}
+(45,1,1) = {"
+MS
+lo
+mm
+hg
+yF
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+hg
+hg
+iy
+hg
+hg
+hg
+hg
+MS
+"}
+(46,1,1) = {"
+MS
+jS
+pp
+yF
+yF
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+hg
+hg
+hg
+Ab
+Ab
+mZ
+MS
+"}
+(47,1,1) = {"
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Ab
+Ab
+hg
+Ab
+Ab
+Ab
+Ab
+MS
+"}
+(48,1,1) = {"
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+YX
+oz
+vv
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(49,1,1) = {"
+MS
+LR
+bR
+oz
+yo
+lB
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+ga
+DA
+DA
+DA
+vv
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(50,1,1) = {"
+MS
+jE
+OA
+LL
+vL
+LL
+LL
+Pb
+Pb
+Pb
+Pb
+Pb
+YX
+DA
+DA
+DA
+DA
+DA
+lB
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(51,1,1) = {"
+MS
+jQ
+hg
+hg
+hg
+Ll
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+DA
+DA
+DA
+DA
+DA
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+Pb
+Pb
+Pb
+Pb
+Pb
+MS
+"}
+(52,1,1) = {"
+MS
+Lv
+hg
+hg
+hg
+PQ
+MS
+Bj
+Bj
+Bj
+Bj
+XR
+vM
+DA
+DA
+DA
+DA
+DA
+vT
+XR
+Bj
+Bj
+Bj
+Bj
+MS
+Pb
+Pb
+aS
+hg
+Pb
+MS
+"}
+(53,1,1) = {"
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+Bj
+Bj
+Bj
+Bj
+XR
+NU
+DA
+DA
+Ny
+DA
+DA
+et
+XR
+Bj
+Bj
+Bj
+Bj
+MS
+MS
+MS
+MS
+MS
+MS
+MS
+"}
+(54,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+XR
+vM
+DA
+DA
+Pu
+DA
+DA
+vT
+XR
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
+(55,1,1) = {"
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+XR
+XR
+XR
+XR
+XR
+XR
+XR
+XR
+XR
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+Bj
+"}
