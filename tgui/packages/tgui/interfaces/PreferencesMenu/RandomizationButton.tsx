@@ -22,6 +22,10 @@ export const RandomizationButton = (props: {
     case RandomSetting.Enabled:
       color = 'green';
       break;
+    case undefined:
+      color = 'default';
+      break;
+
     default:
       exhaustiveCheck(value);
   }
@@ -48,7 +52,7 @@ export const RandomizationButton = (props: {
           value: RandomSetting.AntagOnly,
         },
       ]}
-      nochevron
+      noChevron
       onSelected={setValue}
       menuWidth="120px"
       width="auto"

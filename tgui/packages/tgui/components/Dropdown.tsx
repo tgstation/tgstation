@@ -1,5 +1,4 @@
 import { classes } from 'common/react';
-import { useEffect } from 'react';
 import { ReactNode, useState } from 'react';
 import { Popover } from 'react-tiny-popover';
 
@@ -9,7 +8,7 @@ import { Icon } from './Icon';
 
 type DropdownEntry = {
   displayText: ReactNode;
-  value: string;
+  value: string | number;
 };
 
 type DropdownOption = string | DropdownEntry;
@@ -29,11 +28,11 @@ type Props = { options: DropdownOption[] } & Partial<{
   onClick: (event) => void;
   onSelected: (selected: any) => void;
   over: boolean;
-  selected: string;
+  selected: string | number;
 }> &
   BoxProps;
 
-function getOptionValue(option: DropdownOption): string {
+function getOptionValue(option: DropdownOption) {
   return typeof option === 'string' ? option : option.value;
 }
 
@@ -41,7 +40,6 @@ export function Dropdown(props: Props) {
   const {
     buttons,
     className,
-    clipSelectedText = true,
     color = 'default',
     disabled,
     displayText,
@@ -53,10 +51,10 @@ export function Dropdown(props: Props) {
     onClick,
     onSelected,
     options = [],
+    selected,
   } = props;
 
   const [open, setOpen] = useState(false);
-  const [selected, setSelected] = useState(props.selected);
 
   function getSelectedIndex() {
     return options.findIndex((option) => {
@@ -90,15 +88,13 @@ export function Dropdown(props: Props) {
     onSelected?.(getOptionValue(options[newIndex]));
   }
 
-  useEffect(() => {
-    onSelected?.(props.selected);
-  }, [onSelected, props.selected]);
-
   return (
     <Popover
-      isOpen={open}
       positions="bottom"
-      onClickOutside={() => setOpen(false)}
+      isOpen={open}
+      onClickOutside={() => {
+        setOpen(false);
+      }}
       content={
         <div className="Layout Dropdown__menu" style={{ minWidth: menuWidth }}>
           {options.length === 0 && (
@@ -115,7 +111,10 @@ export function Dropdown(props: Props) {
                   selected === value && 'selected',
                 ])}
                 key={value}
-                onClick={() => setSelected(value)}
+                onClick={() => {
+                  setOpen(false);
+                  onSelected?.(value);
+                }}
               >
                 {typeof option === 'string' ? option : option.displayText}
               </div>
@@ -125,10 +124,9 @@ export function Dropdown(props: Props) {
       }
     >
       <div
+        className="Dropdown"
         style={{
-          display: 'flex',
-          alignItems: 'flex-start',
-          minWidth: '5rem',
+          minWidth: menuWidth,
         }}
       >
         <div
@@ -145,9 +143,6 @@ export function Dropdown(props: Props) {
             }
             setOpen(!open);
             onClick?.(event);
-          }}
-          style={{
-            flex: 1,
           }}
         >
           {icon && (
