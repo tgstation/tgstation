@@ -64,7 +64,7 @@ Striking a noncultist, however, will tear their flesh."}
 	righthand_file = 'icons/mob/inhands/64x64_righthand.dmi'
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	sharpness = SHARP_EDGED
 	w_class = WEIGHT_CLASS_BULKY
 	force = 30 // whoever balanced this got beat in the head by a bible too many times good lord
@@ -1023,8 +1023,7 @@ Striking a noncultist, however, will tear their flesh."}
 	return FALSE
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/turf/T = get_turf(hit_atom)
-	var/datum/thrownthing/D = throwingdatum
+	var/turf/impact_turf = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/target = hit_atom
 
@@ -1037,13 +1036,14 @@ Striking a noncultist, however, will tear their flesh."}
 			return
 		if(!..())
 			target.Paralyze(30)
-			if(D?.thrower)
-				for(var/mob/living/Next in orange(2, T))
+			var/mob/thrower = throwingdatum?.get_thrower()
+			if(thrower)
+				for(var/mob/living/Next in orange(2, impact_turf))
 					if(!Next.density || IS_CULTIST(Next))
 						continue
-					throw_at(Next, 3, 1, D.thrower)
+					throw_at(Next, 3, 1, thrower)
 					return
-				throw_at(D.thrower, 7, 1, null)
+				throw_at(thrower, 7, 1, null)
 	else
 		..()
 

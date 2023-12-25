@@ -91,6 +91,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 	. = ..()
 	toner_cartridge = new(src)
 	setup_components()
+	AddElement(/datum/element/elevation, pixel_shift = 8) //enough to look like your bums are on the machine.
 
 /// Simply adds the necessary components for this to function.
 /obj/machinery/photocopier/proc/setup_components()
@@ -282,6 +283,9 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 
 /// Will invoke `do_copy_loop` asynchronously. Passes the supplied arguments on to it.
 /obj/machinery/photocopier/proc/do_copies(datum/callback/copy_cb, mob/user, paper_use, toner_use, copies_amount)
+	if(machine_stat & (BROKEN|NOPOWER))
+		return
+
 	busy = TRUE
 	update_use_power(ACTIVE_POWER_USE)
 	// fucking god proc
@@ -535,7 +539,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/machinery/photocopier/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/photocopier/attackby(obj/item/object, mob/user, params)
 	if(istype(object, /obj/item/paper) || istype(object, /obj/item/photo) || istype(object, /obj/item/documents))
@@ -673,7 +677,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 /obj/item/toner
 	name = "toner cartridge"
 	desc = "A small, lightweight cartridge of Nanotrasen ValueBrand toner. Fits photocopiers and autopainters alike."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "tonercartridge"
 	grind_results = list(/datum/reagent/iodine = 40, /datum/reagent/iron = 10)
 	var/charges = 5

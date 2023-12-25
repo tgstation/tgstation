@@ -101,4 +101,5 @@
 	item = /obj/item/melee/baton/telescopic/contractor_baton
 	cost = 12
 	surplus = 50
+	limited_stock = 1
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)

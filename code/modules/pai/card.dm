@@ -236,10 +236,9 @@
 	notify_ghosts(
 		"[user] is requesting a pAI companion! Use the pAI button to submit yourself as one.",
 		source = user,
-		alert_overlay = alert_overlay,
-		action = NOTIFY_ORBIT,
-		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		header = "pAI Request!",
+		alert_overlay = alert_overlay,
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		ignore_key = POLL_IGNORE_PAI,
 	)
 

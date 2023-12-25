@@ -102,7 +102,7 @@
 		return
 	if(HAS_MIND_TRAIT(user, TRAIT_CANNOT_OPEN_PRESENTS))
 		var/turf/floor = get_turf(src)
-		var/obj/item/thing = new /obj/item/a_gift/anything(floor)
+		var/obj/item/thing = new /obj/item/gift/anything(floor)
 		if(!atom_storage.attempt_insert(thing, user, override = TRUE, force = STORAGE_SOFT_LOCKED))
 			qdel(thing)
 

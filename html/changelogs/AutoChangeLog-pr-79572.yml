@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - refactor: "Destructive Analyzers now have a TGUI menu."

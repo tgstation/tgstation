@@ -278,7 +278,7 @@
 
 /obj/machinery/disposal/deconstruct(disassembled = TRUE)
 	var/turf/T = loc
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(stored)
 			var/obj/structure/disposalconstruct/construct = stored
 			stored = null
@@ -386,7 +386,8 @@
 
 /obj/machinery/disposal/bin/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	if(isitem(AM) && AM.CanEnterDisposals())
-		if((throwingdatum.thrower && HAS_TRAIT(throwingdatum.thrower, TRAIT_THROWINGARM)) || prob(75))
+		var/mob/thrower = throwingdatum?.get_thrower()
+		if((thrower && HAS_TRAIT(thrower, TRAIT_THROWINGARM)) || prob(75))
 			AM.forceMove(src)
 			visible_message(span_notice("[AM] lands in [src]."))
 			update_appearance()
@@ -401,13 +402,6 @@
 	full_pressure = FALSE
 	pressure_charging = TRUE
 	update_appearance()
-
-/obj/machinery/disposal/bin/update_appearance(updates)
-	. = ..()
-	if((machine_stat & (BROKEN|NOPOWER)) || panel_open)
-		luminosity = 0
-		return
-	luminosity = 1
 
 /obj/machinery/disposal/bin/update_overlays()
 	. = ..()

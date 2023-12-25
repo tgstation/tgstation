@@ -93,7 +93,7 @@
 	SIGNAL_HANDLER
 	on_defused_callback?.Invoke(source, user, tool)
 	qdel(src)
-	return COMPONENT_BLOCK_TOOL_ATTACK
+	return ITEM_INTERACT_BLOCKING
 
 /// Give people a little hint
 /datum/component/interaction_booby_trap/proc/on_examine(atom/source, mob/examiner, list/examine_list)

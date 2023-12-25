@@ -551,7 +551,7 @@
 
 /obj/item/circuitboard/machine/smartfridge/apply_default_parts(obj/machinery/smartfridge/smartfridge)
 	build_path = smartfridge.base_build_path
-	if(!fridges_name_paths.Find(build_path, fridges_name_paths))
+	if(!fridges_name_paths.Find(build_path))
 		name = "[initial(smartfridge.name)]" //if it's a unique type, give it a unique name.
 		is_special_type = TRUE
 	return ..()
@@ -1558,3 +1558,12 @@
 		/obj/item/stack/sheet/plasteel = 2,
 	)
 
+/obj/item/circuitboard/machine/shieldwallgen
+	name = "Shield Wall Generator"
+	greyscale_colors = CIRCUIT_COLOR_SCIENCE
+	build_path = /obj/machinery/power/shieldwallgen
+	req_components = list(
+		/datum/stock_part/capacitor/tier2 = 2,
+		/datum/stock_part/micro_laser/tier2 = 2,
+		/obj/item/stack/sheet/plasteel = 2,
+	)

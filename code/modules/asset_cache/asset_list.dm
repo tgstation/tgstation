@@ -26,6 +26,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	/// Whether or not this asset can be cached across rounds of the same commit under the `CACHE_ASSETS` config.
 	/// This is not a *guarantee* the asset will be cached. Not all asset subtypes respect this field, and the
 	/// config can, of course, be disabled.
+	/// Disable this if your asset can change between rounds on the same exact version of the code.
 	var/cross_round_cachable = FALSE
 
 /datum/asset/New()
@@ -133,6 +134,7 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 /datum/asset/spritesheet
 	_abstract = /datum/asset/spritesheet
+	cross_round_cachable = TRUE
 	var/name
 	/// List of arguments to pass into queuedInsert
 	/// Exists so we can queue icon insertion, mostly for stuff like preferences
@@ -145,6 +147,9 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	/// If this asset should be fully loaded on new
 	/// Defaults to false so we can process this stuff nicely
 	var/load_immediately = FALSE
+	VAR_PRIVATE
+		// Kept in state so that the result is the same, even when the files are created, for this run
+		should_refresh = null
 
 /datum/asset/spritesheet/proc/should_load_immediately()
 #ifdef DO_NOT_DEFER_ASSETS
@@ -157,9 +162,6 @@ GLOBAL_LIST_EMPTY(asset_datums)
 /datum/asset/spritesheet/should_refresh()
 	if (..())
 		return TRUE
-
-	// Static so that the result is the same, even when the files are created, for this run
-	var/static/should_refresh = null
 
 	if (isnull(should_refresh))
 		// `fexists` seems to always fail on static-time
@@ -362,14 +364,13 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		to_generate += list(args.Copy())
 
-// LEMON NOTE
-// A GOON CODER SAYS BAD ICON ERRORS CAN BE THROWN BY THE "ICON CACHE"
-// APPARENTLY IT MAKES ICONS IMMUTABLE
-// LOOK INTO USING THE MUTABLE APPEARANCE PATTERN HERE
 /datum/asset/spritesheet/proc/queuedInsert(sprite_name, icon/I, icon_state="", dir=SOUTH, frame=1, moving=FALSE)
 	I = icon(I, icon_state=icon_state, dir=dir, frame=frame, moving=moving)
 	if (!I || !length(icon_states(I)))  // that direction or state doesn't exist
 		return
+
+	var/start_usage = world.tick_usage
+
 	//any sprite modifications we want to do (aka, coloring a greyscaled asset)
 	I = ModifyInserted(I)
 	var/size_id = "[I.Width()]x[I.Height()]"
@@ -380,6 +381,12 @@ GLOBAL_LIST_EMPTY(asset_datums)
 
 	if (size)
 		var/position = size[SPRSZ_COUNT]++
+		// Icons are essentially representations of files + modifications
+		// Because of this, byond keeps them in a cache. It does this in a really dumb way tho
+		// It's essentially a FIFO queue. So after we do icon() some amount of times, our old icons go out of cache
+		// When this happens it becomes impossible to modify them, trying to do so will instead throw a
+		// "bad icon" error.
+		// What we're doing here is ensuring our icon is in the cache by refreshing it, so we can modify it w/o runtimes.
 		var/icon/sheet = size[SPRSZ_ICON]
 		var/icon/sheet_copy = icon(sheet)
 		size[SPRSZ_STRIPPED] = null
@@ -390,6 +397,8 @@ GLOBAL_LIST_EMPTY(asset_datums)
 	else
 		sizes[size_id] = size = list(1, I, null)
 		sprites[sprite_name] = list(size_id, 0)
+
+	SSblackbox.record_feedback("tally", "spritesheet_queued_insert_time", TICK_USAGE_TO_MS(start_usage), name)
 
 /**
  * A simple proc handing the Icon for you to modify before it gets turned into an asset.

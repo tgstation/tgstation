@@ -738,6 +738,13 @@
 	alert_type = null
 	var/msg_stage = 0//so you dont get the most intense messages immediately
 
+/datum/status_effect/fake_virus/on_apply()
+	if(HAS_TRAIT(owner, TRAIT_VIRUSIMMUNE))
+		return FALSE
+	if(owner.stat != CONSCIOUS)
+		return FALSE
+	return TRUE
+
 /datum/status_effect/fake_virus/tick(seconds_between_ticks)
 	var/fake_msg = ""
 	var/fake_emote = ""
@@ -1003,7 +1010,7 @@
 		victim.blood_volume -= 5 * seconds_between_ticks
 	// This has been hell to try and balance so that you'll actually get anything out of it
 	victim.reagents.add_reagent(/datum/reagent/gold/cursed, amount = seconds_between_ticks * goldscale, no_react = TRUE)
-	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE)
+	var/current_gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
 	switch(current_gold_amount)
 		if(-INFINITY to 50)
 			victim.add_movespeed_modifier(/datum/movespeed_modifier/status_effect/midas_blight/soft, update = TRUE)

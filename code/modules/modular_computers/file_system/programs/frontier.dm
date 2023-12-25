@@ -1,11 +1,11 @@
 /datum/computer_file/program/scipaper_program
 	filename = "ntfrontier"
 	filedesc = "NT Frontier"
-	category = PROGRAM_CATEGORY_SCI
+	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	extended_desc = "Scientific paper publication and navigation software."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 12
-	program_icon_state = "research"
+	program_open_overlay = "research"
 	tgui_id = "NtosScipaper"
 	program_icon = "paper-plane"
 	download_access = list(ACCESS_ORDNANCE)

@@ -172,7 +172,7 @@ CREATE TABLE `SS13_death` (
   `fireloss` smallint(5) unsigned NOT NULL,
   `oxyloss` smallint(5) unsigned NOT NULL,
   `toxloss` smallint(5) unsigned NOT NULL,
-  `cloneloss` smallint(5) unsigned NOT NULL,
+  `cloneloss` smallint(5) unsigned DEFAULT '0',
   `staminaloss` smallint(5) unsigned NOT NULL,
   `last_words` varchar(255) DEFAULT NULL,
   `suicide` tinyint(1) NOT NULL DEFAULT '0',

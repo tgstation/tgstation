@@ -4,7 +4,8 @@
 
 /datum/mood_event/broken_vow //Used for when mimes break their vow of silence
 	description = "I have brought shame upon my name, and betrayed my fellow mimes by breaking our sacred vow..."
-	mood_change = -8
+	mood_change = -4
+	timeout = 3 MINUTES
 
 /datum/mood_event/on_fire
 	description = "I'M ON FIRE!!!"
@@ -444,3 +445,7 @@
 	description = "UNWORTHY, UNWORTHY, UNWORTHY!!!"
 	mood_change = -200
 	special_screen_obj = "mood_despair"
+
+/datum/mood_event/all_nighter
+	description = "I didn't sleep at all last night. I'm exhausted."
+	mood_change = -5

@@ -1,5 +1,6 @@
 /datum/supply_pack/emergency
 	group = "Emergency"
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/emergency/bio
 	name = "Biological Emergency Crate"
@@ -19,11 +20,12 @@
 		in stations and people alike! Comes with two floorbots, two medbots, five oxygen \
 		masks and five small oxygen tanks."
 	cost = CARGO_CRATE_VALUE * 4
-	contains = list(/mob/living/simple_animal/bot/floorbot = 2,
-					/mob/living/simple_animal/bot/medbot = 2,
-					/obj/item/tank/internals/emergency_oxygen = 5,
-					/obj/item/clothing/mask/breath = 5,
-				)
+	contains = list(
+		/mob/living/basic/bot/medbot = 2,
+		/mob/living/simple_animal/bot/floorbot = 2,
+		/obj/item/tank/internals/emergency_oxygen = 5,
+		/obj/item/clothing/mask/breath = 5,
+	)
 	crate_name = "emergency crate"
 	crate_type = /obj/structure/closet/crate/internals
 

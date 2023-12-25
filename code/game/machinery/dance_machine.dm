@@ -40,7 +40,7 @@
 	req_access = null
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 
 /datum/track
 	var/song_name = "generic"
@@ -91,7 +91,7 @@
 	return ..()
 
 /obj/machinery/jukebox/attackby(obj/item/O, mob/user, params)
-	if(!active && !(flags_1 & NODECONSTRUCT_1))
+	if(!active && !(obj_flags & NO_DECONSTRUCTION))
 		if(O.tool_behaviour == TOOL_WRENCH)
 			if(!anchored && !isinspace())
 				to_chat(user,span_notice("You secure [src] to the floor."))

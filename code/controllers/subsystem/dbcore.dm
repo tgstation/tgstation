@@ -399,11 +399,8 @@ The duplicate_key arg can be true to automatically generate this part of the que
 	or set to a string that is appended to the end of the query
 Ignore_errors instructes mysql to continue inserting rows if some of them have errors.
 	the erroneous row(s) aren't inserted and there isn't really any way to know why or why errored
-Delayed insert mode was removed in mysql 7 and only works with MyISAM type tables,
-	It was included because it is still supported in mariadb.
-	It does not work with duplicate_key and the mysql server ignores it in those cases
 */
-/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, delayed = FALSE, warn = FALSE, async = TRUE, special_columns = null)
+/datum/controller/subsystem/dbcore/proc/MassInsert(table, list/rows, duplicate_key = FALSE, ignore_errors = FALSE, warn = FALSE, async = TRUE, special_columns = null)
 	if (!table || !rows || !istype(rows))
 		return
 
@@ -420,8 +417,6 @@ Delayed insert mode was removed in mysql 7 and only works with MyISAM type table
 
 	// Prepare SQL query full of placeholders
 	var/list/query_parts = list("INSERT")
-	if (delayed)
-		query_parts += " DELAYED"
 	if (ignore_errors)
 		query_parts += " IGNORE"
 	query_parts += " INTO "

@@ -604,7 +604,7 @@
 
 	else
 		var/obj/item/slime_extract/to_integrate = human_owner.get_active_held_item()
-		if(!istype(to_integrate) || to_integrate.Uses <= 0)
+		if(!istype(to_integrate) || to_integrate.extract_uses <= 0)
 			human_owner.balloon_alert(human_owner, "need an unused slime extract!")
 			return
 		if(!human_owner.temporarilyRemoveItemFromInventory(to_integrate))

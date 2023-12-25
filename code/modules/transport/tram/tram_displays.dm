@@ -82,7 +82,7 @@
 		. += span_notice("It is secured to the tram wall with [EXAMINE_HINT("bolts.")]")
 
 /obj/machinery/transport/destination_sign/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(disassembled)
 		new /obj/item/wallframe/indicator_display(drop_location())

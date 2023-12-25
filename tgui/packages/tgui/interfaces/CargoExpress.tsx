@@ -1,6 +1,13 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
-import { AnimatedNumber, Box, Button, LabeledList, Section } from '../components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  Section,
+} from '../components';
 import { Window } from '../layouts';
 import { CargoCatalog } from './Cargo';
 import { InterfaceLockNoticeBox } from './common/InterfaceLockNoticeBox';
@@ -17,8 +24,8 @@ type Data = {
   message: string;
 };
 
-export const CargoExpress = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const CargoExpress = (props) => {
+  const { data } = useBackend<Data>();
   const { locked } = data;
 
   return (
@@ -31,8 +38,8 @@ export const CargoExpress = (props, context) => {
   );
 };
 
-const CargoExpressContent = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const CargoExpressContent = (props) => {
+  const { act, data } = useBackend<Data>();
   const {
     hasBeacon,
     message,
@@ -53,7 +60,8 @@ const CargoExpressContent = (props, context) => {
             <AnimatedNumber value={Math.round(points)} />
             {' credits'}
           </Box>
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Landing Location">
             <Button
@@ -64,7 +72,8 @@ const CargoExpressContent = (props, context) => {
             <Button
               selected={usingBeacon}
               disabled={!hasBeacon}
-              onClick={() => act('LZBeacon')}>
+              onClick={() => act('LZBeacon')}
+            >
               {beaconzone} ({beaconName})
             </Button>
             <Button

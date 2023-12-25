@@ -471,7 +471,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 9
 	},
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "so" = (
@@ -1179,7 +1179,7 @@
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
-/obj/effect/spawner/random/structure/crate_empty,
+/obj/effect/spawner/random/structure/closet_empty/crate,
 /turf/open/misc/asteroid/basalt/airless,
 /area/ruin/space)
 "YE" = (

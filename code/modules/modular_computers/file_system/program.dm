@@ -1,12 +1,15 @@
-///The default amount a program should take in cell use.
-#define PROGRAM_BASIC_CELL_USE 15
-
 // /program/ files are executable programs that do things.
 /datum/computer_file/program
 	filetype = "PRG"
 	/// File name. FILE NAME MUST BE UNIQUE IF YOU WANT THE PROGRAM TO BE DOWNLOADABLE FROM NTNET!
 	filename = "UnknownProgram"
 
+	/// Program-specific bitflags that tell the app what it runs on.
+	/// (PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA)
+	var/can_run_on_flags = PROGRAM_ALL
+	/// Program-specific bitflags that tells the ModPC what the app is able to do special.
+	/// (PROGRAM_REQUIRES_NTNET|PROGRAM_ON_NTNET_STORE|PROGRAM_ON_SYNDINET_STORE|PROGRAM_UNIQUE_COPY|PROGRAM_HEADER|PROGRAM_RUNS_WITHOUT_POWER)
+	var/program_flags = PROGRAM_ON_NTNET_STORE
 	///How much power running this program costs.
 	var/power_cell_use = PROGRAM_BASIC_CELL_USE
 	///List of required accesses to *run* the program. Any match will do.
@@ -18,23 +21,16 @@
 	var/filedesc = "Unknown Program"
 	/// Short description of this program's function.
 	var/extended_desc = "N/A"
-	/// Category in the NTDownloader.
-	var/category = PROGRAM_CATEGORY_MISC
-	/// Program-specific screen icon state
-	var/program_icon_state = null
-	///Boolean on whether the program will appear at the top on PDA menus, or in the app list with everything else.
-	var/header_program = FALSE
-	/// Set to 1 for program to require nonstop NTNet connection to run. If NTNet connection is lost program crashes.
-	var/requires_ntnet = FALSE
+	///What category this program can be found in within NTNetDownloader.
+	///This is required if PROGRAM_ON_NTNET_STORE or PROGRAM_ON_SYNDINET_STORE is on.
+	var/downloader_category = PROGRAM_CATEGORY_DEVICE
+	///The overlay to add ontop of the ModPC running the app while it's open.
+	///This is taken from the same file as the ModPC, so you can use can_run_on_flags to prevent
+	///the program from being used on devices that don't have sprites for it.
+	var/program_open_overlay = null
 	/// NTNet status, updated every tick by computer running this program. Don't use this for checks if NTNet works, computers do that. Use this for calculations, etc.
 	var/ntnet_status = 1
-	/// Bitflags (PROGRAM_CONSOLE, PROGRAM_LAPTOP, PROGRAM_TABLET combination) or PROGRAM_ALL
-	var/usage_flags = PROGRAM_ALL
-	/// Whether the program can be downloaded from NTNet. Set to FALSE to disable.
-	var/available_on_ntnet = TRUE
-	/// Whether the program can be downloaded from SyndiNet (accessible via emagging the computer). Set to TRUE to enable.
-	var/available_on_syndinet = FALSE
-	/// Name of the tgui interface
+	/// Name of the tgui interface. If this is not defined, this will not be available in NTNet.
 	var/tgui_id
 	/// Example: "something.gif" - a header image that will be rendered in computer's UI when this program is running at background. Images must also be inserted into /datum/asset/simple/headers.
 	var/ui_header = null
@@ -48,17 +44,15 @@
 	var/alert_pending = FALSE
 	/// How well this program will help combat detomatix viruses.
 	var/detomatix_resistance = NONE
-	///Boolean on whether or not only one copy of the app can exist. This means it deletes itself when cloned elsewhere.
-	var/unique_copy = FALSE
 
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
 	temp.run_access = run_access
 	temp.filedesc = filedesc
-	temp.program_icon_state = program_icon_state
-	temp.requires_ntnet = requires_ntnet
-	temp.usage_flags = usage_flags
-	if(unique_copy)
+	temp.program_open_overlay = program_open_overlay
+	temp.program_flags = program_flags
+	temp.can_run_on_flags = can_run_on_flags
+	if(program_flags & PROGRAM_UNIQUE_COPY)
 		if(computer)
 			computer.remove_file(src)
 		if(disk_host)
@@ -105,7 +99,7 @@
 
 ///Makes sure a program can run on this hardware (for apps limited to tablets/computers/laptops)
 /datum/computer_file/program/proc/is_supported_by_hardware(hardware_flag = NONE, loud = FALSE, mob/user)
-	if(!(hardware_flag & usage_flags))
+	if(!(hardware_flag & can_run_on_flags))
 		if(loud && computer && user)
 			to_chat(user, span_danger("\The [computer] flashes a \"Hardware Error - Incompatible software\" warning."))
 		return FALSE
@@ -127,13 +121,13 @@
  * access can contain a list of access numbers to check against. If access is not empty, it will be used istead of checking any inserted ID.
  */
 /datum/computer_file/program/proc/can_run(mob/user, loud = FALSE, access_to_check, downloading = FALSE, list/access)
-	if(issilicon(user) && !ispAI(user))
-		return TRUE
+	if(user)
+		if(issilicon(user) && !ispAI(user))
+			return TRUE
+		if(isAdminGhostAI(user))
+			return TRUE
 
-	if(isAdminGhostAI(user))
-		return TRUE
-
-	if(computer && (computer.obj_flags & EMAGGED) && (available_on_syndinet || !downloading)) //emagged can run anything on syndinet, and can bypass execution locks, but not download.
+	if(computer && (computer.obj_flags & EMAGGED) && (program_flags & PROGRAM_ON_SYNDINET_STORE || !downloading)) //emagged can run anything on syndinet, and can bypass execution locks, but not download.
 		return TRUE
 
 	if(!access_to_check)
@@ -150,7 +144,7 @@
 			accesscard = computer.computer_id_slot?.GetID()
 
 		if(!accesscard)
-			if(loud)
+			if(loud && user)
 				to_chat(user, span_danger("\The [computer] flashes an \"RFID Error - Unable to scan ID\" warning."))
 			return FALSE
 		access = accesscard.GetAccess()
@@ -159,7 +153,7 @@
 		if(singular_access in access) //For loop checks every individual access entry in the access list. If the user's ID has access to any entry, then we're good.
 			return TRUE
 
-	if(loud)
+	if(loud && user)
 		to_chat(user, span_danger("\The [computer] flashes an \"Access Denied\" warning."))
 	return FALSE
 
@@ -174,7 +168,7 @@
 /datum/computer_file/program/proc/on_start(mob/living/user)
 	SHOULD_CALL_PARENT(TRUE)
 	if(can_run(user, loud = TRUE))
-		if(requires_ntnet)
+		if(program_flags & PROGRAM_REQUIRES_NTNET)
 			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 			generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
 		return TRUE
@@ -193,12 +187,12 @@
 
 	if(src == computer.active_program)
 		computer.active_program = null
-		if(computer.enabled)
-			computer.update_tablet_open_uis(usr)
+		if(!QDELETED(computer) && computer.enabled)
+			INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
 	if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
 
-	if(requires_ntnet)
+	if(program_flags & PROGRAM_REQUIRES_NTNET)
 		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 
@@ -208,7 +202,7 @@
 ///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
 /datum/computer_file/program/proc/background_program()
 	SHOULD_CALL_PARENT(TRUE)
-	if(header_program)
+	if(program_flags & PROGRAM_HEADER)
 		return kill_program()
 
 	computer.idle_threads.Add(src)
@@ -217,5 +211,3 @@
 	computer.update_tablet_open_uis(usr)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
-
-#undef PROGRAM_BASIC_CELL_USE

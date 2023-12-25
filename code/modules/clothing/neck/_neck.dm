@@ -30,6 +30,14 @@
 	greyscale_colors = "#151516ff"
 	flags_1 = IS_PLAYER_COLORABLE_1
 
+/obj/item/clothing/neck/bowtie/rainbow
+	name = "rainbow bow tie"
+	desc = "An extremely large neosilk rainbow-colored bowtie."
+	icon_state = "bowtie_rainbow"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
+
 /obj/item/clothing/neck/tie
 	name = "slick tie"
 	desc = "A neosilk tie."
@@ -73,10 +81,10 @@
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
 	for(var/obj/structure/mirror/reflection in view(2, user))
-		tie_timer_actual /= 1.25
+		tie_timer_actual *= 0.8
 	// Heads of staff are experts at tying their ties.
-	if(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-		tie_timer_actual /= 2
+	if(HAS_TRAIT(user, TRAIT_FAST_TYING))
+		tie_timer_actual *= 0.5
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))
@@ -237,7 +245,7 @@
 
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
-				if(isnull(heart) || !heart.beating || carbon_patient.stat == DEAD)
+				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
 					render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
 				else if(heart.damage > 10 || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
@@ -289,7 +297,7 @@
 				user.visible_message(span_notice("[user] presses their fingers against [carbon_patient]'s [body_part]."), ignored_mobs = user)
 
 			//assess pulse (heart & blood level)
-			if(isnull(heart) || !heart.beating || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
+			if(isnull(heart) || !heart.is_beating() || carbon_patient.blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
 				render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
 			else
 				if(heart.damage > 10)

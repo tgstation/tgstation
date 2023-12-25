@@ -1,3 +1,4 @@
+#define MAXIMUM_GUTLUNCH_POP 20
 /datum/ai_controller/basic_controller/gutlunch
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
@@ -13,10 +14,15 @@
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/target_retaliate/check_faction,
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/make_babies,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/befriend_ashwalkers,
+		/datum/ai_planning_subtree/make_babies/gutlunch,
 	)
+
+/datum/ai_planning_subtree/make_babies/gutlunch/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
+		return
+	return ..()
 
 ///find ashwalkers and add them to the list of masters
 /datum/ai_planning_subtree/befriend_ashwalkers
@@ -117,3 +123,14 @@
 		controller.queue_behavior(/datum/ai_behavior/mine_wall, BB_CURRENT_PET_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 	controller.queue_behavior(/datum/ai_behavior/find_mineral_wall, BB_CURRENT_PET_TARGET)
+
+//pet commands
+/datum/pet_command/point_targeting/breed/gutlunch
+
+/datum/pet_command/point_targeting/breed/gutlunch/set_command_target(mob/living/parent, atom/target)
+	if(GLOB.gutlunch_count >= MAXIMUM_GUTLUNCH_POP)
+		parent.balloon_alert_to_viewers("can't reproduce anymore!")
+		return
+	return ..()
+
+#undef MAXIMUM_GUTLUNCH_POP

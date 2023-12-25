@@ -4,34 +4,30 @@
  * @license MIT
  */
 
-import { BooleanLike, classes, pureComponentHooks } from 'common/react';
-import { InfernoNode } from 'inferno';
+import { BooleanLike, classes } from 'common/react';
+import { PropsWithChildren, ReactNode } from 'react';
+
 import { Box, unit } from './Box';
 import { Divider } from './Divider';
 import { Tooltip } from './Tooltip';
 
-type LabeledListProps = {
-  children?: any;
-};
-
-export const LabeledList = (props: LabeledListProps) => {
+export const LabeledList = (props: PropsWithChildren) => {
   const { children } = props;
   return <table className="LabeledList">{children}</table>;
 };
 
-LabeledList.defaultHooks = pureComponentHooks;
-
 type LabeledListItemProps = Partial<{
+  buttons: ReactNode;
   className: string | BooleanLike;
-  label: string | InfernoNode | BooleanLike;
-  labelColor: string | BooleanLike;
+  color: string;
+  key: string | number;
+  label: string | ReactNode | BooleanLike;
+  labelColor: string;
   labelWrap: boolean;
-  color: string | BooleanLike;
-  textAlign: string | BooleanLike;
-  buttons: InfernoNode;
+  textAlign: string;
   /** @deprecated */
   content: any;
-  children: InfernoNode;
+  children: ReactNode;
   verticalAlign: string;
   tooltip: string;
 }>;
@@ -63,8 +59,9 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         <Box
           as="span"
           style={{
-            'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
-          }}>
+            borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
+          }}
+        >
           {innerLabel}
         </Box>
       </Tooltip>
@@ -80,7 +77,8 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         // Kinda flipped because we want nowrap as default. Cleaner CSS this way though.
         !labelWrap && 'LabeledList__label--nowrap',
       ])}
-      verticalAlign={verticalAlign}>
+      verticalAlign={verticalAlign}
+    >
       {innerLabel}
     </Box>
   );
@@ -94,7 +92,8 @@ const LabeledListItem = (props: LabeledListItemProps) => {
         textAlign={textAlign}
         className={classes(['LabeledList__cell', 'LabeledList__content'])}
         colSpan={buttons ? undefined : 2}
-        verticalAlign={verticalAlign}>
+        verticalAlign={verticalAlign}
+      >
         {content}
         {children}
       </Box>
@@ -104,8 +103,6 @@ const LabeledListItem = (props: LabeledListItemProps) => {
     </tr>
   );
 };
-
-LabeledListItem.defaultHooks = pureComponentHooks;
 
 type LabeledListDividerProps = {
   size?: number;
@@ -118,16 +115,15 @@ const LabeledListDivider = (props: LabeledListDividerProps) => {
       <td
         colSpan={3}
         style={{
-          'padding-top': padding,
-          'padding-bottom': padding,
-        }}>
+          paddingTop: padding,
+          paddingBottom: padding,
+        }}
+      >
         <Divider />
       </td>
     </tr>
   );
 };
-
-LabeledListDivider.defaultHooks = pureComponentHooks;
 
 LabeledList.Item = LabeledListItem;
 LabeledList.Divider = LabeledListDivider;

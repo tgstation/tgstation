@@ -1,5 +1,6 @@
 import { perf } from 'common/perf';
-import { render } from 'inferno';
+import { render } from 'react-dom';
+
 import { createLogger } from './logging';
 
 const logger = createLogger('renderer');
@@ -19,12 +20,17 @@ export const suspendRenderer = () => {
 };
 
 type CreateRenderer = <T extends unknown[] = [unknown]>(
-  getVNode?: (...args: T) => any
+  getVNode?: (...args: T) => any,
 ) => (...args: T) => void;
+
+enum Render {
+  Start = 'render/start',
+  Finish = 'render/finish',
+}
 
 // prettier-ignore
 export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
-  perf.mark('render/start');
+  perf.mark(Render.Start);
   // Start rendering
   if (!reactRoot) {
     reactRoot = document.getElementById('react-root');
@@ -35,7 +41,7 @@ export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   else {
     render(args[0] as any, reactRoot);
   }
-  perf.mark('render/finish');
+  perf.mark(Render.Finish);
   if (suspended) {
     return;
   }
@@ -43,22 +49,22 @@ export const createRenderer: CreateRenderer = (getVNode) => (...args) => {
   if (process.env.NODE_ENV !== 'production') {
     if (initialRender === 'resumed') {
       logger.log('rendered in',
-        perf.measure('render/start', 'render/finish'));
+        perf.measure(Render.Start, Render.Finish));
     }
     else if (initialRender) {
       logger.debug('serving from:', location.href);
       logger.debug('bundle entered in',
         perf.measure('inception', 'init'));
       logger.debug('initialized in',
-        perf.measure('init', 'render/start'));
+        perf.measure('init', Render.Start));
       logger.log('rendered in',
-        perf.measure('render/start', 'render/finish'));
+        perf.measure(Render.Start, Render.Finish));
       logger.log('fully loaded in',
-        perf.measure('inception', 'render/finish'));
+        perf.measure('inception', Render.Finish));
     }
     else {
       logger.debug('rendered in',
-        perf.measure('render/start', 'render/finish'));
+        perf.measure(Render.Start, Render.Finish));
     }
   }
   if (initialRender) {

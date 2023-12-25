@@ -10,7 +10,7 @@
  * AI also has special checks becaus it gets in and out of the mech differently
  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
  *
- * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * For multi-crew, you need to set how the occupants receive ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
  *
  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
@@ -576,7 +576,7 @@
 		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
-		if(cell)
+		if(cell && cell.maxcharge)
 			var/cellcharge = cell.charge/cell.maxcharge
 			switch(cellcharge)
 				if(0.75 to INFINITY)
@@ -589,6 +589,8 @@
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 3)
 				else
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell/mech)
+		else
+			occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)
 		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)

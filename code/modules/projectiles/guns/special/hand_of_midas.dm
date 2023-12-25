@@ -45,7 +45,9 @@
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!victim.reagents)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(!victim.reagents.has_reagent(/datum/reagent/gold, check_subtypes = TRUE))
+
+	var/gold_amount = victim.reagents.get_reagent_amount(/datum/reagent/gold, type_check = REAGENT_SUB_TYPE)
+	if(!gold_amount)
 		balloon_alert(user, "no gold in bloodstream")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/gold_beam = user.Beam(victim, icon_state="drain_gold")
@@ -53,8 +55,8 @@
 		qdel(gold_beam)
 		balloon_alert(user, "link broken")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	handle_gold_charges(user, victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE))
-	victim.reagents.remove_all_type(/datum/reagent/gold, victim.reagents.get_reagent_amount(/datum/reagent/gold, include_subtypes = TRUE))
+	handle_gold_charges(user, gold_amount)
+	victim.reagents.remove_reagent(/datum/reagent/gold, gold_amount, include_subtypes = TRUE)
 	victim.remove_status_effect(/datum/status_effect/midas_blight)
 	qdel(gold_beam)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN

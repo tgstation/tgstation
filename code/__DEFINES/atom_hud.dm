@@ -14,9 +14,9 @@
 /// loyality implant
 #define IMPLOYAL_HUD "5"
 /// chemical implant
-#define IMPCHEM_HUD "6"
+#define IMPSEC_FIRST_HUD "6"
 /// tracking implant
-#define IMPTRACK_HUD "7"
+#define IMPSEC_SECOND_HUD "7"
 /// Silicon/Mech/Circuit Status
 #define DIAG_STAT_HUD "8"
 /// Silicon health bar
@@ -45,6 +45,8 @@
 #define FAN_HUD "21"
 /// Mech camera HUD
 #define DIAG_CAMERA_HUD "22"
+/// Steady Hacked APC effect, visible only to Malf AIs
+#define MALF_APC_HUD "23"
 
 //by default everything in the hud_list of an atom is an image
 //a value in hud_list with one of these will change that behavior
@@ -62,15 +64,10 @@
 #define DATA_HUD_SENTIENT_DISEASE 8
 #define DATA_HUD_AI_DETECT 9
 #define DATA_HUD_FAN 10
-
-// Notification action types
-#define NOTIFY_JUMP "jump"
-#define NOTIFY_PLAY "play"
-#define NOTIFY_ORBIT "orbit"
+#define DATA_HUD_MALF_APC 11
 
 /// cooldown for being shown the images for any particular data hud
 #define ADD_HUD_TO_COOLDOWN 20
-
 
 // Security HUD icon_state defines
 
@@ -86,6 +83,7 @@
 #define SECHUD_BARTENDER "hudbartender"
 #define SECHUD_BITRUNNER "hudbitrunner"
 #define SECHUD_BOTANIST "hudbotanist"
+#define SECHUD_BRIDGE_ASSISTANT "hudbridgeassistant"
 #define SECHUD_CAPTAIN "hudcaptain"
 #define SECHUD_CARGO_TECHNICIAN "hudcargotechnician"
 #define SECHUD_CHAPLAIN "hudchaplain"

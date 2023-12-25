@@ -4,7 +4,6 @@
 	desc = "A machine monitoring atmospheric data from mining environments. Provides warnings about incoming weather fronts."
 	icon = 'icons/obj/miningradio.dmi'
 	icon_state = "wallmount"
-	luminosity = 1
 	light_power = 1
 	light_range = 1.6
 

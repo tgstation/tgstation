@@ -153,7 +153,6 @@
 		notify_ghosts(
 			"[user] has primed a Hot Potato!",
 			source = src,
-			action = NOTIFY_ORBIT,
 			header = "Hot Hot Hot!",
 		)
 

@@ -1,6 +1,6 @@
 
 
-//TODO: Make these simple_animals
+//TODO: Make these basic mobs
 
 #define MIN_IMPREGNATION_TIME 100 //time it takes to impregnate someone
 #define MAX_IMPREGNATION_TIME 150
@@ -22,7 +22,6 @@
 	tint = 3
 	flags_cover = MASKCOVERSEYES | MASKCOVERSMOUTH
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	max_integrity = 100
 	item_flags = XENOMORPH_HOLDABLE
 	var/stat = CONSCIOUS //UNCONSCIOUS is the idle state in this case

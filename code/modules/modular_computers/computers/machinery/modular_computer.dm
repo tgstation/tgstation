@@ -82,7 +82,7 @@
 		return .
 
 	if(cpu.enabled)
-		. += cpu.active_program?.program_icon_state || screen_icon_state_menu
+		. += cpu.active_program?.program_open_overlay || screen_icon_state_menu
 	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
 
@@ -134,7 +134,7 @@
 	return ..()
 
 /obj/machinery/modular_computer/attackby(obj/item/W as obj, mob/living/user)
-	if (cpu && !user.combat_mode && !(flags_1 & NODECONSTRUCT_1))
+	if (cpu && !user.combat_mode && !(obj_flags & NO_DECONSTRUCTION))
 		return cpu.attackby(W, user)
 	return ..()
 

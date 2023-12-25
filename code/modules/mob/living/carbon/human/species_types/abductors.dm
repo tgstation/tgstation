@@ -3,19 +3,21 @@
 	id = SPECIES_ABDUCTOR
 	sexes = FALSE
 	inherent_traits = list(
-		TRAIT_NO_UNDERWEAR,
-		TRAIT_NOBREATH,
-		TRAIT_NOHUNGER,
-		TRAIT_VIRUSIMMUNE,
-		TRAIT_NOBLOOD,
 		TRAIT_CHUNKYFINGERS_IGNORE_BATON,
+		TRAIT_NEVER_WOUNDED,
+		TRAIT_NOBLOOD,
+		TRAIT_NOBREATH,
 		TRAIT_NODISMEMBER,
-		TRAIT_NEVER_WOUNDED
+		TRAIT_NOHUNGER,
+		TRAIT_NO_UNDERWEAR,
+		TRAIT_REMOTE_TASTING,
+		TRAIT_VIRUSIMMUNE,
 	)
 	mutanttongue = /obj/item/organ/internal/tongue/abductor
 	mutantstomach = null
 	mutantheart = null
 	mutantlungs = null
+	mutantbrain = /obj/item/organ/internal/brain/abductor
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN | SLIME_EXTRACT
 	ass_image = 'icons/ass/assgrey.png'
 

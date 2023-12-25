@@ -310,11 +310,9 @@
 	if(gas_visuals[icon_file])
 		return gas_visuals[icon_file]
 
-	var/obj/effect/abstract/new_overlay = new
+	var/obj/effect/abstract/gas_visual/new_overlay = new
 	new_overlay.icon = icon_file
-	new_overlay.appearance_flags = RESET_COLOR | KEEP_APART
-	new_overlay.vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
-	new_overlay.color = gasmix_color
+	new_overlay.ChangeColor(gasmix_color)
 
 	gas_visuals[icon_file] = new_overlay
 	return new_overlay
@@ -322,8 +320,8 @@
 /// Called when the gasmix color has changed and the gas visuals need to be updated.
 /datum/pipeline/proc/UpdateGasVisuals()
 	for(var/icon/source as anything in gas_visuals)
-		var/obj/effect/abstract/overlay = gas_visuals[source]
-		animate(overlay, time=5, color=gasmix_color)
+		var/obj/effect/abstract/gas_visual/overlay = gas_visuals[source]
+		overlay.ChangeColor(gasmix_color)
 
 /// After updating, this proc handles looking at the new gas mixture and blends the colors together according to percentage of the gas mix.
 /datum/pipeline/proc/CalculateGasmixColor(datum/gas_mixture/source)
@@ -355,3 +353,24 @@
 	if(gasmix_color != current_color)
 		gasmix_color = current_color
 		UpdateGasVisuals()
+
+/obj/effect/abstract/gas_visual
+	appearance_flags  = RESET_COLOR | KEEP_APART
+	vis_flags = VIS_INHERIT_ICON_STATE | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	var/current_color
+	var/color_filter
+
+/obj/effect/abstract/gas_visual/Initialize(mapload)
+	. = ..()
+	color_filter = filter(type="color", color=matrix())
+	filters += color_filter
+	color_filter = filters[filters.len]
+	if(current_color)
+		animate(color_filter, color=current_color, time=5)
+
+/obj/effect/abstract/gas_visual/proc/ChangeColor(new_color)
+	current_color = new_color
+	if(isnull(color_filter))
+		// Called before init
+		return
+	animate(color_filter, time=5, color=new_color)

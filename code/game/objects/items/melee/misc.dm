@@ -1,13 +1,6 @@
+// Deprecated, you do not need to use this type for melee weapons.
 /obj/item/melee
 	item_flags = NEEDS_PERMIT
-
-/obj/item/melee/proc/check_martial_counter(mob/living/carbon/human/target, mob/living/carbon/human/user)
-	if(target.check_block())
-		target.visible_message(span_danger("[target.name] blocks [src] and twists [user]'s arm behind [user.p_their()] back!"),
-					span_userdanger("You block the attack!"))
-		user.Stun(40)
-		return TRUE
-
 
 /obj/item/melee/chainofcommand
 	name = "chain of command"
@@ -18,7 +11,7 @@
 	worn_icon_state = "whip"
 	lefthand_file = 'icons/mob/inhands/weapons/melee_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/melee_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 10
 	throwforce = 7
@@ -67,7 +60,7 @@
 	inhand_icon_state = "sabre"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	obj_flags = UNIQUE_RENAME
 	force = 15
 	throwforce = 10
@@ -119,8 +112,8 @@
 	INVOKE_ASYNC(baned_target, TYPE_PROC_REF(/mob/living/carbon/human, emote), "scream")
 
 /obj/item/melee/sabre/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == PROJECTILE_ATTACK)
-		final_block_chance = 0 //Don't bring a sword to a gunfight
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)
@@ -197,6 +190,11 @@
 	attack_verb_simple = list("slash", "sting", "prickle", "poke")
 	hitsound = 'sound/weapons/rapierhit.ogg'
 	block_sound = 'sound/weapons/parry.ogg'
+
+/obj/item/melee/beesword/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	return ..()
 
 /obj/item/melee/beesword/afterattack(atom/target, mob/user, proximity)
 	. = ..()
@@ -489,3 +487,8 @@
 	armour_penetration = 50
 	attack_verb_continuous = list("smacks", "strikes", "cracks", "beats")
 	attack_verb_simple = list("smack", "strike", "crack", "beat")
+
+/obj/item/melee/cleric_mace/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a...mace to a gunfight, and also you aren't going to really block someone full body tackling you with a mace
+	return ..()

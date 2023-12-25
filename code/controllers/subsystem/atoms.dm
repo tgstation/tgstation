@@ -183,7 +183,7 @@ SUBSYSTEM_DEF(atoms)
 		if(fails & BAD_INIT_NO_HINT)
 			. += "- Didn't return an Initialize hint\n"
 		if(fails & BAD_INIT_QDEL_BEFORE)
-			. += "- Qdel'd in New()\n"
+			. += "- Qdel'd before Initialize proc ran\n"
 		if(fails & BAD_INIT_SLEPT)
 			. += "- Slept during Initialize()\n"
 

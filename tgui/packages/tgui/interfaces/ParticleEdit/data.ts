@@ -5,10 +5,10 @@ export const RandTypes = [
   'SQUARE_RAND',
 ];
 export const RandToNumber = {
-  'UNIFORM_RAND': 1,
-  'NORMAL_RAND': 2,
-  'LINEAR_RAND': 3,
-  'SQUARE_RAND': 4,
+  UNIFORM_RAND: 1,
+  NORMAL_RAND: 2,
+  LINEAR_RAND: 3,
+  SQUARE_RAND: 4,
 };
 
 export const P_DATA_GENERATOR = 'generator';
@@ -29,10 +29,10 @@ export const SpaceTypes = [
   'COLORSPACE_HCY',
 ];
 export const SpaceToNum = {
-  'COLORSPACE_RGB': 0,
-  'COLORSPACE_HSV': 1,
-  'COLORSPACE_HSL': 2,
-  'COLORSPACE_HCY': 3,
+  COLORSPACE_RGB: 0,
+  COLORSPACE_HSV: 1,
+  COLORSPACE_HSL: 2,
+  COLORSPACE_HCY: 3,
 };
 
 export const GeneratorTypes = [

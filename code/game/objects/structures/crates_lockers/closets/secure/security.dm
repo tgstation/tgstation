@@ -55,6 +55,7 @@
 
 	new /obj/item/computer_disk/command/hos(src)
 	new /obj/item/radio/headset/heads/hos(src)
+	new /obj/item/radio/headset/heads/hos/alt(src)
 	new /obj/item/storage/bag/garment/hos(src)
 	new /obj/item/storage/lockbox/medal/sec(src)
 	new /obj/item/megaphone/sec(src)
@@ -104,6 +105,7 @@
 	new /obj/item/radio/headset/headset_sec/alt(src)
 	new /obj/item/clothing/glasses/hud/security/sunglasses(src)
 	new /obj/item/flashlight/seclite(src)
+	new /obj/item/clothing/gloves/tackler(src)
 
 /obj/structure/closet/secure_closet/security/sec
 
@@ -275,7 +277,8 @@
 
 /obj/structure/closet/secure_closet/armory2
 	name = "armory ballistics locker"
-	icon_state = "armory"
+	icon_state = "tac"
+	icon_door = "armory_shotgun"
 	req_access = list(ACCESS_ARMORY)
 
 /obj/structure/closet/secure_closet/armory2/PopulateContents()
@@ -288,7 +291,8 @@
 
 /obj/structure/closet/secure_closet/armory3
 	name = "armory energy gun locker"
-	icon_state = "armory"
+	icon_state = "tac"
+	icon_door = "armory_energy"
 	req_access = list(ACCESS_ARMORY)
 
 /obj/structure/closet/secure_closet/armory3/PopulateContents()
