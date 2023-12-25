@@ -95,6 +95,7 @@ export function Dropdown(props: Props) {
 
   return (
     <Popper
+      autoFocus
       isOpen={open}
       onClickOutside={() => setOpen(false)}
       placement="bottom-start"

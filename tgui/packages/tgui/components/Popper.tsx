@@ -9,6 +9,7 @@ type Props = {
   popperContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
 } & Partial<{
   additionalStyles: CSSProperties;
+  autoFocus: boolean;
   onClickOutside: () => void;
   options: ArgumentsOf<typeof createPopper>[2];
   placement: Placement;
@@ -18,6 +19,7 @@ type Props = {
 export function Popper(props: Props) {
   const {
     additionalStyles,
+    autoFocus,
     children,
     isOpen,
     placement,
@@ -59,7 +61,7 @@ export function Popper(props: Props) {
 
   /** Focus when opened */
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !autoFocus) return;
 
     const focusable = popperRef.current?.firstChild as HTMLElement | null;
     focusable?.focus();
