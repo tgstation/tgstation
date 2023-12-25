@@ -101,7 +101,7 @@
 			download_netspeed = NTNETSPEED_ETHERNET
 	if(download_netspeed)
 		if(HAS_TRAIT(computer, TRAIT_MODPC_HALVED_DOWNLOAD_SPEED))
-			download_completion *= 0.5
+			download_netspeed *= 0.5
 		download_completion += download_netspeed
 
 /datum/computer_file/program/ntnetdownload/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
