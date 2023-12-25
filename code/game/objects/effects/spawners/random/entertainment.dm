@@ -277,8 +277,10 @@
 		/obj/item/toy/plush/abductor = 3,
 		/obj/item/toy/plush/abductor/agent = 3,
 		/obj/item/toy/plush/shark = 3,
+		/obj/item/toy/plush/medibot = 3,
 		// super rare plushies
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
 		/obj/item/toy/plush/narplush = 2,
+		/obj/item/toy/plush/securitron = 2,
 	)
