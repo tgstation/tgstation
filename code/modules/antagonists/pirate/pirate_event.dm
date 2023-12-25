@@ -66,7 +66,7 @@
 	if(chosen_gang.paid_off)
 		return
 
-	var/list/candidates = poll_ghost_candidates("Do you wish to be considered for a pirate crew of [chosen_gang.name]?", ROLE_TRAITOR)
+	var/list/candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a pirate crew of [chosen_gang.name]?", check_jobban = ROLE_TRAITOR, pic_source = /obj/item/claymore/cutlass, role_name_text = "pirate crew")
 	shuffle_inplace(candidates)
 
 	var/template_key = "pirate_[chosen_gang.ship_template_id]"

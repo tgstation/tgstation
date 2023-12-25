@@ -72,7 +72,8 @@
 	post_change_callbacks += CALLBACK(src, PROC_REF(post_change_turf), trait_sources)
 
 /datum/element/elevation/proc/post_change_turf(list/trait_sources, turf/changed)
-	ADD_TRAIT(changed, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), trait_sources)
+	for(var/source in trait_sources)
+		ADD_TRAIT(changed, TRAIT_TURF_HAS_ELEVATED_OBJ(pixel_shift), source)
 	reset_elevation(changed)
 
 #define ELEVATE_TIME 0.2 SECONDS
@@ -110,6 +111,7 @@
 	ADD_TRAIT(target, TRAIT_ELEVATED_TURF, REF(src))
 
 	for(var/mob/living/living in target)
+		ADD_TRAIT(living, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		RegisterSignal(living, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
 		elevate_mob(living)
 
@@ -127,6 +129,9 @@
 	))
 	REMOVE_TRAIT(source, TRAIT_ELEVATED_TURF, REF(src))
 	for(var/mob/living/living in source)
+		if(!HAS_TRAIT_FROM(living, TRAIT_ON_ELEVATED_SURFACE, REF(src)))
+			continue
+		REMOVE_TRAIT(living, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		elevate_mob(living, -pixel_shift)
 		UnregisterSignal(living, COMSIG_LIVING_SET_BUCKLED)
 	return ..()
@@ -134,6 +139,7 @@
 /datum/element/elevation_core/proc/on_entered(turf/source, atom/movable/entered, atom/old_loc)
 	SIGNAL_HANDLER
 	if((isnull(old_loc) || !HAS_TRAIT_FROM(old_loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(entered))
+		ADD_TRAIT(entered, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		var/elevate_time = isturf(old_loc) && source.Adjacent(old_loc) ? ELEVATE_TIME : 0
 		elevate_mob(entered, elevate_time = elevate_time)
 		RegisterSignal(entered, COMSIG_LIVING_SET_BUCKLED, PROC_REF(on_set_buckled))
@@ -146,6 +152,7 @@
 /datum/element/elevation_core/proc/on_exited(turf/source, atom/movable/gone)
 	SIGNAL_HANDLER
 	if((isnull(gone.loc) || !HAS_TRAIT_FROM(gone.loc, TRAIT_ELEVATED_TURF, REF(src))) && isliving(gone))
+		REMOVE_TRAIT(gone, TRAIT_ON_ELEVATED_SURFACE, REF(src))
 		var/elevate_time = isturf(gone.loc) && source.Adjacent(gone.loc) ? ELEVATE_TIME : 0
 		elevate_mob(gone, -pixel_shift, elevate_time)
 		UnregisterSignal(gone, COMSIG_LIVING_SET_BUCKLED)

@@ -1,19 +1,20 @@
+import { classes } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
-  Stack,
-  Section,
-  Icon,
-  Dimmer,
   Box,
-  Tooltip,
   Button,
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
-import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
-import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
-import { FabricatorData, Design, MaterialMap } from './Fabrication/Types';
-import { classes } from 'common/react';
 import { DesignBrowser } from './Fabrication/DesignBrowser';
+import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
+import { MaterialCostSequence } from './Fabrication/MaterialCostSequence';
+import { Design, FabricatorData, MaterialMap } from './Fabrication/Types';
 
 export const Fabricator = (props) => {
   const { act, data } = useBackend<FabricatorData>();
@@ -128,16 +129,16 @@ const CustomPrint = (props: CustomPrintProps) => {
       ])}
     >
       <Button.Input
-        content={'[Max: ' + design.maxmult + ']'}
-        color={'transparent'}
-        maxValue={design.maxmult}
+        color="transparent"
         onCommit={(_e, value: string) =>
           act('build', {
             ref: design.id,
             amount: value,
           })
         }
-      />
+      >
+        [Max: {design.maxmult}]
+      </Button.Input>
     </div>
   );
 };

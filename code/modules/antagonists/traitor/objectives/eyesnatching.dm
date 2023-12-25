@@ -74,10 +74,10 @@
 			continue
 
 		if(heads_of_staff)
-			if(!(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND))
+			if(!(possible_target.assigned_role.job_flags & JOB_HEAD_OF_STAFF))
 				continue
 		else
-			if(possible_target.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+			if(possible_target.assigned_role.job_flags & JOB_HEAD_OF_STAFF)
 				continue
 
 		var/mob/living/carbon/human/targets_current = possible_target.current

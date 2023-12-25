@@ -1,5 +1,7 @@
 import { BooleanLike } from 'common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -120,7 +122,8 @@ const CooldownDimmer = (props) => {
 const DepartmentCatalog = (props) => {
   const { act, data } = useBackend<Info>();
   const { supplies } = data;
-  const [tabCategory, setTabCategory] = useLocalState('tabName', supplies[0]);
+  const [tabCategory, setTabCategory] = useState(supplies[0]);
+
   return (
     <Stack vertical fill>
       <Stack.Item>

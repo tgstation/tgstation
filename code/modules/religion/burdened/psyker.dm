@@ -10,12 +10,12 @@
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/organ/internal/brain/psyker/on_insert(mob/living/carbon/inserted_into)
+/obj/item/organ/internal/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from)
+/obj/item/organ/internal/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
@@ -82,9 +82,9 @@
 	qdel(old_head)
 	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
-	old_brain.Remove(src, special = TRUE, no_id_transfer = TRUE)
+	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
-	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
+	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(old_eyes)
 		qdel(old_eyes)
 	return TRUE

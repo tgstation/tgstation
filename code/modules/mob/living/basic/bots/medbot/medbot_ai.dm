@@ -69,7 +69,7 @@
 
 /datum/ai_behavior/find_suitable_patient/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
-	if(!succeeded || get_dist(controller.pawn, controller.blackboard[target_key]) <= 1)
+	if(!succeeded || QDELETED(controller.pawn) ||get_dist(controller.pawn, controller.blackboard[target_key]) <= 1)
 		return
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 	announcement?.announce(pick(controller.blackboard[BB_WAIT_SPEECH]))

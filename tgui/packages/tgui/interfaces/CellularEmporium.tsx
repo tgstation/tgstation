@@ -1,14 +1,16 @@
+import { useState } from 'react';
+
 import { BooleanLike } from '../../common/react';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
+  Box,
   Button,
-  Section,
   Icon,
   Input,
-  Stack,
   LabeledList,
-  Box,
   NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -35,10 +37,7 @@ type Ability = {
 
 export const CellularEmporium = (props) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
-  const [searchAbilities, setSearchAbilities] = useLocalState(
-    'searchAbilities',
-    '',
-  );
+  const [searchAbilities, setSearchAbilities] = useState('');
 
   const { can_readapt, genetic_points_count } = data;
   return (
@@ -51,8 +50,7 @@ export const CellularEmporium = (props) => {
           buttons={
             <Stack>
               <Stack.Item fontSize="16px">
-                {genetic_points_count && genetic_points_count}{' '}
-                <Icon name="dna" color="#DD66DD" />
+                {genetic_points_count} <Icon name="dna" color="#DD66DD" />
               </Stack.Item>
               <Stack.Item>
                 <Button
@@ -72,7 +70,7 @@ export const CellularEmporium = (props) => {
               <Stack.Item>
                 <Input
                   width="200px"
-                  onInput={(event) => setSearchAbilities(event.target.value)}
+                  onInput={(event, value) => setSearchAbilities(value)}
                   placeholder="Search Abilities..."
                   value={searchAbilities}
                 />
@@ -80,16 +78,16 @@ export const CellularEmporium = (props) => {
             </Stack>
           }
         >
-          <AbilityList />
+          <AbilityList searchAbilities={searchAbilities} />
         </Section>
       </Window.Content>
     </Window>
   );
 };
 
-const AbilityList = (props) => {
+const AbilityList = (props: { searchAbilities: string }) => {
   const { act, data } = useBackend<CellularEmporiumContext>();
-  const [searchAbilities] = useLocalState('searchAbilities', '');
+  const { searchAbilities } = props;
   const {
     abilities,
     owned_abilities,
@@ -124,51 +122,49 @@ const AbilityList = (props) => {
           : 'No abilities found.'}
       </NoticeBox>
     );
-  } else {
-    return (
-      <LabeledList>
-        {filteredAbilities.map((ability) => (
-          <LabeledList.Item
-            key={ability.name}
-            className="candystripe"
-            label={ability.name}
-            buttons={
-              <Stack>
-                <Stack.Item>{ability.genetic_point_required}</Stack.Item>
-                <Stack.Item>
-                  <Icon
-                    name="dna"
-                    color={
-                      owned_abilities.includes(ability.path)
-                        ? '#DD66DD'
-                        : 'gray'
-                    }
-                  />
-                </Stack.Item>
-                <Stack.Item>
-                  <Button
-                    content={'Evolve'}
-                    disabled={
-                      owned_abilities.includes(ability.path) ||
-                      ability.genetic_point_required > genetic_points_count ||
-                      ability.absorbs_required > absorb_count ||
-                      ability.dna_required > dna_count
-                    }
-                    onClick={() =>
-                      act('evolve', {
-                        path: ability.path,
-                      })
-                    }
-                  />
-                </Stack.Item>
-              </Stack>
-            }
-          >
-            {ability.desc}
-            <Box color="good">{ability.helptext}</Box>
-          </LabeledList.Item>
-        ))}
-      </LabeledList>
-    );
   }
+
+  return (
+    <LabeledList>
+      {filteredAbilities.map((ability) => (
+        <LabeledList.Item
+          key={ability.name}
+          className="candystripe"
+          label={ability.name}
+          buttons={
+            <Stack>
+              <Stack.Item>{ability.genetic_point_required}</Stack.Item>
+              <Stack.Item>
+                <Icon
+                  name="dna"
+                  color={
+                    owned_abilities.includes(ability.path) ? '#DD66DD' : 'gray'
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item>
+                <Button
+                  content={'Evolve'}
+                  disabled={
+                    owned_abilities.includes(ability.path) ||
+                    ability.genetic_point_required > genetic_points_count ||
+                    ability.absorbs_required > absorb_count ||
+                    ability.dna_required > dna_count
+                  }
+                  onClick={() =>
+                    act('evolve', {
+                      path: ability.path,
+                    })
+                  }
+                />
+              </Stack.Item>
+            </Stack>
+          }
+        >
+          {ability.desc}
+          <Box color="good">{ability.helptext}</Box>
+        </LabeledList.Item>
+      ))}
+    </LabeledList>
+  );
 };

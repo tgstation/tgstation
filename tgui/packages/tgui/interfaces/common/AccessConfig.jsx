@@ -1,6 +1,7 @@
 import { sortBy } from 'common/collections';
-import { Section, Button, Flex, Tabs, Grid } from '../../components';
+
 import { useLocalState } from '../../backend';
+import { Button, Flex, Grid, Section, Tabs } from '../../components';
 
 export const AccessConfig = (props) => {
   const {

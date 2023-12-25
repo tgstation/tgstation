@@ -74,7 +74,7 @@
 			visible_message(span_notice("[user] pets [src]."), \
 							span_notice("[user] pets you."), null, null, user)
 			to_chat(user, span_notice("You pet [src]."))
-			user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
+			SEND_SIGNAL(user, COMSIG_MOB_PAT_BORG)
 
 /mob/living/silicon/check_block(atom/hitby, damage, attack_text, attack_type, armour_penetration, damage_type, attack_flag)
 	. = ..()

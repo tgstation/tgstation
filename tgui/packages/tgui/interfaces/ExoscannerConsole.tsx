@@ -4,14 +4,14 @@ import {
   Box,
   Button,
   Icon,
-  Modal,
-  Section,
   LabeledList,
+  Modal,
   NoticeBox,
+  Section,
   Stack,
 } from '../components';
-import { Window } from '../layouts';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 type SiteData = {
   name: string;

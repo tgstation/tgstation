@@ -1,3 +1,6 @@
+import { createSearch, decodeHtmlEntities } from 'common/string';
+
+import { useBackend, useLocalState } from '../backend';
 import {
   Button,
   Icon,
@@ -9,12 +12,9 @@ import {
   Tooltip,
 } from '../components';
 import { TableCell, TableRow } from '../components/Table';
-import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-
+import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
-import { Window } from '../layouts';
 
 type Data = {
   items: string[];

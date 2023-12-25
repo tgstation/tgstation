@@ -1,3 +1,8 @@
+import { capitalize } from 'common/string';
+import { Fragment } from 'react';
+
+import { resolveAsset } from '../assets';
+import nt_logo from '../assets/bg-nanotrasen.svg';
 import { useBackend, useLocalState } from '../backend';
 import {
   BlockQuote,
@@ -5,18 +10,15 @@ import {
   Button,
   Dimmer,
   Icon,
+  Image,
   LabeledList,
   Modal,
   ProgressBar,
   Section,
   Stack,
 } from '../components';
-import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
 import { formatTime } from '../format';
-import { capitalize } from 'common/string';
-import nt_logo from '../assets/bg-nanotrasen.svg';
-import { Fragment } from 'react';
+import { Window } from '../layouts';
 
 type ExplorationEventData = {
   name: string;
@@ -738,8 +740,7 @@ const EventScreen = (props: { drone: DroneData; event: FullEventData }) => {
         <Stack.Item>
           <Stack fill>
             <Stack.Item>
-              <Box
-                as="img"
+              <Image
                 src={resolveAsset(event.image)}
                 height="125px"
                 width="250px"
@@ -808,7 +809,7 @@ export const AdventureScreen = (props: {
         </Stack.Item>
         <Stack.Divider />
         <Stack.Item>
-          <Box as="img" src={imgSource} height="100px" width="200px" />
+          <Image src={imgSource} height="100px" width="200px" />
           <Stack vertical>
             <Stack.Divider />
             <Stack.Item grow />
@@ -871,16 +872,12 @@ const ExodroneConsoleContent = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <Stack vertical fill grow={2}>
-          <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item>
-                <EquipmentGrid drone={data} />
-              </Stack.Item>
-              <Stack.Item grow basis={0}>
-                <DroneScreen drone={data} />
-              </Stack.Item>
-            </Stack>
+        <Stack vertical fill>
+          <Stack.Item>
+            <EquipmentGrid drone={data} />
+          </Stack.Item>
+          <Stack.Item grow basis={0}>
+            <DroneScreen drone={data} />
           </Stack.Item>
         </Stack>
       </Stack.Item>

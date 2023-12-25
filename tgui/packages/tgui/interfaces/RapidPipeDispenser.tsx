@@ -1,7 +1,9 @@
 import { BooleanLike, classes } from 'common/react';
 import { multiline } from 'common/string';
 import { capitalizeAll } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -9,8 +11,8 @@ import {
   LabeledList,
   Section,
   Stack,
-  Tabs,
   Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -219,12 +221,12 @@ const PreviewSelect = (props) => {
         <Button
           ml={0}
           key={preview.dir}
-          title={preview.dir_name}
+          tooltip={preview.dir_name}
           selected={preview.selected}
           style={{
             width: '40px',
             height: '40px',
-            padding: 0,
+            padding: '0',
           }}
           onClick={() => {
             act('pipe_type', {
@@ -255,19 +257,16 @@ const PreviewSelect = (props) => {
 const PipeTypeSection = (props) => {
   const { act, data } = useBackend<Data>();
   const { categories = [], selected_category, selected_recipe } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    selected_category,
-  );
+  const [categoryName, setCategoryName] = useState(selected_category);
   const shownCategory =
     categories.find((category) => category.cat_name === categoryName) ||
     categories[0];
+
   return (
     <Section>
       <Tabs>
         {categories.map((category, i) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}

@@ -1,8 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - rscadd: "PDAs with a dead power cell are now limited to using their Messenger app."
-  - bugfix: "Microwaves now stop charging PDAs if the cell was removed mid-charge."
-  - bugfix: "Microwaves can now charge laptops."
-  - bugfix: "PDA Flashlights can't be turned on while the PDA is dead."
-  - bugfix: "You can now hold a laptop up to a camera (if it has a notekeeper app installed) like PDAs already could."

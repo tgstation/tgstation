@@ -166,8 +166,10 @@
 /datum/ai_behavior/monkey_attack_mob/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
-	SSmove_manager.stop_looping(living_pawn)
 	controller.clear_blackboard_key(target_key)
+	if(QDELETED(living_pawn)) // pawn can be null at this point
+		return
+	SSmove_manager.stop_looping(living_pawn)
 
 /// attack using a held weapon otherwise bite the enemy, then if we are angry there is a chance we might calm down a little
 /datum/ai_behavior/monkey_attack_mob/proc/monkey_attack(datum/ai_controller/controller, mob/living/target, seconds_per_tick, disarm)
@@ -219,6 +221,12 @@
 	// note they might immediately reduce threat and drop from the list.
 	// this is fine, we're just giving them a love tap then leaving them alone.
 	// unless they fight back, then we retaliate
+
+	// Some mobs delete on death. If the target is no longer alive, go back to idle
+	if(QDELETED(target))
+		finish_action(controller, TRUE)
+		return
+
 	if(isnull(controller.blackboard[BB_MONKEY_ENEMIES][target]))
 		controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, 1)
 
@@ -296,7 +304,7 @@
 	var/mob/living/living_pawn = controller.pawn
 
 	for(var/mob/living/nearby_monkey in view(living_pawn, MONKEY_ENEMY_VISION))
-		if(!HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/monkey))
+		if(QDELETED(nearby_monkey) || !HAS_AI_CONTROLLER_TYPE(nearby_monkey, /datum/ai_controller/monkey))
 			continue
 		if(!SPT_PROB(MONKEY_RECRUIT_PROB, seconds_per_tick))
 			continue
