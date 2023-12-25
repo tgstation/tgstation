@@ -62,7 +62,7 @@ GLOBAL_LIST_INIT(arcade_prize_pool, list(
 		/obj/item/toy/plush/shark = 2,
 		/obj/item/toy/plush/cleanbot = 2,
 		/obj/item/toy/plush/medibot = 2,
-		/obj/item/toy/plush/securitron = 2,
+		/obj/item/toy/plush/secbot = 2,
 		/obj/item/storage/belt/military/snack/full = 2,
 		/obj/item/toy/brokenradio = 2,
 		/obj/item/toy/braintoy = 2,

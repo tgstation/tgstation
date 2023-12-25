@@ -282,5 +282,5 @@
 		/obj/item/toy/plush/bubbleplush = 2,
 		/obj/item/toy/plush/ratplush = 2,
 		/obj/item/toy/plush/narplush = 2,
-		/obj/item/toy/plush/securitron = 2,
+		/obj/item/toy/plush/secbot = 2,
 	)
