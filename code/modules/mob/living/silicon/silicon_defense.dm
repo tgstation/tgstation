@@ -67,19 +67,19 @@
 
 	if(has_buckled_mobs() && !user.combat_mode)
 		user_unbuckle_mob(buckled_mobs[1], user)
-		return
+		return TRUE
 	if(user.combat_mode)
 		user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 		playsound(src.loc, 'sound/effects/bang.ogg', 10, TRUE)
 		visible_message(span_danger("[user] punches [src], but doesn't leave a dent!"), \
 						span_warning("[user] punches you, but doesn't leave a dent!"), null, COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You punch [src], but don't leave a dent!"))
-		return
-	visible_message(span_notice("[user] pets [src]."), \
-					span_notice("[user] pets you."), null, null, user)
-	to_chat(user, span_notice("You pet [src]."))
-	user.add_mood_event("pet_borg", /datum/mood_event/pet_borg)
-	SEND_SIGNAL(user, COMSIG_MOB_PAT_BORG)
+		return return TRUE
+	else
+		visible_message(span_notice("[user] pets [src]."), span_notice("[user] pets you."), null, null, user)
+		to_chat(user, span_notice("You pet [src]."))
+		SEND_SIGNAL(user, COMSIG_MOB_PAT_BORG)
+		return TRUE
 
 /mob/living/silicon/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
