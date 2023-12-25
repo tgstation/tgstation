@@ -217,7 +217,7 @@
 		var/amount_of_lunatics = 0
 		if(isnull(crewmate.mind))
 			continue
-		if(crewmate.stat == DEAD || crewmate.stat == UNCONSCIOUS)
+		if(crewmate.stat == DEAD | UNCONSCIOUS)
 			continue
 		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
 		if(IS_HERETIC_OR_MONSTER(crewmate))
@@ -247,7 +247,7 @@
 
 	for(var/mob/living/carbon/carbon_view in view(5, source))
 		var/carbon_sanity = carbon_view.mob_mood.sanity
-		if(carbon_view.stat == DEAD || carbon_view.stat == UNCONSCIOUS)
+		if(carbon_view.stat == DEAD | UNCONSCIOUS)
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
