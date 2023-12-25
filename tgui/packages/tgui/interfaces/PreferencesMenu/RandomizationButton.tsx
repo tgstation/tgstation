@@ -22,10 +22,6 @@ export const RandomizationButton = (props: {
     case RandomSetting.Enabled:
       color = 'green';
       break;
-    case undefined:
-      color = 'default';
-      break;
-
     default:
       exhaustiveCheck(value);
   }
