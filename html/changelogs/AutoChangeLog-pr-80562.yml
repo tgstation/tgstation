@@ -1,0 +1,4 @@
+author: "Ryll/Shaps"
+delete-after: True
+changes:
+  - balance: "Yawns are less likely to propagate"
