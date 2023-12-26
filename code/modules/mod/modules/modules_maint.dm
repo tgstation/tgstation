@@ -364,11 +364,11 @@
 	icon_state = "eyesight_sharer"
 	module_type = MODULE_USABLE
 	complexity = 3
-	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 300
 	///How many more times this can be used
 	var/uses_left = 1
 	///The range of the blinding effect
-	var/blinding_range = 7
+	var/blinding_range = 9
 	///The duration of the blinding effect
 	var/blinding_duration = 25 SECONDS
 

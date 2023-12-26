@@ -10,11 +10,11 @@
 	anchored = TRUE
 	density = TRUE
 	/// How far away this can blind someone
-	var/blind_range = 2
+	var/blind_range = 12
 	/// If we can whisper something right now
 	var/can_whisper = TRUE
 	/// How long until this can whisper something again, death whispers not included
-	var/whisper_cooldown = 10 SECONDS
+	var/whisper_cooldown = 12 SECONDS
 	/// The distance someone has to be for this to start saying some proximity voicelines
 	var/start_talking_distance = 3
 	/// A list of whispers this can say when it steals eyesight from someone
@@ -68,7 +68,7 @@
 	new /obj/item/organ/internal/brain(drop_location())
 	new /obj/item/organ/internal/tongue/selfish_brain(drop_location())
 	new /obj/item/mod/module/malfunctioning_eyesight_sharer(drop_location())
-	playsound(src, 'sound/effects/glassbr1.ogg', 100, FALSE)
+	playsound(src, 'sound/effects/glassbr1.ogg', 50, FALSE)
 	playsound(src, 'sound/effects/meatslap.ogg', 100, FALSE)
 	update_appearance()
 

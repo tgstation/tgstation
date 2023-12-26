@@ -561,7 +561,6 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	icon_state = "tonguewhisperbox"
 	failing_desc = "seems to be broken"
 	organ_flags = ORGAN_ROBOTIC
-	icon_state = "tonguerobot"
 
 // Make the speech come out as a whisper
 /obj/item/organ/internal/tongue/selfish_brain/Insert(mob/living/carbon/tongue_owner, special, movement_flags)
