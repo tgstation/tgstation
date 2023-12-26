@@ -149,7 +149,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 	if(ispodperson(potential_reaping) || ismonkey(potential_reaping)) //And if they're a podperson or monkey, they can just die.
 		death_knell_speed_mod *= 0.5
 
-	log_combat(attacker, defender, "prepared to use [src] to decapitate")
+	log_combat(user, potential_reaping, "prepared to use [src] to decapitate")
 
 	if(do_after(user,  15 SECONDS * death_knell_speed_mod, target = potential_reaping))
 		playsound(get_turf(potential_reaping), 'sound/weapons/bladeslice.ogg', 250, TRUE)
@@ -167,7 +167,7 @@ If the scythe isn't empowered when you sheath it, you take a heap of damage and 
 			)
 
 		scythe_empowerment(potential_empowerment)
-		log_combat(attacker, defender, "used [src] to decapitate")
+		log_combat(user, potential_reaping, "used [src] to decapitate")
 
 		if(HAS_MIND_TRAIT(user, TRAIT_MORBID)) //You feel good about yourself, pal?
 			user.add_mood_event("morbid_dismemberment", /datum/mood_event/morbid_dismemberment)
