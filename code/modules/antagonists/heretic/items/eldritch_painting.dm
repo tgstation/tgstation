@@ -17,23 +17,43 @@
 	buildable_sign = FALSE
 	// The list of canvas types accepted by this frame, set to zero here
 	accepted_canvas_types = list()
-	// A basic proximity sensor
-	var/datum/proximity_monitor/painting_proximity_sensor
-	// For changing sensor types on subtypes
-	var/sensor_type = /datum/proximity_monitor/advanced/eldritch_painting
 	// Set to false since we don't want this to persist
 	persistence_id = FALSE
+	/// The trauma the painting applies
+	var/applied_trauma = /datum/brain_trauma/severe/pacifism
+	/// The text that shows up when you cross the paintings path
+	var/text_to_display = "I should not be seeing this..."
+	/// The range of the paintings effect
+	var/range = 7
 
 /obj/structure/sign/painting/eldritch/Initialize(mapload, dir, building)
 	. = ..()
-	if(sensor_type)
-		painting_proximity_sensor = new sensor_type(_host = src, range = 7, _ignore_if_not_on_turf = TRUE)
+	var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(apply_trauma))
+	AddComponent(/datum/component/connect_range, tracked = src, connections = connections, range = range, works_in_containers = FALSE)
+
+/obj/structure/sign/painting/eldritch/proc/apply_trauma(datum/source, mob/living/carbon/viewer)
+	if (!isliving(viewer) || !can_see(viewer, src, range))
+		return
+	if (!viewer.mind || !viewer.mob_mood || viewer.stat != CONSCIOUS || viewer.is_blind())
+		return
+	// Certain paintings have no applied trauma, so we shouldnt do further effects if they don't
+	if(!applied_trauma)
+		return
+	if (viewer.has_trauma_type(applied_trauma))
+		return
+	if(IS_HERETIC(viewer))
+		return
+	if(viewer.can_block_magic(MAGIC_RESISTANCE))
+		return
+	to_chat(viewer, span_notice(text_to_display))
+	viewer.gain_trauma(applied_trauma, TRAUMA_RESILIENCE_SURGERY)
+	viewer.emote("scream")
+	to_chat(viewer, span_warning("As you gaze upon the painting your mind rends to its truth!"))
 
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	if(!user.can_block_magic(MAGIC_RESISTANCE))
 		user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
 		to_chat(user, span_notice("Laughter echoes through your mind...."))
-	QDEL_NULL(painting_proximity_sensor)
 	qdel(src)
 
 // On examine eldritch paintings give a trait so their effects can not be spammed
@@ -63,7 +83,8 @@
 	name = "The sister and He Who Wept"
 	desc = "A beautiful artwork depicting a fair lady and HIM, HE WEEPS, I WILL SEE HIM AGAIN. Destroyable with wirecutters."
 	icon_state = "eldritch_painting_weeping"
-	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/weeping
+	applied_trauma = /datum/brain_trauma/severe/weeping
+	text_to_display = "Oh what arts! She is so fair, and he...HE WEEPS!!!"
 
 /obj/structure/sign/painting/eldritch/weeping/examine_effects(mob/living/carbon/examiner)
 	if(!IS_HERETIC(examiner))
@@ -87,7 +108,8 @@
 	name = "The First Desire"
 	desc = "A painting depicting a platter of flesh, just looking at it makes your stomach knot and mouth froth. Destroyable with wirecutters."
 	icon_state = "eldritch_painting_desire"
-	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/desire
+	applied_trauma = /datum/brain_trauma/severe/flesh_desire
+	text_to_display = "What an artwork, just looking at it makes me hunger...."
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/desire/examine_effects(mob/living/carbon/examiner)
@@ -132,7 +154,7 @@
 	name = "Great chaparral over rolling hills"
 	desc = "A painting depicting a massive thicket, it seems to be attempting to crawl through the frame. Destroyable with wirecutters."
 	icon_state = "eldritch_painting_vines"
-	sensor_type = null
+	applied_trauma = null
 	// A static list of 5 pretty strong mutations, simple to expand for any admins
 	var/list/mutations = list(
 		/datum/spacevine_mutation/hardened,
@@ -175,7 +197,8 @@
 	name = "Lady out of gates"
 	desc = "A painting depicting a perfect lady, and I must be perfect like her. Destroyable with wirecutters."
 	icon_state = "eldritch_painting_beauty"
-	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/beauty
+	applied_trauma = /datum/brain_trauma/severe/eldritch_beauty
+	text_to_display = "Her flesh glows in the pale light, and mine can too...If it wasnt for these imperfections...."
 	// Set to mutadone by default to remove mutations
 	var/list/reagents_to_add = list(/datum/reagent/medicine/mutadone)
 
@@ -204,7 +227,8 @@
 	name = "Climb over the rusted mountain"
 	desc = "A painting depicting something climbing a mountain of rust, it gives you an eerie feeling. Destroyable with wirecutters."
 	icon_state = "eldritch_painting_rust"
-	sensor_type = /datum/proximity_monitor/advanced/eldritch_painting/rust
+	applied_trauma = /datum/brain_trauma/severe/rusting
+	text_to_display = "It climbs, and I will aid it...The rust calls and I shall answer..."
 
 // The special examine interaction for this painting
 /obj/structure/sign/painting/eldritch/rust/examine_effects(mob/living/carbon/examiner)
