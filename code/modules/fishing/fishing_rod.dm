@@ -110,6 +110,8 @@
 		reel(user)
 
 /obj/item/fishing_rod/proc/reel(mob/user)
+	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
+		return
 	playsound(src, SFX_REEL, 50, vary = FALSE)
 	if(!do_after(user, 1 SECONDS, currently_hooked, timed_action_flags = IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
