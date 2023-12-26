@@ -190,14 +190,13 @@ SUBSYSTEM_DEF(polling)
 
 	// Take care of updating the remaining screen alerts if a similar poll is found, or deleting them.
 	if(length(finishing_poll.alert_buttons))
-		var/datum/candidate_poll/poll_of_same_type
+		var/polls_of_same_type_left = FALSE
 		for(var/datum/candidate_poll/running_poll as anything in currently_polling)
 			if(running_poll.poll_key == finishing_poll.poll_key && running_poll.time_left() > 0)
-				poll_of_same_type = running_poll
+				polls_of_same_type_left = TRUE
 				break
 		for(var/atom/movable/screen/alert/poll_alert/alert as anything in finishing_poll.alert_buttons)
-			if(poll_of_same_type)
-				alert.poll = poll_of_same_type
+			if(polls_of_same_type_left)
 				alert.update_stacks_overlay()
 			else
 				alert.owner.clear_alert("[finishing_poll.poll_key]_poll_alert")
