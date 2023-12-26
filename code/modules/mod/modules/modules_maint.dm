@@ -354,3 +354,43 @@
 	allowed_item_types = list(/obj/item/ammo_casing/foam_dart)
 	ammobox_type = /obj/item/ammo_box/foambox/mini
 	required_amount = SMALL_MATERIAL_AMOUNT*2.5
+
+///malfunctioning eyesight sharer, dropped by /obj/structure/selfish_brain
+///One time use, makes everyone nearby the user (including the user) blind for a short amount of time
+/obj/item/mod/module/malfunctioning_eyesight_sharer
+	name = "Malfunctioning Eyesight Sharer"
+	desc = "A light piece of tech that temporarily blinds those around it. \
+		A MODsuit could probably power it, but it only has one use left after the beating it took."
+	icon_state = "kinesis"
+	module_type = MODULE_USABLE
+	complexity = 3
+	use_power_cost = DEFAULT_CHARGE_DRAIN * 10
+	///How many more times this can be used
+	var/uses_left = 1
+	///The range of the blinding effect
+	var/blinding_range = 7
+	///The duration of the blinding effect
+	var/blinding_duration = 25 SECONDS
+
+/obj/item/mod/module/malfunctioning_eyesight_sharer/update_desc(updates)
+	. = ..()
+	if(uses_left == 0)
+		desc = "What was intended to be the biotech solution to monitoring employees on station before cheaper robotic automation took over. \
+			Individual security units would share the eyesight of crew and watch over their actions. \
+			Its troubled development was finally put to an end after it was found out funds were being embezzled out of an already small budget. \
+			\n\n how selfish of them."
+
+/obj/item/mod/module/malfunctioning_eyesight_sharer/on_use()
+	. = ..()
+	if (!.)
+		return
+	if (uses_left == 0)
+		balloon_alert(mod.wearer, "no uses left!")
+		return
+
+	do_sparks(5, FALSE, mod.wearer)
+	for(var/mob/living/nearby_mob in range(blinding_range, mod.wearer))
+		nearby_mob.apply_status_effect(/datum/status_effect/temporary_blindness, blinding_duration)
+	drain_power(use_power_cost)
+	uses_left -= 1
+	update_desc()

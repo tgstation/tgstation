@@ -60,6 +60,7 @@
 	new /obj/item/shard(drop_location())
 	new /obj/item/organ/internal/brain(drop_location())
 	new /obj/item/organ/internal/tongue/selfish_brain(drop_location())
+	new /obj/item/mod/module/malfunctioning_eyesight_sharer(drop_location())
 	update_appearance()
 
 /obj/structure/selfish_brain/process(seconds_per_tick)
