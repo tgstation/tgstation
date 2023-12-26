@@ -41,7 +41,7 @@
 /datum/quirk/transhumanist/remove()
 	UnregisterSignal(quirk_holder, list(COMSIG_CARBON_REMOVE_LIMB, COMSIG_CARBON_ATTACH_LIMB))
 
-/datum/quirk/transhumanist/proc/get_bodypart_score(mob/living/target, limbs_only = FALSE)
+/datum/quirk/transhumanist/proc/get_bodypart_score(mob/living/carbon/target, limbs_only = FALSE)
 	var/organic_bodytypes = 0
 	var/silicon_bodytypes = 0
 	var/other_bodytypes = FALSE
