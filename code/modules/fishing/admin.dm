@@ -45,6 +45,10 @@
 			var/datum/fish_source/spot = GLOB.preset_fish_sources[text2path(params["spot"])]
 
 			var/obj/item/fishing_rod/temporary_rod = new rod_type
+			qdel(temporary_rod.bait)
+			qdel(temporary_rod.line)
+			qdel(temporary_rod.hook)
+
 			if(bait_type)
 				temporary_rod.set_slot(new bait_type(temporary_rod), ROD_SLOT_BAIT)
 			if(hook_type)
