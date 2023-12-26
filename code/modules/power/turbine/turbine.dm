@@ -233,7 +233,6 @@
 
 	/// The rotor this inlet is linked to
 	var/obj/machinery/power/turbine/core_rotor/rotor
-
 	/// The turf from which it absorbs gases from
 	var/turf/open/input_turf
 	/// Work acheived during compression
@@ -301,7 +300,6 @@
 
 /obj/machinery/power/turbine/turbine_outlet/deactivate_parts(mob/user)
 	. = ..()
-	var/obj/machinery/power/turbine/core_rotor/rotor
 	if(!QDELETED(rotor))
 		rotor.deactivate_parts()
 	rotor = null
