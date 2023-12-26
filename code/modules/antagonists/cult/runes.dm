@@ -242,6 +242,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	var/mob/living/selected_victim = pick(myriad_targets)
 	var/datum/team/cult/cult_team =  locate(/datum/team/cult) in GLOB.antagonist_teams
+	if(isnull(cult_team))
+		return
 	if(selected_victim.stat != DEAD && is_convertable_to_cult(selected_victim, cult_team))
 		invocation = "Mah'weyh pleggh at e'ntrath!"
 		do_convert(selected_victim, invokers, cult_team)
@@ -324,7 +326,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		log_game("Offer rune with [sacrificial] on it failed - not enough acolytes and target is living or sac target")
 		return FALSE
 
-	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers)
+	var/signal_result = SEND_SIGNAL(sacrificial, COMSIG_LIVING_CULT_SACRIFICED, invokers, cult_team)
 	if(signal_result & STOP_SACRIFICE)
 		return FALSE
 

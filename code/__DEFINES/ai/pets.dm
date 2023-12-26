@@ -52,4 +52,13 @@
 #define BB_IGNORE_ITEMS "ignore_items"
 
 // Cultist pet keys
+///our ability to summon runes
 #define BB_RUNE_ABILITY "rune_ability"
+///the cult team we serve
+#define BB_CULT_TEAM "cult_team"
+///our sacrificial lamb
+#define BB_SACRIFICE_TARGET "sacrifice_target"
+///nearby runes
+#define BB_NEARBY_RUNE "nearby_rune"
+///occupied runes
+#define BB_OCCUPIED_RUNE "occupied_rune"

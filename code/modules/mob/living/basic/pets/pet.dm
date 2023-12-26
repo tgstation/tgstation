@@ -57,6 +57,10 @@
 /mob/living/basic/pet/update_overlays()
 	. = ..()
 
+	if(isnull(mind) && (FACTION_CULT in faction))
+		var/image/cult_indicator = image(icon = icon, icon_state = "pet_cult_indicator", layer = ABOVE_GAME_PLANE)
+		. += cult_indicator
+
 	if(!collar || !collar_icon_state)
 		return
 
@@ -71,6 +75,7 @@
 /mob/living/basic/pet/update_icon_state()
 	if(cult_icon_state && (FACTION_CULT in faction))
 		icon_state = cult_icon_state
+		icon_living = cult_icon_state
 	return ..()
 
 /mob/living/basic/pet/gib()

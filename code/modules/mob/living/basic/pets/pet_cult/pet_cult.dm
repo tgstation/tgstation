@@ -2,7 +2,7 @@
 #define PET_CULT_HEALTH 50
 
 ///turn into terrifying beasts
-/mob/living/basic/pet/proc/become_cultist()
+/mob/living/basic/pet/proc/become_cultist(datum/source, list/invokers, datum/team)
 	SIGNAL_HANDLER
 
 	if(stat == DEAD || !can_cult_convert)
@@ -39,12 +39,14 @@
 	AddElement(/datum/element/death_drops, death_loot)
 
 	basic_mob_flags &= DEL_ON_DEATH
-	ai_controller = /datum/ai_controller/basic_controller/cultist_pet
+	qdel(ai_controller)
+	ai_controller = new /datum/ai_controller/basic_controller/pet_cult(src)
 	var/datum/action/cooldown/spell/conjure/convert_rune/rune_ability = new(src)
 	rune_ability.Grant(src)
 	ai_controller.set_blackboard_key(BB_RUNE_ABILITY, rune_ability)
+	ai_controller.set_blackboard_key(BB_CULT_TEAM, team)
 
-	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(activate_rune))
+	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(activate_rune), override = TRUE)
 	return STOP_SACRIFICE
 
 #undef PET_CULT_ATTACK
