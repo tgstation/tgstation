@@ -512,9 +512,9 @@
 /obj/machinery/power/turbine/core_rotor/deactivate_parts()
 	if(all_parts_connected)
 		power_off()
-	compressor.rotor = null
+	compressor?.rotor = null
 	compressor = null
-	turbine.rotor = null
+	turbine?.rotor = null
 	turbine = null
 	all_parts_connected = FALSE
 	disconnect_from_network()
