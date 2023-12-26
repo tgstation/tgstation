@@ -677,14 +677,14 @@
 	var/list/gases = air_contents.gases
 	var/danger = FALSE
 	for(var/gas_index in 1 to length(gases))
-		var/list/gas_info = gases[gases[i]]
+		var/list/gas_info = gases[gases[gas_index]]
 		var/name = gas_info[GAS_META][META_GAS_NAME]
 		var/moles = gas_info[MOLES]
 
 		output += "[name]: [moles] moles."
 		if(gas_index <= 5) //the first five gases added
 			admin_output += "[name]: [moles] moles."
-		else if(gas_found == 6) // anddd the warning
+		else if(gas_index == 6) // anddd the warning
 			admin_output += "Too many gases to log. Check investigate log."
 		//if moles_visible is undefined, default to default visibility
 		if(gas[GAS_META][META_GAS_DANGER] && gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE))
