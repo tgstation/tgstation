@@ -11,6 +11,8 @@
 	base_icon_state = "wall_safe"
 	anchored = TRUE
 	density = FALSE
+	/// Whether or not this safe will be deconstructed if the wall it is on is deconstructed.
+	var/deconstruct_on_wall_deconstruct = TRUE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 
@@ -18,8 +20,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	. = ..()
 	//this will create the storage for us.
 	AddComponent(/datum/component/lockable_storage)
-	find_and_hang_on_wall()
+	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(handle_wall_deconstruct)))
 	PopulateContents()
+
+/obj/structure/secure_safe/proc/handle_wall_deconstruct()
+	if(!deconstruct_on_wall_deconstruct)
+		return
+	deconstruct(disassembled = FALSE)
 
 /obj/structure/secure_safe/proc/PopulateContents()
 	new /obj/item/paper(src)
@@ -46,6 +53,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe, 32)
 	armor_type = /datum/armor/safe_caps_spare
 	max_integrity = 300
 	color = "#ffdd33"
+	deconstruct_on_wall_deconstruct = FALSE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
 
