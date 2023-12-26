@@ -68,6 +68,8 @@
 	new /obj/item/organ/internal/brain(drop_location())
 	new /obj/item/organ/internal/tongue/selfish_brain(drop_location())
 	new /obj/item/mod/module/malfunctioning_eyesight_sharer(drop_location())
+	playsound(src, 'sound/effects/glassbr1.ogg', 100, FALSE)
+	playsound(src, 'sound/effects/meatslap.ogg', 100, FALSE)
 	update_appearance()
 
 /obj/structure/selfish_brain/update_icon_state()

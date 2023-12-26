@@ -361,7 +361,7 @@
 	name = "Malfunctioning Eyesight Sharer"
 	desc = "A light piece of tech that temporarily blinds those around it. \
 		A MODsuit could probably power it, but it only has one use left after the beating it took."
-	icon_state = "kinesis"
+	icon_state = "eyesight_sharer"
 	module_type = MODULE_USABLE
 	complexity = 3
 	use_power_cost = DEFAULT_CHARGE_DRAIN * 10

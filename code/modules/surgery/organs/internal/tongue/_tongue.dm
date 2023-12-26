@@ -558,6 +558,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/selfish_brain
 	name = "small voicebox"
 	desc = "A small cheaply made voicebox, you doubt it works"
+	icon_state = "tonguewhisperbox"
 	failing_desc = "seems to be broken"
 	organ_flags = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
