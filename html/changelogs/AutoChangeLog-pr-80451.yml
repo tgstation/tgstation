@@ -1,5 +1,0 @@
-author: "ReinaCoder"
-delete-after: True
-changes:
-  - rscadd: "Adds a brown suit jacket to the detective's vendor"
-  - image: "Adds a new sprite for the a brown detective suit jacket\n:cl:"
