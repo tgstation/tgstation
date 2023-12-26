@@ -170,7 +170,7 @@
 
 	movable.vis_contents |= vis_overlay
 
-	LAZYSET(immersed_movables, WEAKREF(movable), WEAKREF(vis_overlay))
+	LAZYSET(immersed_movables, WEAKREF(movable), vis_overlay)
 
 ///Initializes and caches a new visual overlay given parameters such as width, height and whether it should appear fully underwater.
 /datum/element/immerse/proc/generate_vis_overlay(width, height, is_below_water)
