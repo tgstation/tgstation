@@ -231,6 +231,9 @@
 	off_overlay = "inlet_off"
 	open_overlay = "inlet_open"
 
+	/// The rotor this inlet is linked to
+	var/datum/weakref/rotor_ref
+
 	/// The turf from which it absorbs gases from
 	var/turf/open/input_turf
 	/// Work acheived during compression
@@ -242,6 +245,10 @@
 
 /obj/machinery/power/turbine/inlet_compressor/deactivate_parts(mob/user)
 	. = ..()
+	var/obj/machinery/power/turbine/core_rotor/rotor = rotor_ref.resolve()
+	if(!QDELETED(rotor))
+		rotor.deactivate_parts()
+	rotor = null
 	input_turf = null
 
 /**
@@ -288,11 +295,17 @@
 	off_overlay = "outlet_off"
 	open_overlay = "outlet_open"
 
+	/// The rotor this outlet is linked to
+	var/datum/weakref/rotor_ref
 	/// The turf to puch the gases out into
 	var/turf/open/output_turf
 
 /obj/machinery/power/turbine/turbine_outlet/deactivate_parts(mob/user)
 	. = ..()
+	var/obj/machinery/power/turbine/core_rotor/rotor
+	if(!QDELETED(rotor))
+		rotor.deactivate_parts()
+	rotor = null
 	output_turf = null
 
 /// push gases from its gas mix to output turf
@@ -488,6 +501,8 @@
 	if(check_only)
 		return TRUE
 
+	compressor.rotor_ref = WEAKREF(src)
+	turbine.rotor_ref = WEAKREF(src)
 	max_allowed_rpm = (compressor.installed_part.max_rpm + turbine.installed_part.max_rpm + installed_part.max_rpm) / 3
 	max_allowed_temperature = (compressor.installed_part.max_temperature + turbine.installed_part.max_temperature + installed_part.max_temperature) / 3
 	connect_to_network()
