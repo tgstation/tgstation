@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixed some occasions in which heartbeat SFX will continue on revival for longer than expected"
