@@ -246,10 +246,11 @@
 	delusion_name = "Heretic"
 	affects_others = TRUE
 	affects_us = FALSE
-	duration = 10 SECONDS
+	duration = 11 SECONDS
 
 /datum/hallucination/delusion/preset/heretic/make_delusion_image(mob/over_who)
 	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic_hallucination, r_hand = NO_REPLACE))
+	return ..()
 
 /datum/hallucination/delusion/preset/heretic/gate
 	delusion_name = "Mind Gate"
