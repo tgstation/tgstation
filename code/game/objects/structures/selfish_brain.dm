@@ -20,15 +20,15 @@
 	/// A list of whispers this can say when it steals eyesight from someone
 	var/list/stolen_whispers = list(
 		"if i could just borrow this",
-		"i hope you don't mind",
-		"only for a little while",
-		"sorry for this",
+		"sorry about this",
 		"thank you",
 	)
 	/// voicelines this says when someone is close and is blinded by selfish_brain_blind
 	var/list/proximity_voice_lines = list(
 		"there i am",
+		"i hope you don't mind",
 		"just a little longer",
+		"only for a little while",
 		"sorry",
 	)
 	/// voicelines this says when someone is close and not blinded by selfish_brain_blind
@@ -59,6 +59,7 @@
 	src.say(chosen_message)
 	new /obj/item/shard(drop_location())
 	new /obj/item/organ/internal/brain(drop_location())
+	new /obj/item/organ/internal/tongue/selfish_brain(drop_location())
 	update_appearance()
 
 /obj/structure/selfish_brain/process(seconds_per_tick)
@@ -103,7 +104,7 @@
 /// Make it so this always whispers its messages
 /obj/structure/selfish_brain/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
 	message_mods[WHISPER_MODE] = MODE_WHISPER
-	range = 1
+	range = 2
 
 	. = ..()
 

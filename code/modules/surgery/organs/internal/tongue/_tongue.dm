@@ -554,6 +554,22 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/robot/modify_speech(datum/source, list/speech_args)
 	speech_args[SPEECH_SPANS] |= SPAN_ROBOT
 
+// Dropped by /obj/structure/selfish_brain, makes all speech come out as a whisper
+/obj/item/organ/internal/tongue/selfish_brain
+	name = "small voicebox"
+	desc = "A small cheaply made voicebox, you doubt it works"
+	failing_desc = "seems to be broken"
+	organ_flags = ORGAN_ROBOTIC
+	icon_state = "tonguerobot"
+
+// Make the speech come out as a whisper
+/obj/item/organ/internal/tongue/selfish_brain/Insert(mob/living/carbon/tongue_owner, special, movement_flags)
+	. = ..()
+	ADD_TRAIT(tongue_owner, TRAIT_SOFTSPOKEN, SPEAKING_FROM_TONGUE)
+
+/obj/item/organ/internal/tongue/selfish_brain/Remove(mob/living/carbon/tongue_owner, special, movement_flags)
+	. = ..()
+	REMOVE_TRAIT(tongue_owner, TRAIT_SOFTSPOKEN, SPEAKING_FROM_TONGUE)
 /obj/item/organ/internal/tongue/snail
 	name = "radula"
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."
