@@ -232,7 +232,7 @@
 	open_overlay = "inlet_open"
 
 	/// The rotor this inlet is linked to
-	var/datum/weakref/rotor_ref
+	var/obj/machinery/power/turbine/core_rotor/rotor
 
 	/// The turf from which it absorbs gases from
 	var/turf/open/input_turf
@@ -245,7 +245,6 @@
 
 /obj/machinery/power/turbine/inlet_compressor/deactivate_parts(mob/user)
 	. = ..()
-	var/obj/machinery/power/turbine/core_rotor/rotor = rotor_ref.resolve()
 	if(!QDELETED(rotor))
 		rotor.deactivate_parts()
 	rotor = null
@@ -296,7 +295,7 @@
 	open_overlay = "outlet_open"
 
 	/// The rotor this outlet is linked to
-	var/datum/weakref/rotor_ref
+	var/obj/machinery/power/turbine/core_rotor/rotor
 	/// The turf to puch the gases out into
 	var/turf/open/output_turf
 
@@ -501,8 +500,8 @@
 	if(check_only)
 		return TRUE
 
-	compressor.rotor_ref = WEAKREF(src)
-	turbine.rotor_ref = WEAKREF(src)
+	compressor.rotor = src
+	turbine.rotor = src
 	max_allowed_rpm = (compressor.installed_part.max_rpm + turbine.installed_part.max_rpm + installed_part.max_rpm) / 3
 	max_allowed_temperature = (compressor.installed_part.max_temperature + turbine.installed_part.max_temperature + installed_part.max_temperature) / 3
 	connect_to_network()
@@ -515,7 +514,9 @@
 /obj/machinery/power/turbine/core_rotor/deactivate_parts()
 	if(all_parts_connected)
 		power_off()
+	compressor.rotor = null
 	compressor = null
+	turbine.rotor = null
 	turbine = null
 	all_parts_connected = FALSE
 	disconnect_from_network()
