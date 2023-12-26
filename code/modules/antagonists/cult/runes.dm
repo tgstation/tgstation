@@ -245,7 +245,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(isnull(cult_team))
 		return
 	if(selected_victim.stat != DEAD && is_convertable_to_cult(selected_victim, cult_team))
-		invocation = "Mah'weyh pleggh at e'ntrath!"
+		invocation = initial(invocation)
 		do_convert(selected_victim, invokers, cult_team)
 	else
 		invocation = "Barhah hra zar'garis!"

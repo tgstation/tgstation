@@ -62,3 +62,5 @@
 #define BB_NEARBY_RUNE "nearby_rune"
 ///occupied runes
 #define BB_OCCUPIED_RUNE "occupied_rune"
+///friendly cultists we befriend
+#define BB_FRIENDLY_CULTIST "friendly_cultist"

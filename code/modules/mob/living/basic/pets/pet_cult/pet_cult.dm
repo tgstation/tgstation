@@ -10,7 +10,7 @@
 
 	if(FACTION_CULT in faction)
 		return STOP_SACRIFICE
-
+	qdel(GetComponent(/datum/component/obeys_commands))
 	melee_damage_lower = max(PET_CULT_ATTACK, initial(melee_damage_lower))
 	melee_damage_upper = max(PET_CULT_ATTACK + 5, initial(melee_damage_upper))
 	maxHealth = max(PET_CULT_HEALTH, initial(maxHealth))
@@ -46,6 +46,14 @@
 	ai_controller.set_blackboard_key(BB_RUNE_ABILITY, rune_ability)
 	ai_controller.set_blackboard_key(BB_CULT_TEAM, team)
 
+	var/static/list/new_pet_commands = list(
+		/datum/pet_command/point_targeting/attack,
+		/datum/pet_command/follow,
+		/datum/pet_command/idle,
+		/datum/pet_command/point_targeting/fetch,
+		/datum/pet_command/untargeted_ability/draw_rune,
+	)
+	AddComponent(/datum/component/obeys_commands, new_pet_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(activate_rune), override = TRUE)
 	return STOP_SACRIFICE
 

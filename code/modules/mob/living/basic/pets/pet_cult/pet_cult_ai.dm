@@ -1,19 +1,24 @@
 /datum/ai_controller/basic_controller/pet_cult
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/cultist,
-		BB_RUNE_CONVERT_TRIES = 0,
+		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/cultist,
+		BB_FRIENDLY_MESSAGE = "eagerly awaits your command..."
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
 	idle_behavior = /datum/idle_behavior/idle_random_walk
 	planning_subtrees = list(
+		/datum/ai_planning_subtree/pet_planning,
+		/datum/ai_planning_subtree/befriend_cultists,
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_occupied_rune,
 		/datum/ai_planning_subtree/find_sacrifice_target,
 		/datum/ai_planning_subtree/drag_target_to_rune,
 	)
+	ai_traits = PAUSE_DURING_DO_AFTER
 
+///if target gets pulled away, unset him
 /datum/ai_controller/basic_controller/pet_cult/proc/delete_pull_target(datum/source, atom/movable/was_pulling)
 	SIGNAL_HANDLER
 
@@ -22,12 +27,35 @@
 	if(was_pulling == blackboard[BB_SACRIFICE_TARGET])
 		clear_blackboard_key(BB_SACRIFICE_TARGET)
 
+///targeting strat to attack non cultists
 /datum/targeting_strategy/basic/cultist
 
 /datum/targeting_strategy/basic/cultist/faction_check(datum/ai_controller/controller, mob/living/living_mob, mob/living/the_target)
 	return IS_CULTIST_OR_CULTIST_MOB(the_target)
 
+///befriend all cultists around us!
+/datum/ai_planning_subtree/befriend_cultists
 
+/datum/ai_planning_subtree/befriend_cultists/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(controller.blackboard_key_exists(BB_FRIENDLY_CULTIST))
+		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_FRIENDLY_CULTIST)
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/friendly_cultist, BB_FRIENDLY_CULTIST, /mob/living/carbon/human)
+
+///behavior to find cultists that we befriend
+/datum/ai_behavior/find_and_set/friendly_cultist
+	action_cooldown = 5 SECONDS
+	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
+
+/datum/ai_behavior/find_and_set/friendly_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+	for(var/mob/living/carbon/human/possible_cultist in oview(search_range, controller.pawn))
+		if(IS_CULTIST(possible_cultist))
+			return possible_cultist
+
+	return null
+
+///subtree to find a rune with a viable target on it, so we can go activate it
 /datum/ai_planning_subtree/find_occupied_rune
 
 /datum/ai_planning_subtree/find_occupied_rune/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -44,12 +72,15 @@
 	if(isnull(cult_team))
 		return null
 
+	var/turf/final_turf
 	for(var/obj/effect/rune/convert/target_rune in oview(search_range, controller.pawn))
 		controller.set_blackboard_key(BB_NEARBY_RUNE, target_rune)
 		var/mob/living/occupant = locate(/mob/living/carbon/human) in get_turf(target_rune)
 		if(isnull(occupant))
 			continue
 		if(occupant.stat < SOFT_CRIT || occupant.stat > HARD_CRIT)
+			continue
+		if(IS_CULTIST(occupant))
 			continue
 		if(!is_convertable_to_cult(occupant, cult_team))
 			continue
@@ -94,6 +125,7 @@
 	controller.clear_blackboard_key(target_key)
 
 
+///find targets that we can convert
 /datum/ai_planning_subtree/find_sacrifice_target
 
 /datum/ai_planning_subtree/find_sacrifice_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
@@ -155,7 +187,7 @@
 
 	controller.queue_behavior(/datum/ai_behavior/drag_target_to_rune, BB_NEARBY_RUNE, BB_SACRIFICE_TARGET)
 
-
+///behavior to drag the target onto the rune
 /datum/ai_behavior/drag_target_to_rune
 	required_distance = 0
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
@@ -193,3 +225,11 @@
 	controller.clear_blackboard_key(sacrifice_target)
 	controller.clear_blackboard_key(target_key)
 
+///command ability to draw runes
+/datum/pet_command/untargeted_ability/draw_rune
+	command_name = "Draw Rune"
+	command_desc = "Draw a sacrifice rune."
+	radial_icon = 'icons/obj/antags/cult/rune.dmi'
+	radial_icon_state = "1"
+	speech_commands = list("play dead")
+	ability_key = BB_RUNE_ABILITY
