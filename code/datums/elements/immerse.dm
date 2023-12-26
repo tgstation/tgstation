@@ -170,7 +170,7 @@
 
 	movable.vis_contents |= vis_overlay
 
-	LAZYSET(immersed_movables, WEAKREF(movable), vis_overlay)
+	LAZYSET(immersed_movables, WEAKREF(movable), WEAKREF(vis_overlay))
 
 ///Initializes and caches a new visual overlay given parameters such as width, height and whether it should appear fully underwater.
 /datum/element/immerse/proc/generate_vis_overlay(width, height, is_below_water)
@@ -216,7 +216,7 @@
 	if(!vis_overlay)
 		return
 	movable.vis_contents -= vis_overlay
-	LAZYREMOVE(immersed_movables, movable)
+	LAZYREMOVE(immersed_movables, WEAKREF(movable))
 	if(HAS_TRAIT(movable, TRAIT_UNIQUE_IMMERSE))
 		UnregisterSignal(movable, list(COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
 		qdel(vis_overlay)
