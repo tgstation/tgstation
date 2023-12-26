@@ -678,6 +678,7 @@
 	var/danger = FALSE
 	for(var/gas_index in 1 to length(gases))
 		var/list/gas_info = gases[gases[gas_index]]
+		var/list/meta = gas_info[GAS_META]
 		var/name = meta[META_GAS_NAME]
 		var/moles = gas_info[MOLES]
 
