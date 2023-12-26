@@ -468,7 +468,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return
 
 	var/list/items_taken = list()
-	for(var/atom/movable/intaking in location.get_all_contents() - src)
+	for(var/atom/movable/intaking in (location.contents - src))
 		if(insert(intaking, mapload) == LOCKER_FULL)
 			if(mapload)
 				log_mapping("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
