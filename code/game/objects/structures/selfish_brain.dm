@@ -51,6 +51,13 @@
 	. = ..()
 	START_PROCESSING(SSfastprocess, src)
 
+/// Make it so this always whispers its messages
+/obj/structure/selfish_brain/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
+	message_mods[WHISPER_MODE] = MODE_WHISPER
+	range = 2
+
+	. = ..()
+
 /obj/structure/selfish_brain/atom_break(damage_flag)
 	. = ..()
 
@@ -81,6 +88,17 @@
 		candidate.apply_status_effect(/datum/status_effect/selfish_brain_blind)
 		try_to_whisper(stolen_whispers)
 
+/// Try to speak and set its whisper cooldown
+/// available_lines is a list of lines this can choose from
+/obj/structure/selfish_brain/proc/try_to_whisper(var/list/available_lines)
+	if(!can_whisper)
+		return
+
+	var/chosen_line = pick(available_lines)
+	say(chosen_line)
+	can_whisper = FALSE
+	addtimer(VARSET_CALLBACK(src, can_whisper, TRUE), whisper_cooldown)
+
 /// The status effect this gives to mobs in it's range, makes people temporarily blind
 /datum/status_effect/selfish_brain_blind
 	id = "selfish_brain_blind"
@@ -101,23 +119,5 @@
 
 /datum/status_effect/selfish_brain_blind/on_remove()
 	owner.cure_blind(id)
-
-/// Make it so this always whispers its messages
-/obj/structure/selfish_brain/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
-	message_mods[WHISPER_MODE] = MODE_WHISPER
-	range = 2
-
-	. = ..()
-
-/// Try to speak and set its whisper cooldown
-/// available_lines is a list of lines this can choose from
-/obj/structure/selfish_brain/proc/try_to_whisper(var/list/available_lines)
-	if(!can_whisper)
-		return
-
-	var/chosen_line = pick(available_lines)
-	say(chosen_line)
-	can_whisper = FALSE
-	addtimer(VARSET_CALLBACK(src, can_whisper, TRUE), whisper_cooldown)
 
 #undef CAN_BE_BLIND
