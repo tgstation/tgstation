@@ -65,22 +65,24 @@ SUBSYSTEM_DEF(polling)
 		if(!poll_alert_button)
 			continue
 
+		new_poll.alert_buttons += poll_alert_button
+		new_poll.RegisterSignal(poll_alert_button, COMSIG_QDELETING, TYPE_PROC_REF(/datum/candidate_poll, clear_alert_ref))
+
 		poll_alert_button.icon = ui_style2icon(candidate_mob.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 		poll_alert_button.desc = "[question]"
 		poll_alert_button.show_time_left = TRUE
 		poll_alert_button.poll = alert_poll
-		poll_alert_button.poll.alert_button = poll_alert_button
 		poll_alert_button.set_role_overlay()
 		poll_alert_button.update_stacks_overlay()
 
+
 		// Sign up inheritance and stacking
-		var/inherited_sign_up = FALSE
-		for(var/existing_poll in currently_polling)
-			var/datum/candidate_poll/other_poll = existing_poll
-			if(new_poll != other_poll && new_poll.poll_key == other_poll.poll_key)
-				// If there's already a poll for an identical mob type ongoing and the client is signed up for it, sign them up for this one
-				if(!inherited_sign_up && (candidate_mob in other_poll.signed_up) && new_poll.sign_up(candidate_mob, TRUE))
-					inherited_sign_up = TRUE
+		for(var/datum/candidate_poll/other_poll as anything in currently_polling)
+			if(new_poll == other_poll || new_poll.poll_key != other_poll.poll_key)
+				continue
+			// If there's already a poll for an identical mob type ongoing and the client is signed up for it, sign them up for this one
+			if((candidate_mob in other_poll.signed_up) && new_poll.sign_up(candidate_mob, TRUE))
+				break
 
 		// Image to display
 		var/image/poll_image
@@ -179,13 +181,29 @@ SUBSYSTEM_DEF(polling)
 	return TRUE
 
 /datum/controller/subsystem/polling/proc/polling_finished(datum/candidate_poll/finishing_poll)
+	currently_polling -= finishing_poll
 	// Trim players who aren't eligible anymore
 	var/length_pre_trim = length(finishing_poll.signed_up)
 	finishing_poll.trim_candidates()
 	log_game("Candidate poll [finishing_poll.role ? "for [finishing_poll.role]" : "\"[finishing_poll.question]\""] finished. [length_pre_trim] players signed up, [length(finishing_poll.signed_up)] after trimming")
 	finishing_poll.finished = TRUE
-	finishing_poll.alert_button.update_stacks_overlay()
-	currently_polling -= finishing_poll
+
+	// Take care of updating the remaining screen alerts if a similar poll is found, or deleting them.
+	if(length(finishing_poll.alert_buttons))
+		var/datum/candidate_poll/poll_of_same_type
+		for(var/datum/candidate_poll/running_poll as anything in currently_polling)
+			if(running_poll.poll_key == finishing_poll.poll_key && running_poll.time_left() > 0)
+				poll_of_same_type = running_poll
+				break
+		for(var/atom/movable/screen/alert/poll_alert/alert as anything in finishing_poll.alert_buttons)
+			if(poll_of_same_type)
+				alert.poll = poll_of_same_type
+				alert.update_stacks_overlay()
+			else
+				alert.owner.clear_alert("[finishing_poll.poll_key]_poll_alert")
+
+	//More than enough time for the the `UNTIL()` stopping loop in `poll_candidates()` to be over, and the results to be turned in.
+	QDEL_IN(finishing_poll, 0.5 SECONDS)
 
 /datum/controller/subsystem/polling/stat_entry(msg)
 	msg += "Active: [length(currently_polling)] | Total: [total_polls]"

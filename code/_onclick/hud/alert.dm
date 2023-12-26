@@ -888,18 +888,24 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
 		jump_to_pic_source()
 		return
-	handle_sign_up()
+	if(handle_sign_up())
+		update_candidates_number_overlay()
+		update_signed_up_overlay()
 
 /atom/movable/screen/alert/poll_alert/proc/handle_sign_up()
 	if(owner in poll.signed_up)
-		poll.remove_candidate(owner)
-	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
-		poll.sign_up(owner)
+		return poll.remove_candidate(owner, src)
+	if(owner.ckey in GLOB.poll_ignore[poll.ignoring_category])
+		return FALSE
+	if(poll.sign_up(owner))
+		return poll.sign_up(owner)
 
 /atom/movable/screen/alert/poll_alert/proc/set_never_round()
 	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.do_never_for_this_round(owner)
 		color = "red"
+		update_candidates_number_overlay()
+		update_signed_up_overlay()
 		return
 	poll.undo_never_for_this_round(owner)
 	color = initial(color)
