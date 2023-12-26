@@ -113,3 +113,6 @@ laser2.ogg is adapted with 3 SFX made by junggle (CC 4), inferno (CC Sampling+),
 https://freesound.org/people/junggle/sounds/28917/
 https://freesound.org/people/inferno/sounds/18397/
 https://freesound.org/people/humanoide9000/sounds/330293/
+
+reel1.ogg, reel2.ogg, reel3.ogg, reel4.ogg and reel5.ogg adapted from pixabay. Free for use under the Pixabay Content License (https://pixabay.com/service/license-summary/):
+https://pixabay.com/sound-effects/reel-78063/
