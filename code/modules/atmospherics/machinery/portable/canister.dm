@@ -439,16 +439,19 @@
 	return ..()
 
 /obj/machinery/portable_atmospherics/canister/attack_hand_secondary(mob/user, list/modifiers)
-	if(!rig)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
+	if(!rig)
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
 	// mousetrap rigs only make sense if you can set them off, can't step on them
 	// If you see a mousetrap-rigged fuel tank, just leave it alone
 	rig.on_found()
 	if(QDELETED(src))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.balloon_alert_to_viewers("detaching rig...")
 	if(!do_after(user, 2 SECONDS, target = src))
-		return
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	user.balloon_alert_to_viewers("detached rig")
 	user.log_message("detached [rig] from [src].", LOG_GAME)
 	if(!user.put_in_hands(rig))
