@@ -47,7 +47,8 @@
 
 /obj/structure/selfish_brain/Destroy()
 	. = ..()
-	qdel(blind_proximity_monitor)
+	if (blind_proximity_monitor)
+		qdel(blind_proximity_monitor)
 
 /// Make it so this always whispers its messages
 /obj/structure/selfish_brain/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
