@@ -4,7 +4,7 @@
 /obj/structure/selfish_brain
 	name = "???"
 	desc = "how selfish"
-	icon_state = "barrel"
+	icon_state = "selfishbrain"
 	max_integrity = 100
 	integrity_failure = 0.85
 	anchored = TRUE
@@ -60,7 +60,7 @@
 
 /obj/structure/selfish_brain/atom_break(damage_flag)
 	. = ..()
-
+	broken = TRUE
 	STOP_PROCESSING(SSfastprocess, src)
 	var/chosen_message = pick(death_whispers)
 	src.say(chosen_message)
@@ -69,6 +69,18 @@
 	new /obj/item/organ/internal/tongue/selfish_brain(drop_location())
 	new /obj/item/mod/module/malfunctioning_eyesight_sharer(drop_location())
 	update_appearance()
+
+/obj/structure/selfish_brain/update_icon_state()
+	. = ..()
+	icon_state = initial(icon_state)
+	if(broken)
+		icon_state = "selfishbrain_broken"
+
+/obj/structure/selfish_brain/update_desc()
+	. = ..()
+	desc = initial(desc)
+	if(broken)
+		desc = "A smashed machine with a bloody rod sticking out from the broken glass. Whatever this was is irreparably broken now."
 
 /obj/structure/selfish_brain/process(seconds_per_tick)
 	// If someone is close whisper if this can
