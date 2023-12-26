@@ -1,13 +1,15 @@
+import { ReactNode, useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
-  Button,
-  TextArea,
-  Section,
   BlockQuote,
+  Box,
+  Button,
   NoticeBox,
+  Section,
+  TextArea,
 } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
-import { ReactNode } from 'react';
 
 type Data = {
   connected: boolean;
@@ -22,7 +24,7 @@ type Data = {
 type Question = {
   qidx: number;
   question: string;
-  response: string;
+  response: string | null;
 };
 
 enum STATUS {
@@ -56,12 +58,15 @@ export const Interview = (props) => {
   const {
     connected,
     is_admin,
-    questions = [], // TODO: Remove default
+    questions = [],
     queue_pos,
     read_only,
     status,
     welcome_message = '',
   } = data;
+
+  const allAnswered = questions.every((q) => q.response);
+  const numAnswered = questions.filter((q) => q.response)?.length;
 
   return (
     <Window
@@ -80,62 +85,55 @@ export const Interview = (props) => {
           buttons={
             <span>
               <Button
-                content={read_only ? 'Submitted' : 'Submit'}
                 onClick={() => act('submit')}
-                disabled={read_only}
-              />
+                disabled={read_only || !allAnswered || !questions.length}
+                icon="envelope"
+                tooltip={
+                  !allAnswered &&
+                  `Please answer all questions.
+                     ${numAnswered} / ${questions.length}`
+                }
+              >
+                {read_only ? 'Submitted' : 'Submit'}
+              </Button>
               {!!is_admin && status === 'interview_pending' && (
                 <span>
-                  <Button
-                    content="Admin PM"
-                    enabled={connected}
-                    onClick={() => act('adminpm')}
-                  />
-                  <Button
-                    content="Approve"
-                    color="good"
-                    onClick={() => act('approve')}
-                  />
-                  <Button
-                    content="Deny"
-                    color="bad"
-                    onClick={() => act('deny')}
-                  />
+                  <Button disabled={!connected} onClick={() => act('adminpm')}>
+                    Admin PM
+                  </Button>
+                  <Button color="good" onClick={() => act('approve')}>
+                    Approve
+                  </Button>
+                  <Button color="bad" onClick={() => act('deny')}>
+                    Deny
+                  </Button>
                 </span>
               )}
             </span>
           }
         >
           {!read_only && (
-            <p>
-              Please answer the following questions, and press submit when you
-              are satisfied with your answers.
-              <br />
-              <br />
-              <b>You will not be able to edit your answers after submitting.</b>
-            </p>
+            <>
+              <Box as="p" color="label">
+                Please answer the following questions.
+                <ul>
+                  <li>
+                    You can press enter key or the save button to save an
+                    answer.
+                  </li>
+                  <li>
+                    You can edit your answers until you press the submit button.
+                  </li>
+                  <li>Press SUBMIT when you are done.</li>
+                </ul>
+              </Box>
+              <NoticeBox info align="center">
+                You will not be able to edit your answers after submitting.
+              </NoticeBox>
+            </>
           )}
-          {questions.map(({ qidx, question, response }) => (
-            <Section key={qidx} title={`Question ${qidx}`}>
-              <p>{linkifyText(question)}</p>
-              {((read_only || is_admin) && (
-                <BlockQuote>{response || 'No response.'}</BlockQuote>
-              )) || (
-                <TextArea
-                  value={response}
-                  fluid
-                  height={10}
-                  maxLength={500}
-                  placeholder="Write your response here, max of 500 characters. Press enter to submit."
-                  onEnter={(e, input) =>
-                    act('update_answer', {
-                      qidx,
-                      answer: input,
-                    })
-                  }
-                />
-              )}
-            </Section>
+          {questions.map((question) => (
+            <QuestionArea key={question.qidx} {...question} />
           ))}
         </Section>
       </Window.Content>
@@ -159,4 +157,55 @@ const RenderedStatus = (props: { status: string; queue_pos: number }) => {
         </NoticeBox>
       );
   }
+};
+
+const QuestionArea = (props: Question) => {
+  const { qidx, question, response } = props;
+  const { act, data } = useBackend<Data>();
+  const { is_admin, read_only } = data;
+
+  const [userInput, setUserInput] = useState(response);
+
+  const saveResponse = () => {
+    act('update_answer', {
+      qidx,
+      answer: userInput,
+    });
+  };
+
+  const changedResponse = userInput !== response;
+
+  const saveAvailable = !read_only && !!userInput && changedResponse;
+
+  const isSaved = !!response && !changedResponse;
+
+  return (
+    <Section
+      title={`Question ${qidx}`}
+      buttons={
+        <Button
+          disabled={!saveAvailable}
+          onClick={saveResponse}
+          icon={isSaved ? 'check' : 'save'}
+        >
+          {isSaved ? 'Saved' : 'Save'}
+        </Button>
+      }
+    >
+      <p>{linkifyText(question)}</p>
+      {((read_only || is_admin) && (
+        <BlockQuote>{response || 'No response.'}</BlockQuote>
+      )) || (
+        <TextArea
+          fluid
+          height={10}
+          maxLength={500}
+          onChange={(e, input) => setUserInput(input)}
+          onEnter={saveResponse}
+          placeholder="Write your response here, max of 500 characters. Press enter to submit."
+          value={response || undefined}
+        />
+      )}
+    </Section>
+  );
 };

@@ -1,17 +1,17 @@
-import { NtosWindow } from '../layouts';
 import { useBackend } from '../backend';
 import {
-  Stack,
-  Section,
   Box,
   Button,
+  Divider,
   Input,
+  NoticeBox,
+  RestrictedInput,
+  Section,
+  Stack,
   Table,
   Tooltip,
-  NoticeBox,
-  Divider,
-  RestrictedInput,
 } from '../components';
+import { NtosWindow } from '../layouts';
 
 type Data = {
   name: string;
@@ -90,7 +90,7 @@ const TransferSection = (props) => {
   return (
     <Stack>
       <Stack.Item>
-        <Section vertical title="Transfer Money">
+        <Section title="Transfer Money">
           <Box>
             <Tooltip
               content="Enter the pay token of the account you want to transfer credits to."

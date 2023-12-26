@@ -161,24 +161,9 @@ export const DreamMaker = async (dmeFile, options = {}) => {
   const { defines } = options;
   if (defines && defines.length > 0) {
     Juke.logger.info('Using defines:', defines.join(', '));
-    try {
-      const injectedContent = defines
-        .map(x => `#define ${x}\n`)
-        .join('');
-      fs.writeFileSync(`${dmeBaseName}.m.dme`, injectedContent);
-      const dmeContent = fs.readFileSync(`${dmeBaseName}.dme`);
-      fs.appendFileSync(`${dmeBaseName}.m.dme`, dmeContent);
-      await runWithWarningChecks(dmPath, [`${dmeBaseName}.m.dme`]);
-      fs.writeFileSync(`${dmeBaseName}.dmb`, fs.readFileSync(`${dmeBaseName}.m.dmb`));
-      fs.writeFileSync(`${dmeBaseName}.rsc`, fs.readFileSync(`${dmeBaseName}.m.rsc`));
-    }
-    finally {
-      Juke.rm(`${dmeBaseName}.m.*`);
-    }
+
   }
-  else {
-    await runWithWarningChecks(dmPath, [dmeFile]);
-  }
+  await runWithWarningChecks(dmPath, [...defines.map(def => `-D${def}`), dmeFile]);
 };
 
 

@@ -3,6 +3,7 @@ import { flow } from 'common/fp';
 import { BooleanLike, classes } from 'common/react';
 import { createSearch } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Button,
@@ -117,7 +118,7 @@ const CameraSelector = (props) => {
           fluid
           mt={1}
           placeholder="Search for a camera"
-          onChange={(e, value) => setSearchText(value)}
+          onInput={(e, value) => setSearchText(value)}
         />
       </Stack.Item>
       <Stack.Item grow>

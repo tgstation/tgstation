@@ -4,11 +4,12 @@
  * @license MIT
  */
 
-import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
+import { clamp01, keyOfMatchingRange, scale, toFixed } from 'common/math';
 import { classes } from 'common/react';
-import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { CSS_COLORS } from '../constants';
 import { PropsWithChildren } from 'react';
+
+import { CSS_COLORS } from '../constants';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 
 type Props = {
   value: number;

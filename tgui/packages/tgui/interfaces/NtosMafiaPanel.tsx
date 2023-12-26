@@ -1,5 +1,5 @@
-import { MafiaPanelData } from './MafiaPanel';
 import { NtosWindow } from '../layouts';
+import { MafiaPanelData } from './MafiaPanel';
 
 export const NtosMafiaPanel = (props) => {
   return (

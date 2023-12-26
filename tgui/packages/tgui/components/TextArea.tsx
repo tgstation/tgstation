@@ -5,25 +5,27 @@
  * @license MIT
  */
 
+import { KEY } from 'common/keys';
 import { classes } from 'common/react';
 import {
   forwardRef,
-  useEffect,
-  useState,
   RefObject,
-  useRef,
+  useEffect,
   useImperativeHandle,
+  useRef,
+  useState,
 } from 'react';
-import { toInputValue } from './Input';
-import { KEY } from 'common/keys';
-import { Box, BoxProps } from './Box';
 import { ChangeEvent, KeyboardEvent } from 'react';
+
+import { Box, BoxProps } from './Box';
+import { toInputValue } from './Input';
 
 type Props = Partial<{
   autoFocus: boolean;
   autoSelect: boolean;
   displayedValue: string;
   dontUseTabForIndent: boolean;
+  fluid: boolean;
   maxLength: number;
   noborder: boolean;
   // This fires when: value changes

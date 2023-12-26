@@ -1,6 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -144,7 +145,7 @@ export const SparringContract = (props) => {
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
-              <Stack grow textAlign="center">
+              <Stack textAlign="center">
                 <Stack.Item fontSize={left_sign !== 'none' && '14px'} grow>
                   {(left_sign === 'none' && (
                     <Button

@@ -13,6 +13,7 @@ import {
   Stack,
 } from 'tgui/components';
 import { Window } from 'tgui/layouts';
+
 import { JOB2ICON } from '../common/JobToIcon';
 import { ANTAG2COLOR } from './constants';
 import {
@@ -97,7 +98,7 @@ const ObservableSearch = (props) => {
             autoFocus
             fluid
             onEnter={(event, value) => orbitMostRelevant(value)}
-            onChange={(event, value) => setSearchQuery(value)}
+            onInput={(event, value) => setSearchQuery(value)}
             placeholder="Search..."
             value={searchQuery}
           />

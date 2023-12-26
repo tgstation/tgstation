@@ -116,6 +116,10 @@ Difficulty: Hard
 				shockwave_scream()
 		return
 
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD)
+		return
+
 	if(COOLDOWN_FINISHED(src, scream_cooldown))
 		chosen_attack = rand(1, 3)
 	else

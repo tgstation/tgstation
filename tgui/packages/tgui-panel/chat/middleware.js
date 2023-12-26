@@ -4,14 +4,15 @@
  * @license MIT
  */
 
-import DOMPurify from 'dompurify';
 import { storage } from 'common/storage';
+import DOMPurify from 'dompurify';
+
 import {
-  loadSettings,
-  updateSettings,
   addHighlightSetting,
+  loadSettings,
   removeHighlightSetting,
   updateHighlightSetting,
+  updateSettings,
 } from '../settings/actions';
 import { selectSettings } from '../settings/selectors';
 import {
