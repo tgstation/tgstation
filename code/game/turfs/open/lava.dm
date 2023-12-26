@@ -68,7 +68,7 @@
 	// But that's rare, and I'm ok with that, quartering our light source count is useful
 	var/mutable_appearance/light_mask = mutable_appearance(mask_icon, mask_state, LIGHTING_MASK_LAYER, src, LIGHTING_PLANE)
 	light_mask.blend_mode = BLEND_MULTIPLY
-	light_mask.color = list(-1,0,0,0, 0,-1,0,0, 0,0,-1,0, 0,0,0,1, 1,1,1,0)
+	light_mask.color = COLOR_MATRIX_INVERT
 	. += light_mask
 
 /// Refreshes this lava turf's lighting

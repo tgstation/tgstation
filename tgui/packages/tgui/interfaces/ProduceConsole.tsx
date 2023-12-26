@@ -148,7 +148,7 @@ const ShoppingTab = (props) => {
                     />
                     <br />
                   </Stack.Item>
-                  <Stack.Item mt={-1.5} Align="right">
+                  <Stack.Item mt={-1.5} align="right">
                     <Box fontSize="10px" color="label">
                       {item.cost + credit_type + ' per order.'}
                     </Box>

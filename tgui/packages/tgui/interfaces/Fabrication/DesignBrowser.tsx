@@ -199,10 +199,6 @@ export const DesignBrowser = <T extends Design = Design>(
     }
   }
 
-  const designWrapper = (design: T) => {
-    buildRecipeElement(design, availableMaterials || {}, onPrintDesign || NOOP);
-  };
-
   return (
     <Stack fill>
       {/* Left Column */}
@@ -283,12 +279,24 @@ export const DesignBrowser = <T extends Design = Design>(
                         .toLowerCase()
                         .includes(searchText.toLowerCase()),
                     )
-                    .map((design) => designWrapper(design))
+                    .map((design) =>
+                      buildRecipeElement(
+                        design,
+                        availableMaterials || {},
+                        onPrintDesign || NOOP,
+                      ),
+                    )
                 ) : selectedCategory === ALL_CATEGORY ? (
                   <>
                     {sortBy((design: T) => design.name)(
                       Object.values(root.descendants),
-                    ).map((design) => designWrapper(design))}
+                    ).map((design) =>
+                      buildRecipeElement(
+                        design,
+                        availableMaterials || {},
+                        onPrintDesign || NOOP,
+                      ),
+                    )}
                   </>
                 ) : (
                   root.subcategories[selectedCategory] && (
@@ -481,7 +489,7 @@ const CategoryView = <T extends Design = Design>(
   return (
     <Section
       title={category.title}
-      id={category.anchorKey}
+      key={category.anchorKey}
       buttons={categoryButtons && categoryButtons(category)}
     >
       {body}

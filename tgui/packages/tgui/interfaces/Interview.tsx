@@ -203,7 +203,7 @@ const QuestionArea = (props: Question) => {
           onChange={(e, input) => setUserInput(input)}
           onEnter={saveResponse}
           placeholder="Write your response here, max of 500 characters. Press enter to submit."
-          value={response}
+          value={response || undefined}
         />
       )}
     </Section>

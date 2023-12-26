@@ -47,6 +47,8 @@
 ///This app grants a larger protection against being PDA bombed if installed.
 ///(can sometimes prevent it from being sent, while wasting a PDA bomb from the sender).
 #define DETOMATIX_RESIST_MAJOR 2
+///This app gives a diminished protection against being PDA bombed if installed.
+#define DETOMATIX_RESIST_MALUS -4
 
 /**
  * NTNet transfer speeds, used when downloading/uploading a file/program.

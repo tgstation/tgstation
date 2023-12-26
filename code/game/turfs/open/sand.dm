@@ -53,6 +53,7 @@
 	name = "dirt"
 	desc = "Upon closer examination, it's still dirt."
 	icon = 'icons/turf/floors.dmi'
+	damaged_dmi = 'icons/turf/damaged.dmi'
 	icon_state = "sand"
 	base_icon_state = "sand"
 	bullet_bounce_sound = null
@@ -65,6 +66,9 @@
 /turf/open/misc/sandy_dirt/break_tile()
 	. = ..()
 	icon_state = "sand_damaged"
+
+/turf/open/misc/sandy_dirt/broken_states()
+	return list("sand_damaged")
 
 /turf/open/misc/ironsand
 	gender = PLURAL
