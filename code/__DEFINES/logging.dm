@@ -140,6 +140,7 @@
 // Game categories
 #define LOG_CATEGORY_GAME "game"
 #define LOG_CATEGORY_GAME_ACCESS "game-access"
+#define LOG_CATEGORY_GAME_CLOSET "game-closet"
 #define LOG_CATEGORY_GAME_EMOTE "game-emote"
 #define LOG_CATEGORY_GAME_INTERNET_REQUEST "game-internet-request"
 #define LOG_CATEGORY_GAME_OOC "game-ooc"

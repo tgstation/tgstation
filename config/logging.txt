@@ -23,6 +23,9 @@ LOG_ADMINCHAT
 ## log attack messages
 LOG_ATTACK
 
+## log closets being opened/closed
+# LOG_CLOSET
+
 ## log economy actions
 LOG_ECON
 

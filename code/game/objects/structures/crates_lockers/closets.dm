@@ -448,26 +448,38 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		contents_initialized = TRUE
 		PopulateContents()
 
-	var/atom/L = drop_location()
-	for(var/atom/movable/AM in src)
-		AM.forceMove(L)
+	var/atom/target_location = drop_location()
+	var/list/things_inside = list()
+	for(var/atom/movable/inside in contents)
+		things_inside += inside
+
+	for(var/atom/movable/inside as anything in things_inside)
+		inside.forceMove(target_location)
 		if(throwing) // you keep some momentum when getting out of a thrown closet
-			step(AM, dir)
+			step(inside, dir)
 	if(throwing)
 		throwing.finalize(FALSE)
+
+	return things_inside
 
 /obj/structure/closet/proc/take_contents(mapload = FALSE)
 	var/atom/location = drop_location()
 	if(!location)
 		return
-	for(var/atom/movable/AM in location)
-		if(AM != src && insert(AM, mapload) == LOCKER_FULL) // limit reached
-			if(mapload) // Yea, it's a mapping issue. Blame mappers.
+
+	var/list/items_taken = list()
+	for(var/atom/movable/intaking in location.get_all_contents() - src)
+		if(insert(intaking, mapload) == LOCKER_FULL)
+			if(mapload)
 				log_mapping("Closet storage capacity of [type] exceeded on mapload at [AREACOORD(src)]")
 			break
+		items_taken += intaking
+
 	for(var/i in reverse_range(location.get_all_contents()))
 		var/atom/movable/thing = i
 		thing.atom_storage?.close_all()
+
+	return items_taken
 
 ///Proc to write checks before opening a door
 /obj/structure/closet/proc/before_open(mob/living/user, force)
@@ -485,12 +497,25 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	opened = TRUE
 	if(!dense_when_open)
 		set_density(FALSE)
-	dump_contents()
+	var/list/dumped_things = dump_contents()
 	if(special_effects)
 		animate_door(FALSE)
 	update_appearance()
 	after_open(user, force)
 	SEND_SIGNAL(src, COMSIG_CLOSET_POST_OPEN, user, force)
+
+	var/total_dumped = 0
+	var/list/items_dumped_actual = list()
+	for(var/atom/movable/taken as anything in dumped_things)
+		total_dumped += 1
+		if(!(taken.type in items_dumped_actual))
+			items_dumped_actual[taken.type] = 0
+		items_dumped_actual[taken.type] += 1
+
+	logger.Log(LOG_CATEGORY_GAME_CLOSET, "[name]([type]) opened by [key_name(user)] at [AREACOORD(src)]", list(
+		"items_dumped" = total_dumped,
+		"items_dumped_actual" = items_dumped_actual
+	))
 	return TRUE
 
 ///Proc to override for effects after opening a door
@@ -552,7 +577,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		return FALSE
 	if(!before_close(user) || (SEND_SIGNAL(src, COMSIG_CLOSET_PRE_CLOSE, user) & BLOCK_CLOSE))
 		return FALSE
-	take_contents()
+	var/list/items_taken = take_contents()
 	playsound(loc, close_sound, close_sound_volume, TRUE, -3)
 	opened = FALSE
 	set_density(TRUE)
@@ -560,6 +585,19 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	update_appearance()
 	after_close(user)
 	SEND_SIGNAL(src, COMSIG_CLOSET_POST_CLOSE, user)
+
+	var/total_taken = 0
+	var/list/items_taken_actual = list()
+	for(var/atom/movable/taken as anything in items_taken)
+		total_taken += 1
+		if(!(taken.type in items_taken_actual))
+			items_taken_actual[taken.type] = 0
+		items_taken_actual[taken.type] += 1
+
+	logger.Log(LOG_CATEGORY_GAME_CLOSET, "[name]([type]) closed by [key_name(user)] at [AREACOORD(src)]", list(
+		"items_taken" = total_taken,
+		"items_taken_actual" = items_taken_actual
+	))
 	return TRUE
 
 ///Proc to do effects after closet has closed

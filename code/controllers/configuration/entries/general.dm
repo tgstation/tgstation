@@ -76,6 +76,9 @@
 /// log prayers
 /datum/config_entry/flag/log_prayer
 
+/// log closets
+/datum/config_entry/flag/log_closet
+
 ///Log Music Requests
 /datum/config_entry/flag/log_internet_request
 

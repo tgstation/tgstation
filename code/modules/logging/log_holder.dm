@@ -345,6 +345,9 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 		else if(islist(data))
 			data = recursive_jsonify(data, semvers)
 
+		else if(ispath(data))
+			data = "[data]"
+
 		else if(isdatum(data))
 			var/list/options_list = list(
 				SCHEMA_VERSION = LOG_CATEGORY_SCHEMA_VERSION_NOT_SET,
