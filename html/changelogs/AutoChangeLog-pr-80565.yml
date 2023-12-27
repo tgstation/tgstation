@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - bugfix: "Fixed the surgery menu spamming chat messages when on the eyes section of a player with no eyes."

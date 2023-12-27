@@ -854,3 +854,16 @@
   vinylspiders:
   - bugfix: fixes a potential mob hard del with cardboard boxes
   - bugfix: fixes a hard del with thrown items
+2023-12-27:
+  Melbert:
+  - bugfix: Fixed some occasions in which heartbeat SFX will continue on revival for
+      longer than expected
+  Mothblocks:
+  - bugfix: Fixed the surgery menu spamming chat messages when on the eyes section
+      of a player with no eyes.
+  Ryll/Shaps:
+  - balance: Yawns are less likely to propagate
+  jlsnow301:
+  - bugfix: NTOS Messenger should search as you type now
+  timothymtorres:
+  - qol: Add UI screentips to spraycans
