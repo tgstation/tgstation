@@ -101,7 +101,7 @@
  *
  * Returns [QDEL_HINT_QUEUE]
  */
-/datum/proc/Destroy(force=FALSE, ...)
+/datum/proc/Destroy(force = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
@@ -129,10 +129,10 @@
 			var/component_or_list = dc[component_key]
 			if(islist(component_or_list))
 				for(var/datum/component/component as anything in component_or_list)
-					qdel(component, FALSE, TRUE)
+					qdel(component, FALSE)
 			else
 				var/datum/component/C = component_or_list
-				qdel(C, FALSE, TRUE)
+				qdel(C, FALSE)
 		dc.Cut()
 
 	_clear_signal_refs()
