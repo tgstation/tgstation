@@ -1,5 +1,5 @@
 import { KEY } from 'common/keys';
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 
 import { useBackend } from '../backend';
 import { Box, Section, Stack, TextArea } from '../components';
@@ -111,7 +111,7 @@ const InputArea = (props: {
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onEscape={() => act('cancel')}
-      onEnter={(event) => {
+      onEnter={(event: KeyboardEvent<HTMLTextAreaElement>) => {
         if (visualMultiline && event.shiftKey) {
           return;
         }
