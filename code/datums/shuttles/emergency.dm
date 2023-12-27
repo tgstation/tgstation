@@ -494,7 +494,7 @@
 	description = "A shuttle used to explore the mysterious jungle planet. After it departs from Central Command, \
 	any remaining crew will be transported over to investigate"
 	credit_cost = CARGO_CRATE_VALUE * 75
-	occupancy_limit = "As many as we get"
+	occupancy_limit = "Enough seats"
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
