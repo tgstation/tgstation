@@ -151,6 +151,12 @@
 	},
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
+"dZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/bench/left,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
 "el" = (
 /obj/structure/rack,
 /obj/effect/spawner/random/engineering/tool,
@@ -992,6 +998,12 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/jungle_explorer)
+"Bd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/bench,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
 "Be" = (
 /obj/structure/sign/departments/med/directional/west,
 /obj/machinery/light/directional/west,
@@ -1830,6 +1842,12 @@
 	dir = 8
 	},
 /turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
+"VX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/sofa/bench/right,
+/turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "Wc" = (
 /obj/machinery/light/directional/north,
@@ -2671,7 +2689,7 @@ mO
 nZ
 uG
 vL
-aO
+VX
 Ed
 Ll
 Ll
@@ -2720,7 +2738,7 @@ mO
 Jy
 al
 vL
-aO
+Bd
 Ed
 Ll
 oD
@@ -2769,7 +2787,7 @@ mO
 nZ
 XU
 vL
-aO
+Bd
 Ed
 Ll
 oD
@@ -2818,7 +2836,7 @@ bu
 KC
 Zv
 vL
-aO
+dZ
 Ed
 Ll
 Ll
@@ -3014,7 +3032,7 @@ vL
 vL
 vL
 vL
-aO
+VX
 Ed
 Ll
 Ll
@@ -3063,7 +3081,7 @@ vL
 UH
 hh
 vL
-aO
+Bd
 Ed
 Ll
 oD
@@ -3112,7 +3130,7 @@ wU
 CV
 lO
 vL
-aO
+Bd
 Ed
 Ll
 oD
@@ -3161,7 +3179,7 @@ vL
 vL
 vL
 vL
-aO
+dZ
 Ed
 Ll
 Ll
