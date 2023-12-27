@@ -11,6 +11,7 @@
 	desc = "A fishing line. In spite of its simplicity, the added length will make fishing a speck easier."
 	icon = 'icons/obj/fishing.dmi'
 	icon_state = "reel_blue"
+	w_class = WEIGHT_CLASS_SMALL
 	///A list of traits that this fishing line has, checked by fish traits and the minigame.
 	var/list/fishing_line_traits
 	/// Color of the fishing line
@@ -179,6 +180,7 @@
 	name = "jawed hook"
 	desc = "Despite hints of rust, this gritty beartrap-like hook hybrid manages to look even more threating than the real thing. May neptune have mercy of whatever gets caught in its jaws."
 	icon_state = "jaws"
+	w_class = WEIGHT_CLASS_NORMAL
 	fishing_hook_traits = FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_NO_ESCAPE|FISHING_HOOK_KILL
 	rod_overlay_icon_state = "hook_jaws_overlay"
 

@@ -113,7 +113,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
 		return
 	playsound(src, SFX_REEL, 50, vary = FALSE)
-	if(!do_after(user, 1 SECONDS, currently_hooked, timed_action_flags = IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
+	if(!do_after(user, 0.8 SECONDS, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
 	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
 		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
@@ -372,17 +372,16 @@
 	// Trying to remove the item
 	if(!new_item && current_item)
 		user.put_in_hands(current_item)
-		update_icon()
-		return
+		balloon_alert(user, "[slot] removed")
 	// Trying to insert item into empty slot
-	if(new_item && !current_item)
+	else if(new_item && !current_item)
 		if(!slot_check(new_item, slot))
 			return
 		if(user.transferItemToLoc(new_item,src))
 			set_slot(new_item, slot)
-			update_icon()
+			balloon_alert(user, "[slot] installed")
 	/// Trying to swap item
-	if(new_item && current_item)
+	else if(new_item && current_item)
 		if(!slot_check(new_item,slot))
 			return
 		if(user.transferItemToLoc(new_item,src))
@@ -394,7 +393,10 @@
 				if(ROD_SLOT_LINE)
 					line = new_item
 		user.put_in_hands(current_item)
-		update_icon()
+		balloon_alert(user, "[slot] swapped")
+
+	update_icon()
+	playsound(src, 'sound/items/click.ogg', 50, TRUE)
 
 ///assign an item to the given slot and its standard effects, while Exited() should handle unsetting the slot.
 /obj/item/fishing_rod/proc/set_slot(obj/item/equipment, slot)

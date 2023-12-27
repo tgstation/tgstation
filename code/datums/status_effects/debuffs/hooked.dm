@@ -14,23 +14,28 @@
 
 /datum/status_effect/grouped/hooked/on_creation(mob/living/new_owner, datum/beam/fishing_line/source)
 	. = ..()
+	if(!.) //merged with an existing effect
+		return
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
+
+/datum/status_effect/grouped/hooked/merge_with_existing(datum/status_effect/grouped/hooked/existing, datum/beam/fishing_line/source)
+	existing.RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
 
 /datum/status_effect/grouped/hooked/proc/on_fishing_line_deleted(datum/source)
 	SIGNAL_HANDLER
-	owner.remove_status_effect(/datum/status_effect/grouped/hooked, source)
+	owner.remove_status_effect(type, source)
 
 /atom/movable/screen/alert/status_effect/hooked
 	name = "Snagged By Hook"
-	desc = "You're being caught like a fish by some asshat! Click to safely remove the hook or move away far enough for the line to snap."
+	desc = "You're being caught like a fish by some asshat! Click to safely remove the hook or move away far enough to snap it off."
 	icon_state = "hooked"
 
 /atom/movable/screen/alert/status_effect/hooked/Click()
 	if(!owner.can_resist())
 		return
 	owner.balloon_alert(owner, "removing hook...")
-	var/datum/status_effect/grouped/hooked/effect = owner.has_status_effect(/datum/status_effect/grouped/hooked)
-	if(!effect?.try_unhook())
+	var/datum/status_effect/grouped/hooked/effect = owner.has_status_effect(attached_effect.type)
+	if(!effect.try_unhook())
 		return
 	owner.balloon_alert(owner, "hook removed")
 	var/datum/beam/fishing_line/rand_source = pick(effect.sources)
@@ -54,5 +59,5 @@
 
 /atom/movable/screen/alert/status_effect/hooked/jaws
 	name = "Snagged By Jaws"
-	desc = "You've been snagged by some sort of beartrap-slash-fishing-hook-gizmo! Click to safely remove the hook or move away far enough for the line to snap."
+	desc = "You've been snagged by some sort of beartrap-slash-fishing-hook-gizmo! Click to safely remove the hook or move away far enough to snap it off."
 	icon_state = "hooked_jaws"

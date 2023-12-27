@@ -18,7 +18,7 @@
 	multiplicative_slowdown = -0.5
 
 /datum/movespeed_modifier/hook_jawed
-	multiplicative_slowdown = 5
+	multiplicative_slowdown = 4
 
 /datum/movespeed_modifier/shooting_assistant
 	multiplicative_slowdown = 0.5
