@@ -319,7 +319,7 @@
 	icon_state = "bookInfections"
 	starting_author = "Infections Encyclopedia"
 	starting_title = "Pathology 101 - Curing Problems"
-	page_link = "en/jobs/medical/pathology"
+	page_link = "en/jobs/medical/guide-to-pathology"
 
 /obj/item/book/manual/wiki/telescience
 	name = "Teleportation Science - Bluespace for dummies!"
