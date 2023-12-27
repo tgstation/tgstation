@@ -492,7 +492,7 @@
 	suffix = "jungleexplorer"
 	name = "JungleStation Explorative Shuttle"
 	description = "A shuttle used to explore the mysterious jungle planet. After it departs from Central Command, \
-	any remaining crew will be transported over to investigate"
+	any remaining crew will be transported over to investigate."
 	credit_cost = CARGO_CRATE_VALUE * 75
 	occupancy_limit = "Enough seats"
 

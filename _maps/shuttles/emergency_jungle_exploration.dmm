@@ -924,6 +924,12 @@
 /obj/structure/closet/crate/engineering{
 	name = "engineering supplies crate"
 	},
+/obj/item/stack/cable_coil,
+/obj/item/stack/cable_coil,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/plasmarglass/fifty,
+/obj/item/stack/sheet/plasteel/fifty,
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "yx" = (
@@ -1882,6 +1888,9 @@
 /obj/structure/closet/crate/medical{
 	name = "medical supplies"
 	},
+/obj/item/storage/medkit/o2,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit,
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "XU" = (
@@ -2012,9 +2021,9 @@ oD
 oD
 oD
 oD
-II
 oD
-II
+oD
+oD
 oD
 oD
 oD
@@ -2061,9 +2070,9 @@ oD
 oD
 oD
 oD
-Mb
+II
 oD
-Mb
+II
 oD
 oD
 oD
@@ -2757,8 +2766,8 @@ oD
 "}
 (17,1,1) = {"
 oD
-GT
 oD
+GT
 oD
 oD
 Ll
@@ -2805,8 +2814,8 @@ oD
 oD
 "}
 (18,1,1) = {"
+oD
 GT
-Mb
 Mb
 Mb
 Ll
@@ -2855,8 +2864,8 @@ oD
 "}
 (19,1,1) = {"
 oD
-GT
 oD
+GT
 oD
 Zv
 ax
@@ -2953,8 +2962,8 @@ QV
 "}
 (21,1,1) = {"
 oD
-GT
 oD
+GT
 oD
 Zv
 Ce
@@ -3001,8 +3010,8 @@ QV
 QV
 "}
 (22,1,1) = {"
+oD
 Jd
-Mb
 Mb
 Mb
 Ll
@@ -3051,8 +3060,8 @@ oD
 "}
 (23,1,1) = {"
 oD
-GT
 oD
+GT
 oD
 oD
 Ll
