@@ -40,7 +40,7 @@
 		var/obj/item/item_hitting = hitby
 		var/tap_vol = istype(item_hitting) ? item_hitting.get_clamped_volume() : 50
 		source.visible_message(
-			span_warning("[src] looks unharmed!"),
+			span_warning("[source] looks unharmed!"),
 			span_warning("[attack_text] deals no damage to you!"),
 			span_hear("You hear a thud."),
 			COMBAT_MESSAGE_RANGE,

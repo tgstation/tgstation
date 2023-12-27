@@ -35,7 +35,8 @@ handles linking back and forth.
 	var/connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
 		connect_to_silo = TRUE
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
+		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 
 	if(mapload) // wait for silo to initialize during mapload
 		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
@@ -132,7 +133,7 @@ handles linking back and forth.
 		return
 
 	if(silo)
-		mat_container.user_insert(target, user, mat_container_flags, parent)
+		mat_container.user_insert(target, user, parent)
 
 	return COMPONENT_NO_AFTERATTACK
 
@@ -170,7 +171,8 @@ handles linking back and forth.
 		silo.ore_connected_machines += src
 		silo.updateUsrDialog()
 		mat_container = new_container
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
+		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
 		return ITEM_INTERACT_BLOCKING
 
@@ -199,15 +201,19 @@ handles linking back and forth.
  * - The parent is of type movable atom
  * - A mat container is actually present
  * - The silo in not on hold
+ * Arguments
+ * * check_hold - should we check if the silo is on hold
  */
-/datum/component/remote_materials/proc/_can_use_resource()
+/datum/component/remote_materials/proc/_can_use_resource(check_hold = TRUE)
+	PRIVATE_PROC(TRUE)
+
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return FALSE
 	if (!mat_container) //no silolink & local storage not supported
 		movable_parent.say("No access to material storage, please contact the quartermaster.")
 		return FALSE
-	if(on_hold()) //silo on hold
+	if(check_hold && on_hold()) //silo on hold
 		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	return TRUE
@@ -254,3 +260,16 @@ handles linking back and forth.
 		drop_target = movable_parent.drop_location()
 
 	return mat_container.retrieve_sheets(eject_amount, material_ref, target = drop_target, context = parent)
+
+/**
+ * Insert an item into the mat container, helper proc to insert items with the correct context
+ *
+ * Arguments
+ * * obj/item/weapon - the item you are trying to insert
+ * * multiplier - the multiplier applied on the materials consumed
+ */
+/datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier)
+	if(!_can_use_resource(FALSE))
+		return MATERIAL_INSERT_ITEM_FAILURE
+
+	return mat_container.insert_item(weapon, multiplier, parent)

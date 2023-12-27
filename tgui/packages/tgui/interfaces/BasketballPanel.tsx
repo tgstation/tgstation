@@ -40,7 +40,7 @@ export const BasketballPanel = (props) => {
                   />
                   <Button
                     icon="basketball"
-                    disabled={!(data.total_votes >= data.players_min)}
+                    disabled={data.total_votes < data.players_min}
                     onClick={() => act('basketball_start')}
                   >
                     Start

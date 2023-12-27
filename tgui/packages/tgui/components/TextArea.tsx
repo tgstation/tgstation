@@ -28,7 +28,7 @@ type Props = Partial<{
   fluid: boolean;
   maxLength: number;
   noborder: boolean;
-  /** Fires when user is 'done typing': Clicked out, blur, enter key */
+  /** Fires when user is 'done typing': Clicked out, blur, enter key (but not shift+enter) */
   onChange: (event: SyntheticEvent<HTMLTextAreaElement>, value: string) => void;
   /** Fires once the enter key is pressed */
   onEnter: (event: SyntheticEvent<HTMLTextAreaElement>, value: string) => void;
@@ -55,6 +55,7 @@ export const TextArea = forwardRef(
       onChange,
       onEnter,
       onEscape,
+      onInput,
       placeholder,
       scrollbar,
       selfClear,
