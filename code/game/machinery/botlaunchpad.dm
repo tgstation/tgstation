@@ -36,7 +36,7 @@
 /obj/machinery/botpad/proc/launch(mob/living/user)
 	var/turf/reverse_turf = get_turf(user)
 	var/atom/possible_bot
-	for(var/mob/living/robot in get_turf(src))
+	for(var/mob/living/robot in get_turf(src)) //May need to edit this condition
 		if(!isbot(robot))
 			user.balloon_alert(user, "unidentified life form on the pad!")
 			return
