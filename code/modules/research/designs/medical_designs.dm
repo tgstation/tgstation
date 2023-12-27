@@ -352,7 +352,7 @@
 	desc = "A portable, foldable version of the medical bed. Perfect for paramedics or whenever you have mass casualties!"
 	id = "medicalbed_emergency"
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 5)
+	materials = list(/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.7, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 1.7)
 	build_path = /obj/item/emergency_bed
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL

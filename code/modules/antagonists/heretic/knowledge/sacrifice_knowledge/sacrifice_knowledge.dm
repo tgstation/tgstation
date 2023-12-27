@@ -130,7 +130,7 @@
 
 	// First target, any command.
 	for(var/datum/mind/head_mind as anything in shuffle(valid_targets))
-		if(head_mind.assigned_role?.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
+		if(head_mind.assigned_role?.job_flags & JOB_HEAD_OF_STAFF)
 			final_targets += head_mind
 			valid_targets -= head_mind
 			break
@@ -187,8 +187,8 @@
 	heretic_datum.remove_sacrifice_target(sacrifice)
 
 	var/feedback = "Your patrons accept your offer"
-	var/sac_department_flag = sacrifice.mind?.assigned_role?.departments_bitflags | sacrifice.last_mind?.assigned_role?.departments_bitflags
-	if(sac_department_flag & DEPARTMENT_BITFLAG_COMMAND)
+	var/sac_job_flag = sacrifice.mind?.assigned_role?.job_flags | sacrifice.last_mind?.assigned_role?.job_flags
+	if(sac_job_flag & JOB_HEAD_OF_STAFF)
 		heretic_datum.knowledge_points++
 		heretic_datum.high_value_sacrifices++
 		feedback += " <i>graciously</i>"

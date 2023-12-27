@@ -28,6 +28,7 @@
 	paycheck = PAYCHECK_COMMAND
 	paycheck_department = ACCOUNT_SCI
 
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
 	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
@@ -41,7 +42,7 @@
 
 	family_heirlooms = list(/obj/item/toy/plush/slimeplushie)
 	rpg_title = "Archmagister"
-	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
+	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 
 	voice_of_god_power = 1.4 //Command staff has authority
 

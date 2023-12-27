@@ -40,26 +40,6 @@
 ///If the user won't receive a warning when attacking the container with an unallowed item.
 #define MATCONTAINER_SILENT (1<<3)
 
-// The following flags are for decomposing alloys. Should be expanded upon and diversified once someone gets around to reworking recycling.
-/// Can reduce an alloy into its component materials.
-#define BREAKDOWN_ALLOYS (1<<4)
-/// Makes the material composition include transmuted materials objects
-#define BREAKDOWN_INCLUDE_ALCHEMY (1<<5)
-/// Breakdown flags used by techfabs and circuit printers.
-#define BREAKDOWN_FLAGS_LATHE (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the ORM.
-#define BREAKDOWN_FLAGS_ORM (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the recycler.
-#define BREAKDOWN_FLAGS_RECYCLER (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the sheetifier.
-#define BREAKDOWN_FLAGS_SHEETIFIER (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the ore processor.
-#define BREAKDOWN_FLAGS_ORE_PROCESSOR (BREAKDOWN_ALLOYS)
-/// Breakdown flags used by the drone dispenser.
-#define BREAKDOWN_FLAGS_DRONE_DISPENSER (BREAKDOWN_ALLOYS)
-/// Breakdown flags used when exporting materials.
-#define BREAKDOWN_FLAGS_EXPORT (NONE)
-
 /// Whether a material's mechanical effects should apply to the atom. This is necessary for other flags to work.
 #define MATERIAL_EFFECTS (1<<0)
 /// Applies the material color to the atom's color. Deprecated, use MATERIAL_GREYSCALE instead

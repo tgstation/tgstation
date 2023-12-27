@@ -65,7 +65,7 @@
 	SIGNAL_HANDLER
 
 	tackle_ref = WEAKREF(tackle)
-	tackle.thrower = user
+	tackle.thrower = WEAKREF(user)
 
 ///See if we can tackle or not. If we can, leap!
 /datum/component/tackler/proc/checkTackle(mob/living/carbon/user, atom/clicked_atom, list/modifiers)

@@ -1,5 +1,6 @@
+import { sortBy } from 'common/collections';
+
 import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
 import {
   BlockQuote,
   Button,
@@ -11,7 +12,7 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { sortBy } from 'common/collections';
+import { Window } from '../layouts';
 
 type Data = {
   records: WarrantRecord[];

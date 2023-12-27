@@ -2,22 +2,22 @@
 import { useBackend, useLocalState } from '../../backend';
 import {
   Button,
-  LabeledList,
-  NumberInput,
   ColorBox,
   Input,
+  LabeledList,
+  NumberInput,
   Stack,
 } from '../../components';
 import {
   EntryGeneratorNumbersListProps,
   FloatGeneratorColorProps,
   FloatGeneratorProps,
-  ParticleUIData,
   P_DATA_GENERATOR,
+  ParticleUIData,
   RandToNumber,
 } from './data';
-import { isStringArray } from './helpers';
 import { GeneratorListEntry } from './Generators';
+import { isStringArray } from './helpers';
 
 export const FloatGenerator = (props: FloatGeneratorProps) => {
   const { act, data } = useBackend<ParticleUIData>();
@@ -106,7 +106,6 @@ export const FloatGeneratorColor = (props: FloatGeneratorColorProps) => {
         {!Array.isArray(float) ? (
           <Stack.Item>
             <Input
-              animated
               value={float}
               onChange={(e, value) =>
                 act('edit', {
