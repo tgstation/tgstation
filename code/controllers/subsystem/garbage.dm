@@ -338,10 +338,10 @@ SUBSYSTEM_DEF(garbage)
 	var/static/call_count = 0
 
 	if (args.len > 2)
-		stack_trace("[to_delete] ([to_delete.path]) was deleted with more than just itself and force")
-		qdel_OLD(to_delete, force, arglist(args))
+		stack_trace("[to_delete] ([to_delete.type]) was deleted with more than just itself and force")
+		qdel_OLD(arglist(args))
 	else if (++call_count % 2 == 0)
-		qdel_OLD(to_delete, force, arglist(args))
+		qdel_OLD(arglist(args))
 	else
 		qdel_NEW(to_delete, force)
 
