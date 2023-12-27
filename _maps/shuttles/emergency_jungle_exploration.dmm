@@ -321,6 +321,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
+"hT" = (
+/obj/machinery/door/airlock/external,
+/obj/effect/mapping_helpers/airlock/cyclelink_helper{
+	dir = 4
+	},
+/obj/docking_port/mobile/emergency{
+	name = "JungleStation Explorative Shuttle"
+	},
+/turf/open/floor/plating,
+/area/shuttle/jungle_explorer)
 "ig" = (
 /turf/open/misc/dirt/station,
 /area/shuttle/jungle_explorer)
@@ -2322,7 +2332,7 @@ oD
 oD
 oD
 Ll
-AJ
+hT
 Ll
 oD
 oD

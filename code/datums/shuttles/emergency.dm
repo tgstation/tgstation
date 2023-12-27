@@ -38,7 +38,7 @@
 			var/path = pick_weight(events)
 			events -= path
 			mobile.event_list.Add(new path(mobile))
-	
+
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
 	name = "Backup Shuttle"
@@ -487,6 +487,14 @@
 	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = CARGO_CRATE_VALUE * 16
 	occupancy_limit = "xxx"
+
+/datum/map_template/shuttle/emergency/jungle_explorer
+	suffix = "jungleexplorer"
+	name = "JungleStation Explorative Shuttle"
+	description = "A shuttle used to explore the mysterious jungle planet. After it departs from Central Command, \
+	any remaining crew will be transported over to investigate"
+	credit_cost = CARGO_CRATE_VALUE * 75
+	occupancy_limit = "As many as we get"
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
