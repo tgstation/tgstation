@@ -1,4 +1,8 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"al" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/space)
 "as" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible,
 /obj/machinery/portable_atmospherics/canister/air,
@@ -17,6 +21,11 @@
 	pixel_y = 2
 	},
 /turf/open/floor/iron/dark,
+/area/space)
+"bx" = (
+/obj/structure/table/reinforced,
+/obj/item/surgery_tray/full,
+/turf/open/floor/iron/white,
 /area/space)
 "bS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
@@ -179,6 +188,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/space)
+"iW" = (
+/obj/structure/bed/medical,
+/turf/open/floor/iron/white,
+/area/space)
 "jM" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/parquet,
@@ -339,6 +352,19 @@
 	},
 /turf/open/floor/iron/dark,
 /area/space)
+"qV" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/medkit/regular{
+	pixel_y = 5
+	},
+/obj/item/storage/medkit/brute{
+	pixel_y = 12
+	},
+/obj/item/storage/medkit/fire{
+	pixel_y = 19
+	},
+/turf/open/floor/iron/white,
+/area/space)
 "rq" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/iron/white,
@@ -379,6 +405,10 @@
 	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
+/area/space)
+"uG" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/white,
 /area/space)
 "vE" = (
 /obj/structure/chair/comfy/shuttle{
@@ -492,11 +522,23 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"Bg" = (
+/obj/machinery/stasis{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/space)
 "Bh" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Access"
 	},
 /turf/open/floor/plating,
+/area/space)
+"Bi" = (
+/obj/structure/bed/medical{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
 /area/space)
 "BN" = (
 /obj/machinery/door/airlock/science/glass{
@@ -674,7 +716,10 @@
 /obj/machinery/door/airlock/medical/glass{
 	name = "Medbay"
 	},
-/turf/open/floor/iron/dark,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
 /area/space)
 "KP" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -709,7 +754,7 @@
 /obj/machinery/door/airlock/medical{
 	name = "Operating Room"
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron/white,
 /area/space)
 "MG" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
@@ -746,7 +791,11 @@
 /area/space)
 "OO" = (
 /obj/structure/table/optable,
-/turf/open/floor/iron/dark,
+/obj/item/tank/internals/anesthetic{
+	pixel_x = 3
+	},
+/obj/item/clothing/mask/breath/medical,
+/turf/open/floor/iron/white,
 /area/space)
 "Pi" = (
 /obj/structure/chair/wood{
@@ -863,6 +912,10 @@
 	},
 /turf/open/floor/holofloor,
 /area/space)
+"Ty" = (
+/obj/machinery/computer/operating,
+/turf/open/floor/iron/white,
+/area/space)
 "TG" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
@@ -952,6 +1005,10 @@
 	name = "medical supplies"
 	},
 /turf/open/floor/plating,
+/area/space)
+"XU" = (
+/obj/machinery/stasis,
+/turf/open/floor/iron/white,
 /area/space)
 "Ya" = (
 /obj/effect/turf_decal/plaque{
@@ -1500,8 +1557,8 @@ HY
 cp
 vL
 OO
-CR
-CR
+nZ
+bx
 bS
 vL
 Ed
@@ -1548,10 +1605,10 @@ CR
 CR
 EU
 vL
-CR
-CR
-CR
-CR
+Ty
+nZ
+nZ
+al
 vL
 Ed
 Ed
@@ -1646,10 +1703,10 @@ CR
 CR
 BY
 vL
-CR
-CR
-CR
-CR
+iW
+nZ
+nZ
+Bg
 vL
 Ed
 Ed
@@ -1695,10 +1752,10 @@ CR
 CR
 RH
 vL
-CR
-CR
-CR
-CR
+al
+nZ
+nZ
+al
 vL
 Ed
 Ed
@@ -1744,10 +1801,10 @@ CR
 CR
 Kx
 vL
-CR
-CR
-CR
-CR
+qV
+nZ
+nZ
+uG
 vL
 Ed
 Ed
@@ -1793,10 +1850,10 @@ CR
 CR
 CR
 vL
-CR
-CR
-CR
-CR
+al
+nZ
+nZ
+al
 vL
 Ed
 Ed
@@ -1842,10 +1899,10 @@ CR
 CR
 Uj
 vL
-CR
-CR
-CR
-CR
+Bi
+nZ
+nZ
+XU
 vL
 Ed
 Ed
