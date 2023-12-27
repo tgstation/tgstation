@@ -12,9 +12,45 @@
 "bS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
 /area/space)
+"cp" = (
+/obj/structure/table/reinforced,
+/obj/machinery/reagentgrinder{
+	pixel_x = -4;
+	pixel_y = 20
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"dC" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/window{
+	name = "Bar Counter Shutters";
+	id = "shut-bar"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/space)
 "eO" = (
 /obj/machinery/power/shuttle_engine/large,
 /turf/template_noop,
+/area/space)
+"fk" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/space)
+"fx" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/window{
+	name = "Kitchen Counter Shutters";
+	id = "shut-kit"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron/kitchen,
 /area/space)
 "fM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -27,19 +63,62 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"gn" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/window{
+	name = "Kitchen Counter Shutters";
+	id = "shut-kit"
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = 8;
+	req_access = list("kitchen");
+	name = "Service Shutters";
+	id = "shut-kit"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron/kitchen,
+/area/space)
 "gA" = (
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/holofloor,
+/area/space)
+"gP" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L11"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"hh" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/bedsheet{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/space)
+"ig" = (
+/turf/open/misc/dirt/station,
 /area/space)
 "ij" = (
 /turf/open/floor/plating,
+/area/space)
+"im" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/engine,
 /area/space)
 "it" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Command Cockpit"
 	},
 /turf/open/floor/iron/dark,
+/area/space)
+"jM" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/wood/parquet,
 /area/space)
 "kl" = (
 /obj/machinery/computer/crew,
@@ -53,6 +132,19 @@
 /obj/effect/turf_decal/tile/blue/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/space)
+"lU" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/turf/open/floor/plating,
+/area/space)
+"mV" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/space)
+"nZ" = (
+/turf/open/floor/iron/white,
+/area/space)
 "oA" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Ship Aux Storage"
@@ -62,17 +154,43 @@
 "oD" = (
 /turf/template_noop,
 /area/space)
+"oP" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L10"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L4"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
 "oQ" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/tile/dark_red/full,
 /turf/open/floor/iron/dark/smooth_large,
 /area/space)
+"pb" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/space)
 "pu" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/space)
-"pv" = (
-/obj/structure/cable,
+"py" = (
+/obj/machinery/door/airlock/hydroponics{
+	name = "Research Hydroponics"
+	},
+/turf/open/floor/iron/white,
+/area/space)
+"qh" = (
+/obj/structure/table/wood,
+/turf/open/floor/wood/parquet,
+/area/space)
+"qs" = (
+/obj/structure/mirror/directional/south,
 /turf/open/floor/plating,
 /area/space)
 "qC" = (
@@ -95,20 +213,16 @@
 /obj/machinery/power/shuttle_engine/huge,
 /turf/template_noop,
 /area/space)
-"rY" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/plating,
-/area/space)
 "si" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Exploration Ship Battery"
 	},
 /obj/structure/cable,
-/obj/structure/cable/layer3,
 /turf/open/floor/plating,
+/area/space)
+"tC" = (
+/obj/structure/chair/stool/bar/directional/south,
+/turf/open/floor/wood/parquet,
 /area/space)
 "vE" = (
 /obj/structure/chair/comfy/shuttle{
@@ -126,9 +240,32 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/space)
+"wT" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron/kitchen,
+/area/space)
+"wU" = (
+/obj/machinery/door/airlock/glass{
+	name = "Cabin 1"
+	},
+/turf/open/floor/plating,
+/area/space)
+"xR" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/dirt/station,
+/area/space)
 "xT" = (
 /obj/structure/lattice/catwalk,
 /turf/template_noop,
+/area/space)
+"ya" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L10"
+	},
+/turf/open/floor/iron/dark,
 /area/space)
 "yv" = (
 /obj/structure/closet/crate/engineering{
@@ -138,13 +275,42 @@
 /area/space)
 "yx" = (
 /obj/structure/cable,
-/obj/structure/cable/layer3,
-/turf/open/floor/plating,
+/turf/open/floor/engine,
 /area/space)
 "yG" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/plating,
+/area/space)
+"zi" = (
+/obj/structure/bed,
+/obj/item/bedsheet,
+/turf/open/floor/plating,
+/area/space)
+"zm" = (
+/obj/machinery/door/airlock/public{
+	name = "Main Hall"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"zE" = (
+/obj/machinery/door/airlock/glass{
+	name = "Cabin 3"
+	},
+/turf/open/floor/plating,
+/area/space)
+"zJ" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/dark,
+/area/space)
+"zW" = (
+/obj/machinery/door/airlock/public{
+	name = "Common Area"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
 /area/space)
 "Au" = (
 /obj/structure/lattice/catwalk,
@@ -153,12 +319,35 @@
 	},
 /turf/template_noop,
 /area/space)
+"Aw" = (
+/obj/machinery/oven/range,
+/turf/open/floor/iron/kitchen,
+/area/space)
 "AJ" = (
 /obj/machinery/door/airlock/external,
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 4
 	},
 /turf/open/floor/plating,
+/area/space)
+"Bh" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Access"
+	},
+/turf/open/floor/plating,
+/area/space)
+"BN" = (
+/obj/machinery/door/airlock/science/glass{
+	name = "Research Office"
+	},
+/turf/open/floor/iron/white,
+/area/space)
+"BY" = (
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/turf/open/floor/iron/dark,
 /area/space)
 "Ce" = (
 /obj/machinery/computer/communications,
@@ -168,16 +357,79 @@
 "Cy" = (
 /turf/open/floor/holofloor,
 /area/space)
+"CA" = (
+/obj/machinery/smartfridge/food,
+/turf/open/floor/iron/kitchen,
+/area/space)
 "CR" = (
 /turf/open/floor/iron/dark,
 /area/space)
+"CY" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L12"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"DY" = (
+/obj/machinery/door/airlock/glass{
+	name = "Kitchen"
+	},
+/turf/open/floor/iron/kitchen,
+/area/space)
 "Ed" = (
-/obj/structure/cable/layer3,
 /turf/open/floor/engine,
+/area/space)
+"Ei" = (
+/obj/effect/turf_decal/siding/white/corner,
+/turf/open/floor/holofloor,
 /area/space)
 "EI" = (
 /obj/machinery/atmospherics/components/tank/air,
 /turf/open/floor/plating,
+/area/space)
+"EU" = (
+/obj/structure/table/reinforced,
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_y = 10
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"EW" = (
+/obj/effect/spawner/random/engineering/atmospherics_portable,
+/turf/open/floor/plating,
+/area/space)
+"FV" = (
+/obj/machinery/door/airlock/glass{
+	name = "Cabin 2"
+	},
+/turf/open/floor/plating,
+/area/space)
+"GT" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/indigo,
+/turf/template_noop,
+/area/space)
+"Hh" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L14"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Hs" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/space)
+"HY" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
 /area/space)
 "Iw" = (
 /obj/machinery/computer/records/security{
@@ -191,13 +443,44 @@
 /obj/structure/marker_beacon/olive,
 /turf/template_noop,
 /area/space)
-"KN" = (
-/obj/structure/cable/layer3,
-/turf/open/floor/plating,
+"Jd" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/marker_beacon/purple,
+/obj/structure/marker_beacon/indigo,
+/turf/template_noop,
+/area/space)
+"Jo" = (
+/obj/machinery/door/airlock/glass{
+	name = "Bar"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
+/area/space)
+"Kx" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron/dark,
 /area/space)
 "KP" = (
 /obj/effect/mapping_helpers/broken_floor,
+/obj/structure/rack,
+/obj/item/wrench,
+/obj/item/stack/sheet/mineral/plasma/five,
 /turf/open/floor/engine,
+/area/space)
+"Lf" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/poddoor/shutters/window{
+	name = "Bar Counter Shutters";
+	id = "shut-bar"
+	},
+/obj/machinery/button/door/directional/east{
+	pixel_y = -8;
+	req_access = list("bar");
+	name = "Service Shutters";
+	id = "shut-bar"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/wood/parquet,
 /area/space)
 "Ll" = (
 /turf/closed/wall/mineral/titanium,
@@ -208,37 +491,50 @@
 /area/space)
 "MG" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
-/obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/space)
 "Nm" = (
-/obj/structure/cable/multilayer,
-/turf/open/floor/plating,
-/area/space)
-"Nu" = (
-/obj/machinery/power/smes{
-	name = "Ship Battery Cell"
-	},
 /obj/structure/cable,
+/obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/engine,
 /area/space)
-"Nv" = (
-/obj/machinery/power/terminal{
-	dir = 8
-	},
-/obj/structure/cable,
-/turf/open/floor/engine,
+"Ok" = (
+/turf/open/floor/wood/parquet,
 /area/space)
 "OF" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/space)
+"Pi" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/space)
 "PG" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Ship Storage"
 	},
 /turf/open/floor/plating,
+/area/space)
+"PT" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L2"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"PX" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/iron/kitchen,
+/area/space)
+"Qs" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/open/floor/plating,
+/area/space)
+"Ra" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/kitchen,
 /area/space)
 "Ro" = (
 /obj/structure/table/reinforced,
@@ -247,15 +543,64 @@
 	},
 /turf/open/floor/iron/dark,
 /area/space)
+"Rx" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L10"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L8"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
 "RD" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/purple,
 /turf/template_noop,
 /area/space)
+"RH" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/dark,
+/area/space)
 "RL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
+/area/space)
+"RR" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 10
+	},
+/turf/open/floor/holofloor,
+/area/space)
+"SH" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L8"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L6"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"ST" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/space)
+"Ta" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
+/turf/open/floor/holofloor,
 /area/space)
 "TG" = (
 /obj/machinery/door/airlock/external,
@@ -264,17 +609,92 @@
 	},
 /turf/open/floor/plating,
 /area/space)
+"Un" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L3"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"UM" = (
+/obj/machinery/door/airlock/glass{
+	name = "Crew Quarters"
+	},
+/turf/open/floor/plating,
+/area/space)
+"Vl" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L1"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Vp" = (
+/obj/machinery/door/airlock/science{
+	name = "Research Office"
+	},
+/turf/open/floor/plating,
+/area/space)
+"Vs" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L5"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L5"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"VD" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/wood/parquet,
+/area/space)
+"VH" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L5"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L9"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"WL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/turf/open/floor/plating,
+/area/space)
 "Xb" = (
 /obj/structure/closet/crate/medical{
 	name = "medical supplies"
 	},
 /turf/open/floor/plating,
 /area/space)
+"Ya" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L5"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L9"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L5"
+	},
+/obj/effect/turf_decal/plaque{
+	icon_state = "L7"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
 "Yx" = (
 /obj/structure/closet/crate/hydroponics{
 	name = "seeds crate"
 	},
 /turf/open/floor/plating,
+/area/space)
+"YQ" = (
+/obj/effect/turf_decal/plaque{
+	icon_state = "L13"
+	},
+/turf/open/floor/iron/dark,
+/area/space)
+"Zf" = (
+/turf/open/floor/iron/kitchen,
 /area/space)
 "Zh" = (
 /obj/machinery/door/airlock/atmos{
@@ -418,9 +838,9 @@ oD
 oD
 Ll
 Ll
-Nu
-vR
-KN
+im
+im
+Ed
 vL
 ij
 ij
@@ -467,9 +887,9 @@ oD
 oD
 Ll
 KP
-Nv
-rY
-KN
+vR
+vR
+Ed
 vL
 ij
 ij
@@ -515,9 +935,9 @@ oD
 oD
 oD
 Ll
-ij
-ij
-pv
+Ed
+yx
+yx
 yx
 vL
 ij
@@ -625,9 +1045,9 @@ Cy
 Cy
 Cy
 Cy
-Cy
-Cy
-Cy
+Bh
+ij
+ij
 bS
 Ll
 oD
@@ -674,10 +1094,10 @@ Cy
 Cy
 Cy
 Cy
-Cy
-Cy
-Cy
-Cy
+Bh
+ij
+ij
+ij
 Ll
 Ll
 oD
@@ -709,24 +1129,24 @@ Ll
 Cy
 Cy
 Cy
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
 ij
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
-Cy
 yG
 ij
 oD
@@ -757,25 +1177,25 @@ Ll
 bS
 Cy
 Cy
+vL
+bS
+jM
+Pi
+Pi
+Ok
+jM
+vL
+pb
+HY
+cp
+vL
 ij
 ij
 ij
+bS
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 oD
@@ -806,25 +1226,25 @@ Cy
 Cy
 Cy
 Cy
+vL
+jM
+Ok
+qh
+qh
+Ok
+tC
+dC
+CR
+CR
+EU
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 oD
@@ -855,25 +1275,25 @@ Cy
 Cy
 Cy
 Cy
+vL
+Ok
+Ok
+ST
+ST
+Ok
+tC
+dC
+CR
+CR
+zJ
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 Ll
 oD
@@ -899,30 +1319,30 @@ bS
 Cy
 Cy
 Cy
+vL
+vL
+vL
+vL
+DY
+vL
+Ok
+Ok
+Ok
+Ok
+Ok
+tC
+dC
+CR
+CR
+BY
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 eO
@@ -947,31 +1367,31 @@ Cy
 Cy
 Cy
 Cy
+vL
+bS
+Zf
+Zf
+Zf
+Zf
+fx
+VD
+Ok
+Pi
+Pi
+Ok
+tC
+dC
+CR
+CR
+RH
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 oD
@@ -982,45 +1402,45 @@ oD
 oD
 oD
 oD
-oD
+RD
 Mb
-oD
+RD
 oD
 oD
 oD
 Ll
 Cy
 Cy
-Cy
-Cy
-Cy
-Cy
-Cy
+Ei
+Hs
+Hs
+Hs
+Hs
+Zv
+wT
+Zf
+PX
+PX
+Zf
+fx
+VD
+Ok
+qh
+qh
+Ok
+tC
+Lf
+CR
+CR
+Kx
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 Ll
 oD
@@ -1039,37 +1459,37 @@ oD
 Ll
 bS
 Cy
-Cy
-Cy
+Ei
+Ta
+CR
+CR
+CR
+CR
+Zv
+Ra
+Zf
+PX
+PX
+Zf
+fx
+VD
+Ok
+ST
+ST
+Ok
+Ok
+vL
+CR
+CR
+CR
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 oD
 oD
@@ -1077,55 +1497,55 @@ oD
 "}
 (17,1,1) = {"
 oD
+GT
 oD
 oD
 oD
-oD
 Ll
 Ll
 Ll
 Ll
 Ll
 Cy
-Cy
-Cy
+Ei
+Ta
+CR
+CR
+Vl
+PT
+CR
+Zv
+Aw
+Zf
+Zf
+Zf
+Zf
+gn
+VD
+Ok
+Ok
+Ok
+Ok
+Ok
+Jo
+CR
+CR
+CR
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 oD
 oD
 oD
 "}
 (18,1,1) = {"
-RD
+GT
 Mb
 Mb
 Mb
@@ -1135,39 +1555,39 @@ kn
 kl
 vE
 Zv
-Cy
-Cy
+Hs
+Ta
+CR
+CR
+CR
+Un
+oP
+CR
+vL
+Zv
+CA
+Zv
+vL
+vL
+vL
+Zv
+Zv
+Zv
+vL
+zW
+zW
+vL
+Zv
+Zv
+Zv
+vL
 ij
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 Ll
 oD
@@ -1175,7 +1595,7 @@ oD
 "}
 (19,1,1) = {"
 oD
-oD
+GT
 oD
 oD
 Zv
@@ -1189,6 +1609,10 @@ CR
 CR
 CR
 CR
+Vs
+SH
+CR
+zm
 CR
 CR
 CR
@@ -1210,14 +1634,10 @@ CR
 CR
 CR
 CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
+vL
+ij
+ij
+ij
 Ll
 oD
 oD
@@ -1238,6 +1658,10 @@ CR
 CR
 CR
 CR
+Ya
+Rx
+CR
+zm
 CR
 CR
 CR
@@ -1259,21 +1683,17 @@ CR
 CR
 CR
 CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
+Bh
+ij
+ij
+ij
 Ll
 oD
 oD
 "}
 (21,1,1) = {"
 oD
-oD
+GT
 oD
 oD
 Zv
@@ -1287,6 +1707,10 @@ CR
 CR
 CR
 CR
+VH
+ya
+CR
+zm
 CR
 CR
 CR
@@ -1308,20 +1732,16 @@ CR
 CR
 CR
 CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
+vL
+ij
+ij
+ij
 Ll
 oD
 oD
 "}
 (22,1,1) = {"
-RD
+Jd
 Mb
 Mb
 Mb
@@ -1331,39 +1751,39 @@ Iw
 oQ
 vE
 Zv
-Cy
-Cy
+mV
+RR
+CR
+CR
+CR
+gP
+CY
+CR
+vL
+Zv
+Zv
+Zv
+vL
+py
+vL
+Zv
+Zv
+Zv
+Zv
+vL
+vL
 ij
 ij
+vL
+vL
+UM
+vL
+vL
+vL
+vL
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 Ll
 oD
@@ -1371,48 +1791,48 @@ oD
 "}
 (23,1,1) = {"
 oD
+GT
 oD
 oD
 oD
-oD
 Ll
 Ll
 Ll
 Ll
 Ll
 Cy
-Cy
-Cy
+fk
+RR
+CR
+CR
+YQ
+Hh
+CR
+Zv
+xR
+ig
+nZ
+nZ
+nZ
+Zv
+nZ
+nZ
+nZ
+nZ
+nZ
+vL
 ij
 ij
+Zv
 ij
 ij
+qs
+vL
+hh
+hh
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 oD
 oD
@@ -1431,37 +1851,37 @@ oD
 Ll
 bS
 Cy
-Cy
-Cy
+fk
+RR
+CR
+CR
+CR
+CR
+Zv
+xR
+ig
+nZ
+nZ
+nZ
+Zv
+nZ
+nZ
+nZ
+nZ
+nZ
+vL
+ij
+ij
+Zv
 ij
 ij
 ij
+wU
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 oD
 oD
@@ -1472,45 +1892,45 @@ oD
 oD
 oD
 oD
-oD
+RD
 Mb
-oD
+RD
 oD
 oD
 oD
 Ll
 Cy
 Cy
-Cy
-Cy
-Cy
-Cy
-Cy
+fk
+mV
+mV
+mV
+mV
+Zv
+xR
+ig
+nZ
+nZ
+nZ
+BN
+nZ
+nZ
+nZ
+nZ
+nZ
+vL
 ij
 ij
+Zv
 ij
 ij
+qs
+vL
+vL
+vL
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 Ll
 oD
@@ -1535,31 +1955,31 @@ Cy
 Cy
 Cy
 Cy
+vL
+bS
+ig
+nZ
+nZ
+nZ
+Zv
+nZ
+nZ
+nZ
+nZ
+nZ
+vL
+ij
+ij
+Zv
 ij
 ij
 ij
+vL
+hh
+hh
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 eO
@@ -1585,30 +2005,30 @@ bS
 Cy
 Cy
 Cy
+vL
+Zv
+Zv
+Zv
+py
+vL
+nZ
+nZ
+nZ
+nZ
+nZ
+Vp
+ij
+ij
+UM
 ij
 ij
 ij
+FV
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 oD
@@ -1639,25 +2059,25 @@ Cy
 Cy
 Cy
 Cy
+vL
+nZ
+nZ
+nZ
+nZ
+nZ
+vL
 ij
 ij
+vL
+ij
+qs
+vL
+vL
+vL
+vL
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 Ll
 Ll
 oD
@@ -1688,25 +2108,25 @@ Cy
 Cy
 Cy
 Cy
+vL
+nZ
+nZ
+nZ
+nZ
+nZ
+vL
+ij
+ij
+vL
+ij
+ij
+zE
 ij
 ij
 ij
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 oD
@@ -1737,25 +2157,25 @@ Ll
 bS
 Cy
 Cy
+vL
+bS
+nZ
+nZ
+nZ
+nZ
+vL
 ij
 ij
+vL
 ij
 ij
+vL
+zi
+zi
+bS
+vL
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
 yG
 ij
 oD
@@ -1787,24 +2207,24 @@ Ll
 Cy
 Cy
 Cy
+vL
+Zv
+Zv
+Zv
+Zv
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
+vL
 ij
 ij
 ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-ij
-Cy
-Cy
-Cy
 yG
 ij
 oD
@@ -1850,10 +2270,10 @@ Cy
 Cy
 Cy
 Cy
-Cy
-Cy
-Cy
-Cy
+Bh
+ij
+ij
+ij
 Ll
 Ll
 oD
@@ -1899,9 +2319,9 @@ Cy
 Cy
 Cy
 Cy
-Cy
-Cy
-Cy
+Bh
+ij
+ij
 bS
 Ll
 oD
@@ -1985,8 +2405,8 @@ oD
 oD
 oD
 Ll
+Qs
 yv
-ij
 ij
 ij
 vL
@@ -2034,14 +2454,14 @@ oD
 oD
 oD
 Ll
+lU
 Xb
 ij
 ij
-ij
 vL
-as
+EI
 RL
-ij
+EW
 Ll
 oD
 oD
@@ -2088,8 +2508,8 @@ ij
 ij
 ij
 vL
-ij
-pu
+as
+WL
 Ll
 Ll
 oD
