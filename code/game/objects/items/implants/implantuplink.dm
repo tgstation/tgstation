@@ -36,7 +36,7 @@
  */
 /obj/item/implant/uplink/proc/_component_removal(datum/source, datum/component/component)
 	SIGNAL_HANDLER
-	if(istype(component, /datum/component/uplink))
+	if(istype(component, /datum/component/uplink) && !QDELING(src))
 		qdel(src)
 
 /obj/item/implanter/uplink
