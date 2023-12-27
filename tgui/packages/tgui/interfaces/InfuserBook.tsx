@@ -73,12 +73,10 @@ export const InfuserBook = (props) => {
   const { data, act } = useBackend<DnaInfuserData>();
   const { entries } = data;
 
-  const [bookPosition, setBookPosition] = useState<BookPosition>(
-    {
-      chapter: 0,
-      pageInChapter: 0,
-    },
-  );
+  const [bookPosition, setBookPosition] = useState<BookPosition>({
+    chapter: 0,
+    pageInChapter: 0,
+  });
   const { chapter, pageInChapter } = bookPosition;
 
   const paginatedEntries = paginateEntries(entries);

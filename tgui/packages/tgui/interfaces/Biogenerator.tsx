@@ -60,7 +60,9 @@ export const Biogenerator = (props) => {
     efficiency,
     categories,
   } = data;
-  const [selectedCategory, setSelectedCategory] = useState(data.categories[0]?.name);
+  const [selectedCategory, setSelectedCategory] = useState(
+    data.categories[0]?.name,
+  );
   const items =
     categories.find((category) => category.name === selectedCategory)?.items ||
     [];

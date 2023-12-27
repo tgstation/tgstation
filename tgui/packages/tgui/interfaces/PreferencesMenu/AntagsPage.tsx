@@ -48,7 +48,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
   const className = 'PreferencesMenu__Antags__antagSelection';
 
   const [predictedState, setPredictedState] = useState(
-    new Set(data.selected_antags)
+    new Set(data.selected_antags),
   );
 
   const enableAntags = (antags: string[]) => {

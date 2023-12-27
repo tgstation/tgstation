@@ -461,9 +461,9 @@ export const getRandomization = (
 
 export const MainPage = (props: { openSpecies: () => void }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
-  const [currentClothingMenu, setCurrentClothingMenu] = useState<
-    string | null
-  >(null);
+  const [currentClothingMenu, setCurrentClothingMenu] = useState<string | null>(
+    null,
+  );
   const [multiNameInputOpen, setMultiNameInputOpen] = useState(false);
   const [randomToggleEnabled] = useRandomToggleState();
 

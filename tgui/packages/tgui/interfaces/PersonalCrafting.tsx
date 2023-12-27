@@ -177,16 +177,16 @@ export const PersonalCrafting = (props) => {
       ? 'Can Make'
       : mode === MODE.cooking
         ? DEFAULT_CAT_COOKING
-        : DEFAULT_CAT_CRAFTING
+        : DEFAULT_CAT_CRAFTING,
   );
   const [activeType, setFoodType] = useState(
-    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0]
+    Object.keys(craftability).length ? 'Can Make' : data.foodtypes[0],
   );
   const material_occurences = flow([
     sortBy<Material>((material) => -material.occurences),
   ])(data.material_occurences);
   const [activeMaterial, setMaterial] = useState(
-    material_occurences[0].atom_id
+    material_occurences[0].atom_id,
   );
   const [tabMode, setTabMode] = useState(0);
   const searchName = createSearch(searchText, (item: Recipe) => item.name);

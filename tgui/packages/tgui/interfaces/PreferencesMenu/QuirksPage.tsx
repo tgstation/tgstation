@@ -249,9 +249,7 @@ export const QuirksPage = (props) => {
     data.character_preferences.non_contextual.random_body !==
       RandomSetting.Disabled || randomToggleEnabled;
 
-  const [selectedQuirks, setSelectedQuirks] = useState(
-    data.selected_quirks
-  );
+  const [selectedQuirks, setSelectedQuirks] = useState(data.selected_quirks);
 
   return (
     <ServerPreferencesFetcher

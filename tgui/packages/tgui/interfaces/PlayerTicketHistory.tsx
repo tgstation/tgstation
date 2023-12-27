@@ -42,7 +42,7 @@ export const PlayerTicketHistory = (props: any) => {
   const { act, data } = useBackend<PthData>();
 
   const [page, setPage] = useState(
-    data.target_ckey ? Pages.TicketHistory : Pages.Cache
+    data.target_ckey ? Pages.TicketHistory : Pages.Cache,
   );
 
   const [cacheInput, setCacheInput] = useState('');
@@ -109,7 +109,7 @@ const TicketHistory = (props: any) => {
   }
 
   const [activeTicket, setActiveTicket] = useState<TicketData | undefined>(
-    undefined
+    undefined,
   );
 
   // sory by round then ticket number, descending

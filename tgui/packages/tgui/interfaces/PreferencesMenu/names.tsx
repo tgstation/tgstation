@@ -158,9 +158,9 @@ export const NameInput = (props: {
   name: string;
   openMultiNameInput: () => void;
 }) => {
-  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<
-    string | null
-  >(null);
+  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
+    null,
+  );
   const editing = lastNameBeforeEdit === props.name;
 
   const updateName = (e, value) => {

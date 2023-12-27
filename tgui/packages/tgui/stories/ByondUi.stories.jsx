@@ -15,7 +15,7 @@ export const meta = {
 
 const Story = (props) => {
   const [code, setCode] = useState(
-    `Byond.winset('${Byond.windowId}', {\n  'is-visible': true,\n})`
+    `Byond.winset('${Byond.windowId}', {\n  'is-visible': true,\n})`,
   );
   return (
     <>

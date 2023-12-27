@@ -14,7 +14,7 @@ export const AccessConfig = (props) => {
     denyDep,
   } = props;
   const [selectedAccessName, setSelectedAccessName] = useState(
-    accesses[0]?.name
+    accesses[0]?.name,
   );
   const selectedAccess = accesses.find(
     (access) => access.name === selectedAccessName,
