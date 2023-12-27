@@ -1,6 +1,6 @@
 {
 	"version": 1,
-	"map_name": "PeddleStation",
+	"map_name": "Peddle Station",
 	"map_path": "map_files/PeddleStation",
 	"map_file": "PeddleStation.dmm",
 	"shuttles": {
@@ -8,8 +8,5 @@
 		"ferry": "ferry_fancy",
 		"whiteship": "whiteship_meta",
 		"emergency": "emergency_meta"
-	},
-	"traits": [],
-	"job_changes": {}
 	}
 }
