@@ -345,17 +345,20 @@ SUBSYSTEM_DEF(garbage)
 		del(to_delete)
 		return
 
+	//nobody likes datum memory access so lets cache this
+	var/cached_type = to_delete.type
+
 	if(!isnull(to_delete.gc_destroyed))
 		if(to_delete.gc_destroyed == GC_CURRENTLY_BEING_QDELETED)
-			CRASH("[to_delete.type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
+			CRASH("[cached_type] destroy proc was called multiple times, likely due to a qdel loop in the Destroy logic")
 		return
 
 	if(SEND_SIGNAL(to_delete, COMSIG_PREQDELETED, force)) // Give the components a chance to prevent their parent from being deleted
 		return
 
-	var/datum/qdel_item/trash = SSgarbage.items[to_delete.type]
+	var/datum/qdel_item/trash = SSgarbage.items[cached_type]
 	if (isnull(trash))
-		trash = SSgarbage.items[to_delete.type] = new /datum/qdel_item(to_delete.type)
+		trash = SSgarbage.items[cached_type] = new /datum/qdel_item(cached_type)
 	trash.qdels++
 
 	to_delete.gc_destroyed = GC_CURRENTLY_BEING_QDELETED
@@ -383,7 +386,7 @@ SUBSYSTEM_DEF(garbage)
 			// indicates the objects Destroy() does not respect force
 			#ifdef TESTING
 			if(!trash.no_respect_force)
-				testing("WARNING: [to_delete.type] has been force deleted, but is \
+				testing("WARNING: [cached_type] has been force deleted, but is \
 					returning an immortal QDEL_HINT, indicating it does \
 					not respect the force flag for qdel(). It has been \
 					placed in the queue, further instances of this type \
@@ -407,7 +410,7 @@ SUBSYSTEM_DEF(garbage)
 		else
 			#ifdef TESTING
 			if(!trash.no_hint)
-				testing("WARNING: [to_delete.type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
+				testing("WARNING: [cached_type] is not returning a qdel hint. It is being placed in the queue. Further instances of this type will also be queued.")
 			#endif
 			trash.no_hint++
 			SSgarbage.Queue(to_delete)
