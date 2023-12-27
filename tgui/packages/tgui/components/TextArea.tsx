@@ -35,7 +35,7 @@ type Props = Partial<{
   /** Fires once the escape key is pressed */
   onEscape: (event: SyntheticEvent<HTMLTextAreaElement>) => void;
   /** Fires on each key press / value change. Used for searching */
-  onInput: (event: KeyboardEvent<HTMLTextAreaElement>, value: string) => void;
+  onInput: (event: SyntheticEvent<HTMLTextAreaElement>, value: string) => void;
   placeholder: string;
   scrollbar: boolean;
   selfClear: boolean;
@@ -55,6 +55,7 @@ export const TextArea = forwardRef(
       onChange,
       onEnter,
       onEscape,
+      onInput,
       placeholder,
       scrollbar,
       selfClear,
