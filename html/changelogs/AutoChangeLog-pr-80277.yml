@@ -1,0 +1,5 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - rscadd: "basic bots can now display their paths on huds"
+  - bugfix: "medbots can research healing again"

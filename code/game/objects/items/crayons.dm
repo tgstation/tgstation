@@ -762,6 +762,30 @@
 		/datum/component/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+	register_context()
+	register_item_context()
+
+/obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return .
+
+	if(has_cap)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle cap"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/toy/crayon/spraycan/add_item_context(datum/source, list/context, atom/target, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return .
+
+	context[SCREENTIP_CONTEXT_LMB] = "Paint"
+	context[SCREENTIP_CONTEXT_RMB] = "Copy color"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (isfloorturf(surface) || iswallturf(surface))

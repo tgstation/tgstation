@@ -1,8 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "debug chem heater now withdraws more than 100 units from its inserted beaker."
-  - bugfix: "chem heater has correct overlay when its panel is closed with a screwdriver while a beaker is inside."
-  - qol: "added more examines and tooltips for the chem heater."
-  - code_imp: "converted chem heater UI to typescript. removed unused procs, vars, ui tracking code. Added auto doc for everything."
-  - refactor: "removed chem heater tutorial help button & its related reward, chem heater code has been optimized as a whole."
