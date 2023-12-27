@@ -4,6 +4,14 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
+"am" = (
+/obj/machinery/iv_drip,
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "aq" = (
 /obj/structure/chair/sofa/bench/left{
 	dir = 4
@@ -24,6 +32,17 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
+"aG" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"aO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
 "aW" = (
 /obj/structure/table,
 /obj/structure/microscope,
@@ -33,14 +52,45 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"bu" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Medbay"
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "bx" = (
 /obj/structure/table/reinforced,
 /obj/item/surgery_tray/full,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
+"bF" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
 "bS" = (
 /turf/closed/wall/mineral/titanium/nodiagonal,
+/area/shuttle/jungle_explorer)
+"bX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/shuttle/jungle_explorer)
+"cd" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "cp" = (
 /obj/structure/table/reinforced,
@@ -72,6 +122,9 @@
 /area/shuttle/jungle_explorer)
 "dh" = (
 /obj/structure/sign/departments/science/alt/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "dC" = (
@@ -88,6 +141,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "dF" = (
@@ -101,6 +156,13 @@
 /obj/effect/spawner/random/engineering/tool,
 /obj/effect/spawner/random/engineering/tool,
 /turf/open/floor/plating,
+/area/shuttle/jungle_explorer)
+"ey" = (
+/obj/structure/chair/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/parquet,
 /area/shuttle/jungle_explorer)
 "eO" = (
 /obj/machinery/power/shuttle_engine/large,
@@ -190,15 +252,19 @@
 /obj/item/reagent_containers/cup/watering_can,
 /turf/open/misc/dirt/station,
 /area/shuttle/jungle_explorer)
-"gA" = (
-/obj/structure/cable,
-/turf/open/floor/holofloor,
-/area/shuttle/jungle_explorer)
 "gP" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L11"
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"gQ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"gS" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "hd" = (
 /obj/structure/table,
@@ -236,7 +302,18 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
 /turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"hE" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "ig" = (
 /turf/open/misc/dirt/station,
@@ -251,10 +328,19 @@
 /obj/structure/cable,
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
+"ip" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "it" = (
 /obj/machinery/door/airlock/command/glass{
 	name = "Command Cockpit"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "iE" = (
@@ -263,14 +349,36 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"iI" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
 "iW" = (
 /obj/structure/bed/medical,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
+"jf" = (
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"jj" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
 "jM" = (
 /obj/item/kirbyplants/random,
 /turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"kc" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "kl" = (
 /obj/machinery/computer/crew,
@@ -306,6 +414,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"ll" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "ls" = (
 /obj/effect/turf_decal/tile/purple,
 /obj/effect/turf_decal/tile/green{
@@ -314,11 +427,44 @@
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "lO" = (
+/obj/machinery/light/small/dim/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/carpet,
+/area/shuttle/jungle_explorer)
+"lP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "lU" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"lX" = (
+/obj/effect/spawner/structure/window/reinforced/shuttle,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/plating,
+/area/shuttle/jungle_explorer)
+"mt" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"mO" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"mU" = (
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/plating,
 /area/shuttle/jungle_explorer)
 "mV" = (
 /obj/effect/turf_decal/siding/white{
@@ -329,6 +475,25 @@
 "nd" = (
 /obj/effect/spawner/random/engineering/tank,
 /turf/open/floor/plating,
+/area/shuttle/jungle_explorer)
+"nm" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"nO" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"nV" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/wood,
 /area/shuttle/jungle_explorer)
 "nZ" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -360,6 +525,14 @@
 "oA" = (
 /obj/machinery/door/airlock/grunge{
 	name = "Ship Aux Storage"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"oC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
 	},
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
@@ -394,6 +567,10 @@
 	dir = 4
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"oZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "pb" = (
 /obj/structure/table/reinforced,
@@ -440,6 +617,7 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "pJ" = (
@@ -452,7 +630,12 @@
 /area/shuttle/jungle_explorer)
 "qs" = (
 /obj/structure/mirror/directional/south,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/wood,
+/area/shuttle/jungle_explorer)
+"qx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "qC" = (
 /obj/structure/table/reinforced,
@@ -465,6 +648,11 @@
 	pixel_x = -6
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"qI" = (
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "qV" = (
 /obj/structure/table/reinforced,
@@ -480,25 +668,59 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
+"rh" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
 "rq" = (
 /obj/item/kirbyplants/random,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "rH" = (
 /obj/structure/chair/comfy/shuttle,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "rJ" = (
 /obj/machinery/power/shuttle_engine/huge,
 /turf/template_noop,
 /area/shuttle/jungle_explorer)
+"rW" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "si" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Exploration Ship Battery"
 	},
-/obj/structure/cable,
-/turf/open/floor/plating,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"sy" = (
+/obj/machinery/light/warm/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen,
+/area/shuttle/jungle_explorer)
+"sP" = (
+/obj/structure/bed,
+/obj/item/bedsheet,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/carpet,
 /area/shuttle/jungle_explorer)
 "tp" = (
 /obj/structure/chair/office/light{
@@ -520,6 +742,15 @@
 /obj/structure/chair/stool/bar/directional/south,
 /turf/open/floor/wood/parquet,
 /area/shuttle/jungle_explorer)
+"tV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/shuttle/jungle_explorer)
+"up" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
 "uu" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder{
@@ -532,16 +763,65 @@
 	},
 /turf/open/floor/iron/kitchen,
 /area/shuttle/jungle_explorer)
+"uv" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "uA" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Access"
 	},
 /obj/structure/sign/departments/engineering/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/plating,
 /area/shuttle/jungle_explorer)
 "uG" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/cold/directional/south,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"uK" = (
+/obj/machinery/door/airlock/public{
+	name = "Common Area"
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"uZ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/shuttle/jungle_explorer)
+"vb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen,
+/area/shuttle/jungle_explorer)
+"vd" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "vE" = (
@@ -559,6 +839,11 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"vY" = (
+/obj/structure/chair/stool/bar/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/wood/parquet,
 /area/shuttle/jungle_explorer)
 "wH" = (
 /obj/effect/turf_decal/siding/white{
@@ -578,10 +863,19 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/shuttle/jungle_explorer)
 "xk" = (
 /obj/structure/chair/sofa/bench,
+/turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"xC" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "xR" = (
@@ -601,6 +895,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"yp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
 "yr" = (
 /obj/structure/chair/sofa/bench/left,
 /turf/open/floor/holofloor,
@@ -613,12 +912,20 @@
 /area/shuttle/jungle_explorer)
 "yx" = (
 /obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "yG" = (
 /obj/machinery/power/shuttle_engine/heater,
 /obj/structure/window/reinforced/plasma/spawner/directional/south,
 /turf/open/floor/plating,
+/area/shuttle/jungle_explorer)
+"yH" = (
+/obj/structure/mirror/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
 /area/shuttle/jungle_explorer)
 "zi" = (
 /obj/structure/bed,
@@ -631,6 +938,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"zC" = (
+/obj/machinery/door/airlock/engineering{
+	name = "Engine Access"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
 "zE" = (
 /obj/machinery/door/airlock/glass{
 	name = "Cabin 3"
@@ -638,11 +952,18 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/shuttle/jungle_explorer)
 "zJ" = (
 /obj/structure/table/reinforced,
 /turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"zQ" = (
+/obj/machinery/light/small/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "zW" = (
 /obj/machinery/door/airlock/public{
@@ -673,6 +994,10 @@
 /area/shuttle/jungle_explorer)
 "Be" = (
 /obj/structure/sign/departments/med/directional/west,
+/obj/machinery/light/directional/west,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "Bg" = (
@@ -695,11 +1020,27 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
+"BD" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"BF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen,
+/area/shuttle/jungle_explorer)
 "BN" = (
 /obj/machinery/door/airlock/science/glass{
 	name = "Research Office"
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "BY" = (
@@ -721,8 +1062,24 @@
 /obj/machinery/smartfridge/food,
 /turf/open/floor/iron/kitchen,
 /area/shuttle/jungle_explorer)
+"CC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
 "CR" = (
 /turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"CV" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet,
+/area/shuttle/jungle_explorer)
+"CX" = (
+/obj/effect/turf_decal/siding/white,
+/obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "CY" = (
 /obj/effect/turf_decal/plaque{
@@ -748,6 +1105,12 @@
 /obj/effect/turf_decal/tile/purple/opposingcorners,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
+"Dm" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
 "Dp" = (
 /obj/item/clothing/gloves/botanic_leather,
 /turf/open/misc/dirt/station,
@@ -758,10 +1121,17 @@
 	},
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
+"DR" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "DY" = (
 /obj/machinery/door/airlock/glass{
 	name = "Kitchen"
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/kitchen,
 /area/shuttle/jungle_explorer)
 "Ed" = (
@@ -789,6 +1159,10 @@
 /obj/effect/spawner/random/engineering/atmospherics_portable,
 /turf/open/floor/plating,
 /area/shuttle/jungle_explorer)
+"Ff" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
 "Fj" = (
 /obj/structure/chair/sofa/bench/corner{
 	dir = 8
@@ -815,6 +1189,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/carpet,
 /area/shuttle/jungle_explorer)
 "FZ" = (
@@ -835,6 +1211,14 @@
 /obj/item/food/grown/cucumber,
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
+"GF" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
 "GT" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/indigo,
@@ -850,6 +1234,19 @@
 /obj/effect/turf_decal/siding/white{
 	dir = 4
 	},
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
+"HJ" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
+"HT" = (
+/obj/effect/turf_decal/siding/white/corner,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "HY" = (
@@ -892,6 +1289,8 @@
 	name = "Bar"
 	},
 /obj/effect/turf_decal/siding/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood/parquet,
 /area/shuttle/jungle_explorer)
 "Jq" = (
@@ -902,6 +1301,40 @@
 	dir = 1
 	},
 /turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"Jr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"Jy" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"JU" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"JY" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
+"Kn" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
+"Kr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen,
 /area/shuttle/jungle_explorer)
 "Kx" = (
 /obj/structure/closet/crate/bin,
@@ -942,6 +1375,13 @@
 "Ll" = (
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/jungle_explorer)
+"LM" = (
+/obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
 "Mb" = (
 /obj/structure/lattice,
 /turf/template_noop,
@@ -951,21 +1391,40 @@
 	name = "Operating Room"
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "MG" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
 /turf/open/floor/plating,
 /area/shuttle/jungle_explorer)
+"ML" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
 "MR" = (
 /obj/effect/turf_decal/siding/white,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"Nb" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "Nm" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
 /turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"Nx" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/parquet,
 /area/shuttle/jungle_explorer)
 "NN" = (
 /obj/machinery/door/airlock/external,
@@ -977,6 +1436,14 @@
 /area/shuttle/jungle_explorer)
 "Ok" = (
 /turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"Om" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "On" = (
 /obj/structure/frame/machine{
@@ -1004,6 +1471,19 @@
 /obj/item/clothing/mask/breath/medical,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"OX" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"Ph" = (
+/obj/structure/mirror/directional/south,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/wood,
 /area/shuttle/jungle_explorer)
 "Pi" = (
 /obj/structure/chair/wood{
@@ -1033,8 +1513,29 @@
 /obj/item/kitchen/spoon/soup_ladle,
 /turf/open/floor/iron/kitchen,
 /area/shuttle/jungle_explorer)
+"Qa" = (
+/obj/effect/turf_decal/tile/purple,
+/obj/effect/turf_decal/tile/green{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/jungle_explorer)
+"Qi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/jungle_explorer)
 "Qs" = (
 /obj/structure/closet/secure_closet/freezer/meat,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"QP" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "QV" = (
@@ -1043,6 +1544,14 @@
 "Ra" = (
 /obj/machinery/griddle,
 /turf/open/floor/iron/kitchen,
+/area/shuttle/jungle_explorer)
+"Rm" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 10
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "Ro" = (
 /obj/structure/table/reinforced,
@@ -1066,6 +1575,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"RC" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/kitchen,
+/area/shuttle/jungle_explorer)
 "RD" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/marker_beacon/purple,
@@ -1073,6 +1586,7 @@
 /area/shuttle/jungle_explorer)
 "RH" = (
 /obj/machinery/vending/boozeomat,
+/obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "RJ" = (
@@ -1086,6 +1600,8 @@
 /obj/effect/turf_decal/tile/green{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "RL" = (
@@ -1101,6 +1617,7 @@
 /area/shuttle/jungle_explorer)
 "Sg" = (
 /obj/structure/reagent_dispensers/watertank/high,
+/obj/machinery/light/directional/north,
 /turf/open/misc/dirt/station,
 /area/shuttle/jungle_explorer)
 "SH" = (
@@ -1133,9 +1650,16 @@
 	},
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
+"Tx" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
 "Ty" = (
 /obj/machinery/computer/operating,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
+/obj/machinery/light/cold/directional/north,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "TB" = (
@@ -1154,6 +1678,8 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "TX" = (
@@ -1161,6 +1687,22 @@
 	dir = 4
 	},
 /turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
+"TY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"Ub" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"Ug" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "Uj" = (
 /obj/item/kirbyplants/random,
@@ -1172,6 +1714,25 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"Ur" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
+"UH" = (
+/obj/structure/bed{
+	dir = 1
+	},
+/obj/item/bedsheet{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet,
+/area/shuttle/jungle_explorer)
 "UM" = (
 /obj/machinery/door/airlock/glass{
 	name = "Crew Quarters"
@@ -1179,7 +1740,22 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
+/area/shuttle/jungle_explorer)
+"UN" = (
+/obj/structure/table/wood,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"UP" = (
+/obj/structure/chair/wood{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood/parquet,
 /area/shuttle/jungle_explorer)
 "Vl" = (
 /obj/effect/turf_decal/plaque{
@@ -1189,6 +1765,8 @@
 /area/shuttle/jungle_explorer)
 "Vn" = (
 /obj/structure/sign/departments/botany/alt2/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
 "Vp" = (
@@ -1197,6 +1775,8 @@
 	},
 /obj/structure/sign/departments/science/alt/directional/east,
 /obj/effect/turf_decal/tile/purple/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
 /area/shuttle/jungle_explorer)
 "Vs" = (
@@ -1208,11 +1788,19 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"Vu" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
 "Vw" = (
 /obj/machinery/door/airlock/engineering{
 	name = "Engine Access"
 	},
 /obj/structure/sign/departments/engineering/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/engine,
 /area/shuttle/jungle_explorer)
 "VD" = (
@@ -1243,9 +1831,23 @@
 	},
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
+"Wc" = (
+/obj/machinery/light/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
+"We" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/holofloor,
+/area/shuttle/jungle_explorer)
 "WL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
+/obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/jungle_explorer)
 "Xb" = (
@@ -1274,6 +1876,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"Yo" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron/kitchen,
+/area/shuttle/jungle_explorer)
 "Yx" = (
 /obj/structure/closet/crate/hydroponics{
 	name = "seeds crate"
@@ -1286,6 +1892,14 @@
 /obj/effect/spawner/random/food_or_drink/seed,
 /obj/effect/spawner/random/food_or_drink/seed,
 /turf/open/floor/engine,
+/area/shuttle/jungle_explorer)
+"Yy" = (
+/obj/machinery/light/small/dim/directional/south,
+/turf/open/floor/carpet,
+/area/shuttle/jungle_explorer)
+"YL" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
 "YQ" = (
 /obj/effect/turf_decal/plaque{
@@ -1313,6 +1927,8 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
 /area/shuttle/jungle_explorer)
 "Zv" = (
@@ -1454,12 +2070,12 @@ oD
 oD
 Ll
 Ll
+nm
 im
-im
-Ed
+OX
 vL
 tq
-tq
+mU
 Ll
 Ll
 oD
@@ -1505,7 +2121,7 @@ Ll
 KP
 vR
 vR
-Ed
+nO
 vL
 tq
 tq
@@ -1551,9 +2167,9 @@ oD
 oD
 oD
 Ll
-Ed
-yx
-yx
+gQ
+Ug
+Ug
 yx
 vL
 el
@@ -1648,16 +2264,16 @@ bS
 VO
 gs
 SL
+We
 Cy
 Cy
 Cy
-Cy
-gA
-Cy
+fM
 Cy
 Cy
+rh
 Cy
-Cy
+gS
 Cy
 Cy
 Cy
@@ -1693,27 +2309,27 @@ Ll
 oD
 oD
 Ll
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
+HJ
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
 uA
-Ed
-Ed
-Ed
+aO
+aO
+QP
 Ll
 Ll
 oD
@@ -1742,8 +2358,8 @@ Ll
 oD
 oD
 Ll
-Cy
-Cy
+oZ
+fM
 Cy
 vL
 vL
@@ -1761,7 +2377,7 @@ vL
 vL
 vL
 Fy
-Ed
+aO
 Ed
 yG
 tq
@@ -1792,7 +2408,7 @@ Zv
 Zv
 bS
 Cy
-Cy
+fM
 vL
 bS
 jM
@@ -1806,11 +2422,11 @@ HY
 cp
 vL
 OO
-nZ
+LM
 bx
 bS
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -1839,15 +2455,15 @@ Cy
 Cy
 Cy
 Cy
+We
 Cy
-Cy
-Cy
+fM
 vL
 jM
 Ok
 qh
 qh
-Ok
+Tx
 tC
 dC
 CR
@@ -1855,11 +2471,11 @@ CR
 EU
 vL
 Ty
-nZ
-nZ
-al
+mO
+DR
+am
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -1883,23 +2499,23 @@ oD
 oD
 oD
 Ll
+Wc
 Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
+fM
+fM
+fM
+fM
+fM
+fM
 vL
-Ok
-Ok
+Ff
+ML
 ST
 ST
-Ok
+Jr
 tC
 dC
-CR
+aG
 CR
 zJ
 vL
@@ -1908,8 +2524,8 @@ Mf
 vL
 vL
 vL
-Ed
-Ed
+aO
+oC
 Ll
 Ll
 oD
@@ -1932,32 +2548,32 @@ Zv
 Zv
 Zv
 bS
-Cy
-Cy
-Cy
+fM
+fM
+fM
 vL
 vL
 vL
 vL
 DY
 vL
+jf
+ML
 Ok
 Ok
-Ok
-Ok
-Ok
+Jr
 tC
 dC
-CR
+qx
 CR
 BY
 vL
 iW
-nZ
+mO
 nZ
 Bg
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -1977,36 +2593,36 @@ oD
 oD
 Ll
 bS
+rh
 Cy
 Cy
 Cy
-Cy
-Cy
+fM
 Cy
 vL
 bS
-Zf
-Zf
-Zf
-Zf
+RC
+sy
+Kr
+vb
 fx
 VD
-Ok
+ML
+ey
 Pi
-Pi
-Ok
+Jr
 tC
 dC
-CR
+qx
 CR
 RH
 vL
 al
-nZ
-nZ
+mO
+ip
 al
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -2025,37 +2641,37 @@ oD
 oD
 oD
 Ll
-Cy
-Cy
-Ei
-Hs
-Hs
-Hs
+Vu
+fM
+HT
+hE
+hE
+hE
 Hs
 Zv
 wT
 Zf
 pg
 PX
-Zf
+BF
 fx
 VD
 Ok
-qh
-qh
-Ok
+up
+UN
+Jr
 tC
 Lf
-CR
+qx
 CR
 Kx
 vL
 qV
-nZ
+mO
 nZ
 uG
 vL
-Ed
+aO
 Ed
 Ll
 Ll
@@ -2074,7 +2690,7 @@ oD
 oD
 Ll
 bS
-Cy
+fM
 Ei
 Ta
 CR
@@ -2086,25 +2702,25 @@ Ra
 Zf
 uu
 IK
-Zf
+BF
 fx
-VD
-Ok
-ST
-ST
-Ok
-jM
+vY
+Jr
+UP
+Ub
+Dm
+JU
 vL
-CR
-CR
+qx
+Qi
 CR
 vL
 al
-nZ
-nZ
+mO
+Jy
 al
 vL
-Ed
+aO
 Ed
 Ll
 oD
@@ -2123,7 +2739,7 @@ Ll
 Ll
 Ll
 kG
-Ei
+HT
 Ta
 CR
 CR
@@ -2132,28 +2748,28 @@ PT
 dd
 Zv
 Aw
-Zf
-Zf
-Zf
-Zf
+Yo
+BF
+BF
+BF
 gn
 VD
 Ok
-Ok
-Ok
-Ok
-Ok
+ML
+Nx
+Nx
+Nx
 Jo
-CR
-CR
+yp
+CC
 Uj
 vL
 Bi
-nZ
+mO
 nZ
 XU
 vL
-Ed
+aO
 Ed
 Ll
 oD
@@ -2172,7 +2788,7 @@ kl
 vE
 Zv
 wH
-Ta
+GF
 CR
 CR
 CR
@@ -2190,19 +2806,19 @@ Zv
 Zv
 Zv
 vL
+uK
 zW
-zW
 vL
 Zv
 Zv
 Zv
 vL
 Zv
+bu
 KC
-KC
 Zv
 vL
-Ed
+aO
 Ed
 Ll
 Ll
@@ -2217,11 +2833,11 @@ oD
 Zv
 ax
 vE
-CR
+Qi
 CR
 Zv
 TB
-CR
+yp
 CR
 CR
 CR
@@ -2234,12 +2850,12 @@ CR
 CR
 CR
 CR
+YL
 CR
 CR
 CR
-CR
-CR
-CR
+aG
+yp
 CR
 CR
 CR
@@ -2247,11 +2863,11 @@ CR
 CR
 Be
 CR
-CR
+yp
 CR
 CR
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -2267,10 +2883,10 @@ Zv
 Ro
 qC
 rH
-CR
+yp
 it
-CR
-CR
+yp
+yp
 CR
 CR
 CR
@@ -2282,26 +2898,26 @@ CR
 CR
 CR
 CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-CR
-kU
-Ed
-Ed
+CC
+CC
+CC
+CC
+CC
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+yp
+qx
+qx
+zC
+aO
+QP
 yG
 tq
 QV
@@ -2315,11 +2931,11 @@ oD
 Zv
 Ce
 vE
-CR
+JY
 CR
 Zv
 FZ
-CR
+yp
 CR
 CR
 CR
@@ -2331,7 +2947,7 @@ CR
 CR
 CR
 CR
-CR
+CC
 dh
 CR
 CR
@@ -2341,15 +2957,15 @@ CR
 CR
 CR
 CR
+JY
 CR
-CR
-CR
+yp
 CR
 CR
 CR
 CR
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -2368,7 +2984,7 @@ oQ
 vE
 Zv
 db
-RR
+Rm
 CR
 CR
 CR
@@ -2398,7 +3014,7 @@ vL
 vL
 vL
 vL
-Ed
+aO
 Ed
 Ll
 Ll
@@ -2417,7 +3033,7 @@ Ll
 Ll
 Ll
 yr
-fk
+Kn
 RR
 CR
 CR
@@ -2429,25 +3045,25 @@ gz
 ig
 hC
 ls
-ls
+kc
 Zv
 rq
 MR
 CR
 CR
-CR
+Qi
 Zv
 FZ
 CR
 Zv
 oi
-cA
+bX
 qs
 vL
-hh
+UH
 hh
 vL
-Ed
+aO
 Ed
 Ll
 oD
@@ -2466,7 +3082,7 @@ oD
 oD
 Ll
 bS
-Cy
+fM
 fk
 RR
 CR
@@ -2476,27 +3092,27 @@ Fj
 Zv
 xR
 Dp
-hC
-ls
-ls
+vd
+Om
+Qa
 Zv
 az
 MR
 aW
 tp
-CR
+CC
 Zv
 xk
 CR
 Zv
 cA
-cA
-cA
+bX
+bX
 wU
-lO
+CV
 lO
 vL
-Ed
+aO
 Ed
 Ll
 oD
@@ -2515,37 +3131,37 @@ oD
 oD
 oD
 Ll
-Cy
-Cy
-fk
-mV
-mV
-mV
+Vu
+fM
+Kn
+bF
+bF
+bF
 mV
 Zv
 xR
 pJ
-hC
-ls
-ls
+rW
+kc
+Qa
 BN
-az
-MR
+mt
+CX
 or
 hd
-CR
+CC
 Zv
 xk
 CR
 Zv
 cA
-cA
-qs
+bX
+Ph
 vL
 vL
 vL
 vL
-Ed
+aO
 Ed
 Ll
 Ll
@@ -2565,18 +3181,18 @@ oD
 oD
 Ll
 bS
+jj
 Cy
 Cy
 Cy
-Cy
-Cy
+fM
 Cy
 vL
 bS
 Sg
-hC
+uv
 ls
-ls
+Qa
 Zv
 az
 dD
@@ -2588,13 +3204,13 @@ TB
 CR
 Zv
 cA
-cA
+bX
 cA
 vL
-hh
+UH
 hh
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -2618,32 +3234,32 @@ Zv
 Zv
 Zv
 bS
-Cy
-Cy
-Cy
+fM
+fM
+fM
 vL
 Zv
 Zv
 Zv
 RJ
 vL
+ll
+qI
 az
 az
-az
-az
-az
+mt
 Vp
-CR
-CR
+yp
+yp
 Zt
-cA
-cA
-cA
+bX
+bX
+bX
 FV
-lO
+CV
 lO
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -2667,33 +3283,33 @@ oD
 oD
 oD
 Ll
+Nb
 Cy
-Cy
-Cy
+fM
 Vn
-Cy
-Cy
-Cy
-Cy
+fM
+fM
+fM
+fM
 vL
 Dl
 OH
 OH
 OH
-OH
+BD
 vL
 CR
 CR
 vL
 cA
-qs
+yH
 vL
 vL
 vL
 vL
 vL
-Ed
-Ed
+aO
+oC
 Ll
 Ll
 oD
@@ -2723,25 +3339,25 @@ Cy
 Cy
 Cy
 Cy
-Cy
+fM
 vL
 Uj
 tp
 CR
 CR
-tp
+xC
 vL
 CR
 CR
 vL
-cA
-cA
+tV
+bX
 zE
-lO
-lO
-lO
+CV
+uZ
+Yy
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -2769,10 +3385,10 @@ Ll
 FA
 Ll
 Zv
-Zv
+lX
 bS
 Cy
-Cy
+fM
 vL
 bS
 ZN
@@ -2783,14 +3399,14 @@ vL
 CR
 CR
 vL
-cA
+nV
 cA
 vL
-zi
+sP
 zi
 bS
 vL
-Ed
+aO
 Ed
 yG
 tq
@@ -2820,8 +3436,8 @@ Ll
 oD
 oD
 Ll
-Cy
-Cy
+oZ
+fM
 Cy
 vL
 Zv
@@ -2839,7 +3455,7 @@ vL
 vL
 vL
 Fy
-Ed
+aO
 Ed
 yG
 tq
@@ -2869,27 +3485,27 @@ Ll
 oD
 oD
 Ll
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
-Cy
+Ur
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
+fM
 Vw
-Ed
-Ed
-Ed
+aO
+aO
+QP
 Ll
 Ll
 oD
@@ -2922,16 +3538,16 @@ bS
 Dv
 dF
 TX
-Cy
-Cy
-Cy
-Cy
-Cy
+cd
 Cy
 Cy
 Cy
 fM
 Cy
+Cy
+jj
+fM
+iI
 Cy
 Cy
 Cy
@@ -3024,7 +3640,7 @@ Ll
 Qs
 yv
 fW
-Ed
+aO
 vL
 EI
 RL
@@ -3072,8 +3688,8 @@ oD
 Ll
 lU
 Xb
-Ed
-Ed
+TY
+aO
 vL
 EI
 RL
@@ -3120,9 +3736,9 @@ oD
 oD
 Ll
 Ll
-Ed
-Ed
-Ed
+zQ
+TY
+lP
 vL
 as
 WL
