@@ -42,6 +42,12 @@ map northstar
 	votable
 endmap
 
+map peddlestation
+	maxplayers 10
+	votable
+	default
+endmap
+
 map tramstation
 	minplayers 35
 	votable
