@@ -69,6 +69,14 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/obj/item/card/id/access_card
 	///The trim type that will grant additional acces
 	var/datum/id_trim/additional_access
+	///file the path icon is stored in
+	var/path_image_icon = 'icons/mob/silicon/aibots.dmi'
+	///state of the path icon
+	var/path_image_icon_state = "path_indicator"
+	///what color this path icon will use
+	var/path_image_color = "#FFFFFF"
+	///list of all layed path icons
+	var/list/current_pathed_turfs = list()
 
 	///The type of data HUD the bot uses. Diagnostic by default.
 	var/data_hud_type = DATA_HUD_DIAGNOSTIC_BASIC
@@ -91,8 +99,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/relay_attackers)
 
+	AddElement(/datum/element/relay_attackers)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(handle_loop_movement))
 	RegisterSignal(src, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(after_attacked))
 	RegisterSignal(src, COMSIG_MOB_TRIED_ACCESS, PROC_REF(attempt_access))
 	ADD_TRAIT(src, TRAIT_NO_GLIDE, INNATE_TRAIT)
@@ -185,6 +194,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 /mob/living/basic/bot/Destroy()
 	GLOB.bots_list -= src
 	calling_ai_ref = null
+	clear_path_hud()
 	QDEL_NULL(paicard)
 	QDEL_NULL(pa_system)
 	QDEL_NULL(internal_radio)
@@ -261,10 +271,10 @@ GLOBAL_LIST_INIT(command_strings, list(
 	fully_replace_character_name(real_name, new_name)
 
 /mob/living/basic/bot/proc/check_access(mob/living/user, obj/item/card/id)
-	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
-		return FALSE
 	if(user.has_unlimited_silicon_privilege || isAdminGhostAI(user)) // Silicon and Admins always have access.
 		return TRUE
+	if(!istype(user)) // Non-living mobs shouldn't be manipulating bots (like observes using the botkeeper UI).
+		return FALSE
 	if(!length(maints_access_required)) // No requirements to access it.
 		return TRUE
 	if(bot_access_flags & BOT_CONTROL_PANEL_OPEN) // Unlocked.
@@ -540,6 +550,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 		access_card.set_access(initial_access)
 	diag_hud_set_botstat()
 	diag_hud_set_botmode()
+	clear_path_hud()
 	if(bypass_ai_reset || isnull(calling_ai_ref))
 		return
 	var/mob/living/ai_caller = calling_ai_ref.resolve()
@@ -593,9 +604,9 @@ GLOBAL_LIST_INIT(command_strings, list(
 // Actions received from TGUI
 /mob/living/basic/bot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(. || !isliving(ui.user))
+	if(.)
 		return
-	var/mob/living/the_user = ui.user
+	var/mob/the_user = ui.user
 	if(!check_access(the_user))
 		balloon_alert(the_user, "access denied!")
 		return
@@ -747,6 +758,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	speed = 2
 
 	diag_hud_set_botmode()
+	clear_path_hud()
 
 /mob/living/basic/bot/Logout()
 	. = ..()
