@@ -39,11 +39,7 @@
 	. = ..()
 	register_context()
 	if(holds_minerals)
-		silo_materials = AddComponent(
-			/datum/component/remote_materials, \
-			mapload, \
-			mat_container_flags = BREAKDOWN_FLAGS_ORM|MATCONTAINER_NO_INSERT|MATCONTAINER_EXAMINE \
-		)
+		silo_materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/bouldertech/LateInitialize()
 	. = ..()
@@ -231,12 +227,7 @@
 	var/is_artifact = (istype(chosen_boulder, /obj/item/boulder/artifact)) //We need to know if it's an artifact so we can carry it over to the new boulder.
 	var/obj/item/boulder/disposable_boulder = new (src)
 	disposable_boulder.custom_materials = processable_ores
-	silo_materials.mat_container.insert_item(
-		weapon = disposable_boulder,\
-		multiplier = refining_efficiency,\
-		breakdown_flags = BREAKDOWN_FLAGS_ORM,\
-		context = src,\
-		)
+	silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency, context = src)
 	qdel(disposable_boulder)
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100% now that we've processed any relevant ores.
