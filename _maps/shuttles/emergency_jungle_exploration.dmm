@@ -104,6 +104,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/jungle_explorer)
+"cw" = (
+/obj/docking_port/mobile/emergency{
+	name = "JungleStation Explorative Shuttle"
+	},
+/obj/machinery/door/airlock/external,
+/turf/open/floor/plating,
+/area/shuttle/jungle_explorer)
 "cA" = (
 /turf/open/floor/wood,
 /area/shuttle/jungle_explorer)
@@ -321,16 +328,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/holofloor,
 /area/shuttle/jungle_explorer)
-"hT" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/docking_port/mobile/emergency{
-	name = "JungleStation Explorative Shuttle"
-	},
-/turf/open/floor/plating,
-/area/shuttle/jungle_explorer)
 "ig" = (
 /turf/open/misc/dirt/station,
 /area/shuttle/jungle_explorer)
@@ -377,6 +374,9 @@
 "jf" = (
 /obj/machinery/light/warm/directional/north,
 /turf/open/floor/wood/parquet,
+/area/shuttle/jungle_explorer)
+"jg" = (
+/turf/open/floor/glass/reinforced,
 /area/shuttle/jungle_explorer)
 "jj" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
@@ -1988,9 +1988,9 @@ oD
 oD
 oD
 oD
-oD
-oD
-oD
+Ll
+cw
+Ll
 oD
 oD
 oD
@@ -2037,9 +2037,9 @@ oD
 oD
 oD
 oD
-oD
-oD
-oD
+Zv
+jg
+Zv
 oD
 oD
 oD
@@ -2086,9 +2086,9 @@ oD
 oD
 oD
 oD
-II
-oD
-II
+Zv
+jg
+Zv
 oD
 oD
 oD
@@ -2135,9 +2135,9 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+jg
+Zv
 oD
 oD
 oD
@@ -2184,9 +2184,9 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+jg
+Zv
 oD
 oD
 oD
@@ -2233,9 +2233,9 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+jg
+Zv
 oD
 oD
 oD
@@ -2282,9 +2282,9 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+jg
+Zv
 oD
 oD
 Ll
@@ -2332,7 +2332,7 @@ oD
 oD
 oD
 Ll
-hT
+AJ
 Ll
 oD
 oD
