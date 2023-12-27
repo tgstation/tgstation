@@ -1,5 +1,6 @@
 /datum/supply_pack/emergency
 	group = "Emergency"
+	discountable = SUPPLY_PACK_UNCOMMON_DISCOUNTABLE
 
 /datum/supply_pack/emergency/bio
 	name = "Biological Emergency Crate"

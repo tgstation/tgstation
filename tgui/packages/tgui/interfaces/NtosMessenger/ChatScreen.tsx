@@ -305,11 +305,9 @@ export class ChatScreen extends Component<ChatScreenProps, ChatScreenState> {
                     fluid
                     autoFocus
                     width="100%"
-                    justify
-                    id="input"
                     value={message}
                     maxLength={1024}
-                    onChange={this.handleMessageInput}
+                    onInput={this.handleMessageInput}
                     onEnter={this.handleSendMessage}
                   />
                 </Stack.Item>

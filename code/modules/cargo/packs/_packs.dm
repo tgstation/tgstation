@@ -39,6 +39,8 @@
 	var/admin_spawned = FALSE
 	/// Goodies can only be purchased by private accounts and can have coupons apply to them. They also come in a lockbox instead of a full crate, so the 700 min doesn't apply
 	var/goody = FALSE
+	/// Can coupons target this pack? If so, how rarely?
+	var/discountable = SUPPLY_PACK_NOT_DISCOUNTABLE
 
 /datum/supply_pack/New()
 	id = type

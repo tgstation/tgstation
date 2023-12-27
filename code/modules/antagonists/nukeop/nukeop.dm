@@ -564,12 +564,14 @@
 
 	var/tc_to_spawn = tgui_input_number(admin, "How much TC to spawn with?", "TC", 0, 100)
 
-	var/list/nuke_candidates = poll_ghost_candidates(
+	var/list/nuke_candidates = SSpolling.poll_ghost_candidates(
 		"Do you want to play as an emergency syndicate reinforcement?",
-		ROLE_OPERATIVE,
-		ROLE_OPERATIVE,
-		30 SECONDS,
-		POLL_IGNORE_SYNDICATE,
+		check_jobban = ROLE_OPERATIVE,
+		role = ROLE_OPERATIVE,
+		poll_time = 30 SECONDS,
+		ignore_category = POLL_IGNORE_SYNDICATE,
+		pic_source = /obj/structure/sign/poster/contraband/gorlex_recruitment,
+		role_name_text = "syndicate reinforcement",
 	)
 
 	nuke_candidates -= admin // may be easy to fat-finger say yes. so just don't

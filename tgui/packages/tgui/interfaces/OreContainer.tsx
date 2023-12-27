@@ -36,7 +36,7 @@ export const OreContainer = (props) => {
           <Stack.Item>
             <Section>
               <Input
-                autofocus
+                autoFocus
                 position="relative"
                 mt={0.5}
                 bottom="5%"
@@ -44,7 +44,7 @@ export const OreContainer = (props) => {
                 width="150px"
                 placeholder="Search Ore..."
                 value={searchItem}
-                onChange={(e, value) => {
+                onInput={(e, value) => {
                   setSearchItem(value);
                 }}
                 fluid

@@ -872,16 +872,12 @@ const ExodroneConsoleContent = (props) => {
   return (
     <Stack fill vertical>
       <Stack.Item grow>
-        <Stack vertical fill grow={2}>
-          <Stack.Item grow>
-            <Stack fill>
-              <Stack.Item>
-                <EquipmentGrid drone={data} />
-              </Stack.Item>
-              <Stack.Item grow basis={0}>
-                <DroneScreen drone={data} />
-              </Stack.Item>
-            </Stack>
+        <Stack vertical fill>
+          <Stack.Item>
+            <EquipmentGrid drone={data} />
+          </Stack.Item>
+          <Stack.Item grow basis={0}>
+            <DroneScreen drone={data} />
           </Stack.Item>
         </Stack>
       </Stack.Item>
