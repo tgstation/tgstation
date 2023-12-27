@@ -187,7 +187,7 @@ Behavior that's still missing from this component that original food items had t
 	// add newly passed in reagents
 	setup_initial_reagents(initial_reagents)
 
-/datum/component/edible/Destroy(force, silent)
+/datum/component/edible/Destroy(force)
 	after_eat = null
 	on_consume = null
 	check_liked = null

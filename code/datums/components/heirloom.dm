@@ -14,7 +14,7 @@
 
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
-/datum/component/heirloom/Destroy(force, silent)
+/datum/component/heirloom/Destroy(force)
 	owner = null
 	return ..()
 
