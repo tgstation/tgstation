@@ -110,7 +110,7 @@
 
 ///proc that handles deleting the bot's drawn path when needed
 /mob/living/basic/bot/proc/clear_path_hud()
-	for(var/turf/index in current_pathed_turfs)
+	for(var/turf/index as anything in current_pathed_turfs)
 		var/image/our_image = current_pathed_turfs[index]
 		animate(our_image, alpha = 0, time = 0.3 SECONDS)
 		current_pathed_turfs -= index
