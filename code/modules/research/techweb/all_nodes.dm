@@ -1419,6 +1419,7 @@
 		"ci-reviver",
 		"ci-surgery",
 		"ci-toolset",
+		"ci-herculean",
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 

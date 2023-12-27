@@ -73,3 +73,13 @@
 	price_max = CARGO_CRATE_VALUE * 4
 	stock_max = 1
 	availability_prob = 75
+
+/datum/market_item/weapon/gravspine
+	name = "Atlas Gravitonic Spinal Implant Kit"
+	desc = "A kit to produce an Atlas gravitonic spinal implant. By altering a subjects localized gravity field, \
+		this spinal interface is able to significantly increase the explosive strength of a subject without risk to their physical wellbeing."
+	item = /obj/item/weaponcrafting/gravspine
+	price_min = CARGO_CRATE_VALUE * 1
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_max = 1
+	availability_prob = 20

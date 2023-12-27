@@ -358,7 +358,7 @@
 
 /obj/item/organ/internal/cyberimp/arm/muscle
 	name = "\proper Strong-Arm empowered musculature implant"
-	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action."
+	desc = "When implanted, this cybernetic implant will enhance the muscles of the arm to deliver more power-per-action. Every time this implant fires, it goes on cooldown to prevent user longterm damage."
 	icon_state = "muscle_implant"
 
 	zone = BODY_ZONE_R_ARM
@@ -378,6 +378,10 @@
 	var/throw_power_max = 4
 	///How long will the implant malfunction if it is EMP'd
 	var/emp_base_duration = 9 SECONDS
+	///How long before we get another slam punch; consider that these usually come in pairs of two
+	var/slam_cooldown_duration = 5 SECONDS
+	///Tracks how soon we can perform another slam attack
+	COOLDOWN_DECLARE(slam_cooldown)
 
 /obj/item/organ/internal/cyberimp/arm/muscle/on_mob_insert(mob/living/carbon/arm_owner)
 	. = ..()
@@ -412,6 +416,8 @@
 	var/datum/dna/dna = source.has_dna()
 	if(dna?.check_mutation(/datum/mutation/human/hulk)) //NO HULK
 		return NONE
+	if(!COOLDOWN_FINISHED(src, slam_cooldown))
+		return NONE
 	if(!source.can_unarmed_attack())
 		return COMPONENT_SKIP_ATTACK
 
@@ -427,31 +433,50 @@
 		else
 			to_chat(source, span_danger("Your muscles spasm!"))
 			source.Paralyze(1 SECONDS)
+		COOLDOWN_START(src, slam_cooldown, slam_cooldown_duration)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
+
+	var/obj/item/bodypart/attacking_bodypart = hand
+	var/potential_force = punch_damage
+	var/lower_force = attacking_bodypart.unarmed_damage_low
+	var/upper_force = attacking_bodypart.unarmed_damage_high
+	var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
+	var/extra_throw_range = 0
+	var/potential_nonharmful_throw = non_harmful_throw
+
+	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = source.get_organ_slot(ORGAN_SLOT_SPINE)
+	if(potential_spine)
+		lower_force *= potential_spine.added_lower_unarmed_force_multiplier
+		upper_force *= potential_spine.added_upper_unarmed_force_multiplier
+		limb_accuracy += potential_spine.added_unarmed_effectiveness
+		extra_throw_range += potential_spine.added_throw_range
+
+	if(living_target.get_timed_status_effect_duration(/datum/status_effect/staggered)) //Staggered targets are tossed with more force
+		potential_nonharmful_throw = FALSE
+
+	var/potential_throw_range = attack_throw_range + extra_throw_range
+	potential_force += rand(lower_force, upper_force)
 
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
-		if(human_target.check_block(source, punch_damage, "[source]'s' [picked_hit_type]"))
+		if(human_target.check_block(source, potential_force, "[source]'s [picked_hit_type]", UNARMED_ATTACK))
 			source.do_attack_animation(target)
 			playsound(living_target.loc, 'sound/weapons/punchmiss.ogg', 25, TRUE, -1)
-			log_combat(source, target, "attempted to [picked_hit_type]", "muscle implant")
+			log_combat(source, target, "attempted to slam", "muscle implant")
+			COOLDOWN_START(src, slam_cooldown, slam_cooldown_duration)
 			return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	var/potential_damage = punch_damage
-	var/obj/item/bodypart/attacking_bodypart = hand
-	potential_damage += rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
 
 	source.do_attack_animation(target, ATTACK_EFFECT_SMASH)
 	playsound(living_target.loc, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 
 	var/target_zone = living_target.get_random_valid_zone(source.zone_selected)
-	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = attacking_bodypart.unarmed_effectiveness)
-	living_target.apply_damage(potential_damage, attacking_bodypart.attack_type, target_zone, armor_block)
-	living_target.apply_damage(potential_damage*1.5, STAMINA, target_zone, armor_block)
+	var/armor_block = living_target.run_armor_check(target_zone, MELEE, armour_penetration = limb_accuracy)
+	living_target.apply_damage(potential_force, attacking_bodypart.attack_type, target_zone, armor_block)
+	living_target.apply_damage(potential_force*1.5, STAMINA, target_zone, armor_block)
 
 	if(source.body_position != LYING_DOWN) //Throw them if we are standing
 		var/atom/throw_target = get_edge_target_turf(living_target, source.dir)
-		living_target.throw_at(throw_target, attack_throw_range, rand(throw_power_min,throw_power_max), source, gentle = non_harmful_throw)
+		living_target.throw_at(throw_target, potential_throw_range, rand(throw_power_min,throw_power_max), source, gentle = potential_nonharmful_throw)
 
 	living_target.visible_message(
 		span_danger("[source] [picked_hit_type]ed [living_target]!"),
@@ -464,5 +489,7 @@
 	to_chat(source, span_danger("You [picked_hit_type] [target]!"))
 
 	log_combat(source, target, "[picked_hit_type]ed", "muscle implant")
+
+	COOLDOWN_START(src, slam_cooldown, slam_cooldown_duration)
 
 	return COMPONENT_CANCEL_ATTACK_CHAIN

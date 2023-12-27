@@ -214,6 +214,15 @@
 	result = /obj/item/clothing/gloves/tackler/offbrand
 	category = CAT_EQUIPMENT
 
+/datum/crafting_recipe/gravspine
+	name = "Atlas Gravitonic Spinal Implant"
+	reqs = list(
+		/obj/item/assembly/signaler/anomaly/grav = 1,
+		/obj/item/weaponcrafting/gravspine = 1,
+	)
+	result = /obj/item/organ/internal/cyberimp/chest/spine/gravity
+	category = CAT_EQUIPMENT
+
 /**
  * Recipe used for upgrading fake N-spect scanners to bananium HONK-spect scanners
  */

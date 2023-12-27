@@ -1,3 +1,5 @@
+#define GRAVITY_SPINE_INTERACTION "gravity spine interaction"
+
 /obj/item/organ/internal/cyberimp/chest
 	name = "cybernetic torso implant"
 	desc = "Implants for the organs in your torso."
@@ -259,3 +261,58 @@
 
 	deactivate(silent = TRUE)
 	return FALSE
+
+/obj/item/organ/internal/cyberimp/chest/spine
+	name = "\improper Herculean spinal implant"
+	desc = "This spinal interface is able to improve the explosive strength of a user, allowing them greater physical might."
+	implant_color = "#15704c"
+	slot = ORGAN_SLOT_SPINE
+	var/added_lower_unarmed_force_multiplier = 1.25
+	var/added_upper_unarmed_force_multiplier = 1.25
+	var/added_unarmed_effectiveness = 10
+	var/added_throw_range = 2
+	var/attack_sound_alternative
+
+/obj/item/organ/internal/cyberimp/chest/spine/emp_act(severity)
+	. = ..()
+	if(!owner || . & EMP_PROTECT_SELF)
+		return
+	to_chat(owner, span_warning("You feel sheering pain as your body is crushed like a soda can!"))
+	owner.apply_damage(20/severity, BRUTE, def_zone = BODY_ZONE_CHEST)
+	owner.apply_effect(6 SECONDS/severity, EFFECT_STUN)
+
+/obj/item/organ/internal/cyberimp/chest/spine/gravity
+	name = "\improper Atlas gravitonic spinal implant"
+	desc = "By altering a subjects localized gravity field, this spinal interface is able to significantly increase the explosive strength of a subject without risk to their physical wellbeing. \
+		Allows the user to physically pry apart sealed airlocks with their bare-hands."
+	implant_color = "#0e09a1"
+	slot = ORGAN_SLOT_SPINE
+	added_lower_unarmed_force_multiplier = 1.50
+	added_upper_unarmed_force_multiplier = 1.50
+	added_unarmed_effectiveness = 20
+	added_throw_range = 4
+	attack_sound_alternative = 'sound/weapons/kinetic_accel.ogg'
+
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_insert(mob/living/carbon/spine_owner)
+	. = ..()
+	spine_owner.AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = GRAVITY_SPINE_INTERACTION)
+
+/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_remove(mob/living/carbon/spine_owner)
+	. = ..()
+	spine_owner.RemoveElement(/datum/element/door_pryer)
+
+/obj/item/weaponcrafting/gravspine
+	name = "\improper Atlas gravitonic spinal implant housing kit"
+	desc = "Turn your 'average' gravity anomaly into a fullly functional Atlas gravitonic spinal implant! How handy! Just slap this kit with a refined gravity core!"
+	icon = 'icons/obj/weapons/improvised.dmi'
+	icon_state = "spinesuitcase"
+
+/obj/item/weaponcrafting/gravspine/create_slapcraft_component() // slappycraft
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/gravspine)
+
+	AddComponent(
+		/datum/component/slapcrafting,\
+		slapcraft_recipes = slapcraft_recipe_list,\
+	)
+
+#undef GRAVITY_SPINE_INTERACTION

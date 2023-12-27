@@ -2390,7 +2390,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/get_attack_type()
 	return BRUTE
 
-
 /**
  * Apply a martial art move from src to target.
  *

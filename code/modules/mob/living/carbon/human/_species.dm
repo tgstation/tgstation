@@ -1141,6 +1141,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			attacking_bodypart = user.get_active_hand()
 		var/atk_verb = attacking_bodypart.unarmed_attack_verb
 		var/atk_effect = attacking_bodypart.unarmed_attack_effect
+		var/atk_sound = attacking_bodypart.unarmed_attack_sound
 
 		if(atk_effect == ATTACK_EFFECT_BITE)
 			if(user.is_mouth_covered(ITEM_SLOT_MASK))
@@ -1160,13 +1161,24 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		if(target.pulledby && target.pulledby.grab_state >= GRAB_AGGRESSIVE)
 			grappled = TRUE
 
-		var/damage = rand(attacking_bodypart.unarmed_damage_low, attacking_bodypart.unarmed_damage_high)
+		var/lower_force = attacking_bodypart.unarmed_damage_low
+		var/upper_force = attacking_bodypart.unarmed_damage_high
 		var/limb_accuracy = attacking_bodypart.unarmed_effectiveness
+
+		var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = user.get_organ_slot(ORGAN_SLOT_SPINE)
+		if(potential_spine)
+			lower_force *= potential_spine.added_lower_unarmed_force_multiplier
+			upper_force *= potential_spine.added_upper_unarmed_force_multiplier
+			limb_accuracy += potential_spine.added_unarmed_effectiveness
+			if(potential_spine.attack_sound_alternative)
+				atk_sound = potential_spine.attack_sound_alternative
+
+		var/damage = rand(lower_force, upper_force)
 
 		var/obj/item/bodypart/affecting = target.get_bodypart(target.get_random_valid_zone(user.zone_selected))
 
 		var/miss_chance = 100//calculate the odds that a punch misses entirely. considers stamina and brute damage of the puncher. punches miss by default to prevent weird cases
-		if(attacking_bodypart.unarmed_damage_low)
+		if(lower_force)
 			if((target.body_position == LYING_DOWN) || HAS_TRAIT(user, TRAIT_PERFECT_ATTACKER) || staggered) //kicks and attacks against staggered targets never miss (provided your species deals more than 0 damage)
 				miss_chance = 0
 			else
@@ -1182,7 +1194,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 		var/armor_block = target.run_armor_check(affecting, MELEE)
 
-		playsound(target.loc, attacking_bodypart.unarmed_attack_sound, 25, TRUE, -1)
+		playsound(target.loc, atk_sound, 25, TRUE, -1)
 
 		if(grappled && attacking_bodypart.grappled_attack_verb)
 			atk_verb = attacking_bodypart.grappled_attack_verb

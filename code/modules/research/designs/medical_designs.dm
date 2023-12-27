@@ -566,6 +566,23 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/cyberimp_herculean
+	name = "Herculean Spinal Implant"
+	desc = "This spinal interface is able to improve the explosive strength of a user, allowing them greater physical might."
+	id = "ci-herculean"
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 40
+	materials = list(
+		/datum/material/iron =SMALL_MATERIAL_AMOUNT*5,
+		/datum/material/titanium=SMALL_MATERIAL_AMOUNT*3,
+		/datum/material/gold=SMALL_MATERIAL_AMOUNT*3,
+	)
+	build_path = /obj/item/organ/internal/cyberimp/chest/spine
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_IMPLANTS_HEALTH
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/cyberimp_nutriment
 	name = "Nutriment Pump Implant"
 	desc = "This implant with synthesize and pump into your bloodstream a small amount of nutriment when you are starving."
