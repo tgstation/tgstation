@@ -1,4 +1,8 @@
-#define GOLEM_BREAK_SPEED_MULTIPLIER 3
+/// Define for any kind of manual processing speed, whether it's from golem or another mob that can crack boulders.
+#define INATE_SPEED_MULTIPLIER 3
+#define EATS_ROCKS_SPEED 0.2
+
+
 
 /**
  * The objects that ore vents produce, which is refined into minerals.
@@ -65,7 +69,7 @@
 	. += span_notice("[span_bold("Boulders")] can either be cracked open by [span_bold("mining tools")], or processed into sheets with [span_bold("refineries or smelters")]. Undisturbed boulders can be collected by the [span_bold("BRM")].")
 
 /obj/item/boulder/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
-	if(held_item?.tool_behaviour == TOOL_MINING || isgolem(user))
+	if(held_item?.tool_behaviour == TOOL_MINING || HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		context[SCREENTIP_CONTEXT_RMB] = "Crush boulder into ore"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -73,16 +77,24 @@
 	. = ..()
 	if(.)
 		return
-	if(isgolem(user))
-		manual_process(null, user, 1.5)
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		manual_process(null, user, INATE_SPEED_MULTIPLIER)
+		return
+
+/obj/item/boulder/attack_hand(mob/user, list/modifiers)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		manual_process(null, user, INATE_SPEED_MULTIPLIER)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
-	if(isgolem(user))
-		manual_process(null, user, 1.5)
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		manual_process(null, user, INATE_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
@@ -91,16 +103,28 @@
 		return FALSE
 
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
+	to_chat(world, "start")
+	. = ..()
+	to_chat(world, "pre-parent")
+	if(.)
+		to_chat(world, "failed parent")
+		return
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
+		manual_process(weapon, user, INATE_SPEED_MULTIPLIER)
+		to_chat(world, "boulder breaker shrug")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(weapon.tool_behaviour == TOOL_MINING)
+		manual_process(weapon, user)
+		to_chat(world, "tool breaker")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	to_chat(world, "ended, failed")
+
+/obj/item/boulder/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
-	if(!isliving(user))
-		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	if(weapon.tool_behaviour == TOOL_MINING)
-		manual_process(weapon, user)
-		return TRUE
-	if(isgolem(user))
-		manual_process(weapon, user, override_speed_multiplier = GOLEM_BREAK_SPEED_MULTIPLIER)
+	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		manual_process(null, user, EATS_ROCKS_SPEED) //A little hacky but it works around the speed of the blackboard task selection process for now.
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/update_icon_state()
@@ -115,7 +139,14 @@
 		else
 			icon_state = "[boulder_string]_small"
 
-/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, instant_break = FALSE, continued = FALSE)
+/**
+ * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
+ * @param obj/item/weapon The weapon that is being used to process the boulder, that we pull toolspeed from. If null, we use the override_speed_multiplier instead.
+ * @param mob/living/user The mob that is processing the boulder.
+ * @param override_speed_multiplier The speed multiplier to use if weapon is null.
+ * @param continued Whether or not this is a continued process, or the first one. If true, we don't play the "You swing at the boulder" message.
+ */
+/obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, continued = FALSE)
 	var/process_speed = 0
 	if(weapon)
 		process_speed = weapon.toolspeed
@@ -130,7 +161,7 @@
 	else
 		return
 
-	if(!HAS_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
+	if(!HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
 		if(!do_after(user, (2 * process_speed SECONDS), target = src))
 			return FALSE
 		if(!user.Adjacent(src))
@@ -249,10 +280,6 @@
 	artifact_inside = null
 	return ..()
 
-/obj/item/boulder/artifact/update_icon_state()
-	. = ..()
-	icon_state = "boulder_artifact" //We're always going to use the artifact state for clarity.
-	return
 
 /obj/item/boulder/gulag
 	name = "low-quality boulder"
@@ -276,4 +303,5 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 	durability = 1
 
-#undef GOLEM_BREAK_SPEED_MULTIPLIER
+#undef INATE_SPEED_MULTIPLIER
+#undef EATS_ROCKS_SPEED

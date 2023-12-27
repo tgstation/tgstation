@@ -71,7 +71,7 @@
 ///break boulders so that we can find more food!
 /datum/ai_planning_subtree/find_and_hunt_target/harvest_vents
 	target_key = BB_VENT_TARGET
-	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target //We process boulders once every tap, so we dont need to do anything special here
+	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target //We call the ore vent's produce_boulder() proc here to produce a single boulder.
 	finding_behavior = /datum/ai_behavior/find_hunt_target/harvest_vents
 	hunt_targets = list(/obj/structure/ore_vent)
 	hunt_chance = 50
@@ -84,8 +84,11 @@
 		return FALSE
 
 	var/turf/vent_turf = target.drop_location()
-	if(vent_turf.contents.len > MAX_BOULDERS_PER_VENT) //Too many items currently on the vent
-		return FALSE
+	var/counter = 0
+	for(var/obj/item/boulder in vent_turf.contents)
+		counter++
+		if(counter > MAX_BOULDERS_PER_VENT) //Too many items currently on the vent
+			return FALSE
 
 	return can_see(source, target, radius)
 
@@ -101,14 +104,12 @@
 /datum/ai_behavior/find_hunt_target/break_boulders
 
 /datum/ai_behavior/find_hunt_target/break_boulders/valid_dinner(mob/living/basic/source, obj/item/boulder/target, radius)
-
 	if(target in source)
 		return FALSE
 
 	var/obj/item/pet_target = source.ai_controller.blackboard[BB_CURRENT_PET_TARGET]
 	if(target == pet_target) //we are currently fetching this ore for master, dont eat it!
 		return FALSE
-
 	return can_see(source, target, radius)
 
 ///find our child's egg and pull it!

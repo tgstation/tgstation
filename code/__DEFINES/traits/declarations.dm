@@ -1036,4 +1036,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// That which allows mobs to instantly break down boulders.
 #define TRAIT_INSTANTLY_PROCESSES_BOULDERS "instantly_processes_boulders"
 
+/// Trait applied to objects and mobs that can attack a boulder and break it down. (See /obj/item/boulder/manual_process())
+#define TRAIT_BOULDER_BREAKER "boulder_breaker"
+
 // END TRAIT DEFINES

@@ -111,11 +111,14 @@
 	. = ..()
 	if(.)
 		return
-	if(!isgolem(user))
+	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		return
+	if(!isgolem(user)) //We only make things difficult for golems so that they scan the vent first for point.
+		produce_boulder()
 		return
 	if(!discovered)
 		to_chat(user, span_notice("You can't quite find the weakpoint of [src]... Perhaps it needs to be scanned first?"))
-		return TRUE
+		return
 	to_chat(user, span_notice("You start striking [src] with your golem's fist, attempting to dredge up a boulder..."))
 	for(var/i in 1 to 3)
 		if(do_after(user, boulder_size * 1 SECONDS, src))
@@ -123,7 +126,6 @@
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder()
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
-	return TRUE
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()

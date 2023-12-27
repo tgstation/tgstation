@@ -30,6 +30,7 @@
 	disabled = TRUE, \
 	)
 	ADD_TRAIT(src, TRAIT_INSTANTLY_PROCESSES_BOULDERS, INNATE_TRAIT)
+	ADD_TRAIT(src, TRAIT_BOULDER_BREAKER, INNATE_TRAIT)
 
 /obj/item/mecha_parts/mecha_equipment/drill/action(mob/source, atom/target, list/modifiers)
 	// Check if we can even use the equipment to begin with.
@@ -69,7 +70,7 @@
 				var/obj/O = target
 				if(istype(O, /obj/item/boulder))
 					var/obj/item/boulder/nu_boulder = O
-					nu_boulder.manual_process(src, source, instant_break = TRUE)
+					nu_boulder.manual_process(src, source)
 				else
 					O.take_damage(15, BRUTE, 0, FALSE, get_dir(chassis, target))
 				playsound(src,'sound/weapons/drill.ogg', 40, TRUE)

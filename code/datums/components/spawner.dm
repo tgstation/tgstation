@@ -117,5 +117,3 @@
 		return
 	spawned_things -= WEAKREF(source)
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_MOB_STATCHANGE))
-
-
