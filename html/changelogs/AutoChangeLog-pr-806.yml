@@ -1,0 +1,4 @@
+author: "MichiRecRoom"
+delete-after: True
+changes:
+  - qol: "Clothing pieces that make your fingers chunky (currently, only the H.A.U.L. Gauntlets and the Boxing Gloves) will now denote themselves as such upon examining them."
