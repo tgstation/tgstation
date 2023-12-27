@@ -338,6 +338,9 @@ SUBSYSTEM_DEF(garbage)
 ///
 /// Datums passed to this will be given a chance to clean up references to allow the GC to collect them.
 /proc/qdel(datum/to_delete, force = FALSE, ...)
+	if(isnull(to_delete))
+		return
+
 	if(!istype(to_delete))
 		del(to_delete)
 		return
@@ -365,9 +368,6 @@ SUBSYSTEM_DEF(garbage)
 		trash.slept_destroy++
 	else
 		trash.destroy_time += TICK_USAGE_TO_MS(start_tick)
-
-	if(isnull(to_delete))
-		return
 
 	switch(hint)
 		if (QDEL_HINT_QUEUE) //qdel should queue the object for deletion.
