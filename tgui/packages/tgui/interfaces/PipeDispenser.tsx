@@ -7,9 +7,9 @@ import { Window } from '../layouts';
 import {
   ColorItem,
   ICON_BY_CATEGORY_NAME,
-  LayerSelect,
   SmartPipeBlockSection,
 } from './RapidPipeDispenser';
+import { LayerSelect } from './RapidPlumbingDevice';
 
 type Data = {
   // Dynamic

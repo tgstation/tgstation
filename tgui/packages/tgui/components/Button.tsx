@@ -7,7 +7,15 @@
 import { Placement } from '@popperjs/core';
 import { KEY } from 'common/keys';
 import { BooleanLike, classes } from 'common/react';
-import { createRef, MouseEvent, ReactNode, useEffect, useState } from 'react';
+import {
+  ChangeEvent,
+  createRef,
+  MouseEvent,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { Box, BoxProps, computeBoxClassName, computeBoxProps } from './Box';
 import { Icon } from './Icon';
@@ -355,3 +363,53 @@ const ButtonInput = (props: InputProps) => {
 };
 
 Button.Input = ButtonInput;
+
+type FileProps = {
+  accept: string;
+  multiple?: boolean;
+  onSelectFiles: (files: string | string[]) => void;
+} & Props;
+
+/**  Accepts file input */
+function ButtonFile(props: FileProps) {
+  const { accept, multiple, onSelectFiles, ...rest } = props;
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  async function read(files: FileList) {
+    const promises = Array.from(files).map((file) => {
+      const reader = new FileReader();
+
+      return new Promise<string>((resolve) => {
+        reader.onload = () => resolve(reader.result as string);
+        reader.readAsText(file);
+      });
+    });
+
+    return await Promise.all(promises);
+  }
+
+  async function handleChange(event: ChangeEvent<HTMLInputElement>) {
+    const files = event.target.files;
+    if (files?.length) {
+      const readFiles = await read(files);
+      onSelectFiles(multiple ? readFiles : readFiles[0]);
+    }
+  }
+
+  return (
+    <>
+      <Button onClick={() => inputRef.current?.click()} {...rest} />
+      <input
+        hidden
+        type="file"
+        ref={inputRef}
+        accept={accept}
+        multiple={multiple}
+        onChange={handleChange}
+      />
+    </>
+  );
+}
+
+Button.File = ButtonFile;

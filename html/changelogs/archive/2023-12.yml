@@ -761,3 +761,109 @@
   - bugfix: the boozeomat ui will stop duplicating space beer bottles
   - refactor: refactored vending machine backend to have unique keys for their data
       structures. should fix bugs related to items that happen to have the same name.
+2023-12-25:
+  00-Steven:
+  - bugfix: Camera circuits actually print pictures again!
+  - qol: Camera circuits can now take pictures while on a carbon, whether held, hung
+      around the neck, or sneakily hidden in either pocket. When held they try to
+      deposit their pictures into the holder's hands if possible.
+  - bugfix: Camera circuits should now actually use the camera's x axis picture size,
+      rather than using the camera's y axis picture size setting for both axis.
+  A.C.M.O.:
+  - bugfix: Fixed Personal AI cards, allowing them to wake up from sleep.
+  Iamgoofball:
+  - rscadd: Adds a mint condition clear PDA to the Goodies menu for 100,000 credits.
+  LT3:
+  - qol: TGUI will now wait longer trying to reconnect to a new round
+  Mothblocks:
+  - bugfix: Cut down a significant amount of time that caused the start of rounds
+      to lag.
+  - bugfix: Fixed a bug that would give you the chat message "/datum/element/damage_threshold
+      looks unharmed!"
+  SyncIt21:
+  - code_imp: removed excess calls to `update_total()` making reaction code slightly
+      faster.
+  - code_imp: removed excessive use of chemical constants (quantisation & rounding
+      constants) in places where they were not needed i.e. plumbing buffer, reaction
+      chamber, pyrotechnics & the liver.
+  Timberpoes:
+  - bugfix: Fixed an issue with polling ghost roles to control multiple mobs that
+      prevented Sentience Fun Balloons from working as intended.
+  Time-Green:
+  - bugfix: polymorphing into drone no longer gibs
+  Vermidia:
+  - rscadd: You can now look up and down through the IC menu
+  Watermelon914:
+  - balance: Cyborg lover has been replaced with Transhumanist. Transhumanists start
+      with a robotic limb and get mood buffs by being near to silicon-based lifeforms.
+      However, they get mood debuffs by being near organics, so there is a tradeoff
+      to taking this quirk. The cost for this quirk has been reduced from 2 to 0.
+  - bugfix: Fixed integrated circuit UI breaking.
+  jlsnow301:
+  - bugfix: AI voice changer UI should show defaults properly
+  - bugfix: NTOS Software Hub should focus on the input immediately now
+  - bugfix: Ore container UI should autofocus on the search bar now
+  - bugfix: Vend-a-tray registration text should display as intended
+2023-12-26:
+  13spacemen:
+  - rscadd: Canisters now have wires! You can pulse wires to do various canister functions
+      like opening/closing the valve. Make sure it has a cell though.
+  - rscadd: You can rig assembly combos (igniter-timer, prox-signaler, etc.) onto
+      canisters
+  - qol: Canisters now have screentips
+  - qol: You can now build multiple pipe layers with the RPD, with just 1 click!
+  Fikou:
+  - spellcheck: changes mutiline text to multiline text in vv
+  Ghommie:
+  - bugfix: Regal rats (and others), won't be punished by the automute system for
+      repeating the same command several times.
+  - rscadd: Added the 'Coupon Master' program for the PDA. Install it to receive periodical,
+      redeemable coupons for several cargo packs. Requires NTnet connection and the
+      messenger enabled to work.
+  - rscadd: Coupons are no longer only limited to goodies, but may also apply discount
+      to some other packs as well.
+  - bugfix: fixing damaged sandy dirt lacking an icon
+  Ical92:
+  - qol: Wendigo Cave ruin gets an aesthetic refresh
+  - bugfix: Wendigos (Wendigi?) no longer attack corpses
+  MelokGleb and KREKS:
+  - image: modified wizard weapon textures
+  ReinaCoder:
+  - rscadd: Adds a brown suit jacket to the detective's vendor
+  - image: 'Adds a new sprite for the a brown detective suit jacket
+
+      :cl:'
+  SyncIt21:
+  - bugfix: debug chem heater now withdraws more than 100 units from its inserted
+      beaker.
+  - bugfix: chem heater has correct overlay when its panel is closed with a screwdriver
+      while a beaker is inside.
+  - qol: added more examines and tooltips for the chem heater.
+  - code_imp: converted chem heater UI to typescript. removed unused procs, vars,
+      ui tracking code. Added auto doc for everything.
+  - refactor: removed chem heater tutorial help button & its related reward, chem
+      heater code has been optimized as a whole.
+  - bugfix: plumbing rcd ui no longer has any graphical glitches
+  - bugfix: mat container displays correct number of sheets inserted for alloy materials.
+  - bugfix: remote materials now properly respect the `MATCONTAINER_NO_INSERT` flag.
+  - code_imp: removes material breakdown flags and related traits.
+  - code_imp: adds helper proc to insert materials via the remote material component
+      with proper context.
+  jlsnow301:
+  - bugfix: LUA editor should be usable again
+  vinylspiders:
+  - bugfix: fixes a potential mob hard del with cardboard boxes
+  - bugfix: fixes a hard del with thrown items
+2023-12-27:
+  Melbert:
+  - bugfix: Fixed some occasions in which heartbeat SFX will continue on revival for
+      longer than expected
+  Mothblocks:
+  - bugfix: Fixed the surgery menu spamming chat messages when on the eyes section
+      of a player with no eyes.
+  Ryll/Shaps:
+  - balance: Yawns are less likely to propagate
+  jlsnow301:
+  - bugfix: NTOS Messenger should search as you type now
+  timothymtorres:
+  - qol: Add UI screentips to spraycans
