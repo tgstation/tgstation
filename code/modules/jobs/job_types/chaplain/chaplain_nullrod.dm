@@ -80,6 +80,15 @@
 		LAZYOR(cultists_slain, REF(target_mob))
 	return .
 
+/obj/item/nullrod/examine(mob/user)
+	. = ..()
+	if(!IS_CULTIST(user) || !GET_ATOM_BLOOD_DNA_LENGTH(src))
+		return
+
+	var/num_slain = LAZYLEN(cultists_slain)
+	. += span_cultitalic("It has the blood of [num_slain] fallen cultist[num_slain == 1 ? "" : "s"] on it. \
+		<b>Offering</b> it to Nar'sie will transform it into a [num_slain >= 3 ? "powerful" : "standard"] cult weapon.")
+
 /obj/item/nullrod/godhand
 	name = "god hand"
 	desc = "This hand of yours glows with an awesome power!"

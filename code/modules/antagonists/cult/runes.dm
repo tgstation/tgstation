@@ -386,7 +386,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 		var/num_slain = LAZYLEN(rod.cultists_slain)
 		var/displayed_message = "[rod] glows an unholy red and begins to transform..."
-		if(num_slain > 0 && GET_ATOM_BLOOD_DNA_LENGTH(rod))
+		if(GET_ATOM_BLOOD_DNA_LENGTH(rod))
 			displayed_message += " The blood of [num_slain] fallen cultist[num_slain == 1 ? "":"s"] is absorbed into [rod]!"
 
 		rod.visible_message(span_cultitalic(displayed_message))
