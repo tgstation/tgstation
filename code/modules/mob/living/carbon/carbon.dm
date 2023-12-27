@@ -172,7 +172,7 @@
 		if(thrown_item.throw_verb)
 			verb_text = thrown_item.throw_verb
 	do_attack_animation(target, no_effect = 1)
-	playsound(loc, 'sound/weapons/punchmiss.ogg', 50, TRUE, -1)
+	playsound(src, 'sound/weapons/punchmiss.ogg', 50, vary = TRUE, extrarange = -1)
 	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
 					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
 	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
