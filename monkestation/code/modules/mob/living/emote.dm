@@ -6,7 +6,7 @@
 	message_insect = "clicks their mandibles."
 
 /datum/emote/living/click/get_sound(mob/living/user)
-	if(ismoth(user) || isflyperson(user) || istype(user, /mob/living/basic/mothroach))
+	if(ismoth(user) || isflyperson(user) || isarachnid(user) || istype(user, /mob/living/basic/mothroach))
 		return 'monkestation/sound/creatures/rattle.ogg'
 	else if(isipc(user))
 		return 'sound/machines/click.ogg'
