@@ -9,8 +9,9 @@
 
 /area/centcom/central_command_areas/ghost_spawn
 	name = "Centcom Ghost Spawn"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_ghostspawn"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING
-
 
 /area/centcom/central_command_areas/supply
 	area_flags = UNIQUE_AREA | NOTELEPORT | NO_EXPLOSIONS_DURING
@@ -21,28 +22,41 @@
 
 /area/centcom/central_command_areas/supply
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING | NO_GHOSTS_DURING_ROUND
+
 /area/centcom/central_command_areas/borbop
 	name = "Borbop's Bar"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "borbop"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING
 
 /area/centcom/central_command_areas/kitchen
 	name = "Papa's Pizzeria"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_kitchen"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING
 
 /area/centcom/central_command_areas/medical
 	name = "Centcom Medical"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_medical"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING
 
 /area/centcom/central_command_areas/botany
 	name = "Centcom Botany"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_botany"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA  | NO_EXPLOSIONS_DURING
 
 /area/centcom/central_command_areas/hall
 	name = "Centcom Hall"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_hall"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING
 
 /area/centcom/central_command_areas/admin_hangout
 	name = "Admin Hangout"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_hangout"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | PASSIVE_AREA | NO_EXPLOSIONS_DURING | NO_GHOSTS_DURING_ROUND
 
 /area/centcom/central_command_areas/ghost_blocker
@@ -57,6 +71,8 @@
 
 /area/centcom/central_command_areas/firing_range
 	name = "Centcom Firing Range"
+	icon = 'monkestation/icons/area/areas_centcom.dmi'
+	icon_state = "centcom_firingrange"
 	area_flags = UNIQUE_AREA | NOTELEPORT | GHOST_AREA | NO_EXPLOSIONS_DURING
 
 /area/centcom/central_command_areas/firing_range_checkpoint_control
