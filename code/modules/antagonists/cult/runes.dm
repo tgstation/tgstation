@@ -1,6 +1,4 @@
 
-/// list of weakrefs to mobs OR minds that have been sacrificed
-GLOBAL_LIST(sacrificed)
 /// List of all teleport runes
 GLOBAL_LIST(teleport_runes)
 /// Assoc list of every rune that can be drawn by ritual daggers. [rune_name] = [typepath]
@@ -300,11 +298,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	convertee.mind.special_role = ROLE_CULTIST
 	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
-	to_chat(convertee, span_cult_italic("<b>Your blood pulses. Your head throbs. The world goes red. \
+	to_chat(convertee, span_cult_bold_italic("Your blood pulses. Your head throbs. The world goes red. \
 		All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-		and something evil takes root.</b>"))
-	to_chat(convertee, span_cult_italic("<b>Assist your new compatriots in their dark dealings. \
-		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.</b>"))
+		and something evil takes root."))
+	to_chat(convertee, span_cult_bold_italic("Assist your new compatriots in their dark dealings. \
+		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back."))
 
 	if(istype(human_convertee))
 		human_convertee.uncuff()
@@ -643,80 +641,81 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 	invocation = "Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!" //Depends on the name of the user - see below
 	icon_state = "1"
 	color = RUNE_COLOR_MEDIUMRED
-	var/static/sacrifices_used = -SOULS_TO_REVIVE // Cultists get one "free" revive
 
 /obj/effect/rune/raise_dead/examine(mob/user)
 	. = ..()
 	if(IS_CULTIST(user) || user.stat == DEAD)
-		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - sacrifices_used]"
+		. += "<b>Sacrifices unrewarded:</b> [LAZYLEN(GLOB.sacrificed) - GLOB.sacrifices_used]"
 
 /obj/effect/rune/raise_dead/invoke(list/invokers)
-	var/turf/T = get_turf(src)
-	var/mob/living/mob_to_revive
-	var/list/potential_revive_mobs = list()
-	var/mob/living/user = invokers[1]
 	if(rune_in_use)
 		return
 	rune_in_use = TRUE
-	for(var/mob/living/M in T.contents)
-		if(IS_CULTIST(M) && (M.stat == DEAD || !M.client || M.client.is_afk()))
-			potential_revive_mobs |= M
+	var/mob/living/mob_to_revive
+	var/list/potential_revive_mobs = list()
+	var/mob/living/user = invokers[1]
+
+	for(var/mob/living/target in loc)
+		if(IS_CULTIST(target) && (target.stat == DEAD || isnull(target.client) || target.client.is_afk()))
+			potential_revive_mobs += target
+
 	if(!length(potential_revive_mobs))
-		to_chat(user, "<span class='cult italic'>There are no dead cultists on the rune!</span>")
+		to_chat(user, span_cult_italic("There are no dead cultists on the rune!"))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - no cultists to revive.")
 		fail_invoke()
 		return
-	if(length(potential_revive_mobs) > 1)
+
+	if(length(potential_revive_mobs) > 1 && user.mind)
 		mob_to_revive = tgui_input_list(user, "Cultist to revive", "Revive Cultist", potential_revive_mobs)
 		if(isnull(mob_to_revive))
 			return
 	else
 		mob_to_revive = potential_revive_mobs[1]
+
 	if(QDELETED(src) || !validness_checks(mob_to_revive, user))
 		fail_invoke()
 		return
-	if(user.name == "Herbert West")
-		invocation = "To life, to life, I bring them!"
-	else
-		invocation = initial(invocation)
-	..()
+
+	invocation = (user.name == "Herbet West") ? "To life, to life, I bring them!" : initial(invocation)
+
 	if(mob_to_revive.stat == DEAD)
-		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - sacrifices_used
+		var/diff = LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used
 		if(diff < 0)
 			to_chat(user, span_warning("Your cult must carry out [abs(diff)] more sacrifice\s before it can revive another cultist!"))
 			fail_invoke()
 			return
-		sacrifices_used += SOULS_TO_REVIVE
+		GLOB.sacrifices_used += SOULS_TO_REVIVE
 		mob_to_revive.revive(ADMIN_HEAL_ALL) //This does remove traits and such, but the rune might actually see some use because of it! //Why did you think this was a good idea
 
 	if(!mob_to_revive.client || mob_to_revive.client.is_afk())
 		set waitfor = FALSE
 		var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a [mob_to_revive.real_name], an inactive blood cultist?", check_jobban = ROLE_CULTIST, role = ROLE_CULTIST, poll_time = 5 SECONDS, target_mob = mob_to_revive, pic_source = mob_to_revive)
-		if(LAZYLEN(candidates))
-			var/mob/dead/observer/C = pick(candidates)
-			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
-			message_admins("[key_name_admin(C)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
-			mob_to_revive.ghostize(FALSE)
-			mob_to_revive.key = C.key
-		else
+		if(!LAZYLEN(candidates))
 			fail_invoke()
 			return
+		var/mob/dead/observer/chosen = pick(candidates)
+		if(mob_to_revive.mind)
+			to_chat(mob_to_revive.mind, "Your physical form has been taken over by another soul due to your inactivity! Ahelp if you wish to regain your form.")
+		message_admins("[key_name_admin(chosen)] has taken control of ([key_name_admin(mob_to_revive)]) to replace an AFK player.")
+		mob_to_revive.ghostize(FALSE)
+		mob_to_revive.key = chosen.key
+
 	SEND_SOUND(mob_to_revive, 'sound/ambience/antag/bloodcult/bloodcult_gain.ogg')
 	to_chat(mob_to_revive, span_cult_large("\"PASNAR SAVRAE YAM'TOTH. Arise.\""))
 	mob_to_revive.visible_message(span_warning("[mob_to_revive] draws in a huge breath, red light shining from [mob_to_revive.p_their()] eyes."), \
-								  span_cult_large("You awaken suddenly from the void. You're alive!"))
+		span_cult_large("You awaken suddenly from the void. You're alive!"))
 	rune_in_use = FALSE
+	return ..()
 
 /obj/effect/rune/raise_dead/proc/validness_checks(mob/living/target_mob, mob/living/user)
-	var/turf/T = get_turf(src)
 	if(QDELETED(user))
 		return FALSE
 	if(!Adjacent(user) || user.incapacitated())
 		return FALSE
 	if(QDELETED(target_mob))
 		return FALSE
-	if(!(target_mob in T.contents))
-		to_chat(user, "<span class='cult italic'>The cultist to revive has been moved!</span>")
+	if(!(target_mob in loc))
+		to_chat(user, span_cult_italic("The cultist to revive has been moved!"))
 		log_game("Raise Dead rune activated by [user] at [COORD(src)] failed - revival target moved.")
 		return FALSE
 	return TRUE
@@ -724,9 +723,9 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 /obj/effect/rune/raise_dead/fail_invoke()
 	..()
 	rune_in_use = FALSE
-	for(var/mob/living/M in range(1,src))
-		if(IS_CULTIST(M) && M.stat == DEAD)
-			M.visible_message(span_warning("[M] twitches."))
+	for(var/mob/living/cultist in loc)
+		if(IS_CULTIST(cultist) && cultist.stat == DEAD)
+			cultist.visible_message(span_warning("[cultist] twitches."))
 
 //Rite of the Corporeal Shield: When invoked, becomes solid and cannot be passed. Invoke again to undo.
 /obj/effect/rune/wall

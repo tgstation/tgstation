@@ -10,6 +10,8 @@
 
 	if(FACTION_CULT in faction)
 		return STOP_SACRIFICE
+
+	mind?.add_antag_datum(/datum/antagonist/cult, team)
 	qdel(GetComponent(/datum/component/obeys_commands))
 	melee_damage_lower = max(PET_CULT_ATTACK, initial(melee_damage_lower))
 	melee_damage_upper = max(PET_CULT_ATTACK + 5, initial(melee_damage_upper))
@@ -18,9 +20,7 @@
 	//we only serve the cult
 	faction = list(FACTION_CULT)
 
-	if(cult_icon_state)
-		update_appearance(UPDATE_ICON)
-	else
+	if(isnull(cult_icon_state))
 		add_atom_colour(RUNE_COLOR_MEDIUMRED, FIXED_COLOUR_PRIORITY)
 
 	var/static/list/cult_appetite = list(
@@ -50,12 +50,37 @@
 		/datum/pet_command/point_targeting/attack,
 		/datum/pet_command/follow,
 		/datum/pet_command/idle,
-		/datum/pet_command/point_targeting/fetch,
 		/datum/pet_command/untargeted_ability/draw_rune,
 	)
 	AddComponent(/datum/component/obeys_commands, new_pet_commands)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(activate_rune), override = TRUE)
+	update_appearance()
 	return STOP_SACRIFICE
+
+
+/mob/living/basic/pet/proc/activate_rune(datum/source, atom/target)
+	SIGNAL_HANDLER
+
+	if(!istype(target, /obj/effect/rune/raise_dead))
+		return NONE
+
+	target.attack_hand(src)
+
+	return COMPONENT_CANCEL_ATTACK_CHAIN
+
+/mob/living/basic/pet/Login()
+	. = ..()
+	if(!. || !client)
+		return FALSE
+
+	if(!(FACTION_CULT in faction))
+		return
+	var/datum/team/cult_team = locate(/datum/team/cult) in GLOB.antagonist_teams
+	if(isnull(cult_team))
+		return
+	mind.add_antag_datum(/datum/antagonist/cult, cult_team)
+	update_appearance(UPDATE_OVERLAYS)
+
 
 #undef PET_CULT_ATTACK
 #undef PET_CULT_HEALTH

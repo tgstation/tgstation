@@ -13,7 +13,7 @@
 		/datum/ai_planning_subtree/simple_find_target,
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/find_occupied_rune,
-		/datum/ai_planning_subtree/find_sacrifice_target,
+		/datum/ai_planning_subtree/find_dead_cultist,
 		/datum/ai_planning_subtree/drag_target_to_rune,
 	)
 	ai_traits = PAUSE_DURING_DO_AFTER
@@ -24,8 +24,8 @@
 
 	UnregisterSignal(src, COMSIG_ATOM_NO_LONGER_PULLING)
 
-	if(was_pulling == blackboard[BB_SACRIFICE_TARGET])
-		clear_blackboard_key(BB_SACRIFICE_TARGET)
+	if(was_pulling == blackboard[BB_DEAD_CULTIST])
+		clear_blackboard_key(BB_DEAD_CULTIST)
 
 ///targeting strat to attack non cultists
 /datum/targeting_strategy/basic/cultist
@@ -59,6 +59,9 @@
 /datum/ai_planning_subtree/find_occupied_rune
 
 /datum/ai_planning_subtree/find_occupied_rune/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if((LAZYLEN(GLOB.sacrificed) - SOULS_TO_REVIVE - GLOB.sacrifices_used) < 0)
+		return SUBTREE_RETURN_FINISH_PLANNING
+
 	if(controller.blackboard_key_exists(BB_OCCUPIED_RUNE))
 		controller.queue_behavior(/datum/ai_behavior/activate_rune, BB_OCCUPIED_RUNE)
 		return SUBTREE_RETURN_FINISH_PLANNING
@@ -72,17 +75,12 @@
 	if(isnull(cult_team))
 		return null
 
-	var/turf/final_turf
-	for(var/obj/effect/rune/convert/target_rune in oview(search_range, controller.pawn))
+	for(var/obj/effect/rune/raise_dead/target_rune in oview(search_range, controller.pawn))
 		controller.set_blackboard_key(BB_NEARBY_RUNE, target_rune)
 		var/mob/living/occupant = locate(/mob/living/carbon/human) in get_turf(target_rune)
 		if(isnull(occupant))
 			continue
-		if(occupant.stat < SOFT_CRIT || occupant.stat > HARD_CRIT)
-			continue
-		if(IS_CULTIST(occupant))
-			continue
-		if(!is_convertable_to_cult(occupant, cult_team))
+		if(occupant.stat != DEAD || !IS_CULTIST(occupant))
 			continue
 		return target_rune
 
@@ -125,42 +123,43 @@
 	controller.clear_blackboard_key(target_key)
 
 
-///find targets that we can convert
-/datum/ai_planning_subtree/find_sacrifice_target
+///find targets that we can revive
+/datum/ai_planning_subtree/find_dead_cultist
 
-/datum/ai_planning_subtree/find_sacrifice_target/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+/datum/ai_planning_subtree/find_dead_cultist/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(!isnull(living_pawn.pulling))
 		return
 
-	if(controller.blackboard_key_exists(BB_SACRIFICE_TARGET))
-		controller.queue_behavior(/datum/ai_behavior/pull_target/cult_sacrifice, BB_SACRIFICE_TARGET)
+	if(controller.blackboard_key_exists(BB_DEAD_CULTIST))
+		controller.queue_behavior(/datum/ai_behavior/pull_target/cult_revive, BB_DEAD_CULTIST)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	controller.queue_behavior(/datum/ai_behavior/find_and_set/sacrificial_lamb, BB_SACRIFICE_TARGET, /mob/living/carbon/human)
+	controller.queue_behavior(/datum/ai_behavior/find_and_set/dead_cultist, BB_DEAD_CULTIST, /mob/living/carbon/human)
 
-/datum/ai_behavior/find_and_set/sacrificial_lamb
+/datum/ai_behavior/find_and_set/dead_cultist
 
-/datum/ai_behavior/find_and_set/sacrificial_lamb/search_tactic(datum/ai_controller/controller, locate_path, search_range)
+/datum/ai_behavior/find_and_set/dead_cultist/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/datum/team/cult/cult_team = controller.blackboard[BB_CULT_TEAM]
 	if(isnull(cult_team))
 		return null
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/carbon/human/target in oview(search_range, controller.pawn))
-		if(target.stat < SOFT_CRIT || target.stat > HARD_CRIT)
+		if(target.stat != DEAD)
 			continue
-		if(!is_convertable_to_cult(target, cult_team))
+		if(!IS_CULTIST(target))
 			continue
 		if(target.buckled || target.move_resist > living_pawn.move_force || target.pulledby)
 			continue
+		if(locate(/obj/effect/rune/raise_dead) in target.loc)
+			continue
 		return target
-
 	return null
 
-/datum/ai_behavior/pull_target/cult_sacrifice
+/datum/ai_behavior/pull_target/cult_revive
 
-/datum/ai_behavior/pull_target/cult_sacrifice/finish_action(datum/ai_controller/basic_controller/controller, succeeded, target_key)
+/datum/ai_behavior/pull_target/cult_revive/finish_action(datum/ai_controller/basic_controller/controller, succeeded, target_key)
 	. = ..()
 	if(!succeeded)
 		return
@@ -173,7 +172,7 @@
 
 /datum/ai_planning_subtree/drag_target_to_rune/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 
-	if(!controller.blackboard_key_exists(BB_SACRIFICE_TARGET)) //no target, we dont need to do anything
+	if(!controller.blackboard_key_exists(BB_DEAD_CULTIST)) //no target, we dont need to do anything
 		return
 
 	var/mob/living/our_pawn = controller.pawn
@@ -181,55 +180,61 @@
 	if(isnull(our_pawn.pulling))
 		return
 
-	if(!controller.blackboard_key_exists(BB_NEARBY_RUNE))
+	var/atom/target_rune = controller.blackboard[BB_NEARBY_RUNE]
+
+	if(QDELETED(target_rune))
 		controller.queue_behavior(/datum/ai_behavior/use_mob_ability, BB_RUNE_ABILITY)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
-	controller.queue_behavior(/datum/ai_behavior/drag_target_to_rune, BB_NEARBY_RUNE, BB_SACRIFICE_TARGET)
+	if(!can_see(our_pawn, target_rune, 9))
+		controller.clear_blackboard_key(BB_NEARBY_RUNE)
+		return
+
+	controller.queue_behavior(/datum/ai_behavior/drag_target_to_rune, BB_NEARBY_RUNE, BB_DEAD_CULTIST)
 
 ///behavior to drag the target onto the rune
 /datum/ai_behavior/drag_target_to_rune
 	required_distance = 0
 	behavior_flags = AI_BEHAVIOR_REQUIRE_MOVEMENT
 
-/datum/ai_behavior/drag_target_to_rune/setup(datum/ai_controller/controller, target_key, sacrifice_key)
+/datum/ai_behavior/drag_target_to_rune/setup(datum/ai_controller/controller, target_key, cultist_key)
 	. = ..()
 	var/turf/target = controller.blackboard[target_key]
 	if(isnull(target))
 		return FALSE
 	set_movement_target(controller, target)
 
-/datum/ai_behavior/drag_target_to_rune/perform(seconds_per_tick, datum/ai_controller/controller, target_key, sacrifice_key)
+/datum/ai_behavior/drag_target_to_rune/perform(seconds_per_tick, datum/ai_controller/controller, target_key, cultist_key)
 	. = ..()
 	var/mob/living/our_pawn = controller.pawn
-	var/atom/sacrifice_target = controller.blackboard[sacrifice_key]
-	if(isnull(sacrifice_target))
-		finish_action(controller, FALSE, target_key, sacrifice_key)
+	var/atom/cultist_target = controller.blackboard[cultist_key]
+	if(isnull(cultist_target))
+		finish_action(controller, FALSE, target_key, cultist_key)
 		return
 	var/list/possible_dirs = GLOB.alldirs.Copy()
-	possible_dirs -= get_dir(our_pawn, sacrifice_target)
+	possible_dirs -= get_dir(our_pawn, cultist_target)
 	for(var/direction in possible_dirs)
 		var/turf/possible_turf = get_step(our_pawn, direction)
 		if(possible_turf.is_blocked_turf(source_atom = our_pawn))
 			possible_dirs -= direction
 	step(our_pawn, pick(possible_dirs))
 	our_pawn.stop_pulling()
-	finish_action(controller, TRUE, target_key, sacrifice_target)
+	finish_action(controller, TRUE, target_key, cultist_key)
 
 
-/datum/ai_behavior/drag_target_to_rune/finish_action(datum/ai_controller/controller, success, target_key, sacrifice_target)
+/datum/ai_behavior/drag_target_to_rune/finish_action(datum/ai_controller/controller, success, target_key, cultist_key)
 	. = ..()
 	if(success)
-		var/atom/sacrifice_rune = controller.blackboard[target_key]
-		controller.set_blackboard_key(BB_OCCUPIED_RUNE, sacrifice_rune)
-	controller.clear_blackboard_key(sacrifice_target)
+		var/atom/revival_rune = controller.blackboard[target_key]
+		controller.set_blackboard_key(BB_OCCUPIED_RUNE, revival_rune)
+	controller.clear_blackboard_key(cultist_key)
 	controller.clear_blackboard_key(target_key)
 
 ///command ability to draw runes
 /datum/pet_command/untargeted_ability/draw_rune
 	command_name = "Draw Rune"
-	command_desc = "Draw a sacrifice rune."
+	command_desc = "Draw a revival rune."
 	radial_icon = 'icons/obj/antags/cult/rune.dmi'
 	radial_icon_state = "1"
-	speech_commands = list("play dead")
+	speech_commands = list("rune", "revival")
 	ability_key = BB_RUNE_ABILITY

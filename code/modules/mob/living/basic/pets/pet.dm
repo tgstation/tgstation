@@ -45,15 +45,6 @@
 
 	return ..()
 
-/mob/living/basic/pet/proc/activate_rune(datum/source, atom/target)
-	SIGNAL_HANDLER
-
-	if(!istype(target, /obj/effect/rune/convert))
-		return NONE
-
-	target.attack_hand(src)
-	return COMPONENT_CANCEL_ATTACK_CHAIN
-
 /mob/living/basic/pet/update_overlays()
 	. = ..()
 

@@ -56,8 +56,8 @@
 #define BB_RUNE_ABILITY "rune_ability"
 ///the cult team we serve
 #define BB_CULT_TEAM "cult_team"
-///our sacrificial lamb
-#define BB_SACRIFICE_TARGET "sacrifice_target"
+///our dead cultist we revive
+#define BB_DEAD_CULTIST "dead_cultist"
 ///nearby runes
 #define BB_NEARBY_RUNE "nearby_rune"
 ///occupied runes

@@ -7,7 +7,7 @@
 	spell_requirements = NONE
 	cooldown_time = 30 SECONDS
 	summon_type = list(
-		/obj/effect/rune/convert
+		/obj/effect/rune/raise_dead
 	)
 	summon_radius = 0
 	create_summon_timer = 5 SECONDS
