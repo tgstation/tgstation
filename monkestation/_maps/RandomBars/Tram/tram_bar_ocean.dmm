@@ -88,15 +88,6 @@
 /obj/machinery/firealarm/directional/north,
 /turf/open/floor/fake_seafloor/spawning,
 /area/station/commons/lounge)
-"di" = (
-/obj/machinery/elevator_control_panel/directional/north{
-	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
-	linked_elevator_id = "dumbwaiter_lift";
-	name = "Dumbwaiter Control Panel";
-	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
-	},
-/turf/open/floor/fake_seafloor,
-/area/station/commons/lounge)
 "dr" = (
 /turf/closed/wall,
 /area/station/service/kitchen)
@@ -628,6 +619,18 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/mail_sorting/service/kitchen,
+/turf/open/floor/fake_seafloor,
+/area/station/commons/lounge)
+"BQ" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/machinery/elevator_control_panel/directional/north{
+	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
+	linked_elevator_id = "dumbwaiter_lift";
+	name = "Dumbwaiter Control Panel";
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
+	},
 /turf/open/floor/fake_seafloor,
 /area/station/commons/lounge)
 "Cp" = (
@@ -1418,7 +1421,7 @@ Um
 Um
 "}
 (11,1,1) = {"
-di
+aw
 Le
 Le
 AF
@@ -1555,8 +1558,8 @@ Um
 (16,1,1) = {"
 pR
 pR
-pR
-EF
+Um
+BQ
 BO
 jZ
 Uk
