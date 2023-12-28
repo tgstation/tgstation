@@ -236,7 +236,9 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	// We only actually add to contained turfs after large changes (Also the management subsystem)
 	// Do your damndest to keep turfs out of /area/space as a stepping stone
 	// That sucker gets HUGE and will make this take actual tens of seconds if you stuff turfs_to_uncontain
+	stack_trace("area [src]([type]) is uncontaining [length(turfs_to_uncontain)] turfs out of [length(contained_turfs)]")
 	contained_turfs -= turfs_to_uncontain
+	stack_trace("area [src]([type]) now has [length(contained_turfs)] turfs")
 	turfs_to_uncontain = list()
 
 /// Returns TRUE if we have contained turfs, FALSE otherwise
