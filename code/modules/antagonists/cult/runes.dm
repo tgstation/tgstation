@@ -108,15 +108,16 @@ Runes can either be invoked by one's self or with many different cultists. Each 
 		to_chat(user, span_danger("You need [req_cultists - length(invokers)] more adjacent cultists to use this rune in such a manner."))
 		fail_invoke()
 
-/obj/effect/rune/attack_animal(mob/living/simple_animal/user, list/modifiers)
-	if(isshade(user) || isconstruct(user))
-		if(HAS_TRAIT(user, TRAIT_ANGELIC))
-			to_chat(user, span_warning("You purge the rune!"))
-			qdel(src)
-		else if(construct_invoke || !IS_CULTIST(user)) //if you're not a cult construct we want the normal fail message
-			attack_hand(user)
-		else
-			to_chat(user, span_warning("You are unable to invoke the rune!"))
+/obj/effect/rune/attack_animal(mob/living/user, list/modifiers)
+	if(!isshade(user) && !isconstruct(user))
+		return
+	if(HAS_TRAIT(user, TRAIT_ANGELIC))
+		to_chat(user, span_warning("You purge the rune!"))
+		qdel(src)
+	else if(construct_invoke || !IS_CULTIST(user)) //if you're not a cult construct we want the normal fail message
+		attack_hand(user)
+	else
+		to_chat(user, span_warning("You are unable to invoke the rune!"))
 
 /obj/effect/rune/proc/conceal() //for talisman of revealing/hiding
 	visible_message(span_danger("[src] fades away."))
