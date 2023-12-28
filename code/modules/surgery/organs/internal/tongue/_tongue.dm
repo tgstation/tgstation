@@ -570,6 +570,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/selfish_brain/Remove(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
 	REMOVE_TRAIT(tongue_owner, TRAIT_SOFTSPOKEN, SPEAKING_FROM_TONGUE)
+
 /obj/item/organ/internal/tongue/snail
 	name = "radula"
 	desc = "A minutely toothed, chitious ribbon, which as a side effect, makes all snails talk IINNCCRREEDDIIBBLLYY SSLLOOWWLLYY."

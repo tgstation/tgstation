@@ -46,21 +46,20 @@
 	blind_proximity_monitor = new(src, blind_range, FALSE)
 
 /obj/structure/selfish_brain/Destroy()
-	. = ..()
-	if (blind_proximity_monitor)
-		qdel(blind_proximity_monitor)
+	QDEL_NULL(blind_proximity_monitor)
+	return ..()
 
 /// Make it so this always whispers its messages
 /obj/structure/selfish_brain/send_speech(message, range = 7, obj/source = src, bubble_type, list/spans, datum/language/message_language, list/message_mods = list(), forced = FALSE, tts_message, list/tts_filter)
 	message_mods[WHISPER_MODE] = MODE_WHISPER
 	range = 2
 
-	. = ..()
+	return ..()
 
 /obj/structure/selfish_brain/atom_break(damage_flag)
 	. = ..()
 	broken = TRUE
-	qdel(blind_proximity_monitor)
+	QDEL_NULL(blind_proximity_monitor)
 	var/chosen_message = pick(death_whispers)
 	src.say(chosen_message)
 	new /obj/item/shard(drop_location())
