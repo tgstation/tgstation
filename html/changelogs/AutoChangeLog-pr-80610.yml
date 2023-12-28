@@ -1,0 +1,4 @@
+author: "Ghommie, 13spacemen"
+delete-after: True
+changes:
+  - bugfix: "Signing or removing your candidature from ghost roles now properly updates the screen button for it."
