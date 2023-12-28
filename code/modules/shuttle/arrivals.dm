@@ -37,9 +37,9 @@
 	for(var/area/shuttle/arrival/arrival_area in GLOB.areas)
 		for(var/turf/arrival_turf as anything in arrival_area.get_contained_turfs())
 			for(var/obj/structure/chair/shuttle_chair in arrival_turf)
-				new_latejoin += arrival_turf
+				new_latejoin += shuttle_chair
 			if(isnull(console))
-				console = locate(/obj/machinery/requests_console) in arrival_turf
+				console = locate() in arrival_turf
 		areas += arrival_area
 
 	if(SSjob.latejoin_trackers.len)
