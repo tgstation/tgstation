@@ -1,4 +1,4 @@
-// Sidepaths for knowledge between Cosmos and Ash.
+// Sidepaths for knowledge between Ash and Lock.
 
 /datum/heretic_knowledge/summon/fire_shark
 	name = "Scorching Shark"
@@ -7,7 +7,7 @@
 		Fire Sharks inject phlogiston into its victims and spawn plasma once they die."
 	gain_text = "The cradle of the nebula was cold, but not dead. Light and heat flits even through the deepest darkness, and is hunted by its own predators."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/cosmic_runes,
+		/datum/heretic_knowledge/key_ring,
 		/datum/heretic_knowledge/spell/ash_passage,
 	)
 	required_atoms = list(
@@ -20,16 +20,16 @@
 	route = PATH_SIDE
 	poll_ignore_define = POLL_IGNORE_FIRE_SHARK
 
-/datum/heretic_knowledge/spell/space_phase
-	name = "Space Phase"
-	desc = "Grants you Space Phase, a spell that allows you to move freely through space. \
-		You can only phase in and out when you are on a space or misc turf."
-	gain_text = "You feel like your body can move through space as if you where dust."
+/datum/heretic_knowledge/spell/opening_blast
+	name = "Wave Of Desperation"
+	desc = "Grants you Wave Of Desparation, a spell which can only be cast while restrained. \
+		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby."
+	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/star_blast,
 		/datum/heretic_knowledge/mad_mask,
+		/datum/heretic_knowledge/spell/burglar_finesse,
 	)
-	spell_to_add = /datum/action/cooldown/spell/jaunt/space_crawl
+	spell_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 1
 	route = PATH_SIDE
 
@@ -40,7 +40,7 @@
 		when landing on tails. If the coin gets inserted into an airlock it emags the door destroying the coin."
 	gain_text = "The Mansus is a place of all sorts of sins. But greed held a special role."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/cosmic_expansion,
+		datum/heretic_knowledge/spell/caretaker_refuge,
 		/datum/heretic_knowledge/spell/flame_birth,
 	)
 	required_atoms = list(

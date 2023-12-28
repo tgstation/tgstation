@@ -72,8 +72,7 @@
 		I spoke, and heard my own words echoed back."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/cosmic_mark,
-		/datum/heretic_knowledge/essence,
-		/datum/heretic_knowledge/summon/fire_shark,
+		/datum/heretic_knowledge/essence
 	)
 	spell_to_add = /datum/action/cooldown/spell/cosmic_rune
 	cost = 1
@@ -227,7 +226,7 @@
 	gain_text = "The ground now shook beneath me. The Beast inhabited me, and their voice was intoxicating."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/cosmic_final,
-		/datum/heretic_knowledge/eldritch_coin,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/summon/rusty,
 	)
 	spell_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion

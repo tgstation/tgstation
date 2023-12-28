@@ -5,21 +5,24 @@
  *
  * A Steward's Secret
  * Grasp of Lock
- * > Sidepaths:
- *   Ashen Eyes
- *	 Codex Cicatrix
  * Key Keeper’s Burden
+ * > Sidepaths:
+ *   Scorching Shark
  *
- * Concierge's Rite
  * Mark Of Lock
  * Ritual of Knowledge
+ * Concierge's Rite
  * Burglar's Finesse
  * > Sidepaths:
- *   Apetra Vulnera
+ *   Space Phase
  *   Opening Blast
  *
  * Opening Blade
+ *
  * Caretaker’s Last Refuge
+ * > Sidepaths:
+ *  Apetra Vulnera
+ * 	Eldritch Coin
  *
  * Unlock the Labyrinth
  */
@@ -45,11 +48,7 @@
 		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
-	next_knowledge = list(
-		/datum/heretic_knowledge/key_ring,
-		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/codex_cicatrix,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
 	route = PATH_LOCK
 
@@ -105,7 +104,10 @@
 		/obj/item/card/id = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
+	next_knowledge = list(
+		/datum/heretic_knowledge/mark/lock_mark,
+		/datum/heretic_knowledge/summon/fire_shark,
+	)
 	cost = 1
 	route = PATH_LOCK
 
@@ -120,7 +122,7 @@
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
-	next_knowledge = list(/datum/heretic_knowledge/mark/lock_mark)
+	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
 	cost = 1
 	route = PATH_LOCK
 
@@ -135,7 +137,7 @@
 	mark_type = /datum/status_effect/eldritch/lock
 
 /datum/heretic_knowledge/knowledge_ritual/lock
-	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
+	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
 	route = PATH_LOCK
 
 /datum/heretic_knowledge/spell/burglar_finesse
@@ -144,7 +146,7 @@
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/apetra_vulnera,
+		/datum/heretic_knowledge/spell/space_phase,
 		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
 	)
@@ -171,7 +173,11 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	next_knowledge = list(/datum/heretic_knowledge/ultimate/lock_final)
+	next_knowledge = list(
+		/datum/heretic_knowledge/ultimate/lock_final,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
+		/datum/heretic_knowledge/eldritch_coin,
+	)
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1

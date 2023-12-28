@@ -129,7 +129,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/blade_upgrade/ash,
 		/datum/heretic_knowledge/reroll_targets,
-		/datum/heretic_knowledge/spell/space_phase,
+		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/curse/paralysis,
 	)
 	required_atoms = list(
