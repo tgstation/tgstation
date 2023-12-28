@@ -71,7 +71,7 @@
 	if(discount_pct_off != COUPON_OMEN)
 		if(!discount) // the discount arg should be a number already, while the keys in the chances list cannot be numbers
 			discount_pct_off = text2num(discount_pct_off)
-    update_name()
+			update_name()
 		return
 
 	name = "coupon - fuck you"
