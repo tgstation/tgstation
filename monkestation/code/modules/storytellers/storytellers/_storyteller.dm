@@ -60,10 +60,9 @@
 	var/weight = 0
 
 /datum/storyteller/process(delta_time)
-	if(!round_started) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
+	if(!round_started || disable_distribution) // we are differing roundstarted ones until base roundstart so we can get cooler stuff
 		return
-	if(disable_distribution)
-		return
+
 	if(!guarantees_roundstart_roleset && prob(roundstart_prob) && !roundstart_checks)
 		roundstart_checks = TRUE
 		if(!ignores_roundstart)
