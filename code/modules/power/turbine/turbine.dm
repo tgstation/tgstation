@@ -40,6 +40,9 @@
 
 	update_appearance()
 
+	register_context()
+
+
 /obj/machinery/power/turbine/LateInitialize()
 	. = ..()
 	activate_parts()
@@ -91,15 +94,49 @@
 /obj/machinery/power/turbine/block_superconductivity()
 	return TRUE
 
+/obj/machinery/power/turbine/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	if(isnull(held_item))
+		return NONE
+
+	if(panel_open && istype(held_item, part_path))
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "[installed_part ? "Replace" : "Install"] part"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_WRENCH && panel_open)
+		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Rotate"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_CROWBAR)
+		if(installed_part)
+			context[SCREENTIP_CONTEXT_CTRL_RMB] = "Remove part"
+		if(panel_open)
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+
+	if(held_item.tool_behaviour == TOOL_MULTITOOL)
+		if(panel_open)
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Change cable layer"
+		else
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Link parts"
+		return CONTEXTUAL_SCREENTIP_SET
+
 /obj/machinery/power/turbine/examine(mob/user)
 	. = ..()
 	if(installed_part)
-		. += "Currently at tier [installed_part.current_tier]."
+		. += span_notice("Currently at tier [installed_part.current_tier].")
 		if(installed_part.current_tier + 1 < installed_part.max_tier)
-			. += "Can be upgraded by using a tier [installed_part.current_tier + 1] part."
-		. += "The [installed_part.name] can be removed by right-click with a crowbar tool."
+			. += span_notice("Can be upgraded by using a tier [installed_part.current_tier + 1] part.")
+		. += span_notice("The [installed_part.name] can be [EXAMINE_HINT("pried")] out.")
 	else
-		. += "Is missing a [initial(part_path.name)]."
+		. += span_warning("Is missing a [initial(part_path.name)].")
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(panel_open)
+		. += span_notice("It can rotated with a [EXAMINE_HINT("wrench")]")
+		. += span_notice("The full machine can be [EXAMINE_HINT("pried")] apart")
 
 /obj/machinery/power/turbine/update_overlays()
 	. = ..()
@@ -133,19 +170,21 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/wrench_act(mob/living/user, obj/item/tool)
-	return default_change_direction_wrench(user, tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_change_direction_wrench(user, tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	. = ITEM_INTERACT_BLOCKING
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/on_deconstruction()
-	if(installed_part)
-		installed_part.forceMove(loc)
+	installed_part?.forceMove(loc)
 	return ..()
 
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
-
 	if(!panel_open)
 		balloon_alert(user, "panel is closed!")
 		return
@@ -371,6 +410,18 @@
 /obj/machinery/power/turbine/core_rotor/Destroy()
 	QDEL_NULL(radio)
 	return ..()
+
+/obj/machinery/power/turbine/core_rotor/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	if(. == NONE)
+		return
+
+	if(held_item.tool_behaviour == TOOL_MULTITOOL)
+		if(panel_open)
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Change cable layer"
+		else
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Link/Log parts"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/power/turbine/core_rotor/examine(mob/user)
 	. = ..()
