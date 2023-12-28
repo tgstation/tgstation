@@ -16,6 +16,12 @@
 	spell_requirements = NONE
 
 	aoe_radius = 5
+	/// Effect for when the spell triggers
+	var/obj/effect/moon_effect = /obj/effect/temp_visual/moon_ringleader
+
+/datum/action/cooldown/spell/aoe/moon_ringleader/cast(mob/living/caster)
+	new moon_effect(get_turf(caster))
+	return ..()
 
 /datum/action/cooldown/spell/aoe/moon_ringleader/get_things_to_cast_on(atom/center, radius_override)
 	var/list/stuff = list()
@@ -37,7 +43,6 @@
 /datum/action/cooldown/spell/aoe/moon_ringleader/cast_on_thing_in_aoe(mob/living/carbon/victim, mob/living/caster)
 	var/victim_sanity = victim.mob_mood.sanity
 
-	new /obj/effect/temp_visual/moon_ringleader(get_turf(victim))
 	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 - victim_sanity, 160)
 	repeat_string((120 - victim_sanity) / 10,victim.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body),"ringleaders rise"))
 	if(victim_sanity < 15)
@@ -50,4 +55,9 @@
 	icon = 'icons/effects/eldritch.dmi'
 	icon_state = "ring_leader_effect"
 	alpha = 180
-	duration = 3 SECONDS
+	duration = 6
+
+/obj/effect/temp_visual/moon_ringleader/Initialize(mapload)
+	. = ..()
+	transform = transform.Scale(10)
+
