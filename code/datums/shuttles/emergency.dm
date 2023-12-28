@@ -488,6 +488,9 @@
 	credit_cost = CARGO_CRATE_VALUE * 16
 	occupancy_limit = "xxx"
 
+/datum/map_template/shuttle/emergency/zeta/prerequisites_met()
+	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
+
 /datum/map_template/shuttle/emergency/jungle_explorer
 	suffix = "jungleexplorer"
 	name = "JungleStation Explorative Shuttle"
@@ -496,8 +499,5 @@
 	credit_cost = CARGO_CRATE_VALUE * 75
 	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_RD)
 	occupancy_limit = "Enough seats"
-
-/datum/map_template/shuttle/emergency/zeta/prerequisites_met()
-	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
 
 #undef EMAG_LOCKED_SHUTTLE_COST
