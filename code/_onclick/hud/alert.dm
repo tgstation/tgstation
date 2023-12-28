@@ -826,6 +826,7 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 
 /atom/movable/screen/alert/poll_alert/Initialize(mapload)
 	. = ..()
+	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
 	register_context()
 
 /atom/movable/screen/alert/poll_alert/proc/set_role_overlay()
@@ -928,7 +929,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		return
 
 /atom/movable/screen/alert/poll_alert/proc/update_signed_up_overlay()
-	signed_up_overlay = mutable_appearance('icons/hud/screen_gen.dmi', icon_state = "selector")
 	if(owner in poll.signed_up)
 		add_overlay(signed_up_overlay)
 	else

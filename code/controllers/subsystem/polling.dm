@@ -38,6 +38,8 @@ SUBSYSTEM_DEF(polling)
 	var/category = "[new_poll.poll_key]_poll_alert"
 
 	for(var/mob/candidate_mob as anything in group)
+		if(!candidate_mob.client)
+			continue
 		// Universal opt-out for all players.
 		if((!candidate_mob.client.prefs.read_preference(/datum/preference/toggle/ghost_roles)))
 			continue
@@ -55,7 +57,7 @@ SUBSYSTEM_DEF(polling)
 		// we need to keep the first one's timeout rather than use the shorter one
 		var/atom/movable/screen/alert/poll_alert/current_alert = LAZYACCESS(candidate_mob.alerts, category)
 		var/alert_time = poll_time
-		var/alert_poll = new_poll
+		var/datum/candidate_poll/alert_poll = new_poll
 		if(current_alert && current_alert.timeout > (world.time + poll_time - world.tick_lag))
 			alert_time = current_alert.timeout - world.time + world.tick_lag
 			alert_poll = current_alert.poll
