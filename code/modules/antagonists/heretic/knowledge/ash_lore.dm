@@ -15,7 +15,7 @@
  * Fire Blast
  * Mask of Madness
  * > Sidepaths:
- *   Space Phase
+ *   Opening Blast
  *   Curse of Paralysis
  *
  * Fiery Blade

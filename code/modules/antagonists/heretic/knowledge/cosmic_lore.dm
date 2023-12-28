@@ -8,7 +8,6 @@
  * Cosmic Runes
  * > Sidepaths:
  *   Priest's Ritual
- *   Scorching Shark
  *
  * Mark of Cosmos
  * Ritual of Knowledge
@@ -22,7 +21,7 @@
  * Cosmic Expansion
  * > Sidepaths:
  *   Eldritch Coin
- *   Rusted Ritual
+ *   Apetra Vulnera
  *
  * Creators's Gift
  */
