@@ -1066,7 +1066,7 @@
 /obj/item/areaeditor/blueprints/slime/edit_area()
 	..()
 	var/area/A = get_area(src)
-	for(var/turf/T in A)
+	for(var/turf/T as anything in A.get_contained_turfs())
 		T.remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
 		T.add_atom_colour("#2956B2", FIXED_COLOUR_PRIORITY)
 	A.area_flags |= XENOBIOLOGY_COMPATIBLE

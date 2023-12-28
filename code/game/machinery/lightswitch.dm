@@ -87,9 +87,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 	area.lightswitch = status
 	area.update_appearance()
 
-	for(var/obj/machinery/light_switch/light_switch in area)
-		light_switch.update_appearance()
-		SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_SET, status)
+	for(var/turf/area_turf as anything in area.get_contained_turfs())
+		for(var/obj/machinery/light_switch/light_switch in area_turf)
+			light_switch.update_appearance()
+			SEND_SIGNAL(light_switch, COMSIG_LIGHT_SWITCH_SET, status)
 
 	area.power_change()
 
