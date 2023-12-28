@@ -1,4 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Added a \"postal workers strike\" negative station trait. In the case of holidays and sunday though, it'll be a \"postal system overtime\" instead."

@@ -867,3 +867,21 @@
   - bugfix: NTOS Messenger should search as you type now
   timothymtorres:
   - qol: Add UI screentips to spraycans
+2023-12-28:
+  Ben10Omintrix:
+  - rscadd: basic bots can now display their paths on huds
+  - bugfix: medbots can research healing again
+  Ghommie:
+  - rscadd: Added a "postal workers strike" negative station trait. In the case of
+      holidays and sunday though, it'll be a "postal system overtime" instead.
+  LemonInTheDark:
+  - rscdel: Removes the wires from canisters. It's a cool idea, but cheap controlled
+      maxcaps are bad actually
+  SyncIt21:
+  - bugfix: mercury & lithium will no longer make you randomly move outside of cryotubes
+      or in ground less turfs (space, water, lava etc)
+  necromanceranne:
+  - spellcheck: Fixes a typo in chat message when starting a Death Knell with the
+      Vorpal Scythe
+  - admin: Adds logging for the death knell, both when starts and when it is completed
+      successfully.

@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "mercury & lithium will no longer make you randomly move outside of cryotubes or in ground less turfs (space, water, lava etc)"

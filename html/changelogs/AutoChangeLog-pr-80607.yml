@@ -1,4 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscdel: "Removes the wires from canisters. It's a cool idea, but cheap controlled maxcaps are bad actually"
