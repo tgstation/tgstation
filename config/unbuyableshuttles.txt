@@ -23,6 +23,7 @@
 #_maps/shuttles/emergency_goon.dmm
 #_maps/shuttles/emergency_hugcage.dmm
 #_maps/shuttles/emergency_imfedupwiththisworld.dmm
+#_maps/shuttles/emergency_jungle_exploration.dmm
 #_maps/shuttles/emergency_lance.dmm
 #_maps/shuttles/emergency_luxury.dmm
 #_maps/shuttles/emergency_meteor.dmm
@@ -33,4 +34,3 @@
 #_maps/shuttles/emergency_tranquility.dmm
 #_maps/shuttles/emergency_venture.dmm
 #_maps/shuttles/emergency_wabbajack.dmm
-#_maps/shuttles/emergency_jungle_exploration.dmm
