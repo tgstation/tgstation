@@ -148,6 +148,7 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/space_phase,
 		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
