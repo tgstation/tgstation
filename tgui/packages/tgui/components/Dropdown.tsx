@@ -2,6 +2,7 @@ import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
 import { Component, ReactNode } from 'react';
 import { findDOMNode, render } from 'react-dom';
+
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
@@ -342,7 +343,7 @@ export class Dropdown extends Component<Props, State> {
                 overflow: clipSelectedText ? 'hidden' : 'visible',
               }}
             >
-              {this.state.selected || displayText}
+              {displayText || this.state.selected}
             </span>
             {nochevron || (
               <span className="Dropdown__arrow-button">

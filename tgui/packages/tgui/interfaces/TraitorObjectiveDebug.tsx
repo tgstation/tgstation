@@ -1,4 +1,5 @@
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Box, LabeledList, Stack, Tabs, Tooltip } from '../components';
 import { Window } from '../layouts';
@@ -150,7 +151,7 @@ export const TraitorObjectiveDebug = (props) => {
           backgroundColor="green"
           height="5px"
           style={{
-            zIndex: 5,
+            zIndex: '5',
           }}
         />
         <Box
@@ -158,7 +159,7 @@ export const TraitorObjectiveDebug = (props) => {
           top={0}
           left={1}
           style={{
-            zIndex: 5,
+            zIndex: '5',
           }}
         >
           {/* Time in minutes of this threshold */}
@@ -254,7 +255,6 @@ export const TraitorObjectiveDebug = (props) => {
         <Box
           position="absolute"
           width="100%"
-          fill
           backgroundColor="black"
           left={0}
           top="100px"

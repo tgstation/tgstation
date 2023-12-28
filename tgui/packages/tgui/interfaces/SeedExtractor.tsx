@@ -1,21 +1,22 @@
+import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
-import { flow } from 'common/fp';
-import { sortBy } from 'common/collections';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
-  Input,
-  Tooltip,
   Box,
-  ProgressBar,
   Button,
+  Icon,
+  Input,
+  NoticeBox,
+  ProgressBar,
   Section,
   Table,
-  NoticeBox,
-  Icon,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 type TraitData = {
   path: string;
@@ -82,7 +83,7 @@ export const SeedExtractor = (props) => {
                   autoFocus
                   placeholder={'Search...'}
                   value={searchText}
-                  onChange={(e, value) => setSearchText(value)}
+                  onInput={(e, value) => setSearchText(value)}
                   fluid
                 />
               </Table.Cell>

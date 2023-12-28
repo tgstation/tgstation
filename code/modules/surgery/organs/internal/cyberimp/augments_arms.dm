@@ -136,6 +136,7 @@
 		active_item.forceMove(src)
 
 	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF)
+	UnregisterSignal(active_item, COMSIG_ITEM_ATTACK_SELF_SECONDARY)
 	active_item = null
 	playsound(get_turf(owner), retract_sound, 50, TRUE)
 	return TRUE

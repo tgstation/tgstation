@@ -26,8 +26,21 @@ have ways of interacting with a specific mob and control it.
 		BB_MONKEY_GUN_NEURONS_ACTIVATED = FALSE,
 		BB_MONKEY_GUN_WORKED = TRUE,
 		BB_SONG_LINES = MONKEY_SONG,
+		BB_RESISTING = FALSE,
 	)
 	idle_behavior = /datum/idle_behavior/idle_monkey
+
+/datum/ai_controller/monkey/process(seconds_per_tick)
+
+	var/mob/living/living_pawn = src.pawn
+
+	if(!length(living_pawn.do_afters) && living_pawn.ai_controller.blackboard[BB_RESISTING])
+		living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, FALSE)
+
+	if(living_pawn.ai_controller.blackboard[BB_RESISTING])
+		return
+
+	. = ..()
 
 /datum/ai_controller/monkey/New(atom/new_pawn)
 	var/static/list/control_examine = list(
@@ -91,7 +104,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/able_to_run()
 	var/mob/living/living_pawn = pawn
 
-	if(IS_DEAD_OR_INCAP(living_pawn))
+	if(living_pawn.incapacitated(IGNORE_RESTRAINTS | IGNORE_GRAB | IGNORE_STASIS) || living_pawn.stat > CONSCIOUS)
 		return FALSE
 	return ..()
 
@@ -147,8 +160,12 @@ have ways of interacting with a specific mob and control it.
 	return TRUE
 
 ///Reactive events to being hit
-/datum/ai_controller/monkey/proc/retaliate(mob/living/L)
-	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, L, MONKEY_HATRED_AMOUNT)
+/datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
+	// just to be safe
+	if(QDELETED(living_mob))
+		return
+
+	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, living_mob, MONKEY_HATRED_AMOUNT)
 
 /datum/ai_controller/monkey/proc/on_attacked(datum/source, mob/attacker)
 	SIGNAL_HANDLER

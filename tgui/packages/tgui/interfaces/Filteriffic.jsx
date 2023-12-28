@@ -1,5 +1,7 @@
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
+import { useState } from 'react';
+
 import { numberOfDecimalDigits } from '../../common/math';
 import { useBackend } from '../backend';
 import {
@@ -15,7 +17,6 @@ import {
   Section,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const FilterIntegerEntry = (props) => {
   const { value, name, filterName } = props;

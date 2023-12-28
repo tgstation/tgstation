@@ -141,3 +141,59 @@
 		/obj/item/restraints/legcuffs/beartrap/prearmed = 5, //not really a landmine, but still a good threat
 		/obj/effect/mine/shrapnel = 5,
 	)
+
+/obj/effect/spawner/random/contraband/grenades
+	name = "grenades spawner"
+	loot = list(
+		/obj/item/grenade/chem_grenade/metalfoam,
+		/obj/item/grenade/chem_grenade/cleaner,
+		/obj/effect/spawner/random/entertainment/colorful_grenades,
+		/obj/item/grenade/smokebomb,
+		/obj/item/grenade/chem_grenade/antiweed,
+		/obj/item/grenade/spawnergrenade/syndiesoap,
+		/obj/effect/spawner/random/contraband/grenades/dangerous,
+	)
+
+/obj/effect/spawner/random/contraband/grenades/dangerous
+	name = "dangerous grenades spawner"
+	loot = list(
+		/obj/item/grenade/flashbang = 3,
+		/obj/item/grenade/chem_grenade/teargas = 2,
+		/obj/item/grenade/iedcasing/spawned = 2,
+		/obj/item/grenade/empgrenade = 2,
+		/obj/item/grenade/antigravity = 2,
+		/obj/effect/spawner/random/contraband/grenades/cluster = 1,
+		/obj/effect/spawner/random/contraband/grenades/lethal = 1,
+	)
+
+/obj/effect/spawner/random/contraband/grenades/cluster
+	name = "clusterbusters spawner"
+	loot = list(
+		/obj/item/grenade/clusterbuster/smoke = 4,
+		/obj/item/grenade/clusterbuster/metalfoam = 4,
+		/obj/item/grenade/clusterbuster/cleaner = 4,
+		/obj/item/grenade/clusterbuster = 3,
+		/obj/item/grenade/clusterbuster/teargas = 3,
+		/obj/item/grenade/clusterbuster/antiweed = 3,
+		/obj/item/grenade/clusterbuster/soap = 2,
+		/obj/item/grenade/clusterbuster/emp = 1,
+		/obj/item/grenade/clusterbuster/spawner_spesscarp = 1,
+		/obj/item/grenade/clusterbuster/facid = 1,
+		/obj/item/grenade/clusterbuster/inferno = 1,
+		/obj/item/grenade/clusterbuster/clf3 = 1,
+	)
+
+/obj/effect/spawner/random/contraband/grenades/lethal
+	name = "lethal grenades spawner"
+	loot = list(
+		/obj/item/grenade/chem_grenade/incendiary = 3,
+		/obj/item/grenade/chem_grenade/facid = 3,
+		/obj/item/grenade/chem_grenade/ez_clean = 3,
+		/obj/item/grenade/chem_grenade/clf3 = 2,
+		/obj/item/grenade/gluon = 2,
+		/obj/item/grenade/chem_grenade/holy = 2,
+		/obj/item/grenade/spawnergrenade/spesscarp = 1,
+		/obj/item/grenade/spawnergrenade/cat = 1,
+		/obj/item/grenade/frag = 1,
+		/obj/item/grenade/chem_grenade/bioterrorfoam = 1,
+	)

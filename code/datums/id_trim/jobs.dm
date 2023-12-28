@@ -79,6 +79,7 @@
 /datum/id_trim/job/assistant
 	assignment = "Assistant"
 	trim_state = "trim_assistant"
+	intern_alt_name = "Intern"
 	sechud_icon_state = SECHUD_ASSISTANT
 	minimal_access = list()
 	extra_access = list(
@@ -855,7 +856,8 @@
 
 /datum/id_trim/job/quartermaster
 	assignment = "Quartermaster"
-	trim_state = "trim_quartermaster"
+	intern_alt_name = "Quartermaster-in-Training"
+	trim_state = "trim_cargotechnician"
 	department_color = COLOR_COMMAND_BLUE
 	subdepartment_color = COLOR_CARGO_BROWN
 	department_state = "departmenthead"
