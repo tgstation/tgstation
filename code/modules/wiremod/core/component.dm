@@ -205,6 +205,9 @@
 		SStgui.update_uis(parent)
 
 
+/obj/item/circuit_component/proc/after_work_call()
+	return
+
 /**
  * Called whenever an input is received from one of the ports.
  *
@@ -233,6 +236,7 @@
 
 	if(circuit_flags & CIRCUIT_FLAG_OUTPUT_SIGNAL)
 		trigger_output.set_output(COMPONENT_SIGNAL)
+	after_work_call()
 	return TRUE
 
 /obj/item/circuit_component/proc/set_circuit_size(new_size)

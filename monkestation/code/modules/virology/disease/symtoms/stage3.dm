@@ -224,7 +224,6 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		mob.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
 	if(!mob.wear_mask)
 		mob.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
-	mob.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, 20)
 	mob.say(pick("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk..."))
 	if(ishuman(mob))
 		var/mob/living/carbon/human/affected = mob

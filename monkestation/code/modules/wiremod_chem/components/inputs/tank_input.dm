@@ -1,0 +1,74 @@
+/obj/structure/chemical_input
+	name = "remote chemical input tank"
+	desc = "A chemical tank that can be remotely connected to the chemical manufacturer to send chemicals."
+
+	var/obj/item/circuit_component/chem/input/linked_input
+	var/reagent_flags = TRANSPARENT | REFILLABLE
+	var/buffer = 500
+
+/obj/structure/chemical_input/Initialize(mapload)
+	. = ..()
+	create_reagents(buffer, reagent_flags)
+
+/obj/structure/chemical_input/AltClick(mob/user)
+	. = ..()
+	if(!linked_input)
+		linked_input = new(src.loc)
+		linked_input.linked_input = src
+
+/obj/structure/chemical_input/examine(mob/user)
+	. = ..()
+	. += span_notice("The maximum volume display reads: <b>[reagents.maximum_volume] units</b>.")
+	if(linked_output)
+		. += span_notice("Is connected to an input device.")
+
+/obj/item/circuit_component/chem/input
+	display_name = "Tank Input"
+	desc = "Linked to a physical object, pulls the chemicals from the tank."
+
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+
+	var/datum/port/output/chemical_output
+	/// The heat read from the input device
+	var/datum/port/output/chem_heat
+	///our linked input we check if we can send signals from here
+	var/obj/structure/chemical_input/linked_input
+	///our input that dictates how much we pull out
+	var/datum/port/input/units
+
+	var/datum/reagents/reagent_holder
+
+
+/obj/item/circuit_component/chem/input/populate_ports()
+	chemical_output = add_output_port("Chemical Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBEr))
+	chem_heat = add_output_port("Chemical Heat", PORT_TYPE_NUMBER)
+	units = add_input_port("Units", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/chem/input/input_received(datum/port/input/port, list/return_values)
+	if(!reagent_holder)
+		reagent_holder = new(10000)
+		reagent_holder.my_atom = src
+
+	if(!linked_input || !linked_input.reagents.total_volume)
+		return
+	if(!units.value)
+		return
+
+	var/read_heat = linked_input.reagents.chem_temp
+
+	linked_input.reagents.trans_to(reagent_holder, units.value)
+
+	var/list/built_output = list()
+	for(var/datum/reagent/reagent as anything in reagent_holder.reagent_list)
+		built_output += reagent.type
+		built_output[reagent.type] += reagent.volume
+
+	chemical_output.set_output(built_output)
+	chem_heat.set_output(read_heat)
+
+/obj/item/circuit_component/chem/input/after_work_call()
+	clear_all_temp_ports()
+
+/obj/item/circuit_component/chem/input/clear_all_temp_ports()
+	chemical_output.value = null
+	chem_heat.value = null
