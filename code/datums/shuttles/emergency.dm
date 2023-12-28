@@ -492,7 +492,7 @@
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH]
 
 /datum/map_template/shuttle/emergency/jungle_explorer
-	suffix = "jungleexplorer"
+	suffix = "jungle_exploration"
 	name = "JungleStation Explorative Shuttle"
 	description = "A shuttle used to explore the mysterious jungle planet. After it departs from Central Command, \
 	any remaining crew will be transported over to investigate."

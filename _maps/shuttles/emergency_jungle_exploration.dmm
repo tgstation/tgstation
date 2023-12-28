@@ -90,6 +90,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 8
 	},
+/obj/machinery/light/directional/east,
 /turf/open/floor/holofloor,
 /area/shuttle/escape/jungle_explorer)
 "cp" = (
@@ -246,8 +247,8 @@
 /turf/open/floor/holofloor,
 /area/shuttle/escape/jungle_explorer)
 "gz" = (
+/obj/structure/sign/warning/gas_mask/directional/north,
 /obj/machinery/hydroponics/soil,
-/obj/item/reagent_containers/cup/watering_can,
 /turf/open/misc/dirt/station,
 /area/shuttle/escape/jungle_explorer)
 "gP" = (
@@ -291,6 +292,13 @@
 	dir = 1
 	},
 /turf/open/floor/carpet,
+/area/shuttle/escape/jungle_explorer)
+"hv" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape/jungle_explorer)
 "hC" = (
 /obj/effect/turf_decal/siding/white{
@@ -378,6 +386,7 @@
 "kl" = (
 /obj/machinery/computer/crew,
 /obj/effect/turf_decal/tile/blue/full,
+/obj/machinery/light/warm/directional/west,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/jungle_explorer)
 "kn" = (
@@ -522,6 +531,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
 	},
+/obj/machinery/light/directional/south,
 /turf/open/floor/engine,
 /area/shuttle/escape/jungle_explorer)
 "oD" = (
@@ -539,6 +549,7 @@
 "oQ" = (
 /obj/machinery/computer/security,
 /obj/effect/turf_decal/tile/dark_red/full,
+/obj/machinery/light/warm/directional/east,
 /turf/open/floor/iron/dark/smooth_large,
 /area/shuttle/escape/jungle_explorer)
 "oT" = (
@@ -687,6 +698,7 @@
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/floor,
 /turf/open/floor/iron/white,
 /area/shuttle/escape/jungle_explorer)
 "si" = (
@@ -780,7 +792,7 @@
 /turf/open/floor/iron/white,
 /area/shuttle/escape/jungle_explorer)
 "uK" = (
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/public/glass{
 	name = "Common Area"
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -840,19 +852,23 @@
 /obj/structure/chair/sofa/bench,
 /turf/open/floor/holofloor,
 /area/shuttle/escape/jungle_explorer)
+"wN" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/iron/dark,
+/area/shuttle/escape/jungle_explorer)
 "wT" = (
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/kitchen,
 /area/shuttle/escape/jungle_explorer)
 "wU" = (
-/obj/machinery/door/airlock/glass{
-	name = "Cabin 1"
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock{
+	name = "Cabin 1"
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape/jungle_explorer)
 "xk" = (
@@ -923,7 +939,7 @@
 /turf/open/floor/carpet,
 /area/shuttle/escape/jungle_explorer)
 "zm" = (
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/public/glass{
 	name = "Main Hall"
 	},
 /turf/open/floor/iron/dark,
@@ -936,14 +952,14 @@
 /turf/open/floor/engine,
 /area/shuttle/escape/jungle_explorer)
 "zE" = (
-/obj/machinery/door/airlock/glass{
-	name = "Cabin 3"
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock{
+	name = "Cabin 3"
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape/jungle_explorer)
 "zJ" = (
@@ -956,13 +972,17 @@
 /turf/open/floor/engine,
 /area/shuttle/escape/jungle_explorer)
 "zW" = (
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/public/glass{
 	name = "Common Area"
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 4
 	},
 /turf/open/floor/wood/parquet,
+/area/shuttle/escape/jungle_explorer)
+"Ap" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
 /area/shuttle/escape/jungle_explorer)
 "Au" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
@@ -1167,6 +1187,7 @@
 /area/shuttle/escape/jungle_explorer)
 "Fy" = (
 /obj/machinery/suit_storage_unit,
+/obj/machinery/light/directional/north,
 /turf/open/floor/engine,
 /area/shuttle/escape/jungle_explorer)
 "FA" = (
@@ -1178,14 +1199,14 @@
 /turf/open/floor/plating,
 /area/shuttle/escape/jungle_explorer)
 "FV" = (
-/obj/machinery/door/airlock/glass{
-	name = "Cabin 2"
-	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock{
+	name = "Cabin 2"
+	},
 /turf/open/floor/carpet,
 /area/shuttle/escape/jungle_explorer)
 "FZ" = (
@@ -1205,6 +1226,13 @@
 /obj/item/food/grown/cucumber,
 /obj/item/food/grown/cucumber,
 /turf/open/floor/engine,
+/area/shuttle/escape/jungle_explorer)
+"GE" = (
+/obj/machinery/door/airlock/external,
+/obj/docking_port/mobile/emergency{
+	name = "JungleStation Explorative Shuttle"
+	},
+/turf/open/floor/plating,
 /area/shuttle/escape/jungle_explorer)
 "GF" = (
 /obj/effect/turf_decal/siding/white{
@@ -1319,6 +1347,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/jungle_explorer)
+"Kc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/holofloor,
+/area/shuttle/escape/jungle_explorer)
 "Kn" = (
 /obj/effect/turf_decal/siding/white/corner{
 	dir = 8
@@ -1389,6 +1424,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/white,
+/area/shuttle/escape/jungle_explorer)
+"MA" = (
+/obj/machinery/light/floor,
+/turf/open/floor/plating,
 /area/shuttle/escape/jungle_explorer)
 "MG" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible/layer2,
@@ -1597,6 +1636,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/departments/botany/alt2/directional/south,
 /turf/open/floor/iron/white,
 /area/shuttle/escape/jungle_explorer)
 "RL" = (
@@ -1612,7 +1652,6 @@
 /area/shuttle/escape/jungle_explorer)
 "Sg" = (
 /obj/structure/reagent_dispensers/watertank/high,
-/obj/machinery/light/directional/north,
 /turf/open/misc/dirt/station,
 /area/shuttle/escape/jungle_explorer)
 "SH" = (
@@ -1758,12 +1797,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/jungle_explorer)
-"Vn" = (
-/obj/structure/sign/departments/botany/alt2/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/turf/open/floor/holofloor,
-/area/shuttle/escape/jungle_explorer)
 "Vp" = (
 /obj/machinery/door/airlock/science{
 	name = "Research Office"
@@ -1803,7 +1836,7 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape/jungle_explorer)
 "VG" = (
-/obj/machinery/door/airlock/public{
+/obj/machinery/door/airlock/public/glass{
 	name = "Common Area"
 	},
 /obj/effect/turf_decal/siding/wood{
@@ -1845,20 +1878,16 @@
 	},
 /turf/open/floor/holofloor,
 /area/shuttle/escape/jungle_explorer)
+"Wq" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/light/floor,
+/turf/open/floor/engine,
+/area/shuttle/escape/jungle_explorer)
 "WL" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
 /obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/shuttle/escape/jungle_explorer)
-"WV" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/docking_port/mobile/emergency{
-	name = "JungleStation Explorative Shuttle"
-	},
 /turf/open/floor/plating,
 /area/shuttle/escape/jungle_explorer)
 "Xb" = (
@@ -1888,6 +1917,10 @@
 /obj/effect/turf_decal/plaque{
 	icon_state = "L7"
 	},
+/turf/open/floor/iron/dark,
+/area/shuttle/escape/jungle_explorer)
+"Yf" = (
+/obj/machinery/light/directional/north,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape/jungle_explorer)
 "Yo" = (
@@ -1974,9 +2007,9 @@ oD
 oD
 oD
 oD
-oD
-oD
-oD
+Ll
+GE
+Ll
 oD
 oD
 oD
@@ -2023,9 +2056,9 @@ oD
 oD
 oD
 oD
-oD
-oD
-oD
+Zv
+tq
+Zv
 oD
 oD
 oD
@@ -2070,27 +2103,27 @@ oD
 oD
 oD
 oD
-oD
-oD
 II
-oD
+Mb
+Zv
+tq
+Zv
+Mb
 II
-oD
-oD
 oD
 oD
 oD
 oD
 oD
 Ll
-Ll
+bS
 nm
 im
 OX
 vL
 tq
 mU
-Ll
+bS
 Ll
 oD
 oD
@@ -2121,9 +2154,9 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+tq
+Zv
 oD
 oD
 oD
@@ -2170,9 +2203,9 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+tq
+Zv
 oD
 oD
 oD
@@ -2195,7 +2228,7 @@ oD
 oD
 oD
 Ll
-tq
+MA
 Ll
 oD
 oD
@@ -2219,9 +2252,9 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+tq
+Zv
 oD
 oD
 oD
@@ -2268,17 +2301,17 @@ oD
 oD
 oD
 oD
-Mb
-oD
-Mb
+Zv
+tq
+Zv
 oD
 oD
 Ll
-bS
+Ll
 VO
 gs
 SL
-We
+Kc
 Cy
 Cy
 Cy
@@ -2318,7 +2351,7 @@ oD
 oD
 oD
 Ll
-WV
+AJ
 Ll
 oD
 oD
@@ -2367,7 +2400,7 @@ oD
 oD
 oD
 Ll
-tq
+MA
 Ll
 oD
 oD
@@ -2376,9 +2409,9 @@ oZ
 fM
 Cy
 vL
-vL
-vL
-vL
+Zv
+Zv
+Zv
 VG
 VG
 vL
@@ -2420,11 +2453,11 @@ NN
 Ll
 Zv
 Zv
-bS
+Ll
 Cy
 fM
 vL
-bS
+vL
 jM
 Pi
 Pi
@@ -2561,7 +2594,7 @@ Ll
 Zv
 Zv
 Zv
-bS
+Ll
 fM
 fM
 fM
@@ -2570,7 +2603,7 @@ vL
 vL
 vL
 DY
-vL
+bS
 jf
 ML
 Ok
@@ -2606,7 +2639,7 @@ oD
 oD
 oD
 Ll
-bS
+Ll
 rh
 Cy
 Cy
@@ -2614,7 +2647,7 @@ Cy
 fM
 Cy
 vL
-bS
+vL
 RC
 sy
 Kr
@@ -2901,12 +2934,12 @@ yp
 it
 yp
 yp
-CR
+Ap
 CR
 CR
 Ya
 Rx
-CR
+Ap
 zm
 CR
 CR
@@ -2930,7 +2963,7 @@ yp
 qx
 qx
 zC
-aO
+Wq
 QP
 yG
 tq
@@ -2967,7 +3000,7 @@ CR
 CR
 CR
 CR
-CR
+wN
 CR
 CR
 CR
@@ -3054,7 +3087,7 @@ CR
 YQ
 Hh
 dd
-Zv
+Ll
 gz
 ig
 hC
@@ -3113,7 +3146,7 @@ Zv
 az
 MR
 aW
-tp
+hv
 CC
 Zv
 xk
@@ -3194,7 +3227,7 @@ oD
 oD
 oD
 Ll
-bS
+Ll
 jj
 Cy
 Cy
@@ -3202,7 +3235,7 @@ Cy
 fM
 Cy
 vL
-bS
+vL
 Sg
 uv
 ls
@@ -3247,7 +3280,7 @@ Ll
 Zv
 Zv
 Zv
-bS
+Ll
 fM
 fM
 fM
@@ -3300,7 +3333,7 @@ Ll
 Nb
 Cy
 fM
-Vn
+fM
 fM
 fM
 fM
@@ -3346,7 +3379,7 @@ oD
 oD
 oD
 Ll
-bS
+Ll
 Cy
 Cy
 Cy
@@ -3361,7 +3394,7 @@ CR
 CR
 xC
 vL
-CR
+Yf
 CR
 vL
 tV
@@ -3400,11 +3433,11 @@ FA
 Ll
 Zv
 Zv
-bS
+Ll
 Cy
 fM
 vL
-bS
+vL
 ZN
 On
 On
@@ -3445,7 +3478,7 @@ oD
 oD
 oD
 Ll
-tq
+MA
 Ll
 oD
 oD
@@ -3548,7 +3581,7 @@ Mb
 oD
 oD
 Ll
-bS
+Ll
 Dv
 dF
 TX
@@ -3665,7 +3698,7 @@ oD
 oD
 oD
 Ll
-tq
+MA
 Ll
 oD
 oD
@@ -3749,7 +3782,7 @@ oD
 oD
 oD
 Ll
-Ll
+bS
 zQ
 TY
 lP
