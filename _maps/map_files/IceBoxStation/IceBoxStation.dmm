@@ -4408,6 +4408,10 @@
 /area/station/commons/toilet)
 "bws" = (
 /obj/machinery/light/small/directional/north,
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_x = 0;
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/starboard)
 "bwt" = (
@@ -5062,7 +5066,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
-/obj/structure/sign/directions/cryo/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "bEH" = (
@@ -16310,12 +16313,6 @@
 	},
 /turf/open/floor/glass,
 /area/station/service/library)
-"ffc" = (
-/obj/structure/sign/directions/cryo/directional/south{
-	pixel_y = 1
-	},
-/turf/closed/wall,
-/area/station/commons/locker)
 "ffe" = (
 /turf/closed/wall/r_wall,
 /area/station/maintenance/aft/lesser)
@@ -56496,10 +56493,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/engine,
 /area/station/engineering/supermatter)
-"seS" = (
-/obj/structure/sign/directions/cryo/directional/north,
-/turf/closed/wall/r_wall,
-/area/station/maintenance/central/greater)
 "seX" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/mechanical,
@@ -66093,6 +66086,10 @@
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red{
 	dir = 8
+	},
+/obj/structure/sign/directions/cryo/directional/north{
+	pixel_y = 10;
+	pixel_x = -30
 	},
 /turf/open/floor/iron/white/corner{
 	dir = 1
@@ -224473,7 +224470,7 @@ fYS
 hTo
 aJA
 tAR
-ffc
+qnj
 gYR
 vqg
 oGX
@@ -231944,7 +231941,7 @@ gfb
 gfb
 pYB
 gfb
-seS
+gfb
 nqU
 rcE
 rcE
