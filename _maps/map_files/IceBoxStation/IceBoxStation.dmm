@@ -59516,10 +59516,6 @@
 /obj/structure/sign/warning/electric_shock,
 /turf/closed/wall,
 /area/station/maintenance/starboard/fore)
-"tfx" = (
-/obj/machinery/portable_atmospherics/canister/water_vapor,
-/turf/open/floor/iron,
-/area/station/service/janitor)
 "tfG" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
@@ -237871,7 +237867,7 @@ ufw
 rpG
 jtY
 xVK
-tfx
+evb
 tyK
 fVS
 cvS
