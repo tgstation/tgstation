@@ -45,7 +45,7 @@
 		log_combat(attacker, defender, "attempted to hit", atk_verb)
 		return FALSE
 
-	if(damage == upper_force) //lucky you, you discombobulated them
+	if(prob(base_unarmed_effectiveness)) //lucky you, you discombobulated them
 		atk_verb = "discombobulat" //this isn't a spelling mistake, honest
 		defender.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH, 10 SECONDS)
 
