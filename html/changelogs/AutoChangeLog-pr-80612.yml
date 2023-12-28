@@ -1,4 +1,4 @@
 author: "vinylspiders"
 delete-after: True
 changes:
-  - bugfix: "fixes a hard del with thrown items"
+  - spellcheck: "changes some let's to lets"

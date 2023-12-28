@@ -1,6 +1,5 @@
-import { round, toFixed } from 'common/math';
-
-import { resolveAsset } from '../assets';
+import { round, toFixed } from '../../common/math';
+import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
 import {
   AnimatedNumber,
@@ -16,48 +15,63 @@ import {
 } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
-import { BeakerContents } from './common/BeakerContents';
+import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
+
+type ActiveReaction = {
+  name: string;
+  danger: BooleanLike;
+  overheat: BooleanLike;
+  purityAlert: number;
+  quality: number;
+  inverse: number;
+  minPure: number;
+  reactedVol: number;
+  targetVol: number;
+};
+
+type Data = {
+  targetTemp: number;
+  isActive: BooleanLike;
+  upgradeLevel: number;
+  beaker: Beaker;
+  currentTemp: number;
+  activeReactions: ActiveReaction[];
+  isFlashing: number;
+  acidicBufferVol: number;
+  basicBufferVol: number;
+  dispenseVolume: number;
+};
 
 export const ChemHeater = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<Data>();
   const {
     targetTemp,
     isActive,
     isFlashing,
-    currentpH,
-    isBeakerLoaded,
+    beaker,
     currentTemp,
-    beakerCurrentVolume,
-    beakerMaxVolume,
     acidicBufferVol,
     basicBufferVol,
     dispenseVolume,
     upgradeLevel,
-    tutorialMessage,
-    beakerContents = [],
     activeReactions = [],
   } = data;
+  const isBeakerLoaded = beaker !== null;
+
   return (
-    <Window width={330} height={tutorialMessage ? 680 : 350}>
+    <Window width={350} height={350}>
       <Window.Content scrollable>
         <Section
           title="Controls"
           buttons={
             <Flex>
               <Button
-                icon={'question'}
-                selected={tutorialMessage}
-                content={'Help'}
-                left={-2}
-                tooltip={'Guides you through a tutorial reaction!'}
-                onClick={() => act('help')}
-              />
-              <Button
                 icon={isActive ? 'power-off' : 'times'}
                 selected={isActive}
-                content={isActive ? 'On' : 'Off'}
                 onClick={() => act('power')}
-              />
+              >
+                {isActive ? 'On' : 'Off'}
+              </Button>
             </Flex>
           }
         >
@@ -98,7 +112,7 @@ export const ChemHeater = (props) => {
                   unit="K"
                   step={10}
                   stepPixelSize={3}
-                  value={round(targetTemp)}
+                  value={round(targetTemp, 1)}
                   minValue={0}
                   maxValue={1000}
                   onDrag={(e, value) =>
@@ -200,14 +214,14 @@ export const ChemHeater = (props) => {
               <Flex>
                 <Flex.Item color="label">
                   <AnimatedNumber
-                    value={currentpH}
+                    value={beaker.pH}
                     format={(value) => 'pH: ' + round(value, 3)}
                   />
                 </Flex.Item>
                 <Flex.Item>
                   <RoundGauge
                     size={1.6}
-                    value={currentpH}
+                    value={beaker.pH}
                     minValue={0}
                     maxValue={14}
                     alertAfter={isFlashing}
@@ -279,19 +293,28 @@ export const ChemHeater = (props) => {
                         />
                       )}
                     </Table.Cell>
-                    <Table.Cell width={'70px'}>
+                    <Table.Cell width={'100px'}>
                       {(upgradeLevel > 2 && (
-                        <ProgressBar
-                          value={reaction.reactedVol}
-                          minValue={0}
-                          maxValue={reaction.targetVol}
-                          textAlign={'center'}
-                          icon={reaction.overheat && 'thermometer-full'}
-                          width={7}
-                          color={reaction.overheat ? 'red' : 'label'}
-                        >
-                          {reaction.targetVol}u
-                        </ProgressBar>
+                        <>
+                          {!!reaction.overheat && (
+                            <Icon
+                              name="thermometer-full"
+                              color="red"
+                              style={{ transform: 'scale(1.7)' }}
+                              mr="5px"
+                            />
+                          )}
+                          <ProgressBar
+                            value={reaction.reactedVol}
+                            minValue={0}
+                            maxValue={reaction.targetVol}
+                            textAlign="center"
+                            width={8}
+                            color={reaction.overheat ? 'red' : 'label'}
+                          >
+                            {reaction.targetVol}u
+                          </ProgressBar>
+                        </>
                       )) || (
                         <Box color={reaction.danger && 'red'} ml={2}>
                           {reaction.targetVol}u
@@ -305,34 +328,7 @@ export const ChemHeater = (props) => {
             )}
           </Section>
         )}
-        {tutorialMessage && (
-          <Section title="Tutorial" preserveWhitespace>
-            <img src={resolveAsset('chem_help_advisor.gif')} width="30px" />
-            {tutorialMessage}
-          </Section>
-        )}
-        <Section
-          title="Beaker"
-          buttons={
-            !!isBeakerLoaded && (
-              <>
-                <Box inline color="label" mr={2}>
-                  {beakerCurrentVolume} / {beakerMaxVolume} units
-                </Box>
-                <Button
-                  icon="eject"
-                  content="Eject"
-                  onClick={() => act('eject')}
-                />
-              </>
-            )
-          }
-        >
-          <BeakerContents
-            beakerLoaded={isBeakerLoaded}
-            beakerContents={beakerContents}
-          />
-        </Section>
+        <BeakerSectionDisplay beaker={beaker} showpH={false} />
       </Window.Content>
     </Window>
   );

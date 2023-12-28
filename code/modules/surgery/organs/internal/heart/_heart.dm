@@ -119,7 +119,7 @@
 			SEND_SOUND(owner, sound('sound/health/fastbeat.ogg', repeat = TRUE, channel = CHANNEL_HEARTBEAT, volume = 40))
 			beat = BEAT_FAST
 
-	else if(beat == BEAT_SLOW)
+	else if(beat != BEAT_NONE)
 		owner.stop_sound_channel(CHANNEL_HEARTBEAT)
 		beat = BEAT_NONE
 

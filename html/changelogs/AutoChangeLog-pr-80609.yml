@@ -1,0 +1,4 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "Dear mappers, the light debugger tool no longer deletes dragged wall lights"

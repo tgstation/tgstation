@@ -38,12 +38,6 @@
 	var/obj/item/stock_parts/cell/internal_cell
 	///used while processing to update appearance only when its pressure state changes
 	var/current_pressure_state
-	/// An assembly attached to the canister
-	var/obj/item/assembly_holder/rig = null
-	/// The person who attached an assembly to this canister, usually for ignition purposes in tandem with valve wire pulse
-	var/mob/last_rigger = ""
-	//overlay of attached assemblies
-	var/mutable_appearance/assemblies_overlay
 
 /datum/armor/portable_atmospherics_canister
 	melee = 50
@@ -59,8 +53,6 @@
 
 	if(mapload)
 		internal_cell = new /obj/item/stock_parts/cell/high(src)
-
-	set_wires(new /datum/wires/canister(src))
 
 	if(existing_mixture)
 		air_contents.copy_from(existing_mixture)
@@ -81,17 +73,6 @@
 	AddComponent(/datum/component/gas_leaker, leak_rate=0.01)
 	register_context()
 
-/obj/machinery/portable_atmospherics/canister/Destroy()
-	QDEL_NULL(wires)
-	return ..()
-
-/obj/machinery/portable_atmospherics/canister/Exited(atom/movable/gone)
-	if(gone == rig)
-		rig = null
-		last_rigger = null
-		cut_overlays(assemblies_overlay)
-	return ..()
-
 /obj/machinery/portable_atmospherics/canister/interact(mob/user)
 	. = ..()
 	if(!allowed(user))
@@ -101,14 +82,10 @@
 
 /obj/machinery/portable_atmospherics/canister/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-	if(rig)
-		context[SCREENTIP_CONTEXT_RMB] = "Remove rigged device"
 	if(holding)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove tank"
 	if(!held_item)
 		return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/assembly_holder))
-		context[SCREENTIP_CONTEXT_LMB] = "Rig"
 	if(istype(held_item, /obj/item/stock_parts/cell))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert cell"
 	switch(held_item.tool_behaviour)
@@ -132,11 +109,6 @@
 		. += span_notice("Warning, no cell installed, use a screwdriver to open the hatch and insert one.")
 	if(panel_open)
 		. += span_notice("Hatch open, close it with a screwdriver.")
-	if(get_dist(user, src) <= 2)
-		if(rig)
-			. += span_warning("There is some kind of device <b>rigged</b> to the canister!")
-		else
-			. += span_notice("It looks like you could <b>rig</b> a device to the canister.")
 
 // Please keep the canister types sorted
 // Basic canister per gas below here
@@ -411,49 +383,7 @@
 			balloon_alert(user, "you install the cell")
 		internal_cell = active_cell
 		return TRUE
-	if(is_wire_tool(item) && panel_open)
-		wires.interact(user)
-		return
-	if(istype(item, /obj/item/assembly_holder))
-		if(rig)
-			balloon_alert(user, "another device is in the way!")
-			return ..()
-		var/obj/item/assembly_holder/holder = item
-
-		user.balloon_alert_to_viewers("attaching rig...")
-		add_fingerprint(user)
-		if(!do_after(user, 2 SECONDS, target = src) || !user.transferItemToLoc(holder, src))
-			return
-		rig = holder
-		holder.master = src
-		holder.on_attach()
-		assemblies_overlay = holder
-		assemblies_overlay.layer = 3.3
-		assemblies_overlay.pixel_y -= 5
-		add_overlay(assemblies_overlay)
-		log_bomber(user, "attached [holder.name] to ", src)
-		last_rigger = user
-		user.balloon_alert_to_viewers("attached rig")
-		return
-
 	return ..()
-
-/obj/machinery/portable_atmospherics/canister/attack_hand_secondary(mob/user, list/modifiers)
-	if(!rig)
-		return
-	// mousetrap rigs only make sense if you can set them off, can't step on them
-	// If you see a mousetrap-rigged fuel tank, just leave it alone
-	rig.on_found()
-	if(QDELETED(src))
-		return
-	user.balloon_alert_to_viewers("detaching rig...")
-	if(!do_after(user, 2 SECONDS, target = src))
-		return
-	user.balloon_alert_to_viewers("detached rig")
-	user.log_message("detached [rig] from [src].", LOG_GAME)
-	if(!user.put_in_hands(rig))
-		rig.forceMove(get_turf(user))
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/portable_atmospherics/canister/screwdriver_act(mob/living/user, obj/item/screwdriver)
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, screwdriver))
@@ -723,39 +653,47 @@
 
 	update_appearance()
 
-
 /// Opens/closes the canister valve
 /obj/machinery/portable_atmospherics/canister/proc/toggle_valve(mob/user, wire_pulsed = FALSE)
-	var/logmsg
-	var/admin_msg
-	var/danger = FALSE
-	var/n = 0
 	valve_open = !valve_open
-	if(valve_open)
-		SSair.start_processing_machine(src)
-		logmsg = "Valve was <b>opened</b> by [key_name(user)] [wire_pulsed ? "via wire pulse" : ""], starting a transfer into \the [holding || "air"].<br>"
-		if(!holding)
-			var/list/gaseslog = list() //list for logging all gases in canister
-			for(var/id in air_contents.gases)
-				var/gas = air_contents.gases[id]
-				gaseslog[gas[GAS_META][META_GAS_NAME]] = gas[MOLES]	//adds gases to gaseslog
-				if(!gas[GAS_META][META_GAS_DANGER])
-					continue
-				if(gas[MOLES] > (gas[GAS_META][META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE)) //if moles_visible is undefined, default to default visibility
-					danger = TRUE //at least 1 danger gas
-			logmsg = "[key_name(user)] <b>opened</b> a canister [wire_pulsed ? "via wire pulse" : ""] that contains the following:"
-			admin_msg = "[ADMIN_LOOKUPFLW(user)] <b>opened</b> a canister [wire_pulsed ? "via wire pulse" : ""] that contains the following at [ADMIN_VERBOSEJMP(src)]:"
-			for(var/name in gaseslog)
-				n = n + 1
-				logmsg += "\n[name]: [gaseslog[name]] moles."
-				if(n <= 5) //the first five gases added
-					admin_msg += "\n[name]: [gaseslog[name]] moles."
-				if(n == 5 && length(gaseslog) > 5) //message added if more than 5 gases
-					admin_msg += "\nToo many gases to log. Check investigate log."
-			if(danger) //sent to admin's chat if contains dangerous gases
-				message_admins(admin_msg)
-	else
-		logmsg = "valve was <b>closed</b> by [key_name(user)] [wire_pulsed ? "via wire pulse" : ""], stopping the transfer into \the [holding || "air"].<br>"
+	if(!valve_open)
+		var/logmsg = "valve was <b>closed</b> by [key_name(user)] [wire_pulsed ? "via wire pulse" : ""], stopping the transfer into \the [holding || "air"].<br>"
+		investigate_log(logmsg, INVESTIGATE_ATMOS)
+		release_log += logmsg
+		return
+
+	SSair.start_processing_machine(src)
+	if(holding)
+		var/logmsg = "Valve was <b>opened</b> by [key_name(user)] [wire_pulsed ? "via wire pulse" : ""], starting a transfer into \the [holding || "air"].<br>"
+		investigate_log(logmsg, INVESTIGATE_ATMOS)
+		release_log += logmsg
+		return
+
+	// Go over the gases in canister, pull all their info and mark the spooky ones
+	var/list/output = list()
+	output += "[key_name(user)] <b>opened</b> a canister [wire_pulsed ? "via wire pulse" : ""] that contains the following:"
+	var/list/admin_output = list()
+	admin_output += "[ADMIN_LOOKUPFLW(user)] <b>opened</b> a canister [wire_pulsed ? "via wire pulse" : ""] that contains the following at [ADMIN_VERBOSEJMP(src)]:"
+	var/list/gases = air_contents.gases
+	var/danger = FALSE
+	for(var/gas_index in 1 to length(gases))
+		var/list/gas_info = gases[gases[gas_index]]
+		var/list/meta = gas_info[GAS_META]
+		var/name = meta[META_GAS_NAME]
+		var/moles = gas_info[MOLES]
+
+		output += "[name]: [moles] moles."
+		if(gas_index <= 5) //the first five gases added
+			admin_output += "[name]: [moles] moles."
+		else if(gas_index == 6) // anddd the warning
+			admin_output += "Too many gases to log. Check investigate log."
+		//if moles_visible is undefined, default to default visibility
+		if(meta[META_GAS_DANGER] && moles > (meta[META_GAS_MOLES_VISIBLE] || MOLES_GAS_VISIBLE))
+			danger = TRUE
+
+	if(danger) //sent to admin's chat if contains dangerous gases
+		message_admins(admin_output.Join("\n"))
+	var/logmsg = output.Join("\n")
 	investigate_log(logmsg, INVESTIGATE_ATMOS)
 	release_log += logmsg
 
@@ -769,12 +707,13 @@
 
 /// Ejects tank from canister, if any
 /obj/machinery/portable_atmospherics/canister/proc/eject_tank(mob/user, wire_pulsed = FALSE)
-	if(holding)
-		if(valve_open)
-			message_admins("[ADMIN_LOOKUPFLW(user)] removed [holding] from [src] with valve still open [wire_pulsed ? "via wire pulse" : ""] at [ADMIN_VERBOSEJMP(src)] releasing contents into the [span_boldannounce("air")].")
-			user.investigate_log("removed the [holding] [wire_pulsed ? "via wire pulse" : ""], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
-		replace_tank(user, FALSE)
-		return TRUE
+	if(!holding)
+		return FALSE
+	if(valve_open)
+		message_admins("[ADMIN_LOOKUPFLW(user)] removed [holding] from [src] with valve still open [wire_pulsed ? "via wire pulse" : ""] at [ADMIN_VERBOSEJMP(src)] releasing contents into the [span_boldannounce("air")].")
+		user.investigate_log("removed the [holding] [wire_pulsed ? "via wire pulse" : ""], leaving the valve open and transferring into the [span_boldannounce("air")].", INVESTIGATE_ATMOS)
+	replace_tank(user, FALSE)
+	return TRUE
 
 /// Turns hyper-noblium crystal reaction suppression in the canister on or off
 /obj/machinery/portable_atmospherics/canister/proc/toggle_reaction_suppression(mob/user, wire_pulsed = FALSE)
