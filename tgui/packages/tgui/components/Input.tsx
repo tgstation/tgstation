@@ -77,21 +77,32 @@ export const Input = (props: Props) => {
     }
   };
 
+  /** Focuses the input on mount */
+  useEffect(() => {
+    if (!autoFocus && !autoSelect) return;
+
+    const input = inputRef.current;
+    if (!input) return;
+
+    setTimeout(() => {
+      input.focus();
+
+      if (autoSelect) {
+        input.select();
+      }
+    }, 1);
+  }, []);
+
+  /** Updates the initial value on props change */
   useEffect(() => {
     const input = inputRef.current;
     if (!input) return;
 
-    input.value = toInputValue(value);
-    if (autoFocus || autoSelect) {
-      setTimeout(() => {
-        input.focus();
+    const newValue = toInputValue(value);
+    if (input.value === newValue) return;
 
-        if (autoSelect) {
-          input.select();
-        }
-      }, 1);
-    }
-  }, []);
+    input.value = newValue;
+  }, [value]);
 
   return (
     <Box
