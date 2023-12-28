@@ -11,7 +11,7 @@
 #define NUKE_RESULT_HIJACK_NO_DISK 10
 
 /// Min players requireed for nukes to declare war
-#define CHALLENGE_MIN_PLAYERS 50
+#define CHALLENGE_MIN_PLAYERS 25	// MASSMETA EDIT
 
 //fugitive end results
 #define FUGITIVE_RESULT_BADASS_HUNTER 0
