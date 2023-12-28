@@ -194,7 +194,7 @@
 			set_temperature(reagtemp)
 
 	SEND_SIGNAL(src, COMSIG_REAGENTS_NEW_REAGENT, new_reagent, amount, reagtemp, data, no_react)
-	if(!no_react && !is_reacting)
+	if(!no_react)
 		handle_reactions()
 	return amount
 

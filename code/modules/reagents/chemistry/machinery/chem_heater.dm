@@ -146,11 +146,13 @@
 
 		//keep constant with the chemical acclimator please
 		beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume * randomness)
-		if(!beaker.reagents.is_reacting)
-			beaker.reagents.handle_reactions()
+		beaker.reagents.handle_reactions()
 
 		//use power
 		use_power(active_power_usage * seconds_per_tick)
+
+		//show changes to ui immediatly for responsivenes
+		SStgui.update_uis(src)
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -176,8 +178,10 @@
 			var/obj/item/reagent_containers/injector = held_item
 			injector.afterattack(beaker, user, proximity_flag = TRUE)
 			return TRUE
+
 	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		replace_beaker(user, held_item)
+		if(replace_beaker(user, held_item))
+			ui_interact(user)
 		balloon_alert(user, "beaker added!")
 		return TRUE
 
