@@ -119,6 +119,7 @@ const InputArea = (props: {
         act('submit', { entry: input });
       }}
       onChange={(_, value) => onType(value)}
+      onInput={(_, value) => onType(value)}
       placeholder="Type something..."
       value={input}
     />
