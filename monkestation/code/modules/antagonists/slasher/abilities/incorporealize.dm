@@ -78,7 +78,6 @@
 	REMOVE_TRAIT(jaunter, TRAIT_NO_TRANSFORM, INNATE_TRAIT)
 
 	slasherdatum.corporeal = FALSE
-	ADD_TRAIT(jaunter, TRAIT_NOBREATH, REF(src))
 
 	// This needs to happen at the end, after all the traits and stuff is handled
 	SEND_SIGNAL(jaunter, COMSIG_MOB_ENTER_JAUNT, src, jaunt)
@@ -100,7 +99,6 @@
 		qdel(blood_hand)
 
 	slasherdatum.corporeal = TRUE
-	REMOVE_TRAIT(jaunter, TRAIT_NOBREATH, REF(src))
 
 	return TRUE
 
