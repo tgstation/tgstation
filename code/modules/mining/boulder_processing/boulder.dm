@@ -1,6 +1,5 @@
 /// Define for any kind of manual processing speed, whether it's from golem or another mob that can crack boulders.
 #define INATE_SPEED_MULTIPLIER 3
-#define EATS_ROCKS_SPEED 0.2
 
 
 
@@ -103,28 +102,21 @@
 		return FALSE
 
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
-	to_chat(world, "start")
 	. = ..()
-	to_chat(world, "pre-parent")
-	if(.)
-		to_chat(world, "failed parent")
-		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
 		manual_process(weapon, user, INATE_SPEED_MULTIPLIER)
-		to_chat(world, "boulder breaker shrug")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
-		to_chat(world, "tool breaker")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	to_chat(world, "ended, failed")
+	return ..()
 
 /obj/item/boulder/attack_basic_mob(mob/user, list/modifiers)
 	. = ..()
 	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, EATS_ROCKS_SPEED) //A little hacky but it works around the speed of the blackboard task selection process for now.
+		manual_process(null, user) //A little hacky but it works around the speed of the blackboard task selection process for now.
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/update_icon_state()
@@ -143,11 +135,12 @@
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
  * @param obj/item/weapon The weapon that is being used to process the boulder, that we pull toolspeed from. If null, we use the override_speed_multiplier instead.
  * @param mob/living/user The mob that is processing the boulder.
- * @param override_speed_multiplier The speed multiplier to use if weapon is null.
+ * @param override_speed_multiplier The speed multiplier to use if weapon is null. the do_after will
  * @param continued Whether or not this is a continued process, or the first one. If true, we don't play the "You swing at the boulder" message.
  */
 /obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, continued = FALSE)
 	var/process_speed = 0
+	to_chat(world, span_notice("[user] is working on \the [src] (early)"))
 	if(weapon)
 		process_speed = weapon.toolspeed
 		weapon.play_tool_sound(src, 50)
@@ -157,19 +150,20 @@
 		process_speed = override_speed_multiplier
 		playsound(src, 'sound/effects/rocktap1.ogg', 50)
 		if(!continued)
-			to_chat(user, span_notice("You scrape away at \the [src]..."))
+			to_chat(user, span_notice("You scrape away at \the [src]... speed is [process_speed]."))
 	else
 		return
 
-	if(!HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
+	if(HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS) || HAS_TRAIT(user, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
+		durability = 0
+	else
+		to_chat(world, "")
 		if(!do_after(user, (2 * process_speed SECONDS), target = src))
 			return FALSE
 		if(!user.Adjacent(src))
 			return
 		durability--
 		user.apply_damage(4, STAMINA)
-	else
-		durability = 0
 	if(durability <= 0)
 		convert_to_ore()
 		to_chat(user, span_notice("You finish working on \the [src], and it crumbles into ore."))
@@ -304,4 +298,3 @@
 	durability = 1
 
 #undef INATE_SPEED_MULTIPLIER
-#undef EATS_ROCKS_SPEED

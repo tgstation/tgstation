@@ -70,6 +70,7 @@
 	var/artifact_chance = 0
 	/// We use a cooldown to prevent the wave defense from being started multiple times.
 	COOLDOWN_DECLARE(wave_cooldown)
+	COOLDOWN_DECLARE(manual_vent_cooldown)
 
 
 /obj/structure/ore_vent/Initialize(mapload)
@@ -113,9 +114,6 @@
 		return
 	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		return
-	if(!isgolem(user)) //We only make things difficult for golems so that they scan the vent first for point.
-		produce_boulder()
-		return
 	if(!discovered)
 		to_chat(user, span_notice("You can't quite find the weakpoint of [src]... Perhaps it needs to be scanned first?"))
 		return
@@ -126,6 +124,13 @@
 			playsound(src, 'sound/weapons/genhit.ogg', 50, TRUE)
 	produce_boulder()
 	visible_message(span_notice("You've successfully produced a boulder! Boy are your arms tired."))
+
+/obj/structure/ore_vent/attack_basic_mob(mob/user, list/modifiers)
+	. = ..()
+	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		return
+	produce_boulder()
+	return
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
@@ -233,6 +238,8 @@
 		tapped = TRUE
 		SSore_generation.processed_vents += src
 		balloon_alert_to_viewers("vent tapped!")
+		icon_state = icon_state_tapped
+		update_appearance(UPDATE_ICON_STATE)
 	else
 		visible_message(span_danger("\the [src] creaks and groans as the mining attempt fails, and the vent closes back up."))
 		icon_state = initial(icon_state)
@@ -338,7 +345,9 @@
  * Here is where we handle producing a new boulder, based on the qualities of this ore vent.
  * Returns the boulder produced.
  */
-/obj/structure/ore_vent/proc/produce_boulder()
+/obj/structure/ore_vent/proc/produce_boulder(apply_cooldown = FALSE)
+	if(COOLDOWN_FINISHED(src, manual_vent_cooldown))
+		return
 	var/obj/item/boulder/new_rock
 	if(prob(artifact_chance))
 		new_rock = new /obj/item/boulder/artifact(loc)
@@ -348,6 +357,8 @@
 	Shake(duration = 1.5 SECONDS)
 	new_rock.set_custom_materials(mats_list)
 	new_rock.flavor_boulder(src)
+	if(apply_cooldown)
+		COOLDOWN_START(src, manual_vent_cooldown, 10 SECONDS)
 	return new_rock
 
 

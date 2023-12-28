@@ -90,7 +90,8 @@ SUBSYSTEM_DEF(weather)
 	set category = "Debug"
 	set name = "Stop All Active Weather"
 
-	message_admins("Stopping all active weather.")
+	log_admin("[key_name(src)] stopped all currently active weather.")
+	message_admins("[key_name_admin(src)] stopped all currently active weather.")
 	for(var/datum/weather/current_weather in SSweather.processing)
 		if(current_weather in SSweather.processing)
 			current_weather.end()
