@@ -1,8 +1,0 @@
-author: "MilkForever"
-delete-after: True
-changes:
-  - rscadd: "Arachnids now click their mandibles in the *click emote"
-  - rscadd: "Arachnids are now in the \"Spider\" Faction, this means AI CONTROLLED spiders will no longer go after them."
-  - qol: "The eye-wear item slot now gets greyed out if you have arachnid eyes."
-  - balance: "Arachnids no longer have brute damage resistance, and they no longer have a burn damage weakness."
-  - balance: "Arachnids can eat vegetables now."
