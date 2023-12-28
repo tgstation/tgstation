@@ -40,7 +40,7 @@
 		when landing on tails. If the coin gets inserted into an airlock it emags the door destroying the coin."
 	gain_text = "The Mansus is a place of all sorts of sins. But greed held a special role."
 	next_knowledge = list(
-		datum/heretic_knowledge/spell/caretaker_refuge,
+		/datum/heretic_knowledge/spell/caretaker_refuge,
 		/datum/heretic_knowledge/spell/flame_birth,
 	)
 	required_atoms = list(
