@@ -1,0 +1,4 @@
+author: "MichiRecRoom"
+delete-after: True
+changes:
+  - qol: "The H.A.U.L. Gauntlets will no longer prevent the wearer from opening the closet/crate that they're pulling."
