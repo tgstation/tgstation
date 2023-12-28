@@ -209,14 +209,6 @@
 /obj/item/kitchen/spoon,
 /turf/open/floor/engine,
 /area/shuttle/escape/jungle_explorer)
-"fX" = (
-/obj/machinery/door/airlock/external,
-/obj/effect/mapping_helpers/airlock/cyclelink_helper{
-	dir = 4
-	},
-/obj/structure/sign/warning/gas_mask/directional/north,
-/turf/open/floor/plating,
-/area/space)
 "gh" = (
 /obj/structure/closet/crate/freezer{
 	name = "perishables crate"
@@ -324,9 +316,6 @@
 "ig" = (
 /turf/open/misc/dirt/station,
 /area/shuttle/escape/jungle_explorer)
-"ij" = (
-/turf/open/floor/plating,
-/area/space)
 "im" = (
 /obj/machinery/power/terminal{
 	dir = 4
@@ -448,13 +437,6 @@
 "lU" = (
 /obj/structure/closet/secure_closet/freezer/fridge,
 /turf/open/floor/engine,
-/area/shuttle/escape/jungle_explorer)
-"lX" = (
-/obj/effect/spawner/structure/window/reinforced/shuttle,
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
-	dir = 8
-	},
-/turf/open/floor/plating,
 /area/shuttle/escape/jungle_explorer)
 "mt" = (
 /obj/effect/turf_decal/tile/purple/opposingcorners,
@@ -888,10 +870,6 @@
 /obj/machinery/hydroponics/soil,
 /turf/open/misc/dirt/station,
 /area/shuttle/escape/jungle_explorer)
-"xT" = (
-/obj/structure/lattice/catwalk,
-/turf/template_noop,
-/area/shuttle/escape/jungle_explorer)
 "ya" = (
 /obj/effect/turf_decal/plaque{
 	icon_state = "L6"
@@ -987,11 +965,10 @@
 /turf/open/floor/wood/parquet,
 /area/shuttle/escape/jungle_explorer)
 "Au" = (
-/obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/components/unary/passive_vent/layer2{
 	dir = 8
 	},
-/turf/template_noop,
+/turf/open/floor/plating,
 /area/shuttle/escape/jungle_explorer)
 "Aw" = (
 /obj/machinery/oven/range,
@@ -2021,9 +1998,9 @@ oD
 oD
 oD
 oD
+II
 oD
-oD
-oD
+II
 oD
 oD
 oD
@@ -2070,9 +2047,9 @@ oD
 oD
 oD
 oD
-II
+Mb
 oD
-II
+Mb
 oD
 oD
 oD
@@ -2095,9 +2072,9 @@ oD
 oD
 oD
 oD
+II
 oD
-oD
-oD
+II
 oD
 oD
 oD
@@ -2144,9 +2121,9 @@ oD
 oD
 oD
 oD
+Mb
 oD
-oD
-oD
+Mb
 oD
 oD
 oD
@@ -2193,9 +2170,9 @@ oD
 oD
 oD
 oD
+Mb
 oD
-oD
-oD
+Mb
 oD
 oD
 oD
@@ -2242,9 +2219,9 @@ oD
 oD
 oD
 oD
+Mb
 oD
-oD
-oD
+Mb
 oD
 oD
 oD
@@ -2291,9 +2268,9 @@ oD
 oD
 oD
 oD
+Mb
 oD
-oD
-oD
+Mb
 oD
 oD
 Ll
@@ -2766,8 +2743,8 @@ oD
 "}
 (17,1,1) = {"
 oD
-oD
 GT
+oD
 oD
 oD
 Ll
@@ -2814,8 +2791,8 @@ oD
 oD
 "}
 (18,1,1) = {"
-oD
 GT
+Mb
 Mb
 Mb
 Ll
@@ -2864,8 +2841,8 @@ oD
 "}
 (19,1,1) = {"
 oD
-oD
 GT
+oD
 oD
 Zv
 ax
@@ -2962,8 +2939,8 @@ QV
 "}
 (21,1,1) = {"
 oD
-oD
 GT
+oD
 oD
 Zv
 Ce
@@ -3010,8 +2987,8 @@ QV
 QV
 "}
 (22,1,1) = {"
-oD
 Jd
+Mb
 Mb
 Mb
 Ll
@@ -3060,8 +3037,8 @@ oD
 "}
 (23,1,1) = {"
 oD
-oD
 GT
+oD
 oD
 oD
 Ll
@@ -3422,7 +3399,7 @@ Ll
 FA
 Ll
 Zv
-lX
+Zv
 bS
 Cy
 fM
@@ -3639,7 +3616,7 @@ Zv
 Zv
 Ll
 Ll
-fX
+FA
 Ll
 oD
 oD
@@ -3688,7 +3665,7 @@ oD
 oD
 oD
 Ll
-ij
+tq
 Ll
 oD
 oD
@@ -3924,7 +3901,7 @@ oD
 oD
 oD
 oD
-xT
+tq
 Au
 oD
 oD
