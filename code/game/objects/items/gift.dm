@@ -127,7 +127,7 @@ GLOBAL_LIST_EMPTY(possible_gifts)
 			// Per Biddi's suggestion; plus doesn't seem to do much anyways?
 			/obj/item/research,
 		)
-		for(var/blocked_item in blocked_items)
+		for(var/blocked_item as anything in blocked_items)
 			// Block the item listed, and any subtypes too.
 			gift_types_list -= typesof(blocked_item)
 		//MONKESTATION EDIT END
