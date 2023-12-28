@@ -445,7 +445,7 @@
 	var/potential_nonharmful_throw = non_harmful_throw
 
 	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = source.get_organ_slot(ORGAN_SLOT_SPINE)
-	if(potential_spine)
+	if(istype(potential_spine))
 		lower_force *= potential_spine.added_lower_unarmed_force_multiplier
 		upper_force *= potential_spine.added_upper_unarmed_force_multiplier
 		limb_accuracy += potential_spine.added_unarmed_effectiveness

@@ -24,7 +24,7 @@
 	var/attack_sound = active_arm.unarmed_attack_sound
 
 	var/obj/item/organ/internal/cyberimp/chest/spine/potential_spine = attacker_human.get_organ_slot(ORGAN_SLOT_SPINE)
-	if(potential_spine)
+	if(istype(potential_spine))
 		lower_force *= potential_spine.added_lower_unarmed_force_multiplier
 		upper_force *= potential_spine.added_upper_unarmed_force_multiplier
 		base_unarmed_effectiveness += potential_spine.added_unarmed_effectiveness
