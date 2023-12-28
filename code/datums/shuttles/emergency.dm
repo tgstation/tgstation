@@ -494,6 +494,7 @@
 	description = "A shuttle used to explore the mysterious jungle planet. After it departs from Central Command, \
 	any remaining crew will be transported over to investigate."
 	credit_cost = CARGO_CRATE_VALUE * 75
+	who_can_purchase = list(ACCESS_CAPTAIN, ACCESS_RD)
 	occupancy_limit = "Enough seats"
 
 /datum/map_template/shuttle/emergency/zeta/prerequisites_met()
