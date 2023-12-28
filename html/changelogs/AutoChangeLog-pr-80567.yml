@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add 50% graffiti speed boost to tagger quirk"
+  - bugfix: "Fix time duration of large graffiti not applying properly"
