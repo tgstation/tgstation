@@ -4406,14 +4406,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet)
-"bws" = (
-/obj/machinery/light/small/directional/north,
-/obj/structure/sign/directions/cryo/directional/east{
-	pixel_x = 0;
-	pixel_y = 32
-	},
-/turf/open/floor/iron,
-/area/station/hallway/primary/starboard)
 "bwt" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/tile/yellow,
@@ -5062,12 +5054,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/command/general,
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/command/storage/eva)
-"bEB" = (
-/obj/structure/disposalpipe/segment{
-	dir = 6
-	},
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical/central)
 "bEH" = (
 /obj/structure/stairs/north{
 	dir = 4
@@ -17415,6 +17401,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
+"fyq" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/plating,
+/area/station/maintenance/department/medical/central)
 "fyr" = (
 /obj/machinery/door/firedoor,
 /obj/machinery/door/airlock/command/glass{
@@ -22585,6 +22577,10 @@
 /obj/item/bikehorn/rubberducky,
 /turf/open/floor/iron/freezer,
 /area/station/commons/toilet/locker)
+"hlI" = (
+/obj/machinery/portable_atmospherics/canister/water_vapor,
+/turf/open/floor/iron,
+/area/station/service/janitor)
 "hlJ" = (
 /obj/machinery/light/directional/west,
 /obj/effect/turf_decal/stripes/line{
@@ -41196,6 +41192,26 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron/large,
 /area/station/service/hydroponics/garden)
+"nos" = (
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/camera{
+	c_tag = "Departure Lounge West";
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/sign/directions/cryo/directional/north{
+	pixel_y = 10;
+	pixel_x = -30
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/station/hallway/secondary/exit/departure_lounge)
 "nou" = (
 /obj/structure/chair{
 	dir = 4
@@ -65553,6 +65569,14 @@
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/science/robotics/lab)
+"veJ" = (
+/obj/machinery/light/small/directional/north,
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/starboard)
 "veK" = (
 /turf/open/floor/iron/white,
 /area/mine/living_quarters)
@@ -66075,26 +66099,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/service/chapel)
-"vns" = (
-/obj/machinery/firealarm/directional/west,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/camera{
-	c_tag = "Departure Lounge West";
-	dir = 10
-	},
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/red{
-	dir = 8
-	},
-/obj/structure/sign/directions/cryo/directional/north{
-	pixel_y = 10;
-	pixel_x = -30
-	},
-/turf/open/floor/iron/white/corner{
-	dir = 1
-	},
-/area/station/hallway/secondary/exit/departure_lounge)
 "vnt" = (
 /obj/machinery/computer/station_alert{
 	dir = 8
@@ -237864,7 +237868,7 @@ ufw
 rpG
 jtY
 xVK
-evb
+hlI
 tyK
 fVS
 cvS
@@ -240430,7 +240434,7 @@ cvS
 pjF
 nhw
 cvS
-bEB
+fyq
 kNA
 mOo
 jPh
@@ -246838,7 +246842,7 @@ beT
 nwI
 giD
 kKL
-bws
+veJ
 vwO
 pxn
 vBG
@@ -255318,7 +255322,7 @@ gVt
 pCI
 pCI
 vsM
-vns
+nos
 nfB
 cMJ
 eBg

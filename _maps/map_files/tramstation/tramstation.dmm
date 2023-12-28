@@ -9862,6 +9862,7 @@
 /area/station/cargo/drone_bay)
 "bYF" = (
 /obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1

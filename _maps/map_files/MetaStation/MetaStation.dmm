@@ -61149,6 +61149,7 @@
 /area/station/service/kitchen)
 "vMc" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "vMd" = (

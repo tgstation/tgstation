@@ -62595,6 +62595,7 @@
 /area/station/security/brig)
 "pln" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/portable_atmospherics/canister/water_vapor,
 /obj/machinery/light/small/directional/south,
 /obj/effect/turf_decal/bot/right,
 /turf/open/floor/iron/checker,
