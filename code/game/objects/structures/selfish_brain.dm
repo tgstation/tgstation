@@ -1,6 +1,3 @@
-//From code\datums\status_effects\debuffs\blindness.dm
-#define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isrevenant(mob))
-
 /obj/structure/selfish_brain
 	name = "???"
 	desc = "how selfish"
@@ -143,7 +140,7 @@
 	desc = "sorry, im only borrowing it"
 
 /datum/status_effect/selfish_brain_blind/on_apply()
-	if(!CAN_BE_BLIND(owner) || owner.is_blind())
+	if(!owner.can_blind() || owner.is_blind())
 		return FALSE
 
 	owner.become_blind(id)
@@ -168,5 +165,3 @@
 
 /datum/status_effect/selfish_brain_blind/proc/update_last_allowed_turf(turf/new_turf)
 	last_allowed_turf = new_turf
-
-#undef CAN_BE_BLIND

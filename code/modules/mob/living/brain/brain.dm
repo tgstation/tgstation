@@ -111,3 +111,6 @@
 
 	if(container)
 		. += "[container.type]"
+
+/mob/living/brain/can_blind()
+	return FALSE

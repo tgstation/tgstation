@@ -305,3 +305,6 @@
 
 /mob/living/basic/get_body_temp_cold_damage_limit()
 	return minimum_survivable_temperature
+
+/mob/living/basic/can_blind()
+	return FALSE

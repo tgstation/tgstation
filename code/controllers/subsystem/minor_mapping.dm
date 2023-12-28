@@ -62,9 +62,8 @@ SUBSYSTEM_DEF(minor_mapping)
 ///Roll for a chance to place a /obj/structure/selfish_brain in maintenance
 ///If it rolls for one, place one
 /datum/controller/subsystem/minor_mapping/proc/place_selfish_brain()
-	var/chance_to_spawn_selfish_brain = 10
 	//Roll to spawn the selfish brain
-	if (!prob(chance_to_spawn_selfish_brain))
+	if (!prob(10))
 		return
 
 	var/list/possible_spawn_locations = find_unblocked_maint_turfs()

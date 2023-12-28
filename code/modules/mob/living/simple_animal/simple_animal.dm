@@ -669,3 +669,6 @@
 
 /mob/living/simple_animal/compare_sentience_type(compare_type)
 	return sentience_type == compare_type
+
+/mob/living/simple_animal/can_blind()
+	return FALSE

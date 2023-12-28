@@ -1,7 +1,3 @@
-/// Helper macro, for ease of expanding checks for mobs which cannot be blinded
-/// There are no reason why these cannot be blinded, it is simply for "design reasons" (these things shouldn't be blinded)
-#define CAN_BE_BLIND(mob) (!isanimal_or_basicmob(mob) && !isbrain(mob) && !isrevenant(mob))
-
 /// Nearsighted
 /datum/status_effect/grouped/nearsighted
 	id = "nearsighted"
@@ -61,7 +57,7 @@
 	// fullheal should instead remove all the sources and in turn cure this
 
 /datum/status_effect/grouped/blindness/on_apply()
-	if(!CAN_BE_BLIND(owner))
+	if(!owner.can_blind())
 		return FALSE
 
 	owner.overlay_fullscreen(id, /atom/movable/screen/fullscreen/blind)
@@ -91,7 +87,7 @@
 	return ..()
 
 /datum/status_effect/temporary_blindness/on_apply()
-	if(!CAN_BE_BLIND(owner))
+	if(!owner.can_blind())
 		return FALSE
 
 	owner.become_blind(id)
@@ -120,5 +116,3 @@
 		var/obj/item/thing_covering_eyes = owner.is_eyes_covered()
 		// "Your blindfold soothes your eyes", for example
 		to_chat(owner, span_green("Your [thing_covering_eyes?.name || "eye covering"] soothes your eyes."))
-
-#undef CAN_BE_BLIND

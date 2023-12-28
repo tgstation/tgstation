@@ -1390,6 +1390,10 @@
 
 	return TRUE
 
+/// Can this mob be blinded
+/mob/proc/can_blind()
+	return TRUE
+
 /**
  * Get the mob VV dropdown extras
  */
