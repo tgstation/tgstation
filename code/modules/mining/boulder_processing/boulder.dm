@@ -131,13 +131,11 @@
  * This is called when a boulder is processed by a mob or tool, and reduces the durability of the boulder.
  * @param obj/item/weapon The weapon that is being used to process the boulder, that we pull toolspeed from. If null, we use the override_speed_multiplier instead.
  * @param mob/living/user The mob that is processing the boulder.
- * @param override_speed_multiplier The speed multiplier to use if weapon is null. the do_after will
+ * @param override_speed_multiplier The speed multiplier to use if weapon is null. The do_after will take 2 * this value seconds to complete.
  * @param continued Whether or not this is a continued process, or the first one. If true, we don't play the "You swing at the boulder" message.
  */
 /obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, continued = FALSE)
 	var/process_speed = 0
-	to_chat(world, span_notice("[user] is working on \the [src] (early)"))
-
 	//Handle weapon conditions.
 	if(weapon)
 		if(HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
