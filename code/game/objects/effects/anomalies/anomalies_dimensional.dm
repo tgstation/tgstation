@@ -50,11 +50,10 @@
 	theme = new new_theme_path()
 	apply_theme_icon()
 
-	target_turfs = new()
-	var/list/turfs = spiral_range_turfs(range, src)
-	for (var/turf/turf in turfs)
+	target_turfs = list()
+	for (var/turf/turf as anything in spiral_range_turfs(range, src))
 		if (theme.can_convert(turf))
-			target_turfs.Add(turf)
+			target_turfs += turf
 
 /**
  * Applies an overlay icon based on the current theme.
