@@ -544,7 +544,7 @@
 
 	if(src.remote_control)
 		current_turf = get_turf(src.remote_control)
-		above_turf = GET_TURF_BELOW(current_turf)
+		below_turf = GET_TURF_BELOW(current_turf)
 		ventcrawling_flag = HAS_TRAIT(src.remote_control, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 
 	if(!below_turf)
