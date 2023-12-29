@@ -219,6 +219,8 @@
 			continue
 		if(crewmate.stat == DEAD | UNCONSCIOUS)
 			continue
+		if(!is_station_level(crewmate))
+			continue
 		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
 		if(IS_HERETIC_OR_MONSTER(crewmate))
 			to_chat(crewmate, span_boldwarning("[user]'s rise is influencing those who are weak willed. Their minds shall rend." ))
