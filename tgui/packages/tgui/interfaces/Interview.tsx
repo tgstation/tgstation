@@ -1,14 +1,15 @@
+import { ReactNode, useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
-  Button,
-  TextArea,
-  Section,
   BlockQuote,
-  NoticeBox,
   Box,
+  Button,
+  NoticeBox,
+  Section,
+  TextArea,
 } from '../components';
 import { Window } from '../layouts';
-import { useBackend } from '../backend';
-import { ReactNode, useState } from 'react';
 
 type Data = {
   connected: boolean;
@@ -202,7 +203,7 @@ const QuestionArea = (props: Question) => {
           onChange={(e, input) => setUserInput(input)}
           onEnter={saveResponse}
           placeholder="Write your response here, max of 500 characters. Press enter to submit."
-          value={response}
+          value={response || undefined}
         />
       )}
     </Section>

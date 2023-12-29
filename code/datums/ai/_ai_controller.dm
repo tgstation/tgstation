@@ -175,6 +175,7 @@ multiple modular subtrees with behaviors
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
+
 	if(!able_to_run())
 		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
@@ -340,7 +341,7 @@ multiple modular subtrees with behaviors
 	set_ai_status(AI_STATUS_ON) //Can't do anything while player is connected
 	RegisterSignal(pawn, COMSIG_MOB_LOGIN, PROC_REF(on_sentience_gained))
 
-// Turn the controller off the controller if the pawn has been qdeleted
+// Turn the controller off if the pawn has been qdeleted
 /datum/ai_controller/proc/on_pawn_qdeleted()
 	SIGNAL_HANDLER
 	set_ai_status(AI_STATUS_OFF)

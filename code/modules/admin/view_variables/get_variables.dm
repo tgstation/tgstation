@@ -338,7 +338,7 @@
 
 		if(VV_COLOR_MATRIX)
 			.["value"] = open_color_matrix_editor()
-			if(.["value"] == color_matrix_identity()) //identity is equivalent to null
+			if(.["value"] == COLOR_MATRIX_IDENTITY) //identity is equivalent to null
 				.["class"] = null
 
 		if(VV_INFINITY)

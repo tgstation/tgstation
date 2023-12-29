@@ -13,7 +13,7 @@
 
 	START_PROCESSING(SSmachines, src)
 
-/datum/component/netpod_healing/Destroy(force, silent)
+/datum/component/netpod_healing/Destroy(force)
 	STOP_PROCESSING(SSmachines, src)
 
 	var/mob/living/carbon/player = parent

@@ -1,10 +1,11 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
-import { useBackend } from '../backend';
-import { Box, Button, Section, Tabs, Stack } from '../components';
-import { InfoSection } from './RapidConstructionDevice';
-import { Window } from '../layouts';
 import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Box, Button, Section, Stack, Tabs } from '../components';
+import { Window } from '../layouts';
+import { InfoSection } from './RapidConstructionDevice';
 
 type Data = {
   selected_icon: string;
@@ -59,7 +60,7 @@ const DirectionSelect = (props) => {
   const { act, data } = useBackend<Data>();
   const { tile_dirs = [], selected_direction } = data;
   return (
-    <Section fill vertical>
+    <Section fill>
       <Stack vertical>
         {tile_dirs.map((dir) => (
           <Stack.Item key={dir}>
@@ -108,7 +109,6 @@ const TileDesignSection = (props) => {
       <Tabs>
         {categories.map((category) => (
           <Tabs.Tab
-            fluid
             key={category.category_name}
             selected={category.category_name === categoryName}
             onClick={() => setCategoryName(category.category_name)}

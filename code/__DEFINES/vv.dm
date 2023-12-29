@@ -1,6 +1,6 @@
 #define VV_NUM "Number"
 #define VV_TEXT "Text"
-#define VV_MESSAGE "Mutiline Text"
+#define VV_MESSAGE "Multiline Text"
 #define VV_COLOR "Color"
 #define VV_COLOR_MATRIX "Color Matrix"
 #define VV_ICON "Icon"

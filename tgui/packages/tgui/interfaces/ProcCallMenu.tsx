@@ -1,12 +1,13 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
-  Stack,
-  Section,
-  Input,
   Button,
   Dropdown,
+  Input,
   NoticeBox,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -36,7 +37,7 @@ export const ProcCallMenu = (props) => {
   return (
     <Window width={500} height={400}>
       <Window.Content scrollable>
-        <Stack grow height="100%">
+        <Stack fill>
           <Stack.Item>
             <Section fill title="Options">
               <Stack vertical width="180px">

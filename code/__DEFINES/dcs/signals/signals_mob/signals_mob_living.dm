@@ -235,6 +235,9 @@
 /// Sent from a 'contract chain' button on a mob chain
 #define COMSIG_MOB_CHAIN_CONTRACT "living_chain_contracted"
 
+/// Sent from `obj/item/reagent_containers/pill/on_consumption`: (obj/item/reagent_containers/pill/pill, mob/feeder)
+#define COMSIG_LIVING_PILL_CONSUMED "living_pill_consumed"
+
 /// Sent from a mob to their loc when starting to remove cuffs on itself
 #define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
 /// Sent as a reply to above from any atom that wishs to stop self-cuff removal

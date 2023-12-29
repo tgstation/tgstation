@@ -1,10 +1,11 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
+import { KEY } from 'common/keys';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import { Box, Button, RestrictedInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
-import { KEY } from 'common/keys';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 type NumberInputData = {
   init_value: number;
@@ -21,18 +22,14 @@ export const NumberInputModal = (props) => {
   const { act, data } = useBackend<NumberInputData>();
   const { init_value, large_buttons, message = '', timeout, title } = data;
   const [input, setInput] = useState(init_value);
-  const onChange = (value: number) => {
+
+  const setValue = (value: number) => {
     if (value === input) {
       return;
     }
     setInput(value);
   };
-  const onClick = (value: number) => {
-    if (value === input) {
-      return;
-    }
-    setInput(value);
-  };
+
   // Dynamically changes the window height based on the message.
   const windowHeight =
     140 +
@@ -58,7 +55,7 @@ export const NumberInputModal = (props) => {
               <Box color="label">{message}</Box>
             </Stack.Item>
             <Stack.Item>
-              <InputArea input={input} onClick={onClick} onChange={onChange} />
+              <InputArea input={input} onClick={setValue} onChange={setValue} />
             </Stack.Item>
             <Stack.Item>
               <InputButtons input={input} />

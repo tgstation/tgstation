@@ -552,9 +552,10 @@ A basic text input, which allow users to enter text into a UI.
 - `fluid: boolean` - Fill all available horizontal space.
 - `selfClear: boolean` - Clear after hitting enter, as well as remain focused
   when this happens. Useful for things like chat inputs.
-- `onChange: (e, value) => void` - Fires when the value is changed.
+- `onChange: (e, value) => void` - Fires when the user clicks out or presses enter.
 - `onEnter: (e, value) => void` - Fires when the user hits enter.
-- `onEscape: (e, value) => void` - Fires when the user hits escape.
+- `onEscape: (e) => void` - Fires when the user hits escape.
+- `onInput: (e, value) => void` - Fires when the user types into the input.
 
 ### `Knob`
 

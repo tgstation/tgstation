@@ -140,6 +140,7 @@
 					/obj/item/clothing/mask/gas/sechailer,
 				)
 	crate_name = "security clothing crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/security/baton
 	name = "Stun Batons Crate"
@@ -168,6 +169,7 @@
 					/obj/item/clothing/mask/whistle,
 					/obj/item/conversion_kit,
 				)
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /// Armory packs
 

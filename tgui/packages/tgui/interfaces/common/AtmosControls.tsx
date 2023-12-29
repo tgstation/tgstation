@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../../backend';
 import { Button, LabeledList, NumberInput, Section } from '../../components';
 import { getGasLabel } from '../../constants';
@@ -240,8 +241,7 @@ export const Scrubber = (props: ScrubberProps) => {
               <Button
                 key={filter.gas_id}
                 icon={filter.enabled ? 'check-square-o' : 'square-o'}
-                content={getGasLabel(filter.gas_id, filter.gas_name)}
-                title={filter.gas_name}
+                tooltip={filter.gas_name}
                 selected={filter.enabled}
                 onClick={() =>
                   act('toggle_filter', {
@@ -249,7 +249,9 @@ export const Scrubber = (props: ScrubberProps) => {
                     val: filter.gas_id,
                   })
                 }
-              />
+              >
+                {getGasLabel(filter.gas_id, filter.gas_name)}
+              </Button>
             ))) ||
             'N/A'}
         </LabeledList.Item>

@@ -17,7 +17,7 @@
 
 /// Attempt to grant control of a mob to ghosts before spawning it in. if spawn_anyway_if_no_player = TRUE, we spawn the mob even if there's no ghosts
 /datum/shuttle_event/simple_spawner/player_controlled/proc/try_grant_ghost_control(spawn_type)
-	var/list/candidates = poll_ghost_candidates(ghost_alert_string + " (Warning: you will not be able to return to your body!)", role_type, FALSE, 10 SECONDS)
+	var/list/candidates = SSpolling.poll_ghost_candidates(ghost_alert_string + " (Warning: you will not be able to return to your body!)", check_jobban = role_type, poll_time = 10 SECONDS, pic_source = spawn_type, role_name_text = "shot at shuttle")
 
 	if(!candidates.len && !spawn_anyway_if_no_player)
 		return

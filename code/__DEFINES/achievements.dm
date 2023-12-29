@@ -43,7 +43,6 @@
 #define MEDAL_COSMOS_ASCENSION "Cosmos"
 #define MEDAL_LOCK_ASCENSION "Knock"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
-#define MEDAL_CHEM_TUT "Beginner Chemist"
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
 #define MEDAL_TRAM_SURFER "Tram Surfer"
