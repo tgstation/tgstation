@@ -272,12 +272,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/datum/export_report/report = new
 
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/atom/movable/exporting_atom in shuttle_area.get_contained_turfs())
-			if(iscameramob(exporting_atom))
-				continue
-			if(exporting_atom.anchored)
-				continue
-			export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
+		for(var/turf/shuttle_turf as anything in shuttle_area.get_contained_turfs())
+			for(var/atom/movable/exporting_atom in shuttle_turf)
+				if(iscameramob(exporting_atom))
+					continue
+				if(exporting_atom.anchored)
+					continue
+				export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
 
 	if(report.exported_atoms)
 		report.exported_atoms += "." //ugh
