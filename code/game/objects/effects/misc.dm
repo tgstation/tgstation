@@ -39,9 +39,8 @@
 	return QDEL_HINT_QUEUE
 
 /obj/effect/spawner/forceMove(atom/destination)
-	if(destination) // throw a warning if we try to forceMove a spawner to somewhere other than nullspace
-		stack_trace("Warning: something tried to forceMove() [src]([type]) to a non-null destination [destination]([destination.type])!")
-		return
+	if(destination && QDELETED(src)) // throw a warning if we try to forceMove a qdeleted spawner to somewhere other than nullspace
+		stack_trace("Warning: something tried to forceMove() a qdeleted [src]([type]) to a non-null destination [destination]([destination.type])!")
 	return ..()
 
 /obj/effect/list_container
