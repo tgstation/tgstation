@@ -15,6 +15,7 @@
 	var/announce = TRUE
 
 /datum/twitch_event/proc/run_event(name)
+	targets = list() //clear targets each time, if you for some reason dont want this then just add your own var on the type
 	if(event_flags & TWITCH_AFFECTS_STREAMER)
 		targets += get_mob_by_ckey("taocat")
 
