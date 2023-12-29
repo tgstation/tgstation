@@ -45,7 +45,7 @@
 	. = ..()
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
 		limb.bodypart_flags |= BODYPART_UNREMOVABLE // no farming organs or limbs from these fellers. get a monkey cube
-		limb.flags_1 = HOLOGRAM_1
+		limb.flags_1 |= HOLOGRAM_1
 
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
