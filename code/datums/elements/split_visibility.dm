@@ -1,10 +1,17 @@
+/// Lookup table for diagonal -> junction
+GLOBAL_LIST_INIT(diagonal_junctions, generate_splitvis_lookup())
 
-
-// Hello lads
-// This element exists so sides of a turf "pop off" it visually, preventing weird popin when you walk below it
-// It also ensures you can't see anything but the side visible to you, which makes walking in say, maint a lot nicer
-// It's not finished yet, which is why this file isn't ticked. We need to rework how sprite files get split up
-// For now tho, it'll just sit here
+/proc/generate_splitvis_lookup()
+	// It should be as long as all 4 directions combined, so it can act as a lookup for all of them
+	var/list/diagonal_to_junction = new /list(NORTH|SOUTH|EAST|WEST)
+	// Set defaults
+	for(var/i in 1 to length(diagonal_to_junction))
+		diagonal_to_junction[i] = NONE
+	diagonal_to_junction[NORTH|EAST] = dir_to_junction(NORTH|EAST)
+	diagonal_to_junction[SOUTH|EAST] = dir_to_junction(SOUTH|EAST)
+	diagonal_to_junction[SOUTH|WEST] = dir_to_junction(NORTH|WEST)
+	diagonal_to_junction[NORTH|WEST] = dir_to_junction(NORTH|WEST)
+	return diagonal_to_junction
 
 /mutable_appearance/split_vis
 
@@ -36,6 +43,39 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 	GLOB.split_visibility_objects[key] = vis
 	return vis
 
+/// Generates a mutable appearance of the passed in junction
+/// Needs to be kept in parity with the non offsetting bits of [/datum/element/split_vis/proc/apply_splitvis_objs]
+/// I'm sorry bros
+/proc/generate_joined_wall(icon_path, junction)
+	var/list/overlays = list()
+	overlays += mutable_appearance('wall_blackness.dmi', "wall_background")
+
+	// This lets us do O(1) logic down later, and ensure logic works as we'd like
+	var/list/diagonal_to_junction = GLOB.diagonal_junctions
+	for(var/direction in GLOB.cardinals)
+		// If we're connected in this direction, please don't draw a wall side
+		if((junction & direction) == direction)
+			continue
+		overlays += get_splitvis_object(0, icon_path, junction, direction, plane = FLOAT_PLANE, layer = FLOAT_LAYER)
+
+	for(var/direction in GLOB.diagonals)
+		// If we're connected in the two components of this direction
+		if((junction & direction) != direction)
+			continue
+		// AND if we're not connected to anything in the SUM of those directions
+		var/diagonal_junction = diagonal_to_junction[direction]
+		if((junction & diagonal_junction) == diagonal_junction)
+			continue
+
+		overlays += get_splitvis_object(0, icon_path, "innercorner", direction, plane = FLOAT_PLANE, layer = FLOAT_LAYER)
+
+	var/mutable_appearance/holder = mutable_appearance(appearance_flags = KEEP_TOGETHER)
+	holder.overlays += overlays
+	return holder
+
+// Hello lads
+// This element exists so sides of a turf "pop off" it visually, preventing weird popin when you walk below it
+// It also ensures you can't see anything but the side visible to you, which makes walking in say, maint a lot nicer
 /datum/element/split_visibility
 	element_flags = ELEMENT_DETACH_ON_HOST_DESTROY | ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
@@ -82,19 +122,8 @@ GLOBAL_LIST_EMPTY(split_visibility_objects)
 
 	var/offset = GET_Z_PLANE_OFFSET(target_turf.z)
 
-	// Lookup table for diagonal -> junction
 	// This lets us do O(1) logic down later, and ensure logic works as we'd like
-	var/static/list/diagonal_to_junction
-	if(!diagonal_to_junction)
-		// It should be as long as all 4 directions combined, so it can act as a lookup for all of them
-		diagonal_to_junction = new /list(NORTH|SOUTH|EAST|WEST)
-		// Set defaults
-		for(var/i in 1 to length(diagonal_to_junction))
-			diagonal_to_junction[i] = NONE
-		diagonal_to_junction[NORTH|EAST] = NORTHEAST_JUNCTION
-		diagonal_to_junction[SOUTH|EAST] = SOUTHEAST_JUNCTION
-		diagonal_to_junction[SOUTH|WEST] = SOUTHWEST_JUNCTION
-		diagonal_to_junction[NORTH|WEST] = NORTHWEST_JUNCTION
+	var/list/diagonal_to_junction = GLOB.diagonal_junctions
 
 	for(var/direction in GLOB.cardinals)
 		// If we're connected in this direction, please don't draw a wall side
