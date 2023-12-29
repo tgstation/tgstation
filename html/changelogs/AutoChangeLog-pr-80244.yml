@@ -1,0 +1,7 @@
+author: "mogeoko"
+delete-after: True
+changes:
+  - bugfix: "Atmospherics components will now move air into connected pipeline on deconstruction if possible. Otherwise, air will be released to the outside from open nodes."
+  - bugfix: "Unsafe pressure release on atmos components will now work the same way it does in the normal pipes if there is an empty node with air."
+  - bugfix: "The HFR user interface would close when the machine is shut down."
+  - bugfix: "Atmospherics machinery will now share air from nodes after being rotated and reconnected to pipenet."
