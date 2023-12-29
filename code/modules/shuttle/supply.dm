@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/list/empty_turfs = list()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/turf/open/floor/shuttle_turf in shuttle_area)
+		for(var/turf/open/floor/shuttle_turf in shuttle_area.get_contained_turfs())
 			if(shuttle_turf.is_blocked_turf())
 				continue
 			empty_turfs += shuttle_turf
@@ -272,7 +272,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/datum/export_report/report = new
 
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/atom/movable/exporting_atom in shuttle_area)
+		for(var/atom/movable/exporting_atom in shuttle_area.get_contained_turfs())
 			if(iscameramob(exporting_atom))
 				continue
 			if(exporting_atom.anchored)
@@ -305,9 +305,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	//spawn crate
 	var/list/empty_turfs = list()
-	for(var/place as anything in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
-		for(var/turf/open/floor/shuttle_floor in shuttle_area)
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
+		for(var/turf/open/floor/shuttle_floor in shuttle_area.get_contained_turfs())
 			if(shuttle_floor.is_blocked_turf())
 				continue
 			empty_turfs += shuttle_floor

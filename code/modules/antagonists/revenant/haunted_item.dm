@@ -113,8 +113,7 @@
  */
 
 /proc/haunt_outburst(epicenter, range, haunt_chance, duration = 1 MINUTES)
-	var/effect_area = range(range, epicenter)
-	for(var/obj/item/object_to_possess in effect_area)
+	for(var/obj/item/object_to_possess in range(range, epicenter))
 		if(!prob(haunt_chance))
 			continue
 		object_to_possess.AddComponent(/datum/component/haunted_item, \

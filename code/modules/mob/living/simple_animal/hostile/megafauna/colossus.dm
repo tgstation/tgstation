@@ -375,16 +375,20 @@
 /datum/crystal_warp_theme/proc/transform_area(area/target_area)
 	if (target_area.outdoors)
 		return FALSE
-	for(var/atom/thing in target_area)
-		if(isturf(thing))
-			replace_turf(thing)
-			continue
-		if(chair && istype(thing, /obj/structure/chair))
-			replace_object(thing, chair)
-			continue
-		if(table && istype(thing, /obj/structure/table))
-			replace_object(thing, table)
-			continue
+
+	var/has_chair = ispath(chair)
+	var/has_table = ispath(table)
+	for(var/turf/area_turf as anything in target_area.get_contained_turfs())
+		replace_turf(area_turf)
+
+		if(has_chair)
+			for(var/obj/structure/chair/area_chair in area_turf)
+				replace_object(area_chair, chair)
+
+		if(has_table)
+			for(var/obj/structure/table/area_table in area_turf)
+				replace_object(area_table, table)
+
 	return TRUE
 
 /// Replaces a turf with a different themed turf
