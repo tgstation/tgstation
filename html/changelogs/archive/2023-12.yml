@@ -885,3 +885,35 @@
       Vorpal Scythe
   - admin: Adds logging for the death knell, both when starts and when it is completed
       successfully.
+2023-12-29:
+  Diamond-74:
+  - bugfix: ai can now tell if it is in a do_after for resisting and will not interrupt
+      it. monkeys also now don't freeze up when aggressively grabbed and will resist
+      out of those and cuffs.
+  Ghommie, 13spacemen:
+  - bugfix: Signing or removing your candidature from ghost roles now properly updates
+      the screen button for it.
+  LemonInTheDark:
+  - bugfix: Dear mappers, the light debugger tool no longer deletes dragged wall lights
+  Mothblocks:
+  - bugfix: Fixed a lot of missing/broken images, such as emojis, language icons,
+      commendation hearts, icons in R&D menu, etc.
+  - refactor: Photo albums and photo frames are now more resilient to data loss, especially
+      when a server crashes.
+  - bugfix: Fixed "was shocked by /datum/component/energized" message.
+  SyncIt21:
+  - bugfix: reaction chamber open its UI when inserting/removing beakers from it
+  - bugfix: reaction chamber triggers new reactions & updates UI more often during
+      heating
+  - bugfix: instant and  normal reactions now get triggered more often so for e.g.
+      more plastic sheets from polymer reactions or more reactions occur when there
+      are multiple reagents present
+  - bugfix: Off station ORM's can redeem points again.
+  jlsnow301:
+  - bugfix: NTOS Messenger should clear on enter now
+  timothymtorres:
+  - rscadd: Add 50% graffiti speed boost to tagger quirk
+  - bugfix: Fix time duration of large graffiti not applying properly
+  vinylspiders:
+  - bugfix: reduces lag in the tgui textarea input boxes
+  - spellcheck: changes some let's to lets

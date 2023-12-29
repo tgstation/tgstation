@@ -1,4 +1,0 @@
-author: "Mothblocks"
-delete-after: True
-changes:
-  - refactor: "Photo albums and photo frames are now more resilient to data loss, especially when a server crashes."

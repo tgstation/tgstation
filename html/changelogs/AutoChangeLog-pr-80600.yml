@@ -1,6 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "reaction chamber open its UI when inserting/removing beakers from it"
-  - bugfix: "reaction chamber triggers new reactions & updates UI more often during heating"
-  - bugfix: "instant and  normal reactions now get triggered more often so for e.g. more plastic sheets from polymer reactions or more reactions occur when there are multiple reagents present"
