@@ -14,6 +14,7 @@
 
 /obj/vehicle/ridden/janicart/Initialize(mapload)
 	. = ..()
+	register_context()
 	update_appearance()
 	AddElement(/datum/element/ridable, /datum/component/riding/vehicle/janicart)
 	GLOB.janitor_devices += src
@@ -84,6 +85,45 @@
 	. = (LAZYACCESS(modifiers, RIGHT_CLICK) && try_remove_bag(user)) || ..()
 	if (!.)
 		try_remove_bag(user)
+
+/obj/vehicle/ridden/janicart/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	//has occupant && hands empty
+		//lmb dismount
+		//rmb remove bag
+
+	if(!held_item)
+		if(trash_bag)
+			context[SCREENTIP_CONTEXT_LMB] = "Remove bag"
+			context[SCREENTIP_CONTEXT_RMB] = "Remove bag"
+			//if key inserted
+				//context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/storage/bag/trash))
+		if(!trash_bag)
+			context[SCREENTIP_CONTEXT_LMB] = "Add bag"
+			context[SCREENTIP_CONTEXT_RMB] = "Add bag"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/janicart_upgrade))
+		if(!installed_upgrade)
+			context[SCREENTIP_CONTEXT_LMB] = "Install upgrade"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	if(istype(held_item, /obj/item/screwdriver))
+		if(installed_upgrade)
+			context[SCREENTIP_CONTEXT_LMB] = "Remove upgrade"
+			return CONTEXTUAL_SCREENTIP_SET
+
+	//holding key
+		//lmb insert key
+
+	//holding something that isn't the key (and probably also tiny/small)
+		//LMB = insert into bag
+
+//TODO move key insertion and dismount to basetype?
 
 
 /**
