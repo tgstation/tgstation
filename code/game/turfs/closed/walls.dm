@@ -1,4 +1,3 @@
-#define MAX_DENT_DECALS 15
 #define LEANING_OFFSET 11
 
 /turf/closed/wall
@@ -387,5 +386,4 @@
 	. = ..()
 	SEND_SIGNAL(gone, COMSIG_LIVING_WALL_EXITED, src)
 
-#undef MAX_DENT_DECALS
 #undef LEANING_OFFSET

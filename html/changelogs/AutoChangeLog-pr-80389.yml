@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "mat container displays correct number of sheets inserted for alloy materials."
-  - bugfix: "remote materials now properly respect the `MATCONTAINER_NO_INSERT` flag."
-  - code_imp: "removes material breakdown flags and related traits."
-  - code_imp: "adds helper proc to insert materials via the remote material component with proper context."

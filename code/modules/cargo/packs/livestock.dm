@@ -222,6 +222,7 @@
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(/mob/living/basic/garden_gnome)
 	crate_name = "garden gnome crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/critter/garden_gnome/generate()
 	. = ..()

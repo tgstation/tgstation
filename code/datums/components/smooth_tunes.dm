@@ -24,7 +24,7 @@
 	src.particles_path = particles_path
 	src.glow_color = glow_color
 
-/datum/component/smooth_tunes/Destroy(force, silent)
+/datum/component/smooth_tunes/Destroy(force)
 	if(particle_holder)
 		QDEL_NULL(particle_holder)
 	qdel(linked_songtuner_rite)

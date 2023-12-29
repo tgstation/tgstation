@@ -341,7 +341,7 @@
 	var/total_step_added = 0
 	for(var/datum/reagent/product as anything in reaction.results)
 		//create the products
-		step_add = holder.add_reagent(product, delta_chem_factor * reaction.results[product], null, cached_temp, purity, override_base_ph = TRUE, no_react = TRUE)
+		step_add = holder.add_reagent(product, delta_chem_factor * reaction.results[product], null, cached_temp, purity, override_base_ph = TRUE)
 		if(!step_add)
 			to_delete = TRUE
 			return
