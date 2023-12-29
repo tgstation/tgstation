@@ -172,10 +172,19 @@
 		if(thrown_item.throw_verb)
 			verb_text = thrown_item.throw_verb
 	do_attack_animation(target, no_effect = 1)
-	playsound(src, 'sound/weapons/punchmiss.ogg', 7*get_dist(loc,target), vary = TRUE)
-	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
-					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
-	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
+	var/sound/throwsound = 'sound/weapons/throw.ogg'
+	var/power_throw_text = "."
+	if(power_throw > 0) //If we have anything that boosts our throw power like hulk, we use the rougher heavier variant.
+		throwsound = 'sound/weapons/throwhard.ogg'
+		power_throw_text = " really hard!"
+	if(power_throw < 0) //if we have anything that weakens our throw power like dward, we use a slower variant.
+		throwsound = 'sound/weapons/throwsoft.ogg'
+		power_throw_text = " flimsily."
+		//The volume of the sound takes the minimum between the distance thrown or the max range an item. Short throws are quieter. A fast throwing speed also makes the noise sharper.
+	playsound(src, throwsound, 10*min(get_dist(loc,target),thrown_thing.throw_range), vary = TRUE, extrarange = -1, frequency = max(0.8,-1+thrown_thing.throw_speed))
+	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
+					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
+	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 	newtonian_move(get_dir(target, src))
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
