@@ -94,7 +94,6 @@
 		/obj/effect/decal/cleanable/glass,
 		/obj/effect/decal/cleanable/vomit,
 		/obj/effect/decal/cleanable/wrapping,
-		/obj/effect/decal/remains,
 	))
 	///blood we can clean
 	var/static/list/cleanable_blood = typecacheof(list(
@@ -111,6 +110,7 @@
 	var/static/list/huntable_trash = typecacheof(list(
 		/obj/item/trash,
 		/obj/item/food/deadmouse,
+		/obj/effect/decal/remains,
 	))
 	///drawings we hunt
 	var/static/list/cleanable_drawings = typecacheof(list(/obj/effect/decal/cleanable/crayon))

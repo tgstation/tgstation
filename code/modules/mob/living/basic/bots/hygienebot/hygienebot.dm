@@ -12,7 +12,7 @@
 	anchored = FALSE
 	health = 100
 	maxHealth = 100
-
+	path_image_color = "#80dae7"
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_JANITOR)
 	radio_key = /obj/item/encryptionkey/headset_service
 	radio_channel = RADIO_CHANNEL_SERVICE
@@ -63,7 +63,6 @@
 
 	ADD_TRAIT(src, TRAIT_SPRAY_PAINTABLE, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(on_attack))
-	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 
 /mob/living/basic/bot/hygienebot/explode()
 	var/datum/effect_system/fluid_spread/foam/foam = new
@@ -116,8 +115,7 @@
 		return
 	target.wash(CLEAN_WASH)
 
-/mob/living/basic/bot/hygienebot/proc/on_move(atom/movable/source, atom/oldloc, dir, forced)
-	SIGNAL_HANDLER
+/mob/living/basic/bot/hygienebot/on_bot_movement(atom/movable/source, atom/oldloc, dir, forced)
 
 	if(!washing || !isturf(loc))
 		return

@@ -126,8 +126,9 @@
 	if(succeeded)
 		var/mob/living/washed_target = controller.blackboard[target_key]
 		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, washed_target, TRUE)
+		if(controller.blackboard[BB_WASH_FRUSTRATION] > 0)
+			announcement.announce(pick(controller.blackboard[BB_WASH_DONE]))
 		controller.clear_blackboard_key(target_key)
-		announcement.announce(pick(controller.blackboard[BB_WASH_DONE]))
 		return
 
 	if(controller.blackboard[BB_WASH_FRUSTRATION] < BOT_FRUSTRATION_LIMIT)
