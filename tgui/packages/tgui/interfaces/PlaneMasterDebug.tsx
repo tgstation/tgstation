@@ -4,7 +4,6 @@ import { classes, shallowDiffers } from 'common/react';
 import { Component, createRef, RefObject } from 'react';
 
 import { resolveAsset } from '../assets';
-import { useState } from 'react';
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -383,7 +382,10 @@ export class PlaneMasterDebug extends Component {
     const { plane_info, mob_name } = data;
     const [showAdd, setShowAdd] = useLocalState('showAdd', false);
 
-    const [connectSources, setConnectSouces] = useState<AssocConnected>({});
+    const [connectSources, setConnectSouces] = useLocalState<AssocConnected>(
+      'connectionSources',
+      {},
+    );
 
     positionPlanes(connectSources);
 
@@ -929,7 +931,10 @@ const AddModal = (props) => {
     'currentPlane',
     {} as Plane,
   );
-  const [currentTarget, setCurrentTarget] = useState<Plane>({} as Plane);
+  const [currentTarget, setCurrentTarget] = useLocalState<Plane>(
+    'currentTarget',
+    {} as Plane,
+  );
 
   const plane_list = Object.keys(plane_info).map((plane) => plane_info[plane]);
   const planes = sortBy((plane: Plane) => -plane.plane)(plane_list);
