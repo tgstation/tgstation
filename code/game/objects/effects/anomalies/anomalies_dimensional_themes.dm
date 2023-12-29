@@ -59,7 +59,7 @@
 		apply_materials(affected_turf)
 
 /**
- * Applies the transformation to a list of turfs, ensuring a sound is only played every 5th turf to reduce noice spam
+ * Applies the transformation to a list of turfs, ensuring a sound is only played every few turfs to reduce noice spam
  *
  * Arguments
  * * list/turf/all_turfs - List of turfs to transform.
@@ -68,7 +68,7 @@
 	var/every_nth_turf = 0
 	for (var/turf/turf as anything in all_turfs)
 		if(can_convert(turf))
-			apply_theme(turf, skip_sound = (every_nth_turf % 5 != 0))
+			apply_theme(turf, skip_sound = (every_nth_turf % 7 != 0))
 			every_nth_turf++
 		CHECK_TICK
 
