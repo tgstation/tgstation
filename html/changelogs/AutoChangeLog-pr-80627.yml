@@ -1,0 +1,5 @@
+author: "Tristrian"
+delete-after: True
+changes:
+  - bugfix: "Bot launchpads can deploy cleanbots and medibots again."
+  - spellcheck: "Clarified the message when failling to recall a bot."
