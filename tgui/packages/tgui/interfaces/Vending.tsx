@@ -60,6 +60,7 @@ type UserData = {
 
 type StockItem = {
   name: string;
+  path: string;
   amount: number;
   colorable: boolean;
 };
@@ -84,7 +85,7 @@ export const Vending = (props) => {
 
   const [selectedCategory, setSelectedCategory] = useLocalState<string>(
     'selectedCategory',
-    Object.keys(data.categories)[0],
+    Object.keys(data.categories)[0]
   );
 
   let inventory: (ProductRecord | CustomInput)[];
@@ -112,7 +113,7 @@ export const Vending = (props) => {
           return false;
         }
       });
-    }),
+    })
   );
 
   return (
@@ -218,12 +219,12 @@ const ProductDisplay = (props: {
               return true;
             }
           })
-          .map((product, index) => (
+          .map((product) => (
             <VendingRow
               key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[index]}
+              productStock={stock[product.path]}
             />
           ))}
       </Table>
