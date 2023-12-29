@@ -1,4 +1,0 @@
-author: "Diamond-74"
-delete-after: True
-changes:
-  - bugfix: "ai can now tell if it is in a do_after for resisting and will not interrupt it. monkeys also now don't freeze up when aggressively grabbed and will resist out of those and cuffs."
