@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
-	else // for fishing things like corpses, move them to the turf of the fisherman
+	else if(!istype(reward, /obj/effect/spawner)) // for fishing things like corpses, move them to the turf of the fisherman. Do not do this for spawners.
 		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")
 
