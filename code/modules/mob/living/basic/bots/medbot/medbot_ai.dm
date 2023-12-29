@@ -186,7 +186,7 @@
 	return can_see(source, patient, radius)
 
 /datum/ai_behavior/announce_patient
-	action_cooldown = 30 SECONDS
+	action_cooldown = 3 MINUTES
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
 
 /datum/ai_behavior/announce_patient/perform(seconds_per_tick, datum/ai_controller/basic_controller/bot/controller, target_key)
