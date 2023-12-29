@@ -14,6 +14,7 @@
 
 #define AVAILABLE_SPRAYCAN_SPACE 8 // enough to fill one radial menu page
 
+#define DRAW_TIME 5 SECONDS
 #define INFINITE_CHARGES -1
 
 /*
@@ -504,11 +505,13 @@
 		audible_message(span_notice("You hear spraying."))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
-	var/wait_time = 50
+	var/wait_time = DRAW_TIME
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
+	if(istagger)
+		wait_time *= 0.5
 
-	if(!instant && !do_after(user, 50, target = target))
+	if(!instant && !do_after(user, wait_time, target = target))
 		return
 
 	if(!use_charges(user, cost))
@@ -1064,3 +1067,4 @@
 #undef PAINT_LARGE_HORIZONTAL_ICON
 
 #undef INFINITE_CHARGES
+#undef DRAW_TIME

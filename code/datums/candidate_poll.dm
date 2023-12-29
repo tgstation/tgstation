@@ -12,8 +12,8 @@
 	var/ignoring_category
 	/// The players who signed up to this poll
 	var/list/mob/signed_up
-	/// the linked alert button
-	var/atom/movable/screen/alert/poll_alert/alert_button
+	/// the linked alert buttons
+	var/list/atom/movable/screen/alert/poll_alert/alert_buttons = list()
 	/// The world.time at which the poll was created
 	var/time_started
 	/// Whether the polling is finished
@@ -33,10 +33,16 @@
 	return ..()
 
 /datum/candidate_poll/Destroy()
-	QDEL_NULL(alert_button)
+	if(src in SSpolling.currently_polling)
+		SSpolling.polling_finished(src)
+		return QDEL_HINT_IWILLGC // the above proc will call QDEL_IN(src, 0.5 SECONDS)
 	jump_to_me = null
-	signed_up.Cut()
+	signed_up = null
 	return ..()
+
+/datum/candidate_poll/proc/clear_alert_ref(atom/movable/screen/alert/poll_alert/source)
+	SIGNAL_HANDLER
+	alert_buttons -= source
 
 /datum/candidate_poll/proc/sign_up(mob/candidate, silent = FALSE)
 	if(!istype(candidate) || isnull(candidate.key) || isnull(candidate.client))
@@ -58,9 +64,6 @@
 		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
 			if(src != existing_poll && poll_key == existing_poll.poll_key && !(candidate in existing_poll.signed_up))
 				existing_poll.sign_up(candidate, TRUE)
-	if(alert_button)
-		alert_button.update_candidates_number_overlay()
-		alert_button.update_signed_up_overlay()
 	return TRUE
 
 /datum/candidate_poll/proc/remove_candidate(mob/candidate, silent = FALSE)
@@ -83,9 +86,6 @@
 		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
 			if(src != existing_poll && poll_key == existing_poll.poll_key && (candidate in existing_poll.signed_up))
 				existing_poll.remove_candidate(candidate, TRUE)
-	if(alert_button)
-		alert_button.update_candidates_number_overlay()
-		alert_button.update_signed_up_overlay()
 	return TRUE
 
 /datum/candidate_poll/proc/do_never_for_this_round(mob/candidate)

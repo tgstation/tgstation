@@ -28,7 +28,7 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-/datum/component/supermatter_crystal/Destroy(force, silent)
+/datum/component/supermatter_crystal/Destroy(force)
 	tool_act_callback = null
 	consume_callback = null
 	return ..()

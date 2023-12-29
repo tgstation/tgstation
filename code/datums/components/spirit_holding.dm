@@ -13,7 +13,7 @@
 	if(!ismovable(parent)) //you may apply this to mobs, i take no responsibility for how that works out
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/spirit_holding/Destroy(force, silent)
+/datum/component/spirit_holding/Destroy(force)
 	. = ..()
 	if(bound_spirit)
 		QDEL_NULL(bound_spirit)
