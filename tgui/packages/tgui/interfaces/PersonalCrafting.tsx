@@ -254,7 +254,7 @@ export const PersonalCrafting = (props) => {
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
-                    onChange={(e, value) => {
+                    onInput={(e, value) => {
                       setPages(1);
                       setSearchText(value);
                     }}
@@ -489,8 +489,7 @@ export const PersonalCrafting = (props) => {
           </Stack.Item>
           <Stack.Item grow my={-1}>
             <Box
-              id="content"
-              height={'100%'}
+              height="100%"
               pr={1}
               pt={1}
               mr={-1}

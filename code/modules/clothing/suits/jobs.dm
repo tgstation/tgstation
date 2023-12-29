@@ -144,6 +144,12 @@
 	icon_state = "detsuit"
 	inhand_icon_state = null
 
+/obj/item/clothing/suit/jacket/det_suit/brown
+	name = "brown suit jacket"
+	desc = "A suit jacket perfect for dinner dates and criminal investigations."
+	icon_state = "detsuit_brown"
+	inhand_icon_state = null
+
 /obj/item/clothing/suit/jacket/det_suit/kim
 	name = "aerostatic bomber jacket"
 	desc = "A jacket once worn by the revolutionary air brigades during the Antecentennial Revolution. There are quite a few pockets on the inside, mostly for storing notebooks and compasses."

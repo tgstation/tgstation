@@ -137,13 +137,13 @@ export const NtosNetDownloader = (props) => {
         </Section>
         <Section>
           <Input
-            autofocus
+            autoFocus
             height="23px"
             width="100%"
             placeholder="Search program name..."
             fluid
             value={searchItem}
-            onChange={(e, value) => {
+            onInput={(e, value) => {
               setSearchItem(value);
             }}
           />
@@ -188,7 +188,7 @@ const Program = (props) => {
   return (
     <Section>
       <Stack align="baseline">
-        <Stack.Item grow={1} blod>
+        <Stack.Item grow bold>
           <Icon name={program.icon} mr={1} />
           {program.filedesc}
         </Stack.Item>

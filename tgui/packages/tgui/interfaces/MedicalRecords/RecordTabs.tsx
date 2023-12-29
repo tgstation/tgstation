@@ -38,7 +38,7 @@ export const MedicalRecordTabs = (props) => {
       <Stack.Item>
         <Input
           fluid
-          onChange={(_, value) => setSearch(value)}
+          onInput={(_, value) => setSearch(value)}
           placeholder="Name/Job/DNA"
         />
       </Stack.Item>
@@ -105,11 +105,10 @@ const CrewTab = (props: { record: MedicalRecord }) => {
   return (
     <Tabs.Tab
       className="candystripe"
-      label={name}
       onClick={() => selectRecord(record)}
       selected={selectedRecord?.crew_ref === crew_ref}
     >
-      <Box wrap>
+      <Box>
         <Icon name={JOB2ICON[rank] || 'question'} /> {name}
       </Box>
     </Tabs.Tab>

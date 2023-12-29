@@ -50,8 +50,7 @@ export const CellularEmporium = (props) => {
           buttons={
             <Stack>
               <Stack.Item fontSize="16px">
-                {genetic_points_count && genetic_points_count}{' '}
-                <Icon name="dna" color="#DD66DD" />
+                {genetic_points_count} <Icon name="dna" color="#DD66DD" />
               </Stack.Item>
               <Stack.Item>
                 <Button
@@ -71,7 +70,7 @@ export const CellularEmporium = (props) => {
               <Stack.Item>
                 <Input
                   width="200px"
-                  onChange={(event, value) => setSearchAbilities(value)}
+                  onInput={(event, value) => setSearchAbilities(value)}
                   placeholder="Search Abilities..."
                   value={searchAbilities}
                 />

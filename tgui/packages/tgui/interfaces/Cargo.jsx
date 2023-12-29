@@ -225,7 +225,7 @@ export const CargoCatalog = (props) => {
                     fluid
                     placeholder="Search..."
                     value={searchText}
-                    onChange={(e, value) => {
+                    onInput={(e, value) => {
                       if (value === searchText) {
                         return;
                       }

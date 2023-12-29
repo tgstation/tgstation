@@ -48,7 +48,7 @@
 	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_EXAMINE, COMSIG_MOB_LOGIN))
 	return ..()
 
-/datum/component/ghost_direct_control/Destroy(force, silent)
+/datum/component/ghost_direct_control/Destroy(force)
 	extra_control_checks = null
 	after_assumed_control = null
 
@@ -74,12 +74,14 @@
 	if (!(GLOB.ghost_role_flags & GHOSTROLE_SPAWNER))
 		return
 	awaiting_ghosts = TRUE
-	var/list/mob/dead/observer/candidates = poll_ghost_candidates(
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates(
 		question = "Do you want to play as [role_name]?",
-		jobban_type = ban_type,
-		be_special_flag = ban_type,
+		check_jobban = ban_type,
+		role = ban_type,
 		poll_time = poll_length,
 		ignore_category = poll_ignore_key,
+		pic_source = parent,
+		role_name_text = role_name,
 	)
 	awaiting_ghosts = FALSE
 	if (!LAZYLEN(candidates))

@@ -21,7 +21,7 @@
 		/datum/ai_planning_subtree/acid_spray,
 		/datum/ai_planning_subtree/use_mob_ability/foam_area,
 		/datum/ai_planning_subtree/salute_authority,
-		/datum/ai_planning_subtree/find_patrol_beacon,
+		/datum/ai_planning_subtree/find_patrol_beacon/cleanbot,
 	)
 	reset_keys = list(
 		BB_ACTIVE_PET_COMMAND,
@@ -37,6 +37,7 @@
 		BB_CLEANABLE_DRAWINGS = CLEANBOT_CLEAN_DRAWINGS,
 		BB_HUNTABLE_TRASH = CLEANBOT_CLEAN_TRASH,
 	)
+	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
@@ -49,12 +50,8 @@
 /datum/ai_planning_subtree/cleaning_subtree
 
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
-	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
-
-	if(LAZYLEN(bot_pawn.do_afters))
-		return SUBTREE_RETURN_FINISH_PLANNING
-
 	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
+		controller.clear_blackboard_key(BB_BEACON_TARGET)
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -62,6 +59,7 @@
 
 	final_hunt_list += controller.blackboard[BB_CLEANABLE_DECALS]
 	var/list/flag_list = controller.clean_flags
+	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
 	for(var/list_key in flag_list)
 		if(!(bot_pawn.janitor_mode_flags & flag_list[list_key]))
 			continue
@@ -70,7 +68,7 @@
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets, BB_CLEAN_TARGET, final_hunt_list)
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets
-	action_cooldown = 2 SECONDS
+	action_cooldown = 1 SECONDS
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
@@ -184,6 +182,13 @@
 			continue
 		return human_target
 	return null
+
+/datum/ai_planning_subtree/find_patrol_beacon/cleanbot
+
+/datum/ai_planning_subtree/find_patrol_beacon/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+	if(controller.blackboard_key_exists(BB_CLEAN_TARGET))
+		return
+	return ..()
 
 /datum/pet_command/point_targeting/clean
 	command_name = "Clean"

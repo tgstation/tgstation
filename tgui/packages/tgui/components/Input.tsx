@@ -14,15 +14,18 @@ type Props = Partial<{
   autoFocus: boolean;
   autoSelect: boolean;
   className: string;
+  disabled: boolean;
   fluid: boolean;
   maxLength: number;
   monospace: boolean;
-  // Fires when: Value changes
+  /** Fires when user is 'done typing': Clicked out, blur, enter key */
   onChange: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
-  // Fires when: Pressed enter without shift
+  /** Fires once the enter key is pressed */
   onEnter: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
-  // Fires when: Pressed escape
+  /** Fires once the escape key is pressed */
   onEscape: (event: SyntheticEvent<HTMLInputElement>) => void;
+  /** Fires on each key press / value change. Used for searching */
+  onInput: (event: SyntheticEvent<HTMLInputElement>, value: string) => void;
   placeholder: string;
   selfClear: boolean;
   value: string | number;
@@ -36,7 +39,11 @@ export const Input = (props: Props) => {
   const {
     autoFocus,
     autoSelect,
+    className,
+    disabled,
+    fluid,
     maxLength,
+    monospace,
     onChange,
     onEnter,
     onEscape,
@@ -44,9 +51,8 @@ export const Input = (props: Props) => {
     placeholder,
     selfClear,
     value,
-    ...boxProps
+    ...rest
   } = props;
-  const { className, fluid, monospace, ...rest } = boxProps;
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -57,6 +63,7 @@ export const Input = (props: Props) => {
         event.currentTarget.value = '';
       } else {
         event.currentTarget.blur();
+        onChange?.(event, event.currentTarget.value);
       }
 
       return;
@@ -67,26 +74,35 @@ export const Input = (props: Props) => {
 
       event.currentTarget.value = toInputValue(value);
       event.currentTarget.blur();
-
-      return;
     }
   };
 
+  /** Focuses the input on mount */
+  useEffect(() => {
+    if (!autoFocus && !autoSelect) return;
+
+    const input = inputRef.current;
+    if (!input) return;
+
+    setTimeout(() => {
+      input.focus();
+
+      if (autoSelect) {
+        input.select();
+      }
+    }, 1);
+  }, []);
+
+  /** Updates the initial value on props change */
   useEffect(() => {
     const input = inputRef.current;
     if (!input) return;
 
-    input.value = toInputValue(value);
-    if (autoFocus || autoSelect) {
-      setTimeout(() => {
-        input.focus();
+    const newValue = toInputValue(value);
+    if (input.value === newValue) return;
 
-        if (autoSelect) {
-          input.select();
-        }
-      }, 1);
-    }
-  }, []);
+    input.value = newValue;
+  }, [value]);
 
   return (
     <Box
@@ -101,8 +117,10 @@ export const Input = (props: Props) => {
       <div className="Input__baseline">.</div>
       <input
         className="Input__input"
+        disabled={disabled}
         maxLength={maxLength}
-        onChange={(event) => onChange?.(event, event.target.value)}
+        onBlur={(event) => onChange?.(event, event.target.value)}
+        onChange={(event) => onInput?.(event, event.target.value)}
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         ref={inputRef}
