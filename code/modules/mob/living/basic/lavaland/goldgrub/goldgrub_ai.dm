@@ -45,7 +45,7 @@
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target/hunt_ores
 	finding_behavior = /datum/ai_behavior/find_hunt_target/hunt_ores
 	hunt_targets = list(/obj/item/stack/ore)
-	hunt_chance = 75
+	hunt_chance = 90
 	hunt_range = 9
 
 /datum/ai_behavior/find_hunt_target/hunt_ores
@@ -74,7 +74,7 @@
 	hunting_behavior = /datum/ai_behavior/hunt_target/unarmed_attack_target //We call the ore vent's produce_boulder() proc here to produce a single boulder.
 	finding_behavior = /datum/ai_behavior/find_hunt_target/harvest_vents
 	hunt_targets = list(/obj/structure/ore_vent)
-	hunt_chance = 50
+	hunt_chance = 25
 	hunt_range = 15
 
 /datum/ai_behavior/find_hunt_target/harvest_vents

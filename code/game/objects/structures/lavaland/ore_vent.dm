@@ -346,7 +346,7 @@
  * Returns the boulder produced.
  */
 /obj/structure/ore_vent/proc/produce_boulder(apply_cooldown = FALSE)
-	if(COOLDOWN_FINISHED(src, manual_vent_cooldown))
+	if(!COOLDOWN_FINISHED(src, manual_vent_cooldown))
 		return
 	var/obj/item/boulder/new_rock
 	if(prob(artifact_chance))

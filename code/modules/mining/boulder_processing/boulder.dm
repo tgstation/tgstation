@@ -1,6 +1,3 @@
-/// Define for any kind of manual processing speed, whether it's from golem or another mob that can crack boulders.
-#define INATE_SPEED_MULTIPLIER 3
-
 
 
 /**
@@ -14,7 +11,6 @@
 	item_flags = NO_MAT_REDEMPTION
 	throw_range = 2
 	throw_speed = 0.5
-	slowdown = 1.5 // It's a big rock.
 	drag_slowdown = 1.5 // It's still a big rock.
 	///When a refinery machine is working on this boulder, we'll set this. Re reset when the process is finished, but the boulder may still be refined/operated on further.
 	var/obj/machinery/bouldertech/processed_by = null
@@ -77,13 +73,13 @@
 	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, INATE_SPEED_MULTIPLIER)
+		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return
 
 /obj/item/boulder/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, INATE_SPEED_MULTIPLIER)
+		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
@@ -93,7 +89,7 @@
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, INATE_SPEED_MULTIPLIER)
+		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/CanAllowThrough(atom/movable/mover, border_dir)
@@ -104,7 +100,7 @@
 /obj/item/boulder/attackby_secondary(obj/item/weapon, mob/user, params)
 	. = ..()
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER) || HAS_TRAIT(weapon, TRAIT_BOULDER_BREAKER))
-		manual_process(weapon, user, INATE_SPEED_MULTIPLIER)
+		manual_process(weapon, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(weapon.tool_behaviour == TOOL_MINING)
 		manual_process(weapon, user)
@@ -116,7 +112,7 @@
 	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user) //A little hacky but it works around the speed of the blackboard task selection process for now.
+		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/update_icon_state()
@@ -141,25 +137,33 @@
 /obj/item/boulder/proc/manual_process(obj/item/weapon, mob/living/user, override_speed_multiplier, continued = FALSE)
 	var/process_speed = 0
 	to_chat(world, span_notice("[user] is working on \the [src] (early)"))
+
+	//Handle weapon conditions.
 	if(weapon)
+		if(HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
+			durability = 0
 		process_speed = weapon.toolspeed
 		weapon.play_tool_sound(src, 50)
 		if(!continued)
 			to_chat(user, span_notice("You swing at \the [src]..."))
-	else if (override_speed_multiplier)
-		process_speed = override_speed_multiplier
+
+	// Handle user conditions/override conditions.
+	else if (override_speed_multiplier || HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
+		if(user)
+			if(HAS_TRAIT(user, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
+				durability = 0
+		else if(override_speed_multiplier)
+			process_speed = override_speed_multiplier
+		else
+			process_speed = INATE_BOULDER_SPEED_MULTIPLIER
 		playsound(src, 'sound/effects/rocktap1.ogg', 50)
 		if(!continued)
 			to_chat(user, span_notice("You scrape away at \the [src]... speed is [process_speed]."))
 	else
-		return
-
-	if(HAS_TRAIT(weapon, TRAIT_INSTANTLY_PROCESSES_BOULDERS) || HAS_TRAIT(user, TRAIT_INSTANTLY_PROCESSES_BOULDERS))
-		durability = 0
-	else
-		to_chat(world, "")
+		CRASH("No weapon, acceptable user, or override speed multiplier passed to manual_process()")
+	if(durability > 0)
 		if(!do_after(user, (2 * process_speed SECONDS), target = src))
-			return FALSE
+			return
 		if(!user.Adjacent(src))
 			return
 		durability--
@@ -224,6 +228,9 @@
 /**
  * This is called when a boulder is spawned from a vent, and is used to set the boulder's icon as well as durability.
  * We also set our boulder_size variable, which is used for inheiriting the icon_state later on if processed.
+ * @param obj/structure/ore_vent/parent_vent The vent that spawned this boulder to generate consistent boulder icons. If null, we use the default size.
+ * @param size The size of the boulder to spawn. If parent_vent is defined, this is ignored.
+ * @param is_artifact Whether or not this boulder is an artifact boulder. If true, we use the artifact boulder icon state regardless of size.
  */
 /obj/item/boulder/proc/flavor_boulder(obj/structure/ore_vent/parent_vent, size = BOULDER_SIZE_SMALL, is_artifact = FALSE)
 	var/durability_min = size
@@ -296,5 +303,3 @@
 	desc = "A bizzare, twisted boulder. Wait, wait no, it's just a rock."
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.1, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.1)
 	durability = 1
-
-#undef INATE_SPEED_MULTIPLIER
