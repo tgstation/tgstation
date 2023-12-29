@@ -505,9 +505,18 @@
 	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+
+	if(src.remote_control)
+		current_turf = get_turf(src.remote_control)
+		above_turf = GET_TURF_ABOVE(current_turf)
+		ventcrawling_flag = HAS_TRAIT(src.remote_control, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+
 	if(!above_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
+
+	if(src.remote_control)
+		return src.remote_control.relaymove(src, UP)
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
@@ -530,15 +539,25 @@
 
 	var/turf/current_turf = get_turf(src)
 	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+
+	if(src.remote_control)
+		current_turf = get_turf(src.remote_control)
+		above_turf = GET_TURF_BELOW(current_turf)
+		ventcrawling_flag = HAS_TRAIT(src.remote_control, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+
 	if(!below_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
+
+	if(src.remote_control)
+		return src.remote_control.relaymove(src, DOWN)
 
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, DOWN)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
 	return FALSE
