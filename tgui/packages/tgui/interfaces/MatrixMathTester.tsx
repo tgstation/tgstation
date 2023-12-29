@@ -1,6 +1,5 @@
 import { toFixed } from 'common/math';
 import { useState } from 'react';
-
 import { useBackend } from '../backend';
 import { Button, Input, NumberInput, Section, Table } from '../components';
 import { Window } from '../layouts';
