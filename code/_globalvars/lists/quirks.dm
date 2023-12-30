@@ -28,3 +28,9 @@ GLOBAL_LIST_INIT(favorite_brand, list(
 	"Robust Gold Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
 	"Syndicate Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
 ))
+
+///Options for hemiplegic quirk
+GLOBAL_LIST_INIT(hemiplegic_side, list(
+	"Left Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
+	"Right Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right
+))

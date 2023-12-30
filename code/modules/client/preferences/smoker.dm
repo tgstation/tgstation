@@ -1,17 +1,17 @@
-/datum/preference/choiced/item_quirk/junkie/smoker
+/datum/preference/choiced/smoker
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "smoker"
 	savefile_identifier = PREFERENCE_CHARACTER
 
-/datum/preference/choiced/item_quirk/junkie/smoker/init_possible_values()
+/datum/preference/choiced/smoker/init_possible_values()
 	return list("Random") + GLOB.favorite_brand
 
-/datum/preference/choiced/item_quirk/junkie/smoker/is_accessible(datum/preferences/preferences)
+/datum/preference/choiced/smoker/is_accessible(datum/preferences/preferences)
 	. = ..()
 	if (!.)
 		return FALSE
 
 	return "Smoker" in preferences.all_quirks
 
-/datum/preference/choiced/item_quirk/junkie/smoker/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/smoker/apply_to_human(mob/living/carbon/human/target, value)
 	return
