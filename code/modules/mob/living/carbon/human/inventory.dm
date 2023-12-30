@@ -251,7 +251,7 @@
 				update_worn_undersuit()
 			update_worn_oversuit()
 	else if(I == w_uniform)
-		if(invdrop)
+		if(invdrop && IS_ORGANIC_LIMB(src.get_bodypart(BODY_ZONE_CHEST)))
 			if(r_store)
 				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
 			if(l_store)
