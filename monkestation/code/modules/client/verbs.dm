@@ -16,8 +16,10 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	/datum/antagonist/paradox_clone,
 ))
 
-
-
+#define ADMIN_APPROVE_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_antag_token=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_ANTAG_TOKEN(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_antag_token=[REF(user)]'>No</a>)"
+#define ADMIN_APPROVE_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];approve_token_event=[REF(user)]'>Yes</a>)"
+#define ADMIN_REJECT_TOKEN_EVENT(user) "(<A href='?_src_=holder;[HrefToken(forceGlobal = TRUE)];reject_token_event=[REF(user)]'>No</a>)"
 /client/verb/spend_antag_tokens()
 	set category = "IC"
 	set name = "Spend Antag Tokens"
@@ -31,15 +33,18 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	if(isobserver(mob))
 		to_chat(src, span_notice("NOTE: You will be spawned where ever your ghost is when approved, so becareful where you are."))
 
-	if(!saved_tokens)
-		saved_tokens = new(src)
+	if(!client_token_holder)
+		client_token_holder = new(src)
 
-	var/tier = tgui_input_list(src, "High:[saved_tokens.total_high_threat_tokens] | Med: [saved_tokens.total_medium_threat_tokens] | Low: [saved_tokens.total_low_threat_tokens] | Donator:[saved_tokens.donator_token]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
+	var/tier = tgui_input_list(src, "High:[client_token_holder.total_high_threat_tokens] | \
+									Med: [client_token_holder.total_medium_threat_tokens] | \
+									Low: [client_token_holder.total_low_threat_tokens] | \
+									Donator:[client_token_holder.donator_token]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
 	if(!tier)
 		return
 
 	var/using_donor = FALSE
-	if(saved_tokens.donator_token)
+	if(client_token_holder.donator_token)
 		var/choice = tgui_alert(src, "Use Donator Token?" , "Spend Tokens", list("Yes", "No"))
 		if(choice == "Yes")
 			using_donor = TRUE
@@ -47,41 +52,72 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	if(!using_donor)
 		switch(tier)
 			if(HIGH_THREAT)
-				if(saved_tokens.total_high_threat_tokens <= 0)
+				if(client_token_holder.total_high_threat_tokens <= 0)
 					return
 			if(MEDIUM_THREAT)
-				if(saved_tokens.total_medium_threat_tokens <= 0)
+				if(client_token_holder.total_medium_threat_tokens <= 0)
 					return
 			if(LOW_THREAT)
-				if(saved_tokens.total_low_threat_tokens <= 0)
+				if(client_token_holder.total_low_threat_tokens <= 0)
 					return
 
 	var/datum/antagonist/chosen_antagonist
-	switch(tier)
-		if(HIGH_THREAT)
-			chosen_antagonist = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", GLOB.high_threat_antags)
-		if(MEDIUM_THREAT)
-			chosen_antagonist = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", GLOB.medium_threat_antags)
-		if(LOW_THREAT)
-			chosen_antagonist = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", GLOB.low_threat_antags)
+	var/static/list/token_values = list(
+		HIGH_THREAT = GLOB.high_threat_antags,
+		MEDIUM_THREAT = GLOB.medium_threat_antags,
+		LOW_THREAT = GLOB.low_threat_antags,
+	)
+	chosen_antagonist = tgui_input_list(src, "Choose an Antagonist", "Spend Tokens", token_values[tier])
 	if(!chosen_antagonist)
 		return
 
-	saved_tokens.queued_donor = using_donor
-	saved_tokens.in_queued_tier = tier
-	saved_tokens.in_queue = new chosen_antagonist
+	client_token_holder.queued_donor = using_donor
+	client_token_holder.in_queued_tier = tier
+	client_token_holder.in_queue = new chosen_antagonist
 
 	to_chat(src, "Your request has been sent to the admins.")
-	wait_for_approval(src, chosen_antagonist)
+	SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(src)]</EM> \
+							[ADMIN_APPROVE_ANTAG_TOKEN(src)] [ADMIN_REJECT_ANTAG_TOKEN(src)] | \
+							[src] has requested to use their antag token to be a [chosen_antagonist].")]")
 
+/client/verb/trigger_token_event()
+	set category = "IC"
+	set name = "Trigger Token Event"
+	set desc = "Opens a ui to spend event tokens on"
 
-/proc/wait_for_approval(client/requestor, datum/antagonist/requested_antag)
-	var/msg = "[span_admin("[span_prefix("ANTAG TOKEN:")] <EM>[key_name(requestor)]</EM> [ADMIN_APPROVE_TOKEN(requestor)] [ADMIN_REJECT_TOKEN(requestor)] | [requestor] has requested to use their antag token to be a [requested_antag].")]"
-	add_event_to_buffer(requestor,  data = "has requested to use their antag token to be a [requested_antag].", log_key =  "META")
-	for(var/client/X in GLOB.admins)
-		X << 'sound/items/bikehorn.ogg'
+	if(!isobserver(mob))
+		to_chat(src, "You can only trigger events as a ghost.")
+		return
 
-	to_chat(GLOB.admins,
-		type = MESSAGE_TYPE_ADMINCHAT,
-		html = msg,
-		confidential = TRUE)
+	var/static/list/event_list
+	if(!event_list)
+		event_list = list()
+		for(var/event as anything in SStwitch.twitch_events_by_type)
+			var/datum/twitch_event/event_instance = SStwitch.twitch_events_by_type[event]
+			if(!event_instance.token_cost)
+				continue
+			event_list += event_instance
+
+	client_token_holder.check_event_tokens(src)
+
+	var/datum/twitch_event/selected_event = tgui_input_list(src, "Event tokens: [client_token_holder.event_tokens]", "Choose an event to trigger", event_list)
+	if(!selected_event)
+		return
+
+	var/confirm = tgui_alert(src, "Are you sure you want to trigger [selected_event.event_name]? It will cost [selected_event.token_cost] event tokens.", "Trigger token event", \
+							list("Yes", "No"))
+	if(confirm == "Yes")
+		if(client_token_holder.event_tokens >= selected_event.token_cost)
+			client_token_holder.queued_token_event = selected_event
+			to_chat(src, "Your request has been sent.")
+			add_event_to_buffer(usr,  data = "has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).", log_key =  "META")
+			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("TOKEN EVENT:")] <EM>[key_name(src)]</EM> \
+																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \
+																				[src] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).")]")
+			return
+		to_chat(src, "You dont have enough tokens to trigger this event.")
+
+#undef ADMIN_APPROVE_ANTAG_TOKEN
+#undef ADMIN_REJECT_ANTAG_TOKEN
+#undef ADMIN_APPROVE_TOKEN_EVENT
+#undef ADMIN_REJECT_TOKEN_EVENT

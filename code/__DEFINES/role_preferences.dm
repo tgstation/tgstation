@@ -16,7 +16,7 @@
 #define ROLE_OPERATIVE "Operative"
 #define ROLE_TRAITOR "Traitor"
 #define ROLE_WIZARD "Wizard"
-#define ROLE_CLOCK_CULTIST "Clock Cultist"
+#define ROLE_CLOCK_CULTIST "Clock Cultist" //monkestation edit
 
 // Midround roles
 #define ROLE_ABDUCTOR "Abductor"
@@ -39,6 +39,7 @@
 #define ROLE_SPACE_DRAGON "Space Dragon"
 #define ROLE_SPIDER "Spider"
 #define ROLE_WIZARD_MIDROUND "Wizard (Midround)"
+#define ROLE_DRIFTING_CONTRACTOR "Drifting Contractor" //monkestation edit
 
 // Latejoin roles
 #define ROLE_HERETIC_SMUGGLER "Heretic Smuggler"
@@ -148,8 +149,11 @@ GLOBAL_LIST_INIT(special_roles, list(
 	ROLE_SPACE_DRAGON = 0,
 	ROLE_SPIDER = 0,
 	ROLE_WIZARD_MIDROUND = 14,
+//monkestation edit start
+	ROLE_DRIFTING_CONTRACTOR = 0,
 	ROLE_VAMPIRICACCIDENT = 0,
 	ROLE_MONSTERHUNTER = 0,
+//monkestation edit end
 
 	// Latejoin
 	ROLE_HERETIC_SMUGGLER = 0,

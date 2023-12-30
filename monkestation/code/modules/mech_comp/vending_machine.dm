@@ -25,7 +25,7 @@
 		/obj/item/mcobject/messaging/microphone = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/or = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/pressure_sensor = STANDARD_COMPONENT_SUPPLY,
-		/obj/item/mcobject/messaging/regfind = STANDARD_COMPONENT_SUPPLY,
+//		/obj/item/mcobject/messaging/regfind = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/regreplace = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/relay = STANDARD_COMPONENT_SUPPLY,
 		/obj/item/mcobject/messaging/signal_builder = STANDARD_COMPONENT_SUPPLY,
