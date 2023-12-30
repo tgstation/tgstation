@@ -10,4 +10,4 @@
 	new /obj/item/circuit_component/chem/filter(src)
 	new /obj/item/circuit_component/chem/synthesizer(src)
 	new /obj/item/stock_parts/cell(src)
-	new /obj/item/integrated_circuit(src)
+	new /obj/item/integrated_circuit/chemical(src)
