@@ -89,11 +89,16 @@
 /obj/vehicle/ridden/janicart/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	//has occupant && hands empty
-		//lmb dismount
-		//rmb remove trash bag
-		//if key inserted && you are the driver
-			//context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
+	if(occupant_amount() > 0)
+		if(!held_item)
+			context[SCREENTIP_CONTEXT_LMB] = "Dismount"
+			context[SCREENTIP_CONTEXT_RMB] = "Dismount"
+			if(trash_bag)
+				context[SCREENTIP_CONTEXT_RMB] = "Remove trash bag"
+			if(is_key(inserted_key))
+				if(occupants.Find(user))
+					context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
+			return CONTEXTUAL_SCREENTIP_SET
 
 	if(!held_item) //&& not driving it
 		if(trash_bag)
