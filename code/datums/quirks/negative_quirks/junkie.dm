@@ -112,13 +112,12 @@
 	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
 	customization_options = list(/datum/preference/choiced/smoker)
 
-/datum/quirk/item_quirk/junkie/smoker/add_unique(client/client_source)
+/datum/quirk/item_quirk/junkie/smoker/post_add(client/client_source)
+	. = ..()
 	var/drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
 	if(isnull(drug_container_type))
 		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
 
-/datum/quirk/item_quirk/junkie/smoker/post_add()
-	. = ..()
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/mob/living/carbon/carbon_holder = quirk_holder
