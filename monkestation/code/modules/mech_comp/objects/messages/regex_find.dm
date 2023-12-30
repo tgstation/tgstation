@@ -1,3 +1,5 @@
+//nuked from orbit until fixed
+/*
 //Thank you mark
 /obj/item/mcobject/messaging/regfind
 	name = "regex find component"
@@ -64,4 +66,4 @@
 			fire(stored_message, input)
 		else
 			input.cmd = R.match
-			fire(input)
+			fire(input)*/

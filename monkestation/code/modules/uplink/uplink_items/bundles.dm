@@ -1,3 +1,27 @@
+/datum/uplink_item/bundles_tc/contract_kit
+	name = "Contractor Bundle"
+	desc = "A box containing everything you need to take contracts from the Syndicate. Kidnap people and drop them off at specified locations for rewards in the form of Telecrystals \
+			(Usable in the provided uplink) and Contractor Points. Can not be bought if you have taken any secondary objectives."
+	item = /obj/item/storage/box/syndie_kit/contract_kit
+	cost = 20
+	purchasable_from = UPLINK_TRAITORS
+
+/datum/uplink_item/bundles_tc/contract_kit/unique_checks(mob/user, datum/uplink_handler/handler, atom/movable/source)
+	if(length(handler.active_objectives) || !handler.can_take_objectives || !handler.has_objectives)
+		return FALSE
+
+	for(var/datum/traitor_objective/objective in handler.completed_objectives)
+		if(objective.objective_state != OBJECTIVE_STATE_INACTIVE)
+			return FALSE
+
+	return TRUE
+
+/datum/uplink_item/bundles_tc/contract_kit/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
+	. = ..()
+	var/datum/component/uplink/our_uplink = source.GetComponent(/datum/component/uplink)
+	if(uplink_handler && our_uplink)
+		our_uplink.become_contractor()
+
 /datum/uplink_item/bundles_tc/surplus/lootbox
 	name = "Syndicate Lootbox Crate"
 	desc = "A dusty crate from the back of the Syndicate warehouse. Rumored to contain a valuable assortment of items, \
@@ -50,3 +74,4 @@
 ///Check if we should ignore handler locked_entries or not
 /datum/uplink_item/bundles_tc/random/proc/check_ignore_locked(datum/uplink_handler/handler)
 	return (length(handler.locked_entries) == (length(subtypesof(/datum/uplink_item)) - 1)) && !(src.type in handler.locked_entries)
+

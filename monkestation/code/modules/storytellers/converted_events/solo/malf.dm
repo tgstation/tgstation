@@ -37,6 +37,7 @@
 /datum/round_event_control/antagonist/solo/malf/midround
 	name = "Malfunctioning AI Midround"
 	antag_flag = ROLE_MALF_MIDROUND
+	weight = 2
 
 /datum/round_event_control/antagonist/solo/malf/roundstart
 	name = "Roundstart Malf AI"

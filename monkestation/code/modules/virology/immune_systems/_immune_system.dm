@@ -118,6 +118,13 @@
 				if (prob(threshold) && prob(tally * 10) && prob((100 - antibodies[A])*100/(100-threshold)))//smaller and smaller chance for further increase
 					antibodies[A] = min(antibodies[A] + 1, 100)
 
+/datum/immune_system/proc/AntibodyCure()
+	if (overloaded)
+		return
+
+	for (var/datum/disease/advanced/disease as anything in host.diseases)
+		for (var/A in disease.antigen)
+			antibodies[A] = 100
 
 /datum/immune_system/proc/ApplyVaccine(list/antigen, amount = 1, decay = 0)
 	if (overloaded)
