@@ -20,18 +20,18 @@
 	AddComponent(/datum/component/two_handed, require_twohands=TRUE, force_unwielded=10, force_wielded=10)
 
 /obj/item/precursor_tank/pre_attack(atom/A, mob/living/user, params)
-	. = ..()
 	if(istype(A, /obj/machinery/chem_dispenser))
 		if(!do_after(user, 3 SECONDS, A))
-			return FALSE
+			return TRUE
 		var/obj/machinery/chem_dispenser/dispenser = A
 		var/missing = max_precursor - stored_precursor
 		if(!missing)
-			return FALSE
+			return TRUE
 		var/max_units = round(dispenser.cell.charge * 0.1)
 		var/min_result = min(missing, max_units)
 
 		dispenser.cell.charge -= max(0, min_result * 10)
 		stored_precursor += min_result
 		user.visible_message(span_notice("[user] fills up the [src] from the [dispenser]."), span_notice("You fill up the [src] from the [dispenser]."))
-		return FALSE
+		return TRUE
+	return ..()
