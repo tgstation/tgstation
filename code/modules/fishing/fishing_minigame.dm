@@ -199,7 +199,7 @@
 	bait_height -= difficulty
 	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
 
-/datum/fishing_challenge/Destroy(force, ...)
+/datum/fishing_challenge/Destroy(force)
 	if(!completed)
 		complete(win = FALSE)
 	if(fishing_line)

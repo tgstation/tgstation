@@ -1,0 +1,4 @@
+author: "Echomori"
+delete-after: True
+changes:
+  - bugfix: "trying to move up or down while controlling an advanced camera console now properly moves the camera up or down, not your body"
