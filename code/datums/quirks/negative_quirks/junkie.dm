@@ -114,7 +114,7 @@
 
 /datum/quirk/item_quirk/junkie/smoker/post_add(client/client_source)
 	. = ..()
-	var/drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
+	drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
 	if(isnull(drug_container_type))
 		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
 

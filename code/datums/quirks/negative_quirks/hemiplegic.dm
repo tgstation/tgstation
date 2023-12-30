@@ -11,13 +11,18 @@
 		/obj/item/stack/sheet/mineral/uranium/half, //half a stack of a material that has a half life
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full,
 	)
+	var/trauma_type
 
 /datum/quirk_constant_data/hemiplegic
 	associated_typepath = /datum/quirk/hemiplegic
 	customization_options = list(/datum/preference/choiced/hemiplegic)
 
-/datum/quirk/hemiplegic/add(client/client_source)
+/datum/quirk/hemiplegic/add_unique(client/client_source)
 	var/trauma_type = GLOB.hemiplegic_side[client_source?.prefs?.read_preference(/datum/preference/choiced/hemiplegic)]
+	if(isnull(trauma_type))
+		trauma_type = GLOB.hemiplegic_side[pick(GLOB.hemiplegic_side)]
+
+/datum/quirk/hemiplegic/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.gain_trauma(trauma_type, TRAUMA_RESILIENCE_ABSOLUTE)
 
