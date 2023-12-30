@@ -85,7 +85,7 @@ export const Vending = (props) => {
 
   const [selectedCategory, setSelectedCategory] = useLocalState<string>(
     'selectedCategory',
-    Object.keys(data.categories)[0]
+    Object.keys(data.categories)[0],
   );
 
   let inventory: (ProductRecord | CustomInput)[];
@@ -113,7 +113,7 @@ export const Vending = (props) => {
           return false;
         }
       });
-    })
+    }),
   );
 
   return (
