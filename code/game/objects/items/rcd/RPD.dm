@@ -206,6 +206,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/multi_layer = FALSE
 	///Layer for disposal ducts
 	var/ducting_layer = DUCT_LAYER_DEFAULT
+	/// the player currently holding this device.
+	var/mob/listeningTo
 	///Stores the current device to spawn
 	var/datum/pipe_info/recipe
 	///Stores the first atmos device
@@ -218,6 +220,16 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/mode = BUILD_MODE | DESTROY_MODE | WRENCH_MODE | REPROGRAM_MODE
 	/// Bitflags for upgrades
 	var/upgrade_flags
+	/// Turfs marked for auto-build by speedpipe upgrade
+	var/list/speedpipe_turfs = list()
+	/// Are we currently marking turfs for speedpipe building?
+	var/speedpipe_marking = FALSE
+	/// Are we currently building via speedpipe mode?
+	var/speedpipe_building = FALSE
+	/// overlay on turfs to show we're speedpiping there
+	var/mutable_appearance/rpd_overlay
+	/// timer for autoclearing speedpipe turfs and any overlays on them
+	var/timed_out_speedpipe_timer
 
 /datum/armor/item_pipe_dispenser
 	fire = 100
@@ -236,11 +248,14 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		first_transit = GLOB.transit_tube_recipes[GLOB.transit_tube_recipes[1]][1]
 
 	recipe = first_atmos
+	register_context()
 	register_item_context()
+	rpd_overlay = mutable_appearance(icon, icon_state, layer = ABOVE_ALL_MOB_LAYER, plane = ABOVE_GAME_PLANE, alpha = 100, offset_const = src)
 
 /obj/item/pipe_dispenser/Destroy()
 	qdel(spark_system)
 	spark_system = null
+	speedpipe_turfs = null
 	return ..()
 
 /obj/item/pipe_dispenser/examine(mob/user)
@@ -257,6 +272,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/dropped(mob/user, silent)
 	UnregisterSignal(user, COMSIG_MOUSE_SCROLL_ON)
+	if(!(upgrade_flags & RPD_UPGRADE_SPEEDPIPE))
+		return .
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	listeningTo = null
 	return ..()
 
 /obj/item/pipe_dispenser/proc/get_active_pipe_layers()
@@ -273,6 +292,79 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 /obj/item/pipe_dispenser/attack_self(mob/user)
 	ui_interact(user)
 
+/obj/item/pipe_dispenser/AltClick(mob/user)
+	. = ..()
+	if(!(upgrade_flags & RPD_UPGRADE_SPEEDPIPE))
+		return .
+	toggle_speedpipe_marking(user)
+
+/obj/item/pipe_dispenser/alt_click_secondary(mob/user)
+	. = ..()
+	speedpipe_build(user)
+
+/obj/item/pipe_dispenser/CtrlClick(mob/user)
+	. = ..()
+	clear_out_speedpipe(speedpipe_turfs, user)
+
+/obj/item/pipe_dispenser/proc/toggle_speedpipe_marking(mob/user)
+	speedpipe_marking = !speedpipe_marking
+	balloon_alert(user, "[speedpipe_marking ? "marking speedpipe locations" : "stopped marking"]")
+
+/obj/item/pipe_dispenser/proc/speedpipe_build(mob/user)
+	if(length(speedpipe_turfs))
+		speedpipe_building = !speedpipe_building
+		balloon_alert(user, "[speedpipe_building ? "speedpiping..." : "stopped speedpiping"]")
+		if(!speedpipe_building)
+			return
+		deltimer(timed_out_speedpipe_timer)
+		var/list/old_turfs = speedpipe_turfs.Copy()
+		for(var/turf/old_turf as anything in old_turfs)
+			old_turfs[old_turf] = old_turf.type
+		for(var/turf/speedpipe_turf as anything in speedpipe_turfs)
+			if(!speedpipe_building)
+				return
+			if(speedpipe_turf.type == old_turfs[speedpipe_turf])
+				do_rpd_actions(speedpipe_turf, user, speedpipe_build = TRUE)
+				speedpipe_turf.cut_overlay(rpd_overlay)
+				speedpipe_turfs -= speedpipe_turf
+		for(var/turf/old_turf as anything in old_turfs)
+			old_turf.cut_overlay(rpd_overlay)
+
+/obj/item/pipe_dispenser/pickup(mob/to_hook)
+	. = ..()
+	if(!(upgrade_flags & RPD_UPGRADE_SPEEDPIPE))
+		return .
+	if(listeningTo == to_hook)
+		return .
+	if(listeningTo)
+		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
+	RegisterSignal(to_hook, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
+	listeningTo = to_hook
+
+/obj/item/pipe_dispenser/proc/on_move(mob/user)
+	SIGNAL_HANDLER
+	if(!speedpipe_marking)
+		return
+	if(!isturf(user.loc))
+		return
+	var/turf/the_turf = user.loc
+	if(!(the_turf in speedpipe_turfs))
+		speedpipe_turfs += the_turf
+		var/old_turf_color = the_turf.color
+		the_turf.color = COLOR_DARK_CYAN
+		animate(the_turf, 2 SECONDS, color = old_turf_color)
+		the_turf.add_overlay(rpd_overlay)
+		addtimer(CALLBACK(the_turf, TYPE_PROC_REF(/atom, update_atom_colour)), 2 SECONDS)
+		deltimer(timed_out_speedpipe_timer)
+		timed_out_speedpipe_timer = addtimer(CALLBACK(src, PROC_REF(clear_out_speedpipe), speedpipe_turfs, user), 3 MINUTES, TIMER_STOPPABLE)
+
+/obj/item/pipe_dispenser/proc/clear_out_speedpipe(list/the_speedpipe_turfs, mob/user)
+	balloon_alert(user, "cleared speedpipe markings")
+	for(var/turf/speedpipe_turf as anything in the_speedpipe_turfs)
+		speedpipe_turf.cut_overlay(rpd_overlay)
+	speedpipe_turfs = list()
+	toggle_speedpipe_marking(user)
+
 /obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
 	if(!istype(target, /obj/machinery/atmospherics))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -281,6 +373,15 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		pipe_layers = PIPE_LAYER(target.piping_layer)
 		balloon_alert(user, "color/layer copied")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/pipe_dispenser/add_context(obj/item/source, list/context, atom/target, mob/living/user)
+	. = ..()
+	if(upgrade_flags & RPD_UPGRADE_SPEEDPIPE)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Turn [speedpipe_marking ? "off" : "on"] speedpipe marking"
+		if(length(speedpipe_turfs))
+			context[SCREENTIP_CONTEXT_CTRL_LMB] = "Clear speedpipe markings"
+			context[SCREENTIP_CONTEXT_ALT_RMB] = "[!speedpipe_building ? "Start" : "Stop"] speedpipe building"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/pipe_dispenser/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
 	. = ..()
@@ -435,6 +536,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		install_upgrade(atom_to_attack, user)
 		return TRUE
 
+	return do_rpd_actions(atom_to_attack, user, params = params)
+
+/obj/item/pipe_dispenser/proc/do_rpd_actions(atom/atom_to_attack, mob/user, speedpipe_build = FALSE, params)
+
 	var/atom/attack_target = atom_to_attack
 
 	//So that changing the menu settings doesn't affect the pipes already being built.
@@ -532,12 +637,12 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	if(mode & BUILD_MODE)
 		switch(category) //if we've gotten this var, the target is valid
 			if(ATMOS_CATEGORY) //Making pipes
-				if(!do_pipe_build(attack_target, user, params))
-					return ..()
+				if(!do_pipe_build(attack_target, user, speedpipe_build, params))
+					return FALSE
 
 			if(DISPOSALS_CATEGORY) //Making disposals pipes
 				if(!can_make_pipe)
-					return ..()
+					return FALSE
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
 					balloon_alert(user, "target is blocked!")
@@ -561,7 +666,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 			if(TRANSIT_CATEGORY) //Making transit tubes
 				if(!can_make_pipe)
-					return ..()
+					return FALSE
 				attack_target = get_turf(attack_target)
 				if(isclosedturf(attack_target))
 					balloon_alert(user, "something in the way!")
@@ -594,7 +699,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 							tube.wrench_act(user, src)
 					return
 			else
-				return ..()
+				return FALSE
 
 /obj/item/pipe_dispenser/proc/check_can_make_pipe(atom/target_of_attack)
 	//make sure what we're clicking is valid for the current category
@@ -602,7 +707,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/can_we_make_pipe = (isturf(target_of_attack) || is_type_in_typecache(target_of_attack, make_pipe_whitelist))
 	return can_we_make_pipe
 
-/obj/item/pipe_dispenser/proc/do_pipe_build(atom/atom_to_target, mob/user, params)
+/obj/item/pipe_dispenser/proc/do_pipe_build(atom/atom_to_target, mob/user, speedpipe_build = FALSE, params)
 	//So that changing the menu settings doesn't affect the pipes already being built.
 	var/queued_pipe_type = recipe.id
 	var/queued_pipe_dir = p_dir
@@ -620,7 +725,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(!can_make_pipe)
 			return FALSE
 		playsound(get_turf(src), 'sound/machines/click.ogg', 50, vary = TRUE)
-		if(!continued_build && !do_after(user, atmos_build_speed, target = atom_to_target))
+		var/ignore_proximity = NONE
+		if(speedpipe_build)
+			ignore_proximity = IGNORE_USER_LOC_CHANGE
+		if(!continued_build && !do_after(user, atmos_build_speed, target = atom_to_target, timed_action_flags = ignore_proximity))
 			return FALSE
 		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == 5))
 			balloon_alert(user, "can't build on layer [layer_to_build]!")
@@ -671,6 +779,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		return
 	// Adds the upgrade from the disk and then deletes the disk
 	upgrade_flags |= rpd_disk.upgrade_flags
+	rpd_disk.on_install(user, src)
 	playsound(loc, 'sound/machines/click.ogg', 50, vary = TRUE)
 	balloon_alert(user, "upgrade installed")
 	qdel(rpd_disk)
@@ -704,9 +813,20 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	/// Bitflags for upgrades
 	var/upgrade_flags
 
+/obj/item/rpd_upgrade/proc/on_install()
+	return
+
 /obj/item/rpd_upgrade/unwrench
 	desc = "Adds reverse wrench mode to the RPD. Attention, due to budget cuts, the mode is hard linked to the destroy mode control button."
 	upgrade_flags = RPD_UPGRADE_UNWRENCH
+
+/obj/item/rpd_upgrade/speedpipe
+	desc = "Adds the ability to mark locations for automatic pipelaying by simply moving."
+	upgrade_flags =  RPD_UPGRADE_SPEEDPIPE
+
+/obj/item/rpd_upgrade/speedpipe/on_install(mob/user, obj/item/pipe_dispenser/the_rpd)
+	the_rpd.RegisterSignal(user, COMSIG_MOVABLE_MOVED, TYPE_PROC_REF(/obj/item/pipe_dispenser, on_move))
+	the_rpd.listeningTo = user
 
 #undef ATMOS_CATEGORY
 #undef DISPOSALS_CATEGORY

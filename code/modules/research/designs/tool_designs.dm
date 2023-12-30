@@ -202,6 +202,18 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/rpd_upgrade/speedpipe
+	name = "Advanced RPD speedpipe upgrade"
+	desc = "Upgrades the RPD to be able to mark locations to build on by simply moving."
+	id = "rpd_upgrade_speedpipe"
+	build_type = PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*1.25, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.25, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.25, /datum/material/titanium =SHEET_MATERIAL_AMOUNT*1.25, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT*1.25)
+	build_path = /obj/item/rpd_upgrade/speedpipe
+	category = list(
+		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_ENGINEERING_ADVANCED
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/rld_mini
 	name = "Mini Rapid Light Device (MRLD)"
 	desc = "A tool that can deploy portable and standing lighting orbs and glowsticks."

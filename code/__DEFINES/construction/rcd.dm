@@ -36,7 +36,8 @@
 #define RCD_ALL_UPGRADES (RCD_UPGRADE_FRAMES | RCD_UPGRADE_SIMPLE_CIRCUITS | RCD_UPGRADE_SILO_LINK | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_ANTI_INTERRUPT | RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN)
 /// Upgrades for the Rapid Pipe Dispenser to unwrench pipes
 #define RPD_UPGRADE_UNWRENCH (1 << 0)
-
+/// Upgrade for RPD to autolay pipes on marked turfs
+#define RPD_UPGRADE_SPEEDPIPE (1 << 1)
 //Memory constants for faster construction speeds
 /// The memory constant for a wall
 #define RCD_MEMORY_WALL 1

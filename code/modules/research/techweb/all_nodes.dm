@@ -1586,12 +1586,13 @@
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
-/datum/techweb_node/adv_rcd_upgrade
-	id = "adv_rcd_upgrade"
-	display_name = "Advanced RCD Designs Upgrade"
-	description = "Unlocks new RCD designs."
+/datum/techweb_node/adv_rapid_upgrade
+	id = "adv_rapid_upgrade"
+	display_name = "Advanced Rapid Tool Upgrades"
+	description = "Unlocks designs for advanced rapid tool upgrades."
 	design_ids = list(
 		"rcd_upgrade_silo_link",
+		"rpd_upgrade_speedpipe",
 	)
 	prereq_ids = list(
 		"bluespace_travel",
