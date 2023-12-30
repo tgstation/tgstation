@@ -20,15 +20,15 @@
 	var/mob/living/carbon/human/host = mob
 	if (prob(50) && isturf(mob.loc))
 		if(istype(host.wear_mask, /obj/item/clothing/mask/cigarette))
-			var/obj/item/clothing/mask/cigarette/I = host.get_item_by_slot(ITEM_SLOT_MASK)
+			var/obj/item/clothing/mask/cigarette/ciggie = host.get_item_by_slot(ITEM_SLOT_MASK)
 			if(prob(20))
-				var/turf/Q = get_turf(mob)
+				var/turf/startLocation = get_turf(mob)
 				var/turf/endLocation
 				var/spitForce = pick(0,1,2,3)
-				endLocation = get_ranged_target_turf(Q, mob.dir, spitForce)
+				endLocation = get_ranged_target_turf(startLocation, mob.dir, spitForce)
 				to_chat(mob, "<span class ='warning'>You sneezed \the [host.wear_mask] out of your mouth!</span>")
-				host.dropItemToGround(I)
-				I.throw_at(endLocation,spitForce,1)
+				host.dropItemToGround(ciggie)
+				ciggie.throw_at(endLocation,spitForce,1)
 
 /datum/symptom/gunck
 	name = "Flemmingtons"
@@ -85,6 +85,7 @@
 
 /datum/symptom/eyewater/activate(mob/living/mob)
 	to_chat(mob, span_warning("Your eyes sting and water!"))
+	mob.emote("cry")
 
 
 /datum/symptom/wheeze

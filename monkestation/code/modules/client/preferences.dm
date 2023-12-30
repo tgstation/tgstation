@@ -26,6 +26,8 @@
 		"high_threat" = 0,
 		"medium_threat" = 0,
 		"low_threat" = 0,
+		"event_tokens" = 0,
+		"event_token_month" = 0,
 	)
 
 	///amount of metaconis you can earn per shift

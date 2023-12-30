@@ -1,5 +1,6 @@
 /client
 	var/datum/patreon_data/patreon
+
 /datum/patreon_data
 	///the client that owns this data
 	var/client/owner

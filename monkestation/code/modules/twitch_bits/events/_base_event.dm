@@ -9,10 +9,12 @@
 	var/random_count = 0
 	///list of targets
 	var/list/targets = list()
-	///the tag tied to this event, should make these be defines at some point
+	///the tag tied to this event
 	var/id_tag
 	///should we announce this event
 	var/announce = TRUE
+	///how many event tokens does this cost to trigger
+	var/token_cost = 0
 
 /datum/twitch_event/proc/run_event(name)
 	targets = list() //clear targets each time, if you for some reason dont want this then just add your own var on the type

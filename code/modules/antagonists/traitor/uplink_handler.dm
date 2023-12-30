@@ -114,14 +114,24 @@
 	on_update()
 	return TRUE
 
-/// Generates objectives for this uplink handler
-/datum/uplink_handler/proc/generate_objectives()
+/** Generates objectives for this uplink handler
+ * forced_types - an assoc list of objective types that when passed will always be generated first if possible to generate, value is how many of that type to generate
+ */
+/datum/uplink_handler/proc/generate_objectives(list/forced_types = list()) //monkestation edit: adds forced_types
 	var/potential_objectives_left = maximum_potential_objectives - (length(potential_objectives) + length(active_objectives))
-	var/list/objectives = SStraitor.category_handler.get_possible_objectives(progression_points)
+	var/list/objectives = SStraitor.category_handler.get_possible_objectives(progression_points, uplink_flag) //monkestation edit: adds uplink_flag
 	if(!length(objectives))
 		return
 	while(length(objectives) && potential_objectives_left > 0)
 		var/objective_typepath = pick_weight(objectives)
+//monkestation edit start
+		if(length(forced_types))
+			var/picked_type = pick(forced_types)
+			forced_types[picked_type] -= 1
+			if(!forced_types[picked_type])
+				forced_types -= picked_type
+			objective_typepath = picked_type
+//monkestation edit end
 		var/list/target_list = objectives
 		while(islist(objective_typepath))
 			if(!length(objective_typepath))

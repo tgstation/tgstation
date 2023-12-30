@@ -2,13 +2,15 @@
 	event_name = "Think Fast Ook"
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_STREAMER
-	id_tag = "chucklenuts-ook"
+	id_tag = T_EVENT_CHUCKLENUTS_OOK
+	token_cost = 800
 
 /datum/twitch_event/chucklenuts/random
 	event_name = "Think Fast"
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_RANDOM
-	id_tag = "chucklenuts-random"
+	id_tag = T_EVENT_CHUCKLENUTS_RANDOM
+	token_cost = null
 
 /datum/twitch_event/chucklenuts/run_event(name)
 	. = ..()

@@ -247,3 +247,10 @@
   - balance: Arachnids no longer have brute damage resistance, and they no longer
       have a burn damage weakness.
   - balance: Arachnids can eat vegetables now.
+2023-12-29:
+  MichiRecRoom:
+  - qol: The H.A.U.L. Gauntlets will no longer prevent the wearer from opening the
+      closet/crate that they're pulling.
+  - bugfix: The anything-gift now has a very small list of items that it will never
+      spawn. The list consists primarily of items which could majorly endanger game-server/game-client
+      stability - so you still have a chance to get that funny debug uplink!
