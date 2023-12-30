@@ -7,7 +7,7 @@ import {
   KEY_Z,
 } from '../../common/keycodes';
 import { useBackend, useLocalState } from '../backend';
-import { Button, Input, Section, Stack } from '../components';
+import { Autofocus, Button, Input, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
@@ -196,6 +196,7 @@ const ListDisplay = (props) => {
 
   return (
     <Section fill scrollable>
+      <Autofocus />
       {filteredItems.map((item, index) => {
         return (
           <Button
