@@ -2,6 +2,10 @@
 	name = "remote chemical tank"
 	desc = "A chemical tank that can be remotely connected to the chemical manufacturer."
 
+	icon = 'monkestation/code/modules/wiremod_chem/icons/structures.dmi'
+	icon_state = "tank_output"
+
+	density = TRUE
 	var/obj/item/circuit_component/chem/output/linked_output
 	var/reagent_flags = TRANSPARENT | DRAINABLE
 	var/buffer = 500

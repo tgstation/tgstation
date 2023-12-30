@@ -2,6 +2,10 @@
 	name = "remote chemical input tank"
 	desc = "A chemical tank that can be remotely connected to the chemical manufacturer to send chemicals."
 
+	icon = 'monkestation/code/modules/wiremod_chem/icons/structures.dmi'
+	icon_state = "tank_input"
+
+	density = TRUE
 	var/obj/item/circuit_component/chem/input/linked_input
 	var/reagent_flags = TRANSPARENT | REFILLABLE
 	var/buffer = 500
@@ -19,7 +23,7 @@
 /obj/structure/chemical_input/examine(mob/user)
 	. = ..()
 	. += span_notice("The maximum volume display reads: <b>[reagents.maximum_volume] units</b>.")
-	if(linked_output)
+	if(linked_input)
 		. += span_notice("Is connected to an input device.")
 
 /obj/item/circuit_component/chem/input
@@ -40,7 +44,7 @@
 
 
 /obj/item/circuit_component/chem/input/populate_ports()
-	chemical_output = add_output_port("Chemical Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBEr))
+	chemical_output = add_output_port("Chemical Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
 	chem_heat = add_output_port("Chemical Heat", PORT_TYPE_NUMBER)
 	units = add_input_port("Units", PORT_TYPE_NUMBER)
 
@@ -65,6 +69,7 @@
 
 	chemical_output.set_output(built_output)
 	chem_heat.set_output(read_heat)
+	reagent_holder.remove_all(10000)
 
 /obj/item/circuit_component/chem/input/after_work_call()
 	clear_all_temp_ports()
