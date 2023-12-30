@@ -35,3 +35,7 @@
 		user.visible_message(span_notice("[user] fills up the [src] from the [dispenser]."), span_notice("You fill up the [src] from the [dispenser]."))
 		return TRUE
 	return ..()
+
+/obj/item/precursor_tank/examine(mob/user)
+	. = ..()
+	. += span_notice("The [name] currently has [stored_precursor] out of [max_precursor] stored.")

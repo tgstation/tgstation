@@ -2,13 +2,23 @@
 	name = "remote chemical input tank"
 	desc = "A chemical tank that can be remotely connected to the chemical manufacturer to send chemicals."
 
+	max_integrity = 2500
+
 	icon = 'monkestation/code/modules/wiremod_chem/icons/structures.dmi'
 	icon_state = "tank_input"
 
 	density = TRUE
 	var/obj/item/circuit_component/chem/input/linked_input
-	var/reagent_flags = TRANSPARENT | REFILLABLE
+	var/reagent_flags = TRANSPARENT | REFILLABLE | DRAINABLE
 	var/buffer = 500
+	var/component_name = "Tank Input"
+
+/obj/structure/chemical_tank/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
+		if(attacking_item.use_tool(src, user, 40, volume=75))
+			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
+			set_anchored(!anchored)
+	. = ..()
 
 /obj/structure/chemical_input/Initialize(mapload)
 	. = ..()
@@ -19,6 +29,7 @@
 	if(!linked_input)
 		linked_input = new(src.loc)
 		linked_input.linked_input = src
+		linked_input.name = component_name
 
 /obj/structure/chemical_input/examine(mob/user)
 	. = ..()

@@ -2,6 +2,8 @@
 	name = "remote chemical tank"
 	desc = "A chemical tank that can be remotely connected to the chemical manufacturer."
 
+	max_integrity = 2500
+
 	icon = 'monkestation/code/modules/wiremod_chem/icons/structures.dmi'
 	icon_state = "tank_output"
 
@@ -9,6 +11,14 @@
 	var/obj/item/circuit_component/chem/output/linked_output
 	var/reagent_flags = TRANSPARENT | DRAINABLE
 	var/buffer = 500
+	var/component_name = "Tank Output"
+
+/obj/structure/chemical_tank/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
+		if(attacking_item.use_tool(src, user, 40, volume=75))
+			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
+			set_anchored(!anchored)
+	. = ..()
 
 /obj/structure/chemical_tank/Initialize(mapload)
 	. = ..()
@@ -25,7 +35,10 @@
 	if(!linked_output)
 		linked_output = new(src.loc)
 		linked_output.chemical_tank = src
+		linked_output.name = component_name
 
+/obj/structure/chemical_tank/proc/after_reagent_add()
+	return
 
 /obj/item/circuit_component/chem/output
 	display_name = "Tank Output"
@@ -69,6 +82,7 @@
 		chemical_list += input_port.value
 
 	chemical_tank.reagents.add_reagent_list(chemical_list, temperature = sane_heat)
+	chemical_tank.after_reagent_add()
 
 /obj/item/circuit_component/chem/output/after_work_call()
 	clear_all_temp_ports()

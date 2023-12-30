@@ -5,7 +5,9 @@
 	icon = 'monkestation/code/modules/wiremod_chem/icons/structures.dmi'
 	icon_state = "manufacturer"
 
-	density = FALSE
+	max_integrity = 2500
+
+	density = TRUE
 
 	///the tank we pull chemicals from
 	var/obj/item/precursor_tank/connected_tank
@@ -14,6 +16,13 @@
 	var/reagent_flags = TRANSPARENT | DRAINABLE
 	var/buffer = 500
 	var/recharge_counter = 0
+
+/obj/structure/chemical_manufacturer/attackby(obj/item/attacking_item, mob/user, params)
+	if(attacking_item.tool_behaviour == TOOL_WRENCH)
+		if(attacking_item.use_tool(src, user, 40, volume=75))
+			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
+			set_anchored(!anchored)
+	. = ..()
 
 /obj/structure/chemical_manufacturer/process(seconds_per_tick)
 	var/obj/item/integrated_circuit/attached_circuit = locate(/obj/item/integrated_circuit) in contents
