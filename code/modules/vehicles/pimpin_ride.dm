@@ -89,38 +89,32 @@
 /obj/vehicle/ridden/janicart/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(occupant_amount() > 0)
-		if(!held_item)
+	if(!held_item)
+		if(occupant_amount() > 0)
 			context[SCREENTIP_CONTEXT_LMB] = "Dismount"
 			context[SCREENTIP_CONTEXT_RMB] = "Dismount"
 			if(trash_bag)
 				context[SCREENTIP_CONTEXT_RMB] = "Remove trash bag"
-			if(is_key(inserted_key))
-				if(occupants.Find(user))
-					context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
+			if(is_key(inserted_key) && occupants.Find(user))
+				context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
 			return CONTEXTUAL_SCREENTIP_SET
-
-	if(!held_item) //&& not driving it
-		if(trash_bag)
+		else if(trash_bag)
 			context[SCREENTIP_CONTEXT_LMB] = "Remove trash bag"
 			context[SCREENTIP_CONTEXT_RMB] = "Remove trash bag"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/storage/bag/trash))
-		if(!trash_bag)
-			context[SCREENTIP_CONTEXT_LMB] = "Add trash bag"
-			context[SCREENTIP_CONTEXT_RMB] = "Add trash bag"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/storage/bag/trash) && !trash_bag)
+		context[SCREENTIP_CONTEXT_LMB] = "Add trash bag"
+		context[SCREENTIP_CONTEXT_RMB] = "Add trash bag"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/janicart_upgrade))
-		if(!installed_upgrade)
-			context[SCREENTIP_CONTEXT_LMB] = "Install upgrade"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/janicart_upgrade) && !installed_upgrade)
+		context[SCREENTIP_CONTEXT_LMB] = "Install upgrade"
+		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/screwdriver))
-		if(installed_upgrade)
-			context[SCREENTIP_CONTEXT_LMB] = "Remove upgrade"
-			return CONTEXTUAL_SCREENTIP_SET
+	if(istype(held_item, /obj/item/screwdriver) && installed_upgrade)
+		context[SCREENTIP_CONTEXT_LMB] = "Remove upgrade"
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(is_key(held_item) && !is_key(inserted_key))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert key"
@@ -128,10 +122,8 @@
 		return CONTEXTUAL_SCREENTIP_SET
 	else if (trash_bag)
 		context[SCREENTIP_CONTEXT_LMB] = "Insert into trash bag"
-		context[SCREENTIP_CONTEXT_RMB] = "Insert key"
+		context[SCREENTIP_CONTEXT_RMB] = "Insert into trash bag"
 		return CONTEXTUAL_SCREENTIP_SET
-
-//TODO move key insertion and dismount to basetype?
 
 
 /**
