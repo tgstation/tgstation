@@ -32,13 +32,13 @@
 	)
 	AddComponent(/datum/component/light_eater)
 
-obj/item/light_eater/equipped(mob/user, slot, initial = FALSE)
+/obj/item/light_eater/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_ENTER_JAUNT, PROC_REF(remove_crit))
 	RegisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT, PROC_REF(prepare_crit_timer))
 	prepare_crit_timer()
 
-obj/item/light_eater/dropped(mob/user, silent = FALSE)
+/obj/item/light_eater/dropped(mob/user, silent = FALSE)
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOB_ENTER_JAUNT)
 	UnregisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT)
