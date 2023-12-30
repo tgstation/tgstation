@@ -1,13 +1,14 @@
 import { BooleanLike } from 'common/react';
 import { useState } from 'react';
+
 import {
   Box,
   Button,
   Input,
-  Section,
-  Tabs,
   NoticeBox,
+  Section,
   Stack,
+  Tabs,
 } from '../../components';
 
 type GenericUplinkProps = {
@@ -48,9 +49,10 @@ export const GenericUplink = (props: GenericUplinkProps) => {
           />
           <Button
             icon={compactMode ? 'list' : 'info'}
-            content={compactMode ? 'Compact' : 'Detailed'}
             onClick={() => setCompactMode(!compactMode)}
-          />
+          >
+            {compactMode ? 'Compact' : 'Detailed'}
+          </Button>
         </>
       }
     >

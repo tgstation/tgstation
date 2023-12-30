@@ -1,9 +1,10 @@
-import { useBackend } from '../backend';
-import { Section, Stack, Button, Modal } from '../components';
-import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
+
+import { useBackend } from '../backend';
+import { Button, Modal, Section, Stack } from '../components';
 import { formatMoney } from '../format';
+import { Window } from '../layouts';
 
 type Material = {
   name: string;

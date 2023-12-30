@@ -1,22 +1,22 @@
+import { sortBy } from 'common/collections';
+import { BooleanLike } from 'common/react';
+import { createSearch } from 'common/string';
+
+import { useBackend, useLocalState } from '../../backend';
 import {
   Box,
   Button,
-  Icon,
-  Section,
-  Stack,
-  Input,
-  TextArea,
   Dimmer,
   Divider,
+  Icon,
+  Input,
+  Section,
+  Stack,
+  TextArea,
 } from '../../components';
-import { useBackend, useLocalState } from '../../backend';
-import { createSearch } from 'common/string';
-import { BooleanLike } from 'common/react';
 import { NtosWindow } from '../../layouts';
-
-import { NtChat, NtMessenger, NtPicture } from './types';
 import { ChatScreen } from './ChatScreen';
-import { sortBy } from 'common/collections';
+import { NtChat, NtMessenger, NtPicture } from './types';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -213,7 +213,7 @@ const ContactsScreen = (props: any) => {
               width="220px"
               placeholder="Search by name or job..."
               value={searchUser}
-              onInput={(_: any, value: string) => setSearchUser(value)}
+              onInput={(_, value) => setSearchUser(value)}
             />
           </Stack>
         </Section>

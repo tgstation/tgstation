@@ -40,7 +40,7 @@
 		return
 	qdel(src)
 
-/datum/component/itembound/Destroy(force, silent)
+/datum/component/itembound/Destroy(force)
 	var/atom/movable/container = containerref?.resolve()
 	if (!QDELETED(container))
 		UnregisterSignal(container, COMSIG_ATOM_EXAMINE_MORE)

@@ -180,6 +180,15 @@
 	min_cold_protection_temperature = FIRE_HELM_MIN_TEMP_PROTECT
 	dog_fashion = /datum/dog_fashion/head/santa
 
+/obj/item/clothing/head/costume/santa/gags
+	name = "santa hat"
+	desc = "On the first day of christmas my employer gave to me!"
+	icon_state = "santa_hat"
+	greyscale_colors = "#cc0000#f8f8f8"
+	greyscale_config = /datum/greyscale_config/santa_hat
+	greyscale_config_worn = /datum/greyscale_config/santa_hat/worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 /obj/item/clothing/head/costume/jester
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."

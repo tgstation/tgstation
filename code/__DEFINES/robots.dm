@@ -325,4 +325,4 @@ DEFINE_BITFIELD(janitor_mode_flags, list(
 #define MEDIBOT_VOICED_THIS_HURTS "This hurts, my pain is real!"
 #define MEDIBOT_VOICED_THE_END "Is this the end?"
 #define MEDIBOT_VOICED_NOOO	"Nooo!"
-#define MEDIBOT_VOICED_CHICKEN "LOOK AT ME?! i am a chicken."
+#define MEDIBOT_VOICED_CHICKEN "LOOK AT ME?! I am a chicken."

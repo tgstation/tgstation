@@ -1,5 +1,6 @@
 import { decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
@@ -133,9 +134,8 @@ export const PaintingAdminPanel = (props) => {
                   setChosenPaintingRef(undefined);
                   act('delete', { ref: chosenPainting.ref });
                 }}
-              >
-                Delete
-              </Button.Confirm>
+                content="Delete"
+              />
               <Button
                 onClick={() => act('dumpit', { ref: chosenPainting.ref })}
               >

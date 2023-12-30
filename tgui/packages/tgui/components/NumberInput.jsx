@@ -7,6 +7,7 @@
 import { clamp } from 'common/math';
 import { classes } from 'common/react';
 import { Component, createRef } from 'react';
+
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box } from './Box';
 

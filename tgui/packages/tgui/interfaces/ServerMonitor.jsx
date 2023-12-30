@@ -1,17 +1,18 @@
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
+  Button,
+  Divider,
+  Flex,
+  Input,
+  LabeledList,
+  NoticeBox,
   Section,
   Stack,
-  Input,
-  Button,
   Table,
-  LabeledList,
-  Flex,
-  Divider,
-  NoticeBox,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const PacketInfo = (props) => {
   const { act, data } = useBackend();
@@ -94,7 +95,7 @@ const MainScreen = (props) => {
         <Section>
           <Input
             value={networkId}
-            onInput={(e, value) => setNetworkId(value)}
+            onChange={(e, value) => setNetworkId(value)}
             placeholder="Network ID"
           />
           <Button

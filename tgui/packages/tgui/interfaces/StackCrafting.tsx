@@ -1,19 +1,20 @@
-import { createSearch } from 'common/string';
 import { filter, map, reduce, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+import { clamp } from 'common/math';
+import { createSearch } from 'common/string';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Collapsible,
   Input,
   NoticeBox,
   Section,
-  Collapsible,
   Table,
 } from '../components';
 import { Window } from '../layouts';
-import { clamp } from 'common/math';
-import { flow } from 'common/fp';
-import { useState } from 'react';
 
 type Recipe = {
   ref: unknown | null;
@@ -56,7 +57,6 @@ type RecipeListFilterableEntry = [string, RecipeList | Recipe | undefined];
  * @param value the value to test
  * @returns type guard boolean
  */
-// eslint-disable-next-line func-style
 function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
   return (value as Recipe).ref === undefined;
 }

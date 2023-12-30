@@ -1,13 +1,14 @@
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
-  Section,
-  Stack,
-  Input,
   Button,
-  Table,
+  Input,
   LabeledList,
   NoticeBox,
+  Section,
+  Stack,
+  Table,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -101,13 +102,14 @@ const MainScreen = (props) => {
         <Section>
           <Input
             value={networkId}
-            onInput={(e, value) => setNetworkId(value)}
+            onChange={(e, value) => setNetworkId(value)}
             placeholder="Network ID"
           />
           <Button
-            content="Probe Network"
             onClick={() => act('probe_network', { network_id: networkId })}
-          />
+          >
+            Probe Network
+          </Button>
         </Section>
       </Stack.Item>
       <Stack.Item grow>

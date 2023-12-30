@@ -1,8 +1,8 @@
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, Table, Tooltip } from 'tgui/components';
 import { getGasColor, getGasLabel } from 'tgui/constants';
 
 import { HypertorusData } from '.';
-import { useBackend } from 'tgui/backend';
 
 type Recipe = {
   param: string;

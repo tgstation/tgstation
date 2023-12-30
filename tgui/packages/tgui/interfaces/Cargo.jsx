@@ -1,5 +1,6 @@
-import { flow } from 'common/fp';
 import { filter, sortBy } from 'common/collections';
+import { flow } from 'common/fp';
+
 import { useBackend, useSharedState } from '../backend';
 import {
   AnimatedNumber,
@@ -8,9 +9,9 @@ import {
   Flex,
   Icon,
   Input,
-  RestrictedInput,
   LabeledList,
   NoticeBox,
+  RestrictedInput,
   Section,
   Stack,
   Table,
@@ -237,13 +238,6 @@ export const CargoCatalog = (props) => {
                         setActiveSupplyName(supplies[0]?.name);
                       }
                       setSearchText(value);
-                    }}
-                    onChange={(e, value) => {
-                      // Allow edge cases like the X button to work
-                      const onInput = e.target?.props?.onInput;
-                      if (onInput) {
-                        onInput(e, value);
-                      }
                     }}
                   />
                 </Stack.Item>

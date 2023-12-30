@@ -1,7 +1,8 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
+
 import { useLocalState } from '../../backend';
-import { Flex, Button, Stack, AnimatedNumber } from '../../components';
+import { AnimatedNumber, Button, Flex, Stack } from '../../components';
 import { formatSiUnit } from '../../format';
 import { MaterialIcon } from './MaterialIcon';
 import { Material } from './Types';
@@ -97,7 +98,7 @@ const MaterialCounter = (props: MaterialCounterProps) => {
         sheets < 1 && 'MaterialDock--disabled',
       ])}
     >
-      <Stack vertial direction={'column-reverse'}>
+      <Stack vertical direction="column-reverse">
         <Flex
           direction="column"
           textAlign="center"
