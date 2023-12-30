@@ -71,7 +71,7 @@
 	// This happens after everything's all set, remember this for New overrides
 	generate_memory_name()
 
-/datum/memory/Destroy(force, ...)
+/datum/memory/Destroy(force)
 	memorizer_mind = null
 	return ..()
 
