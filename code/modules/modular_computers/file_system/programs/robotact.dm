@@ -132,7 +132,7 @@
 			cyborg.toggle_headlamp(FALSE, TRUE)
 
 		if("selfDestruct")
-			if(cyborg.stat || isnull(cyborg.cell)) //No detonation while stunned or no cell
+			if(cyborg.stat || isnull(cyborg.cell) || cyborg.cell.charge) //No detonation while stunned or no cell
 				return
 			if(cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //This option shouldn't even be showing otherwise
 				cyborg.self_destruct(cyborg)
