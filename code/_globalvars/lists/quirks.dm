@@ -12,25 +12,28 @@ GLOBAL_LIST_INIT(nearsighted_glasses, list(
 
 ///Options for the prosthetic limb quirk to choose from
 GLOBAL_LIST_INIT(limb_choice, list(
-	"Left Arm" = /obj/item/bodypart/arm/left/robot/surplus,
-	"Right Arm" = /obj/item/bodypart/arm/right/robot/surplus,
-	"Left Leg" = /obj/item/bodypart/leg/left/robot/surplus,
-	"Right Leg" = /obj/item/bodypart/leg/right/robot/surplus,
+	"Left arm" = /obj/item/bodypart/arm/left/robot/surplus,
+	"Right arm" = /obj/item/bodypart/arm/right/robot/surplus,
+	"Left leg" = /obj/item/bodypart/leg/left/robot/surplus,
+	"Right leg" = /obj/item/bodypart/leg/right/robot/surplus,
 ))
 
 ///Options for the SMOKER quirk to choose from
 GLOBAL_LIST_INIT(favorite_brand, list(
 	"Space Cigarettes" = /obj/item/storage/fancy/cigarettes,
-	"Midori Tabako" = /obj/item/storage/fancy/cigarettes/cigpack_midori,
 	"Uplift Smooth" = /obj/item/storage/fancy/cigarettes/cigpack_uplift,
-	"Carp Classic" = /obj/item/storage/fancy/cigarettes/cigpack_carp,
 	"Robust Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robust,
 	"Robust Gold Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_robustgold,
+	"Carp Classic" = /obj/item/storage/fancy/cigarettes/cigpack_carp,
+	"Midori Tabako" = /obj/item/storage/fancy/cigarettes/cigpack_midori,
 	"Syndicate Cigarettes" = /obj/item/storage/fancy/cigarettes/cigpack_syndicate,
+	"Premium Cigars" = /obj/item/storage/fancy/cigarettes/cigars,
+	"Cohiba Cigars" = /obj/item/storage/fancy/cigarettes/cigars/cohiba,
+	"Havanian Cigars" = /obj/item/storage/fancy/cigarettes/cigars/havana,
 ))
 
 ///Options for hemiplegic quirk
 GLOBAL_LIST_INIT(hemiplegic_side, list(
-	"Left Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
-	"Right Side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right
+	"Left side" = /datum/brain_trauma/severe/paralysis/hemiplegic/left,
+	"Right side" = /datum/brain_trauma/severe/paralysis/hemiplegic/right
 ))

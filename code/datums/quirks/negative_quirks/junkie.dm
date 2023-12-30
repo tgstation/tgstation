@@ -108,7 +108,7 @@
 		/obj/item/clothing/mask/cigarette/pipe,
 	)
 
-/datum/quirk_constant_data/item_quirk/junkie/smoker
+/datum/quirk_constant_data/smoker
 	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
 	customization_options = list(/datum/preference/choiced/smoker)
 
