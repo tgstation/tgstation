@@ -18,6 +18,7 @@
 		if(attacking_item.use_tool(src, user, 40, volume=75))
 			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
 			set_anchored(!anchored)
+			return
 	. = ..()
 
 /obj/structure/chemical_input/Initialize(mapload)
