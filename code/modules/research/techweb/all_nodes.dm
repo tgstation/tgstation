@@ -377,7 +377,12 @@
 		"component_printer",
 		"integrated_circuit",
 		"module_duplicator",
-		"usb_cable"
+		"usb_cable",
+		"chemical_synthesizer",
+		"weighted_splitter",
+		"chemical_splitter",
+		"chemical_mixer",
+		"chemical_filter"
 	)
 
 /////////////////////////Biotech/////////////////////////
