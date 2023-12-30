@@ -220,3 +220,37 @@
   - spellcheck: Two store tabs had errant right parenthesis, which are now removed.
   Wisemonster:
   - bugfix: Fix mulebots receiving the wrong message when thier cell is added/removed.
+2023-12-25:
+  CannibalHunter:
+  - balance: changes the price of gnome outfits in monkeshop
+  NicoDeLuna:
+  - rscadd: Added Milkman Outfit
+  Sord213:
+  - rscadd: Dagoth Ur has been hired by NT to make announcements on a station near
+      YOU
+2023-12-27:
+  san7890:
+  - bugfix: Ranged Guardians (Holoparasites/Power Miners/etc.) can no longer use ranged
+      attacks in scouting (incorporeal) mode.
+2023-12-28:
+  DexeeXI:
+  - qol: yet another wikibook fix.
+  MichiRecRoom:
+  - qol: Clothing pieces that make your fingers chunky (currently, only the H.A.U.L.
+      Gauntlets and the Boxing Gloves) will now denote themselves as such upon examining
+      them.
+  MilkForever:
+  - rscadd: Arachnids now click their mandibles in the *click emote
+  - rscadd: Arachnids are now in the "Spider" Faction, this means AI CONTROLLED spiders
+      will no longer go after them.
+  - qol: The eye-wear item slot now gets greyed out if you have arachnid eyes.
+  - balance: Arachnids no longer have brute damage resistance, and they no longer
+      have a burn damage weakness.
+  - balance: Arachnids can eat vegetables now.
+2023-12-29:
+  MichiRecRoom:
+  - qol: The H.A.U.L. Gauntlets will no longer prevent the wearer from opening the
+      closet/crate that they're pulling.
+  - bugfix: The anything-gift now has a very small list of items that it will never
+      spawn. The list consists primarily of items which could majorly endanger game-server/game-client
+      stability - so you still have a chance to get that funny debug uplink!

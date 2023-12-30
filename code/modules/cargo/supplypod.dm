@@ -76,7 +76,7 @@
 	specialised = TRUE
 	style = STYLE_SYNDICATE
 	bluespace = TRUE
-	explosionSize = list(0,0,1,2)
+	explosionSize = list(0,0,0,0) //monkestation edit: replaced list(0,0,1,2)
 	delays = list(POD_TRANSIT = 25, POD_FALLING = 4, POD_OPENING = 30, POD_LEAVING = 30)
 	reversing = TRUE
 	stay_after_drop = TRUE
