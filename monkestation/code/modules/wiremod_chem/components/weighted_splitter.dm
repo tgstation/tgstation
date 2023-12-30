@@ -2,6 +2,7 @@
 	display_name = "Weighted Chemical Splitter"
 	desc = "General chemical splitter, allows more fine grain control."
 	category = "Chemistry"
+	power_usage_per_input = 20
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
@@ -27,8 +28,8 @@
 	chemical_input = add_input_port("Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
 	number = add_input_port("Number", PORT_TYPE_NUMBER)
 
-	chemical_output = add_output_port("Weighted Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
-	non_weighted_output = add_output_port("Secondary Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
+	chemical_output = add_output_port("Weighted Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), port_type = /datum/port/output/singular)
+	non_weighted_output = add_output_port("Secondary Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), port_type = /datum/port/output/singular)
 
 /obj/item/circuit_component/chem/weighted_splitter/input_received(datum/port/input/port, list/return_values)
 	var/list/chemicals = chemical_input.value

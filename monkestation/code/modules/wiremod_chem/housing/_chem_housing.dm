@@ -19,7 +19,7 @@
 	var/obj/item/integrated_circuit/attached_circuit = locate(/obj/item/integrated_circuit) in contents
 	if(!attached_circuit || !attached_circuit?.cell)
 		return
-	if (recharge_counter >= 8)
+	if (recharge_counter >= 2)
 		var/usedpower = attached_circuit.cell.give(attached_circuit.cell.maxcharge - attached_circuit.cell.charge) // we refill every process this goes hard af
 		if(usedpower)
 			var/amount = max(usedpower, 0) // make sure we don't use negative power
@@ -31,6 +31,7 @@
 
 /obj/structure/chemical_manufacturer/Initialize(mapload)
 	. = ..()
+	create_reagents(buffer, reagent_flags)
 	START_PROCESSING(SSmachines, src)
 	AddComponent( \
 		/datum/component/shell, \
@@ -103,7 +104,9 @@
 
 /obj/item/circuit_component/chem/output_manufacturer/input_received(datum/port/input/port, list/return_values)
 	if(!chemical_tank)
-		return
+		chemical_tank = parent.shell
+		if(!chemical_tank)
+			return
 
 	var/list/ports = chemical_inputs.Copy()
 	var/list/chemical_list = list()

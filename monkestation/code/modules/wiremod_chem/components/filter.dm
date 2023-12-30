@@ -2,6 +2,7 @@
 	display_name = "Chemical Filter"
 	desc = "General chemical filter."
 	category = "Chemistry"
+	power_usage_per_input = 25
 
 	///this is our chosen chemical
 	var/datum/port/input/chemical_input
@@ -20,8 +21,8 @@
 /obj/item/circuit_component/chem/filter/populate_ports()
 	. = ..()
 	chemical_input = add_input_port("Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
-	filtered_output = add_output_port("Filtered Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
-	junk_output = add_output_port("Unfiltered Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
+	filtered_output = add_output_port("Filtered Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), port_type = /datum/port/output/singular)
+	junk_output = add_output_port("Unfiltered Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), port_type = /datum/port/output/singular)
 	filter_list = add_input_port("Filter List", PORT_TYPE_LIST(PORT_TYPE_STRING))
 
 /obj/item/circuit_component/chem/filter/input_received(datum/port/input/port, list/return_values)

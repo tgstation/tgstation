@@ -2,6 +2,7 @@
 	display_name = "Chemical Synthesizer"
 	desc = "General chemical synthesizer component."
 	category = "Chemistry"
+	power_usage_per_input = 1
 
 	///this is our chosen chemical
 	var/datum/port/input/option/chemical_to_generate
@@ -50,6 +51,25 @@
 		reagent_list[initial(reagent.name)] = reagent
 
 	chemical_to_generate = add_option_port("Chemical", reagent_list)
+
+
+/obj/item/circuit_component/chem/synthesizer/check_power_modifictions()
+	var/units = per_chemical_amount?.value
+	if(!parent.shell)
+		return power_usage_per_input * 5 * units
+
+	var/obj/structure/chemical_manufacturer/host = parent.shell
+	if(!istype(host, /obj/structure/chemical_manufacturer))
+		return power_usage_per_input * 10 * units// even worse if we manage to get this in a non manufactured cell
+
+	if(!host.has_precursor(units))
+		var/precursor = host.connected_tank?.stored_precursor
+		units = units - precursor
+		host.process_precursor(units)
+		return power_usage_per_input * 5 * units
+
+	host.process_precursor(units)
+	return power_usage_per_input
 
 /obj/item/circuit_component/chem/synthesizer/populate_ports()
 	output = add_output_port("Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), order = 1.1)

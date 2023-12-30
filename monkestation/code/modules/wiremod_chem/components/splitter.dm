@@ -24,7 +24,8 @@
 		port_type = PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), \
 		prefix = "Split Output", \
 		minimum_amount = 2, \
-		is_output = TRUE \
+		is_output = TRUE, \
+		is_singular = TRUE, \
 	)
 	chemical_input = add_input_port("Chemical Input", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), order = 1.1)
 

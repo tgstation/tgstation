@@ -2,6 +2,7 @@
 	display_name = "Chemical Mixer"
 	desc = "Mixes chemicals."
 	category = "Chemistry"
+	power_usage_per_input = 40
 
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
@@ -31,7 +32,7 @@
 		minimum_amount = 2 \
 	)
 	heat_input = add_input_port("Desired Heat", PORT_TYPE_NUMBER, default = 300)
-	output = add_output_port("Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), order = 1.1)
+	output = add_output_port("Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), order = 1.1, port_type = /datum/port/output/singular)
 
 /obj/item/circuit_component/chem/mixer/input_received(datum/port/input/port, list/return_values)
 
