@@ -9,7 +9,7 @@ on:
     # Do not run if the only files changed cannot affect the build
     paths-ignore:
       - "**.md"
-      - "**.json"
+      - "**.txt"
       - ".github/CODEOWNERS"
       - ".github/PULL_REQUEST_TEMPLATE.md"
       - ".editorconfig"
@@ -20,7 +20,7 @@ on:
     # Do not run if the only files changed cannot affect the build
     paths-ignore:
       - "**.md"
-      - "**.json"
+      - "**.txt"
       - ".github/CODEOWNERS"
       - ".github/PULL_REQUEST_TEMPLATE.md"
       - ".editorconfig"
