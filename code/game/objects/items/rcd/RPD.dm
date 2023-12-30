@@ -262,6 +262,10 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	. = ..()
 	. += span_notice("You can scroll your <b>mouse wheel</b> to change the piping layer.")
 	. += span_notice("You can <b>right click</b> a pipe to set the RPD to its color and layer.")
+	if(upgrade_flags & RPD_UPGRADE_SPEEDPIPE)
+		. += span_notice("Alt-click to toggle speedpipe marking mode.")
+		. += span_notice("Ctrl-click to clear all speedpipe markings, or right-click a single marking with the RPD to clear it.")
+		. += span_notice("Alt-right-click to start/stop building on speedpipe markings.")
 
 /obj/item/pipe_dispenser/equipped(mob/user, slot, initial)
 	. = ..()
@@ -304,7 +308,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 
 /obj/item/pipe_dispenser/CtrlClick(mob/user)
 	. = ..()
-	clear_out_speedpipe(speedpipe_turfs, user)
+	clear_out_speedpipe(user)
 
 /obj/item/pipe_dispenser/proc/toggle_speedpipe_marking(mob/user)
 	speedpipe_marking = !speedpipe_marking
@@ -356,22 +360,29 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		the_turf.add_overlay(rpd_overlay)
 		addtimer(CALLBACK(the_turf, TYPE_PROC_REF(/atom, update_atom_colour)), 2 SECONDS)
 		deltimer(timed_out_speedpipe_timer)
-		timed_out_speedpipe_timer = addtimer(CALLBACK(src, PROC_REF(clear_out_speedpipe), speedpipe_turfs, user), 3 MINUTES, TIMER_STOPPABLE)
+		timed_out_speedpipe_timer = addtimer(CALLBACK(src, PROC_REF(clear_out_speedpipe), user), 3 MINUTES, TIMER_STOPPABLE)
 
-/obj/item/pipe_dispenser/proc/clear_out_speedpipe(list/the_speedpipe_turfs, mob/user)
+/obj/item/pipe_dispenser/proc/clear_out_speedpipe(list/the_speedpipe_turfs = speedpipe_turfs, mob/user)
 	balloon_alert(user, "cleared speedpipe markings")
 	for(var/turf/speedpipe_turf as anything in the_speedpipe_turfs)
 		speedpipe_turf.cut_overlay(rpd_overlay)
-	speedpipe_turfs = list()
-	toggle_speedpipe_marking(user)
+		speedpipe_turfs -= speedpipe_turf
+	the_speedpipe_turfs = list()
 
-/obj/item/pipe_dispenser/pre_attack_secondary(obj/machinery/atmospherics/target, mob/user, params)
+/obj/item/pipe_dispenser/pre_attack_secondary(atom/target, mob/user, params)
+	if(isturf(target) && upgrade_flags & RPD_UPGRADE_SPEEDPIPE && length(speedpipe_turfs))
+		var/turf/target_turf = target
+		var/list/hit_turfs = list()
+		if(target_turf in speedpipe_turfs)
+			hit_turfs += target_turf
+			clear_out_speedpipe(hit_turfs, user)
 	if(!istype(target, /obj/machinery/atmospherics))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(target.pipe_color && target.piping_layer)
-		paint_color = GLOB.pipe_color_name[target.pipe_color]
-		pipe_layers = PIPE_LAYER(target.piping_layer)
-		balloon_alert(user, "color/layer copied")
+	var/obj/machinery/atmospherics/atmos_pipe_device = target
+	if(atmos_pipe_device.pipe_color && atmos_pipe_device.piping_layer)
+		paint_color = GLOB.pipe_color_name[atmos_pipe_device.pipe_color]
+		pipe_layers = PIPE_LAYER(atmos_pipe_device.piping_layer)
+		balloon_alert(user, "set to [paint_color] color and layer [PIPE_LAYER(pipe_layers)]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/pipe_dispenser/add_context(obj/item/source, list/context, atom/target, mob/living/user)
