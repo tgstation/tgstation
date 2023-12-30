@@ -265,7 +265,7 @@
 			!(weapon.flags_1 & HOLOGRAM_1) && \
 			accept_check(weapon) \
 		)
-			load(weapon)
+			load(weapon, user)
 			user.visible_message(span_notice("[user] adds \the [weapon] to \the [src]."), span_notice("You add \the [weapon] to \the [src]."))
 			SStgui.update_uis(src)
 			if(visible_contents)
@@ -282,7 +282,7 @@
 					!(object.flags_1 & HOLOGRAM_1) && \
 					accept_check(object) \
 				)
-					load(object)
+					load(object, user)
 					loaded++
 			SStgui.update_uis(src)
 
@@ -328,7 +328,7 @@
  * Arguments
  * * [weapon][obj/item] - the item to load. If the item is being held by a mo it will transfer it from hand else directly force move
  */
-/obj/machinery/smartfridge/proc/load(obj/item/weapon)
+/obj/machinery/smartfridge/proc/load(obj/item/weapon, mob/user)
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
@@ -437,7 +437,7 @@
 	can_atmos_pass = ATMOS_PASS_YES
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
-	/// The reference to the current user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
+	/// The reference to the last user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
 	var/datum/weakref/current_user
 
 /obj/machinery/smartfridge/drying_rack/Initialize(mapload)
@@ -522,9 +522,13 @@
 	if(!powered())
 		toggle_drying(TRUE)
 
-/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object) //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object, mob/user) //For updating the filled overlay
 	. = ..()
+	if(!.)
+		return
 	update_appearance()
+	if(drying && user?.mind)
+		current_user = WEAKREF(user.mind)
 
 /obj/machinery/smartfridge/drying_rack/update_overlays()
 	. = ..()
@@ -656,17 +660,17 @@
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
 	return (isorgan(O) || isbodypart(O))
 
-/obj/machinery/smartfridge/organ/load(obj/item/O)
+/obj/machinery/smartfridge/organ/load(obj/item/item, mob/user)
 	. = ..()
 	if(!.) //if the item loads, clear can_decompose
 		return
 
-	if(isorgan(O))
-		var/obj/item/organ/organ = O
+	if(isorgan(item))
+		var/obj/item/organ/organ = item
 		organ.organ_flags |= ORGAN_FROZEN
 
-	if(isbodypart(O))
-		var/obj/item/bodypart/bodypart = O
+	if(isbodypart(item))
+		var/obj/item/bodypart/bodypart = item
 		for(var/obj/item/organ/stored in bodypart.contents)
 			stored.organ_flags |= ORGAN_FROZEN
 
