@@ -286,6 +286,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			RegisterSignal(holo_effect_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 		if(islist(holo_effect_product))
 			for(var/atom/atom_product as anything in holo_effect_product)
+				spawned += atom_product
 				RegisterSignal(atom_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 		return
 
