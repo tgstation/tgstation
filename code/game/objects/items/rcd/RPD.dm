@@ -230,6 +230,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/mutable_appearance/rpd_overlay
 	/// timer for autoclearing speedpipe turfs and any overlays on them
 	var/timed_out_speedpipe_timer
+	/// Used to track changes in turfs, to cancel speedpipe builds in case of changed turf
+	var/list/old_turfs = list()
 
 /datum/armor/item_pipe_dispenser
 	fire = 100
@@ -321,9 +323,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		if(!speedpipe_building)
 			return
 		deltimer(timed_out_speedpipe_timer)
-		var/list/old_turfs = speedpipe_turfs.Copy()
-		for(var/turf/old_turf as anything in old_turfs)
-			old_turfs[old_turf] = old_turf.type
+		clear_orphaned_speedpipe_turfs()
 		for(var/turf/speedpipe_turf as anything in speedpipe_turfs)
 			if(!speedpipe_building)
 				return
@@ -331,8 +331,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 				do_rpd_actions(speedpipe_turf, user, speedpipe_build = TRUE)
 				speedpipe_turf.cut_overlay(rpd_overlay)
 				speedpipe_turfs -= speedpipe_turf
-		for(var/turf/old_turf as anything in old_turfs)
-			old_turf.cut_overlay(rpd_overlay)
+				old_turfs -= speedpipe_turf
 
 /obj/item/pipe_dispenser/pickup(mob/to_hook)
 	. = ..()
@@ -354,6 +353,8 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 	var/turf/the_turf = user.loc
 	if(!(the_turf in speedpipe_turfs))
 		speedpipe_turfs += the_turf
+		old_turfs += the_turf
+		old_turfs[the_turf] = the_turf.type
 		var/old_turf_color = the_turf.color
 		the_turf.color = COLOR_DARK_CYAN
 		animate(the_turf, 2 SECONDS, color = old_turf_color)
@@ -362,12 +363,23 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		deltimer(timed_out_speedpipe_timer)
 		timed_out_speedpipe_timer = addtimer(CALLBACK(src, PROC_REF(clear_out_speedpipe), user), 3 MINUTES, TIMER_STOPPABLE)
 
-/obj/item/pipe_dispenser/proc/clear_out_speedpipe(list/the_speedpipe_turfs = speedpipe_turfs, mob/user)
+/obj/item/pipe_dispenser/proc/clear_orphaned_speedpipe_turfs()
+	for(var/turf/speedpipe_turf as anything in speedpipe_turfs)
+		if(QDELETED(speedpipe_turf))
+			speedpipe_turfs -= speedpipe_turf
+	for(var/turf/speedpipe_turf as anything in old_turfs)
+		if(QDELETED(speedpipe_turf))
+			old_turfs -= speedpipe_turf
+
+/obj/item/pipe_dispenser/proc/clear_out_speedpipe(mob/user, list/the_speedpipe_turfs = speedpipe_turfs)
 	balloon_alert(user, "cleared speedpipe markings")
 	for(var/turf/speedpipe_turf as anything in the_speedpipe_turfs)
 		speedpipe_turf.cut_overlay(rpd_overlay)
 		speedpipe_turfs -= speedpipe_turf
+		old_turfs -= speedpipe_turf
 	the_speedpipe_turfs = list()
+	if(the_speedpipe_turfs == speedpipe_turfs)
+		old_turfs = list()
 
 /obj/item/pipe_dispenser/pre_attack_secondary(atom/target, mob/user, params)
 	if(isturf(target) && upgrade_flags & RPD_UPGRADE_SPEEDPIPE && length(speedpipe_turfs))
@@ -375,7 +387,7 @@ GLOBAL_LIST_INIT(transit_tube_recipes, list(
 		var/list/hit_turfs = list()
 		if(target_turf in speedpipe_turfs)
 			hit_turfs += target_turf
-			clear_out_speedpipe(hit_turfs, user)
+			clear_out_speedpipe(user, hit_turfs)
 	if(!istype(target, /obj/machinery/atmospherics))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	var/obj/machinery/atmospherics/atmos_pipe_device = target
