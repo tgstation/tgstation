@@ -36,7 +36,7 @@
 		HYGIENEBOT_VOICED_THREAT_AIRLOCK = 'sound/voice/hygienebot/dragyouout.ogg',
 		HYGIENEBOT_VOICED_FOUL_SMELL = 'sound/voice/hygienebot/foulsmelling.ogg',
 		HYGIENEBOT_VOICED_TROGLODYTE = 'sound/voice/hygienebot/troglodyte.ogg',
-		HYGIENEBOT_VOICED_GREEN_CLOUD = 'sound/voice/hygienebot/letmeclean.ogg',
+		HYGIENEBOT_VOICED_GREEN_CLOUD = 'sound/voice/hygienebot/greencloud.ogg',
 		HYGIENEBOT_VOICED_ARSEHOLE = 'sound/voice/hygienebot/letmeclean.ogg',
 		HYGIENEBOT_VOICED_THREAT_ARTERIES = 'sound/voice/hygienebot/cutarteries.ogg',
 		HYGIENEBOT_VOICED_STOP_RUNNING = 'sound/voice/hygienebot/stoprunning.ogg',

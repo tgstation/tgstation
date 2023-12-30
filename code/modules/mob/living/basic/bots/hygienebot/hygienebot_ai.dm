@@ -9,8 +9,8 @@
 		BB_WASH_FRUSTRATION = 0,
 	)
 	planning_subtrees = list(
-		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/manage_unreachable_list,
+		/datum/ai_planning_subtree/respond_to_summon,
 		/datum/ai_planning_subtree/wash_people,
 		/datum/ai_planning_subtree/salute_authority,
 		/datum/ai_planning_subtree/find_patrol_beacon,
@@ -36,7 +36,7 @@
 
 /datum/ai_planning_subtree/wash_people
 
-/datum/ai_planning_subtree/wash_people/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
+/datum/ai_planning_subtree/wash_people/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 
 	var/atom/wash_target = controller.blackboard[BB_WASH_TARGET]
@@ -55,26 +55,28 @@
 
 /datum/ai_behavior/find_valid_wash_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, our_access_flags)
 	. = ..()
-	var/list/ignore_list = controller.blackboard[BB_TEMPORARILY_IGNORE_FACTION]
+	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	var/atom/found_target
 	for(var/mob/living/carbon/human/wash_potential in oview(5, controller.pawn))
+
+		if(found_target)
+			break
 
 		if(isnull(wash_potential.mind) || wash_potential.stat != CONSCIOUS)
 			continue
 
-		if(our_access_flags & BOT_COVER_EMAGGED)
-			found_target = wash_potential
-			break
-
 		if(LAZYACCESS(ignore_list, wash_potential))
 			continue
+
+		if(our_access_flags & BOT_COVER_EMAGGED)
+			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, wash_potential, TRUE)
+			found_target = wash_potential
+			break
 
 		for(var/atom/clothing in wash_potential.get_equipped_items())
 			if(GET_ATOM_BLOOD_DNA_LENGTH(clothing))
 				found_target = wash_potential
 				break
-
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, wash_potential, TRUE)
 
 	if(isnull(found_target))
 		finish_action(controller, succeeded = FALSE)
@@ -82,6 +84,8 @@
 
 	controller.set_blackboard_key(target_key, found_target)
 	finish_action(controller, succeeded = TRUE)
+
+
 
 /datum/ai_behavior/find_valid_wash_targets/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	. = ..()
@@ -124,8 +128,6 @@
 	var/datum/action/cooldown/bot_announcement/announcement = controller.blackboard[BB_ANNOUNCE_ABILITY]
 
 	if(succeeded)
-		var/mob/living/washed_target = controller.blackboard[target_key]
-		controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, washed_target, TRUE)
 		if(controller.blackboard[BB_WASH_FRUSTRATION] > 0)
 			announcement.announce(pick(controller.blackboard[BB_WASH_DONE]))
 		controller.clear_blackboard_key(target_key)
@@ -136,6 +138,5 @@
 
 	announcement.announce(pick(controller.blackboard[BB_WASH_THREATS]))
 	controller.set_blackboard_key(BB_WASH_FRUSTRATION, 0)
-
 
 #undef BOT_FRUSTRATION_LIMIT

@@ -69,3 +69,5 @@
 #define BB_WASH_TARGET "wash_target"
 ///key that holds how frustrated we are when target is running away
 #define BB_WASH_FRUSTRATION "wash_frustration"
+///key that holds cooldown after we finish cleaning something, so we dont immediately run off to patrol
+#define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"
