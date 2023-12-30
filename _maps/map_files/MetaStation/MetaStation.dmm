@@ -10332,10 +10332,6 @@
 /obj/structure/reagent_dispensers/wall/peppertank/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/security/checkpoint/science)
-"dTX" = (
-/obj/effect/landmark/start/chemist,
-/turf/open/floor/iron/white,
-/area/station/medical/chemistry)
 "dTZ" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/recharger,
@@ -12873,6 +12869,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/closed/wall/r_wall,
 /area/station/science/ordnance/burnchamber)
+"eRv" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "chem_lockdown";
+	name = "Chemistry Shutters"
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/station/medical/chemistry)
 "eRx" = (
 /obj/structure/closet/emcloset,
 /obj/machinery/light/directional/east,
@@ -20907,6 +20913,15 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
+"hPA" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "chem_lockdown";
+	name = "Chemistry Shutters"
+	},
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/station/medical/chemistry)
 "hPM" = (
 /obj/effect/landmark/event_spawn,
 /obj/structure/cable,
@@ -23935,6 +23950,7 @@
 	name = "Chemistry Shutters"
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/medical/chemistry)
 "iMs" = (
@@ -26235,8 +26251,6 @@
 /obj/structure/table,
 /obj/item/stack/sheet/iron/fifty,
 /obj/item/stack/sheet/iron/fifty,
-/obj/item/construction/plumbing,
-/obj/item/construction/plumbing,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
 	},
@@ -29344,6 +29358,13 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"kEi" = (
+/obj/effect/turf_decal/tile/yellow/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/turf/open/floor/iron/white,
+/area/station/medical/pharmacy)
 "kEm" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -31356,17 +31377,10 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/table/glass,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/grenade/chem_grenade,
-/obj/item/stack/cable_coil,
-/obj/item/stack/cable_coil,
-/obj/item/screwdriver{
-	pixel_x = -2;
-	pixel_y = 6
-	},
+/obj/structure/chemical_manufacturer,
+/obj/item/integrated_circuit/chemical,
+/obj/item/multitool,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "loh" = (
@@ -43862,6 +43876,7 @@
 	id = "chem_lockdown";
 	name = "Chemistry Shutters"
 	},
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/medical/chemistry)
 "pJY" = (
@@ -47378,6 +47393,7 @@
 	},
 /obj/structure/disposalpipe/segment,
 /obj/effect/mapping_helpers/airlock/access/all/medical/chemistry,
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "qWR" = (
@@ -48068,10 +48084,11 @@
 	},
 /obj/machinery/airalarm/directional/south,
 /obj/structure/cable,
-/obj/structure/table/glass,
-/obj/item/clothing/glasses/science,
-/obj/item/clothing/glasses/science,
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/chemical_manufacturer,
+/obj/item/integrated_circuit/chemical,
+/obj/item/multitool,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "rlg" = (
@@ -50478,6 +50495,15 @@
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 8
 	},
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
+/obj/item/grenade/chem_grenade,
+/obj/item/stack/cable_coil,
+/obj/item/screwdriver{
+	pixel_x = -2;
+	pixel_y = 6
+	},
+/obj/item/stack/cable_coil,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "rYR" = (
@@ -61912,7 +61938,6 @@
 /area/station/maintenance/port)
 "vZF" = (
 /obj/structure/chair/office/light,
-/obj/effect/landmark/start/chemist,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
@@ -66334,6 +66359,7 @@
 	name = "Chemistry Desk";
 	req_access = list("plumbing")
 	},
+/obj/structure/barricade/wooden/crude,
 /turf/open/floor/iron/white,
 /area/station/medical/chemistry)
 "xCS" = (
@@ -91426,10 +91452,10 @@ pKP
 pKP
 bqX
 bqX
+eRv
 yfg
-yfg
-yfg
-yfg
+eRv
+eRv
 yfg
 bqX
 iMr
@@ -91694,7 +91720,7 @@ oqk
 xZB
 hIJ
 vhb
-lrZ
+hPA
 kiz
 unN
 iwc
@@ -94501,7 +94527,7 @@ oar
 keK
 lXA
 mVE
-lXA
+kEi
 nJn
 nqB
 mtm
@@ -94509,7 +94535,7 @@ eIO
 hKG
 fvE
 hdI
-dTX
+iqz
 iqz
 iqz
 iqz
