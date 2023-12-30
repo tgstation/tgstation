@@ -970,3 +970,14 @@
 	var/location = get_turf(holder.my_atom)
 	for(var/i in 1 to created_volume)
 		new /obj/item/stack/sheet/hauntium(location)
+
+/datum/chemical_reaction/bananium_solidification
+	required_reagents = list(/datum/reagent/consumable/laughter = 5, /datum/reagent/lube/superlube = 10, /datum/reagent/iron = 1)
+	mob_react = FALSE
+	reaction_flags = REACTION_INSTANT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE | REACTION_TAG_OTHER
+
+/datum/chemical_reaction/bananium_solidification/on_reaction(datum/reagents/holder, datum/equilibrium/reaction, created_volume)
+	var/location = get_turf(holder.my_atom)
+	for(var/i in 1 to created_volume)
+		new /obj/item/stack/sheet/mineral/bananium(location)

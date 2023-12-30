@@ -244,7 +244,7 @@ GLOBAL_LIST_INIT(silver_recipes, list ( \
 	singular_name = "bananium sheet"
 	sheettype = "bananium"
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT)
-	grind_results = list(/datum/reagent/consumable/banana = 20)
+	grind_results = list(/datum/reagent/consumable/banana = 20, /datum/reagent/lube/superlube = 10)
 	point_value = 50
 	merge_type = /obj/item/stack/sheet/mineral/bananium
 	material_type = /datum/material/bananium
