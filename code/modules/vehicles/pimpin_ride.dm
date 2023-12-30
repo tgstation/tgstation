@@ -91,20 +91,20 @@
 
 	//has occupant && hands empty
 		//lmb dismount
-		//rmb remove bag
+		//rmb remove trash bag
+		//if key inserted && you are the driver
+			//context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
 
-	if(!held_item)
+	if(!held_item) //&& not driving it
 		if(trash_bag)
-			context[SCREENTIP_CONTEXT_LMB] = "Remove bag"
-			context[SCREENTIP_CONTEXT_RMB] = "Remove bag"
-			//if key inserted
-				//context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove key"
+			context[SCREENTIP_CONTEXT_LMB] = "Remove trash bag"
+			context[SCREENTIP_CONTEXT_RMB] = "Remove trash bag"
 			return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/storage/bag/trash))
 		if(!trash_bag)
-			context[SCREENTIP_CONTEXT_LMB] = "Add bag"
-			context[SCREENTIP_CONTEXT_RMB] = "Add bag"
+			context[SCREENTIP_CONTEXT_LMB] = "Add trash bag"
+			context[SCREENTIP_CONTEXT_RMB] = "Add trash bag"
 			return CONTEXTUAL_SCREENTIP_SET
 
 	if(istype(held_item, /obj/item/janicart_upgrade))
@@ -117,11 +117,14 @@
 			context[SCREENTIP_CONTEXT_LMB] = "Remove upgrade"
 			return CONTEXTUAL_SCREENTIP_SET
 
-	//holding key
-		//lmb insert key
-
-	//holding something that isn't the key (and probably also tiny/small)
-		//LMB = insert into bag
+	if(is_key(held_item) && !is_key(inserted_key))
+		context[SCREENTIP_CONTEXT_LMB] = "Insert key"
+		context[SCREENTIP_CONTEXT_RMB] = "Insert key"
+		return CONTEXTUAL_SCREENTIP_SET
+	else if (trash_bag)
+		context[SCREENTIP_CONTEXT_LMB] = "Insert into trash bag"
+		context[SCREENTIP_CONTEXT_RMB] = "Insert key"
+		return CONTEXTUAL_SCREENTIP_SET
 
 //TODO move key insertion and dismount to basetype?
 
