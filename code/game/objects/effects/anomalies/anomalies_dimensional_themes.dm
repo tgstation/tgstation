@@ -117,6 +117,8 @@
 		return
 	var/obj/new_object = new replace_path(object.loc)
 	new_object.setDir(object.dir)
+	if(istype(object, /obj/machinery/door/airlock))
+		new_object.name = object.name
 	qdel(object)
 
 /**
