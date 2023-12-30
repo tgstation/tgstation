@@ -437,6 +437,8 @@
 	can_atmos_pass = ATMOS_PASS_YES
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
+	/// The reference to the current user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
+	var/datum/weakref/current_user
 
 /obj/machinery/smartfridge/drying_rack/Initialize(mapload)
 	. = ..()
@@ -446,6 +448,10 @@
 
 	//so we don't drop any of the parent smart fridge parts upon deconstruction
 	clear_components()
+
+/obj/machinery/smartfridge/drying_rack/Destroy()
+	current_user = null
+	return ..()
 
 /// We cleared out the components in initialize so we can optimize this
 /obj/machinery/smartfridge/drying_rack/visible_items()
@@ -505,7 +511,7 @@
 
 	switch(action)
 		if("Dry")
-			toggle_drying(FALSE)
+			toggle_drying(FALSE, usr)
 			return TRUE
 
 /obj/machinery/smartfridge/drying_rack/powered()
@@ -546,17 +552,20 @@
  * Arguments
  * * forceoff - if TRUE will force the dryer off always
  */
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff, mob/user)
 	if(drying || forceoff)
 		drying = FALSE
+		current_user = FALSE
 		update_use_power(IDLE_POWER_USE)
 	else
 		drying = TRUE
+		if(user?.mind)
+			current_user = WEAKREF(user.mind)
 		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)
-	SEND_SIGNAL(target, COMSIG_ITEM_DRIED)
+	SEND_SIGNAL(target, COMSIG_ITEM_DRIED, current_user)
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
 	. = ..()
