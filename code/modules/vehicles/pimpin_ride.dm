@@ -125,7 +125,6 @@
 		context[SCREENTIP_CONTEXT_RMB] = "Insert into trash bag"
 		return CONTEXTUAL_SCREENTIP_SET
 
-
 /**
  * Called if the attached bag is being qdeleted, ensures appearance is maintained properly
  */
