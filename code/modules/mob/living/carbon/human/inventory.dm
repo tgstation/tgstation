@@ -256,10 +256,11 @@
 				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
 			if(l_store && IS_ORGANIC_LIMB(src.get_bodypart(BODY_ZONE_L_LEG)))
 				dropItemToGround(l_store, TRUE)
-			if(wear_id && IS_ORGANIC_LIMB(src.get_bodypart(BODY_ZONE_CHEST)))
-				dropItemToGround(wear_id)
-			if(belt && IS_ORGANIC_LIMB(src.get_bodypart(BODY_ZONE_CHEST)))
-				dropItemToGround(belt)
+			if(IS_ORGANIC_LIMB(src.get_bodypart(BODY_ZONE_CHEST)))
+				if(wear_id)
+					dropItemToGround(wear_id)
+				if(belt)
+					dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
 		if(!QDELETED(src))
