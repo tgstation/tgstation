@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - sound: "added *gaspshock emote sound effect to felinids"

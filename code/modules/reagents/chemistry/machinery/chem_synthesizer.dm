@@ -45,16 +45,28 @@
 			return TRUE
 
 		if("amount")
-			var/input = text2num(params["amount"])
-			if(input)
-				amount = input
-			return FALSE
+			var/input = params["amount"]
+			if(isnull(input))
+				return FALSE
+
+			input = text2num(input)
+			if(isnull(input))
+				return FALSE
+
+			amount = input
+			return TRUE
 
 		if("purity")
-			var/input = text2num(params["amount"])
-			if(input)
-				purity = input
-			return FALSE
+			var/input = params["amount"]
+			if(isnull(input))
+				return FALSE
+
+			input = text2num(input)
+			if(isnull(input))
+				return FALSE
+
+			purity = input
+			return TRUE
 
 	update_appearance()
 
