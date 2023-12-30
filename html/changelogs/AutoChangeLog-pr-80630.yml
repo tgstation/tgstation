@@ -1,4 +1,0 @@
-author: "ReturnToZender"
-delete-after: True
-changes:
-  - bugfix: "JSX files, when edited, cause TGUI to recompile on build"

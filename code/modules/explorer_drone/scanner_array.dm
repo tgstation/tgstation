@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	SEND_SIGNAL(src,COMSIG_EXOSCAN_INTERRUPTED)
 	qdel(src)
 
-/datum/exoscan/Destroy(force, ...)
+/datum/exoscan/Destroy(force)
 	. = ..()
 	deltimer(scan_timer)
 

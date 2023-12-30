@@ -48,7 +48,7 @@
 	var/json = CreateBridgeData(command, data, TRUE)
 	var/encoded_json = url_encode(json)
 
-	var/api_prefix = interop_version.minor >= 7 ? "api/" : ""
+	var/api_prefix = interop_version.minor >= 8 ? "api/" : ""
 
 	var/url = "http://127.0.0.1:[server_port]/[api_prefix]Bridge?[DMAPI5_BRIDGE_DATA]=[encoded_json]"
 	return url
