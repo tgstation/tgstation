@@ -332,7 +332,7 @@
 				return FALSE
 
 			dispense_volume = target
-			return FALSE
+			return TRUE
 
 /**
  * Injects either acid/base buffer into the beaker
