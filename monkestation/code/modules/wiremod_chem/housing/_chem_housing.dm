@@ -34,6 +34,7 @@
 	START_PROCESSING(SSmachines, src)
 	AddComponent( \
 		/datum/component/shell, \
+		unremovable_circuit_components = list(new /obj/item/circuit_component/chem/output_manufacturer), \
 		capacity = SHELL_CAPACITY_VERY_LARGE, \
 		shell_flags = SHELL_FLAG_USB_PORT, \
 	)
