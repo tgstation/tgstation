@@ -31,21 +31,43 @@
 	effectiveness = 70, \
 	)
 	AddComponent(/datum/component/light_eater)
-	RegisterSignal(antag, COMSIG_MOB_ENTER_JAUNT, PROC_REF(remove_crit))
-	crit_timer = addtimer(CALLBACK(src, PROC_REF(add_crit)), TIMER_DELETE_ME | TIMER_STOPPABLE)
+
+obj/item/light_eater/on_equipped(mob/user, slot, initial = FALSE)
+	. = ..()
+	RegisterSignal(user, COMSIG_MOB_ENTER_JAUNT, PROC_REF(remove_crit))
+	RegisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT, PROC_REF(prepare_crit_timer))
+	prepare_crit_timer()
+
+obj/item/light_eater/dropped(mob/user, silent = FALSE)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_ENTER_JAUNT)
+	UnregisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT)
+	remove_crit()
 
 /obj/item/light_eater/attack(mob/living/target, mob/living/user, params)
 	. = ..()
 	if(!has_crit)
 		return
-	user.visible_message(span_boldwarning("[user] gores [target] with their [src], bringing them to a halt!"), span_userdanger("You gore [target] with your [src], bringing them to a halt!"))
-	target.Paralyze(1 SECONDS)
+	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100, TRUE)
+	if(target.stat == DEAD)
+		user.visible_message(span_warning("[user] gores [target] with [src]!"), span_warning("You gore [target] with [src], which doesn't accomplish much, but it does make you feel a little better."))
+	else if(iscarbon(target) || issilicon(target))
+		user.visible_message(span_boldwarning("[user] gores [target] with [src], bringing them to a halt!"), span_userdanger("You gore [target] with [src], bringing them to a halt!"))
+		target.Paralyze(issilicon(target) ? 2 SECONDS : 1 SECONDS)
+	else
+		user.visible_message(span_boldwarning("[user] gores [target] with [src], ripping into them!"), span_userdanger("You gore [target] with [src], ripping into them!"))
+		target.apply_damage(damage = force, forced = TRUE)
 	remove_crit()
+	prepare_crit_timer()
+
+/obj/item/light_eater/proc/prepare_crit_timer()
+	crit_timer = addtimer(CALLBACK(src, PROC_REF(add_crit)), 15 SECONDS, TIMER_DELETE_ME | TIMER_STOPPABLE)
 
 /obj/item/light_eater/proc/add_crit()
 	has_crit = TRUE
 	add_filter("crit_glow", 3, list("type" = "outline", "color" = "#ff330030", "size" = 5))
-	balloon_alert(owner, "critical strike ready")
+	if(ismob(loc))
+		loc.balloon_alert(loc, "critical strike ready")
 
 /obj/item/light_eater/proc/remove_crit()
 	has_crit = FALSE
