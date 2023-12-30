@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - bugfix: "Poll alert buttons candidate number should be more responsive"
