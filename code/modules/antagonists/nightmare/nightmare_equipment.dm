@@ -34,12 +34,16 @@
 
 /obj/item/light_eater/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/nightmare))
+		return
 	RegisterSignal(user, COMSIG_MOB_ENTER_JAUNT, PROC_REF(remove_crit))
 	RegisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT, PROC_REF(prepare_crit_timer))
 	prepare_crit_timer()
 
 /obj/item/light_eater/dropped(mob/user, silent = FALSE)
 	. = ..()
+	if(!user?.mind?.has_antag_datum(/datum/antagonist/nightmare))
+		return
 	UnregisterSignal(user, COMSIG_MOB_ENTER_JAUNT)
 	UnregisterSignal(user, COMSIG_MOB_AFTER_EXIT_JAUNT)
 	remove_crit()
@@ -49,9 +53,10 @@
 	if(!has_crit)
 		return
 	playsound(target, 'sound/effects/wounds/crackandbleed.ogg', 100, TRUE)
+	var/datum/dna/target_dna = target.has_dna()
 	if(target.stat == DEAD)
 		user.visible_message(span_warning("[user] gores [target] with [src]!"), span_warning("You gore [target] with [src], which doesn't accomplish much, but it does make you feel a little better."))
-	else if(iscarbon(target) || issilicon(target))
+	else if(!target_dna?.check_mutation(/datum/mutation/human/hulk) && (iscarbon(target) || issilicon(target)))
 		user.visible_message(span_boldwarning("[user] gores [target] with [src], bringing them to a halt!"), span_userdanger("You gore [target] with [src], bringing them to a halt!"))
 		target.Paralyze(issilicon(target) ? 2 SECONDS : 1 SECONDS)
 	else
