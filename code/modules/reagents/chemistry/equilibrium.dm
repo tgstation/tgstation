@@ -317,7 +317,7 @@
 	if(delta_chem_factor > step_target_vol)
 		delta_chem_factor = step_target_vol
 	//Normalise to multiproducts
-	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_QUANTISATION_LEVEL)
+	delta_chem_factor = round(delta_chem_factor / product_ratio, CHEMICAL_VOLUME_ROUNDING)
 	if(delta_chem_factor <= 0)
 		to_delete = TRUE
 		return
