@@ -69,7 +69,7 @@
 		if(boulders_contained.len < boulders_held_max)
 			continue
 		toggled_on = FALSE
-		boulders_contained = list()
+		boulders_contained.Cut()
 		update_appearance(UPDATE_ICON_STATE)
 		return PROCESS_KILL
 
