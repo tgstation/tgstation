@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - qol: "makes modal list uis autofocus"

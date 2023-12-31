@@ -205,7 +205,7 @@ const Entry = (props: EntryProps) => {
   const {
     onRemove,
     onChange,
-    onSetOption,
+    onSetOption = () => null,
     name,
     current_option,
     options = [],

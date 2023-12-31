@@ -48,7 +48,7 @@ export const RandomizationButton = (props: {
           value: RandomSetting.AntagOnly,
         },
       ]}
-      nochevron
+      noChevron
       onSelected={setValue}
       menuWidth="120px"
       width="auto"

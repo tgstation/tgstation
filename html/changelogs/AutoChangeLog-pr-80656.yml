@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes textarea input boxes not updating on prop change (such as changing tabs)"

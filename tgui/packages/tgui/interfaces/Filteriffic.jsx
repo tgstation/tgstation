@@ -323,7 +323,7 @@ export const Filteriffic = (props) => {
             <Dropdown
               icon="plus"
               displayText="Add Filter"
-              nochevron
+              noChevron
               options={Object.keys(filterDefaults)}
               onSelected={(value) =>
                 act('add_filter', {

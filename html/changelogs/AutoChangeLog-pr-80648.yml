@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "chem heater now shows the new value of its buffer dispense volume immediately when it gets changed."
-  - bugfix: "debug chem synthesizer now shows the new values of amount & purity immediately when it gets changed."
