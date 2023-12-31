@@ -879,7 +879,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		add_overlay(time_left_overlay)
 	if(isnull(poll))
 		return
-	..()
 
 /atom/movable/screen/alert/poll_alert/Click(location, control, params)
 	. = ..()
