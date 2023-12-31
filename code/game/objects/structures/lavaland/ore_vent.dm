@@ -169,10 +169,9 @@
 	return refined_list
 
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
-	var/iterator = 1
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
-	while(iterator <= max_minerals)
+	for(var/iterator = 1; iterator <= max_minerals; iterator++)
 		if(!SSore_generation.ore_vent_minerals.len && map_loading)
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material
@@ -186,7 +185,6 @@
 			if(SSore_generation.ore_vent_minerals[material] <= 0)
 				SSore_generation.ore_vent_minerals -= material
 		mineral_breakdown[material] = rand(1, 4)
-		iterator++
 
 
 /**
@@ -261,7 +259,10 @@
 
 /**
  * Called when the ore vent is tapped by a scanning device.
- * Gives a readout of the ores available in the vent that gets added to the description, then asks the user if they want to start wave defense.
+ * Gives a readout of the ores available in the vent that gets added to the description,
+ * then asks the user if they want to start wave defense if it's already been discovered.
+ * @params user The user who tapped the vent.
+ * @params scan_only If TRUE, the vent will only scan, and not prompt to start wave defense. Used by the mech mineral scanner.
  */
 /obj/structure/ore_vent/proc/scan_and_confirm(mob/user, scan_only = FALSE)
 	if(tapped)

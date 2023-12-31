@@ -66,6 +66,7 @@
 	. = ..()
 	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
 		update_appearance(UPDATE_ICON_STATE)
+		START_PROCESSING(SSmachines, src)
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/screwdriver_act(mob/living/user, obj/item/tool)
@@ -138,7 +139,7 @@
 
 /obj/machinery/bouldertech/process()
 	if(!anchored)
-		return
+		return PROCESS_KILL
 	var/stop_processing_check = FALSE
 	var/boulders_concurrent = boulders_processing_max ///How many boulders can we touch this process() call
 	for(var/obj/item/potential_boulder as anything in boulders_contained)
@@ -212,12 +213,12 @@
 	for(var/datum/material/possible_mat as anything in chosen_boulder.custom_materials)
 		if(!is_type_in_list(possible_mat, processable_materials))
 			continue
-			var/quantity = chosen_boulder.custom_materials[possible_mat]
-			points_held = round(points_held + (quantity * possible_mat.points_per_unit)) // put point total here into machine
-			processable_ores += possible_mat
-			processable_ores[possible_mat] = quantity
-			chosen_boulder.custom_materials -= possible_mat //Remove it from the boulder now that it's tracked
-			tripped = TRUE
+		var/quantity = chosen_boulder.custom_materials[possible_mat]
+		points_held = round(points_held + (quantity * possible_mat.points_per_unit)) // put point total here into machine
+		processable_ores += possible_mat
+		processable_ores[possible_mat] = quantity
+		chosen_boulder.custom_materials -= possible_mat //Remove it from the boulder now that it's tracked
+		tripped = TRUE
 	if(!tripped)
 		remove_boulder(chosen_boulder)
 		say("Nothing to process!")
@@ -227,7 +228,7 @@
 	var/is_artifact = (istype(chosen_boulder, /obj/item/boulder/artifact)) //We need to know if it's an artifact so we can carry it over to the new boulder.
 	var/obj/item/boulder/disposable_boulder = new (src)
 	disposable_boulder.custom_materials = processable_ores
-	silo_materials.mat_container.insert_item(disposable_boulder, refining_efficiency, context = src)
+	silo_materials.insert_item(disposable_boulder, refining_efficiency)
 	qdel(disposable_boulder)
 
 	refining_efficiency = initial(refining_efficiency) //Reset refining efficiency to 100% now that we've processed any relevant ores.
@@ -271,10 +272,8 @@
  * @param specific_boulder The boulder to be ejected.
  */
 /obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder, turf/drop_turf = null)
-	if(!specific_boulder)
-		CRASH("remove_boulder() called with no boulder!")
 	if(isnull(specific_boulder))
-		return FALSE
+		CRASH("remove_boulder() called with no boulder!")
 	if(!specific_boulder.custom_materials)
 		say("Empty boulder removed!")
 		qdel(specific_boulder)
@@ -312,6 +311,7 @@
 
 /**
  * Checks if a custom_material is in a list of processable materials in the machine.
+ * @param list/custom_material A list of materials, presumably taken from a boulder. If a material that this machine can process is in this list, it will return true, inclusively.
  */
 /obj/machinery/bouldertech/proc/check_for_processable_materials(list/boulder_mats)
 	for(var/material as anything in boulder_mats)
@@ -325,12 +325,17 @@
 	desc = "N.T. approved boulder beacon, toss it down and you will have a full bouldertech mining station."
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "floor_beacon"
+	/// Number of activations left on this beacon. Uses will be removed as the beacon is used and each triggers a different machine to be spawned from it.
 	var/uses = 3
 
 /obj/item/boulder_beacon/attack_self()
 	loc.visible_message(span_warning("\The [src] begins to beep loudly!"))
 	addtimer(CALLBACK(src, PROC_REF(launch_payload)), 1 SECONDS)
 
+/**
+ * Spawns a new bouldertech machine from the beacon, then removes a use from the beacon.
+ * Use one spawns a BRM teleporter, then a refinery, and lastly a smelter.
+ */
 /obj/item/boulder_beacon/proc/launch_payload()
 	playsound(src, SFX_SPARKS, 80, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	switch(uses)

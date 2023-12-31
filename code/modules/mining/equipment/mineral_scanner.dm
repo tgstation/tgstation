@@ -11,7 +11,9 @@
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	/// The cooldown between scans.
 	var/cooldown = 35
+	/// Current time until the next scan can be performed.
 	var/current_cooldown = 0
 
 /obj/item/mining_scanner/attack_self(mob/user)
@@ -40,8 +42,11 @@
 	w_class = WEIGHT_CLASS_SMALL
 	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
+	/// The cooldown between scans.
 	var/cooldown = 35
+	/// Current time until the next scan can be performed.
 	var/current_cooldown = 0
+	/// The range of the scanner in tiles.
 	var/range = 7
 
 /obj/item/t_scanner/adv_mining_scanner/cyborg/Initialize(mapload)
@@ -103,6 +108,7 @@
 	duration = 35
 	pixel_x = -224
 	pixel_y = -224
+	/// What animation easing to use when we create the ore overlay on rock walls/ore vents.
 	var/easing_style = EASE_IN
 
 /obj/effect/temp_visual/mining_overlay/Initialize(mapload)

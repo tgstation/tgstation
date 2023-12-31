@@ -11,7 +11,8 @@
 
 /obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
 	if (istype(W, /obj/item/stack/ore) || istype(W, /obj/item/boulder))
-		user.transferItemToLoc(W, src)
+		if(!user.transferItemToLoc(W, src))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	else if(W.atom_storage)
 		W.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
 		to_chat(user, span_notice("You empty the ore in [W] into \the [src]."))

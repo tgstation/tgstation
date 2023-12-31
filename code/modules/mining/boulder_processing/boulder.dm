@@ -206,9 +206,15 @@
 				cracked_ore = new /obj/item/stack/ore/uranium(drop_location(), quantity)
 		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore)
 
+/**
+ * Handles the boulder's processing cooldown to check if it's ready to be processed again.
+ */
 /obj/item/boulder/proc/can_get_processed()
 	return COOLDOWN_FINISHED(src, processing_cooldown)
 
+/**
+ * Starts the boulder's processing cooldown.
+ */
 /obj/item/boulder/proc/restart_processing_cooldown()
 	COOLDOWN_START(src, processing_cooldown, 2 SECONDS)
 
@@ -217,10 +223,11 @@
  */
 /obj/item/boulder/proc/break_apart()
 	var/list/quips = list("Clang!", "Crack!", "Bang!", "Clunk!", "Clank!")
-	for(var/obj/item/content as anything in contents)
-		content.forceMove(get_turf(src))
+	if(length(contents))
 		visible_message(span_notice("[pick(quips)] Something falls out of \the [src]!"))
 		playsound(loc, 'sound/effects/picaxe1.ogg', 60, FALSE)
+		for(var/obj/item/content as anything in contents)
+			content.forceMove(get_turf(src))
 	qdel(src)
 
 /**
@@ -246,7 +253,7 @@
 /**
  * Unique proc for gulag-style boulders, which adds a random amount of minerals to the boulder.
  */
-/obj/item/boulder/proc/add_gulag_minerals(list_to_pick)
+/obj/item/boulder/proc/add_gulag_minerals()
 	var/datum/material/new_material = pick_weight(gulag_minerals)
 	var/list/new_mats = list()
 	new_mats += new_material

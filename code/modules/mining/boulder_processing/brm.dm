@@ -61,9 +61,9 @@
 	for(var/i in 1 to boulders_processing_max)
 		if(pre_collect_boulder())
 			continue
-			toggled_on = FALSE
-			update_appearance(UPDATE_ICON_STATE)
-			return PROCESS_KILL
+		toggled_on = FALSE
+		update_appearance(UPDATE_ICON_STATE)
+		return PROCESS_KILL
 	for(var/obj/item/boulder/ground_rocks in loc.contents)
 		boulders_contained += ground_rocks
 		if(boulders_contained.len < boulders_held_max)
@@ -100,6 +100,12 @@
 		return
 	return ..()
 
+/**
+ * Begins to collect a boulder from the available boulders list in SSore_generation.
+ * Boulders must not be processed by another BRM or machine, and must be in the available boulders list.
+ * A selected boulder is picked randomly.
+ * The actual movement is then handled by collect_boulder() after a timed callback.
+ */
 /obj/machinery/bouldertech/brm/proc/pre_collect_boulder()
 	if(!SSore_generation.available_boulders.len)
 		playsound(loc, 'sound/machines/synth_no.ogg', 30 , TRUE)
@@ -115,6 +121,11 @@
 	addtimer(CALLBACK(src, PROC_REF(collect_boulder), random_boulder), 1.5 SECONDS)
 	return TRUE
 
+/**
+ * Collects a boulder from the available boulders list in SSore_generation.
+ * Handles the movement of the boulder as well as visual effects on the BRM.
+ * @param obj/item/boulder/random_boulder The boulder to collect.
+ */
 /obj/machinery/bouldertech/brm/proc/collect_boulder(obj/item/boulder/random_boulder)
 	flick("brm-flash", src)
 	if(QDELETED(random_boulder))
