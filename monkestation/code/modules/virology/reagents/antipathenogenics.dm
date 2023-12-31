@@ -31,7 +31,7 @@
 	name = "Changeling Immunoglobulin"
 	description = "Antibodies from a changeling's immune system. They seem to shift and change to respond to threats"
 
-/datum/reagent/medicine/antipathogenic/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
+/datum/reagent/medicine/antipathogenic/changeling/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	if(..())
 		return TRUE
 	M.immune_system.AntibodyCure()
