@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed fire extinguisher cabinets not appearing opened after removing the fire extinguisher from them"

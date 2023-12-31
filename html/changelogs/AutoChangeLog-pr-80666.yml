@@ -1,0 +1,4 @@
+author: "uaioy"
+delete-after: True
+changes:
+  - bugfix: "The sustenance vendor in perma actually serves food now"
