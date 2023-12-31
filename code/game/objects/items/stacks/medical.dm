@@ -76,6 +76,8 @@
 
 /// In which we print the message that we're starting to heal someone, then we try healing them. Does the do_after whether or not it can actually succeed on a targeted mob
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/user, silent = FALSE)
+	if(!try_heal_checks(patient, user, heal_brute, heal_burn))
+		return
 	if(patient == user)
 		if(!silent)
 			user.visible_message(
@@ -132,8 +134,7 @@
 		return heal_carbon(patient, user, heal_brute, heal_burn)
 	patient.balloon_alert(user, "can't heal that!")
 
-/// The healing effects on a carbon patient. Since we have extra details for dealing with bodyparts, we get our own fancy proc. Still returns TRUE on success and FALSE on fail
-/obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/patient, mob/user, brute, burn)
+/obj/item/stack/medical/proc/try_heal_checks(mob/living/carbon/patient, mob/user, brute, burn)
 	var/obj/item/bodypart/affecting = patient.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting) //Missing limb?
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
@@ -141,18 +142,25 @@
 	if(!IS_ORGANIC_LIMB(affecting)) //Limb must be organic to be healed - RR
 		patient.balloon_alert(user, "it's not organic!")
 		return FALSE
-	if(affecting.brute_dam && brute || affecting.burn_dam && burn)
-		user.visible_message(
-			span_infoplain(span_green("[user] applies [src] on [patient]'s [parse_zone(affecting.body_zone)].")),
-			span_infoplain(span_green("You apply [src] on [patient]'s [parse_zone(affecting.body_zone)]."))
-		)
-		var/previous_damage = affecting.get_damage()
-		if(affecting.heal_damage(brute, burn))
-			patient.update_damage_overlays()
-		post_heal_effects(max(previous_damage - affecting.get_damage(), 0), patient, user)
-		return TRUE
-	patient.balloon_alert(user, "can't heal that!")
-	return FALSE
+	if(!(affecting.brute_dam && brute) && !(affecting.burn_dam && burn))
+		patient.balloon_alert(user, "can't heal [affecting]!")
+		return FALSE
+	return TRUE
+
+/// The healing effects on a carbon patient. Since we have extra details for dealing with bodyparts, we get our own fancy proc. Still returns TRUE on success and FALSE on fail
+/obj/item/stack/medical/proc/heal_carbon(mob/living/carbon/patient, mob/user, brute, burn)
+	var/obj/item/bodypart/affecting = patient.get_bodypart(check_zone(user.zone_selected))
+	if(!try_heal_checks(patient, user, brute, burn))
+		return FALSE
+	user.visible_message(
+		span_infoplain(span_green("[user] applies [src] on [patient]'s [parse_zone(affecting.body_zone)].")),
+		span_infoplain(span_green("You apply [src] on [patient]'s [parse_zone(affecting.body_zone)]."))
+	)
+	var/previous_damage = affecting.get_damage()
+	if(affecting.heal_damage(brute, burn))
+		patient.update_damage_overlays()
+	post_heal_effects(max(previous_damage - affecting.get_damage(), 0), patient, user)
+	return TRUE
 
 ///Override this proc for special post heal effects.
 /obj/item/stack/medical/proc/post_heal_effects(amount_healed, mob/living/carbon/healed_mob, mob/user)
