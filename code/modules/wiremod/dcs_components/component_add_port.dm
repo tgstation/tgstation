@@ -77,7 +77,7 @@
 	var/list/arguments = list("[prefix] [length(port_list) + 1]", port_type, order = src.order + (length(port_list) + 1) * 0.001)
 	if(is_output)
 		if(is_singular)
-			arguments = list("[prefix] [length(port_list) + 1]", port_type, order = src.order + (length(port_list) + 1) * 0.001, /datum/port/output/singular)
+			arguments = list("[prefix] [length(port_list) + 1]", port_type, order = src.order + (length(port_list) + 1) * 0.001, port_type = /datum/port/output/singular)
 		return component.add_output_port(arglist(arguments))
 	else
 		return component.add_input_port(arglist(arguments))
