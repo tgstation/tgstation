@@ -19,7 +19,7 @@
 	var/next_process = 0 //! ticker for processing
 	var/drug_flavour_text = "Better hope you don't run out..."
 
-/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
+/datum/quirk/item_quirk/junkie/proc/give_junkie_item()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
 	if(!reagent_type)
@@ -64,6 +64,10 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS,
 		)
 	)
+
+
+/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
+	give_junkie_item()
 
 /datum/quirk/item_quirk/junkie/remove()
 	if(quirk_holder && reagent_instance)
@@ -112,12 +116,13 @@
 	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
 	customization_options = list(/datum/preference/choiced/smoker)
 
-/datum/quirk/item_quirk/junkie/smoker/post_add(client/client_source)
-	. = ..()
+/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
 	drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
 	if(isnull(drug_container_type))
 		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
+	give_junkie_item()
 
+/datum/quirk/item_quirk/junkie/smoker/post_add(client/client_source)
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
 	// smoker lungs have 25% less health and healing
 	var/mob/living/carbon/carbon_holder = quirk_holder
