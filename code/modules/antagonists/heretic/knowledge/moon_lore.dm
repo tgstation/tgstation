@@ -76,7 +76,6 @@
 	gain_text = "The moon smiles upon us all and those who see its true side can bring its joy."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/moon_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/medallion,
 		/datum/heretic_knowledge/spell/mind_gate,
 	)

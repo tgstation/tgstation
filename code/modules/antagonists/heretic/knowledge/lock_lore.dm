@@ -7,7 +7,6 @@
  * Grasp of Lock
  * > Sidepaths:
  *   Mindgate
- *	 Codex Cicatrix
  * Key Keeper’s Burden
  *
  * Concierge's Rite
@@ -50,7 +49,6 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/key_ring,
 		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/codex_cicatrix,
 	)
 	cost = 1
 	route = PATH_LOCK
