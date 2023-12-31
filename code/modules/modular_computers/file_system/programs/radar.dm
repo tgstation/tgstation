@@ -173,7 +173,7 @@
 //We use SSfastprocess for the program icon state because it runs faster than process_tick() does.
 /datum/computer_file/program/radar/process()
 	if(computer.active_program != src)
-		 //We're not the active program, it's time to stop.
+		//We're not the active program, it's time to stop.
 		return PROCESS_KILL
 	if(!selected)
 		return
