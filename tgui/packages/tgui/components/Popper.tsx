@@ -1,89 +1,101 @@
-import { createPopper } from '@popperjs/core';
+import { createPopper, Placement } from '@popperjs/core';
 import { ArgumentsOf } from 'common/types';
 import {
-  Component,
-  CSSProperties,
-  JSXElementConstructor,
   PropsWithChildren,
-  ReactElement,
-  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
 } from 'react';
-import { findDOMNode, render } from 'react-dom';
+import { CSSProperties, JSXElementConstructor, ReactElement } from 'react';
+import { createPortal } from 'react-dom';
 
-type PopperProps = {
-  popperContent: ReactElement<any, string | JSXElementConstructor<any>>;
-  options?: ArgumentsOf<typeof createPopper>[2];
-  additionalStyles?: CSSProperties;
-} & PropsWithChildren;
+type Props = {
+  isOpen: boolean;
+  popperContent: ReactElement<any, string | JSXElementConstructor<any>> | null;
+} & Partial<{
+  additionalStyles: CSSProperties;
+  autoFocus: boolean;
+  onClickOutside: () => void;
+  options: ArgumentsOf<typeof createPopper>[2];
+  placement: Placement;
+}> &
+  PropsWithChildren;
 
-export class Popper extends Component<PopperProps> {
-  static id: number = 0;
-  popperRef: RefObject<HTMLDivElement>;
+export function Popper(props: Props) {
+  const {
+    additionalStyles,
+    autoFocus,
+    children,
+    isOpen,
+    placement,
+    popperContent,
+    options = {},
+    onClickOutside,
+  } = props;
 
-  renderedContent: HTMLDivElement;
-  popperInstance: ReturnType<typeof createPopper>;
+  const parentRef = useRef<HTMLDivElement | null>(null);
+  const popperRef = useRef<HTMLDivElement | null>(null);
 
-  constructor(props) {
-    super(props);
+  const handleClickOutside = useCallback((event: MouseEvent) => {
+    if (
+      !parentRef.current?.contains(event.target as Node) &&
+      !popperRef.current?.contains(event.target as Node)
+    ) {
+      onClickOutside?.();
+    }
+  }, []);
 
-    Popper.id += 1;
-  }
+  /** Create the popper instance when the component mounts */
+  useEffect(() => {
+    if (!parentRef.current || !popperRef.current) return;
+    if (placement) options.placement = placement;
 
-  componentDidMount() {
-    const { additionalStyles, options } = this.props;
+    const instance = createPopper(
+      parentRef.current,
+      popperRef.current,
+      options,
+    );
 
-    this.renderedContent = document.createElement('div');
+    return () => {
+      instance.destroy();
+    };
+  }, [options]);
 
-    if (additionalStyles) {
-      for (const [attribute, value] of Object.entries(additionalStyles)) {
-        this.renderedContent.style[attribute] = value;
-      }
+  /** Focus when opened, adds click outside listener */
+  useEffect(() => {
+    if (!isOpen) return;
+
+    if (autoFocus) {
+      const focusable = popperRef.current?.firstChild as HTMLElement | null;
+      focusable?.focus();
     }
 
-    this.renderPopperContent(() => {
-      document.body.appendChild(this.renderedContent);
+    if (!onClickOutside) return;
 
-      // HACK: We don't want to create a wrapper, as it could break the layout
-      // of consumers, so we use findDOMNode.
-      // This is usually bad as refs are usually better, but refs did
-      // not work in this case, as they weren't propagating correctly.
-      // A previous attempt was made as a render prop that passed an ID,
-      // but this made consuming use too unwieldly.
-      // Because this component is written in TypeScript, we will know
-      // immediately if this internal variable is removed.
-      //
-      // eslint-disable-next-line react/no-find-dom-node
-      const domNode = findDOMNode(this) as Element;
-      if (!domNode) {
-        return;
-      }
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isOpen]);
 
-      this.popperInstance = createPopper(
-        domNode,
-        this.renderedContent,
-        options,
-      );
-    });
-  }
+  const contentStyle = useMemo(() => {
+    return {
+      ...additionalStyles,
+      position: 'absolute',
+      zIndex: 1000,
+    } as CSSProperties;
+  }, [additionalStyles]);
 
-  componentDidUpdate() {
-    this.renderPopperContent(() => this.popperInstance?.update());
-  }
-
-  componentWillUnmount() {
-    this.popperInstance?.destroy();
-    render(<> </>, this.renderedContent, () => {
-      this.renderedContent.remove();
-    });
-  }
-
-  renderPopperContent(callback: () => void) {
-    // `render` errors when given false, so we convert it to `null`,
-    // which is supported.
-    render(this.props.popperContent || null, this.renderedContent, callback);
-  }
-
-  render() {
-    return this.props.children;
-  }
+  return (
+    <>
+      <div ref={parentRef}>{children}</div>
+      {createPortal(
+        <div ref={popperRef} style={isOpen ? contentStyle : {}}>
+          {isOpen && popperContent}
+        </div>,
+        document.body,
+      )}
+    </>
+  );
 }

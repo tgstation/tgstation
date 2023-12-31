@@ -345,7 +345,7 @@
 	rusted_turfs += centre
 	START_PROCESSING(SSprocessing, src)
 
-/datum/rust_spread/Destroy(force, ...)
+/datum/rust_spread/Destroy(force)
 	centre = null
 	edge_turfs.Cut()
 	rusted_turfs.Cut()

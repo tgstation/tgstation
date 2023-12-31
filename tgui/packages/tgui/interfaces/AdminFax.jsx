@@ -63,7 +63,7 @@ export const FaxMainPanel = (props) => {
             textAlign="center"
             selected="Choose fax machine..."
             width="100%"
-            nochevron
+            noChevron
             nowrap
             options={data.faxes}
             onSelected={(value) => setFax(value)}

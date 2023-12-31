@@ -917,3 +917,55 @@
   vinylspiders:
   - bugfix: reduces lag in the tgui textarea input boxes
   - spellcheck: changes some let's to lets
+2023-12-30:
+  13spacemen:
+  - bugfix: Poll alert buttons candidate number should be more responsive
+  Melbert:
+  - bugfix: Lizards now show a proper description in the magic mirror
+  ReturnToZender:
+  - bugfix: JSX files, when edited, cause TGUI to recompile on build
+  Tristrian:
+  - bugfix: Bot launchpads can deploy cleanbots and medibots again.
+  - spellcheck: Clarified the message when failling to recall a bot.
+  mc-oofert:
+  - rscadd: 69(roughly?) new vox phrases
+  mogeoko:
+  - bugfix: Atmospherics components will now move air into connected pipeline on deconstruction
+      if possible. Otherwise, air will be released to the outside from open nodes.
+  - bugfix: Unsafe pressure release on atmos components will now work the same way
+      it does in the normal pipes if there is an empty node with air.
+  - bugfix: The HFR user interface would close when the machine is shut down.
+  - bugfix: Atmospherics machinery will now share air from nodes after being rotated
+      and reconnected to pipenet.
+2023-12-31:
+  13spacemen:
+  - bugfix: Dimensional anomlies converting airlocks preserves the old name
+  Echomori:
+  - bugfix: trying to move up or down while controlling an advanced camera console
+      now properly moves the camera up or down, not your body
+  Ghommie:
+  - bugfix: The transhumanist quirk now should work as intended.
+  GoldenAlpharex:
+  - bugfix: Vending machines now display the proper color customization options and
+      item quantities again!
+  PapaMichael:
+  - sound: added *gaspshock emote sound effect to felinids
+  Rhials:
+  - code_imp: Unholy water no longer calls parent twice in on_mob_life().
+  SyncIt21:
+  - bugfix: chem heater now shows the new value of its buffer dispense volume immediately
+      when it gets changed.
+  - bugfix: debug chem synthesizer now shows the new values of amount & purity immediately
+      when it gets changed.
+  Time-Green:
+  - bugfix: Fixes borg polymorph
+  - bugfix: Holodeck monkeys are properly cleaned up now
+  - bugfix: Holodeck monkeys have organs now
+  vinylspiders:
+  - qol: makes modal list uis autofocus
+  - bugfix: fishing up a spawner will now give you the spawned item instead of a broken,
+      undeletable spawner object
+  - code_imp: adds a warning to the stack trace when something tries to forceMove()
+      a qdeleted spawner
+  - bugfix: fixes textarea input boxes not updating on prop change (such as changing
+      tabs)

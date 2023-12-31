@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Dropdowns and pop-up menus have been rewritten. This should fix an issue where dropdown text was accidentally scrolling if hovered. Please report any issues on the repo"

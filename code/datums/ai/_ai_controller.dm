@@ -67,7 +67,7 @@ multiple modular subtrees with behaviors
 	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
 		PossessPawn(new_pawn)
 
-/datum/ai_controller/Destroy(force, ...)
+/datum/ai_controller/Destroy(force)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	set_movement_target(type, null)
