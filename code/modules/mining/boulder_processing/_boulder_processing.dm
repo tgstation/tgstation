@@ -95,7 +95,7 @@
 		START_PROCESSING(SSmachines, src)
 		return TRUE
 	if(!istype(attacking_item, /obj/item/card/id))
-		return
+		return TRUE
 	if(!holds_mining_points)
 		return FALSE
 	if(points_held <= 0)
@@ -108,7 +108,7 @@
 	var/obj/item/card/id/id_card = attacking_item
 	var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
 	if(!amount)
-		return
+		return TRUE
 	if(amount > points_held)
 		amount = points_held
 	id_card.registered_account.mining_points += amount
