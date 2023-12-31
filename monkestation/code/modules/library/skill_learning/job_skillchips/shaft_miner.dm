@@ -1,4 +1,20 @@
-/*
+/obj/item/skillchip/drg_callout
+	name = "D.R.G.R.A.S Skillchip" //Deep Rock Galactic Reactive Alert System (Or ROCK AND STONE)
+	desc = "Smells faintly of alcohol and has an odd coffee stain on it."
+	custom_price = PAYCHECK_CREW
+	complexity = 0
+	skill_name = "Miner Communication"
+	skill_description = "Understand the skills required to rapidly recognize and call out objects you've pointed at to teammates."
+	skill_icon = "bullhorn"
+	cooldown = 5 SECONDS //Honestly, this should be easy to turn off at any time if you don't want it anymore.
+	activate_message = span_notice("You suddenly understand the need to shout about things you point at.")
+	deactivate_message = span_notice("You no longer understand why you were yelling so much.")
+	//5-10 second delay for radio messages
+	COOLDOWN_DECLARE(radio_cooldown)
+	//1 second delay for regular point shouts
+	COOLDOWN_DECLARE(shout_cooldown)
+
+	/*
 	DRG Style callout list.
 	Note the following:
 	Subtypes MUST go above their base types.
@@ -7,8 +23,8 @@
 	ABOVE 	/mob/living/basic/mining/legion/
 
 	Typepaths must have a trailing forward slash.
-*/
-GLOBAL_LIST_INIT(miner_callouts, list(
+	*/
+	var/list/static/miner_callouts = list(
 	//Mobs: Icemoon
 	/mob/living/basic/mining/legion/snow/ = list("Legion!", "It's a snowy legion!", "Kill it before it creates more!"),
 	/mob/living/basic/mining/wolf/ = list("Wolf!", "Winter wolf!", "It's hungry like the...", "Wolf pack!"),
@@ -121,6 +137,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	//Machines
 	/obj/machinery/mineral/ore_redemption/ = list("ORM! Drop off your rocks and stones!", "It's a mystery to me how all these minerals fit inside!", "Making a deposit!", "Molly!", "Bloody scientists never upgrade this thing..."),
 	/obj/machinery/computer/shuttle/ = list("Shuttle console!", "Away we go!"),
+	/obj/machinery/computer/order_console/mining = list("Order console!", "Time to spend my hard-earned points!", "What should I buy today?", "Capitalism, ho!"),
 
 	//Static Objects: Icemoon
 	/obj/structure/flora/ash/chilly/ = list("Got some fruit here!", "Ice pepper plant!", "Cold as ice!", "Frosty peppers!", "Time for some chilly chili!"),
@@ -135,23 +152,7 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	/obj/structure/flora/ash/fireblossom/ = list("Fireblossom here!", "Got a fireblossom plant!", "Fireblossom, for when you need to glow!"),
 	/obj/structure/flora/ash/ = list("Mushroom!"), //You just know I had to do this.
 	/turf/closed/mineral/ = list("Dig through here.", "Minerals inside?", "We need to dig here.", "Drill here?")
-))
-
-/obj/item/skillchip/drg_callout
-	name = "D.R.G.R.A.S Skillchip" //Deep Rock Galactic Reactive Alert System (Or ROCK AND STONE)
-	desc = "Smells faintly of alcohol and has an odd coffee stain on it."
-	custom_price = PAYCHECK_CREW
-	complexity = 0
-	skill_name = "Miner Communication"
-	skill_description = "Understand the skills required to rapidly recognize and call out objects you've pointed at to teammates."
-	skill_icon = "bullhorn"
-	cooldown = 5 SECONDS //Honestly, this should be easy to turn off at any time if you don't want it anymore.
-	activate_message = "<span class='notice'>You suddenly understand the need to shout about things you point at.</span>"
-	deactivate_message = "<span class='notice'>You no longer understand why you were yelling so much.</span>"
-	//5-10 second delay for radio messages
-	COOLDOWN_DECLARE(radio_cooldown)
-	//1 second delay for regular point shouts
-	COOLDOWN_DECLARE(shout_cooldown)
+)
 
 
 /obj/item/skillchip/drg_callout/on_activate(mob/living/carbon/user, silent)
@@ -164,10 +165,10 @@ GLOBAL_LIST_INIT(miner_callouts, list(
 	if(!COOLDOWN_FINISHED(src, shout_cooldown))
 		return
 
-	var/type = is_path_in_list_return_path(pointed_at.type, GLOB.miner_callouts)
+	var/type = is_path_in_list_return_path(pointed_at.type, miner_callouts)
 	if(!type)
 		return
-	var/list/callouts = GLOB.miner_callouts[type]
+	var/list/callouts = miner_callouts[type]
 	if(!length(callouts))
 		return
 
