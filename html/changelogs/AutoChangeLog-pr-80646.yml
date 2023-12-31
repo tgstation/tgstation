@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fishing up a spawner will now give you the spawned item instead of a broken, undeletable spawner object"
-  - code_imp: "adds a warning to the stack trace when something tries to forceMove() a qdeleted spawner"
