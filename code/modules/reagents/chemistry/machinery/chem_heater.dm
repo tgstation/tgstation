@@ -104,15 +104,15 @@
 	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
 	beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
 	use_power(active_power_usage * seconds_per_tick * 0.3)
-
-	//send updates to ui. faster than SStgui.update_uis
-	for(var/datum/tgui/ui in src.open_uis)
-		ui.send_update()
+	return TRUE
 
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	heat_reagents(seconds_per_tick)
+	if(heat_reagents(seconds_per_tick))
+		//send updates to ui. faster than SStgui.update_uis
+		for(var/datum/tgui/ui in src.open_uis)
+			ui.send_update()
 
 /obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -160,7 +160,13 @@
 	if(QDELETED(beaker) || beaker.reagents.is_reacting)
 		return
 
-	heat_reagents(seconds_per_tick)
+	if(heat_reagents(seconds_per_tick))
+		//create new reactions after temperature adjust
+		beaker.reagents.handle_reactions()
+
+		//send updates to ui. faster than SStgui.update_uis
+		for(var/datum/tgui/ui in src.open_uis)
+			ui.send_update()
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
