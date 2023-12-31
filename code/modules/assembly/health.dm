@@ -64,7 +64,6 @@
 			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
 			toggle_scan()
 		return
-	return
 
 /obj/item/assembly/health/proc/toggle_scan()
 	if(!secured)

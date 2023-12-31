@@ -29,7 +29,7 @@
 		else
 			return
 	else
-		STOP_PROCESSING(SSobj,src)
+		return PROCESS_KILL
 
 ///Turns on the siphoning, and its various side effects
 /obj/machinery/shuttle_scrambler/proc/toggle_on(mob/user)
