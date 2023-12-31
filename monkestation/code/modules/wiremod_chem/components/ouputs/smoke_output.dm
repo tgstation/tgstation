@@ -12,7 +12,7 @@
 	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
 	smoke.attach(get_turf(src))
 	smoke.set_up(amount = reagents.total_volume, holder = src, location = get_turf(src), carry = reagents, silent = TRUE)
-	smoke.start(log = TRUE)
+	smoke.start(log = FALSE)
 
 	reagents.remove_all(100000)
 
