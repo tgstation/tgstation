@@ -140,6 +140,11 @@
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
 	return TRUE
 
+/**
+ * Toggles automatic boulder retrieval on.
+ * Adjusts the teleportation sound, icon state, and begins processing.
+ * @param mob/user The user who toggled the BRM.
+ */
 /obj/machinery/bouldertech/brm/proc/toggle_auto_on(mob/user)
 	if(panel_open)
 		if(user)

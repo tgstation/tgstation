@@ -256,7 +256,6 @@
 /obj/item/boulder/proc/add_gulag_minerals()
 	var/datum/material/new_material = pick_weight(gulag_minerals)
 	var/list/new_mats = list()
-	new_mats += new_material
 	new_mats[new_material] = SHEET_MATERIAL_AMOUNT * rand(1,3) //We only want a few sheets of material in the gulag boulders
 	set_custom_materials(new_mats)
 
