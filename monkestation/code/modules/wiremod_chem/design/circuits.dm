@@ -9,7 +9,7 @@
 	build_path = /obj/item/circuit_component/chem/mixer
 
 /datum/design/component/splitter
-	name = "Chemical FiSplitterlter"
+	name = "Chemical Splitter"
 	id = "chemical_splitter"
 	build_path = /obj/item/circuit_component/chem/splitter
 
