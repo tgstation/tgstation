@@ -1,0 +1,4 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - bugfix: "Spaceacillin no longer instantly cures anything"
