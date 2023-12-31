@@ -1,0 +1,6 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - refactor: "hygeinebots are now basic bots. please report all the bugs"
+  - bugfix: "fixes hygenebots not being able to patrol"
+  - rscadd: "hygeinebots can now be controlled by Players"
