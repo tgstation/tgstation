@@ -501,10 +501,12 @@
 	set name = "Move Upwards"
 	set category = "IC"
 
+	if(remote_control)
+		return remote_control.relaymove(src, UP)
+
 	var/turf/current_turf = get_turf(src)
 	var/turf/above_turf = GET_TURF_ABOVE(current_turf)
 
-	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 	if(!above_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -512,6 +514,8 @@
 	if(ismovable(loc)) //Inside an object, tell it we moved
 		var/atom/loc_atom = loc
 		return loc_atom.relaymove(src, UP)
+
+	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
 
 	if(can_z_move(DOWN, above_turf, current_turf, ZMOVE_FALL_FLAGS|ventcrawling_flag)) //Will we fall down if we go up?
 		if(buckled)
@@ -528,8 +532,12 @@
 	set name = "Move Down"
 	set category = "IC"
 
+	if(remote_control)
+		return remote_control.relaymove(src, DOWN)
+
 	var/turf/current_turf = get_turf(src)
 	var/turf/below_turf = GET_TURF_BELOW(current_turf)
+
 	if(!below_turf)
 		to_chat(src, span_warning("There's nowhere to go in that direction!"))
 		return
@@ -539,6 +547,7 @@
 		return loc_atom.relaymove(src, DOWN)
 
 	var/ventcrawling_flag = HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) ? ZMOVE_VENTCRAWLING : 0
+
 	if(zMove(DOWN, z_move_flags = ZMOVE_FLIGHT_FLAGS|ZMOVE_FEEDBACK|ventcrawling_flag))
 		to_chat(src, span_notice("You move down."))
 	return FALSE

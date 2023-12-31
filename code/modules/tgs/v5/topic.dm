@@ -175,6 +175,7 @@
 
 			var/list/reattach_response = TopicResponse(error_message)
 			reattach_response[DMAPI5_PARAMETER_CUSTOM_COMMANDS] = ListCustomCommands()
+			reattach_response[DMAPI5_PARAMETER_TOPIC_PORT] = GetTopicPort()
 			return reattach_response
 
 		if(DMAPI5_TOPIC_COMMAND_SEND_CHUNK)

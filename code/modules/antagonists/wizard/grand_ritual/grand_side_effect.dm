@@ -74,8 +74,7 @@
 		addtimer(CALLBACK(src, PROC_REF(staggered_transform), theme, range_turfs), (0.5 SECONDS) * iterator)
 
 /datum/grand_side_effect/transmogrify_area/proc/staggered_transform(datum/dimension_theme/theme, list/transform_turfs)
-	for (var/turf/target_turf as anything in transform_turfs)
-		theme.apply_theme(target_turf)
+	theme.apply_theme_to_list_of_turfs(transform_turfs)
 
 /// Minimum number of anomalies to create
 #define MIN_ANOMALIES_CREATED 1

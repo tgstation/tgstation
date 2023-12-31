@@ -1,0 +1,5 @@
+author: "Time-Green"
+delete-after: True
+changes:
+  - rscadd: "Adds a geared assistant station trait! Spawn with a skateboard, toolbelt or in your favorite bee suit!"
+  - code_imp: "Moves assistant code around"

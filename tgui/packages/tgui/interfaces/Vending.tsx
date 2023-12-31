@@ -60,6 +60,7 @@ type UserData = {
 
 type StockItem = {
   name: string;
+  path: string;
   amount: number;
   colorable: boolean;
 };
@@ -218,12 +219,12 @@ const ProductDisplay = (props: {
               return true;
             }
           })
-          .map((product, index) => (
+          .map((product) => (
             <VendingRow
               key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[index]}
+              productStock={stock[product.path]}
             />
           ))}
       </Table>
@@ -388,21 +389,17 @@ const CategorySelector = (props: {
 
   return (
     <Section>
-      <Stack grow>
-        <Stack.Item>
-          {Object.entries(categories).map(([name, category]) => (
-            <Button
-              key={name}
-              selected={name === selectedCategory}
-              color={CATEGORY_COLORS[name]}
-              icon={category.icon}
-              onClick={() => onSelect(name)}
-            >
-              {name}
-            </Button>
-          ))}
-        </Stack.Item>
-      </Stack>
+      {Object.entries(categories).map(([name, category]) => (
+        <Button
+          key={name}
+          selected={name === selectedCategory}
+          color={CATEGORY_COLORS[name]}
+          icon={category.icon}
+          onClick={() => onSelect(name)}
+        >
+          {name}
+        </Button>
+      ))}
     </Section>
   );
 };

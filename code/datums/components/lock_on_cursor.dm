@@ -62,7 +62,7 @@
 	mouse_tracker.assign_to_mob(owner)
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/lock_on_cursor/Destroy(force, silent)
+/datum/component/lock_on_cursor/Destroy(force)
 	clear_visuals()
 	STOP_PROCESSING(SSfastprocess, src)
 	mouse_tracker = null

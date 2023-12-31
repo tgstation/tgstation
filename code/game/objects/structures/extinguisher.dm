@@ -105,6 +105,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		if(!opened)
 			opened = 1
 			playsound(loc, 'sound/machines/click.ogg', 15, TRUE, -3)
+			update_appearance(UPDATE_ICON)
 	else
 		toggle_cabinet(user)
 
