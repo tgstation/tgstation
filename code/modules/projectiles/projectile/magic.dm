@@ -176,6 +176,7 @@
 	if(!is_type_in_typecache(target, GLOB.animatable_blacklist))
 		target.animate_atom_living(firer)
 
+///proc to animate the target into a living creature
 /atom/proc/animate_atom_living(mob/living/owner)
 	return
 
