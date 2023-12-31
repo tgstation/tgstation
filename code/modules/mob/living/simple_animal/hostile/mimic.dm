@@ -153,11 +153,11 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	creator = owner
 	faction |= REF(owner)
 
-/mob/living/simple_animal/hostile/mimic/copy/proc/CheckObject(obj/target)
+/mob/living/simple_animal/hostile/mimic/copy/proc/check_object(obj/target)
 	return ((isitem(target) || isstructure(target)) && !is_type_in_typecache(target, GLOB.animatable_blacklist))
 
 /mob/living/simple_animal/hostile/mimic/copy/proc/CopyObject(obj/O, mob/living/user, destroy_original = 0)
-	if(destroy_original || CheckObject(O))
+	if(destroy_original || check_object(O))
 		O.forceMove(src)
 		name = O.name
 		desc = O.desc
