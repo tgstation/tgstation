@@ -134,7 +134,7 @@
 		return FALSE
 	playsound(src, AUTO_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	random_boulder.forceMove(drop_location())
-	random_boulder.processed_by = NULL
+	random_boulder.processed_by = null
 	balloon_alert_to_viewers("boulder appears!")
 	random_boulder.visible_message(span_warning("[random_boulder] suddenly appears!"))
 	use_power(BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1)
