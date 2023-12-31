@@ -2,11 +2,11 @@
 // there), to be a redirect to the new targetted variant.
 /proc/log_bomber(atom/user, details, atom/bomb, additional_details, message_admins = TRUE)
 	// We pass in `null` for the target, which makes it work as before.
-	log_bomber_targetted(user, details, bomb, null, additional_details, message_admins)
+	log_bomber_targeted(user, details, bomb, null, additional_details, message_admins)
 
 // Like `/proc/log_bomber`, but with a target specified. This also marks pacifist characters as
 // pacifist, so we can see if they're bypassing the trait when they shouldn't.
-/proc/log_bomber_targetted(atom/user, details, atom/bomb, atom/target, additional_details, message_admins = TRUE)
+/proc/log_bomber_targeted(atom/user, details, atom/bomb, atom/target, additional_details, message_admins = TRUE)
 	var/bomb_message = "[details][bomb ? " [bomb.name] at [AREACOORD(bomb)]": ""][target ? " on [target.name] at [AREACOORD(target)]" : ""][additional_details ? " [additional_details]" : ""]."
 
 	if(user)
