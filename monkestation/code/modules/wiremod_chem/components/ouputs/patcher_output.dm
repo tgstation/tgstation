@@ -27,7 +27,7 @@
 	visible_message("[name] slaps [AM] with a patch containing [inject_amount] units.")
 	reagents.trans_to(AM, inject_amount, methods = TOUCH)
 
-/obj/strucutre/chemical_tank/patcher/AltClick(mob/user)
+/obj/structure/chemical_tank/patcher/AltClick(mob/user)
 	. = ..()
 	var/inject_choice = tgui_input_number(user, "How much to put into a patch?", "[name]", inject_amount, max_inject, 1)
 	if(inject_choice)

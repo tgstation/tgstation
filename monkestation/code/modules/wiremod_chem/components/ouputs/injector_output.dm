@@ -27,7 +27,7 @@
 	visible_message("[name] pricks [AM] with a needle injecting [inject_amount] units into them.")
 	reagents.trans_to(AM, inject_amount, methods = INJECT)
 
-/obj/strucutre/chemical_tank/injector/AltClick(mob/user)
+/obj/structure/chemical_tank/injector/AltClick(mob/user)
 	. = ..()
 	var/inject_choice = tgui_input_number(user, "How much to put into a patch?", "[name]", inject_amount, max_inject, 1)
 	if(inject_choice)
