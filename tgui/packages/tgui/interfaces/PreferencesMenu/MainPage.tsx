@@ -10,7 +10,6 @@ import {
   LabeledList,
   Popper,
   Stack,
-  TrackOutsideClicks,
 } from '../../components';
 import { CharacterPreview } from '../common/CharacterPreview';
 import {
@@ -197,35 +196,30 @@ const GenderButton = (props: {
 
   return (
     <Popper
-      options={{
-        placement: 'right-end',
-      }}
+      isOpen={genderMenuOpen}
+      placement="right-end"
       popperContent={
-        genderMenuOpen ? (
-          <Stack backgroundColor="white" ml={0.5} p={0.3}>
-            {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
-              (gender) => {
-                return (
-                  <Stack.Item key={gender}>
-                    <Button
-                      selected={gender === props.gender}
-                      onClick={() => {
-                        props.handleSetGender(gender);
-                        setGenderMenuOpen(false);
-                      }}
-                      fontSize="22px"
-                      icon={GENDERS[gender].icon}
-                      tooltip={GENDERS[gender].text}
-                      tooltipPosition="top"
-                    />
-                  </Stack.Item>
-                );
-              },
-            )}
-          </Stack>
-        ) : (
-          <> </>
-        )
+        <Stack backgroundColor="white" ml={0.5} p={0.3}>
+          {[Gender.Male, Gender.Female, Gender.Other, Gender.Other2].map(
+            (gender) => {
+              return (
+                <Stack.Item key={gender}>
+                  <Button
+                    selected={gender === props.gender}
+                    onClick={() => {
+                      props.handleSetGender(gender);
+                      setGenderMenuOpen(false);
+                    }}
+                    fontSize="22px"
+                    icon={GENDERS[gender].icon}
+                    tooltip={GENDERS[gender].text}
+                    tooltipPosition="top"
+                  />
+                </Stack.Item>
+              );
+            },
+          )}
+        </Stack>
       }
     >
       <Button
@@ -271,30 +265,24 @@ const MainFeature = (props: {
 
   return (
     <Popper
-      options={{
-        placement: 'bottom-start',
-      }}
+      placement="bottom-start"
+      onClickOutside={() => handleClose()}
+      isOpen={isOpen}
       popperContent={
-        isOpen ? (
-          <TrackOutsideClicks onOutsideClick={props.handleClose}>
-            <ChoicedSelection
-              name={catalog.name}
-              catalog={catalog}
-              selected={currentValue}
-              supplementalFeature={supplementalFeature}
-              supplementalValue={
-                supplementalFeature &&
-                data.character_preferences.supplemental_features[
-                  supplementalFeature
-                ]
-              }
-              onClose={handleClose}
-              onSelect={handleSelect}
-            />
-          </TrackOutsideClicks>
-        ) : (
-          <> </>
-        )
+        <ChoicedSelection
+          name={catalog.name}
+          catalog={catalog}
+          selected={currentValue}
+          supplementalFeature={supplementalFeature}
+          supplementalValue={
+            supplementalFeature &&
+            data.character_preferences.supplemental_features[
+              supplementalFeature
+            ]
+          }
+          onClose={handleClose}
+          onSelect={handleSelect}
+        />
       }
     >
       <Button
