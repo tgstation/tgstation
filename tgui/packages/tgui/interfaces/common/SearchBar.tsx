@@ -9,11 +9,11 @@ type RequiredProps = {
 
 type OptionalProps = Partial<{
   /** Whether the input should be focused on mount. */
-  autoFocus?: boolean;
+  autoFocus: boolean;
   /** Whether to show the search icon. */
-  noIcon?: boolean;
+  noIcon: boolean;
   /** The placeholder text. */
-  placeholder?: string;
+  placeholder: string;
   /** Override styles of the search bar. */
   style: Partial<CSSStyleDeclaration>;
 }>;
