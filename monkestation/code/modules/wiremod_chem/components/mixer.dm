@@ -48,6 +48,7 @@
 		chemical_list += input_port.value
 
 	reagent_holder.add_reagent_list(chemical_list, temperature = sane_heat)
+	reagent_holder.handle_reactions()
 	var/list/reagent_pre_wipe = list()
 	for(var/datum/reagent/reagent as anything in reagent_holder.reagent_list)
 		reagent_pre_wipe += reagent.type

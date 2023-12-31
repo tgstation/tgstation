@@ -93796,7 +93796,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east,
-/obj/machinery/rnd/production/circuit_imprinter/department/science,
+/obj/machinery/component_printer,
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "wLK" = (
