@@ -63,7 +63,7 @@
 		icon_state ="[initial(icon_state)]-off"
 
 /obj/machinery/bouldertech/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
+	. = ITEM_INTERACT_BLOCKING
 	if(default_unfasten_wrench(user, tool, time = 1.5 SECONDS) == SUCCESSFUL_UNFASTEN)
 		update_appearance(UPDATE_ICON_STATE)
 		START_PROCESSING(SSmachines, src)
