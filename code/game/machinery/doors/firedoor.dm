@@ -61,6 +61,7 @@
 
 	var/knock_sound = 'sound/effects/glassknock.ogg'
 	var/bash_sound = 'sound/effects/glassbash.ogg'
+	var/manual_open_time = 7.5 SECONDS
 
 
 /datum/armor/door_firedoor
@@ -116,10 +117,11 @@
 	. = ..()
 	if(!density)
 		. += span_notice("It is open, but could be <b>pried</b> closed.")
+		. += span_notice("Alt-click to engage the manual override.")
 	else if(!welded)
 		. += span_notice("It is closed, but could be <b>pried</b> open.")
 		. += span_notice("Hold the firelock temporarily open by prying it with <i>left-click</i> and standing next to it.")
-		. += span_notice("Prying by <i>right-clicking</i> the firelock will open it permanently.")
+		. += span_notice("Prying by <i>right-clicking</i> the firelock will force it open.")
 		. += span_notice("Deconstruction would require it to be <b>welded</b> shut.")
 	else if(boltslocked)
 		. += span_notice("It is <i>welded</i> shut. The floor bolts have been locked by <b>screws</b>.")
@@ -136,6 +138,7 @@
 
 	if (isnull(held_item))
 		if(density)
+			context[SCREENTIP_CONTEXT_ALT_LMB] = "Engage manual override"
 			if(isalienadult(living_user) || issilicon(living_user))
 				context[SCREENTIP_CONTEXT_LMB] = "Open"
 				return CONTEXTUAL_SCREENTIP_SET
@@ -164,7 +167,7 @@
 				context[SCREENTIP_CONTEXT_LMB] = "Close"
 			else if (!welded)
 				context[SCREENTIP_CONTEXT_LMB] = "Hold open"
-				context[SCREENTIP_CONTEXT_RMB] = "Open permanently"
+				context[SCREENTIP_CONTEXT_RMB] = "Force open"
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
 			context[SCREENTIP_CONTEXT_RMB] = welded ? "Unweld shut" : "Weld shut"
@@ -486,6 +489,20 @@
 			span_warning("You bash [src]!"))
 		playsound(src, bash_sound, 100, TRUE)
 
+/obj/machinery/door/firedoor/AltClick(mob/user)
+	. = ..()
+	if(!user.can_perform_action(src))
+		return
+	try_manual_override(user)
+
+/obj/machinery/door/firedoor/proc/try_manual_override(mob/user)
+	if(density && !welded && !operating)
+		balloon_alert(user, "engaging manual override...")
+		if(do_after(user, manual_open_time, target = src))
+			simple_open_close(user, manual_opened = TRUE)
+			return TRUE
+	return FALSE
+
 /obj/machinery/door/firedoor/wrench_act(mob/living/user, obj/item/tool)
 	add_fingerprint(user)
 	if(operating || !welded)
@@ -550,14 +567,18 @@
 
 /// A simple toggle for firedoors between on and off
 /obj/machinery/door/firedoor/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
+	simple_open_close(user)
+
+/obj/machinery/door/firedoor/proc/simple_open_close(mob/user, manual_opened = FALSE)
 	if(welded || operating)
+		balloon_alert(user, "can't open!")
 		return
 
 	if(density)
 		open()
 		if(active)
 			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
-	else
+	else if(!manual_opened)
 		close()
 
 /obj/machinery/door/firedoor/proc/handle_held_open_adjacency(mob/user)
