@@ -109,10 +109,12 @@
 /obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	if(heat_reagents(seconds_per_tick))
-		//send updates to ui. faster than SStgui.update_uis
-		for(var/datum/tgui/ui in src.open_uis)
-			ui.send_update()
+	//adjust temp
+	heat_reagents(seconds_per_tick)
+
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
 
 /obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -164,9 +166,9 @@
 		//create new reactions after temperature adjust
 		beaker.reagents.handle_reactions()
 
-		//send updates to ui. faster than SStgui.update_uis
-		for(var/datum/tgui/ui in src.open_uis)
-			ui.send_update()
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
