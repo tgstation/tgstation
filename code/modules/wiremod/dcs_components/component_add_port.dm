@@ -23,7 +23,7 @@
 	/// The maximum amount of ports allowed
 	var/maximum_amount = 10
 
-/datum/component/circuit_component_add_port/Initialize(list/port_list, add_action, remove_action, port_type, is_output = FALSE, prefix = "Port", order = 1, minimum_amount = 1, maximum_amount = 10)
+/datum/component/circuit_component_add_port/Initialize(list/port_list, add_action, remove_action, port_type, is_output = FALSE, prefix = "Port", order = 1, minimum_amount = 1, maximum_amount = 10, is_singular = FALSE)
 	. = ..()
 	if(!istype(parent, /obj/item/circuit_component))
 		return COMPONENT_INCOMPATIBLE

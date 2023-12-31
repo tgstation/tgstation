@@ -21,6 +21,10 @@
 	reagent_holder = new /datum/reagents(10000)
 	reagent_holder.my_atom = src
 
+/obj/item/circuit_component/chem/mixer/Destroy()
+	. = ..()
+	qdel(reagent_holder)
+
 /obj/item/circuit_component/chem/mixer/populate_ports()
 	chemical_inputs = list()
 	AddComponent(/datum/component/circuit_component_add_port, \
