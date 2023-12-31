@@ -2,7 +2,8 @@
 	event_name = "Anime Ook"
 	event_duration = 1 SECONDS
 	event_flags = TWITCH_AFFECTS_STREAMER
-	id_tag = "anime-ook"
+	id_tag = T_EVENT_ANIME_OOK
+	token_cost = 100
 
 /datum/twitch_event/anime_ook/run_event(name)
 	. = ..()
