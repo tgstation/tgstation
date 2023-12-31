@@ -36,7 +36,7 @@ type Props = Partial<{
 export const toInputValue = (value: string | number | undefined) =>
   typeof value !== 'number' && typeof value !== 'string' ? '' : String(value);
 
-export const inputDebounce = debounce((onInput: () => void) => onInput(), 200);
+const inputDebounce = debounce((onInput: () => void) => onInput(), 200);
 
 export const Input = (props: Props) => {
   const {
