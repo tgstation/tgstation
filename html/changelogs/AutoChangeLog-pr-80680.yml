@@ -1,0 +1,4 @@
+author: "YakumoChen"
+delete-after: True
+changes:
+  - qol: "Toggling an armour booster module on a MODsuit now gives a balloon alert making the tradeoffs more clear."
