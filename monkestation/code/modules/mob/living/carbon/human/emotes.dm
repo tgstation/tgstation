@@ -80,4 +80,3 @@
 						Struck.apply_damage(20, "brute", BODY_ZONE_HEAD)
 		spawn(20)
 			booty.cooling_down = FALSE
-

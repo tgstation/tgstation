@@ -317,6 +317,7 @@
 	message = "pouts."
 	message_mime = "pouts silently."
 
+/* monkestation edit start - relocating this to our own code @ <monkestation/code/modules/mob/living/emote.dm>
 /datum/emote/living/scream
 	key = "scream"
 	key_third_person = "screams"
@@ -325,7 +326,6 @@
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
 	mob_type_blacklist_typecache = list(/mob/living/carbon/human) //Humans get specialized scream.
 
-//monkestation edit start
 /datum/emote/living/scream/get_sound(mob/living/user)
 	if(!issilicon(user))
 		return
@@ -335,7 +335,7 @@
 		'monkestation/sound/voice/screams/silicon/robotAUGH3.ogg',
 		'monkestation/sound/voice/screams/silicon/robotAUGH4.ogg',
 		'monkestation/sound/voice/screams/silicon/robotAUGH5.ogg')
-//monkestation edit end
+monkestation edit end */
 
 /datum/emote/living/scream/select_message_type(mob/user, message, intentional)
 	. = ..()
