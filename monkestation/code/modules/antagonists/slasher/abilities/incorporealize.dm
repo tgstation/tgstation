@@ -39,7 +39,7 @@
 		to_chat(owner, span_boldwarning("The souls you have stolen are preventing you from going incorporeal!"))
 		return
 
-	for(var/mob/living/watcher in view(9, target) - target)
+	for(var/mob/living/watcher in viewers(9, target))
 		if(!watcher.mind) //only mobs with minds stop you from jaunting
 			continue
 

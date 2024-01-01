@@ -834,6 +834,16 @@
 	worn_icon = 'monkestation/icons/donator/mob/clothing/suit.dmi'
 	icon_state = "CCvest"
 
+/obj/item/clothing/suit/armor/vest/nanotrasen_consultant/hubert/Initialize(mapload)
+	. = ..()
+	set_armor(/datum/armor/vest_ntc_hubert)
+
+/datum/armor/vest_ntc_hubert
+	melee = 0
+	bullet = 0
+	energy = 0
+	laser = 0
+
 //Donation reward for Hacker T.Dog
 /obj/item/clothing/under/rank/nanotrasen_consultant/hubert
 	name = "CC ensign's uniform"
