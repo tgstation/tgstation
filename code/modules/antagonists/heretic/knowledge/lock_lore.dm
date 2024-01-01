@@ -6,8 +6,7 @@
  * A Steward's Secret
  * Grasp of Lock
  * > Sidepaths:
- *   Ashen Eyes
- *	 Codex Cicatrix
+ *   Mindgate
  * Key Keeper’s Burden
  *
  * Concierge's Rite
@@ -15,8 +14,10 @@
  * Ritual of Knowledge
  * Burglar's Finesse
  * > Sidepaths:
+ * 	 Opening Blast
  *   Apetra Vulnera
- *   Opening Blast
+ *   Unfathomable Curio
+ * 	 Unsealed arts
  *
  * Opening Blade
  * Caretaker’s Last Refuge
@@ -48,7 +49,6 @@
 	next_knowledge = list(
 		/datum/heretic_knowledge/key_ring,
 		/datum/heretic_knowledge/medallion,
-		/datum/heretic_knowledge/codex_cicatrix,
 	)
 	cost = 1
 	route = PATH_LOCK
@@ -147,6 +147,9 @@
 		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
+		/datum/heretic_knowledge/unfathomable_curio,
+		/datum/heretic_knowledge/curse/paralysis,
+		/datum/heretic_knowledge/painting,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
 	cost = 2
