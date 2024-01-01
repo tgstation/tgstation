@@ -29,7 +29,7 @@ GLOBAL_DATUM(tower_of_babel, /datum/tower_of_babel)
 
 		curse_of_babel(target)
 
-/datum/tower_of_babel/Destroy(force, ...)
+/datum/tower_of_babel/Destroy(force)
 	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
 

@@ -1,11 +1,12 @@
+/// List of objects that AIs will treat as targets
+GLOBAL_LIST_EMPTY_TYPED(hostile_machines, /atom)
+
 /datum/ai_behavior/find_potential_targets
 	action_cooldown = 2 SECONDS
 	/// How far can we see stuff?
 	var/vision_range = 9
 	/// Blackboard key for aggro range, uses vision range if not specified
 	var/aggro_range_key = BB_AGGRO_RANGE
-	/// Static typecache list of potentially dangerous objs
-	var/static/list/hostile_machines = typecacheof(list(/obj/machinery/porta_turret, /obj/vehicle/sealed/mecha))
 
 /datum/ai_behavior/find_potential_targets/perform(seconds_per_tick, datum/ai_controller/controller, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
@@ -26,9 +27,9 @@
 
 	var/list/potential_targets = hearers(aggro_range, get_turf(controller.pawn)) - living_mob //Remove self, so we don't suicide
 
-	for(var/HM in typecache_filter_list(range(aggro_range, living_mob), hostile_machines)) //Can we see any hostile machines?
-		if(can_see(living_mob, HM, aggro_range))
-			potential_targets += HM
+	for (var/atom/hostile_machine as anything in GLOB.hostile_machines)
+		if (can_see(living_mob, hostile_machine, aggro_range))
+			potential_targets += hostile_machine
 
 	if(!potential_targets.len)
 		finish_action(controller, succeeded = FALSE)

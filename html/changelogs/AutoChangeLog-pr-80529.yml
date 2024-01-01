@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "removed excess calls to `update_total()` making reaction code slightly faster."
-  - code_imp: "removed excessive use of chemical constants (quantisation & rounding constants) in places where they were not needed i.e. plumbing buffer, reaction chamber, pyrotechnics & the liver."

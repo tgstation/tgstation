@@ -27,7 +27,7 @@
 	/// An assoc list of [ref] to [timers] - a list of all the timers of people in the shadow realm currently
 	var/list/return_timers
 
-/datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force, ...)
+/datum/heretic_knowledge/hunt_and_sacrifice/Destroy(force)
 	heretic_mind = null
 	LAZYCLEARLIST(target_blacklist)
 	return ..()

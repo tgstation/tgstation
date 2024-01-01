@@ -66,7 +66,7 @@
 		src.fibers = LAZY_LISTS_OR(src.fibers, fibers)
 	check_blood()
 
-/datum/forensics/Destroy(force, ...)
+/datum/forensics/Destroy(force)
 	var/atom/parent_atom = parent.resolve()
 	if (!isnull(parent_atom))
 		UnregisterSignal(parent_atom, list(COMSIG_COMPONENT_CLEAN_ACT))

@@ -1,4 +1,0 @@
-author: "A.C.M.O."
-delete-after: True
-changes:
-  - bugfix: "Fixed Personal AI cards, allowing them to wake up from sleep."

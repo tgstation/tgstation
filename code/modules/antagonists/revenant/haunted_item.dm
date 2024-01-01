@@ -65,7 +65,7 @@
 	src.types_which_dispell_us = types_which_dispell_us || default_dispell_types
 	src.despawn_message = despawn_message
 
-/datum/component/haunted_item/Destroy(force, silent)
+/datum/component/haunted_item/Destroy(force)
 	var/obj/item/haunted_item = parent
 	// Handle these two specifically in Destroy() instead of clear_haunting(),
 	// because we want to make sure they always get dealt with no matter how the component is removed

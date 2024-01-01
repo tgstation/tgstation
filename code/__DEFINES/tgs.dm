@@ -1,6 +1,6 @@
 // tgstation-server DMAPI
 
-#define TGS_DMAPI_VERSION "6.7.0"
+#define TGS_DMAPI_VERSION "7.0.1"
 
 // All functions and datums outside this document are subject to change with any version and should not be relied on.
 
@@ -73,12 +73,12 @@
 #define TGS_EVENT_REPO_MERGE_PULL_REQUEST 3
 /// Before the repository makes a sychronize operation. Parameters: Absolute repostiory path.
 #define TGS_EVENT_REPO_PRE_SYNCHRONIZE 4
-/// Before a BYOND install operation begins. Parameters: [/datum/tgs_version] of the installing BYOND.
-#define TGS_EVENT_BYOND_INSTALL_START 5
-/// When a BYOND install operation fails. Parameters: Error message
-#define TGS_EVENT_BYOND_INSTALL_FAIL 6
-/// When the active BYOND version changes.  Parameters: (Nullable) [/datum/tgs_version] of the current BYOND, [/datum/tgs_version] of the new BYOND.
-#define TGS_EVENT_BYOND_ACTIVE_VERSION_CHANGE 7
+/// Before a engine install operation begins. Parameters: Version string of the installing engine.
+#define TGS_EVENT_ENGINE_INSTALL_START 5
+/// When a engine install operation fails. Parameters: Error message
+#define TGS_EVENT_ENGINE_INSTALL_FAIL 6
+/// When the active engine version changes. Parameters: (Nullable) Version string of the current engine, version string of the new engine.
+#define TGS_EVENT_ENGINE_ACTIVE_VERSION_CHANGE 7
 /// When the compiler starts running. Parameters: Game directory path, origin commit SHA.
 #define TGS_EVENT_COMPILE_START 8
 /// When a compile is cancelled. No parameters.
@@ -108,7 +108,7 @@
 // #define TGS_EVENT_DREAM_DAEMON_LAUNCH 22
 /// After a single submodule update is performed. Parameters: Updated submodule name.
 #define TGS_EVENT_REPO_SUBMODULE_UPDATE 23
-/// After CodeModifications are applied, before DreamMaker is run. Parameters: Game directory path, origin commit sha, byond version.
+/// After CodeModifications are applied, before DreamMaker is run. Parameters: Game directory path, origin commit sha, version string of the used engine.
 #define TGS_EVENT_PRE_DREAM_MAKER 24
 /// Whenever a deployment folder is deleted from disk. Parameters: Game directory path.
 #define TGS_EVENT_DEPLOYMENT_CLEANUP 25
@@ -122,6 +122,7 @@
 /// The watchdog will restart on reboot.
 #define TGS_REBOOT_MODE_RESTART 2
 
+// Note that security levels are currently meaningless in OpenDream
 /// DreamDaemon Trusted security level.
 #define TGS_SECURITY_TRUSTED 0
 /// DreamDaemon Safe security level.
@@ -135,6 +136,11 @@
 #define TGS_VISIBILITY_PRIVATE 1
 /// DreamDaemon invisible visibility level.
 #define TGS_VISIBILITY_INVISIBLE 2
+
+/// The Build Your Own Net Dream engine.
+#define TGS_ENGINE_TYPE_BYOND 0
+/// The OpenDream engine.
+#define TGS_ENGINE_TYPE_OPENDREAM 1
 
 //REQUIRED HOOKS
 
@@ -447,6 +453,10 @@
 
 /// Returns the current [/datum/tgs_version] of TGS if it is running the server, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
 /world/proc/TgsVersion()
+	return
+
+/// Returns the running engine type
+/world/proc/TgsEngine()
 	return
 
 /// Returns the current [/datum/tgs_version] of the DMAPI being used if it was activated, null otherwise. This function may sleep if the call to [/world/proc/TgsNew] is sleeping!
