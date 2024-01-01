@@ -293,11 +293,11 @@
 	added_throw_range = 4
 	attack_sound_alternative = 'sound/weapons/kinetic_accel.ogg'
 
-/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_insert(mob/living/carbon/spine_owner)
+/obj/item/organ/internal/cyberimp/chest/spine/gravity/on_mob_insert(mob/living/carbon/spine_owner)
 	. = ..()
 	spine_owner.AddElement(/datum/element/door_pryer, pry_time = 5 SECONDS, interaction_key = GRAVITY_SPINE_INTERACTION)
 
-/obj/item/organ/internal/cyberimp/arm/muscle/on_mob_remove(mob/living/carbon/spine_owner)
+/obj/item/organ/internal/cyberimp/chest/spine/gravity/on_mob_remove(mob/living/carbon/spine_owner)
 	. = ..()
 	spine_owner.RemoveElement(/datum/element/door_pryer)
 
