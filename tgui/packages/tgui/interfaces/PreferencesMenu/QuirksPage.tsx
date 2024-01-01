@@ -136,8 +136,10 @@ const QuirkList = (props: {
                     {quirk.description}
                     {!!quirk.customizable && (
                       <Popper
-                        options={{
-                          placement: 'bottom-end',
+                        placement="bottom-end"
+                        isOpen={customizationExpanded}
+                        onClickOutside={() => {
+                          setCustomizationExpanded(false);
                         }}
                         popperContent={
                           <Box>

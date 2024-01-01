@@ -456,8 +456,44 @@
 /obj/machinery/cryo_cell/crowbar_act(mob/living/user, obj/item/tool)
 	if(on || state_open)
 		return FALSE
-	if(default_pry_open(tool) || default_deconstruction_crowbar(tool))
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
 		return ITEM_INTERACT_SUCCESS
+
+	var/unsafe_wrenching = FALSE
+	var/filled_pipe = FALSE
+	var/datum/gas_mixture/environment_air = loc.return_air()
+	var/datum/gas_mixture/inside_air = internal_connector.gas_connector.airs[1]
+	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
+	var/internal_pressure = 0
+
+	if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
+		var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
+		internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
+
+	if(inside_air.total_moles() > 0)
+		filled_pipe = TRUE
+		if(!node || internal_pressure > 0)
+			internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
+
+	if(!filled_pipe)
+		default_deconstruction_crowbar(tool)
+		return ITEM_INTERACT_SUCCESS
+
+	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
+
+	if(internal_pressure > 2 * ONE_ATMOSPHERE)
+		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		unsafe_wrenching = TRUE
+
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	if(unsafe_wrenching)
+		internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)
+
+	tool.play_tool_sound(src, 50)
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
 	if(on || occupant || state_open)

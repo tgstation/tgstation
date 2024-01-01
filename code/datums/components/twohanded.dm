@@ -56,7 +56,7 @@
 	if(require_twohands)
 		ADD_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS, ABSTRACT_ITEM_TRAIT)
 
-/datum/component/two_handed/Destroy(force, silent)
+/datum/component/two_handed/Destroy(force)
 	offhand_item = null
 	wield_callback = null
 	unwield_callback = null

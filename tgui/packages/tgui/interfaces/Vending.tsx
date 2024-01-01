@@ -60,6 +60,7 @@ type UserData = {
 
 type StockItem = {
   name: string;
+  path: string;
   amount: number;
   colorable: boolean;
 };
@@ -218,12 +219,12 @@ const ProductDisplay = (props: {
               return true;
             }
           })
-          .map((product, index) => (
+          .map((product) => (
             <VendingRow
               key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[index]}
+              productStock={stock[product.path]}
             />
           ))}
       </Table>

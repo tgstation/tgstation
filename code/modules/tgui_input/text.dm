@@ -90,7 +90,7 @@
 		start_time = world.time
 		QDEL_IN(src, timeout)
 
-/datum/tgui_input_text/Destroy(force, ...)
+/datum/tgui_input_text/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
 	return ..()
