@@ -152,14 +152,18 @@
 
 /obj/item/mail/examine_more(mob/user)
 	. = ..()
-	var/list/msg = list(span_notice("<i>You notice the postmarking on the front of the mail...</i>"))
+	if(!postmarked)
+		. += span_info("This mail has no postmarking of any sort...")
+	else
+		. += span_notice("<i>You notice the postmarking on the front of the mail...</i>")
 	var/datum/mind/recipient = recipient_ref.resolve()
 	if(recipient)
-		msg += "\t[span_info("Certified NT mail for [recipient].")]"
+		. += span_info("[postmarked ? "Certified NT" : "Uncertfieid"] mail for [recipient].")
+	else if(postmarked)
+		. += span_info("Certified mail for [GLOB.station_name].")
 	else
-		msg += "\t[span_info("Certified mail for [GLOB.station_name].")]"
-	msg += "\t[span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")]"
-	return msg
+		. += span_info("This is a dead letter mail with no recipient.")
+	. += span_info("Distribute by hand or via destination tagger using the certified NT disposal system.")
 
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
@@ -249,6 +253,8 @@
 	lid_x = -26
 	lid_y = 2
 	paint_jobs = null
+	///if it'll show the nt mark on the crate
+	var/postmarked = TRUE
 
 /obj/structure/closet/crate/mail/update_icon_state()
 	. = ..()
@@ -258,6 +264,11 @@
 			icon_state = base_icon_state
 	else
 		icon_state = "[base_icon_state]sealed"
+
+/obj/structure/closet/crate/mail/update_overlays()
+	. = ..()
+	if(postmarked)
+		. += "mail_nt"
 
 /// Fills this mail crate with N pieces of mail, where N is the lower of the amount var passed, and the maximum capacity of this crate. If N is larger than the number of alive human players, the excess will be junkmail.
 /obj/structure/closet/crate/mail/proc/populate(amount)
@@ -304,6 +315,19 @@
 	. = ..()
 	populate(INFINITY)
 
+///Used in the mail strike shuttle loan event
+/obj/structure/closet/crate/mail/full/mail_strike
+	desc = "A post crate from somewhere else. It has no NT logo on it."
+	postmarked = FALSE
+
+/obj/structure/closet/crate/mail/full/mail_strike/populate(amount)
+	var/strike_mail_to_spawn = rand(1, storage_capacity-1)
+	for(var/i in 1 to strike_mail_to_spawn)
+		if(prob(95))
+			new /obj/item/mail/mail_strike(src)
+		else
+			new /obj/item/mail/traitor/mail_strike(src)
+	return ..(storage_capacity - strike_mail_to_spawn)
 
 /// Opened mail crate
 /obj/structure/closet/crate/mail/preopen
@@ -381,7 +405,8 @@
 	playsound(loc, 'sound/items/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
 		if(user.put_in_hands(stuff) && armed)
-			log_bomber(user, "opened armed mail made by [made_by_cached_name] ([made_by_cached_ckey]), activating", stuff)
+			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
+			log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
 			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
 	qdel(src)
 	return TRUE
@@ -411,6 +436,55 @@
 		else
 			after_unwrap(user)
 			return TRUE
+
+///Generic mail used in the mail strike shuttle loan event
+/obj/item/mail/mail_strike
+	name = "dead mail"
+	desc = "An unmarked parcel of unknown origins, effectively undeliverable."
+	postmarked = FALSE
+	generic_goodies = list(
+		/obj/effect/spawner/random/entertainment/money_medium = 2,
+		/obj/effect/spawner/random/contraband = 2,
+		/obj/effect/spawner/random/entertainment/money_large = 1,
+		/obj/effect/spawner/random/entertainment/coin = 1,
+		/obj/effect/spawner/random/food_or_drink/any_snack_or_beverage = 1,
+		/obj/effect/spawner/random/entertainment/drugs = 1,
+		/obj/effect/spawner/random/contraband/grenades = 1,
+	)
+
+/obj/item/mail/mail_strike/Initialize(mapload)
+	if(prob(35))
+		stamped = FALSE
+	if(prob(35))
+		name = "dead envelope"
+		icon_state = "mail_large"
+		goodie_count = 2
+		stamp_max = 2
+		stamp_offset_y = 5
+	. = ..()
+	color = pick(COLOR_SILVER, COLOR_DARK, COLOR_DRIED_TAN, COLOR_ORANGE_BROWN, COLOR_BROWN, COLOR_SYNDIE_RED)
+	for(var/goodie in 1 to goodie_count)
+		var/target_good = pick_weight(generic_goodies)
+		new target_good(src)
+
+///Also found in the mail strike shuttle loan. It contains a random grenade that'll be triggered when unwrapped
+/obj/item/mail/traitor/mail_strike
+	name = "dead mail"
+	desc = "An unmarked parcel of unknown origins, effectively undeliverable."
+	postmarked = FALSE
+
+/obj/item/mail/traitor/mail_strike/Initialize(mapload)
+	if(prob(35))
+		stamped = FALSE
+	if(prob(35))
+		name = "dead envelope"
+		icon_state = "mail_large"
+		goodie_count = 2
+		stamp_max = 2
+		stamp_offset_y = 5
+	. = ..()
+	color = pick(COLOR_SILVER, COLOR_DARK, COLOR_DRIED_TAN, COLOR_ORANGE_BROWN, COLOR_BROWN, COLOR_SYNDIE_RED)
+	new /obj/effect/spawner/random/contraband/grenades/dangerous(src)
 
 /obj/item/storage/mail_counterfeit_device
 	name = "GLA-2 mail counterfeit device"

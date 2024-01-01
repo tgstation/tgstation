@@ -67,7 +67,7 @@ multiple modular subtrees with behaviors
 	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
 		PossessPawn(new_pawn)
 
-/datum/ai_controller/Destroy(force, ...)
+/datum/ai_controller/Destroy(force)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	set_movement_target(type, null)
@@ -175,6 +175,7 @@ multiple modular subtrees with behaviors
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
+
 	if(!able_to_run())
 		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.

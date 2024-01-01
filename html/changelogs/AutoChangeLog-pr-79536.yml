@@ -1,0 +1,5 @@
+author: "Rex9001"
+delete-after: True
+changes:
+  - rscadd: "A new heretic path opens up! Gaze up at the great sky for the path of the moon opens and the lie shall be slain in pursuit of ultimate truth!"
+  - bugfix: "Fixes the syndicate delusion not working"

@@ -76,7 +76,7 @@
 			return
 		add_overlay("active")
 		if(do_after(user, 2 SECONDS, src))
-			medipen.reagents.maximum_volume = initial(medipen.reagents.maximum_volume)
+			medipen.used_up = FALSE
 			medipen.add_initial_reagents()
 			reagents.remove_reagent(allowed_pens[medipen.type], 10)
 			balloon_alert(user, "refilled")

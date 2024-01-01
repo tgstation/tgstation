@@ -107,7 +107,7 @@
 
 	QDEL_NULL(attached_circuit)
 
-/datum/component/shell/Destroy(force, silent)
+/datum/component/shell/Destroy(force)
 	QDEL_LIST(unremovable_circuit_components)
 	return ..()
 

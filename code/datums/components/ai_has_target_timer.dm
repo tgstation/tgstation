@@ -33,7 +33,7 @@
 	REMOVE_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 	return ..()
 
-/datum/component/ai_target_timer/Destroy(force, silent)
+/datum/component/ai_target_timer/Destroy(force)
 	finalise_losing_target()
 	return ..()
 

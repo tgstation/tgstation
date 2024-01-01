@@ -32,7 +32,7 @@
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_SENTIENCEPOTION, PROC_REF(on_tame)) //Instantly succeeds
 	RegisterSignal(parent, COMSIG_SIMPLEMOB_TRANSFERPOTION, PROC_REF(on_tame)) //Instantly succeeds
 
-/datum/component/tameable/Destroy(force, silent)
+/datum/component/tameable/Destroy(force)
 	after_tame = null
 	return ..()
 

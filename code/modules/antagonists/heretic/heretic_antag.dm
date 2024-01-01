@@ -65,7 +65,9 @@
 		PATH_BLADE = "label", // my favorite color is label
 		PATH_COSMIC = "purple",
 		PATH_LOCK = "yellow",
+		PATH_MOON = "blue",
 	)
+
 	var/static/list/path_to_rune_color = list(
 		PATH_START = COLOR_LIME,
 		PATH_RUST = COLOR_CARGO_BROWN,
@@ -75,6 +77,7 @@
 		PATH_BLADE = COLOR_SILVER,
 		PATH_COSMIC = COLOR_PURPLE,
 		PATH_LOCK = COLOR_YELLOW,
+		PATH_MOON = COLOR_BLUE_LIGHT,
 	)
 
 /datum/antagonist/heretic/Destroy()

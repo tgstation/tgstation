@@ -66,8 +66,6 @@ const QuirkList = (props: {
           <Box
             className={className}
             key={quirkKey}
-            role="button"
-            tabIndex="1"
             onClick={() => {
               if (props.selected) {
                 setCustomizationExpanded(false);
@@ -138,8 +136,10 @@ const QuirkList = (props: {
                     {quirk.description}
                     {!!quirk.customizable && (
                       <Popper
-                        options={{
-                          placement: 'bottom-end',
+                        placement="bottom-end"
+                        isOpen={customizationExpanded}
+                        onClickOutside={() => {
+                          setCustomizationExpanded(false);
                         }}
                         popperContent={
                           <Box>

@@ -363,8 +363,8 @@ and displays selected entry.
 - `width: string` - Width of dropdown button and resulting menu; css width value
 - `over: boolean` - Dropdown renders over instead of below
 - `color: string` - Color of dropdown button
-- `nochevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
-- `displayText: string | number | ReactNode` - Text to always display in place of the selected text
+- `noChevron: boolean` - Whether or not the arrow on the right hand side of the dropdown button is visible
+- `displayText: ReactNode` - Text to always display in place of the selected text
 - `onClick: (e) => void` - Called when dropdown button is clicked
 - `onSelected: (value) => void` - Called when a value is picked from the list, `value` is the value that was picked
 
@@ -739,7 +739,10 @@ Popper lets you position elements so that they don't go out of the bounds of the
 **Props:**
 
 - `popperContent: ReactNode` - The content that will be put inside the popper.
-- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options], but the one you want most is `placement`. Valid placements are "bottom", "top", "left", and "right". You can affix "-start" and "-end" to achieve something like top left or top right respectively. You can also use "auto" (with an optional "-start" or "-end"), where a best fit will be chosen.
+- `options?: { ... }` - An object of options to pass to `createPopper`. See [https://popper.js.org/docs/v2/constructors/#options]
+- `isOpen: boolean` - Whether or not the popper is open.
+- `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
+- `onClickOutside?: (e) => void` - A function that will be called when the user clicks outside of the popper.
 - `additionalStyles: { ... }` - A map of CSS styles to add to the element that will contain the popper.
 
 ### `ProgressBar`
