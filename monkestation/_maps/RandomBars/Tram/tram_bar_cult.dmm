@@ -34,8 +34,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "aL" = (
-/mob/living/carbon/human/species/monkey/punpun,
-/turf/open/floor/cult,
+/turf/open/openspace,
 /area/station/service/kitchen)
 "br" = (
 /obj/machinery/door/airlock/cult/glass/friendly{
@@ -975,6 +974,7 @@
 "yE" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/mob/living/carbon/human/species/monkey/punpun,
 /turf/open/floor/cult,
 /area/station/service/bar)
 "yL" = (
