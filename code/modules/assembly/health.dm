@@ -46,22 +46,26 @@
 		to_chat(user, span_notice("You toggle [src] to \"detect critical state\" mode."))
 
 /obj/item/assembly/health/process()
+	//no ready yet
 	if(!scanning || !secured)
 		return
 
+	//look for a mob in either our location or in the connected holder
 	var/atom/object = src
 	if(connected?.holder)
 		object = connected.holder
-	for(object, object && !ismob(object), object=object.loc);
-	// like get_turf(), but for mobs.
-	var/mob/living/target_mob = object
+	while(!ismob(object))
+		object = object.loc
+		if(isnull(object)) //we went too far
+			return
 
-	if(!target_mob)
-		return
+	//only do the pulse if we are within alarm thresholds
+	var/mob/living/target_mob = object
 	health_scan = target_mob.health
 	if(health_scan > alarm_health)
 		return
 
+	//do the pulse & the scan
 	pulse()
 	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
