@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - qol: "Gas analyzer can scan adjacent turfs. No more roasting yourself just to scan your burn mix."
