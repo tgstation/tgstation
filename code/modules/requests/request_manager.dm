@@ -25,7 +25,7 @@ GLOBAL_DATUM_INIT(requests, /datum/request_manager, new)
 	/// List where requests can be accessed by ID
 	var/list/requests_by_id = list()
 
-/datum/request_manager/Destroy(force, ...)
+/datum/request_manager/Destroy(force)
 	QDEL_LIST(requests)
 	return ..()
 

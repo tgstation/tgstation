@@ -105,6 +105,13 @@
 /obj/effect/holodeck_effect/mobspawner/monkey
 	mobtype = /mob/living/carbon/human/species/monkey/holodeck
 
+/obj/effect/holodeck_effect/mobspawner/monkey/activate(obj/machinery/computer/holodeck/computer)
+	var/mob/living/carbon/human/monkey = ..()
+	. = list() + monkey
+
+	for(var/atom/atom as anything in monkey.contents + monkey.organs)
+		. += atom
+
 /obj/effect/holodeck_effect/mobspawner/penguin
 	mobtype = /mob/living/basic/pet/penguin/emperor/neuter
 

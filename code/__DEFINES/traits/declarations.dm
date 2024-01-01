@@ -887,6 +887,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOB_ALLY "blob_ally"
 
 ///Traits given by station traits
+#define STATION_TRAIT_ASSISTANT_GIMMICKS "station_trait_assistant_gimmicks"
 #define STATION_TRAIT_BANANIUM_SHIPMENTS "station_trait_bananium_shipments"
 #define STATION_TRAIT_BIGGER_PODS "station_trait_bigger_pods"
 #define STATION_TRAIT_BIRTHDAY "station_trait_birthday"
@@ -1020,6 +1021,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait given to foam darts that have an insert in them
 #define TRAIT_DART_HAS_INSERT "dart_has_insert"
+
+/// Trait determines if this mob has examined an eldritch painting
+#define TRAIT_ELDRITCH_PAINTING_EXAMINE "eldritch_painting_examine"
+
+/// Trait used by the /datum/brain_trauma/severe/flesh_desire trauma to change their preferences of what they eat
+#define TRAIT_FLESH_DESIRE "flesh_desire"
 
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"

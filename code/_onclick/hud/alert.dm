@@ -844,6 +844,9 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	QDEL_NULL(stacks_overlay)
 	QDEL_NULL(candidates_num_overlay)
 	QDEL_NULL(signed_up_overlay)
+	if(poll)
+		poll.alert_buttons -= src
+	poll = null
 	return ..()
 
 /atom/movable/screen/alert/poll_alert/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -874,9 +877,6 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 		time_left_overlay.maptext = MAPTEXT("<span style='color: [(timeleft <= 10 SECONDS) ? "red" : "white"]'><b>[CEILING(timeleft / (1 SECONDS), 1)]</b></span>")
 		time_left_overlay.transform = time_left_overlay.transform.Translate(4, 19)
 		add_overlay(time_left_overlay)
-	if(isnull(poll))
-		return
-	..()
 
 /atom/movable/screen/alert/poll_alert/Click(location, control, params)
 	. = ..()
@@ -889,23 +889,19 @@ or shoot a gun to move around via Newton's 3rd Law of Motion."
 	if(LAZYACCESS(modifiers, CTRL_CLICK) && poll.jump_to_me)
 		jump_to_pic_source()
 		return
-	if(handle_sign_up())
-		update_candidates_number_overlay()
-		update_signed_up_overlay()
+	handle_sign_up()
 
 /atom/movable/screen/alert/poll_alert/proc/handle_sign_up()
 	if(owner in poll.signed_up)
-		return poll.remove_candidate(owner, src)
-	if(owner.ckey in GLOB.poll_ignore[poll.ignoring_category])
-		return FALSE
-	if(poll.sign_up(owner))
-		return poll.sign_up(owner)
+		poll.remove_candidate(owner)
+	else if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
+		poll.sign_up(owner)
+	update_signed_up_overlay()
 
 /atom/movable/screen/alert/poll_alert/proc/set_never_round()
 	if(!(owner.ckey in GLOB.poll_ignore[poll.ignoring_category]))
 		poll.do_never_for_this_round(owner)
 		color = "red"
-		update_candidates_number_overlay()
 		update_signed_up_overlay()
 		return
 	poll.undo_never_for_this_round(owner)

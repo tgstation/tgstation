@@ -6,6 +6,7 @@
 
 import { KEY } from 'common/keys';
 import { classes } from 'common/react';
+import { debounce } from 'common/timer';
 import { KeyboardEvent, SyntheticEvent, useEffect, useRef } from 'react';
 
 import { Box, BoxProps } from './Box';
@@ -34,6 +35,8 @@ type Props = Partial<{
 
 export const toInputValue = (value: string | number | undefined) =>
   typeof value !== 'number' && typeof value !== 'string' ? '' : String(value);
+
+const inputDebounce = debounce((onInput: () => void) => onInput(), 200);
 
 export const Input = (props: Props) => {
   const {
@@ -120,7 +123,9 @@ export const Input = (props: Props) => {
         disabled={disabled}
         maxLength={maxLength}
         onBlur={(event) => onChange?.(event, event.target.value)}
-        onChange={(event) => onInput?.(event, event.target.value)}
+        onChange={(event) =>
+          onInput && inputDebounce(() => onInput(event, event.target.value))
+        }
         onKeyDown={handleKeyDown}
         placeholder={placeholder}
         ref={inputRef}

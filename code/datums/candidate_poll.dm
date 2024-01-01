@@ -64,6 +64,8 @@
 		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
 			if(src != existing_poll && poll_key == existing_poll.poll_key && !(candidate in existing_poll.signed_up))
 				existing_poll.sign_up(candidate, TRUE)
+	for(var/atom/movable/screen/alert/poll_alert/linked_button as anything in alert_buttons)
+		linked_button.update_candidates_number_overlay()
 	return TRUE
 
 /datum/candidate_poll/proc/remove_candidate(mob/candidate, silent = FALSE)
@@ -86,6 +88,8 @@
 		for(var/datum/candidate_poll/existing_poll as anything in SSpolling.currently_polling)
 			if(src != existing_poll && poll_key == existing_poll.poll_key && (candidate in existing_poll.signed_up))
 				existing_poll.remove_candidate(candidate, TRUE)
+	for(var/atom/movable/screen/alert/poll_alert/linked_button as anything in alert_buttons)
+		linked_button.update_candidates_number_overlay()
 	return TRUE
 
 /datum/candidate_poll/proc/do_never_for_this_round(mob/candidate)

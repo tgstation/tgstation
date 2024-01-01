@@ -134,7 +134,7 @@
 		maximum_progression
 	)
 
-/datum/traitor_objective/Destroy(force, ...)
+/datum/traitor_objective/Destroy(force)
 	handler = null
 	return ..()
 

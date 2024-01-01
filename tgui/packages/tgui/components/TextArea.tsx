@@ -110,11 +110,12 @@ export const TextArea = forwardRef(
       () => textareaRef.current as HTMLTextAreaElement,
     );
 
+    /** Focuses the input on mount */
     useEffect(() => {
+      if (!autoFocus && !autoSelect) return;
+
       const input = textareaRef.current;
       if (!input) return;
-
-      input.value = toInputValue(value);
 
       if (autoFocus || autoSelect) {
         setTimeout(() => {
@@ -126,6 +127,17 @@ export const TextArea = forwardRef(
         }, 1);
       }
     }, []);
+
+    /** Updates the initial value on props change */
+    useEffect(() => {
+      const input = textareaRef.current;
+      if (!input) return;
+
+      const newValue = toInputValue(value);
+      if (input.value === newValue) return;
+
+      input.value = newValue;
+    }, [value]);
 
     return (
       <Box

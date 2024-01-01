@@ -115,7 +115,6 @@ Then the player gets the profit from selling his own wasted time.
 	return ..()
 
 /datum/export/process()
-	..()
 	cost *= NUM_E**(k_elasticity * (1/30))
 	if(cost > init_cost)
 		cost = init_cost

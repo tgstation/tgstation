@@ -130,7 +130,7 @@
 		if(!isturf(target.loc) || target == quirk_holder || target.alpha <= 128 || target.invisibility > quirk_holder.see_invisible)
 			continue
 
-		if(target.mob_biotypes & MOB_ORGANIC)
+		if(iscarbon(target))
 			var/list/score = get_bodypart_score(target, limbs_only = TRUE)
 			// For an average human, they'll need 2 augmented limbs to not get counted as an organic nor a silicon.
 			// If some monstrosity has 20-30 organic limbs, they'll likely need more.
@@ -138,10 +138,10 @@
 				organics_nearby += 1
 			else if(score[BODYPART_SCORE_ORGANIC] == 0)
 				silicons_nearby += 1
-		else if(target.mob_biotypes & MOB_ROBOTIC)
-			// Dead silicons don't count, they're basically just machinery
-			if(target.stat != DEAD)
-				silicons_nearby += 1
+		else if(target.mob_biotypes & MOB_ORGANIC)
+			organics_nearby += 1
+		else if(target.mob_biotypes & MOB_ROBOTIC && target.stat != DEAD) // Dead silicons don't count, they're basically just machinery
+			silicons_nearby += 1
 
 	var/mood_result = silicons_nearby - organics_nearby
 
