@@ -49,21 +49,23 @@
 	if(!scanning || !secured)
 		return
 
-	var/atom/A = src
+	var/atom/object = src
 	if(connected?.holder)
-		A = connected.holder
-	for(A, A && !ismob(A), A=A.loc);
+		object = connected.holder
+	for(object, object && !ismob(object), object=object.loc);
 	// like get_turf(), but for mobs.
-	var/mob/living/M = A
+	var/mob/living/target_mob = object
 
-	if(M)
-		health_scan = M.health
-		if(health_scan <= alarm_health)
-			pulse()
-			audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
-			playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-			toggle_scan()
+	if(!target_mob)
 		return
+	health_scan = target_mob.health
+	if(health_scan > alarm_health)
+		return
+
+	pulse()
+	audible_message("<span class='infoplain'>[icon2html(src, hearers(src))] *beep* *beep* *beep*</span>")
+	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
+	toggle_scan()
 
 /obj/item/assembly/health/proc/toggle_scan()
 	if(!secured)
