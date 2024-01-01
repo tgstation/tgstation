@@ -1,0 +1,29 @@
+2024-01-01:
+  13spacemen:
+  - rscadd: Atmos Holofan projectors can be right-clicked inhand to make their holograms
+      more transparent
+  Ben10Omintrix:
+  - refactor: hygeinebots are now basic bots. please report all the bugs
+  - bugfix: fixes hygenebots not being able to patrol
+  - rscadd: hygeinebots can now be controlled by Players
+  Melbert:
+  - refactor: Refactored the area transformation colossus crystal effect to use the
+      same system dimensional anomalies use. That means the colossus crystal now has
+      access to some dimensional themes (bamboo, plasma, glass) and the dimensional
+      anomaly now has access to some colossus themes (jungle, alien).
+  Time-Green:
+  - rscadd: Adds a geared assistant station trait! Spawn with a skateboard, toolbelt
+      or in your favorite bee suit!
+  - code_imp: Moves assistant code around
+  jlsnow301:
+  - bugfix: Dropdowns and pop-up menus have been rewritten. This should fix an issue
+      where dropdown text was accidentally scrolling if hovered. Please report any
+      issues on the repo
+  kawoppi:
+  - qol: added screentips to the janicart (pimpin' ride)
+  uaioy:
+  - bugfix: The sustenance vendor in perma actually serves food now
+  - bugfix: Cyborgs do not deathgasp twice when dying anymore
+  vinylspiders:
+  - bugfix: fixed fire extinguisher cabinets not appearing opened after removing the
+      fire extinguisher from them
