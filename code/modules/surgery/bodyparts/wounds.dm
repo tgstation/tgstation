@@ -75,8 +75,6 @@
 	injury_roll += check_woundings_mods(woundtype, damage, wound_bonus, bare_wound_bonus)
 	var/list/series_wounding_mods = check_series_wounding_mods()
 
-	to_chat(world, "injury_roll = [injury_roll]")
-
 	if(injury_roll > WOUND_DISMEMBER_OUTRIGHT_THRESH && prob(get_damage() / max_damage * 100) && can_dismember())
 		var/datum/wound/loss/dismembering = new
 		dismembering.apply_dismember(src, woundtype, outright = TRUE, attack_direction = attack_direction)

@@ -69,5 +69,50 @@
 		span_userdanger("Your brain spills right out of your head!"),
 	)
 
-#undef CRANIAL_FISSURE_FILTER_ALPHA
+/datum/wound/cranial_fissure/try_handling(mob/living/carbon/human/user)
+	if (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES)
+		return FALSE
+
+	if (victim.body_position != LYING_DOWN)
+		return FALSE
+
+	var/obj/item/organ/internal/eyes/eyes = victim.get_organ_by_type(/obj/item/organ/internal/eyes)
+	if (isnull(eyes))
+		victim.balloon_alert(user, "no eyes to take!")
+		return TRUE
+
+	victim.balloon_alert(user, "pulling out eyes...")
+	victim.show_message(
+		span_userdanger("[victim] starts to pull out your eyes!"),
+		MSG_VISUAL,
+		span_userdanger("An arm reaches inside your brain, and starts pulling on your eyes!"),
+	)
+
+	if (!do_after(user, 10 SECONDS, victim, extra_checks = CALLBACK(src, PROC_REF(still_has_eyes), eyes)))
+		return TRUE
+
+	eyes.Remove(victim)
+	user.put_in_hands(eyes)
+
+	log_combat(user, victim, "pulled out the eyes of")
+
+	user.visible_message(
+		span_boldwarning("You rip out [victim]'s eyes!"),
+		span_boldwarning("[user] rips out [victim]'s eyes!"),
+		ignored_mobs = victim,
+	)
+
+	victim.show_message(
+		span_userdanger("[user] rips out your eyes!"),
+		MSG_VISUAL,
+		span_userdanger("You feel an arm yank from inside your head, as you feel something very important is missing!"),
+	)
+
+	return TRUE
+
+/datum/wound/cranial_fissure/proc/still_has_eyes(obj/item/organ/internal/eyes/eyes)
+	PRIVATE_PROC(TRUE)
+
+	return victim?.get_organ_by_type(/obj/item/organ/internal/eyes) == eyes
+
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT
