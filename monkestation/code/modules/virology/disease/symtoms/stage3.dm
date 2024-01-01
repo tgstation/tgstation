@@ -583,8 +583,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	name = "Acute respiratory distress syndrome"
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to brain damage in critical patients."
 	badness = EFFECT_DANGER_DEADLY
-	max_chance = 10
-	multiplier = 5
+	max_chance = 5
+	max_multiplier = 5
 	stage = 3
 
 /datum/symptom/asphyxiation/activate(mob/living/carbon/mob)
