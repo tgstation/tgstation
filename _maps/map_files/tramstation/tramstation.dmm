@@ -65355,6 +65355,14 @@
 	},
 /turf/open/floor/iron/stairs/medium,
 /area/station/commons/dorms)
+"vYN" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Utilities Access Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/catwalk_floor,
+/area/station/hallway/primary/tram/center)
 "vYO" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -171310,7 +171318,7 @@ fhx
 iJl
 wUG
 vfk
-cRc
+vYN
 ioA
 qtS
 gnj
