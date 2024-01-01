@@ -156,6 +156,16 @@
 	atom_storage.set_holdable(list(/obj/item/food/egg))
 
 /*
+ * Fertile Egg Box
+ */
+
+/obj/item/storage/fancy/egg_box/fertile
+	name = "fertile egg box"
+	desc = "Only one thing here is fertile, and it's not the eggs."
+	spawn_type = /obj/item/food/egg/fertile
+	spawn_count = 6
+
+/*
  * Candle Box
  */
 
