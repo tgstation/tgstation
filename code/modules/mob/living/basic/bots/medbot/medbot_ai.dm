@@ -36,8 +36,9 @@
 	if(bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE)
 		controller.clear_blackboard_key(BB_PATIENT_TARGET)
 		return
-	var/reach_distance = (bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : BOT_PATIENT_PATH_LIMIT
-	if(controller.reachable_key(BB_PATIENT_TARGET, reach_distance))
+	var/is_stationary = bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE
+	var/reach_distance = (is_stationary) ? 1 : BOT_PATIENT_PATH_LIMIT
+	if(controller.reachable_key(BB_PATIENT_TARGET, distance = reach_distance, bypass_add_to_blacklist = is_stationary))
 		controller.queue_behavior(/datum/ai_behavior/tend_to_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.bot_access_flags)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
