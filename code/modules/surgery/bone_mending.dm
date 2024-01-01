@@ -207,7 +207,7 @@
 /// Surgery to repair cranial fissures
 /datum/surgery/cranial_reconstruction
 	name = "Cranial reconstruction"
-	surgery_flags = parent_type::surgery_flags | SURGERY_REQUIRES_REAL_LIMB
+	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
 	targetable_wound = /datum/wound/cranial_fissure
 	possible_locs = list(
 		BODY_ZONE_HEAD,
