@@ -77596,7 +77596,8 @@
 	},
 /obj/machinery/door/window/left/directional/south{
 	dir = 1;
-	req_access = list("cargo")
+	req_access = list("cargo");
+	name = "Office Desk"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/desk_bell{
