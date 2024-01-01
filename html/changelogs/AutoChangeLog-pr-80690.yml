@@ -1,0 +1,6 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "you can set the chemical reaction chamber temps to 0k again"
+  - bugfix: "used higher rounding value for reactions thus you get full volumes especially for endothermic reactions(no more 99.99 but 100 units)."
+  - bugfix: "chem heater now applies heat per reaction step and sends updates to UI more frequently"

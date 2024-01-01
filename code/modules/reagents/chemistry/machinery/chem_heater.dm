@@ -77,7 +77,7 @@
 			update_appearance()
 			return FALSE
 		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_heater, refresh_ui))
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_heater, on_reaction_step))
 
 	update_appearance()
 
@@ -89,10 +89,32 @@
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		heater_coefficient *= micro_laser.tier
 
-/obj/machinery/chem_heater/proc/refresh_ui()
+/**
+ * Heats the reagents of the currently inserted beaker only if machine is on & beaker has some reagents inside
+ * Arguments
+ * * seconds_per_tick - passed from process() or from reaction_step()
+ */
+/obj/machinery/chem_heater/proc/heat_reagents(seconds_per_tick)
+	PRIVATE_PROC(TRUE)
+
+	//must be on and beaker must have something inside to heat
+	if(!on || (machine_stat & NOPOWER) || QDELETED(beaker) || !beaker.reagents.total_volume)
+		return FALSE
+
+	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
+	beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+	use_power(active_power_usage * seconds_per_tick * 0.3)
+	return TRUE
+
+/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	SStgui.update_uis(src)
+	//adjust temp
+	heat_reagents(seconds_per_tick)
+
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
 
 /obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -136,23 +158,17 @@
 			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
 
 /obj/machinery/chem_heater/process(seconds_per_tick)
-	if(!on || (machine_stat & NOPOWER) || QDELETED(beaker))
+	//is_reacting is handled in reaction_step()
+	if(QDELETED(beaker) || beaker.reagents.is_reacting)
 		return
 
-	if(beaker.reagents.total_volume)
-		var/randomness = 1
-		if(beaker.reagents.is_reacting) //Give it a little wiggle room since we're actively reacting
-			randomness = rand(8, 11) * 0.1
-
-		//keep constant with the chemical acclimator please
-		beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume * randomness)
+	if(heat_reagents(seconds_per_tick))
+		//create new reactions after temperature adjust
 		beaker.reagents.handle_reactions()
 
-		//use power
-		use_power(active_power_usage * seconds_per_tick)
-
-		//show changes to ui immediatly for responsivenes
-		SStgui.update_uis(src)
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -288,7 +304,7 @@
 
 		if("temperature")
 			var/target = params["target"]
-			if(!target)
+			if(isnull(target))
 				return FALSE
 
 			target = text2num(target)
