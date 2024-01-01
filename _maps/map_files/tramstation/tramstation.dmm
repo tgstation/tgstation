@@ -23866,6 +23866,14 @@
 "hBf" = (
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
+"hBi" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Utilities Access Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/catwalk_floor,
+/area/station/hallway/primary/tram/center)
 "hBl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/r_wall,
@@ -65355,14 +65363,6 @@
 	},
 /turf/open/floor/iron/stairs/medium,
 /area/station/commons/dorms)
-"vYN" = (
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Utilities Access Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/disposalpipe/segment,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/tram/center)
 "vYO" = (
 /obj/machinery/disposal/bin,
 /obj/structure/disposalpipe/trunk{
@@ -171312,13 +171312,13 @@ aaa
 abE
 oIW
 lTg
-cRc
+hBi
 vfk
 fhx
 iJl
 wUG
 vfk
-vYN
+hBi
 ioA
 qtS
 gnj
