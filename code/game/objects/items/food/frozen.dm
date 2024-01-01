@@ -434,3 +434,16 @@
 	foodtypes = DAIRY | SUGAR
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/popsicle/meatsicle
+	name = "Meatsicle"
+	desc = "A horrific abomination of raw meat, glazed with sugar on a stick, then frozen."
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/fat = 2,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/sugar = 4,
+	)
+	overlay_state = "meatsicle"
+	foodtypes = RAW | MEAT | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_4
