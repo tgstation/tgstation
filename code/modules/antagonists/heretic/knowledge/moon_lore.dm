@@ -136,7 +136,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/blade_upgrade/moon)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)

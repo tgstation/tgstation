@@ -26,7 +26,7 @@
 		/datum/heretic_knowledge/spell/moon_parade,
 	)
 	required_atoms = list(
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/lungs = 1,
 		/obj/item/stack/rods = 3,
 		/obj/item/storage/belt = 1,
 	)
