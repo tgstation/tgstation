@@ -915,6 +915,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// This atom is currently spinning.
 #define TRAIT_SPINNING "spinning"
 
+/// This head can't be torn open anymore
+#define TRAIT_IMMUNE_TO_CRANIAL_FISSURE "immune_to_cranial_fissure"
+
 /// Denotes that this id card was given via the job outfit, aka the first ID this player got.
 #define TRAIT_JOB_FIRST_ID_CARD "job_first_id_card"
 /// ID cards with this trait will attempt to forcibly occupy the front-facing ID card slot in wallets.
