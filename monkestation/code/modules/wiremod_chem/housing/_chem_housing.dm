@@ -109,7 +109,7 @@
 		prefix = "Chemical Input", \
 		minimum_amount = 2 \
 	)
-	heat_input = add_input_port("Desired Heat", PORT_TYPE_NUMBER, default = 300)
+	heat_input = add_input_port("Desired Heat", PORT_TYPE_NUMBER, default = 275)
 
 
 /obj/item/circuit_component/chem/output_manufacturer/input_received(datum/port/input/port, list/return_values)
@@ -131,3 +131,7 @@
 
 /obj/item/circuit_component/chem/output_manufacturer/after_work_call()
 	clear_all_temp_ports()
+
+/obj/item/circuit_component/chem/output_manufacturer/clear_all_temp_ports()
+	for(var/datum/port/input/input as anything in chemical_inputs)
+		input.value = null
