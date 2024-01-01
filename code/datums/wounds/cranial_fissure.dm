@@ -34,6 +34,7 @@
 
 /datum/wound/cranial_fissure/wound_injury(datum/wound/old_wound = null, attack_direction = null)
 	ADD_TRAIT(limb, TRAIT_IMMUNE_TO_CRANIAL_FISSURE, type)
+	ADD_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)
 
 	victim.add_filter(CRANIAL_FISSURE_FILTER_DISPLACEMENT, 2, displacement_map_filter(icon('icons/effects/cranial_fissure.dmi', "displacement"), size = 3))
 
@@ -41,6 +42,7 @@
 
 /datum/wound/cranial_fissure/remove_wound(ignore_limb, replaced)
 	REMOVE_TRAIT(limb, TRAIT_IMMUNE_TO_CRANIAL_FISSURE, type)
+	REMOVE_TRAIT(victim, TRAIT_HAS_CRANIAL_FISSURE, type)
 
 	victim.remove_filter(CRANIAL_FISSURE_FILTER_DISPLACEMENT)
 
