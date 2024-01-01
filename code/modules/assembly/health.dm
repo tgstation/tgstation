@@ -46,7 +46,7 @@
 		to_chat(user, span_notice("You toggle [src] to \"detect critical state\" mode."))
 
 /obj/item/assembly/health/process()
-	//no ready yet
+	//not ready yet
 	if(!scanning || !secured)
 		return
 
