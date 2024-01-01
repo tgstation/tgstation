@@ -11470,10 +11470,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 1
-	},
-/turf/open/floor/plating,
+/turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/center)
 "cRf" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -56158,7 +56155,7 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
-/turf/open/space/basic,
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/tram/mid)
 "sWF" = (
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -57770,7 +57767,6 @@
 /obj/effect/mapping_helpers/airlock/unres{
 	dir = 1
 	},
-/obj/structure/cable,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/mid)
 "tyV" = (
@@ -59026,16 +59022,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
-"tVf" = (
-/obj/structure/cable,
-/obj/machinery/door/airlock/maintenance_hatch{
-	name = "Utilities Access Hatch"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/stripes/white/line,
-/turf/open/floor/plating,
-/area/station/hallway/primary/tram/center)
 "tVv" = (
 /obj/effect/turf_decal/trimline/neutral/filled/corner{
 	dir = 4
@@ -166178,7 +166164,7 @@ htI
 izU
 vzw
 ssS
-tVf
+cRc
 lEj
 rWQ
 iCj
@@ -171318,7 +171304,7 @@ aaa
 abE
 oIW
 lTg
-tVf
+cRc
 vfk
 fhx
 iJl
