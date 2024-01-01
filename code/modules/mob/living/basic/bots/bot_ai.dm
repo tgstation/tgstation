@@ -84,7 +84,7 @@
 		clear_blackboard_key(key)
 		clear_blackboard_key(BB_LAST_ATTEMPTED_PATHING)
 		if(!bypass_add_to_blacklist)
-			set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+			set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
 		return FALSE
 	return TRUE
 

@@ -53,7 +53,7 @@
 	search_range = (mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : initial(search_range)
 	var/list/ignore_keys = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
+		if(LAZYACCESS(ignore_keys, REF(treatable_target)) || treatable_target.stat == DEAD)
 			continue
 		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
 			controller.set_blackboard_key(BB_PATIENT_TARGET, treatable_target)
