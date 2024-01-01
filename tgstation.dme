@@ -769,6 +769,7 @@
 #include "code\datums\lazy_template.dm"
 #include "code\datums\map_config.dm"
 #include "code\datums\minigames_menu.dm"
+#include "code\datums\minimap.dm"
 #include "code\datums\mood.dm"
 #include "code\datums\movement_detector.dm"
 #include "code\datums\mutable_appearance.dm"

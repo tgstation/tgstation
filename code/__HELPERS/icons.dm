@@ -1544,7 +1544,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)
 	var/width = icon_dimensions["width"]
 	var/height = icon_dimensions["height"]
-	
+
 	if(width > world.icon_size)
 		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
 	if(height > world.icon_size)
