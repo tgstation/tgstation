@@ -13,14 +13,14 @@
  * Ritual of Knowledge
  * Burglar's Finesse
  * > Sidepaths:
- *   Apetra Vulnera
+ *   Opening Blast
  *   Unfathomable Curio
  * 	 Unsealed arts
  *
  * Opening Blade
  * Caretaker’s Last Refuge
  * > Sidepaths:
- * 	 Opening Blast
+ * 	 Apetra Vulnera
  *
  * Unlock the Labyrinth
  */
@@ -144,7 +144,7 @@
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/apetra_vulnera,
+		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
 		/datum/heretic_knowledge/unfathomable_curio,
 		/datum/heretic_knowledge/painting,
@@ -174,7 +174,7 @@
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/lock_final,
-		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
 	)
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker

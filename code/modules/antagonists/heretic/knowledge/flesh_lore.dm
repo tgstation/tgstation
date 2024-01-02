@@ -20,13 +20,13 @@
  * Raw Ritual
  * > Sidepaths:
  *   Blood Siphon
- *   Aptera Vulnera
+ *   Opening Blast
  *
  * Bleeding Steel
  * Lonely Ritual
  * > Sidepaths:
  *   Cleave
- *   Opening Blast
+ *   Aptera Vulnera
  *
  * Priest's Final Hymn
  */
@@ -240,7 +240,7 @@
 		/datum/heretic_knowledge/blade_upgrade/flesh,
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/spell/apetra_vulnera,
+		/datum/heretic_knowledge/spell/opening_blast,
 	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
@@ -279,7 +279,7 @@
 		An ever shapeshifting mass of flesh, it knew well my goals. The Marshal approved."
 	next_knowledge = list(
 		/datum/heretic_knowledge/ultimate/flesh_final,
-		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/cleave,
 	)
 	required_atoms = list(
