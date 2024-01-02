@@ -129,12 +129,12 @@
 			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 				tally += 3.5
 
-			if (antibodies[A] < 60)
+			if (antibodies[A] < 70)
 				antibodies[A] = min(antibodies[A] + tally * strength, 60)
 			else
-				if(strength < 0.7) //stop trying at all once below 70%
+				if(strength < 0.7) //stop trying at all once below 70% strength and above 70% antibodies
 					return
-				if(prob(80)) //immune system begins gaining attrition over 60% antigen.
+				if(prob(80)) //immune system begins gaining attrition over 70% antigen.
 					strength = max(strength - 0.05, 0)
 				antibodies[A] = min(antibodies[A] + tally * strength, 100)
 
