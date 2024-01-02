@@ -31,7 +31,7 @@
 	chemical_names += filter_list.value
 
 	for(var/name as anything in chemical_names)
-		chemicals_from_names += GLOB.name2reagent[lowertext(name)]
+		chemicals_from_names += GLOB.name2reagent[ckey(lowertext(name))]
 
 	var/list/inputted_chemicals = chemical_input.value
 
