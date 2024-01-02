@@ -43,7 +43,29 @@
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	AddComponent(/datum/component/payment, active_price, SSeconomy.get_dep_account(ACCOUNT_MED), PAYMENT_FRIENDLY)
+	register_context()
 	scanner_wand = new/obj/item/scanner_wand(src)
+
+/obj/machinery/medical_kiosk/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	var/screentip_change = FALSE
+
+	if(!held_item && scanner_wand)
+		context[SCREENTIP_CONTEXT_RMB] = "Pick up scanner wand"
+		return screentip_change = TRUE
+
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+		context[SCREENTIP_CONTEXT_LMB] = anchored ? "Unsecure" : "Secure"
+		return screentip_change = TRUE
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_CROWBAR && panel_open)
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return screentip_change = TRUE
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = panel_open ? "Close panel" : "Open panel"
+		return screentip_change = TRUE
+	if(istype(held_item, /obj/item/scanner_wand))
+		context[SCREENTIP_CONTEXT_LMB] = "Return the scanner wand"
+		return screentip_change = TRUE
 
 /obj/machinery/medical_kiosk/proc/inuse()  //Verifies that the user can use the interface, followed by showing medical information.
 	var/mob/living/carbon/human/paying = paying_ref?.resolve()
@@ -86,7 +108,7 @@
 /obj/machinery/medical_kiosk/wrench_act(mob/living/user, obj/item/tool) //Allows for wrenching/unwrenching the machine.
 	..()
 	default_unfasten_wrench(user, tool, time = 0.1 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medical_kiosk/RefreshParts()
 	. = ..()
@@ -104,13 +126,13 @@
 	if(istype(O, /obj/item/scanner_wand))
 		var/obj/item/scanner_wand/W = O
 		if(scanner_wand)
-			to_chat(user, span_warning("There's already a scanner wand in [src]!"))
+			balloon_alert(user, "already has a wand!")
 			return
 		if(HAS_TRAIT(O, TRAIT_NODROP) || !user.transferItemToLoc(O, src))
-			to_chat(user, span_warning("[O] is stuck to your hand!"))
+			balloon_alert(user, "stuck to your hand!")
 			return
-		user.visible_message(span_notice("[user] snaps [O] onto [src]!"), \
-		span_notice("You press [O] into the side of [src], clicking into place."))
+		user.visible_message(span_notice("[user] snaps [O] onto [src]!"))
+		balloon_alert(user, "wand returned")
 		//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 		if(W.selected_target)
 			var/datum/weakref/target_ref = WEAKREF(W.return_patient())
@@ -124,20 +146,24 @@
 		return
 	return ..()
 
-/obj/machinery/medical_kiosk/AltClick(mob/living/carbon/user)
-	if(!istype(user) || !user.can_perform_action(src))
-		return
+/obj/machinery/medical_kiosk/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!ishuman(user) || !user.can_perform_action(src))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!scanner_wand)
-		to_chat(user, span_warning("The scanner wand is currently removed from the machine."))
-		return
+		balloon_alert(user, "no scanner wand!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	if(!user.put_in_hands(scanner_wand))
-		to_chat(user, span_warning("The scanner wand falls to the floor."))
+		balloon_alert(user, "scanner wand falls!")
 		scanner_wand = null
-		return
-	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."), \
-	span_notice("You detach the [scanner_wand] from [src]."))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	user.visible_message(span_notice("[user] unhooks the [scanner_wand] from [src]."))
+	balloon_alert(user, "scanner pulled")
 	playsound(src, 'sound/machines/click.ogg', 60, TRUE)
 	scanner_wand = null
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/medical_kiosk/Destroy()
 	qdel(scanner_wand)
@@ -162,7 +188,7 @@
 	if(scanner_wand == null)
 		. += span_notice("\The [src] is missing its scanner.")
 	else
-		. += span_notice("\The [src] has its scanner clipped to the side. Alt-Click to remove.")
+		. += span_notice("\The [src] has its scanner clipped to the side. Right Click to remove.")
 
 /obj/machinery/medical_kiosk/ui_interact(mob/user, datum/tgui/ui)
 	var/patient_distance = 0
@@ -230,7 +256,6 @@
 		blood_status = "Patient blood levels are currently reading [blood_percent]%. Patient has [ blood_type] type blood. [blood_warning]"
 
 	var/trauma_status = "Patient is free of unique brain trauma."
-	var/clone_loss = patient.getCloneLoss()
 	var/brain_loss = patient.get_organ_loss(ORGAN_SLOT_BRAIN)
 	var/brain_status = "Brain patterns normal."
 	if(LAZYLEN(patient.get_traumas()))
@@ -280,13 +305,13 @@
 	if (patient.has_status_effect(/datum/status_effect/hallucination))
 		hallucination_status = "Subject appears to be hallucinating. Suggested treatments: bedrest, mannitol or psicodine."
 
-	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 200))  //Patient status checks.
+	if(patient.stat == DEAD || HAS_TRAIT(patient, TRAIT_FAKEDEATH) || ((brute_loss+fire_loss+tox_loss+oxy_loss) >= 200))  //Patient status checks.
 		patient_status = "Dead."
-	if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 80)
+	if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 80)
 		patient_status = "Gravely Injured"
-	else if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 40)
+	else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 40)
 		patient_status = "Injured"
-	else if((brute_loss+fire_loss+tox_loss+oxy_loss+clone_loss) >= 20)
+	else if((brute_loss+fire_loss+tox_loss+oxy_loss) >= 20)
 		patient_status = "Lightly Injured"
 	if(pandemonium || user.has_status_effect(/datum/status_effect/hallucination))
 		patient_status = pick(
@@ -320,7 +345,6 @@
 	data["burn_health"] = round(fire_loss+(chaos_modifier * (rand(1,30))),0.001) //then a random number is added, which is multiplied by chaos modifier.
 	data["toxin_health"] = round(tox_loss+(chaos_modifier * (rand(1,30))),0.001) //That allows for a weaker version of the affect to be applied while hallucinating as opposed to emagged.
 	data["suffocation_health"] = round(oxy_loss+(chaos_modifier * (rand(1,30))),0.001) //It's not the cleanest but it does make for a colorful window.
-	data["clone_health"] = round(clone_loss+(chaos_modifier * (rand(1,30))),0.001)
 	data["brain_health"] = brain_status
 	data["brain_damage"] = brain_loss+(chaos_modifier * (rand(1,30)))
 	data["patient_status"] = patient_status

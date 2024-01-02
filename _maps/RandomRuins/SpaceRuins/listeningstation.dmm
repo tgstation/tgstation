@@ -234,7 +234,6 @@
 	anchored = 1
 	},
 /obj/machinery/door/window/brigdoor{
-	dir = 2;
 	req_access = list("syndicate");
 	name = "Self Destruct Option"
 	},
@@ -305,9 +304,6 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "rr" = (
-/obj/machinery/door/airlock{
-	name = "Emergency Backup"
-	},
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -392,7 +388,6 @@
 /area/ruin/space/has_grav/listeningstation)
 "xh" = (
 /obj/machinery/computer/records/medical/syndie{
-	dir = 2;
 	req_access = list("syndicate")
 	},
 /obj/machinery/light/small/directional/north,
@@ -555,7 +550,7 @@
 "Dp" = (
 /obj/structure/table,
 /obj/item/flashlight/lantern/syndicate{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/listeningstation)
@@ -813,6 +808,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/door/airlock{
+	name = "Emergency Backup"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/listeningstation)
 "RK" = (

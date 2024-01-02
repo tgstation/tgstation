@@ -1,0 +1,2 @@
+/mob/living/simple_animal/hostile/gorilla/cargo_domestic : /mob/living/basic/gorilla/cargorilla{@OLD}
+/mob/living/simple_animal/hostile/gorilla : /mob/living/basic/gorilla/@SUBTYPES{@OLD}

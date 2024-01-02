@@ -84,7 +84,7 @@
 	return ..()
 
 /obj/structure/toilet/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		for(var/obj/toilet_item in contents)
 			toilet_item.forceMove(drop_location())
 		if(buildstacktype)
@@ -105,7 +105,7 @@
 			cistern = !cistern
 			update_appearance()
 		return COMPONENT_CANCEL_ATTACK_CHAIN
-	else if(I.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	else if(I.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
 		I.play_tool_sound(src)
 		deconstruct()
 		return TRUE
@@ -168,7 +168,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 /obj/structure/urinal/Initialize(mapload)
 	. = ..()
 	hidden_item = new /obj/item/food/urinalcake
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/structure/urinal/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -228,7 +228,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/urinal)
 	return TRUE
 
 /obj/structure/urinal/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/wallframe/urinal(loc)
 	qdel(src)
 
@@ -390,7 +390,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 			return FALSE
 		if(RG.is_refillable())
 			if(!RG.reagents.holder_full())
-				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transfered_by = user)
+				reagents.trans_to(RG, RG.amount_per_transfer_from_this, transferred_by = user)
 				begin_reclamation()
 				to_chat(user, span_notice("You fill [RG] from [src]."))
 				return TRUE
@@ -413,13 +413,13 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		if(reagents.total_volume <= 0)
 			to_chat(user, span_notice("\The [src] is dry."))
 			return FALSE
-		reagents.trans_to(O, 5, transfered_by = user)
+		reagents.trans_to(O, 5, transferred_by = user)
 		begin_reclamation()
 		to_chat(user, span_notice("You wet [O] in [src]."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
 
-	if(O.tool_behaviour == TOOL_WRENCH && !(flags_1&NODECONSTRUCT_1))
+	if(O.tool_behaviour == TOOL_WRENCH && !(obj_flags & NO_DECONSTRUCTION))
 		O.play_tool_sound(src)
 		deconstruct()
 		return
@@ -496,7 +496,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink, (-14))
 		return ..()
 
 /obj/structure/sink/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		drop_materials()
 		if(has_water_reclaimer)
 			new /obj/item/stock_parts/water_recycler(drop_location())
@@ -572,7 +572,7 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	return TRUE
 
 /obj/structure/sinkframe/deconstruct()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		drop_materials()
 	return ..()
 
@@ -590,6 +590,12 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	anchored = TRUE
 	var/busy = FALSE //Something's being washed at the moment
 	var/dispensedreagent = /datum/reagent/water // for whenever plumbing happens
+
+/obj/structure/water_source/Initialize(mapload)
+	. = ..()
+
+	create_reagents(INFINITY, NO_REACT)
+	reagents.add_reagent(dispensedreagent, INFINITY)
 
 /obj/structure/water_source/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -822,6 +828,14 @@ INVERT_MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sink/kitchen, (-16))
 	color = null
 	alpha = 255
 	opaque_closed = TRUE
+
+/obj/structure/curtain/bounty/start_closed
+	icon_state = "bounty-closed"
+
+/obj/structure/curtain/bounty/start_closed/Initialize(mapload)
+	. = ..()
+	if(open)
+		toggle()
 
 /obj/structure/curtain/cloth
 	color = null

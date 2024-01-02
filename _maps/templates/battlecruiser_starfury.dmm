@@ -119,7 +119,6 @@
 "as" = (
 /obj/machinery/light/directional/north,
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/obj/machinery/light/directional/north,
 /obj/effect/turf_decal/siding/thinplating_new{
 	dir = 4
 	},
@@ -3885,7 +3884,7 @@
 /turf/open/floor/engine,
 /area/shuttle/sbc_starfury)
 "qQ" = (
-/obj/machinery/atmospherics/components/unary/cryo_cell,
+/obj/machinery/cryo_cell,
 /turf/open/floor/plating,
 /area/shuttle/sbc_starfury)
 "qS" = (
@@ -4781,7 +4780,7 @@
 /area/shuttle/sbc_starfury)
 "Gz" = (
 /obj/structure/cable,
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	desc = "A medical bot of syndicate origins. Probably plots about how to stab you full of toxins in its free time.";
 	faction = list("neutral","silicon","turret","Syndicate");
 	name = "Syndicate Medibot";

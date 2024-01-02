@@ -87,7 +87,7 @@
 	var/list/mobs_to_swap = list()
 
 	for(var/mob/living/carbon/human/alive_human in GLOB.alive_mob_list)
-		if(alive_human.stat != CONSCIOUS || !alive_human.mind || IS_WIZARD(alive_human))
+		if(alive_human.stat != CONSCIOUS || isnull(alive_human.mind) || IS_WIZARD(alive_human) || HAS_TRAIT(alive_human, TRAIT_NO_MINDSWAP))
 			continue //the wizard(s) are spared on this one
 		mobs_to_swap += alive_human
 

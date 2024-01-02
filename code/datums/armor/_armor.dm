@@ -62,6 +62,7 @@ GLOBAL_LIST_INIT(armor_by_type, generate_armor_type_cache())
 	return FALSE
 
 /datum/armor/vv_get_dropdown()
+	SHOULD_CALL_PARENT(FALSE)
 	return list("", "MUST MODIFY ARMOR VALUES ON THE PARENT ATOM")
 
 /datum/armor/CanProcCall(procname)

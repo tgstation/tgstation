@@ -78,7 +78,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			to_chat(user, span_warning("[src] already has a defibrillator!"))
 			return
 		var/obj/item/borg/upgrade/defib/backpack/B = new(null, D)
-		add_to_upgrades(B, user)
+		apply_upgrade(B, user)
 		return
 
 	if(istype(W, /obj/item/ai_module))
@@ -95,8 +95,12 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(shell) //AI shells always have the laws of the AI
 			to_chat(user, span_warning("[src] is controlled remotely! You cannot upload new laws this way!"))
 			return
-		if(emagged || (connected_ai && lawupdate)) //Can't be sure which, metagamers
-			emote("buzz-[user.name]")
+		if(connected_ai && lawupdate)
+			to_chat(user, span_warning("[src] is receiving laws remotely from a synced AI!"))
+			return
+		if(emagged)
+			to_chat(user, span_warning("The law interface glitches out!"))
+			emote("buzz")
 			return
 		if(!mind) //A player mind is required for law procs to run antag checks.
 			to_chat(user, span_warning("[src] is entirely unresponsive!"))
@@ -142,7 +146,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		if(!user.canUnEquip(U))
 			to_chat(user, span_warning("The upgrade is stuck to you and you can't seem to let go of it!"))
 			return
-		add_to_upgrades(U, user)
+		apply_upgrade(U, user)
 		return
 
 	if(istype(W, /obj/item/toner))
@@ -180,8 +184,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		modularInterface.inserted_disk = floppy
 		return
 
-	if(W.force && W.damtype != STAMINA && stat != DEAD) //only sparks if real damage is dealt.
-		spark_system.start()
 	return ..()
 
 /mob/living/silicon/robot/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
@@ -232,8 +234,8 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 			return
 		cell.update_appearance()
 		cell.add_fingerprint(user)
-		user.put_in_active_hand(cell)
 		to_chat(user, span_notice("You remove \the [cell]."))
+		user.put_in_active_hand(cell)
 		update_icons()
 		diag_hud_set_borgcell()
 
@@ -414,14 +416,14 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		adjustBruteLoss(30)
 	else
 		investigate_log("has been gibbed a blob.", INVESTIGATE_DEATHS)
-		gib()
+		gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /mob/living/silicon/robot/ex_act(severity, target)
 	switch(severity)
 		if(EXPLODE_DEVASTATE)
 			investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
-			gib()
+			gib(DROP_ALL_REMAINS)
 			return
 		if(EXPLODE_HEAVY)
 			if (stat != DEAD)
@@ -433,17 +435,18 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 
 	return TRUE
 
-/mob/living/silicon/robot/bullet_act(obj/projectile/Proj, def_zone)
+/mob/living/silicon/robot/bullet_act(obj/projectile/hitting_projectile, def_zone, piercing_hit = FALSE)
 	. = ..()
-	updatehealth()
-	if(prob(75) && Proj.damage > 0)
-		spark_system.start()
+	if(prob(25) || . != BULLET_ACT_HIT)
+		return
+	if(hitting_projectile.damage_type != BRUTE && hitting_projectile.damage_type != BURN)
+		return
+	if(!hitting_projectile.is_hostile_projectile() || hitting_projectile.damage <= 0)
+		return
+	spark_system.start()
 
-/mob/living/silicon/on_hit(obj/projectile/P)
-	if(!has_movespeed_modifier(/datum/movespeed_modifier/borg_throw))
-		add_movespeed_modifier(/datum/movespeed_modifier/borg_throw)
-		addtimer(CALLBACK(src, TYPE_PROC_REF(/mob/living/silicon, clear_throw_slowdown)), (P.throwforce / 10) SECONDS)
-	return ..()
-
-/mob/living/silicon/proc/clear_throw_slowdown()
-	src.remove_movespeed_modifier(/datum/movespeed_modifier/borg_throw)
+/mob/living/silicon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
+	. = ..()
+	if (. || AM.throwforce < CYBORG_THROW_SLOWDOWN_THRESHOLD)
+		return
+	apply_status_effect(/datum/status_effect/borg_throw_slow)

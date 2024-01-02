@@ -66,7 +66,7 @@
 		return FALSE
 
 /datum/weather/ash_storm/weather_act(mob/living/victim)
-	victim.adjustFireLoss(4)
+	victim.adjustFireLoss(4, required_bodytype = BODYTYPE_ORGANIC)
 
 /datum/weather/ash_storm/end()
 	GLOB.ash_storm_sounds -= weak_sounds

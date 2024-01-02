@@ -43,6 +43,8 @@
 	var/force_teleport = FALSE
 	/// Does this portal create spark effect when teleporting?
 	var/sparkless = FALSE
+	/// If FALSE, the wibble filter will not be applied to this portal (only a visual effect).
+	var/wibbles = TRUE
 
 /obj/effect/portal/anom
 	name = "wormhole"
@@ -52,6 +54,7 @@
 	mech_sized = TRUE
 	teleport_channel = TELEPORT_CHANNEL_WORMHOLE
 	light_on = FALSE
+	wibbles = FALSE
 
 /obj/effect/portal/Move(newloc)
 	for(var/T in newloc)
@@ -99,6 +102,8 @@
 	hardlinked = automatic_link
 	if(isturf(hard_target_override))
 		hard_target = hard_target_override
+	if(wibbles)
+		apply_wibbly_filters(src)
 
 /obj/effect/portal/singularity_pull()
 	return

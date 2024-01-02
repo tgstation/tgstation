@@ -28,7 +28,7 @@
 /obj/item/organ/internal/monster_core/regenerative_core/on_life(seconds_per_tick, times_fired)
 	. = ..()
 	if (owner.health <= owner.crit_threshold)
-		trigger_organ_action()
+		trigger_organ_action(TRIGGER_FORCE_AVAILABLE)
 
 /obj/item/organ/internal/monster_core/regenerative_core/on_triggered_internal()
 	owner.revive(HEAL_ALL)
@@ -36,7 +36,7 @@
 
 /// Log applications and apply moodlet.
 /obj/item/organ/internal/monster_core/regenerative_core/apply_to(mob/living/target, mob/user)
-	target.add_mood_event("regenerative core", /datum/mood_event/healsbadman)
+	target.add_mood_event(MOOD_CATEGORY_LEGION_CORE, /datum/mood_event/healsbadman)
 	if (target != user)
 		target.visible_message(span_notice("[user] forces [target] to apply [src]... Black tendrils entangle and reinforce [target.p_them()]!"))
 		SSblackbox.record_feedback("nested tally", "hivelord_core", 1, list("[type]", "used", "other"))
@@ -60,4 +60,3 @@
 	desc = "Fully regenerate your body, consuming your regenerative core in the process. \
 		This process will trigger automatically if you are badly wounded."
 	button_icon_state = "legion_core_stable"
-	check_flags = NONE

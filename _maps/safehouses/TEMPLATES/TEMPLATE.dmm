@@ -1,0 +1,82 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"c" = (
+/obj/effect/mapping_helpers/airlock/access/all,
+/obj/machinery/door/airlock/external/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"p" = (
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"v" = (
+/obj/effect/landmark/bitrunning/hololadder_spawn,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"N" = (
+/obj/effect/landmark/bitrunning/cache_goal_turf,
+/turf/open/floor/plating,
+/area/virtual_domain/safehouse)
+"R" = (
+/turf/closed/wall,
+/area/virtual_domain/safehouse)
+
+(1,1,1) = {"
+R
+R
+a
+a
+R
+R
+"}
+(2,1,1) = {"
+a
+p
+p
+p
+p
+R
+"}
+(3,1,1) = {"
+R
+p
+p
+p
+v
+a
+"}
+(4,1,1) = {"
+c
+p
+p
+p
+v
+R
+"}
+(5,1,1) = {"
+R
+p
+p
+p
+v
+a
+"}
+(6,1,1) = {"
+a
+p
+N
+N
+p
+R
+"}
+(7,1,1) = {"
+R
+R
+a
+a
+R
+R
+"}

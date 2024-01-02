@@ -124,11 +124,10 @@
 	notify_ghosts(
 		"[imp_in] is about to detonate their explosive implant!",
 		source = src,
-		action = NOTIFY_ORBIT,
-		flashwindow = FALSE,
-		ghost_sound = 'sound/machines/warning-buzzer.ogg',
 		header = "Tick Tick Tick...",
-		notify_volume = 75
+		notify_flags = NOTIFY_CATEGORY_NOFLASH,
+		ghost_sound = 'sound/machines/warning-buzzer.ogg',
+		notify_volume = 75,
 	)
 
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
@@ -166,7 +165,7 @@
 	explosion(src, devastation_range = explosion_devastate, heavy_impact_range = explosion_heavy, light_impact_range = explosion_light, flame_range = explosion_light, flash_range = explosion_light, explosion_cause = src)
 	if(imp_in)
 		imp_in.investigate_log("has been gibbed by an explosive implant.", INVESTIGATE_DEATHS)
-		imp_in.gib(TRUE)
+		imp_in.gib(DROP_ORGANS|DROP_BODYPARTS)
 	qdel(src)
 
 ///Macrobomb has the strength and delay of 10 microbombs

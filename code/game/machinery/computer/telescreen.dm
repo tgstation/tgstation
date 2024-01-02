@@ -25,10 +25,10 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen)
 
 /obj/machinery/computer/security/telescreen/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/machinery/computer/security/telescreen/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new frame_type(loc)
 	qdel(src)
 

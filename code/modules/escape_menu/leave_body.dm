@@ -101,7 +101,7 @@
 	screen_loc = "CENTER:[pixel_offset],CENTER-1"
 
 /atom/movable/screen/escape_menu/leave_body_button/Destroy()
-	QDEL_NULL(on_click_callback)
+	on_click_callback = null
 
 	return ..()
 

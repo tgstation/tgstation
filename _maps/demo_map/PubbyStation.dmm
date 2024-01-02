@@ -3050,7 +3050,7 @@
 	fax_name = "Head of Security's Office";
 	name = "Head of Security's Fax Machine"
 	},
-/obj/item/storage/secure/safe/hos/directional/north,
+/obj/structure/secure_safe/hos/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hos)
 "akW" = (
@@ -7085,7 +7085,7 @@
 /area/station/command/heads_quarters/captain)
 "azc" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
 "azd" = (
@@ -7128,7 +7128,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/item/storage/secure/safe/caps_spare/directional/south,
+/obj/structure/secure_safe/caps_spare/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
 "azj" = (
@@ -7742,7 +7742,7 @@
 /obj/item/pen{
 	layer = 4
 	},
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
 "aBA" = (
@@ -15531,7 +15531,7 @@
 /obj/effect/turf_decal/tile/brown/anticorner/contrasted{
 	dir = 8
 	},
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/iron,
 /area/station/commons/vacant_room/commissary)
 "biL" = (
@@ -32589,7 +32589,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4{
 	dir = 4
 	},
-/obj/item/storage/secure/safe/directional/west,
+/obj/structure/secure_safe/directional/west,
 /turf/open/floor/iron/grimy,
 /area/station/security/detectives_office)
 "fih" = (

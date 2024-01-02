@@ -69,7 +69,7 @@
 	if(forced)
 		occupier.forceMove(drop_location())
 		INVOKE_ASYNC(occupier, TYPE_PROC_REF(/mob/living, death))
-		occupier.gib()
+		occupier.gib(DROP_ALL_REMAINS)
 
 	if(!occupier.nuking) //Pinpointers go back to tracking the nuke disk, as long as the AI (somehow) isn't mid-nuking.
 		for(var/obj/item/pinpointer/nuke/disk_pinpointers in GLOB.pinpointer_list)

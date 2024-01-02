@@ -1,4 +1,5 @@
-import { Fragment } from 'inferno';
+import { Fragment } from 'react';
+
 import { useBackend } from '../backend';
 import { Button, Section, Stack } from '../components';
 import { Window } from '../layouts';
@@ -14,8 +15,8 @@ type Props = {
   buttonColor: string;
 };
 
-export const ChemFilterPane = (props: Props, context) => {
-  const { act } = useBackend(context);
+export const ChemFilterPane = (props: Props) => {
+  const { act } = useBackend();
   const { title, list, buttonColor } = props;
   const titleKey = title.toLowerCase();
 
@@ -34,7 +35,8 @@ export const ChemFilterPane = (props: Props, context) => {
             })
           }
         />
-      }>
+      }
+    >
       {list.map((filter) => (
         <Fragment key={filter}>
           <Button
@@ -54,8 +56,8 @@ export const ChemFilterPane = (props: Props, context) => {
   );
 };
 
-export const ChemFilter = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const ChemFilter = (props) => {
+  const { data } = useBackend<Data>();
   const { left = [], right = [] } = data;
 
   return (

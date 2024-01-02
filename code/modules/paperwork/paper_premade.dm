@@ -72,6 +72,19 @@
 	<br>
 	<i>Keep this manual for your records, failure to do so will void your 2 day limited liability warranty from Nanotrasen.</i>"}
 
+/obj/item/paper/fluff/jobs/engineering/frequencies
+	name = "Station Frequencies"
+	default_raw_text = {"Please remember the frequencies of each radio channel used on station:
+		* AI Private - 144.7
+		* Command - 135.3
+		* Common - 145.9
+		* Engineering - 135.7
+		* Medical - 135.5
+		* Science - 135.1
+		* Security - 135.9
+		* Service - 134.9
+		* Supply - 134.7"}
+
 /obj/item/paper/fluff/jobs/security/beepsky_mom
 	name = "Note from Beepsky's Mom"
 	default_raw_text = "01001001 00100000 01101000 01101111 01110000 01100101 00100000 01111001 01101111 01110101 00100000 01110011 01110100 01100001 01111001 00100000 01110011 01100001 01100110 01100101 00101110 00100000 01001100 01101111 01110110 01100101 00101100 00100000 01101101 01101111 01101101 00101110"

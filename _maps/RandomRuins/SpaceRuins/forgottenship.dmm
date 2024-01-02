@@ -519,7 +519,7 @@
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cd" = (
 /obj/machinery/light/directional/south,
-/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,
+/mob/living/basic/trooper/nanotrasen/ranged/assault,
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "ce" = (
@@ -796,7 +796,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/mob/living/simple_animal/hostile/nanotrasen/elite,
+/mob/living/basic/trooper/nanotrasen/ranged/elite,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "cR" = (
@@ -1084,7 +1084,7 @@
 	dir = 10
 	},
 /obj/item/wrench,
-/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,
+/mob/living/basic/trooper/nanotrasen/ranged/assault,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "tO" = (
@@ -1105,7 +1105,7 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "yf" = (
-/mob/living/simple_animal/hostile/nanotrasen/ranged/assault,
+/mob/living/basic/trooper/nanotrasen/ranged/assault,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "yv" = (

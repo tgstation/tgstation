@@ -211,7 +211,7 @@
 		mother.children_list -= src
 	visible_message(span_warning("[src] explodes!"))
 	explosion(src, flame_range = 3, adminlog = FALSE)
-	gib()
+	gib(DROP_ALL_REMAINS)
 
 /obj/effect/goliath_tentacle/broodmother
 	grapple_time = 1 SECONDS

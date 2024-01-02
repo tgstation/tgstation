@@ -385,6 +385,22 @@
 	return O.equip(src, visualsOnly)
 
 
+///A version of equipOutfit that overrides passed in outfits with their entry on the species' outfit override registry
+/mob/living/carbon/human/proc/equip_species_outfit(outfit, visualsOnly = FALSE)
+	var/datum/outfit/outfit_to_equip
+
+	var/override_outfit_path = dna?.species.outfit_override_registry[outfit]
+	if(override_outfit_path)
+		outfit_to_equip = new override_outfit_path
+	else
+		outfit_to_equip = new outfit
+
+	if(isnull(outfit_to_equip))
+		return FALSE
+
+	return outfit_to_equip.equip(src, visualsOnly)
+
+
 //delete all equipment without dropping anything
 /mob/living/carbon/human/proc/delete_equipment()
 	for(var/slot in get_all_worn_items())//order matters, dependant slots go first

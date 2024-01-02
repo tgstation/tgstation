@@ -72,13 +72,109 @@
 /atom/movable/screen/plane_master/rendering_plate/game_plate
 	name = "Game rendering plate"
 	documentation = "Holds all objects that are ahhh, in character? is maybe the best way to describe it.\
-		<br>We apply a displacement effect from the gravity pulse plane too, so we can warp the game world."
+		<br>We apply a displacement effect from the gravity pulse plane too, so we can warp the game world.\
+		<br>If we have fov enabled we'll relay this onto two different rendering plates to apply fov effects to only a portion. If not, we just draw straight to master"
 	plane = RENDER_PLANE_GAME
 	render_relay_planes = list(RENDER_PLANE_MASTER)
 
 /atom/movable/screen/plane_master/rendering_plate/game_plate/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
 	add_filter("displacer", 1, displacement_map_filter(render_source = OFFSET_RENDER_TARGET(GRAVITY_PULSE_RENDER_TARGET, offset), size = 10))
+	if(check_holidays(HALLOWEEN))
+		// Makes things a tad greyscale (leaning purple) and drops low colors for vibes
+		// We're basically using alpha as better constant here btw
+		add_filter("spook_color", 2, color_matrix_filter(list(0.75,0.13,0.13,0, 0.13,0.7,0.13,0, 0.13,0.13,0.75,0, -0.06,-0.09,-0.08,1, 0,0,0,0)))
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/show_to(mob/mymob)
+	. = ..()
+	if(!. || !mymob)
+		return .
+	RegisterSignal(mymob, SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_enabled), override = TRUE)
+	RegisterSignal(mymob, SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_disabled), override = TRUE)
+	if(HAS_TRAIT(mymob, TRAIT_FOV_APPLIED))
+		fov_enabled(mymob)
+	else
+		fov_disabled(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/fov_enabled(mob/source)
+	SIGNAL_HANDLER
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME_UNMASKED, offset))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME_MASKED, offset))
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_MASTER, offset))
+
+/atom/movable/screen/plane_master/rendering_plate/game_plate/proc/fov_disabled(mob/source)
+	SIGNAL_HANDLER
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME_UNMASKED, offset))
+	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME_MASKED, offset))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_MASTER, offset))
+
+///renders the parts of the plate unmasked by fov
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate
+	name = "Unmasked Game rendering plate"
+	documentation = "Holds the bits of the game plate that aren't impacted by fov.\
+		<br>We use an alpha mask to cut out the bits we plan on dealing with elsewhere"
+	plane = RENDER_PLANE_GAME_UNMASKED
+	render_relay_planes = list(RENDER_PLANE_MASTER)
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("fov_handled", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/show_to(mob/mymob)
+	. = ..()
+	if(!. || !mymob)
+		return .
+	RegisterSignal(mymob, SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_enabled), override = TRUE)
+	RegisterSignal(mymob, SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_disabled), override = TRUE)
+	if(HAS_TRAIT(mymob, TRAIT_FOV_APPLIED))
+		fov_enabled(mymob)
+	else
+		fov_disabled(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/proc/fov_enabled(mob/source)
+	SIGNAL_HANDLER
+	if(force_hidden == FALSE)
+		return
+	unhide_plane(source)
+
+/atom/movable/screen/plane_master/rendering_plate/unmasked_game_plate/proc/fov_disabled(mob/source)
+	SIGNAL_HANDLER
+	hide_plane(source)
+
+///renders the parts of the plate masked by fov
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate
+	name = "FOV Game rendering plate"
+	documentation = "Contains the bits of the game plate that are hidden by some form of fov\
+		<br>Applies a color matrix to dim and create contrast, alongside a blur. Goal is only half being able to see stuff"
+	plane = RENDER_PLANE_GAME_MASKED
+	render_relay_planes = list(RENDER_PLANE_MASTER)
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("fov_blur", 1, gauss_blur_filter(1.8))
+	add_filter("fov_handled_space", 2, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(FIELD_OF_VISION_BLOCKER_RENDER_TARGET, offset)))
+	add_filter("fov_matrix", 3, color_matrix_filter(list(0.5,-0.15,-0.15,0, -0.15,0.5,-0.15,0, -0.15,-0.15,0.5,0, 0,0,0,1, 0,0,0,0)))
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/show_to(mob/mymob)
+	. = ..()
+	if(!. || !mymob)
+		return .
+	RegisterSignal(mymob, SIGNAL_ADDTRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_enabled), override = TRUE)
+	RegisterSignal(mymob, SIGNAL_REMOVETRAIT(TRAIT_FOV_APPLIED), PROC_REF(fov_disabled), override = TRUE)
+	if(HAS_TRAIT(mymob, TRAIT_FOV_APPLIED))
+		fov_enabled(mymob)
+	else
+		fov_disabled(mymob)
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/proc/fov_enabled(mob/source)
+	SIGNAL_HANDLER
+	if(force_hidden == FALSE)
+		return
+	unhide_plane(source)
+
+/atom/movable/screen/plane_master/rendering_plate/masked_game_plate/proc/fov_disabled(mob/source)
+	SIGNAL_HANDLER
+	hide_plane(source)
 
 // Blackness renders weird when you view down openspace, because of transforms and borders and such
 // This is a consequence of not using lummy's grouped transparency, but I couldn't get that to work without totally fucking up

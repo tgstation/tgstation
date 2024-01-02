@@ -244,7 +244,7 @@
 /area/template_noop)
 "wV" = (
 /obj/structure/window/spawner/directional/north,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 1
 	},
@@ -568,6 +568,8 @@
 /obj/item/surgical_drapes,
 /obj/item/razor,
 /obj/item/hemostat,
+/obj/item/bonesetter,
+/obj/item/stack/medical/bone_gel,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},

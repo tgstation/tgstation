@@ -91,9 +91,6 @@
 /turf/closed/mineral/silver,
 /area/misc/testroom)
 "co" = (
-/obj/machinery/door/window/tram/hilbert{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "cx" = (
@@ -147,8 +144,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "dP" = (
-/obj/structure/window/reinforced/tram/directional/north,
-/obj/structure/window/reinforced/tram/directional/south,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "dU" = (
@@ -174,15 +169,12 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "em" = (
-/obj/structure/window/reinforced/tram/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "eo" = (
 /turf/closed/wall/mineral/wood,
 /area/misc/testroom)
 "es" = (
-/obj/structure/window/reinforced/tram/directional/west,
-/obj/structure/window/reinforced/tram/directional/north,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "ev" = (
@@ -327,7 +319,6 @@
 /turf/closed/wall/mineral/titanium/interior,
 /area/misc/testroom)
 "gY" = (
-/obj/machinery/door/window/tram/hilbert,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "ha" = (
@@ -335,8 +326,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "hg" = (
-/obj/structure/window/reinforced/tram/directional/east,
-/obj/structure/window/reinforced/tram/directional/north,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "hh" = (
@@ -379,8 +368,6 @@
 /turf/closed/mineral/snowmountain/coldroom,
 /area/misc/testroom)
 "ic" = (
-/obj/structure/window/reinforced/tram/directional/east,
-/obj/structure/window/reinforced/tram/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "id" = (
@@ -587,7 +574,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "lB" = (
-/obj/machinery/door/window/tram/right/directional/south,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "lI" = (
@@ -650,9 +636,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "mC" = (
-/obj/machinery/door/window/tram{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "mF" = (
@@ -660,7 +643,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "mJ" = (
-/obj/structure/window/reinforced/tram/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "mO" = (
@@ -792,7 +774,6 @@
 /turf/closed/indestructible/reinforced,
 /area/misc/testroom)
 "oX" = (
-/obj/machinery/door/window/tram/left/directional/north,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "pf" = (
@@ -873,9 +854,6 @@
 /turf/closed/wall/mineral/gold,
 /area/misc/testroom)
 "qA" = (
-/obj/machinery/door/window/tram{
-	dir = 8
-	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "qB" = (
@@ -966,7 +944,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "sc" = (
-/obj/structure/window/reinforced/tram/directional/north,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "se" = (
@@ -1006,7 +983,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "ta" = (
-/obj/machinery/door/window/tram/right/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "tb" = (
@@ -1082,9 +1058,6 @@
 /turf/closed/indestructible/paper,
 /area/misc/testroom)
 "uB" = (
-/obj/machinery/door/window/tram/hilbert{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "uE" = (
@@ -1096,7 +1069,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "uN" = (
-/obj/machinery/door/window/tram/left/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "uP" = (
@@ -1119,8 +1091,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "vk" = (
-/obj/structure/window/reinforced/tram/directional/north,
-/obj/structure/window/reinforced/tram/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "vm" = (
@@ -1183,7 +1153,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "wa" = (
-/obj/structure/window/reinforced/tram/directional/south,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "wm" = (
@@ -1231,10 +1200,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "xo" = (
-/obj/structure/window/reinforced/tram/directional/south,
-/obj/structure/window/reinforced/tram/directional/north,
-/obj/structure/window/reinforced/tram/directional/east,
-/obj/structure/window/reinforced/tram/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "xp" = (
@@ -1266,7 +1231,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "yc" = (
-/obj/machinery/door/window/tram/left/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "yf" = (
@@ -1340,7 +1304,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "zl" = (
-/obj/machinery/door/window/tram,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "zn" = (
@@ -1402,8 +1365,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "AD" = (
-/obj/structure/window/reinforced/tram/directional/south,
-/obj/structure/window/reinforced/tram/directional/east,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "AS" = (
@@ -1689,9 +1650,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "GR" = (
-/obj/machinery/door/window/tram/hilbert{
-	dir = 1
-	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "GY" = (
@@ -1852,7 +1810,6 @@
 /turf/closed/indestructible/necropolis,
 /area/misc/testroom)
 "JN" = (
-/obj/machinery/door/window/tram/left/directional/south,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "JS" = (
@@ -1955,8 +1912,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "LW" = (
-/obj/structure/window/reinforced/tram/directional/south,
-/obj/structure/window/reinforced/tram/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "LX" = (
@@ -2084,7 +2039,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "Og" = (
-/obj/machinery/door/window/tram/right/directional/north,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "Oj" = (
@@ -2199,9 +2153,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "Qp" = (
-/obj/machinery/door/window/tram{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/misc/testroom)
 "QB" = (
@@ -2471,7 +2422,6 @@
 /turf/open/floor/iron,
 /area/misc/testroom)
 "WN" = (
-/obj/machinery/door/window/tram/right/directional/west,
 /turf/open/floor/iron,
 /area/misc/testroom)
 "WO" = (

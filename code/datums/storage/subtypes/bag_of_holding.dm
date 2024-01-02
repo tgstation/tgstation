@@ -32,6 +32,6 @@
 	user.log_message("detonated a bag of holding at [loc_name(loccheck)].", LOG_ATTACK, color="red")
 
 	user.investigate_log("has been gibbed by a bag of holding recursive insertion.", INVESTIGATE_DEATHS)
-	user.gib(TRUE, TRUE, TRUE)
+	user.gib()
 	new/obj/boh_tear(loccheck)
 	qdel(resolve_parent)

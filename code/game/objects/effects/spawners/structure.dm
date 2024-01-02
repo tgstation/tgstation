@@ -143,6 +143,10 @@ again.
 			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/spawner/directional/north, /obj/structure/window/reinforced/spawner/directional/west)
 	return ..()
 
+/obj/effect/spawner/structure/window/reinforced/damaged
+	name = "damaged reinforced window spawner"
+	spawn_list = list(/obj/structure/window_frame/reinforced/damaged/grille_and_window)
+	
 //tinted
 
 /obj/effect/spawner/structure/window/reinforced/tinted

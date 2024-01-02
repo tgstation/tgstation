@@ -3,11 +3,15 @@
 //Reminder to everyone that planes override layers: things on the same plane will sort in order of layers
 
 //NEVER HAVE ANYTHING BELOW THIS PLANE ADJUST IF YOU NEED MORE SPACE
-#define LOWEST_EVER_PLANE -100
+#define LOWEST_EVER_PLANE -50
 
-#define CLICKCATCHER_PLANE -80
+// Doesn't really layer, just throwing this in here cause it's the best place imo
+#define FIELD_OF_VISION_BLOCKER_PLANE -45
+#define FIELD_OF_VISION_BLOCKER_RENDER_TARGET "*FIELD_OF_VISION_BLOCKER_RENDER_TARGET"
 
-#define PLANE_SPACE -25
+#define CLICKCATCHER_PLANE -40
+
+#define PLANE_SPACE -21
 #define PLANE_SPACE_PARALLAX -20
 
 #define GRAVITY_PULSE_PLANE -19
@@ -16,11 +20,12 @@
 #define RENDER_PLANE_TRANSPARENT -18 //Transparent plane that shows openspace underneath the floor
 #define TRANSPARENT_FLOOR_PLANE -14
 
-#define FLOOR_PLANE -11
+#define FLOOR_PLANE -12
 #define FLOOR_PLANE_RENDER_TARGET "*FLOOR_PLANE"
-#define WALL_PLANE -10
-#define OVER_TILE_PLANE -9
-#define GAME_PLANE -8
+#define WALL_PLANE -11
+#define OVER_TILE_PLANE -10
+#define GAME_PLANE -9
+#define ABOVE_GAME_PLANE -8
 #define HIDDEN_WALL_PLANE -7
 #define UNDER_FRILL_PLANE -6
 #define UNDER_FRILL_RENDER_TARGET "*UNDER_FRILL_PLANE"
@@ -28,7 +33,6 @@
 #define FRILL_MASK_PLANE -4
 #define FRILL_MASK_RENDER_TARGET "*FRILL_MASK_PLANE"
 #define OVER_FRILL_PLANE -3
-
 ///Slightly above the game plane but does not catch mouse clicks. Useful for certain visuals that should be clicked through, like seethrough trees
 #define SEETHROUGH_PLANE -2
 
@@ -95,31 +99,36 @@
 
 //-------------------- HUD ---------------------
 //HUD layer defines
-#define HUD_PLANE 40
-#define ABOVE_HUD_PLANE 41
+#define HUD_PLANE 35
+#define ABOVE_HUD_PLANE 36
 
 ///Plane of the "splash" icon used that shows on the lobby screen
-#define SPLASHSCREEN_PLANE 50
+#define SPLASHSCREEN_PLANE 37
 
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 100
-#define RENDER_PLANE_NON_GAME 101
+#define RENDER_PLANE_GAME 40
+/// If fov is enabled we'll draw game to this and do shit to it
+#define RENDER_PLANE_GAME_MASKED 41
+/// The bit of the game plane that is let alone is sent here
+#define RENDER_PLANE_GAME_UNMASKED 42
+#define RENDER_PLANE_NON_GAME 45
 
 // Only VERY special planes should be here, as they are above not just the game, but the UI planes as well.
 
 /// Plane related to the menu when pressing Escape.
 /// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
-#define ESCAPE_MENU_PLANE 105
+#define ESCAPE_MENU_PLANE 46
 
-#define RENDER_PLANE_MASTER 110
+#define RENDER_PLANE_MASTER 50
 
 // Lummox I swear to god I will find you
 // NOTE! You can only ever have planes greater then -10000, if you add too many with large offsets you will brick multiz
 // Same can be said for large multiz maps. Tread carefully mappers
 #define HIGHEST_EVER_PLANE RENDER_PLANE_MASTER
 /// The range unique planes can be in
+/// Try and keep this to a nice whole number, so it's easy to look at a plane var and know what's going on
 #define PLANE_RANGE (HIGHEST_EVER_PLANE - LOWEST_EVER_PLANE)
 
 // PLANE_SPACE layer(s)
@@ -138,7 +147,6 @@
 #define WIRE_LAYER 2.044
 #define GLASS_FLOOR_LAYER 2.046
 #define TRAM_RAIL_LAYER 2.047
-#define TRAM_FLOOR_LAYER 2.048
 #define ABOVE_OPEN_TURF_LAYER 2.049
 
 //GAME_PLANE layers
@@ -163,6 +171,9 @@
 // Anything above this layer is not "on" a turf for the purposes of washing
 // I hate this life of ours
 #define FLOOR_CLEAN_LAYER 2.55
+#define TRAM_STRUCTURE_LAYER 2.57
+#define TRAM_FLOOR_LAYER 2.58
+#define TRAM_WALL_LAYER 2.59
 
 //Walls draw below
 //We draw them to the game plane so we can take advantage of SIDE_MAP for em
@@ -173,8 +184,8 @@
 #define WALL_CLICKCATCH_LAYER 2.69
 #define ON_WALL_LAYER 2.7
 
-///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
 #define BELOW_OPEN_DOOR_LAYER 2.74
+///Anything below this layer is to be considered completely (visually) under water by the immerse layer.
 #define WATER_LEVEL_LAYER 2.76
 #define BLASTDOOR_LAYER 2.78
 #define OPEN_DOOR_LAYER 2.8
@@ -206,18 +217,17 @@
 #define MOB_SHIELD_LAYER 4.01
 #define MOB_ABOVE_PIGGYBACK_LAYER 4.06
 #define MOB_UPPER_LAYER 4.07
-#define HITSCAN_PROJECTILE_LAYER 4.09
+#define HITSCAN_PROJECTILE_LAYER 4.09 //above all mob but still hidden by FoV
 #define ABOVE_MOB_LAYER 4.1
 #define WALL_OBJ_LAYER 4.25
-#warn is this actually needed?
-#define TRAM_STUFF_LAYER 4.26
-#warn should these exist?
+#define TRAM_SIGNAL_LAYER 4.26
 #define EDGED_TURF_LAYER 4.3
 #define ON_EDGED_TURF_LAYER 4.35
-
 #define SPACEVINE_LAYER 4.4
 #define LARGE_MOB_LAYER 4.5
 #define SPACEVINE_MOB_LAYER 4.6
+
+// Intermediate layer used by both GAME_PLANE and ABOVE_GAME_PLANE
 #define ABOVE_ALL_MOB_LAYER 4.7
 #define NAVIGATION_EYE_LAYER 4.9
 //#define FLY_LAYER 5 //For easy recordkeeping; this is a byond define
@@ -232,6 +242,8 @@
  * We just have to make sure the visual overlay is rendered above all the other overlays of those movables.
  */
 #define WATER_VISUAL_OVERLAY_LAYER 1000
+
+// SEETHROUGH_PLANE layers here, tho it has no layer values
 
 //---------- LIGHTING -------------
 
@@ -267,7 +279,7 @@
 #define ECHO_LAYER 7
 #define PARRY_LAYER 8
 
-#define BLIND_EFFECTS_LAYER 100
+#define FOV_EFFECT_LAYER 100
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 /// Bubble for typing indicators

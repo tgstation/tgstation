@@ -37,3 +37,4 @@ To defeat the slaughter demon, shoot at it until it dies.
 When a round ends nearly everything about it is lost forever, leave your salt behind with it.
 You can win a pulse rifle from the arcade machine. Honest.
 Your sprite represents your hitbox, so that afro makes you easier to kill. The sacrifices we make for style.
+Gorillas can be killed by land mines placed along forest paths.

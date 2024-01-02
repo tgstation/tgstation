@@ -36,7 +36,7 @@
 			heal_when_sinked = TRUE,
 			health_per_second = 1,
 			outline_colour = COLOR_PALE_GREEN,
-			damage_res_sinked = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1))
+			damage_res_sinked = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1))
 
 	if (!isbasicmob(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -66,7 +66,7 @@
 	if(ground_sinking_start_timer)
 		deltimer(ground_sinking_start_timer)
 
-/// When you take damage, reset the cooldown and start processing
+/// When you move, reset the cooldown and start processing
 /datum/component/ground_sinking/proc/on_moved(mob/living/basic/living_target, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
 	if(sinked || is_sinking)
@@ -79,18 +79,24 @@
 /datum/component/ground_sinking/proc/start_sinking(mob/living/basic/living_target)
 	if(!sinked || is_sinking)
 		is_sinking = TRUE
-		INVOKE_ASYNC(src, PROC_REF(sink_once), living_target)
+		INVOKE_ASYNC(src, PROC_REF(sinking_progress), living_target)
 
-/datum/component/ground_sinking/proc/sink_once(mob/living/basic/living_target)
+/// Makes the mob try to sink three times. Unsinks if interrupted.
+/datum/component/ground_sinking/proc/sinking_progress(mob/living/basic/living_target)
 	living_target.visible_message(span_notice("[living_target] starts sinking into the ground!"))
 	for(var/i in 1 to 3)
-		if(do_after(living_target, sink_speed, living_target))
-			sink_count += 1
-			living_target.icon_state = "[target_icon_state]_burried_[sink_count]"
+		if(QDELETED(living_target))
+			return
+		if(!do_after(living_target, sink_speed, living_target))
+			unsink()
+			return
+		sink_count += 1
+		living_target.icon_state = "[target_icon_state]_burried_[sink_count]"
 	sink_count = 0
-	is_sinked(living_target)
+	finish_sinking(living_target)
 
-/datum/component/ground_sinking/proc/is_sinked(mob/living/basic/living_target)
+/// The mob has fully sunk, updates its regeneration, damage resistance and density
+/datum/component/ground_sinking/proc/finish_sinking(mob/living/basic/living_target)
 	sinked = TRUE
 	is_sinking = FALSE
 	living_target.density = FALSE
@@ -98,15 +104,19 @@
 	if(heal_when_sinked)
 		start_regenerating()
 
+/// The mob pops out of the ground
 /datum/component/ground_sinking/proc/unsink()
 	var/mob/living/basic/living_target = parent
+	if(QDELETED(parent))
+		return
 	if(sinked && heal_when_sinked)
 		stop_regenerating()
 	living_target.icon_state = target_icon_state
-	living_target.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	living_target.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	living_target.density = TRUE
 	sinked = FALSE
 
+/// The mop starts regaining health
 /datum/component/ground_sinking/proc/start_regenerating()
 	var/mob/living/basic/living_parent = parent
 	if (living_parent.stat == DEAD)
@@ -122,6 +132,7 @@
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
 
+/// Stops regaining health
 /datum/component/ground_sinking/proc/stop_regenerating()
 	STOP_PROCESSING(SSobj, src)
 	var/mob/living/basic/living_parent = parent

@@ -20,6 +20,14 @@
 	REMOVE_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 	AddComponent(/datum/component/seethrough_mob)
 
+/mob/living/carbon/alien/adult/royal/on_lying_down(new_lying_angle)
+	. = ..()
+	layer = LYING_MOB_LAYER
+
+/mob/living/carbon/alien/adult/royal/on_standing_up(new_lying_angle)
+	. = ..()
+	layer = initial(layer)
+
 /mob/living/carbon/alien/adult/royal/can_inject(mob/user, target_zone, injection_flags)
 	return FALSE
 
@@ -46,11 +54,11 @@
 
 	real_name = src.name
 
-	var/datum/action/cooldown/spell/aoe/repulse/xeno/tail_whip = new(src)
-	tail_whip.Grant(src)
-
-	var/datum/action/cooldown/alien/promote/promotion = new(src)
-	promotion.Grant(src)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/alien/promote,
+		/datum/action/cooldown/spell/aoe/repulse/xeno,
+	)
+	grant_actions_by_list(innate_actions)
 
 	return ..()
 

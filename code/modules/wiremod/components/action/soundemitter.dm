@@ -87,7 +87,7 @@
 	if(!parent.shell)
 		return
 
-	if(TIMER_COOLDOWN_CHECK(parent.shell, COOLDOWN_CIRCUIT_SOUNDEMITTER))
+	if(TIMER_COOLDOWN_RUNNING(parent.shell, COOLDOWN_CIRCUIT_SOUNDEMITTER))
 		return
 
 	var/sound_to_play = options_map[sound_file.value]

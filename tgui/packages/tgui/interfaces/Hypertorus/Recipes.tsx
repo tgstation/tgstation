@@ -1,8 +1,8 @@
+import { useBackend } from 'tgui/backend';
 import { Box, Button, Icon, Table, Tooltip } from 'tgui/components';
 import { getGasColor, getGasLabel } from 'tgui/constants';
 
 import { HypertorusData } from '.';
-import { useBackend } from 'tgui/backend';
 
 type Recipe = {
   param: string;
@@ -115,7 +115,8 @@ const MemoRow = (props) => {
       className={`hypertorus-recipes__row${
         active ? ' hypertorus-recipes__activerow' : ''
       }`}
-      {...rest}>
+      {...rest}
+    >
       {children}
     </Table.Row>
   );
@@ -133,9 +134,9 @@ const GasCellItem = (props: GasCellProps) => {
   );
 };
 
-export const HypertorusRecipes = (props: RecipeProps, context) => {
+export const HypertorusRecipes = (props: RecipeProps) => {
   const { enableRecipeSelection, onRecipe, ...rest } = props;
-  const { data } = useBackend<HypertorusData>(context);
+  const { data } = useBackend<HypertorusData>();
   const { selectable_fuel, selected } = data;
 
   return (
@@ -209,19 +210,20 @@ export const HypertorusRecipes = (props: RecipeProps, context) => {
                     return (
                       <Table.Cell key={param}>
                         <Tooltip
-                          content={(tooltip || ((v) => 'x' + v))(value, rest)}>
+                          content={(tooltip || ((v) => 'x' + v))(value, rest)}
+                        >
                           <Icon
                             className="hypertorus-recipes__icon"
                             name={effect_to_icon(
                               value,
                               scale,
-                              override_base || 1
+                              override_base || 1,
                             )}
                           />
                         </Tooltip>
                       </Table.Cell>
                     );
-                  }
+                  },
                 )}
               </MemoRow>
             );

@@ -46,8 +46,8 @@
 	gain_text = "I met an old man in an anique shop who wielded a very unusual weapon. \
 		I could not purchase it at the time, but they showed me how they made it ages ago."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/furious_steel,
-		/datum/heretic_knowledge/spell/entropic_plume,
+		/datum/heretic_knowledge/spell/realignment,
+		/datum/heretic_knowledge/spell/rust_construction,
 		/datum/heretic_knowledge/rifle_ammo,
 	)
 	required_atoms = list(
@@ -100,6 +100,10 @@
 	name = "Rust Charge"
 	desc = "A charge that must be started on a rusted tile and will destroy any rusted objects you come into contact with, will deal high damage to others and rust around you during the charge."
 	gain_text = "The hills sparkled now, as I neared them my mind began to wander. I quickly regained my resolve and pushed forward, this last leg would be the most treacherous."
+	next_knowledge = list(
+		/datum/heretic_knowledge/spell/furious_steel,
+		/datum/heretic_knowledge/spell/entropic_plume,
+	)
 	spell_to_add = /datum/action/cooldown/mob_cooldown/charge/rust
 	cost = 1
 	route = PATH_SIDE

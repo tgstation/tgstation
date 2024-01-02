@@ -17,31 +17,30 @@
 	var/killer_clamp = FALSE
 	///How much base damage this clamp does
 	var/clamp_damage = 20
-	///Var for the chassis we are attached to, needed to access ripley contents and such
-	var/obj/vehicle/sealed/mecha/ripley/cargo_holder
 	///Audio for using the hydraulic clamp
 	var/clampsound = 'sound/mecha/hydraulic.ogg'
+	///Chassis but typed for the cargo_hold var
+	var/obj/vehicle/sealed/mecha/ripley/workmech
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/attach(obj/vehicle/sealed/mecha/new_mecha)
 	. = ..()
-	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))
-		cargo_holder = chassis
+	workmech = chassis
 	ADD_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/detach(atom/moveto)
 	REMOVE_TRAIT(chassis, TRAIT_OREBOX_FUNCTIONAL, TRAIT_MECH_EQUIPMENT(type))
-	cargo_holder = null
+	workmech = null
 	return ..()
 
 /obj/item/mecha_parts/mecha_equipment/hydraulic_clamp/action(mob/living/source, atom/target, list/modifiers)
 	if(!action_checks(target))
 		return
-	if(!cargo_holder)
-		return
+	if(!workmech.cargo_hold)
+		CRASH("Mech [chassis] has a clamp device, but no internal storage. This should be impossible.")
 	if(ismecha(target))
 		var/obj/vehicle/sealed/mecha/M = target
 		var/have_ammo
-		for(var/obj/item/mecha_ammo/box in cargo_holder.cargo)
+		for(var/obj/item/mecha_ammo/box in workmech.cargo_hold.contents)
 			if(istype(box, /obj/item/mecha_ammo) && box.rounds)
 				have_ammo = TRUE
 				if(M.ammo_resupply(box, source, TRUE))
@@ -66,7 +65,7 @@
 		if(clamptarget.anchored)
 			to_chat(source, "[icon2html(src, source)][span_warning("[target] is firmly secured!")]")
 			return
-		if(LAZYLEN(cargo_holder.cargo) >= cargo_holder.cargo_capacity)
+		if(workmech.cargo_hold.contents.len >= workmech.cargo_hold.cargo_capacity)
 			to_chat(source, "[icon2html(src, source)][span_warning("Not enough room in cargo compartment!")]")
 			return
 		playsound(chassis, clampsound, 50, FALSE, -6)
@@ -75,13 +74,12 @@
 		if(!do_after_cooldown(target, source))
 			clamptarget.set_anchored(initial(clamptarget.anchored))
 			return
-		LAZYADD(cargo_holder.cargo, clamptarget)
-		clamptarget.forceMove(chassis)
+		clamptarget.forceMove(workmech.cargo_hold)
 		clamptarget.set_anchored(FALSE)
-		if(!cargo_holder.ore_box && istype(clamptarget, /obj/structure/ore_box))
-			cargo_holder.ore_box = clamptarget
+		if(!chassis.ore_box && istype(clamptarget, /obj/structure/ore_box))
+			chassis.ore_box = clamptarget
 		to_chat(source, "[icon2html(src, source)][span_notice("[target] successfully loaded.")]")
-		log_message("Loaded [clamptarget]. Cargo compartment capacity: [cargo_holder.cargo_capacity - LAZYLEN(cargo_holder.cargo)]", LOG_MECHA)
+		log_message("Loaded [clamptarget]. Cargo compartment capacity: [workmech.cargo_hold.cargo_capacity - workmech.cargo_hold.contents.len]", LOG_MECHA)
 
 	else if(isliving(target))
 		var/mob/living/M = target
@@ -172,7 +170,7 @@
 		var/datum/reagents/water_reagents = new /datum/reagents(required_amount/8) //required_amount/8, because the water usage is split between eight sprays. As of this comment, required_amount/8 = 10u each.
 		water.reagents = water_reagents
 		water_reagents.my_atom = water
-		reagents.trans_to(water, required_amount/8)
+		reagents.trans_to(water, required_amount / 8)
 		water.move_at(get_step(chassis, get_dir(targetturf, chassis)), 2, 4) //Target is the tile opposite of the mech as the starting turf.
 
 	playsound(chassis, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
@@ -305,13 +303,13 @@
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Wall...")]")
 				if(!do_after_cooldown(floor_turf, source))
 					return
-				floor_turf.PlaceOnTop(/turf/closed/wall)
+				floor_turf.place_on_top(/turf/closed/wall)
 			else if(isopenturf(target))
 				var/turf/open/open_turf = target
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Floor...")]")
 				if(!do_after_cooldown(open_turf, source))
 					return
-				open_turf.PlaceOnTop(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
+				open_turf.place_on_top(/turf/open/floor/plating, flags = CHANGETURF_INHERIT_AIR)
 		if(MODE_AIRLOCK)
 			if(isfloorturf(target))
 				to_chat(source, "[icon2html(src, source)][span_notice("Building Airlock...")]")
@@ -331,15 +329,17 @@
 //Dunno where else to put this so shrug
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade
 	name = "Ripley MK-II Conversion Kit"
-	desc = "A pressurized canopy attachment kit for an Autonomous Power Loader Unit \"Ripley\" MK-I mecha, to convert it to the slower, but space-worthy MK-II design. This kit cannot be removed, once applied."
+	desc = "A pressurized canopy attachment kit for an Autonomous Power Loader Unit \"Ripley\" MK-I exosuit, to convert it to the slower, but space-worthy MK-II design. This kit cannot be removed, once applied."
 	icon_state = "ripleyupgrade"
 	mech_flags = EXOSUIT_MODULE_RIPLEY
+	var/result = /obj/vehicle/sealed/mecha/ripley/mk2
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
 	if(mecha.type != /obj/vehicle/sealed/mecha/ripley)
 		to_chat(user, span_warning("This conversion kit can only be applied to APLU MK-I models."))
 		return FALSE
-	if(LAZYLEN(mecha.cargo))
+	var/obj/vehicle/sealed/mecha/ripley/workmech = mecha
+	if(LAZYLEN(workmech.cargo_hold))
 		to_chat(user, span_warning("[mecha]'s cargo hold must be empty before this conversion kit can be applied."))
 		return FALSE
 	if(!(mecha.mecha_flags & PANEL_OPEN)) //non-removable upgrade, so lets make sure the pilot or owner has their say.
@@ -354,43 +354,58 @@
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/attach(obj/vehicle/sealed/mecha/markone, attach_right = FALSE)
-	var/obj/vehicle/sealed/mecha/ripley/mk2/marktwo = new (get_turf(markone),1)
-	if(!marktwo)
+	var/obj/vehicle/sealed/mecha/newmech = new result(get_turf(markone),1)
+	if(!newmech)
 		return
-	QDEL_NULL(marktwo.cell)
+	QDEL_NULL(newmech.cell)
 	if (markone.cell)
-		marktwo.cell = markone.cell
-		markone.cell.forceMove(marktwo)
+		newmech.cell = markone.cell
+		markone.cell.forceMove(newmech)
 		markone.cell = null
-	QDEL_NULL(marktwo.scanmod)
+	QDEL_NULL(newmech.scanmod)
 	if (markone.scanmod)
-		marktwo.scanmod = markone.scanmod
-		markone.scanmod.forceMove(marktwo)
+		newmech.scanmod = markone.scanmod
+		markone.scanmod.forceMove(newmech)
 		markone.scanmod = null
-	QDEL_NULL(marktwo.capacitor)
+	QDEL_NULL(newmech.capacitor)
 	if (markone.capacitor)
-		marktwo.capacitor = markone.capacitor
-		markone.capacitor.forceMove(marktwo)
+		newmech.capacitor = markone.capacitor
+		markone.capacitor.forceMove(newmech)
 		markone.capacitor = null
-	QDEL_NULL(marktwo.servo)
+	QDEL_NULL(newmech.servo)
 	if (markone.servo)
-		marktwo.servo = markone.servo
-		markone.servo.forceMove(marktwo)
+		newmech.servo = markone.servo
+		markone.servo.forceMove(newmech)
 		markone.servo = null
-	marktwo.update_part_values()
+	newmech.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
 		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))
-			continue //the MK2 already has one.
+			continue //the new mech already has one.
 		var/righthandgun = markone.equip_by_category[MECHA_R_ARM] == equipment
-		equipment.detach(marktwo)
-		equipment.attach(marktwo, righthandgun)
-	marktwo.dna_lock = markone.dna_lock
-	marktwo.mecha_flags = markone.mecha_flags
-	marktwo.strafe = markone.strafe
+		equipment.detach(newmech)
+		equipment.attach(newmech, righthandgun)
+	newmech.dna_lock = markone.dna_lock
+	newmech.mecha_flags = markone.mecha_flags
+	newmech.strafe = markone.strafe
 	//Integ set to the same percentage integ as the old mecha, rounded to be whole number
-	marktwo.update_integrity(round((markone.get_integrity() / markone.max_integrity) * marktwo.get_integrity()))
+	newmech.update_integrity(round((markone.get_integrity() / markone.max_integrity) * newmech.get_integrity()))
 	if(markone.name != initial(markone.name))
-		marktwo.name = markone.name
+		newmech.name = markone.name
 	markone.wreckage = FALSE
+	if(HAS_TRAIT(markone, TRAIT_MECHA_CREATED_NORMALLY))
+		ADD_TRAIT(newmech, TRAIT_MECHA_CREATED_NORMALLY, newmech)
 	qdel(markone)
-	playsound(get_turf(marktwo),'sound/items/ratchet.ogg',50,TRUE)
+	playsound(get_turf(newmech),'sound/items/ratchet.ogg',50,TRUE)
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy
+	name = "Paddy Conversion Kit"
+	desc = "A hardpoint modification kit for an Autonomous Power Loader Unit \"Ripley\" MK-I exosuit, to convert it to the Paddy lightweight security design. This kit cannot be removed, once applied."
+	icon_state = "paddyupgrade"
+	mech_flags = EXOSUIT_MODULE_RIPLEY
+	result = /obj/vehicle/sealed/mecha/ripley/paddy
+
+/obj/item/mecha_parts/mecha_equipment/ripleyupgrade/paddy/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
+	if(mecha.equip_by_category[MECHA_L_ARM] || mecha.equip_by_category[MECHA_R_ARM]) //Paddys can't use RIPLEY-type equipment
+		to_chat(user, span_warning("This kit cannot be applied with hardpoint equipment attached."))
+		return FALSE
+	return ..()

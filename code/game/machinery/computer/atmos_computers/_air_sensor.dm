@@ -91,28 +91,28 @@
 	if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/outlet_injector))
 		var/obj/machinery/atmospherics/components/unary/outlet_injector/input = multi_tool.buffer
 		inlet_id = input.id_tag
-		multi_tool.set_buffer(null)
+		multi_tool.set_buffer(src)
 		balloon_alert(user, "connected to input")
 
 	else if(istype(multi_tool.buffer, /obj/machinery/atmospherics/components/unary/vent_pump))
 		var/obj/machinery/atmospherics/components/unary/vent_pump/output = multi_tool.buffer
 		//so its no longer controlled by air alarm
 		output.disconnect_from_area()
-		//configuration copied from /obj/machinery/atmospherics/components/unary/vent_pump/siphon
+		//configuration copied from /obj/machinery/atmospherics/components/unary/vent_pump/siphon but with max pressure
 		output.pump_direction = ATMOS_DIRECTION_SIPHONING
 		output.pressure_checks = ATMOS_INTERNAL_BOUND
-		output.internal_pressure_bound = 4000
+		output.internal_pressure_bound = MAX_OUTPUT_PRESSURE
 		output.external_pressure_bound = 0
 		//finally assign it to this sensor
 		outlet_id = output.id_tag
-		multi_tool.set_buffer(null)
+		multi_tool.set_buffer(src)
 		balloon_alert(user, "connected to output")
 
 	else
 		multi_tool.set_buffer(src)
-		balloon_alert(user, "added to multitool buffer")
+		balloon_alert(user, "sensor added to buffer")
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * A portable version of the /obj/machinery/air_sensor
@@ -207,23 +207,22 @@
 
 /obj/item/air_sensor/wrench_act(mob/living/user, obj/item/tool)
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	return
+		return ITEM_INTERACT_SUCCESS
 
 /obj/item/air_sensor/welder_act(mob/living/user, obj/item/tool)
 	if(!tool.tool_start_check(user, amount = 1))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	loc.balloon_alert(user, "dismantling sensor")
 	if(!tool.use_tool(src, user, 2 SECONDS, volume = 30, amount = 1))
-		return
+		return ITEM_INTERACT_BLOCKING
 	loc.balloon_alert(user, "sensor dismanteled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/air_sensor/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/analyzer(loc)
 		new /obj/item/stack/sheet/iron(loc, 1)
 	return ..()

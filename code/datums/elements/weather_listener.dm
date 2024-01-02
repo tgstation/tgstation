@@ -35,7 +35,7 @@
 /datum/element/weather_listener/proc/handle_z_level_change(datum/source, turf/old_loc, turf/new_loc)
 	SIGNAL_HANDLER
 	var/list/fitting_z_levels = SSmapping.levels_by_trait(weather_trait)
-	if(!(new_loc.z in fitting_z_levels))
+	if(!(new_loc?.z in fitting_z_levels))
 		return
 	var/datum/component/our_comp = source.AddComponent(\
 		/datum/component/area_sound_manager, \

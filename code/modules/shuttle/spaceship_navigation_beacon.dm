@@ -5,7 +5,7 @@
 	icon_state = "beacon_active"
 	base_icon_state = "beacon"
 	density = TRUE
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 
 	/// Locked beacons cannot be jumped to by ships.
 	var/locked = FALSE
@@ -101,7 +101,7 @@
 
 /obj/item/folded_navigation_gigabeacon/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/deployable, 3 SECONDS, /obj/machinery/spaceship_navigation_beacon, delete_on_use = TRUE)
+	AddComponent(/datum/component/deployable, 3 SECONDS, /obj/machinery/spaceship_navigation_beacon)
 
 /obj/item/folded_navigation_gigabeacon/examine()
 	.=..()

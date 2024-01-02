@@ -1,4 +1,4 @@
-#define MAX_NOTICES 5
+#define MAX_NOTICES 8
 
 /obj/structure/noticeboard
 	name = "notice board"
@@ -25,9 +25,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 		if(istype(I, /obj/item/paper))
 			I.forceMove(src)
 			notices++
-	update_icon()
-
-	AddElement(/datum/element/wall_mount)
+	update_appearance(UPDATE_ICON)
+	find_and_hang_on_wall()
 
 //attaching papers!!
 /obj/structure/noticeboard/attackby(obj/item/O, mob/user, params)
@@ -39,7 +38,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 			if(!user.transferItemToLoc(O, src))
 				return
 			notices++
-			update_icon()
+			update_appearance(UPDATE_ICON)
 			to_chat(user, span_notice("You pin the [O] to the noticeboard."))
 		else
 			to_chat(user, span_warning("The notice board is full!"))
@@ -91,6 +90,11 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 			remove_item(item, user)
 			return TRUE
 
+/obj/structure/noticeboard/update_overlays()
+	. = ..()
+	if(notices)
+		. += "notices_[notices]"
+
 /**
  * Removes an item from the notice board
  *
@@ -104,10 +108,10 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/noticeboard)
 		user.put_in_hands(item)
 		balloon_alert(user, "removed from board")
 	notices--
-	update_appearance()
+	update_appearance(UPDATE_ICON)
 
 /obj/structure/noticeboard/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(!disassembled)
 			new /obj/item/stack/sheet/mineral/wood(loc)
 		else

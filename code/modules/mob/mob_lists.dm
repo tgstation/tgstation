@@ -53,7 +53,7 @@
 		GLOB.keyloop_list |= src
 	else if(stat != DEAD || !SSlag_switch?.measures[DISABLE_DEAD_KEYLOOP])
 		GLOB.keyloop_list |= src
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(stat == DEAD)
 		add_to_current_dead_players()
@@ -65,7 +65,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	GLOB.player_list -= src
 	GLOB.keyloop_list -= src
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(stat == DEAD)
 		remove_from_current_dead_players()
@@ -75,12 +75,12 @@
 
 ///Adds the cliented mob reference to either the list of dead player-mobs or to the list of observers, depending on how they joined the game.
 /mob/proc/add_to_current_dead_players()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	GLOB.dead_player_list |= src
 
 /mob/dead/observer/add_to_current_dead_players()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(started_as_observer)
 		GLOB.current_observers_list |= src
@@ -92,12 +92,12 @@
 
 ///Removes the mob reference from either the list of dead player-mobs or from the list of observers, depending on how they joined the game.
 /mob/proc/remove_from_current_dead_players()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	GLOB.dead_player_list -= src
 
 /mob/dead/observer/remove_from_current_dead_players()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	if(started_as_observer)
 		GLOB.current_observers_list -= src
@@ -107,7 +107,7 @@
 
 ///Adds the cliented mob reference to the list of living player-mobs. If the mob is an antag, it adds it to the list of living antag player-mobs.
 /mob/proc/add_to_current_living_players()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	GLOB.alive_player_list |= src
 	if(mind && (mind.special_role || length(mind.antag_datums)))
@@ -115,7 +115,7 @@
 
 ///Removes the mob reference from the list of living player-mobs. If the mob is an antag, it removes it from the list of living antag player-mobs.
 /mob/proc/remove_from_current_living_players()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	GLOB.alive_player_list -= src
 	if(LAZYLEN(mind?.antag_datums))
@@ -124,7 +124,7 @@
 
 ///Adds the cliented mob reference to the list of living antag player-mobs.
 /mob/proc/add_to_current_living_antags()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 
 	if (length(mind.antag_datums) == 0)
@@ -137,6 +137,6 @@
 
 ///Removes the mob reference from the list of living antag player-mobs.
 /mob/proc/remove_from_current_living_antags()
-	if(!SSticker?.mode)
+	if(!SSticker.HasRoundStarted())
 		return
 	GLOB.current_living_antags -= src

@@ -27,7 +27,7 @@
 		return
 	var/obj/item/multitool/M = I
 	M.set_buffer(src)
-	to_chat(user, span_notice("You store linkage information in [I]'s buffer."))
+	balloon_alert(user, "saved to multitool buffer")
 	return TRUE
 
 /obj/machinery/mineral/stacking_unit_console/ui_interact(mob/user, datum/tgui/ui)

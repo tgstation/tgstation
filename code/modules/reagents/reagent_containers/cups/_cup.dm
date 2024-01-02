@@ -85,7 +85,7 @@
 
 	SEND_SIGNAL(src, COMSIG_GLASS_DRANK, target_mob, user)
 	var/fraction = min(gulp_size/reagents.total_volume, 1)
-	reagents.trans_to(target_mob, gulp_size, transfered_by = user, methods = INGEST)
+	reagents.trans_to(target_mob, gulp_size, transferred_by = user, methods = INGEST)
 	checkLiked(fraction, target_mob)
 	playsound(target_mob.loc,'sound/items/drink.ogg', rand(10,50), TRUE)
 	if(!iscarbon(target_mob))
@@ -123,7 +123,7 @@
 			to_chat(user, span_warning("[target] is full."))
 			return
 
-		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You transfer [trans] unit\s of the solution to [target]."))
 
 	else if(target.is_drainable()) //A dispenser. Transfer FROM it TO us.
@@ -135,7 +135,7 @@
 			to_chat(user, span_warning("[src] is full."))
 			return
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
 	target.update_appearance()
@@ -156,7 +156,7 @@
 			to_chat(user, span_warning("[src] is full."))
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transfered_by = user)
+		var/trans = target.reagents.trans_to(src, amount_per_transfer_from_this, transferred_by = user)
 		to_chat(user, span_notice("You fill [src] with [trans] unit\s of the contents of [target]."))
 
 	target.update_appearance()
@@ -167,34 +167,34 @@
 	if(hotness && reagents)
 		reagents.expose_temperature(hotness)
 		to_chat(user, span_notice("You heat [name] with [attacking_item]!"))
-		return
+		return TRUE
 
 	//Cooling method
 	if(istype(attacking_item, /obj/item/extinguisher))
 		var/obj/item/extinguisher/extinguisher = attacking_item
 		if(extinguisher.safety)
-			return
+			return TRUE
 		if (extinguisher.reagents.total_volume < 1)
 			to_chat(user, span_warning("\The [extinguisher] is empty!"))
-			return
+			return TRUE
 		var/cooling = (0 - reagents.chem_temp) * extinguisher.cooling_power * 2
 		reagents.expose_temperature(cooling)
 		to_chat(user, span_notice("You cool the [name] with the [attacking_item]!"))
 		playsound(loc, 'sound/effects/extinguish.ogg', 75, TRUE, -3)
 		extinguisher.reagents.remove_all(1)
-		return
+		return TRUE
 
 	if(istype(attacking_item, /obj/item/food/egg)) //breaking eggs
 		var/obj/item/food/egg/attacking_egg = attacking_item
 		if(!reagents)
-			return
-		if(reagents.total_volume >= reagents.maximum_volume)
+			return TRUE
+		if(reagents.holder_full())
 			to_chat(user, span_notice("[src] is full."))
 		else
 			to_chat(user, span_notice("You break [attacking_egg] in [src]."))
-			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transfered_by = user)
+			attacking_egg.reagents.trans_to(src, attacking_egg.reagents.total_volume, transferred_by = user)
 			qdel(attacking_egg)
-		return
+		return TRUE
 
 	return ..()
 
@@ -350,11 +350,8 @@
 	inhand_icon_state = "bucket"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	greyscale_colors = "#0085e5" //matches 1:1 with the original sprite color before gag-ification.
-	greyscale_config = /datum/greyscale_config/buckets
-	greyscale_config_worn = /datum/greyscale_config/buckets_worn
-	greyscale_config_inhand_left = /datum/greyscale_config/buckets_inhands_left
-	greyscale_config_inhand_right = /datum/greyscale_config/buckets_inhands_right
+	fill_icon_state = "bucket"
+	fill_icon_thresholds = list(50, 90)
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 2)
 	w_class = WEIGHT_CLASS_NORMAL
 	amount_per_transfer_from_this = 20
@@ -380,20 +377,10 @@
 	fire = 75
 	acid = 50
 
-/obj/item/reagent_containers/cup/bucket/Initialize(mapload, vol)
-	if(greyscale_colors == initial(greyscale_colors))
-		set_greyscale(pick(list("#0085e5", COLOR_OFF_WHITE, COLOR_ORANGE_BROWN, COLOR_SERVICE_LIME, COLOR_MOSTLY_PURE_ORANGE, COLOR_FADED_PINK, COLOR_RED, COLOR_YELLOW, COLOR_VIOLET, COLOR_WEBSAFE_DARK_GRAY)))
-	return ..()
-
 /obj/item/reagent_containers/cup/bucket/wooden
 	name = "wooden bucket"
 	icon_state = "woodbucket"
 	inhand_icon_state = "woodbucket"
-	greyscale_colors = null
-	greyscale_config = null
-	greyscale_config_worn = null
-	greyscale_config_inhand_left = null
-	greyscale_config_inhand_right = null
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2)
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/bucket_wooden
@@ -407,7 +394,7 @@
 		if(reagents.total_volume < 1)
 			user.balloon_alert(user, "empty!")
 		else
-			reagents.trans_to(O, 5, transfered_by = user)
+			reagents.trans_to(O, 5, transferred_by = user)
 			user.balloon_alert(user, "doused [O]")
 			playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
 		return
@@ -487,36 +474,10 @@
 				if(do_after(user, 25, target = src))
 					user.adjustStaminaLoss(40)
 					switch(picked_option)
-						if("Juice") //prioritize juicing
-							if(grinded.juice_results)
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You juice [grinded] into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You try to juice [grinded] but there is no liquids in it. Instead you get nice powder."))
-								QDEL_NULL(grinded)
-								return
+						if("Juice")
+							return juice_item(grinded, user)
 						if("Grind")
-							if(grinded.grind_results)
-								grinded.on_grind()
-								reagents.add_reagent_list(grinded.grind_results)
-								if(grinded.reagents) //If grinded item has reagents within, transfer them to the mortar
-									grinded.reagents.trans_to(src, grinded.reagents.total_volume, transfered_by = user)
-								to_chat(user, span_notice("You break [grinded] into powder."))
-								QDEL_NULL(grinded)
-								return
-							else
-								grinded.on_juice()
-								reagents.add_reagent_list(grinded.juice_results)
-								to_chat(user, span_notice("You try to grind [grinded] but it almost instantly turns into a fine liquid."))
-								QDEL_NULL(grinded)
-								return
+							return grind_item(grinded, user)
 						else
 							to_chat(user, span_notice("You try to grind the mortar itself instead of [grinded]. You failed."))
 							return
@@ -527,11 +488,40 @@
 	if(grinded)
 		to_chat(user, span_warning("There is something inside already!"))
 		return
-	if(I.juice_results || I.grind_results)
+	if(I.juice_typepath || I.grind_results)
 		I.forceMove(src)
 		grinded = I
 		return
 	to_chat(user, span_warning("You can't grind this!"))
+
+/obj/item/reagent_containers/cup/mortar/proc/grind_item(obj/item/item, mob/living/carbon/human/user)
+	if(item.flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to grind [item], but it fades away!"))
+		qdel(item)
+		return
+
+	if(!item.grind(reagents, user))
+		if(isstack(item))
+			to_chat(usr, span_notice("[src] attempts to grind as many pieces of [item] as possible."))
+		else
+			to_chat(user, span_danger("You fail to grind [item]."))
+		return
+	to_chat(user, span_notice("You grind [item] into a nice powder."))
+	grinded = null
+	QDEL_NULL(item)
+
+/obj/item/reagent_containers/cup/mortar/proc/juice_item(obj/item/item, mob/living/carbon/human/user)
+	if(item.flags_1 & HOLOGRAM_1)
+		to_chat(user, span_notice("You try to juice [item], but it fades away!"))
+		qdel(item)
+		return
+
+	if(!item.juice(reagents, user))
+		to_chat(user, span_notice("You fail to juice [item]."))
+		return
+	to_chat(user, span_notice("You juice [item] into a fine liquid."))
+	grinded = null
+	QDEL_NULL(item)
 
 //Coffeepots: for reference, a standard cup is 30u, to allow 20u for sugar/sweetener/milk/creamer
 /obj/item/reagent_containers/cup/coffeepot

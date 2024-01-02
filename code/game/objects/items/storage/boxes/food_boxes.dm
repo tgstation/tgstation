@@ -313,7 +313,7 @@
 	new /obj/item/food/grown/onion/red(src)
 	new /obj/item/food/grown/onion/red(src)
 	new /obj/item/food/grown/tomato(src)
-	new /obj/item/reagent_containers/condiment/quality_oil(src)
+	new /obj/item/reagent_containers/condiment/olive_oil(src)
 
 /obj/item/storage/box/ingredients/random
 	theme_name = "random"
@@ -466,7 +466,7 @@
 			/obj/item/food/cheese/wheel = 5,
 			/obj/item/food/grown/toechtauese = 10,
 			/obj/item/reagent_containers/condiment/cornmeal = 5,
-			/obj/item/reagent_containers/condiment/quality_oil = 5,
+			/obj/item/reagent_containers/condiment/olive_oil = 5,
 			/obj/item/reagent_containers/condiment/yoghurt = 5,
 			))
 		new random_food(src)

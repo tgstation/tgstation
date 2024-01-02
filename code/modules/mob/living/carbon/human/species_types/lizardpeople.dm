@@ -5,7 +5,6 @@
 	id = SPECIES_LIZARD
 	inherent_traits = list(
 		TRAIT_MUTANT_COLORS,
-		TRAIT_CAN_USE_FLIGHT_POTION,
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 	inherent_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_REPTILE
@@ -28,7 +27,6 @@
 	exotic_bloodtype = "L"
 	inert_mutation = /datum/mutation/human/firebreath
 	death_sound = 'sound/voice/lizard/deathsound.ogg'
-	wing_types = list(/obj/item/organ/external/wings/functional/dragon)
 	species_language_holder = /datum/language_holder/lizard
 	digitigrade_customization = DIGITIGRADE_OPTIONAL
 
@@ -75,9 +73,10 @@
 	return randname
 
 
-/datum/species/lizard/randomize_features(mob/living/carbon/human/human_mob)
-	human_mob.dna.features["body_markings"] = pick(GLOB.body_markings_list)
-	randomize_external_organs(human_mob)
+/datum/species/lizard/randomize_features()
+	var/list/features = ..()
+	features["body_markings"] = pick(GLOB.body_markings_list)
+	return features
 
 /datum/species/lizard/get_scream_sound(mob/living/carbon/human/lizard)
 	return pick(
@@ -85,6 +84,10 @@
 		'sound/voice/lizard/lizard_scream_2.ogg',
 		'sound/voice/lizard/lizard_scream_3.ogg',
 	)
+
+/datum/species/lizard/get_physical_attributes()
+	return "Lizardpeople can withstand slightly higher temperatures than most species, but they are very vulnerable to the cold \
+		and can't regulate their body-temperature internally, making the vacuum of space extremely deadly to them."
 
 /datum/species/lizard/get_species_description()
 	return "The militaristic Lizardpeople hail originally from Tizira, but have grown \
@@ -152,6 +155,10 @@ Lizard subspecies: ASHWALKERS
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/lizard,
 	)
 
+/datum/species/lizard/get_physical_attributes()
+	return "Ash Walkers are identical to lizardpeople in almost all aspects. \
+		Unlike them, they're always digitigrade, they can breathe Lavaland's often noxious atmosphere and resist viruses. They are usually illiterate."
+
 /*
 Lizard subspecies: SILVER SCALED
 */
@@ -180,6 +187,11 @@ Lizard subspecies: SILVER SCALED
 	var/old_eye_color_left
 	///See above
 	var/old_eye_color_right
+
+/datum/species/lizard/silverscale/get_physical_attributes()
+	return "Silver Scales are to lizardpeople what angels are to humans. \
+		Mostly identical, they are holy, don't breathe, don't get viruses, their hide cannot be pierced, love the taste of wine, \
+		and their tongue allows them to turn into a statue, for some reason."
 
 /datum/species/lizard/silverscale/on_species_gain(mob/living/carbon/human/new_silverscale, datum/species/old_species, pref_load)
 	old_mutcolor = new_silverscale.dna.features["mcolor"]

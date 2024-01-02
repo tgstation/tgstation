@@ -53,7 +53,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/door_buttons/access_button)
 
 /obj/machinery/door_buttons/access_button/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/machinery/door_buttons/access_button/findObjsByTag()
 	for(var/obj/machinery/door_buttons/airlock_controller/A as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door_buttons/airlock_controller))
@@ -112,8 +112,9 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/door_buttons/access_button)
 	base_icon_state = "access_control"
 	name = "access console"
 	desc = "A small terminal that can cycle opening between two airlocks."
-	var/obj/machinery/door/airlock/interiorAirlock
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
 	var/obj/machinery/door/airlock/exteriorAirlock
+	var/obj/machinery/door/airlock/interiorAirlock
 	var/idInterior
 	var/idExterior
 	var/busy
@@ -123,7 +124,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/door_buttons/airlock_controller)
 
 /obj/machinery/door_buttons/airlock_controller/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/machinery/door_buttons/airlock_controller/removeMe(obj/O)
 	if(O == interiorAirlock)

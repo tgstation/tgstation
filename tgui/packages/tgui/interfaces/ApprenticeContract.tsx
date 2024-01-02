@@ -1,10 +1,11 @@
 import { multiline } from 'common/string';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
-export const ApprenticeContract = (props, context) => {
+export const ApprenticeContract = (props) => {
   return (
     <Window width={620} height={600} theme="wizard">
       <Window.Content>
@@ -65,8 +66,8 @@ export const ApprenticeContract = (props, context) => {
   );
 };
 
-const ApprenticeSelection = (props, context) => {
-  const { act } = useBackend(context);
+const ApprenticeSelection = (props) => {
+  const { act } = useBackend();
   const { iconName, fluffName, schoolTitle, assetName, blurb } = props;
   return (
     <Section>
@@ -77,8 +78,8 @@ const ApprenticeSelection = (props, context) => {
               <img
                 src={resolveAsset(assetName)}
                 style={{
-                  'border-style': 'solid',
-                  'border-color': '#7e90a7',
+                  borderStyle: 'solid',
+                  borderColor: '#7e90a7',
                 }}
               />
             </Stack.Item>
@@ -90,7 +91,8 @@ const ApprenticeSelection = (props, context) => {
                   act('buy', {
                     school: schoolTitle,
                   })
-                }>
+                }
+              >
                 Select
               </Button>
             </Stack.Item>

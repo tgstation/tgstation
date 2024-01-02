@@ -65,11 +65,13 @@
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setOpened()
 	opened = TRUE
+	layer = initial(layer)
 	update_appearance()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 50)
 
 /mob/living/simple_animal/pet/gondola/gondolapod/setClosed()
 	opened = FALSE
+	layer = LOW_MOB_LAYER
 	update_appearance()
 
 /mob/living/simple_animal/pet/gondola/gondolapod/death()

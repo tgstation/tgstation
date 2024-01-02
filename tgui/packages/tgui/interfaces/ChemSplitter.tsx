@@ -1,4 +1,5 @@
 import { toFixed } from 'common/math';
+
 import { useBackend } from '../backend';
 import { LabeledList, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
@@ -9,8 +10,8 @@ type Data = {
   max_transfer: number;
 };
 
-export const ChemSplitter = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ChemSplitter = (props) => {
+  const { act, data } = useBackend<Data>();
   const { straight, side, max_transfer } = data;
 
   return (

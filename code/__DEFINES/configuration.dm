@@ -20,3 +20,11 @@
 
 #define KEY_MODE_TEXT 0
 #define KEY_MODE_TYPE 1
+
+// Flags for respawn config
+/// Respawn not allowed
+#define RESPAWN_FLAG_DISABLED 0
+/// Respawn as much as you'd like
+#define RESPAWN_FLAG_FREE 1
+/// Can respawn, but not as the same character
+#define RESPAWN_FLAG_NEW_CHARACTER 2

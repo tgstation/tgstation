@@ -1,12 +1,19 @@
-import { Box, Button, LabeledList, NumberInput, ProgressBar, Section } from 'tgui/components';
-import { HelpDummy, HoverHelp } from './helpers';
-import { HypertorusFuel, HypertorusGas } from '.';
 import { filter, sortBy } from 'common/collections';
-import { getGasColor, getGasLabel } from 'tgui/constants';
-
 import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { useBackend } from 'tgui/backend';
+import {
+  Box,
+  Button,
+  LabeledList,
+  NumberInput,
+  ProgressBar,
+  Section,
+} from 'tgui/components';
+import { getGasColor, getGasLabel } from 'tgui/constants';
+
+import { HypertorusFuel, HypertorusGas } from '.';
+import { HelpDummy, HoverHelp } from './helpers';
 
 type GasListProps = {
   input_max: number;
@@ -68,8 +75,8 @@ const ensure_gases = (gas_array: HypertorusGas[] = [], gasids) => {
   }
 };
 
-const GasList = (props: GasListProps, context) => {
-  const { act, data } = useBackend<GasListData>(context);
+const GasList = (props: GasListProps) => {
+  const { act, data } = useBackend<GasListData>();
   const {
     input_max,
     input_min,
@@ -100,7 +107,8 @@ const GasList = (props: GasListProps, context) => {
             <HoverHelp content={rateHelp} />
             Injection control:
           </>
-        }>
+        }
+      >
         <Button
           disabled={start_power === 0 || start_cooling === 0}
           icon={data[input_switch] ? 'power-off' : 'times'}
@@ -130,12 +138,14 @@ const GasList = (props: GasListProps, context) => {
                 {labelPrefix}
                 {getGasLabel(gas.id)}:
               </>
-            }>
+            }
+          >
             <ProgressBar
               color={getGasColor(gas.id)}
               value={gas.amount}
               minValue={0}
-              maxValue={minimumScale}>
+              maxValue={minimumScale}
+            >
               {toFixed(gas.amount, 2) + ' moles'}
             </ProgressBar>
           </LabeledList.Item>
@@ -145,8 +155,8 @@ const GasList = (props: GasListProps, context) => {
   );
 };
 
-export const HypertorusGases = (props, context) => {
-  const { data } = useBackend<HypertorusData>(context);
+export const HypertorusGases = (props) => {
+  const { data } = useBackend<HypertorusData>();
   const {
     fusion_gases = [],
     moderator_gases = [],

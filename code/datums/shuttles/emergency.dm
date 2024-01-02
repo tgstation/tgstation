@@ -3,12 +3,42 @@
 /datum/map_template/shuttle/emergency
 	port_id = "emergency"
 	name = "Base Shuttle Template (Emergency)"
+	///assoc list of shuttle events to add to this shuttle on spawn (typepath = weight)
+	var/list/events
+	///pick all events instead of random
+	var/use_all_events = FALSE
+	///how many do we pick
+	var/event_amount = 1
+	///do we empty the event list before adding our events
+	var/events_override = FALSE
 
 /datum/map_template/shuttle/emergency/New()
 	. = ..()
 	if(!occupancy_limit && who_can_purchase)
 		CRASH("The [name] needs an occupancy limit!")
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_SHUTTLE_SALE) && credit_cost > 0 && prob(15))
+		var/discount_amount = round(rand(25, 80), 5)
+		name += " ([discount_amount]% Discount!)"
+		var/discount_multiplier = 100 - discount_amount
+		credit_cost = ((credit_cost * discount_multiplier) / 100)
 
+///on post_load use our variables to change shuttle events
+/datum/map_template/shuttle/emergency/post_load(obj/docking_port/mobile/mobile)
+	. = ..()
+	if(!events)
+		return
+	if(events_override)
+		mobile.event_list.Cut()
+	if(use_all_events)
+		for(var/path in events)
+			mobile.event_list.Add(new path(mobile))
+			events -= path
+	else
+		for(var/i in 1 to event_amount)
+			var/path = pick_weight(events)
+			events -= path
+			mobile.event_list.Add(new path(mobile))
+	
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
 	name = "Backup Shuttle"
@@ -42,6 +72,19 @@
 	description = "A mid-sized shuttle for those who like a lot of space for their legs."
 	credit_cost = CARGO_CRATE_VALUE * 10
 	occupancy_limit = "45"
+
+/datum/map_template/shuttle/emergency/humpback
+	suffix = "humpback"
+	name = "Humpback Emergency Shuttle"
+	description = "A repurposed cargo hauling and salvaging ship, for sightseeing and tourism. Has a bar. Complete with a 2 minute vacation plan to carp territory."
+	credit_cost = CARGO_CRATE_VALUE * 12
+	occupancy_limit = "30"
+	events = list(
+		/datum/shuttle_event/simple_spawner/carp/friendly = 10,
+		/datum/shuttle_event/simple_spawner/carp/friendly_but_no_personal_space = 2,
+		/datum/shuttle_event/simple_spawner/carp = 2,
+		/datum/shuttle_event/simple_spawner/carp/magic = 1,
+	)
 
 /datum/map_template/shuttle/emergency/bar
 	suffix = "bar"

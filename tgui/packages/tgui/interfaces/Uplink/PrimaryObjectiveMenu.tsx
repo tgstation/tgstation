@@ -1,16 +1,16 @@
-import { Box, Dimmer, Section, Stack } from '../../components';
+import { useBackend } from '../../backend';
+import { Box, Button, Dimmer, Section, Stack } from '../../components';
 import { ObjectiveElement } from './ObjectiveMenu';
 
 type PrimaryObjectiveMenuProps = {
   primary_objectives;
   final_objective;
+  can_renegotiate;
 };
 
-export const PrimaryObjectiveMenu = (
-  props: PrimaryObjectiveMenuProps,
-  context
-) => {
-  const { primary_objectives, final_objective } = props;
+export const PrimaryObjectiveMenu = (props: PrimaryObjectiveMenuProps) => {
+  const { act } = useBackend();
+  const { primary_objectives, final_objective, can_renegotiate } = props;
   return (
     <Section fill>
       <Section>
@@ -32,7 +32,8 @@ export const PrimaryObjectiveMenu = (
             fontFamily={'Bahnschrift'}
             fontSize={3}
             align={'top'}
-            as="span">
+            as="span"
+          >
             PRIORITY MESSAGE
             <br />
             SOURCE: xxx.xxx.xxx.224:41394
@@ -56,7 +57,7 @@ export const PrimaryObjectiveMenu = (
                 key={prim_obj.id}
                 name={prim_obj['task_name']}
                 description={prim_obj['task_text']}
-                reputation={{
+                dangerLevel={{
                   minutesLessThan: 0,
                   title: 'none',
                   gradient:
@@ -77,6 +78,17 @@ export const PrimaryObjectiveMenu = (
           ))}
         </Stack>
       </Section>
+      {!!can_renegotiate && (
+        <Box mt={3} mb={5} bold fontSize={1.2} align="center" color="white">
+          <Button
+            content={'Renegotiate Contract'}
+            tooltip={
+              'Replace your existing primary objectives with a custom one. This action can only be performed once.'
+            }
+            onClick={() => act('renegotiate_objectives')}
+          />
+        </Box>
+      )}
     </Section>
   );
 };

@@ -60,7 +60,7 @@
 				span_userdanger("[caster] electrocutes you!"),
 			)
 			if(chain)
-				tesla_zap(victim, zap_range, zap_power, zap_flags)
+				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 				carbon_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 
@@ -72,7 +72,7 @@
 				span_userdanger("[caster] electrocutes you!"),
 			)
 			if(chain)
-				tesla_zap(victim, zap_range, zap_power, zap_flags)
+				tesla_zap(source = victim, zap_range = zap_range, power = zap_power, cutoff = 1e3, zap_flags = zap_flags)
 				living_victim.visible_message(span_danger("An arc of electricity explodes out of [victim]!"))
 			return TRUE
 

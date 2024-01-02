@@ -15,7 +15,6 @@
 /obj/machinery/igniter/Initialize(mapload)
 	. = ..()
 	update_appearance()
-	AddElement(/datum/element/wall_mount)
 	register_context()
 
 /obj/machinery/igniter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -54,10 +53,10 @@
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 5)
 		new /obj/item/assembly/igniter(loc)
 	return ..()
@@ -69,7 +68,7 @@
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/igniter/incinerator_ordmix
 	id = INCINERATOR_ORDMIX_IGNITER
@@ -164,8 +163,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/sparker)
 	spark_system = new /datum/effect_system/spark_spread
 	spark_system.set_up(2, 1, src)
 	spark_system.attach(src)
-	AddElement(/datum/element/wall_mount)
 	register_context()
+	find_and_hang_on_wall()
 
 /obj/machinery/sparker/Destroy()
 	QDEL_NULL(spark_system)
@@ -201,10 +200,10 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/sparker)
 	loc.balloon_alert(user, "[src] dismantled")
 
 	deconstruct(TRUE)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/deconstruct(disassembled)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/wallframe/sparker(loc)
 	return ..()
 
@@ -215,7 +214,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/sparker)
 	id = change_id
 	balloon_alert(user, "id set to [id]")
 	to_chat(user, span_notice("You change the ID to [id]."))
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/sparker/update_icon_state()
 	if(disable)

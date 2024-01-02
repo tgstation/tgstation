@@ -149,7 +149,7 @@
 	to_chat(user, "<span class='notice'>You cut the grille on [src].</span>")
 	has_grille = FALSE
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/window_frame/welder_act(mob/living/user, obj/item/tool)
@@ -168,7 +168,7 @@
 	atom_integrity = max_integrity
 	to_chat(user, span_notice("You repair [src]."))
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 ///creates a window from the typepath given from window_type, which is either a glass sheet typepath or a /obj/structure/window subtype
 /obj/structure/window_frame/proc/create_structure_window(window_material_type, start_anchored = TRUE)
@@ -226,7 +226,7 @@
 			to_chat(user, "<span class='notice'>You add [stack_name] to [src]")
 			update_appearance()
 
-	else if((attacking_item.flags_1 & CONDUCT_1) && try_shock(user, 70))
+	else if((attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && try_shock(user, 70))
 		return
 
 	return ..()

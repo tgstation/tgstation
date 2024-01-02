@@ -37,7 +37,7 @@
 
 /obj/structure/plaque/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()

@@ -146,7 +146,7 @@
 
 /obj/machinery/computer/pod/old/mass_driver_controller/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/computer/pod/old/mass_driver_controller)
 

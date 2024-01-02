@@ -3,7 +3,7 @@
 /// Key that holds a vent that we want to exit out of (when we're already in a pipenet)
 #define BB_EXIT_VENT_TARGET "BB_exit_vent_target"
 /// Do we plan on going inside a vent? Boolean.
-#define BB_CURRENTLY_TARGETTING_VENT "BB_currently_targetting_vent"
+#define BB_CURRENTLY_TARGETING_VENT "BB_currently_targeting_vent"
 /// How long should we wait before we try and enter a vent again?
 #define BB_VENTCRAWL_COOLDOWN "BB_ventcrawl_cooldown"
 /// The least amount of time (in seconds) we take to go through the vents.

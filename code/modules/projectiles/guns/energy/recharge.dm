@@ -135,3 +135,36 @@
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*2)
 	suppressed = null
 	ammo_type = list(/obj/item/ammo_casing/energy/bolt/large)
+
+/// A silly gun that does literally zero damage, but disrupts electrical sources of light, like flashlights.
+/obj/item/gun/energy/recharge/fisher
+	name = "\improper SC/FISHER disruptor"
+	desc = "A self-recharging, permanently suppressed, and very haphazardly modified accelerator handgun that does literally nothing to anything except light fixtures and cameras. \
+	Can fire twice before requiring a recharge, with bolts passing through machinery, but demands precision."
+	icon_state = "fisher"
+	base_icon_state = "fisher"
+	dry_fire_sound_volume = 10
+	w_class = WEIGHT_CLASS_SMALL
+	holds_charge = TRUE
+	suppressed = TRUE
+	recharge_time = 1.2 SECONDS
+	ammo_type = list(/obj/item/ammo_casing/energy/fisher)
+
+/obj/item/gun/energy/recharge/fisher/examine_more(mob/user)
+	. = ..()
+	. += span_notice("The SC/FISHER is an illegally-modified kinetic accelerator cut down and refit into a disassembled miniature energy gun chassis, with its pressure chamber \
+	attenuated to launch kinetic bolts that <b>disrupt flashlights and cameras, if only temporarily</b>. This effect also works on <b>cyborg headlamps<b>, and works longer in melee.<br><br>\
+	While some would argue that this is a really terrible design choice, others argue that it is very funny to be able to shoot at light sources. Caveat emptor.")
+
+/obj/item/gun/energy/recharge/fisher/afterattack(atom/target, mob/living/user, flag, params)
+	// you should just shoot them, but in case you can't/wont
+	. = ..()
+	if(user.Adjacent(target))
+		var/obj/projectile/energy/fisher/melee/simulated_hit = new
+		simulated_hit.on_hit(target)
+
+/obj/item/gun/energy/recharge/fisher/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	// ...you reeeeeally just shoot them, but in case you can't/won't
+	. = ..()
+	var/obj/projectile/energy/fisher/melee/simulated_hit = new
+	simulated_hit.on_hit(hit_atom)

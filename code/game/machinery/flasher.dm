@@ -20,9 +20,6 @@
 	COOLDOWN_DECLARE(flash_cooldown)
 	/// Duration of time between flashes.
 	var/flash_cooldown_duration = 15 SECONDS
-	/// If this is a wall flash, or one that isn't
-	var/on_wall = TRUE
-
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 
@@ -30,9 +27,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 	. = ..() // ..() is EXTREMELY IMPORTANT, never forget to add it
 	if(!built)
 		bulb = new(src)
-
-	if(on_wall)
-		AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/machinery/flasher/vv_edit_var(vname, vval)
 	. = ..()
@@ -149,7 +144,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 		power_change()
 
 /obj/machinery/flasher/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(bulb)
 			bulb.forceMove(loc)
 		if(disassembled)
@@ -170,7 +165,6 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 	strength = 8 SECONDS
 	anchored = FALSE
 	density = TRUE
-	on_wall = FALSE
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
 
@@ -184,7 +178,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/flasher)
 
 	if(iscarbon(proximity_check_mob))
 		var/mob/living/carbon/proximity_carbon = proximity_check_mob
-		if (proximity_carbon.m_intent != MOVE_INTENT_WALK && anchored)
+		if (proximity_carbon.move_intent != MOVE_INTENT_WALK && anchored)
 			flash()
 
 /obj/machinery/flasher/portable/vv_edit_var(vname, vval)

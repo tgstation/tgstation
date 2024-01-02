@@ -14,10 +14,10 @@ Burning extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/burning/attack_self(mob/user)
-	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))
 		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
 		return
-	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/magic/fireball.ogg', 50, TRUE)
@@ -32,11 +32,11 @@ Burning extracts:
 	effect_desc = "Creates a hungry and speedy slime that will love you forever."
 
 /obj/item/slimecross/burning/grey/do_effect(mob/user)
-	var/mob/living/simple_animal/slime/S = new(get_turf(user),SLIME_TYPE_GREY)
-	S.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
-	S.set_friendship(user, 20) //Gas, gas, gas
-	S.bodytemperature = T0C + 400 //We gonna step on the gas.
-	S.set_nutrition(S.get_hunger_nutrition()) //Tonight, we fight!
+	var/mob/living/simple_animal/slime/new_slime = new(get_turf(user),/datum/slime_type/grey)
+	new_slime.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
+	new_slime.set_friendship(user, 20) //Gas, gas, gas
+	new_slime.bodytemperature = T0C + 400 //We gonna step on the gas.
+	new_slime.set_nutrition(new_slime.get_hunger_nutrition()) //Tonight, we fight!
 	..()
 
 /obj/item/slimecross/burning/orange
@@ -197,15 +197,15 @@ Burning extracts:
 
 /obj/item/slimecross/burning/red/do_effect(mob/user)
 	user.visible_message(span_danger("[src] pulses a hazy red aura for a moment, which wraps around [user]!"))
-	for(var/mob/living/simple_animal/slime/S in view(7, get_turf(user)))
-		if(user in S.Friends)
-			var/friendliness = S.Friends[user]
-			S.clear_friends()
-			S.set_friendship(user, friendliness)
+	for(var/mob/living/simple_animal/slime/slimes_in_view in view(7, get_turf(user)))
+		if(user in slimes_in_view.Friends)
+			var/friendliness = slimes_in_view.Friends[user]
+			slimes_in_view.clear_friends()
+			slimes_in_view.set_friendship(user, friendliness)
 		else
-			S.clear_friends()
-		S.rabid = 1
-		S.visible_message(span_danger("The [S] is driven into a dangerous frenzy!"))
+			slimes_in_view.clear_friends()
+		slimes_in_view.rabid = TRUE
+		slimes_in_view.visible_message(span_danger("The [slimes_in_view] is driven into a dangerous frenzy!"))
 	..()
 
 /obj/item/slimecross/burning/green

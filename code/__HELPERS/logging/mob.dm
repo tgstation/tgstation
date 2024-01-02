@@ -11,17 +11,18 @@
 
 
 /// Logs a message in a mob's individual log, and in the global logs as well if log_globally is true
-/mob/log_message(message, message_type, color = null, log_globally = TRUE)
+/mob/log_message(message, message_type, color = null, log_globally = TRUE, list/data)
 	if(!LAZYLEN(message))
 		stack_trace("Empty message")
 		return
 
 	// Cannot use the list as a map if the key is a number, so we stringify it (thank you BYOND)
 	var/smessage_type = num2text(message_type, MAX_BITFLAG_DIGITS)
+	var/datum/player_details/client_details = client?.player_details
 
-	if(client)
-		if(!islist(client.player_details.logging[smessage_type]))
-			client.player_details.logging[smessage_type] = list()
+	if(!isnull(client_details))
+		if(!islist(client_details.logging[smessage_type]))
+			client_details.logging[smessage_type] = list()
 
 	if(!islist(logging[smessage_type]))
 		logging[smessage_type] = list()
@@ -46,7 +47,7 @@
 		if(LOG_RADIO_EMOTE)
 			colored_message = "(RADIOEMOTE) [colored_message]"
 
-	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
+	var/list/timestamped_message = list("\[[time_stamp(format = "YYYY-MM-DD hh:mm:ss")]\] [key_name_and_tag(src)] [loc_name(src)] (Event #[LAZYLEN(logging[smessage_type])])" = colored_message)
 
 	logging[smessage_type] += timestamped_message
 

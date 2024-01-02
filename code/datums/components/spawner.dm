@@ -38,6 +38,8 @@
 
 /// Try to create a new mob
 /datum/component/spawner/proc/try_spawn_mob()
+	if(!length(spawn_types))
+		return
 	if(!COOLDOWN_FINISHED(src, spawn_delay))
 		return
 	validate_references()
