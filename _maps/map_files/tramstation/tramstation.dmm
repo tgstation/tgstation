@@ -17215,12 +17215,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/maintenance/port/central)
-"eZt" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line{
-	dir = 8
-	},
-/turf/closed/wall,
-/area/station/hallway/secondary/service)
 "eZO" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/trimline/neutral/filled/line{
@@ -41133,11 +41127,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison)
-"nAa" = (
-/obj/effect/turf_decal/trimline/neutral/filled/line,
-/obj/effect/turf_decal/trimline/purple/filled/warning,
-/turf/closed/wall,
-/area/station/maintenance/tram/mid)
 "nAB" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 1
@@ -49630,9 +49619,6 @@
 /obj/machinery/telecomms/processor/preset_four,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
-"qGe" = (
-/turf/open/floor/iron/smooth,
-/area/station/hallway/primary/tram/center)
 "qGy" = (
 /obj/structure/transit_tube/crossing,
 /turf/open/floor/plating/airless,
@@ -100371,9 +100357,9 @@ ekB
 xvD
 fah
 hJM
-nAa
 qjU
-hYb
+qjU
+qjU
 qtV
 ceb
 qjU
@@ -101142,7 +101128,7 @@ dJJ
 dJJ
 dJJ
 uWM
-eZt
+dJJ
 thD
 dXc
 jra
@@ -172082,7 +172068,7 @@ aaa
 aaa
 abE
 kMs
-ghg
+wYw
 izU
 eSz
 nSP
@@ -172339,7 +172325,7 @@ aaa
 aaa
 abE
 gEC
-qGe
+wYw
 nEl
 eSz
 nSP
