@@ -487,6 +487,10 @@
 /obj/effect/turf_decal/trimline/yellow/corner,
 /turf/open/floor/cult,
 /area/station/service/kitchen)
+"lc" = (
+/obj/machinery/griddle,
+/turf/open/floor/cult,
+/area/station/service/kitchen)
 "lg" = (
 /obj/structure/table/wood/fancy/red,
 /obj/item/clothing/neck/cross{
@@ -2567,7 +2571,7 @@ lb
 Fb
 CJ
 up
-up
+lc
 up
 up
 jA
@@ -2621,7 +2625,7 @@ oN
 JN
 Co
 up
-up
+lc
 XA
 up
 jA
