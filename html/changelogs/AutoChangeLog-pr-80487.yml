@@ -1,0 +1,9 @@
+author: "Profakos"
+delete-after: True
+changes:
+  - refactor: "attack_slime is completely gone"
+  - refactor: "slime lifestate changes now have less boilerplate code"
+  - balance: "baby slimes do a bit of a less damage on the low end, but all slime damage is much more consistent"
+  - balance: "instead of taking half brute damage, cyborgs are now immune to slime's melee attacks. Charged slimes attacking cyborgs now lose a bit of charge. They still get massive damage from charged slimes, and every slime attack flashes them."
+  - bugfix: "slimes can now properly drain basic mobs and simple animals that they can damage"
+  - bugfix: "slimes can drift in zero gravity"
