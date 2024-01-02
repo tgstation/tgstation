@@ -38,14 +38,6 @@
 /mob/living/carbon/human/species/monkey/holodeck/spawn_gibs() // no blood and no gibs
 	return
 
-/mob/living/carbon/human/species/monkey/holodeck/has_dna()
-	return null
-
-/mob/living/carbon/human/species/monkey/holodeck/create_bodyparts(list/overrides) // done like this in case people add more limbs to monkeys or something
-	. = ..()
-	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		limb.bodypart_flags |= BODYPART_UNREMOVABLE // no farming organs or limbs from these fellers. get a monkey cube
-
 GLOBAL_DATUM(the_one_and_only_punpun, /mob/living/carbon/human/species/monkey/punpun)
 
 /mob/living/carbon/human/species/monkey/punpun

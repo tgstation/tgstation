@@ -50,7 +50,7 @@
 	if(istype(starting_light))
 		add_light(starting_light)
 
-/datum/component/seclite_attachable/Destroy(force, silent)
+/datum/component/seclite_attachable/Destroy(force)
 	if(light)
 		remove_light()
 	return ..()

@@ -42,11 +42,11 @@
 
 	var/datum/tgs_version/max_api_version = TgsMaximumApiVersion();
 	if(version.suite != null && version.minor != null && version.patch != null && version.deprecated_patch != null && version.deprefixed_parameter > max_api_version.deprefixed_parameter)
-		TGS_ERROR_LOG("Detected unknown API version! Defaulting to latest. Update the DMAPI to fix this problem.")
+		TGS_ERROR_LOG("Detected unknown Interop API version! Defaulting to latest. Update the DMAPI to fix this problem.")
 		api_datum = /datum/tgs_api/latest
 
 	if(!api_datum)
-		TGS_ERROR_LOG("Found unsupported API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
+		TGS_ERROR_LOG("Found unsupported Interop API version: [raw_parameter]. If this is a valid version please report this, backporting is done on demand.")
 		return
 
 	TGS_INFO_LOG("Activating API for version [version.deprefixed_parameter]")
@@ -106,6 +106,13 @@
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
 	if(api)
 		return api.ApiVersion()
+
+/world/TgsEngine()
+#ifdef OPENDREAM
+	return TGS_ENGINE_TYPE_OPENDREAM
+#else
+	return TGS_ENGINE_TYPE_BYOND
+#endif
 
 /world/TgsInstanceName()
 	var/datum/tgs_api/api = TGS_READ_GLOBAL(tgs)
