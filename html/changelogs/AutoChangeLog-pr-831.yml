@@ -1,0 +1,5 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - sound: "Added audible meow and hiss emotes, although they only work if you have the anime trait, are wearing cat ears, or are just a literal cat."
+  - sound: "Having cat ears + tail will change your default scream to a cat-like scream (although scream sounds from certain clothing still take priority)."
