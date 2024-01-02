@@ -640,7 +640,7 @@
 	active_program = program
 	program.alert_pending = FALSE
 	if(open_ui)
-			INVOKA_ASYNC(src, PROC_REF(update_tablet_open_uis), user)
+		INVOKA_ASYNC(src, PROC_REF(update_tablet_open_uis), user)
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
