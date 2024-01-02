@@ -1,0 +1,7 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - bugfix: "turbine now shuts itself off when the room apc loses power or if it gets damaged. Also uses a small amount of power for operation of internal electronics, the green light & other stuff"
+  - bugfix: "No more runtime in turbine computer when parts are not fully connected"
+  - qol: "adds screentips & examines for turbine"
+  - code_imp: "removed unused vars, auto doc procs and cleans up some code in turbine"
