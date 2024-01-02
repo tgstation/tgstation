@@ -54,7 +54,7 @@
 	var/list/data = list()
 
 	var/obj/machinery/power/turbine/core_rotor/main_control = turbine_core?.resolve()
-	data["connected"] =  QDELETED(main_control) ? TRUE : FALSE
+	data["connected"] =  !!QDELETED(main_control)
 	if(!main_control)
 		return
 
@@ -67,7 +67,7 @@
 
 	data["max_rpm"] = main_control.max_allowed_rpm
 	data["max_temperature"] = main_control.max_allowed_temperature
-	data["temp"] = QDELETED(main_control.compressor) ? 0 : main_control.compressor.input_turf?.air.temperature
+	data["temp"] = main_control.compressor?.input_turf?.air.temperature || 0
 	data["regulator"] = QDELETED(main_control.compressor) ? 0 : main_control.compressor.intake_regulator
 
 	return data

@@ -256,7 +256,7 @@
 
 /// Gets the efficiency of the installed part, returns 0 if no part is installed
 /obj/machinery/power/turbine/proc/get_efficiency()
-	return installed_part ? installed_part.part_efficiency : 0
+	return installed_part?.part_efficiency || 0
 
 /obj/machinery/power/turbine/inlet_compressor
 	name = "inlet compressor"
