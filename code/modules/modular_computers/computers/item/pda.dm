@@ -333,6 +333,10 @@
 	silicon_owner = null
 	return ..()
 
+///Silicons don't have the tools (or hands) to make circuits setups with their own PDAs.
+/obj/item/modular_computer/pda/silicon/add_shell_component(capacity)
+	return
+
 /obj/item/modular_computer/pda/silicon/turn_on(mob/user, open_ui = FALSE)
 	if(silicon_owner?.stat != DEAD)
 		return ..()

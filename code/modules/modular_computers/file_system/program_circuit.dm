@@ -40,11 +40,14 @@
 		associated_program = found_program
 
 /obj/item/circuit_component/mod_program/unregister_shell()
-	associated_program = null
+	associated_program = initial(associated_program)
 	return ..()
 
 ///For most programs, triggers only work if they're open (either active or idle).
 /obj/item/circuit_component/mod_program/should_receive_input(datum/port/input/port)
+	. = ..()
+	if(!.)
+		return FALSE
 	if(isnull(associated_program))
 		return FALSE
 	if(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED)

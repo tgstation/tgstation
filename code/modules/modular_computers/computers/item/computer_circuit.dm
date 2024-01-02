@@ -5,8 +5,14 @@
 	var/obj/item/modular_computer/computer
 	///Turns the PC on/off
 	var/datum/port/input/on_off
-	///When set, will print a piece of paper with its value
+	///When set, will print a piece of paper with the value as text.
 	var/datum/port/input/print
+
+	///Toggles lights on and off. Also RGB.
+	var/datum/port/input/lights
+	var/datum/port/input/red
+	var/datum/port/input/green
+	var/datum/port/input/blue
 
 /obj/item/circuit_component/modpc/register_shell(atom/movable/shell)
 	. = ..()
@@ -23,6 +29,21 @@
 /obj/item/circuit_component/modpc/populate_ports()
 	on_off = add_input_port("Turn On/Off", PORT_TYPE_SIGNAL)
 	print = add_input_port("Print Text", PORT_TYPE_STRING)
+	if(computer?.has_light)
+		lights = add_input_port("Toggle Lights", PORT_TYPE_SIGNAL)
+		red = add_input_port("Red", PORT_TYPE_NUMBER)
+		green = add_input_port("Green", PORT_TYPE_NUMBER)
+		blue = add_input_port("Blue", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/modpc/pre_input_received(datum/port/input/port)
+	if(COMPONENT_TRIGGERED_BY(print, port))
+		print.set_value(html_encode(trim(print.value, MAX_PAPER_LENGTH)))
+	else if(COMPONENT_TRIGGERED_BY(red, port))
+		red.set_value(clamp(red.value, 0, 255))
+	else if(COMPONENT_TRIGGERED_BY(blue, port))
+		blue.set_value(clamp(blue.value, 0, 255))
+	else if(COMPONENT_TRIGGERED_BY(green, port))
+		green.set_value(clamp(green.value, 0, 255))
 
 /obj/item/circuit_component/modpc/input_received(datum/port/input/port)
 	if(isnull(computer))
@@ -39,3 +60,9 @@
 
 	if(COMPONENT_TRIGGERED_BY(print, port))
 		computer.print_text(print.value)
+
+	if(lights)
+		if(COMPONENT_TRIGGERED_BY(lights, port))
+			computer.toggle_flashlight()
+		if(COMPONENT_TRIGGERED_BY(red, port) || COMPONENT_TRIGGERED_BY(green, port) || COMPONENT_TRIGGERED_BY(blue, port))
+			computer.set_flashlight_color(rgb(red.value || 0, green.value || 0, blue.value || 0))

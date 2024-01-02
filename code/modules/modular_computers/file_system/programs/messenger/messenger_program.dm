@@ -139,12 +139,16 @@
 	for(var/datum/tgui/window as anything in computer.open_uis)
 		SSassets.transport.send_assets(window.user, data)
 
-/// Set the ringtone if possible
+/// Set the ringtone if possible. Also handles encoding.
 /datum/computer_file/program/messenger/proc/set_ringtone(new_ringtone, mob/user)
+	new_ringtone = trim(html_encode(new_ringtone), MESSENGER_RINGTONE_MAX_LENGTH)
+	if(!new_ringtone)
+		return FALSE
+
 	if(SEND_SIGNAL(computer, COMSIG_TABLET_CHANGE_ID, user, new_ringtone) & COMPONENT_STOP_RINGTONE_CHANGE)
 		return FALSE
 
-	ringtone = new_ringtone
+	ringtone = ringtone
 	return TRUE
 
 /datum/computer_file/program/messenger/ui_interact(mob/user, datum/tgui/ui)
@@ -159,11 +163,11 @@
 /datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
 	switch(action)
 		if("PDA_ringSet")
-			var/new_ringtone = tgui_input_text(usr, "Enter a new ringtone", "Ringtone", ringtone, MESSENGER_RINGTONE_MAX_LENGTH)
-			var/mob/living/usr_mob = usr
-			if(!new_ringtone || !in_range(computer, usr_mob) || computer.loc != usr_mob)
+			var/mob/living/user = usr
+			var/new_ringtone = tgui_input_text(user, "Enter a new ringtone", "Ringtone", ringtone, encode = FALSE)
+			if(!in_range(computer, user) || computer.loc != user)
 				return FALSE
-			return set_ringtone(new_ringtone, usr_mob)
+			return set_ringtone(new_ringtone, user)
 
 		if("PDA_toggleAlerts")
 			alert_silenced = !alert_silenced
@@ -455,7 +459,7 @@
 		message = emoji_sanitize(message)
 
 	// check message against filter
-	if(!check_pda_message_against_filter(message, sender))
+	if(sender && !check_pda_message_against_filter(message, sender))
 		return null
 
 	return message
@@ -465,10 +469,10 @@
 	var/mob/living/sender
 	if(isliving(source))
 		sender = source
-		message = sanitize_pda_message(message, sender)
-		if(!message)
-			return FALSE
 	else if(is_ic_filtered_for_pdas(message) || is_soft_ic_filtered_for_pdas(message))
+		return FALSE
+	message = sanitize_pda_message(message, sender)
+	if(!message)
 		return FALSE
 
 

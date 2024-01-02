@@ -53,6 +53,32 @@
 	if(circuit_comp_type && initial(circuit_comp_type.associated_program) != type)
 		stack_trace("circuit comp type mismatch: [type] has circuit comp type \[[circuit_comp_type]\], while \[[circuit_comp_type]\] has associated program \[[initial(circuit_comp_type.associated_program)]\].")
 
+/**
+ * Here we deal with peculiarity of adding unremovable components to the computer shell.
+ * It probably doesn't look badass, but it's a decent way of doing it without taining the component with
+ * oddities like this.
+ */
+/datum/computer_file/program/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
+	. = ..()
+	if(isnull(circuit_comp_type) || isnull(computer.shell))
+		return
+	if(!(locate(circuit_comp_type) in computer.shell.unremovable_circuit_components))
+		var/obj/item/circuit_component/mod_program/comp = new circuit_comp_type()
+		computer.shell.add_unremovable_circuit_component(comp)
+		if(computer.shell.attached_circuit)
+			comp.forceMove(computer.shell.attached_circuit)
+			computer.shell.attached_circuit.add_component(comp)
+
+///Here we deal with killing the associated components instead.
+/datum/computer_file/program/Destroy()
+	if(isnull(circuit_comp_type) || isnull(computer?.shell))
+		return ..()
+	for(var/obj/item/circuit_component/mod_program/comp as anything in computer.shell.unremovable_circuit_components)
+		if(comp.associated_program == src)
+			computer.shell.unremovable_circuit_components -= comp
+			qdel(comp)
+	return ..()
+
 /datum/computer_file/program/clone()
 	var/datum/computer_file/program/temp = ..()
 	temp.run_access = run_access
@@ -73,10 +99,6 @@
  * This proc only serves as a callback.
  */
 /datum/computer_file/program/ui_interact(mob/user, datum/tgui/ui)
-	SHOULD_CALL_PARENT(FALSE)
-
-///We are not calling parent as it's handled by the computer itself, this is only called after.
-/datum/computer_file/program/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	SHOULD_CALL_PARENT(FALSE)
 
 // Relays icon update to the computer.

@@ -37,20 +37,28 @@
 	associated_program = /datum/computer_file/program/notepad
 	///When the input is received, the written note will be set to its value.
 	var/datum/port/input/set_text
-	///Send out the written note
-	var/datum/port/input/send
-	///The written note output
-	var/datum/port/output/sent_text
+	///The written note output, sent everytime notes are updated.
+	var/datum/port/output/updated_text
 
 /obj/item/circuit_component/mod_program/notepad/populate_ports()
 	set_text = add_input_port("Set Notes", PORT_TYPE_STRING)
-	send = add_input_port("Send Notes", PORT_TYPE_SIGNAL)
-	sent_text = add_output_port("Sent Notes", PORT_TYPE_STRING)
+	updated_text = add_output_port("Updated Notes", PORT_TYPE_STRING)
+
+/obj/item/circuit_component/mod_program/notepad/register_shell(atom/movable/shell)
+	. = ..()
+	RegisterSignal(associated_program, COMSIG_UI_ACT, PROC_REF(on_note_updated))
+
+/obj/item/circuit_component/mod_program/notepad/unregister_shell()
+	UnregisterSignal(associated_program, COMSIG_UI_ACT)
+	return ..()
+
+/obj/item/circuit_component/mod_program/notepad/proc/on_note_updated(datum/source, mob/user, action, list/params)
+	SIGNAL_HANDLER
+	if(action == "UpdateNote")
+		updated_text.set_output(params["newnote"])
 
 /obj/item/circuit_component/mod_program/notepad/input_received(datum/port/port)
 	var/datum/computer_file/program/notepad/pad = associated_program
-	if(COMPONENT_TRIGGERED_BY(set_text, port))
-		pad.written_note = set_text.value
-		SStgui.update_uis(pad.computer)
-	if(COMPONENT_TRIGGERED_BY(send, port))
-		sent_text.set_output(pad.written_note)
+	pad.written_note = set_text.value
+	SStgui.update_uis(pad.computer)
+	updated_text.set_output(pad.written_note)

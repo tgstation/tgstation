@@ -9,7 +9,7 @@
 	max_integrity = 300
 	integrity_failure = 0.5
 
-	///The power cell, null by default as we use the APC we're in
+	///The power cell path used by the processor, by default a very weak one as we generally use the APC we're in instead.
 	var/internal_cell = null
 	///A flag that describes this device type
 	var/hardware_flag = PROGRAM_CONSOLE
@@ -41,7 +41,7 @@
 	. = ..()
 	cpu = new(src)
 	cpu.screen_on = TRUE
-	AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/modpc), SHELL_CAPACITY_LARGE)
+	cpu.add_shell_component(SHELL_CAPACITY_LARGE, SHELL_FLAG_USB_PORT)
 	update_appearance()
 
 /obj/machinery/modular_computer/Destroy()
@@ -118,6 +118,19 @@
 		update_appearance()
 		return
 	return ..()
+
+///Try to recharge our internal cell if it isn't fully charged.
+/obj/machinery/modular_computer/process(seconds_per_tick)
+	var/obj/item/stock_parts/cell/cell = get_cell()
+	if(isnull(cell) || cell.percent() >= 100)
+		return
+	var/power_to_draw = idle_power_usage * seconds_per_tick * 0.5
+	if(!use_power_from_net(power_to_draw))
+		return
+	cell.give(power_to_draw)
+
+/obj/machinery/modular_computer/get_cell()
+	return cpu?.internal_cell
 
 /obj/machinery/modular_computer/screwdriver_act(mob/user, obj/item/tool)
 	if(cpu)

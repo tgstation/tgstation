@@ -52,8 +52,6 @@
 		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, PROC_REF(on_atom_usb_cable_try_attach))
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
-	if(istype(parent, /obj/item/modular_computer))
-		RegisterSignal(parent, COMSIG_MODULAR_COMPUTER_FILE_STORE, PROC_REF(on_file_stored))
 
 /datum/component/shell/proc/set_unremovable_circuit_components(list/components)
 	if(unremovable_circuit_components)
@@ -101,7 +99,6 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_ATTACK_GHOST,
 		COMSIG_ATOM_USB_CABLE_TRY_ATTACH,
-		COMSIG_MODULAR_COMPUTER_FILE_STORE,
 		COMSIG_MOVABLE_CIRCUIT_LOADED,
 	))
 
@@ -110,30 +107,6 @@
 /datum/component/shell/Destroy(force)
 	QDEL_LIST(unremovable_circuit_components)
 	return ..()
-
-///Modular computers have different unremovable components depending on the program installed
-/datum/component/shell/proc/on_file_stored(datum/source, datum/computer_file/file)
-	SIGNAL_HANDLER
-	if(!istype(file, /datum/computer_file/program))
-		return
-	var/datum/computer_file/program/program = file
-	if(isnull(program.circuit_comp_type))
-		return
-	if(!(locate(program.circuit_comp_type) in unremovable_circuit_components))
-		var/obj/item/circuit_component/mod_program/comp = new program.circuit_comp_type()
-		add_unremovable_circuit_component(comp)
-		if(attached_circuit)
-			comp.forceMove(attached_circuit)
-			attached_circuit.add_component(comp)
-	RegisterSignal(program, COMSIG_COMPUTER_FILE_DELETE, PROC_REF(on_file_deleted))
-
-/datum/component/shell/proc/on_file_deleted(datum/computer_file/program/program)
-	SIGNAL_HANDLER
-	for(var/obj/item/circuit_component/mod_program/comp in unremovable_circuit_components)
-		if(comp.associated_program == program)
-			unremovable_circuit_components -= comp
-			qdel(comp)
-			break
 
 /datum/component/shell/proc/on_object_deconstruct()
 	SIGNAL_HANDLER
@@ -335,6 +308,7 @@
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
+	SEND_SIGNAL(src, COMSIG_SHELL_CIRCUIT_ATTACHED)
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && !circuitboard.admin_only)
 		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, PROC_REF(on_circuit_moved))
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
@@ -377,6 +351,7 @@
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
 	attached_circuit.set_locked(FALSE)
+	SEND_SIGNAL(src, COMSIG_SHELL_CIRCUIT_REMOVED)
 	attached_circuit = null
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)

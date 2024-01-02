@@ -195,7 +195,10 @@
 
 /obj/item/circuit_component/mod_program/borg_monitor/populate_ports()
 	target_robot = add_input_port("Receiver", PORT_TYPE_ATOM)
-	set_message = add_input_port("Set Message", PORT_TYPE_STRING)
+	set_message = add_input_port("Set Message", PORT_TYPE_STRING, trigger = PROC_REF(sanitize_borg_message))
+
+/obj/item/circuit_component/mod_program/borg_monitor/proc/sanitize_borg_message(datum/port/port)
+	set_message.set_value(trim(html_encode(new_ringtone), MAX_MESSAGE_LEN))
 
 /obj/item/circuit_component/mod_program/borg_monitor/input_received(datum/port/port)
 	if(!length(set_message.value) || !iscyborg(target_robot.value))

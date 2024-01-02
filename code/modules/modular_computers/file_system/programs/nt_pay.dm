@@ -126,13 +126,13 @@
 
 /obj/item/circuit_component/mod_program/nt_pay/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("NT-Pay Statuses: \
-		Fail (No Account) - [NT_PAY_STATUS_NO_ACCOUNT], \
-		Fail (Dept Account) - [NT_PAY_STATUS_DEPT_ACCOUNT], \
-		Fail (Invalid Token) - [NT_PAY_STATUS_INVALID_TOKEN], \
-		Fail (Sender = Receiver) - [NT_PAY_SATUS_SENDER_IS_RECEIVER], \
-		Fail (Invalid Amount) - [NT_PAY_STATUS_INVALID_MONEY], \
-		Success - [NT_PAY_STATUS_SUCCESS]")
+	. += create_ui_notice("NT-Pay Statuses:")
+	. += create_ui_notice("Fail (No Account) - [NT_PAY_STATUS_NO_ACCOUNT]", "red")
+	. += create_ui_notice("Fail (Dept Account) - [NT_PAY_STATUS_DEPT_ACCOUNT]", "red")
+	. += create_ui_notice("Fail (Invalid Token) - [NT_PAY_STATUS_INVALID_TOKEN]", "red")
+	. += create_ui_notice("Fail (Sender = Receiver) - [NT_PAY_SATUS_SENDER_IS_RECEIVER]", "red")
+	. += create_ui_notice("Fail (Invalid Amount) - [NT_PAY_STATUS_INVALID_MONEY]", "red")
+	. += create_ui_notice("Success - [NT_PAY_STATUS_SUCCESS]", "green")
 
 /obj/item/circuit_component/mod_program/nt_pay/input_received(datum/port/port)
 	var/datum/computer_file/program/nt_pay/program = associated_program

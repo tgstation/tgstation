@@ -1,4 +1,6 @@
 #define MESSENGER_CIRCUIT_MIN_COOLDOWN 5 SECONDS
+#define MESSENGER_CIRCUIT_MAX_COOLDOWN 45 SECONDS
+#define MESSENGER_CIRCUIT_CD_PER_RECIPIENT 1.5 SECONDS
 
 /obj/item/circuit_component/mod_program/messenger
 	associated_program = /datum/computer_file/program/messenger
@@ -35,12 +37,17 @@
 	ring = add_input_port("Play Ringtone", PORT_TYPE_SIGNAL, trigger = PROC_REF(play_ringtone))
 	set_ring = add_input_port("Set Ringtone", PORT_TYPE_STRING, trigger = PROC_REF(set_ringtone))
 
+///Sanitize the targets list so it doesn't contain duplicate targets and our own computer.
+/obj/item/circuit_component/mod_program/messenger/pre_input_received(datum/port/port)
+	if(COMPONENT_TRIGGERED_BY(targets, port))
+		targets.value = unique_list(targets.value) - associated_program.computer
+
 /obj/item/circuit_component/mod_program/messenger/input_received(datum/port/port)
 	var/list/messenger_targets = list()
-	for(var/obj/item/modular_computer/computer in targets.value)
-		var/datum/computer_file/program/messenger/messenger = locate() in computer.stored_files
+	for(var/obj/item/modular_computer/modpc in targets.value)
+		var/datum/computer_file/program/messenger/messenger = locate() in modpc.stored_files
 		if(messenger)
-			messenger_targets += messenger
+			messenger_targets |= messenger
 	var/messenger_length = length(messenger_targets)
 	if(!messenger_length)
 		return
@@ -61,7 +68,9 @@
 
 /obj/item/circuit_component/mod_program/messenger/get_ui_notices()
 	. = ..()
-	. += create_ui_notice("Sending a message with this circuit will result in a longer cooldown that scales with the number of recepients.")
+	. += create_ui_notice("Cooldown per recipient: [DisplayTimeText(MESSENGER_CIRCUIT_CD_PER_RECIPIENT)]", "orange", "stopwatch")
+	. += create_ui_notice("Minimum cooldown: [DisplayTimeText(MESSENGER_CIRCUIT_MIN_COOLDOWN)]", "orange", "stopwatch")
+	. += create_ui_notice("Maximum cooldown: [DisplayTimeText(MESSENGER_CIRCUIT_MAX_COOLDOWN)]", "orange", "stopwatch")
 
 /obj/item/circuit_component/mod_program/messenger/proc/message_received(datum/source, datum/signal/subspace/messaging/tablet_message/signal, message_job, message_name)
 	SIGNAL_HANDLER
@@ -85,7 +94,8 @@
 		return
 	var/targets_length = length(signal.data["targets"])
 	var/datum/computer_file/program/messenger/messenger = associated_program
-	COOLDOWN_START(messenger, last_text, max(targets_length * 1.5 SECONDS, MESSENGER_CIRCUIT_MIN_COOLDOWN))
+	var/cool = clamp(targets_length * MESSENGER_CIRCUIT_CD_PER_RECIPIENT, MESSENGER_CIRCUIT_MIN_COOLDOWN, MESSENGER_CIRCUIT_MAX_COOLDOWN)
+	COOLDOWN_START(messenger, last_text, cool)
 
 /obj/item/circuit_component/mod_program/messenger/proc/set_ringtone(datum/port/port)
 	var/datum/computer_file/program/messenger/messenger = associated_program
@@ -96,3 +106,5 @@
 	messenger.computer.ring(messenger.ringtone)
 
 #undef MESSENGER_CIRCUIT_MIN_COOLDOWN
+#undef MESSENGER_CIRCUIT_MAX_COOLDOWN
+#undef MESSENGER_CIRCUIT_CD_PER_RECIPIENT

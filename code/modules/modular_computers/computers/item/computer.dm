@@ -113,6 +113,12 @@
 	/// The capacity of the circuit shell component of this item
 	var/shell_capacity = SHELL_CAPACITY_MEDIUM
 
+	/**
+	 * Reference to the circuit shell component, because we're special and do special things with it,
+	 * such as creating and deleting unremovable circuit comps based on the programs installed.
+	 */
+	var/datum/component/shell/shell
+
 /datum/armor/item_modular_computer
 	bullet = 20
 	laser = 20
@@ -122,8 +128,8 @@
 	. = ..()
 	START_PROCESSING(SSobj, src)
 	if(!physical)
-		AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/modpc), shell_capacity)
 		physical = src
+		add_shell_component(shell_capacity)
 	set_light_color(comp_light_color)
 	set_light_range(comp_light_luminosity)
 	if(looping_sound)
@@ -140,6 +146,26 @@
 	install_default_programs()
 	register_context()
 	update_appearance()
+
+///Initialize the shell for this item, or the physical machinery it belongs to.
+/obj/item/modular_computer/proc/add_shell_component(capacity = SHELL_CAPACITY_MEDIUM, shell_flags = NONE)
+	shell = physical.AddComponent(/datum/component/shell, list(new /obj/item/circuit_component/modpc), capacity, shell_flags)
+	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_ATTACHED, PROC_REF(on_circuit_attached))
+	RegisterSignal(shell, COMSIG_SHELL_CIRCUIT_REMOVED, PROC_REF(on_circuit_removed))
+
+/obj/item/modular_computer/proc/on_circuit_attached(datum/source)
+	SIGNAL_HANDLER
+	RegisterSignal(shell.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE, PROC_REF(use_power_for_circuits))
+
+///Try to draw power from our internal cell first, before switching to that of the circuit.
+/obj/item/modular_computer/proc/use_power_for_circuits(datum/source, power_usage_per_input)
+	SIGNAL_HANDLER
+	if(use_power(power_usage_per_input, check_programs = FALSE))
+		return COMPONENT_OVERRIDE_POWER_USAGE
+
+/obj/item/modular_computer/proc/on_circuit_removed(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(shell.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
 /obj/item/modular_computer/proc/install_default_programs()
 	SHOULD_CALL_PARENT(FALSE)
@@ -162,6 +188,7 @@
 	if(computer_id_slot)
 		QDEL_NULL(computer_id_slot)
 
+	shell = null
 	physical = null
 	return ..()
 
@@ -689,10 +716,11 @@
  * It is separated from ui_act() to be overwritten as needed.
 */
 /obj/item/modular_computer/proc/toggle_flashlight(mob/user)
-	if(!has_light || !internal_cell || !internal_cell.charge)
+	if(!has_light || !internal_cell?.charge)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, disabled_time))
-		balloon_alert(user, "disrupted!")
+		if(user)
+			balloon_alert(user, "disrupted!")
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
