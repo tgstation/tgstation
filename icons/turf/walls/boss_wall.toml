@@ -1,0 +1,3 @@
+template = "bitmask/walls"
+[prefabs]
+0 = 5

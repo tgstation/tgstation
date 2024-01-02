@@ -1,0 +1,3 @@
+template = "bitmask/walls"
+[cut_pos]
+y = 16
