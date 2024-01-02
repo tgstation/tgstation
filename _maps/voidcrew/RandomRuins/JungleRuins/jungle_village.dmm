@@ -1,0 +1,591 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/item/extinguisher/mini,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"bz" = (
+/obj/item/grown/bananapeel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"bO" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"bS" = (
+/obj/structure/closet/crate/miningcar,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"co" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/banana,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"do" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"ds" = (
+/mob/living/carbon/human/species/monkey,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ey" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"eG" = (
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"gU" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"he" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"hI" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"iL" = (
+/turf/template_noop,
+/area/template_noop)
+"kp" = (
+/obj/item/grown/bananapeel,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ky" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ll" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/ingredients/exotic,
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"lr" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"mj" = (
+/obj/structure/table/wood,
+/obj/item/hatchet/wooden,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"mB" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"nj" = (
+/obj/effect/decal/remains/human,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"oO" = (
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"pb" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"qh" = (
+/obj/structure/table/wood,
+/obj/item/food/bread/banana,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"qv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"qY" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"rX" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"sa" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"sz" = (
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"sM" = (
+/obj/effect/decal/cleanable/food/plant_smudge,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"sR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ty" = (
+/obj/item/grown/bananapeel,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"tL" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"vk" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"vv" = (
+/turf/closed/indestructible/wood,
+/area/ruin/unpowered)
+"wc" = (
+/obj/structure/table/wood,
+/obj/item/food/grown/banana,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"wV" = (
+/obj/item/food/monkeycube/gorilla,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"ya" = (
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ye" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"yi" = (
+/obj/structure/barricade/wooden,
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"yq" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"yR" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"yU" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"zG" = (
+/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"AQ" = (
+/obj/structure/table/wood,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"AY" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"Bj" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"BJ" = (
+/obj/structure/closet/crate/wooden/toy,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"BM" = (
+/mob/living/carbon/human/species/monkey,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"BQ" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ch" = (
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"CG" = (
+/obj/structure/table/wood,
+/obj/item/pickaxe/improvised,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"DR" = (
+/obj/structure/barricade/wooden,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"HG" = (
+/mob/living/carbon/human/species/monkey,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Iq" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/barricade/wooden,
+/turf/open/misc/grass/jungle,
+/area/ruin/unpowered)
+"Jq" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/mineral/random/jungle,
+/area/ruin/unpowered)
+"JD" = (
+/obj/structure/fermenting_barrel,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Kl" = (
+/obj/structure/closet/crate/miningcar,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Lc" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Lu" = (
+/mob/living/carbon/human/species/monkey,
+/obj/effect/decal/cleanable/food/pie_smudge,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"NB" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"NM" = (
+/obj/structure/sink/puddle,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"Ph" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Ps" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Rm" = (
+/obj/structure/barricade/wooden/crude,
+/obj/structure/barricade/wooden,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"RO" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Si" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"SR" = (
+/obj/item/bedsheet/clown,
+/obj/structure/bed,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Vl" = (
+/obj/effect/decal/cleanable/insectguts,
+/turf/open/floor/grass,
+/area/ruin/unpowered)
+"Xe" = (
+/turf/closed/mineral/random/jungle,
+/area/ruin/unpowered)
+"XE" = (
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"ZM" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/bananalamp,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+iL
+iL
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+iL
+iL
+iL
+iL
+iL
+iL
+"}
+(2,1,1) = {"
+iL
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+iL
+iL
+"}
+(3,1,1) = {"
+iL
+Xe
+vv
+Ps
+Lc
+Lc
+vv
+Kl
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+iL
+"}
+(4,1,1) = {"
+Xe
+Xe
+do
+co
+SR
+qY
+bO
+sa
+XE
+nj
+JD
+Xe
+Xe
+Xe
+Xe
+"}
+(5,1,1) = {"
+Xe
+Xe
+RO
+Lu
+mB
+ye
+yq
+sM
+XE
+eG
+oO
+oO
+Ph
+Xe
+Xe
+"}
+(6,1,1) = {"
+Xe
+Xe
+vv
+ky
+ky
+ky
+vv
+sz
+sz
+XE
+XE
+XE
+sa
+sa
+pb
+"}
+(7,1,1) = {"
+Xe
+Xe
+sz
+kp
+NB
+sz
+ty
+sz
+Si
+sz
+sz
+sz
+Bj
+tL
+Iq
+"}
+(8,1,1) = {"
+Xe
+Xe
+NM
+sz
+Vl
+sz
+sz
+wV
+aa
+Si
+sz
+sz
+kp
+he
+Iq
+"}
+(9,1,1) = {"
+Xe
+Xe
+ds
+sz
+sz
+sz
+sz
+sz
+sz
+sz
+sz
+sz
+sz
+NM
+Xe
+"}
+(10,1,1) = {"
+Xe
+BJ
+Si
+wc
+AY
+ey
+sR
+hI
+qh
+sz
+sz
+sz
+CG
+Xe
+Xe
+"}
+(11,1,1) = {"
+Xe
+bz
+yU
+yi
+ll
+HG
+lr
+rX
+DR
+sz
+sM
+Si
+bS
+Xe
+iL
+"}
+(12,1,1) = {"
+pb
+qv
+Bj
+yi
+ZM
+BQ
+mB
+ya
+DR
+Si
+sz
+BM
+yR
+Jq
+Xe
+"}
+(13,1,1) = {"
+Rm
+vk
+Ch
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+AQ
+sz
+ty
+Si
+gU
+Xe
+"}
+(14,1,1) = {"
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+mj
+Vl
+Ch
+vk
+Xe
+"}
+(15,1,1) = {"
+iL
+iL
+iL
+iL
+iL
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+Xe
+zG
+zG
+Xe
+"}

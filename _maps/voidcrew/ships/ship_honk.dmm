@@ -1,0 +1,1466 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/cable,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"am" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"aO" = (
+/obj/structure/tank_dispenser/plasma,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"dr" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/docking_port/mobile/voidcrew/honk{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk/bridge)
+"dW" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk/bridge)
+"fx" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/machinery/vending/autodrobe/all_access,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"fL" = (
+/obj/item/areaeditor/shuttle,
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/honk/bridge)
+"gc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/high_volume/on{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"gN" = (
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/voidcrew/honk/bridge)
+"hf" = (
+/obj/machinery/vending/hydronutrients,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"hn" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/machinery/light,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"hv" = (
+/obj/machinery/computer/helm,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/honk/bridge)
+"hx" = (
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"iN" = (
+/obj/machinery/light,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"kz" = (
+/obj/structure/table/wood/fancy/royalblue,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/honk/bridge)
+"lc" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/honk/bridge)
+"mc" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/honk/bridge)
+"mU" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk)
+"mV" = (
+/obj/structure/cable,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"ns" = (
+/obj/machinery/door/airlock/bananium/glass,
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk/bridge)
+"oo" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/obj/item/food/grown/banana,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"rq" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 10
+	},
+/obj/machinery/power/supermatter_crystal/shard,
+/turf/open/floor/glass/reinforced,
+/area/shuttle/voidcrew/honk/supermatter)
+"rz" = (
+/obj/machinery/door/airlock/bananium/glass,
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk/bridge)
+"rT" = (
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"rY" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"sM" = (
+/obj/machinery/power/smes/engineering{
+	dir = 1
+	},
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk/supermatter)
+"ta" = (
+/obj/item/stack/tile/eighties/loaded{
+	amount = 50
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"tc" = (
+/obj/machinery/conveyor/auto{
+	dir = 4
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/voidcrew/honk/supermatter)
+"tX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"vn" = (
+/obj/structure/cable,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"vo" = (
+/obj/machinery/atmospherics/components/tank/air,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"wp" = (
+/obj/structure/cable,
+/obj/machinery/power/emitter{
+	dir = 8
+	},
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"wr" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "honkext3"
+	},
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"xf" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/east,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"xT" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 4
+	},
+/obj/machinery/conveyor/auto{
+	dir = 6
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/voidcrew/honk/supermatter)
+"yr" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"yB" = (
+/obj/structure/chair/e_chair{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"yE" = (
+/obj/structure/fans/tiny,
+/obj/structure/cable,
+/obj/structure/railing,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"AS" = (
+/obj/machinery/airalarm/all_access{
+	dir = 1;
+	pixel_y = 26
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"AY" = (
+/obj/machinery/jukebox/disco{
+	anchored = 1
+	},
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"Bn" = (
+/obj/structure/cable,
+/obj/item/pipe_dispenser,
+/obj/structure/table/wood/fancy,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"BK" = (
+/obj/structure/closet/crate,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Cz" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"CJ" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Do" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Dt" = (
+/obj/machinery/conveyor/auto{
+	dir = 8
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/voidcrew/honk/supermatter)
+"El" = (
+/mob/living/carbon/human/species/monkey,
+/obj/structure/cable,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"En" = (
+/obj/structure/fans/tiny,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"EC" = (
+/obj/structure/window/spawner/directional/east,
+/obj/structure/window/spawner/directional/west,
+/obj/machinery/door/window,
+/obj/structure/table/wood/fancy,
+/obj/item/dnainjector/timed/h2m,
+/obj/item/dnainjector/timed/h2m,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"FK" = (
+/obj/machinery/autolathe,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Hg" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/item/toy/crayon/spraycan/lubecan,
+/obj/item/toy/crayon/spraycan/lubecan,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Hr" = (
+/obj/machinery/biogenerator,
+/obj/item/reagent_containers/cup/beaker,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"HB" = (
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"HX" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing{
+	dir = 8
+	},
+/obj/machinery/airalarm/all_access{
+	pixel_y = -26
+	},
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"IO" = (
+/obj/structure/rack,
+/obj/item/mod/control/pre_equipped/cosmohonk,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"IT" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"IX" = (
+/obj/structure/cable,
+/obj/structure/table/wood/fancy/royalblue,
+/obj/machinery/microwave,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Jl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto{
+	dir = 5
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/voidcrew/honk/supermatter)
+"Jq" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor/shutters{
+	id = "prisonint2"
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Jy" = (
+/obj/structure/cable,
+/obj/machinery/button/door{
+	id = "prisonext3";
+	name = "Prison Flush";
+	pixel_y = 25
+	},
+/obj/machinery/button/door{
+	id = "prisonint2";
+	name = "Prison Shutters";
+	pixel_y = 34
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"KF" = (
+/obj/structure/table/wood/fancy,
+/obj/item/storage/toolbox/mechanical,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"KM" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"KZ" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"LJ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump{
+	dir = 8
+	},
+/obj/machinery/conveyor/auto{
+	dir = 9
+	},
+/turf/open/floor/glass/reinforced,
+/area/shuttle/voidcrew/honk/supermatter)
+"LW" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/disposalpipe/trunk{
+	dir = 2
+	},
+/obj/machinery/disposal/delivery_chute{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Mg" = (
+/obj/structure/falsewall/bananium,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk)
+"MZ" = (
+/obj/structure/cable,
+/obj/machinery/power/shuttle_engine/ship/electric{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk/supermatter)
+"Nj" = (
+/obj/structure/table/glass,
+/obj/item/storage/toolbox/mechanical,
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/item/pneumatic_cannon/pie/selfcharge,
+/obj/item/nullrod/clown,
+/obj/item/clothing/neck/petcollar,
+/obj/item/bikehorn/golden,
+/obj/item/gun/ballistic/revolver/russian/soul,
+/obj/item/clothing/head/chaplain/clownmitre,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"NI" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/yellow,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk)
+"Ow" = (
+/obj/machinery/computer/cryopod,
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Po" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/seeds/banana{
+	growthstages = 2;
+	potency = 75;
+	production = 2;
+	yield = 9
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Pr" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/obj/item/reagent_containers/cup/bucket,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Pt" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/west,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Pz" = (
+/obj/structure/cable,
+/obj/item/assembly/signaler,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"PU" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/disposal/delivery_chute,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"Qc" = (
+/obj/structure/fans/tiny,
+/obj/machinery/power/terminal,
+/obj/structure/cable,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"Rx" = (
+/obj/effect/landmark/start/mime,
+/obj/item/clothing/mask/gas/mime,
+/obj/effect/decal/remains/human,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"RJ" = (
+/obj/structure/rack,
+/obj/item/mod/control/pre_equipped/cosmohonk,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/structure/window/spawner/directional/west,
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"RK" = (
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"SM" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"TK" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/honk/bridge)
+"TV" = (
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/structure/closet/secure_closet/freezer/fridge/open,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/obj/item/food/egg,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Up" = (
+/obj/item/pet_carrier,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Ur" = (
+/obj/structure/window/reinforced/plasma/spawner/directional/south,
+/obj/structure/disposalpipe/trunk,
+/obj/structure/cable,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Uv" = (
+/obj/vehicle/ridden/scooter/skateboard,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"UD" = (
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/voidcrew/honk/supermatter)
+"UT" = (
+/obj/structure/fans/tiny,
+/obj/structure/railing,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"Vc" = (
+/obj/machinery/mineral/ore_redemption,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Vl" = (
+/obj/machinery/ore_silo,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"VT" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "honkext3"
+	},
+/obj/machinery/button/door{
+	id = "honkext3";
+	pixel_y = -25
+	},
+/obj/item/grown/bananapeel/bluespace{
+	alpha = 30
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Wc" = (
+/obj/structure/cable,
+/obj/structure/bed/dogbed,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Wl" = (
+/obj/machinery/atmospherics/components/unary/passive_vent,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk)
+"Ww" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/item/melee/roastingstick,
+/obj/structure/closet,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/obj/item/food/raw_sausage,
+/turf/open/floor/light,
+/area/shuttle/voidcrew/honk/supermatter)
+"Xn" = (
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"XR" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Yd" = (
+/mob/living/simple_animal/pet/penguin/emperor/shamebrero{
+	desc = "Weakest Clown Player.";
+	icon = 'icons/mob/clown_mobs.dmi';
+	icon_living = "chlown";
+	icon_state = "chlown";
+	name = "Chlowne"
+	},
+/obj/item/fugu_gland,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"YY" = (
+/turf/template_noop,
+/area/template_noop)
+"Zp" = (
+/obj/machinery/mecha_part_fabricator,
+/obj/machinery/light,
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"Zr" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/honk)
+"Zw" = (
+/obj/machinery/door/poddoor{
+	id = "prisonext3"
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"ZI" = (
+/obj/structure/rack,
+/obj/item/mod/control/pre_equipped/cosmohonk,
+/obj/item/pickaxe/drill,
+/obj/item/storage/bag/ore,
+/obj/item/clothing/shoes/clown_shoes/banana_shoes,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/item/stack/sheet/mineral/bananium,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+"ZT" = (
+/turf/closed/wall/mineral/bananium,
+/area/shuttle/voidcrew/honk)
+
+(1,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+ZT
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(2,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+FK
+HB
+Up
+ta
+Mg
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(3,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+IT
+rT
+rT
+rT
+Wc
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+"}
+(4,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+Nj
+Uv
+Yd
+Xn
+rT
+Zp
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+"}
+(5,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Vc
+Xn
+Xn
+rT
+Xn
+Xn
+ZT
+ZT
+YY
+YY
+YY
+YY
+"}
+(6,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+Vl
+Xn
+Xn
+IX
+oo
+Xn
+Xn
+ZT
+ZT
+YY
+YY
+YY
+"}
+(7,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+RJ
+Xn
+vn
+Hg
+Xn
+Xn
+Xn
+Ow
+ZT
+YY
+YY
+"}
+(8,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZI
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+KM
+ZT
+YY
+YY
+"}
+(9,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+IO
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+Xn
+ZT
+YY
+YY
+"}
+(10,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+KZ
+rT
+Xn
+xf
+xf
+hx
+hn
+ZT
+ZT
+YY
+"}
+(11,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+AS
+rT
+Ur
+PU
+mV
+mV
+mV
+Ww
+UD
+YY
+"}
+(12,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Wl
+tX
+XR
+rT
+LW
+am
+RK
+RK
+En
+Qc
+sM
+MZ
+"}
+(13,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+Jy
+CJ
+mV
+mV
+yE
+Jl
+LJ
+UD
+YY
+"}
+(14,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Zw
+yB
+Zr
+Pz
+Do
+RK
+AY
+UT
+tc
+Dt
+UD
+YY
+"}
+(15,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+Zw
+Rx
+mU
+rT
+CJ
+mV
+mV
+yE
+xT
+rq
+UD
+YY
+"}
+(16,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Jq
+mU
+rT
+Do
+KF
+RK
+RK
+rY
+HX
+UD
+YY
+"}
+(17,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+fx
+Xn
+Xn
+rT
+CJ
+Bn
+El
+mV
+mV
+wp
+UD
+YY
+"}
+(18,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+hf
+Xn
+Xn
+rT
+Xn
+Pt
+Pt
+Pt
+iN
+ZT
+ZT
+YY
+"}
+(19,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+SM
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+Xn
+NI
+YY
+YY
+"}
+(20,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+Hr
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Xn
+aO
+ZT
+YY
+YY
+"}
+(21,1,1) = {"
+YY
+YY
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+EC
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Po
+ZT
+ZT
+YY
+YY
+"}
+(22,1,1) = {"
+YY
+YY
+YY
+YY
+ZT
+ZT
+ZT
+yr
+BK
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Xn
+Po
+ZT
+YY
+YY
+YY
+"}
+(23,1,1) = {"
+dW
+dW
+gN
+gN
+gN
+vo
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+Xn
+Xn
+Pr
+ZT
+ZT
+YY
+YY
+YY
+"}
+(24,1,1) = {"
+dr
+hv
+TK
+lc
+ns
+gc
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+Xn
+rT
+TV
+Cz
+ZT
+ZT
+YY
+YY
+YY
+YY
+"}
+(25,1,1) = {"
+dW
+fL
+kz
+mc
+rz
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+rT
+aj
+ZT
+ZT
+ZT
+YY
+YY
+YY
+YY
+YY
+"}
+(26,1,1) = {"
+dW
+dW
+gN
+gN
+gN
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+wr
+VT
+ZT
+YY
+YY
+YY
+YY
+YY
+YY
+YY
+"}

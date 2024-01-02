@@ -1,0 +1,187 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/item/reagent_containers/glass/bottle/potion/flight,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"d" = (
+/obj/item/nullrod/spear,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"e" = (
+/turf/open/floor/engine,
+/area/ruin/reebe)
+"o" = (
+/obj/item/stack/spacecash/c10000,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"v" = (
+/obj/machinery/door/airlock/bronze,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"x" = (
+/obj/item/construction/rcd/combat,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"y" = (
+/obj/structure/window/bronze{
+	dir = 8
+	},
+/obj/item/hand_tele,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"z" = (
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"B" = (
+/obj/structure/window/bronze/fulltile,
+/obj/structure/grille,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"C" = (
+/turf/open/indestructible/supermatter_cascade/stationary,
+/area/ruin/reebe)
+"E" = (
+/obj/structure/lattice/clockwork,
+/turf/template_noop,
+/area/template_noop)
+"M" = (
+/obj/item/stack/spacecash/c10000,
+/turf/open/floor/engine,
+/area/ruin/reebe)
+"O" = (
+/turf/closed/wall/mineral/bronze,
+/area/ruin/reebe)
+"Y" = (
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+"Z" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/bronze,
+/area/ruin/reebe)
+
+(1,1,1) = {"
+a
+E
+a
+C
+C
+C
+E
+a
+a
+a
+"}
+(2,1,1) = {"
+Y
+Y
+C
+C
+x
+C
+d
+E
+a
+a
+"}
+(3,1,1) = {"
+E
+O
+z
+C
+z
+C
+O
+O
+a
+o
+"}
+(4,1,1) = {"
+Y
+O
+e
+C
+C
+O
+Y
+O
+Y
+E
+"}
+(5,1,1) = {"
+Y
+B
+e
+C
+M
+v
+Z
+v
+Y
+a
+"}
+(6,1,1) = {"
+Y
+O
+C
+e
+e
+O
+Y
+O
+Y
+a
+"}
+(7,1,1) = {"
+Y
+C
+y
+C
+C
+O
+O
+O
+c
+a
+"}
+(8,1,1) = {"
+E
+C
+C
+C
+Y
+Y
+Y
+E
+a
+a
+"}
+(9,1,1) = {"
+Y
+Y
+E
+E
+Y
+E
+a
+a
+a
+a
+"}
+(10,1,1) = {"
+a
+E
+a
+a
+a
+a
+a
+a
+a
+a
+"}

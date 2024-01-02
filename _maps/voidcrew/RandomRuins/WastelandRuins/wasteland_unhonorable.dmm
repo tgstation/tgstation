@@ -1,0 +1,397 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"c" = (
+/obj/structure/sign/warning/radiation,
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"i" = (
+/obj/effect/gibspawner,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"j" = (
+/obj/item/grenade/syndieminibomb,
+/obj/item/ammo_box/magazine/aknt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/radioactive/stack,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"l" = (
+/obj/structure/table/reinforced,
+/obj/item/ammo_box/magazine/aknt{
+	pixel_x = -15;
+	pixel_y = -9
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"m" = (
+/obj/effect/radiation,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"n" = (
+/obj/item/ammo_box/magazine/aknt,
+/turf/open/floor/plating/rust{
+	initial_gas_mix = "plasma=70000;TEMP=293.15"
+	},
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/fence/door,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"p" = (
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/effect/mine/shrapnel,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"q" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/automatic/ak47/nt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"r" = (
+/obj/item/stack/sheet/mineral/uranium/five,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"s" = (
+/obj/structure/fence/corner{
+	dir = 10
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"t" = (
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/structure/radioactive/stack,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"u" = (
+/obj/effect/radiation,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"v" = (
+/obj/machinery/door/airlock/vault,
+/obj/effect/mapping_helpers/airlock/locked,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"x" = (
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/structure/radioactive,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"y" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/energy/e_gun/nuclear,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/sign/warning/radiation,
+/turf/closed/wall/r_wall/rust,
+/area/ruin/unpowered)
+"A" = (
+/obj/item/grenade/frag,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"B" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/unpowered)
+"D" = (
+/obj/structure/fence,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"E" = (
+/obj/structure/sign/warning/radiation,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"F" = (
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"G" = (
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/effect/gibspawner,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"H" = (
+/obj/item/grenade/stingbang,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"I" = (
+/obj/item/flashlight/lantern,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"J" = (
+/obj/structure/radioactive,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"K" = (
+/obj/effect/mine/shrapnel,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"M" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"O" = (
+/obj/structure/marker_beacon,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"P" = (
+/obj/effect/gibspawner,
+/obj/structure/radioactive/waste,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"Q" = (
+/obj/structure/fence/corner,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"R" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/head/utility/radiation{
+	pixel_y = 8
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"S" = (
+/obj/structure/sign/warning/longtermwaste{
+	pixel_y = 32
+	},
+/obj/structure/radioactive,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"U" = (
+/obj/structure/radioactive,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"W" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Y" = (
+/obj/item/ammo_box/magazine/aknt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"Z" = (
+/obj/effect/mine/shrapnel,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+c
+B
+F
+B
+F
+F
+F
+F
+z
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+B
+F
+B
+F
+B
+F
+B
+F
+F
+D
+D
+D
+D
+D
+D
+s
+a
+"}
+(3,1,1) = {"
+B
+B
+x
+J
+e
+i
+t
+B
+F
+M
+k
+M
+M
+U
+M
+W
+a
+"}
+(4,1,1) = {"
+B
+B
+J
+G
+b
+j
+b
+F
+B
+S
+M
+M
+M
+M
+M
+W
+a
+"}
+(5,1,1) = {"
+F
+F
+y
+n
+p
+b
+r
+B
+F
+M
+M
+M
+K
+M
+M
+W
+a
+"}
+(6,1,1) = {"
+F
+B
+q
+A
+u
+b
+I
+B
+O
+M
+m
+M
+M
+M
+k
+E
+O
+"}
+(7,1,1) = {"
+B
+B
+l
+Y
+i
+Y
+Z
+v
+M
+M
+U
+M
+M
+M
+M
+o
+M
+"}
+(8,1,1) = {"
+B
+F
+r
+p
+H
+b
+i
+B
+O
+M
+M
+M
+U
+M
+M
+W
+O
+"}
+(9,1,1) = {"
+F
+F
+P
+b
+e
+r
+J
+B
+F
+M
+M
+M
+M
+M
+M
+W
+a
+"}
+(10,1,1) = {"
+F
+F
+F
+F
+B
+B
+F
+F
+F
+D
+D
+D
+D
+D
+D
+Q
+a
+"}
+(11,1,1) = {"
+z
+F
+F
+B
+B
+B
+B
+B
+c
+a
+a
+a
+a
+a
+R
+a
+a
+"}

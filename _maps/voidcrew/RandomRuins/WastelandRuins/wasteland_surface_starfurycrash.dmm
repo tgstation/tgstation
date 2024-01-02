@@ -1,0 +1,1615 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"aE" = (
+/obj/effect/turf_decal/corner/yellow{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"ba" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"bl" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"bJ" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"cS" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"dX" = (
+/obj/item/gun/ballistic/automatic/pistol{
+	spawnwithmagazine = 0
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"ef" = (
+/obj/structure/closet/wall{
+	dir = 1;
+	icon_door = "sec_wall";
+	icon_state = "sec_wall";
+	name = "backup identification locker";
+	pixel_y = -28
+	},
+/obj/item/card/id/syndicate_command,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"eg" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"eO" = (
+/obj/item/clothing/gloves/combat,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"eS" = (
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"fw" = (
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/cut/blue,
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"fA" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 5
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"fH" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"fM" = (
+/turf/closed/wall/r_wall/syndicate,
+/area/ruin/unpowered)
+"fU" = (
+/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/metal,
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"fW" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 1
+	},
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"gb" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"gt" = (
+/obj/machinery/atmospherics/components/binary/pump,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"gK" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"ho" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 1
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"hz" = (
+/obj/item/storage/toolbox/syndicate,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"hG" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"hQ" = (
+/obj/structure/chair/comfy,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"ih" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"il" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"iq" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"jd" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 10
+	},
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"jf" = (
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"jI" = (
+/turf/template_noop,
+/area/ruin/unpowered)
+"kN" = (
+/obj/item/stack/sheet/metal,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"kW" = (
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"kZ" = (
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"lx" = (
+/obj/effect/turf_decal/corner/blue,
+/obj/effect/turf_decal/corner/blue{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"lN" = (
+/obj/item/clothing/head/utility/hardhat/red{
+	desc = "A piece of headgear used in dangerous working conditions to protect the head. On closer inspection it apears to be a regular hardhat painted red.";
+	name = "syndicate hardhat"
+	},
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"mv" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"mP" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"nn" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"ns" = (
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/smes,
+/obj/item/stock_parts/capacitor,
+/obj/item/stack/cable_coil/cut/blue,
+/obj/item/stock_parts/cell/empty,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"nA" = (
+/obj/item/storage/medkit/ancient,
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"nM" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"ox" = (
+/obj/machinery/atmospherics/components/binary/pump,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"oT" = (
+/turf/open/misc/dust/lit,
+/area/ruin/unpowered)
+"pK" = (
+/obj/item/stack/cable_coil/cut/blue,
+/obj/item/stack/tile/plasteel,
+/turf/open/misc/dust/lit,
+/area/ruin/unpowered)
+"pL" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 5
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"qe" = (
+/obj/machinery/atmospherics/components/binary/circulator{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"qk" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"rp" = (
+/obj/machinery/suit_storage_unit{
+	mask_type = /obj/item/clothing/mask/gas/syndicate;
+	suit_type = /obj/item/clothing/suit/space/hardsuit/syndi
+	},
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"rE" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"sa" = (
+/obj/item/toy/plush/lizardplushie{
+	desc = "An adorable stuffed toy that resembles nothing like a tegu.";
+	name = "tegu plushie"
+	},
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"ss" = (
+/obj/structure/window/plasma/reinforced/plastitanium/unanchored,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"sB" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"tc" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"tp" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 10
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"uN" = (
+/obj/effect/turf_decal/industrial/warning/corner{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 6
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"wh" = (
+/obj/item/clothing/shoes/jackboots,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"wp" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"wy" = (
+/obj/item/stock_parts/cell/empty,
+/obj/item/stock_parts/cell/empty{
+	pixel_x = -8;
+	pixel_y = -7
+	},
+/obj/item/stock_parts/cell/empty{
+	pixel_x = 6;
+	pixel_y = -10
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"wH" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible,
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"xr" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/smg/space,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"yj" = (
+/obj/machinery/door/airlock/hatch,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"yD" = (
+/obj/machinery/door/airlock/engineering,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"zt" = (
+/obj/machinery/atmospherics/components/unary/portables_connector/visible{
+	dir = 4
+	},
+/obj/effect/turf_decal/industrial/outline/yellow,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"zA" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"zB" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/obj/item/clothing/under/syndicate{
+	pixel_y = -11
+	},
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"zY" = (
+/obj/effect/turf_decal/corner/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"AB" = (
+/obj/structure/frame/machine,
+/obj/item/circuitboard/machine/sleeper,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Be" = (
+/obj/structure/window/plasma/reinforced/plastitanium/unanchored,
+/obj/machinery/atmospherics/pipe/simple/scrubbers,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Bt" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"BW" = (
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"BY" = (
+/obj/effect/turf_decal/radiation,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"CM" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible,
+/turf/closed/wall/r_wall/syndicate,
+/area/ruin/unpowered)
+"CW" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"CX" = (
+/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Dz" = (
+/obj/machinery/atmospherics/components/binary/circulator/cold{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"DF" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/binary/pump,
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"DL" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Eg" = (
+/obj/item/stock_parts/cell/empty{
+	pixel_x = 5;
+	pixel_y = -6
+	},
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Ej" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Ek" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 5
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Eu" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space/stormtrooper,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"FM" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 6
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Gd" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet/wall{
+	icon_state = "sec_wall";
+	name = "explosives locker";
+	pixel_y = 28;
+	req_access_txt = "150"
+	},
+/obj/item/grenade/c4/x4,
+/obj/item/grenade/c4/x4,
+/obj/item/grenade/syndieminibomb,
+/obj/item/grenade/syndieminibomb/concussion,
+/obj/item/grenade/c4,
+/obj/item/grenade/c4,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Gg" = (
+/obj/machinery/atmospherics/pipe/manifold/dark/visible{
+	dir = 4
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"GD" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"GO" = (
+/obj/item/circuitboard/machine/sleeper,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Ha" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Hy" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Iz" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"IK" = (
+/obj/item/stack/sheet/metal,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"IY" = (
+/obj/machinery/power/smes,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/whitesands/surface/outdoors)
+"Jn" = (
+/turf/open/floor/pod/dark,
+/area/ruin/unpowered)
+"JC" = (
+/obj/structure/closet/secure_closet/wall{
+	dir = 1;
+	icon_door = "med_wall";
+	name = "medical locker";
+	pixel_y = -28;
+	req_access_txt = "150"
+	},
+/obj/item/storage/medkit/tactical,
+/obj/item/storage/medkit/advanced,
+/obj/item/storage/belt/medical/webbing,
+/turf/open/misc/dust/lit,
+/area/ruin/unpowered)
+"KN" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"KR" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/shotgun/space,
+/turf/open/misc/dust/lit,
+/area/ruin/unpowered)
+"KT" = (
+/obj/structure/safe/floor,
+/obj/item/clothing/suit/space/hardsuit/syndi/elite,
+/obj/item/gun/ballistic/automatic/c20r,
+/obj/item/implantcase/weapons_auth,
+/obj/item/implanter,
+/obj/item/ammo_box/magazine/smgm45,
+/obj/item/ammo_box/magazine/smgm45,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Md" = (
+/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"NA" = (
+/obj/structure/frame/machine,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"NH" = (
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 5
+	},
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"NQ" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Oj" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 10
+	},
+/obj/structure/closet/secure_closet/wall{
+	icon_state = "sec_wall";
+	name = "firearms locker";
+	pixel_y = 28;
+	req_access_txt = "150"
+	},
+/obj/item/gun/ballistic/automatic/pistol/APS,
+/obj/item/gun/ballistic/automatic/pistol/APS,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/obj/item/ammo_box/magazine/pistolm9mm,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Or" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"OY" = (
+/obj/effect/turf_decal/corner/blue,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Pr" = (
+/obj/machinery/door/airlock/engineering,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"PQ" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/dark/visible{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Qk" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 9
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"QG" = (
+/obj/effect/turf_decal/industrial/loading/red,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"QP" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 8
+	},
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"Ri" = (
+/obj/item/pickaxe/improvised,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Rn" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Rq" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"RJ" = (
+/turf/template_noop,
+/area/template_noop)
+"Sp" = (
+/obj/effect/decal/cleanable/ash,
+/obj/item/paper{
+	desc = null;
+	info = "Well, we failed. The undoable has been done. We were taken out. The great Starfury is stuck in orbit, and many of our systems are damaged. There is no other choice but to evacuate. However, me and a group of talented indviduals will go with me. I will activate the hyperdrive, one last time to scuttle the ship before Nanotrasen can get their grubby little hands on it, on the planet of our greatest victory.  If you are worried about me, I have my tegu plushie and all i need to survive for a year. Men and women, its been a honour.";
+	name = "Starfury Status Report - January 15th, 2501"
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Sx" = (
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"SM" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"SS" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 8
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Ts" = (
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/ash{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/ash{
+	pixel_x = 2;
+	pixel_y = -2
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"TF" = (
+/obj/effect/turf_decal/industrial/traffic{
+	dir = 5
+	},
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"TT" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/obj/item/pipe_dispenser,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"TZ" = (
+/obj/item/stack/sheet/metal,
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 1
+	},
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"Uw" = (
+/obj/structure/door_assembly/door_assembly_hatch,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"UD" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"UV" = (
+/obj/machinery/atmospherics/pipe/manifold/scrubbers/visible{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Vl" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Wh" = (
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Ws" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Wz" = (
+/obj/machinery/atmospherics/pipe/simple/scrubbers{
+	dir = 10
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"WB" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"WX" = (
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Xh" = (
+/obj/item/stack/tile/plasteel,
+/mob/living/simple_animal/hostile/syndicate/ranged/space,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"XR" = (
+/obj/machinery/atmospherics/pipe/simple/cyan/visible,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Yo" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Yw" = (
+/obj/item/stack/sheet/metal,
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"YE" = (
+/obj/item/stack/sheet/metal,
+/obj/item/stack/sheet/metal,
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"YM" = (
+/obj/machinery/atmospherics/pipe/manifold/cyan/visible{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"Zy" = (
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/cut/blue,
+/turf/open/floor/engine{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"ZX" = (
+/obj/machinery/suit_storage_unit{
+	helmet_type = /obj/item/clothing/head/helmet/infiltrator;
+	mask_type = /obj/item/clothing/mask/gas/syndicate;
+	suit_type = /obj/item/clothing/suit/armor/vest/infiltrator
+	},
+/turf/open/floor/mineral/plastitanium/red{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+IY
+Eg
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+"}
+(2,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+fM
+ns
+wy
+Xh
+Yo
+RJ
+RJ
+fM
+fM
+fM
+fM
+RJ
+RJ
+RJ
+"}
+(3,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+bl
+Ws
+fM
+RJ
+RJ
+fM
+rE
+Vl
+pK
+RJ
+fM
+ss
+fM
+Sx
+Sx
+Sx
+RJ
+RJ
+RJ
+"}
+(4,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+bl
+kZ
+Sx
+fM
+fM
+fM
+fM
+fM
+fM
+yD
+fM
+fM
+Ws
+Sx
+CW
+mv
+Sx
+RJ
+RJ
+RJ
+"}
+(5,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+Iz
+CW
+Bt
+BW
+BY
+QG
+Pr
+CW
+Sx
+CW
+oT
+CW
+tc
+SS
+sB
+NH
+qk
+RJ
+RJ
+RJ
+"}
+(6,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+qk
+Sx
+CW
+BY
+QG
+Pr
+ho
+IK
+KR
+Ws
+WX
+CW
+Ws
+wH
+Gg
+Ek
+RJ
+RJ
+RJ
+"}
+(7,1,1) = {"
+RJ
+RJ
+fM
+RJ
+fM
+fM
+BW
+Sx
+fM
+fM
+fM
+fM
+TF
+uN
+KN
+kN
+KN
+KN
+KN
+DL
+pL
+PQ
+RJ
+RJ
+RJ
+"}
+(8,1,1) = {"
+RJ
+RJ
+RJ
+nA
+GO
+fM
+Sx
+kZ
+fM
+CW
+kW
+fM
+fM
+QP
+Ws
+YE
+CW
+Ha
+Ws
+WX
+Rq
+nM
+fM
+RJ
+RJ
+"}
+(9,1,1) = {"
+RJ
+fM
+fM
+qk
+JC
+fM
+aE
+OY
+fM
+hQ
+Sp
+fM
+fM
+Gd
+UD
+CW
+Ws
+ad
+zt
+Ws
+fW
+DF
+jI
+RJ
+RJ
+"}
+(10,1,1) = {"
+RJ
+RJ
+RJ
+oT
+xr
+Uw
+zY
+lx
+yj
+Eu
+Ts
+fM
+fM
+Rn
+kZ
+kZ
+Sx
+Wz
+Hy
+WX
+hG
+tp
+CM
+RJ
+RJ
+"}
+(11,1,1) = {"
+RJ
+RJ
+RJ
+Wh
+kZ
+fM
+qk
+eS
+fM
+CW
+ef
+fM
+fM
+Oj
+KN
+TZ
+qe
+Or
+nn
+il
+UV
+iq
+Be
+RJ
+RJ
+"}
+(12,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+wp
+fM
+BW
+BW
+fM
+KT
+AB
+fM
+fM
+CW
+WX
+WX
+Zy
+WX
+kZ
+WX
+WX
+WX
+ss
+RJ
+RJ
+"}
+(13,1,1) = {"
+RJ
+RJ
+RJ
+fM
+fM
+fM
+yj
+yj
+fM
+fM
+fM
+fM
+fM
+FM
+XR
+ox
+Dz
+gt
+YM
+TT
+cS
+fA
+ss
+RJ
+RJ
+"}
+(14,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+CW
+Ws
+ZX
+rp
+fw
+fM
+fM
+zA
+kZ
+Md
+WX
+FM
+ba
+WX
+CW
+WB
+fM
+RJ
+RJ
+"}
+(15,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+bl
+bl
+Ws
+xr
+Jn
+fM
+fM
+fU
+Yw
+Sx
+hz
+bJ
+lN
+WX
+Ws
+fH
+jI
+RJ
+RJ
+"}
+(16,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+bl
+gb
+jf
+qk
+NQ
+fM
+fM
+zA
+Yw
+Ws
+WX
+Ws
+CX
+CW
+Ws
+WB
+fM
+RJ
+RJ
+"}
+(17,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+bl
+bl
+gK
+gK
+bl
+fM
+RJ
+jd
+cS
+cS
+GD
+mP
+mP
+mP
+YM
+Qk
+bl
+RJ
+RJ
+"}
+(18,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+bl
+dX
+gK
+gK
+bl
+bl
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+Ej
+NA
+NA
+NA
+ho
+gK
+RJ
+RJ
+"}
+(19,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+gK
+bl
+zB
+wh
+bl
+bl
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+eg
+ih
+eg
+eg
+gK
+RJ
+RJ
+RJ
+"}
+(20,1,1) = {"
+RJ
+RJ
+RJ
+gK
+gK
+Ri
+eO
+bl
+bl
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+BW
+SM
+Sx
+Sx
+RJ
+RJ
+RJ
+RJ
+"}
+(21,1,1) = {"
+RJ
+RJ
+RJ
+sa
+gK
+gK
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+fM
+fM
+BW
+BW
+BW
+RJ
+RJ
+RJ
+"}
+(22,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+fM
+ss
+fM
+RJ
+RJ
+RJ
+RJ
+"}
+(23,1,1) = {"
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+RJ
+"}

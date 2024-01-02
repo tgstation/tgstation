@@ -1,0 +1,497 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"f" = (
+/obj/effect/landmark/portal_exit{
+	id = "pandora_entrance"
+	},
+/turf/open/indestructible/hierophant,
+/area/ruin)
+"k" = (
+/obj/effect/portal/permanent/one_way{
+	id = "pandora_entrance"
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"m" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 5
+	},
+/turf/open/indestructible/hierophant,
+/area/ruin)
+"n" = (
+/obj/structure/fluff/divine/powerpylon,
+/turf/open/indestructible/hierophant,
+/area/ruin)
+"q" = (
+/obj/structure/window/plasma/fulltile,
+/turf/open/indestructible/hierophant,
+/area/ruin)
+"s" = (
+/turf/open/indestructible/hierophant,
+/area/ruin)
+"u" = (
+/obj/machinery/light/floor,
+/turf/open/indestructible/hierophant,
+/area/ruin)
+"x" = (
+/turf/open/indestructible/hierophant/two,
+/area/ruin)
+"z" = (
+/obj/structure/fluff/divine/defensepylon,
+/turf/open/indestructible/hierophant/two,
+/area/ruin)
+"C" = (
+/mob/living/simple_animal/hostile/asteroid/elite/pandora/dungeon,
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 5
+	},
+/turf/open/indestructible/hierophant/two,
+/area/ruin)
+"I" = (
+/obj/machinery/light/floor,
+/turf/open/indestructible/hierophant/two,
+/area/ruin)
+"J" = (
+/obj/machinery/door/poddoor/gates/indestructible{
+	id = "pandora_dead"
+	},
+/turf/open/indestructible/hierophant/two,
+/area/ruin)
+"M" = (
+/turf/closed/indestructible/riveted/hierophant,
+/area/ruin)
+"O" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"S" = (
+/obj/effect/light_emitter{
+	set_cap = 3;
+	set_luminosity = 5
+	},
+/turf/open/indestructible/hierophant/two,
+/area/ruin)
+"X" = (
+/obj/machinery/door/poddoor/gates/indestructible{
+	id = "pandora_dead"
+	},
+/turf/open/indestructible/hierophant,
+/area/ruin)
+"Y" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(2,1,1) = {"
+M
+m
+s
+s
+M
+s
+s
+s
+s
+s
+M
+s
+s
+m
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(3,1,1) = {"
+M
+s
+n
+s
+q
+s
+s
+s
+s
+s
+q
+s
+n
+s
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(4,1,1) = {"
+M
+s
+s
+q
+q
+s
+s
+u
+s
+s
+q
+q
+s
+s
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(5,1,1) = {"
+M
+M
+q
+q
+u
+s
+s
+s
+s
+s
+u
+q
+q
+M
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(6,1,1) = {"
+M
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(7,1,1) = {"
+M
+s
+s
+s
+M
+M
+x
+x
+x
+M
+M
+s
+s
+s
+M
+M
+M
+M
+M
+M
+O
+"}
+(8,1,1) = {"
+M
+s
+u
+s
+M
+z
+x
+x
+x
+z
+M
+s
+u
+s
+M
+I
+x
+x
+I
+M
+k
+"}
+(9,1,1) = {"
+M
+s
+s
+s
+x
+x
+x
+C
+x
+x
+x
+s
+s
+s
+X
+x
+x
+x
+x
+J
+O
+"}
+(10,1,1) = {"
+M
+s
+s
+s
+x
+x
+x
+S
+x
+x
+x
+s
+s
+f
+X
+x
+x
+x
+x
+J
+O
+"}
+(11,1,1) = {"
+M
+s
+u
+s
+M
+z
+x
+x
+x
+z
+M
+s
+u
+s
+M
+I
+x
+x
+I
+M
+O
+"}
+(12,1,1) = {"
+M
+s
+s
+s
+M
+M
+x
+x
+x
+M
+M
+s
+s
+s
+M
+M
+M
+M
+M
+M
+O
+"}
+(13,1,1) = {"
+M
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+s
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(14,1,1) = {"
+M
+M
+q
+q
+u
+s
+s
+s
+s
+s
+u
+q
+q
+M
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(15,1,1) = {"
+M
+s
+s
+q
+q
+s
+s
+u
+s
+s
+q
+q
+s
+s
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(16,1,1) = {"
+M
+s
+n
+s
+q
+s
+s
+s
+s
+s
+q
+s
+n
+s
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(17,1,1) = {"
+M
+m
+s
+s
+M
+s
+s
+s
+s
+s
+M
+s
+s
+m
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}
+(18,1,1) = {"
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+M
+Y
+Y
+Y
+Y
+Y
+Y
+"}

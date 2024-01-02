@@ -1,0 +1,1317 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ao" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"aB" = (
+/obj/structure/table/wood/poker,
+/obj/item/dice/d6/space,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"aU" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/fakespace,
+/area/ruin/powered)
+"ca" = (
+/obj/structure/table/wood/reinforced,
+/obj/machinery/roulette,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"cA" = (
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"cU" = (
+/turf/open/floor/mineral/silver,
+/area/ruin/powered)
+"dd" = (
+/obj/item/cigbutt/cigarbutt,
+/turf/open/floor/fakespace,
+/area/ruin/powered)
+"di" = (
+/obj/structure/sign/barsign,
+/turf/closed/wall/r_wall,
+/area/ruin/powered)
+"dt" = (
+/obj/machinery/computer/arcade,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"ea" = (
+/obj/machinery/computer/arcade,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"eT" = (
+/obj/machinery/computer/arcade,
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"fx" = (
+/obj/machinery/mineral/mint,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light,
+/turf/open/indestructible,
+/area/ruin/powered)
+"fR" = (
+/obj/item/cigbutt/roach,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"ga" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"ge" = (
+/obj/item/cigbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"gt" = (
+/obj/effect/decal/cleanable/ash,
+/obj/item/cigbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"gZ" = (
+/obj/structure/chair/stool/bar,
+/obj/item/cigbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"hA" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/table/wood/reinforced,
+/obj/machinery/chem_dispenser/drinks,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"im" = (
+/obj/machinery/computer/arcade,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"jm" = (
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"jw" = (
+/obj/item/cigbutt/roach,
+/obj/item/cigbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"jH" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"kk" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"kT" = (
+/obj/structure/chair/stool/bar,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"ln" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/chair/stool/bar,
+/obj/machinery/light,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"ls" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/ash,
+/obj/item/cigbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"lY" = (
+/obj/structure/table/wood/poker,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"mu" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/ruin/powered)
+"mG" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/ash,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"nL" = (
+/obj/structure/table/wood/poker,
+/obj/item/dice/d6,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"oq" = (
+/obj/structure/table/wood/poker,
+/obj/item/dice/d6/ebony,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"oH" = (
+/obj/structure/chair/stool/bar,
+/obj/machinery/light,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"oJ" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"oP" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"oQ" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/food/salt,
+/obj/item/toy/cards/deck,
+/turf/open/misc/grass/jungle,
+/area/ruin/powered)
+"pd" = (
+/obj/machinery/computer/slot_machine,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"pe" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"ph" = (
+/obj/structure/table/wood/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"pq" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/item/grenade/discogrenade,
+/turf/open/floor/light{
+	base_icon_state = "light_on-cycle_all";
+	icon_plating = "light_on-cycle_all";
+	icon_state = "light_on-cycle_all"
+	},
+/area/ruin/powered)
+"qa" = (
+/obj/machinery/light,
+/turf/open/floor/mineral/silver,
+/area/ruin/powered)
+"qd" = (
+/obj/item/paper/fluff{
+	info = "Hey, the dance floor is broken. I'm not being paid enough to fix it, so go fix it yourself with my multitool.";
+	name = "Mechanic's Note"
+	},
+/turf/open/floor/light{
+	base_icon_state = "light_on-cycle_all";
+	icon_plating = "light_on-cycle_all";
+	icon_state = "light_on-cycle_all"
+	},
+/area/ruin/powered)
+"qA" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"qP" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"sz" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/item/dice/fudge,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"sO" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"td" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible,
+/area/ruin/powered)
+"tj" = (
+/obj/machinery/computer/slot_machine,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"ts" = (
+/obj/machinery/computer/arcade,
+/obj/effect/decal/cleanable/food/salt,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"ty" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/ash,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"uV" = (
+/obj/machinery/computer/arcade,
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"uY" = (
+/turf/closed/wall/r_wall,
+/area/ruin/powered)
+"vR" = (
+/obj/machinery/scanner_gate/luxury_shuttle,
+/obj/machinery/door/airlock/vault,
+/turf/open/indestructible,
+/area/ruin/powered)
+"vV" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/machinery/door/window/northright,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"vX" = (
+/turf/open/floor/fakespace,
+/area/ruin/powered)
+"wu" = (
+/obj/structure/table/wood/reinforced,
+/obj/machinery/chem_dispenser/drinks,
+/obj/item/storage/box/drinkingglasses,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"wV" = (
+/obj/machinery/computer/arcade,
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/cobweb,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"xD" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/ash,
+/obj/item/storage/dice,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"xG" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/mineral/silver,
+/area/ruin/powered)
+"xN" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/closed/indestructible/riveted,
+/area/ruin/powered)
+"yi" = (
+/obj/item/cigbutt/cigarbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"yv" = (
+/obj/structure/safe,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/glass/beaker/bluespace{
+	list_reagents = list(/datum/reagent/consumable/sodiumchloride = 300)
+	},
+/obj/item/storage/box/slugshot,
+/obj/item/storage/bag/money,
+/obj/item/circuitboard/computer/arcade/amputation,
+/obj/item/coin/gold,
+/obj/item/coin/gold,
+/obj/item/coin/gold,
+/obj/item/coin/gold,
+/obj/item/coin/gold,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/silver,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/iron,
+/obj/item/coin/diamond,
+/obj/item/coin/diamond,
+/obj/machinery/light,
+/obj/item/gun/ballistic/shotgun/riot,
+/turf/open/indestructible,
+/area/ruin/powered)
+"yw" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/powered)
+"zw" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"zM" = (
+/turf/closed/wall/mineral/diamond,
+/area/ruin/powered)
+"Aq" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/fans/tiny/invisible,
+/turf/open/floor/mineral/silver,
+/area/ruin/powered)
+"AK" = (
+/obj/item/cigbutt/cigarbutt,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"Bj" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/ash,
+/obj/item/dice,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Cc" = (
+/obj/item/cigbutt/cigarbutt,
+/obj/item/cigbutt,
+/turf/open/floor/fakespace,
+/area/ruin/powered)
+"Cm" = (
+/obj/machinery/computer/arcade,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/eighties,
+/area/ruin/powered)
+"CC" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/light{
+	base_icon_state = "light_on-cycle_all";
+	icon_plating = "light_on-cycle_all";
+	icon_state = "light_on-cycle_all"
+	},
+/area/ruin/powered)
+"CV" = (
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Er" = (
+/obj/machinery/door/window/northleft,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Ez" = (
+/obj/item/cigbutt/roach,
+/turf/open/floor/light{
+	base_icon_state = "light_on-cycle_all";
+	icon_plating = "light_on-cycle_all";
+	icon_state = "light_on-cycle_all"
+	},
+/area/ruin/powered)
+"Fd" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Fl" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/item/cigbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"GY" = (
+/obj/item/multitool/old,
+/turf/open/floor/light{
+	base_icon_state = "light_on-cycle_all";
+	icon_plating = "light_on-cycle_all";
+	icon_state = "light_on-cycle_all"
+	},
+/area/ruin/powered)
+"Hc" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Hg" = (
+/obj/machinery/computer/slot_machine,
+/obj/effect/decal/cleanable/food/salt,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"Hv" = (
+/obj/structure/table/wood/poker,
+/obj/item/dice,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"HB" = (
+/obj/structure/table/wood/poker,
+/obj/item/storage/dice,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"HD" = (
+/obj/machinery/computer/slot_machine,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"HS" = (
+/obj/structure/chair/stool/bar,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"II" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"Jh" = (
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Jk" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"JE" = (
+/obj/structure/chair/stool/bar,
+/obj/effect/decal/cleanable/ash,
+/obj/item/cigbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"KT" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Lv" = (
+/obj/structure/table/wood/poker,
+/obj/item/clothing/neck/stethoscope,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"LC" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/chair/stool/bar,
+/obj/structure/chair/stool/bar,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"Mb" = (
+/obj/item/cigbutt/roach,
+/turf/open/floor/fakespace,
+/area/ruin/powered)
+"Md" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/food/salt,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Mm" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/fakespace,
+/area/ruin/powered)
+"Or" = (
+/obj/machinery/computer/slot_machine,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"OB" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/indestructible,
+/area/ruin/powered)
+"PV" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/ash,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Qq" = (
+/obj/structure/table/wood/poker,
+/obj/item/cigbutt,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"QG" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/food/salt,
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/ash,
+/obj/item/toy/cards/deck,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"QH" = (
+/obj/structure/table/wood/poker,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Rk" = (
+/obj/structure/chair/stool/bar,
+/obj/item/cigbutt/cigarbutt,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"TH" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/mineral/silver,
+/area/ruin/powered)
+"Ug" = (
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/fakespace,
+/area/ruin/powered)
+"UC" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Vp" = (
+/obj/structure/chair/stool/bar,
+/obj/item/cigbutt/roach,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"VK" = (
+/obj/structure/chair/stool/bar,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"WQ" = (
+/obj/effect/decal/cleanable/food/salt,
+/obj/structure/chair/stool/bar,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet/black,
+/area/ruin/powered)
+"Xb" = (
+/turf/open/floor/light{
+	base_icon_state = "light_on-cycle_all";
+	icon_plating = "light_on-cycle_all";
+	icon_state = "light_on-cycle_all"
+	},
+/area/ruin/powered)
+"Xl" = (
+/turf/template_noop,
+/area/template_noop)
+"YA" = (
+/obj/structure/table/wood/poker,
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/food/salt,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"YG" = (
+/obj/structure/table/wood/poker,
+/obj/item/cigbutt/roach,
+/turf/open/floor/carpet/royalblack,
+/area/ruin/powered)
+"Zo" = (
+/obj/machinery/jukebox/disco/indestructible,
+/turf/open/floor/light{
+	base_icon_state = "light_on-cycle_all";
+	icon_plating = "light_on-cycle_all";
+	icon_state = "light_on-cycle_all"
+	},
+/area/ruin/powered)
+
+(1,1,1) = {"
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+zM
+zM
+zM
+zM
+zM
+zM
+zM
+zM
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+"}
+(2,1,1) = {"
+Xl
+Xl
+Xl
+Xl
+zM
+zM
+zM
+wV
+eT
+Cm
+Cm
+eT
+ts
+zM
+zM
+zM
+Xl
+Xl
+Xl
+Xl
+"}
+(3,1,1) = {"
+Xl
+Xl
+Xl
+Xl
+zM
+zw
+zw
+qA
+qA
+LC
+qA
+AK
+qA
+zw
+zw
+zM
+Xl
+Xl
+Xl
+Xl
+"}
+(4,1,1) = {"
+Xl
+Xl
+Xl
+zM
+zM
+WQ
+ga
+vX
+vX
+vX
+vX
+vX
+vX
+qA
+ln
+zM
+zM
+Xl
+Xl
+Xl
+"}
+(5,1,1) = {"
+Xl
+zM
+zM
+zM
+zw
+cA
+vX
+Cc
+Mm
+vX
+Ug
+Ug
+vX
+vX
+Mb
+vX
+zM
+zM
+zM
+Xl
+"}
+(6,1,1) = {"
+Xl
+zM
+Or
+kT
+II
+ga
+vX
+vX
+yi
+Jh
+Jh
+Jh
+vX
+vX
+vX
+cA
+kT
+cA
+zM
+Xl
+"}
+(7,1,1) = {"
+zM
+zM
+HD
+qA
+vX
+vX
+vX
+Fd
+Jh
+Vp
+gZ
+Jh
+yi
+Mb
+vX
+qA
+ca
+oH
+zM
+zM
+"}
+(8,1,1) = {"
+zM
+ea
+qA
+vX
+Ug
+vX
+Jh
+CV
+YA
+oq
+aB
+PV
+oJ
+ge
+vX
+II
+ga
+cA
+qa
+zM
+"}
+(9,1,1) = {"
+zM
+eT
+qA
+dd
+vX
+vX
+Fd
+oP
+QG
+pe
+Jh
+jm
+QH
+Jh
+vX
+vX
+vX
+vX
+cU
+zM
+"}
+(10,1,1) = {"
+zM
+eT
+qA
+vX
+vX
+jw
+Rk
+lY
+Jh
+Jh
+Jh
+Jh
+lY
+CV
+Hc
+vX
+vX
+vX
+cU
+zM
+"}
+(11,1,1) = {"
+zM
+uV
+qA
+vX
+vX
+Jh
+Jk
+oQ
+ge
+hA
+ph
+Fd
+jm
+jH
+yi
+vX
+vX
+vX
+cU
+zM
+"}
+(12,1,1) = {"
+zM
+im
+ga
+vX
+vX
+CV
+QH
+Jh
+KT
+Jh
+Jh
+KT
+Jh
+QH
+CV
+vX
+vX
+vX
+qa
+zM
+"}
+(13,1,1) = {"
+zM
+eT
+ga
+vX
+vX
+sO
+lY
+Jh
+uY
+uY
+xN
+uY
+Jh
+lY
+Fd
+Ug
+vX
+vX
+cU
+xG
+"}
+(14,1,1) = {"
+zM
+Zo
+Xb
+CC
+Xb
+CV
+HB
+Fd
+uY
+OB
+fx
+uY
+Jh
+Lv
+CV
+Ug
+Ug
+Ug
+Ug
+Aq
+"}
+(15,1,1) = {"
+zM
+pq
+Xb
+qd
+Xb
+Jh
+Er
+Jh
+uY
+mu
+mu
+di
+Jh
+Hv
+Jh
+aU
+aU
+aU
+aU
+Aq
+"}
+(16,1,1) = {"
+zM
+pq
+Xb
+GY
+Xb
+Jh
+vV
+Jh
+vR
+mu
+td
+uY
+Jh
+Bj
+Hc
+aU
+aU
+aU
+aU
+Aq
+"}
+(17,1,1) = {"
+zM
+Zo
+Xb
+Xb
+Ez
+gZ
+xD
+Jh
+uY
+yw
+yv
+uY
+Jh
+YG
+CV
+aU
+Ug
+Ug
+Ug
+Aq
+"}
+(18,1,1) = {"
+zM
+eT
+qA
+vX
+vX
+Fl
+ty
+Jh
+uY
+uY
+xN
+uY
+Jh
+lY
+Jh
+vX
+vX
+vX
+cU
+xG
+"}
+(19,1,1) = {"
+zM
+im
+ga
+dd
+vX
+CV
+QH
+Fd
+UC
+Jh
+Jh
+UC
+Hc
+QH
+JE
+Ug
+vX
+vX
+qa
+zM
+"}
+(20,1,1) = {"
+zM
+eT
+qA
+vX
+vX
+Hc
+QH
+Md
+Jh
+wu
+ph
+Fd
+mG
+QH
+Jh
+dd
+vX
+vX
+cU
+zM
+"}
+(21,1,1) = {"
+zM
+eT
+qA
+vX
+vX
+Jh
+ao
+PV
+Hc
+Jh
+Jh
+Jh
+Qq
+CV
+Jh
+Mb
+vX
+vX
+TH
+zM
+"}
+(22,1,1) = {"
+zM
+eT
+qA
+vX
+vX
+vX
+Hc
+jH
+mG
+Fd
+Hc
+kk
+ls
+Jh
+vX
+vX
+vX
+vX
+cU
+zM
+"}
+(23,1,1) = {"
+zM
+im
+qA
+vX
+vX
+vX
+Jh
+CV
+lY
+nL
+sz
+qP
+CV
+Jh
+vX
+cA
+qA
+cA
+qa
+zM
+"}
+(24,1,1) = {"
+zM
+zM
+HD
+qA
+vX
+vX
+vX
+Fd
+Jh
+CV
+Vp
+Jh
+Jh
+vX
+vX
+ga
+ca
+oH
+zM
+zM
+"}
+(25,1,1) = {"
+Xl
+zM
+zw
+HS
+cA
+ga
+vX
+vX
+Jh
+gt
+fR
+Fd
+vX
+Ug
+vX
+cA
+HS
+cA
+zM
+Xl
+"}
+(26,1,1) = {"
+Xl
+zM
+zM
+zM
+pd
+cA
+vX
+vX
+Ug
+vX
+vX
+vX
+vX
+vX
+vX
+vX
+zM
+zM
+zM
+Xl
+"}
+(27,1,1) = {"
+Xl
+Xl
+Xl
+zM
+zM
+VK
+qA
+dd
+Ug
+vX
+Ug
+vX
+vX
+qA
+ln
+zM
+zM
+Xl
+Xl
+Xl
+"}
+(28,1,1) = {"
+Xl
+Xl
+Xl
+Xl
+zM
+pd
+Hg
+qA
+qA
+qA
+ga
+qA
+qA
+tj
+zw
+zM
+Xl
+Xl
+Xl
+Xl
+"}
+(29,1,1) = {"
+Xl
+Xl
+Xl
+Xl
+zM
+zM
+zM
+dt
+eT
+dt
+dt
+uV
+dt
+zM
+zM
+zM
+Xl
+Xl
+Xl
+Xl
+"}
+(30,1,1) = {"
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+zM
+zM
+zM
+zM
+zM
+zM
+zM
+zM
+Xl
+Xl
+Xl
+Xl
+Xl
+Xl
+"}

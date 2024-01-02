@@ -1,0 +1,729 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aq" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/fancy/donut_box,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"br" = (
+/obj/structure/sign/donk{
+	pixel_y = 32
+	},
+/turf/open/floor/carpet/nanoweave/purple,
+/area/ruin/unpowered)
+"cl" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"dr" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"dA" = (
+/obj/structure/extinguisher_cabinet,
+/obj/structure/girder,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"fE" = (
+/obj/structure/curtain/bounty,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/eighties,
+/area/ruin/unpowered)
+"ga" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gg" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"gO" = (
+/obj/structure/table,
+/turf/open/floor/carpet/nanoweave/purple,
+/area/ruin/unpowered)
+"gS" = (
+/obj/structure/chair{
+	dir = 4
+	},
+/obj/machinery/firealarm{
+	dir = 1;
+	pixel_y = -24
+	},
+/turf/open/floor/carpet/nanoweave/purple,
+/area/ruin/unpowered)
+"im" = (
+/obj/structure/curtain/bounty,
+/turf/open/floor/eighties,
+/area/ruin/unpowered)
+"iH" = (
+/turf/template_noop,
+/area/template_noop)
+"ju" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/purple,
+/area/ruin/unpowered)
+"jX" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"lN" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/condiment/saltshaker{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/condiment/peppermill{
+	pixel_y = 2
+	},
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/shutters,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"me" = (
+/obj/structure/table,
+/obj/structure/frame/machine,
+/obj/structure/table,
+/obj/item/circuitboard/machine/chem_dispenser/drinks/beer,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"pa" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/unpowered)
+"pc" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"sI" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"sQ" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"sV" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"tm" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/glass/beaker/large{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = -28
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"tI" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/obj/structure/sign/solgov_seal{
+	pixel_x = -27;
+	pixel_y = 0
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ut" = (
+/turf/open/misc/asteroid,
+/area/overmap_encounter/planetoid/wasteland)
+"uM" = (
+/obj/structure/lattice,
+/turf/open/misc/asteroid,
+/area/ruin/unpowered)
+"vc" = (
+/obj/structure/cable,
+/obj/machinery/light,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/nanoweave/purple,
+/area/ruin/unpowered)
+"wq" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"wG" = (
+/obj/structure/girder,
+/obj/structure/girder,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"xh" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"xi" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xD" = (
+/obj/structure/table,
+/obj/item/storage/bag/tray,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/item/reagent_containers/glass/rag,
+/obj/item/reagent_containers/food/condiment/enzyme,
+/obj/item/kitchen/knife,
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"xU" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Crew Quarters"
+	},
+/obj/structure/cable,
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2,
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"yB" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/turf/open/floor/plasteel/tech/grid,
+/area/ruin/unpowered)
+"yE" = (
+/obj/structure/sign/warning/docking,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"Al" = (
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"DF" = (
+/obj/machinery/door/window/westleft,
+/obj/structure/sink{
+	dir = 8;
+	pixel_x = 12
+	},
+/obj/structure/mirror{
+	pixel_x = 24
+	},
+/turf/open/floor/iron/white,
+/area/ruin/unpowered)
+"Fq" = (
+/obj/item/electronics/apc,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Hv" = (
+/obj/structure/table,
+/obj/machinery/chem_dispenser/drinks,
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"HU" = (
+/obj/structure/chair{
+	dir = 8
+	},
+/turf/open/floor/carpet/nanoweave/purple,
+/area/ruin/unpowered)
+"HV" = (
+/obj/structure/curtain,
+/obj/machinery/shower{
+	pixel_y = 8
+	},
+/obj/structure/window/reinforced/tinted/frosted{
+	dir = 8
+	},
+/obj/item/soap,
+/mob/living/simple_animal/hostile/asteroid/goliath/beast{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/unpowered)
+"Ka" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"KR" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Lz" = (
+/obj/item/ammo_casing/spent{
+	dir = 1;
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/item/gun/ballistic/automatic/pistol/commander{
+	pixel_y = 7
+	},
+/obj/effect/mob_spawn/human/corpse/assistant,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"Mi" = (
+/obj/structure/grille,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Nb" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"QS" = (
+/obj/structure/chair/comfy/teal,
+/obj/machinery/airalarm/all_access{
+	pixel_y = 24
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Rt" = (
+/obj/effect/spawner/structure/window/shuttle,
+/obj/machinery/door/firedoor/window,
+/obj/structure/grille,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "sgwindowshut";
+	name = "External Shutters"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"RL" = (
+/obj/structure/lattice,
+/obj/structure/girder,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"Sh" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/door/window/westright,
+/obj/structure/window/reinforced/spawner,
+/obj/machinery/atmospherics/components/binary/pump/layer2,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Te" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"TX" = (
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 9
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/siphon/layer4{
+	dir = 8
+	},
+/obj/item/oar,
+/obj/machinery/advanced_airlock_controller{
+	pixel_y = -24
+	},
+/obj/structure/closet/emcloset/wall{
+	pixel_x = 32
+	},
+/turf/open/floor/plasteel/tech,
+/area/ruin/unpowered)
+"TZ" = (
+/obj/machinery/door/airlock/public/glass,
+/obj/structure/cable,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/supply/hidden/layer2{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/scrubbers/hidden/layer4{
+	dir = 4
+	},
+/turf/open/floor/plasteel/tech/grid,
+/area/ruin/unpowered)
+"UA" = (
+/obj/machinery/gibber,
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"Vn" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/supply/hidden/layer2{
+	dir = 1
+	},
+/turf/open/floor/carpet/nanoweave/purple,
+/area/ruin/unpowered)
+"Vy" = (
+/obj/structure/table,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/machinery/button/door{
+	id = "sgkitchen";
+	name = "Kitchen Shutters";
+	pixel_y = -22
+	},
+/obj/machinery/camera/autoname{
+	dir = 1;
+	network = list("cricket")
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/white{
+	dir = 2
+	},
+/obj/effect/turf_decal/corner/bar/diagonal{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"VG" = (
+/obj/machinery/atmospherics/components/unary/tank/air{
+	piping_layer = 2
+	},
+/obj/structure/window/reinforced/spawner/west,
+/obj/machinery/camera/autoname{
+	dir = 8;
+	network = list("cricket")
+	},
+/turf/open/floor/plasteel/tech,
+/area/ruin/unpowered)
+"WP" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+ut
+iH
+ut
+uM
+uM
+uM
+wq
+jX
+sQ
+uM
+uM
+ut
+iH
+ut
+iH
+iH
+"}
+(2,1,1) = {"
+yE
+VG
+Sh
+TX
+pa
+yB
+TZ
+pa
+pa
+Nb
+dr
+dr
+uM
+iH
+iH
+iH
+"}
+(3,1,1) = {"
+Nb
+Nb
+dr
+pa
+pa
+KR
+Vn
+ju
+xU
+tI
+Ka
+fE
+KR
+uM
+ut
+iH
+"}
+(4,1,1) = {"
+Nb
+UA
+tm
+Te
+xh
+sQ
+jX
+gS
+dr
+QS
+cl
+im
+gg
+sQ
+uM
+ut
+"}
+(5,1,1) = {"
+Rt
+xD
+pc
+WP
+lN
+sV
+sQ
+gO
+dr
+Fq
+ga
+Al
+jX
+KR
+uM
+uM
+"}
+(6,1,1) = {"
+Rt
+me
+jX
+Lz
+aq
+sQ
+jX
+HU
+pa
+HV
+DF
+pa
+sQ
+uM
+iH
+ut
+"}
+(7,1,1) = {"
+Mi
+Hv
+KR
+Vy
+dr
+br
+vc
+dA
+pa
+Nb
+pa
+pa
+uM
+ut
+iH
+iH
+"}
+(8,1,1) = {"
+RL
+pa
+pa
+xi
+wG
+gg
+jX
+jX
+sQ
+Nb
+uM
+ut
+ut
+iH
+iH
+iH
+"}
+(9,1,1) = {"
+ut
+ut
+uM
+uM
+sQ
+KR
+sI
+sQ
+uM
+uM
+ut
+iH
+iH
+iH
+iH
+iH
+"}
+(10,1,1) = {"
+iH
+iH
+ut
+iH
+ut
+uM
+uM
+uM
+ut
+iH
+ut
+iH
+iH
+iH
+iH
+iH
+"}
+(11,1,1) = {"
+iH
+iH
+iH
+iH
+iH
+ut
+uM
+ut
+iH
+iH
+iH
+iH
+iH
+iH
+iH
+iH
+"}

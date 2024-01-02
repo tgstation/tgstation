@@ -1,0 +1,730 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ay" = (
+/obj/structure/statue/sandstone/venus{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"aR" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ch" = (
+/obj/structure/railing/corner{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"cM" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/pod/dark,
+/area/ruin/unpowered)
+"ej" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"eK" = (
+/obj/item/bedsheet/syndie,
+/obj/structure/bed,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gz" = (
+/obj/structure/stairs/east,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gE" = (
+/obj/structure/closet/crate/wooden/toy,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gW" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/ash,
+/obj/structure/fluff/oldturret,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"iw" = (
+/obj/item/ammo_box/c45,
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"iC" = (
+/obj/item/ammo_box/c9mm,
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"iY" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"jc" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"jN" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 1
+	},
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"kh" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"lv" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"lN" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/stairs/east,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"nD" = (
+/obj/item/ammo_box/a40mm,
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"of" = (
+/turf/open/floor/pod/dark,
+/area/ruin/unpowered)
+"oj" = (
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"oX" = (
+/obj/structure/curtain/bounty,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"pd" = (
+/obj/item/storage/bag/money/vault,
+/obj/item/storage/bag/money/vault,
+/obj/item/storage/bag/money/vault,
+/obj/item/storage/bag/money/vault,
+/obj/item/storage/bag/money/vault,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"pR" = (
+/obj/structure/railing{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/pirate/ranged,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"qL" = (
+/obj/structure/table/wood/poker,
+/obj/item/gun/energy/laser,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"rc" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"sH" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"tw" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"tG" = (
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"uf" = (
+/obj/structure/closet/crate/goldcrate,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"xd" = (
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"xT" = (
+/obj/structure/bonfire/prelit,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ze" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"zk" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/structure/railing{
+	dir = 5
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"zN" = (
+/obj/effect/turf_decal/siding/wood/corner{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"BV" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"CG" = (
+/obj/structure/curtain/bounty,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Dm" = (
+/obj/machinery/power/shuttle_engine/propulsion/burst{
+	dir = 4
+	},
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"DC" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"DH" = (
+/mob/living/simple_animal/hostile/pirate/ranged/space,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"DS" = (
+/mob/living/simple_animal/hostile/pirate/ranged,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"DV" = (
+/obj/vehicle/ridden/lavaboat,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"Er" = (
+/obj/structure/dresser,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ew" = (
+/obj/structure/table/wood/poker,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/mob/living/simple_animal/parrot{
+	faction = list("pirate");
+	name = "Pegwing"
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Ic" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"IH" = (
+/obj/item/reagent_containers/cup/bucket/wooden,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Kd" = (
+/obj/structure/fermenting_barrel,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Kl" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"KD" = (
+/obj/machinery/grill,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"LD" = (
+/obj/item/ammo_box/n762,
+/obj/structure/table/wood/poker,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"LT" = (
+/mob/living/simple_animal/hostile/pirate/melee,
+/obj/structure/chair/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"MX" = (
+/obj/structure/fluff/oldturret,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Nq" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/water/jungle,
+/area/ruin/unpowered)
+"NY" = (
+/obj/structure/railing,
+/obj/effect/decal/cleanable/ash/large,
+/obj/structure/fluff/oldturret,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Pp" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/ash,
+/obj/structure/fluff/oldturret,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"PI" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser,
+/obj/item/gun/energy/laser,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Qq" = (
+/turf/template_noop,
+/area/template_noop)
+"RY" = (
+/obj/effect/decal/cleanable/food/flour,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Sk" = (
+/obj/structure/safe,
+/obj/item/gun/ballistic/shotgun/lethal,
+/obj/item/gun/ballistic/shotgun/lethal,
+/obj/item/gun/ballistic/shotgun/lethal,
+/obj/item/gun/grenadelauncher,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"SA" = (
+/obj/structure/railing,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Th" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"TH" = (
+/obj/structure/railing,
+/obj/structure/railing{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"TX" = (
+/obj/structure/closet/crate/secure/loot,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"UA" = (
+/obj/structure/railing{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/ash/large,
+/obj/structure/fluff/oldturret,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"UR" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"UX" = (
+/mob/living/simple_animal/hostile/pirate/melee,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Vf" = (
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"Wk" = (
+/obj/structure/closet/crate/critter,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/parrot{
+	faction = list("pirate")
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Wp" = (
+/obj/structure/railing/corner{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"WA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Xb" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"Xt" = (
+/obj/structure/table/wood/poker,
+/obj/item/nullrod/claymore/saber/pirate,
+/obj/item/melee/energy/sword/pirate,
+/turf/open/floor/carpet/red,
+/area/ruin/unpowered)
+"XA" = (
+/mob/living/simple_animal/hostile/pirate/melee,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Zl" = (
+/obj/structure/ore_box,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ZM" = (
+/obj/structure/closet/crate/goldcrate,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+Qq
+Qq
+xd
+xd
+Kl
+Kl
+tG
+tG
+tG
+tG
+tG
+Kl
+Kl
+Qq
+Qq
+"}
+(2,1,1) = {"
+Qq
+BV
+xd
+Kl
+Kl
+tG
+tG
+tG
+ay
+MX
+tG
+tG
+Kl
+Kl
+Qq
+"}
+(3,1,1) = {"
+Ic
+Ic
+zN
+Kl
+tG
+tG
+tG
+tG
+sH
+sH
+tG
+tG
+tG
+Kl
+Qq
+"}
+(4,1,1) = {"
+lv
+rc
+tw
+tG
+tG
+tG
+tG
+Th
+sH
+WA
+ej
+tG
+tG
+Kl
+Qq
+"}
+(5,1,1) = {"
+Zl
+sH
+tw
+tG
+tG
+tG
+jc
+Wp
+UX
+sH
+ch
+TH
+tG
+Kl
+Kl
+"}
+(6,1,1) = {"
+Kd
+sH
+tw
+tG
+tG
+tG
+UA
+sH
+sH
+sH
+sH
+gW
+tG
+tG
+Kl
+"}
+(7,1,1) = {"
+ZM
+ej
+tw
+tG
+tG
+jc
+ze
+sH
+uf
+uf
+sH
+ch
+TH
+tG
+Kl
+"}
+(8,1,1) = {"
+sH
+SA
+tG
+tG
+DV
+Pp
+XA
+nD
+kh
+kh
+iC
+UX
+NY
+DV
+Kl
+"}
+(9,1,1) = {"
+PI
+ej
+tG
+tG
+tG
+Th
+sH
+LD
+kh
+kh
+iw
+aR
+SA
+tG
+Kl
+"}
+(10,1,1) = {"
+LT
+sH
+of
+cM
+of
+WA
+sH
+sH
+oj
+sH
+sH
+sH
+sH
+tG
+tG
+"}
+(11,1,1) = {"
+sH
+sH
+cM
+of
+of
+IH
+gz
+RY
+KD
+xT
+sH
+lN
+gE
+tG
+tG
+"}
+(12,1,1) = {"
+TX
+SA
+tG
+tG
+tG
+kh
+kh
+oX
+kh
+kh
+oX
+kh
+kh
+tG
+tG
+"}
+(13,1,1) = {"
+Wk
+ej
+tG
+tG
+DV
+kh
+Er
+Xb
+qL
+Xt
+Vf
+pd
+kh
+DV
+Kl
+"}
+(14,1,1) = {"
+Kd
+SA
+tw
+tG
+tG
+kh
+eK
+DH
+Xb
+Vf
+Vf
+ZM
+kh
+tG
+Kl
+"}
+(15,1,1) = {"
+Kd
+rc
+tw
+tG
+tG
+kh
+kh
+Ew
+sH
+sH
+Sk
+kh
+kh
+tG
+Kl
+"}
+(16,1,1) = {"
+DS
+sH
+tw
+tG
+tG
+Dm
+kh
+kh
+oX
+CG
+kh
+kh
+Dm
+tG
+Kl
+"}
+(17,1,1) = {"
+UR
+UR
+jN
+Kl
+tG
+tG
+Dm
+zk
+pR
+iY
+DC
+Dm
+tG
+Kl
+Kl
+"}
+(18,1,1) = {"
+Qq
+xd
+xd
+Kl
+tG
+tG
+tG
+tG
+tG
+Nq
+tG
+tG
+tG
+Kl
+Qq
+"}
+(19,1,1) = {"
+Qq
+BV
+xd
+Kl
+Kl
+Kl
+tG
+tG
+tG
+tG
+tG
+tG
+Kl
+Kl
+Qq
+"}
+(20,1,1) = {"
+Qq
+Qq
+xd
+xd
+xd
+Kl
+Kl
+Kl
+tG
+tG
+Kl
+Kl
+Kl
+Qq
+Qq
+"}

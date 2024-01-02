@@ -8,7 +8,9 @@ import { useBackend } from './backend';
 import { LoadingScreen } from './interfaces/common/LoadingToolbox';
 import { Window } from './layouts';
 
-const requireInterface = require.context('./interfaces');
+// voidcrew edit - modular tgui
+import { loadInterface } from '../voidcrew_tgui';
+// const requireInterface = require.context('./interfaces');
 
 const routingError =
   (type: 'notFound' | 'missingExport', name: string) => () => {
@@ -78,7 +80,8 @@ export const getRoutedComponent = () => {
     const interfacePathBuilder = interfacePathBuilders.shift()!;
     const interfacePath = interfacePathBuilder(name);
     try {
-      esModule = requireInterface(interfacePath);
+      // voidcrew edit - modular TGUI
+      esModule = loadInterface(interfacePath);
     } catch (err) {
       if (err.code !== 'MODULE_NOT_FOUND') {
         throw err;

@@ -1,0 +1,851 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aj" = (
+/obj/structure/cable,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"aW" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"aY" = (
+/obj/structure/cable,
+/obj/item/rollingpaper,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"br" = (
+/mob/living/simple_animal/hostile/cockroach,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"cR" = (
+/obj/structure/cable,
+/mob/living/simple_animal/hostile/cockroach,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"dG" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/turf/template_noop,
+/area/template_noop)
+"ec" = (
+/obj/structure/plaque{
+	desc = "A motivational plaque reading: \"It's not a crack shack, it's a crack home <3\"";
+	engraved = 1;
+	name = "Motivational Plaque"
+	},
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/unpowered)
+"eZ" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/seeds/cannabis/ultimate,
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/unpowered)
+"fP" = (
+/obj/structure/cable,
+/obj/item/reagent_containers/food/snacks/grown/cannabis,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"gP" = (
+/obj/item/trash/chips,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/unpowered)
+"gS" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/turf/template_noop,
+/area/template_noop)
+"il" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"iw" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight{
+	setting = 15
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"kD" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/cigbutt/roach,
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/unpowered)
+"kM" = (
+/mob/living/simple_animal/hostile/cockroach,
+/obj/item/trash/cheesie,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"kW" = (
+/obj/structure/cable,
+/obj/machinery/power/port_gen/pacman,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"li" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/template_noop,
+/area/template_noop)
+"ls" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/rollingpaper,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/unpowered)
+"lJ" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight{
+	setting = 15
+	},
+/obj/item/seeds/cannabis/white,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"mx" = (
+/obj/structure/cable,
+/obj/item/trash/boritos,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ns" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"nI" = (
+/obj/structure/cable,
+/obj/item/trash/cheesie,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/unpowered)
+"nJ" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/unpowered)
+"ov" = (
+/obj/structure/cable,
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/unpowered)
+"oE" = (
+/obj/machinery/hydroponics/constructable,
+/obj/item/seeds/cannabis,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/unpowered)
+"qI" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"rl" = (
+/obj/structure/bed/pod,
+/obj/structure/bed/pod{
+	pixel_y = 10
+	},
+/obj/effect/immovablerod{
+	pixel_x = -15
+	},
+/obj/effect/immovablerod{
+	pixel_x = 15
+	},
+/obj/item/seeds/cannabis/rainbow,
+/obj/item/clothing/head/beanie/rasta,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"sF" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"sW" = (
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/ruin/unpowered)
+"uQ" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"wn" = (
+/turf/open/misc/dirt/jungle,
+/area/template_noop)
+"xh" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"zz" = (
+/obj/item/trash/boritos,
+/obj/item/seeds/cannabis/death,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"zL" = (
+/obj/structure/closet/crate/hydroponics,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Av" = (
+/mob/living/simple_animal/hostile/cockroach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"AJ" = (
+/obj/item/trash/boritos,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Cs" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"Cw" = (
+/obj/structure/cable,
+/obj/structure/table/wood,
+/obj/item/storage/fancy/rollingpapers,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"DM" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"DN" = (
+/obj/structure/cable,
+/obj/item/cigbutt/roach,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"Ey" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 10
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"EM" = (
+/obj/structure/cable,
+/mob/living/simple_animal/hostile/cockroach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"FK" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"FN" = (
+/obj/machinery/power/smes/engineering,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Gc" = (
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/unpowered)
+"Gi" = (
+/obj/structure/table/wood,
+/obj/item/rollingpaper,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Gk" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/template_noop)
+"Hl" = (
+/obj/structure/cable,
+/obj/structure/sink/kitchen{
+	dir = 8;
+	pixel_x = 11
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Hp" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"HG" = (
+/obj/structure/table/wood,
+/obj/item/clothing/mask/cigarette/rollie/mindbreaker,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"HJ" = (
+/obj/item/cigbutt/roach,
+/obj/structure/plaque{
+	pixel_y = 32
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Jb" = (
+/obj/effect/turf_decal/weather/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"JY" = (
+/mob/living/simple_animal/hostile/cockroach/glockroach,
+/turf/open/misc/dirt/jungle,
+/area/template_noop)
+"Kg" = (
+/obj/structure/cable,
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/machinery/power/apc/auto_name/north,
+/obj/item/trash/cheesie,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Kq" = (
+/obj/structure/cable,
+/obj/item/seeds/cannabis,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/ruin/unpowered)
+"LD" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/unpowered)
+"Ma" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight{
+	setting = 15
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Mj" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"NE" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/turf/template_noop,
+/area/template_noop)
+"Pk" = (
+/mob/living/simple_animal/hostile/cockroach/glockroach,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Pv" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"PS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
+	},
+/area/ruin/unpowered)
+"Qr" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"Qs" = (
+/mob/living/simple_animal/hostile/cockroach,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Qt" = (
+/obj/structure/mineral_door/wood,
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"QQ" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight{
+	setting = 15
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Rj" = (
+/mob/living/simple_animal/hostile/cockroach,
+/obj/item/reagent_containers/food/snacks/grown/cannabis,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"RW" = (
+/obj/structure/cable,
+/obj/machinery/power/floodlight{
+	setting = 15
+	},
+/obj/item/rollingpaper,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"Tx" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"TK" = (
+/obj/structure/table/wood,
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/cigarette/rollie/cannabis,
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/storage/fancy/rollingpapers,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Up" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/beanie/rasta,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"UC" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/reagent_containers/glass/bucket,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Vn" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/effect/turf_decal/weather/dirt{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"VY" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/food/snacks/grown/cannabis,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Wo" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/cigbutt/roach,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Wr" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 8
+	},
+/turf/open/misc/grass/jungle,
+/area/template_noop)
+"Xd" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/light{
+	currentcolor = "#FFFFFF"
+	},
+/area/ruin/unpowered)
+"XJ" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"XT" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 9
+	},
+/turf/template_noop,
+/area/template_noop)
+"XW" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/template_noop)
+"Yj" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/unpowered)
+"YB" = (
+/obj/structure/cable,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"YL" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"ZJ" = (
+/obj/effect/turf_decal/weather/dirt{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/template_noop)
+"ZK" = (
+/turf/template_noop,
+/area/template_noop)
+"ZS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+ZK
+Yj
+Yj
+Yj
+ZK
+ZK
+Yj
+Yj
+Yj
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+"}
+(2,1,1) = {"
+ZK
+Yj
+zL
+Yj
+Yj
+Yj
+Yj
+zz
+Yj
+Yj
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+"}
+(3,1,1) = {"
+ZK
+Yj
+aj
+nI
+fP
+YB
+Yj
+Pk
+sW
+Yj
+Yj
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+"}
+(4,1,1) = {"
+ZK
+Yj
+iw
+LD
+LD
+Wo
+Yj
+YL
+br
+rl
+Yj
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+"}
+(5,1,1) = {"
+ZK
+Yj
+RW
+LD
+eZ
+Kq
+Yj
+Kg
+YB
+Yj
+Yj
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+"}
+(6,1,1) = {"
+Yj
+Yj
+QQ
+UC
+Av
+Tx
+Yj
+Gc
+cR
+Yj
+Yj
+Yj
+dG
+ZK
+ZK
+ZK
+ZK
+"}
+(7,1,1) = {"
+Yj
+Mj
+Ma
+oE
+kD
+FK
+Yj
+Yj
+Pv
+Yj
+VY
+Yj
+wn
+NE
+ZK
+ZK
+ZK
+"}
+(8,1,1) = {"
+Yj
+Rj
+Ma
+LD
+Xd
+Hp
+TK
+Yj
+aY
+DM
+kM
+Yj
+sF
+wn
+wn
+NE
+ZK
+"}
+(9,1,1) = {"
+Yj
+Yj
+Ma
+YL
+gP
+Tx
+Yj
+Yj
+il
+PS
+YL
+Yj
+wn
+xh
+JY
+wn
+NE
+"}
+(10,1,1) = {"
+Yj
+Yj
+Ma
+LD
+Xd
+FK
+ec
+HJ
+il
+Up
+ZS
+Yj
+wn
+ns
+Gk
+Ey
+wn
+"}
+(11,1,1) = {"
+Yj
+YL
+lJ
+LD
+ls
+DN
+Qt
+mx
+Cw
+HG
+Mj
+qI
+Cs
+Qr
+Jb
+wn
+wn
+"}
+(12,1,1) = {"
+Yj
+Yj
+FN
+uQ
+EM
+Hl
+ov
+XJ
+Qs
+ZS
+nJ
+qI
+XW
+Qr
+ZJ
+wn
+XT
+"}
+(13,1,1) = {"
+ZK
+Yj
+Yj
+Yj
+Yj
+Yj
+Yj
+aW
+kW
+AJ
+Qs
+Yj
+wn
+Vn
+wn
+wn
+gS
+"}
+(14,1,1) = {"
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+Yj
+Yj
+Yj
+VY
+Gi
+Yj
+wn
+wn
+wn
+XT
+ZK
+"}
+(15,1,1) = {"
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+Yj
+Yj
+Yj
+Yj
+Wr
+li
+li
+ZK
+ZK
+"}
+(16,1,1) = {"
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+Yj
+Yj
+ZK
+ZK
+ZK
+ZK
+ZK
+ZK
+"}

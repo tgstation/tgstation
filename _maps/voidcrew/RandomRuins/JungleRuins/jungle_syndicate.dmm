@@ -1,0 +1,312 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"c" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/effect/decal/cleanable/cobweb,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"e" = (
+/obj/structure/sign/poster/contraband/revolver,
+/turf/closed/wall,
+/area/ruin/powered)
+"g" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/grass/jungle,
+/obj/effect/decal/cleanable/blood/gibs/down,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"h" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/effect/decal/remains/human,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"i" = (
+/obj/structure/table,
+/obj/item/kitchen/knife/combat,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"j" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/syndicate,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/gun/ballistic/automatic/pistol,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"k" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"l" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"m" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/junglebush,
+/obj/effect/decal/remains/human,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/barricade/sandbags,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"p" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"q" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/rock/jungle,
+/obj/effect/decal/remains/human,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"r" = (
+/obj/structure/table,
+/obj/item/grenade/frag,
+/obj/item/grenade/frag,
+/obj/item/grenade/frag,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"t" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/porta_turret/syndicate/pod,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"u" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/porta_turret/syndicate/pod,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"v" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"w" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"x" = (
+/obj/structure/table,
+/obj/item/grenade/smokebomb,
+/obj/item/grenade/smokebomb,
+/obj/item/grenade/smokebomb,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"y" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"A" = (
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/mm712x82,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"C" = (
+/obj/structure/table,
+/obj/item/clothing/gloves/combat,
+/obj/item/clothing/shoes/combat,
+/obj/item/clothing/mask/gas/syndicate,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"E" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/ausbushes/fernybush,
+/obj/effect/decal/cleanable/blood/gibs/limb,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"F" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"G" = (
+/obj/structure/cable,
+/mob/living/simple_animal/hostile/syndicate,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"H" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/ausbushes/fullgrass,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"I" = (
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"J" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/ausbushes/fullgrass,
+/obj/effect/decal/remains/human,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"K" = (
+/obj/structure/chair/plastic,
+/mob/living/simple_animal/hostile/syndicate/ranged,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"M" = (
+/obj/structure/sign/poster/contraband/syndicate_recruitment,
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"N" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"R" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"S" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"T" = (
+/obj/structure/punji_sticks,
+/obj/structure/flora/ausbushes/lavendergrass,
+/obj/effect/decal/cleanable/blood/gibs/torso,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"U" = (
+/obj/machinery/door/airlock/hatch,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"V" = (
+/turf/open/floor/plating,
+/area/ruin/powered)
+"W" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/misc/dirt,
+/area/ruin/unpowered)
+"X" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"Y" = (
+/obj/structure/sign/poster/contraband/free_key,
+/turf/closed/wall,
+/area/ruin/powered)
+"Z" = (
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+J
+g
+H
+m
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+I
+I
+u
+w
+b
+b
+a
+a
+"}
+(3,1,1) = {"
+a
+I
+c
+k
+F
+i
+M
+b
+a
+"}
+(4,1,1) = {"
+W
+b
+j
+S
+V
+p
+C
+o
+T
+"}
+(5,1,1) = {"
+v
+U
+X
+Z
+l
+F
+K
+R
+q
+"}
+(6,1,1) = {"
+n
+Y
+G
+V
+y
+V
+A
+w
+a
+"}
+(7,1,1) = {"
+a
+b
+x
+r
+y
+e
+I
+I
+a
+"}
+(8,1,1) = {"
+a
+b
+w
+o
+t
+b
+a
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+N
+E
+h
+a
+a
+a
+a
+"}

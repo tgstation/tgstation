@@ -1,0 +1,372 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/fence/corner{
+	dir = 9
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"b" = (
+/obj/machinery/modular_computer/console/preset/civilian,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"c" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"d" = (
+/obj/item/grown/bananapeel,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"e" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp/bananalamp,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"f" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/item/grown/bananapeel,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"g" = (
+/obj/structure/fence/door,
+/obj/item/toy/snappop/phoenix,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"h" = (
+/obj/machinery/door/airlock/titanium,
+/obj/item/toy/snappop/phoenix,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"i" = (
+/obj/machinery/power/shuttle_engine/propulsion,
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"j" = (
+/mob/living/simple_animal/bot/honkbot,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"k" = (
+/turf/closed/mineral/random/asteroid/rockplanet,
+/area/overmap_encounter/planetoid/wasteland)
+"l" = (
+/obj/item/grown/bananapeel,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"m" = (
+/obj/structure/fence/corner{
+	dir = 6
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"o" = (
+/obj/structure/table/reinforced,
+/obj/item/bikehorn/airhorn,
+/obj/item/nullrod/clown,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"r" = (
+/obj/structure/table/reinforced,
+/obj/item/stack/ore/bananium,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"s" = (
+/obj/structure/sign/poster/official/foam_force_ad,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"t" = (
+/obj/item/bedsheet/clown,
+/obj/structure/bed,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"u" = (
+/obj/structure/mecha_wreckage/honker,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"w" = (
+/obj/structure/sign/poster/contraband/clown,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"x" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/mob/living/simple_animal/hostile/retaliate/clown,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"y" = (
+/obj/structure/sign/poster/official/high_class_martini,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/window/shuttle,
+/obj/structure/grille,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"B" = (
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"D" = (
+/obj/item/wrench,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/obj/structure/rack,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"E" = (
+/obj/machinery/power/shuttle_engine/heater,
+/turf/closed/wall/mineral/titanium,
+/area/ruin/unpowered)
+"F" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"G" = (
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"H" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"J" = (
+/obj/machinery/power/floodlight,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"K" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/spawner/random/maintenance/seven,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"L" = (
+/obj/structure/fence/corner,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"M" = (
+/obj/structure/fence,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"N" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"O" = (
+/obj/structure/table/reinforced,
+/obj/item/pickaxe/drill,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"P" = (
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"Q" = (
+/turf/template_noop,
+/area/template_noop)
+"R" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"S" = (
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"T" = (
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"U" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"V" = (
+/obj/item/clothing/suit/space/hardsuit/clown,
+/obj/structure/rack,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"W" = (
+/obj/structure/table/reinforced,
+/obj/item/seeds/banana/bluespace,
+/obj/item/circuitboard/computer/arcade/orion_trail,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"X" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/obj/structure/cable,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Y" = (
+/obj/structure/statue/bananium/clown,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/structure/window/reinforced/survival_pod{
+	dir = 8
+	},
+/obj/structure/window/reinforced/survival_pod,
+/turf/open/floor/noslip,
+/area/ruin/unpowered)
+"Z" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/snacks/honkdae,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+
+(1,1,1) = {"
+Q
+Q
+Q
+Q
+k
+k
+k
+k
+M
+M
+a
+"}
+(2,1,1) = {"
+Q
+Q
+k
+k
+k
+k
+u
+D
+H
+c
+U
+"}
+(3,1,1) = {"
+Q
+k
+k
+k
+Z
+r
+H
+l
+H
+X
+U
+"}
+(4,1,1) = {"
+k
+k
+W
+l
+H
+N
+H
+H
+H
+S
+g
+"}
+(5,1,1) = {"
+k
+k
+B
+z
+y
+h
+B
+B
+R
+d
+U
+"}
+(6,1,1) = {"
+k
+B
+b
+x
+P
+P
+e
+E
+i
+S
+F
+"}
+(7,1,1) = {"
+k
+w
+Y
+t
+P
+P
+V
+E
+i
+S
+F
+"}
+(8,1,1) = {"
+k
+k
+B
+z
+s
+h
+B
+B
+K
+S
+F
+"}
+(9,1,1) = {"
+Q
+k
+k
+o
+l
+H
+H
+H
+f
+G
+U
+"}
+(10,1,1) = {"
+Q
+Q
+k
+k
+O
+j
+H
+H
+J
+T
+m
+"}
+(11,1,1) = {"
+Q
+Q
+Q
+k
+k
+k
+M
+M
+M
+L
+Q
+"}

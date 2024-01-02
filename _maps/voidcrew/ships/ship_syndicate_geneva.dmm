@@ -1,0 +1,1915 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ai" = (
+/obj/machinery/suit_storage_unit/syndicate{
+	name = "captain's suit storage unit";
+	storage_type = /obj/item/clothing/shoes/magboots/syndie;
+	suit_type = /obj/item/mod/control/pre_equipped/elite
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"am" = (
+/obj/machinery/computer/crew,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"an" = (
+/obj/structure/table/reinforced,
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/item/radio/intercom,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"aJ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"aV" = (
+/obj/structure/table/glass,
+/obj/machinery/fax{
+	name = "Geneva Fax Machine";
+	fax_name = "Geneva Fax";
+	syndicate_network = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"aY" = (
+/obj/structure/cable,
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"bd" = (
+/obj/machinery/button/door{
+	id = "spitfireshutters";
+	pixel_x = 25
+	},
+/obj/machinery/ore_silo,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"bM" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/engineering)
+"ca" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"co" = (
+/obj/structure/table/reinforced,
+/obj/machinery/firealarm/directional/west{
+	dir = 4
+	},
+/obj/item/areaeditor/shuttle,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"cB" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/dorms)
+"cD" = (
+/obj/machinery/smartfridge/chemistry,
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"cE" = (
+/obj/machinery/chem_dispenser/mutagensaltpeter,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"cI" = (
+/obj/machinery/door/airlock/highsecurity{
+	name = "Bridge"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"cQ" = (
+/obj/machinery/cryopod{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"cX" = (
+/obj/machinery/vending/cigarette/syndicate,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"dh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"dj" = (
+/obj/machinery/chem_master,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"do" = (
+/obj/effect/turf_decal/syndicateemblem/top/left,
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"dr" = (
+/obj/effect/turf_decal/syndicateemblem/top/right,
+/obj/item/kirbyplants/random,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"dw" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"dy" = (
+/obj/machinery/washing_machine,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/firealarm/directional/west{
+	dir = 4
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"dz" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"dP" = (
+/obj/structure/closet/cabinet,
+/obj/item/clothing/under/syndicate/skirt,
+/obj/item/clothing/under/syndicate/skirt,
+/obj/item/clothing/under/syndicate/skirt,
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/under/syndicate/bloodred/sleepytime,
+/obj/item/clothing/under/syndicate/bloodred/sleepytime,
+/obj/item/clothing/under/syndicate/bloodred/sleepytime,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"dZ" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"eh" = (
+/obj/structure/water_source/puddle,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"ej" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"el" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"ew" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"eL" = (
+/obj/machinery/door/airlock/wood/glass{
+	name = "Natural Sciences Lab"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"eO" = (
+/obj/effect/turf_decal/syndicateemblem/middle/left,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"eR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"eU" = (
+/obj/effect/turf_decal/syndicateemblem/middle/middle,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"eV" = (
+/obj/effect/turf_decal/syndicateemblem/middle/right,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"fB" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Crew Quarters"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"fF" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/machinery/medical_kiosk,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"fW" = (
+/obj/machinery/airalarm/directional/west,
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/table/glass,
+/obj/item/storage/medkit/o2,
+/obj/item/soap/syndie,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"gy" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"gA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"gC" = (
+/mob/living/simple_animal/bot/secbot/grievous/toy{
+	name = "Protector of Doctors"
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"gR" = (
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"gW" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/cup/watering_can/wood,
+/obj/machinery/light/directional/west,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"hy" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"hI" = (
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"hZ" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"ic" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"iH" = (
+/obj/machinery/computer/cryopod{
+	pixel_y = 26
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"iQ" = (
+/obj/machinery/vending/hydronutrients,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"iR" = (
+/obj/machinery/light,
+/obj/effect/turf_decal/syndicateemblem/bottom/left,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"iU" = (
+/obj/effect/turf_decal/syndicateemblem/bottom/middle,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"iY" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"jh" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"ju" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/syndicateemblem/bottom/right,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"jD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"jG" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"ka" = (
+/obj/structure/table/wood,
+/obj/machinery/microwave,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"kq" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"kx" = (
+/obj/machinery/light,
+/obj/machinery/airalarm/directional/south,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"kG" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/syndie,
+/obj/item/toy/plush/nukeplushie,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"kM" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/item/stack/sheet/mineral/plasma/five,
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/engineering)
+"lO" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"lV" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/holopad,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"mz" = (
+/obj/machinery/door/airlock/virology/glass{
+	name = "Medical Center"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/bridge)
+"mL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"mR" = (
+/obj/structure/table/wood,
+/obj/structure/bedsheetbin/empty,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"mX" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/obj/docking_port/mobile/voidcrew/geneva{
+	dir = 2
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/bridge)
+"nc" = (
+/obj/structure/table/glass,
+/obj/machinery/computer/records/medical/laptop,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"nf" = (
+/obj/machinery/power/terminal{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/airalarm/directional/west,
+/obj/structure/cable,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"nn" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"nu" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"nw" = (
+/obj/machinery/power/smes/engineering,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/structure/cable,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"nA" = (
+/obj/machinery/stasis{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"nO" = (
+/obj/machinery/iv_drip,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"oc" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/item/defibrillator,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"ow" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"oA" = (
+/obj/structure/chair/comfy/black{
+	dir = 1
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"pm" = (
+/obj/machinery/vending/drugs,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"po" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/machinery/autolathe,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"pu" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "hydro";
+	name = "natural scientist's locker"
+	},
+/obj/item/storage/belt/fannypack/green,
+/obj/item/storage/bag/plants,
+/obj/item/hatchet,
+/obj/item/shovel/spade,
+/obj/item/cultivator,
+/obj/item/storage/bag/chemistry,
+/obj/item/storage/box/beakers,
+/obj/item/plant_analyzer,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/item/storage/box/syringes,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/circuitboard/machine/reagentgrinder,
+/obj/item/clothing/glasses/science,
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/grass,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"pw" = (
+/obj/machinery/stasis,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"pH" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/components/tank/air{
+	dir = 4;
+	piping_layer = 4
+	},
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"pI" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/yellow,
+/obj/machinery/atmospherics/components/binary/pump/layer4{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"pL" = (
+/obj/machinery/door/airlock/command/glass{
+	name = "Professor's Office"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"pO" = (
+/obj/effect/turf_decal/tile/red,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"pR" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/airalarm/directional/south,
+/obj/structure/table/reinforced,
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"qm" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"rt" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"rz" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/engineering)
+"rN" = (
+/obj/machinery/duct,
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"rZ" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/secure_closet{
+	icon_state = "eng_secure";
+	name = "engineer's locker"
+	},
+/obj/item/clothing/gloves/combat,
+/obj/item/clothing/under/syndicate,
+/obj/item/clothing/glasses/meson/engine,
+/obj/item/storage/belt/utility,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"sc" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/engineering)
+"so" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"ss" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"sA" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 5
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"sB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"sG" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"sI" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"sY" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"tr" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"tO" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"tZ" = (
+/obj/machinery/computer/rdconsole,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"uC" = (
+/obj/item/kirbyplants/random,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"uK" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"vi" = (
+/obj/machinery/computer/arcade/amputation,
+/obj/structure/cable,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/breakroom)
+"vn" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/item/construction/plumbing,
+/obj/item/stack/ducts/fifty,
+/obj/structure/rack,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"vv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/engineering)
+"vC" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"vE" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 9
+	},
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/carbon;
+	dir = 8
+	},
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"vP" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/structure/closet/secure_closet{
+	icon_state = "med_secure";
+	name = "student's locker"
+	},
+/obj/item/storage/belt/medical,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/obj/item/pinpointer/crew,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2,
+/obj/item/roller,
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"vZ" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/east,
+/obj/structure/closet/secure_closet{
+	icon_state = "med_secure";
+	name = "student's locker"
+	},
+/obj/item/storage/belt/medical,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/machinery/door/window/survival_pod{
+	dir = 1
+	},
+/obj/item/pinpointer/crew,
+/obj/item/storage/medkit/toxin,
+/obj/item/storage/medkit/o2,
+/obj/item/roller,
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"wd" = (
+/obj/structure/closet/crate/freezer/blood,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"wj" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"wz" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"wC" = (
+/obj/effect/turf_decal/tile/brown/anticorner{
+	dir = 8
+	},
+/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"wK" = (
+/obj/effect/turf_decal/tile/yellow,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/oil,
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/hydrogen;
+	dir = 4
+	},
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"wP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/engineering)
+"xM" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 9
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/plumbing/synthesizer{
+	reagent_id = /datum/reagent/fuel;
+	dir = 8
+	},
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"yf" = (
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"yi" = (
+/obj/structure/chair/comfy/black,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"yE" = (
+/obj/machinery/door/airlock/virology/glass,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"zb" = (
+/obj/structure/frame/computer{
+	anchored = 1;
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"zc" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 9
+	},
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/gloves/color/black,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/resonator/upgraded,
+/obj/item/storage/backpack/duffelbag/syndie/c4{
+	name = "bag of rescue charges"
+	},
+/obj/item/t_scanner/adv_mining_scanner/lesser,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/machinery/airalarm/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet{
+	icon_state = "mining";
+	name = "rescue specialist's locker"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"zd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"zA" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"zG" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 6
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"zH" = (
+/obj/machinery/door/airlock/medical/glass{
+	name = "Paramedic's Quarters"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/structure/barricade/wooden,
+/obj/machinery/door/firedoor,
+/obj/machinery/duct,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"zY" = (
+/obj/effect/turf_decal/tile/brown/anticorner{
+	dir = 4
+	},
+/obj/structure/sign/poster/contraband/rebels_unite{
+	pixel_y = 32
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Ac" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Af" = (
+/obj/effect/turf_decal/tile/brown/anticorner{
+	dir = 8
+	},
+/obj/structure/closet/secure_closet{
+	icon_state = "med";
+	name = "paramedic's locker"
+	},
+/obj/item/storage/belt/medical/paramedic,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/glasses/meson,
+/obj/item/clothing/gloves/latex/nitrile,
+/obj/item/clothing/mask/gas/syndicate,
+/obj/item/clothing/suit/hooded/wintercoat/medical,
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/item/pinpointer/crew,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/item/clothing/head/soft/paramedic,
+/obj/item/clothing/suit/toggle/labcoat/paramedic,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/roller,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Ao" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Au" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/west{
+	dir = 4
+	},
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"Aw" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/yellow{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"AX" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"Bg" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"Bl" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/dorms)
+"Bu" = (
+/obj/machinery/computer/helm,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"BD" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/tile/brown{
+	dir = 9
+	},
+/obj/item/pickaxe/mini,
+/obj/item/pickaxe/mini,
+/obj/item/pickaxe/mini,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/storage/bag/ore,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/item/mining_scanner,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"BF" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"BP" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"Ck" = (
+/obj/machinery/suit_storage_unit/syndicate,
+/obj/effect/turf_decal/tile/brown{
+	dir = 6
+	},
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"Cu" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/engineering)
+"Cz" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"CL" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/brown/anticorner{
+	dir = 1
+	},
+/obj/machinery/computer/records/medical/laptop{
+	dir = 1
+	},
+/obj/structure/table/glass,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Da" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/brown{
+	dir = 10
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/screwdriver,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Dk" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/brown/anticorner,
+/obj/structure/bed,
+/obj/item/bedsheet/syndie,
+/obj/machinery/light/dim{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Dl" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/engineering)
+"Dm" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/engineering)
+"Dt" = (
+/obj/machinery/holopad,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"DH" = (
+/obj/structure/table/optable,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"Ed" = (
+/obj/machinery/mineral/ore_redemption{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/brown{
+	dir = 9
+	},
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"Es" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Irrelevant Room"
+	},
+/obj/effect/mapping_helpers/airlock/abandoned,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"Eu" = (
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/structure/ore_box,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"Ey" = (
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"EE" = (
+/obj/effect/turf_decal/tile/brown{
+	dir = 6
+	},
+/obj/structure/tank_dispenser/oxygen,
+/obj/effect/turf_decal/trimline/red/filled/warning,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"FJ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"FQ" = (
+/obj/machinery/airalarm/directional/north,
+/obj/structure/table/glass,
+/obj/item/storage/medkit,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"Ge" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/south,
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/machinery/power/shuttle_engine/ship/liquid/oil,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Gn" = (
+/obj/machinery/vending/medical,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"Gr" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"Gt" = (
+/obj/machinery/atmospherics/components/unary/passive_vent/layer2{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/engineering)
+"Gv" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "syndie3doors"
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"GF" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "syndie3doors"
+	},
+/obj/machinery/button/door{
+	id = "syndie3doors";
+	pixel_x = 25
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"GK" = (
+/obj/structure/table/glass,
+/obj/item/storage/backpack/duffelbag/syndie/surgery,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"GN" = (
+/obj/structure/table/glass,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"GP" = (
+/obj/machinery/stasis,
+/obj/effect/decal/cleanable/blood,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"GR" = (
+/obj/machinery/computer/operating{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay/operating)
+"GS" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"Hc" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/hydroponics)
+"He" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "syndie4doors"
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"Hg" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "syndie4doors"
+	},
+/obj/machinery/button/door{
+	id = "syndie4doors";
+	pixel_x = 25
+	},
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"HS" = (
+/obj/effect/turf_decal/syndicateemblem/top/middle,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/plastitanium/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"HY" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"Ik" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/machinery/firealarm/directional/east,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"Lw" = (
+/obj/structure/chair/comfy/shuttle{
+	dir = 1
+	},
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/bridge)
+"Lz" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"PY" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/medbay/paramedic)
+"Rj" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/bridge)
+"Sc" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/bridge)
+"SI" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/carpet/neon/simple/red,
+/area/shuttle/voidcrew/geneva/dorms)
+"Ux" = (
+/obj/machinery/door/poddoor/preopen{
+	id = "spitfireshutters"
+	},
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/bridge)
+"UK" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/cargo_bay)
+"Vn" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 10
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 5
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"VS" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/shuttle/voidcrew/geneva/dorms)
+"Wl" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"Wv" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/breakroom)
+"WO" = (
+/obj/effect/turf_decal/tile/yellow{
+	dir = 9
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"Xt" = (
+/obj/machinery/duct,
+/obj/effect/turf_decal/tile/yellow{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/circuit,
+/area/shuttle/voidcrew/geneva/engineering)
+"XZ" = (
+/turf/closed/wall,
+/area/shuttle/voidcrew/geneva/breakroom)
+"Yo" = (
+/obj/machinery/door/airlock/engineering/glass{
+	name = "Engineering Bay"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/firedoor,
+/obj/machinery/duct,
+/turf/open/floor/iron/dark,
+/area/shuttle/voidcrew/geneva/engineering)
+"Yz" = (
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/duct,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"YN" = (
+/obj/structure/closet/secure_closet{
+	icon_state = "cmo";
+	name = "professor's locker"
+	},
+/obj/item/clothing/suit/armor/vest/capcarapace/syndicate,
+/obj/item/clothing/head/hats/hos/beret/syndicate,
+/obj/item/storage/medkit/tactical,
+/obj/item/card/emag,
+/turf/open/floor/wood,
+/area/shuttle/voidcrew/geneva/bridge/cmo)
+"YX" = (
+/obj/structure/window/reinforced/survival_pod/spawner/directional/west,
+/obj/machinery/rnd/production/techfab/department/medical,
+/turf/open/floor/iron/white,
+/area/shuttle/voidcrew/geneva/medbay)
+"ZB" = (
+/turf/template_noop,
+/area/template_noop)
+
+(1,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+bM
+bM
+rz
+rz
+rz
+bM
+bM
+ZB
+ZB
+"}
+(2,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+bM
+bM
+bM
+pH
+rZ
+vn
+wK
+Au
+Dl
+ZB
+ZB
+"}
+(3,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+bM
+kM
+nf
+pI
+sc
+vv
+wP
+Aw
+Dm
+Gt
+ZB
+"}
+(4,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+GS
+GS
+GS
+bM
+bM
+nw
+iY
+WO
+vE
+xM
+Xt
+Dl
+ZB
+ZB
+"}
+(5,1,1) = {"
+ZB
+ZB
+ZB
+GS
+GS
+pu
+hy
+ow
+bM
+bM
+Yo
+bM
+bM
+bM
+Cu
+bM
+XZ
+ZB
+"}
+(6,1,1) = {"
+ZB
+ZB
+ZB
+Hc
+gW
+hI
+dZ
+hI
+hZ
+lO
+aJ
+XZ
+cX
+sG
+zb
+dw
+XZ
+ZB
+"}
+(7,1,1) = {"
+ZB
+ZB
+ZB
+cD
+eh
+hI
+ej
+hZ
+GS
+GS
+Yz
+dz
+yf
+Wl
+yf
+yf
+Gv
+ZB
+"}
+(8,1,1) = {"
+ZB
+ZB
+ZB
+Hc
+cE
+dh
+el
+ic
+lO
+nA
+aJ
+FJ
+sB
+HY
+rN
+Wv
+GF
+ZB
+"}
+(9,1,1) = {"
+ZB
+Rj
+Rj
+Rj
+Rj
+dj
+ew
+iQ
+lO
+nO
+aJ
+aY
+vi
+yi
+GN
+oA
+XZ
+ZB
+"}
+(10,1,1) = {"
+Ux
+Ux
+an
+co
+Rj
+GS
+eL
+GS
+GS
+oc
+aJ
+ss
+YX
+so
+uK
+so
+so
+so
+"}
+(11,1,1) = {"
+Ux
+am
+Lw
+jh
+Sc
+do
+eO
+iR
+Rj
+FQ
+pO
+nu
+fF
+so
+Gn
+fW
+GK
+nn
+"}
+(12,1,1) = {"
+mX
+Bu
+Lw
+lV
+cI
+HS
+eU
+iU
+mz
+jD
+Vn
+sA
+Lz
+yE
+AX
+Dt
+GP
+nn
+"}
+(13,1,1) = {"
+Ux
+tZ
+Lw
+mL
+Sc
+dr
+eV
+ju
+Rj
+pm
+qm
+sI
+vP
+so
+Bg
+DH
+GR
+nn
+"}
+(14,1,1) = {"
+Ux
+Ux
+bd
+pR
+Rj
+cB
+fB
+cB
+cB
+po
+aJ
+sY
+vZ
+so
+uK
+so
+so
+so
+"}
+(15,1,1) = {"
+ZB
+Rj
+Rj
+Rj
+Rj
+dy
+gy
+ka
+VS
+nO
+aJ
+tr
+wd
+zc
+BD
+Ed
+UK
+ZB
+"}
+(16,1,1) = {"
+ZB
+ZB
+ZB
+Bl
+cQ
+SI
+gA
+kq
+VS
+pw
+aJ
+ca
+wj
+zd
+BF
+Eu
+He
+ZB
+"}
+(17,1,1) = {"
+ZB
+ZB
+ZB
+cB
+cB
+iH
+gC
+kx
+cB
+cB
+rt
+tO
+wz
+zA
+BP
+Ey
+Hg
+ZB
+"}
+(18,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+Bl
+dP
+gR
+gR
+mR
+VS
+jD
+UK
+wC
+zG
+Ck
+EE
+UK
+ZB
+"}
+(19,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+cB
+cB
+kG
+kG
+Gr
+Gr
+pL
+Gr
+Gr
+zH
+Cz
+UK
+UK
+ZB
+"}
+(20,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+ZB
+cB
+cB
+Gr
+Gr
+ai
+jG
+uC
+Gr
+zY
+CL
+Ge
+ZB
+ZB
+"}
+(21,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+Gr
+Gr
+nc
+Ik
+eR
+jG
+Es
+Ac
+Da
+Ge
+ZB
+ZB
+"}
+(22,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+Gr
+vC
+Gr
+aV
+YN
+Gr
+Af
+Dk
+Ge
+ZB
+ZB
+"}
+(23,1,1) = {"
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+ZB
+Gr
+Gr
+vC
+Gr
+Ao
+PY
+PY
+ZB
+ZB
+"}

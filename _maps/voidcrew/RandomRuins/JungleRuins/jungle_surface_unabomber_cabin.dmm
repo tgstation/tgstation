@@ -1,0 +1,133 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/wood/nonmetal,
+/area/ruin/powered)
+"i" = (
+/turf/open/floor/wood,
+/area/ruin/powered)
+"j" = (
+/obj/structure/closet/bombcloset,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"k" = (
+/obj/machinery/syndicatebomb/empty,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"y" = (
+/obj/structure/table/wood,
+/obj/item/bombcore,
+/obj/item/grenade/frag{
+	pixel_x = 9;
+	pixel_y = 11
+	},
+/obj/item/stack/sheet/mineral/uranium/five{
+	pixel_x = -9
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+"B" = (
+/obj/structure/table/wood,
+/obj/item/grenade/chem_grenade/adv_release,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"E" = (
+/obj/item/screwdriver/power,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"F" = (
+/obj/item/stack/package_wrap,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"M" = (
+/obj/structure/bed/pod,
+/obj/item/bedsheet/rd,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"N" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"R" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/green{
+	pixel_y = 10
+	},
+/obj/item/grenade/chem_grenade,
+/obj/item/stack/package_wrap,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"S" = (
+/obj/item/stack/sheet/plasteel/twenty,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"X" = (
+/obj/item/stack/sheet/mineral/wood/fifty,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Y" = (
+/obj/structure/bookcase,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"Z" = (
+/obj/structure/chair/wood{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/powered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+E
+i
+i
+S
+a
+"}
+(3,1,1) = {"
+a
+R
+k
+X
+i
+a
+"}
+(4,1,1) = {"
+a
+y
+Z
+i
+i
+N
+"}
+(5,1,1) = {"
+a
+B
+i
+F
+i
+a
+"}
+(6,1,1) = {"
+a
+j
+M
+Y
+Y
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}

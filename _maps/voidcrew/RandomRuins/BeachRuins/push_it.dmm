@@ -1,0 +1,1096 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aD" = (
+/obj/structure/table/glass,
+/obj/item/research_notes/loot/medium,
+/obj/item/research_notes/loot/small,
+/turf/open/floor/light,
+/area/ruin/powered)
+"aN" = (
+/obj/machinery/chem_dispenser,
+/obj/machinery/light,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"aR" = (
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"dd" = (
+/obj/structure/chair/sofa/left,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"dh" = (
+/mob/living/simple_animal/hostile/russian/ranged/mosin,
+/turf/open/floor/light,
+/area/ruin/powered)
+"ds" = (
+/mob/living/simple_animal/hostile/russian/ranged/trooper,
+/turf/open/floor/light,
+/area/ruin/powered)
+"dG" = (
+/obj/structure/chair/sofa/corner{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/russian,
+/obj/machinery/light,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"gE" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"hh" = (
+/obj/structure/chair/sofa/left{
+	dir = 1
+	},
+/turf/open/floor/light,
+/area/ruin/powered)
+"hm" = (
+/obj/item/kirbyplants,
+/turf/open/floor/light,
+/area/ruin/powered)
+"ie" = (
+/obj/item/storage/pill_bottle/floorpill/full,
+/turf/open/floor/light,
+/area/ruin/powered)
+"kc" = (
+/obj/structure/chair/sofa/right,
+/obj/item/research_notes/loot/medium,
+/mob/living/simple_animal/hostile/russian/ranged/trooper,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"kf" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"kR" = (
+/obj/machinery/door/airlock/freezer,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"mf" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/carpet/blue,
+/area/ruin/powered)
+"mK" = (
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"nh" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"nz" = (
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/light,
+/area/ruin/powered)
+"nS" = (
+/obj/structure/chair/sofa/right{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"pi" = (
+/obj/structure/chair/office/light,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"pG" = (
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"pY" = (
+/obj/item/clothing/head/costume/chicken,
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"qg" = (
+/obj/machinery/hydroponics,
+/obj/item/seeds/cannabis/ultimate,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"qD" = (
+/obj/structure/chair/sofa/corner{
+	dir = 1
+	},
+/obj/machinery/light,
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"rb" = (
+/obj/structure/chair/sofa/left{
+	dir = 8
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"rN" = (
+/obj/item/kirbyplants/random,
+/obj/item/stack/sheet/mineral/diamond/five,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"se" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/light,
+/area/ruin/powered)
+"sn" = (
+/turf/open/floor/carpet/blue,
+/area/ruin/powered)
+"sP" = (
+/mob/living/simple_animal/hostile/russian/ranged/officer,
+/turf/open/floor/light,
+/area/ruin/powered)
+"uC" = (
+/turf/open/floor/light,
+/area/ruin/powered)
+"ve" = (
+/obj/structure/table/glass,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"xr" = (
+/obj/structure/chair/office/light,
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"xL" = (
+/obj/structure/chair/sofa,
+/mob/living/simple_animal/hostile/russian/ranged/mosin,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"yA" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/machinery/light,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"yE" = (
+/obj/machinery/chem_master,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"yG" = (
+/obj/structure/chair/sofa/right,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"zj" = (
+/obj/item/melee/baseball_bat{
+	force = 25;
+	throwforce = 25
+	},
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"Cm" = (
+/obj/structure/table/glass,
+/obj/item/gun/ballistic/revolver/golden,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/obj/item/ammo_casing/a357,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"Cs" = (
+/obj/structure/chair/sofa{
+	dir = 1
+	},
+/turf/open/floor/light,
+/area/ruin/powered)
+"Cz" = (
+/obj/effect/mob_spawn/human/corpse/solgov/infantry,
+/turf/open/floor/light,
+/area/ruin/powered)
+"CI" = (
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"CX" = (
+/obj/structure/table/rolling,
+/obj/item/storage/fancy/rollingpapers,
+/obj/item/clothing/mask/cigarette/rollie/cannabis,
+/obj/item/clothing/mask/cigarette/rollie/cannabis,
+/obj/item/reagent_containers/pill/stimulant,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"Df" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"Dz" = (
+/mob/living/simple_animal/hostile/bear/russian,
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"Fr" = (
+/mob/living/simple_animal/hostile/russian/ranged/officer,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"FB" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/carpet/blue,
+/area/ruin/powered)
+"GK" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/carpet/blue,
+/area/ruin/powered)
+"Ha" = (
+/obj/structure/table/glass,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"HH" = (
+/obj/machinery/vending/hydroseeds,
+/obj/machinery/light,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Iw" = (
+/obj/machinery/plantgenes/seedvault,
+/obj/structure/table/reinforced,
+/obj/item/research_notes/loot/big,
+/obj/machinery/light,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"JH" = (
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"JQ" = (
+/obj/machinery/chem_heater,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Le" = (
+/obj/structure/chair/sofa/right{
+	dir = 1
+	},
+/turf/open/floor/light,
+/area/ruin/powered)
+"Mb" = (
+/mob/living/simple_animal/hostile/russian/ranged/mosin,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"MB" = (
+/obj/machinery/light,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"MI" = (
+/obj/structure/chair/sofa/left,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"Nh" = (
+/obj/structure/table/glass,
+/obj/machinery/microwave,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"Oa" = (
+/obj/structure/chair/sofa/right,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"Ou" = (
+/mob/living/simple_animal/hostile/russian/ranged/mosin,
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"Pq" = (
+/obj/structure/chair/sofa/right{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/russian/ranged/trooper,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"Px" = (
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"QN" = (
+/obj/item/book/manual/wiki/chemistry,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"QY" = (
+/obj/structure/chair/sofa/right{
+	dir = 8
+	},
+/mob/living/simple_animal/hostile/russian,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"RJ" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"RS" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/powered)
+"Sa" = (
+/obj/structure/table/glass,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c1000,
+/obj/item/stack/spacecash/c200,
+/obj/item/stack/medical/suture,
+/obj/item/stack/medical/gauze,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"Sb" = (
+/obj/structure/chair/sofa/right,
+/obj/item/lighter/greyscale,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"SI" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+"TH" = (
+/obj/machinery/hydroponics,
+/obj/item/seeds/cannabis,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"TO" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"TP" = (
+/obj/structure/table/glass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass,
+/obj/item/stack/medical/suture,
+/turf/open/floor/iron/vaporwave,
+/area/ruin/powered)
+"Vb" = (
+/turf/template_noop,
+/area/template_noop)
+"VO" = (
+/obj/machinery/light,
+/turf/open/floor/carpet/cyan,
+/area/ruin/powered)
+"Wx" = (
+/obj/machinery/hydroponics,
+/obj/item/seeds/cannabis/rainbow,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"WU" = (
+/obj/machinery/jukebox/disco/beach,
+/turf/open/floor/light,
+/area/ruin/powered)
+"Xs" = (
+/obj/item/gun/ballistic/automatic/pistol/commander,
+/turf/open/floor/light,
+/area/ruin/powered)
+"XC" = (
+/obj/machinery/hydroponics,
+/obj/item/seeds/cannabis/death,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"YD" = (
+/obj/item/surgicaldrill,
+/turf/open/floor/light,
+/area/ruin/powered)
+"YV" = (
+/obj/machinery/hydroponics,
+/obj/item/seeds/cannabis/white,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Zo" = (
+/obj/item/reagent_containers/pill/happy,
+/turf/open/floor/light,
+/area/ruin/powered)
+"ZH" = (
+/obj/structure/chair/sofa/left{
+	dir = 4
+	},
+/turf/open/floor/carpet/royalblue,
+/area/ruin/powered)
+
+(1,1,1) = {"
+RS
+RS
+RS
+RS
+RS
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(2,1,1) = {"
+RS
+Nh
+Ha
+ZH
+Pq
+RS
+RS
+RS
+RS
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(3,1,1) = {"
+RS
+JH
+JH
+CI
+MB
+RS
+Cm
+ZH
+qD
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(4,1,1) = {"
+RS
+Oa
+JH
+CI
+CI
+RS
+CI
+Px
+mK
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(5,1,1) = {"
+RS
+MI
+JH
+CI
+CI
+kf
+CI
+Dz
+CI
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(6,1,1) = {"
+RS
+JH
+JH
+CI
+MB
+RS
+rN
+Px
+MB
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(7,1,1) = {"
+RS
+RS
+RS
+kf
+RS
+RS
+RS
+TO
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(8,1,1) = {"
+Vb
+RS
+Px
+Px
+Px
+RS
+CI
+Px
+CI
+CI
+CI
+CI
+MB
+RS
+CI
+CI
+RS
+RS
+RS
+RS
+RS
+RS
+"}
+(9,1,1) = {"
+Vb
+RS
+Px
+sn
+Px
+RJ
+CI
+Px
+Px
+Px
+Px
+Ou
+CI
+kf
+CI
+MB
+RS
+pG
+pG
+pG
+yE
+RS
+"}
+(10,1,1) = {"
+RS
+RS
+Px
+sn
+Px
+RJ
+CI
+CI
+CI
+CI
+CI
+CI
+MB
+RS
+CI
+CI
+RS
+pG
+Fr
+pi
+aN
+RS
+"}
+(11,1,1) = {"
+RS
+Px
+Px
+sn
+VO
+RS
+RS
+GK
+GK
+RS
+RS
+RS
+RS
+RS
+CI
+CI
+RS
+pG
+pG
+pG
+JQ
+RS
+"}
+(12,1,1) = {"
+RS
+Px
+sn
+mf
+Px
+RS
+se
+ds
+uC
+uC
+uC
+uC
+hh
+RS
+Sb
+CI
+RS
+pG
+QN
+pG
+pG
+RS
+"}
+(13,1,1) = {"
+RS
+zj
+sn
+sn
+Px
+RS
+se
+Zo
+uC
+sP
+uC
+uC
+Cs
+RS
+xL
+CI
+RS
+pG
+pG
+pG
+pG
+RS
+"}
+(14,1,1) = {"
+RS
+pY
+sn
+sn
+VO
+RS
+uC
+uC
+YD
+uC
+uC
+ie
+Le
+RS
+dd
+MB
+RS
+pG
+pG
+pG
+Iw
+RS
+"}
+(15,1,1) = {"
+TO
+Px
+mf
+sn
+Px
+FB
+uC
+uC
+Zo
+WU
+Xs
+uC
+aD
+RS
+CX
+CI
+kR
+pG
+pG
+xr
+gE
+RS
+"}
+(16,1,1) = {"
+RS
+Px
+sn
+sn
+VO
+RS
+uC
+uC
+uC
+Cz
+uC
+uC
+hh
+RS
+yG
+MB
+RS
+pG
+pG
+pG
+HH
+RS
+"}
+(17,1,1) = {"
+RS
+Px
+sn
+sn
+Px
+RS
+hm
+nz
+uC
+uC
+dh
+uC
+Cs
+RS
+xL
+CI
+RS
+pG
+TH
+pG
+XC
+RS
+"}
+(18,1,1) = {"
+RS
+Px
+sn
+sn
+Px
+RS
+se
+uC
+uC
+uC
+uC
+uC
+Le
+RS
+Df
+CI
+RS
+Mb
+pG
+pG
+pG
+RS
+"}
+(19,1,1) = {"
+RS
+Px
+Px
+sn
+VO
+RS
+RS
+GK
+GK
+RS
+RS
+RS
+RS
+RS
+CI
+CI
+RS
+pG
+Wx
+pG
+qg
+RS
+"}
+(20,1,1) = {"
+RS
+RS
+Px
+sn
+Px
+RJ
+CI
+CI
+CI
+CI
+CI
+CI
+MB
+RS
+CI
+CI
+RS
+pG
+pG
+pG
+yA
+RS
+"}
+(21,1,1) = {"
+Vb
+RS
+Px
+sn
+Px
+RJ
+CI
+Px
+Px
+Px
+Px
+Ou
+CI
+kf
+CI
+MB
+RS
+nh
+YV
+pG
+TH
+RS
+"}
+(22,1,1) = {"
+Vb
+RS
+Px
+Px
+Px
+RS
+CI
+Px
+CI
+CI
+CI
+CI
+MB
+RS
+CI
+CI
+RS
+RS
+RS
+RS
+RS
+RS
+"}
+(23,1,1) = {"
+RS
+RS
+RS
+kf
+RS
+RS
+RS
+TO
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(24,1,1) = {"
+RS
+JH
+JH
+CI
+MB
+RS
+SI
+Px
+MB
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(25,1,1) = {"
+RS
+kc
+JH
+CI
+CI
+kf
+CI
+Px
+CI
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(26,1,1) = {"
+RS
+MI
+JH
+CI
+CI
+RS
+CI
+Px
+aR
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(27,1,1) = {"
+RS
+JH
+JH
+CI
+MB
+RS
+Sa
+nS
+dG
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(28,1,1) = {"
+RS
+ve
+TP
+QY
+rb
+RS
+RS
+RS
+RS
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}
+(29,1,1) = {"
+RS
+RS
+RS
+RS
+RS
+RS
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+Vb
+"}

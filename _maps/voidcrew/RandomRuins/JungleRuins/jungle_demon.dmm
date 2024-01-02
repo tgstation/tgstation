@@ -1,0 +1,1159 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bx" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"bE" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/fullupgrade,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"bO" = (
+/obj/structure/closet/crate/secure/weapon,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"bR" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall,
+/area/ruin/powered)
+"cQ" = (
+/obj/structure/table/reinforced,
+/obj/item/flashlight/lamp/green,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"dt" = (
+/obj/effect/mob_spawn/human/corpse/assistant,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"dV" = (
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"eO" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"fm" = (
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"fr" = (
+/mob/living/simple_animal/hostile/cult_demon{
+	health = 120;
+	name = "Demonic Foreman";
+	resize = 1.25
+	},
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"fv" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"fL" = (
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/cult_demon,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"fX" = (
+/obj/effect/decal/cleanable/chem_pile,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"fY" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/material,
+/area/ruin/powered)
+"gL" = (
+/obj/machinery/door/airlock/grunge,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"hc" = (
+/obj/machinery/vending/wardrobe/jani_wardrobe,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"hk" = (
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"iw" = (
+/obj/structure/table/reinforced,
+/obj/item/soap/syndie,
+/obj/item/reagent_containers/spray/cleaner,
+/obj/item/reagent_containers/spray/cyborg_lube,
+/obj/item/reagent_containers/spray/cyborg_drying,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"iB" = (
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"iC" = (
+/obj/structure/chair/office,
+/obj/effect/mob_spawn/human/skeleton/alive,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"jd" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/waterbottle/large,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"jf" = (
+/obj/structure/closet/crate/coffin,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"jB" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"kb" = (
+/turf/closed/wall/material,
+/area/ruin/powered)
+"kf" = (
+/obj/structure/sign/warning/explosives,
+/turf/closed/wall,
+/area/ruin/powered)
+"kM" = (
+/obj/structure/closet/crate/trashcart,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/maintenance/eight,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"li" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"mI" = (
+/obj/vehicle/ridden/atv{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"mY" = (
+/turf/template_noop,
+/area/template_noop)
+"nC" = (
+/obj/structure/fluff/fokoff_sign,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"nJ" = (
+/obj/structure/filingcabinet/chestdrawer,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"nR" = (
+/mob/living/simple_animal/hostile/cult_demon,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"pm" = (
+/obj/structure/table/reinforced,
+/obj/item/upgradescroll,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"pE" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"qD" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"qE" = (
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"rc" = (
+/obj/structure/closet/crate/grave,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"rx" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/gibs/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"rA" = (
+/obj/structure/chair/office,
+/obj/effect/mob_spawn/human/corpse/charredskeleton,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"se" = (
+/obj/structure/janitorialcart,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"sD" = (
+/obj/vehicle/ridden/atv{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"sK" = (
+/obj/structure/chair/office/light{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"sQ" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"tv" = (
+/obj/structure/chair/office,
+/obj/effect/mob_spawn/human/skeleton/alive,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"tR" = (
+/obj/structure/closet/gimmick/russian,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"uj" = (
+/obj/structure/closet/crate/silvercrate,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"uD" = (
+/obj/item/kirbyplants/random,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"wr" = (
+/obj/structure/rack,
+/obj/item/stack/spacecash/c1000,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/fakeartefact,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"wG" = (
+/obj/structure/rack,
+/obj/item/stack/spacecash/c1000,
+/obj/item/fakeartefact,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"wP" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"wQ" = (
+/obj/structure/table/reinforced,
+/obj/item/phone,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"wS" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"xe" = (
+/mob/living/simple_animal/hostile/cult_demon,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"xK" = (
+/obj/structure/bonfire/prelit,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"xY" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"yM" = (
+/obj/structure/table/reinforced,
+/obj/item/gun/ballistic/shotgun/bulldog/unrestricted,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"AF" = (
+/obj/vehicle/ridden/wheelchair,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"AI" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"AU" = (
+/obj/structure/table/reinforced,
+/obj/item/storage/box/drinkingglasses,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Da" = (
+/obj/structure/filingcabinet/chestdrawer,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Dd" = (
+/obj/effect/decal/remains/human,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"DC" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Ed" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"Ew" = (
+/obj/structure/flora/junglebush/c,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"EY" = (
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"Fh" = (
+/obj/machinery/vending/cola/red,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"FA" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"FK" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"FR" = (
+/obj/structure/sign/warning/fire,
+/turf/closed/wall/material,
+/area/ruin/powered)
+"FY" = (
+/obj/structure/sign/warning/biohazard,
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"GI" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/costume,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Hk" = (
+/obj/machinery/vending/donksofttoyvendor,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Hv" = (
+/obj/structure/table/reinforced,
+/obj/machinery/chem_dispenser/drinks/beer/fullupgrade,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Hz" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/glass,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Ig" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/vehicle/ridden/wheelchair/motorized,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Iq" = (
+/obj/structure/chair/comfy/brown,
+/mob/living/simple_animal/hostile/cult_demon/greater{
+	health = 250;
+	name = "The Boss";
+	resize = 1.5
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Ir" = (
+/obj/structure/flora/junglebush/b,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Jx" = (
+/obj/structure/fence,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"JB" = (
+/obj/structure/fence{
+	dir = 4
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"JI" = (
+/obj/effect/mob_spawn/human/corpse/pirate,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"KA" = (
+/obj/structure/flora/junglebush,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"KV" = (
+/obj/machinery/light/floor,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Lh" = (
+/obj/structure/chair/office/light{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/cult_demon,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Lu" = (
+/obj/structure/sign/warning,
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"LP" = (
+/mob/living/simple_animal/hostile/cult_demon,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"LV" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"LW" = (
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Mk" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"Mq" = (
+/obj/structure/table/reinforced,
+/obj/item/pen/survival,
+/obj/effect/decal/cleanable/dirt,
+/obj/item/key,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Mw" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/spawner/random/clothing/costume,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"MM" = (
+/obj/structure/chair/plastic{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/ash/large,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"MW" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/closed/wall/material,
+/area/ruin/powered)
+"Nl" = (
+/obj/structure/sign/poster/contraband/random,
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"Nm" = (
+/obj/structure/tank_dispenser,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Nt" = (
+/obj/structure/tank_dispenser,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"NU" = (
+/obj/structure/ore_box,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"OU" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Pe" = (
+/obj/effect/decal/cleanable/ash,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"PA" = (
+/obj/machinery/suit_storage_unit/syndicate,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"QI" = (
+/obj/structure/rack,
+/obj/item/stack/spacecash/c1000,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Re" = (
+/obj/structure/table/reinforced,
+/obj/item/photo/old,
+/obj/item/key,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"RX" = (
+/obj/structure/table/reinforced,
+/obj/item/modular_computer/laptop/preset/civilian,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Sg" = (
+/obj/machinery/door/airlock/grunge,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Sz" = (
+/obj/structure/closet/ammunitionlocker,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"SJ" = (
+/obj/structure/sign/warning/nosmoking,
+/turf/closed/wall,
+/area/ruin/powered)
+"SU" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"SV" = (
+/obj/structure/closet/crate/trashcart,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"Ta" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Tp" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Tr" = (
+/obj/effect/decal/cleanable/ash,
+/obj/structure/bed/dogbed,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"TI" = (
+/obj/structure/sign/warning/electricshock,
+/turf/closed/wall,
+/area/ruin/powered)
+"TY" = (
+/obj/structure/closet/crate/internals,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"UH" = (
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Vp" = (
+/obj/structure/filingcabinet,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"VO" = (
+/obj/structure/rack,
+/obj/machinery/light/floor,
+/obj/item/stack/spacecash/c1000,
+/obj/item/fakeartefact,
+/obj/item/stack/spacecash/c1000,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Wa" = (
+/obj/structure/ore_box,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Wi" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"XB" = (
+/obj/effect/decal/remains/xeno,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"XS" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"Yp" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+"YL" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"YX" = (
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/powered)
+
+(1,1,1) = {"
+mY
+mY
+mY
+mY
+NU
+AI
+iB
+iB
+eO
+eO
+Mk
+YL
+iB
+mY
+mY
+mY
+mY
+mY
+mY
+mY
+"}
+(2,1,1) = {"
+mY
+Ed
+Ed
+bR
+Ed
+Ed
+iB
+eO
+nC
+Dd
+Mk
+iB
+Ed
+Ed
+Ed
+Nl
+EY
+EY
+Ed
+mY
+"}
+(3,1,1) = {"
+mY
+Ed
+Da
+XS
+Lh
+EY
+Ew
+Mk
+sD
+eO
+eO
+iB
+Ed
+YX
+sQ
+LW
+XS
+LW
+Ed
+mY
+"}
+(4,1,1) = {"
+mY
+Ed
+nJ
+XS
+SU
+EY
+pE
+eO
+Mk
+eO
+eO
+Ir
+bR
+LW
+wG
+FA
+Mw
+qE
+bR
+iB
+"}
+(5,1,1) = {"
+mY
+Ed
+nJ
+LW
+sK
+EY
+iB
+eO
+Mk
+Mk
+eO
+eO
+Ed
+LW
+XS
+Ig
+xe
+LW
+Ed
+iB
+"}
+(6,1,1) = {"
+iB
+Ed
+PA
+KV
+Wi
+Lu
+eO
+eO
+eO
+Mk
+Mk
+eO
+Ed
+LW
+Tp
+VO
+GI
+XS
+Ed
+iB
+"}
+(7,1,1) = {"
+iB
+bR
+rx
+LW
+LW
+Hz
+eO
+eO
+eO
+eO
+Mk
+eO
+gL
+LW
+LW
+AF
+sQ
+XS
+Ed
+dt
+"}
+(8,1,1) = {"
+iB
+EY
+Fh
+Mq
+Hk
+Ed
+Mk
+Mk
+eO
+eO
+eO
+eO
+SJ
+LW
+wr
+GI
+QI
+XS
+Ed
+iB
+"}
+(9,1,1) = {"
+iB
+EY
+EY
+bR
+Ed
+Ed
+iB
+eO
+fr
+eO
+eO
+KA
+EY
+LW
+DC
+LW
+fL
+XS
+Nl
+iB
+"}
+(10,1,1) = {"
+iB
+AI
+iB
+JB
+rc
+iB
+fv
+XB
+xK
+eO
+eO
+iB
+Nl
+XS
+sQ
+fm
+LW
+LW
+Ed
+iB
+"}
+(11,1,1) = {"
+iB
+OU
+iB
+JB
+NU
+AI
+iB
+eO
+Mk
+Mk
+eO
+AI
+EY
+Nt
+xY
+Yp
+xY
+Nm
+Ed
+iB
+"}
+(12,1,1) = {"
+iB
+iB
+iB
+JB
+wS
+iB
+iB
+iB
+eO
+Mk
+eO
+eO
+EY
+Ed
+Ed
+bR
+Ed
+Ed
+Ed
+iB
+"}
+(13,1,1) = {"
+iB
+iB
+AI
+qD
+iB
+iB
+YL
+iB
+eO
+eO
+eO
+Dd
+eO
+iB
+iB
+iB
+JB
+AI
+rc
+iB
+"}
+(14,1,1) = {"
+iB
+iB
+Ir
+JB
+iB
+iB
+iB
+iB
+iB
+eO
+eO
+eO
+Mk
+eO
+iB
+fv
+JB
+iB
+Ir
+iB
+"}
+(15,1,1) = {"
+iB
+Ed
+Ed
+Ed
+Ed
+EY
+EY
+EY
+gL
+kb
+Ed
+Ed
+Mk
+Mk
+eO
+Ed
+Ed
+Ed
+EY
+iB
+"}
+(16,1,1) = {"
+iB
+Ed
+Vp
+FK
+XS
+Tr
+EY
+Wi
+LW
+XS
+Re
+Ed
+eO
+Mk
+eO
+TI
+LP
+uj
+Nl
+iB
+"}
+(17,1,1) = {"
+iB
+Ed
+Hv
+XS
+cQ
+LW
+kb
+DC
+LW
+iC
+RX
+Ed
+SV
+eO
+eO
+Sg
+wP
+bO
+EY
+iB
+"}
+(18,1,1) = {"
+iB
+Ed
+bE
+Iq
+pm
+MM
+kb
+LW
+hk
+fY
+kb
+Ed
+eO
+eO
+eO
+gL
+LW
+TY
+EY
+iB
+"}
+(19,1,1) = {"
+iB
+Ed
+AU
+li
+yM
+XS
+FR
+XS
+LW
+fX
+wQ
+Ed
+mI
+eO
+iB
+kf
+LW
+jf
+Ed
+iB
+"}
+(20,1,1) = {"
+iB
+Ed
+UH
+LW
+Pe
+LW
+gL
+LW
+LW
+rA
+RX
+Ed
+Mk
+eO
+iB
+Ed
+XS
+Sz
+Ed
+iB
+"}
+(21,1,1) = {"
+mY
+Ed
+MW
+kb
+fY
+kb
+kb
+Wi
+hk
+Nl
+EY
+EY
+LV
+fv
+iB
+Ed
+XS
+tR
+Ed
+iB
+"}
+(22,1,1) = {"
+mY
+EY
+hc
+jB
+DC
+XS
+Sg
+XS
+qE
+XS
+jd
+EY
+eO
+iB
+AI
+bR
+nR
+Ta
+Ed
+mY
+"}
+(23,1,1) = {"
+mY
+EY
+bx
+kM
+se
+iw
+FY
+uD
+XS
+tv
+RX
+Ed
+Jx
+Jx
+Jx
+Ed
+dV
+Wa
+Ed
+mY
+"}
+(24,1,1) = {"
+mY
+EY
+EY
+EY
+Ed
+Ed
+EY
+Ed
+Ed
+Ed
+Ed
+Ed
+AI
+pE
+rc
+Ed
+Ed
+bR
+Ed
+mY
+"}
+(25,1,1) = {"
+mY
+mY
+mY
+mY
+iB
+iB
+iB
+iB
+iB
+iB
+iB
+iB
+eO
+eO
+JI
+iB
+iB
+mY
+mY
+mY
+"}

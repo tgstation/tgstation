@@ -37,7 +37,13 @@
 		if("Delete Shuttle")
 			if(tgui_alert(user, "Really delete [name || shuttle_id]?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")
 				return
-			jumpToNullSpace()
+			//VOID EDIT [
+			if(istype(src, /obj/docking_port/mobile/voidcrew))
+				var/obj/docking_port/mobile/voidcrew/dockingport = src
+				dockingport.current_ship.destroy_ship(TRUE)
+			else
+				jumpToNullSpace()
+			// ]
 
 		if("Into The Sunset (delete & greentext 'escape')")
 			if(tgui_alert(user, "Really delete [name || shuttle_id] and greentext escape objectives?", "Delete Shuttle", list("Cancel", "Really!")) != "Really!")

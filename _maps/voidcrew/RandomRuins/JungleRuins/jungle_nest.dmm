@@ -1,0 +1,813 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aH" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/wood/fancy,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"aW" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/storage/bag/books,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"bB" = (
+/obj/structure/alien/weeds,
+/obj/structure/mecha_wreckage/seraph,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"ce" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"cj" = (
+/obj/structure/alien/weeds,
+/obj/item/clothing/head/costume/crown,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"cO" = (
+/obj/structure/alien/weeds,
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"dj" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"eA" = (
+/obj/structure/flora/ausbushes/pointybush,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"eB" = (
+/obj/structure/flora/ausbushes/reedbush,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"eG" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"fj" = (
+/obj/structure/alien/weeds,
+/obj/structure/mecha_wreckage/ripley,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"fZ" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"gU" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/remains/xeno,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"hu" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/obj/machinery/vending/boozeomat,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"iF" = (
+/turf/closed/mineral/random/jungle,
+/area/ruin/powered)
+"jI" = (
+/obj/structure/alien/resin/wall,
+/turf/closed/mineral/random/jungle,
+/area/ruin/powered)
+"kd" = (
+/obj/structure/alien/resin/membrane,
+/obj/structure/alien/weeds,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"lh" = (
+/obj/structure/alien/weeds,
+/obj/structure/sink/oil_well,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"lS" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/glasses/night,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"mW" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"nn" = (
+/obj/structure/barricade/wooden,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"oB" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva/body,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"oX" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/obj/item/toy/toy_xeno,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"qK" = (
+/obj/structure/flora/junglebush,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"rY" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/wood/fancy,
+/obj/item/reagent_containers/food/drinks/bottle/fernet,
+/obj/item/reagent_containers/food/drinks/bottle/champagne,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"sw" = (
+/obj/structure/alien/resin/wall,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"tZ" = (
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"ul" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/storage/box/alienhandcuffs,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"uo" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/structure/bed/nest,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"uR" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/up,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"vg" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/under/costume/mech_suit/blue,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"vt" = (
+/obj/structure/alien/resin/wall,
+/turf/open/misc/grass,
+/area/ruin/powered)
+"vW" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/mecha_parts/mecha_equipment/weapon/energy/plasma,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"wc" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"wg" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"wl" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/cleanable/xenoblood/xgibs/torso,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"wt" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/obj/structure/sign/poster/contraband/lusty_xenomorph,
+/turf/open/misc/grass,
+/area/ruin/powered)
+"xY" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/structure/bed/nest,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"ya" = (
+/obj/effect/decal/cleanable/xenoblood/xgibs/larva,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"yF" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/wall,
+/turf/open/misc/grass,
+/area/ruin/powered)
+"yG" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/maid,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"yV" = (
+/obj/structure/alien/resin/wall,
+/obj/structure/alien/weeds,
+/turf/closed/mineral/random/jungle,
+/area/ruin/powered)
+"zi" = (
+/obj/structure/alien/resin/wall,
+/obj/structure/alien/weeds,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"zv" = (
+/obj/structure/alien/weeds,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"zy" = (
+/obj/structure/alien/resin/wall,
+/obj/structure/alien/weeds,
+/turf/open/misc/grass,
+/area/ruin/powered)
+"zz" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/remains/xeno/larva,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"AC" = (
+/obj/structure/alien/weeds,
+/obj/structure/barricade/wooden/crude,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"AE" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/shield/riot,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"AI" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Du" = (
+/obj/structure/alien/weeds,
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/structure/bed/nest,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"DP" = (
+/obj/structure/alien/resin/wall,
+/obj/structure/sign/poster/contraband/busty_backdoor_xeno_babes_6,
+/turf/open/misc/grass,
+/area/ruin/powered)
+"Ee" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/kitchen/knife/combat/survival,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"EC" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/effect/spawner/random/maintenance/two,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Fe" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/cartridge,
+/obj/item/clothing/under/rank/civilian/curator,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"FA" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/clothing/head/helmet/space/eva,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Gk" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/sentinel,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Gt" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/membrane,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Hh" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/drone,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Hs" = (
+/turf/closed/mineral/random/jungle,
+/area/ruin)
+"Hz" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/egg/burst,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"II" = (
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"KR" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/wood/fancy,
+/obj/machinery/dish_drive,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Lg" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/resin/membrane,
+/turf/open/misc/grass,
+/area/ruin/powered)
+"Lh" = (
+/obj/structure/alien/weeds,
+/mob/living/simple_animal/hostile/alien/queen/large,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"MJ" = (
+/obj/structure/alien/weeds,
+/obj/effect/decal/remains/human,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Ne" = (
+/obj/structure/alien/weeds,
+/obj/structure/alien/weeds/node,
+/mob/living/simple_animal/hostile/alien,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"NK" = (
+/obj/structure/alien/weeds,
+/obj/item/bodypart/chest/larva,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"RG" = (
+/obj/structure/alien/weeds,
+/turf/closed/mineral/random/jungle,
+/area/ruin/powered)
+"TS" = (
+/obj/structure/alien/weeds,
+/obj/structure/bed/nest,
+/obj/item/mecha_parts/mecha_equipment/drill/diamonddrill,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"TY" = (
+/obj/structure/flora/junglebush/large,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"UV" = (
+/obj/structure/alien/weeds,
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"VK" = (
+/obj/structure/flora/tree/jungle/small,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"VT" = (
+/obj/structure/alien/weeds,
+/obj/structure/table/wood/fancy,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 8
+	},
+/turf/open/misc/dirt,
+/area/ruin/powered)
+"Wb" = (
+/turf/template_noop,
+/area/template_noop)
+"Wj" = (
+/obj/structure/flora/tree/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+"Yq" = (
+/obj/structure/flora/ausbushes/stalkybush,
+/turf/open/misc/dirt/jungle,
+/area/ruin/powered)
+
+(1,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+iF
+iF
+II
+II
+tZ
+eB
+Wb
+Wb
+Wb
+Wb
+Wb
+"}
+(2,1,1) = {"
+Wb
+Wb
+iF
+iF
+iF
+iF
+RG
+Yq
+II
+Wj
+II
+Wb
+Wb
+Wb
+Wb
+"}
+(3,1,1) = {"
+Wb
+iF
+jI
+zi
+zi
+zi
+vt
+zv
+zv
+II
+II
+II
+Wb
+Wb
+Wb
+"}
+(4,1,1) = {"
+iF
+jI
+zy
+Hz
+zz
+NK
+zy
+zy
+zy
+ya
+TY
+II
+Wb
+Wb
+Wb
+"}
+(5,1,1) = {"
+iF
+vt
+wc
+UV
+UV
+UV
+UV
+vg
+zy
+zv
+II
+II
+fZ
+Wb
+Wb
+"}
+(6,1,1) = {"
+iF
+vt
+wc
+AI
+fj
+ce
+UV
+UV
+zy
+zy
+zy
+zy
+II
+II
+Wb
+"}
+(7,1,1) = {"
+iF
+sw
+vt
+UV
+Lh
+UV
+yF
+Gt
+yF
+lh
+lS
+zy
+II
+qK
+Wb
+"}
+(8,1,1) = {"
+iF
+iF
+vt
+mW
+UV
+UV
+yF
+UV
+yF
+dj
+Du
+zy
+eB
+oB
+Yq
+"}
+(9,1,1) = {"
+iF
+iF
+vt
+vt
+cj
+mW
+yF
+Hh
+yF
+Gk
+AE
+zy
+UV
+II
+II
+"}
+(10,1,1) = {"
+Wb
+iF
+iF
+vt
+oX
+yF
+yF
+UV
+yF
+UV
+zy
+vt
+UV
+VK
+II
+"}
+(11,1,1) = {"
+Wb
+iF
+iF
+vt
+yF
+yF
+EC
+UV
+yF
+Gt
+zy
+cO
+UV
+UV
+TY
+"}
+(12,1,1) = {"
+Wb
+iF
+iF
+vt
+UV
+gU
+AI
+UV
+UV
+UV
+kd
+AC
+wl
+UV
+II
+"}
+(13,1,1) = {"
+Wb
+iF
+sw
+zy
+Gt
+yF
+yF
+yF
+yF
+yF
+zy
+nn
+UV
+UV
+eA
+"}
+(14,1,1) = {"
+Wb
+iF
+vt
+uo
+UV
+UV
+UV
+UV
+bB
+vW
+zy
+zy
+zy
+zy
+uR
+"}
+(15,1,1) = {"
+Wb
+iF
+DP
+FA
+UV
+Hh
+UV
+wg
+xY
+yF
+yF
+Fe
+aW
+zy
+Yq
+"}
+(16,1,1) = {"
+Wb
+iF
+sw
+Ee
+UV
+AI
+UV
+UV
+TS
+yF
+UV
+Ne
+eG
+zy
+iF
+"}
+(17,1,1) = {"
+Wb
+iF
+jI
+vt
+yF
+Lg
+yF
+yF
+yF
+yF
+UV
+MJ
+ul
+yV
+iF
+"}
+(18,1,1) = {"
+Wb
+Wb
+iF
+jI
+vt
+UV
+UV
+UV
+UV
+UV
+UV
+zy
+vt
+jI
+iF
+"}
+(19,1,1) = {"
+Wb
+Wb
+Wb
+iF
+jI
+vt
+vt
+Gt
+yF
+wt
+yF
+zy
+iF
+Hs
+Wb
+"}
+(20,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+iF
+iF
+vt
+UV
+UV
+UV
+KR
+zy
+iF
+Wb
+Wb
+"}
+(21,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+jI
+vt
+hu
+yG
+rY
+yV
+iF
+Wb
+Wb
+"}
+(22,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+jI
+vt
+VT
+aH
+yV
+Wb
+Wb
+Wb
+"}
+(23,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+iF
+sw
+vt
+jI
+jI
+Wb
+Wb
+Wb
+"}
+(24,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+iF
+iF
+iF
+Wb
+Wb
+Wb
+Wb
+"}
+(25,1,1) = {"
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+Wb
+"}

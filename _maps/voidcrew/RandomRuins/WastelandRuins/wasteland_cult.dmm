@@ -1,0 +1,307 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/clothing/suit/hooded/cultrobes,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"c" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/restraints/legcuffs/bola/cult,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"d" = (
+/obj/structure/window/reinforced/tinted/fulltile,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/ruin/unpowered)
+"e" = (
+/obj/item/bedsheet/cult,
+/obj/structure/bed,
+/obj/structure/trap/cult,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/destructible/cult/forge,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"h" = (
+/obj/item/stack/sheet/runed_metal/ten,
+/obj/structure/table/wood/fancy/red,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"j" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/wrapping,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"k" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"l" = (
+/turf/closed/wall/mineral/cult,
+/area/ruin/unpowered)
+"m" = (
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/destructible/cult/talisman,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"o" = (
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"q" = (
+/obj/structure/destructible/cult/pylon,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"t" = (
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"u" = (
+/turf/closed/mineral/random/asteroid/rockplanet,
+/area/overmap_encounter/planetoid/wasteland)
+"v" = (
+/obj/structure/trap/cult,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"w" = (
+/obj/structure/headpike/bone,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"y" = (
+/obj/effect/decal/cleanable/plasma,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/toy/plush/narplush,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"A" = (
+/obj/structure/bookcase/random/religion,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"C" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/ash,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"D" = (
+/obj/structure/destructible/cult/tome,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"E" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"F" = (
+/obj/structure/destructible/cult/tome,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"H" = (
+/obj/machinery/door/airlock/cult,
+/obj/structure/trap/cult,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"I" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"J" = (
+/obj/effect/decal/cleanable/crayon,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"K" = (
+/obj/effect/mob_spawn/human/corpse/charredskeleton,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"N" = (
+/obj/structure/bookcase/random/religion,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"O" = (
+/obj/structure/table/wood/fancy/red,
+/obj/item/melee/cultblade/dagger,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"P" = (
+/obj/item/storage/fancy/candle_box,
+/obj/item/lighter/greyscale,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Q" = (
+/obj/structure/table/wood/fancy/red,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"S" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"T" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/food/salt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"U" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"V" = (
+/obj/structure/closet/crate/necropolis,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Y" = (
+/obj/effect/decal/cleanable/ash/large,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Z" = (
+/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+u
+u
+u
+K
+w
+Y
+w
+a
+a
+"}
+(2,1,1) = {"
+u
+u
+l
+l
+l
+l
+H
+l
+l
+a
+"}
+(3,1,1) = {"
+u
+l
+l
+F
+c
+m
+o
+z
+l
+l
+"}
+(4,1,1) = {"
+l
+l
+h
+o
+E
+C
+Z
+o
+b
+l
+"}
+(5,1,1) = {"
+l
+N
+o
+S
+y
+J
+o
+o
+O
+l
+"}
+(6,1,1) = {"
+d
+D
+v
+t
+o
+P
+T
+o
+n
+d
+"}
+(7,1,1) = {"
+l
+A
+U
+y
+k
+E
+t
+U
+y
+l
+"}
+(8,1,1) = {"
+l
+l
+l
+q
+e
+Q
+I
+j
+v
+l
+"}
+(9,1,1) = {"
+u
+u
+l
+l
+l
+l
+l
+f
+V
+l
+"}
+(10,1,1) = {"
+a
+u
+u
+u
+u
+u
+l
+l
+l
+l
+"}

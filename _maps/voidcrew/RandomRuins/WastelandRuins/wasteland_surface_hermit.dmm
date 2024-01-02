@@ -1,0 +1,388 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/open/floor/wood,
+/area/ruin/powered)
+"e" = (
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"f" = (
+/turf/open/floor/plating/dirt/old/dark/lit,
+/area/ruin/powered)
+"g" = (
+/obj/structure/table/survival_pod,
+/obj/machinery/light/small,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"i" = (
+/obj/structure/chair/stool,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"j" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/dust/lit,
+/area/ruin/powered)
+"m" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/dirt/old/lit,
+/area/ruin/powered)
+"n" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"o" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/powered)
+"p" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/powered)
+"q" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"r" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/bed,
+/obj/item/bedsheet/grey,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"s" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"t" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/powered)
+"v" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"w" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/powered)
+"x" = (
+/obj/structure/sink/puddle,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/turf/open/floor/plating/dirt/jungle/dark/lit,
+/area/ruin/powered)
+"y" = (
+/obj/structure/rack,
+/obj/item/pickaxe/improvised,
+/obj/item/kitchen/knife/combat/survival,
+/obj/item/storage/medkit/surgery,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"z" = (
+/obj/structure/glowshroom/single,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"B" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/powered)
+"C" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/powered)
+"D" = (
+/obj/item/storage/bag/plants/portaseeder,
+/obj/item/storage/bag/ore,
+/obj/structure/table/glass,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"E" = (
+/obj/structure/table/glass,
+/obj/item/seeds/plump,
+/obj/item/seeds/plump,
+/obj/item/seeds/tower,
+/obj/item/seeds/reishi,
+/obj/item/reagent_containers/food/snacks/grown/mushroom/glowshroom,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"G" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/dirt/jungle/dark/lit,
+/area/ruin/powered)
+"H" = (
+/obj/item/storage/toolbox/emergency,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"I" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/ruin/powered)
+"J" = (
+/obj/item/shovel,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"K" = (
+/obj/item/clothing/suit/space/orange,
+/obj/item/clothing/head/helmet/space/orange,
+/obj/structure/rack,
+/obj/item/gun/ballistic/rifle/boltaction/polymer,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"L" = (
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"M" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"O" = (
+/obj/structure/table/glass,
+/obj/item/flashlight/lantern,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"P" = (
+/turf/template_noop,
+/area/template_noop)
+"Q" = (
+/turf/open/misc/dust/lit,
+/area/ruin/powered)
+"S" = (
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"T" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/wood,
+/area/ruin/powered)
+"W" = (
+/obj/effect/mob_spawn/human/hermit,
+/turf/open/misc/wasteland/lit,
+/area/ruin/powered)
+"X" = (
+/turf/open/floor/plating/dirt/old/lit,
+/area/ruin/powered)
+"Y" = (
+/obj/item/flashlight/lantern,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/powered)
+"Z" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/powered)
+
+(1,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+"}
+(2,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+"}
+(3,1,1) = {"
+P
+S
+M
+S
+S
+S
+S
+P
+P
+P
+P
+P
+P
+P
+P
+"}
+(4,1,1) = {"
+P
+M
+X
+f
+x
+D
+S
+S
+P
+P
+P
+P
+P
+P
+P
+"}
+(5,1,1) = {"
+S
+M
+G
+o
+w
+z
+y
+M
+P
+P
+P
+P
+s
+P
+P
+"}
+(6,1,1) = {"
+M
+G
+Z
+Y
+H
+t
+B
+M
+M
+S
+S
+P
+s
+P
+P
+"}
+(7,1,1) = {"
+S
+m
+J
+a
+X
+Q
+j
+j
+W
+g
+S
+s
+s
+s
+P
+"}
+(8,1,1) = {"
+S
+G
+I
+C
+T
+Q
+L
+q
+q
+L
+e
+s
+s
+s
+s
+"}
+(9,1,1) = {"
+S
+E
+L
+z
+p
+M
+r
+L
+i
+O
+S
+s
+n
+n
+n
+"}
+(10,1,1) = {"
+S
+M
+M
+v
+K
+M
+S
+S
+M
+M
+M
+s
+s
+n
+n
+"}
+(11,1,1) = {"
+P
+P
+M
+M
+S
+S
+P
+P
+P
+P
+s
+s
+s
+s
+n
+"}
+(12,1,1) = {"
+P
+P
+P
+P
+P
+P
+P
+P
+P
+P
+s
+s
+s
+P
+n
+"}

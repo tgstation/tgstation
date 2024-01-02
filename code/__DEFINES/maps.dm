@@ -158,7 +158,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define CAMERA_LOCK_CENTCOM 4
 
 //Reserved/Transit turf type
-#define RESERVED_TURF_TYPE /turf/open/space/basic //What the turf is when not being used
+//VOID EDIT
+#define RESERVED_TURF_TYPE /turf/open/space //What the turf is when not being used
 
 //Ruin Generation
 

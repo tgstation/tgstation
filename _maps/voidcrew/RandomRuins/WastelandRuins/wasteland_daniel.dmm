@@ -1,0 +1,296 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"b" = (
+/obj/machinery/light_switch,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"d" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"e" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/chair/comfy/teal,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"g" = (
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"h" = (
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"i" = (
+/obj/structure/table/reinforced,
+/obj/item/kitchen/knife,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"j" = (
+/obj/effect/turf_decal/corner/bar,
+/obj/effect/turf_decal/corner/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"k" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/obj/machinery/vending/boozeomat{
+	req_access = null
+	},
+/obj/effect/turf_decal/corner/bar,
+/obj/effect/turf_decal/corner/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"l" = (
+/obj/machinery/computer/security/wooden_tv,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"m" = (
+/obj/structure/table/glass,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/chair/comfy/teal{
+	dir = 8
+	},
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/snacks/store/cake/birthday,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"p" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/shaker,
+/obj/effect/turf_decal/corner/bar,
+/obj/effect/turf_decal/corner/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"q" = (
+/obj/structure/table/reinforced,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"r" = (
+/obj/structure/table/reinforced,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/item/reagent_containers/food/drinks/drinkingglass/shotglass,
+/obj/effect/turf_decal/corner/bar,
+/obj/effect/turf_decal/corner/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"s" = (
+/obj/machinery/door/window{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/bar,
+/obj/effect/turf_decal/corner/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/corner/bar,
+/obj/effect/turf_decal/corner/bar{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"u" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"v" = (
+/obj/structure/chair/office,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"w" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/drip,
+/obj/effect/decal/cleanable/blood/gibs,
+/obj/effect/mob_spawn/human/corpse,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/cakeslice/birthday,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"x" = (
+/obj/structure/bed,
+/obj/item/bedsheet/red,
+/obj/item/paper/fluff/shuttles/daniel,
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"y" = (
+/obj/item/kirbyplants,
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/table/wood,
+/obj/item/papercutter,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"A" = (
+/obj/structure/table/wood,
+/obj/machinery/computer/bookmanagement,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"B" = (
+/obj/machinery/light,
+/obj/structure/table/wood,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"C" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"D" = (
+/obj/structure/table/wood,
+/obj/item/toy/plush/lizardplushie{
+	desc = "Oh hi Mark.";
+	name = "Marcus"
+	},
+/turf/open/floor/carpet,
+/area/ruin/unpowered)
+"E" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"Q" = (
+/obj/structure/fans/tiny,
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+E
+Q
+E
+E
+E
+E
+E
+E
+E
+"}
+(2,1,1) = {"
+b
+d
+d
+d
+d
+u
+d
+y
+E
+"}
+(3,1,1) = {"
+E
+e
+l
+h
+h
+d
+d
+z
+E
+"}
+(4,1,1) = {"
+E
+f
+m
+m
+h
+d
+v
+A
+E
+"}
+(5,1,1) = {"
+E
+g
+n
+n
+h
+d
+d
+B
+E
+"}
+(6,1,1) = {"
+E
+h
+h
+h
+h
+d
+d
+d
+E
+"}
+(7,1,1) = {"
+E
+i
+o
+q
+s
+E
+E
+C
+E
+"}
+(8,1,1) = {"
+E
+j
+j
+j
+j
+E
+w
+h
+E
+"}
+(9,1,1) = {"
+E
+k
+p
+r
+t
+E
+x
+D
+E
+"}
+(10,1,1) = {"
+E
+E
+E
+E
+E
+E
+E
+E
+E
+"}

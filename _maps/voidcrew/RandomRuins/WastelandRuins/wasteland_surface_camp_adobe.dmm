@@ -1,0 +1,487 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"c" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"d" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"e" = (
+/obj/structure/table,
+/obj/item/ammo_box/aac_300blk_stripper,
+/obj/item/ammo_box/aac_300blk_stripper,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"f" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/ranged/hunter{
+	faction = list("adobe")
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"g" = (
+/turf/closed/wall,
+/area/whitesands/surface/outdoors)
+"h" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/rifle/boltaction/polymer,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"i" = (
+/obj/item/stack/sheet/mineral/gold/five,
+/obj/structure/table,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"j" = (
+/obj/structure/bonfire/prelit,
+/obj/effect/decal/cleanable/ash,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"k" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"m" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/aks74u,
+/obj/item/ammo_box/magazine/aks74u,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"p" = (
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/obj/structure/table,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"q" = (
+/obj/item/trash/can{
+	pixel_y = -6
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"r" = (
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"s" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/drinks/bottle/sarsaparilla,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"u" = (
+/obj/structure/tank_dispenser/oxygen,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"v" = (
+/obj/item/stack/sheet/mineral/titanium/fifty,
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"w" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/ranged/hunter{
+	dir = 4;
+	faction = list("adobe")
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"x" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 4;
+	faction = list("adobe")
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"y" = (
+/obj/structure/table,
+/obj/item/clothing/glasses/meson/gar,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"A" = (
+/obj/item/cigbutt{
+	pixel_x = -3;
+	pixel_y = -1
+	},
+/obj/item/cigbutt{
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"B" = (
+/turf/closed/wall,
+/area/ruin/unpowered)
+"C" = (
+/obj/structure/chair/plastic,
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	faction = list("adobe")
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"D" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/ranged/gunslinger{
+	dir = 4;
+	faction = list("adobe")
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"E" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 1;
+	faction = list("adobe")
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"F" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor5-old"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"G" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"H" = (
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor3-old"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"I" = (
+/obj/structure/falsewall,
+/turf/open/space/basic,
+/area/ruin/unpowered)
+"J" = (
+/obj/structure/sign/poster/contraband/communist_state,
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"K" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"L" = (
+/turf/closed/wall/rust,
+/area/whitesands/surface/outdoors)
+"M" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"N" = (
+/obj/item/stack/sheet/mineral/uranium/five,
+/obj/structure/table,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"O" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 4;
+	faction = list("adobe")
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"P" = (
+/obj/structure/barricade/sandbags,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Q" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"R" = (
+/obj/effect/mob_spawn/human/corpse/damaged,
+/obj/effect/decal/cleanable/blood/old{
+	icon_state = "floor2-old"
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"S" = (
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"T" = (
+/obj/structure/barricade/sandbags,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"U" = (
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"V" = (
+/obj/structure/table,
+/obj/item/radio,
+/obj/item/radio,
+/obj/item/radio,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"W" = (
+/obj/structure/table,
+/obj/item/gun/ballistic/automatic/pistol/m1911,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"X" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Y" = (
+/obj/machinery/door/airlock/wood/glass,
+/turf/open/floor/plating/rust,
+/area/ruin/powered)
+"Z" = (
+/obj/structure/table,
+/obj/item/trash/can,
+/obj/item/ammo_box/c45,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+M
+X
+X
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+M
+R
+X
+X
+a
+"}
+(3,1,1) = {"
+a
+U
+U
+U
+U
+B
+U
+U
+U
+U
+U
+U
+X
+a
+"}
+(4,1,1) = {"
+a
+B
+i
+y
+U
+V
+r
+t
+U
+r
+r
+U
+M
+a
+"}
+(5,1,1) = {"
+a
+B
+p
+s
+B
+W
+z
+r
+Y
+r
+D
+B
+M
+a
+"}
+(6,1,1) = {"
+a
+B
+N
+E
+B
+Z
+s
+o
+J
+s
+T
+B
+M
+a
+"}
+(7,1,1) = {"
+a
+U
+u
+s
+S
+s
+r
+e
+B
+w
+o
+U
+M
+a
+"}
+(8,1,1) = {"
+a
+U
+v
+o
+U
+k
+f
+Q
+U
+G
+s
+U
+M
+a
+"}
+(9,1,1) = {"
+a
+U
+n
+o
+I
+c
+h
+m
+U
+o
+b
+U
+M
+a
+"}
+(10,1,1) = {"
+a
+L
+L
+L
+L
+g
+g
+g
+B
+F
+H
+U
+M
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+M
+M
+K
+O
+q
+U
+U
+Y
+U
+M
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+M
+M
+C
+j
+K
+M
+M
+M
+x
+M
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+P
+X
+A
+K
+M
+d
+M
+M
+M
+M
+a
+"}
+(14,1,1) = {"
+a
+a
+a
+P
+X
+X
+M
+d
+d
+M
+M
+M
+M
+a
+"}

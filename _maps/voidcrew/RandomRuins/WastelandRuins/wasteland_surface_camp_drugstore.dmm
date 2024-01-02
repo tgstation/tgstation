@@ -1,0 +1,440 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"b" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"c" = (
+/obj/structure/table/reinforced,
+/obj/item/pda/clear{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"d" = (
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"e" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/cornchips,
+/obj/item/reagent_containers/food/snacks/butterdog,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/canned/peaches,
+/obj/item/reagent_containers/food/drinks/bottle/sarsaparilla,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"g" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/unpowered)
+"h" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/barricade/wooden,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/cheesyfries,
+/obj/item/reagent_containers/food/snacks/chips,
+/obj/item/reagent_containers/food/snacks/cheesewedge,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"l" = (
+/obj/structure/dresser,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"m" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"n" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"o" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken3"
+	},
+/area/ruin/unpowered)
+"p" = (
+/obj/structure/table/reinforced,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"q" = (
+/obj/machinery/door/window/northleft{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"r" = (
+/obj/structure/rack,
+/obj/item/gun/energy/kinetic_accelerator{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/gun/energy/kinetic_accelerator{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/pill_bottle/floorpill,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"s" = (
+/obj/structure/sign/poster/official/pda_ad,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/rack,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/obj/effect/spawner/random/clothing/kittyears_or_rabbitears,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"u" = (
+/obj/structure/table/reinforced,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"w" = (
+/obj/structure/window,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"x" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"y" = (
+/obj/structure/rack,
+/obj/item/grenade/smokebomb{
+	pixel_x = 5
+	},
+/obj/item/grenade/smokebomb{
+	pixel_x = -6
+	},
+/obj/item/storage/medkit,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"z" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"A" = (
+/obj/machinery/vending/cola/random,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"B" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken4"
+	},
+/area/ruin/unpowered)
+"C" = (
+/obj/structure/mineral_door/wood,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"D" = (
+/turf/open/floor/wood{
+	icon_state = "wood-broken"
+	},
+/area/ruin/unpowered)
+"E" = (
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/structure/window,
+/obj/structure/rack,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"F" = (
+/obj/structure/rack,
+/obj/item/borg/upgrade/modkit/cooldown{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/borg/upgrade/modkit/damage,
+/obj/item/borg/upgrade/modkit/range{
+	pixel_x = -7
+	},
+/obj/item/storage/pill_bottle/floorpill,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"G" = (
+/obj/effect/spawner/random/clothing/costume,
+/obj/structure/window,
+/obj/structure/rack,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"H" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"I" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken2"
+	},
+/area/ruin/unpowered)
+"J" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/nicotine,
+/obj/item/reagent_containers/food/snacks/burger/fivealarm,
+/obj/item/reagent_containers/food/snacks/cherrycupcake,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"K" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/chococornet,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/canned/peaches,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"M" = (
+/obj/effect/spawner/random/clothing/costume,
+/obj/effect/spawner/random/clothing/gloves,
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"N" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"O" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/chewable/bubblegum/happiness,
+/obj/item/reagent_containers/food/snacks/candy_corn,
+/obj/item/reagent_containers/food/snacks/chocolatebar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Q" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/chocolatebunny,
+/obj/item/reagent_containers/food/snacks/candy,
+/obj/item/reagent_containers/food/snacks/canned/beans,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"R" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/cheesynachos,
+/obj/item/reagent_containers/food/snacks/branrequests,
+/obj/item/reagent_containers/food/snacks/canned/beans,
+/obj/item/reagent_containers/food/drinks/bottle/sarsaparilla,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"S" = (
+/turf/template_noop,
+/area/template_noop)
+"U" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"V" = (
+/obj/structure/table/reinforced,
+/obj/item/pen/red,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"W" = (
+/obj/structure/rack,
+/obj/item/construction/rcd{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/rcd_ammo,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"X" = (
+/obj/structure/closet/cabinet,
+/obj/item/stack/spacecash/c100,
+/obj/item/stack/spacecash/c10,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c1,
+/obj/item/stack/spacecash/c20,
+/obj/item/stack/spacecash/c200,
+/obj/item/stack/spacecash/c50,
+/obj/item/storage/pill_bottle/floorpill/full,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Y" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Z" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+d
+Z
+Z
+d
+a
+a
+"}
+(2,1,1) = {"
+Z
+R
+H
+k
+K
+A
+h
+"}
+(3,1,1) = {"
+a
+O
+n
+H
+b
+o
+E
+"}
+(4,1,1) = {"
+a
+Q
+D
+f
+J
+H
+w
+"}
+(5,1,1) = {"
+d
+c
+q
+u
+U
+z
+M
+"}
+(6,1,1) = {"
+d
+r
+o
+p
+B
+U
+G
+"}
+(7,1,1) = {"
+s
+F
+H
+V
+b
+e
+a
+"}
+(8,1,1) = {"
+a
+W
+g
+u
+I
+m
+C
+"}
+(9,1,1) = {"
+d
+y
+U
+u
+U
+t
+d
+"}
+(10,1,1) = {"
+a
+a
+x
+a
+a
+d
+a
+"}
+(11,1,1) = {"
+a
+m
+m
+m
+a
+S
+S
+"}
+(12,1,1) = {"
+a
+Y
+m
+m
+a
+S
+S
+"}
+(13,1,1) = {"
+a
+N
+X
+l
+a
+S
+S
+"}
+(14,1,1) = {"
+a
+a
+a
+a
+a
+S
+S
+"}

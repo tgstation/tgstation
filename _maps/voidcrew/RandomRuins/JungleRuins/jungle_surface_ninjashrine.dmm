@@ -1,0 +1,317 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/flora/ausbushes/lavendergrass,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"b" = (
+/obj/item/reagent_containers/food/drinks/bottle/sake,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"f" = (
+/obj/item/food/fortunecookie,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/yew,
+/area/mine/unexplored)
+"h" = (
+/obj/structure/fluff/divine/convertaltar{
+	desc = "An altar dedicated to a kami.";
+	name = "altar"
+	},
+/obj/item/toy/plush/spider,
+/obj/item/storage/belt/weebstick,
+/obj/item/throwing_star,
+/obj/item/clothing/under/color/black,
+/obj/item/clothing/mask/balaclava{
+	name = "ninja mask"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/yew,
+/area/mine/unexplored)
+"i" = (
+/mob/living/simple_animal/hostile/jungle/mega_arachnid,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"j" = (
+/obj/structure/flora/ausbushes/ppflowers,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"l" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/yew,
+/area/mine/unexplored)
+"o" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"u" = (
+/obj/item/clothing/suit/costume/shrine_maiden,
+/obj/item/clothing/head/costume/shrine_wig,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/remains/human,
+/obj/item/gohei,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"y" = (
+/obj/item/seeds/wheat/rice,
+/turf/open/water/jungle,
+/area/mine/unexplored)
+"A" = (
+/turf/closed/wall/mineral/wood,
+/area/mine/unexplored)
+"G" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/yew,
+/area/mine/unexplored)
+"H" = (
+/turf/open/water/jungle,
+/area/mine/unexplored)
+"I" = (
+/obj/effect/decal/remains/human,
+/turf/open/water/jungle,
+/area/mine/unexplored)
+"J" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/dirt/jungle/dark,
+/area/mine/unexplored)
+"N" = (
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/yew,
+/area/mine/unexplored)
+"R" = (
+/turf/template_noop,
+/area/mine/unexplored)
+"T" = (
+/obj/structure/flora/ausbushes/brflowers,
+/turf/open/misc/grass/jungle,
+/area/mine/unexplored)
+"U" = (
+/obj/structure/mineral_door/paperframe,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood/yew,
+/area/mine/unexplored)
+
+(1,1,1) = {"
+H
+H
+H
+H
+T
+R
+R
+R
+R
+R
+T
+a
+T
+a
+"}
+(2,1,1) = {"
+H
+H
+o
+o
+j
+G
+o
+R
+R
+R
+A
+A
+A
+T
+"}
+(3,1,1) = {"
+H
+o
+A
+A
+A
+G
+o
+o
+R
+R
+R
+R
+A
+R
+"}
+(4,1,1) = {"
+o
+o
+R
+R
+R
+R
+R
+a
+u
+R
+l
+R
+R
+G
+"}
+(5,1,1) = {"
+R
+R
+R
+l
+R
+R
+R
+j
+T
+R
+G
+R
+R
+R
+"}
+(6,1,1) = {"
+R
+R
+R
+G
+R
+R
+N
+G
+R
+R
+R
+R
+A
+R
+"}
+(7,1,1) = {"
+R
+R
+G
+o
+i
+R
+G
+h
+R
+R
+j
+o
+U
+R
+"}
+(8,1,1) = {"
+R
+R
+R
+o
+R
+R
+R
+G
+G
+R
+a
+o
+A
+R
+"}
+(9,1,1) = {"
+R
+G
+R
+R
+G
+R
+o
+o
+o
+R
+o
+o
+G
+R
+"}
+(10,1,1) = {"
+T
+j
+R
+R
+R
+R
+J
+o
+R
+R
+b
+o
+A
+R
+"}
+(11,1,1) = {"
+H
+H
+o
+f
+o
+R
+o
+R
+G
+R
+R
+R
+A
+a
+"}
+(12,1,1) = {"
+H
+y
+H
+A
+o
+o
+R
+R
+R
+o
+R
+l
+A
+T
+"}
+(13,1,1) = {"
+H
+I
+H
+R
+R
+R
+R
+R
+R
+G
+A
+R
+j
+R
+"}
+(14,1,1) = {"
+H
+H
+H
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+R
+"}

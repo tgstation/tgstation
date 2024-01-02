@@ -1,0 +1,1366 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"at" = (
+/obj/item/mining_scanner,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"aZ" = (
+/turf/closed/wall/mineral/titanium/nodiagonal,
+/area/ruin/unpowered)
+"bb" = (
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"bW" = (
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/obj/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"cj" = (
+/obj/effect/mob_spawn/human/corpse{
+	mob_species = /datum/species/golem
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"cs" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"cB" = (
+/obj/effect/turf_decal/trimline/white/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/machinery/mecha_part_fabricator/maint,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"cW" = (
+/obj/structure/door_assembly/door_assembly_min,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"dz" = (
+/obj/structure/rack,
+/obj/item/pickaxe,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"eM" = (
+/obj/item/pickaxe{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/card/id/mining,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"fb" = (
+/obj/item/crowbar,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"fo" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/unpowered)
+"ha" = (
+/obj/item/rack_parts,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"hh" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"hi" = (
+/obj/item/resonator,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"ht" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"hJ" = (
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"hM" = (
+/obj/item/storage/box,
+/obj/item/light/bulb/broken,
+/obj/item/light/tube/broken,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"iE" = (
+/obj/structure/ai_core/deactivated,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"jp" = (
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/storage/medkit/brute,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"jw" = (
+/obj/item/bedsheet/rd/royal_cape,
+/obj/item/toy/figure/rd{
+	name = "the Liberator action figure";
+	pixel_x = 7;
+	pixel_y = -5;
+	toysay = "Yeah, go do whatever."
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"jy" = (
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"jO" = (
+/obj/item/storage/part_replacer/bluespace/tier2,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"kJ" = (
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/stack/sheet/mineral/wood,
+/obj/item/mining_scanner{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"kT" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"mO" = (
+/obj/structure/window/reinforced,
+/obj/machinery/power/shuttle_engine/heater{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"mS" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"nL" = (
+/obj/item/light/bulb/broken{
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/light/tube/broken{
+	pixel_x = -10;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"nX" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"nZ" = (
+/obj/item/storage/bag/ore,
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/item/rack_parts,
+/obj/item/resonator{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"oP" = (
+/obj/item/toy/plush/lizardplushie{
+	desc = "Awww! It looks like it will snuggle all of your internal organs!";
+	name = "ashwalker plushie"
+	},
+/obj/effect/mob_spawn/human/corpse{
+	mob_species = /datum/species/lizard/ashwalker
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"pb" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"pC" = (
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"pQ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"qU" = (
+/obj/structure/table,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"qY" = (
+/obj/structure/door_assembly/door_assembly_com,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"rm" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"rC" = (
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/corner{
+	dir = 1
+	},
+/obj/structure/table,
+/obj/item/areaeditor/blueprints{
+	desc = "Use to build new structures in the wastes.";
+	name = "land claim"
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"sb" = (
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"sh" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/plating/asteroid/whitesands,
+/area/ruin/unpowered)
+"sm" = (
+/obj/structure/frame/machine,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"sF" = (
+/obj/item/rack_parts,
+/obj/item/storage/bag/ore,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"sO" = (
+/obj/item/storage/box,
+/obj/structure/table,
+/obj/item/light/bulb/broken,
+/obj/item/light/tube/broken{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/shard,
+/obj/effect/mob_spawn/human/corpse{
+	mob_species = /datum/species/lizard/ashwalker
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"tg" = (
+/obj/item/light/bulb/broken{
+	pixel_x = -3;
+	pixel_y = -9
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"tv" = (
+/obj/item/light/bulb/broken{
+	pixel_x = -4;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"tw" = (
+/obj/item/mining_scanner{
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/yellow,
+/area/ruin/unpowered)
+"tH" = (
+/obj/item/pickaxe{
+	pixel_x = -6;
+	pixel_y = 17
+	},
+/obj/item/mining_scanner,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"uY" = (
+/obj/structure/reagent_dispensers/watertank,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"vc" = (
+/obj/item/pickaxe,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"vd" = (
+/obj/item/rack_parts,
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"vD" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"vI" = (
+/obj/structure/rack,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/item/clothing/head/hardhat/mining{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/clothing/head/hardhat/mining{
+	pixel_x = -2;
+	pixel_y = -2
+	},
+/obj/item/clothing/head/hardhat/mining{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"wd" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 5
+	},
+/obj/effect/turf_decal/trimline/purple/corner{
+	dir = 8
+	},
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/mob_spawn/human/corpse{
+	mob_species = /datum/species/golem
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"wl" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"ww" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"wH" = (
+/obj/structure/girder,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xA" = (
+/obj/item/storage/box/rndboards,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"xJ" = (
+/obj/machinery/power/shuttle_engine/propulsion{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"xX" = (
+/obj/effect/turf_decal/industrial/outline/yellow,
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/trimline/yellow/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"yc" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg2"
+	},
+/area/ruin/unpowered)
+"yX" = (
+/obj/item/light/bulb/broken{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"zF" = (
+/turf/template_noop,
+/area/template_noop)
+"zP" = (
+/obj/effect/spawner/structure/window/shuttle,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Al" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"AG" = (
+/obj/machinery/mineral/ore_redemption{
+	input_dir = 4;
+	output_dir = 8
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"AW" = (
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 9
+	},
+/obj/structure/table,
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/cut/green,
+/obj/item/circuitboard/machine/reagentgrinder,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"CL" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 4
+	},
+/obj/item/circuitboard/machine/autodoc,
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/cut/random,
+/obj/item/surgicaldrill/advanced,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"EO" = (
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"EZ" = (
+/obj/machinery/door/airlock/titanium,
+/obj/effect/turf_decal/industrial/warning,
+/obj/effect/turf_decal/industrial/warning{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"FK" = (
+/obj/item/resonator,
+/obj/effect/mob_spawn/human/corpse{
+	mob_species = /datum/species/golem
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/unpowered)
+"Gf" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Gm" = (
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Gn" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/unpowered)
+"Gs" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/ruin/unpowered)
+"GZ" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Hm" = (
+/obj/item/card/id/mining,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"HB" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"HE" = (
+/obj/machinery/cell_charger,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/unpowered)
+"HK" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Ie" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Il" = (
+/obj/machinery/shower,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/ruin/unpowered)
+"IC" = (
+/turf/open/floor/mineral/titanium/purple,
+/area/ruin/unpowered)
+"JF" = (
+/obj/machinery/door/airlock/external,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Kh" = (
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"Ks" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/freezer,
+/area/ruin/unpowered)
+"Kt" = (
+/obj/structure/reagent_dispensers/watertank,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"KT" = (
+/obj/structure/rack,
+/obj/item/card/id/mining,
+/obj/item/clothing/head/hardhat/mining,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Lz" = (
+/obj/structure/frame/machine,
+/obj/effect/decal/cleanable/oil,
+/obj/item/stack/cable_coil/cut/random,
+/obj/item/clothing/suit/space/hardsuit/mining,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Mx" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 1
+	},
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"MT" = (
+/obj/structure/frame/machine,
+/obj/item/shard,
+/obj/item/book/manual/wiki/research_and_development{
+	name = "Sacred Text of the Liberator";
+	pixel_y = -5
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Nm" = (
+/obj/machinery/door/airlock/titanium,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Nz" = (
+/turf/open/misc/dust/lit,
+/area/ruin/unpowered)
+"Pe" = (
+/obj/structure/ore_box,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"PD" = (
+/obj/item/pickaxe,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"PN" = (
+/obj/structure/rack,
+/obj/item/spear,
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Qi" = (
+/obj/item/light/bulb/broken{
+	pixel_x = -13;
+	pixel_y = -12
+	},
+/obj/item/light/tube/broken{
+	pixel_x = -10;
+	pixel_y = -6
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/oil,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"Qr" = (
+/obj/item/shard,
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"QX" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Rb" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/corner/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/corner{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/white/corner,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"RJ" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/titanium/white,
+/area/ruin/unpowered)
+"RX" = (
+/obj/structure/rack,
+/obj/item/storage/toolbox/electrical{
+	pixel_x = -3;
+	pixel_y = 3
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"SN" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Tc" = (
+/obj/item/spear,
+/obj/effect/mob_spawn/human/corpse{
+	mob_species = /datum/species/lizard/ashwalker
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"Um" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/trimline/purple/line{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Uz" = (
+/turf/closed/wall/mineral/plastitanium,
+/area/ruin/unpowered)
+"Wm" = (
+/obj/structure/frame/machine,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"Wt" = (
+/obj/effect/turf_decal/corner/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/corner/neutral,
+/obj/effect/turf_decal/trimline/white/line{
+	dir = 8
+	},
+/obj/machinery/autolathe,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"WO" = (
+/obj/structure/door_assembly/door_assembly_com,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"Xx" = (
+/obj/structure/table,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"XQ" = (
+/obj/item/shard,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"YG" = (
+/obj/item/resonator/upgraded,
+/obj/effect/mob_spawn/human/corpse{
+	mob_species = /datum/species/golem
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"YN" = (
+/obj/item/light/tube/broken{
+	pixel_x = -10;
+	pixel_y = -7
+	},
+/turf/open/floor/plating{
+	icon_state = "panelscorched"
+	},
+/area/ruin/unpowered)
+"YZ" = (
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"ZD" = (
+/obj/structure/rack,
+/obj/item/mop,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/storage/bag/trash{
+	pixel_x = 6
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"ZM" = (
+/obj/item/spear/bonespear,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1"
+	},
+/area/ruin/unpowered)
+"ZP" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"ZT" = (
+/obj/structure/reagent_dispensers/fueltank,
+/obj/effect/decal/cleanable/oil/slippery,
+/turf/open/floor/iron/dark,
+/area/ruin/unpowered)
+"ZY" = (
+/obj/item/light/bulb/broken{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/light/tube/broken{
+	pixel_x = 12;
+	pixel_y = -7
+	},
+/obj/effect/decal/cleanable/oil/streak,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+zF
+zF
+zF
+zP
+zP
+aZ
+aZ
+rm
+aZ
+wH
+Kh
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(2,1,1) = {"
+Uz
+Uz
+aZ
+zP
+uY
+ZD
+RX
+wH
+Gs
+pb
+Kh
+Kh
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(3,1,1) = {"
+xJ
+mO
+aZ
+wl
+ZP
+ZP
+Kh
+aZ
+Il
+hh
+pb
+wH
+Kh
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(4,1,1) = {"
+xJ
+mO
+aZ
+Xx
+Tc
+Kh
+Kh
+nX
+Ks
+Nz
+hh
+Nz
+Kh
+Kh
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(5,1,1) = {"
+Uz
+Uz
+kT
+rm
+Nm
+kT
+PD
+rm
+pb
+hh
+pQ
+ht
+hJ
+Kh
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(6,1,1) = {"
+xJ
+mO
+pb
+Gm
+Nz
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+aZ
+mS
+mS
+aZ
+nX
+nX
+aZ
+aZ
+Kh
+zF
+zF
+"}
+(7,1,1) = {"
+xJ
+mO
+rm
+Nz
+yX
+hh
+kT
+AW
+jp
+qU
+Wt
+pb
+Qr
+jy
+EO
+pb
+ZP
+Um
+pQ
+Ie
+Kh
+Kh
+zF
+"}
+(8,1,1) = {"
+aZ
+aZ
+aZ
+sm
+YG
+HK
+aZ
+rC
+hi
+RJ
+RJ
+pb
+pb
+Gn
+Gn
+jw
+pQ
+XQ
+pQ
+WO
+fb
+hh
+Nz
+"}
+(9,1,1) = {"
+JF
+pC
+JF
+HB
+ZY
+YN
+EZ
+ww
+cj
+pb
+iE
+vc
+IC
+HE
+sb
+Gn
+bb
+SN
+SN
+Ie
+yc
+Nz
+yc
+"}
+(10,1,1) = {"
+JF
+pC
+JF
+tv
+hM
+nL
+EZ
+RJ
+RJ
+oP
+Gm
+xA
+pb
+Gn
+Wm
+fo
+MT
+wd
+vD
+wH
+Nz
+pb
+pb
+"}
+(11,1,1) = {"
+aZ
+aZ
+aZ
+Lz
+Qi
+sO
+aZ
+cB
+RJ
+ZM
+RJ
+jO
+yc
+FK
+pb
+pQ
+pQ
+pQ
+pQ
+qY
+pb
+hh
+Nz
+"}
+(12,1,1) = {"
+xJ
+bW
+aZ
+Kt
+tg
+PN
+aZ
+cs
+pb
+Rb
+CL
+pb
+QX
+Gf
+Mx
+pQ
+Gf
+pQ
+pb
+pb
+Kh
+Kh
+Nz
+"}
+(13,1,1) = {"
+xJ
+bW
+aZ
+ZT
+YZ
+aZ
+aZ
+aZ
+aZ
+cW
+aZ
+AG
+Al
+aZ
+aZ
+aZ
+cW
+GZ
+Ie
+Kh
+zF
+zF
+zF
+"}
+(14,1,1) = {"
+Uz
+Uz
+aZ
+aZ
+sh
+aZ
+vI
+nZ
+Hm
+xX
+Kh
+Nz
+Nz
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(15,1,1) = {"
+xJ
+mO
+aZ
+Pe
+tw
+pb
+at
+Kh
+Nz
+Kh
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(16,1,1) = {"
+xJ
+mO
+aZ
+kJ
+eM
+tH
+pb
+Hm
+Kh
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(17,1,1) = {"
+Uz
+Uz
+aZ
+aZ
+dz
+sF
+ha
+KT
+vd
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}
+(18,1,1) = {"
+zF
+zF
+zF
+aZ
+aZ
+Kh
+Nz
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+zF
+"}

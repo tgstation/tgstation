@@ -1,0 +1,1097 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 10
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"aU" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"aW" = (
+/obj/item/stack/medical/bruise_pack,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"bd" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"bf" = (
+/obj/structure/chair/office{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"bh" = (
+/obj/structure/filingcabinet/security,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"bo" = (
+/obj/effect/decal/cleanable/blood/gibs/core,
+/obj/item/kitchen/knife/combat,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"bz" = (
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = -9;
+	pixel_y = -9
+	},
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ct" = (
+/turf/template_noop,
+/area/template_noop)
+"dk" = (
+/obj/effect/decal/cleanable/blood/gibs,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"dl" = (
+/turf/closed/wall/r_wall,
+/area/ruin/powered)
+"dw" = (
+/obj/effect/decal/cleanable/blood/gibs/torso{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ew" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"eH" = (
+/obj/item/ammo_casing/spent{
+	dir = 1;
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/ammo_casing/spent{
+	pixel_x = -8;
+	pixel_y = -7
+	},
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"eU" = (
+/obj/machinery/computer/security,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"eZ" = (
+/obj/item/stack/sheet/plastic/fifty,
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"fm" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor3"
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ga" = (
+/obj/effect/decal/cleanable/blood/splatter,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"gy" = (
+/obj/structure/rack,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"gF" = (
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor2"
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"gG" = (
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 13;
+	pixel_y = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"gK" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"hs" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"hw" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/ranged/hunter,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"hA" = (
+/obj/item/ammo_casing/spent{
+	pixel_y = 3
+	},
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ia" = (
+/obj/structure/fans/tiny,
+/obj/machinery/door/poddoor{
+	id = "SPOON"
+	},
+/turf/open/floor/plating,
+/area/ruin/powered)
+"jw" = (
+/obj/item/ammo_casing/spent{
+	dir = 1;
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/ammo_box/magazine/co9mm,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ka" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/shovel/spoon,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"km" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/plastic/fifty,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"os" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"oN" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/shovel/spoon,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"pl" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/shovel/spoon,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"pZ" = (
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"qa" = (
+/obj/machinery/icecream_vat,
+/obj/item/shovel/spoon,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"sl" = (
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 11
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"sv" = (
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 5;
+	pixel_y = -4
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"sw" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/shovel/spoon,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"tl" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor2"
+	},
+/obj/item/bodypart/arm/right,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ud" = (
+/obj/machinery/door/airlock/engineering,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"vO" = (
+/obj/item/ammo_casing/spent{
+	dir = 9;
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"vV" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"vZ" = (
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -5;
+	pixel_y = -6
+	},
+/obj/item/ammo_casing/spent{
+	dir = 4;
+	pixel_x = 8;
+	pixel_y = 9
+	},
+/obj/effect/decal/cleanable/blood/tracks,
+/mob/living/simple_animal/hostile/asteroid/hermit/ranged/gunslinger,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"wr" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"xd" = (
+/obj/item/grenade/syndieminibomb,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ys" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/plastic/five,
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"zb" = (
+/obj/item/ammo_casing/spent{
+	dir = 4;
+	pixel_x = 6;
+	pixel_y = 5
+	},
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -7;
+	pixel_y = -7
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"zM" = (
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Az" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/helmet,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"AE" = (
+/obj/structure/table,
+/obj/item/reagent_containers/food/snacks/donut/meat{
+	pixel_x = 2;
+	pixel_y = 5
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Bl" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"BR" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/plastic/fifty,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Cb" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/plastic,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Cq" = (
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -8;
+	pixel_y = -8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"CD" = (
+/obj/item/ammo_casing/spent{
+	dir = 6;
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/obj/item/ammo_casing/spent{
+	dir = 4;
+	pixel_x = -10;
+	pixel_y = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"CU" = (
+/obj/structure/table,
+/obj/machinery/button/door{
+	id = "SPOON"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"DM" = (
+/obj/structure/chair/office{
+	dir = 4
+	},
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/clothing/glasses/regular,
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/turf/open/floor/material,
+/area/ruin/powered)
+"EC" = (
+/mob/living/simple_animal/hostile/asteroid/hermit/ranged/hunter,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Fi" = (
+/obj/machinery/autolathe,
+/obj/machinery/camera{
+	dir = 5
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"FB" = (
+/turf/closed/wall/material,
+/area/ruin/powered)
+"Hi" = (
+/obj/machinery/door/airlock/security,
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Hl" = (
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"HA" = (
+/obj/item/stack/sheet/plastic,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"HS" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Ij" = (
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 13
+	},
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor7"
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Iy" = (
+/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"IH" = (
+/turf/closed/wall/rust,
+/area/ruin/powered)
+"Jb" = (
+/obj/machinery/light/broken,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Jm" = (
+/obj/machinery/camera,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Jt" = (
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/obj/item/bodypart/head,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Ke" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken{
+	dir = 4
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"KY" = (
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Lm" = (
+/obj/item/gun/ballistic/automatic/pistol,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Lz" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Me" = (
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/blood/splatter,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Mu" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"MG" = (
+/turf/closed/wall/r_wall/rust,
+/area/ruin/powered)
+"Nd" = (
+/obj/effect/decal/cleanable/blood/gibs/limb{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/blood/gibs/limb{
+	dir = 1;
+	pixel_x = 18;
+	pixel_y = 5
+	},
+/obj/effect/decal/cleanable/blood,
+/obj/item/ammo_box/magazine/m10mm,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"NP" = (
+/obj/item/paper_bin,
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/material,
+/area/ruin/powered)
+"NU" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/asteroid/hermit/survivor,
+/turf/open/floor/material,
+/area/ruin/powered)
+"Oo" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"OJ" = (
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_y = -6
+	},
+/obj/item/ammo_casing/spent{
+	pixel_x = -11;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Pi" = (
+/obj/effect/decal/cleanable/blood/splatter{
+	icon_state = "gibbl5"
+	},
+/obj/item/ammo_box/magazine/wt550m9,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"PO" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/material,
+/area/ruin/powered)
+"Qm" = (
+/obj/item/ammo_casing/spent{
+	dir = 8;
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/item/ammo_casing/spent{
+	dir = 6;
+	pixel_x = 8;
+	pixel_y = -3
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Qp" = (
+/obj/structure/closet/crate/secure,
+/obj/item/kitchen/spoon/plastic,
+/obj/item/kitchen/spoon/plastic,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Ro" = (
+/obj/machinery/door/airlock/glass,
+/obj/structure/fans/tiny,
+/turf/open/floor/material,
+/area/ruin/powered)
+"Rz" = (
+/obj/machinery/door/airlock/highsecurity,
+/turf/open/floor/material,
+/area/ruin/powered)
+"RG" = (
+/obj/item/ammo_casing/spent{
+	dir = 10;
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = -10;
+	pixel_y = -10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"RN" = (
+/obj/machinery/camera,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/material,
+/area/ruin/powered)
+"Sr" = (
+/obj/item/ammo_casing/spent{
+	dir = 1;
+	pixel_x = 12;
+	pixel_y = -3
+	},
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = 6;
+	pixel_y = -9
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Sw" = (
+/obj/effect/decal/remains/human,
+/obj/item/clothing/head/utility/hardhat/weldhat/orange,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"ST" = (
+/obj/item/ammo_casing/spent{
+	dir = 5;
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Tt" = (
+/obj/item/gun/ballistic/automatic/pistol/commander,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"TA" = (
+/obj/structure/fluff/paper/stack{
+	dir = 4;
+	pixel_y = -1
+	},
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/material,
+/area/ruin/powered)
+"TD" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/closed/wall/r_wall/rust,
+/area/ruin/powered)
+"TM" = (
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"VR" = (
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"WA" = (
+/obj/machinery/camera{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"XL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Ze" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+"Zr" = (
+/obj/effect/mob_spawn/human/corpse/nanotrasensoldier,
+/obj/effect/decal/cleanable/blood{
+	icon_state = "floor4"
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/plastic,
+/area/ruin/powered)
+
+(1,1,1) = {"
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+Lz
+bd
+bd
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+"}
+(2,1,1) = {"
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+Lz
+qa
+Lz
+ct
+ct
+FB
+IH
+FB
+IH
+FB
+ct
+"}
+(3,1,1) = {"
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+bd
+Lz
+Lz
+ct
+ct
+FB
+PO
+DM
+PO
+IH
+ct
+"}
+(4,1,1) = {"
+ct
+dl
+MG
+dl
+dl
+MG
+MG
+dl
+dl
+dl
+MG
+dl
+MG
+NU
+TA
+NP
+FB
+bd
+"}
+(5,1,1) = {"
+ct
+MG
+BR
+ew
+Fi
+dl
+Ze
+VR
+Oo
+VR
+jw
+zb
+Rz
+PO
+PO
+PO
+Ro
+bd
+"}
+(6,1,1) = {"
+ct
+MG
+wr
+Ze
+Ze
+MG
+eH
+Ze
+Zr
+dk
+sv
+WA
+MG
+RN
+PO
+PO
+IH
+bd
+"}
+(7,1,1) = {"
+ct
+dl
+ys
+Ze
+HA
+ud
+Pi
+sw
+Tt
+Me
+Ze
+KY
+MG
+MG
+IH
+FB
+IH
+bd
+"}
+(8,1,1) = {"
+ct
+dl
+Cb
+Sw
+Ze
+dl
+Hl
+Ze
+Ze
+hs
+HS
+VR
+Ze
+Jt
+MG
+bd
+Lz
+Lz
+"}
+(9,1,1) = {"
+ct
+TD
+eZ
+gy
+km
+MG
+sl
+Cq
+os
+vV
+Ze
+Ze
+ka
+Ze
+dl
+Lz
+Lz
+ct
+"}
+(10,1,1) = {"
+ct
+dl
+MG
+dl
+MG
+MG
+gK
+Ze
+tl
+VR
+TM
+fm
+Nd
+Jb
+MG
+bd
+bd
+ct
+"}
+(11,1,1) = {"
+ct
+MG
+bh
+xd
+aW
+MG
+Ze
+aU
+RG
+Ze
+vO
+VR
+VR
+hA
+ia
+bd
+EC
+ct
+"}
+(12,1,1) = {"
+ct
+dl
+AE
+zM
+aU
+MG
+Ij
+bz
+pl
+OJ
+bo
+HS
+VR
+dk
+ia
+bd
+bd
+ct
+"}
+(13,1,1) = {"
+ct
+dl
+XL
+Lm
+Mu
+Hi
+ga
+vZ
+Mu
+pZ
+gG
+Sr
+gF
+VR
+ia
+bd
+bd
+ct
+"}
+(14,1,1) = {"
+ct
+MG
+eU
+bf
+Az
+dl
+Jm
+Iy
+Ze
+Qm
+ST
+Ze
+Ze
+Bl
+MG
+bd
+bd
+ct
+"}
+(15,1,1) = {"
+ct
+dl
+CU
+hw
+Ze
+dl
+Qp
+Ze
+CD
+Ke
+oN
+dw
+aa
+Ze
+dl
+ct
+ct
+ct
+"}
+(16,1,1) = {"
+ct
+dl
+MG
+MG
+dl
+MG
+MG
+dl
+MG
+dl
+MG
+MG
+dl
+MG
+dl
+ct
+ct
+ct
+"}
+(17,1,1) = {"
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+ct
+"}

@@ -1,0 +1,598 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aX" = (
+/obj/structure/rack,
+/obj/item/instrument/guitar{
+	pixel_x = 2;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"bd" = (
+/obj/machinery/door/airlock/public,
+/obj/structure/fans/tiny,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/material,
+/area/ruin/powered)
+"by" = (
+/obj/item/cigbutt{
+	pixel_x = -9;
+	pixel_y = -2
+	},
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"cD" = (
+/obj/item/chair{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"cJ" = (
+/obj/item/trash/can{
+	pixel_x = -3;
+	pixel_y = -6
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"dj" = (
+/obj/structure/rack,
+/obj/machinery/light/broken{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"fd" = (
+/obj/structure/sign/poster/official/bless_this_spess,
+/turf/closed/wall/material,
+/area/ruin/powered)
+"ff" = (
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"fo" = (
+/obj/structure/rack,
+/obj/item/toy/plush/moth{
+	pixel_x = -4
+	},
+/obj/item/toy/plush/lizardplushie{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"hP" = (
+/obj/structure/table,
+/obj/item/stack/spacecash/c100{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/obj/item/stack/spacecash/c100{
+	pixel_x = 1
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"lu" = (
+/obj/structure/sign/poster/contraband/donut_corp,
+/turf/closed/wall/material,
+/area/ruin/powered)
+"lS" = (
+/turf/closed/wall/material,
+/area/ruin/powered)
+"mF" = (
+/obj/structure/table,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/sarsaparilla,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"nB" = (
+/mob/living/simple_animal/hostile/cockroach,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"pd" = (
+/obj/item/kitchen/knife{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"po" = (
+/obj/item/cigbutt{
+	pixel_x = -7;
+	pixel_y = 10
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"rk" = (
+/obj/item/cigbutt,
+/obj/item/cigbutt{
+	pixel_x = -8;
+	pixel_y = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/cockroach,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"sP" = (
+/obj/structure/rack,
+/obj/item/kitchen/knife/plastic{
+	pixel_x = -5
+	},
+/obj/item/kitchen/spoon/plastic{
+	pixel_x = 15
+	},
+/obj/item/kitchen/fork/plastic{
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"sQ" = (
+/obj/item/trash/popcorn{
+	pixel_x = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"tJ" = (
+/obj/structure/rack,
+/obj/item/cane,
+/obj/item/clothing/head/hats/bowler{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"ut" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/toy/plush/slimeplushie{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"ux" = (
+/turf/template_noop,
+/area/template_noop)
+"uM" = (
+/obj/machinery/vending/snack/random,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"wp" = (
+/obj/structure/sign/poster/contraband/energy_swords,
+/turf/closed/wall/material,
+/area/ruin/powered)
+"xo" = (
+/obj/item/cigbutt{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"xv" = (
+/obj/structure/rack,
+/obj/item/paicard{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"yQ" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/syndicake{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"yX" = (
+/obj/structure/rack,
+/obj/item/poster/random_official,
+/obj/item/poster/random_official{
+	pixel_x = 1;
+	pixel_y = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"zP" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"BK" = (
+/obj/item/trash/can{
+	icon_state = "shamblers";
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Cy" = (
+/obj/structure/table,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"FT" = (
+/turf/closed/wall,
+/area/ruin/powered)
+"FX" = (
+/obj/machinery/vending/cola/random,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Gr" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/item/trash/candy{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"IJ" = (
+/obj/effect/decal/remains/human{
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Kr" = (
+/obj/structure/rack,
+/obj/item/toy/plush/hornet/gay,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"KZ" = (
+/obj/structure/sign/poster/contraband/starkist,
+/turf/closed/wall/material,
+/area/ruin/powered)
+"LZ" = (
+/obj/structure/rack,
+/obj/item/clothing/mask/gas/clown_hat{
+	pixel_y = 6
+	},
+/obj/item/clothing/mask/gas/clown_hat,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Mu" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/fulltile,
+/obj/structure/barricade/wooden/crude,
+/turf/open/floor/plating,
+/area/ruin/powered)
+"MZ" = (
+/obj/structure/rack,
+/obj/item/clothing/under/pants/khaki{
+	pixel_y = 2
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Nc" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/broken{
+	dir = 8
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Qd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/vomit/old,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Qq" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/closet/crate/bin,
+/obj/machinery/light/broken,
+/obj/item/toy/plush/among,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Tr" = (
+/obj/structure/table,
+/obj/structure/window,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Uk" = (
+/obj/structure/rack,
+/obj/item/bikehorn{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"UZ" = (
+/obj/structure/table,
+/obj/structure/window,
+/obj/structure/window{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/pizzaslice/custom{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"We" = (
+/obj/item/trash/chips{
+	pixel_x = 1
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Wp" = (
+/obj/structure/sign/poster/contraband/clown,
+/turf/closed/wall,
+/area/ruin/powered)
+"Wr" = (
+/obj/structure/rack,
+/obj/item/toy/sword{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Wt" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"WJ" = (
+/obj/machinery/door/window/southright,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"WU" = (
+/obj/item/trash/pistachios,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Xd" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/snacks/canned/beans{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"XR" = (
+/obj/structure/rack,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Yd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/mob/living/simple_animal/hostile/cockroach,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Yf" = (
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"Zu" = (
+/obj/structure/rack,
+/obj/item/reagent_containers/food/drinks/waterbottle{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/waterbottle{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/waterbottle{
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+"ZA" = (
+/obj/structure/rack,
+/obj/item/lighter/greyscale{
+	pixel_x = -4
+	},
+/obj/item/lighter/greyscale{
+	pixel_x = 5
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/iron/white,
+/area/ruin/powered)
+
+(1,1,1) = {"
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+"}
+(2,1,1) = {"
+ux
+ux
+ux
+ux
+ff
+ff
+ff
+by
+ff
+ux
+ux
+ux
+ux
+"}
+(3,1,1) = {"
+ux
+lS
+lS
+lS
+Mu
+Mu
+bd
+Mu
+Mu
+lS
+lS
+FT
+ux
+"}
+(4,1,1) = {"
+ux
+fd
+XR
+Yf
+WU
+Wt
+Yf
+Wt
+Yf
+Nc
+fo
+Wp
+ux
+"}
+(5,1,1) = {"
+ux
+lS
+yX
+Wt
+aX
+nB
+Wt
+sQ
+Xd
+ut
+Kr
+lS
+ux
+"}
+(6,1,1) = {"
+ux
+lS
+dj
+Wt
+xv
+Qd
+MZ
+Wt
+yQ
+Yf
+Wr
+wp
+ux
+"}
+(7,1,1) = {"
+ux
+lS
+ZA
+Gr
+tJ
+Yf
+cJ
+Wt
+Zu
+Wt
+Uk
+FT
+ux
+"}
+(8,1,1) = {"
+ux
+lS
+sP
+Yd
+Wt
+Wt
+Wt
+Yf
+Wt
+Yd
+LZ
+FT
+ux
+"}
+(9,1,1) = {"
+ux
+lS
+lS
+lS
+lu
+mF
+Cy
+UZ
+Yf
+We
+Qq
+lS
+ux
+"}
+(10,1,1) = {"
+ux
+lS
+hP
+pd
+lS
+po
+rk
+Tr
+Wt
+Yf
+uM
+lS
+ux
+"}
+(11,1,1) = {"
+ux
+lS
+cD
+IJ
+zP
+xo
+Yf
+WJ
+BK
+Wt
+FX
+FT
+ux
+"}
+(12,1,1) = {"
+ux
+lS
+lS
+lS
+lS
+lS
+lS
+lS
+lS
+KZ
+lS
+lS
+ux
+"}
+(13,1,1) = {"
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+ux
+"}

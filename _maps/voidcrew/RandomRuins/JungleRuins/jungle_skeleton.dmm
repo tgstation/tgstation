@@ -1,0 +1,291 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"b" = (
+/obj/effect/mob_spawn/human/skeleton/alive,
+/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"d" = (
+/obj/effect/mob_spawn/human/skeleton/alive,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"e" = (
+/obj/item/clothing/head/helmet/skull,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"f" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"g" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mob_spawn/human/skeleton/alive,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"h" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"i" = (
+/obj/item/kitchen/knife/combat/bone,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"j" = (
+/obj/item/spear/bonespear,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"k" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/item/book/granter/crafting_recipe/boneyard_notes,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"l" = (
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"m" = (
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"n" = (
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/headpike/bone,
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"q" = (
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"s" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"t" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/item/nullrod/scythe,
+/obj/item/storage/box/holy/follower,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"v" = (
+/obj/item/stack/sheet/bone,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"w" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"x" = (
+/obj/item/slime_cookie/black,
+/mob/living/simple_animal/hostile/skeleton/templar,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"y" = (
+/obj/item/slime_cookie/black,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"z" = (
+/obj/structure/statue/bone/rib,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"B" = (
+/obj/effect/mob_spawn/human/skeleton/alive,
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"C" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/obj/effect/mob_spawn/human/skeleton/alive,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"D" = (
+/obj/item/stack/sheet/bone,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"E" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"F" = (
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"G" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"H" = (
+/mob/living/simple_animal/hostile/retaliate/ghost,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"I" = (
+/mob/living/simple_animal/hostile/skeleton/plasmaminer/jackhammer,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"J" = (
+/mob/living/simple_animal/hostile/retaliate/ghost,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"K" = (
+/mob/living/simple_animal/hostile/skeleton/templar,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"L" = (
+/obj/item/crusher_trophy/legion_skull,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"P" = (
+/obj/structure/fluff/drake_statue,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Q" = (
+/obj/item/stack/sheet/bone,
+/obj/item/crusher_trophy/legion_skull,
+/obj/structure/flora/grass/jungle/b,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"R" = (
+/obj/effect/mob_spawn/human/skeleton/alive,
+/obj/item/stack/sheet/bone,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"S" = (
+/obj/item/slime_cookie/black,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"T" = (
+/obj/effect/decal/cleanable/blood/tracks,
+/mob/living/simple_animal/hostile/skeleton/templar,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"U" = (
+/obj/item/stack/sheet/bone,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"V" = (
+/obj/item/slime_cookie/black,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"W" = (
+/obj/structure/spawner/skeleton,
+/obj/item/reagent_containers/food/snacks/meat/slab/human/mutant/skeleton,
+/turf/open/misc/dirt/jungle/dark,
+/area/ruin/unpowered)
+"X" = (
+/obj/structure/statue/bone/rib{
+	dir = 1
+	},
+/obj/structure/flora/rock/jungle,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Y" = (
+/obj/structure/sacrificealtar,
+/obj/effect/mob_spawn/human/corpse,
+/obj/item/clothing/suit/armor/bone,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+"Z" = (
+/obj/structure/statue/bone/rib,
+/turf/open/misc/dirt/jungle,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+D
+m
+b
+m
+a
+Q
+a
+m
+a
+m
+X
+m
+a
+B
+a
+"}
+(2,1,1) = {"
+m
+s
+W
+l
+S
+m
+J
+d
+j
+q
+q
+x
+m
+L
+U
+"}
+(3,1,1) = {"
+d
+o
+Y
+k
+T
+t
+E
+h
+h
+h
+E
+g
+G
+F
+H
+"}
+(4,1,1) = {"
+m
+P
+W
+i
+V
+n
+d
+I
+m
+H
+L
+y
+v
+w
+C
+"}
+(5,1,1) = {"
+K
+e
+L
+d
+Z
+m
+Z
+m
+Z
+R
+Z
+m
+z
+f
+Z
+"}

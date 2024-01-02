@@ -1,0 +1,334 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"b" = (
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"c" = (
+/obj/effect/spawner/structure/window/plasma/reinforced,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"e" = (
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"f" = (
+/turf/open/misc/wasteland/lit,
+/area/whitesands/surface/outdoors)
+"g" = (
+/obj/effect/turf_decal/industrial/outline/yellow{
+	dir = 1
+	},
+/turf/open/floor/iron/dark,
+/area/overmap_encounter/planetoid/wasteland)
+"i" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/item/disk/plantgene,
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"j" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 10
+	},
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	icon_state = "panelscorched";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"r" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/unpowered)
+"s" = (
+/obj/effect/turf_decal/industrial/outline/yellow{
+	dir = 1
+	},
+/obj/machinery/portable_atmospherics/canister/nitrogen,
+/turf/open/floor/iron/dark,
+/area/overmap_encounter/planetoid/wasteland)
+"t" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on,
+/turf/open/floor/engine,
+/area/ruin/unpowered)
+"u" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/closed/wall/r_wall,
+/area/ruin/unpowered)
+"w" = (
+/turf/closed/wall/r_wall,
+/area/overmap_encounter/planetoid/wasteland)
+"x" = (
+/obj/effect/mob_spawn/corpse/human/engineer{
+	gender = "female";
+	mob_species = null
+	},
+/obj/item/clothing/suit/utility/radiation,
+/obj/item/clothing/head/utility/radiation{
+	pixel_x = -1;
+	pixel_y = 9
+	},
+/obj/item/geiger_counter,
+/obj/item/construction/rcd,
+/obj/item/rcd_ammo,
+/obj/item/rcd_ammo,
+/obj/item/rcd_ammo,
+/obj/item/rcd_ammo,
+/turf/open/floor/engine,
+/area/ruin/unpowered)
+"z" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"B" = (
+/obj/effect/turf_decal/industrial/hatch/yellow,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/dark,
+/area/overmap_encounter/planetoid/wasteland)
+"C" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/unpowered)
+"E" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"G" = (
+/obj/machinery/atmospherics/components/binary/pump{
+	dir = 8
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"H" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"I" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/ruin/unpowered)
+"J" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/frame/machine,
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 9
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"L" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"M" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/engine,
+/area/overmap_encounter/planetoid/wasteland)
+"Q" = (
+/obj/machinery/atmospherics/pipe/simple/general/visible{
+	dir = 6
+	},
+/obj/structure/girder,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"R" = (
+/obj/structure/window/plasma/reinforced,
+/obj/machinery/power/rad_collector/anchored,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"S" = (
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"T" = (
+/obj/structure/window/plasma/reinforced{
+	dir = 1
+	},
+/obj/structure/frame/machine,
+/obj/machinery/atmospherics/pipe/manifold/general/visible,
+/turf/open/floor/engine,
+/area/overmap_encounter/planetoid/wasteland)
+"V" = (
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"W" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg2";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/ruin/unpowered)
+"X" = (
+/obj/structure/girder,
+/turf/open/floor/plating{
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+"Y" = (
+/obj/machinery/door/airlock/engineering/glass/critical{
+	heat_proof = 1;
+	name = "Supermatter Chamber";
+	req_access_txt = "10"
+	},
+/turf/open/floor/engine,
+/area/ruin/unpowered)
+"Z" = (
+/obj/structure/window/plasma/reinforced,
+/obj/structure/frame/machine,
+/obj/machinery/atmospherics/pipe/manifold/general/visible{
+	dir = 1
+	},
+/turf/open/floor/plating{
+	icon_state = "platingdmg1";
+	initial_gas_mix = "ws_atmos"
+	},
+/area/overmap_encounter/planetoid/wasteland)
+
+(1,1,1) = {"
+a
+z
+X
+e
+W
+e
+H
+B
+a
+"}
+(2,1,1) = {"
+s
+z
+w
+o
+x
+G
+w
+g
+a
+"}
+(3,1,1) = {"
+w
+X
+Q
+u
+Y
+j
+w
+w
+w
+"}
+(4,1,1) = {"
+a
+V
+R
+I
+i
+r
+L
+f
+a
+"}
+(5,1,1) = {"
+a
+z
+Z
+I
+E
+r
+T
+n
+b
+"}
+(6,1,1) = {"
+S
+S
+k
+I
+C
+t
+J
+M
+a
+"}
+(7,1,1) = {"
+X
+w
+w
+e
+c
+e
+w
+X
+w
+"}

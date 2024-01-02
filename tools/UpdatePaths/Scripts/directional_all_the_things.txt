@@ -1,0 +1,21 @@
+#comment you guys didn't fucking use directionals so now i have to do it
+
+/obj/machinery/firealarm{dir=1} : /obj/machinery/firealarm/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/firealarm{dir=@UNSET} : /obj/machinery/firealarm/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/firealarm{dir=4} : /obj/machinery/firealarm/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/firealarm{dir=8} : /obj/machinery/firealarm/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+
+/obj/machinery/newscaster{dir=1} : /obj/machinery/newscaster/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/newscaster{dir=@UNSET} : /obj/machinery/newscaster/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/newscaster{dir=4} : /obj/machinery/newscaster/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/newscaster{dir=8} : /obj/machinery/newscaster/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+
+/obj/machinery/intercom{dir=1} : /obj/machinery/intercom/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/intercom{dir=@UNSET} : /obj/machinery/intercom/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/intercom{dir=4} : /obj/machinery/intercom/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/machinery/intercom{dir=8} : /obj/machinery/intercom/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+
+/obj/structure/extinguisher_cabinet{dir=1} : /obj/structure/extinguisher_cabinet/directional/north{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/extinguisher_cabinet{dir=@UNSET} : /obj/structure/extinguisher_cabinet/directional/south{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/extinguisher_cabinet{dir=4} : /obj/structure/extinguisher_cabinet/directional/west{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}
+/obj/structure/extinguisher_cabinet{dir=8} : /obj/structure/extinguisher_cabinet/directional/east{@OLD;pixel_x=@SKIP;pixel_y=@SKIP}

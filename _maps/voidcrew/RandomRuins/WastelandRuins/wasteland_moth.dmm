@@ -1,0 +1,573 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/effect/turf_decal/industrial/warning/dust{
+	dir = 10
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"b" = (
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"d" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"e" = (
+/obj/effect/turf_decal/industrial/warning/dust{
+	dir = 9
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"f" = (
+/obj/item/stack/sheet/mineral/plasma,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"g" = (
+/obj/item/toy/plush/moth,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"h" = (
+/obj/effect/turf_decal/industrial/warning/dust,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"i" = (
+/obj/machinery/power/apc/auto_name/north,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"k" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"l" = (
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"m" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"n" = (
+/obj/item/toy/plush/moth,
+/obj/effect/gibspawner/xeno/bodypartless,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"p" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"q" = (
+/obj/effect/turf_decal/industrial/warning/dust/corner,
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"r" = (
+/obj/effect/turf_decal/industrial/warning/dust/corner{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"s" = (
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"t" = (
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"u" = (
+/obj/structure/closet/crate,
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"v" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"w" = (
+/obj/machinery/suit_storage_unit/mining/eva,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"x" = (
+/obj/machinery/mineral/equipment_vendor,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"y" = (
+/obj/effect/turf_decal/industrial/warning/dust{
+	dir = 5
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"z" = (
+/obj/structure/closet/crate,
+/obj/item/storage/medkit/regular,
+/obj/item/storage/medkit/regular,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"A" = (
+/obj/effect/spawner/random/structure/crate_abandoned,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"B" = (
+/obj/structure/ore_box,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"C" = (
+/obj/structure/girder/displaced,
+/turf/open/misc/wasteland/lit,
+/area/ruin/unpowered)
+"D" = (
+/obj/item/stack/sheet/mineral/plasma,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"F" = (
+/turf/closed/wall/rust,
+/area/ruin/unpowered)
+"G" = (
+/obj/effect/turf_decal/industrial/warning/dust{
+	dir = 6
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"H" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"I" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"K" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"L" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"M" = (
+/obj/effect/turf_decal/industrial/warning/dust{
+	dir = 4
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"O" = (
+/obj/effect/turf_decal/industrial/warning/dust{
+	dir = 1
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"P" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"Q" = (
+/obj/machinery/light/small{
+	dir = 4
+	},
+/obj/machinery/suit_storage_unit/mining/eva,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"R" = (
+/obj/structure/girder/displaced,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"S" = (
+/obj/structure/girder/displaced,
+/turf/open/misc/asteroid,
+/area/ruin/unpowered)
+"T" = (
+/obj/effect/spawner/structure/window/reinforced,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"U" = (
+/obj/item/toy/plush/moth,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"V" = (
+/obj/machinery/light/small{
+	dir = 8
+	},
+/obj/item/toy/plush/moth,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"W" = (
+/obj/effect/turf_decal/industrial/warning/dust{
+	dir = 8
+	},
+/turf/open/floor/plating/rust,
+/area/overmap_encounter/planetoid/wasteland)
+"X" = (
+/obj/effect/gibspawner/xeno/bodypartless,
+/turf/open/floor/plating/rust,
+/area/ruin/unpowered)
+"Y" = (
+/obj/machinery/door/airlock/centcom,
+/turf/open/floor/iron,
+/area/ruin/unpowered)
+"Z" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+
+(1,1,1) = {"
+e
+W
+W
+W
+W
+W
+W
+W
+W
+W
+a
+"}
+(2,1,1) = {"
+O
+b
+b
+b
+b
+b
+b
+b
+b
+b
+h
+"}
+(3,1,1) = {"
+O
+b
+b
+b
+b
+b
+b
+b
+b
+b
+h
+"}
+(4,1,1) = {"
+O
+b
+b
+b
+b
+b
+b
+b
+b
+b
+h
+"}
+(5,1,1) = {"
+O
+b
+b
+b
+b
+b
+b
+b
+b
+b
+h
+"}
+(6,1,1) = {"
+y
+M
+M
+M
+r
+b
+q
+M
+M
+M
+G
+"}
+(7,1,1) = {"
+Z
+Z
+Z
+Z
+O
+b
+h
+Z
+Z
+Z
+Z
+"}
+(8,1,1) = {"
+Z
+Z
+Z
+Z
+O
+b
+h
+Z
+Z
+Z
+Z
+"}
+(9,1,1) = {"
+Z
+Z
+Z
+Z
+O
+b
+h
+Z
+Z
+Z
+Z
+"}
+(10,1,1) = {"
+F
+T
+T
+T
+F
+Y
+F
+T
+T
+T
+F
+"}
+(11,1,1) = {"
+F
+u
+p
+p
+F
+t
+P
+t
+t
+x
+F
+"}
+(12,1,1) = {"
+F
+i
+t
+t
+Y
+t
+s
+s
+l
+w
+F
+"}
+(13,1,1) = {"
+F
+m
+t
+l
+F
+v
+l
+l
+t
+w
+F
+"}
+(14,1,1) = {"
+F
+p
+I
+s
+F
+L
+L
+l
+l
+Q
+F
+"}
+(15,1,1) = {"
+F
+F
+F
+F
+F
+F
+F
+Y
+F
+F
+F
+"}
+(16,1,1) = {"
+F
+d
+f
+s
+F
+B
+t
+t
+V
+t
+F
+"}
+(17,1,1) = {"
+F
+d
+l
+s
+F
+B
+U
+l
+l
+l
+T
+"}
+(18,1,1) = {"
+F
+H
+D
+d
+F
+U
+l
+X
+l
+U
+T
+"}
+(19,1,1) = {"
+T
+t
+l
+d
+F
+H
+l
+U
+l
+l
+F
+"}
+(20,1,1) = {"
+T
+t
+l
+l
+K
+l
+l
+U
+l
+U
+C
+"}
+(21,1,1) = {"
+T
+d
+t
+t
+t
+l
+U
+l
+l
+l
+Z
+"}
+(22,1,1) = {"
+T
+d
+t
+t
+F
+H
+l
+z
+l
+l
+Z
+"}
+(23,1,1) = {"
+F
+t
+l
+t
+F
+t
+U
+l
+n
+Z
+g
+"}
+(24,1,1) = {"
+F
+k
+l
+t
+F
+t
+X
+Z
+Z
+Z
+Z
+"}
+(25,1,1) = {"
+F
+A
+t
+t
+R
+l
+U
+g
+Z
+Z
+Z
+"}
+(26,1,1) = {"
+F
+d
+t
+t
+R
+l
+Z
+Z
+Z
+g
+Z
+"}
+(27,1,1) = {"
+F
+F
+F
+F
+S
+Z
+Z
+Z
+Z
+Z
+Z
+"}

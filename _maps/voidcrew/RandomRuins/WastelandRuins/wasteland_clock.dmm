@@ -1,0 +1,618 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"br" = (
+/obj/structure/table/bronze,
+/obj/item/toy/clockwork_watch,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"bw" = (
+/obj/structure/girder/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"by" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"cn" = (
+/obj/item/clothing/shoes/sandal/magic,
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"ct" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"fy" = (
+/mob/living/carbon/human/species/golem/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"fK" = (
+/obj/machinery/computer/monitor{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"gA" = (
+/obj/machinery/computer/message_monitor{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"hb" = (
+/obj/machinery/quantumpad,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"hm" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"hn" = (
+/obj/effect/decal/cleanable/garbage,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"hU" = (
+/obj/machinery/computer/teleporter,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"iX" = (
+/obj/structure/girder/bronze,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"iY" = (
+/obj/machinery/door/airlock/bronze/seethru,
+/obj/structure/trap/chill,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"jK" = (
+/obj/effect/decal/cleanable/robot_debris/limb,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"kd" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"ks" = (
+/obj/structure/girder/bronze,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"lm" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"mG" = (
+/obj/structure/chair/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"nM" = (
+/obj/machinery/door/airlock/bronze,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"oj" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"oW" = (
+/mob/living/simple_animal/hostile/jungle/mook,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"pi" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/trap/fire,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"pt" = (
+/obj/item/gun/magic/wand/nothing,
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"pV" = (
+/obj/structure/reagent_dispensers/fueltank,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"rM" = (
+/obj/structure/table/bronze,
+/obj/item/stack/tile/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"sS" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/trap/stun,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"tg" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/obj/machinery/quantumpad,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"tI" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"uk" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"ur" = (
+/obj/machinery/quantumpad,
+/obj/structure/trap/damage,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"uM" = (
+/obj/item/clothing/under/color/black,
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"uS" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"wq" = (
+/obj/machinery/power/smes,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"wv" = (
+/obj/effect/decal/cleanable/robot_debris,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"xb" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/closed/wall/mineral/bronze,
+/area/ruin/unpowered)
+"xt" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/obj/structure/closet/crate/grave,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"xV" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"zj" = (
+/obj/effect/decal/cleanable/robot_debris/old,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"zz" = (
+/obj/structure/chair/bronze,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Bh" = (
+/obj/machinery/door/airlock/bronze/seethru,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"BX" = (
+/obj/structure/lattice,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Ci" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/suit/costume/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"DL" = (
+/obj/structure/table/bronze,
+/obj/item/stack/sheet/glass/fifty,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"EB" = (
+/obj/structure/closet/crate/grave,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"FE" = (
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Gk" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"GD" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"GT" = (
+/obj/item/toy/plush/ratplush,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"HK" = (
+/obj/effect/mine/stun,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Id" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/remains/human,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Iu" = (
+/obj/structure/fluff/clockwork/clockgolem_remains,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/trap/stun,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Ji" = (
+/obj/item/flashlight/lantern,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Jl" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/effect/decal/remains/human,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Nr" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"NP" = (
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Oa" = (
+/obj/structure/fluff/clockwork/alloy_shards/medium_gearbit,
+/obj/effect/mine/stun,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Os" = (
+/obj/effect/decal/cleanable/blood/old,
+/obj/structure/trap/chill,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"OB" = (
+/turf/template_noop,
+/area/template_noop)
+"OC" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/head/costume/bronze,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"PA" = (
+/obj/structure/fluff/clockwork/blind_eye,
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Qs" = (
+/turf/closed/wall/mineral/bronze,
+/area/ruin/unpowered)
+"Rt" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"TL" = (
+/obj/structure/statue/bronze/marx,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"TV" = (
+/obj/item/reagent_containers/cup/glass/trophy/bronze_cup,
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"VV" = (
+/obj/structure/girder/bronze,
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Wm" = (
+/obj/effect/mine/stun,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Wx" = (
+/obj/effect/decal/cleanable/greenglow,
+/obj/effect/decal/cleanable/robot_debris/limb,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"WK" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"WT" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/shoes/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Xi" = (
+/obj/structure/table/bronze,
+/obj/item/nullrod/spear,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"XY" = (
+/obj/structure/window/bronze/fulltile,
+/obj/structure/grille,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Ye" = (
+/obj/structure/fluff/clockwork/alloy_shards,
+/obj/structure/lattice,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Ys" = (
+/obj/machinery/door/airlock/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"YQ" = (
+/obj/item/book/granter/action/spell/smoke,
+/obj/structure/table/bronze,
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+"Zs" = (
+/obj/structure/lattice,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"ZY" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/turf/open/floor/bronze,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+Qs
+Ys
+Ys
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+OB
+OB
+OB
+"}
+(2,1,1) = {"
+Qs
+hm
+NP
+hn
+bw
+Qs
+VV
+pV
+NP
+NP
+cn
+XY
+OB
+OB
+OB
+"}
+(3,1,1) = {"
+Qs
+kd
+Iu
+wv
+NP
+Bh
+HK
+WK
+hm
+NP
+uM
+XY
+xt
+Wm
+OB
+"}
+(4,1,1) = {"
+XY
+gA
+Ji
+lm
+NP
+Bh
+WK
+tI
+lm
+by
+NP
+Qs
+oW
+GD
+OB
+"}
+(5,1,1) = {"
+Qs
+fK
+uk
+NP
+TV
+Qs
+DL
+Jl
+Ji
+sS
+NP
+Ys
+BX
+oj
+OB
+"}
+(6,1,1) = {"
+Qs
+ZY
+NP
+NP
+PA
+Qs
+rM
+NP
+NP
+zj
+NP
+Ys
+BX
+Gk
+Nr
+"}
+(7,1,1) = {"
+Qs
+ks
+WK
+WK
+bw
+Qs
+ks
+br
+Xi
+FE
+bw
+Qs
+EB
+Nr
+Nr
+"}
+(8,1,1) = {"
+Qs
+Qs
+Bh
+iY
+xb
+Qs
+Qs
+xb
+Qs
+Qs
+Qs
+Qs
+Nr
+GT
+TL
+"}
+(9,1,1) = {"
+Qs
+VV
+NP
+NP
+iX
+Qs
+VV
+xV
+Rt
+NP
+bw
+Qs
+Zs
+oW
+Nr
+"}
+(10,1,1) = {"
+Qs
+hU
+NP
+Oa
+wq
+Qs
+mG
+Ci
+WT
+NP
+pi
+nM
+BX
+Nr
+Nr
+"}
+(11,1,1) = {"
+Qs
+tg
+Id
+Ji
+NP
+Qs
+zz
+OC
+fy
+uk
+WK
+nM
+Wm
+Nr
+Nr
+"}
+(12,1,1) = {"
+XY
+ur
+uS
+NP
+NP
+Bh
+WK
+NP
+Wx
+ct
+WK
+xb
+oW
+GD
+OB
+"}
+(13,1,1) = {"
+Qs
+hb
+NP
+jK
+WK
+Bh
+WK
+Os
+NP
+zj
+YQ
+XY
+EB
+OB
+OB
+"}
+(14,1,1) = {"
+Qs
+NP
+NP
+NP
+bw
+Qs
+ks
+Ji
+by
+by
+pt
+XY
+Ye
+BX
+OB
+"}
+(15,1,1) = {"
+Qs
+Ys
+Ys
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+Qs
+OB
+OB
+OB
+"}

@@ -1,0 +1,275 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/template_noop,
+/area/template_noop)
+"c" = (
+/obj/structure/window/reinforced/tinted{
+	dir = 8
+	},
+/obj/item/pickaxe/diamond,
+/obj/structure/rack,
+/obj/item/clothing/gloves/combat/wizard,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"d" = (
+/obj/structure/closet/secure_closet/chemical,
+/obj/structure/window/reinforced/tinted{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"e" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"i" = (
+/mob/living/simple_animal/hostile/dark_wizard,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"k" = (
+/obj/structure/destructible/cult/forge,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"m" = (
+/obj/structure/grille,
+/obj/structure/window/reinforced/tinted/fulltile,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"o" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/rack,
+/obj/item/clothing/head/wizard,
+/obj/item/clothing/suit/wizrobe/fake,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"q" = (
+/turf/open/floor/carpet/royalblack,
+/area/ruin/unpowered)
+"r" = (
+/turf/closed/wall/mineral/iron,
+/area/ruin/unpowered)
+"s" = (
+/obj/effect/decal/remains/human,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"t" = (
+/obj/structure/mineral_door/iron,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"u" = (
+/obj/structure/closet/crate/miningcar,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"x" = (
+/obj/structure/window/reinforced/tinted,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/crate/coffin,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"y" = (
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"z" = (
+/obj/item/candle/infinite,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"B" = (
+/obj/structure/table/wood,
+/obj/item/kitchen/knife/bloodletter,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"C" = (
+/obj/effect/decal/cleanable/crayon,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"E" = (
+/obj/item/bedsheet/wiz,
+/obj/structure/bed,
+/obj/structure/window/reinforced/tinted{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/cobweb,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"H" = (
+/obj/structure/closet/crate/freezer/blood,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/cobweb/cobweb2,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"I" = (
+/obj/effect/decal/cleanable/greenglow,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"K" = (
+/obj/item/stack/sheet/mineral/coal,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"L" = (
+/obj/item/candle/infinite,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"M" = (
+/obj/structure/kitchenspike,
+/obj/effect/mob_spawn/human/corpse/assistant,
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"N" = (
+/obj/structure/dresser,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"O" = (
+/obj/structure/table/wood,
+/obj/item/slimepotion/slime/renaming,
+/obj/item/slimepotion/genderchange,
+/obj/item/slimepotion/lovepotion,
+/obj/effect/decal/cleanable/food/tomato_smudge,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"P" = (
+/obj/structure/table/wood,
+/obj/effect/decal/cleanable/food/salt,
+/obj/item/reagent_containers/glass/mortar,
+/obj/item/pestle,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"R" = (
+/mob/living/simple_animal/hostile/dark_wizard,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"S" = (
+/obj/structure/sacrificealtar,
+/obj/effect/decal/cleanable/blood/old,
+/obj/effect/decal/cleanable/glass,
+/obj/item/clothing/head/helmet/skull,
+/turf/open/floor/light,
+/area/ruin/unpowered)
+"T" = (
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"U" = (
+/obj/effect/decal/cleanable/oil,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"V" = (
+/obj/structure/table/wood,
+/obj/item/clothing/head/helmet/knight,
+/obj/item/clothing/suit/armor/riot/knight,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+"Z" = (
+/obj/structure/rack,
+/obj/item/stack/sheet/mineral/silver,
+/obj/item/reagent_containers/food/condiment/saltshaker,
+/obj/item/stack/sheet/mineral/gold,
+/obj/item/reagent_containers/glass/bottle/sulfur,
+/turf/open/floor/mineral/plastitanium,
+/area/ruin/unpowered)
+
+(1,1,1) = {"
+a
+a
+a
+r
+r
+r
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+m
+P
+O
+Z
+m
+a
+a
+"}
+(3,1,1) = {"
+a
+m
+d
+I
+i
+T
+E
+m
+a
+"}
+(4,1,1) = {"
+r
+B
+s
+T
+T
+z
+T
+N
+r
+"}
+(5,1,1) = {"
+r
+M
+e
+R
+S
+C
+e
+q
+t
+"}
+(6,1,1) = {"
+r
+H
+y
+T
+T
+L
+T
+o
+r
+"}
+(7,1,1) = {"
+a
+m
+x
+K
+i
+U
+c
+m
+a
+"}
+(8,1,1) = {"
+a
+a
+m
+k
+V
+u
+m
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+a
+r
+r
+r
+a
+a
+a
+"}

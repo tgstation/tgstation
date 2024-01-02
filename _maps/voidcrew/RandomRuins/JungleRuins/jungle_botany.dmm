@@ -1,0 +1,809 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aM" = (
+/obj/structure/table,
+/obj/item/disk/data,
+/obj/item/disk/data,
+/obj/item/disk/data,
+/obj/item/disk/data,
+/obj/item/disk/data,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"aP" = (
+/obj/item/kirbyplants/fullysynthetic,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"bI" = (
+/turf/closed/wall/r_wall,
+/area/ship/crew/hydroponics)
+"ce" = (
+/turf/open/floor/iron,
+/area/ship/bridge)
+"dJ" = (
+/obj/structure/closet/crate/radiation,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"dR" = (
+/turf/closed/wall/r_wall,
+/area/ship/engineering)
+"ez" = (
+/obj/structure/bed,
+/obj/item/bedsheet/medical,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"eQ" = (
+/obj/machinery/washing_machine,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"fM" = (
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ship/bridge)
+"fR" = (
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"gb" = (
+/obj/structure/table,
+/obj/item/plant_analyzer,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"hl" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"hm" = (
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"ii" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"ik" = (
+/obj/effect/decal/cleanable/blood/gibs/up,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"iv" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"iG" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"jb" = (
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"jc" = (
+/obj/machinery/seed_extractor,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"jf" = (
+/obj/structure/closet/crate/large,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"ji" = (
+/obj/machinery/vending/hydroseeds,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"js" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"jK" = (
+/obj/machinery/door/unpowered/shuttle,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"ke" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"kj" = (
+/obj/machinery/vending/sovietsoda,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"kG" = (
+/turf/closed/wall/r_wall,
+/area/ship/hallway)
+"lb" = (
+/obj/machinery/power/smes,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"lK" = (
+/obj/machinery/hydroponics/constructable,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"lO" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"mg" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"mL" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"mN" = (
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"nl" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/xenoblood/xgibs,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"nF" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/ship/hallway)
+"nJ" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/turf/open/floor/grass,
+/area/ruin/jungle)
+"nQ" = (
+/obj/machinery/power/apc,
+/turf/closed/wall/r_wall,
+/area/ship/engineering)
+"nS" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"oc" = (
+/obj/machinery/door/airlock/glass,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"om" = (
+/obj/effect/decal/cleanable/blood,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/obj/effect/mob_spawn/human/corpse/pirate,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"oR" = (
+/obj/structure/table,
+/obj/item/storage/fancy/cigarettes/cigpack_robust,
+/obj/item/paper/fluff/ruins/forgottenship/powerissues,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"pt" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"pM" = (
+/turf/closed/wall/r_wall,
+/area/ship/crew/canteen)
+"qM" = (
+/obj/structure/sign/poster/contraband/ambrosia_vulgaris,
+/turf/closed/wall/r_wall,
+/area/ship/crew/hydroponics)
+"ru" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"sU" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"tb" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/ship/bridge)
+"uC" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"uK" = (
+/obj/structure/flora/ausbushes/sparsegrass,
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/grass,
+/area/ruin/jungle)
+"uM" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"vo" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"wl" = (
+/obj/structure/table,
+/obj/item/storage/belt/utility,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"wP" = (
+/obj/structure/closet/crate/medical,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"wU" = (
+/obj/structure/flora/ausbushes/grassybush,
+/turf/open/floor/grass,
+/area/ruin/jungle)
+"xa" = (
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"yt" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/public/glass,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"yR" = (
+/obj/machinery/hydroponics/constructable,
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"yS" = (
+/obj/structure/table,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/electrical,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"zm" = (
+/obj/structure/cable,
+/obj/effect/mob_spawn/human/corpse/pirate,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"zz" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"Aq" = (
+/obj/structure/table,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/item/folder,
+/obj/item/stamp,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"AD" = (
+/obj/structure/bed,
+/obj/item/bedsheet/black,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"AJ" = (
+/obj/effect/decal/cleanable/blood,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"Cj" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"CO" = (
+/obj/machinery/power/apc,
+/turf/closed/wall/r_wall,
+/area/ship/crew/hydroponics)
+"Dr" = (
+/obj/item/xenos_claw,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"DL" = (
+/obj/machinery/power/port_gen/pacman,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"DS" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"EJ" = (
+/obj/structure/cable,
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"FF" = (
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"FG" = (
+/obj/machinery/door/airlock/public,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"FN" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"FZ" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"Gq" = (
+/obj/structure/table,
+/obj/item/book/manual/hydroponics_pod_people,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"Gx" = (
+/obj/structure/cable,
+/obj/effect/decal/cleanable/blood/tracks{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ship/bridge)
+"GY" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/ship/engineering)
+"Hm" = (
+/obj/structure/chair/greyscale{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"Hu" = (
+/turf/open/floor/iron,
+/area/ship/hallway)
+"HQ" = (
+/obj/effect/mob_spawn/corpse/human/cargo_tech,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"Ie" = (
+/obj/structure/table,
+/obj/machinery/plantgenes,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"Ig" = (
+/obj/structure/table,
+/obj/item/clothing/glasses/meson,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"IG" = (
+/obj/structure/closet/crate/large,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"IT" = (
+/obj/machinery/power/apc,
+/turf/closed/wall/r_wall,
+/area/ship/crew/canteen)
+"Ji" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"JU" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"Ke" = (
+/obj/structure/cable,
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"Kn" = (
+/obj/structure/sign/departments/botany,
+/turf/closed/wall/r_wall,
+/area/ship/crew/hydroponics)
+"Kt" = (
+/obj/structure/chair/greyscale{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"KE" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/ship/bridge)
+"Nk" = (
+/obj/structure/table,
+/obj/item/storage/box/donkpockets/donkpocketberry,
+/obj/item/storage/box/donkpockets/donkpockethonk,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"Nn" = (
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"Np" = (
+/obj/structure/girder/reinforced,
+/turf/open/floor/plating,
+/area/ship/crew/canteen)
+"OX" = (
+/turf/open/floor/iron,
+/area/ship/engineering)
+"Pm" = (
+/obj/structure/sign/departments/engineering,
+/turf/closed/wall/r_wall,
+/area/ship/engineering)
+"Pp" = (
+/obj/structure/grille/broken,
+/turf/open/floor/plating,
+/area/ship/crew/hydroponics)
+"Pq" = (
+/obj/effect/decal/cleanable/xenoblood,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"Qc" = (
+/obj/effect/spawner/structure/window/hollow/reinforced,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"Qg" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"Qu" = (
+/obj/machinery/door/airlock,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"QJ" = (
+/obj/structure/cable,
+/obj/machinery/door/airlock/engineering{
+	locked = 1
+	},
+/turf/open/floor/iron,
+/area/ship/engineering)
+"Rj" = (
+/obj/structure/closet/crate{
+	icon_state = "crateopen"
+	},
+/obj/item/stack/sheet/mineral/plasma/twenty,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"Se" = (
+/obj/structure/closet/secure_closet/personal,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"Sh" = (
+/obj/structure/flora/grass/jungle,
+/turf/open/floor/grass,
+/area/ruin/jungle)
+"Ss" = (
+/obj/machinery/power/terminal{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/effect/gibspawner/xeno,
+/turf/open/floor/iron,
+/area/ship/engineering)
+"SB" = (
+/obj/machinery/vending/hydronutrients,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"SQ" = (
+/obj/structure/cable,
+/turf/closed/wall/r_wall,
+/area/ship/bridge)
+"Uo" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"Vn" = (
+/obj/structure/table,
+/turf/open/floor/iron,
+/area/ship/bridge)
+"Vu" = (
+/obj/machinery/power/apc,
+/turf/closed/wall/r_wall,
+/area/ship/crew/dorm)
+"VH" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"Wo" = (
+/obj/structure/sign/poster/contraband/donut_corp,
+/turf/closed/wall/r_wall,
+/area/ship/engineering)
+"Ws" = (
+/obj/machinery/power/apc,
+/turf/closed/wall/r_wall,
+/area/ship/hallway)
+"WE" = (
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"Xq" = (
+/obj/machinery/power/apc,
+/turf/closed/wall/r_wall,
+/area/ship/bridge)
+"XO" = (
+/turf/closed/wall/r_wall,
+/area/ship/bridge)
+"Yc" = (
+/obj/effect/mob_spawn/human/corpse/charredskeleton,
+/turf/open/floor/iron,
+/area/ship/crew/hydroponics)
+"YN" = (
+/obj/structure/table,
+/obj/item/toy/cards/deck/tarot,
+/turf/open/floor/iron,
+/area/ship/crew/canteen)
+"Zq" = (
+/obj/machinery/suit_storage_unit/ert/engineer,
+/turf/open/floor/iron,
+/area/ship/hallway)
+"ZO" = (
+/obj/structure/bed,
+/obj/item/bedsheet/green,
+/turf/open/floor/iron,
+/area/ship/crew/dorm)
+"ZU" = (
+/turf/closed/wall/r_wall,
+/area/ship/crew/dorm)
+
+(1,1,1) = {"
+kG
+kG
+jK
+jK
+kG
+XO
+Qc
+XO
+Qc
+Qc
+wU
+Sh
+"}
+(2,1,1) = {"
+nF
+Zq
+Hu
+Hu
+Zq
+XO
+aM
+Vn
+Aq
+Qc
+tb
+nJ
+"}
+(3,1,1) = {"
+kG
+kG
+jK
+jK
+kG
+XO
+ce
+fM
+ce
+Pq
+tb
+tb
+"}
+(4,1,1) = {"
+kG
+yS
+JU
+Ke
+mL
+hl
+js
+nS
+om
+ce
+ce
+Qc
+"}
+(5,1,1) = {"
+Ws
+gb
+Cj
+Hu
+ii
+Xq
+pt
+uM
+Gx
+ce
+jf
+XO
+"}
+(6,1,1) = {"
+kG
+Gq
+Hu
+Hu
+ii
+KE
+iv
+ik
+sU
+AJ
+wP
+Qc
+"}
+(7,1,1) = {"
+bI
+bI
+Kn
+oc
+bI
+KE
+XO
+XO
+SQ
+Qu
+XO
+XO
+"}
+(8,1,1) = {"
+bI
+qM
+ji
+hm
+hm
+lK
+pM
+iG
+WE
+fR
+Kt
+pM
+"}
+(9,1,1) = {"
+Sh
+CO
+SB
+Qg
+Yc
+yR
+Np
+kj
+nl
+xa
+YN
+pM
+"}
+(10,1,1) = {"
+nJ
+zz
+lK
+ru
+FN
+FN
+mg
+VH
+ke
+xa
+Hm
+pM
+"}
+(11,1,1) = {"
+nJ
+Pp
+lK
+FZ
+Dr
+lK
+IT
+Uo
+ke
+FF
+aP
+pM
+"}
+(12,1,1) = {"
+Sh
+zz
+lK
+FZ
+mN
+lK
+pM
+Nk
+zm
+DS
+pM
+pM
+"}
+(13,1,1) = {"
+Sh
+bI
+jc
+FZ
+Ie
+bI
+ZU
+ZU
+yt
+ZU
+ZU
+nJ
+"}
+(14,1,1) = {"
+wU
+dR
+Pm
+QJ
+dR
+dR
+AD
+FG
+uC
+Se
+Ji
+Sh
+"}
+(15,1,1) = {"
+nJ
+dR
+wl
+lO
+IG
+dR
+ZU
+Vu
+EJ
+Se
+ZU
+uK
+"}
+(16,1,1) = {"
+Sh
+GY
+Ig
+lO
+dJ
+dR
+ZO
+FG
+Nn
+eQ
+Ji
+Sh
+"}
+(17,1,1) = {"
+Sh
+GY
+Rj
+lO
+OX
+dR
+ZU
+ZU
+FG
+ZU
+ZU
+wU
+"}
+(18,1,1) = {"
+Sh
+dR
+lb
+Ss
+HQ
+Wo
+ez
+Nn
+Nn
+Ji
+Sh
+nJ
+"}
+(19,1,1) = {"
+nJ
+nQ
+DL
+vo
+OX
+dR
+oR
+jb
+Nn
+Ji
+nJ
+Sh
+"}
+(20,1,1) = {"
+Sh
+dR
+dR
+dR
+dR
+dR
+ZU
+Ji
+Ji
+ZU
+Sh
+Sh
+"}

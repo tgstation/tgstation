@@ -1,0 +1,505 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/structure/fence/corner{
+	dir = 8
+	},
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"b" = (
+/obj/structure/fence/door/opened,
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"c" = (
+/obj/structure/fence,
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"d" = (
+/obj/machinery/light,
+/obj/effect/decal/cleanable/dirt,
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/wasteland,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"e" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"f" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"g" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"h" = (
+/obj/structure/closet/secure_closet/hydroponics,
+/obj/item/circuitboard/machine/plantgenes,
+/obj/item/gun/ballistic/automatic/ebr,
+/obj/item/ammo_box/magazine/ebr,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"i" = (
+/obj/machinery/hydroponics/soil,
+/turf/open/floor/plating/dirt/dry/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"j" = (
+/obj/structure/table/wood,
+/obj/item/watertank,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"k" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/cultivator/rake,
+/turf/open/floor/plating/dirt/dry/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"l" = (
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"m" = (
+/obj/machinery/chem_master/condimaster,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"n" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken7"
+	},
+/area/ruin/unpowered)
+"o" = (
+/obj/structure/closet/crate/hydroponics,
+/obj/item/seeds/apple,
+/obj/item/seeds/banana,
+/obj/item/seeds/berry,
+/obj/item/seeds/cabbage,
+/obj/item/seeds/carrot,
+/obj/item/seeds/chili,
+/obj/item/seeds/cherry,
+/obj/item/seeds/cocoapod,
+/obj/item/seeds/cotton,
+/obj/item/seeds/corn,
+/obj/item/seeds/garlic,
+/obj/item/seeds/eggplant,
+/obj/item/seeds/orange,
+/obj/item/seeds/onion,
+/obj/item/seeds/lemon,
+/obj/item/seeds/lime,
+/obj/item/seeds/pineapple,
+/obj/item/seeds/potato,
+/obj/item/seeds/pumpkin,
+/obj/item/seeds/sugarcane,
+/obj/item/seeds/tea,
+/obj/item/seeds/tobacco,
+/obj/item/seeds/tomato,
+/obj/item/seeds/wheat,
+/obj/item/seeds/watermelon,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"r" = (
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"s" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"t" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken6"
+	},
+/area/ruin/unpowered)
+"u" = (
+/obj/structure/chair/plastic{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"v" = (
+/obj/structure/fence/cut/large,
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"w" = (
+/obj/machinery/light,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"x" = (
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"y" = (
+/mob/living/simple_animal/hostile/asteroid/goliath/beast/wasteland,
+/turf/open/misc/dust/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"z" = (
+/obj/structure/fence/cut/medium,
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"A" = (
+/obj/structure/chair/plastic{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/remains/human,
+/obj/effect/decal/cleanable/blood/old,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"B" = (
+/obj/machinery/hydroponics/soil,
+/obj/item/shovel,
+/turf/open/floor/plating/dirt/dry/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"C" = (
+/obj/structure/mineral_door/wood,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"D" = (
+/obj/machinery/door/window/northleft,
+/obj/item/circuitboard/machine/seed_extractor,
+/obj/structure/frame/machine,
+/obj/item/stack/cable_coil/cut/red,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"E" = (
+/obj/structure/fence/cut/large{
+	dir = 8
+	},
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"F" = (
+/obj/machinery/biogenerator,
+/obj/machinery/door/window/northleft,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"G" = (
+/obj/structure/sign/departments/botany,
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"H" = (
+/obj/structure/bed,
+/obj/item/bedsheet/dorms,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"I" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"J" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "small"
+	},
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"K" = (
+/obj/structure/table/wood,
+/obj/item/gun/energy/floragun,
+/obj/item/storage/bag/plants/portaseeder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"L" = (
+/turf/closed/wall/mineral/wood,
+/area/ruin/unpowered)
+"M" = (
+/obj/structure/fence/post,
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"N" = (
+/obj/structure/fence/post{
+	dir = 1
+	},
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"O" = (
+/obj/structure/fence/corner,
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"P" = (
+/turf/open/floor/plating/dirt/dry/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"Q" = (
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"R" = (
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"S" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/item/shard,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"T" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/open/floor/wood{
+	icon_state = "wood-broken5"
+	},
+/area/ruin/unpowered)
+"U" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+"V" = (
+/obj/structure/closet/wardrobe/botanist,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"W" = (
+/obj/structure/reagent_dispensers/watertank/high,
+/turf/open/misc/wasteland/lit,
+/area/overmap_encounter/planetoid/wasteland)
+"X" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/glass/bucket,
+/obj/item/reagent_containers/spray/weedspray{
+	pixel_x = 7
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/wood,
+/area/ruin/unpowered)
+"Y" = (
+/obj/item/shard{
+	icon_state = "tiny"
+	},
+/obj/item/shard{
+	icon_state = "medium"
+	},
+/obj/item/shard,
+/obj/item/shard{
+	icon_state = "small"
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/ruin/unpowered)
+"Z" = (
+/obj/structure/fence{
+	dir = 8
+	},
+/obj/structure/fence{
+	dir = 8
+	},
+/turf/template_noop,
+/area/overmap_encounter/planetoid/wasteland)
+
+(1,1,1) = {"
+L
+Y
+L
+L
+J
+L
+N
+c
+v
+z
+c
+c
+c
+a
+"}
+(2,1,1) = {"
+L
+s
+u
+s
+n
+I
+W
+l
+P
+x
+P
+P
+x
+E
+"}
+(3,1,1) = {"
+I
+R
+Q
+j
+s
+e
+l
+k
+i
+i
+i
+i
+P
+U
+"}
+(4,1,1) = {"
+S
+s
+m
+K
+d
+L
+P
+x
+x
+x
+P
+x
+x
+U
+"}
+(5,1,1) = {"
+S
+t
+o
+X
+s
+D
+l
+B
+i
+i
+g
+g
+l
+U
+"}
+(6,1,1) = {"
+L
+s
+T
+A
+n
+F
+l
+P
+P
+x
+x
+P
+l
+U
+"}
+(7,1,1) = {"
+L
+L
+L
+L
+s
+L
+x
+i
+i
+i
+i
+i
+x
+U
+"}
+(8,1,1) = {"
+L
+V
+r
+L
+t
+G
+l
+x
+x
+P
+x
+x
+l
+U
+"}
+(9,1,1) = {"
+L
+h
+r
+C
+s
+C
+l
+P
+P
+y
+P
+P
+x
+b
+"}
+(10,1,1) = {"
+L
+H
+w
+L
+R
+L
+x
+i
+i
+i
+i
+i
+P
+Z
+"}
+(11,1,1) = {"
+L
+L
+L
+L
+f
+L
+M
+c
+c
+c
+c
+c
+c
+O
+"}
