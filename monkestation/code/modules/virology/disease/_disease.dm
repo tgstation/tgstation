@@ -509,7 +509,6 @@ GLOBAL_LIST_INIT(virusDB, list())
 
 	if (mob.immune_system)
 		var/immune_system = mob.immune_system.GetImmunity()
-		var/immune_str = immune_system[1]
 		var/list/antibodies = immune_system[2]
 		var/subdivision = (strength - ((robustness * strength) / 100)) / max_stages
 		//for each antigen, we measure the corresponding antibody concentration in the carrier's immune system
