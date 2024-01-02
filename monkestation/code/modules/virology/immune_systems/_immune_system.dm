@@ -122,7 +122,7 @@
 				if (host.buckled == B)//fucking chairs n stuff
 					tally += 0.5
 				if (host.IsUnconscious())
-					if (tally < 3)
+					if (tally < 2.5)
 						tally += 1
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 5.5

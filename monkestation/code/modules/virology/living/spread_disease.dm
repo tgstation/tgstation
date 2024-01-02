@@ -39,7 +39,7 @@
 	if(prob(disease.infectionchance) || forced)
 		var/datum/disease/advanced/D = disease.Copy()
 		if (D.infectionchance > 5)
-			D.infectionchance = max(5, D.infectionchance - 2)//The virus gets weaker as it jumps from people to people
+			D.infectionchance = max(5, D.infectionchance - 5)//The virus gets weaker as it jumps from people to people
 
 		D.stage = clamp(D.stage+D.stage_variance, 1, D.max_stages)
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(src)] [notes]. Infection chance now [D.infectionchance]%"
@@ -55,3 +55,35 @@
 
 		D.AddToGoggleView(src)
 	return TRUE
+
+/mob/dead/new_player/proc/DiseaseCarrierCheck(mob/living/carbon/human/H)
+	if(world.time < SSautotransfer.starttime + 30 MINUTES)
+		return
+	// 10% of players are joining the station with some minor disease if latejoined
+	if(prob(10))
+		var/virus_choice = pick(subtypesof(/datum/disease/advanced)- typesof(/datum/disease/advanced/premade))
+		var/datum/disease/advanced/D = new virus_choice
+
+		var/list/anti = list(
+			ANTIGEN_BLOOD	= 1,
+			ANTIGEN_COMMON	= 1,
+			ANTIGEN_RARE	= 0,
+			ANTIGEN_ALIEN	= 0,
+			)
+		var/list/bad = list(
+			EFFECT_DANGER_HELPFUL	= 1,
+			EFFECT_DANGER_FLAVOR	= 4,
+			EFFECT_DANGER_ANNOYING	= 4,
+			EFFECT_DANGER_HINDRANCE	= 0,
+			EFFECT_DANGER_HARMFUL	= 0,
+			EFFECT_DANGER_DEADLY	= 0,
+			)
+
+		D.makerandom(list(30,55),list(0,50),anti,bad,null)
+
+		D.log += "<br />[ROUND_TIME()] Infected [key_name(H)]"
+		if(!length(H.diseases))
+			H.diseases = list()
+		H.diseases += D
+
+		D.AddToGoggleView(H)
