@@ -50,7 +50,8 @@
 
 	return null
 
-/datum/computer_file/program/skill_tracker/ui_act(action, params, datum/tgui/ui)
+/datum/computer_file/program/skill_tracker/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PRG_reward")
 			var/skill_type = find_skilltype(params["skill"])

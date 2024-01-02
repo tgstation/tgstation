@@ -47,6 +47,7 @@
 	return controlled_suit?.ui_static_data()
 
 /datum/computer_file/program/maintenance/modsuit_control/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	return controlled_suit?.ui_act(action, params, ui, state)
 
 

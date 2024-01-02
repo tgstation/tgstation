@@ -73,7 +73,8 @@
 
 	log_game("[log_usr] has changed the station status display message to \"[picture]\" [loc_name(usr)]")
 
-/datum/computer_file/program/status/ui_act(action, list/params, datum/tgui/ui)
+/datum/computer_file/program/status/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("setStatusMessage")
 			upper_text = reject_bad_text(params["upperText"] || "", MAX_STATUS_LINE_LENGTH)

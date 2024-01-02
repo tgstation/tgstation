@@ -68,7 +68,7 @@
 	return data
 
 /datum/computer_file/program/radar/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-
+	. = ..()
 	switch(action)
 		if("selecttarget")
 			var/selected_new_ref = params["ref"]

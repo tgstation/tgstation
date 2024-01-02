@@ -11,7 +11,8 @@
 	program_icon = "network-wired"
 	circuit_comp_type = /obj/item/circuit_component/mod_program/ntnetmonitor
 
-/datum/computer_file/program/ntnetmonitor/ui_act(action, list/params, datum/tgui/ui)
+/datum/computer_file/program/ntnetmonitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("resetIDS")
 			SSmodular_computers.intrusion_detection_alarm = FALSE

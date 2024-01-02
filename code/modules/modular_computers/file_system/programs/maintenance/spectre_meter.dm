@@ -47,6 +47,7 @@
 	return data
 
 /datum/computer_file/program/maintenance/spectre_meter/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("manual_scan")
 			INVOKE_ASYNC(src, PROC_REF(scan_surroundings))

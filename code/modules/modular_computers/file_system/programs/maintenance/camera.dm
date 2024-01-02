@@ -92,13 +92,13 @@
 
 	return data
 
-/datum/computer_file/program/maintenance/camera/ui_act(action, params, datum/tgui/ui)
-	var/mob/living/user = usr
+/datum/computer_file/program/maintenance/camera/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("print_photo")
 			if(computer.stored_paper <= 0)
 				to_chat(usr, span_notice("Hardware error: Printer out of paper."))
 				return
-			internal_camera.printpicture(user, internal_picture)
+			internal_camera.printpicture(usr, internal_picture)
 			computer.stored_paper--
 			computer.visible_message(span_notice("\The [computer] prints out a paper."))

@@ -38,7 +38,8 @@
 	data["maxFrequency"] = MAX_FREE_FREQ
 	return data
 
-/datum/computer_file/program/signal_commander/ui_act(action, list/params)
+/datum/computer_file/program/signal_commander/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("signal")
 			INVOKE_ASYNC(src, PROC_REF(signal), usr)

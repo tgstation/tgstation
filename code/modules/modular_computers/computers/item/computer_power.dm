@@ -16,7 +16,7 @@
 	internal_cell.use(min(amount JOULES, internal_cell.charge)) //drain it anyways.
 	if(active_program?.program_flags & PROGRAM_RUNS_WITHOUT_POWER)
 		return TRUE
-	close_all_programs()
+	INVOKE_ASYNC(src, PROC_REF(close_all_programs))
 	for(var/datum/computer_file/program/programs as anything in stored_files)
 		if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && open_program(program = programs))
 			return TRUE

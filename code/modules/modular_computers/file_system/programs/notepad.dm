@@ -20,7 +20,8 @@
 		Quarter - Either sides of Aft\n\
 		Bow - Either sides of Fore"
 
-/datum/computer_file/program/notepad/ui_act(action, list/params, datum/tgui/ui)
+/datum/computer_file/program/notepad/ui_act(action, list/params, datum/tgui/ui, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("UpdateNote")
 			written_note = params["newnote"]

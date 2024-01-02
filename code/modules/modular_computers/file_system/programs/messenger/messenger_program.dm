@@ -160,7 +160,8 @@
 		return GLOB.reverse_contained_state
 	return GLOB.default_state
 
-/datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui)
+/datum/computer_file/program/messenger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PDA_ringSet")
 			var/mob/living/user = usr
