@@ -42,6 +42,13 @@
 /obj/structure/chemical_tank/proc/after_reagent_add()
 	return
 
+/obj/structure/chemical_tank/plunger_act(obj/item/plunger/P, mob/living/user, reinforced)
+	to_chat(user, span_notice("You start furiously plunging [name]."))
+	if(do_after(user, 30, target = src))
+		to_chat(user, span_notice("You finish plunging the [name]."))
+		reagents.expose(get_turf(src), TOUCH) //splash on the floor
+		reagents.clear_reagents()
+
 /obj/item/circuit_component/chem/output
 	display_name = "Tank Output"
 	desc = "Linked to a physical object, sends the chemicals to the tank."
