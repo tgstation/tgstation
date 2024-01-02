@@ -1254,7 +1254,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.11.8":
+"@popperjs/core@npm:^2.11.8, @popperjs/core@npm:^2.9.3":
   version: 2.11.8
   resolution: "@popperjs/core@npm:2.11.8"
   checksum: e5c69fdebf52a4012f6a1f14817ca8e9599cb1be73dd1387e1785e2ed5e5f0862ff817f420a87c7fc532add1f88a12e25aeb010ffcbdc98eace3d55ce2139cf0
@@ -3345,7 +3345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dateformat@npm:^4.6.2":
+"dateformat@npm:^4.5.1, dateformat@npm:^4.6.2":
   version: 4.6.3
   resolution: "dateformat@npm:4.6.3"
   checksum: c3aa0617c0a5b30595122bc8d1bee6276a9221e4d392087b41cbbdf175d9662ae0e50d0d6dcdf45caeac5153c4b5b0844265f8cd2b2245451e3da19e39e3b65d
@@ -3520,7 +3520,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"dompurify@npm:^2.4.4":
+"dompurify@npm:^2.3.1, dompurify@npm:^2.4.4":
   version: 2.4.7
   resolution: "dompurify@npm:2.4.7"
   checksum: 13c047e772a1998348191554dda403950d45ef2ec75fa0b9915cc179ccea0a39ef780d283109bd72cf83a2a085af6c77664281d4d0106a737bc5f39906364efe
@@ -5237,6 +5237,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"inferno-shared@npm:7.4.11":
+  version: 7.4.11
+  resolution: "inferno-shared@npm:7.4.11"
+  checksum: 48b453fb11d7126d30668e3d74ccc4a4f00f9f7b191d27eded2138acc0cd07c02d14c1c936319b5b25bf46f7476b480938337ec7a64b932b2949b73c968ae52a
+  languageName: node
+  linkType: hard
+
+"inferno-vnode-flags@npm:7.4.11, inferno-vnode-flags@npm:^7.4.8":
+  version: 7.4.11
+  resolution: "inferno-vnode-flags@npm:7.4.11"
+  checksum: 8a2f1d8d546b99c14c31a25a88ac45f076be9ac630202f898c49140aa420cf2c96d871fcc3f8e5813d5176d569a40c3fd1727198edf46306de3a989fe85176ab
+  languageName: node
+  linkType: hard
+
+"inferno@npm:^7.4.8":
+  version: 7.4.11
+  resolution: "inferno@npm:7.4.11"
+  dependencies:
+    inferno-shared: 7.4.11
+    inferno-vnode-flags: 7.4.11
+    opencollective-postinstall: ^2.0.3
+  checksum: 1651aad357995170c135520ff09d6e24311e05f0b0736b66d50dba5e68ff521b6c9dff13eec64effd6b79455d39f06176f0a5be50a1aaa979384721ae9b9862c
+  languageName: node
+  linkType: hard
+
 "inflight@npm:^1.0.4":
   version: 1.0.6
   resolution: "inflight@npm:1.0.6"
@@ -6720,7 +6745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.2.12":
+"marked@npm:^4.0.10, marked@npm:^4.2.12":
   version: 4.3.0
   resolution: "marked@npm:4.3.0"
   bin:
@@ -7249,6 +7274,15 @@ __metadata:
   dependencies:
     mimic-fn: ^2.1.0
   checksum: 2478859ef817fc5d4e9c2f9e5728512ddd1dbc9fb7829ad263765bb6d3b91ce699d6e2332eef6b7dff183c2f490bd3349f1666427eaba4469fba0ac38dfd0d34
+  languageName: node
+  linkType: hard
+
+"opencollective-postinstall@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "opencollective-postinstall@npm:2.0.3"
+  bin:
+    opencollective-postinstall: index.js
+  checksum: 0a68c5cef135e46d11e665d5077398285d1ce5311c948e8327b435791c409744d4a6bb9c55bd6507fb5f2ef34b0ad920565adcdaf974cbdae701aead6f32b396
   languageName: node
   linkType: hard
 
@@ -9643,6 +9677,28 @@ resolve@^1.20.0:
   checksum: c431df0bedf2088b227a4e051e0ff4ca54df2c114096b0c01e1cbaadb021c30a04d7dd5b41ab277bcd51246ca135bf931d4c4c796ecae7a4fef6d744ecef36ea
   languageName: node
   linkType: hard
+
+"voidcrew_tgui@workspace:packages/voidcrew_tgui":
+  version: 0.0.0-use.local
+  resolution: "voidcrew_tgui@workspace:packages/voidcrew_tgui"
+  dependencies:
+    "@popperjs/core": ^2.9.3
+    "@types/react": ^18.2.39
+    "@types/react-dom": ^18.2.17
+    common: "workspace:*"
+    dateformat: ^4.5.1
+    dompurify: ^2.3.1
+    inferno: ^7.4.8
+    inferno-vnode-flags: ^7.4.8
+    js-yaml: ^4.1.0
+    marked: ^4.0.10
+    react: ^18.2.0
+    react-dom: ^18.2.0
+    tgui: "workspace:*"
+    tgui-dev-server: "workspace:*"
+    tgui-polyfill: "workspace:*"
+  languageName: unknown
+  linkType: soft
 
 "w3c-xmlserializer@npm:^4.0.0":
   version: 4.0.0

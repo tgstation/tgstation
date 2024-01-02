@@ -19,11 +19,11 @@
 	)
 	mob_spawn_chance = 4
 	mob_spawn_list = list(
-		/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50,
+		/mob/living/basic/mining/goliath = 50,
 
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub = 10
+		/mob/living/basic/mining/watcher = 40,
+		/mob/living/basic/mining/legion = 30,
+		/mob/living/basic/mining/goldgrub = 10
 	)
 
 /datum/biome/lavaland/forest
@@ -125,10 +125,10 @@
 	closed_turf_types = list(/turf/closed/mineral/random/volcanic = 1)
 	mob_spawn_chance = 4
 	mob_spawn_list = list(
-		/mob/living/simple_animal/hostile/asteroid/goliath/beast/random = 50,
-		/mob/living/simple_animal/hostile/asteroid/basilisk/watcher/random = 40,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/random = 30,
-		/mob/living/simple_animal/hostile/asteroid/goldgrub = 10
+		/mob/living/basic/mining/goliath = 50,
+		/mob/living/basic/mining/watcher = 40,
+		/mob/living/basic/mining/legion = 30,
+		/mob/living/basic/mining/goldgrub = 10
 	)
 	feature_spawn_list = list(
 		/obj/structure/spawner/lavaland/goliath = 1,

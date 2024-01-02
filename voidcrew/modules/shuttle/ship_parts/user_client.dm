@@ -1,7 +1,7 @@
 ///Removes the cost of the ship from their total. Returns FALSE if unable to.
 /client/proc/remove_ship_cost(ship_faction, ship_cost)
 	for(var/obj/item/ship_parts/ships as anything in prefs.ships_owned)
-		if(initial(ships.faction) != ship_faction)
+		if(initial(ships.ship_faction) != ship_faction)
 			continue
 		//not enough parts
 		if(prefs.ships_owned[ships] < ship_cost)

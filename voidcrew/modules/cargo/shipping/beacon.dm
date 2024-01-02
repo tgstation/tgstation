@@ -1,7 +1,7 @@
 /obj/item/supply_beacon
 	name = "Supply Pod Beacon"
 	desc = "A device linked to a cargo console meant to allow a user to drop pod down cargo freight."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "supplypod_beacon"
 	inhand_icon_state = "radio"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'

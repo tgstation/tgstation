@@ -448,7 +448,7 @@
 	name = "jungle rocks"
 	icon_state = "rock"
 	desc = "A pile of rocks, partially covered with grass."
-	icon = 'icons/obj/flora/jungleflora.dmi'
+	icon = 'icons/obj/fluff/flora/jungleflora.dmi'
 	density = FALSE
 	gender = PLURAL
 

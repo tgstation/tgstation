@@ -37,14 +37,14 @@
 	if(QDELETED(tool.buffer) || !istype(tool.buffer, /obj/machinery/computer/bank_machine))
 		return
 	bank_account_holder = tool.buffer
-	RegisterSignal(tool.buffer, COMSIG_PARENT_QDELETING, PROC_REF(on_bank_deletion))
+	RegisterSignal(tool.buffer, COMSIG_QDELETING, PROC_REF(on_bank_deletion))
 	playsound(user, 'sound/machines/ding.ogg', 40, TRUE)
 	balloon_alert_to_viewers("new account synced")
 	return TRUE
 
 /obj/machinery/computer/voidcrew_cargo/proc/on_bank_deletion(atom/source)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_PARENT_QDELETING)
+	UnregisterSignal(source, COMSIG_QDELETING)
 	bank_account_holder = null
 
 /obj/machinery/computer/voidcrew_cargo/ui_interact(mob/user, datum/tgui/ui)

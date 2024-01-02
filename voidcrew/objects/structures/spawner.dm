@@ -99,7 +99,7 @@
 /obj/structure/spawner/cave/beach
 	name = "oak barrel"
 	desc = "A musty barrel. Reach in and unlock its mold-covered mysteries!"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/structures.dmi'
 	icon_state = "barrel"
 	mob_types = list(/mob/living/simple_animal/hostile/pirate/melee/beach, /mob/living/simple_animal/hostile/pirate/ranged/beach)
 	max_mobs = 2

@@ -36,7 +36,7 @@
 /obj/item/crusher_trophy/fang
 	name = "battle-stained fang"
 	desc = "A wolf fang, displaying the wear and tear associated with a long and colorful life. Could be attached to a kinetic crusher or used to make a trophy."
-	icon = 'icons/obj/lavaland/elite_trophies.dmi'
+	icon = 'icons/obj/mining_zones/elite_trophies.dmi'
 	icon_state = "fang"
 	denied_type = /obj/item/crusher_trophy/fang
 	var/bleed_stacks_per_hit = 5

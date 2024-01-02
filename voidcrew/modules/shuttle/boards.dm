@@ -43,7 +43,7 @@
 	name = "Expulsion Thruster"
 	build_path = /obj/machinery/power/shuttle_engine/ship/fueled/expulsion
 	req_components = list(
-		/obj/item/stock_parts/manipulator = 2,
+		/obj/item/stock_parts/servo = 2,
 		/obj/item/stock_parts/matter_bin = 2,
 	)
 

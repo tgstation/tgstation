@@ -51,12 +51,18 @@
 	var/datum/export_report/ex = new
 
 	for(var/obj/structure/shipping_container/containers as anything in bank_account_holder.synced_bank_account.shipping_containers)
-		for(var/atom/movable/AM as anything in containers.contents)
-			if(iscameramob(AM))
+		// for(var/atom/movable/AM as anything in containers.contents)
+		// 	if(iscameramob(AM))
+		// 		continue
+		// 	if(AM.anchored)
+		// 		continue
+		// 	export_item_and_contents(AM, (EXPORT_CARGO | EXPORT_CONTRABAND), dry_run = FALSE, external_report = ex)
+		for(var/atom/movable/exporting_atom as anything in containers.contents)
+			if(iscameramob(exporting_atom))
 				continue
-			if(AM.anchored)
+			if(exporting_atom.anchored)
 				continue
-			export_item_and_contents(AM, (EXPORT_CARGO | EXPORT_CONTRABAND), dry_run = FALSE, external_report = ex)
+			export_item_and_contents(exporting_atom, dry_run = FALSE, external_report = ex)
 		bank_account_holder.synced_bank_account.shipping_containers -= containers
 		qdel(containers)
 

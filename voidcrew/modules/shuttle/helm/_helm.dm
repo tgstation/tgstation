@@ -32,7 +32,7 @@
 
 /obj/machinery/computer/helm/viewscreen
 	name = "ship viewscreen"
-	icon = 'icons/obj/stationobjs.dmi'
+	icon = 'icons/obj/wallmounts.dmi'
 	icon_state = "telescreen"
 	icon_keyboard = null
 	icon_screen = null

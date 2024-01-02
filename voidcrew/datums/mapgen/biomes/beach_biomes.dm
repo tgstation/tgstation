@@ -162,5 +162,5 @@
 	mob_spawn_list = list(
 		/mob/living/simple_animal/butterfly = 1,
 		/mob/living/simple_animal/slime/pet = 1,
-		/mob/living/simple_animal/hostile/lightgeist = 1
+		/mob/living/basic/lightgeist = 1
 	)

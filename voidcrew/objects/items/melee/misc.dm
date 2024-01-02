@@ -6,7 +6,7 @@
 	//item_state = "swordoff"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	flags_1 = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BACK
 	force = 15
 	throwforce = 8

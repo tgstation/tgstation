@@ -7,9 +7,9 @@
 	mob_spawn_list = list(
 		/mob/living/simple_animal/hostile/asteroid/wolf/random = 30, /obj/structure/spawner/ice_moon = 3,
 		/mob/living/simple_animal/hostile/asteroid/polarbear/random = 30, /obj/structure/spawner/ice_moon/polarbear = 3,
-		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/snow = 50, /mob/living/simple_animal/hostile/asteroid/goldgrub = 10,
+		/mob/living/simple_animal/hostile/asteroid/hivelord/legion/wasteland = 50, /mob/living/basic/mining/goldgrub = 10,
 		/mob/living/simple_animal/hostile/asteroid/ice_demon/random = 20, /obj/structure/spawner/ice_moon/demonic_portal = 7,
-		/mob/living/simple_animal/hostile/asteroid/ice_whelp = 20, /obj/structure/spawner/ice_moon/demonic_portal/ice_whelp = 7,
+		/mob/living/basic/mining/ice_whelp = 20, /mob/living/basic/mining/ice_whelp = 7,
 		/obj/structure/spawner/ice_moon/demonic_portal/snowlegion = 7,
 	)
 	flora_spawn_list = list(

@@ -1,5 +1,11 @@
 import { useBackend } from '../../tgui/backend';
-import { Button, LabeledList, Section, Table, Divider } from '../../tgui/components';
+import {
+  Button,
+  Divider,
+  LabeledList,
+  Section,
+  Table,
+} from '../../tgui/components';
 import { TableCell } from '../../tgui/components/Table';
 import { Window } from '../../tgui/layouts';
 

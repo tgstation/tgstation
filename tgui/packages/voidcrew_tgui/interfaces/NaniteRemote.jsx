@@ -1,5 +1,13 @@
 import { useBackend } from '../../tgui/backend';
-import { Button, LabeledList, NumberInput, Section, NoticeBox, Input, Table } from '../../tgui/components';
+import {
+  Button,
+  Input,
+  LabeledList,
+  NoticeBox,
+  NumberInput,
+  Section,
+  Table,
+} from '../../tgui/components';
 import { Window } from '../../tgui/layouts';
 
 export const NaniteRemote = (props, context) => {
@@ -41,7 +49,8 @@ export const NaniteRemoteContent = (props, context) => {
             content="Lock Interface"
             onClick={() => act('lock')}
           />
-        }>
+        }
+      >
         <LabeledList>
           <LabeledList.Item label="Name">
             <Input

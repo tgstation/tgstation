@@ -27,6 +27,6 @@
 	icon = 'voidcrew/icons/obj/clothing/hats.dmi'
 	worn_icon = 'voidcrew/icons/mob/clothing/head.dmi'
 	icon_state = "survivor"
-	suit = /obj/item/clothing/suit/hooded/explorer/survivor
+	// suit = /obj/item/clothing/suit/hooded/explorer/survivor
 	armor_type = /datum/armor/hooded_survivor
 	resistance_flags = FIRE_PROOF

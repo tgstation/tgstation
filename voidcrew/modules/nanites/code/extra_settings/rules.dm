@@ -130,8 +130,6 @@
 			damage_amt = program.host_mob.getToxLoss()
 		if(OXY)
 			damage_amt = program.host_mob.getOxyLoss()
-		if(CLONE)
-			damage_amt = program.host_mob.getCloneLoss()
 
 	if(above)
 		if(damage_amt >= threshold)

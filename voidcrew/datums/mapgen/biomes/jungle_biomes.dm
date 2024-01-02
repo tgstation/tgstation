@@ -108,6 +108,6 @@
 	open_turf_types = list(/turf/open/misc/grass/jungle/lit = 12, /turf/open/water/jungle/lit = 1)
 	flora_spawn_chance = 40
 	mob_spawn_chance = 1
-	mob_spawn_list = list(/mob/living/simple_animal/slime/random = 1, /mob/living/simple_animal/hostile/lightgeist = 1)
+	mob_spawn_list = list(/mob/living/simple_animal/slime/random = 1, /mob/living/basic/lightgeist = 1)
 	feature_spawn_chance = 0.1
 	feature_spawn_list = list(/obj/item/rod_of_asclepius = 1)

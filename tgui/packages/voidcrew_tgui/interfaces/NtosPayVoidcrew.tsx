@@ -1,7 +1,7 @@
-import { NtosPayContent } from '../../tgui/interfaces/NtosPay';
 import { useBackend, useSharedState } from '../../tgui/backend';
+import { Button, NoticeBox, Stack, Table, Tabs } from '../../tgui/components';
+import { NtosPayContent } from '../../tgui/interfaces/NtosPay';
 import { NtosWindow } from '../../tgui/layouts';
-import { NoticeBox, Stack, Tabs, Table, Button } from '../../tgui/components';
 
 export const NtosPayVoidcrew = (props, context) => {
   const { data } = useBackend(context);
@@ -10,7 +10,7 @@ export const NtosPayVoidcrew = (props, context) => {
   const [screenmode, setScreenmode] = useSharedState(
     context,
     'tab_main',
-    NTOS_PAY
+    NTOS_PAY,
   );
 
   return (
@@ -22,13 +22,15 @@ export const NtosPayVoidcrew = (props, context) => {
               <Tabs.Tab
                 color="Green"
                 selected={screenmode === NTOS_PAY}
-                onClick={() => setScreenmode(NTOS_PAY)}>
+                onClick={() => setScreenmode(NTOS_PAY)}
+              >
                 Transaction History
               </Tabs.Tab>
               <Tabs.Tab
                 Color="Blue"
                 selected={screenmode === ALL_ACCOUNTS}
-                onClick={() => setScreenmode(ALL_ACCOUNTS)}>
+                onClick={() => setScreenmode(ALL_ACCOUNTS)}
+              >
                 All Connected Accounts
               </Tabs.Tab>
             </Tabs>

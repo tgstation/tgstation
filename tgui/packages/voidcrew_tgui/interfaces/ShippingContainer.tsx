@@ -1,6 +1,6 @@
 import { toTitleCase } from '../../common/string';
-import { Button, Section, Table } from '../../tgui/components';
 import { useBackend } from '../../tgui/backend';
+import { Button, Section, Table } from '../../tgui/components';
 import { Window } from '../../tgui/layouts';
 
 type Data = {

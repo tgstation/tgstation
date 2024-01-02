@@ -1,7 +1,18 @@
-import { CargoCatalog } from '../../tgui/interfaces/Cargo.js';
 import { useBackend, useSharedState } from '../../tgui/backend';
-import { AnimatedNumber, Box, Button, Input, RestrictedInput, LabeledList, Section, Stack, Table, Tabs } from '../../tgui/components';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  Input,
+  LabeledList,
+  RestrictedInput,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+} from '../../tgui/components';
 import { formatMoney } from '../../tgui/format';
+import { CargoCatalog } from '../../tgui/interfaces/Cargo.jsx';
 import { Window } from '../../tgui/layouts';
 
 export const VoidcrewCargo = (props, context) => {
@@ -27,14 +38,16 @@ export const VoidcrewCargoContent = (props, context) => {
           <Tabs.Tab
             icon="list"
             selected={tab === 'catalog'}
-            onClick={() => setTab('catalog')}>
+            onClick={() => setTab('catalog')}
+          >
             Catalog
           </Tabs.Tab>
           <Tabs.Tab
             icon="shopping-cart"
             textColor={tab !== 'cart' && cart_length > 0 && 'yellow'}
             selected={tab === 'cart'}
-            onClick={() => setTab('cart')}>
+            onClick={() => setTab('cart')}
+          >
             Checkout ({cart_length})
           </Tabs.Tab>
         </Tabs>
@@ -193,7 +206,7 @@ const VoidcrewCargoCart = (props, context) => {
               color="green"
               style={{
                 'line-height': '28px',
-                'padding': '0 12px',
+                padding: '0 12px',
               }}
               content="Confirm the order"
               onClick={() => act('send')}

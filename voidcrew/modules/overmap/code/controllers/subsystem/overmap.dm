@@ -265,7 +265,7 @@ SUBSYSTEM_DEF(overmap)
 	if(!initial_ship)
 		CRASH("Failed to spawn initial ship.")
 
-	RegisterSignal(initial_ship, COMSIG_PARENT_QDELETING, PROC_REF(handle_initial_ship_deletion))
+	RegisterSignal(initial_ship, COMSIG_QDELETING, PROC_REF(handle_initial_ship_deletion))
 #endif
 
 /**

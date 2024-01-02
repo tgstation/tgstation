@@ -14,7 +14,6 @@
 	icon_living = "hivelord"
 	icon_dead = "hivelord_dead"
 	icon_gib = "syndicate_gib"
-	brood_type = /mob/living/simple_animal/hostile/asteroid/hivelordbrood/beach
 	faction = list(FACTION_BEACH, FACTION_CRYSTAL)
 	//loot = list(/obj/item/strange_crystal)
 

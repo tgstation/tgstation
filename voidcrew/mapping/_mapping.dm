@@ -103,8 +103,9 @@
 /datum/controller/subsystem/mapping/get_station_center()
 	return SSovermap.overmap_centre || locate(OVERMAP_LEFT_SIDE_COORD, OVERMAP_NORTH_SIDE_COORD, OVERMAP_Z_LEVEL)
 
-/datum/controller/subsystem/mapping/get_turf_above(turf/T)
-	return SSovermap.calculate_turf_above(T)
+// Todo I guess
+// /datum/controller/subsystem/mapping/get_turf_above(turf/T)
+// 	return SSovermap.calculate_turf_above(T)
 
-/datum/controller/subsystem/mapping/get_turf_below(turf/T)
-	return SSovermap.calculate_turf_below(T)
+// /datum/controller/subsystem/mapping/get_turf_below(turf/T)
+// 	return SSovermap.calculate_turf_below(T)

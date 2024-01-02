@@ -16,7 +16,6 @@
 		/obj/item/ammo_box/magazine/m10mm = 3,
 		/obj/item/ammo_box/magazine/smgm45 = 3,
 		/obj/item/ammo_box/magazine/sniper_rounds = 3,
-		/obj/item/ammo_box/magazine/m556 = 2,
 		/obj/item/ammo_box/magazine/m12g = 3,
 		/obj/item/grenade/c4 = 1,
 		/obj/item/grenade/frag = 1,
