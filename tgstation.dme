@@ -6629,6 +6629,7 @@
 #include "monkestation\code\modules\virology\machines\isolator.dm"
 #include "monkestation\code\modules\virology\machines\splicer.dm"
 #include "monkestation\code\modules\virology\reagents\antipathenogenics.dm"
+#include "monkestation\code\modules\virology\reagents\immune_healers.dm"
 #include "monkestation\code\modules\virology\reagents\symptom_reagents.dm"
 #include "monkestation\code\modules\virology\reagents\vaccine.dm"
 #include "monkestation\code\modules\virology\research\circuitboards.dm"
