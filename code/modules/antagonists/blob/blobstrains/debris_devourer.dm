@@ -29,7 +29,7 @@
 	for (var/obj/item/I in T)
 		I.forceMove(overmind.blob_core)
 
-/datum/blobstrain/debris_devourer/proc/debris_attack(atom/attacking, source)
+/datum/blobstrain/debris_devourer/proc/debris_attack(atom/attacking, atom/source)
 	var/obj/structure/blob/special/core/core = overmind.blob_core
 	if (prob(40 * DEBRIS_DENSITY)) // Pretend the items are spread through the blob and its mobs and not in the core.
 		var/obj/item/I = length(core.contents) ? pick(core.contents) : null
@@ -37,7 +37,7 @@
 			I.forceMove(get_turf(source))
 			I.throw_at(attacking, 6, 5, overmind, TRUE, FALSE, null, 3)
 
-/datum/blobstrain/debris_devourer/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut) // When this blob's blobbernaut attacks people
+/datum/blobstrain/debris_devourer/blobbernaut_attack(atom/attacking, mob/living/basic/blobbernaut)
 	debris_attack(attacking, blobbernaut)
 
 /datum/blobstrain/debris_devourer/damage_reaction(obj/structure/blob/B, damage, damage_type, damage_flag, coefficient = 1) //when the blob takes damage, do this
