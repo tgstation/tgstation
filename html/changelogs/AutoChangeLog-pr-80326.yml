@@ -1,0 +1,4 @@
+author: "Vishenka0704"
+delete-after: True
+changes:
+  - admin: "The ability to export a part(or z-level) of the map has been added."
