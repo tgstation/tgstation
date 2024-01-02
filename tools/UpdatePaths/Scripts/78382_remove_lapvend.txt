@@ -1,0 +1,1 @@
+/obj/machinery/lapvend : @DELETE

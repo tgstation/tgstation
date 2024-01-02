@@ -1,3 +1,5 @@
+#define CINEMATIC_SOURCE "cinematic"
+
 /**
  * Plays a cinematic, duh. Can be to a select few people, or everyone.
  *
@@ -30,7 +32,7 @@
 /datum/cinematic
 	/// A list of all clients watching the cinematic
 	var/list/client/watching = list()
-	/// A list of all mobs who have notransform set while watching the cinematic
+	/// A list of all mobs who have TRAIT_NO_TRANSFORM set while watching the cinematic
 	var/list/datum/weakref/locked = list()
 	/// Whether the cinematic is a global cinematic or not
 	var/is_global = FALSE
@@ -106,11 +108,7 @@
 /datum/cinematic/proc/show_to(mob/watching_mob, client/watching_client)
 	SIGNAL_HANDLER
 
-	// We could technically rip people out of notransform who shouldn't be,
-	// so we'll only lock down all viewing mobs who don't have it already set.
-	// This does potentially mean some mobs could lose their notrasnform and
-	// not be locked down by cinematics, but that should be very unlikely.
-	if(!watching_mob.notransform)
+	if(!HAS_TRAIT_FROM(watching_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE))
 		lock_mob(watching_mob)
 
 	// Only show the actual cinematic to cliented mobs.
@@ -152,14 +150,14 @@
 /// Locks a mob, preventing them from moving, being hurt, or acting
 /datum/cinematic/proc/lock_mob(mob/to_lock)
 	locked += WEAKREF(to_lock)
-	to_lock.notransform = TRUE
+	ADD_TRAIT(to_lock, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
 
 /// Unlocks a previously locked weakref
 /datum/cinematic/proc/unlock_mob(datum/weakref/mob_ref)
 	var/mob/locked_mob = mob_ref.resolve()
 	if(isnull(locked_mob))
 		return
-	locked_mob.notransform = FALSE
+	REMOVE_TRAIT(locked_mob, TRAIT_NO_TRANSFORM, CINEMATIC_SOURCE)
 	UnregisterSignal(locked_mob, COMSIG_MOB_CLIENT_LOGIN)
 
 /// Removes the passed client from our watching list.
@@ -171,8 +169,10 @@
 
 	UnregisterSignal(no_longer_watching, COMSIG_QDELETING)
 	// We'll clear the cinematic if they have a mob which has one,
-	// but we won't remove notransform. Wait for the cinematic end to do that.
+	// but we won't remove TRAIT_NO_TRANSFORM. Wait for the cinematic end to do that.
 	no_longer_watching.mob?.clear_fullscreen("cinematic")
 	no_longer_watching.screen -= screen
 
 	watching -= no_longer_watching
+
+#undef CINEMATIC_SOURCE

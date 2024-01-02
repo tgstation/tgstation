@@ -50,6 +50,8 @@
 
 /datum/component/nuclear_bomb_operator/Destroy(force, silent)
 	QDEL_NULL(disky)
+	on_disk_collected = null
+	add_disk_overlays = null
 	return ..()
 
 /// Drop the disk on the floor, if we have it

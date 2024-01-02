@@ -39,7 +39,7 @@
 
 /obj/structure/chair/deconstruct(disassembled)
 	// If we have materials, and don't have the NOCONSTRUCT flag
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(buildstacktype)
 			new buildstacktype(loc,buildstackamount)
 		else
@@ -57,7 +57,7 @@
 	qdel(src)
 
 /obj/structure/chair/attackby(obj/item/W, mob/user, params)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return . = ..()
 	if(istype(W, /obj/item/assembly/shock_kit) && !HAS_TRAIT(src, TRAIT_ELECTRIFIED_BUCKLE))
 		electrify_self(W, user)
@@ -86,7 +86,7 @@
 
 
 /obj/structure/chair/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1&NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return TRUE
 	..()
 	weapon.play_tool_sound(src)
@@ -267,7 +267,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool)
 /obj/structure/chair/MouseDrop(over_object, src_location, over_location)
 	. = ..()
 	if(over_object == usr && Adjacent(usr))
-		if(!item_chair || has_buckled_mobs() || src.flags_1 & NODECONSTRUCT_1)
+		if(!item_chair || has_buckled_mobs() || src.obj_flags & NO_DECONSTRUCTION)
 			return
 		if(!usr.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
 			return
@@ -365,11 +365,8 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 		new /obj/item/stack/rods(get_turf(loc), 2)
 	qdel(src)
 
-
-
-
 /obj/item/chair/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
-	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance))
+	if(attack_type == UNARMED_ATTACK && prob(hit_reaction_chance) || attack_type == LEAP_ATTACK && prob(hit_reaction_chance))
 		owner.visible_message(span_danger("[owner] fends off [attack_text] with [src]!"))
 		return TRUE
 	return FALSE
@@ -483,7 +480,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)

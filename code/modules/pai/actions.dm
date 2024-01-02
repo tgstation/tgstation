@@ -61,3 +61,18 @@
 /datum/action/innate/pai/light/Trigger(trigger_flags)
 	..()
 	pai_owner.toggle_integrated_light()
+
+/datum/action/innate/pai/messenger
+	name = "Interact with PDA"
+	button_icon_state = "pda"
+	background_icon_state = "bg_tech"
+	overlay_icon_state = "bg_tech_border"
+
+/datum/action/innate/pai/messenger/Trigger(trigger_flags)
+	. = ..()
+	var/obj/item/pai_card/pai_holder = owner.loc
+	if(!istype(pai_holder.loc, /obj/item/modular_computer))
+		owner.balloon_alert(owner, "not in a pda!")
+		return
+	var/obj/item/modular_computer/computer_host = pai_holder.loc
+	computer_host.interact(owner)

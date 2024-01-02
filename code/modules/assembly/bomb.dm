@@ -8,7 +8,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
 	throw_range = 4
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	var/status = FALSE   //0 - not readied //1 - bomb finished with welder
 	var/obj/item/assembly_holder/bombassembly = null   //The first part of the bomb is an assembly holder, holding an igniter+some device
 	var/obj/item/tank/bombtank = null //the second part of the bomb is a plasma tank
@@ -122,7 +122,7 @@
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
 
-	if((src in user.get_equipped_items(TRUE)) && !user.canUnEquip(src))
+	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
 		to_chat(user, span_warning("[src] is stuck to you!"))
 		return
 

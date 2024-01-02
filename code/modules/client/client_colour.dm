@@ -191,7 +191,7 @@
 	colour = list(/*R*/ 0,0,0,0, /*G*/ 0,175,0,0, /*B*/ 0,0,0,0, /*A*/ 0,0,0,1, /*C*/0,-130,0,0) // Matrix colors
 
 /datum/client_colour/monochrome
-	colour = list(rgb(77,77,77), rgb(150,150,150), rgb(28,28,28), rgb(0,0,0))
+	colour = COLOR_MATRIX_GRAYSCALE
 	priority = PRIORITY_HIGH //we can't see colors anyway!
 	override = TRUE
 	fade_in = 20
@@ -223,6 +223,10 @@
 	priority = PRIORITY_ABSOLUTE
 	override = TRUE
 	colour = list(0.8,0,0,0, 0,0,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,0)
+
+/datum/client_colour/manual_heart_blood
+	priority = PRIORITY_ABSOLUTE
+	colour = COLOR_RED
 
 #undef PRIORITY_ABSOLUTE
 #undef PRIORITY_HIGH

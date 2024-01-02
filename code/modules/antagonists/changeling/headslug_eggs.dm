@@ -37,7 +37,7 @@
 		changeling_datum.regain_powers()
 
 	owner.investigate_log("has been gibbed by a changeling egg burst.", INVESTIGATE_DEATHS)
-	owner.gib()
+	owner.gib(DROP_ALL_REMAINS)
 	qdel(src)
 
 #undef EGG_INCUBATION_TIME

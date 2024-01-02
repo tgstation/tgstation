@@ -21,6 +21,9 @@
 /// Controller for admin event arenas
 /obj/machinery/computer/arena
 	name = "arena controller"
+
+	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_SET_MACHINE|INTERACT_MACHINE_REQUIRES_LITERACY
+
 	/// Arena ID
 	var/arena_id = ARENA_DEFAULT_ID
 	/// Enables/disables spawning
@@ -362,7 +365,7 @@
 /// Arena spawnpoint
 /obj/machinery/arena_spawn
 	name = "Arena Spawnpoint"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	resistance_flags = INDESTRUCTIBLE
 	/// In case we have multiple arena controllers at once.

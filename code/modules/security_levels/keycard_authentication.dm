@@ -84,11 +84,10 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 /obj/machinery/keycard_auth/ui_status(mob/user)
 	if(isdrone(user))
 		return UI_CLOSE
-	if(!isanimal(user))
+	if(!isanimal_or_basicmob(user))
 		return ..()
-	var/mob/living/simple_animal/A = user
-	if(!A.dextrous)
-		to_chat(user, span_warning("You are too primitive to use this device!"))
+	if(!HAS_TRAIT(user, TRAIT_CAN_HOLD_ITEMS))
+		balloon_alert(user, "no hands!")
 		return UI_CLOSE
 	return ..()
 

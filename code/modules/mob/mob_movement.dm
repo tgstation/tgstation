@@ -8,25 +8,6 @@
 	if(!iscyborg(mob) && mob.stat == CONSCIOUS)
 		mob.dropItemToGround(mob.get_active_held_item())
 	return
-
-/**
- * force move the control_object of your client mob
- *
- * Used in admin possession and called from the client Move proc
- * ensures the possessed object moves and not the admin mob
- *
- * Has no sanity other than checking density
- */
-/client/proc/Move_object(direct)
-	if(mob?.control_object)
-		if(mob.control_object.density)
-			step(mob.control_object,direct)
-			if(!mob.control_object)
-				return
-			mob.control_object.setDir(direct)
-		else
-			mob.control_object.forceMove(get_step(mob.control_object,direct))
-
 /**
  * Move a client in a direction
  *
@@ -74,11 +55,11 @@
 		return FALSE
 	if(!mob?.loc)
 		return FALSE
-	if(mob.notransform)
-		return FALSE //This is sota the goto stop mobs from moving var
-	if(mob.control_object)
-		return Move_object(direct)
+	if(HAS_TRAIT(mob, TRAIT_NO_TRANSFORM))
+		return FALSE //This is sorta the goto stop mobs from moving trait
 	if(!isliving(mob))
+		if(SEND_SIGNAL(mob, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE, new_loc, direct) & COMSIG_MOB_CLIENT_BLOCK_PRE_NON_LIVING_MOVE)
+			return FALSE
 		return mob.Move(new_loc, direct)
 	if(mob.stat == DEAD)
 		mob.ghostize()
@@ -132,7 +113,7 @@
 	//Basically an optional override for our glide size
 	//Sometimes you want to look like you're moving with a delay you don't actually have yet
 	visual_delay = 0
-	var/old_dir = dir
+	var/old_dir = mob.dir
 
 	. = ..()
 
@@ -253,9 +234,9 @@
 				if(salt)
 					to_chat(L, span_warning("[salt] bars your passage!"))
 					if(isrevenant(L))
-						var/mob/living/simple_animal/revenant/R = L
-						R.reveal(20)
-						R.stun(20)
+						var/mob/living/basic/revenant/ghostie = L
+						ghostie.apply_status_effect(/datum/status_effect/revenant/revealed, 2 SECONDS)
+						ghostie.apply_status_effect(/datum/status_effect/incapacitating/paralyzed/revenant, 2 SECONDS)
 					return
 				if(stepTurf.turf_flags & NOJAUNT)
 					to_chat(L, span_warning("Some strange aura is blocking the way."))
@@ -496,22 +477,24 @@
 	set name = "toggle-walk-run"
 	set hidden = TRUE
 	set instant = TRUE
-	if(mob)
-		mob.toggle_move_intent(usr)
+	if(isliving(mob))
+		var/mob/living/user_mob = mob
+		user_mob.toggle_move_intent(usr)
 
 /**
  * Toggle the move intent of the mob
  *
  * triggers an update the move intent hud as well
  */
-/mob/proc/toggle_move_intent(mob/user)
-	if(m_intent == MOVE_INTENT_RUN)
-		m_intent = MOVE_INTENT_WALK
+/mob/living/proc/toggle_move_intent(mob/user)
+	if(move_intent == MOVE_INTENT_RUN)
+		move_intent = MOVE_INTENT_WALK
 	else
-		m_intent = MOVE_INTENT_RUN
+		move_intent = MOVE_INTENT_RUN
 	if(hud_used?.static_inventory)
 		for(var/atom/movable/screen/mov_intent/selector in hud_used.static_inventory)
 			selector.update_appearance()
+	update_move_intent_slowdown()
 
 ///Moves a mob upwards in z level
 /mob/verb/up()

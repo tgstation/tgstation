@@ -394,7 +394,7 @@
 /turf/open/floor/iron,
 /area/awaymission/moonoutpost19/research)
 "cS" = (
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /obj/structure/flora/lunar_plant,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -434,7 +434,7 @@
 	},
 /area/awaymission/moonoutpost19/syndicate)
 "dr" = (
-/mob/living/simple_animal/hostile/construct/proteon/hostile,
+/mob/living/basic/construct/proteon/hostile,
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
 	},
@@ -1941,7 +1941,7 @@
 "mJ" = (
 /obj/structure/sign/warning/vacuum{
 	desc = "A beacon used by a teleporter.";
-	icon = 'icons/obj/device.dmi';
+	icon = 'icons/obj/devices/tracker.dmi';
 	icon_state = "beacon";
 	name = "tracking beacon"
 	},
@@ -2959,7 +2959,7 @@
 "sM" = (
 /obj/effect/mapping_helpers/burnt_floor,
 /obj/item/flashlight/flare{
-	on = 1
+	start_on = 1
 	},
 /turf/open/floor/iron{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251";
@@ -3358,7 +3358,7 @@
 /area/awaymission/moonoutpost19/research)
 "vu" = (
 /obj/structure/table,
-/obj/item/storage/secure/briefcase,
+/obj/item/storage/briefcase/secure,
 /obj/item/taperecorder{
 	pixel_x = -3
 	},
@@ -5120,7 +5120,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "HP" = (
-/mob/living/simple_animal/pet/cat/space{
+/mob/living/basic/pet/cat/space{
 	desc = "With survival instincts like these, it's no wonder cats survived to the 26th century.";
 	name = "Jones"
 	},
@@ -6170,7 +6170,7 @@
 /area/awaymission/moonoutpost19/mines)
 "Pf" = (
 /obj/item/flashlight/flare{
-	on = 1
+	start_on = 1
 	},
 /turf/open/misc/asteroid/moon{
 	initial_gas_mix = "co2=48.7;n2=13.2;o2=32.4;TEMP=251"
@@ -6844,7 +6844,7 @@
 	},
 /area/awaymission/moonoutpost19/research)
 "Tx" = (
-/obj/item/storage/secure/safe/directional/east,
+/obj/structure/secure_safe/directional/east,
 /obj/effect/decal/cleanable/blood/splatter,
 /obj/item/pen,
 /obj/item/paper/crumpled/awaymissions/moonoutpost19/hastey_note,

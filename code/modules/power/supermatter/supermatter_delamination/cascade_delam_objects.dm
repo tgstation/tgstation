@@ -36,6 +36,9 @@
 	if(our_turf)
 		our_turf.opacity = FALSE
 
+	// Ideally this'd be part of the SM component, but the SM itself snowflakes bullets (emitters are bullets).
+	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(eat_bullets))
+
 /obj/crystal_mass/process()
 
 	if(!COOLDOWN_FINISHED(src, sm_wall_cooldown))
@@ -70,9 +73,18 @@
 
 	new /obj/crystal_mass(next_turf, get_dir(next_turf, src))
 
-/obj/crystal_mass/bullet_act(obj/projectile/projectile)
-	visible_message(span_notice("[src] is unscathed!"))
-	return BULLET_ACT_HIT
+/obj/crystal_mass/proc/eat_bullets(datum/source, obj/projectile/hitting_projectile)
+	SIGNAL_HANDLER
+
+	visible_message(
+		span_warning("[hitting_projectile] flies into [src] with a loud crack, before rapidly flashing into ash."),
+		null,
+		span_hear("You hear a loud crack as you are washed with a wave of heat."),
+	)
+
+	playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+	qdel(hitting_projectile)
+	return COMPONENT_BULLET_BLOCKED
 
 /obj/crystal_mass/singularity_act()
 	return
@@ -166,4 +178,3 @@
 			span_hear("You hear a loud crack as a small distortion passes through you."))
 
 		qdel(consumed_object)
-

@@ -92,7 +92,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/machinery/shower/examine(mob/user)
 	. = ..()
@@ -185,7 +185,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/shower)
 
 /obj/machinery/shower/wrench_act(mob/living/user, obj/item/I)
 	. = ..()
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	I.play_tool_sound(src)

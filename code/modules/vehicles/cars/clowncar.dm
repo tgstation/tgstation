@@ -13,6 +13,7 @@
 	light_range = 8
 	light_power = 2
 	light_on = FALSE
+	access_provider_flags = VEHICLE_CONTROL_DRIVE|VEHICLE_CONTROL_KIDNAPPED
 	///list of headlight colors we use to pick through when we have party mode due to emag
 	var/headlight_colors = list(COLOR_RED, COLOR_ORANGE, COLOR_YELLOW, COLOR_LIME, COLOR_BRIGHT_BLUE, COLOR_CYAN, COLOR_PURPLE)
 	///Cooldown time inbetween [/obj/vehicle/sealed/car/clowncar/proc/roll_the_dice()] usages
@@ -121,11 +122,11 @@
 				if(prob(35)) //Note: The randomstep on dump_mobs throws occupants into each other and often causes wounds regardless.
 					continue
 				for(var/obj/item/bodypart/head/head_to_wound as anything in carbon_occupant.bodyparts)
-					var/type_wound = pick(list(
-					/datum/wound/blunt/moderate,
-					/datum/wound/blunt/severe,
-					))
-					head_to_wound.force_wound_upwards(type_wound, wound_source = src)
+					var/pick_mode = text2num(pick(list(
+						"[WOUND_PICK_LOWEST_SEVERITY]",
+						"[WOUND_PICK_HIGHEST_SEVERITY]"
+					)))
+					carbon_occupant.cause_wound_of_type_and_severity(WOUND_BLUNT, head_to_wound, WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, pick_mode)
 					carbon_occupant.playsound_local(src, 'sound/weapons/flash_ring.ogg', 50)
 					carbon_occupant.set_eye_blur_if_lower(rand(10 SECONDS, 20 SECONDS))
 
@@ -198,7 +199,7 @@
  * * Fart and make everyone nearby laugh
  */
 /obj/vehicle/sealed/car/clowncar/proc/roll_the_dice(mob/user)
-	if(TIMER_COOLDOWN_CHECK(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
+	if(TIMER_COOLDOWN_RUNNING(src, COOLDOWN_CLOWNCAR_RANDOMNESS))
 		to_chat(user, span_notice("The button panel is currently recharging."))
 		return
 	TIMER_COOLDOWN_START(src, COOLDOWN_CLOWNCAR_RANDOMNESS, dice_cooldown_time)

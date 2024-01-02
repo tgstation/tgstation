@@ -38,13 +38,13 @@
 	premium = list(
 		/obj/item/food/spacers_sidekick = 3,
 		/obj/item/food/pistachios = 3,
+		/obj/item/food/swirl_lollipop = 3,
 	)
 	refill_canister = /obj/item/vending_refill/snack
 	req_access = list(ACCESS_KITCHEN)
 	default_price = PAYCHECK_CREW * 0.6
 	extra_price = PAYCHECK_CREW
 	payment_department = ACCOUNT_SRV
-	input_display_header = "Chef's Food Selection"
 
 /obj/item/vending_refill/snack
 	machine_name = "Getmore Chocolate Corp"

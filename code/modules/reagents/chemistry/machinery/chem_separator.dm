@@ -231,7 +231,7 @@
 			soundloop.start()
 		var/vapor_amount = distillation_rate * seconds_per_tick
 		// Vapor to condenser
-		reagents.trans_id_to(condenser, separating_reagent.type, vapor_amount)
+		reagents.trans_to(condenser, vapor_amount, target_id = separating_reagent.type)
 		// Cool the vapor down
 		condenser.set_temperature(air.temperature)
 		// Condense into container

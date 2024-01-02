@@ -94,6 +94,7 @@
 /obj/structure/bookcase/random/reference
 	name = "bookcase (Reference)"
 	random_category = "Reference"
+	///Chance to spawn a random manual book
 	var/ref_book_prob = 20
 
 /obj/structure/bookcase/random/reference/Initialize(mapload)
@@ -101,3 +102,15 @@
 	while(books_to_load > 0 && prob(ref_book_prob))
 		books_to_load--
 		new /obj/item/book/manual/random(src)
+
+/obj/structure/bookcase/random/reference/wizard
+	desc = "It reeks of cheese..."
+	///Whether this shelf has spawned a cheese granter
+	var/static/cheese_granter_spawned = FALSE
+
+/obj/structure/bookcase/random/reference/wizard/after_random_load()
+	if(cheese_granter_spawned)
+		return
+	cheese_granter_spawned = TRUE
+	new /obj/item/book/granter/action/spell/summon_cheese(src)
+	new /obj/item/book/manual/ancient_parchment(src)

@@ -24,18 +24,6 @@
 	To see an example of a diagonal wall, see '/turf/closed/wall/mineral/titanium' and its subtypes.
 */
 
-
-DEFINE_BITFIELD(smoothing_junction, list(
-	"NORTH_JUNCTION" = NORTH_JUNCTION,
-	"SOUTH_JUNCTION" = SOUTH_JUNCTION,
-	"EAST_JUNCTION" = EAST_JUNCTION,
-	"WEST_JUNCTION" = WEST_JUNCTION,
-	"NORTHEAST_JUNCTION" = NORTHEAST_JUNCTION,
-	"SOUTHEAST_JUNCTION" = SOUTHEAST_JUNCTION,
-	"SOUTHWEST_JUNCTION" = SOUTHWEST_JUNCTION,
-	"NORTHWEST_JUNCTION" = NORTHWEST_JUNCTION,
-))
-
 #define NO_ADJ_FOUND 0
 #define ADJ_FOUND 1
 #define NULLTURF_BORDER 2
@@ -177,6 +165,8 @@ xxx xxx xxx
 
 ///do not use, use QUEUE_SMOOTH(atom)
 /atom/proc/smooth_icon()
+	if(QDELETED(src))
+		return
 	smoothing_flags &= ~SMOOTH_QUEUED
 	flags_1 |= HTML_USE_INITAL_ICON_1
 	if (!z)

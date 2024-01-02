@@ -8,3 +8,6 @@
 #define CATEGORY_CONSUMABLES "Consumables"
 #define CATEGORY_TOYS_DRONE "Toys & Drones"
 #define CATEGORY_PKA "PKAs"
+#define CATEGORY_BEPIS "Bepis Tech"
+#define CATEGORY_BITRUNNING_FLAIR "Misc"
+#define CATEGORY_BITRUNNING_TECH "Tech"

@@ -187,7 +187,7 @@
 	name = "Psyker-Shikari Hunter"
 	glasses = null
 	head = null
-	ears = /obj/item/radio/headset/syndicate/alt/psyker
+	ears = /obj/item/radio/headset/psyker
 	uniform = /obj/item/clothing/under/pants/track
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = /obj/item/clothing/shoes/jackboots

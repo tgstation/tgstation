@@ -48,7 +48,7 @@
 			return TRUE
 
 	victim.investigate_log("has been gibbed by the smite spell.", INVESTIGATE_DEATHS)
-	victim.gib()
+	victim.gib(DROP_ALL_REMAINS)
 	return TRUE
 
 /obj/item/melee/touch_attack/smite

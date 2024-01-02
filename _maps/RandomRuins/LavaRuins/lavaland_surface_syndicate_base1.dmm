@@ -1585,7 +1585,7 @@
 /area/ruin/syndicate_lava_base/bar)
 "mA" = (
 /obj/machinery/light/small/directional/west,
-/obj/structure/bed/roller,
+/obj/structure/bed/medical/emergency,
 /obj/machinery/iv_drip,
 /obj/item/reagent_containers/blood/o_minus,
 /obj/machinery/firealarm/directional/west,
@@ -3716,7 +3716,7 @@
 "OZ" = (
 /obj/effect/turf_decal/bot,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/suit_storage_unit/syndicate,
+/obj/machinery/suit_storage_unit/syndicate/lavaland,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)

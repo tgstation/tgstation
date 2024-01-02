@@ -19,7 +19,6 @@
 	name = "Makarov Pistol"
 	desc = "A small, easily concealable handgun that uses 9mm auto rounds in 8-round magazines and is compatible \
 			with suppressors."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/gun/ballistic/automatic/pistol
 	cost = 7
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -28,7 +27,6 @@
 	name = "Box of Throwing Weapons"
 	desc = "A box of shurikens and reinforced bolas from ancient Earth martial arts. They are highly effective \
 			throwing weapons. The bolas can knock a target down and the shurikens will embed into limbs."
-	progression_minimum = 10 MINUTES
 	item = /obj/item/storage/box/syndie_kit/throwing_weapons
 	cost = 3
 	illegal_tech = FALSE
@@ -63,11 +61,11 @@
 /datum/uplink_item/dangerous/doublesword
 	name = "Double-Bladed Energy Sword"
 	desc = "The double-bladed energy sword does slightly more damage than a standard energy sword and will deflect \
-			all energy projectiles, but requires two hands to wield."
+			energy projectiles it blocks, but requires two hands to wield. It also struggles to protect you from tackles."
 	progression_minimum = 30 MINUTES
 	item = /obj/item/dualsaber
 
-	cost = 16
+	cost = 13
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //nukies get their own version
 
 /datum/uplink_item/dangerous/doublesword/get_discount_value(discount_type)
@@ -84,7 +82,7 @@
 	desc = "Though capable of near sorcerous feats via use of hardlight holograms and nanomachines, they require an \
 			organic host as a home base and source of fuel. Holoparasites come in various types and share damage with their host."
 	progression_minimum = 30 MINUTES
-	item = /obj/item/guardiancreator/tech/choose/traitor
+	item = /obj/item/guardian_creator/tech
 	cost = 18
 	surplus = 0
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
@@ -95,7 +93,13 @@
 	name = "Syndicate Revolver"
 	desc = "Waffle Co.'s modernized Syndicate revolver. Fires 7 brutal rounds of .357 Magnum."
 	item = /obj/item/gun/ballistic/revolver/syndicate
-	progression_minimum = 30 MINUTES
 	cost = 13
 	surplus = 50
 	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS) //nukies get their own version
+
+/datum/uplink_item/dangerous/cat
+	name = "Feral cat grenade"
+	desc = "This grenade is filled with 5 feral cats in stasis. Upon activation, the feral cats are awoken and unleashed unto unlucky bystanders. WARNING: The cats are not trained to discern friend from foe!"
+	cost = 5
+	item = /obj/item/grenade/spawnergrenade/cat
+	surplus = 30

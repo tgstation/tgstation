@@ -304,7 +304,7 @@
 		return TRUE
 	var/choice = tgui_alert(usr, "Please confirm feed channel creation","Network Channel Handler", list("Confirm","Cancel"))
 	if(choice == "Confirm")
-		GLOB.news_network.create_feed_channel(channel_name, "Centcom Offical", channel_desc, locked = channel_locked)
+		GLOB.news_network.create_feed_channel(channel_name, "Centcom Official", channel_desc, locked = channel_locked)
 		SSblackbox.record_feedback("text", "newscaster_channels", 1, "[channel_name]")
 	creating_channel = FALSE
 
@@ -316,7 +316,7 @@
 		creating_comment = FALSE
 		return TRUE
 	var/datum/feed_comment/new_feed_comment = new /datum/feed_comment
-	new_feed_comment.author = "Centcom Offical"
+	new_feed_comment.author = "Centcom Official"
 	new_feed_comment.body = comment_text
 	new_feed_comment.time_stamp = station_time_timestamp()
 	current_message.comments += new_feed_comment

@@ -73,7 +73,9 @@
 	///The minimum value for the light's power in low power mode
 	var/bulb_low_power_pow_min = 0.5
 	///The Light range to use when working in fire alarm status
-	var/fire_brightness = 4
+	var/fire_brightness = 9
+	///The Light power to use when working in fire alarm status
+	var/fire_power = 0.5
 	///The Light colour to use when working in fire alarm status
 	var/fire_colour = COLOR_FIRE_LIGHT_RED
 
@@ -101,7 +103,7 @@
 			qdel(on_turf)
 
 	if(!mapload) //sync up nightshift lighting for player made lights
-		var/area/our_area = get_room_area(src)
+		var/area/our_area = get_room_area()
 		var/obj/machinery/power/apc/temp_apc = our_area.apc
 		nightshift_enabled = temp_apc?.nightshift_lights
 
@@ -114,8 +116,9 @@
 	// Light projects out backwards from the dir of the light
 	set_light(l_dir = dir)
 	RegisterSignal(src, COMSIG_LIGHT_EATER_ACT, PROC_REF(on_light_eater))
-	AddElement(/datum/element/wall_mount)
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 	AddElement(/datum/element/atmos_sensitive, mapload)
+	find_and_hang_on_wall(custom_drop_callback = CALLBACK(src, PROC_REF(knock_down)))
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/light/LateInitialize()
@@ -130,7 +133,7 @@
 	update(trigger = FALSE)
 
 /obj/machinery/light/Destroy()
-	var/area/local_area = get_room_area(src)
+	var/area/local_area = get_room_area()
 	if(local_area)
 		on = FALSE
 	QDEL_NULL(cell)
@@ -156,7 +159,7 @@
 /obj/machinery/light/update_icon_state()
 	switch(status) // set icon_states
 		if(LIGHT_OK)
-			var/area/local_area =get_room_area(src)
+			var/area/local_area = get_room_area()
 			if(low_power_mode || major_emergency || (local_area?.fire))
 				icon_state = "[base_state]_emergency"
 			else
@@ -176,7 +179,7 @@
 
 	. += emissive_appearance(overlay_icon, "[base_state]", src, alpha = src.alpha)
 
-	var/area/local_area = get_room_area(src)
+	var/area/local_area = get_room_area()
 
 	if(low_power_mode || major_emergency || (local_area?.fire))
 		. += mutable_appearance(overlay_icon, "[base_state]_emergency")
@@ -192,7 +195,7 @@
 	. = ..()
 	if(!.)
 		return
-	var/area/our_area = get_room_area(src)
+	var/area/our_area = get_room_area()
 	RegisterSignal(our_area, COMSIG_AREA_FIRE_CHANGED, PROC_REF(handle_fire))
 
 /obj/machinery/light/on_enter_area(datum/source, area/area_to_register)
@@ -222,9 +225,10 @@
 			color_set = color
 		if(reagents)
 			START_PROCESSING(SSmachines, src)
-		var/area/local_area =get_room_area(src)
+		var/area/local_area = get_room_area()
 		if (local_area?.fire)
 			color_set = fire_colour
+			power_set = fire_power
 			brightness_set = fire_brightness
 		else if (nightshift_enabled)
 			brightness_set = nightshift_brightness
@@ -264,7 +268,7 @@
 		static_power_used = 0
 	else if(on) //Light is on, just recalculate usage
 		var/static_power_used_new = 0
-		var/area/local_area = get_room_area(src)
+		var/area/local_area = get_room_area()
 		if (nightshift_enabled && !local_area?.fire)
 			static_power_used_new = nightshift_brightness * nightshift_light_power * power_consumption_rate
 		else
@@ -379,13 +383,13 @@
 		deconstruct()
 		return
 	to_chat(user, span_userdanger("You stick \the [tool] into the light socket!"))
-	if(has_power() && (tool.flags_1 & CONDUCT_1))
+	if(has_power() && (tool.obj_flags & CONDUCTS_ELECTRICITY))
 		do_sparks(3, TRUE, src)
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
 
 /obj/machinery/light/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		qdel(src)
 		return
 	var/obj/structure/light_construct/new_light = null
@@ -422,7 +426,7 @@
 	..()
 	if(status != LIGHT_BROKEN && status != LIGHT_EMPTY)
 		return
-	if(!on || !(attacking_object.flags_1 & CONDUCT_1))
+	if(!on || !(attacking_object.obj_flags & CONDUCTS_ELECTRICITY))
 		return
 	if(prob(12))
 		electrocute_mob(user, get_area(src), src, 0.3, TRUE)
@@ -449,13 +453,13 @@
 // returns if the light has power /but/ is manually turned off
 // if a light is turned off, it won't activate emergency power
 /obj/machinery/light/proc/turned_off()
-	var/area/local_area = get_room_area(src)
+	var/area/local_area = get_room_area()
 	return !local_area.lightswitch && local_area.power_light || flickering
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
-	var/area/local_area =get_room_area(src)
+	var/area/local_area = get_room_area()
 	return local_area.lightswitch && local_area.power_light
 
 // returns whether this light has emergency power
@@ -657,7 +661,7 @@
 // called when area power state changes
 /obj/machinery/light/power_change()
 	SHOULD_CALL_PARENT(FALSE)
-	var/area/local_area =get_room_area(src)
+	var/area/local_area = get_room_area()
 	set_on(local_area.lightswitch && local_area.power_light)
 
 // called when heated
@@ -678,6 +682,11 @@
 	tube?.burn()
 	return
 
+/obj/machinery/light/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	break_light_tube()
+	return COMSIG_SABOTEUR_SUCCESS
+
 /obj/machinery/light/proc/grey_tide(datum/source, list/grey_tide_areas)
 	SIGNAL_HANDLER
 
@@ -685,6 +694,20 @@
 		if(!istype(get_area(src), area_type))
 			continue
 		INVOKE_ASYNC(src, PROC_REF(flicker))
+
+/**
+ * All the effects that occur when a light falls off a wall that it was hung onto.
+ */
+/obj/machinery/light/proc/knock_down()
+	new /obj/item/wallframe/light_fixture(drop_location())
+	new /obj/item/stack/cable_coil(drop_location(), 1, "red")
+	if(status != LIGHT_BROKEN)
+		break_light_tube(FALSE)
+	if(status != LIGHT_EMPTY)
+		drop_light_tube()
+	if(cell)
+		cell.forceMove(drop_location())
+	qdel(src)
 
 /obj/machinery/light/floor
 	name = "floor light"
@@ -700,7 +723,7 @@
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
 	nightshift_brightness = 3
-	fire_brightness = 2
+	fire_brightness = 4.5
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)

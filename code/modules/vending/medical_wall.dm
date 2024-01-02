@@ -15,6 +15,7 @@
 		/obj/item/reagent_containers/medigel/sterilizine = 1,
 		/obj/item/healthanalyzer/simple = 2,
 		/obj/item/stack/medical/bone_gel = 2,
+		/obj/item/storage/box/bandages = 1,
 	)
 	contraband = list(
 		/obj/item/reagent_containers/pill/tox = 2,
@@ -30,7 +31,7 @@
 
 /obj/machinery/vending/wallmed/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/vending/wallmed)
 

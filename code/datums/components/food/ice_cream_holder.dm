@@ -33,14 +33,16 @@
 	var/datum/reagent/sweetener
 
 
-/datum/component/ice_cream_holder/Initialize(max_scoops = DEFAULT_MAX_ICE_CREAM_SCOOPS,
-											change_name = TRUE,
-											filled_name,
-											change_desc = FALSE,
-											x_offset = 0,
-											y_offset = 0,
-											datum/reagent/sweetener = /datum/reagent/consumable/sugar,
-											list/prefill_flavours)
+/datum/component/ice_cream_holder/Initialize(
+	max_scoops = DEFAULT_MAX_ICE_CREAM_SCOOPS,
+	change_name = TRUE,
+	filled_name,
+	change_desc = FALSE,
+	x_offset = 0,
+	y_offset = 0,
+	datum/reagent/sweetener = /datum/reagent/consumable/sugar,
+	list/prefill_flavours,
+)
 	if(!IS_EDIBLE(parent)) /// There is no easy way to add servings to those non-item edibles, but I won't stop you.
 		return COMPONENT_INCOMPATIBLE
 
@@ -75,8 +77,7 @@
 
 /datum/component/ice_cream_holder/proc/on_update_name(atom/source, updates)
 	SIGNAL_HANDLER
-	var/obj/obj = source
-	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
+	if(HAS_TRAIT(source, TRAIT_WAS_RENAMED))
 		return
 	var/scoops_len = length(scoops)
 	if(!scoops_len)
@@ -91,8 +92,7 @@
 
 /datum/component/ice_cream_holder/proc/on_update_desc(atom/source, updates)
 	SIGNAL_HANDLER
-	var/obj/obj = source
-	if(istype(obj) && obj.renamedByPlayer) //Renamed by the player.
+	if(HAS_TRAIT(source, TRAIT_WAS_RENAMED))
 		return
 	var/scoops_len = length(scoops)
 	if(!scoops_len)
@@ -169,7 +169,7 @@
 	if(compare_list(our_scoops, icecream_order.wanted_flavors))
 		return COMPONENT_CORRECT_ORDER
 
-/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/simple_animal/robot_customer/sold_to)
+/datum/component/ice_cream_holder/proc/sell_ice_cream(obj/item/source, mob/living/basic/robot_customer/sold_to)
 	SIGNAL_HANDLER
 
 	//the price of ice cream scales with the number of scoops. Yummy.

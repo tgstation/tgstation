@@ -41,9 +41,9 @@
 	var/message2 = ""
 
 	/// Normal text color
-	var/text_color = "#0099FF"
+	var/text_color = COLOR_DISPLAY_BLUE
 	/// Color for headers, eg. "- ETA -"
-	var/header_text_color = "#22CCFF"
+	var/header_text_color = COLOR_DISPLAY_PURPLE
 
 	/// Transforms for the projection effects
 	var/static/list/matrix/floor_projections = list(
@@ -66,10 +66,6 @@
 		TEXT_WEST = list(-18, -4),
 	)
 
-/obj/machinery/status_display/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/wall_mount)
-
 /obj/item/wallframe/status_display
 	name = "status display frame"
 	desc = "Used to build status displays, just secure to the wall."
@@ -81,6 +77,7 @@
 //makes it go on the wall when built
 /obj/machinery/status_display/Initialize(mapload, ndir, building)
 	. = ..()
+	find_and_hang_on_wall()
 	update_appearance()
 
 /obj/machinery/status_display/setDir(newdir)
@@ -116,7 +113,7 @@
 	return TRUE
 
 /obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 	if(!disassembled)
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
@@ -367,7 +364,7 @@
 		set_messages("shutl","not in service")
 		return PROCESS_KILL
 	else if(shuttle.timer)
-		var/line1 = "<<< [shuttle.getModeStr()]"
+		var/line1 = shuttle.getModeStr()
 		var/line2 = shuttle.getTimerStr()
 
 		set_messages(line1, line2)
@@ -508,8 +505,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac)
 /obj/machinery/status_display/supply
 	name = "supply display"
 	current_mode = SD_MESSAGE
-	text_color = "#FF9900"
-	header_text_color = "#FFCC22"
+	text_color = COLOR_DISPLAY_ORANGE
+	header_text_color = COLOR_DISPLAY_YELLOW
 
 /obj/machinery/status_display/supply/process()
 	if(machine_stat & NOPOWER)
@@ -532,7 +529,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac)
 			line1 = ""
 			line2 = ""
 	else
-		line1 = "<<< [SSshuttle.supply.getModeStr()]"
+		line1 = SSshuttle.supply.getModeStr()
 		line2 = SSshuttle.supply.getTimerStr()
 	set_messages(line1, line2)
 
@@ -543,8 +540,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac)
 	current_mode = SD_MESSAGE
 	var/shuttle_id
 
-	text_color = "#00FF55"
-	header_text_color = "#22FFCC"
+	text_color = COLOR_DISPLAY_GREEN
+	header_text_color = COLOR_DISPLAY_CYAN
 
 /obj/machinery/status_display/shuttle/process()
 	if(!shuttle_id || (machine_stat & NOPOWER))
@@ -629,9 +626,13 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai)
 
 	var/static/list/picture_options = list(
 		"Default" = "default",
+		"Delta Alert" = "deltaalert",
 		"Red Alert" = "redalert",
+		"Blue Alert" = "bluealert",
+		"Green Alert" = "greenalert",
 		"Biohazard" = "biohazard",
 		"Lockdown" = "lockdown",
+		"Radiation" = "radiation",
 		"Happy" = "ai_happy",
 		"Neutral" = "ai_neutral",
 		"Very Happy" = "ai_veryhappy",
@@ -685,3 +686,5 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai)
 #undef PROJECTION_FLOOR_ALPHA
 #undef PROJECTION_BEAM_ALPHA
 #undef STATUS_DISPLAY_FONT_DATUM
+
+#undef SCROLL_PADDING

@@ -40,8 +40,11 @@
 /// From base of /datum/action/cooldown/mob_cooldown/lava_swoop/proc/swoop_attack(): ()
 #define COMSIG_LAVA_ARENA_FAILED "mob_lava_arena_failed"
 
-///From /datum/action/vehicle/sealed/mecha/mech_toggle_safeties/proc/update_action_icon(): ()
+/// From /datum/action/vehicle/sealed/mecha/mech_toggle_safeties/proc/update_action_icon(): ()
 #define COMSIG_MECH_SAFETIES_TOGGLE "mech_safeties_toggle"
 
 /// From /datum/action/cooldown/mob_cooldown/assume_form/proc/assume_appearances(), sent to the action owner: (atom/movable/target)
 #define COMSIG_ACTION_DISGUISED_APPEARANCE "mob_ability_disguise_appearance"
+
+/// From /datum/action/cooldown/manual_heart/Activate(): ()
+#define COMSIG_HEART_MANUAL_PULSE "heart_manual_pulse"

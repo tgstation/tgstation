@@ -2,7 +2,8 @@
 #define MAX_ITEMS_PER_RATING 10
 /// How many items are converted per cycle, per rating point of the manipulator used.
 #define PROCESSED_ITEMS_PER_RATING 5
-
+/// Starting purity of reagents made in biogenerator
+#define BIOGEN_REAGENT_PURITY 0.3
 
 /obj/machinery/biogenerator
 	SET_BASE_VISUAL_PIXEL(0, WALLENING_OFFSET)
@@ -198,7 +199,7 @@
 /obj/machinery/biogenerator/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/biogenerator/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode)
@@ -315,6 +316,11 @@
 		if(!food_to_convert)
 			break
 
+		if(food_to_convert.flags_1 & HOLOGRAM_1)
+			qdel(food_to_convert)
+			current_item_count = max(current_item_count - 1, 0)
+			continue
+
 		convert_to_biomass(food_to_convert)
 
 	use_power(active_power_usage * seconds_per_tick)
@@ -335,10 +341,7 @@
  * subsequently be deleted.
  */
 /obj/machinery/biogenerator/proc/convert_to_biomass(obj/item/food/food_to_convert)
-	var/static/list/nutrient_subtypes = typesof(/datum/reagent/consumable/nutriment)
-	var/nutriments = 0
-
-	nutriments += ROUND_UP(food_to_convert.reagents.get_multiple_reagent_amounts(nutrient_subtypes))
+	var/nutriments = ROUND_UP(food_to_convert.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment, type_check = REAGENT_PARENT_TYPE))
 	qdel(food_to_convert)
 	current_item_count = max(current_item_count - 1, 0)
 	biomass += nutriments * productivity
@@ -388,7 +391,7 @@
 		if(!use_biomass(design.materials, amount))
 			return FALSE
 
-		beaker.reagents.add_reagent(design.make_reagent, amount)
+		beaker.reagents.add_reagent(design.make_reagent, amount, added_purity = BIOGEN_REAGENT_PURITY)
 
 	if(design.build_path)
 		if(!use_biomass(design.materials, amount))
@@ -569,3 +572,4 @@
 
 #undef MAX_ITEMS_PER_RATING
 #undef PROCESSED_ITEMS_PER_RATING
+#undef BIOGEN_REAGENT_PURITY

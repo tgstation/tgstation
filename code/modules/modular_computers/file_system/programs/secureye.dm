@@ -3,13 +3,13 @@
 /datum/computer_file/program/secureye
 	filename = "secureye"
 	filedesc = "SecurEye"
-	category = PROGRAM_CATEGORY_MISC
+	downloader_category = PROGRAM_CATEGORY_SECURITY
 	ui_header = "borg_mon.gif"
-	program_icon_state = "generic"
+	program_open_overlay = "generic"
 	extended_desc = "This program allows access to standard security camera networks."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_SECURITY)
-	usage_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	download_access = list(ACCESS_SECURITY)
+	can_run_on_flags = PROGRAM_CONSOLE | PROGRAM_LAPTOP
 	size = 5
 	tgui_id = "NtosSecurEye"
 	program_icon = "eye"
@@ -39,12 +39,9 @@
 	filename = "syndeye"
 	filedesc = "SyndEye"
 	extended_desc = "This program allows for illegal access to security camera networks."
-	transfer_access = list()
-	available_on_ntnet = FALSE
-	available_on_syndinet = TRUE
-	requires_ntnet = FALSE
-	usage_flags = PROGRAM_ALL
-	unique_copy = TRUE
+	download_access = list()
+	can_run_on_flags = PROGRAM_ALL
+	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
 
 	network = list("ss13", "mine", "rd", "labor", "ordnance", "minisat")
 	spying = TRUE
@@ -100,18 +97,19 @@
 
 /datum/computer_file/program/secureye/ui_data()
 	var/list/data = list()
-	data["network"] = network
 	data["activeCamera"] = null
 	var/obj/machinery/camera/active_camera = camera_ref?.resolve()
 	if(active_camera)
 		data["activeCamera"] = list(
 			name = active_camera.c_tag,
+			ref = REF(active_camera),
 			status = active_camera.status,
 		)
 	return data
 
 /datum/computer_file/program/secureye/ui_static_data(mob/user)
 	var/list/data = list()
+	data["network"] = network
 	data["mapRef"] = cam_screen.assigned_map
 	data["can_spy"] = !!spying
 	var/list/cameras = get_camera_list(network)
@@ -120,6 +118,7 @@
 		var/obj/machinery/camera/C = cameras[i]
 		data["cameras"] += list(list(
 			name = C.c_tag,
+			ref = REF(C),
 		))
 
 	return data
@@ -130,13 +129,14 @@
 		return
 	switch(action)
 		if("switch_camera")
-			var/c_tag = format_text(params["name"])
-			var/list/cameras = get_camera_list(network)
-			var/obj/machinery/camera/selected_camera = cameras[c_tag]
-			camera_ref = WEAKREF(selected_camera)
+			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in GLOB.cameranet.cameras
+			if(selected_camera)
+				camera_ref = WEAKREF(selected_camera)
+			else
+				camera_ref = null
 			if(!spying)
 				playsound(computer, get_sfx(SFX_TERMINAL_TYPE), 25, FALSE)
-			if(!selected_camera)
+			if(isnull(camera_ref))
 				return TRUE
 			if(internal_tracker && internal_tracker.tracking)
 				internal_tracker.set_tracking(FALSE)

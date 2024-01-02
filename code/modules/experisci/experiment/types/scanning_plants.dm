@@ -10,7 +10,7 @@
 	///List of plant genes actually required, indexed by the atom that is required.
 	var/list/required_genes = list()
 
-/datum/experiment/scanning/random/plants/New()
+/datum/experiment/scanning/random/plants/New(datum/techweb/techweb)
 	. = ..()
 	if(possible_plant_genes.len)
 		for(var/req_atom in required_atoms)

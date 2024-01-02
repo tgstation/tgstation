@@ -22,6 +22,25 @@
 	. = ..()
 	. += span_notice("Has a neat <i>selection menu</i> for modifying airlock access levels.")
 
+/**
+ * Create a copy of the electronics
+ * Arguments
+ * * [location][atom]- the location to create the new copy in
+ */
+/obj/item/electronics/airlock/proc/create_copy(atom/location)
+	//create a copy
+	var/obj/item/electronics/airlock/new_electronics = new(location)
+	//copy all params
+	new_electronics.accesses = accesses.Copy()
+	new_electronics.one_access = one_access
+	new_electronics.unres_sides = unres_sides
+	new_electronics.passed_name = passed_name
+	new_electronics.passed_cycle_id = passed_cycle_id
+	new_electronics.shell = shell
+	//return copy
+	return new_electronics
+
+
 /obj/item/electronics/airlock/ui_state(mob/user)
 	return GLOB.hands_state
 

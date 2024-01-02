@@ -27,7 +27,6 @@
 	leftpewarmrest.layer = ABOVE_MOB_LAYER
 	update_leftpewarmrest()
 
-
 /obj/structure/chair/pew/left/proc/GetLeftPewArmrest()
 	return mutable_appearance('icons/obj/chairs_wide.dmi', "pewend_left_armrest")
 

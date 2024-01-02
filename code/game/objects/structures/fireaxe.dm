@@ -36,7 +36,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 	if(populate_contents)
 		held_item = new item_path(src)
 	update_appearance()
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 /obj/structure/fireaxecabinet/Destroy()
 	if(held_item)
@@ -108,7 +108,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 
 /obj/structure/fireaxecabinet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		update_appearance()
 		broken = TRUE
 		playsound(src, 'sound/effects/glassbr3.ogg', 100, TRUE)
@@ -116,7 +116,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 		new /obj/item/shard(loc)
 
 /obj/structure/fireaxecabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(held_item && loc)
 			held_item.forceMove(loc)
 		new /obj/item/wallframe/fireaxecabinet(loc)
@@ -211,6 +211,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 /obj/structure/fireaxecabinet/empty
 	populate_contents = FALSE
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/empty, 32)
+
 /obj/item/wallframe/fireaxecabinet
 	name = "fire axe cabinet"
 	desc = "Home to a window's greatest nightmare. Apply to wall to use."
@@ -229,7 +231,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet)
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval)
 
 /obj/structure/fireaxecabinet/mechremoval/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(held_item && loc)
 			held_item.forceMove(loc)
 		new /obj/item/wallframe/fireaxecabinet/mechremoval(loc)
@@ -237,6 +239,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval)
 
 /obj/structure/fireaxecabinet/mechremoval/empty
 	populate_contents = FALSE
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet/mechremoval/empty, 32)
 
 /obj/item/wallframe/fireaxecabinet/mechremoval
 	name = "mech removal tool cabinet"

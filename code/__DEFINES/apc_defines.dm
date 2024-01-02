@@ -95,16 +95,14 @@
 #define UPSTATE_BROKE (1<<5)
 /// The APC is undergoing maintenance.
 #define UPSTATE_MAINT (1<<6)
-/// The APC is emagged or malfed.
-#define UPSTATE_BLUESCREEN (1<<7)
 /// The APCs wires are exposed.
-#define UPSTATE_WIREEXP (1<<8)
+#define UPSTATE_WIREEXP (1<<7)
 /// The APC has a terminal deployed
-#define UPOVERLAY_TERMINAL (1<<9)
+#define UPOVERLAY_TERMINAL (1<<8)
 /// The APC has its electronics inserted
-#define UPOVERLAY_ELECTRONICS_INSERT (1<<10)
+#define UPOVERLAY_ELECTRONICS_INSERT (1<<9)
 /// The APC has its electronics fastened
-#define UPOVERLAY_ELECTRONICS_FASTENED (1<<11)
+#define UPOVERLAY_ELECTRONICS_FASTENED (1<<10)
 
 #define APC_AI_NO_MALF 0
 #define APC_AI_NO_HACK 1

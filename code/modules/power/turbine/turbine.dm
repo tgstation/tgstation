@@ -69,14 +69,14 @@
  * Handles all the calculations needed for the gases, work done, temperature increase/decrease
  */
 /obj/machinery/power/turbine/proc/transfer_gases(datum/gas_mixture/input_mix, datum/gas_mixture/output_mix, work_amount_to_remove, intake_size = 1)
-	//pump gases. if no gases were transfered then no work was done
+	//pump gases. if no gases were transferred then no work was done
 	var/output_pressure = PRESSURE_MAX(output_mix.return_pressure())
-	var/datum/gas_mixture/transfered_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
-	if(!transfered_gases)
+	var/datum/gas_mixture/transferred_gases = input_mix.pump_gas_to(output_mix, input_mix.return_pressure() * intake_size)
+	if(!transferred_gases)
 		return 0
 
 	//compute work done
-	var/work_done = QUANTIZE(transfered_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transfered_gases.temperature * log((transfered_gases.volume * PRESSURE_MAX(transfered_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
+	var/work_done = QUANTIZE(transferred_gases.total_moles()) * R_IDEAL_GAS_EQUATION * transferred_gases.temperature * log((transferred_gases.volume * PRESSURE_MAX(transferred_gases.return_pressure())) / (output_mix.volume * output_pressure)) * TURBINE_WORK_CONVERSION_MULTIPLIER
 	if(work_amount_to_remove)
 		work_done = work_done - work_amount_to_remove
 
@@ -116,10 +116,10 @@
 /obj/machinery/power/turbine/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active)
 		balloon_alert(user, "turn it off!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!anchored)
 		balloon_alert(user, "anchor first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	tool.play_tool_sound(src, 50)
 	toggle_panel_open()
@@ -130,7 +130,7 @@
 	balloon_alert(user, "you [panel_open ? "open" : "close"] the maintenance hatch of [src]")
 	update_appearance()
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
@@ -146,16 +146,16 @@
 /obj/machinery/power/turbine/crowbar_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "panel is closed!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!installed_part)
 		balloon_alert(user, "no rotor installed!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(active)
 		balloon_alert(user, "[src] is on!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	user.put_in_hands(installed_part)
 
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /**
  * Allow easy enabling of each machine for connection to the main controller
@@ -416,7 +416,7 @@
 
 	//failed checks
 	if(!activate_parts(user))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 	//log rotor to link later to computer
 	balloon_alert(user, "all parts linked")
@@ -425,7 +425,7 @@
 	to_chat(user, span_notice("You store linkage information in [tool]'s buffer."))
 
 	//success
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/power/turbine/core_rotor/multitool_act_secondary(mob/living/user, obj/item/tool)
 	//allow cable layer changing

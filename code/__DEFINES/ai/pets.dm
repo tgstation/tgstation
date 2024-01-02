@@ -27,3 +27,27 @@
 #define BB_FIND_MOM_TYPES "BB_find_mom_types"
 ///list of types of mobs we must ignore
 #define BB_IGNORE_MOM_TYPES "BB_ignore_mom_types"
+
+/// The current string that this parrot will repeat back to someone
+#define BB_PARROT_REPEAT_STRING "BB_parrot_repeat_string"
+/// The odds that this parrot will repeat back a string
+#define BB_PARROT_REPEAT_PROBABILITY "BB_parrot_repeat_probability"
+/// The odds that this parrot will choose another string to repeat
+#define BB_PARROT_PHRASE_CHANGE_PROBABILITY "BB_parrot_phrase_change_probability"
+/// A copy of the string buffer that we end the shift with. DO NOT ACCESS THIS DIRECTLY - YOU SHOULD USE THE COMPONENT IN MOST CASES
+#define BB_EXPORTABLE_STRING_BUFFER_LIST "BB_parrot_repeat_string_buffer"
+/// The types of perches we desire to use
+#define BB_PARROT_PERCH_TYPES "BB_parrot_perch_types"
+/// key that holds our perch target
+#define BB_PERCH_TARGET "perch_target"
+/// key that holds our theft item target
+#define BB_HOARD_ITEM_TARGET "hoard_item_target"
+/// key that holds the mob we will steal from
+#define BB_THEFT_VICTIM "theft_victim"
+/// key that holds the turf we will be hauling stolen items to
+#define BB_HOARD_LOCATION "hoard_location"
+/// key that holds the minimum range we must be from the hoard spot
+#define BB_HOARD_LOCATION_RANGE "hoard_location_range"
+/// key that holds items we arent interested in hoarding
+#define BB_IGNORE_ITEMS "ignore_items"
+

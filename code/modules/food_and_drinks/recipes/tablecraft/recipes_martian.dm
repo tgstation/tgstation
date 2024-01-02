@@ -648,7 +648,7 @@
 		/obj/item/food/friedegg = 1,
 		/obj/item/food/grown/chili = 1,
 		/datum/reagent/consumable/yoghurt = 5,
-		/datum/reagent/consumable/quality_oil = 2,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 2,
 	)
 	result = /obj/item/food/cilbir
 	category = CAT_MARTIAN

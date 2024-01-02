@@ -15,10 +15,10 @@ Charged extracts:
 	create_reagents(10, INJECTABLE | DRAWABLE)
 
 /obj/item/slimecross/charged/attack_self(mob/user)
-	if(!reagents.has_reagent(/datum/reagent/toxin/plasma,10))
+	if(!reagents.has_reagent(/datum/reagent/toxin/plasma, 10))
 		to_chat(user, span_warning("This extract needs to be full of plasma to activate!"))
 		return
-	reagents.remove_reagent(/datum/reagent/toxin/plasma,10)
+	reagents.remove_reagent(/datum/reagent/toxin/plasma, 10)
 	to_chat(user, span_notice("You squeeze the extract, and it absorbs the plasma!"))
 	playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 	playsound(src, 'sound/effects/light_flicker.ogg', 50, TRUE)
@@ -235,21 +235,23 @@ Charged extracts:
 	effect_desc = "Randomizes the user's species."
 
 /obj/item/slimecross/charged/black/do_effect(mob/user)
-	var/mob/living/carbon/human/H = user
-	if(!istype(H))
-		to_chat(user, span_warning("You have to be able to have a species to get your species changed."))
+	var/mob/living/carbon/human/experiment_subject = user
+	if(!istype(experiment_subject))
+		balloon_alert(experiment_subject, "incompatible biology!")
 		return
 	var/list/allowed_species = list()
 	for(var/stype in subtypesof(/datum/species))
-		var/datum/species/X = stype
-		if(initial(X.changesource_flags) & SLIME_EXTRACT)
+		var/datum/species/try_species = stype
+		if(initial(try_species.changesource_flags) & SLIME_EXTRACT)
 			allowed_species += stype
 
 	var/datum/species/changed = pick(allowed_species)
-	if(changed)
-		H.set_species(changed, icon_update = 1)
-		to_chat(H, span_danger("You feel very different!"))
-	..()
+	if(isnull(changed))
+		visible_message(span_notice("[src] fizzes uselessly."))
+		return
+	experiment_subject.set_species(changed, icon_update = TRUE)
+	to_chat(experiment_subject, span_danger("You feel very different!"))
+	return ..()
 
 /obj/item/slimecross/charged/lightpink
 	colour = SLIME_TYPE_LIGHT_PINK
@@ -276,6 +278,6 @@ Charged extracts:
 /obj/item/slimecross/charged/rainbow/do_effect(mob/user)
 	user.visible_message(span_warning("[src] swells and splits into three new slimes!"))
 	for(var/i in 1 to 3)
-		var/mob/living/simple_animal/slime/S = new(get_turf(user))
-		S.random_colour()
+		var/mob/living/simple_animal/slime/new_slime = new(get_turf(user))
+		new_slime.random_colour()
 	return ..()

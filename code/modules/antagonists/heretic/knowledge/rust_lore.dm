@@ -13,6 +13,9 @@
  * Mark of Rust
  * Ritual of Knowledge
  * Rust Construction
+ * > Sidepaths:
+ *   Lionhunter Rifle
+ *
  * Aggressive Spread
  * > Sidepaths:
  *   Curse of Corrosion
@@ -22,7 +25,7 @@
  * Entropic Plume
  * > Sidepaths:
  *   Rusted Ritual
- *   Blood Cleave
+ *   Rust Charge
  *
  * Rustbringer's Oath
  */
@@ -82,7 +85,6 @@
 	gain_text = "The speed was unparalleled, the strength unnatural. The Blacksmith was smiling."
 	next_knowledge = list(
 		/datum/heretic_knowledge/mark/rust_mark,
-		/datum/heretic_knowledge/codex_cicatrix,
 		/datum/heretic_knowledge/armor,
 		/datum/heretic_knowledge/essence,
 		/datum/heretic_knowledge/entropy_pulse,
@@ -126,11 +128,14 @@
 		return
 
 	// Heals all damage + Stamina
-	source.adjustBruteLoss(-2, FALSE)
-	source.adjustFireLoss(-2, FALSE)
-	source.adjustToxLoss(-2, FALSE, forced = TRUE) // Slimes are people to
-	source.adjustOxyLoss(-0.5, FALSE)
-	source.adjustStaminaLoss(-2)
+	var/need_mob_update = FALSE
+	need_mob_update += source.adjustBruteLoss(-2, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-2, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-2, updating_health = FALSE, forced = TRUE) // Slimes are people too
+	need_mob_update += source.adjustOxyLoss(-0.5, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-2, updating_stamina = FALSE)
+	if(need_mob_update)
+		source.updatehealth()
 	// Reduces duration of stuns/etc
 	source.AdjustAllImmobility(-0.5 SECONDS)
 	// Heals blood loss
@@ -256,7 +261,12 @@
 
 /datum/heretic_knowledge/ultimate/rust_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()
-	priority_announce("[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]","[generate_heretic_text()]", ANNOUNCER_SPANOMALIES)
+	priority_announce(
+		text = "[generate_heretic_text()] Fear the decay, for the Rustbringer, [user.real_name] has ascended! None shall escape the corrosion! [generate_heretic_text()]",
+		title = "[generate_heretic_text()]",
+		sound = ANNOUNCER_SPANOMALIES,
+		color_override = "pink",
+	)
 	new /datum/rust_spread(loc)
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(user, COMSIG_LIVING_LIFE, PROC_REF(on_life))
@@ -295,11 +305,14 @@
 	if(!HAS_TRAIT(our_turf, TRAIT_RUSTY))
 		return
 
-	source.adjustBruteLoss(-4, FALSE)
-	source.adjustFireLoss(-4, FALSE)
-	source.adjustToxLoss(-4, FALSE, forced = TRUE)
-	source.adjustOxyLoss(-4, FALSE)
-	source.adjustStaminaLoss(-20)
+	var/need_mob_update = FALSE
+	need_mob_update += source.adjustBruteLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustFireLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustToxLoss(-4, updating_health = FALSE, forced = TRUE)
+	need_mob_update += source.adjustOxyLoss(-4, updating_health = FALSE)
+	need_mob_update += source.adjustStaminaLoss(-20, updating_stamina = FALSE)
+	if(need_mob_update)
+		source.updatehealth()
 
 /**
  * #Rust spread datum

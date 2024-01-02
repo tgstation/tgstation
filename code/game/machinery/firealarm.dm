@@ -27,8 +27,6 @@
 	light_range = 1.6
 	light_color = LIGHT_COLOR_ELECTRIC_CYAN
 
-	//Trick to get the glowing overlay visible from a distance
-	luminosity = 1
 	//We want to use area sensitivity, let us
 	always_area_sensitive = TRUE
 	///Buildstate for contruction steps
@@ -52,7 +50,6 @@
 	my_area = get_area(src)
 	LAZYADD(my_area.firealarms, src)
 
-	AddElement(/datum/element/wall_mount)
 	AddElement(/datum/element/atmos_sensitive, mapload)
 	RegisterSignal(SSsecurity_level, COMSIG_SECURITY_LEVEL_CHANGED, PROC_REF(check_security_level))
 	soundloop = new(src, FALSE)
@@ -81,7 +78,7 @@
 		)
 	)
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
-
+	find_and_hang_on_wall()
 	update_appearance()
 
 
@@ -148,9 +145,9 @@
 /obj/machinery/firealarm/update_appearance(updates)
 	. = ..()
 	if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
-		set_light(l_power = 3)
+		set_light(l_range = 2.5, l_power = 1.5)
 	else
-		set_light(l_power = 1)
+		set_light(l_range = 1.6, l_power = 1)
 
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
@@ -410,14 +407,13 @@
 
 /obj/machinery/firealarm/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
 	if((buildstage == FIRE_ALARM_BUILD_NO_CIRCUIT) && (the_rcd.upgrade & RCD_UPGRADE_SIMPLE_CIRCUITS))
-		return list("mode" = RCD_WALLFRAME, "delay" = 2 SECONDS, "cost" = 1)
+		return list("delay" = 2 SECONDS, "cost" = 1)
 	return FALSE
 
-/obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, passed_mode)
-	switch(passed_mode)
+/obj/machinery/firealarm/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
+	switch(rcd_data["[RCD_DESIGN_MODE]"])
 		if(RCD_WALLFRAME)
-			user.visible_message(span_notice("[user] fabricates a circuit and places it into [src]."), \
-			span_notice("You adapt a fire alarm circuit and slot it into the assembly."))
+			balloon_alert(user, "circuit installed")
 			buildstage = FIRE_ALARM_BUILD_NO_WIRES
 			update_appearance()
 			return TRUE
@@ -441,7 +437,7 @@
 	return ..()
 
 /obj/machinery/firealarm/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 1)
 		if(buildstage > FIRE_ALARM_BUILD_NO_CIRCUIT)
 			var/obj/item/item = new /obj/item/electronics/firealarm(loc)
@@ -468,7 +464,7 @@
 
 // Allows Silicons to disable thermal sensor
 /obj/machinery/firealarm/BorgCtrlClick(mob/living/silicon/robot/user)
-	if(get_dist(src,user) <= user.interaction_range)
+	if(get_dist(src,user) <= user.interaction_range && !(user.control_disabled))
 		AICtrlClick(user)
 		return
 	return ..()

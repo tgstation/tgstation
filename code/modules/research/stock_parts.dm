@@ -100,22 +100,20 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
  */
 /obj/item/storage/part_replacer/bluespace/proc/on_part_entered(datum/source, obj/item/inserted_component)
 	SIGNAL_HANDLER
+
+	if(istype(inserted_component, /obj/item/stock_parts/cell))
+		var/obj/item/stock_parts/cell/inserted_cell = inserted_component
+		if(inserted_cell.rigged || inserted_cell.corrupted)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
+			usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
+			usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
+		return
+
 	if(inserted_component.reagents)
 		if(length(inserted_component.reagents.reagent_list))
 			inserted_component.reagents.clear_reagents()
 			to_chat(usr, span_notice("[src] churns as [inserted_component] has its reagents emptied into bluespace."))
 		RegisterSignal(inserted_component.reagents, COMSIG_REAGENTS_PRE_ADD_REAGENT, PROC_REF(on_insered_component_reagent_pre_add))
-
-
-	if(!istype(inserted_component, /obj/item/stock_parts/cell))
-		return
-
-	var/obj/item/stock_parts/cell/inserted_cell = inserted_component
-
-	if(inserted_cell.rigged || inserted_cell.corrupted)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] has inserted rigged/corrupted [inserted_cell] into [src].")
-		usr.log_message("has inserted rigged/corrupted [inserted_cell] into [src].", LOG_GAME)
-		usr.log_message("inserted rigged/corrupted [inserted_cell] into [src]", LOG_ATTACK)
 
 /**
  * Signal handler for when the reagents datum of an inserted part has reagents added to it.
@@ -199,11 +197,17 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
-	desc = "Special mechanical module made to store, sort, and apply standard machine parts."
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has an extra large compartment for more parts."
 	icon_state = "borgrped"
 	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
+
+/obj/item/storage/part_replacer/cyborg/Initialize(mapload)
+	. = ..()
+	atom_storage.max_slots = 400
+	atom_storage.max_total_storage = 800
+	atom_storage.max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
 /obj/item/storage/part_replacer/proc/get_sorted_parts(ignore_stacks = FALSE)
 	var/list/part_list = list()
@@ -226,7 +230,7 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 /obj/item/stock_parts
 	name = "stock part"
 	desc = "What?"
-	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon = 'icons/obj/devices/stock_parts.dmi'
 	w_class = WEIGHT_CLASS_SMALL
 	var/rating = 1
 	///Used when a base part has a different name to higher tiers of part. For example, machine frames want any servo and not just a micro-servo.
@@ -467,6 +471,6 @@ If you create T5+ please take a pass at mech_fabricator.dm. The parts being good
 
 /obj/item/research//Makes testing much less of a pain -Sieve
 	name = "research"
-	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon = 'icons/obj/devices/stock_parts.dmi'
 	icon_state = "capacitor"
 	desc = "A debug item for research."

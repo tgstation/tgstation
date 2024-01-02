@@ -6,12 +6,6 @@
 		return
 
 	. = ..()
-	// And now, separately for cleanness, the lighting changing
-	if(update_overlay & UPSTATE_BLUESCREEN)
-		set_light_color(LIGHT_COLOR_BLUE)
-		set_light(light_on_range)
-		return
-
 	if(update_overlay)
 		switch(charging)
 			if(APC_NOT_CHARGING)
@@ -58,21 +52,7 @@
 	if((machine_stat & (BROKEN|MAINT)))
 		return
 
-	if(update_overlay & UPSTATE_BLUESCREEN)
-		. += mutable_appearance(icon, "emagged")
-		. += emissive_appearance(icon, "emagged", src)
-
-		if(update_overlay & (UPSTATE_OPENED1 | UPSTATE_OPENED2))
-			return
-
-		. += mutable_appearance(icon, "equip-0")
-		. += emissive_appearance(icon, "equip-0", src)
-		. += mutable_appearance(icon, "light-0")
-		. += emissive_appearance(icon, "light-0", src)
-		. += mutable_appearance(icon, "enviro-0")
-		. += emissive_appearance(icon, "enviro-0", src)
-		return
-
+	// If we're emagged, these'll get temporarially overrided by the flickering overlay
 	. += mutable_appearance(icon, "state-[charging]")
 	. += emissive_appearance(icon, "state-[charging]", src)
 
@@ -111,9 +91,6 @@
 	if(cell)
 		new_update_overlay |= UPSTATE_CELL_IN
 
-	if((obj_flags & EMAGGED) || malfai)
-		new_update_overlay |= UPSTATE_BLUESCREEN
-
 	if(panel_open)
 		new_update_overlay |= UPSTATE_WIREEXP
 
@@ -136,3 +113,24 @@
 // Used in process so it doesn't update the icon too much
 /obj/machinery/power/apc/proc/queue_icon_update()
 	icon_update_needed = TRUE
+
+// Shows a dark-blue interface for a moment. Shouldn't appear on cameras.
+/obj/machinery/power/apc/proc/flicker_hacked_icon()
+	var/image/hacker_image = image(icon = icon, loc = src, icon_state = "emagged", layer = FLOAT_LAYER)
+	if(!(update_overlay & (UPSTATE_OPENED1 | UPSTATE_OPENED2)))
+		hacker_image.add_overlay(mutable_appearance(icon, "equip-emag"))
+		hacker_image.add_overlay(emissive_appearance(icon, "equip-emag", src))
+		hacker_image.add_overlay(mutable_appearance(icon, "light-emag"))
+		hacker_image.add_overlay(emissive_appearance(icon, "light-emag", src))
+		hacker_image.add_overlay(mutable_appearance(icon, "enviro-emag"))
+		hacker_image.add_overlay(emissive_appearance(icon, "enviro-emag", src))
+
+	var/list/mobs_to_show = list()
+	// Collecting mobs the APC can see for this animation, rather than mobs that can see the APC. Important distinction, intended such that mobs on camera / with XRAY cannot see the flicker.
+	for(var/mob/viewer in view(src))
+		if(viewer.client)
+			mobs_to_show += viewer.client
+	if(malfai?.client)
+		mobs_to_show |= malfai.client
+	flick_overlay_global(hacker_image, mobs_to_show, 1 SECONDS)
+	hacked_flicker_counter = rand(3, 5) //The counter is decrimented in the process() proc, which runs every two seconds.

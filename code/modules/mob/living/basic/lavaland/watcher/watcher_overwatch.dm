@@ -1,5 +1,6 @@
 /**
  * Automatically shoot at a target if they do anything while this is active on them.
+ * Currently not given to any mob, but retained so admins can use it.
  */
 /datum/action/cooldown/mob_cooldown/watcher_overwatch
 	name = "Overwatch"
@@ -9,7 +10,6 @@
 	background_icon_state = "bg_demon"
 	overlay_icon_state = "bg_demon_border"
 	cooldown_time = 20 SECONDS
-	check_flags = AB_CHECK_CONSCIOUS | AB_CHECK_INCAPACITATED
 	click_to_activate = TRUE
 	shared_cooldown = NONE
 	/// Furthest range we can activate ability at

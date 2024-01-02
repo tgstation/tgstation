@@ -57,9 +57,9 @@
 		if(!length(reagent_container.reagents.reagent_list))
 			balloon_alert(user, "nothing to transfer!")
 			return
-		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transfered_by = user)
+		var/units = reagent_container.reagents.trans_to(src, reagent_container.amount_per_transfer_from_this, transferred_by = user)
 		if(units)
-			balloon_alert(user, "[units] units transfered")
+			balloon_alert(user, "[units] units transferred")
 		else
 			balloon_alert(user, "reagent storage full!")
 		return
@@ -76,7 +76,7 @@
 			return
 		add_overlay("active")
 		if(do_after(user, 2 SECONDS, src))
-			medipen.reagents.maximum_volume = initial(medipen.reagents.maximum_volume)
+			medipen.used_up = FALSE
 			medipen.add_initial_reagents()
 			reagents.remove_reagent(allowed_pens[medipen.type], 10)
 			balloon_alert(user, "refilled")
@@ -94,7 +94,7 @@
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/living/user, obj/item/tool)
 	default_deconstruction_crowbar(tool)

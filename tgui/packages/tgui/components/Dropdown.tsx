@@ -1,35 +1,43 @@
 import { createPopper, VirtualElement } from '@popperjs/core';
 import { classes } from 'common/react';
-import { Component, findDOMfromVNode, InfernoNode, render } from 'inferno';
+import { Component, ReactNode } from 'react';
+import { findDOMNode, render } from 'react-dom';
+
 import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
 import { Stack } from './Stack';
 
-export interface DropdownEntry {
-  displayText: string | number | InfernoNode;
+type DropdownEntry = {
+  displayText: string | number | ReactNode;
   value: string | number | Enumerator;
-}
-
-type DropdownUniqueProps = {
-  options: string[] | DropdownEntry[];
-  icon?: string;
-  iconRotation?: number;
-  clipSelectedText?: boolean;
-  width?: string;
-  menuWidth?: string;
-  over?: boolean;
-  color?: string;
-  nochevron?: boolean;
-  displayText?: string | number | InfernoNode;
-  onClick?: (event) => void;
-  // you freaks really are just doing anything with this shit
-  selected?: any;
-  onSelected?: (selected: any) => void;
-  buttons?: boolean;
 };
 
-export type DropdownProps = BoxProps & DropdownUniqueProps;
+type Props = { options: string[] | DropdownEntry[] } & Partial<{
+  buttons: boolean;
+  clipSelectedText: boolean;
+  color: string;
+  disabled: boolean;
+  displayText: string | number | ReactNode;
+  dropdownStyle: any;
+  icon: string;
+  iconRotation: number;
+  iconSpin: boolean;
+  menuWidth: string;
+  nochevron: boolean;
+  onClick: (event) => void;
+  onSelected: (selected: any) => void;
+  over: boolean;
+  // you freaks really are just doing anything with this shit
+  selected: any;
+  width: string;
+}> &
+  BoxProps;
+
+type State = {
+  selected?: string;
+  open: boolean;
+};
 
 const DEFAULT_OPTIONS = {
   placement: 'left-start',
@@ -40,6 +48,7 @@ const DEFAULT_OPTIONS = {
     },
   ],
 };
+
 const NULL_RECT: DOMRect = {
   width: 0,
   height: 0,
@@ -52,15 +61,10 @@ const NULL_RECT: DOMRect = {
   toJSON: () => null,
 } as const;
 
-type DropdownState = {
-  selected?: string;
-  open: boolean;
-};
-
 const DROPDOWN_DEFAULT_CLASSNAMES = 'Layout Dropdown__menu';
 const DROPDOWN_SCROLL_CLASSNAMES = 'Layout Dropdown__menu-scroll';
 
-export class Dropdown extends Component<DropdownProps, DropdownState> {
+export class Dropdown extends Component<Props, State> {
   static renderedMenu: HTMLDivElement | undefined;
   static singletonPopper: ReturnType<typeof createPopper> | undefined;
   static currentOpenMenu: Element | undefined;
@@ -69,7 +73,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
       Dropdown.currentOpenMenu?.getBoundingClientRect() ?? NULL_RECT,
   };
   menuContents: any;
-  state: DropdownState = {
+  state: State = {
     open: false,
     selected: this.props.selected,
   };
@@ -81,7 +85,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
   };
 
   getDOMNode() {
-    return findDOMfromVNode(this.$LI, true);
+    // eslint-disable-next-line react/no-find-dom-node
+    return findDOMNode(this) as Element;
   }
 
   componentDidMount() {
@@ -105,11 +110,7 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
     Dropdown.currentOpenMenu = domNode;
 
     renderedMenu.scrollTop = 0;
-    renderedMenu.style.width =
-      this.props.menuWidth ||
-      // Hack, but domNode should *always* be the parent control meaning it will have width
-      // @ts-ignore
-      `${domNode.offsetWidth}px`;
+    renderedMenu.style.width = this.props.menuWidth || '10rem';
     renderedMenu.style.opacity = '1';
     renderedMenu.style.pointerEvents = 'auto';
 
@@ -172,7 +173,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
           ])}
           onClick={() => {
             this.setSelected(value);
-          }}>
+          }}
+        >
           {displayText}
         </div>
       );
@@ -180,33 +182,24 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
 
     const to_render = ops.length ? ops : 'No Options Found';
 
-    render(
-      <div>{to_render}</div>,
-      renderedMenu,
-      () => {
-        let singletonPopper = Dropdown.singletonPopper;
-        if (singletonPopper === undefined) {
-          singletonPopper = createPopper(
-            Dropdown.virtualElement,
-            renderedMenu!,
-            {
-              ...DEFAULT_OPTIONS,
-              placement: 'bottom-start',
-            }
-          );
+    render(<div>{to_render}</div>, renderedMenu, () => {
+      let singletonPopper = Dropdown.singletonPopper;
+      if (singletonPopper === undefined) {
+        singletonPopper = createPopper(Dropdown.virtualElement, renderedMenu!, {
+          ...DEFAULT_OPTIONS,
+          placement: 'bottom-start',
+        });
 
-          Dropdown.singletonPopper = singletonPopper;
-        } else {
-          singletonPopper.setOptions({
-            ...DEFAULT_OPTIONS,
-            placement: 'bottom-start',
-          });
+        Dropdown.singletonPopper = singletonPopper;
+      } else {
+        singletonPopper.setOptions({
+          ...DEFAULT_OPTIONS,
+          placement: 'bottom-start',
+        });
 
-          singletonPopper.update();
-        }
-      },
-      this.context
-    );
+        singletonPopper.update();
+      }
+    });
   }
 
   setOpen(open: boolean) {
@@ -334,7 +327,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
                 onClick(event);
               }
             }}
-            {...rest}>
+            {...rest}
+          >
             {icon && (
               <Icon
                 name={icon}
@@ -347,7 +341,8 @@ export class Dropdown extends Component<DropdownProps, DropdownState> {
               className="Dropdown__selected-text"
               style={{
                 overflow: clipSelectedText ? 'hidden' : 'visible',
-              }}>
+              }}
+            >
               {displayText || this.state.selected}
             </span>
             {nochevron || (

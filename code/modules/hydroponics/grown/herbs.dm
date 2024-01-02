@@ -22,6 +22,6 @@
 	icon_state = "herbs"
 	foodtypes = VEGETABLES
 	grind_results = list(/datum/reagent/consumable/nutriment = 0)
-	juice_results = list(/datum/reagent/consumable/nutriment = 0)
+	juice_typepath = /datum/reagent/consumable/nutriment
 	tastes = list("nondescript herbs" = 1)
 	distill_reagent = /datum/reagent/consumable/ethanol/fernet

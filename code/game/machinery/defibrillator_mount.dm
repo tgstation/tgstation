@@ -21,7 +21,7 @@
 /obj/machinery/defibrillator_mount/loaded/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
 	defib = new/obj/item/defibrillator/loaded(src)
-	AddElement(/datum/element/wall_mount)
+	find_and_hang_on_wall()
 
 WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/defibrillator_mount)
 

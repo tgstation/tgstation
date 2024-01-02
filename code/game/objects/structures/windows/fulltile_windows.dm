@@ -137,7 +137,7 @@
 
 /obj/structure/window/reinforced/shuttle/indestructible
 	name = "hardened shuttle window"
-	flags_1 = PREVENT_CLICK_UNDER_1 | NODECONSTRUCT_1
+	obj_flags = CAN_BE_HIT | BLOCKS_CONSTRUCTION
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/window/reinforced/shuttle/indestructible/rcd_vals(mob/user, obj/item/construction/rcd/the_rcd)
@@ -261,22 +261,23 @@
 /obj/structure/window/bronze
 	name = "brass window"
 	desc = "A paper-thin pane of translucent yet reinforced brass. Nevermind, this is just weak bronze!"
-	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
-	icon_state = "clockwork_window_single"
+	icon = 'icons/obj/smooth_structures/structure_variations.dmi'
+	icon_state = "clockwork_window-single"
 	glass_type = /obj/item/stack/sheet/bronze
 
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE
 
 /obj/structure/window/bronze/fulltile
-	icon = 'icons/obj/smooth_structures/windows/bronze_window.dmi'
+	icon = 'icons/obj/smooth_structures/clockwork_window.dmi'
 	icon_state = "clockwork_window-0"
 	base_icon_state = "clockwork_window"
 	smoothing_flags = SMOOTH_BITMASK
-	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE + SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE
+	smoothing_groups = SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE + SMOOTH_GROUP_WINDOW_FULLTILE
 	canSmoothWith = SMOOTH_GROUP_WINDOW_FULLTILE_BRONZE
 	fulltile = TRUE
 	flags_1 = PREVENT_CLICK_UNDER_1
+	obj_flags = CAN_BE_HIT
 	max_integrity = 50
 	glass_amount = 2
 

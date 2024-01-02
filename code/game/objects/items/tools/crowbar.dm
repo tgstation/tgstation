@@ -7,7 +7,7 @@
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	usesound = 'sound/items/crowbar.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 5
 	throwforce = 7
@@ -70,6 +70,24 @@
 	desc = "It's a bulky crowbar. It almost seems deliberately designed to not be able to fit inside of a backpack."
 	w_class = WEIGHT_CLASS_BULKY
 
+/obj/item/crowbar/hammer
+	name = "claw hammer"
+	desc = "It's a heavy hammer with a pry bar on the back of its head. Nails aren't common in space, but this tool can still be used as a weapon or a crowbar."
+	force = 11
+	w_class = WEIGHT_CLASS_NORMAL
+	icon = 'icons/obj/weapons/hammer.dmi'
+	icon_state = "clawhammer"
+	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/hammers_righthand.dmi'
+	inhand_icon_state = "clawhammer"
+	belt_icon_state = "clawhammer"
+	throwforce = 10
+	throw_range = 5
+	throw_speed = 3
+	toolspeed = 2
+	custom_materials = list(/datum/material/wood=SMALL_MATERIAL_AMOUNT*0.5, /datum/material/iron=SMALL_MATERIAL_AMOUNT*0.7)
+	wound_bonus = 35
+
 /obj/item/crowbar/large/heavy //from space ruin
 	name = "heavy crowbar"
 	desc = "It's a big crowbar. It doesn't fit in your pockets, because it's big. It feels oddly heavy.."
@@ -106,6 +124,9 @@
 	var/snap_time_weak_handcuffs = 0 SECONDS
 	/// Used on Initialize, how much time to cut real handcuffs. Null means it can't.
 	var/snap_time_strong_handcuffs = 0 SECONDS
+
+/obj/item/crowbar/power/get_all_tool_behaviours()
+	return list(TOOL_CROWBAR, TOOL_WIRECUTTER)
 
 /obj/item/crowbar/power/Initialize(mapload)
 	. = ..()

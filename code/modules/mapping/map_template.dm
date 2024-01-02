@@ -29,6 +29,8 @@
 	var/list/ceiling_baseturfs = list()
 
 /datum/map_template/New(path = null, rename = null, cache = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+	. = ..()
 	if(path)
 		mappath = path
 	if(mappath)
@@ -109,7 +111,6 @@
 	// need these two below?
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
-	SSshuttle.setup_shuttles(ports)
 
 	//calculate all turfs inside the border
 	var/list/template_and_bordering_turfs = block(
@@ -133,7 +134,15 @@
 	var/y = round((world.maxy - height) * 0.5) + 1
 
 	var/datum/space_level/level = SSmapping.add_new_zlevel(name, secret ? ZTRAITS_AWAY_SECRET : ZTRAITS_AWAY, contain_turfs = FALSE)
-	var/datum/parsed_map/parsed = load_map(file(mappath), x, y, level.z_value, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top, new_z = TRUE)
+	var/datum/parsed_map/parsed = load_map(
+		file(mappath),
+		x,
+		y,
+		level.z_value,
+		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
+		place_on_top = should_place_on_top,
+		new_z = TRUE,
+	)
 	var/list/bounds = parsed.bounds
 	if(!bounds)
 		return FALSE
@@ -176,7 +185,14 @@
 
 	UNSETEMPTY(turf_blacklist)
 	parsed.turf_blacklist = turf_blacklist
-	if(!parsed.load(T.x, T.y, T.z, cropMap=TRUE, no_changeturf=(SSatoms.initialized == INITIALIZATION_INSSATOMS), placeOnTop=should_place_on_top))
+	if(!parsed.load(
+		T.x,
+		T.y,
+		T.z,
+		crop_map = TRUE,
+		no_changeturf = (SSatoms.initialized == INITIALIZATION_INSSATOMS),
+		place_on_top = should_place_on_top,
+	))
 		return
 
 	var/list/bounds = parsed.bounds

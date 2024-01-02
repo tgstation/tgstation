@@ -275,3 +275,27 @@
 	suffix = "lavaland_surface_phonebooth.dmm"
 	allow_duplicates = FALSE
 	cost = 5
+
+/datum/map_template/ruin/lavaland/battle_site
+	name = "Battle Site"
+	id = "battle_site"
+	description = "The long past site of a battle between beast and humanoids. The victor is unknown, but the losers are clear."
+	suffix = "lavaland_battle_site.dmm"
+	allow_duplicates = TRUE
+	cost = 3
+
+/datum/map_template/ruin/lavaland/watcher_grave
+	name = "Watchers' Grave"
+	id = "watcher-grave"
+	description = "A lonely cave where an orphaned child awaits a new parent."
+	suffix = "lavaland_surface_watcher_grave.dmm"
+	cost = 5
+	allow_duplicates = FALSE
+
+/datum/map_template/ruin/lavaland/mook_village
+	name = "Mook Village"
+	id = "mook_village"
+	description = "A village hosting a community of friendly mooks!"
+	suffix = "lavaland_surface_mookvillage.dmm"
+	allow_duplicates = FALSE
+	cost = 5

@@ -103,6 +103,12 @@
 /obj/effect/countdown/supermatter
 	name = "supermatter damage"
 	color = "#00ff80"
+	pixel_y = 8
+
+/obj/effect/countdown/supermatter/attach(atom/A)
+	. = ..()
+	if(istype(A, /obj/machinery/power/supermatter_crystal/shard))
+		pixel_y = -12
 
 /obj/effect/countdown/supermatter/get_value()
 	var/obj/machinery/power/supermatter_crystal/S = attached_to
@@ -157,7 +163,7 @@
 		return round(time_left)
 
 /obj/effect/countdown/arena
-	invisibility = 0
+	invisibility = INVISIBILITY_NONE
 	name = "arena countdown"
 
 /obj/effect/countdown/arena/get_value()

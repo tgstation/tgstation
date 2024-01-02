@@ -1,7 +1,7 @@
 /obj/structure/frame
 	name = "frame"
 	desc = "A generic looking construction frame. One day this will be something greater."
-	icon = 'icons/obj/assemblies/stock_parts.dmi'
+	icon = 'icons/obj/devices/stock_parts.dmi'
 	icon_state = "box_0"
 	density = TRUE
 	max_integrity = 250
@@ -15,7 +15,7 @@
 
 
 /obj/structure/frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 5)
 		if(circuit)
 			circuit.forceMove(loc)
@@ -410,7 +410,7 @@
 	return part
 
 /obj/structure/frame/machine/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(state >= 2)
 			new /obj/item/stack/cable_coil(loc , 5)
 
@@ -428,3 +428,12 @@
 			new physical_object_type(drop_location())
 		else
 			stack_trace("Invalid component [component] was found in constructable frame")
+
+/obj/structure/frame/machine/secured
+	state = 2
+	icon_state = "box_1"
+
+/obj/structure/frame/machine/secured/Initialize(mapload)
+	. = ..()
+
+	set_anchored(TRUE)

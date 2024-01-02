@@ -46,6 +46,6 @@
 	sitting_chair.buckle_mob(target, check_loc = FALSE)
 
 /datum/smite/ghost_control/proc/ghost_speed(mob/living/target, new_speed)
-	if(target.m_intent == new_speed)
+	if(target.move_intent == new_speed)
 		return
 	target.toggle_move_intent()

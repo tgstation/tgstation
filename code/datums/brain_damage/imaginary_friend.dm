@@ -45,15 +45,26 @@
 /datum/brain_trauma/special/imaginary_friend/proc/make_friend()
 	friend = new(get_turf(owner), owner)
 
+/// Tries an orbit poll for the imaginary friend
 /datum/brain_trauma/special/imaginary_friend/proc/get_ghost()
-	set waitfor = FALSE
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as [owner.real_name]'s imaginary friend?", ROLE_PAI, null, 7.5 SECONDS, friend, POLL_IGNORE_IMAGINARYFRIEND)
-	if(LAZYLEN(candidates))
-		var/mob/dead/observer/C = pick(candidates)
-		friend.key = C.key
-		friend_initialized = TRUE
-	else
+	var/datum/callback/to_call = CALLBACK(src, PROC_REF(add_friend))
+	owner.AddComponent(/datum/component/orbit_poll, \
+		ignore_key = POLL_IGNORE_IMAGINARYFRIEND, \
+		job_bans = ROLE_PAI, \
+		title = "[owner.real_name]'s imaginary friend", \
+		to_call = to_call, \
+	)
+
+/// Yay more friends!
+/datum/brain_trauma/special/imaginary_friend/proc/add_friend(mob/dead/observer/ghost)
+	if(isnull(ghost))
 		qdel(src)
+		return
+
+	friend.key = ghost.key
+	friend_initialized = TRUE
+	friend.log_message("became [key_name(owner)]'s split personality.", LOG_GAME)
+	message_admins("[ADMIN_LOOKUPFLW(friend)] became [ADMIN_LOOKUPFLW(owner)]'s split personality.")
 
 /mob/camera/imaginary_friend
 	name = "imaginary friend"
@@ -72,8 +83,7 @@
 	var/mob/living/owner
 	var/bubble_icon = "default"
 
-	var/datum/action/innate/imaginary_join/join
-	var/datum/action/innate/imaginary_hide/hide
+
 
 /mob/camera/imaginary_friend/Login()
 	. = ..()
@@ -94,10 +104,11 @@
  */
 /mob/camera/imaginary_friend/Initialize(mapload)
 	. = ..()
-	join = new
-	join.Grant(src)
-	hide = new
-	hide.Grant(src)
+	var/static/list/grantable_actions = list(
+		/datum/action/innate/imaginary_join,
+		/datum/action/innate/imaginary_hide,
+	)
+	grant_actions_by_list(grantable_actions)
 
 /// Links this imaginary friend to the provided mob
 /mob/camera/imaginary_friend/proc/attach_to_owner(mob/living/imaginary_friend_owner)
@@ -379,7 +390,7 @@
 	animate(visual, pixel_x = (tile.x - our_tile.x) * world.icon_size + pointed_atom.pixel_x, pixel_y = (tile.y - our_tile.y) * world.icon_size + pointed_atom.pixel_y, time = 1.7, easing = EASE_OUT)
 
 /mob/camera/imaginary_friend/create_thinking_indicator()
-	if(active_thinking_indicator || active_typing_indicator || !thinking_IC)
+	if(active_thinking_indicator || active_typing_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_thinking_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]3", TYPING_LAYER)
 	add_image_to_clients(active_thinking_indicator, group_clients())
@@ -391,7 +402,7 @@
 	active_thinking_indicator = null
 
 /mob/camera/imaginary_friend/create_typing_indicator()
-	if(active_typing_indicator || active_thinking_indicator || !thinking_IC)
+	if(active_typing_indicator || active_thinking_indicator || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_typing_indicator = image('icons/mob/effects/talk.dmi', src, "[bubble_icon]0", TYPING_LAYER)
 	add_image_to_clients(active_typing_indicator, group_clients())
@@ -403,7 +414,7 @@
 	active_typing_indicator = null
 
 /mob/camera/imaginary_friend/remove_all_indicators()
-	thinking_IC = FALSE
+	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
 

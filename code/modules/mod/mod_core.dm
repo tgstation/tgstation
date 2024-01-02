@@ -399,7 +399,7 @@
 	SIGNAL_HANDLER
 	if(mod.active)
 		particle_effect = new(mod.wearer, /particles/pollen, PARTICLE_ATTACH_MOB)
-		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3)
+		mob_spawner = mod.wearer.AddComponent(/datum/component/spawner, spawn_types=list(spawned_mob_type), spawn_time=5 SECONDS, max_spawned=3, faction=mod.wearer.faction)
 		RegisterSignal(mob_spawner, COMSIG_SPAWNER_SPAWNED, PROC_REF(new_mob))
 		RegisterSignal(mod.wearer, COMSIG_MOVABLE_MOVED, PROC_REF(spread_flowers))
 

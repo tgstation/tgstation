@@ -141,10 +141,9 @@
 
 ///Attack proc. Spawns a singular legion skull.
 /mob/living/simple_animal/hostile/megafauna/legion/proc/create_legion_skull()
-	var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/A = new(loc)
-	A.GiveTarget(target)
-	A.friends = friends
-	A.faction = faction
+	var/mob/living/basic/legion_brood/minion = new(loc)
+	minion.assign_creator(src)
+	minion.ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET] = target
 
 //CHARGE
 
@@ -203,14 +202,14 @@
 
 
 ///In addition to parent functionality, this will also turn the target into a small legion if they are unconscious.
-/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/legion/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(!. || !ishuman(target))
 		return
 	var/mob/living/living_target = target
 	switch(living_target.stat)
 		if(UNCONSCIOUS, HARD_CRIT)
-			var/mob/living/simple_animal/hostile/asteroid/hivelordbrood/legion/legion = new(loc)
+			var/mob/living/basic/legion_brood/legion = new(loc)
 			legion.infest(living_target)
 
 
@@ -270,14 +269,14 @@
 	density = TRUE
 	layer = ABOVE_OBJ_LAYER
 	armor_type = /datum/armor/structure_legionturret
+	//Compared with the targeted mobs. If they have the faction, turret won't shoot.
+	faction = list(FACTION_MINING)
 	///What kind of projectile the actual damaging part should be.
 	var/projectile_type = /obj/projectile/beam/legion
 	///Time until the tracer gets shot
 	var/initial_firing_time = 18
 	///How long it takes between shooting the tracer and the projectile.
 	var/shot_delay = 8
-	///Compared with the targeted mobs. If they have the faction, turret won't shoot.
-	var/faction = list(FACTION_MINING)
 
 /datum/armor/structure_legionturret
 	laser = 100
@@ -325,7 +324,6 @@
 	hitsound = 'sound/magic/magic_missile.ogg'
 	damage = 19
 	range = 6
-	eyeblur = 0
 	light_color = COLOR_SOFT_RED
 	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
 	tracer_type = /obj/effect/projectile/tracer/legion

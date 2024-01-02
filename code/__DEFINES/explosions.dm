@@ -23,8 +23,10 @@
 	if(!(target.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) { \
 		target.contents_explosion(##args);\
 	};\
-	SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\
-	target.ex_act(##args);
+	if(!(SEND_SIGNAL(target, COMSIG_ATOM_PRE_EX_ACT, ##args) & COMPONENT_CANCEL_EX_ACT)) { \
+		SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\
+		target.ex_act(##args);\
+	}
 
 // Internal explosion argument list keys.
 // Must match the arguments to [/datum/controller/subsystem/explosions/proc/propagate_blastwave]

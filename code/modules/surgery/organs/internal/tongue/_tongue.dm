@@ -94,8 +94,10 @@
 /obj/item/organ/internal/tongue/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
 
-	if(speech_args[SPEECH_LANGUAGE] in languages_native)
-		return FALSE //no changes
+	if(speech_args[SPEECH_LANGUAGE] in languages_native) // Speaking a native language?
+		return FALSE // Don't modify speech
+	if(HAS_TRAIT(source, TRAIT_SIGN_LANG)) // No modifiers for signers - I hate this but I simply cannot get these to combine into one statement
+		return FALSE // Don't modify speech
 	modify_speech(source, speech_args)
 
 /obj/item/organ/internal/tongue/proc/modify_speech(datum/source, list/speech_args)
@@ -118,7 +120,7 @@
 		food_taste_reaction = FOOD_LIKED
 	return food_taste_reaction
 
-/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/tongue/Insert(mob/living/carbon/tongue_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -133,7 +135,7 @@
 	REMOVE_TRAIT(tongue_owner, TRAIT_AGEUSIA, NO_TONGUE_TRAIT)
 	apply_tongue_effects()
 
-/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special = FALSE)
+/obj/item/organ/internal/tongue/Remove(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
 	temp_say_mod = ""
 	UnregisterSignal(tongue_owner, COMSIG_MOB_SAY)
@@ -146,7 +148,7 @@
 /obj/item/organ/internal/tongue/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag)
 	. = ..()
 	if(!owner)
-		return
+		return FALSE
 	apply_tongue_effects()
 
 /// Applies effects to our owner based on how damaged our tongue is
@@ -181,7 +183,7 @@
 	languages_native = list(/datum/language/draconic)
 	liked_foodtypes = GORE | MEAT | SEAFOOD | NUTS | BUGS
 	disliked_foodtypes = GRAIN | DAIRY | CLOTH | GROSS
-
+	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.9,aresample=%SAMPLE_RATE%,atempo=1/0.9,aformat=channel_layouts=mono,volume=0.2 [p0]; [out2] asetrate=%SAMPLE_RATE%*1.1,aresample=%SAMPLE_RATE%,atempo=1/1.1,aformat=channel_layouts=mono,volume=0.2[p2]; [p0][0][p2] amix=inputs=3"}
 /obj/item/organ/internal/tongue/lizard/modify_speech(datum/source, list/speech_args)
 	var/static/regex/lizard_hiss = new("s+", "g")
 	var/static/regex/lizard_hiSS = new("S+", "g")
@@ -475,7 +477,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	say_mod = "hisses"
 	taste_sensitivity = 10 // LIZARDS ARE ALIENS CONFIRMED
 	modifies_speech = TRUE // not really, they just hiss
-
+	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.8,aresample=%SAMPLE_RATE%,atempo=1/0.8,aformat=channel_layouts=mono [p0]; [out2] asetrate=%SAMPLE_RATE%*1.2,aresample=%SAMPLE_RATE%,atempo=1/1.2,aformat=channel_layouts=mono[p2]; [p0][0][p2] amix=inputs=3"}
 // Aliens can only speak alien and a few other languages.
 /obj/item/organ/internal/tongue/alien/get_possible_languages()
 	return list(
@@ -536,6 +538,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 /obj/item/organ/internal/tongue/robot
 	name = "robotic voicebox"
 	desc = "A voice synthesizer that can interface with organic lifeforms."
+	failing_desc = "seems to be broken."
 	organ_flags = ORGAN_ROBOTIC
 	icon_state = "tonguerobot"
 	say_mod = "states"
@@ -579,6 +582,7 @@ GLOBAL_LIST_INIT(english_to_zombie, list())
 	toxic_foodtypes = NONE //no food is particularly toxic to ethereals
 	attack_verb_continuous = list("shocks", "jolts", "zaps")
 	attack_verb_simple = list("shock", "jolt", "zap")
+	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.99,aresample=%SAMPLE_RATE%,volume=0.3 [p0]; [p0][out2] amix=inputs=2"}
 
 // Ethereal tongues can speak all default + voltaic
 /obj/item/organ/internal/tongue/ethereal/get_possible_languages()

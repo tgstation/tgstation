@@ -18,7 +18,7 @@
 	icon_state_menu = "menu"
 	max_capacity = 64
 	allow_chunky = TRUE
-	hardware_flag = PROGRAM_TABLET
+	hardware_flag = PROGRAM_PDA
 	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
@@ -83,7 +83,7 @@
 /obj/item/modular_computer/pda/interact(mob/user)
 	. = ..()
 	if(HAS_TRAIT(src, TRAIT_PDA_MESSAGE_MENU_RIGGED))
-		explode(usr, from_message_menu = TRUE)
+		explode(user, from_message_menu = TRUE)
 
 /obj/item/modular_computer/pda/attack_self(mob/user)
 	// bypass literacy checks to access syndicate uplink
@@ -272,6 +272,19 @@
 	if(msg)
 		msg.invisible = TRUE
 
+/obj/item/modular_computer/pda/syndicate_contract_uplink
+	name = "contractor tablet"
+	device_theme = PDA_THEME_SYNDICATE
+	icon_state_menu = "contractor-assign"
+	comp_light_luminosity = 6.3
+	has_pda_programs = FALSE
+	greyscale_config = /datum/greyscale_config/tablet/stripe_double
+	greyscale_colors = "#696969#000000#FFA500"
+
+	starting_programs = list(
+		/datum/computer_file/program/contract_uplink,
+	)
+
 /**
  * Silicon PDA
  *
@@ -374,7 +387,7 @@
 		.["comp_light_color"] = robo.lamp_color
 
 //Makes the flashlight button affect the borg rather than the tablet
-/obj/item/modular_computer/pda/silicon/toggle_flashlight()
+/obj/item/modular_computer/pda/silicon/toggle_flashlight(mob/user)
 	if(!silicon_owner || QDELETED(silicon_owner))
 		return FALSE
 	if(iscyborg(silicon_owner))

@@ -11,13 +11,13 @@
 /obj/item/powersink
 	name = "power sink"
 	desc = "A power sink which drains energy from electrical systems and converts it to heat. Ensure short workloads and ample time to cool down if used in high energy systems."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "powersink0"
 	inhand_icon_state = "electronic"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	w_class = WEIGHT_CLASS_BULKY
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NO_PIXEL_RANDOM_DROP
 	throwforce = 5
 	throw_speed = 1
@@ -124,7 +124,11 @@
 				span_hear("You hear a click."))
 			message_admins("Power sink activated by [ADMIN_LOOKUPFLW(user)] at [ADMIN_VERBOSEJMP(src)]")
 			user.log_message("activated a powersink", LOG_GAME)
-			notify_ghosts("[user] has activated a power sink!", source = src, header = "Shocking News!")
+			notify_ghosts(
+				"[user] has activated a power sink!",
+				source = src,
+				header = "Shocking News!",
+			)
 			set_mode(OPERATING)
 
 		if(OPERATING)
@@ -188,7 +192,11 @@
 		if (!warning_given)
 			warning_given = TRUE
 			message_admins("Power sink at ([x],[y],[z] - <A HREF='?_src_=holder;[HrefToken()];adminplayerobservecoodjump=1;X=[x];Y=[y];Z=[z]'>JMP</a>) has reached [ALERT]% of max heat. Explosion imminent.")
-			notify_ghosts("[src] is about to reach critical heat capacity!", source = src, header = "Power Sunk")
+			notify_ghosts(
+				"[src] is about to reach critical heat capacity!",
+				source = src,
+				header = "Power Sunk",
+			)
 		playsound(src, 'sound/effects/screech.ogg', 100, TRUE, TRUE)
 
 	if(internal_heat >= max_heat)

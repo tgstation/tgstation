@@ -107,6 +107,7 @@ GLOBAL_LIST_EMPTY(generic_event_spawns)
 /// essentially allowing a user to override generic job spawnpoints with a specific one
 GLOBAL_LIST_EMPTY(jobspawn_overrides)
 
+GLOBAL_LIST_EMPTY(gorilla_start)
 GLOBAL_LIST_EMPTY(wizardstart)
 GLOBAL_LIST_EMPTY(nukeop_start)
 GLOBAL_LIST_EMPTY(nukeop_leader_start)
@@ -126,6 +127,9 @@ GLOBAL_LIST_EMPTY(deathsquadspawn)
 GLOBAL_LIST_EMPTY(emergencyresponseteamspawn)
 GLOBAL_LIST_EMPTY(ruin_landmarks)
 GLOBAL_LIST_EMPTY(bar_areas)
+
+/// List of all the maps that have been cached for /proc/load_map
+GLOBAL_LIST_EMPTY(cached_maps)
 
 /// Away missions
 GLOBAL_LIST_EMPTY(vr_spawnpoints)

@@ -9,7 +9,7 @@
 /obj/item/raw_anomaly_core
 	name = "raw anomaly core"
 	desc = "You shouldn't be seeing this. Someone screwed up."
-	icon = 'icons/obj/assemblies/new_assemblies.dmi'
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "broken_state"
 
 	/// Anomaly type

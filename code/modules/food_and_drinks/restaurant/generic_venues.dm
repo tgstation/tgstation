@@ -42,7 +42,7 @@
 	var/obj/item/object_to_order = order
 	return "I'll take \a [initial(object_to_order.name)]"
 
-/datum/venue/restaurant/on_get_order(mob/living/simple_animal/robot_customer/customer_pawn, obj/item/order_item)
+/datum/venue/restaurant/on_get_order(mob/living/basic/robot_customer/customer_pawn, obj/item/order_item)
 	var/transaction_result = ..()
 	if((transaction_result & TRANSACTION_HANDLED) || !(transaction_result & TRANSACTION_SUCCESS))
 		return

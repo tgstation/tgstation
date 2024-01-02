@@ -9,7 +9,7 @@
 /datum/surgery/repair_puncture
 	name = "Repair puncture"
 	surgery_flags = SURGERY_REQUIRE_RESTING | SURGERY_REQUIRE_LIMB | SURGERY_REQUIRES_REAL_LIMB
-	targetable_wound = /datum/wound/pierce
+	targetable_wound = /datum/wound/pierce/bleed
 	target_mobtypes = list(/mob/living/carbon)
 	possible_locs = list(
 		BODY_ZONE_R_ARM,
@@ -32,7 +32,7 @@
 	. = ..()
 	if(.)
 		var/obj/item/bodypart/targeted_bodypart = target.get_bodypart(user.zone_selected)
-		var/datum/wound/burn/pierce_wound = targeted_bodypart.get_wound_type(targetable_wound)
+		var/datum/wound/burn/flesh/pierce_wound = targeted_bodypart.get_wound_type(targetable_wound)
 		return(pierce_wound && pierce_wound.blood_flow > 0)
 
 //SURGERY STEPS
@@ -47,7 +47,7 @@
 	time = 3 SECONDS
 
 /datum/surgery_step/repair_innards/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/datum/wound/pierce/pierce_wound = surgery.operated_wound
+	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound
 	if(!pierce_wound)
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
 		return
@@ -67,7 +67,7 @@
 	display_pain(target, "You feel a horrible stabbing pain in your [parse_zone(user.zone_selected)]!")
 
 /datum/surgery_step/repair_innards/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/datum/wound/pierce/pierce_wound = surgery.operated_wound
+	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound
 	if(!pierce_wound)
 		to_chat(user, span_warning("[target] has no puncture wound there!"))
 		return ..()
@@ -112,7 +112,7 @@
 	return TRUE
 
 /datum/surgery_step/seal_veins/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
-	var/datum/wound/pierce/pierce_wound = surgery.operated_wound
+	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound
 	if(!pierce_wound)
 		user.visible_message(span_notice("[user] looks for [target]'s [parse_zone(user.zone_selected)]."), span_notice("You look for [target]'s [parse_zone(user.zone_selected)]..."))
 		return
@@ -126,7 +126,7 @@
 	display_pain(target, "You're being burned inside your [parse_zone(user.zone_selected)]!")
 
 /datum/surgery_step/seal_veins/success(mob/living/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery, default_display_results = FALSE)
-	var/datum/wound/pierce/pierce_wound = surgery.operated_wound
+	var/datum/wound/pierce/bleed/pierce_wound = surgery.operated_wound
 	if(!pierce_wound)
 		to_chat(user, span_warning("[target] has no puncture there!"))
 		return ..()

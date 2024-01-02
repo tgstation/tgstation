@@ -33,6 +33,7 @@
 	var/obj/item/mecha_parts/chassis/parent_chassis = parent
 	mech.CheckParts(parent_chassis.contents)
 	SSblackbox.record_feedback("tally", "mechas_created", 1, mech.name)
+	ADD_TRAIT(mech, TRAIT_MECHA_CREATED_NORMALLY, mech)
 	QDEL_NULL(parent)
 
 // Default proc to generate mech steps.
@@ -503,7 +504,7 @@
 		list(
 			"key" = /obj/item/circuitboard/mecha/honker/targeting,
 			"action" = ITEM_DELETE,
-			"desc" = "Prank <b>targetting board</b> can be added!",
+			"desc" = "Prank <b>targeting board</b> can be added!",
 			"forward_message" = "added prank"
 		),
 		list(
@@ -679,7 +680,7 @@
 			"key" = /obj/item/stock_parts/servo,
 			"action" = ITEM_MOVE_INSIDE,
 			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanning module is secured, the <b>capacitor</b> can be added.",
+			"desc" = "Capacitor is secured, the <b>micro-servo</b> can be added.",
 			"forward_message" = "added micro-servo",
 			"backward_message" = "unsecured capacitor"
 		),

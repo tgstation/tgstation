@@ -29,7 +29,6 @@
 	var/busy = FALSE
 	var/emped = FALSE  //Number of consecutive EMP's on this camera
 	var/in_use_lights = 0
-
 	// Upgrades bitflag
 	var/upgrades = 0
 
@@ -101,9 +100,12 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 		toggle_cam()
 	else //this is handled by toggle_camera, so no need to update it twice.
 		update_appearance()
-	AddElement(/datum/element/wall_mount)
 
 	alarm_manager = new(src)
+	find_and_hang_on_wall(directional = TRUE, \
+		custom_drop_callback = CALLBACK(src, PROC_REF(deconstruct), FALSE))
+
+	RegisterSignal(src, COMSIG_HIT_BY_SABOTEUR, PROC_REF(on_saboteur))
 
 /obj/machinery/camera/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
 	for(var/i in network)
@@ -155,7 +157,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 		if(!status && powered())
 			. += span_info("It can reactivated with <b>wirecutters</b>.")
 
-/obj/machinery/camera/emp_act(severity)
+/obj/machinery/camera/emp_act(severity, reset_time = 90 SECONDS)
 	. = ..()
 	if(!status)
 		return
@@ -168,13 +170,18 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 			set_light(0)
 			emped = emped+1  //Increase the number of consecutive EMP's
 			update_appearance()
-			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), 90 SECONDS)
+			addtimer(CALLBACK(src, PROC_REF(post_emp_reset), emped, network), reset_time)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client?.eye == src)
 					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, span_warning("The screen bursts into static!"))
+
+/obj/machinery/camera/proc/on_saboteur(datum/source, disrupt_duration)
+	SIGNAL_HANDLER
+	emp_act(EMP_LIGHT, reset_time = disrupt_duration)
+	return COMSIG_SABOTEUR_SUCCESS
 
 /obj/machinery/camera/proc/post_emp_reset(thisemp, previous_network)
 	if(QDELETED(src))
@@ -188,7 +195,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 	if(can_use())
 		GLOB.cameranet.addCamera(src)
 	emped = 0 //Resets the consecutive EMP count
-	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 100)
+	addtimer(CALLBACK(src, PROC_REF(cancelCameraAlarm)), 10 SECONDS)
 
 /obj/machinery/camera/ex_act(severity, target)
 	if(invuln)
@@ -334,7 +341,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 			return
 
 	// OTHER
-	if(istype(attacking_item, /obj/item/modular_computer/pda))
+	if(istype(attacking_item, /obj/item/modular_computer))
 		var/itemname = ""
 		var/info = ""
 
@@ -432,7 +439,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray)
 		toggle_cam(null, 0)
 
 /obj/machinery/camera/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
 			var/obj/structure/camera_assembly/assembly = assembly_ref?.resolve()
 			if(!assembly)

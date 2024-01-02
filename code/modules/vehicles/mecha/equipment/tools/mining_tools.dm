@@ -122,7 +122,7 @@
 			SEND_SIGNAL(src, COMSIG_MECHA_DRILL_MOB, chassis, target)
 		else
 			target.investigate_log("has been gibbed by [src] (attached to [chassis]).", INVESTIGATE_DEATHS)
-			target.gib()
+			target.gib(DROP_ALL_REMAINS)
 	else
 		//drill makes a hole
 		var/obj/item/bodypart/target_part = target.get_bodypart(target.get_random_valid_zone(BODY_ZONE_CHEST))

@@ -62,7 +62,7 @@
 		else if(reagents.total_volume >= 10)
 			to_chat(user, span_warning("[src] is full."))
 		else
-			A.reagents.trans_to(src, 10, transfered_by = user)
+			A.reagents.trans_to(src, 10, transferred_by = user)
 			to_chat(user, span_notice("You fill the balloon with the contents of [A]."))
 			desc = "A translucent balloon with some form of liquid sloshing around in it."
 			update_appearance()
@@ -77,7 +77,7 @@
 			else
 				desc = "A translucent balloon with some form of liquid sloshing around in it."
 				to_chat(user, span_notice("You fill the balloon with the contents of [I]."))
-				I.reagents.trans_to(src, 10, transfered_by = user)
+				I.reagents.trans_to(src, 10, transferred_by = user)
 				update_appearance()
 	else if(I.get_sharpness())
 		balloon_burst()
@@ -135,7 +135,8 @@
 		return ..()
 
 /obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
-	if(ismonkey(throwingdatum.thrower) && istype(AM, /obj/item/ammo_casing/foam_dart))
+	var/mob/thrower = throwingdatum?.get_thrower()
+	if(ismonkey(thrower) && istype(AM, /obj/item/ammo_casing/foam_dart))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
@@ -285,7 +286,7 @@
 	var/obj/item/bodypart/chest/CH = user.get_bodypart(BODY_ZONE_CHEST)
 	if(CH.cavity_item) // if he's (un)bright enough to have a round and full belly...
 		user.visible_message(span_danger("[user] regurgitates [src]!")) // I swear i dont have a fetish
-		user.vomit(100, TRUE, distance = 0)
+		user.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 100, distance = 0)
 		user.adjustOxyLoss(120)
 		user.dropItemToGround(src) // incase the crit state doesn't drop the singulo to the floor
 		user.set_suicide(FALSE)
@@ -320,7 +321,7 @@
 	worn_icon_state = "gun"
 	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.1, /datum/material/glass= SMALL_MATERIAL_AMOUNT * 0.1)
@@ -457,10 +458,10 @@
 		if("purple")
 			saber_color = "red"
 		else
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 	balloon_alert(user, "changed to [saber_color]")
 	update_appearance(UPDATE_ICON)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/sword/vv_edit_var(vname, vval)
 	. = ..()
@@ -615,7 +616,7 @@
 	worn_icon_state = "katana"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 5
 	throwforce = 5
@@ -663,7 +664,7 @@
 	SIGNAL_HANDLER
 	if(ishuman(H) || issilicon(H)) //i guess carp and shit shouldn't set them off
 		var/mob/living/carbon/M = H
-		if(issilicon(H) || M.m_intent == MOVE_INTENT_RUN)
+		if(issilicon(H) || M.move_intent == MOVE_INTENT_RUN)
 			to_chat(M, span_danger("You step on the snap pop!"))
 			pop_burst(2, 0)
 
@@ -855,7 +856,7 @@
 /obj/item/toy/redbutton
 	name = "big red button"
 	desc = "A big, plastic red button. Reads 'From HonkCo Pranks!' on the back."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "bigred"
 	w_class = WEIGHT_CLASS_SMALL
 	var/cooldown = 0

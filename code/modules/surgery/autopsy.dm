@@ -13,7 +13,7 @@
 	. = ..()
 	if(patient.stat != DEAD)
 		return FALSE
-	if(HAS_TRAIT(patient, TRAIT_DISSECTED))
+	if(HAS_TRAIT_FROM(patient, TRAIT_DISSECTED, AUTOPSY_TRAIT))
 		return FALSE
 	return TRUE
 

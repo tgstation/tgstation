@@ -46,7 +46,7 @@
 /datum/action/cooldown/spell/pointed/rust_construction/cast(turf/open/cast_on)
 	. = ..()
 	var/rises_message = "rises out of [cast_on]"
-	var/turf/closed/wall/new_wall = cast_on.PlaceOnTop(/turf/closed/wall)
+	var/turf/closed/wall/new_wall = cast_on.place_on_top(/turf/closed/wall)
 	if(!istype(new_wall))
 		return
 

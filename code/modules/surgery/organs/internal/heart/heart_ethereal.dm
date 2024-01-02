@@ -1,6 +1,7 @@
 /obj/item/organ/internal/heart/ethereal
 	name = "crystal core"
-	icon_state = "ethereal_heart" //Welp. At least it's more unique in functionaliy.
+	icon_state = "ethereal_heart-on"
+	base_icon_state = "ethereal_heart"
 	visual = TRUE //This is used by the ethereal species for color
 	desc = "A crystal-like organ that functions similarly to a heart for Ethereals. It can revive its owner."
 
@@ -18,8 +19,9 @@
 /obj/item/organ/internal/heart/ethereal/Initialize(mapload)
 	. = ..()
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
+	update_appearance()
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -27,7 +29,7 @@
 	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
 	RegisterSignal(heart_owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/heart_owner, special = FALSE)
+/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/heart_owner, special, movement_flags)
 	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_QDELETING))
 	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(heart_owner)
@@ -36,7 +38,7 @@
 
 /obj/item/organ/internal/heart/ethereal/update_overlays()
 	. = ..()
-	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[icon_state]_shine")
+	var/mutable_appearance/shine = mutable_appearance(icon, icon_state = "[base_icon_state]_overlay-[beating ? "on" : "off"]")
 	shine.appearance_flags = RESET_COLOR //No color on this, just pure white
 	. += shine
 
@@ -108,7 +110,7 @@
 	if(!COOLDOWN_FINISHED(src, crystalize_cooldown) || ethereal.stat != DEAD)
 		return //Should probably not happen, but lets be safe.
 
-	if(ismob(location) || isitem(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
+	if(ismob(location) || isitem(location) || iseffect(location) || HAS_TRAIT_FROM(src, TRAIT_HUSK, CHANGELING_DRAIN)) //Stops crystallization if they are eaten by a dragon, turned into a legion, consumed by his grace, etc.
 		to_chat(ethereal, span_warning("You were unable to finish your crystallization, for obvious reasons."))
 		stop_crystalization_process(ethereal, FALSE)
 		return
@@ -139,7 +141,7 @@
 	return
 
 ///Lets you stop the process with enough brute damage
-/obj/item/organ/internal/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone)
+/obj/item/organ/internal/heart/ethereal/proc/on_take_damage(datum/source, damage, damagetype, def_zone, ...)
 	SIGNAL_HANDLER
 	if(damagetype != BRUTE)
 		return
@@ -193,13 +195,13 @@
 	add_atom_colour(ethereal_heart.ethereal_color, FIXED_COLOUR_PRIORITY)
 	crystal_heal_timer = addtimer(CALLBACK(src, PROC_REF(heal_ethereal)), CRYSTALIZE_HEAL_TIME, TIMER_STOPPABLE)
 	set_light(4, 10, ethereal_heart.ethereal_color)
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 	flick("ethereal_crystal_forming", src)
 	addtimer(CALLBACK(src, PROC_REF(start_crystalization)), 1 SECONDS)
 
 /obj/structure/ethereal_crystal/proc/start_crystalization()
 	being_built = FALSE
-	update_icon()
+	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/ethereal_crystal/atom_destruction(damage_flag)
 	playsound(get_turf(ethereal_heart.owner), 'sound/effects/ethereal_revive_fail.ogg', 100)

@@ -1,14 +1,15 @@
 import { exhaustiveCheck } from 'common/exhaustive';
+
 import { useBackend, useLocalState } from '../../backend';
 import { Button, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { PreferencesMenuData } from './data';
-import { PageButton } from './PageButton';
 import { AntagsPage } from './AntagsPage';
+import { PreferencesMenuData } from './data';
 import { JobsPage } from './JobsPage';
 import { MainPage } from './MainPage';
-import { SpeciesPage } from './SpeciesPage';
+import { PageButton } from './PageButton';
 import { QuirksPage } from './QuirksPage';
+import { SpeciesPage } from './SpeciesPage';
 
 enum Page {
   Antags,
@@ -34,7 +35,8 @@ const CharacterProfiles = (props: {
             onClick={() => {
               props.onClick(slot);
             }}
-            fluid>
+            fluid
+          >
             {profile ?? 'New Character'}
           </Button>
         </Stack.Item>
@@ -43,14 +45,10 @@ const CharacterProfiles = (props: {
   );
 };
 
-export const CharacterPreferenceWindow = (props, context) => {
-  const { act, data } = useBackend<PreferencesMenuData>(context);
+export const CharacterPreferenceWindow = (props) => {
+  const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [currentPage, setCurrentPage] = useLocalState(
-    context,
-    'currentPage',
-    Page.Main
-  );
+  const [currentPage, setCurrentPage] = useLocalState('currentPage', Page.Main);
 
   let pageContents;
 
@@ -111,7 +109,8 @@ export const CharacterPreferenceWindow = (props, context) => {
                   currentPage={currentPage}
                   page={Page.Main}
                   setPage={setCurrentPage}
-                  otherActivePages={[Page.Species]}>
+                  otherActivePages={[Page.Species]}
+                >
                   Character
                 </PageButton>
               </Stack.Item>
@@ -120,7 +119,8 @@ export const CharacterPreferenceWindow = (props, context) => {
                 <PageButton
                   currentPage={currentPage}
                   page={Page.Jobs}
-                  setPage={setCurrentPage}>
+                  setPage={setCurrentPage}
+                >
                   {/*
                     Fun fact: This isn't "Jobs" so that it intentionally
                     catches your eyes, because it's really important!
@@ -133,7 +133,8 @@ export const CharacterPreferenceWindow = (props, context) => {
                 <PageButton
                   currentPage={currentPage}
                   page={Page.Antags}
-                  setPage={setCurrentPage}>
+                  setPage={setCurrentPage}
+                >
                   Antagonists
                 </PageButton>
               </Stack.Item>
@@ -142,7 +143,8 @@ export const CharacterPreferenceWindow = (props, context) => {
                 <PageButton
                   currentPage={currentPage}
                   page={Page.Quirks}
-                  setPage={setCurrentPage}>
+                  setPage={setCurrentPage}
+                >
                   Quirks
                 </PageButton>
               </Stack.Item>

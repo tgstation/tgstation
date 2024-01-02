@@ -4,7 +4,7 @@
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "pickaxe"
 	inhand_icon_state = "pickaxe"
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT | ITEM_SLOT_BACK
 	force = 15
 	throwforce = 10
@@ -123,7 +123,7 @@
 	inhand_icon_state = "shovel"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	force = 8
 	throwforce = 4
@@ -206,7 +206,7 @@
 	inhand_icon_state = "trench_tool"
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/mining_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 15
 	throwforce = 6
 	w_class = WEIGHT_CLASS_SMALL
@@ -216,6 +216,9 @@
 	attack_verb_continuous = list("bashes", "bludgeons", "thrashes", "whacks")
 	attack_verb_simple = list("bash", "bludgeon", "thrash", "whack")
 	wound_bonus = 10
+
+/obj/item/trench_tool/get_all_tool_behaviours()
+	return list(TOOL_MINING, TOOL_SHOVEL, TOOL_WRENCH)
 
 /obj/item/trench_tool/Initialize(mapload)
 	. = ..()
@@ -319,6 +322,9 @@
 	var/recoil_factor = 3
 	/// Wether we knock down and launch away out enemies when we attack.
 	var/do_launch = TRUE
+
+/obj/item/shovel/giant_wrench/get_all_tool_behaviours()
+	return list(TOOL_SHOVEL, TOOL_WRENCH)
 
 /datum/armor/giant_wrench
 	acid = 30

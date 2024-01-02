@@ -19,8 +19,8 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 	else
 		stored_extinguisher = new /obj/item/extinguisher(src)
 	update_appearance(UPDATE_ICON)
-	AddElement(/datum/element/wall_mount)
 	register_context()
+	find_and_hang_on_wall()
 
 /obj/structure/extinguisher_cabinet/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -140,7 +140,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 
 /obj/structure/extinguisher_cabinet/atom_break(damage_flag)
 	. = ..()
-	if(!broken && !(flags_1 & NODECONSTRUCT_1))
+	if(!broken && !(obj_flags & NO_DECONSTRUCTION))
 		broken = 1
 		opened = 1
 		if(stored_extinguisher)
@@ -149,7 +149,7 @@ WALL_MOUNT_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet)
 		update_appearance(UPDATE_ICON)
 
 /obj/structure/extinguisher_cabinet/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
 			new /obj/item/wallframe/extinguisher_cabinet(loc)
 		else

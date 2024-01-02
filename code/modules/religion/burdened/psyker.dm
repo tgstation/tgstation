@@ -10,12 +10,12 @@
 	organ_traits = list(TRAIT_ADVANCEDTOOLUSER, TRAIT_LITERATE, TRAIT_CAN_STRIP, TRAIT_ANTIMAGIC_NO_SELFBLOCK)
 	w_class = WEIGHT_CLASS_NORMAL
 
-/obj/item/organ/internal/brain/psyker/on_insert(mob/living/carbon/inserted_into)
+/obj/item/organ/internal/brain/psyker/on_mob_insert(mob/living/carbon/inserted_into)
 	. = ..()
 	inserted_into.AddComponent(/datum/component/echolocation, blocking_trait = TRAIT_DUMB, echo_group = "psyker", echo_icon = "psyker", color_path = /datum/client_colour/psyker)
 	inserted_into.AddComponent(/datum/component/anti_magic, antimagic_flags = MAGIC_RESISTANCE_MIND)
 
-/obj/item/organ/internal/brain/psyker/on_remove(mob/living/carbon/removed_from)
+/obj/item/organ/internal/brain/psyker/on_mob_remove(mob/living/carbon/removed_from)
 	. = ..()
 	qdel(removed_from.GetComponent(/datum/component/echolocation))
 	qdel(removed_from.GetComponent(/datum/component/anti_magic))
@@ -36,7 +36,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	bodypart_traits = list(TRAIT_DISFIGURED, TRAIT_BALD, TRAIT_SHAVED)
-	head_flags = HEAD_LIPS|HEAD_EYEHOLES|HEAD_DEBRAIN
+	head_flags = HEAD_DEBRAIN
 
 /obj/item/bodypart/head/psyker/try_attach_limb(mob/living/carbon/new_head_owner, special, abort)
 	. = ..()
@@ -82,9 +82,9 @@
 	qdel(old_head)
 	var/obj/item/organ/internal/brain/psyker/psyker_brain = new()
 	old_brain.before_organ_replacement(psyker_brain)
-	old_brain.Remove(src, special = TRUE, no_id_transfer = TRUE)
+	old_brain.Remove(src, special = TRUE, movement_flags = NO_ID_TRANSFER)
 	qdel(old_brain)
-	psyker_brain.Insert(src, special = TRUE, drop_if_replaced = FALSE)
+	psyker_brain.Insert(src, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 	if(old_eyes)
 		qdel(old_eyes)
 	return TRUE
@@ -183,7 +183,7 @@
 		on_clear_callback = CALLBACK(src, PROC_REF(on_cult_rune_removed)), \
 		effects_we_clear = list(/obj/effect/rune, /obj/effect/heretic_rune, /obj/effect/cosmic_rune), \
 	)
-	AddElement(/datum/element/bane, target_type = /mob/living/simple_animal/revenant, damage_multiplier = 0, added_damage = 25)
+	AddElement(/datum/element/bane, target_type = /mob/living/basic/revenant, damage_multiplier = 0, added_damage = 25)
 	name = pick(possible_names)
 	desc = possible_names[name]
 
@@ -418,4 +418,4 @@
 
 /datum/action/cooldown/spell/forcewall/psychic_wall/spawn_wall(turf/cast_turf)
 	. = ..()
-	play_blind_effect(cast_turf, 5, "forcefield", time = 10 SECONDS)
+	play_fov_effect(cast_turf, 5, "forcefield", time = 10 SECONDS)

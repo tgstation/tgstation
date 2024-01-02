@@ -8,13 +8,13 @@
  */
 /datum/component/lock_on_cursor
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	/// Appearance to overlay onto whatever we are targetting
+	/// Appearance to overlay onto whatever we are targeting
 	var/mutable_appearance/lock_appearance
 	/// Current images we are displaying to the client
 	var/list/image/lock_images
 	/// Typecache of things we are allowed to target
 	var/list/target_typecache
-	/// Cache of weakrefs to ignore targetting formatted as `list(weakref = TRUE)`
+	/// Cache of weakrefs to ignore targeting formatted as `list(weakref = TRUE)`
 	var/list/immune_weakrefs
 	/// Number of things we can target at once
 	var/lock_amount
@@ -62,12 +62,14 @@
 	mouse_tracker.assign_to_mob(owner)
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/lock_on_cursor/Destroy()
+/datum/component/lock_on_cursor/Destroy(force, silent)
 	clear_visuals()
 	STOP_PROCESSING(SSfastprocess, src)
 	mouse_tracker = null
 	var/mob/owner = parent
 	owner.clear_fullscreen("lock_on")
+	on_lock = null
+	can_target_callback = null
 	return ..()
 
 /// Adds overlays to all targets

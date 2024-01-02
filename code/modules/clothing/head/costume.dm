@@ -159,6 +159,7 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT
+	var/has_fov = TRUE
 
 /datum/armor/costume_bronze
 	melee = 5
@@ -167,6 +168,15 @@
 	bomb = 10
 	fire = 20
 	acid = 20
+
+/obj/item/clothing/head/costume/tv_head/Initialize(mapload)
+	. = ..()
+	if(has_fov)
+		AddComponent(/datum/component/clothing_fov_visor, FOV_90_DEGREES)
+
+/obj/item/clothing/head/costume/tv_head/fov_less
+	desc = "A mysterious headgear made from the hollowed out remains of a status display. How very retro-retro-futuristic of you. It's very easy to see out of this one."
+	has_fov = FALSE
 
 /obj/item/clothing/head/costume/irs
 	name = "internal revenue service cap"

@@ -61,6 +61,11 @@
 	id = "comp_trigonometry"
 	build_path = /obj/item/circuit_component/trigonometry
 
+/datum/design/component/arctan2
+	name = "Arctangent 2 Component"
+	id = "comp_arctan2"
+	build_path = /obj/item/circuit_component/arctan2
+
 /datum/design/component/clock
 	name = "Clock Component"
 	id = "comp_clock"
@@ -276,6 +281,17 @@
 	id = "comp_list_remove"
 	build_path = /obj/item/circuit_component/variable/list/listremove
 
+/datum/design/component/assoc_list_set
+	name = "Associative List Set"
+	id = "comp_assoc_list_set"
+	build_path = /obj/item/circuit_component/variable/assoc_list/list_set
+
+/datum/design/component/assoc_list_remove
+	name = "Associative List Remove"
+	id = "comp_assoc_list_remove"
+	build_path = /obj/item/circuit_component/variable/assoc_list/list_remove
+
+
 /datum/design/component/list_clear
 	name = "List Clear"
 	id = "comp_list_clear"
@@ -341,15 +357,10 @@
 	id = "comp_pinpointer"
 	build_path = /obj/item/circuit_component/pinpointer
 
-/datum/design/component/bci
-	category = list(
-		RND_CATEGORY_CIRCUITRY + RND_SUBCATEGORY_CIRCUITRY_BCI_COMPONENTS
-	)
-
-/datum/design/component/bci/bci_action
-	name = "BCI Action Component"
-	id = "comp_bci_action"
-	build_path = /obj/item/circuit_component/equipment_action/bci
+/datum/design/component/equipment_action
+	name = "Equipment Action Component"
+	id = "comp_equip_action"
+	build_path = /obj/item/circuit_component/equipment_action
 
 /datum/design/component/bci/object_overlay
 	name = "Object Overlay Component"
@@ -400,11 +411,6 @@
 	name = "Filter List Component"
 	id = "comp_filter_list"
 	build_path = /obj/item/circuit_component/filter_list
-
-/datum/design/component/mod_action
-	name = "MOD Action Component"
-	id = "comp_mod_action"
-	build_path = /obj/item/circuit_component/equipment_action/mod
 
 /datum/design/component/id_getter
 	name = "ID Getter Component"

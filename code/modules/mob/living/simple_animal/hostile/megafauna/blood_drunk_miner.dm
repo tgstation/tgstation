@@ -67,20 +67,23 @@ Difficulty: Medium
 	. = ..()
 	miner_saw = new(src)
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	dash = new /datum/action/cooldown/mob_cooldown/dash()
-	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator()
-	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack()
-	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon()
+
+	dash = new /datum/action/cooldown/mob_cooldown/dash
+	kinetic_accelerator = new /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator
+	dash_attack = new /datum/action/cooldown/mob_cooldown/dash_attack
+	transform_weapon = new /datum/action/cooldown/mob_cooldown/transform_weapon
 	dash.Grant(src)
 	kinetic_accelerator.Grant(src)
 	dash_attack.Grant(src)
 	transform_weapon.Grant(src)
 
+	AddComponent(/datum/component/boss_music, 'sound/lavaland/bdm_boss.ogg', 167 SECONDS)
+
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/Destroy()
-	QDEL_NULL(dash)
-	QDEL_NULL(kinetic_accelerator)
-	QDEL_NULL(dash_attack)
-	QDEL_NULL(transform_weapon)
+	dash = null
+	kinetic_accelerator = null
+	dash_attack = null
+	transform_weapon = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/OpenFire()
@@ -129,22 +132,19 @@ Difficulty: Medium
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/AttackingTarget(atom/attacked_target)
 	if(QDELETED(target))
 		return
 	face_atom(target)
 	if(isliving(target))
 		var/mob/living/living_target = target
 		if(living_target.stat == DEAD)
-			visible_message(span_danger("[src] butchers [living_target]!"),
-			span_userdanger("You butcher [living_target], restoring your health!"))
 			if(!is_station_level(z) || client) //NPC monsters won't heal while on station
 				if(guidance)
 					adjustHealth(-living_target.maxHealth)
 				else
 					adjustHealth(-(living_target.maxHealth * 0.5))
-			living_target.investigate_log("has been gibbed by [src].", INVESTIGATE_DEATHS)
-			living_target.gib()
+			devour(living_target)
 			return TRUE
 	changeNext_move(CLICK_CD_MELEE)
 	miner_saw.melee_attack_chain(src, target)
@@ -187,7 +187,7 @@ Difficulty: Medium
 /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/guidance
 	guidance = TRUE
 
-/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget()
+/mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/hunter/AttackingTarget(atom/attacked_target)
 	. = ..()
 	if(. && prob(12))
 		INVOKE_ASYNC(dash, TYPE_PROC_REF(/datum/action, Trigger), target)

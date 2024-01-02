@@ -36,6 +36,7 @@
 
 /datum/status_effect/terrified/on_remove()
 	UnregisterSignal(owner, COMSIG_CARBON_HELPED)
+	owner.remove_fov_trait(id, FOV_270_DEGREES)
 
 /datum/status_effect/terrified/tick(seconds_between_ticks)
 	if(check_surrounding_darkness())
@@ -55,6 +56,7 @@
 
 	if(terror_buildup >= TERROR_PANIC_THRESHOLD) //If you reach this amount of buildup in an engagement, it's time to start looking for a way out.
 		owner.playsound_local(get_turf(owner), 'sound/health/slowbeat.ogg', 40, 0, channel = CHANNEL_HEARTBEAT, use_reverb = FALSE)
+		owner.add_fov_trait(id, FOV_270_DEGREES) //Terror induced tunnel vision
 		owner.adjust_eye_blur_up_to(10 SECONDS * seconds_between_ticks, 10 SECONDS)
 		if(prob(5)) //We have a little panic attack. Consider it GENTLE ENCOURAGEMENT to start running away.
 			freak_out(PANIC_ATTACK_TERROR_AMOUNT)
@@ -63,6 +65,8 @@
 				span_alert("Your heart lurches in your chest. You can't take much more of this!"),
 				span_hear("You hear a grunt."),
 			)
+	else
+		owner.remove_fov_trait(id, FOV_270_DEGREES)
 
 	if(terror_buildup >= TERROR_HEART_ATTACK_THRESHOLD) //You should only be able to reach this by actively terrorizing someone
 		owner.visible_message(

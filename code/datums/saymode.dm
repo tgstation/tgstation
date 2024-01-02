@@ -23,23 +23,23 @@
 	var/datum/antagonist/changeling/ling_sender = user.mind.has_antag_datum(/datum/antagonist/changeling)
 	if(!ling_sender)
 		return FALSE
-	if(HAS_TRAIT(user, CHANGELING_HIVEMIND_MUTE))
+	if(HAS_TRAIT(user, TRAIT_CHANGELING_HIVEMIND_MUTE))
 		to_chat(user, span_warning("The poison in the air hinders our ability to interact with the hivemind."))
 		return FALSE
 
 	user.log_talk(message, LOG_SAY, tag="changeling [ling_sender.changelingID]")
 	var/msg = span_changeling("<b>[ling_sender.changelingID]:</b> [message]")
 
-	//the recipients can recieve the message
-	for(var/datum/antagonist/changeling/ling_reciever in GLOB.antagonists)
-		if(!ling_reciever.owner)
+	//the recipients can receive the message
+	for(var/datum/antagonist/changeling/ling_receiver in GLOB.antagonists)
+		if(!ling_receiver.owner)
 			continue
-		var/mob/living/ling_mob = ling_reciever.owner.current
+		var/mob/living/ling_mob = ling_receiver.owner.current
 		//removes types that override the presence of being changeling (for example, borged lings still can't hivemind chat)
 		if(!isliving(ling_mob) || issilicon(ling_mob) || isbrain(ling_mob))
 			continue
-		// can't recieve messages on the hivemind right now
-		if(HAS_TRAIT(ling_mob, CHANGELING_HIVEMIND_MUTE))
+		// can't receive messages on the hivemind right now
+		if(HAS_TRAIT(ling_mob, TRAIT_CHANGELING_HIVEMIND_MUTE))
 			continue
 		to_chat(ling_mob, msg)
 
@@ -77,8 +77,8 @@
 
 /datum/saymode/binary/handle_message(mob/living/user, message, datum/language/language)
 	if(isdrone(user))
-		var/mob/living/simple_animal/drone/D = user
-		D.drone_chat(message)
+		var/mob/living/basic/drone/drone_user = user
+		drone_user.drone_chat(message)
 		return FALSE
 	if(user.binarycheck())
 		user.robot_talk(message)
@@ -96,17 +96,3 @@
 		AI.holopad_talk(message, language)
 		return FALSE
 	return TRUE
-
-/datum/saymode/mafia
-	key = "j"
-	mode = MODE_MAFIA
-
-/datum/saymode/mafia/handle_message(mob/living/user, message, datum/language/language)
-	var/datum/mafia_controller/MF = GLOB.mafia_game
-	if (!MF)
-		return TRUE
-	var/datum/mafia_role/R = MF.player_role_lookup[user]
-	if(!R || R.team != "mafia")
-		return TRUE
-	MF.send_message(span_changeling("<b>[R.body.real_name]:</b> [message]"), "mafia")
-	return FALSE

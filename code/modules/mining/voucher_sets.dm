@@ -62,7 +62,7 @@
 	icon = 'icons/mob/silicon/aibots.dmi'
 	icon_state = "mining_drone"
 	set_items = list(
-		/mob/living/simple_animal/hostile/mining_drone,
+		/mob/living/basic/mining_drone,
 		/obj/item/weldingtool/hugetank,
 		/obj/item/clothing/head/utility/welding,
 		/obj/item/borg/upgrade/modkit/minebot_passthrough,

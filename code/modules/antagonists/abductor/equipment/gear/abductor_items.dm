@@ -48,37 +48,29 @@
 		icon_state = "gizmo_scan"
 	to_chat(user, span_notice("You switch the device to [mode == GIZMO_SCAN? "SCAN": "MARK"] MODE"))
 
-/obj/item/abductor/gizmo/attack(mob/living/target, mob/user)
+/obj/item/abductor/gizmo/interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!ScientistCheck(user))
-		return
+		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 	if(!console)
 		to_chat(user, span_warning("The device is not linked to console!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	switch(mode)
 		if(GIZMO_SCAN)
-			scan(target, user)
+			scan(interacting_with, user)
 		if(GIZMO_MARK)
-			mark(target, user)
+			mark(interacting_with, user)
 
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/abductor/gizmo/afterattack(atom/target, mob/living/user, flag, params)
+/obj/item/abductor/gizmo/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(flag)
+	// Proximity is already handled via the interact_with_atom proc
+	if(proximity_flag)
 		return
-	if(!ScientistCheck(user))
-		return .
-	if(!console)
-		to_chat(user, span_warning("The device is not linked to console!"))
-		return .
 
-	switch(mode)
-		if(GIZMO_SCAN)
-			scan(target, user)
-		if(GIZMO_MARK)
-			mark(target, user)
-
-	return .
+	. |= AFTERATTACK_PROCESSED_ITEM
+	interact_with_atom(target, user)
 
 /obj/item/abductor/gizmo/proc/scan(atom/target, mob/living/user)
 	if(ishuman(target))
@@ -118,20 +110,21 @@
 	icon_state = "silencer"
 	inhand_icon_state = "gizmo"
 
-/obj/item/abductor/silencer/attack(mob/living/target, mob/user)
+/obj/item/abductor/silencer/interact_with_atom(atom/interacting_with, mob/living/user)
 	if(!AbductorCheck(user))
-		return
-	radio_off(target, user)
+		return ITEM_INTERACT_SKIP_TO_ATTACK // So you slap them with it
 
-/obj/item/abductor/silencer/afterattack(atom/target, mob/living/user, flag, params)
+	radio_off(interacting_with, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/abductor/silencer/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
-	if(flag)
+	// Proximity is already handled via the interact_with_atom proc
+	if(proximity_flag)
 		return
+
 	. |= AFTERATTACK_PROCESSED_ITEM
-	if(!AbductorCheck(user))
-		return .
-	radio_off(target, user)
-	return .
+	interact_with_atom(target, user)
 
 /obj/item/abductor/silencer/proc/radio_off(atom/target, mob/living/user)
 	if( !(user in (viewers(7,target))) )
@@ -250,7 +243,7 @@
 /obj/item/gun/energy/alien
 	name = "alien pistol"
 	desc = "A complicated gun that fires bursts of high-intensity radiation."
-	ammo_type = list(/obj/item/ammo_casing/energy/declone)
+	ammo_type = list(/obj/item/ammo_casing/energy/radiation)
 	pin = /obj/item/firing_pin/abductor
 	icon_state = "alienpistol"
 	inhand_icon_state = "alienpistol"
@@ -515,7 +508,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 // Stops humans from disassembling abductor headsets.
 /obj/item/radio/headset/abductor/screwdriver_act(mob/living/user, obj/item/tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/abductor_machine_beacon
 	name = "machine beacon"
@@ -556,30 +549,35 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	name = "alien scalpel"
 	desc = "It's a gleaming sharp knife made out of silvery-green metal."
 	icon = 'icons/obj/antags/abductor.dmi'
+	surgical_tray_overlay = "scalpel_alien"
 	toolspeed = 0.25
 
 /obj/item/hemostat/alien
 	name = "alien hemostat"
 	desc = "You've never seen this before."
 	icon = 'icons/obj/antags/abductor.dmi'
+	surgical_tray_overlay = "hemostat_alien"
 	toolspeed = 0.25
 
 /obj/item/retractor/alien
 	name = "alien retractor"
 	desc = "You're not sure if you want the veil pulled back."
 	icon = 'icons/obj/antags/abductor.dmi'
+	surgical_tray_overlay = "retractor_alien"
 	toolspeed = 0.25
 
 /obj/item/circular_saw/alien
 	name = "alien saw"
 	desc = "Do the aliens also lose this, and need to find an alien hatchet?"
 	icon = 'icons/obj/antags/abductor.dmi'
+	surgical_tray_overlay = "saw_alien"
 	toolspeed = 0.25
 
 /obj/item/surgicaldrill/alien
 	name = "alien drill"
 	desc = "Maybe alien surgeons have finally found a use for the drill."
 	icon = 'icons/obj/antags/abductor.dmi'
+	surgical_tray_overlay = "drill_alien"
 	toolspeed = 0.25
 
 /obj/item/cautery/alien
@@ -587,6 +585,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	desc = "Why would bloodless aliens have a tool to stop bleeding? \
 		Unless..."
 	icon = 'icons/obj/antags/abductor.dmi'
+	surgical_tray_overlay = "cautery_alien"
 	toolspeed = 0.25
 
 /obj/item/clothing/head/helmet/abductor
@@ -624,6 +623,24 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 	var/list/tool_list = list()
 	///Which toolset do we have active currently?
 	var/active_toolset = TOOLSET_MEDICAL
+
+/obj/item/abductor/alien_omnitool/get_all_tool_behaviours()
+	return list(
+	TOOL_BLOODFILTER,
+	TOOL_BONESET,
+	TOOL_CAUTERY,
+	TOOL_CROWBAR,
+	TOOL_DRILL,
+	TOOL_HEMOSTAT,
+	TOOL_MULTITOOL,
+	TOOL_RETRACTOR,
+	TOOL_SAW,
+	TOOL_SCALPEL,
+	TOOL_SCREWDRIVER,
+	TOOL_WELDER,
+	TOOL_WIRECUTTER,
+	TOOL_WRENCH,
+	)
 
 /obj/item/abductor/alien_omnitool/Initialize(mapload)
 	. = ..()

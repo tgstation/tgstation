@@ -13,7 +13,7 @@ Passive gate is similar to the regular pump except:
 	desc = "A one-way air valve that does not require power. Passes gas when the output pressure is lower than the target pressure."
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
-	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON | INTERACT_MACHINE_SET_MACHINE
+	interaction_flags_machine = INTERACT_MACHINE_OFFLINE | INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "passivegate"
 	use_power = NO_POWER_USE

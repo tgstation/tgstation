@@ -36,7 +36,7 @@
 		/datum/pet_command/free,
 		/datum/pet_command/grub_spit,
 		/datum/pet_command/follow,
-		/datum/pet_command/point_targetting/fetch,
+		/datum/pet_command/point_targeting/fetch,
 	)
 
 /mob/living/basic/mining/goldgrub/Initialize(mapload)
@@ -47,13 +47,13 @@
 	else
 		can_lay_eggs = FALSE
 
-	var/datum/action/cooldown/mob_cooldown/spit_ore/spit = new(src)
-	var/datum/action/cooldown/mob_cooldown/burrow/burrow = new(src)
-	spit.Grant(src)
-	burrow.Grant(src)
-	ai_controller.set_blackboard_key(BB_SPIT_ABILITY, spit)
-	ai_controller.set_blackboard_key(BB_BURROW_ABILITY, burrow)
-	AddElement(/datum/element/wall_smasher)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/spit_ore = BB_SPIT_ABILITY,
+		/datum/action/cooldown/mob_cooldown/burrow = BB_BURROW_ABILITY,
+	)
+	grant_actions_by_list(innate_actions)
+	AddElement(/datum/element/ore_collecting)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddComponent(/datum/component/ai_listen_to_weather)
 	AddComponent(\
 		/datum/component/appearance_on_aggro,\
@@ -65,23 +65,20 @@
 	if(can_lay_eggs)
 		make_egg_layer()
 
-/mob/living/basic/mining/goldgrub/UnarmedAttack(atom/attack_target, proximity_flag, list/modifiers)
-	. = ..()
-	if(!.)
-		return
+	RegisterSignal(src, COMSIG_ATOM_PRE_BULLET_ACT, PROC_REF(block_bullets))
 
-	if(!proximity_flag)
-		return
+/mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
+	SIGNAL_HANDLER
 
-	if(istype(attack_target, /obj/item/stack/ore))
-		consume_ore(attack_target)
+	if(stat != CONSCIOUS)
+		return COMPONENT_BULLET_PIERCED
 
-/mob/living/basic/mining/goldgrub/bullet_act(obj/projectile/bullet)
-	if(stat == DEAD)
-		return BULLET_ACT_FORCE_PIERCE
+	///high penetration bullets should still go through. No goldgrub can save you from the colossus' death bolts.
+	if(prob(hitting_projectile.armour_penetration))
+		return NONE
 
-	visible_message(span_danger("The [bullet.name] is repelled by [src]'s girth!"))
-	return BULLET_ACT_BLOCK
+	visible_message(span_danger("[hitting_projectile] is repelled by [source]'s girth!"))
+	return COMPONENT_BULLET_BLOCKED
 
 /mob/living/basic/mining/goldgrub/proc/barf_contents(gibbed)
 	playsound(src, 'sound/effects/splat.ogg', 50, TRUE)
@@ -131,12 +128,14 @@
 		max_eggs_held = 1,\
 	)
 
-/mob/living/basic/mining/goldgrub/proc/consume_ore(obj/item/target_ore)
+/mob/living/basic/mining/goldgrub/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	. = ..()
+	if(!istype(arrived, /obj/item/stack/ore))
+		return
 	playsound(src,'sound/items/eatfood.ogg', rand(10,50), TRUE)
-	target_ore.forceMove(src)
 	if(!can_lay_eggs)
 		return
-	if(!istype(target_ore, /obj/item/stack/ore/bluespace_crystal) || prob(60))
+	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))
 		return
 	new /obj/item/food/egg/green/grub_egg(get_turf(src))
 
@@ -188,4 +187,3 @@
 		current_growth = 0,\
 		location_allowlist = typecacheof(list(/turf)),\
 	)
-

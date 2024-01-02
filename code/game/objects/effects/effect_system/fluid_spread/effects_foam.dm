@@ -16,7 +16,7 @@
 	opacity = FALSE
 	anchored = TRUE
 	density = FALSE
-	layer = ABOVE_MOB_LAYER
+	layer = EDGED_TURF_LAYER
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	animate_movement = NO_STEPS
 	/// The types of turfs that this foam cannot spread to.
@@ -136,9 +136,10 @@
 	if(!istype(location))
 		return FALSE
 
+	var/datum/can_pass_info/info = new(no_id = TRUE)
 	for(var/iter_dir in GLOB.cardinals)
 		var/turf/spread_turf = get_step(src, iter_dir)
-		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, no_id = TRUE))
+		if(spread_turf?.density || spread_turf.LinkBlockedWithAccess(spread_turf, info))
 			continue
 
 		var/obj/effect/particle_effect/fluid/foam/foundfoam = locate() in spread_turf //Don't spread foam where there's already foam!
@@ -295,7 +296,7 @@
 	density = TRUE
 	opacity = TRUE // changed in New()
 	anchored = TRUE
-	layer = ABOVE_MOB_LAYER
+	layer = EDGED_TURF_LAYER
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	name = "foamed metal"
 	desc = "A lightweight foamed metal wall that can be used as base to construct a wall."
@@ -358,7 +359,7 @@
 				return
 			to_chat(user, span_notice("You add the plating."))
 			var/turf/T = get_turf(src)
-			T.PlaceOnTop(/turf/closed/wall/metal_foam_base)
+			T.place_on_top(/turf/closed/wall/metal_foam_base)
 			transfer_fingerprints_to(T)
 			qdel(src)
 		return
@@ -390,7 +391,7 @@
 /obj/effect/particle_effect/fluid/foam/metal/smart/make_result() //Smart foam adheres to area borders for walls
 	var/turf/open/location = loc
 	if(isspaceturf(location))
-		location.PlaceOnTop(/turf/open/floor/plating/foam)
+		location.place_on_top(/turf/open/floor/plating/foam)
 
 	for(var/cardinal in GLOB.cardinals)
 		var/turf/cardinal_turf = get_step(location, cardinal)
@@ -456,6 +457,20 @@
 	name = "dirty foam"
 	allow_duplicate_results = FALSE
 	result_type = /obj/effect/decal/cleanable/dirt
+
+/obj/effect/spawner/foam_starter
+	var/datum/effect_system/fluid_spread/foam/foam_type = /datum/effect_system/fluid_spread/foam
+	var/foam_size = 4
+
+/obj/effect/spawner/foam_starter/Initialize(mapload)
+	. = ..()
+
+	var/datum/effect_system/fluid_spread/foam/foam = new foam_type()
+	foam.set_up(foam_size, holder = src, location = loc)
+	foam.start()
+
+/obj/effect/spawner/foam_starter/small
+	foam_size = 2
 
 #undef MINIMUM_FOAM_DILUTION_RANGE
 #undef MINIMUM_FOAM_DILUTION

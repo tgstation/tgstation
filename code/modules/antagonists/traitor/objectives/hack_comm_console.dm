@@ -23,7 +23,7 @@
 
 /datum/traitor_objective/hack_comm_console/generate_objective(datum/mind/generating_for, list/possible_duplicates)
 	AddComponent(/datum/component/traitor_objective_mind_tracker, generating_for, \
-		signals = list(COMSIG_HUMAN_EARLY_UNARMED_ATTACK = PROC_REF(on_unarmed_attack)))
+		signals = list(COMSIG_LIVING_UNARMED_ATTACK = PROC_REF(on_unarmed_attack)))
 	RegisterSignal(SSdcs, COMSIG_GLOB_TRAITOR_OBJECTIVE_COMPLETED, PROC_REF(on_global_obj_completed))
 	return TRUE
 

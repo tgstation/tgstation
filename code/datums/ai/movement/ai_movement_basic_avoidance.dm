@@ -16,10 +16,8 @@
 /datum/ai_movement/basic_avoidance/allowed_to_move(datum/move_loop/has_target/dist_bound/source)
 	. = ..()
 	var/turf/target_turf = get_step_towards(source.moving, source.target)
-
-	if(is_type_in_typecache(target_turf, GLOB.dangerous_turfs))
-		. = FALSE
-	return .
+	if(!target_turf?.can_cross_safely(source.moving))
+		return FALSE
 
 /// Move immediately and don't update our facing
 /datum/ai_movement/basic_avoidance/backstep

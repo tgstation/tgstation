@@ -60,15 +60,17 @@
 				to_chat(usr, span_notice("Reconstruction in progress. This will take several minutes."))
 				playsound(src, 'sound/machines/terminal_prompt_confirm.ogg', 25, FALSE)
 				restoring = TRUE
-				occupier.notify_ghost_cloning("Your core files are being restored!", source = src)
+				occupier.notify_revival("Your core files are being restored!", source = src)
 				. = TRUE
 
 /obj/machinery/computer/aifixer/proc/Fix()
 	use_power(1000)
-	occupier.adjustOxyLoss(-5, FALSE)
-	occupier.adjustFireLoss(-5, FALSE)
-	occupier.adjustBruteLoss(-5, FALSE)
-	occupier.updatehealth()
+	var/need_mob_update = FALSE
+	need_mob_update += occupier.adjustOxyLoss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjustFireLoss(-5, updating_health = FALSE)
+	need_mob_update += occupier.adjustBruteLoss(-5, updating_health = FALSE)
+	if(need_mob_update)
+		occupier.updatehealth()
 	if(occupier.health >= 0 && occupier.stat == DEAD)
 		occupier.revive()
 		if(!occupier.radio_enabled)

@@ -211,7 +211,7 @@
 /obj/structure/chair/comfy/shuttle{
 	dir = 4
 	},
-/mob/living/basic/syndicate/ranged/smg/pilot{
+/mob/living/basic/trooper/syndicate/ranged/smg/pilot{
 	environment_smash = 0
 	},
 /turf/open/floor/iron/dark,

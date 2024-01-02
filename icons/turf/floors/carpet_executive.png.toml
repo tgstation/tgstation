@@ -1,0 +1,6 @@
+output_name = "executive_carpet"
+template = "bitmask/diagonal_32x32.toml"
+
+[prefabs]
+255 = 5
+

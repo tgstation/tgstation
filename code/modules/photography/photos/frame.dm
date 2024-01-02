@@ -143,7 +143,7 @@
 	user.visible_message(span_warning("[user] cuts away [framed] from [src]!"))
 	framed = null
 	update_appearance()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 
 /obj/structure/sign/picture_frame/attackby(obj/item/I, mob/user, params)
@@ -173,7 +173,7 @@
 		. += framed
 
 /obj/structure/sign/picture_frame/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/obj/item/wallframe/picture/F = new /obj/item/wallframe/picture(loc)
 		if(framed)
 			F.displayed = framed

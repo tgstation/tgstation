@@ -21,13 +21,13 @@
 	if(!manifest_can_fail)
 		return
 
-	if(prob(MANIFEST_ERROR_CHANCE))
+	if(prob(MANIFEST_ERROR_CHANCE) && (world.time-SSticker.round_start_time > STATION_RENAME_TIME_LIMIT)) //Too confusing if station name gets changed
 		errors |= MANIFEST_ERROR_NAME
 		investigate_log("Supply order #[order_id] generated a manifest with an incorrect station name.", INVESTIGATE_CARGO)
 	if(prob(MANIFEST_ERROR_CHANCE))
 		errors |= MANIFEST_ERROR_CONTENTS
 		investigate_log("Supply order #[order_id] generated a manifest missing listed contents.", INVESTIGATE_CARGO)
-	if(prob(MANIFEST_ERROR_CHANCE))
+	else if(prob(MANIFEST_ERROR_CHANCE)) //Content and item errors could remove the same items, so only one at a time
 		errors |= MANIFEST_ERROR_ITEM
 		investigate_log("Supply order #[order_id] generated with incorrect contents shipped.", INVESTIGATE_CARGO)
 
@@ -85,14 +85,18 @@
 	src.manifest_can_fail = manifest_can_fail
 	src.can_be_cancelled = can_be_cancelled
 
+/datum/supply_order/Destroy(force, ...)
+	QDEL_NULL(applied_coupon)
+	return ..()
+
 //returns the total cost of this order. Its not the total price paid by cargo but the total value of this order
 /datum/supply_order/proc/get_final_cost()
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
-		cost -= (cost * applied_coupon.discount_pct_off)
-	if(!isnull(paying_account)) //privately purchased means 1.1x the cost
+		cost *= (1 - applied_coupon.discount_pct_off)
+	if(paying_account && !pack.goody) //privately purchased and not a goody means 1.1x the cost
 		cost *= 1.1
-	return cost
+	return round(cost)
 
 /datum/supply_order/proc/generateRequisition(turf/T)
 	var/obj/item/paper/requisition_paper = new(T)
@@ -136,11 +140,15 @@
 	for(var/atom/movable/AM in container.contents - manifest_paper)
 		container_contents[AM.name]++
 	if((manifest_paper.errors & MANIFEST_ERROR_CONTENTS) && container_contents)
-		for(var/i = 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
-			var/missing_item = pick(container_contents)
-			container_contents[missing_item]--
-			if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
-				container_contents -= missing_item
+		if(HAS_TRAIT(container, TRAIT_NO_MANIFEST_CONTENTS_ERROR))
+			manifest_paper.errors &= ~MANIFEST_ERROR_CONTENTS
+		else
+			for(var/iteration in 1 to rand(1, round(container.contents.len * 0.5))) // Remove anywhere from one to half of the items
+				var/missing_item = pick(container_contents)
+				container_contents[missing_item]--
+				if(container_contents[missing_item] == 0) // To avoid 0s and negative values on the manifest
+					container_contents -= missing_item
+
 
 	for(var/item in container_contents)
 		manifest_text += "<li> [container_contents[item]] [item][container_contents[item] == 1 ? "" : "s"]</li>"
@@ -187,6 +195,28 @@
 		new I(miscbox)
 	generateManifest(miscbox, misc_own, "", misc_cost)
 	return
+
+/datum/supply_order/proc/append_order(list/new_contents, cost_increase)
+	for(var/i as anything in new_contents)
+		if(pack.contains[i])
+			pack.contains[i] += new_contents[i]
+		else
+			pack.contains += i
+			pack.contains[i] = new_contents[i]
+	pack.cost += cost_increase
+
+/// Custom type of order who's supply pack can be safely deleted
+/datum/supply_order/disposable
+
+/datum/supply_order/disposable/Destroy(force, ...)
+	QDEL_NULL(pack)
+	return ..()
+
+/// Custom material order to append cargo crate value to the final order cost
+/datum/supply_order/disposable/materials
+
+/datum/supply_order/disposable/materials/get_final_cost()
+	return (..() + CARGO_CRATE_VALUE)
 
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME

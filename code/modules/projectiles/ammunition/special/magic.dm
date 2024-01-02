@@ -4,7 +4,6 @@
 	slot_flags = null
 	projectile_type = /obj/projectile/magic
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/magic
-	is_cased_ammo = FALSE
 
 /obj/item/ammo_casing/magic/change
 	projectile_type = /obj/projectile/magic/change

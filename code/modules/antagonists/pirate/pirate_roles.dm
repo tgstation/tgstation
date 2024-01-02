@@ -61,7 +61,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/captain
 	rank = "Captain"
-	outfit = /datum/outfit/pirate/captain
+	outfit = /datum/outfit/pirate/captain/skeleton
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/skeleton/gunner
 	rank = "Gunner"

@@ -1,5 +1,15 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Input, Button, Table, LabeledList, NoticeBox } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Button,
+  Input,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 enum Screen {
@@ -28,8 +38,8 @@ type LinkedMachinery = {
   name: string;
 };
 
-const MachineScreen = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MachineScreen = (props) => {
+  const { act, data } = useBackend<Data>();
   const { network, machine } = data;
   const { linked_machinery = [] } = machine;
 
@@ -44,7 +54,8 @@ const MachineScreen = (props, context) => {
               icon="home"
               onClick={() => act('return_home')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Network">{network}</LabeledList.Item>
             <LabeledList.Item label="Network Entity">
@@ -80,14 +91,10 @@ const MachineScreen = (props, context) => {
   );
 };
 
-const MainScreen = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const MainScreen = (props) => {
+  const { act, data } = useBackend<Data>();
   const { machinery = [], network } = data;
-  const [networkId, setNetworkId] = useLocalState(
-    context,
-    'networkId',
-    network
-  );
+  const [networkId, setNetworkId] = useState(network);
 
   return (
     <Stack fill vertical>
@@ -95,13 +102,14 @@ const MainScreen = (props, context) => {
         <Section>
           <Input
             value={networkId}
-            onInput={(e, value) => setNetworkId(value)}
+            onChange={(e, value) => setNetworkId(value)}
             placeholder="Network ID"
           />
           <Button
-            content="Probe Network"
             onClick={() => act('probe_network', { network_id: networkId })}
-          />
+          >
+            Probe Network
+          </Button>
         </Section>
       </Stack.Item>
       <Stack.Item grow>
@@ -117,7 +125,8 @@ const MainScreen = (props, context) => {
               disabled={machinery.length === 0}
               onClick={() => act('flush_buffer')}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Address</Table.Cell>
@@ -143,8 +152,8 @@ const MainScreen = (props, context) => {
   );
 };
 
-export const TelecommsMonitor = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const TelecommsMonitor = (props) => {
+  const { act, data } = useBackend<Data>();
   const { screen, error_message } = data;
   return (
     <Window width={575} height={400}>
