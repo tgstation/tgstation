@@ -8,12 +8,11 @@
 	var/repeatable = FALSE //can this step be repeated? Make shure it isn't last step, or else the surgeon will be stuck in the loop
 	var/list/chems_needed = list()  //list of chems needed to complete the step. Even on success, the step will have no effect if there aren't the chems required in the mob.
 	var/require_all_chems = TRUE    //any on the list or all on the list?
-	var/silicons_obey_prob = FALSE
 	var/preop_sound //Sound played when the step is started
 	var/success_sound //Sound played if the step succeeded
 	var/failure_sound //Sound played if the step fails
 
-/datum/surgery_step/proc/try_op(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
+/datum/surgery_step/proc/try_op(mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, try_to_fail = FALSE)
 	var/success = FALSE
 	if(surgery.organ_to_manipulate && !target.get_organ_slot(surgery.organ_to_manipulate))
 		to_chat(user, span_warning("[target] seems to be missing the organ necessary to complete this surgery!"))
@@ -75,7 +74,6 @@
 
 	surgery.step_in_progress = TRUE
 	var/speed_mod = 1
-	var/fail_prob = 0//100 - fail_prob = success_prob
 	var/advance = FALSE
 
 	if(preop(user, target, target_zone, tool, surgery) == SURGERY_STEP_FAIL)
@@ -94,31 +92,39 @@
 		speed_mod *= SURGERY_SPEED_MORBID_CURIOSITY
 
 	var/implement_speed_mod = 1
+	var/success_chance = 100
 	if(implement_type) //this means it isn't a require hand or any item step.
-		implement_speed_mod = implements[implement_type] / 100.0
+		implement_speed_mod = implements[implement_type] / 100
+		success_chance = implements[implement_type]
 
 	speed_mod /= (get_location_modifier(target) * (1 + surgery.speed_modifier) * implement_speed_mod) * target.mob_surgery_speed_mod
 	var/modded_time = time * speed_mod
 
+	if(HAS_TRAIT(user, TRAIT_CLUMSY))
+		success_chance *= 0.25
+	if(user.is_nearsighted_currently())
+		success_chance *= 0.33
+	if(user.is_blind())
+		success_chance *= 0.50
 
-	fail_prob = min(max(0, modded_time - (time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)),99)//if modded_time > time * modifier, then fail_prob = modded_time - time*modifier. starts at 0, caps at 99
-	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)//also if that, then cap modded_time at time*modifier
+	// also if that, then cap modded_time at time*modifier
+	modded_time = min(modded_time, time * SURGERY_SLOWDOWN_CAP_MULTIPLIER)
 
 	if(iscyborg(user))//any immunities to surgery slowdown should go in this check.
 		modded_time = time
 
 	var/was_sleeping = (target.stat != DEAD && target.IsSleeping())
+	// If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
+	var/interaction_target = user.has_status_effect(/datum/status_effect/hippocratic_oath) ? target : DOAFTER_SOURCE_SURGERY
 
-	if(do_after(user, modded_time, target = target, interaction_key = user.has_status_effect(/datum/status_effect/hippocratic_oath) ? target : DOAFTER_SOURCE_SURGERY)) //If we have the hippocratic oath, we can perform one surgery on each target, otherwise we can only do one surgery in total.
-
+	if(do_after(user, modded_time, target = target, interaction_key = interaction_target))
 		var/chem_check_result = chem_check(target)
-		if((prob(100-fail_prob) || (iscyborg(user) && !silicons_obey_prob)) && chem_check_result && !try_to_fail)
-
+		if(prob(success_chance) && chem_check_result && !try_to_fail)
 			if(success(user, target, target_zone, tool, surgery))
 				play_success_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 		else
-			if(failure(user, target, target_zone, tool, surgery, fail_prob))
+			if(failure(user, target, target_zone, tool, surgery, success_chance))
 				play_failure_sound(user, target, target_zone, tool, surgery)
 				advance = TRUE
 			if(chem_check_result)
@@ -173,15 +179,16 @@
 		return
 	playsound(get_turf(target), success_sound, 75, TRUE, falloff_exponent = 12, falloff_distance = 1)
 
-/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, fail_prob = 0)
+/datum/surgery_step/proc/failure(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, success_chance = 0)
 	var/screwedmessage = ""
-	switch(fail_prob)
+	switch(success_chance)
 		if(0 to 24)
-			screwedmessage = " You almost had it, though."
-		if(50 to 74)//25 to 49 = no extra text
+			screwedmessage = " This is practically impossible in these conditions..."
+		// if(25 to 49) no extra text
+		if(50 to 74)
 			screwedmessage = " This is hard to get right in these conditions..."
 		if(75 to 99)
-			screwedmessage = " This is practically impossible in these conditions..."
+			screwedmessage = " You almost had it, though."
 
 	display_results(
 		user,
@@ -237,7 +244,7 @@
 
 //Replaces visible_message during operations so only people looking over the surgeon can see them.
 /datum/surgery_step/proc/display_results(mob/user, mob/living/target, self_message, detailed_message, vague_message, target_detailed = FALSE)
-	user.visible_message(detailed_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
+	user.visible_message(detailed_message, self_message, self_message, vision_distance = 1, ignored_mobs = target_detailed ? null : target)
 	if(!target_detailed)
 		var/you_feel = pick("a brief pain", "your body tense up", "an unnerving sensation")
 		if(!vague_message)

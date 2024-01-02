@@ -30,7 +30,6 @@
 		/obj/item/shard = 10,
 	)
 	time = 12 SECONDS
-	silicons_obey_prob = TRUE
 
 /datum/surgery_step/experimental_dissection/preop(mob/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message("<span class='notice'>[user] starts dissecting [target].</span>", "<span class='notice'>You start dissecting [target].</span>")

@@ -110,6 +110,8 @@
 		return FALSE
 	if(step_in_progress)
 		return TRUE
+	if(!user.can_perform_action(target, NEED_LIGHT|NEED_DEXTERITY))
+		return TRUE
 
 	var/try_to_fail = FALSE
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))

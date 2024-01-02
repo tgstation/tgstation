@@ -72,6 +72,9 @@
 
 /// Checks if the passed patient can be healed by the passed user
 /obj/item/stack/medical/proc/can_heal(mob/living/patient, mob/user)
+	if(!user.can_perform_action(patient, NEED_LIGHT|NEED_DEXTERITY))
+		return
+
 	return patient.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE)
 
 /// In which we print the message that we're starting to heal someone, then we try healing them. Does the do_after whether or not it can actually succeed on a targeted mob
