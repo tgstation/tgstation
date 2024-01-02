@@ -927,7 +927,7 @@
 			var/is_cold_recipe = reaction.is_cold_recipe
 			var/meets_temp_requirement = FALSE
 			var/meets_ph_requirement = FALSE
-			var/granularity = 1
+			var/granularity = CHEMICAL_VOLUME_MINIMUM
 			if((reaction.reaction_flags & REACTION_NON_INSTANT))
 				granularity = CHEMICAL_VOLUME_MINIMUM
 
@@ -1216,7 +1216,7 @@
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)
 	if(cached_my_atom)
-		if(!ismob(cached_my_atom) || !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
+		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 
