@@ -7,8 +7,8 @@
 		Wounds a random limb if no limb is sufficiently damaged."
 	gain_text = "Flesh opens, and blood spills. My master seeks sacrifice, and I shall appease."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/blood_siphon,
-		/datum/heretic_knowledge/void_cloak,
+		/datum/heretic_knowledge/summon/raw_prophet,
+		/datum/heretic_knowledge/spell/burglar_finesse,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/apetra_vulnera
 	cost = 1
@@ -20,8 +20,8 @@
 		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby."
 	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
 	next_knowledge = list(
-		/datum/heretic_knowledge/summon/ashy,
-		/datum/heretic_knowledge/void_cloak,
+		/datum/heretic_knowledge/summon/stalker,
+		/datum/heretic_knowledge/spell/caretaker_refuge,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/wave_of_desperation
 	cost = 1
