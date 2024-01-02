@@ -7,6 +7,7 @@
 /datum/species/skeleton/draconic
 	// Alternate skeleton for drake blood that can process chems!
 	name = "Draconic Skeleton"
+	id = SPECIES_DRACONIC_SKELETON
 	sexes = 0
 	meat = /obj/item/food/meat/slab/human/mutant/skeleton
 	species_traits = list(
