@@ -27,3 +27,37 @@
   vinylspiders:
   - bugfix: fixed fire extinguisher cabinets not appearing opened after removing the
       fire extinguisher from them
+2024-01-02:
+  00-Steven:
+  - bugfix: slamming through a glass table while previously on a table no longer gives
+      you a negative offset.
+  13spacemen:
+  - qol: Gas analyzer can scan adjacent turfs. No more roasting yourself just to scan
+      your burn mix.
+  - qol: The "Explosive Planted" alert for C4 actually shows the C4
+  Majkl-J:
+  - bugfix: Having an inorganic chest/legs no longer makes you drop your ID, belt
+      or pocketed stuff upon losing your jumpsuit
+  Mothblocks:
+  - bugfix: Fixed footstep sounds.
+  OrionTheFox:
+  - image: resprited the Pirate/Sailor costumes, the pirate jacket, and the pirate
+      spacesuit
+  Rex9001:
+  - rscadd: A new heretic path opens up! Gaze up at the great sky for the path of
+      the moon opens and the lie shall be slain in pursuit of ultimate truth!
+  - bugfix: Fixes the syndicate delusion not working
+  SyncIt21:
+  - bugfix: you can set the chemical reaction chamber temps to 0k again
+  - bugfix: used higher rounding value for reactions thus you get full volumes especially
+      for endothermic reactions(no more 99.99 but 100 units).
+  - bugfix: chem heater now applies heat per reaction step and sends updates to UI
+      more frequently
+  YakumoChen:
+  - qol: Toggling an armour booster module on a MODsuit now gives a balloon alert
+      making the tradeoffs more clear.
+  jlsnow301:
+  - bugfix: Protolathe input should feel more responsive.
+  xXPawnStarrXx:
+  - rscadd: Added new lizard variants of existing foods for equality of edibility.
+  - qol: made pickle jars reusable and vinegar craftable.
