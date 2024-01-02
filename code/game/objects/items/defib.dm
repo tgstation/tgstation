@@ -446,7 +446,7 @@
 	forceMove(defib)
 	defib.update_power()
 
-/obj/item/shockpaddles/attack(mob/M, mob/living/user, params)
+/obj/item/shockpaddles/attack(mob/living/carbon/patient, mob/living/user, params)
 	if(busy)
 		return
 	defib?.update_power()
@@ -469,30 +469,32 @@
 
 	var/list/modifiers = params2list(params)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		do_disarm(M, user)
+		do_disarm(patient, user)
 		return
 
-	if(!iscarbon(M))
+	if(!iscarbon(patient))
 		if(req_defib)
 			to_chat(user, span_warning("The instructions on [defib] don't mention how to revive that..."))
 		else
 			to_chat(user, span_warning("You aren't sure how to revive that..."))
 		return
-	var/mob/living/carbon/H = M
 
 	if(user.zone_selected != BODY_ZONE_CHEST)
 		to_chat(user, span_warning("You need to target your patient's chest with [src]!"))
 		return
 
 	if(user.combat_mode)
-		do_harm(H, user)
+		do_harm(patient, user)
 		return
 
-	if(H.can_defib() == DEFIB_POSSIBLE)
-		H.notify_revival("Your heart is being defibrillated!")
-		H.grab_ghost() // Shove them back in their body.
+	if(!user.can_perform_action(patient, NEED_LIGHT|NEED_DEXTERITY))
+		return
 
-	do_help(H, user)
+	if(patient.can_defib() == DEFIB_POSSIBLE)
+		patient.notify_revival("Your heart is being defibrillated!")
+		patient.grab_ghost() // Shove them back in their body.
+
+	do_help(patient, user)
 
 /// Called whenever the paddles successfuly shock something
 /obj/item/shockpaddles/proc/do_success()
