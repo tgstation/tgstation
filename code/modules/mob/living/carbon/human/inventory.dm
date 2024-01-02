@@ -252,13 +252,13 @@
 			update_worn_oversuit()
 	else if(I == w_uniform)
 		if(invdrop)
-			if(r_store && !can_equip(r_store, ITEM_SLOT_RPOCKET, TRUE))
+			if(r_store && !can_equip(r_store, ITEM_SLOT_RPOCKET, TRUE, ignore_equipped = TRUE))
 				dropItemToGround(r_store, TRUE) //Again, makes sense for pockets to drop.
-			if(l_store && !can_equip(l_store, ITEM_SLOT_LPOCKET, TRUE))
+			if(l_store && !can_equip(l_store, ITEM_SLOT_LPOCKET, TRUE, ignore_equipped = TRUE))
 				dropItemToGround(l_store, TRUE)
-			if(wear_id && !can_equip(wear_id, ITEM_SLOT_ID, TRUE))
+			if(wear_id && !can_equip(wear_id, ITEM_SLOT_ID, TRUE, ignore_equipped = TRUE))
 				dropItemToGround(wear_id)
-			if(belt && !can_equip(belt, ITEM_SLOT_BELT, TRUE))
+			if(belt && !can_equip(belt, ITEM_SLOT_BELT, TRUE, ignore_equipped = TRUE))
 				dropItemToGround(belt)
 		w_uniform = null
 		update_suit_sensors()
