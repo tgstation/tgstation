@@ -145,8 +145,6 @@
 	set_target(null)
 	set_leader(null)
 	clear_friends()
-
-	UnregisterSignal(src, COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
 
 ///Random slime subtype
@@ -427,7 +425,7 @@
 		var/stunprob = our_slime.powerlevel * SLIME_SHOCK_PERCENTAGE_PER_LEVEL + SLIME_BASE_SHOCK_PERCENTAGE
 		if(prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
 			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
-			borg_target.adjustBruteLoss(our_slime.powerlevel * rand(6,10))
+			borg_target.apply_damage(our_slime.powerlevel * rand(6, 10), BRUTE, spread_damage = TRUE, wound_bonus = CANT_WOUND)
 			borg_target.visible_message(span_danger("The [our_slime.name] shocks [borg_target]!"), span_userdanger("The [our_slime.name] shocks you!"))
 		else
 			borg_target.visible_message(span_danger("The [our_slime.name] fails to hurt [borg_target]!"), span_userdanger("The [our_slime.name] failed to hurt you!"))
@@ -449,7 +447,6 @@
 		if (prob(stunprob) && our_slime.powerlevel >= SLIME_EXTRA_SHOCK_COST)
 			our_slime.powerlevel = clamp(our_slime.powerlevel - SLIME_EXTRA_SHOCK_COST, SLIME_MIN_POWER, SLIME_MAX_POWER)
 			carbon_target.apply_damage(our_slime.powerlevel * rand(6, 10), BURN, spread_damage = TRUE, wound_bonus = CANT_WOUND)
-			carbon_target.updatehealth()
 
 	if(isslime(target))
 		if(target == our_slime)
@@ -468,7 +465,6 @@
 			our_slime.add_nutrition(stolen_nutrition)
 		if(target_slime.health > 0)
 			our_slime.adjustBruteLoss(is_adult_slime ? -20 : -10)
-			our_slime.updatehealth()
 
 #undef SLIME_EXTRA_SHOCK_COST
 #undef SLIME_EXTRA_SHOCK_THRESHOLD
