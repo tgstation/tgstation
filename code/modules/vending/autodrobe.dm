@@ -209,6 +209,10 @@
 				/obj/item/clothing/mask/gas/prop = 4,
 				/obj/item/clothing/mask/gas/atmosprop = 3,
 				/obj/item/clothing/mask/animal/small/tribal = 1,
+				/obj/item/clothing/head/shipwreckedhelmet = 2,
+				/obj/item/clothing/suit/shipwreckedsuit = 2,
+				/obj/item/clothing/head/kingofbugshelmet = 2,
+				/obj/item/clothing/suit/kingofbugssuit = 2,
 			),
 		),
 	)
