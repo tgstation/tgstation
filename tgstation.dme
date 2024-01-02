@@ -6682,6 +6682,8 @@
 #include "monkestation\code\modules\wiremod_chem\components\ouputs\patcher_output.dm"
 #include "monkestation\code\modules\wiremod_chem\components\ouputs\smoke_output.dm"
 #include "monkestation\code\modules\wiremod_chem\components\ouputs\tank_output.dm"
+#include "monkestation\code\modules\wiremod_chem\components\targetted\_bci_base.dm"
+#include "monkestation\code\modules\wiremod_chem\components\targetted\outputs\bloodstream.dm"
 #include "monkestation\code\modules\wiremod_chem\design\circuits.dm"
 #include "monkestation\code\modules\wiremod_chem\housing\_chem_housing.dm"
 #include "monkestation\code\modules\wiremod_chem\housing\chemical_circuit.dm"

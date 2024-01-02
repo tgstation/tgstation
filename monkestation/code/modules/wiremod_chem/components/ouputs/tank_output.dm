@@ -37,6 +37,7 @@
 		linked_output = new(src.loc)
 		linked_output.chemical_tank = src
 		linked_output.name = component_name
+		linked_output.display_name = component_name
 
 /obj/structure/chemical_tank/proc/after_reagent_add()
 	return

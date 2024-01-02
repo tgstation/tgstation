@@ -382,7 +382,8 @@
 		"weighted_splitter",
 		"chemical_splitter",
 		"chemical_mixer",
-		"chemical_filter"
+		"chemical_filter",
+		"chemical_injector_bci",
 	)
 
 /////////////////////////Biotech/////////////////////////

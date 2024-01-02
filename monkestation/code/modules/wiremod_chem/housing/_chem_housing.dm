@@ -115,6 +115,7 @@
 /obj/item/circuit_component/chem/output_manufacturer/input_received(datum/port/input/port, list/return_values)
 	if(heat_input.value == 0)
 		heat_input.value = 275
+
 	if(!chemical_tank)
 		chemical_tank = parent.shell
 		if(!chemical_tank)
