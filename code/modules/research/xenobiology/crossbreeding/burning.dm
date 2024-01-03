@@ -36,7 +36,7 @@ Burning extracts:
 	new_slime.visible_message(span_danger("A baby slime emerges from [src], and it nuzzles [user] before burbling hungrily!"))
 	new_slime.set_friendship(user, 20) //Gas, gas, gas
 	new_slime.bodytemperature = T0C + 400 //We gonna step on the gas.
-	new_slime.set_nutrition(new_slime.get_hunger_nutrition()) //Tonight, we fight!
+	new_slime.set_nutrition(new_slime.hunger_nutrition) //Tonight, we fight!
 	..()
 
 /obj/item/slimecross/burning/orange

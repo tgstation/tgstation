@@ -178,7 +178,6 @@
 	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
 
 /obj/machinery/sleeper/process()
-	..()
 	use_power(idle_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)

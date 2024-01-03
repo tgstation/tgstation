@@ -119,9 +119,12 @@
 
 		message_admins("[ADMIN_LOOKUPFLW(user)] planted [name] on [target.name] at [ADMIN_VERBOSEJMP(target)] with [det_time] second fuse")
 		user.log_message("planted [name] on [target.name] with a [det_time] second fuse.", LOG_ATTACK)
+		var/icon/target_icon = icon(bomb_target.icon, bomb_target.icon_state)
+		target_icon.Blend(icon(icon, icon_state), ICON_OVERLAY)
+		var/image/bomb_target_image = image(target_icon)
 		notify_ghosts(
 			"[user] has planted \a [src] on [target] with a [det_time] second fuse!",
-			source = bomb_target,
+			source = bomb_target_image,
 			header = "Explosive Planted",
 			notify_flags = NOTIFY_CATEGORY_NOFLASH,
 		)

@@ -19,3 +19,6 @@
 
 /datum/movespeed_modifier/shooting_assistant
 	multiplicative_slowdown = 0.5
+
+/datum/movespeed_modifier/binocs_wielded
+	multiplicative_slowdown = 1.5

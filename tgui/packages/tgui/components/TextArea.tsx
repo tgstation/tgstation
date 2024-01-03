@@ -117,8 +117,6 @@ export const TextArea = forwardRef(
       const input = textareaRef.current;
       if (!input) return;
 
-      input.value = toInputValue(value);
-
       if (autoFocus || autoSelect) {
         setTimeout(() => {
           input.focus();

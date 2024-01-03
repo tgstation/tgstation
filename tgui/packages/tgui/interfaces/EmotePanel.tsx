@@ -3,7 +3,7 @@ import { capitalizeFirst } from '../../common/string';
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Icon, Section } from '../components';
 import { Window } from '../layouts';
-import { SearchBar } from './Fabrication/SearchBar';
+import { SearchBar } from './common/SearchBar';
 
 type Emote = {
   key: string;
@@ -120,9 +120,9 @@ export const EmotePanelContent = (props) => {
         }
       >
         <SearchBar
-          searchText={searchText}
-          onSearchTextChanged={setSearchText}
-          hint={'Search all emotes...'}
+          query={searchText}
+          onSearch={setSearchText}
+          placeholder="Search all emotes..."
         />
       </Section>
       <Section
