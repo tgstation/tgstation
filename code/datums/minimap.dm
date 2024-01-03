@@ -257,17 +257,13 @@ SUBSYSTEM_DEF(minimap)
 /datum/controller/subsystem/minimap/proc/do_we_care_about_this_turf(turf/turf)
 	return istype(turf.loc, /area/station) || istype(turf.loc, /area/space/nearstation)
 
-/datum/controller/subsystem/minimap/proc/is_minimap_ready_for(z_level)
-	return z_level in minimaps_by_z_level
+/// Get the minimap data for the given z level. If it does not exist or is still generating, block for it.
+/datum/controller/subsystem/minimap/proc/get_minimap_data(z_level)
+	start_generating_minimap_for(z_level)
+	UNTIL(. = poll_for_minimap_data(z_level))
+
+/datum/controller/subsystem/minimap/proc/poll_for_minimap_data(z_level)
+	return minimaps_by_z_level["[z_level]"]
 
 /datum/controller/subsystem/minimap/proc/start_generating_minimap_for(z_level)
-	if(z_level in generating)
-		return
-	generate_minimap_for_z(z_level)
-
-/datum/controller/subsystem/minimap/proc/get_minimap_for(z_level)
-	UNTIL(!(z_level in generating))
-
-	if(!("[z_level]" in minimaps_by_z_level))
-		generate_minimap_for_z(z_level)
-	return minimaps_by_z_level["[z_level]"]
+	return generate_minimap_for_z(z_level)
