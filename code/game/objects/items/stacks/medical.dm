@@ -75,8 +75,8 @@
 	return patient.try_inject(user, injection_flags = INJECT_TRY_SHOW_ERROR_MESSAGE)
 
 /// In which we print the message that we're starting to heal someone, then we try healing them. Does the do_after whether or not it can actually succeed on a targeted mob
-/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/user, silent = FALSE)
-	if(!try_heal_checks(patient, user, heal_brute, heal_burn))
+/obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/user, silent = FALSE, looping = FALSE)
+	if(!try_heal_checks(patient, user, heal_brute, heal_burn, looping))
 		return
 	if(patient == user)
 		if(!silent)
@@ -113,7 +113,7 @@
 		return
 	if(!can_heal(patient, user))
 		return
-	try_heal(patient, user, silent = TRUE)
+	try_heal(patient, user, silent = TRUE, looping = TRUE)
 
 /// Apply the actual effects of the healing if it's a simple animal, goes to [/obj/item/stack/medical/proc/heal_carbon] if it's a carbon, returns TRUE if it works, FALSE if it doesn't
 /obj/item/stack/medical/proc/heal(mob/living/patient, mob/user)
@@ -134,7 +134,10 @@
 		return heal_carbon(patient, user, heal_brute, heal_burn)
 	patient.balloon_alert(user, "can't heal that!")
 
-/obj/item/stack/medical/proc/try_heal_checks(mob/living/carbon/patient, mob/user, brute, burn)
+/obj/item/stack/medical/proc/try_heal_checks(mob/living/carbon/patient, mob/user, brute, burn, looping = FALSE)
+	if(looping)
+		balloon_alert(user, "assessing damage...")
+		do_after(user, 1 SECONDS, patient)
 	var/obj/item/bodypart/affecting = patient.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting) //Missing limb?
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
@@ -211,7 +214,7 @@
 	gauzed_bodypart = null
 
 // gauze is only relevant for wounds, which are handled in the wounds themselves
-/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent)
+/obj/item/stack/medical/gauze/try_heal(mob/living/patient, mob/user, silent, looping)
 
 	var/treatment_delay = (user == patient ? self_delay : other_delay)
 
@@ -383,7 +386,7 @@
 		return ..()
 	icon_state = "regen_mesh_closed"
 
-/obj/item/stack/medical/mesh/try_heal(mob/living/patient, mob/user, silent = FALSE)
+/obj/item/stack/medical/mesh/try_heal(mob/living/patient, mob/user, silent = FALSE, looping)
 	if(!is_open)
 		balloon_alert(user, "open it first!")
 		return
