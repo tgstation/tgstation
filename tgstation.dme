@@ -6670,6 +6670,7 @@
 #include "monkestation\code\modules\wiremod_chem\components\_base.dm"
 #include "monkestation\code\modules\wiremod_chem\components\filter.dm"
 #include "monkestation\code\modules\wiremod_chem\components\generator.dm"
+#include "monkestation\code\modules\wiremod_chem\components\internal_tank.dm"
 #include "monkestation\code\modules\wiremod_chem\components\mixer.dm"
 #include "monkestation\code\modules\wiremod_chem\components\splitter.dm"
 #include "monkestation\code\modules\wiremod_chem\components\weighted_splitter.dm"
