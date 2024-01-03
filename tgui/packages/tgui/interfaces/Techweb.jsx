@@ -309,7 +309,7 @@ const TechwebOverview = (props) => {
         </Flex>
       </Flex.Item>
       <Flex.Item className={'Techweb__OverviewNodes'} height="100%">
-        <VirtualList key={tabIndex}>
+        <VirtualList key={tabIndex + searchText}>
           {displayedNodes.map((n) => {
             return <TechNode node={n} key={n.id} />;
           })}
