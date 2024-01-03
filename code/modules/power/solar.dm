@@ -14,6 +14,8 @@
 	active_power_usage = 0
 	max_integrity = 150
 	integrity_failure = 0.33
+	minimap_render = MINIMAP_RENDER_NORMAL
+	minimap_priority = MINIMAP_PRIORITY_SOLAR
 
 	var/id
 	var/obscured = FALSE
@@ -376,6 +378,8 @@
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION
 	max_integrity = 200
 	integrity_failure = 0.5
+	minimap_render = MINIMAP_RENDER_NORMAL
+	minimap_priority = MINIMAP_PRIORITY_SOLAR
 	var/icon_screen = "solar"
 	var/icon_keyboard = "power_key"
 	var/id = 0

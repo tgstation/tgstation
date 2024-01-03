@@ -23,6 +23,8 @@
 
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.1
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.2
+	minimap_render = MINIMAP_RENDER_NORMAL
+	minimap_priority = MINIMAP_PRIORITY_DOOR
 
 	var/visible = TRUE
 	var/operating = FALSE

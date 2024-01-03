@@ -16,6 +16,8 @@
 	armor_type = /datum/armor/structure_grille
 	max_integrity = 50
 	integrity_failure = 0.4
+	minimap_render = MINIMAP_RENDER_NORMAL
+	minimap_priority = MINIMAP_PRIORITY_GRILLE
 	var/rods_type = /obj/item/stack/rods
 	var/rods_amount = 2
 

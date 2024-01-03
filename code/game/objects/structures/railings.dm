@@ -12,6 +12,8 @@
 	/// armor is a little bit less than a grille. max_integrity about half that of a grille.
 	armor_type = /datum/armor/structure_railing
 	max_integrity = 25
+	minimap_render = MINIMAP_RENDER_NORMAL
+	minimap_priority = MINIMAP_PRIORITY_RAILING
 
 	var/climbable = TRUE
 	///Initial direction of the railing.

@@ -18,6 +18,8 @@
 	set_dir_on_move = FALSE
 	flags_ricochet = RICOCHET_HARD
 	receive_ricochet_chance_mod = 0.5
+	minimap_render = MINIMAP_RENDER_NORMAL
+	minimap_priority = MINIMAP_PRIORITY_WINDOW
 	var/state = WINDOW_OUT_OF_FRAME
 	var/reinf = FALSE
 	var/heat_resistance = 800

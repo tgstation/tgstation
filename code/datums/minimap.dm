@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(minimap)
 	while(TRUE)
 		minimap_data.minimap_pixel_width = minimap_data.minimap_tile_width * minimap_data.minimap_icon_size
 		minimap_data.minimap_pixel_height = minimap_data.minimap_tile_height * minimap_data.minimap_icon_size
-		if(minimap_data.minimap_pixel_width <= 2048 && minimap_data.minimap_pixel_height <= 2048)
+		if(minimap_data.minimap_pixel_width <= 4096 && minimap_data.minimap_pixel_height <= 4096)
 			break
 		minimap_data.minimap_icon_size *= 0.5
 		if(minimap_data.minimap_icon_size < 8)
@@ -130,36 +130,44 @@ SUBSYSTEM_DEF(minimap)
 	if(turf.type in known_nulls)
 		return null
 
-	var/icon/turf_icon = getFlatIcon(turf)
+	var/icon/turf_icon = getFlatIcon(turf, no_anim = TRUE)
 	if(turf_icon == null)
 		known_nulls += turf.type
 		CRASH("getFlatIcon returned a null icon for [turf] ([turf.type]) at [loc_name(turf)]")
 
-	if(isclosedturf(turf))
-		return turf_icon
-
-	var/static/list/types_we_care_about = list(
-		/obj/structure/grille,
-		/obj/structure/window,
-		/obj/structure/plasticflaps,
-		/obj/machinery/door,
-		/obj/machinery/power/solar,
-		/obj/machinery/power/solar_control,
-	)
-
 	var/list/things_we_care_about = list()
-	for(var/atom/movable/thing in turf)
-		if(!is_type_in_list(thing, types_we_care_about))
-			continue
+	for(var/obj/thing in turf)
+		switch(thing.minimap_render)
+			if(MINIMAP_RENDER_NEVER)
+				continue
+			if(MINIMAP_RENDER_NORMAL)
+				if(thing.invisibility > SEE_INVISIBLE_LIVING)
+					continue
 		things_we_care_about += thing
 
-	for(var/type in types_we_care_about)
-		for(var/atom/movable/thing as anything in things_we_care_about)
-			if(!istype(thing, type))
-				continue
-			turf_icon.Blend(getFlatIcon(thing), BLEND_OVERLAY)
+#ifdef TESTING
+	var/drew_window = FALSE
+	var/drew_door = FALSE
+#endif
+
+	for(var/thing_we_care_about in sort_list(things_we_care_about, GLOBAL_PROC_REF(cmp_obj_minimap_priority)))
+		turf_icon.Blend(getFlatIcon(thing_we_care_about, no_anim = TRUE), ICON_OVERLAY)
+
+#ifdef TESTING
+		if(istype(thing_we_care_about, /obj/structure/grille) && (drew_window || drew_door))
+			stack_trace("drew a grille after we drew a window or door!")
+		else if(istype(thing_we_care_about, /obj/machinery/door))
+			drew_door = TRUE
+		else if(istype(thing_we_care_about, /obj/structure/window))
+			drew_window = TRUE
+#endif
 
 	return turf_icon
+
+/proc/cmp_obj_minimap_priority(obj/left, obj/right)
+	if(left.minimap_priority == right.minimap_priority)
+		return left.layer - right.layer
+	return left.minimap_priority - right.minimap_priority
 
 /datum/controller/subsystem/minimap/proc/do_we_care_about_this_turf(turf/turf)
 	return istype(turf.loc, /area/station)

@@ -2,6 +2,14 @@
 /obj
 	animate_movement = SLIDE_STEPS
 	speech_span = SPAN_ROBOT
+	uses_integrity = TRUE
+
+	/// Flags used to determine how and if the object is rendered on a minimap
+	var/minimap_render = MINIMAP_RENDER_NEVER
+
+	/// Priority of the object on the minimap. Higher values are rendered on top of lower values.
+	var/minimap_priority = 0
+
 	var/obj_flags = CAN_BE_HIT
 
 	/// Extra examine line to describe controls, such as right-clicking, left-clicking, etc.
@@ -47,7 +55,6 @@
 	/// Next pr after the network fix will have me refactor door interactions, so help me god.
 	var/id_tag = null
 
-	uses_integrity = TRUE
 
 /obj/vv_edit_var(vname, vval)
 	if(vname == NAMEOF(src, obj_flags))
