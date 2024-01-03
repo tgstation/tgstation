@@ -74,6 +74,8 @@ SUBSYSTEM_DEF(minimap)
 	minimap_data.minimap_icon_size = world.icon_size
 	minimap_data.minimap_tile_offset_x = min_x
 	minimap_data.minimap_tile_offset_y = min_y
+	minimap_data.minimap_pixel_width = minimap_data.minimap_tile_width * minimap_data.minimap_icon_size
+	minimap_data.minimap_pixel_height = minimap_data.minimap_tile_height * minimap_data.minimap_icon_size
 
 	while(TRUE)
 		minimap_data.minimap_pixel_width = minimap_data.minimap_tile_width * minimap_data.minimap_icon_size
@@ -87,15 +89,30 @@ SUBSYSTEM_DEF(minimap)
 			generating -= z
 			return
 
+	testing("MINIMAP GEN | OFFSETS | [minimap_data.minimap_tile_offset_x],[minimap_data.minimap_tile_offset_y]")
+	testing("MINIMAP GEN | TILES | [minimap_data.minimap_tile_width]x[minimap_data.minimap_tile_height]")
+	testing("MINIMAP GEN | PIXELS | [minimap_data.minimap_pixel_width]x[minimap_data.minimap_pixel_height]")
+	testing("MINIMAP GEN | ICON SIZE | [minimap_data.minimap_icon_size]")
+	testing("MINIMAP GEN | PNG LOCATION | [minimap_data.png_location]")
+
 	var/icon/master = icon('icons/blanks/32x32.dmi', "nothing")
 	master.Scale(minimap_data.minimap_pixel_width, minimap_data.minimap_pixel_height)
-	testing("MINIMAP GEN | MASTER | ([minimap_data.minimap_tile_width]t x[minimap_data.minimap_tile_height]t)([minimap_data.minimap_pixel_width]px x[minimap_data.minimap_pixel_height]px)")
-	testing("MINIMAP GEN | ICON SIZE | [minimap_data.minimap_icon_size]")
-	sleep(10)
 
-	var/total_turfs = length(turfs_we_care_about)
-	for(var/idx in 1 to total_turfs)
-		draw_turf_onto_master(master, turfs_we_care_about[idx], minimap_data)
+	var/list/turf_map = new(minimap_data.minimap_pixel_width)
+	for(var/offset_x in 1 to minimap_data.minimap_tile_width)
+		turf_map[offset_x] = new /list(minimap_data.minimap_tile_height)
+
+	for(var/turf/turf as anything in turfs_we_care_about)
+		var/offset_x = turf.x - minimap_data.minimap_tile_offset_x
+		var/offset_y = turf.y - minimap_data.minimap_tile_offset_y
+		var/icon/final_icon = get_final_turf_icon(turf)
+		final_icon.Scale(minimap_data.minimap_icon_size, minimap_data.minimap_icon_size)
+		master.Blend(
+			final_icon,
+			ICON_OVERLAY,
+			(offset_x * minimap_data.minimap_icon_size) + 1,
+			(offset_y * minimap_data.minimap_icon_size) + 1,
+		)
 		CHECK_TICK
 
 	fcopy(master, minimap_data.png_location)
@@ -126,6 +143,8 @@ SUBSYSTEM_DEF(minimap)
 		/obj/structure/window,
 		/obj/structure/plasticflaps,
 		/obj/machinery/door,
+		/obj/machinery/power/solar,
+		/obj/machinery/power/solar_control,
 	)
 
 	var/list/things_we_care_about = list()
@@ -141,19 +160,6 @@ SUBSYSTEM_DEF(minimap)
 			turf_icon.Blend(getFlatIcon(thing), BLEND_OVERLAY)
 
 	return turf_icon
-
-/datum/controller/subsystem/minimap/proc/draw_turf_onto_master(icon/master, turf/turf, datum/minimap_data/minimap_data)
-	var/turf_offset_x = turf.x - minimap_data.minimap_tile_offset_x
-	var/turf_offset_y = turf.y - minimap_data.minimap_tile_offset_y
-	var/draw_x = (turf_offset_x * minimap_data.minimap_icon_size) + 1
-	var/draw_y = (turf_offset_y * minimap_data.minimap_icon_size) + 1
-	var/icon/turf_icon = get_final_turf_icon(turf)
-	if(turf_icon == null)
-		return // this will have been screamed about in get_final_turf_icon
-
-	turf_icon.Scale(minimap_data.minimap_icon_size, minimap_data.minimap_icon_size)
-	testing("MINIMAP GEN | DRAW | [turf_offset_x],[turf_offset_y] | [draw_x],[draw_y]")
-	master.Blend(turf_icon, BLEND_OVERLAY, draw_x, draw_y)
 
 /datum/controller/subsystem/minimap/proc/do_we_care_about_this_turf(turf/turf)
 	return istype(turf.loc, /area/station)
