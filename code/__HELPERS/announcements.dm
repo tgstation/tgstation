@@ -72,9 +72,7 @@
  * * color - optional, set a div color other than default
  */
 /proc/create_announcement_div(message, color = "default")
-	var/processed_message = "<div class='chat_alert_[color]'>[message]</div>"
-	return processed_message
+	return "<div class='chat_alert_[color]'>[message]</div>"
 
 /proc/create_ooc_announcement_div(message)
-	var/processed_message = "<div class='ooc_alert'>[message]</div>"
-	return processed_message
+	return "<div class='ooc_alert'>[message]</div>"
