@@ -11,6 +11,14 @@
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 
+/obj/item/infuser_book/ui_status(mob/user, /datum/ui_state/state)
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+		return UI_CLOSE
+	if(!user.can_read(src))
+		return UI_CLOSE
+	return ..()
+
 /obj/item/infuser_book/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)

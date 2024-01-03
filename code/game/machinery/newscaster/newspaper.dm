@@ -33,8 +33,15 @@
 	return TOXLOSS
 
 /obj/item/newspaper/attack_self(mob/user)
-	if(!istype(user) || !user.can_read(src))
+	if(!istype(user))
 		return
+
+	if(!user.can_read(src))
+		return
+
+	if(user.is_blind())
+		to_chat(user, span_warning("You are blind and can't read anything!"))
+
 	var/dat
 	pages = 0
 	switch(screen)
