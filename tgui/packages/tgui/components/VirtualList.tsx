@@ -48,6 +48,8 @@ export const VirtualList = (props: PropsWithChildren) => {
   }, [containerRef, visibleElements, setVisibleElements, setPadding]);
 
   useEffect(() => {
+    adjustExtents();
+
     const interval = setInterval(adjustExtents, 100);
 
     return () => clearInterval(interval);
