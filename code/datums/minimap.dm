@@ -4,12 +4,18 @@ SUBSYSTEM_DEF(minimap)
 	runlevels = ALL
 	wait = 1
 	priority = FIRE_PRIORITY_MINIMAP
+	/// The list of minimaps that have been generated
 	var/list/datum/minimap_data/minimaps_by_z_level = list()
+	/// The list of minimaps pending generation
 	var/list/datum/minimap_generation_cache/to_generate = list()
+	/// The master datum for the minimap we are currently generating
 	var/datum/minimap_generation_cache/generating
+	/// The current section we are processing
 	var/datum/minimap_generation_section/current_section
+	/// The current run of turfs we are processing
 	var/list/turf/current_run
-	var/list/too_large_z_levels = list()
+	/// Have we announced to world that round start is pending minimap generation?
+	var/announced_start_delay = FALSE
 
 /datum/minimap_section
 	var/x
@@ -58,7 +64,6 @@ SUBSYSTEM_DEF(minimap)
 	generating = SSminimap.generating
 	current_section = SSminimap.current_section
 	current_run = SSminimap.current_run
-	too_large_z_levels = SSminimap.too_large_z_levels
 
 /// Generates a minimap for the given z level. Does not block and will generate the minimap in the background.
 /datum/controller/subsystem/minimap/proc/generate_minimap_for_z(z)
@@ -72,10 +77,6 @@ SUBSYSTEM_DEF(minimap)
 		if(cache.data.z_level != z)
 			continue
 		return TRUE
-
-	if("[z]" in too_large_z_levels)
-		stack_trace("Attempted to generate minimap for [z] when it is too large!")
-		return FALSE
 
 	var/datum/minimap_generation_cache/cache = new
 	cache.data = new
@@ -193,7 +194,7 @@ SUBSYSTEM_DEF(minimap)
 	for(var/section_x in 1 to generating.data.section_columns)
 		for(var/section_y in 1 to generating.data.section_rows)
 			png_paths += "[generating.data.save_location]/[section_x],[section_y].png"
-	rustg_stitch_png(json_encode(png_paths), "[generating.data.save_location]/final.png")
+	//!!TODO!! rustg_stitch_png(json_encode(png_paths), "[generating.data.save_location]/final.png")
 
 	minimaps_by_z_level["[generating.data.z_level]"] = generating.data
 	generating.data = null
@@ -267,3 +268,19 @@ SUBSYSTEM_DEF(minimap)
 
 /datum/controller/subsystem/minimap/proc/start_generating_minimap_for(z_level)
 	return generate_minimap_for_z(z_level)
+
+/datum/controller/subsystem/minimap/proc/are_station_minimaps_done(from_ssticker = FALSE)
+	var/all_done = TRUE
+	for(var/z_level in SSmapping.levels_by_trait(ZTRAIT_STATION))
+		if(!poll_for_minimap_data(z_level))
+			all_done = FALSE
+			break
+
+	if(all_done)
+		return TRUE
+	if(!from_ssticker || announced_start_delay)
+		return FALSE
+
+	announced_start_delay = TRUE
+	to_chat(world, span_boldannounce("Station Minimap generation is still in progress. Round start is delaying until it is done. Admins can bypass this delay using '[/datum/admins/proc/startnow::name]'."))
+	return FALSE

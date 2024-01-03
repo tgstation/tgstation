@@ -187,7 +187,12 @@ SUBSYSTEM_DEF(ticker)
 				send_tip_of_the_round(world, selected_tip)
 				tipped = TRUE
 
+
 			if(timeLeft <= 0)
+				if(!start_immediately && !SSminimap.are_station_minimaps_done(from_ssticker = TRUE))
+					timeLeft = 0
+					return
+
 				SEND_SIGNAL(src, COMSIG_TICKER_ENTER_SETTING_UP)
 				current_state = GAME_STATE_SETTING_UP
 				Master.SetRunLevel(RUNLEVEL_SETUP)
