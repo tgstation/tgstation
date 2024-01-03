@@ -80,8 +80,8 @@ SUBSYSTEM_DEF(minimap)
 	var/datum/minimap_generation_cache/cache = new
 	cache.data = new
 	cache.data.z_level = z
-	cache.data.save_location = "data/minimaps/z_[z]/"
-	fdel(cache.data.save_location)
+	cache.data.save_location = "data/minimaps/z_[z]"
+	fdel("[cache.data.save_location]/")
 
 	var/list/all_turfs = list()
 	var/lowest_x = world.maxx
@@ -189,12 +189,18 @@ SUBSYSTEM_DEF(minimap)
 	testing("MINIMAP GEN | [generating.data.z_level] | DONE | [(REALTIMEOFDAY - generating.started_at) * 0.1]s")
 #endif
 
+	var/list/png_paths = list()
+	for(var/section_x in 1 to generating.data.section_columns)
+		for(var/section_y in 1 to generating.data.section_rows)
+			png_paths += "[generating.data.save_location]/[section_x],[section_y].png"
+	rustg_stitch_png(json_encode(png_paths), "[generating.data.save_location]/final.png")
+
 	minimaps_by_z_level["[generating.data.z_level]"] = generating.data
 	generating.data = null
 	generating = null
 
 /datum/controller/subsystem/minimap/proc/finalize_section()
-	var/section_png = "[generating.data.save_location][current_section.section_x],[current_section.section_y].png"
+	var/section_png = "[generating.data.save_location]/[current_section.section_x],[current_section.section_y].png"
 	fcopy(current_section.section_blank, section_png)
 	current_section = null
 
