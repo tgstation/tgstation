@@ -20,7 +20,12 @@ export const VirtualList = (props: PropsWithChildren) => {
   const adjustExtents = useCallback(() => {
     const { current } = containerRef;
 
-    if (!current || visibleElements >= children.length) {
+    if (
+      !children ||
+      !Array.isArray(children) ||
+      !current ||
+      visibleElements >= children.length
+    ) {
       return;
     }
 
@@ -51,11 +56,11 @@ export const VirtualList = (props: PropsWithChildren) => {
   return (
     <div className={'VirtualList'}>
       <div className={'VirtualList__Container'} ref={containerRef}>
-        {children.slice(0, visibleElements)}
+        {Array.isArray(children) ? children.slice(0, visibleElements) : null}
       </div>
       <div
         className={'VirtualList__Padding'}
-        style={{ 'padding-bottom': `${padding}px` }}
+        style={{ paddingBottom: `${padding}px` }}
       />
     </div>
   );
