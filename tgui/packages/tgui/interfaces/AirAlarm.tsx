@@ -6,11 +6,11 @@ import {
   Box,
   Button,
   LabeledList,
-  LazyList,
   Modal,
   NumberInput,
   Section,
   Table,
+  VirtualList,
 } from '../components';
 import { Window } from '../layouts';
 import {
@@ -263,11 +263,11 @@ const AirAlarmControlVents = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <LazyList>
+    <VirtualList>
       {vents.map((vent) => (
         <Vent key={vent.refID} {...vent} />
       ))}
-    </LazyList>
+    </VirtualList>
   );
 };
 
@@ -281,11 +281,11 @@ const AirAlarmControlScrubbers = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <LazyList>
+    <VirtualList>
       {scrubbers.map((scrubber) => (
         <Scrubber key={scrubber.refID} {...scrubber} />
       ))}
-    </LazyList>
+    </VirtualList>
   );
 };
 

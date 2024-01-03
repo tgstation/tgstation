@@ -11,7 +11,7 @@ import {
  * current window, and then defers rendering of other items until they come
  * into view.
  */
-export const LazyList = (props: PropsWithChildren) => {
+export const VirtualList = (props: PropsWithChildren) => {
   const { children } = props;
   const containerRef = useRef(null as HTMLDivElement | null);
   const [visibleElements, setVisibleElements] = useState(1);
@@ -49,12 +49,12 @@ export const LazyList = (props: PropsWithChildren) => {
   }, [adjustExtents]);
 
   return (
-    <div className={'LazyList'}>
-      <div className={'LazyList__Container'} ref={containerRef}>
+    <div className={'VirtualList'}>
+      <div className={'VirtualList__Container'} ref={containerRef}>
         {children.slice(0, visibleElements)}
       </div>
       <div
-        className={'LazyList__Padding'}
+        className={'VirtualList__Padding'}
         style={{ 'padding-bottom': `${padding}px` }}
       />
     </div>

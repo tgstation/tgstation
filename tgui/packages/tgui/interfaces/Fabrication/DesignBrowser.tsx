@@ -3,9 +3,7 @@ import { classes } from 'common/react';
 import { ReactNode } from 'react';
 
 import { useSharedState } from '../../backend';
-import { Dimmer, Icon, LazyList, Section, Stack } from '../../components';
-import { SearchBar } from './SearchBar';
-import { Dimmer, Icon, Section, Stack } from '../../components';
+import { Dimmer, Icon, Section, Stack, VirtualList } from '../../components';
 import { SearchBar } from '../common/SearchBar';
 import { Design, MaterialMap } from './Types';
 
@@ -273,24 +271,25 @@ export const DesignBrowser = <T extends Design = Design>(
             <Stack.Item grow>
               <Section fill style={{ overflow: 'auto' }}>
                 {searchText.length > 0 ? (
-                  sortBy((design: T) => design.name)(
-                    Object.values(root.descendants),
-                  )
-                    .filter((design) =>
-                      design.name
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase()),
+                  <VirtualList>
+                    {sortBy((design: T) => design.name)(
+                      Object.values(root.descendants),
                     )
-                    .map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )
-                    </LazyList>
+                      .filter((design) =>
+                        design.name
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase()),
+                      )
+                      .map((design) =>
+                        buildRecipeElement(
+                          design,
+                          availableMaterials || {},
+                          onPrintDesign || NOOP,
+                        ),
+                      )}
+                  </VirtualList>
                 ) : selectedCategory === ALL_CATEGORY ? (
-                  <LazyList>
+                  <VirtualList>
                     {sortBy((design: T) => design.name)(
                       Object.values(root.descendants),
                     ).map((design) =>
@@ -300,7 +299,7 @@ export const DesignBrowser = <T extends Design = Design>(
                         onPrintDesign || NOOP,
                       ),
                     )}
-                  </LazyList>
+                  </VirtualList>
                 ) : (
                   root.subcategories[selectedCategory] && (
                     <CategoryView
@@ -462,7 +461,7 @@ const CategoryView = <T extends Design = Design>(
   depth ??= 0;
 
   const body = (
-    <>
+    <VirtualList>
       {sortBy((design: T) => design.name)(category.children).map((design) =>
         buildRecipeElement(
           design,
@@ -482,7 +481,7 @@ const CategoryView = <T extends Design = Design>(
             key={category.title}
           />
         ))}
-    </>
+    </VirtualList>
   );
 
   if (depth === 0 || category.children.length === 0) {
