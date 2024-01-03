@@ -6,6 +6,7 @@ import {
   Box,
   Button,
   LabeledList,
+  LazyList,
   Modal,
   NumberInput,
   Section,
@@ -262,11 +263,11 @@ const AirAlarmControlVents = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <>
+    <LazyList>
       {vents.map((vent) => (
         <Vent key={vent.refID} {...vent} />
       ))}
-    </>
+    </LazyList>
   );
 };
 
@@ -280,11 +281,11 @@ const AirAlarmControlScrubbers = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <>
+    <LazyList>
       {scrubbers.map((scrubber) => (
         <Scrubber key={scrubber.refID} {...scrubber} />
       ))}
-    </>
+    </LazyList>
   );
 };
 

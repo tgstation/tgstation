@@ -3,6 +3,8 @@ import { classes } from 'common/react';
 import { ReactNode } from 'react';
 
 import { useSharedState } from '../../backend';
+import { Dimmer, Icon, LazyList, Section, Stack } from '../../components';
+import { SearchBar } from './SearchBar';
 import { Dimmer, Icon, Section, Stack } from '../../components';
 import { SearchBar } from '../common/SearchBar';
 import { Design, MaterialMap } from './Types';
@@ -286,8 +288,9 @@ export const DesignBrowser = <T extends Design = Design>(
                         onPrintDesign || NOOP,
                       ),
                     )
+                    </LazyList>
                 ) : selectedCategory === ALL_CATEGORY ? (
-                  <>
+                  <LazyList>
                     {sortBy((design: T) => design.name)(
                       Object.values(root.descendants),
                     ).map((design) =>
@@ -297,7 +300,7 @@ export const DesignBrowser = <T extends Design = Design>(
                         onPrintDesign || NOOP,
                       ),
                     )}
-                  </>
+                  </LazyList>
                 ) : (
                   root.subcategories[selectedCategory] && (
                     <CategoryView
