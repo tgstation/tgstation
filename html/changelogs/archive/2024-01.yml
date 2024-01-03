@@ -61,3 +61,43 @@
   xXPawnStarrXx:
   - rscadd: Added new lizard variants of existing foods for equality of edibility.
   - qol: made pickle jars reusable and vinegar craftable.
+2024-01-03:
+  0-ERRORNAME-0:
+  - image: Improved sprites for sailor school uniform
+  Ghommie:
+  - rscadd: Reworked Binoculars to function like a scope from long-range rifles. They
+      also can be used while moving, albeit that'll slow you down significantly.
+  - rscadd: Authentic mothic softcaps can be found in the "Mothic Pioneer" curator
+      kit, which googles can also used to look into the distance. The date on the
+      boxed kit has been updated to match "muh lore".
+  - qol: Using a scope (and now binocs or moth cap) won't hide your mouse pointer
+      away now, so that you won't slip out of the game screen and close the game tab
+      by accident.
+  Profakos:
+  - refactor: attack_slime is completely gone
+  - refactor: slime lifestate changes now have less boilerplate code
+  - balance: baby slimes do a bit of a less damage on the low end, but all slime damage
+      is much more consistent
+  - balance: instead of taking half brute damage, cyborgs are now immune to slime's
+      melee attacks. Charged slimes attacking cyborgs now lose a bit of charge. They
+      still get massive damage from charged slimes, and every slime attack flashes
+      them.
+  - bugfix: slimes can now properly drain basic mobs and simple animals that they
+      can damage
+  - bugfix: slimes can drift in zero gravity
+  SyncIt21:
+  - bugfix: turbine now shuts itself off when the room apc loses power or if it gets
+      damaged. Also uses a small amount of power for operation of internal electronics,
+      the green light & other stuff
+  - bugfix: No more runtime in turbine computer when parts are not fully connected
+  - qol: adds screentips & examines for turbine
+  - code_imp: removed unused vars, auto doc procs and cleans up some code in turbine
+  Tristrian:
+  - image: Throwing things has now a sprite animation forward your target.
+  - sound: Throwing things also has a sound accompagnying it.
+  - spellcheck: Dwarves don't throw things hard like hulks. Instead their throws are
+      described as "flimsily".
+  Vishenka0704:
+  - admin: The ability to export a part(or z-level) of the map has been added.
+  Watermelon914:
+  - bugfix: Fixed integrated circuit speech logging

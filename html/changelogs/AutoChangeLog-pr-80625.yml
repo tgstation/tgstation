@@ -1,6 +1,0 @@
-author: "Tristrian"
-delete-after: True
-changes:
-  - image: "Throwing things has now a sprite animation forward your target."
-  - sound: "Throwing things also has a sound accompagnying it."
-  - spellcheck: "Dwarves don't throw things hard like hulks. Instead their throws are described as \"flimsily\"."

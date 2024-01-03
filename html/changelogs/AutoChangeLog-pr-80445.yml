@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Reworked Binoculars to function like a scope from long-range rifles. They also can be used while moving, albeit that'll slow you down significantly."
-  - rscadd: "Authentic mothic softcaps can be found in the \"Mothic Pioneer\" curator kit, which googles can also used to look into the distance. The date on the boxed kit has been updated to match \"muh lore\"."
-  - qol: "Using a scope (and now binocs or moth cap) won't hide your mouse pointer away now, so that you won't slip out of the game screen and close the game tab by accident."
