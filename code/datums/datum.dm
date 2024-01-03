@@ -412,5 +412,5 @@
 	if(harddel_deets_dumped)
 		return
 	harddel_deets_dumped = TRUE
-	return "Image icon: [icon] - icon_state: [icon_state] loc: [loc] ([loc?.x],[loc?.y],[loc?.z])"
+	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z]) : ""]"
 
