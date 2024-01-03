@@ -80,9 +80,7 @@
 		clean_user_client()
 
 	bar_loc = null
-
-	if(bar)
-		bar = null
+	bar = null
 
 	return ..()
 
