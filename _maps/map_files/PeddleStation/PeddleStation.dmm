@@ -2,8 +2,10 @@
 "ag" = (/obj/machinery/power/emitter,/turf/open/floor/plating,/area/station/engineering/main)
 "ah" = (/obj/structure/cable,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/aft)
 "al" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command{name = "Chief Medical Officer's Office"},/turf/open/floor/iron,/area/station/command/heads_quarters/cmo)
+"ap" = (/obj/structure/table,/obj/item/plate{pixel_x = -9},/obj/effect/spawner/random/food_or_drink/donkpockets{pixel_x = -9; pixel_y = 3},/obj/item/reagent_containers/cup/glass/waterbottle/large{pixel_x = 5; pixel_y = 20},/obj/item/reagent_containers/cup/glass/waterbottle{pixel_x = 7; pixel_y = 6},/obj/item/reagent_containers/cup/glass/waterbottle{pixel_x = 7},/turf/open/floor/iron,/area/station/cargo/warehouse)
 "aB" = (/obj/machinery/door/poddoor{id = "Secure Storage"; name = "Secure Storage"},/turf/open/floor/plating,/area/station/engineering/main)
 "aE" = (/turf/closed/wall,/area/station/service/janitor)
+"aU" = (/obj/machinery/autolathe,/turf/open/floor/iron,/area/station/cargo/storage)
 "bk" = (/obj/machinery/button/door/directional/east{id = "rdrnd"; name = "Primary Research Shutters Control"; pixel_y = -24; req_access = list("science"); pixel_x = -6},/turf/open/floor/iron,/area/station/science/lab)
 "br" = (/obj/machinery/door/firedoor,/obj/structure/cable,/obj/machinery/door/airlock/engineering{name = "Starboard Bow Solar Access"},/turf/open/floor/plating,/area/station/maintenance/solars/starboard/fore)
 "bu" = (/turf/closed/wall,/area/station/science/genetics)
@@ -18,22 +20,27 @@
 "cJ" = (/turf/closed/wall,/area/station/service/chapel)
 "cK" = (/obj/machinery/door/firedoor/heavy,/obj/machinery/door/airlock/engineering/glass{name = "Shared Engineering Storage"},/turf/open/floor/iron,/area/station/engineering/storage_shared)
 "cP" = (/turf/open/floor/iron,/area/station/engineering/gravity_generator)
+"cT" = (/obj/machinery/conveyor{dir = 1; id = "packageSort2"},/obj/machinery/door/window/left/directional/west{dir = 4; name = "Crate Security Door"; req_access = list("shipping")},/turf/open/floor/plating,/area/station/cargo/sorting)
+"cX" = (/obj/effect/turf_decal/bot,/obj/structure/closet/crate/freezer,/turf/open/floor/iron,/area/station/cargo/warehouse)
 "db" = (/obj/structure/toilet{pixel_y = 8},/obj/machinery/light/small/directional/west,/obj/effect/landmark/blobstart,/obj/effect/landmark/start/hangover,/obj/machinery/button/door/directional/west{id = "Toilet2"; name = "Lock Control"; normaldoorcontrol = 1; specialfunctions = 4},/obj/effect/spawner/random/trash/graffiti{pixel_y = 32},/obj/machinery/newscaster/directional/east,/turf/open/floor/iron/freezer,/area/station/commons/toilet/restrooms)
 "df" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/tcommsat/server)
+"di" = (/obj/machinery/computer/order_console/mining,/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "dj" = (/obj/machinery/door/airlock/external{name = "Transport Airlock"},/turf/open/floor/plating,/area/station/commons/dorms)
 "dk" = (/obj/machinery/mineral/ore_redemption{dir = 4; input_dir = 8; output_dir = 4},/obj/machinery/door/firedoor,/obj/machinery/door/window/left/directional/east{name = "Ore Redemtion Window"},/turf/open/floor/iron,/area/station/cargo/storage)
 "ds" = (/obj/machinery/door/firedoor/heavy,/obj/effect/spawner/structure/window/reinforced/plasma,/turf/open/floor/plating,/area/station/engineering/storage_shared)
 "du" = (/turf/closed/wall,/area/station/command/heads_quarters/rd)
+"dE" = (/obj/machinery/disposal/delivery_chute{dir = 4},/obj/machinery/door/window{base_state = "right"; dir = 4; icon_state = "right"; layer = 3},/obj/structure/window/spawner/directional/north,/obj/structure/window/spawner/directional/south,/turf/open/floor/plating,/area/station/maintenance/disposal)
 "dG" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/engineering/atmos)
 "dJ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/highsecurity{name = "AI Chamber"},/obj/machinery/door/poddoor/shutters/preopen{id = "AI Chamber entrance shutters"; name = "AI Chamber Entrance Shutters"; dir = 1},/turf/open/floor/iron,/area/station/ai_monitored/turret_protected/ai_upload)
 "dK" = (/turf/closed/wall/r_wall,/area/station/ai_monitored/command/nuke_storage)
 "dM" = (/obj/machinery/door/firedoor,/obj/structure/table/reinforced,/turf/open/floor/iron,/area/station/service/bar)
 "ea" = (/turf/closed/wall,/area/station/hallway/secondary/command)
-"en" = (/obj/machinery/door/airlock/external/glass{name = "Supply Door Airlock"},/turf/open/floor/iron,/area/station/cargo/storage)
+"en" = (/obj/machinery/door/airlock/external/glass{name = "Supply Door Airlock"},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 4},/turf/open/floor/plating,/area/station/cargo/storage)
 "eq" = (/obj/machinery/gravity_generator/main,/turf/open/floor/iron,/area/station/engineering/gravity_generator)
 "ev" = (/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
 "ex" = (/turf/closed/wall/r_wall,/area/station/maintenance/department/engine)
 "eA" = (/obj/machinery/conveyor{dir = 1; id = "QMLoad"},/turf/open/floor/iron,/area/station/cargo/storage)
+"eD" = (/obj/structure/table,/obj/machinery/microwave{pixel_y = 6},/turf/open/floor/iron,/area/station/cargo/warehouse)
 "eU" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/hatch{name = "Telecomms Control Room"},/turf/open/floor/plating,/area/station/tcommsat/computer)
 "fc" = (/obj/machinery/button/door/directional/south{id = "mechbay"; name = "Mech Bay Shutters Control"; req_access = list("robotics"); pixel_y = 0; pixel_x = -24},/turf/open/floor/iron,/area/station/science/robotics/mechbay)
 "ff" = (/turf/open/floor/iron,/area/station/commons/dorms)
@@ -45,9 +52,11 @@
 "go" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command{name = "Research Director's Office"},/turf/open/floor/iron,/area/station/science/research)
 "gq" = (/turf/closed/wall,/area/station/commons/lounge)
 "gt" = (/obj/machinery/door/airlock/external{name = "Departure Lounge Airlock"},/turf/open/floor/iron,/area/station/hallway/secondary/exit/departure_lounge)
+"gy" = (/obj/effect/turf_decal/bot,/obj/effect/spawner/random/structure/crate_loot,/turf/open/floor/iron,/area/station/cargo/warehouse)
 "gJ" = (/turf/open/floor/iron,/area/station/security/office)
 "gR" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/fore)
 "gX" = (/obj/structure/toilet{pixel_y = 8},/obj/machinery/light/small/directional/west,/obj/effect/landmark/blobstart,/obj/effect/landmark/start/hangover,/obj/machinery/button/door/directional/west{id = "Toilet1"; name = "Lock Control"; normaldoorcontrol = 1; specialfunctions = 4},/obj/machinery/newscaster/directional/east,/obj/effect/spawner/random/trash/graffiti{pixel_y = 32},/turf/open/floor/iron/freezer,/area/station/commons/toilet/restrooms)
+"ht" = (/obj/machinery/modular_computer/preset/id{dir = 8},/obj/machinery/requests_console/directional/east{department = "Quartermaster's Desk"; name = "Quartermaster's Requests Console"},/obj/effect/mapping_helpers/requests_console/supplies,/obj/effect/mapping_helpers/requests_console/announcement,/obj/machinery/computer/security/telescreen/vault{pixel_y = 30},/turf/open/floor/wood,/area/station/command/heads_quarters/qm)
 "hu" = (/turf/closed/wall,/area/station/service/chapel/office)
 "hD" = (/turf/open/floor/iron,/area/station/engineering/main)
 "ia" = (/obj/machinery/door/airlock/highsecurity{name = "AI Upload"},/turf/open/floor/iron,/area/station/ai_monitored/turret_protected/ai_upload)
@@ -56,9 +65,11 @@
 "ig" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/aft)
 "is" = (/turf/closed/wall/r_wall,/area/station/command/heads_quarters/cmo)
 "iE" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/window/brigdoor/security/cell{id = "Cell 2"; name = "Cell 2"},/turf/open/floor/iron,/area/station/security/brig)
+"iS" = (/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/machinery/door/window/right/directional/east{name = "Danger: Conveyor Access"; req_access = list("maint_tunnels"); dir = 2},/turf/open/floor/plating,/area/station/maintenance/disposal)
 "iU" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/commons/storage/tools)
 "iZ" = (/obj/structure/cable,/obj/machinery/power/solar{id = "aftport"; name = "Aft-Port Solar Array"},/turf/open/floor/iron/solarpanel/airless,/area/station/solars/port/aft)
 "ja" = (/turf/open/floor/plating,/area/station/maintenance/solars/starboard/aft)
+"jk" = (/obj/structure/disposalpipe/segment,/turf/open/floor/iron,/area/station/maintenance/disposal)
 "jl" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Funeral Parlour"},/turf/open/floor/iron,/area/station/service/chapel)
 "jp" = (/obj/machinery/door/airlock/engineering{name = "Port Quarter Solar Access"},/obj/machinery/door/firedoor,/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
 "jq" = (/obj/structure/table/reinforced,/obj/machinery/door/window/left/directional/north{name = "Engineering Desk"; req_access = list("engineering")},/obj/machinery/door/firedoor,/turf/open/floor/iron,/area/station/engineering/main)
@@ -72,11 +83,12 @@
 "kc" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Gateway Chamber"},/turf/open/floor/iron,/area/station/hallway/secondary/command)
 "kf" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/mining{name = "Warehouse"},/turf/open/floor/iron,/area/station/cargo/storage)
 "kj" = (/turf/closed/wall,/area/station/medical/pharmacy)
+"kr" = (/obj/machinery/door/airlock/external,/turf/open/floor/plating,/area/station/maintenance/fore)
 "ky" = (/obj/machinery/door/firedoor,/obj/machinery/computer/cargo/request{dir = 4},/obj/structure/window/spawner/directional/west,/turf/open/floor/iron,/area/station/cargo/sorting)
 "kI" = (/turf/open/floor/iron,/area/station/science/lab)
 "kM" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command{name = "Research Division Server Room"},/turf/open/floor/iron,/area/station/science/server)
 "kR" = (/turf/open/floor/iron,/area/station/commons/toilet/restrooms)
-"kV" = (/turf/closed/wall,/area/space)
+"kV" = (/obj/structure/sink/kitchen/directional/south{desc = "A sink used for washing one's hands and face. It looks rusty and home-made"; name = "old sink"},/turf/open/floor/iron,/area/station/cargo/warehouse)
 "kY" = (/obj/machinery/shieldgen,/turf/open/floor/plating,/area/station/engineering/main)
 "lf" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/multi_tile/public/glass{dir = 8},/turf/open/floor/iron,/area/station/hallway/primary/central)
 "lk" = (/obj/machinery/door/poddoor/shutters/preopen{id = "roboticsprivacy2"; name = "Robotics Shutters"},/obj/structure/table/reinforced,/turf/open/floor/iron,/area/station/science/robotics/lab)
@@ -86,6 +98,7 @@
 "lw" = (/obj/machinery/button/door/directional/south{id = "evashutter"; name = "E.V.A. Storage Shutter Control"; req_access = list("command")},/turf/open/floor/iron,/area/station/hallway/primary/port)
 "lJ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/hallway/primary/port)
 "lP" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command{name = "Teleport Access"},/turf/open/floor/iron,/area/station/command/teleporter)
+"lQ" = (/obj/structure/disposalpipe/segment{dir = 10},/turf/closed/wall/r_wall,/area/station/maintenance/solars/port/fore)
 "lU" = (/turf/open/floor/iron,/area/station/engineering/storage/tech)
 "lV" = (/obj/structure/cable,/obj/machinery/power/solar_control{dir = 1; id = "aftport"; name = "Port Quarter Solar Control"},/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
 "lX" = (/obj/machinery/ore_silo,/turf/open/floor/iron,/area/station/ai_monitored/command/nuke_storage)
@@ -97,24 +110,30 @@
 "mJ" = (/turf/open/floor/iron,/area/station/medical/chemistry)
 "mO" = (/obj/machinery/door/poddoor/shutters/preopen{id = "rdrnd"; name = "Research and Development Shutters"},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/science/lab)
 "nc" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/hallway/secondary/exit/departure_lounge)
+"nd" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/turf/open/floor/plating,/area/station/maintenance/disposal)
 "nq" = (/obj/structure/table/reinforced,/turf/open/floor/iron,/area/station/science/genetics)
 "nt" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/mining{name = "Cargo Bay"},/turf/open/floor/iron,/area/station/cargo/storage)
 "nu" = (/obj/effect/turf_decal/delivery,/turf/open/floor/iron,/area/station/cargo/storage)
 "nw" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/hallway/secondary/exit/departure_lounge)
+"nC" = (/obj/machinery/recycler{dir = 8},/obj/machinery/conveyor{dir = 4; id = "garbage"},/obj/structure/window/spawner/directional/south,/turf/open/floor/plating,/area/station/maintenance/disposal)
 "nD" = (/turf/open/floor/iron,/area/station/commons/lounge)
 "nH" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{id_tag = "Cabin2"; name = "Cabin 4"},/turf/open/floor/iron,/area/station/commons/dorms)
 "nK" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/glass{name = "Bar"},/turf/open/floor/iron,/area/station/service/bar)
+"nW" = (/obj/structure/closet/secure_closet/miner,/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "nZ" = (/turf/closed/wall,/area/station/cargo/sorting)
 "od" = (/obj/machinery/door/firedoor/heavy,/obj/effect/spawner/structure/window/reinforced/plasma,/turf/open/floor/plating,/area/station/engineering/supermatter/room)
 "ol" = (/obj/structure/safe,/turf/open/floor/iron,/area/station/ai_monitored/command/nuke_storage)
-"on" = (/obj/structure/table/reinforced,/obj/machinery/door/firedoor,/obj/machinery/door/window/right/directional/south{name = "Cargo Desk"; req_access = list("shipping"); dir = 8},/turf/open/floor/iron,/area/station/cargo/sorting)
+"on" = (/obj/structure/table/reinforced,/obj/machinery/door/firedoor,/obj/machinery/door/window/right/directional/south{name = "Cargo Desk"; req_access = list("shipping"); dir = 8},/obj/item/paper_bin{pixel_x = -7; pixel_y = 6},/obj/structure/desk_bell{pixel_x = 7},/obj/item/pen{pixel_x = 1; pixel_y = 9},/turf/open/floor/iron,/area/station/cargo/sorting)
 "oq" = (/turf/closed/wall/r_wall,/area/station/engineering/supermatter/room)
 "oO" = (/turf/open/floor/iron,/area/station/ai_monitored/command/storage/eva)
 "pa" = (/turf/open/floor/iron,/area/station/commons/storage/tools)
+"pi" = (/obj/effect/spawner/random/structure/closet_empty/crate,/turf/open/floor/iron,/area/station/cargo/warehouse)
 "pl" = (/obj/effect/landmark/generic_maintenance_landmark,/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
 "px" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command{name = "Quartermaster's Office"},/turf/open/floor/iron,/area/station/command/heads_quarters/qm)
 "pD" = (/obj/item/reagent_containers/cup/glass/bottle/holywater{pixel_x = -2; pixel_y = 2},/turf/open/floor/iron,/area/station/service/chapel/office)
+"pG" = (/obj/structure/closet/secure_closet/miner,/obj/item/clothing/suit/hooded/wintercoat/miner,/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "pI" = (/obj/machinery/door/airlock/vault{name = "Vault"},/turf/open/floor/iron,/area/station/ai_monitored/command/nuke_storage)
+"pJ" = (/obj/machinery/conveyor_switch/oneway{dir = 1; id = "garbage"; name = "disposal conveyor"},/turf/open/floor/iron,/area/station/maintenance/disposal)
 "pK" = (/turf/closed/wall/r_wall,/area/station/science/server)
 "pS" = (/obj/machinery/power/smes,/obj/structure/cable,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/fore)
 "qb" = (/turf/closed/wall/r_wall,/area/station/ai_monitored/turret_protected/ai_upload)
@@ -124,20 +143,26 @@
 "qu" = (/obj/machinery/door/airlock/wood/glass,/turf/open/floor/iron,/area/station/command/heads_quarters/captain/private)
 "qv" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/cargo/miningoffice)
 "qC" = (/obj/machinery/door/airlock/external{name = "Arrival Airlock"},/turf/open/floor/iron,/area/station/hallway/primary/port)
+"qI" = (/obj/structure/disposaloutlet{dir = 8},/obj/structure/window/spawner/directional/east,/obj/structure/window/spawner/directional/north,/turf/open/floor/plating,/area/station/cargo/sorting)
+"qO" = (/obj/machinery/mineral/stacking_machine{input_dir = 2},/obj/structure/window/spawner/directional/north,/turf/open/floor/plating,/area/station/maintenance/disposal)
 "rb" = (/turf/closed/wall,/area/station/cargo/warehouse)
 "rc" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Auxiliary Tool Storage"},/turf/open/floor/iron,/area/station/commons/storage/tools)
-"rg" = (/obj/machinery/conveyor{dir = 8; id = "QMLoad"},/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "Supply Dock Loading Door"},/turf/open/floor/iron,/area/station/cargo/storage)
+"rg" = (/obj/machinery/conveyor{dir = 8; id = "QMLoad"},/obj/machinery/door/poddoor{id = "QMLoaddoor"; name = "Supply Dock Loading Door"},/turf/open/floor/plating,/area/station/cargo/storage)
+"rh" = (/obj/structure/disposaloutlet{dir = 4},/obj/structure/window/spawner/directional/south,/turf/open/floor/plating,/area/station/maintenance/disposal)
 "rk" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/engineering/glass{name = "Supermatter Engine Room"},/turf/open/floor/iron,/area/station/engineering/atmos)
+"rs" = (/obj/structure/disposalpipe/segment,/turf/closed/wall/r_wall,/area/station/maintenance/solars/port/fore)
 "rt" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{id_tag = "Cabin6"; name = "Cabin 2"},/turf/open/floor/iron,/area/station/commons/dorms)
-"rv" = (/turf/open/floor/iron,/area/station/command/heads_quarters/qm)
+"rv" = (/obj/structure/table/wood,/obj/machinery/fax{fax_name = "Quartermaster's Office"; name = "Quartermaster's Fax Machine"},/turf/open/floor/wood,/area/station/command/heads_quarters/qm)
 "rw" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/research{name = "Robotics Lab"},/turf/open/floor/iron,/area/station/science/robotics/lab)
 "ry" = (/obj/machinery/power/solar{id = "forestarboard"; name = "Fore-Starboard Solar Array"},/obj/structure/cable,/turf/open/floor/iron/solarpanel/airless,/area/station/solars/port/aft)
 "rY" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/maintenance/fore)
+"sh" = (/obj/machinery/photocopier,/turf/open/floor/iron,/area/station/cargo/sorting)
 "ss" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/engineering/glass{name = "Primary Tool Storage"},/turf/open/floor/iron,/area/station/commons/storage/tools)
 "su" = (/turf/open/floor/iron,/area/station/hallway/secondary/exit/departure_lounge)
 "sx" = (/obj/machinery/door/airlock/command/glass{name = "Gravity Generator Area"},/turf/open/floor/iron,/area/station/engineering/gravity_generator)
 "sB" = (/turf/closed/wall/r_wall,/area/station/hallway/primary/central)
 "sF" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/medical/pharmacy)
+"sI" = (/obj/machinery/disposal/delivery_chute,/obj/structure/window/spawner/directional/east,/turf/open/floor/plating,/area/station/cargo/sorting)
 "sJ" = (/turf/closed/wall,/area/station/science/ordnance/burnchamber)
 "sK" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/research{name = "Research Division Access"},/turf/open/floor/iron,/area/station/science/lab)
 "sO" = (/turf/open/floor/iron,/area/station/command/heads_quarters/captain/private)
@@ -151,11 +176,12 @@
 "tX" = (/turf/open/floor/iron,/area/station/science/robotics/lab)
 "tY" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/maintenance/fore)
 "uk" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Bar"},/turf/open/floor/iron,/area/station/commons/lounge)
+"uo" = (/obj/effect/mapping_helpers/airlock/unres{dir = 8},/obj/effect/mapping_helpers/airlock/access/any/supply/maintenance,/obj/machinery/door/airlock/maintenance{name = "Disposal Conveyor Access"},/turf/open/floor/plating,/area/station/maintenance/disposal)
 "ut" = (/obj/effect/spawner/structure/window/reinforced/plasma,/obj/machinery/door/firedoor/heavy,/turf/open/floor/plating,/area/station/engineering/supermatter/room)
 "uv" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/command/heads_quarters/hop)
 "uy" = (/obj/machinery/door/window{dir = 8; name = "Mass Driver"; req_access = list("chapel_office")},/turf/open/floor/iron,/area/station/service/chapel/office)
 "uA" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/engineering/gravity_generator)
-"uF" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/obj/structure/plasticflaps,/turf/open/floor/iron,/area/station/cargo/storage)
+"uF" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/obj/structure/plasticflaps,/turf/open/floor/plating,/area/station/cargo/storage)
 "uK" = (/turf/closed/wall,/area/station/commons/dorms)
 "uR" = (/turf/closed/wall/r_wall,/area/station/ai_monitored/security/armory)
 "uT" = (/obj/machinery/door/firedoor/border_only,/obj/machinery/door/window/brigdoor/security/cell{id = "Cell 1"; name = "Cell 1"},/turf/open/floor/iron,/area/station/security/brig)
@@ -165,7 +191,9 @@
 "ve" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{id_tag = "Cabin7"; name = "Cabin 1"},/turf/open/floor/iron,/area/station/commons/dorms)
 "vh" = (/turf/open/floor/iron,/area/station/service/bar)
 "vo" = (/turf/closed/wall/r_wall,/area/station/service/janitor)
+"vt" = (/obj/structure/disposaloutlet{dir = 1},/obj/structure/disposalpipe/trunk{dir = 4},/turf/open/floor/plating/airless,/area/space)
 "vD" = (/turf/closed/wall/r_wall,/area/station/security/detectives_office)
+"vG" = (/obj/machinery/conveyor/inverted{dir = 6; id = "garbage"},/turf/open/floor/plating,/area/station/maintenance/disposal)
 "vI" = (/obj/docking_port/stationary{dir = 4; dwidth = 12; height = 18; name = "BoxStation emergency evac bay"; shuttle_id = "emergency_home"; width = 32},/turf/open/space/basic,/area/space)
 "vL" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Vault Storage"},/turf/open/floor/iron,/area/station/ai_monitored/command/nuke_storage)
 "vO" = (/turf/open/floor/engine,/area/station/engineering/supermatter)
@@ -185,10 +213,12 @@
 "xA" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance{name = "Disposal Access"},/turf/open/floor/iron,/area/station/maintenance/disposal)
 "xB" = (/obj/structure/lattice,/turf/open/space/basic,/area/space)
 "xE" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/science/research)
+"xJ" = (/turf/open/floor/wood,/area/station/command/heads_quarters/qm)
 "xK" = (/obj/machinery/door/poddoor/shutters/preopen{id = "roboticsprivacy2"; name = "Robotics Shutters"},/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/science/robotics/lab)
 "xQ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/hydroponics/glass{name = "Hydroponics"},/turf/open/floor/iron,/area/station/hallway/secondary/service)
 "xS" = (/turf/closed/wall,/area/station/maintenance/disposal)
 "xT" = (/turf/open/floor/engine,/area/station/engineering/supermatter/room)
+"xV" = (/obj/machinery/computer/security/mining{dir = 4},/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "yb" = (/obj/machinery/door/poddoor/massdriver_chapel,/turf/open/floor/iron,/area/station/service/chapel/office)
 "yh" = (/turf/closed/wall,/area/station/engineering/atmos)
 "ym" = (/obj/structure/cable,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/fore)
@@ -212,6 +242,8 @@
 "zS" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command/glass{name = "Bridge Access"},/turf/open/floor/plating,/area/station/maintenance/department/bridge)
 "zT" = (/obj/machinery/door/firedoor/heavy,/obj/machinery/door/airlock/engineering/glass{name = "Supermatter Engine Room"},/turf/open/floor/iron,/area/station/engineering/supermatter/room)
 "zV" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable,/obj/structure/chair/stool/directional/south,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/aft)
+"Ab" = (/obj/machinery/conveyor{dir = 9; id = "garbage"},/obj/item/clothing/shoes/wheelys/rollerskates,/turf/open/floor/plating,/area/station/cargo/sorting)
+"Af" = (/obj/structure/closet/secure_closet/quartermaster,/obj/item/stamp/head/qm,/obj/item/computer_disk/quartermaster,/obj/item/clothing/mask/cigarette/cigar{pixel_x = -1; pixel_y = -2},/obj/item/lighter{pixel_x = 11; pixel_y = -7},/obj/item/gps{gpstag = "QM0"; pixel_x = 10; pixel_y = 12},/obj/item/reagent_containers/cup/glass/bottle/whiskey{pixel_x = -5; pixel_y = 4},/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{pixel_x = -9; pixel_y = -4},/obj/item/reagent_containers/cup/glass/drinkingglass/shotglass{pixel_x = 2; pixel_y = -4},/obj/item/coin/gold{pixel_x = 9; pixel_y = 9},/obj/item/clipboard{pixel_x = -6; pixel_y = 4},/turf/open/floor/wood,/area/station/command/heads_quarters/qm)
 "An" = (/turf/open/floor/plating,/area/station/hallway/primary/port)
 "Ar" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security/glass{name = "Security Office"},/turf/open/floor/iron,/area/station/security/office)
 "As" = (/turf/open/floor/iron,/area/station/science/ordnance/burnchamber)
@@ -224,14 +256,18 @@
 "Bp" = (/turf/closed/wall/r_wall,/area/station/maintenance/solars/starboard/fore)
 "Bt" = (/obj/machinery/power/terminal{dir = 1},/obj/structure/cable,/obj/structure/chair/stool/directional/south,/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
 "BG" = (/obj/machinery/door/firedoor,/obj/structure/cable,/obj/machinery/door/airlock/engineering{name = "Port Bow Solar Access"},/turf/open/floor/plating,/area/station/maintenance/solars/port/fore)
+"BQ" = (/obj/machinery/computer/security/qm{dir = 8},/obj/machinery/keycard_auth/directional/south{pixel_x = -6},/turf/open/floor/wood,/area/station/command/heads_quarters/qm)
 "Cb" = (/turf/open/floor/iron,/area/station/service/kitchen)
+"Cc" = (/obj/machinery/vending/wardrobe/cargo_wardrobe,/turf/open/floor/iron,/area/station/cargo/sorting)
 "Ce" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/command/heads_quarters/ce)
 "Cl" = (/turf/open/floor/iron,/area/station/ai_monitored/security/armory)
 "CI" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/security/glass{id_tag = "innerbrig"; name = "Brig"},/turf/open/floor/iron,/area/station/security/brig)
 "CR" = (/obj/machinery/door/firedoor,/obj/machinery/door/poddoor/shutters{id = "qm_warehouse"; name = "Warehouse Shutters"},/turf/open/floor/iron,/area/station/cargo/warehouse)
 "CS" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/ai_monitored/turret_protected/ai_upload)
 "CT" = (/obj/structure/table/reinforced,/obj/machinery/door/firedoor,/obj/machinery/door/window/right/directional/west{dir = 4; name = "Hydroponics Desk"; req_access = list("hydroponics")},/turf/open/floor/iron,/area/station/service/hydroponics)
+"Da" = (/obj/effect/turf_decal/bot,/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,/turf/open/floor/iron,/area/station/cargo/storage)
 "De" = (/obj/structure/table/reinforced,/obj/machinery/door/firedoor,/obj/machinery/door/window/left/directional/west{dir = 4; name = "Hydroponics Desk"; req_access = list("hydroponics")},/turf/open/floor/iron,/area/station/service/hydroponics)
+"Di" = (/obj/effect/spawner/random/structure/crate_loot,/turf/open/floor/iron,/area/station/cargo/warehouse)
 "Ds" = (/turf/open/floor/plating,/area/station/maintenance/starboard/aft)
 "Dw" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/service/chapel/office)
 "Dx" = (/turf/open/floor/iron,/area/station/service/kitchen/coldroom)
@@ -246,20 +282,25 @@
 "EH" = (/obj/machinery/power/solar_control{dir = 1; id = "starboardsolar"; name = "Starboard Quarter Solar Control"},/obj/structure/cable,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/aft)
 "EZ" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/research/glass{name = "Chemistry Lab"},/turf/open/floor/iron,/area/station/medical/chemistry)
 "Fc" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/research{name = "Genetics Lab"},/turf/open/floor/iron,/area/station/science/research)
+"Fk" = (/obj/machinery/door/airlock/external/glass{name = "Supply Door Airlock"},/obj/effect/mapping_helpers/airlock/cyclelink_helper{dir = 8},/turf/open/floor/plating,/area/station/cargo/storage)
 "Fn" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/maintenance/starboard/central)
 "Fo" = (/turf/closed/wall/r_wall,/area/station/command/heads_quarters/qm)
 "Fp" = (/turf/closed/wall,/area/station/cargo/storage)
+"FE" = (/obj/structure/chair/office,/obj/structure/chair/office,/obj/effect/landmark/start/quartermaster,/turf/open/floor/wood,/area/station/command/heads_quarters/qm)
 "Ga" = (/obj/machinery/door/airlock/external{name = "Transport Airlock"},/turf/open/floor/iron,/area/station/commons/dorms)
 "Gd" = (/obj/structure/table/reinforced,/obj/machinery/door/firedoor,/obj/machinery/door/window/left/directional/north{dir = 8; name = "Reception Window"},/obj/machinery/door/window/brigdoor{base_state = "rightsecure"; dir = 4; icon_state = "rightsecure"; name = "Head of Personnel's Desk"; req_access = list("hop")},/obj/machinery/door/poddoor/preopen{id = "hop"; name = "Privacy Shutters"},/turf/open/floor/iron,/area/station/command/heads_quarters/hop)
 "Gf" = (/obj/machinery/door/firedoor,/obj/machinery/door/poddoor/shutters{id = "evashutter"; name = "E.V.A. Storage Shutter"; dir = 1},/turf/open/floor/iron,/area/station/ai_monitored/command/storage/eva)
 "Gg" = (/obj/machinery/conveyor/inverted{dir = 6; id = "QMLoad"},/turf/open/floor/iron,/area/station/cargo/storage)
 "Gj" = (/obj/machinery/door/airlock{id_tag = "Toilet2"; name = "Unit 2"},/turf/open/floor/iron,/area/station/commons/toilet/restrooms)
 "Gk" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/hallway/secondary/service)
+"Gq" = (/obj/effect/spawner/random/structure/grille,/turf/open/floor/plating,/area/station/maintenance/fore)
 "Gw" = (/turf/open/floor/iron,/area/station/tcommsat/server)
 "Gx" = (/turf/closed/wall,/area/station/command/heads_quarters/hop)
 "Gz" = (/turf/closed/wall/r_wall,/area/station/command/teleporter)
 "GB" = (/obj/structure/cable,/obj/machinery/door/airlock/external{name = "Solar Maintenance"},/turf/open/floor/plating,/area/station/maintenance/solars/starboard/fore)
 "GI" = (/obj/machinery/computer/bank_machine,/turf/open/floor/iron,/area/station/ai_monitored/command/nuke_storage)
+"GP" = (/obj/machinery/rnd/production/techfab/department/cargo,/turf/open/floor/iron,/area/station/cargo/storage)
+"GR" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/plating,/area/station/maintenance/port/central)
 "Hd" = (/turf/open/floor/iron,/area/station/cargo/sorting)
 "Hu" = (/turf/closed/wall,/area/station/science/research)
 "HA" = (/turf/closed/wall,/area/station/hallway/primary/central)
@@ -278,19 +319,22 @@
 "Ir" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
 "It" = (/turf/open/floor/iron,/area/station/tcommsat/computer)
 "IF" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/mining{name = "Mining Office"},/turf/open/floor/iron,/area/station/cargo/miningoffice)
+"IM" = (/turf/open/floor/plating,/area/station/cargo/storage)
 "IP" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/engineering/main)
 "IW" = (/obj/machinery/power/solar_control{id = "forestarboard"; name = "Starboard Bow Solar Control"},/obj/structure/cable,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/fore)
 "IX" = (/turf/closed/wall/r_wall,/area/station/security/office)
 "Jc" = (/obj/docking_port/stationary{dir = 8; dwidth = 3; height = 15; name = "arrivals"; roundstart_template = /datum/map_template/shuttle/arrival/box; shuttle_id = "arrival_stationary"; width = 7},/turf/open/space/basic,/area/space)
 "Jg" = (/obj/machinery/portable_atmospherics/canister/plasma,/turf/open/floor/plating,/area/station/engineering/main)
-"Jh" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "Supply Dock Loading Door"},/turf/open/floor/iron,/area/station/cargo/storage)
+"Jh" = (/obj/machinery/conveyor{dir = 4; id = "QMLoad2"},/obj/machinery/door/poddoor{id = "QMLoaddoor2"; name = "Supply Dock Loading Door"},/turf/open/floor/plating,/area/station/cargo/storage)
 "Ji" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/science/genetics)
 "Jj" = (/obj/machinery/door/firedoor/heavy,/obj/machinery/door/airlock/engineering/glass{name = "Laser Room"},/turf/open/floor/plating,/area/station/engineering/supermatter/room)
+"Jk" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/plating,/area/station/maintenance/port/central)
 "Js" = (/obj/machinery/computer/cargo{dir = 4},/obj/machinery/button/door/directional/west{id = "QMLoaddoor2"; layer = 4; name = "Loading Doors"; pixel_y = 8; req_access = list("cargo")},/obj/machinery/button/door/directional/west{id = "QMLoaddoor"; layer = 4; name = "Loading Doors"; pixel_y = -8; req_access = list("cargo")},/obj/effect/turf_decal/delivery,/turf/open/floor/iron,/area/station/cargo/storage)
 "Jw" = (/turf/open/floor/iron,/area/station/command/heads_quarters/hop)
 "JB" = (/obj/structure/cable,/turf/open/floor/plating/airless,/area/station/solars/port/aft)
 "JG" = (/obj/machinery/power/solar_control{id = "foreport"; name = "Port Bow Solar Control"},/obj/structure/cable,/turf/open/floor/plating,/area/station/maintenance/solars/port/fore)
 "JK" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/public/glass{name = "Chapel"},/turf/open/floor/iron,/area/station/hallway/secondary/exit/departure_lounge)
+"JX" = (/obj/item/hand_labeler{pixel_y = 11},/obj/item/multitool{pixel_x = -3; pixel_y = -4},/obj/structure/closet,/turf/open/floor/iron,/area/station/cargo/sorting)
 "Kg" = (/obj/machinery/door/airlock/external{name = "Mining Dock Airlock"},/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "Kq" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/hallway/primary/central)
 "Kv" = (/turf/closed/wall,/area/station/hallway/secondary/exit/departure_lounge)
@@ -314,16 +358,19 @@
 "LX" = (/turf/closed/wall,/area/station/medical/chemistry)
 "Ma" = (/turf/open/floor/iron,/area/station/command/gateway)
 "Ml" = (/turf/open/floor/iron,/area/station/medical/morgue)
+"Mp" = (/obj/machinery/computer/shuttle/mining{dir = 4; req_access = null},/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "Mr" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/engineering{name = "Tech Storage"},/turf/open/floor/iron,/area/station/engineering/storage/tech)
 "MK" = (/turf/open/space/basic,/area/station/solars/starboard/aft)
 "MN" = (/obj/machinery/door/poddoor/shutters/radiation/preopen{id = "engsm"; name = "Radiation Chamber Shutters"},/turf/open/floor/engine,/area/station/engineering/supermatter)
 "MO" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/maintenance/starboard/aft)
+"Nb" = (/obj/machinery/conveyor/inverted{dir = 10; id = "garbage"},/obj/structure/window/spawner/directional/south,/turf/open/floor/plating,/area/station/maintenance/disposal)
 "Nj" = (/obj/machinery/door/airlock/external{name = "Security External Airlock"},/turf/open/floor/plating,/area/station/security/office)
 "No" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/cargo/storage)
 "Np" = (/turf/closed/wall,/area/station/service/kitchen)
 "Nw" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/research{name = "Robotics Lab"},/turf/open/floor/iron,/area/station/science/lab)
 "NF" = (/turf/open/floor/iron,/area/station/science/server)
-"NM" = (/obj/structure/plasticflaps,/obj/machinery/conveyor{dir = 8; id = "QMLoad"},/turf/open/floor/iron,/area/station/cargo/storage)
+"NM" = (/obj/structure/plasticflaps,/obj/machinery/conveyor{dir = 8; id = "QMLoad"},/turf/open/floor/plating,/area/station/cargo/storage)
+"Ob" = (/obj/structure/table,/obj/item/dest_tagger{pixel_x = 9; pixel_y = 10},/obj/item/pen/red{pixel_y = 10},/obj/item/stamp{pixel_x = -3; pixel_y = 3},/obj/item/stamp/denied{pixel_x = 4; pixel_y = -2},/obj/item/pen/blue{pixel_x = 5; pixel_y = 5},/obj/item/pen{pixel_x = -11; pixel_y = 7},/turf/open/floor/iron,/area/station/cargo/sorting)
 "Oe" = (/obj/structure/toilet{pixel_y = 8; dir = 1},/obj/machinery/light/small/directional/west,/obj/effect/landmark/start/assistant,/obj/effect/landmark/start/hangover,/obj/effect/spawner/random/trash/graffiti{pixel_y = -32; spawn_loot_chance = 50},/obj/machinery/button/door/directional/west{id = "Toilet3"; name = "Lock Control"; normaldoorcontrol = 1; specialfunctions = 4},/obj/machinery/newscaster/directional/east,/turf/open/floor/iron/freezer,/area/station/commons/toilet/restrooms)
 "Oh" = (/turf/open/floor/iron,/area/station/hallway/primary/starboard)
 "On" = (/turf/open/floor/plating,/area/station/engineering/main)
@@ -335,6 +382,7 @@
 "OK" = (/obj/machinery/power/smes,/obj/structure/cable,/turf/open/floor/plating,/area/station/maintenance/solars/starboard/aft)
 "OV" = (/turf/open/floor/plating,/area/station/maintenance/starboard/central)
 "OZ" = (/obj/machinery/door/firedoor,/obj/machinery/door/poddoor/shutters{id = "teleshutter"; name = "Teleporter Access Shutter"; dir = 4},/turf/open/floor/iron,/area/station/command/teleporter)
+"Pa" = (/obj/structure/disposalpipe/segment,/obj/structure/window/spawner/directional/east,/turf/open/floor/iron,/area/station/maintenance/disposal)
 "Pe" = (/obj/machinery/door/firedoor,/turf/open/floor/iron,/area/station/hallway/primary/port)
 "Pp" = (/turf/open/floor/iron,/area/station/medical/medbay/lobby)
 "Py" = (/obj/effect/landmark/blobstart,/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
@@ -362,10 +410,14 @@
 "Rq" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/hydroponics/glass{name = "Hydroponics"},/turf/open/floor/iron,/area/station/service/hydroponics)
 "Rw" = (/obj/machinery/door/firedoor,/obj/machinery/door/poddoor/shutters{dir = 8; id = "qm_warehouse"; name = "Warehouse Shutters"},/turf/open/floor/iron,/area/station/cargo/storage)
 "Rz" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{name = "Recreation Area"},/turf/open/floor/iron,/area/station/commons/toilet/restrooms)
+"RC" = (/obj/structure/reagent_dispensers/fueltank,/turf/open/floor/iron,/area/station/cargo/warehouse)
 "RL" = (/turf/open/floor/iron,/area/station/hallway/primary/port)
 "RM" = (/obj/effect/turf_decal/box/red,/obj/machinery/conveyor_switch/oneway{id = "QMLoad2"; name = "Unloading Conveyor"; pixel_x = -13; pixel_y = -4},/turf/open/floor/iron,/area/station/cargo/storage)
+"RR" = (/obj/item/tank/internals/oxygen,/obj/item/clothing/mask/breath,/turf/open/floor/plating,/area/station/maintenance/port/central)
+"RT" = (/obj/structure/reagent_dispensers/watertank,/turf/open/floor/iron,/area/station/cargo/warehouse)
 "RV" = (/turf/closed/wall/r_wall,/area/station/command/heads_quarters/ce)
 "RY" = (/turf/closed/wall/r_wall,/area/station/maintenance/solars/port/fore)
+"Sj" = (/obj/machinery/disposal/delivery_chute{dir = 4; name = "''idea box''"},/obj/structure/disposalpipe/trunk{dir = 1},/obj/structure/window/spawner/directional/north,/turf/open/floor/plating,/area/station/maintenance/disposal)
 "Sz" = (/obj/machinery/door/airlock/engineering/glass/critical{heat_proof = 1; name = "Supermatter Chamber"},/turf/open/floor/engine,/area/station/engineering/supermatter)
 "SB" = (/turf/closed/wall,/area/station/medical/medbay/lobby)
 "SM" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command{name = "E.V.A. Storage"},/turf/open/floor/iron,/area/station/ai_monitored/command/storage/eva)
@@ -373,16 +425,19 @@
 "Th" = (/obj/machinery/power/smes{charge = 5e+006},/obj/structure/cable,/obj/machinery/power/apc/auto_name/directional/north,/turf/open/floor/plating,/area/station/maintenance/solars/port/aft)
 "Ti" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/security/brig)
 "Tm" = (/turf/closed/wall/r_wall,/area/station/command/heads_quarters/captain/private)
+"To" = (/obj/item/storage/toolbox/emergency,/turf/open/floor/plating,/area/station/maintenance/port/central)
 "Tq" = (/turf/open/floor/iron,/area/station/security/brig)
 "Tv" = (/turf/open/floor/iron,/area/station/service/hydroponics)
 "Tw" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/maintenance,/turf/open/floor/plating,/area/station/maintenance/port/central)
 "TH" = (/turf/closed/wall,/area/station/medical/storage)
 "TL" = (/obj/structure/cable,/obj/machinery/door/airlock/external{name = "Solar Maintenance"},/turf/open/floor/plating,/area/station/maintenance/solars/port/fore)
+"TP" = (/obj/machinery/conveyor_switch/oneway{id = "packageSort2"; name = "Sort and Deliver"; pixel_x = -2; pixel_y = 12},/turf/open/floor/iron,/area/station/cargo/sorting)
 "TR" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/medical/medbay/central)
 "TT" = (/obj/machinery/button/door/directional/west{id = "qm_warehouse"; name = "Warehouse Door Control"; req_access = list("cargo")},/turf/open/floor/iron,/area/station/cargo/warehouse)
 "Ue" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{name = "Custodial Closet"},/turf/open/floor/iron,/area/station/service/janitor)
 "Uf" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/cargo/sorting)
 "Ug" = (/turf/open/floor/plating,/area/station/security/office)
+"Ui" = (/obj/machinery/conveyor{dir = 8; id = "garbage"},/obj/machinery/door/window/right/directional/north,/turf/open/floor/plating,/area/station/maintenance/disposal)
 "Un" = (/turf/open/floor/iron,/area/station/cargo/storage)
 "Us" = (/obj/machinery/conveyor_switch/oneway{dir = 8; id = "QMLoad"; name = "Loading Conveyor"; pixel_x = -13; pixel_y = -5},/obj/effect/turf_decal/delivery,/turf/open/floor/iron,/area/station/cargo/storage)
 "Ux" = (/obj/machinery/door/firedoor,/turf/open/floor/iron,/area/station/hallway/primary/starboard)
@@ -411,6 +466,7 @@
 "Xp" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/mining{name = "Deliveries"},/turf/open/floor/iron,/area/station/cargo/sorting)
 "Xq" = (/obj/structure/chair/office{dir = 4},/turf/open/floor/iron,/area/station/cargo/sorting)
 "Xu" = (/turf/open/space/basic,/area/station/solars/starboard/fore)
+"Xz" = (/obj/effect/turf_decal/bot,/turf/open/floor/iron,/area/station/hallway/primary/central)
 "XB" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/command/glass{name = "Bridge Access"},/turf/open/floor/iron,/area/station/command/bridge)
 "XN" = (/turf/closed/wall/r_wall,/area/station/ai_monitored/command/storage/eva)
 "XP" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/multi_tile/public/glass,/turf/open/floor/iron,/area/station/medical/medbay/lobby)
@@ -428,7 +484,9 @@
 "YB" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock/medical/glass{id_tag = "MedbayFoyer"; name = "Medbay Clinic"},/turf/open/floor/iron,/area/station/medical/medbay/central)
 "YU" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{id_tag = "Cabin4"; name = "Cabin 5"},/turf/open/floor/iron,/area/station/commons/dorms)
 "Za" = (/obj/machinery/door/airlock/mining/glass{name = "Mining Dock"},/turf/open/floor/iron,/area/station/cargo/miningoffice)
+"Zf" = (/obj/effect/turf_decal/bot,/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,/obj/machinery/holopad,/turf/open/floor/iron,/area/station/cargo/storage)
 "Zl" = (/obj/effect/spawner/structure/window/reinforced,/turf/open/floor/plating,/area/station/medical/chemistry)
+"Zq" = (/obj/structure/table,/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "Zs" = (/obj/machinery/button/door/directional/west{id = "qm_warehouse"; name = "Warehouse Door Control"; req_access = list("cargo"); pixel_y = 24},/turf/open/floor/iron,/area/station/hallway/primary/central)
 "Zw" = (/turf/closed/wall/r_wall,/area/station/engineering/supermatter)
 "ZB" = (/turf/closed/wall/r_wall,/area/station/tcommsat/server)
@@ -436,6 +494,7 @@
 "ZP" = (/obj/machinery/door/airlock{id_tag = "Toilet3"; name = "Unit 3"},/turf/open/floor/iron,/area/station/commons/toilet/restrooms)
 "ZQ" = (/turf/open/floor/iron,/area/station/engineering/atmos/storage/gas)
 "ZR" = (/turf/closed/wall,/area/station/maintenance/port/aft)
+"ZT" = (/obj/structure/table,/obj/item/storage/toolbox/emergency,/turf/open/floor/iron,/area/station/cargo/miningoffice)
 "ZW" = (/obj/machinery/door/firedoor,/obj/machinery/door/airlock{id_tag = "Cabin3"; name = "Cabin 6"},/turf/open/floor/iron,/area/station/commons/dorms)
 
 (1,1,1) = {"
@@ -501,33 +560,33 @@ wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
 wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoQAwowowowowowowowowowowowoKGjWKGWzKGGwGwGwGwGwZBZBwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
 wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoLdTLLdwowowowowowowowowowowoKGItItItjWGwGwGwGwGwZBZBwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
 wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoLdLCLdwowowowowowowowowowowoKGItItItjWGwGwGwGwGwZBZBwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoRYLdTLLdRYwowowowowompvampwowoKGItItItKGZBZBZBZBZBZBwowompvampwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoRYLdTLLdRYwowowowowompkrmpwowoKGItItItKGZBZBZBZBZBZBwowompvampwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
 wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoRYJGLCKTRYrYrYrYmpwompvampwowoKGItItItKGwowowowowowowowompvampwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoRYAVKTLCBGvavavampmpmpvampLvLvKGKGeUKGKGLvLvLvLvLvLvLvLvmpvampkVwowowowoyhYpyhwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoRYidLCLCRYvavavavavavavavavavavavavavavavavavavavavavavavavavakVwowowowodGYpdGwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsqvqvqvcsRYRYRYRYRYvavavavavavavavavavavavavavavavavavavavavavavavavavasJsJsJsJsJyhYpyhdGdGdGdGdGdGdGyhyhwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoqvqvqvQCQCQCqvvSvSvSvSxSvavavaDMDMDMDMDMmpmpmpmpmpmpmpdududubububububuvavavasJsJsJsJsJYpYpYpYpYpYpYpYpYpYpYpyhwooqoqoqoqoqoqoqoqoqoqoqoqoqoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowogjKgQCZaQCQCQCIFvSvSvSvSxSvampvaDMsTsTsTsTmpvavavavavampXlXlduwjwjwjwjbuvavavasJsJsJsJsJYpYpYpYpYpYpYpYpYpYpYpyhwooqgfgfgfgfgfgfgfgfgfgfgfgfgfoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoqvqvqvQCQCQCcsvSvSvSvSxSvampvawCsTsTsTsTmpvavavavavampXlXlduwjwjwjwjbuvavavasJsJsJsJsJQUQUQUQUYpYpYpYpYpYpYpyhwooqgfgfgfgfgfgfgfgfgfgfgfgfgfoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsQCQCQCcsvSvSvSvSxSvampKADMfcsTsTsTpKpKpKpKpKpKpKXlXlduwjwjwjwjbuvavavasJsJsJsJsJZQZQZQQUYpYpYpYpYpYpYpyhwooqoqJjoqoqoqoqutoqoqoqoqJjoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsQCQCQCIFvSvSvSvSxSvavavayKyKrwyKyKpKNFNFNFNFNFpKgoxEHuwjwjwjwjbuvavavasJAsAsAsmcZQZQZQmcYpYpYpYpYpYpYpyhwooqxTxTxTxTxTxTvbxTxTxTxTxTxToqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsQCQCQCcsvSvSvSvSxSvavavayKtXtXtXtXpKNFNFNFNFNFkMIhIhHuwjwjwjwjbuvavavasJAsAsAsQUZQZQZQQUYpYpYpYpYpYpYpyhwooqxTxTxTxTxTxTvbxTxTxTxTxTxToqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocscsqvIFcsxSxSxAxSxSvampvayKtXtXtXtXpKpKpKpKpKpKpKIhIhHuwjwjwjwjJivavavasJAsAsAsQUQUQUQUQUYpYpYpYpYpYpYpdGdGodxTxTZwZwZwZwRhZwZwZwZwxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoNoNoNoyWRMUnUnkfXQXQXQrbvampvayKtXtXtXtXLekIkIkIkIkILeIhIhHuwjwjwjwjbuvavavasJAsAsAsAssJYpYpYpYpYpYpYpYpYpYprkYpzTxTxTMNvORhvOvOvORhvOMNxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoJhuFJhxvUnUnQMFpTTXQXQrbvampvayKtXtXtXtXNwkIkIkIkIkIsKIhIhFcwjwjwjwjbuvavavawqAsAsAsAszAYpYpYpYpYpYpYpYpYpYpdGdGodxTxTMNvORhvOvOvORhvOMNxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoenUnennuUnUnUnRwXQXQXQrbvavavayKtXtXtXjxLekIkIkIkIbkLeIhIhHuwjwjwjwjbuvavavasJAsAsAsAssJYpYpYpYpYpYpYpYpYpYpyhwooqxTxTMNvORhvOvOvORhvOMNxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoNoNoFpJsUnUnUnRwXQXQXQrbmptYmpyKqelkxKyKLesKLfIcmOLeLeHuHuHubuUGnqUGbumptYmpqsqsqsqsqsqsAuIPWwIPRVRVRVRVRVAXAXAXAXxTxTZwZwZwZwSzZwZwZwZwxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowobTenUnenUsUnUnUnFpCRCRCRrbKZKZKZKZKZKZKZKZKZKZKZKZKZKZyvKZKZKZKZKZKZKZKZKZKZKZqspapapapasshDhDhDhDCeQJQJQJRVzczckYAXxTxTxTxTxTZwvOZwxTxTxTxTxToqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoworgNMrgGgUnUnUndkZsKZKZyvKZKZKZKZKZKZKZKZKZKZKZKZKZKZyvKZKZKZKZKZKZKZKZKZKZKZrcpapapapaqshDhDhDhDQYQJQJQJRVzczckYaBxTxTxTxTxTZwSzZwxTxTxTxTxToqoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoNoNoNoeAUnUnUnntKZKZKZlfKZKZKZKZKZKZKZKZKZKZKZKZKZKZyvKZKZKZKZKZKZKZKZKZKZKZqspapapapaiUhDhDhDhDCeQJQJQJwRJgOnOnaBxTxTxTxTxTxTxTxTxTxTxTxTxTgfgfgfwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoFpeAUnUnUnFpKZKZKZHAKZKZKZHAHAGxGxIgGxGxGxzSWZWZsBsBsBsBsBUAUAUAUAKZKZKZqspapapapaiUhDhDhDhDRVRVRVRVRVagjEzdaBxTxTxTxTxTxTxTxTxTxTxTxTxToqoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowonZUfXpUfnZnZKZKZKZUAKZKZKZKZKZuvJwJwJwJwGxQsQsWZwowowowowowowowoUAKZKZKZyQyQFnyQyQyQhDhDhDhDQolUlUlUDZagagagyxyxqlyxyxyxyxyxoqoqYscKdsdsYswowowowowoXuwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowonZHdHdHdHdonKZKZKZHAKZKZKZUAKZuvJwJwJwJwGxQsQsWZwoqbqbqbCSCSCSwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDQolUlUlUDZAXAXAXyxcPcPuAcPcPcPyxwowoYsDRDRDRLAwowowowogRGBgRwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvWvwOWvWvWvWvWvWvWvWvWvWvWvWvWvWvnZHdHdHdXqjuKZKZKZyvKZKZKZUAKZuvJwJwJwJwGxQsQsqbqbqbieieieieCSwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDMrlUlUlUDZwowowoyxcPcPsxcPcPcPyxwowoYsDRDRDRLAwowowowogRymgRwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvwOwOwOwOwOwOwOwOwOwOwOwOwOwOwOwOnZHdHdHdYwkyKZKZKZlfKZKZKZUAKZuvJwJwJwJwGxQsQsYiieiaieieieieCSwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDQolUlUlUDZwowowoyxcPcPuAcPeqcPyxwowoYsDRDRDRLAzBzBzBBpgRGBgRBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvwOwOwOwOwOwOwOwOwOwOwOwOwOwOwOwOFoFopxFoFoWvWvWvWvWvKZKZKZKZKZGdJwJwJwJwGxQsQsqbqbqbieieieieqbwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDQolUlUlUDZwowowoyxyxyxyxyxyxyxyxzBzBLAyMLALALARcRcRcBpRnymIWBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvwOwOwOWvWvWvWvWvWvWvWvWvWvwOwOwOForvrvrvFowOwOwOwOWvKZKZKZlvlvlvlvIglvlvlvQsQsWZwoqbqbdJqbqbqbwosBKZKZKZyQOVOVyQyQyQzgAujqPQQoQoQoQoDZzBzBzBzBRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcbrymRnHNBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
-wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoQrQrQrQrQrlJQrQrQrQrQrQrQrQrQrQrQrQrwOwOForvrvrvFowOwOwOwOTwKZKZKZlvJwJwJwJwJwlvQsQsQsWZwowoxllsxlwowowosBKZKZKZFnOVOVOVOVyQOhOhOhOhexRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcBpymympSBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoRYAVKTLCBGvavavampmpmpkrmpLvLvKGKGeUKGKGLvLvLvLvLvLvLvLvmpvampsJwowowowoyhYpyhwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowovtlQidLCLCRYvavavavavavavavavavavavavavavavavavavavavavavavavavasJwowowowodGYpdGwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsqvqvqvcsrsRYRYRYRYvavavavavavavavavavavavavavavavavavavavavavavavavavasJsJsJsJsJyhYpyhdGdGdGdGdGdGdGyhyhwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoqvqvqvnWpGdiqvjkvSvSvSuovavavaDMDMDMDMDMmpmpmpmpmpmpmpdududubububububuvavavasJsJsJsJsJYpYpYpYpYpYpYpYpYpYpYpyhwooqoqoqoqoqoqoqoqoqoqoqoqoqoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowogjKgQCZaQCQCQCIFPadEUiqOxSvaGqvaDMsTsTsTsTmpvavavavavampXlXlduwjwjwjwjbuvavavasJsJsJsJsJYpYpYpYpYpYpYpYpYpYpYpyhwooqgfgfgfgfgfgfgfgfgfgfgfgfgfoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoqvqvqvMpQCQCcsSjndndvGxSGqGqvawCsTsTsTsTmpvavavavavampXlXlduwjwjwjwjbuvavavasJsJsJsJsJQUQUQUQUYpYpYpYpYpYpYpyhwooqgfgfgfgfgfgfgfgfgfgfgfgfgfoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsxVQCQCcsrhiSnCNbxSvaGqKADMfcsTsTsTpKpKpKpKpKpKpKXlXlduwjwjwjwjbuvavavasJsJsJsJsJZQZQZQQUYpYpYpYpYpYpYpyhwooqoqJjoqoqoqoqutoqoqoqoqJjoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsQCQCQCIFvSvSpJvSxSvavavayKyKrwyKyKpKNFNFNFNFNFpKgoxEHuwjwjwjwjbuvavavasJAsAsAszAZQZQZQmcYpYpYpYpYpYpYpyhwooqxTxTxTxTxTxTvbxTxTxTxTxTxToqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocsZqZTQCcsvSvSvSvSxSvavavayKtXtXtXtXpKNFNFNFNFNFkMIhIhHuwjwjwjwjbuvavavasJAsAsAssJZQZQZQQUYpYpYpYpYpYpYpyhwooqxTxTxTxTxTxTvbxTxTxTxTxTxToqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowocscsqvIFcsxSxSxAxSxSvaGqGqyKtXtXtXtXpKpKpKpKpKpKpKIhIhHuwjwjwjwjJivavavasJAsAsAssJQUQUQUQUYpYpYpYpYpYpYpdGdGodxTxTZwZwZwZwRhZwZwZwZwxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoNoNoNoyWRMUnUnkfkVXQeDrbvaGqvayKtXtXtXtXLekIkIkIkIkILeIhIhHuwjwjwjwjbuvavavasJAsAsAsAssJYpYpYpYpYpYpYpYpYpYprkYpzTxTxTMNvORhvOvOvORhvOMNxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoJhuFJhxvUnUnQMFpTTcXaprbvaGqvayKtXtXtXtXNwkIkIkIkIkIsKIhIhFcwjwjwjwjbuvavavawqAsAsAsAszAYpYpYpYpYpYpYpYpYpYpdGdGodxTxTMNvORhvOvOvORhvOMNxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoenIMFknuUnDaUnRwpigyRCrbvavavayKtXtXtXjxLekIkIkIkIbkLeIhIhHuwjwjwjwjbuvavavasJAsAsAsAssJYpYpYpYpYpYpYpYpYpYpyhwooqxTxTMNvORhvOvOvORhvOMNxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoNoNoFpJsUnDaUnRwDiXQRTrbmptYmpyKqelkxKyKLesKLfIcmOLeLeHuHuHubuUGnqUGbumptYmpqsqsqsqsqsqsAuIPWwIPRVRVRVRVRVAXAXAXAXxTxTZwZwZwZwSzZwZwZwZwxTxTyAwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowobTenIMFkUsUnZfUnFpCRCRCRrbKZKZKZKZKZKZKZKZKZKZKZKZKZKZyvKZKZKZKZKZKZKZKZKZKZKZqspapapapasshDhDhDhDCeQJQJQJRVzczckYAXxTxTxTxTxTZwvOZwxTxTxTxTxToqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoworgNMrgGgUnDaUndkZsKZKZyvKZKZKZKZKZKZKZKZKZKZKZKZKZKZyvKZKZKZKZKZKZKZKZKZKZKZrcpapapapaqshDhDhDhDQYQJQJQJRVzczckYaBxTxTxTxTxTZwSzZwxTxTxTxTxToqoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoNoNoNoeAUnUnUnntKZXzKZlfKZKZKZKZKZKZKZKZKZKZKZKZKZKZyvKZKZKZKZKZKZKZKZKZKZKZqspapapapaiUhDhDhDhDCeQJQJQJwRJgOnOnaBxTxTxTxTxTxTxTxTxTxTxTxTxTgfgfgfwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoFpeAUnaUGPFpKZXzKZHAKZKZKZHAHAGxGxIgGxGxGxzSWZWZsBsBsBsBsBUAUAUAUAKZKZKZqspapapapaiUhDhDhDhDRVRVRVRVRVagjEzdaBxTxTxTxTxTxTxTxTxTxTxTxTxToqoqoqwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowonZnZUfXpUfnZnZKZKZKZUAKZKZKZKZKZuvJwJwJwJwGxQsQsWZwowowowowowowowoUAKZKZKZyQyQFnyQyQyQhDhDhDhDQolUlUlUDZagagagyxyxqlyxyxyxyxyxoqoqYscKdsdsYswowowowowoXuwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowonZsICcHdObJXonKZXzKZHAKZKZKZUAKZuvJwJwJwJwGxQsQsWZwoqbqbqbCSCSCSwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDQolUlUlUDZAXAXAXyxcPcPuAcPcPcPyxwowoYsDRDRDRLAwowowowogRGBgRwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvWvwOWvWvWvWvWvWvWvWvWvWvWvWvWvnZcTTPHdHdXqjuKZXzKZyvKZKZKZUAKZuvJwJwJwJwGxQsQsqbqbqbieieieieCSwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDMrlUlUlUDZwowowoyxcPcPsxcPcPcPyxwowoYsDRDRDRLAwowowowogRymgRwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvwOwOwOwOwOwOwOwOwOwOwOwOwOwOwOnZAbqIHdshYwkyKZKZKZlfKZKZKZUAKZuvJwJwJwJwGxQsQsYiieiaieieieieCSwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDQolUlUlUDZwowowoyxcPcPuAcPeqcPyxwowoYsDRDRDRLAzBzBzBBpgRGBgRBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvwOwOwOwOwOwOwOwOwOwOwOwOwOwOwOWvFoFopxFoFoWvWvWvWvWvKZKZKZKZKZGdJwJwJwJwGxQsQsqbqbqbieieieieqbwoUAKZKZKZyQOVOVyQOVyQhDhDhDhDQolUlUlUDZwowowoyxyxyxyxyxyxyxyxzBzBLAyMLALALARcRcRcBpRnymIWBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoWvwOwOwOWvWvWvWvWvWvWvWvWvWvwOwOwOFoAfxJhtFoGRJkToRRWvKZKZKZlvlvlvlvIglvlvlvQsQsWZwoqbqbdJqbqbqbwosBKZKZKZyQOVOVyQyQyQzgAujqPQQoQoQoQoDZzBzBzBzBRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcbrymRnHNBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
+wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoQrQrQrQrQrlJQrQrQrQrQrQrQrQrQrQrQrQrwOwOForvFEBQFowOwOwOwOTwKZKZKZlvJwJwJwJwJwlvQsQsQsWZwowoxllsxlwowowosBKZKZKZFnOVOVOVOVyQOhOhOhOhexRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcRcBpymympSBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
 wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoAnRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLQrwOwOFoFoFoFoFoWvWvWvwOWvKZKZKZlvJwJwJwJwJwlvQsQsQsWZwoxlxljPxlxlwowosBKZKZKZyQOVOVOVOVFnOhOhOhOhzORcRcRcRcRcRcRcRcRcRcRczBzBzBzBzBzBzBzBzBzBzBzBzBzBBpBpBpBpBpwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
 wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoQrQrQrRLRLRLRLRLRLRLRLRLRLRLRLRLRLlJwOwOwOwOwOwOwOwOwOwOwOWvyvyvyvlvJwJwJwJwJwlvQsQsQsWZwoxllslslsxlwowosByvyvyvyQyQyQyQyQyQOhOhOhOhexexexexexexexexexexRcRczBwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
 wowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowoQrUFqCUFRLRLRLRLUFqCUFQrQrRLRLQrwOwOwOwOwOwOwOwOwOwOwOWvKZKZKZlvlvlvlvlvlvlvQsQsQsWZwoxllslslsxlwowosBKZKZKZUxOhOhOhOhOhOhOhOhOhOhOhOhOhOhOhOhOhOhexRcRczBwowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowowo
