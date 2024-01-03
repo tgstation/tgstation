@@ -136,7 +136,7 @@
 		possible_entry.set_spell_info() //loads up things for the entry that require checking spell instance.
 		entries |= possible_entry
 
-/obj/item/spellbook/ui_status(mob/user, /datum/ui_state/state)
+/obj/item/spellbook/ui_status(mob/user)
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return UI_CLOSE

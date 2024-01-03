@@ -11,7 +11,7 @@
 	drop_sound = 'sound/items/handling/book_drop.ogg'
 	pickup_sound = 'sound/items/handling/book_pickup.ogg'
 
-/obj/item/infuser_book/ui_status(mob/user, /datum/ui_state/state)
+/obj/item/infuser_book/ui_status(mob/user)
 	if(user.is_blind())
 		to_chat(user, span_warning("You are blind and can't read anything!"))
 		return UI_CLOSE
