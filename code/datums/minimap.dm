@@ -65,6 +65,12 @@ SUBSYSTEM_DEF(minimap)
 	current_section = SSminimap.current_section
 	current_run = SSminimap.current_run
 
+/datum/controller/subsystem/minimap/stat_entry(msg)
+	. = ..()
+	if(isnull(generating))
+		return .
+	return . + "S:[current_section.section_x],[current_section.section_y]|CR:[length(current_run)]"
+
 /// Generates a minimap for the given z level. Does not block and will generate the minimap in the background.
 /datum/controller/subsystem/minimap/proc/generate_minimap_for_z(z)
 	set waitfor = FALSE
