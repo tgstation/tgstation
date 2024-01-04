@@ -99,7 +99,7 @@ Des: Removes all infected images from the alien.
 /mob/living/carbon/alien/proc/RemoveInfectionImages()
 	if(client)
 		var/list/image/to_remove
-		for(var/client_image as anything in client.images)
+		for(var/image/client_image as anything in client.images)
 			var/searchfor = "infected"
 			if(findtext(client_image.icon_state, searchfor, 1, length(searchfor) + 1))
 				to_remove += client_image
