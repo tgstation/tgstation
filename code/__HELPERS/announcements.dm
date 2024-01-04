@@ -21,16 +21,15 @@
  * * color_override - optional, set a color for the announcement box
  */
 
-/proc/send_formatted_announcement(
+/proc/send_ooc_announcement(
 	text,
 	title = "",
 	players,
 	play_sound = TRUE,
-	sound_override = 'sound/ai/default/attention.ogg',
+	sound_override = 'sound/misc/bloop.ogg',
 	sender_override = "Server Admin Announcement",
 	encode_title = TRUE,
 	encode_text = TRUE,
-	color_override = "grey",
 )
 	if(isnull(text))
 		return
@@ -44,9 +43,10 @@
 			if(!length(text))
 				return
 
-		announcement_strings += span_announcement_header(generate_unique_announcement_header(title, sender_override))
-		announcement_strings += span_major_announcement_text(text)
-		var/finalized_announcement = create_announcement_div(jointext(announcement_strings, ""), color_override)
+		announcement_strings += span_major_announcement_title(sender_override)
+		announcement_strings += span_subheader_announcement_text(title)
+		announcement_strings += span_ooc_announcement_text(text)
+		var/finalized_announcement = create_ooc_announcement_div(jointext(announcement_strings, ""))
 
 		if(islist(players))
 			for(var/mob/target in players)
@@ -72,5 +72,7 @@
  * * color - optional, set a div color other than default
  */
 /proc/create_announcement_div(message, color = "default")
-	var/processed_message = "<div class='chat_alert_[color]'>[message]</div>"
-	return processed_message
+	return "<div class='chat_alert_[color]'>[message]</div>"
+
+/proc/create_ooc_announcement_div(message)
+	return "<div class='ooc_alert'>[message]</div>"

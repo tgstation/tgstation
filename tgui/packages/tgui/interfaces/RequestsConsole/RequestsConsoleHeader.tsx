@@ -81,7 +81,7 @@ const MessageNoticeBox = (props) => {
   const { data } = useBackend<RequestsData>();
   const { new_message_priority } = data;
   return (
-    <NoticeBox warning>
+    <NoticeBox>
       {'You have new unread '}
       {new_message_priority === RequestPriority.HIGH && 'PRIORITY '}
       {new_message_priority === RequestPriority.EXTREME && 'EXTREME PRIORITY '}

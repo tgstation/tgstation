@@ -510,8 +510,9 @@
 
 	var/ctf_enabled = FALSE
 	ctf_enabled = ctf_controller.toggle_ctf()
-	for(var/obj/machinery/power/emitter/emitter in ctf_area)
-		emitter.active = ctf_enabled
+	for(var/turf/ctf_turf as anything in get_area_turfs(ctf_area))
+		for(var/obj/machinery/power/emitter/emitter in ctf_turf)
+			emitter.active = ctf_enabled
 	if(user)
 		message_admins("[key_name_admin(user)] has [ctf_enabled ? "enabled" : "disabled"] CTF!")
 	else if(automated)

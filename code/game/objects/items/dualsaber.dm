@@ -172,7 +172,7 @@
 			set_light_color(pick(COLOR_SOFT_RED, LIGHT_COLOR_GREEN, LIGHT_COLOR_LIGHT_CYAN, LIGHT_COLOR_LAVENDER))
 		open_flame()
 	else
-		STOP_PROCESSING(SSobj, src)
+		return PROCESS_KILL
 
 /obj/item/dualsaber/IsReflect()
 	if(HAS_TRAIT(src, TRAIT_WIELDED) && prob(block_chance))

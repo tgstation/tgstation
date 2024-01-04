@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Some things which affect everything in an area are less laggy, the \"all lights are broken\" station trait especially"

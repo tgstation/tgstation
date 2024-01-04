@@ -463,10 +463,11 @@
 			update()
 		if("emergency_lighting")
 			emergency_lights = !emergency_lights
-			for(var/obj/machinery/light/L in area)
-				if(!initial(L.no_low_power)) //If there was an override set on creation, keep that override
-					L.no_low_power = emergency_lights
-					INVOKE_ASYNC(L, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
+			for(var/turf/area_turf as anything in area.get_contained_turfs())
+				for(var/obj/machinery/light/area_light in area_turf)
+					if(!initial(area_light.no_low_power)) //If there was an override set on creation, keep that override
+						area_light.no_low_power = emergency_lights
+						INVOKE_ASYNC(area_light, TYPE_PROC_REF(/obj/machinery/light/, update), FALSE)
 				CHECK_TICK
 	return TRUE
 
@@ -665,10 +666,11 @@
 		INVOKE_ASYNC(src, PROC_REF(break_lights))
 
 /obj/machinery/power/apc/proc/break_lights()
-	for(var/obj/machinery/light/breaked_light in area)
-		breaked_light.on = TRUE
-		breaked_light.break_light_tube()
-		stoplag()
+	for(var/turf/area_turf as anything in area.get_contained_turfs())
+		for(var/obj/machinery/light/breaked_light in area_turf)
+			breaked_light.on = TRUE
+			breaked_light.break_light_tube()
+			stoplag()
 
 /obj/machinery/power/apc/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > 2000)
