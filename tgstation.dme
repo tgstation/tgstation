@@ -779,7 +779,6 @@
 #include "code\datums\position_point_vector.dm"
 #include "code\datums\profiling.dm"
 #include "code\datums\progressbar.dm"
-#include "code\datums\recipe.dm"
 #include "code\datums\request_message.dm"
 #include "code\datums\ruins.dm"
 #include "code\datums\saymode.dm"
