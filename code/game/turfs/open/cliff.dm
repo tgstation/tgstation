@@ -84,7 +84,8 @@
 		return FALSE
 	
 	// gravity
-	if(!arrived.has_gravity(src))
+	// marked in UNLINT due to a spacemandmm bug: https://github.com/SpaceManiac/SpacemanDMM/issues/382 (REMOVE ONCE FIXED!)
+	if(UNLINT(!arrived.has_gravity(src)))
 		return FALSE
 
 	return TRUE
