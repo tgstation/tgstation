@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(modular_computers)
 	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
 		"fakename" = "Coupon Master",
 		"fakejob" = "Goodies Promotion",
-		"message" = "[chosen_promo_message] [pick(code_messages)]: [coupon_code][expires_in ? " (EXPIRES IN [uppercase(DisplayTimeText(expires_in))])" : ""].",
+		"message" = "[chosen_promo_message] [pick(code_messages)]: [coupon_code][expires_in ? " (EXPIRES IN [uppertext(DisplayTimeText(expires_in))])" : ""].",
 		"targets" = targets,
 		"automated" = TRUE,
 	))
