@@ -529,3 +529,21 @@ DISALLOW_TITLE_MUSIC
 ## This is primarily useful for developing tutorials. If you have a proper DB setup, you
 ## don't need (or want) this.
 #GIVE_TUTORIALS_WITHOUT_DB
+
+## Configuration for station traits of each type.
+## The first value (key) is the budget, or the space available to use for station traits of that type. Some take more space than others.
+## The second value (assoc) is the weight associated with said budget compared to the rest for that type.
+POSITIVE_STATION_TRAITS 0 8
+POSITIVE_STATION_TRAITS 1 4
+POSITIVE_STATION_TRAITS 2 2
+POSITIVE_STATION_TRAITS 3 1
+
+NEUTRAL_STATION_TRAITS 0 10
+NEUTRAL_STATION_TRAITS 1 10
+NEUTRAL_STATION_TRAITS 2 3
+NEUTRAL_STATION_TRAITS 2.5 1
+
+NEGATIVE_STATION_TRAITS 0 8
+NEGATIVE_STATION_TRAITS 1 4
+NEGATIVE_STATION_TRAITS 2 2
+NEGATIVE_STATION_TRAITS 3 1
