@@ -25,6 +25,10 @@
 	var/size_at_maximum = 0
 	///list of cultists just before summoning Narsie
 	var/list/true_cultists = list()
+	///amount of sacrifices available
+	var/sacrifices_used = -SOULS_TO_REVIVE
+	///list of sacrifices we have made
+	var/list/sacrificed = null
 
 /datum/team/cult/proc/check_size()
 	if(cult_ascendent)
@@ -191,3 +195,6 @@
 
 	deltimer(blood_target_reset_timer)
 	unset_blood_target()
+
+/datum/team/cult/proc/sacrifices_available()
+	return LAZYLEN(sacrificed) - SOULS_TO_REVIVE - sacrifices_used

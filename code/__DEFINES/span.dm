@@ -69,6 +69,7 @@
 #define span_info(str) ("<span class='info'>" + str + "</span>")
 #define span_infoplain(str) ("<span class='infoplain'>" + str + "</span>")
 #define span_interface(str) ("<span class='interface'>" + str + "</span>")
+#define span_italic(str) ("<span class ='italic'> + str + </span>")
 #define span_linkify(str) ("<span class='linkify'>" + str + "</span>")
 #define span_looc(str) ("<span class='looc'>" + str + "</span>")
 #define span_major_announcement_text(str) ("<span class='major_announcement_text'>" + str + "</span>")

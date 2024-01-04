@@ -84,6 +84,9 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define ispassmeteorturf(A) (is_type_in_typecache(A, GLOB.turfs_pass_meteor))
 
+//Areas
+#define isspacearea(A) (istype(A, /area/space))
+
 //Mobs
 #define isliving(A) (istype(A, /mob/living))
 
