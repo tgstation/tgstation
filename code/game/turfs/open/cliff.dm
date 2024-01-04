@@ -84,7 +84,7 @@
 		return FALSE
 	
 	// gravity
-	if(!arrived.has_gravity())
+	if(!arrived.has_gravity(src))
 		return FALSE
 
 	return TRUE
