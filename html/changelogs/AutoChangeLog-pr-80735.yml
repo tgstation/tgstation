@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes some runtimes in pathfinding code, as well as one in the give direct control admin verb"

@@ -101,3 +101,10 @@
   - admin: The ability to export a part(or z-level) of the map has been added.
   Watermelon914:
   - bugfix: Fixed integrated circuit speech logging
+2024-01-04:
+  Ghommie:
+  - bugfix: food made with drying racks now counts as "chef-made" (ergo, can provide
+      a mild buff).
+  vinylspiders:
+  - bugfix: fixes some runtimes in pathfinding code, as well as one in the give direct
+      control admin verb
