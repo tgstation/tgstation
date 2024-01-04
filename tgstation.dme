@@ -3013,7 +3013,7 @@
 #include "code\modules\antagonists\heretic\knowledge\lock_lore.dm"
 #include "code\modules\antagonists\heretic\knowledge\moon_lore.dm"
 #include "code\modules\antagonists\heretic\knowledge\rust_lore.dm"
-#include "code\modules\antagonists\heretic\knowledge\side_ash_flesh.dm"
+#include "code\modules\antagonists\heretic\knowledge\side_ash_moon.dm"
 #include "code\modules\antagonists\heretic\knowledge\side_blade_rust.dm"
 #include "code\modules\antagonists\heretic\knowledge\side_cosmos_ash.dm"
 #include "code\modules\antagonists\heretic\knowledge\side_flesh_void.dm"

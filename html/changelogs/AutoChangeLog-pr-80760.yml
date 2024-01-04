@@ -1,0 +1,4 @@
+author: "Hatterhat"
+delete-after: True
+changes:
+  - bugfix: "Universal scanners are no longer invisible when set to the export or sales tagger modes."

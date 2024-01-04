@@ -1,0 +1,5 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Birdshot: Released gulag prisoners can now get off the gulag shuttle."
+  - bugfix: "Birdshot: The gulag shuttle airlocks will now cycle like other airlocks."
