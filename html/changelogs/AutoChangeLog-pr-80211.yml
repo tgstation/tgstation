@@ -1,0 +1,5 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Introduced a simple budget system to station traits, so that smaller things only count as half a trait, for example."
+  - balance: "Increased the odds and maximum number of station traits that can be rolled each shift."
