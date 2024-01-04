@@ -780,7 +780,6 @@ world
 			&& !length(icon_states(icon(curicon, curstate, WEST))) \
 		)
 			base_icon_dir = SOUTH
-		base_icon_dir = SOUTH
 
 	if(!base_icon_dir)
 		base_icon_dir = curdir
