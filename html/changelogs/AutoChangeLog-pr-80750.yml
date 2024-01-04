@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "Gibtonite ore on ice planet gulags no longer spawns as lavaland rock."
