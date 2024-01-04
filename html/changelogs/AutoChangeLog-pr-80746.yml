@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "TGUI: Sections should be scrollable on mouse hover"
