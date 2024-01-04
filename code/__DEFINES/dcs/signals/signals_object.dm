@@ -130,7 +130,7 @@
 #define COMSIG_ITEM_ON_JUICE "on_juice"
 ///from /obj/machinery/hydroponics/attackby(obj/item/O, mob/user, params) when an object is used as compost: (mob/user)
 #define COMSIG_ITEM_ON_COMPOSTED "on_composted"
-///Called when an item is dried by a drying rack:
+///Called when an item is dried by a drying rack
 #define COMSIG_ITEM_DRIED "item_dried"
 ///from base of obj/item/dropped(): (mob/user)
 #define COMSIG_ITEM_DROPPED "item_drop"

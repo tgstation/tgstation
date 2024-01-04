@@ -123,6 +123,7 @@
 	name = "Cleaned out maintenance"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 5
+	cost = STATION_TRAIT_COST_LOW //Most of maints is literal trash anyway
 	show_in_report = TRUE
 	report_message = "Our workers cleaned out most of the junk in the maintenace areas."
 	blacklist = list(/datum/station_trait/filled_maint)
@@ -167,6 +168,7 @@
 	name = "Bot Language Matrix Malfunction"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 4
+	cost = STATION_TRAIT_COST_LOW
 	show_in_report = TRUE
 	report_message = "Your station's friendly bots have had their language matrix fried due to an event, resulting in some strange and unfamiliar speech patterns."
 	trait_to_give = STATION_TRAIT_BOTS_GLITCHED
@@ -187,6 +189,7 @@
 	name = "Revenge of Pun Pun"
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
+	cost = STATION_TRAIT_COST_LOW
 
 	// Way too much is done on atoms SS to be reverted, and it'd look
 	// kinda clunky on round start. It's not impossible to make this work,
@@ -319,6 +322,7 @@
 	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelyhood of space dust storms damaging the station hull."
 	trait_type = STATION_TRAIT_NEGATIVE
 	weight = 2
+	cost = STATION_TRAIT_COST_LOW
 	event_control_path = /datum/round_event_control/meteor_wave/dust_storm
 	weight_multiplier = 2
 	max_occurrences_modifier = 3

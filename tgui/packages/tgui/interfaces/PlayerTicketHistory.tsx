@@ -234,7 +234,6 @@ const TicketView = (props: TicketViewProps) => {
     >
       {props.ticket.ticket_log.map((log, index) => (
         <Collapsible
-          tooltip={log.timestamp}
           open={forceExpand}
           key={`${props.ticket.round_id}-${props.ticket.ticket_number}-${index}`}
           title={`${log.action} - ${log.origin_ckey}${

@@ -1,0 +1,4 @@
+author: "Rex9001"
+delete-after: True
+changes:
+  - bugfix: "the moon heretic ascension now produces lunatics again"
