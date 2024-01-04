@@ -252,7 +252,7 @@
 
 	for(var/mob/living/carbon/carbon_view in view(5, source))
 		var/carbon_sanity = carbon_view.mob_mood.sanity
-		if(carbon_view.stat == DEAD || carbon_view.stat == UNCONSCIOUS)
+		if(carbon_view.stat != CONSCIOUS)
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue
