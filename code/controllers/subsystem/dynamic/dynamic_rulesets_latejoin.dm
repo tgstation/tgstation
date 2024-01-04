@@ -66,6 +66,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 1
 	weight = 11
@@ -197,6 +198,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 1
 	weight = 8
@@ -239,6 +241,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 1
 	weight = 2

@@ -237,6 +237,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_candidates = 1
@@ -441,6 +442,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)
@@ -812,6 +814,7 @@
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 		ROLE_POSITRONIC_BRAIN,
 	)
 	required_enemies = list(2,2,1,1,1,1,1,0,0,0)

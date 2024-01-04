@@ -22,6 +22,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 1
 	weight = 5
@@ -111,6 +112,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 	)
 	weight = 5
 	cost = 8
@@ -164,6 +166,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 1
 	weight = 3
@@ -213,6 +216,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 	restricted_roles = list(
 		JOB_AI,
 		JOB_CYBORG,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 1
 	weight = 3
@@ -333,6 +337,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_PRISONER,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 2
 	weight = 3
@@ -508,6 +513,7 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_RESEARCH_DIRECTOR,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_CARGO_GORILLA,
 	)
 	required_candidates = 3
 	weight = 3
