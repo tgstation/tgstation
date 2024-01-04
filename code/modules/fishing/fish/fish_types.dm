@@ -238,7 +238,7 @@
 	random_case_rarity = FISH_RARITY_RARE
 	fillet_type = /obj/item/food/meat/slab/rawcrab
 	required_temperature_min = MIN_AQUARIUM_TEMP+9
-	required_temperature_max = LAVALAND_MAX_TEMPERATURE+50
+	required_temperature_max = 400
 	min_pressure = HAZARD_LOW_PRESSURE
 	safe_air_limits = list(
 		/datum/gas/oxygen = list(2, 100),
@@ -257,7 +257,7 @@
 	desc = "A subspecies of chasm chrabs that has adapted to the cold climate and lack of abysmal holes of the icemoon."
 	icon_state = "arctic_chrab"
 	dedicated_in_aquarium_icon_state = "ice_chrab_small"
-	required_temperature_min = ICEBOX_MIN_TEMPERATURE-20
+	required_temperature_min = 160
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)

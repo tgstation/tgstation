@@ -31,3 +31,5 @@
 
 /// Sent when the challenge is to be interrupted: (reason)
 #define COMSIG_FISHING_SOURCE_INTERRUPT_CHALLENGE "fishing_spot_interrupt_challenge"
+
+#define COMSIG_FISHING_LINE_SNAPPED "fishing_line_snapped"
