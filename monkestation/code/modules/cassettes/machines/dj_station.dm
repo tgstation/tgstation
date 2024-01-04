@@ -180,7 +180,7 @@ GLOBAL_VAR(dj_booth)
 	GLOB.dj_broadcast = TRUE
 	pl_index = list_index
 
-	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM))
+	var/list/viable_z = SSmapping.levels_by_any_trait(list(ZTRAIT_STATION, ZTRAIT_MINING, ZTRAIT_CENTCOM, ZTRAIT_RESERVED))
 	for(var/mob/person as anything in GLOB.player_list)
 		if(isAI(person) || isobserver(person) || isaicamera(person) || iscyborg(person))
 			active_listeners |=	person.client
