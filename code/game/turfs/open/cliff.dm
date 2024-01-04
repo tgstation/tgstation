@@ -82,6 +82,10 @@
 	// We can walk infront of the bottom cliff turf, so check that here
 	if(!iscliffturf(get_step(src, fall_direction)) && !(get_dir(arrived, src) & fall_direction))
 		return FALSE
+	
+	// gravity
+	if(!arrived.has_gravity())
+		return FALSE
 
 	return TRUE
 
