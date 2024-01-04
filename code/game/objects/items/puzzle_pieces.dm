@@ -429,3 +429,37 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	SIGNAL_HANDLER
 	density = FALSE
 	update_appearance(UPDATE_ICON)
+
+/obj/effect/puzzle_poddoor_open
+	name = "puzzle-poddoor relay"
+	desc = "activates poddoors if activated with a puzzle signal."
+	icon = 'icons/effects/mapping_helpers.dmi'
+	icon_state = ""
+	anchored = TRUE
+	invisibility = INVISIBILITY_MAXIMUM
+	/// if we receive a puzzle signal with this we do our thing
+	var/queue_id
+	/// door id
+	var/id
+
+/obj/effect/puzzle_poddoor_open/Initialize(mapload)
+	. = ..()
+	if(isnull(id) || isnull(queue_id))
+		log_mapping("[src] id:[id] has no id or door id and has been deleted")
+		return INITIALIZE_HINT_QDEL
+	
+	SSqueuelinks.add_to_queue(src, queue_id)
+
+/obj/effect/puzzle_poddoor_open/MatchedLinks(id, list/partners)
+	for(var/partner in partners)
+		RegisterSignal(partner, COMSIG_PUZZLE_COMPLETED, PROC_REF(try_signal))
+
+/obj/effect/puzzle_poddoor_open/proc/try_signal(datum/source)
+	SIGNAL_HANDLER
+	to_chat(world, "hi")
+	var/openclose
+	for(var/obj/machinery/door/poddoor/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
+		if(door.id == id)
+			if(openclose == null)
+				openclose = door.density
+			INVOKE_ASYNC(door, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))

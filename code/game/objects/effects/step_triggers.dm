@@ -144,13 +144,18 @@
 	var/teleport_x_offset = 0
 	var/teleport_y_offset = 0
 
+/obj/effect/step_trigger/teleporter/offset/on_entered(datum/source, H as mob|obj, atom/old_loc)
+	if(!old_loc?.Adjacent(loc)) // prevents looping, if we were teleported into this then the old loc is usually not adjacent
+		return
+	return ..()
+
 /obj/effect/step_trigger/teleporter/offset/Trigger(atom/movable/poor_soul)
 	var/turf/destination = locate(x + teleport_x_offset, y + teleport_y_offset, z)
 	if(!destination)
 		return
 	poor_soul.forceMove(destination)
 	var/mob/living/living_soul = poor_soul
-	if(istype(poor_soul) && living_soul.client)
+	if(istype(living_soul) && living_soul.client)
 		living_soul.client.move_delay = 0
 
 /* Fancy teleporter, creates sparks and smokes when used */

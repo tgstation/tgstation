@@ -119,3 +119,6 @@
 
 /turf/open/chasm/true/apply_components(mapload)
 	AddComponent(/datum/component/chasm, null, mapload) //Don't pass anything for below_turf.
+
+/turf/open/chasm/true/no_smooth
+	smoothing_flags = NONE
