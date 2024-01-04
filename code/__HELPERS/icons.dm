@@ -773,7 +773,7 @@ world
 
 	//Try to remove/optimize this section ASAP, CPU hog.
 	//Determines if there's directionals.
-if(render_icon && curdir != SOUTH)
+	if(render_icon && curdir != SOUTH)
 		if (
 			!length(icon_states(icon(curicon, curstate, NORTH))) \
 			&& !length(icon_states(icon(curicon, curstate, EAST))) \
