@@ -200,7 +200,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		for(var/A in B.contents)
 			qdel(A)
 		return
-	QDEL_LIST(blueprint_data)
+	blueprint_data.Cut()
 	flags_1 &= ~INITIALIZED_1
 	requires_activation = FALSE
 	..()
