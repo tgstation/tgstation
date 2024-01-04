@@ -1,0 +1,4 @@
+author: "Rex9001"
+delete-after: True
+changes:
+  - admin: "Amputation Shear amputation is now logged"
