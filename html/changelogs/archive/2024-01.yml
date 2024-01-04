@@ -71,3 +71,9 @@
   Salted-Zen:
   - rscadd: The Mining Research Director has decided to authorize the purchasing of
       surplus necropolis crates for miners. Beware, content quality not guranteed.
+2024-01-04:
+  Jacquerel:
+  - bugfix: Spiders, Morphs, Fire Sharks, and Regal Rats no longer have a reduced
+      click speed.
+  NicoDeLuna:
+  - bugfix: Adjusted minor sprite issues on shipwrecked captain costumes
