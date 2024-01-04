@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "food made with drying racks now counts as \"chef-made\" (ergo, can provide a mild buff)."
