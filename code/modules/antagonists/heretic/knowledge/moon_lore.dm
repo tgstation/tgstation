@@ -219,7 +219,7 @@
 		var/crewmate_z = crewmate_turf?.z
 		if(isnull(crewmate.mind))
 			continue
-		if(crewmate.stat == DEAD || crewmate.stat == UNCONSCIOUS)
+		if(crewmate.stat != CONSCIOUS)
 			continue
 		if(!is_station_level(crewmate_z))
 			continue
