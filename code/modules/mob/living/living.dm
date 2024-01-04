@@ -1010,23 +1010,6 @@
 	if(body_position == LYING_DOWN && !buckled && prob(getBruteLoss()*200/maxHealth))
 		makeTrail(newloc, T, old_direction)
 
-/**
- * Called by mob/living attackby()
- * Checks if there's active surgery on the mob that can be continued with the item
- */
-/mob/living/proc/can_perform_surgery(mob/living/user, params)
-	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
-			break
-		if(IS_IN_INVALID_SURGICAL_POSITION(src, operations))
-			continue
-		if(!(operations.surgery_flags & SURGERY_SELF_OPERABLE) && (user == src))
-			continue
-		var/list/modifiers = params2list(params)
-		if(operations.next_step(user, modifiers))
-			return TRUE
-	return FALSE
-
 ///Called by mob Move() when the lying_angle is different than zero, to better visually simulate crawling.
 /mob/living/proc/lying_angle_on_movement(direct)
 	if(direct & EAST)
@@ -1409,7 +1392,8 @@
 	else
 		for(var/obj/item/item in src)
 			if(!dropItemToGround(item))
-				qdel(item)
+				if(!(item.item_flags & ABSTRACT))
+					qdel(item)
 				continue
 			item_contents += item
 
@@ -1608,10 +1592,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * Signals the extinguishing.
  */
 /mob/living/proc/extinguish_mob()
+	if(HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE)) //The everlasting flames will not be extinguished
+		return
 	var/datum/status_effect/fire_handler/fire_stacks/fire_status = has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(!fire_status || !fire_status.on_fire)
 		return
-
 	remove_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 
 /**
@@ -1626,10 +1611,14 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/proc/adjust_fire_stacks(stacks, fire_type = /datum/status_effect/fire_handler/fire_stacks)
 	if(stacks < 0)
+		if(HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE)) //You can't reduce fire stacks of the everlasting flames
+			return
 		stacks = max(-fire_stacks, stacks)
 	apply_status_effect(fire_type, stacks)
 
 /mob/living/proc/adjust_wet_stacks(stacks, wet_type = /datum/status_effect/fire_handler/wet_stacks)
+	if(HAS_TRAIT(src, TRAIT_PERMANENTLY_ONFIRE)) //The everlasting flames will not be extinguished
+		return
 	if(stacks < 0)
 		stacks = max(fire_stacks, stacks)
 	apply_status_effect(wet_type, stacks)
@@ -2633,7 +2622,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(isnull(guardian_client))
 		return
 	else if(guardian_client == "Poll Ghosts")
-		var/list/candidates = poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", ROLE_PAI, FALSE, 100, POLL_IGNORE_HOLOPARASITE)
+		var/list/candidates = SSpolling.poll_ghost_candidates("Do you want to play as an admin created Guardian Spirit of [real_name]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, ignore_category = POLL_IGNORE_HOLOPARASITE, pic_source = src, role_name_text = "guardian spirit")
 		if(LAZYLEN(candidates))
 			var/mob/dead/observer/candidate = pick(candidates)
 			guardian_client = candidate.client
@@ -2665,3 +2654,21 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	message_admins(span_adminnotice("[key_name_admin(admin)] gave a guardian spirit controlled by [guardian_client || "AI"] to [src]."))
 	log_admin("[key_name(admin)] gave a guardian spirit controlled by [guardian_client] to [src].")
 	BLACKBOX_LOG_ADMIN_VERB("Give Guardian Spirit")
+
+/mob/living/verb/lookup()
+	set name = "Look Up"
+	set category = "IC"
+
+	if(client.perspective != MOB_PERSPECTIVE)
+		end_look_up()
+	else
+		look_up()
+
+/mob/living/verb/lookdown()
+	set name = "Look Down"
+	set category = "IC"
+
+	if(client.perspective != MOB_PERSPECTIVE)
+		end_look_down()
+	else
+		look_down()

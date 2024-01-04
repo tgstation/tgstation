@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 	SEND_SIGNAL(src,COMSIG_EXOSCAN_INTERRUPTED)
 	qdel(src)
 
-/datum/exoscan/Destroy(force, ...)
+/datum/exoscan/Destroy(force)
 	. = ..()
 	deltimer(scan_timer)
 
@@ -262,7 +262,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 /obj/machinery/exoscanner/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool, time = 1 SECONDS)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/exoscanner/set_anchored(anchorvalue)
 	. = ..()

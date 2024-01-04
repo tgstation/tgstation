@@ -123,7 +123,7 @@ Possible to do for anyone motivated enough:
 
 /obj/machinery/holopad/tutorial
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 	on_network = FALSE
 	///Proximity monitor associated with this atom, needed for proximity checks.
 	var/datum/proximity_monitor/proximity_monitor
@@ -231,7 +231,7 @@ Possible to do for anyone motivated enough:
 /obj/machinery/holopad/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/holopad/set_anchored(anchorvalue)
 	. = ..()

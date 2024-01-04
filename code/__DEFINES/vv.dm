@@ -1,6 +1,6 @@
 #define VV_NUM "Number"
 #define VV_TEXT "Text"
-#define VV_MESSAGE "Mutiline Text"
+#define VV_MESSAGE "Multiline Text"
 #define VV_COLOR "Color"
 #define VV_COLOR_MATRIX "Color Matrix"
 #define VV_ICON "Icon"
@@ -113,6 +113,9 @@
 
 // /obj/item
 #define VV_HK_ADD_FANTASY_AFFIX "add_fantasy_affix"
+
+// /obj/narsie
+#define VV_HK_BEGIN_NARSIE_ROUNDEND "begin_narsie_roundend"
 
 // /mob
 #define VV_HK_GIB "gib"

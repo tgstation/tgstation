@@ -1,7 +1,7 @@
 /obj/item/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/assemblies/assemblies.dmi'
+	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -208,6 +208,7 @@
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
 		var/obj/item/organ/internal/brain/newbrain = H.get_organ_by_type(/obj/item/organ/internal/brain)
+		newbrain.Remove(H, special = TRUE, movement_flags = NO_ID_TRANSFER)
 		newbrain.forceMove(src)
 		brain = newbrain
 	else if(!brain)

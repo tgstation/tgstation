@@ -6,12 +6,8 @@
 	// If you are refactoring a simple_animal, REMOVE it from this list
 	var/list/allowed_types = list(
 		/mob/living/simple_animal/bot,
-		/mob/living/simple_animal/bot/cleanbot,
-		/mob/living/simple_animal/bot/cleanbot/autopatrol,
-		/mob/living/simple_animal/bot/cleanbot/medbay,
 		/mob/living/simple_animal/bot/firebot,
 		/mob/living/simple_animal/bot/floorbot,
-		/mob/living/simple_animal/bot/hygienebot,
 		/mob/living/simple_animal/bot/mulebot,
 		/mob/living/simple_animal/bot/mulebot/paranormal,
 		/mob/living/simple_animal/bot/secbot,

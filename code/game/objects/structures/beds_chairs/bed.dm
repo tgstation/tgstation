@@ -34,12 +34,12 @@
 
 /obj/structure/bed/examine(mob/user)
 	. = ..()
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		. += span_notice("It's held together by a couple of <b>bolts</b>.")
 
 /obj/structure/bed/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(held_item.tool_behaviour != TOOL_WRENCH || flags_1 & NODECONSTRUCT_1)
+		if(held_item.tool_behaviour != TOOL_WRENCH || obj_flags & NO_DECONSTRUCTION)
 			return
 
 		context[SCREENTIP_CONTEXT_RMB] = "Dismantle"
@@ -50,7 +50,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/structure/bed/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(build_stack_type)
 			new build_stack_type(loc, build_stack_amount)
 	..()
@@ -59,7 +59,7 @@
 	return attack_hand(user, modifiers)
 
 /obj/structure/bed/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return TRUE
 
 	..()

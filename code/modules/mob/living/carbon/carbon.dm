@@ -28,19 +28,16 @@
 	QDEL_NULL(dna)
 	GLOB.carbon_list -= src
 
-/mob/living/carbon/attackby(obj/item/item, mob/living/user, params)
-	if(!all_wounds || !(!user.combat_mode || user == src))
-		return ..()
+/mob/living/carbon/item_tending(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(. & ITEM_INTERACT_ANY_BLOCKER)
+		return .
 
-	if(can_perform_surgery(user, params))
-		return TRUE
+	for(var/datum/wound/wound as anything in shuffle(all_wounds))
+		if(wound.try_treating(tool, user))
+			return ITEM_INTERACT_SUCCESS
 
-	for(var/i in shuffle(all_wounds))
-		var/datum/wound/wound = i
-		if(wound.try_treating(item, user))
-			return TRUE
-
-	return ..()
+	return .
 
 /mob/living/carbon/CtrlShiftClick(mob/user)
 	..()
@@ -53,7 +50,8 @@
 	var/hurt = TRUE
 	var/extra_speed = 0
 	var/oof_noise = FALSE //We smacked something with denisty, so play a noise
-	if(throwingdatum.thrower != src)
+	var/mob/thrower = throwingdatum?.get_thrower()
+	if(thrower != src)
 		extra_speed = min(max(0, throwingdatum.speed - initial(throw_speed)), CARBON_MAX_IMPACT_SPEED_BONUS)
 
 	if(istype(throwingdatum))
@@ -140,6 +138,7 @@
 	if(prob(0.5))
 		verb_text = "yeet"
 	var/neckgrab_throw = FALSE // we can't check for if it's a neckgrab throw when totaling up power_throw since we've already stopped pulling them by then, so get it early
+	var/frequency_number = 1 //We assign a default frequency number for the sound of the throw.
 	if(!held_item)
 		if(pulling && isliving(pulling) && grab_state >= GRAB_AGGRESSIVE)
 			var/mob/living/throwable_mob = pulling
@@ -171,11 +170,24 @@
 		power_throw++
 	if(isitem(thrown_thing))
 		var/obj/item/thrown_item = thrown_thing
+		frequency_number = 1-(thrown_item.w_class-3)/8 //At normal weight, the frequency is at 1. For tiny, it is 1.25. For huge, it is 0.75.
 		if(thrown_item.throw_verb)
 			verb_text = thrown_item.throw_verb
-	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw ? " really hard!" : "."]"), \
-					span_danger("You [verb_text] [thrown_thing][power_throw ? " really hard!" : "."]"))
-	log_message("has thrown [thrown_thing] [power_throw > 0 ? "really hard" : ""]", LOG_ATTACK)
+	do_attack_animation(target, no_effect = 1)
+	var/sound/throwsound = 'sound/weapons/throw.ogg'
+	var/power_throw_text = "."
+	if(power_throw > 0) //If we have anything that boosts our throw power like hulk, we use the rougher heavier variant.
+		throwsound = 'sound/weapons/throwhard.ogg'
+		power_throw_text = " really hard!"
+	if(power_throw < 0) //if we have anything that weakens our throw power like dward, we use a slower variant.
+		throwsound = 'sound/weapons/throwsoft.ogg'
+		power_throw_text = " flimsily."
+	frequency_number = frequency_number + (rand(-5,5)/100); //Adds a bit of randomness in the frequency to not sound exactly the same.
+	//The volume of the sound takes the minimum between the distance thrown or the max range an item, but no more than 50. Short throws are quieter. A fast throwing speed also makes the noise sharper.
+	playsound(src, throwsound, min(8*min(get_dist(loc,target),thrown_thing.throw_range), 50), vary = TRUE, extrarange = -1, frequency = frequency_number)
+	visible_message(span_danger("[src] [verb_text][plural_s(verb_text)] [thrown_thing][power_throw_text]"), \
+					span_danger("You [verb_text] [thrown_thing][power_throw_text]"))
+	log_message("has thrown [thrown_thing] [power_throw_text]", LOG_ATTACK)
 	var/extra_throw_range = HAS_TRAIT(src, TRAIT_THROWINGARM) ? 2 : 0
 	newtonian_move(get_dir(target, src))
 	thrown_thing.safe_throw_at(target, thrown_thing.throw_range + extra_throw_range, max(1,thrown_thing.throw_speed + power_throw), src, null, null, null, move_force)
@@ -795,7 +807,6 @@
 	if(hud_used?.spacesuit)
 		hud_used.spacesuit.icon_state = "spacesuit_[cell_state]"
 
-
 /mob/living/carbon/set_health(new_value)
 	. = ..()
 	if(. > hardcrit_threshold)
@@ -956,6 +967,9 @@
 
 	return DEFIB_POSSIBLE
 
+/mob/living/carbon/proc/can_defib_client()
+	return (client || get_ghost(FALSE, TRUE)) && (can_defib() & DEFIB_REVIVABLE_STATES)
+
 /mob/living/carbon/harvest(mob/living/user)
 	if(QDELETED(src))
 		return
@@ -977,7 +991,6 @@
 	for(var/obj/item/bodypart/bodypart_path as anything in bodyparts_paths)
 		var/real_body_part_path = overrides?[initial(bodypart_path.body_zone)] || bodypart_path
 		var/obj/item/bodypart/bodypart_instance = new real_body_part_path()
-		bodypart_instance.set_owner(src)
 		add_bodypart(bodypart_instance)
 
 /// Called when a new hand is added
@@ -994,8 +1007,12 @@
 /mob/living/carbon/proc/add_bodypart(obj/item/bodypart/new_bodypart)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
-	new_bodypart.set_owner(src)
+	new_bodypart.update_owner(src)
+
+	for(var/obj/item/organ/organ in new_bodypart)
+		organ.mob_insert(src)
 
 	switch(new_bodypart.body_part)
 		if(LEG_LEFT, LEG_RIGHT)
@@ -1010,10 +1027,17 @@
 	synchronize_bodytypes()
 
 ///Proc to hook behavior on bodypart removals.  Do not directly call. You're looking for [/obj/item/bodypart/proc/drop_limb()].
-/mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart)
+/mob/living/carbon/proc/remove_bodypart(obj/item/bodypart/old_bodypart, special)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
-	old_bodypart.on_removal()
+	if(special)
+		for(var/obj/item/organ/organ in old_bodypart)
+			organ.bodypart_remove(limb_owner = src, movement_flags = NO_ID_TRANSFER)
+	else
+		for(var/obj/item/organ/organ in old_bodypart)
+			organ.mob_remove(src, special)
+
+	old_bodypart.on_removal(src)
 	bodyparts -= old_bodypart
 
 	switch(old_bodypart.body_part)
@@ -1411,3 +1435,8 @@
 	our_splatter.blood_dna_info = get_blood_dna_list()
 	var/turf/targ = get_ranged_target_turf(src, splatter_direction, splatter_strength)
 	our_splatter.fly_towards(targ, splatter_strength)
+
+/mob/living/carbon/dropItemToGround(obj/item/item, force = FALSE, silent = FALSE, invdrop = TRUE)
+	if(item && ((item in organs) || (item in bodyparts))) //let's not do this, aight?
+		return FALSE
+	return ..()

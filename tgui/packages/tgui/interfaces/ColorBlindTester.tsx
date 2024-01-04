@@ -34,7 +34,7 @@ export const ColorBlindTester = (props) => {
   return (
     <Window title="Color Blindness Testing" width={600} height={515}>
       <Window.Content>
-        <NoticeBox warning>
+        <NoticeBox>
           {UI_WARNINGS.map((warning, index) => (
             <Box key={index}>{warning}</Box>
           ))}
@@ -69,7 +69,8 @@ const ColorBlindCategory = (props: Props) => {
               })
             }
           />
-        }>
+        }
+      >
         {details[category]}
       </Section>
     );
@@ -85,7 +86,8 @@ const ColorBlindCategory = (props: Props) => {
           color="bad"
           onClick={() => act('clear_matrix')}
         />
-      }>
+      }
+    >
       {details[category]}
     </Section>
   );

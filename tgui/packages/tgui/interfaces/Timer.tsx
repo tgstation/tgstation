@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, Section } from '../components';
 import { Window } from '../layouts';
@@ -34,7 +35,8 @@ export const Timer = (props) => {
                 onClick={() => act('time')}
               />
             </>
-          }>
+          }
+        >
           <TimerContent />
         </Section>
       </Window.Content>

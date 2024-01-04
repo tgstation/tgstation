@@ -1,5 +1,14 @@
 import { useBackend, useSharedState } from '../backend';
-import { Box, Button, Dropdown, LabeledList, ProgressBar, Section, Stack, Tabs } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  LabeledList,
+  ProgressBar,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { NtosWindow } from '../layouts';
 
 const getMuleByRef = (mules, ref) => {
@@ -10,6 +19,7 @@ export const NtosRoboControl = (props) => {
   const { act, data } = useBackend();
   const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const { bots, drones, id_owner, droneaccess, dronepingtypes } = data;
+
   return (
     <NtosWindow width={550} height={550}>
       <NtosWindow.Content scrollable>
@@ -27,14 +37,16 @@ export const NtosRoboControl = (props) => {
               icon="robot"
               lineHeight="23px"
               selected={tab_main === 1}
-              onClick={() => setTab_main(1)}>
+              onClick={() => setTab_main(1)}
+            >
               Bots
             </Tabs.Tab>
             <Tabs.Tab
               icon="hammer"
               lineHeight="23px"
               selected={tab_main === 2}
-              onClick={() => setTab_main(2)}>
+              onClick={() => setTab_main(2)}
+            >
               Drones
             </Tabs.Tab>
           </Tabs>
@@ -131,7 +143,8 @@ export const RobotInfo = (props) => {
             />
           </>
         )
-      }>
+      }
+    >
       <Stack>
         <Stack.Item grow={1} basis={0}>
           <LabeledList>
@@ -290,7 +303,8 @@ export const DroneInfo = (props) => {
       title={drone.name}
       style={{
         border: `4px solid ${color}`,
-      }}>
+      }}
+    >
       <Stack>
         <Stack.Item grow={1} basis={0}>
           <LabeledList>

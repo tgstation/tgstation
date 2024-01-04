@@ -50,11 +50,9 @@
 	move_update_air(old_loc)
 
 /obj/machinery/smartfridge/welder_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(welded_down)
 		if(!tool.tool_start_check(user, amount=2))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		user.visible_message(
 			span_notice("[user.name] starts to cut the [name] free from the floor."),
@@ -63,18 +61,18 @@
 		)
 
 		if(!tool.use_tool(src, user, delay=100, volume=100))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		welded_down = FALSE
 		to_chat(user, span_notice("You cut [src] free from the floor."))
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(!anchored)
 		balloon_alert(user, "wrench it first!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=2))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user.name] starts to weld the [name] to the floor."),
@@ -83,20 +81,19 @@
 	)
 
 	if(!tool.use_tool(src, user, delay = 100, volume = 100))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	welded_down = TRUE
 	to_chat(user, span_notice("You weld [src] to the floor."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/welder_act_secondary(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(!(machine_stat & BROKEN))
 		balloon_alert(user, "no repair needed!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if(!tool.tool_start_check(user, amount=1))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	user.visible_message(
 		span_notice("[user] is repairing [src]."),
@@ -106,21 +103,22 @@
 
 	if(tool.use_tool(src, user, delay = 40, volume = 50))
 		if(!(machine_stat & BROKEN))
-			return
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You repair [src]"))
 		atom_integrity = max_integrity
 		set_machine_stat(machine_stat & ~BROKEN)
 		update_icon()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/screwdriver_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		if(panel_open)
 			add_overlay("[initial(icon_state)]-panel")
 		else
 			cut_overlay("[initial(icon_state)]-panel")
 		SStgui.update_uis(src)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/smartfridge/can_be_unfasten_wrench(mob/user, silent)
 	if(welded_down)
@@ -136,21 +134,19 @@
 	air_update_turf(TRUE, anchorvalue)
 
 /obj/machinery/smartfridge/wrench_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		power_change()
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/crowbar_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
-
 	if(default_pry_open(tool, close_after_pry = TRUE))
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	if(welded_down)
 		balloon_alert(user, "unweld first!")
 	else
 		default_deconstruction_crowbar(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(isnull(held_item))
@@ -269,7 +265,7 @@
 			!(weapon.flags_1 & HOLOGRAM_1) && \
 			accept_check(weapon) \
 		)
-			load(weapon)
+			load(weapon, user)
 			user.visible_message(span_notice("[user] adds \the [weapon] to \the [src]."), span_notice("You add \the [weapon] to \the [src]."))
 			SStgui.update_uis(src)
 			if(visible_contents)
@@ -286,7 +282,7 @@
 					!(object.flags_1 & HOLOGRAM_1) && \
 					accept_check(object) \
 				)
-					load(object)
+					load(object, user)
 					loaded++
 			SStgui.update_uis(src)
 
@@ -332,7 +328,7 @@
  * Arguments
  * * [weapon][obj/item] - the item to load. If the item is being held by a mo it will transfer it from hand else directly force move
  */
-/obj/machinery/smartfridge/proc/load(obj/item/weapon)
+/obj/machinery/smartfridge/proc/load(obj/item/weapon, mob/user)
 	if(ismob(weapon.loc))
 		var/mob/owner = weapon.loc
 		if(!owner.transferItemToLoc(weapon, src))
@@ -441,6 +437,8 @@
 	can_atmos_pass = ATMOS_PASS_YES
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
+	/// The reference to the last user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
+	var/datum/weakref/current_user
 
 /obj/machinery/smartfridge/drying_rack/Initialize(mapload)
 	. = ..()
@@ -450,6 +448,10 @@
 
 	//so we don't drop any of the parent smart fridge parts upon deconstruction
 	clear_components()
+
+/obj/machinery/smartfridge/drying_rack/Destroy()
+	current_user = null
+	return ..()
 
 /// We cleared out the components in initialize so we can optimize this
 /obj/machinery/smartfridge/drying_rack/visible_items()
@@ -476,16 +478,25 @@
 	else
 		. += span_info("It's not anchored to the floor. It can be [EXAMINE_HINT("wrenched")] down.")
 	. += span_info("The whole rack can be [EXAMINE_HINT("pried")] apart.")
+
 /obj/machinery/smartfridge/drying_rack/welder_act(mob/living/user, obj/item/tool)
+	return NONE
+
 /obj/machinery/smartfridge/drying_rack/welder_act_secondary(mob/living/user, obj/item/tool)
+	return NONE
+
 /obj/machinery/smartfridge/drying_rack/default_deconstruction_screwdriver()
+	return NONE
+
 /obj/machinery/smartfridge/drying_rack/exchange_parts()
+	return
+
 /obj/machinery/smartfridge/drying_rack/on_deconstruction()
 	new /obj/item/stack/sheet/mineral/wood(drop_location(), 10)
-/obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
-	. = TOOL_ACT_TOOLTYPE_SUCCESS
 
-	default_deconstruction_crowbar(tool, ignore_panel = TRUE)
+/obj/machinery/smartfridge/drying_rack/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool, ignore_panel = TRUE))
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/smartfridge/drying_rack/ui_data(mob/user)
 	. = ..()
@@ -500,7 +511,7 @@
 
 	switch(action)
 		if("Dry")
-			toggle_drying(FALSE)
+			toggle_drying(FALSE, usr)
 			return TRUE
 
 /obj/machinery/smartfridge/drying_rack/powered()
@@ -511,9 +522,13 @@
 	if(!powered())
 		toggle_drying(TRUE)
 
-/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object) //For updating the filled overlay
+/obj/machinery/smartfridge/drying_rack/load(obj/item/dried_object, mob/user) //For updating the filled overlay
 	. = ..()
+	if(!.)
+		return
 	update_appearance()
+	if(drying && user?.mind)
+		current_user = WEAKREF(user.mind)
 
 /obj/machinery/smartfridge/drying_rack/update_overlays()
 	. = ..()
@@ -541,17 +556,20 @@
  * Arguments
  * * forceoff - if TRUE will force the dryer off always
  */
-/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff)
+/obj/machinery/smartfridge/drying_rack/proc/toggle_drying(forceoff, mob/user)
 	if(drying || forceoff)
 		drying = FALSE
+		current_user = FALSE
 		update_use_power(IDLE_POWER_USE)
 	else
 		drying = TRUE
+		if(user?.mind)
+			current_user = WEAKREF(user.mind)
 		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 
 /obj/machinery/smartfridge/drying_rack/proc/rack_dry(obj/item/target)
-	SEND_SIGNAL(target, COMSIG_ITEM_DRIED)
+	SEND_SIGNAL(target, COMSIG_ITEM_DRIED, current_user)
 
 /obj/machinery/smartfridge/drying_rack/emp_act(severity)
 	. = ..()
@@ -642,17 +660,17 @@
 /obj/machinery/smartfridge/organ/accept_check(obj/item/O)
 	return (isorgan(O) || isbodypart(O))
 
-/obj/machinery/smartfridge/organ/load(obj/item/O)
+/obj/machinery/smartfridge/organ/load(obj/item/item, mob/user)
 	. = ..()
 	if(!.) //if the item loads, clear can_decompose
 		return
 
-	if(isorgan(O))
-		var/obj/item/organ/organ = O
+	if(isorgan(item))
+		var/obj/item/organ/organ = item
 		organ.organ_flags |= ORGAN_FROZEN
 
-	if(isbodypart(O))
-		var/obj/item/bodypart/bodypart = O
+	if(isbodypart(item))
+		var/obj/item/bodypart/bodypart = item
 		for(var/obj/item/organ/stored in bodypart.contents)
 			stored.organ_flags |= ORGAN_FROZEN
 

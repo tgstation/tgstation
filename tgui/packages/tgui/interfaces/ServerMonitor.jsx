@@ -1,10 +1,23 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Input, Button, Table, LabeledList, Flex, Divider, NoticeBox } from '../components';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Button,
+  Divider,
+  Flex,
+  Input,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 const PacketInfo = (props) => {
   const { act, data } = useBackend();
   const { packet } = props;
+
   return (
     <Stack.Item>
       <Flex justify="space-between">
@@ -45,7 +58,8 @@ const ServerScreen = (props) => {
               icon="home"
               onClick={() => act('return_home')}
             />
-          }>
+          }
+        >
           <LabeledList>
             <LabeledList.Item label="Network">{network}</LabeledList.Item>
             <LabeledList.Item label="Server">{server.name}</LabeledList.Item>
@@ -73,7 +87,7 @@ const ServerScreen = (props) => {
 const MainScreen = (props) => {
   const { act, data } = useBackend();
   const { servers, network } = data;
-  const [networkId, setNetworkId] = useLocalState('networkId', network);
+  const [networkId, setNetworkId] = useState(network);
 
   return (
     <Stack fill vertical>
@@ -81,7 +95,7 @@ const MainScreen = (props) => {
         <Section>
           <Input
             value={networkId}
-            onInput={(e, value) => setNetworkId(value)}
+            onChange={(e, value) => setNetworkId(value)}
             placeholder="Network ID"
           />
           <Button
@@ -103,7 +117,8 @@ const MainScreen = (props) => {
               disabled={servers.length === 0}
               onClick={() => act('clear_buffer')}
             />
-          }>
+          }
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Address</Table.Cell>

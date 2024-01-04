@@ -1,6 +1,6 @@
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { Box, Button, Section, Flex, Stack } from '../components';
+import { Box, Button, Flex, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type CTFPanelData =
@@ -49,7 +49,7 @@ export const CTFPanel = (props) => {
                   <Button
                     content="Jump"
                     fontSize="18px"
-                    fluid={1}
+                    fluid
                     color={team.color.toLowerCase()}
                     onClick={() =>
                       act('jump', {
@@ -61,7 +61,7 @@ export const CTFPanel = (props) => {
                   <Button
                     content="Join"
                     fontSize="18px"
-                    fluid={1}
+                    fluid
                     color={team.color.toLowerCase()}
                     onClick={() =>
                       act('join', {
@@ -95,7 +95,8 @@ export const CTFPanel = (props) => {
                   } else {
                     act('vote');
                   }
-                }}>
+                }}
+              >
                 {data.voted ? 'Unvote for CTF' : 'Vote for CTF'}
               </Button>
             </Stack.Item>

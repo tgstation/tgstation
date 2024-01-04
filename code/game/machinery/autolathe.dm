@@ -230,11 +230,11 @@
 
 /obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/autolathe/screwdriver_act_secondary(mob/living/user, obj/item/tool)
 	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(user.combat_mode) //so we can hit the machine

@@ -21,16 +21,22 @@ $bg-map: colors.$bg-map !default;
   $luminance: luminance($color);
   $text-color: if($luminance > 0.4, rgba(0, 0, 0, 1), rgba(255, 255, 255, 1));
 
-  transition: color 50ms, background-color 50ms;
+  transition:
+    color 50ms,
+    background-color 50ms;
   background-color: $color;
   color: $text-color;
 
   &:hover {
-    transition: color 0ms, background-color 0ms;
+    transition:
+      color 0ms,
+      background-color 0ms;
   }
 
   &:focus {
-    transition: color 100ms, background-color 100ms;
+    transition:
+      color 100ms,
+      background-color 100ms;
   }
 
   &:hover,
@@ -69,6 +75,12 @@ $bg-map: colors.$bg-map !default;
   }
 }
 
+.Button--dropdown {
+  line-height: base.em(16px);
+  height: base.em(22px);
+  padding: 0.2rem 0.5rem;
+}
+
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
   .fa,
@@ -88,8 +100,8 @@ $bg-map: colors.$bg-map !default;
 }
 
 .Button--ellipsis {
-  overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .Button--fluid {
@@ -163,4 +175,8 @@ $bg-map: colors.$bg-map !default;
 .Button__content {
   display: block;
   align-self: stretch;
+}
+
+.Button__textMargin {
+  margin-left: 0.4rem;
 }

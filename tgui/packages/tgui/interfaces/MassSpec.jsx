@@ -1,6 +1,15 @@
 import { round } from 'common/math';
+
 import { useBackend } from '../backend';
-import { Box, Button, Dimmer, Icon, Section, Slider, Table } from '../components';
+import {
+  Box,
+  Button,
+  Dimmer,
+  Icon,
+  Section,
+  Slider,
+  Table,
+} from '../components';
 import { Window } from '../layouts';
 
 export const MassSpec = (props) => {
@@ -51,7 +60,8 @@ export const MassSpec = (props) => {
               tooltipPosition="left"
               onClick={() => act('activate')}
             />
-          }>
+          }
+        >
           {(beaker1Contents.length && (
             <MassSpectroscopy
               lowerRange={lowerRange}
@@ -83,7 +93,8 @@ export const MassSpec = (props) => {
                 />
               </>
             )
-          }>
+          }
+        >
           <BeakerMassProfile loaded={!!beaker1} beaker={beaker1Contents} />
           {!!beaker1Contents.length && (
             <Box>{'Eta of selection: ' + round(eta) + ' seconds'}</Box>
@@ -107,7 +118,8 @@ export const MassSpec = (props) => {
                 />
               </>
             )
-          }>
+          }
+        >
           <BeakerMassProfile
             loaded={!!beaker2}
             beaker={beaker2Contents}
@@ -153,22 +165,26 @@ const BeakerMassProfile = (props) => {
               <Table.Row key={reagent.name}>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? 'green' : 'default'}>
+                  color={reagent.selected ? 'green' : 'default'}
+                >
                   {reagent.name}
                 </Table.Cell>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? 'green' : 'default'}>
+                  color={reagent.selected ? 'green' : 'default'}
+                >
                   {reagent.volume}
                 </Table.Cell>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? 'green' : 'default'}>
+                  color={reagent.selected ? 'green' : 'default'}
+                >
                   {reagent.mass}
                 </Table.Cell>
                 <Table.Cell
                   collapsing
-                  color={reagent.selected ? 'green' : 'default'}>
+                  color={reagent.selected ? 'green' : 'default'}
+                >
                   {`${reagent.purity}%`}
                 </Table.Cell>
                 <Table.Cell collapsing color={reagent.color}>
@@ -209,7 +225,8 @@ const MassSpectroscopy = (props) => {
             text-anchor="middle"
             fill="white"
             font-size="16"
-            transform="translate(0,0) scale(0.8 0.8)">
+            transform="translate(0,0) scale(0.8 0.8)"
+          >
             {/* x axis*/}
             <tspan x="250" y="318" font-weight="bold" font-size="1.4em">
               Mass (g)
@@ -256,7 +273,8 @@ const MassSpectroscopy = (props) => {
             text-anchor="middle"
             transform="translate(430,100) rotate(90) scale(0.8 0.8)"
             fill="white"
-            font-size="16">
+            font-size="16"
+          >
             <tspan font-weight="bold" font-size="1.4em">
               Absorbance (AU)
             </tspan>
@@ -272,7 +290,7 @@ const MassSpectroscopy = (props) => {
                   ((peak.mass + 10) / graphUpperRange) * 500
                 },265 `}
                 opacity="0.6"
-                style={`fill:${peak.color}`}
+                style={{ fill: peak.color }}
               />
             ))}
             <polygon
@@ -282,7 +300,7 @@ const MassSpectroscopy = (props) => {
                 (upperRange / deltaRange) * 500
               },265`}
               opacity="0.2"
-              style={`fill:blue`}
+              style={{ fill: 'blue' }}
             />
             <line
               x1={0}
@@ -319,7 +337,8 @@ const MassSpectroscopy = (props) => {
             act('leftSlider', {
               value: value,
             })
-          }>
+          }
+        >
           {' '}
         </Slider>
         <Slider
@@ -337,7 +356,8 @@ const MassSpectroscopy = (props) => {
             act('rightSlider', {
               value: value,
             })
-          }>
+          }
+        >
           {' '}
         </Slider>
         <Box>
@@ -358,7 +378,8 @@ const MassSpectroscopy = (props) => {
               act('centerSlider', {
                 value: value,
               })
-            }>
+            }
+          >
             {' '}
           </Slider>
         </Box>

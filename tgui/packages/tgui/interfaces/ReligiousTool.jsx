@@ -1,17 +1,28 @@
 import { useBackend, useSharedState } from '../backend';
-import { BlockQuote, Box, Button, Collapsible, Dimmer, Icon, Section, Stack, Tabs } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Collapsible,
+  Dimmer,
+  Icon,
+  Section,
+  Stack,
+  Tabs,
+} from '../components';
 import { Window } from '../layouts';
 
 const ALIGNMENT2COLOR = {
-  'good': 'yellow',
-  'neutral': 'white',
-  'evil': 'red',
+  good: 'yellow',
+  neutral: 'white',
+  evil: 'red',
 };
 
 export const ReligiousTool = (props) => {
   const { act, data } = useBackend();
   const [tab, setTab] = useSharedState('tab', 1);
   const { sects, alignment, toolname } = data;
+
   return (
     <Window title={toolname} width={560} height={500}>
       <Window.Content scrollable>
@@ -104,7 +115,8 @@ const SectSelectTab = (props) => {
                   <Stack.Item italic>{'"' + sect.quote + '"'}</Stack.Item>
                 </Stack>
               }
-              color="transparent">
+              color="transparent"
+            >
               <Stack.Item key={sect}>
                 {sect.desc}
                 <br />
@@ -117,7 +129,8 @@ const SectSelectTab = (props) => {
                     act('sect_select', {
                       path: sect.path,
                     })
-                  }>
+                  }
+                >
                   Select {sect.name}
                 </Button>
               </Stack.Item>
@@ -169,10 +182,12 @@ const RiteTab = (props) => {
                     act('perform_rite', {
                       path: rite.path,
                     })
-                  }>
+                  }
+                >
                   Invoke
                 </Button>
-              }>
+              }
+            >
               <Box color={favor < rite.favor ? 'red' : 'grey'} mb={0.5}>
                 <Icon name="star" color={ALIGNMENT2COLOR[alignment]} /> Costs{' '}
                 {rite.favor} favor.

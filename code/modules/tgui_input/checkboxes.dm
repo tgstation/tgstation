@@ -70,7 +70,7 @@
 		start_time = world.time
 		QDEL_IN(src, timeout)
 
-/datum/tgui_checkbox_input/Destroy(force, ...)
+/datum/tgui_checkbox_input/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
 	QDEL_NULL(items)

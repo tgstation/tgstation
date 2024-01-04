@@ -286,6 +286,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 			RegisterSignal(holo_effect_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 		if(islist(holo_effect_product))
 			for(var/atom/atom_product as anything in holo_effect_product)
+				spawned += atom_product
 				RegisterSignal(atom_product, COMSIG_QDELETING, PROC_REF(remove_from_holo_lists))
 		return
 
@@ -294,12 +295,12 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 		holo_object.resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 		if(isstructure(holo_object))
-			holo_object.flags_1 |= NODECONSTRUCT_1
+			holo_object.obj_flags |= NO_DECONSTRUCTION
 			return
 
 		if(ismachinery(holo_object))
 			var/obj/machinery/holo_machine = holo_object
-			holo_machine.flags_1 |= NODECONSTRUCT_1
+			holo_machine.obj_flags |= NO_DECONSTRUCTION
 			holo_machine.power_change()
 
 			if(istype(holo_machine, /obj/machinery/button))
@@ -325,6 +326,8 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	UnregisterSignal(holo_atom, COMSIG_QDELETING)
 	var/turf/target_turf = get_turf(holo_atom)
 	for(var/atom/movable/atom_contents as anything in holo_atom) //make sure that things inside of a holoitem are moved outside before destroying it
+		if(atom_contents.flags_1 & HOLOGRAM_1) //hologram in hologram is fine
+			continue
 		atom_contents.forceMove(target_turf)
 
 	if(istype(holo_atom, /obj/item/clothing/under))

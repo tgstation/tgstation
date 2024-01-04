@@ -1,7 +1,16 @@
 import { classes } from 'common/react';
 import { capitalizeAll } from 'common/string';
 import { useBackend, useLocalState } from 'tgui/backend';
-import { Box, Button, Icon, LabeledList, NoticeBox, Section, Stack, Table } from 'tgui/components';
+import {
+  Box,
+  Button,
+  Icon,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+} from 'tgui/components';
 import { Window } from 'tgui/layouts';
 
 type VendingData = {
@@ -51,11 +60,13 @@ type UserData = {
 
 type StockItem = {
   name: string;
+  path: string;
   amount: number;
   colorable: boolean;
 };
 
 type CustomInput = {
+  path: string;
   name: string;
   price: number;
   img: string;
@@ -74,7 +85,7 @@ export const Vending = (props) => {
 
   const [selectedCategory, setSelectedCategory] = useLocalState<string>(
     'selectedCategory',
-    Object.keys(data.categories)[0]
+    Object.keys(data.categories)[0],
   );
 
   let inventory: (ProductRecord | CustomInput)[];
@@ -102,7 +113,7 @@ export const Vending = (props) => {
           return false;
         }
       });
-    })
+    }),
   );
 
   return (
@@ -197,7 +208,8 @@ const ProductDisplay = (props: {
             <Icon name={displayed_currency_icon} color="gold" />
           </Box>
         )
-      }>
+      }
+    >
       <Table>
         {inventory
           .filter((product) => {
@@ -209,10 +221,10 @@ const ProductDisplay = (props: {
           })
           .map((product) => (
             <VendingRow
-              key={product.name}
+              key={product.path}
               custom={custom}
               product={product}
-              productStock={stock[product.name]}
+              productStock={stock[product.path]}
             />
           ))}
       </Table>
@@ -275,16 +287,14 @@ const ProductImage = (props) => {
     <img
       src={`data:image/jpeg;base64,${product.img}`}
       style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   ) : (
     <span
       className={classes(['vending32x32', product.path])}
       style={{
-        'vertical-align': 'middle',
-        'horizontal-align': 'middle',
+        verticalAlign: 'middle',
       }}
     />
   );
@@ -317,7 +327,8 @@ const ProductStock = (props) => {
         (remaining <= 0 && 'bad') ||
         (!custom && remaining <= product.max_amount / 2 && 'average') ||
         'good'
-      }>
+      }
+    >
       {remaining} left
     </Box>
   );
@@ -341,9 +352,10 @@ const ProductButton = (props) => {
       disabled={disabled}
       onClick={() =>
         act('dispense', {
-          'item': product.name,
+          item: product.path,
         })
-      }>
+      }
+    >
       {customPrice}
       {!access && displayed_currency_name}
     </Button>
@@ -353,9 +365,10 @@ const ProductButton = (props) => {
       disabled={disabled}
       onClick={() =>
         act('vend', {
-          'ref': product.ref,
+          ref: product.ref,
         })
-      }>
+      }
+    >
       {standardPrice}
       {!free && displayed_currency_name}
     </Button>
@@ -363,8 +376,8 @@ const ProductButton = (props) => {
 };
 
 const CATEGORY_COLORS = {
-  'Contraband': 'red',
-  'Premium': 'yellow',
+  Contraband: 'red',
+  Premium: 'yellow',
 };
 
 const CategorySelector = (props: {
@@ -376,20 +389,17 @@ const CategorySelector = (props: {
 
   return (
     <Section>
-      <Stack grow>
-        <Stack.Item>
-          {Object.entries(categories).map(([name, category]) => (
-            <Button
-              key={name}
-              selected={name === selectedCategory}
-              color={CATEGORY_COLORS[name]}
-              icon={category.icon}
-              onClick={() => onSelect(name)}>
-              {name}
-            </Button>
-          ))}
-        </Stack.Item>
-      </Stack>
+      {Object.entries(categories).map(([name, category]) => (
+        <Button
+          key={name}
+          selected={name === selectedCategory}
+          color={CATEGORY_COLORS[name]}
+          icon={category.icon}
+          onClick={() => onSelect(name)}
+        >
+          {name}
+        </Button>
+      ))}
     </Section>
   );
 };

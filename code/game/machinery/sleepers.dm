@@ -147,7 +147,7 @@
 	return FALSE
 
 /obj/machinery/sleeper/default_pry_open(obj/item/I) //wew
-	. = !(state_open || panel_open || (flags_1 & NODECONSTRUCT_1)) && I.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open || (obj_flags & NO_DECONSTRUCTION)) && I.tool_behaviour == TOOL_CROWBAR
 	if(.)
 		I.play_tool_sound(src, 50)
 		visible_message(span_notice("[usr] pries open [src]."), span_notice("You pry open [src]."))
@@ -178,7 +178,6 @@
 	. += span_notice("Alt-click [src] to [state_open ? "close" : "open"] it.")
 
 /obj/machinery/sleeper/process()
-	..()
 	use_power(idle_power_usage)
 
 /obj/machinery/sleeper/nap_violation(mob/violator)

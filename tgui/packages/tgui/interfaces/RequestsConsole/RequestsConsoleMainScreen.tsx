@@ -1,14 +1,15 @@
 import { useBackend, useSharedState } from '../../backend';
 import { Icon, Stack, Tabs } from '../../components';
-import { RequestsData, RequestTabs } from './types';
+import { AnnouncementTab } from './AnnouncementTab';
 import { MessageViewTab } from './MessageViewTab';
 import { MessageWriteTab } from './MessageWriteTab';
-import { AnnouncementTab } from './AnnouncementTab';
+import { RequestsData, RequestTabs } from './types';
 
 export const RequestMainScreen = (props) => {
   const { act, data } = useBackend<RequestsData>();
   const { can_send_announcements } = data;
-  const [tab, setTab] = useSharedState('tab', 1);
+  const [tab, setTab] = useSharedState('tab', RequestTabs.MESSAGE_VIEW);
+
   return (
     <Stack.Item grow>
       <Stack vertical fill>
@@ -20,7 +21,8 @@ export const RequestMainScreen = (props) => {
                 setTab(RequestTabs.MESSAGE_VIEW);
                 act('clear_message_status');
                 act('clear_authentication');
-              }}>
+              }}
+            >
               View Messages <Icon name={'envelope-open'} />
             </Tabs.Tab>
             <Tabs.Tab
@@ -32,7 +34,8 @@ export const RequestMainScreen = (props) => {
                   act('clear_authentication');
                 }
                 setTab(RequestTabs.MESSAGE_WRITE);
-              }}>
+              }}
+            >
               Write Message <Icon name="pencil" />
             </Tabs.Tab>
             {!!can_send_announcements && (
@@ -45,7 +48,8 @@ export const RequestMainScreen = (props) => {
                     act('clear_authentication');
                   }
                   setTab(RequestTabs.ANNOUNCE);
-                }}>
+                }}
+              >
                 Make Announcement <Icon name="bullhorn" />
               </Tabs.Tab>
             )}

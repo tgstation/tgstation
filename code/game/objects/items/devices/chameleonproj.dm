@@ -1,6 +1,6 @@
 /obj/item/chameleon
 	name = "chameleon projector"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/syndie_gadget.dmi'
 	icon_state = "shield0"
 	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = NOBLUDGEON
@@ -138,9 +138,6 @@
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_animal(mob/user, list/modifiers)
-	master.disrupt()
-
-/obj/effect/dummy/chameleon/attack_slime(mob/user, list/modifiers)
 	master.disrupt()
 
 /obj/effect/dummy/chameleon/attack_alien(mob/user, list/modifiers)

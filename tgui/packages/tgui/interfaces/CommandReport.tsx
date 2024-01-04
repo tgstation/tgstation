@@ -1,5 +1,13 @@
 import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Dropdown, Input, Section, Stack, TextArea } from '../components';
+import {
+  Box,
+  Button,
+  Dropdown,
+  Input,
+  Section,
+  Stack,
+  TextArea,
+} from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -22,7 +30,8 @@ export const CommandReport = () => {
       title="Create Command Report"
       width={325}
       height={685}
-      theme="admin">
+      theme="admin"
+    >
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -47,17 +56,19 @@ const CentComName = (props) => {
   const { act, data } = useBackend<Data>();
   const { command_name, command_name_presets = [], custom_name } = data;
 
+  const sendName = (value) => {
+    act('update_command_name', {
+      updated_name: value,
+    });
+  };
+
   return (
     <Section title="Set Central Command name" textAlign="center">
       <Dropdown
         width="100%"
         selected={command_name}
         options={command_name_presets}
-        onSelected={(value) =>
-          act('update_command_name', {
-            updated_name: value,
-          })
-        }
+        onSelected={(value) => sendName(value)}
       />
       {!!custom_name && (
         <Input
@@ -65,11 +76,7 @@ const CentComName = (props) => {
           mt={1}
           value={command_name}
           placeholder={command_name}
-          onChange={(_, value) =>
-            act('update_command_name', {
-              updated_name: value,
-            })
-          }
+          onChange={(_, value) => sendName(value)}
         />
       )}
     </Section>
@@ -147,7 +154,7 @@ const ReportText = (props) => {
   const { announce_contents, print_report, command_report_content } = data;
   const [commandReport, setCommandReport] = useLocalState<string>(
     'textArea',
-    command_report_content
+    command_report_content,
   );
 
   return (
@@ -155,27 +162,29 @@ const ReportText = (props) => {
       <TextArea
         height="200px"
         mb={1}
-        onInput={(_, value) => setCommandReport(value)}
+        onChange={(_, value) => setCommandReport(value)}
         value={commandReport}
       />
       <Stack vertical>
         <Stack.Item>
           <Button.Checkbox
             fluid
-            checked={announce_contents}
-            onClick={() => act('toggle_announce')}>
+            checked={!!announce_contents}
+            onClick={() => act('toggle_announce')}
+          >
             Announce Contents
           </Button.Checkbox>
           <Button.Checkbox
             fluid
-            checked={print_report || !announce_contents}
+            checked={!!print_report || !announce_contents}
             disabled={!announce_contents}
             onClick={() => act('toggle_printing')}
             tooltip={
               !announce_contents &&
               "Printing the report is required since we aren't announcing its contents."
             }
-            tooltipPosition="top">
+            tooltipPosition="top"
+          >
             Print Report
           </Button.Checkbox>
         </Stack.Item>

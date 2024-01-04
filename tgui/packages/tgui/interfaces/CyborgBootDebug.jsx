@@ -1,4 +1,5 @@
 import { multiline } from 'common/string';
+
 import { useBackend } from '../backend';
 import { Button, Input, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
@@ -49,7 +50,8 @@ export const CyborgBootDebug = (props) => {
                   tooltip={TOOLTIP_NAME}
                   tooltipPosition="left"
                 />
-              }>
+              }
+            >
               <Input
                 fluid
                 value={designation || 'Default Cyborg'}
@@ -68,7 +70,8 @@ export const CyborgBootDebug = (props) => {
                   tooltip={TOOLTIP_LOCOMOTION}
                   tooltipPosition="left"
                 />
-              }>
+              }
+            >
               <Button
                 icon={locomotion ? 'unlock' : 'lock'}
                 content={locomotion ? 'Free' : 'Restricted'}
@@ -84,7 +87,8 @@ export const CyborgBootDebug = (props) => {
                   tooltip={TOOLTIP_PANEL}
                   tooltipPosition="left"
                 />
-              }>
+              }
+            >
               <Button
                 icon={panel ? 'lock' : 'unlock'}
                 content={panel ? 'Locked' : 'Unlocked'}
@@ -103,7 +107,8 @@ export const CyborgBootDebug = (props) => {
                   tooltip={TOOLTIP_AISYNC}
                   tooltipPosition="left"
                 />
-              }>
+              }
+            >
               <Button
                 icon={aisync ? 'unlock' : 'lock'}
                 content={aisync ? 'Open' : 'Closed'}
@@ -118,7 +123,8 @@ export const CyborgBootDebug = (props) => {
                   tooltip={TOOLTIP_AI}
                   tooltipPosition="left"
                 />
-              }>
+              }
+            >
               <Button
                 icon={!aisync ? 'times' : master ? 'edit' : 'sync'}
                 content={!aisync ? 'None' : master || 'Automatic'}
@@ -135,7 +141,8 @@ export const CyborgBootDebug = (props) => {
                   tooltip={TOOLTIP_LAWSYNC}
                   tooltipPosition="top-start"
                 />
-              }>
+              }
+            >
               <Button
                 icon={!aisync ? 'lock' : lawsync ? 'unlock' : 'lock'}
                 content={!aisync ? 'Closed' : lawsync ? 'Open' : 'Closed'}

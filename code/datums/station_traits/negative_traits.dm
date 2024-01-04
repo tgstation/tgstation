@@ -17,6 +17,30 @@
 /datum/station_trait/distant_supply_lines/on_round_start()
 	SSeconomy.pack_price_modifier *= 1.2
 
+///A negative trait that stops mail from arriving (or the inverse if on holiday). It also enables a specific shuttle loan situation.
+/datum/station_trait/mail_blocked
+	name = "Postal workers strike"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 2
+	show_in_report = TRUE
+	report_message = "Due to an ongoing strike announced by the postal workers union, mail won't be delivered this shift."
+
+/datum/station_trait/mail_blocked/on_round_start()
+	//This is either a holiday or sunday... well then, let's flip the situation.
+	if(SSeconomy.mail_blocked)
+		name = "Postal system overtime"
+		report_message = "Despite being a day off, the postal system is working overtime today. Mail will be delivered this shift."
+	else
+		var/datum/round_event_control/shuttle_loan/our_event = locate() in SSevents.control
+		our_event.unavailable_situations -= /datum/shuttle_loan_situation/mail_strike
+	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
+
+/datum/station_trait/mail_blocked/hangover/revert()
+	var/datum/round_event_control/shuttle_loan/our_event = locate() in SSevents.control
+	our_event.unavailable_situations |= /datum/shuttle_loan_situation/mail_strike
+	SSeconomy.mail_blocked = !SSeconomy.mail_blocked
+	return ..()
+
 ///A negative trait that reduces the amount of products available from vending machines throughout the station.
 /datum/station_trait/vending_shortage
 	name = "Vending products shortage"
@@ -123,7 +147,7 @@
 
 /datum/station_trait/overflow_job_bureaucracy/proc/set_overflow_job_override(datum/source)
 	SIGNAL_HANDLER
-	var/datum/job/picked_job = pick(SSjob.joinable_occupations)
+	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
 	chosen_job_name = lowertext(picked_job.title) // like Chief Engineers vs like chief engineers
 	SSjob.set_overflow_role(picked_job.type)
 
@@ -156,7 +180,7 @@
 /datum/station_trait/bot_languages/on_round_start()
 	. = ..()
 	// All bots that exist round start on station Z OR on the escape shuttle have their set language randomized.
-	for(var/mob/living/simple_animal/bot/found_bot as anything in GLOB.bots_list)
+	for(var/mob/living/found_bot as anything in GLOB.bots_list)
 		found_bot.randomize_language_if_on_station()
 
 /datum/station_trait/revenge_of_pun_pun
@@ -254,7 +278,7 @@
 	name = "Random Event Modifier"
 	report_message = "A random event has been modified this shift! Someone forgot to set this!"
 	show_in_report = TRUE
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/random_event_weight_modifier
 	weight = 0
 
 	/// The path to the round_event_control that we modify.
@@ -277,7 +301,6 @@
 	name = "Ionic Stormfront"
 	report_message = "An ionic stormfront is passing over your station's system. Expect an increased likelihood of ion storms afflicting your station's silicon units."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 3
 	event_control_path = /datum/round_event_control/ion_storm
 	weight_multiplier = 2
@@ -286,7 +309,6 @@
 	name = "Radiation Stormfront"
 	report_message = "A radioactive stormfront is passing through your station's system. Expect an increased likelihood of radiation storms passing over your station, as well the potential for multiple radiation storms to occur during your shift."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 2
 	event_control_path = /datum/round_event_control/radiation_storm
 	weight_multiplier = 1.5
@@ -296,7 +318,6 @@
 	name = "Dust Stormfront"
 	report_message = "The space around your station is clouded by heavy pockets of space dust. Expect an increased likelyhood of space dust storms damaging the station hull."
 	trait_type = STATION_TRAIT_NEGATIVE
-	trait_flags = STATION_TRAIT_MAP_UNRESTRICTED
 	weight = 2
 	event_control_path = /datum/round_event_control/meteor_wave/dust_storm
 	weight_multiplier = 2
@@ -424,7 +445,7 @@
 ///Station traits that influence the space background and apply some unique effects!
 /datum/station_trait/nebula
 	name = "Nebula"
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/nebula
 	weight = 0
 
 	show_in_report = TRUE
@@ -445,7 +466,7 @@
 
 ///Station nebula that incur some sort of effect if no shielding is created
 /datum/station_trait/nebula/hostile
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/nebula/hostile
 	trait_processes = TRUE
 
 	///Intensity of the nebula
@@ -663,7 +684,7 @@
 
 ///Starts a storm on roundstart
 /datum/station_trait/storm
-	trait_flags = STATION_TRAIT_ABSTRACT
+	abstract_type = /datum/station_trait/storm
 	var/datum/weather/storm_type
 
 /datum/station_trait/storm/on_round_start()

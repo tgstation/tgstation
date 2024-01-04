@@ -365,7 +365,7 @@
 /// Arena spawnpoint
 /obj/machinery/arena_spawn
 	name = "Arena Spawnpoint"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/machines/beacon.dmi'
 	icon_state = "syndbeacon"
 	resistance_flags = INDESTRUCTIBLE
 	/// In case we have multiple arena controllers at once.

@@ -1,6 +1,7 @@
 import { sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
-import { Box, Button, Section, Table, Icon } from '../components';
+import { Box, Button, Icon, Section, Table } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 
@@ -125,7 +126,7 @@ const CrewTableEntry = (props) => {
   } = sensor_data;
 
   return (
-    <Table.Row>
+    <Table.Row className="candystripe">
       <Table.Cell bold={jobIsHead(ijob)} color={jobToColor(ijob)}>
         {name}
         {assignment !== undefined ? ` (${assignment})` : ''}
@@ -139,7 +140,7 @@ const CrewTableEntry = (props) => {
               toxdam,
               burndam,
               brutedam,
-              HEALTH_COLOR_BY_LEVEL
+              HEALTH_COLOR_BY_LEVEL,
             )}
             size={1}
           />

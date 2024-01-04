@@ -1,7 +1,7 @@
 /obj/item/slime_scanner
 	name = "slime scanner"
 	desc = "A device that analyzes a slime's internal composition and measures its stats."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "slime_scanner"
 	inhand_icon_state = "analyzer"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
@@ -13,23 +13,26 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.30, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.20)
 
-/obj/item/slime_scanner/attack(mob/living/living_mob, mob/living/user)
-	if(user.stat || !user.can_read(src) || user.is_blind())
-		return
-	if (!isslime(living_mob))
+/obj/item/slime_scanner/interact_with_atom(atom/interacting_with, mob/living/user)
+	if(!isliving(interacting_with))
+		return NONE
+	if(!user.can_read(src) || user.is_blind())
+		return ITEM_INTERACT_BLOCKING
+	if (!isslime(interacting_with))
 		to_chat(user, span_warning("This device can only scan slimes!"))
-		return
-	var/mob/living/simple_animal/slime/scanned_slime = living_mob
+		return ITEM_INTERACT_BLOCKING
+	var/mob/living/simple_animal/slime/scanned_slime = interacting_with
 	slime_scan(scanned_slime, user)
+	return ITEM_INTERACT_SUCCESS
 
 /proc/slime_scan(mob/living/simple_animal/slime/scanned_slime, mob/living/user)
 	var/to_render = "<b>Slime scan results:</b>\
-					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.is_adult ? "adult" : "baby"] slime")]\
-					\nNutrition: [scanned_slime.nutrition]/[scanned_slime.get_max_nutrition()]"
+					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.life_stage] slime")]\
+					\nNutrition: [scanned_slime.nutrition]/[scanned_slime.max_nutrition]"
 
-	if (scanned_slime.nutrition < scanned_slime.get_starve_nutrition())
+	if (scanned_slime.nutrition < scanned_slime.starve_nutrition)
 		to_render += "\n[span_warning("Warning: slime is starving!")]"
-	else if (scanned_slime.nutrition < scanned_slime.get_hunger_nutrition())
+	else if (scanned_slime.nutrition < scanned_slime.hunger_nutrition)
 		to_render += "\n[span_warning("Warning: slime is hungry")]"
 
 	to_render += "\nElectric charge strength: [scanned_slime.powerlevel]\nHealth: [round(scanned_slime.health/scanned_slime.maxHealth,0.01)*100]%"

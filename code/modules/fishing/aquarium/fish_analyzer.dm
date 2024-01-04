@@ -1,7 +1,7 @@
 ///An item that can be used to gather information on the fish, such as but not limited to: health, hunger and traits.
 /obj/item/fish_analyzer
 	name = "fish analyzer"
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "fish_analyzer_map"
 	base_icon_state = "fish_analyzer"
 	inhand_icon_state = "fish_analyzer"

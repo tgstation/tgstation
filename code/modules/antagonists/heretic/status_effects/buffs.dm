@@ -237,6 +237,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(create_blade)), blade_recharge_time)
 
+
 /datum/status_effect/caretaker_refuge
 	id = "Caretaker’s Last Refuge"
 	status_type = STATUS_EFFECT_REFRESH
@@ -292,3 +293,22 @@
 /datum/status_effect/caretaker_refuge/proc/prevent_cuff(datum/source, mob/attemptee)
 	SIGNAL_HANDLER
 	return COMSIG_CARBON_CUFF_PREVENT
+
+// Path Of Moon status effect which hides the identity of the heretic
+/datum/status_effect/moon_grasp_hide
+	id = "Moon Grasp Hide Identity"
+	status_type = STATUS_EFFECT_REFRESH
+	duration = 15 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/moon_grasp_hide
+
+/datum/status_effect/moon_grasp_hide/on_apply()
+	owner.add_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+	return TRUE
+
+/datum/status_effect/moon_grasp_hide/on_remove()
+	owner.remove_traits(list(TRAIT_UNKNOWN, TRAIT_SILENT_FOOTSTEPS), id)
+
+/atom/movable/screen/alert/status_effect/moon_grasp_hide
+	name = "Blessing of The Moon"
+	desc = "The Moon clouds their vision, as the sun always has yours."
+	icon_state = "moon_hide"

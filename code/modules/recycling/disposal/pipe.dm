@@ -171,7 +171,7 @@
 
 // called when pipe is cut with welder
 /obj/structure/disposalpipe/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		if(disassembled)
 			if(spawn_pipe)
 				var/obj/structure/disposalconstruct/construct = stored

@@ -19,15 +19,24 @@ handles linking back and forth.
 	var/allow_standalone
 	///Local size of container when silo = null
 	var/local_size = INFINITY
-	///Flags used when converting inserted materials into their component materials.
+	///Flags used for the local material container(exceptions for item insert & intent flags)
 	var/mat_container_flags = NONE
+	///List of signals to hook onto the local container
+	var/list/mat_container_signals
 
-/datum/component/remote_materials/Initialize(mapload, allow_standalone = TRUE, force_connect = FALSE, mat_container_flags = NONE)
+/datum/component/remote_materials/Initialize(
+	mapload,
+	allow_standalone = TRUE,
+	force_connect = FALSE,
+	mat_container_flags = NONE,
+	list/mat_container_signals = null
+)
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.allow_standalone = allow_standalone
 	src.mat_container_flags = mat_container_flags
+	src.mat_container_signals = mat_container_signals
 
 	RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL), PROC_REF(OnMultitool))
 
@@ -35,7 +44,8 @@ handles linking back and forth.
 	var/connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
 		connect_to_silo = TRUE
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
+		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 
 	if(mapload) // wait for silo to initialize during mapload
 		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
@@ -50,6 +60,8 @@ handles linking back and forth.
  * only if allow_standalone = TRUE, else you a null mat_container
  */
 /datum/component/remote_materials/proc/_PrepareStorage(connect_to_silo)
+	PRIVATE_PROC(TRUE)
+
 	if (connect_to_silo)
 		silo = GLOB.ore_silo_default
 		if (silo)
@@ -68,6 +80,8 @@ handles linking back and forth.
 	return ..()
 
 /datum/component/remote_materials/proc/_MakeLocal()
+	PRIVATE_PROC(TRUE)
+
 	silo = null
 
 	var/static/list/allowed_mats = list(
@@ -89,6 +103,7 @@ handles linking back and forth.
 		allowed_mats, \
 		local_size, \
 		mat_container_flags, \
+		container_signals = mat_container_signals, \
 		allowed_items = /obj/item/stack \
 	)
 
@@ -124,11 +139,15 @@ handles linking back and forth.
 		_MakeLocal()
 
 ///Insert mats into silo
-/datum/component/remote_materials/proc/SiloAttackBy(datum/source, obj/item/target, mob/user)
+/datum/component/remote_materials/proc/SiloAttackBy(datum/source, obj/item/target, mob/living/user)
 	SIGNAL_HANDLER
 
+	//Allows you to attack the machine with iron sheets for e.g.
+	if(!(mat_container_flags & MATCONTAINER_ANY_INTENT) && user.combat_mode)
+		return
+
 	if(silo)
-		mat_container.user_insert(target, user, mat_container_flags, parent)
+		mat_container.user_insert(target, user, parent)
 
 	return COMPONENT_NO_AFTERATTACK
 
@@ -136,15 +155,15 @@ handles linking back and forth.
 	SIGNAL_HANDLER
 
 	if(!I.multitool_check_buffer(user, I))
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING
 	var/obj/item/multitool/M = I
 	if (!QDELETED(M.buffer) && istype(M.buffer, /obj/machinery/ore_silo))
 		if (silo == M.buffer)
 			to_chat(user, span_warning("[parent] is already connected to [silo]!"))
-			return COMPONENT_BLOCK_TOOL_ATTACK
+			return ITEM_INTERACT_BLOCKING
 		if(!check_z_level(M.buffer))
 			to_chat(user, span_warning("[parent] is too far away to get a connection signal!"))
-			return COMPONENT_BLOCK_TOOL_ATTACK
+			return ITEM_INTERACT_BLOCKING
 
 		var/obj/machinery/ore_silo/new_silo = M.buffer
 		var/datum/component/material_container/new_container = new_silo.GetComponent(/datum/component/material_container)
@@ -166,9 +185,10 @@ handles linking back and forth.
 		silo.ore_connected_machines += src
 		silo.updateUsrDialog()
 		mat_container = new_container
-		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
+		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return COMPONENT_BLOCK_TOOL_ATTACK
+		return ITEM_INTERACT_BLOCKING
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc
@@ -195,15 +215,19 @@ handles linking back and forth.
  * - The parent is of type movable atom
  * - A mat container is actually present
  * - The silo in not on hold
+ * Arguments
+ * * check_hold - should we check if the silo is on hold
  */
-/datum/component/remote_materials/proc/_can_use_resource()
+/datum/component/remote_materials/proc/_can_use_resource(check_hold = TRUE)
+	PRIVATE_PROC(TRUE)
+
 	var/atom/movable/movable_parent = parent
 	if (!istype(movable_parent))
 		return FALSE
 	if (!mat_container) //no silolink & local storage not supported
 		movable_parent.say("No access to material storage, please contact the quartermaster.")
 		return FALSE
-	if(on_hold()) //silo on hold
+	if(check_hold && on_hold()) //silo on hold
 		movable_parent.say("Mineral access is on hold, please contact the quartermaster.")
 		return FALSE
 	return TRUE
@@ -250,3 +274,16 @@ handles linking back and forth.
 		drop_target = movable_parent.drop_location()
 
 	return mat_container.retrieve_sheets(eject_amount, material_ref, target = drop_target, context = parent)
+
+/**
+ * Insert an item into the mat container, helper proc to insert items with the correct context
+ *
+ * Arguments
+ * * obj/item/weapon - the item you are trying to insert
+ * * multiplier - the multiplier applied on the materials consumed
+ */
+/datum/component/remote_materials/proc/insert_item(obj/item/weapon, multiplier = 1)
+	if(!_can_use_resource(FALSE))
+		return MATERIAL_INSERT_ITEM_FAILURE
+
+	return mat_container.insert_item(weapon, multiplier, parent)

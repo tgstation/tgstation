@@ -1,5 +1,20 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Collapsible, Dropdown, Input, LabeledList, Section, Stack, Tabs, Box, Table, NoticeBox, Tooltip, Icon } from '../components';
+import {
+  BlockQuote,
+  Box,
+  Button,
+  Collapsible,
+  Dropdown,
+  Icon,
+  Input,
+  LabeledList,
+  NoticeBox,
+  Section,
+  Stack,
+  Table,
+  Tabs,
+  Tooltip,
+} from '../components';
 import { TableCell, TableRow } from '../components/Table';
 import { NtosWindow } from '../layouts';
 
@@ -89,7 +104,8 @@ const PaperPublishing = (props) => {
               <Stack.Item align="center">
                 <Tooltip
                   position="left"
-                  content="The selected file containing experimental data for our paper. Must be present in the HDD to be accesible. Transfer files with the File Manager program.">
+                  content="The selected file containing experimental data for our paper. Must be present in the HDD to be accesible. Transfer files with the File Manager program."
+                >
                   <Icon size={1.15} name="info-circle" />
                 </Tooltip>
               </Stack.Item>
@@ -112,7 +128,8 @@ const PaperPublishing = (props) => {
               <Stack.Item align="center">
                 <Tooltip
                   position="left"
-                  content="The topic we want to publish our paper on. Different topics unlock different technologies and possible partners.">
+                  content="The topic we want to publish our paper on. Different topics unlock different technologies and possible partners."
+                >
                   <Icon size={1.15} name="info-circle" />
                 </Tooltip>
               </Stack.Item>
@@ -135,7 +152,8 @@ const PaperPublishing = (props) => {
               <Stack.Item align="center">
                 <Tooltip
                   position="left"
-                  content="The tier we want to publish on. Higher tiers can confer better rewards but means our data will be judged more harshly.">
+                  content="The tier we want to publish on. Higher tiers can confer better rewards but means our data will be judged more harshly."
+                >
                   <Icon size={1.15} name="info-circle" />
                 </Tooltip>
               </Stack.Item>
@@ -158,7 +176,8 @@ const PaperPublishing = (props) => {
               <Stack.Item align="center">
                 <Tooltip
                   position="left"
-                  content="Which organization to partner with. We can obtain research boosts in techs related to the partner's interests.">
+                  content="Which organization to partner with. We can obtain research boosts in techs related to the partner's interests."
+                >
                   <Icon size={1.15} name="info-circle" />
                 </Tooltip>
               </Stack.Item>
@@ -171,7 +190,8 @@ const PaperPublishing = (props) => {
           <Stack.Item grow>
             <Tooltip
               position="top"
-              content="How much will our relation improve with the particular partner. Cooperation will be used to unlock boosts.">
+              content="How much will our relation improve with the particular partner. Cooperation will be used to unlock boosts."
+            >
               <Icon size={1.15} name="info-circle" />
             </Tooltip>
             {' Cooperation: '}
@@ -180,7 +200,8 @@ const PaperPublishing = (props) => {
           <Stack.Item grow>
             <Tooltip
               position="top"
-              content="How much grant will we be endowed with upon the publication of this paper.">
+              content="How much grant will we be endowed with upon the publication of this paper."
+            >
               <Icon size={1.15} name="info-circle" />
             </Tooltip>
             {' Funding: '}
@@ -209,7 +230,8 @@ const PaperBrowser = (props) => {
     return publishedPapers.map((paper) => (
       <Collapsible
         key={String(paper['experimentName'] + paper['tier'])}
-        title={paper['title']}>
+        title={paper['title']}
+      >
         <Section>
           <LabeledList>
             <LabeledList.Item label="Topic">
@@ -256,7 +278,8 @@ const ExperimentBrowser = (props) => {
               experiment.prefix +
               ' Amount - Tier ' +
               String(Number(tier) + 1)
-            }>
+            }
+          >
             {experiment.target[tier] + ' ' + experiment.suffix}
           </LabeledList.Item>
         ))}
@@ -350,7 +373,8 @@ export const NtosScipaperContent = (props) => {
             act('change_tab', {
               new_tab: 1,
             })
-          }>
+          }
+        >
           {'Publish Papers'}
         </Tabs.Tab>
         <Tabs.Tab
@@ -359,7 +383,8 @@ export const NtosScipaperContent = (props) => {
             act('change_tab', {
               new_tab: 2,
             })
-          }>
+          }
+        >
           {'View Previous Publications'}
         </Tabs.Tab>
         <Tabs.Tab
@@ -368,7 +393,8 @@ export const NtosScipaperContent = (props) => {
             act('change_tab', {
               new_tab: 3,
             })
-          }>
+          }
+        >
           {'View Available Experiments'}
         </Tabs.Tab>
         <Tabs.Tab
@@ -377,7 +403,8 @@ export const NtosScipaperContent = (props) => {
             act('change_tab', {
               new_tab: 4,
             })
-          }>
+          }
+        >
           {'View Scientific Partners'}
         </Tabs.Tab>
       </Tabs>

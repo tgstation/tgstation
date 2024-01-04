@@ -1,6 +1,6 @@
 import { multiline } from '../../common/string';
 import { useBackend } from '../backend';
-import { Button, NoticeBox, Stack, Section } from '../components';
+import { Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 type BasketballPanelData = {
@@ -40,12 +40,14 @@ export const BasketballPanel = (props) => {
                   />
                   <Button
                     icon="basketball"
-                    disabled={!(data.total_votes >= data.players_min)}
-                    onClick={() => act('basketball_start')}>
+                    disabled={data.total_votes < data.players_min}
+                    onClick={() => act('basketball_start')}
+                  >
                     Start
                   </Button>
                 </>
-              }>
+              }
+            >
               <NoticeBox info>
                 The lobby has {data.total_votes} players signed up. The minigame
                 is for {data.players_min} to {data.players_max} players.
@@ -56,11 +58,13 @@ export const BasketballPanel = (props) => {
                   key={lobbyist.ckey}
                   className="candystripe"
                   p={1}
-                  align="baseline">
+                  align="baseline"
+                >
                   <Stack.Item grow>{lobbyist.ckey}</Stack.Item>
                   <Stack.Item>Status:</Stack.Item>
                   <Stack.Item
-                    color={lobbyist.status === 'Ready' ? 'green' : 'red'}>
+                    color={lobbyist.status === 'Ready' ? 'green' : 'red'}
+                  >
                     {lobbyist.status}
                   </Stack.Item>
                 </Stack>

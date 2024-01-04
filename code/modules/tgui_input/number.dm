@@ -92,7 +92,7 @@
 	if(default > max_value)
 		CRASH("Default value is greater than max value.")
 
-/datum/tgui_input_number/Destroy(force, ...)
+/datum/tgui_input_number/Destroy(force)
 	SStgui.close_uis(src)
 	state = null
 	return ..()

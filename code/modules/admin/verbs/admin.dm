@@ -37,7 +37,7 @@
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		to_chat(world, "[span_adminnotice("<b>[usr.client.holder.fakekey ? "Administrator" : usr.key] Announces:</b>")]\n \t [message]", confidential = TRUE)
+		send_ooc_announcement(message, "From [usr.client.holder.fakekey ? "Administrator" : usr.key]")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 
@@ -174,10 +174,8 @@
 	if(confirm != "Yes")
 		return
 
-	for(var/obj/item/W in M)
-		if(!M.dropItemToGround(W))
-			qdel(W)
-			M.regenerate_icons()
+	M.drop_everything(del_on_drop = FALSE, force = TRUE, del_if_nodrop = TRUE)
+	M.regenerate_icons()
 
 	log_admin("[key_name(usr)] made [key_name(M)] drop everything!")
 	var/msg = "[key_name_admin(usr)] made [ADMIN_LOOKUPFLW(M)] drop everything!"

@@ -166,6 +166,8 @@ xxx xxx xxx
 
 ///do not use, use QUEUE_SMOOTH(atom)
 /atom/proc/smooth_icon()
+	if(QDELETED(src))
+		return
 	smoothing_flags &= ~SMOOTH_QUEUED
 	flags_1 |= HTML_USE_INITAL_ICON_1
 	if (!z)

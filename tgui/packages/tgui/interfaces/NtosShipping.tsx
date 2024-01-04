@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section } from '../components';
 import { NtosWindow } from '../layouts';
@@ -36,7 +37,8 @@ const ShippingHub = (props) => {
           content="Eject Id"
           onClick={() => act('ejectid')}
         />
-      }>
+      }
+    >
       <LabeledList>
         <LabeledList.Item label="Current User">
           {current_user || 'N/A'}

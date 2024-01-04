@@ -167,9 +167,9 @@
 		id.update_icon()
 
 		if(worn)
-			if(istype(worn, /obj/item/modular_computer/pda))
-				var/obj/item/modular_computer/pda/PDA = worn
-				PDA.InsertID(id, H)
+			if(istype(worn, /obj/item/modular_computer))
+				var/obj/item/modular_computer/worn_computer = worn
+				worn_computer.InsertID(id, H)
 
 			else if(istype(worn, /obj/item/storage/wallet))
 				var/obj/item/storage/wallet/W = worn
@@ -217,6 +217,8 @@
 		if(tgui_alert(usr,"This mob is being controlled by [M.key]. Are you sure you wish to give someone else control of it? [M.key] will be made a ghost.",,list("Yes","No")) != "Yes")
 			return
 	var/client/newkey = input(src, "Pick the player to put in control.", "New player") as null|anything in sort_list(GLOB.clients)
+	if(isnull(newkey))
+		return
 	var/mob/oldmob = newkey.mob
 	var/delmob = FALSE
 	if((isobserver(oldmob) || tgui_alert(usr,"Do you want to delete [newkey]'s old mob?","Delete?",list("Yes","No")) != "No"))

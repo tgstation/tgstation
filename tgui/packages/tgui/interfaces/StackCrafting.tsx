@@ -1,10 +1,20 @@
-import { createSearch } from 'common/string';
 import { filter, map, reduce, sortBy } from 'common/collections';
-import { useBackend, useLocalState } from '../backend';
-import { Box, Button, Input, NoticeBox, Section, Collapsible, Table } from '../components';
-import { Window } from '../layouts';
-import { clamp } from 'common/math';
 import { flow } from 'common/fp';
+import { clamp } from 'common/math';
+import { createSearch } from 'common/string';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import {
+  Box,
+  Button,
+  Collapsible,
+  Input,
+  NoticeBox,
+  Section,
+  Table,
+} from '../components';
+import { Window } from '../layouts';
 
 type Recipe = {
   ref: unknown | null;
@@ -47,7 +57,6 @@ type RecipeListFilterableEntry = [string, RecipeList | Recipe | undefined];
  * @param value the value to test
  * @returns type guard boolean
  */
-// eslint-disable-next-line func-style
 function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
   return (value as Recipe).ref === undefined;
 }
@@ -60,7 +69,7 @@ function isRecipeList(value: Recipe | RecipeList): value is RecipeList {
  */
 const filterRecipeList = (
   list: RecipeList,
-  keyFilter: (key: string) => boolean
+  keyFilter: (key: string) => boolean,
 ) => {
   const filteredList: RecipeList = flow([
     map((entry: RecipeListEntry): RecipeListFilterableEntry => {
@@ -93,7 +102,7 @@ export const StackCrafting = (_props) => {
   const { data } = useBackend<StackCraftingProps>();
   const { amount, recipes = {} } = data;
 
-  const [searchText, setSearchText] = useLocalState('searchText', '');
+  const [searchText, setSearchText] = useState('');
   const testSearch = createSearch(searchText, (item: string) => item);
   const filteredRecipes = filterRecipeList(recipes, testSearch);
 
@@ -114,7 +123,8 @@ export const StackCrafting = (_props) => {
                 mx={1}
               />
             </>
-          }>
+          }
+        >
           {filteredRecipes ? (
             <RecipeListBox recipes={filteredRecipes} />
           ) : (
@@ -164,7 +174,7 @@ const Multipliers = (props: MultiplierProps) => {
 
   const maxM = Math.min(
     maxMultiplier,
-    Math.floor(recipe.max_res_amount / recipe.res_amount)
+    Math.floor(recipe.max_res_amount / recipe.res_amount),
   );
 
   const multipliers = [5, 10, 25];
@@ -182,7 +192,7 @@ const Multipliers = (props: MultiplierProps) => {
               multiplier: multiplier,
             })
           }
-        />
+        />,
       );
     }
   }
@@ -197,7 +207,7 @@ const Multipliers = (props: MultiplierProps) => {
             multiplier: maxM,
           })
         }
-      />
+      />,
     );
   }
 

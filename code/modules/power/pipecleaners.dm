@@ -107,7 +107,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	return ..() // then go ahead and delete the pipe_cleaner
 
 /obj/structure/pipe_cleaner/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		var/turf/T = get_turf(loc)
 		if(T)
 			stored.forceMove(T)

@@ -99,6 +99,11 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 	user.visible_message(span_suicide("[user] is falling on [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
+/obj/item/claymore/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK)
+		final_block_chance = 0 //Don't bring a sword to a gunfight, and also you aren't going to really block someone full body tackling you with a sword
+	return ..()
+
 //statistically similar to e-cutlasses
 /obj/item/claymore/cutlass
 	name = "cutlass"
@@ -156,7 +161,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/claymore/highlander/process()
 	if(ishuman(loc))
 		var/mob/living/carbon/human/holder = loc
-		SET_PLANE_EXPLICIT(holder, GAME_PLANE_UPPER_FOV_HIDDEN, src) //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
+		layer = ABOVE_ALL_MOB_LAYER //NO HIDING BEHIND PLANTS FOR YOU, DICKWEED (HA GET IT, BECAUSE WEEDS ARE PLANTS)
 		ADD_TRAIT(holder, TRAIT_NOBLOOD, HIGHLANDER_TRAIT) //AND WE WON'T BLEED OUT LIKE COWARDS
 	else
 		if(!(flags_1 & ADMIN_SPAWNED_1))
@@ -280,7 +285,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/claymore/highlander/robot/process()
-	SET_PLANE_IMPLICIT(loc, GAME_PLANE_UPPER_FOV_HIDDEN)
+	layer = ABOVE_ALL_MOB_LAYER
 
 /obj/item/katana
 	name = "katana"
@@ -413,7 +418,7 @@ for further reading, please see: https://github.com/tgstation/tgstation/pull/301
 /obj/item/phone
 	name = "red phone"
 	desc = "Should anything ever go wrong..."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/voice.dmi'
 	icon_state = "red_phone"
 	force = 3
 	throwforce = 2
