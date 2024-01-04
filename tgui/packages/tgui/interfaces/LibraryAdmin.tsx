@@ -345,7 +345,7 @@ const ModifyPage = (props) => {
 
   return (
     <Window.Content scrollable>
-      <NoticeBox warning>
+      <NoticeBox>
         Heads Up! We do not allow you to fully delete books in game
         <br />
         What you&apos;re doing here is a &quot;don&apos;t show this to
