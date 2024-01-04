@@ -73,7 +73,7 @@
 /datum/computer_file/program/Destroy()
 	if(isnull(circuit_comp_type) || isnull(computer?.shell))
 		return ..()
-	for(var/obj/item/circuit_component/mod_program/comp as anything in computer.shell.unremovable_circuit_components)
+	for(var/obj/item/circuit_component/mod_program/comp in computer.shell.unremovable_circuit_components)
 		if(comp.associated_program == src)
 			computer.shell.unremovable_circuit_components -= comp
 			qdel(comp)
