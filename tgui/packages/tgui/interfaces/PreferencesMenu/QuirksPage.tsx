@@ -1,4 +1,5 @@
 import { filterMap } from 'common/collections';
+import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../../backend';
 import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
@@ -249,10 +250,7 @@ export const QuirksPage = (props) => {
     data.character_preferences.non_contextual.random_body !==
       RandomSetting.Disabled || randomToggleEnabled;
 
-  const [selectedQuirks, setSelectedQuirks] = useLocalState(
-    `selectedQuirks_${data.active_slot}`,
-    data.selected_quirks,
-  );
+  const [selectedQuirks, setSelectedQuirks] = useState(data.selected_quirks);
 
   return (
     <ServerPreferencesFetcher

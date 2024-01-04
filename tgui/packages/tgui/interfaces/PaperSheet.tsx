@@ -5,7 +5,7 @@
 import { clamp } from 'common/math';
 import { classes } from 'common/react';
 import { marked } from 'marked';
-import { Component, createRef, RefObject } from 'react';
+import { Component, createRef, RefObject, useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
 import { Box, Button, Flex, Section, TextArea } from '../components';
@@ -315,7 +315,7 @@ export class PrimaryView extends Component {
       {},
     );
 
-    const [textAreaText, setTextAreaText] = useLocalState('textAreaText', '');
+    const [textAreaText, setTextAreaText] = useState('');
 
     const interactMode =
       held_item_details?.interaction_mode || InteractionType.reading;
