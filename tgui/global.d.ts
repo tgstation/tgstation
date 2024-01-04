@@ -84,6 +84,14 @@ type ByondType = {
   strictMode: boolean;
 
   /**
+   * If `true`, all byond.topic and byond.send_message calls will silently fail.
+   * This is to deal with a byond bug where sending messages to the server while
+   * a client is reconnecting or the world is rebooting can cause the connection
+   * to die. Set on world reboot.
+   */
+  communicationLocked: boolean;
+
+  /**
    * Makes a BYOND call.
    *
    * If path is empty, this will trigger a Topic call.

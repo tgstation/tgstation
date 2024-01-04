@@ -25,6 +25,7 @@
 	var/initial_inline_js
 	var/initial_inline_css
 	var/mouse_event_macro_set = FALSE
+	var/communication_locked = FALSE
 
 	/**
 	 * Static list used to map in macros that will then emit execute events to the tgui window
@@ -86,6 +87,7 @@
 	src.initial_inline_js = inline_js
 	src.initial_inline_css = inline_css
 	status = TGUI_WINDOW_LOADING
+	communication_locked = FALSE
 	fatally_errored = FALSE
 	// Build window options
 	var/options = "file=[id].html;can_minimize=0;auto_format=0;"
@@ -386,6 +388,20 @@
 			reinitialize()
 		if("chat/resend")
 			SSchat.handle_resend(client, payload)
+
+/**
+ * public
+ *
+ * Blocks all communication with the server until the window is closed or reloaded by browse()
+ */
+/datum/tgui_window/proc/lock_communication()
+	if(!client || isnull(id))
+		return
+	communication_locked = TRUE
+	client << output("", is_browser \
+		? "[id]:lock_communication" \
+		: "[id].browser:lock_communication")
+
 
 /datum/tgui_window/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, id) && ..()

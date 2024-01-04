@@ -69,6 +69,9 @@
   // Strict mode flag
   Byond.strictMode = Boolean(Number(parseMetaTag('tgui:strictMode')));
 
+  // communication locked flag
+  Byond.communicationLocked = false;
+
   // Callbacks for asynchronous calls
   Byond.__callbacks__ = [];
 
@@ -144,6 +147,9 @@
   };
 
   Byond.topic = function (params) {
+    if (Byond.communicationLocked) {
+      return;
+    }
     return Byond.call('', params);
   };
 
@@ -467,6 +473,11 @@ window.update = function (rawMessage) {
   for (var i = 0; i < listeners.length; i++) {
     listeners[i](message.type, message.payload);
   }
+};
+
+// locking message handler
+window.lock_communication = function () {
+  Byond.communicationLocked = true;
 };
 
 // Properties and variables of this specific handler
