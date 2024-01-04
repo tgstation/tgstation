@@ -8,3 +8,7 @@
 #define STARGAZER_TRAIT "stargazer"
 /// Prevents the invocation of clockwork scriptures
 #define TRAIT_NO_SLAB_INVOKE "no_slab_invoke"
+/// Allows the user to start any surgery, anywhere. Mostly used by abductor scientists.
+#define TRAIT_ALL_SURGERIES "all_surgeries"
+/// Prevents the user from ever (unintentionally) failing a surgery step, and ensures they always have the maximum surgery speed.
+#define TRAIT_PERFECT_SURGEON "perfect_surgeon"
