@@ -77,3 +77,6 @@
       click speed.
   NicoDeLuna:
   - bugfix: Adjusted minor sprite issues on shipwrecked captain costumes
+2024-01-05:
+  DexeeXI:
+  - rscdel: Removed Oshan as a map from the codebase.
