@@ -73,6 +73,8 @@
 /// This also affects how fast the body normalises it's temperature when cold.
 /// 270k is about -3c, that is below freezing and would hurt over time.
 #define BODYTEMP_COLD_DAMAGE_LIMIT (BODYTEMP_NORMAL - 40)
+/// The temperature which a bodypart/organ is considered cryogenically frozen
+#define BODYTEMP_CRYO_THRESHOLD 96.15
 /// A temperature limit which is above the minimum icebox temperature
 #define BODYTEMP_COLD_ICEBOX_SAFE (ICEBOX_MIN_TEMPERATURE - 5)
 /// The body temperature limit the human body can take before it will take wound damage.
