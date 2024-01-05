@@ -9,7 +9,7 @@ GLOBAL_LIST_INIT(diagonal_junctions, generate_splitvis_lookup())
 		diagonal_to_junction[i] = NONE
 	diagonal_to_junction[NORTH|EAST] = dir_to_junction(NORTH|EAST)
 	diagonal_to_junction[SOUTH|EAST] = dir_to_junction(SOUTH|EAST)
-	diagonal_to_junction[SOUTH|WEST] = dir_to_junction(NORTH|WEST)
+	diagonal_to_junction[SOUTH|WEST] = dir_to_junction(SOUTH|WEST)
 	diagonal_to_junction[NORTH|WEST] = dir_to_junction(NORTH|WEST)
 	return diagonal_to_junction
 
