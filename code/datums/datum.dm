@@ -406,3 +406,11 @@
 /// Can be called more then once per object, use harddel_deets_dumped to avoid duplicate calls (I am so sorry)
 /datum/proc/dump_harddel_info()
 	return
+
+///images are pretty generic, this should help a bit with tracking harddels related to them
+/image/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z])" : ""]"
+
