@@ -30,8 +30,10 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 
 /area/awaymission/museum/mothroachvoid
 	static_lighting = FALSE
-	base_lighting_alpha = 255
-	base_lighting_color = "#FFFFCC"
+	base_lighting_alpha = 200
+	base_lighting_color = "#FFF4AA"
+	sound_environment = SOUND_ENVIRONMENT_PLAIN
+	ambientsounds = list('sound/ambience/shore.ogg', 'sound/ambience/ambiodd.ogg','sound/ambience/ambinice.ogg')
 
 /area/awaymission/errorroom
 	name = "Super Secret Room"

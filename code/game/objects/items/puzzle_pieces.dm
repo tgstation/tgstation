@@ -456,7 +456,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 
 /obj/effect/puzzle_poddoor_open/proc/try_signal(datum/source)
 	SIGNAL_HANDLER
-	to_chat(world, "hi")
 	var/openclose
 	for(var/obj/machinery/door/poddoor/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
 		if(door.id == id)

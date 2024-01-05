@@ -59,6 +59,11 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"az" = (
+/obj/structure/table/reinforced,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
 "aG" = (
 /obj/machinery/conveyor{
 	dir = 4
@@ -81,6 +86,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"aW" = (
+/obj/structure/closet/crate/bin,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "bg" = (
 /obj/structure/no_effect_signpost{
 	name = "if youre reading this you stink and also made by jimmyl"
@@ -98,6 +107,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"bj" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/door/airlock/wood{
+	name = "Bathroom"
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/awaymission/museum)
 "bk" = (
 /obj/structure/thermoplastic,
 /obj/structure/transport/linear/tram/slow,
@@ -109,6 +127,9 @@
 	},
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
+"bs" = (
+/turf/open/misc/dirt,
+/area/awaymission/museum/mothroachvoid)
 "bt" = (
 /obj/effect/step_trigger/teleporter/offset{
 	teleport_y_offset = 12
@@ -121,6 +142,10 @@
 	target_turf_x = 11;
 	range = 1
 	},
+/area/awaymission/museum)
+"bC" = (
+/obj/structure/closet/secure_closet/freezer/kitchen/all_access,
+/turf/open/floor/iron/freezer,
 /area/awaymission/museum)
 "bE" = (
 /obj/machinery/door/airlock/grunge,
@@ -214,6 +239,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
+"ct" = (
+/obj/structure/chair/comfy,
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
 "cv" = (
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron/dark/diagonal,
@@ -243,11 +275,30 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"cC" = (
+/turf/open/floor/mineral/silver,
+/area/awaymission/museum/mothroachvoid)
+"cF" = (
+/turf/open/floor/iron/dark/side{
+	dir = 8
+	},
+/area/awaymission/museum)
+"cH" = (
+/obj/effect/mapping_helpers/broken_floor,
+/turf/open/floor/iron/showroomfloor,
+/area/awaymission/museum)
 "cM" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/bureaucracy/pen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
+/area/awaymission/museum)
+"cR" = (
+/obj/structure/broken_flooring/side/always_floorplane{
+	dir = 8
+	},
+/obj/structure/lattice,
+/turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "cS" = (
 /obj/effect/step_trigger/thrower{
@@ -314,12 +365,21 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"dH" = (
+/obj/structure/table/wood,
+/obj/item/reagent_containers/cup/glass/shaker,
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
 "dK" = (
 /turf/open/mirage{
 	range = 2;
 	target_turf_y = -4;
 	dir = 1
 	},
+/area/awaymission/museum)
+"dL" = (
+/obj/structure/sink/directional/west,
+/turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "dN" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -339,6 +399,12 @@
 	hat = /obj/item/clothing/head/utility/welding
 	},
 /turf/open/floor/engine,
+/area/awaymission/museum)
+"dV" = (
+/obj/machinery/door/window/brigdoor/left/directional/south{
+	req_access = list("bartender")
+	},
+/turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "dY" = (
 /mob/living/basic/statue/mannequin/alert_linked{
@@ -426,6 +492,20 @@
 	},
 /turf/open/floor/grass,
 /area/awaymission/museum)
+"ex" = (
+/obj/structure/chair/stool/bar/directional/west{
+	can_buckle = 1
+	},
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
+"eA" = (
+/obj/machinery/door/airlock/wood{
+	name = "Dance Room"
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "eD" = (
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 1
@@ -449,6 +529,10 @@
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/holofloor/white,
 /area/awaymission/museum)
+"eM" = (
+/obj/structure/statue/gold/qm,
+/turf/open/misc/dirt,
+/area/awaymission/museum/mothroachvoid)
 "eN" = (
 /obj/machinery/door/poddoor/shutters/window/indestructible{
 	dir = 4;
@@ -484,7 +568,7 @@
 	hat = /obj/item/clothing/suit/hooded/explorer
 	},
 /obj/effect/turf_decal/mining,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "fe" = (
 /turf/closed/indestructible/reinforced/titanium/nodiagonal,
@@ -496,7 +580,9 @@
 /area/awaymission/museum/mothroachvoid)
 "fi" = (
 /obj/structure/table/wood,
-/turf/open/floor/wood/large,
+/obj/item/plate,
+/obj/item/kitchen/fork,
+/turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "fn" = (
 /turf/open/floor/holofloor/hyperspace/ns,
@@ -522,6 +608,15 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"fz" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/plate/large,
+/obj/item/food/little_hawaii_hotdog,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "fC" = (
 /obj/machinery/light/small/directional/west,
 /obj/structure/table/wood,
@@ -538,6 +633,10 @@
 	},
 /obj/structure/lattice,
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"fW" = (
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "gf" = (
 /obj/structure/railing{
@@ -556,11 +655,9 @@
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "gm" = (
-/obj/structure/railing{
-	dir = 8
-	},
-/turf/open/chasm/true/no_smooth,
-/area/awaymission/museum)
+/obj/structure/statue/gold/cmo,
+/turf/open/floor/mineral/diamond,
+/area/awaymission/museum/mothroachvoid)
 "go" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
@@ -574,6 +671,19 @@
 /obj/structure/flora/tree/palm/style_random,
 /turf/open/misc/beach/sand,
 /area/awaymission/museum/mothroachvoid)
+"gA" = (
+/obj/structure/toilet{
+	dir = 1
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/awaymission/museum)
+"gB" = (
+/obj/structure/table/wood,
+/obj/item/knife,
+/obj/item/kitchen/rollingpin,
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/iron/freezer,
+/area/awaymission/museum)
 "gC" = (
 /obj/machinery/conveyor{
 	dir = 8
@@ -637,6 +747,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"hj" = (
+/obj/structure/lattice/catwalk,
+/turf/open/misc/grass,
+/area/awaymission/museum/mothroachvoid)
 "hk" = (
 /obj/effect/smooths_with_walls,
 /turf/open/mirage{
@@ -652,6 +766,18 @@
 	dir = 1
 	},
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"hp" = (
+/mob/living/basic/mothroach/bar,
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
+"ht" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/effect/spawner/random/vending/colavend,
+/obj/machinery/light/small/directional/west,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "hC" = (
 /obj/structure/railing{
@@ -700,6 +826,11 @@
 	dir = 6
 	},
 /turf/open/floor/engine,
+/area/awaymission/museum)
+"il" = (
+/obj/structure/table/wood,
+/obj/item/clothing/suit/costume/judgerobe,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "im" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -785,6 +916,11 @@
 	},
 /turf/open/floor/tram/plate,
 /area/awaymission/museum)
+"iN" = (
+/mob/living/basic/mothroach,
+/obj/structure/window/spawner/directional/west,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/awaymission/museum)
 "iT" = (
 /obj/machinery/door/airlock/engineering,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -794,6 +930,16 @@
 /obj/machinery/telecomms/relay/preset/auto,
 /turf/open/floor/bluespace,
 /area/awaymission/museum)
+"iV" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 10
+	},
+/obj/structure/table,
+/obj/item/binoculars,
+/obj/item/clothing/mask/whistle,
+/turf/open/misc/grass,
+/area/awaymission/museum/mothroachvoid)
 "iW" = (
 /obj/effect/turf_decal/tile/dark_blue/half/contrasted{
 	dir = 8
@@ -813,6 +959,14 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"jf" = (
+/mob/living/basic/mothroach,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
+"jm" = (
+/mob/living/basic/mothroach,
+/turf/open/misc/dirt,
+/area/awaymission/museum/mothroachvoid)
 "jn" = (
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 4
@@ -850,6 +1004,9 @@
 /obj/effect/spawner/structure/window,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"jG" = (
+/turf/open/floor/carpet/cyan,
+/area/awaymission/museum/mothroachvoid)
 "jH" = (
 /obj/structure/fake_stairs/directional/west,
 /turf/open/floor/iron/smooth_half,
@@ -857,6 +1014,10 @@
 "jI" = (
 /obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
+/area/awaymission/museum)
+"jL" = (
+/obj/structure/sink/kitchen/directional/west,
+/turf/open/floor/iron/freezer,
 /area/awaymission/museum)
 "jP" = (
 /obj/effect/landmark/observer_start,
@@ -890,8 +1051,13 @@
 /obj/structure/chair/comfy{
 	dir = 1
 	},
+/obj/effect/mapping_helpers/mob_buckler,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
+"ke" = (
+/obj/structure/statue/gold/hos,
+/turf/open/floor/mineral/diamond,
+/area/awaymission/museum/mothroachvoid)
 "kg" = (
 /obj/machinery/conveyor{
 	dir = 1
@@ -911,6 +1077,12 @@
 /obj/machinery/door/airlock/grunge,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
+"kr" = (
+/obj/structure/table/wood,
+/obj/structure/window/spawner/directional/west,
+/obj/item/storage/box/fireworks,
+/turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "kw" = (
 /obj/effect/turf_decal/tile/green/opposingcorners,
@@ -952,7 +1124,13 @@
 /obj/effect/spawner/random/entertainment/money_medium,
 /obj/effect/spawner/random/entertainment/money_medium,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
+/area/awaymission/museum)
+"la" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "lb" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -998,7 +1176,7 @@
 /obj/machinery/computer/arcade/amputation{
 	dir = 8
 	},
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "lz" = (
 /obj/effect/landmark/awaystart,
@@ -1082,6 +1260,11 @@
 	target_turf_y = 4
 	},
 /area/awaymission/museum)
+"ml" = (
+/obj/structure/table/wood,
+/obj/item/food/hotcrossbun,
+/turf/open/floor/iron/freezer,
+/area/awaymission/museum)
 "mn" = (
 /obj/structure/lattice/catwalk,
 /obj/structure/railing/corner{
@@ -1092,6 +1275,14 @@
 "mA" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /turf/open/floor/holofloor/beach/water,
+/area/awaymission/museum)
+"mC" = (
+/obj/structure/fluff/beach_umbrella,
+/turf/open/floor/carpet/cyan,
+/area/awaymission/museum/mothroachvoid)
+"mK" = (
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/awaymission/museum)
 "mN" = (
 /obj/structure/statue/sandstone/assistant,
@@ -1124,6 +1315,13 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
+"mZ" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/machinery/door/airlock/freezer{
+	req_access = req("bartender")
+	},
+/turf/open/floor/iron/freezer,
+/area/awaymission/museum)
 "nb" = (
 /turf/open/misc/beach/coast/corner,
 /area/awaymission/museum/mothroachvoid)
@@ -1146,6 +1344,15 @@
 	dir = 5
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"nq" = (
+/obj/structure/table/wood,
+/obj/item/paper/fluff/jobs/security/court_judgement,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
+"nr" = (
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/iron/showroomfloor,
 /area/awaymission/museum)
 "ns" = (
 /obj/machinery/light/small/directional/south,
@@ -1348,6 +1555,11 @@
 /obj/structure/sign/poster/official/pda_ad/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"pc" = (
+/turf/open/floor/iron/dark/side{
+	dir = 6
+	},
+/area/awaymission/museum)
 "pf" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/gibs/body,
@@ -1369,6 +1581,10 @@
 	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/holofloor/white,
+/area/awaymission/museum)
+"pp" = (
+/obj/structure/chair/stool/bar/directional/north,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "pt" = (
 /obj/structure/railing{
@@ -1399,7 +1615,7 @@
 /obj/structure/broken_flooring/corner/always_floorplane/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/structure/crate_loot,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "pF" = (
 /obj/structure/hedge/opaque,
@@ -1431,18 +1647,44 @@
 /obj/item/grenade/iedcasing/spawned,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"pY" = (
+/obj/item/pickaxe/drill/diamonddrill,
+/turf/open/misc/grass,
+/area/awaymission/museum/mothroachvoid)
 "qj" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"qo" = (
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/water/beach,
+/area/awaymission/museum/mothroachvoid)
 "qp" = (
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
+"qt" = (
+/obj/effect/spawner/random/food_or_drink/booze{
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	spawn_random_offset = 2
+	},
+/turf/open/floor/carpet/cyan,
+/area/awaymission/museum/mothroachvoid)
+"qw" = (
+/obj/item/flashlight/flare{
+	start_on = 1;
+	icon_state = "flare-on"
+	},
+/obj/structure/table,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "qx" = (
 /obj/structure/reagent_dispensers/fueltank,
 /obj/effect/decal/cleanable/fuel_pool,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "qJ" = (
 /obj/effect/turf_decal/stripes/line{
@@ -1480,8 +1722,9 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "qS" = (
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "qU" = (
 /obj/structure/reagent_dispensers/fueltank,
@@ -1533,10 +1776,12 @@
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "rA" = (
-/obj/item/flashlight/flare,
-/obj/structure/table,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/obj/structure/chair/comfy/beige{
+	dir = 8
+	},
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "rB" = (
 /obj/structure/lattice/catwalk,
@@ -1636,6 +1881,7 @@
 /area/awaymission/museum)
 "sp" = (
 /obj/machinery/door/window/left/directional/west,
+/obj/machinery/light/warm/directional/south,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "sq" = (
@@ -1717,6 +1963,16 @@
 /obj/machinery/light/warm/directional/south,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"tc" = (
+/obj/structure/lattice/catwalk,
+/obj/structure/railing{
+	dir = 6
+	},
+/obj/structure/chair,
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/turf/open/misc/grass,
+/area/awaymission/museum/mothroachvoid)
 "tf" = (
 /obj/item/instrument/musicalmoth,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1779,6 +2035,14 @@
 /obj/structure/railing,
 /turf/open/floor/iron/smooth_half,
 /area/awaymission/museum)
+"tx" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	spawn_random_offset = 2
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
 "ty" = (
 /obj/structure/table,
 /obj/item/clothing/gloves/color/yellow{
@@ -1792,6 +2056,10 @@
 /obj/effect/turf_decal/siding/thinplating_new,
 /turf/open/chasm,
 /area/awaymission/museum)
+"tC" = (
+/obj/structure/sign/departments/lawyer/directional/south,
+/turf/open/misc/grass,
+/area/awaymission/museum/mothroachvoid)
 "tD" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue{
@@ -1843,6 +2111,9 @@
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"uc" = (
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/awaymission/museum)
 "ud" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle,
 /turf/open/indestructible/plating,
@@ -1862,6 +2133,23 @@
 	dir = 8
 	},
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"ul" = (
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/floor/holofloor/beach/coast{
+	dir = 2
+	},
+/area/awaymission/museum/mothroachvoid)
+"up" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/door/airlock/wood{
+	name = "Bathroom"
+	},
+/turf/open/floor/iron/showroomfloor,
 /area/awaymission/museum)
 "uu" = (
 /obj/structure/rack,
@@ -1908,7 +2196,7 @@
 	},
 /obj/structure/broken_flooring/side/always_floorplane/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "vj" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -1921,6 +2209,11 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
+"vs" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/structure/holosign/barrier/engineering,
+/turf/open/indestructible/plating,
+/area/awaymission/museum)
 "vw" = (
 /obj/structure/window/bronze,
 /obj/structure/window/bronze{
@@ -1930,7 +2223,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "vx" = (
 /obj/structure/sign/poster/random/directional/north,
@@ -1964,6 +2257,18 @@
 	},
 /turf/open/floor/bronze,
 /area/awaymission/museum)
+"vO" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 4
+	},
+/area/awaymission/museum)
+"vU" = (
+/obj/machinery/door/airlock/wood{
+	name = "Dance Room"
+	},
+/obj/effect/turf_decal/siding/wood,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "vZ" = (
 /obj/structure/table/reinforced,
 /obj/effect/spawner/random/entertainment/toy,
@@ -1972,12 +2277,21 @@
 /obj/effect/turf_decal/siding/dark_blue,
 /turf/open/floor/mineral/titanium/blue,
 /area/awaymission/museum)
+"wh" = (
+/obj/structure/broken_flooring/corner/always_floorplane/directional/west,
+/obj/structure/lattice,
+/turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
 "wi" = (
 /obj/machinery/door/poddoor/shutters/indestructible{
 	dir = 8;
 	id = "nothing"
 	},
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"wk" = (
+/obj/machinery/vending/dinnerware,
+/turf/open/floor/iron/freezer,
 /area/awaymission/museum)
 "wy" = (
 /obj/effect/turf_decal/loading_area{
@@ -2021,6 +2335,10 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/blood/footprints,
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"wI" = (
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/awaymission/museum)
 "wJ" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -2104,6 +2422,12 @@
 	dir = 2
 	},
 /area/awaymission/museum/mothroachvoid)
+"xn" = (
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/misc/beach/sand,
+/area/awaymission/museum/mothroachvoid)
 "xr" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/closet/crate/freezer/food,
@@ -2115,7 +2439,7 @@
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
 "xu" = (
-/turf/cordon/secret,
+/turf/closed/indestructible/rock,
 /area/awaymission/museum/mothroachvoid)
 "xv" = (
 /obj/structure/hedge,
@@ -2144,6 +2468,9 @@
 /obj/structure/fluff/balloon_nuke,
 /turf/open/floor/holofloor/beach,
 /area/awaymission/museum)
+"xE" = (
+/turf/open/floor/mineral/gold,
+/area/awaymission/museum/mothroachvoid)
 "xF" = (
 /mob/living/basic/statue/mannequin/alert_linked{
 	dir = 1;
@@ -2174,7 +2501,7 @@
 /obj/structure/closet/crate/cardboard,
 /obj/item/storage/toolbox/artistic,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "xR" = (
 /obj/structure/railing{
@@ -2183,10 +2510,35 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"xT" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/storage/box/party_poppers,
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
+"ya" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/plate,
+/obj/item/food/kebab/fiesta,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "yf" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/light/small/directional/north,
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"yi" = (
+/obj/structure/chair/comfy/beige{
+	dir = 1
+	},
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "yl" = (
 /turf/open/lava/plasma/mafia,
@@ -2209,6 +2561,8 @@
 /area/awaymission/museum)
 "yr" = (
 /obj/structure/chair/comfy,
+/obj/effect/mapping_helpers/mob_buckler,
+/mob/living/basic/mothroach,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "yu" = (
@@ -2227,6 +2581,10 @@
 /obj/effect/spawner/structure/window/hollow/reinforced/end,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"yE" = (
+/obj/item/pickaxe/diamond,
+/turf/open/misc/grass,
+/area/awaymission/museum/mothroachvoid)
 "yF" = (
 /obj/machinery/light/small/broken/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2304,6 +2662,10 @@
 	},
 /turf/open/floor/bluespace,
 /area/awaymission/museum)
+"zC" = (
+/obj/machinery/vending/boozeomat/all_access,
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
 "zE" = (
 /turf/closed/indestructible/rock,
 /area/awaymission/museum)
@@ -2365,6 +2727,10 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"zR" = (
+/obj/structure/statue/gold/hop,
+/turf/open/floor/mineral/diamond,
+/area/awaymission/museum/mothroachvoid)
 "zU" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/decal/cleanable/generic,
@@ -2407,6 +2773,11 @@
 	transport_linked_id = "museum_cargo"
 	},
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"Am" = (
+/obj/structure/window/spawner/directional/west,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
 /area/awaymission/museum)
 "Aq" = (
 /obj/effect/turf_decal/stripes/line{
@@ -2457,6 +2828,10 @@
 	dir = 8
 	},
 /turf/open/floor/cult,
+/area/awaymission/museum)
+"AG" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/freezer,
 /area/awaymission/museum)
 "AI" = (
 /obj/machinery/conveyor{
@@ -2512,6 +2887,14 @@
 /obj/machinery/light/warm/directional/south,
 /obj/structure/closet/crate/bin,
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"Bj" = (
+/obj/structure/closet/lawcloset,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
+"Bo" = (
+/obj/machinery/jukebox,
+/turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
 "Bq" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -2586,6 +2969,15 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Ci" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/item/clothing/mask/party_horn,
+/obj/item/clothing/mask/party_horn,
+/obj/structure/table/wood,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "Cj" = (
 /obj/structure/rack,
 /obj/effect/turf_decal/tile/green/opposingcorners,
@@ -2607,11 +2999,25 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"Cq" = (
+/obj/structure/statue/gold/rd,
+/turf/open/floor/mineral/diamond,
+/area/awaymission/museum/mothroachvoid)
 "Cu" = (
 /turf/open/misc/beach/coast{
 	dir = 10
 	},
 /area/awaymission/museum/mothroachvoid)
+"Cy" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	spawn_random_offset = 2;
+	spawn_loot_count = 2
+	},
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "CC" = (
 /obj/effect/turf_decal/siding/wideplating,
 /turf/open/misc/beach/sand,
@@ -2652,6 +3058,27 @@
 /obj/effect/turf_decal/siding/wood,
 /turf/open/floor/carpet/executive,
 /area/awaymission/museum)
+"CT" = (
+/mob/living/basic/mothroach,
+/mob/living/basic/mothroach,
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/awaymission/museum)
+"CV" = (
+/obj/structure/sink/directional/south,
+/obj/structure/mirror/directional/north{
+	pixel_y = 32
+	},
+/turf/open/floor/iron/showroomfloor,
+/area/awaymission/museum)
+"De" = (
+/obj/effect/oneway{
+	dir = 8
+	},
+/turf/open/misc/beach/coast{
+	dir = 1
+	},
+/area/awaymission/museum/mothroachvoid)
 "Dk" = (
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/engine,
@@ -2688,6 +3115,11 @@
 	},
 /turf/open/floor/engine,
 /area/awaymission/museum)
+"DS" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/effect/spawner/random/structure/girder,
+/turf/open/indestructible/plating,
+/area/awaymission/museum)
 "DT" = (
 /obj/structure/broken_flooring/side/always_floorplane/directional/south,
 /turf/open/floor/black,
@@ -2714,6 +3146,11 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
+"Ec" = (
+/mob/living/basic/mothroach,
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/awaymission/museum)
 "Ef" = (
 /obj/machinery/computer/old{
 	name = "replica computer";
@@ -2722,6 +3159,13 @@
 	icon_screen = "rdcomp"
 	},
 /turf/open/floor/iron/smooth_large,
+/area/awaymission/museum)
+"Ek" = (
+/obj/structure/table/wood,
+/obj/structure/window/spawner/directional/east,
+/obj/item/plate,
+/obj/item/kitchen/fork,
+/turf/open/floor/wood/tile,
 /area/awaymission/museum)
 "El" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -2745,6 +3189,13 @@
 /obj/machinery/light/directional/north,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"Er" = (
+/obj/structure/chair/comfy/beige,
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/obj/machinery/light/warm/directional/west,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "EA" = (
 /obj/machinery/door/airlock/shuttle/glass,
 /obj/effect/turf_decal/siding/dark_blue,
@@ -2763,7 +3214,10 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "EG" = (
-/obj/item/flashlight/flare,
+/obj/item/flashlight/flare{
+	start_on = 1;
+	icon_state = "flare-on"
+	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -2772,6 +3226,15 @@
 	dir = 1
 	},
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"EM" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	spawn_random_offset = 2;
+	spawn_loot_count = 2
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "EO" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2827,12 +3290,24 @@
 /obj/effect/decal/cleanable/blood/gibs/core,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"Fc" = (
+/obj/item/food/sandwich/cheese,
+/turf/open/floor/carpet/cyan,
+/area/awaymission/museum/mothroachvoid)
 "Fg" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 8
 	},
 /turf/open/floor/grass,
+/area/awaymission/museum)
+"Fh" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/structure/closet/crate/bin,
+/obj/structure/sign/departments/restroom/directional/west,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "Fi" = (
 /obj/effect/turf_decal/siding/dark_blue,
@@ -2895,12 +3370,20 @@
 	},
 /turf/open/floor/carpet/executive,
 /area/awaymission/museum)
+"FG" = (
+/obj/structure/window/spawner/directional/south,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/awaymission/museum)
 "FH" = (
 /obj/structure/plaque/static_plaque/golden/commission/box,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
 "FK" = (
 /turf/closed/indestructible/reinforced,
+/area/awaymission/museum)
+"FM" = (
+/obj/structure/sign/departments/restroom/directional/south,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "Gh" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -2951,6 +3434,15 @@
 	},
 /turf/open/floor/wood/tile,
 /area/awaymission/museum)
+"GO" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/plate/large,
+/obj/item/food/kurry_ok_subsando,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "GQ" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -2967,8 +3459,13 @@
 /obj/structure/table/wood,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
+/obj/item/book/manual/wiki/security_space_law,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
+"GU" = (
+/mob/living/basic/mothroach,
+/turf/open/water/beach,
+/area/awaymission/museum/mothroachvoid)
 "GV" = (
 /obj/structure/plaque/static_plaque/golden/commission/disc,
 /turf/closed/indestructible/reinforced,
@@ -3044,6 +3541,9 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/light/directional/north,
 /turf/open/floor/mineral/titanium/blue,
+/area/awaymission/museum)
+"HP" = (
+/turf/open/floor/iron/freezer,
 /area/awaymission/museum)
 "HU" = (
 /obj/structure/railing{
@@ -3121,6 +3621,26 @@
 /obj/effect/turf_decal/stripes,
 /turf/open/floor/iron/smooth_large,
 /area/awaymission/museum)
+"IZ" = (
+/obj/structure/chair/comfy/beige{
+	dir = 4
+	},
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
+"Jb" = (
+/turf/open/floor/iron/dark/side,
+/area/awaymission/museum)
+"Jc" = (
+/obj/structure/window/spawner/directional/north,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/awaymission/museum)
+"Jd" = (
+/obj/machinery/vending/cigarette/beach,
+/obj/machinery/light/warm/directional/north,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "Je" = (
 /obj/structure/railing{
 	dir = 10
@@ -3137,6 +3657,10 @@
 	},
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"Jj" = (
+/mob/living/basic/mothroach,
+/turf/open/floor/mineral/gold,
+/area/awaymission/museum/mothroachvoid)
 "Jk" = (
 /obj/item/toy/plush/moth,
 /obj/machinery/light/small/dim/directional/west,
@@ -3212,12 +3736,23 @@
 	},
 /turf/open/floor/black,
 /area/awaymission/museum)
+"JY" = (
+/turf/open/floor/iron/stairs{
+	dir = 8
+	},
+/area/awaymission/museum/mothroachvoid)
 "Kb" = (
 /obj/effect/turf_decal/loading_area{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
+"Kd" = (
+/obj/structure/chair/stool/bar/directional/east{
+	can_buckle = 1
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "Kh" = (
 /turf/closed/indestructible/fakeglass,
@@ -3254,12 +3789,21 @@
 /obj/effect/spawner/random/maintenance/three,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"KI" = (
+/turf/open/floor/iron/dark/side{
+	dir = 10
+	},
+/area/awaymission/museum)
 "KN" = (
 /obj/effect/landmark/awaystart,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
 /turf/open/floor/grass,
+/area/awaymission/museum)
+"Lg" = (
+/obj/machinery/griddle,
+/turf/open/floor/iron/freezer,
 /area/awaymission/museum)
 "Lk" = (
 /obj/machinery/light/directional/north,
@@ -3275,6 +3819,11 @@
 	dir = 10
 	},
 /turf/open/floor/grass,
+/area/awaymission/museum)
+"Ls" = (
+/obj/structure/table/reinforced,
+/obj/item/instrument/piano_synth/headphones,
+/turf/open/floor/iron/dark/textured_large,
 /area/awaymission/museum)
 "Lt" = (
 /obj/structure/plaque/static_plaque/golden/commission/asteroid,
@@ -3293,6 +3842,11 @@
 	},
 /obj/effect/turf_decal/tile/green,
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"LB" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 8
+	},
 /area/awaymission/museum)
 "LC" = (
 /obj/machinery/computer/terminal/museum{
@@ -3343,6 +3897,10 @@
 "Mg" = (
 /obj/structure/plaque/static_plaque/golden/commission/tram,
 /turf/closed/indestructible/reinforced,
+/area/awaymission/museum)
+"Mn" = (
+/obj/machinery/light/warm/directional/south,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "Ms" = (
 /obj/effect/turf_decal/stripes/line,
@@ -3432,6 +3990,14 @@
 /obj/structure/plaque/static_plaque/golden/commission/birdboat,
 /turf/closed/indestructible/reinforced,
 /area/awaymission/museum)
+"Ns" = (
+/obj/structure/table/wood,
+/obj/effect/spawner/random/food_or_drink/booze{
+	loot = list(/obj/item/reagent_containers/cup/glass/bottle/beer = 10, /obj/item/reagent_containers/cup/glass/bottle/ale = 10, /obj/item/reagent_containers/cup/glass/bottle/beer/light = 5, /obj/item/reagent_containers/cup/glass/bottle/maltliquor = 5, /obj/item/reagent_containers/cup/glass/bottle/whiskey = 5, /obj/item/reagent_containers/cup/glass/bottle/gin = 5, /obj/item/reagent_containers/cup/glass/bottle/vodka = 5, /obj/item/reagent_containers/cup/glass/bottle/tequila = 5, /obj/item/reagent_containers/cup/glass/bottle/rum = 5, /obj/item/reagent_containers/cup/glass/bottle/vermouth = 5, /obj/item/reagent_containers/cup/glass/bottle/cognac = 5, /obj/item/reagent_containers/cup/glass/bottle/wine = 5, /obj/item/reagent_containers/cup/glass/bottle/kahlua = 5, /obj/item/reagent_containers/cup/glass/bottle/amaretto = 5, /obj/item/reagent_containers/cup/glass/bottle/hcider = 5, /obj/item/reagent_containers/cup/glass/bottle/absinthe = 5, /obj/item/reagent_containers/cup/glass/bottle/sake = 5, /obj/item/reagent_containers/cup/glass/bottle/grappa = 5, /obj/item/reagent_containers/cup/glass/bottle/applejack = 5, /obj/item/reagent_containers/cup/glass/bottle/wine_voltaic = 5, /obj/item/reagent_containers/cup/bottle/ethanol = 2, /obj/item/reagent_containers/cup/glass/bottle/fernet = 2, /obj/item/reagent_containers/cup/glass/bottle/champagne = 2, /obj/item/reagent_containers/cup/glass/bottle/absinthe/premium = 2, /obj/item/reagent_containers/cup/glass/bottle/goldschlager = 2, /obj/item/reagent_containers/cup/glass/bottle/patron = 1, /obj/item/reagent_containers/cup/glass/bottle/kong = 1, /obj/item/reagent_containers/cup/glass/bottle/lizardwine = 1, /obj/item/reagent_containers/cup/glass/bottle/vodka/badminka = 1, /obj/item/reagent_containers/cup/glass/bottle/trappist = 1);
+	spawn_random_offset = 2
+	},
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "Ny" = (
 /obj/effect/turf_decal/siding/dark_blue{
 	dir = 1
@@ -3508,6 +4074,12 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"Oo" = (
+/obj/structure/closet/secure_closet/bar/lavaland_bartender_booze{
+	anchored = 1
+	},
+/turf/open/floor/wood/tile,
+/area/awaymission/museum)
 "Op" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/computer/terminal/museum{
@@ -3539,6 +4111,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron,
 /area/awaymission/museum)
+"OS" = (
+/obj/structure/chair/stool/bar/directional/east{
+	can_buckle = 1
+	},
+/obj/effect/mapping_helpers/mob_buckler,
+/mob/living/basic/mothroach,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "OT" = (
 /obj/structure/marker_beacon/burgundy,
 /obj/structure/lattice/catwalk,
@@ -3557,6 +4137,10 @@
 	dir = 1
 	},
 /area/awaymission/museum)
+"Pb" = (
+/mob/living/basic/mothroach,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/awaymission/museum)
 "Pc" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 4
@@ -3573,6 +4157,11 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"Pf" = (
+/obj/structure/table/wood,
+/obj/item/food/kebab/pineapple_skewer,
+/turf/open/floor/iron/freezer,
+/area/awaymission/museum)
 "Pi" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue/corner{
@@ -3587,6 +4176,21 @@
 /obj/structure/filingcabinet/chestdrawer,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
+"Pq" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/plate,
+/obj/item/food/kebab/pineapple_skewer,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
+"Ps" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "PB" = (
 /turf/closed/indestructible/fakedoor/engineering,
@@ -3603,7 +4207,7 @@
 	icon_state = "lantern-on";
 	start_on = 1
 	},
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "PK" = (
 /obj/machinery/door/poddoor{
@@ -3649,10 +4253,15 @@
 "PX" = (
 /obj/structure/thermoplastic/light,
 /obj/structure/transport/linear/tram/slow,
-/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
-/obj/effect/spawner/random/maintenance/seven,
-/obj/item/storage/pill_bottle/maintenance_pill/full,
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"PZ" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/item/flashlight/flare{
+	start_on = 1;
+	icon_state = "flare-on"
+	},
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Qb" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3679,7 +4288,7 @@
 /area/awaymission/museum)
 "Qi" = (
 /obj/effect/spawner/structure/window/reinforced/indestructible,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Qj" = (
 /obj/structure/hedge,
@@ -3701,7 +4310,7 @@
 /obj/item/food/pizza/mothic_white_pie,
 /obj/item/toy/plush/moth,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Qs" = (
 /obj/effect/mapping_helpers/burnt_floor,
@@ -3718,9 +4327,9 @@
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "Qv" = (
-/obj/effect/decal/cleanable/fuel_pool,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/floor/iron/dark/side{
+	dir = 4
+	},
 /area/awaymission/museum)
 "Qw" = (
 /obj/effect/turf_decal/siding/wood{
@@ -3768,6 +4377,7 @@
 /area/awaymission/museum)
 "QP" = (
 /obj/effect/playeronly_barrier,
+/obj/machinery/door/airlock/public/glass,
 /turf/open/floor/iron,
 /area/awaymission/museum)
 "QU" = (
@@ -3775,6 +4385,14 @@
 /obj/structure/broken_flooring/side/always_floorplane{
 	dir = 1
 	},
+/turf/open/indestructible/plating,
+/area/awaymission/museum)
+"QX" = (
+/obj/structure/sign/poster/party_game/directional/south,
+/turf/open/floor/iron/dark/side,
+/area/awaymission/museum)
+"Re" = (
+/obj/effect/mapping_helpers/broken_floor,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "Ri" = (
@@ -3808,6 +4426,10 @@
 /turf/open/floor/iron/smooth_corner{
 	dir = 4
 	},
+/area/awaymission/museum)
+"Rs" = (
+/mob/living/basic/mothroach,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/awaymission/museum)
 "Rz" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/end{
@@ -3848,6 +4470,19 @@
 /obj/structure/transport/linear/tram/slow,
 /obj/structure/closet/crate/engineering,
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"Sa" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/door/airlock/freezer,
+/turf/open/floor/iron/freezer,
+/area/awaymission/museum)
+"Se" = (
+/obj/structure/chair/comfy/beige,
+/mob/living/basic/mothroach,
+/obj/effect/mapping_helpers/mob_buckler,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "Sh" = (
 /obj/effect/turf_decal/siding,
@@ -3898,6 +4533,10 @@
 /obj/machinery/light/floor,
 /turf/open/floor/mineral/gold,
 /area/awaymission/museum)
+"Tt" = (
+/obj/structure/holosign/barrier/engineering,
+/turf/open/misc/grass,
+/area/awaymission/museum/mothroachvoid)
 "Tz" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood{
@@ -3912,6 +4551,11 @@
 	dir = 8
 	},
 /turf/open/indestructible/plating,
+/area/awaymission/museum)
+"TF" = (
+/turf/open/floor/iron/stairs/right{
+	dir = 4
+	},
 /area/awaymission/museum)
 "TI" = (
 /obj/structure/chair/bronze{
@@ -3955,10 +4599,17 @@
 	},
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"TR" = (
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/awaymission/museum)
 "TV" = (
 /obj/structure/sign/poster/random/directional/east,
 /obj/structure/grille,
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
+"TY" = (
+/turf/open/floor/iron/showroomfloor,
 /area/awaymission/museum)
 "Ue" = (
 /obj/structure/thermoplastic,
@@ -4111,7 +4762,7 @@
 /obj/structure/grille/broken,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "VA" = (
 /obj/effect/turf_decal/stripes/line,
@@ -4198,6 +4849,12 @@
 /obj/structure/flora/bush/sparsegrass/style_random,
 /turf/open/floor/grass,
 /area/awaymission/museum)
+"Wg" = (
+/mob/living/basic/mothroach,
+/obj/structure/window/spawner/directional/north,
+/obj/structure/window/spawner/directional/east,
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/awaymission/museum)
 "Wj" = (
 /obj/effect/turf_decal/siding/wood/corner{
 	dir = 1
@@ -4211,6 +4868,13 @@
 	},
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"Wr" = (
+/obj/effect/light_emitter{
+	light_color = "#FFF4AA";
+	set_cap = 1
+	},
+/turf/closed/indestructible/rock,
 /area/awaymission/museum)
 "Wt" = (
 /obj/machinery/computer/old{
@@ -4235,6 +4899,10 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"WB" = (
+/obj/structure/chair/stool/bar/directional/east,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "WD" = (
 /obj/effect/mob_spawn/corpse/human/assistant,
 /obj/effect/mapping_helpers/broken_floor,
@@ -4257,6 +4925,14 @@
 	dir = 8
 	},
 /turf/open/floor/cult,
+/area/awaymission/museum)
+"WJ" = (
+/obj/structure/thermoplastic,
+/obj/structure/transport/linear/tram/slow,
+/obj/effect/spawner/random/maintenance/seven,
+/obj/item/storage/pill_bottle/maintenance_pill/full,
+/obj/effect/spawner/random/structure/closet_empty/crate/with_loot,
+/turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
 "WM" = (
 /obj/structure/flora/bush/sparsegrass/style_random,
@@ -4295,6 +4971,15 @@
 	},
 /obj/structure/lattice,
 /turf/open/chasm/true/no_smooth,
+/area/awaymission/museum)
+"Xc" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/plate,
+/obj/item/food/kitzushi,
+/turf/open/floor/wood/large,
 /area/awaymission/museum)
 "Xh" = (
 /turf/closed/indestructible/fakedoor/maintenance,
@@ -4351,6 +5036,15 @@
 /obj/structure/broken_flooring/corner/always_floorplane,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"Yb" = (
+/obj/structure/table/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/item/plate/large,
+/obj/item/food/khachapuri,
+/turf/open/floor/wood/large,
+/area/awaymission/museum)
 "Yd" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/broken_flooring/side/directional/east,
@@ -4401,7 +5095,7 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "YF" = (
 /obj/structure/hedge,
@@ -4415,6 +5109,11 @@
 	dir = 1
 	},
 /turf/open/floor/black,
+/area/awaymission/museum)
+"YY" = (
+/turf/open/floor/iron/stairs/left{
+	dir = 8
+	},
 /area/awaymission/museum)
 "YZ" = (
 /obj/machinery/light/warm/dim/directional/south,
@@ -4458,9 +5157,10 @@
 /obj/machinery/door/airlock/maintenance_hatch,
 /obj/structure/broken_flooring/side/always_floorplane/directional/east,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "ZF" = (
+/mob/living/basic/mothroach,
 /turf/open/misc/beach/coast/corner{
 	dir = 1
 	},
@@ -4483,6 +5183,10 @@
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
+"ZP" = (
+/obj/structure/statue/gold/ce,
+/turf/open/floor/mineral/diamond,
+/area/awaymission/museum/mothroachvoid)
 "ZW" = (
 /obj/machinery/door/airlock/wood/glass,
 /obj/effect/turf_decal/siding/wood{
@@ -4499,7 +5203,7 @@
 	dir = 1
 	},
 /obj/structure/grille,
-/turf/open/floor/plating,
+/turf/open/indestructible/plating,
 /area/awaymission/museum)
 "ZZ" = (
 /obj/item/stack/rods,
@@ -26723,17 +27427,17 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+MF
+MF
+MF
+MF
+MF
+MF
+MF
+MF
+MF
+MF
 re
 re
 re
@@ -26980,17 +27684,17 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+Ns
+yi
+Er
+EM
+yi
+Se
+Cy
+yi
+Ns
+MF
 re
 re
 re
@@ -27237,17 +27941,17 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+rA
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+rA
+MF
 re
 re
 re
@@ -27489,28 +28193,28 @@ re
 re
 re
 re
+MF
+MF
+MF
+MF
+MF
+MF
+WB
+WB
+WB
+WB
+WB
+WB
+gM
+gM
+wO
+MF
 re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Ma
+Ma
 re
 re
 re
@@ -27746,29 +28450,29 @@ re
 re
 re
 re
+MF
+ml
+Pf
+Lg
+Lg
+MF
+fi
+fi
+fi
+fi
+fi
+fi
+pp
+gM
+IZ
+MF
 re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+Zn
+Ma
+Ma
 re
 re
 re
@@ -28003,30 +28707,30 @@ re
 re
 re
 re
+MF
+gB
+HP
+HP
+HP
+MF
+fW
+rr
+rr
+rr
+rr
+Ek
+pp
+gM
+EM
+MF
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+DS
+wh
+Ma
+Ma
+Ma
 re
 re
 re
@@ -28260,31 +28964,31 @@ re
 re
 re
 re
+MF
+AG
+HP
+HP
+HP
+mZ
+rr
+Oo
+zC
+dH
+rr
+dV
+gM
+gM
+rA
+MF
+MF
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+DS
+Re
+wh
+Ma
+Ma
+Zn
 re
 re
 re
@@ -28517,31 +29221,31 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+wk
+jL
+HP
+bC
+MF
+dL
+rr
+rr
+hp
+rr
+kr
+pp
+gM
+gM
+aW
+MF
+MF
+MF
+MF
+Re
+PZ
+Ma
+Ma
+dZ
 re
 re
 re
@@ -28772,33 +29476,33 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+MF
+MF
+MF
+MF
+Sa
+MF
+MF
+MF
+tx
+tx
+tx
+tx
+tx
+pp
+gM
+jf
+gM
+bj
+TY
+cH
+cH
+vs
+cR
+Ma
+Ma
+Zn
 re
 re
 re
@@ -29029,32 +29733,32 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+cF
+cF
+cF
+cF
+cF
+KI
+Ci
+MF
+ex
+ex
+ex
+ex
+ex
+gM
+gM
+gM
+FM
+MF
+nr
+TY
+cH
+vs
+cR
+Ma
+Ma
 re
 re
 re
@@ -29286,32 +29990,32 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+YY
+LB
+Am
+iN
+uc
+Jb
+Ps
+eA
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+gM
+Mn
+MF
+CV
+TY
+gA
+MF
+Zn
+Ma
+Ma
 re
 re
 re
@@ -29543,32 +30247,32 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+MF
+qp
+Ls
+Ec
+uc
+CT
+Jb
+xT
+MF
+Jd
+Kd
+OS
+Kd
+OS
+OS
+Kd
+gM
+gM
+MF
+MF
+up
+MF
+MF
+Zn
+Ma
+Ma
 re
 re
 re
@@ -29800,32 +30504,32 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-re
-re
-re
+MF
+ct
+Bo
+wI
+Rs
+mK
+QX
+MF
+MF
+MF
+Pq
+ya
+Yb
+Xc
+GO
+fz
+la
+la
+MF
+Fh
+la
+ht
+MF
+qS
+Ma
+Ma
 re
 re
 re
@@ -30057,14 +30761,14 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-xu
+MF
+qp
+az
+Jc
+Pb
+FG
+Jb
+MF
 eP
 eP
 eP
@@ -30074,15 +30778,15 @@ Ar
 Ar
 wZ
 eP
+eP
 mV
 mV
 mV
 mV
 mV
-mV
-re
-re
-re
+qS
+qS
+Ko
 re
 re
 re
@@ -30314,14 +31018,14 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-xu
+MF
+TF
+vO
+Wg
+TR
+Pb
+Jb
+vU
 eP
 gu
 nb
@@ -30331,12 +31035,12 @@ Ar
 hb
 Dl
 eP
+SQ
 mV
 mV
 mV
 mV
-mV
-mV
+SQ
 MF
 MF
 MF
@@ -30571,33 +31275,33 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-xu
+MF
+Qv
+Qv
+Qv
+Qv
+Qv
+pc
+MF
 oC
 nb
 BF
 Ar
-Ar
+GU
 Ar
 wZ
 gu
 eP
 mV
 mV
-mV
-mV
+mC
+jG
 mV
 mV
 ZW
 gM
-gM
 wO
+Bj
 MF
 re
 re
@@ -30828,14 +31532,14 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-xu
+MF
+MF
+MF
+MF
+MF
+MF
+MF
+MF
 eP
 xm
 Ar
@@ -30847,10 +31551,10 @@ eP
 oC
 mV
 mV
+Fc
+jG
 mV
-mV
-mV
-mV
+tC
 MF
 gM
 gM
@@ -31091,7 +31795,7 @@ re
 re
 re
 re
-re
+zE
 xu
 eP
 xm
@@ -31101,11 +31805,11 @@ Ar
 wZ
 os
 eP
-UG
-SQ
-SQ
-SQ
-SQ
+eP
+mV
+mV
+jG
+qt
 mV
 mV
 jB
@@ -31347,8 +32051,8 @@ re
 re
 re
 re
-re
-re
+xu
+xu
 xu
 dx
 xm
@@ -31358,16 +32062,16 @@ Ar
 wZ
 eP
 eP
-UG
-SQ
-SQ
+eP
+mV
+mV
 SQ
 mV
 mV
 mV
 jB
 yr
-fi
+nq
 kd
 MF
 re
@@ -31424,7 +32128,7 @@ Ma
 Ma
 RU
 ED
-bk
+WJ
 Ai
 tU
 PB
@@ -31604,27 +32308,27 @@ re
 re
 re
 re
-re
-re
 xu
+xu
+mV
 eP
 xm
-Ar
+GU
 Ar
 Ar
 wZ
 eP
 eP
-SQ
-SQ
-SQ
-SQ
-SQ
+mV
+mV
+mV
+mV
+mV
 mV
 mV
 jB
 gM
-fi
+il
 gM
 MF
 re
@@ -31861,9 +32565,9 @@ re
 re
 re
 re
-re
-re
 xu
+xu
+mV
 eP
 xm
 Ar
@@ -31873,7 +32577,7 @@ wZ
 gu
 eP
 zE
-zE
+Wr
 zE
 zE
 zE
@@ -32117,10 +32821,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+xu
+mV
 eP
 xm
 Ar
@@ -32374,10 +33078,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+mV
+mV
 eP
 xm
 Ar
@@ -32631,10 +33335,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+mV
+mV
 eP
 ZF
 Cu
@@ -32888,10 +33592,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+xu
+mV
 dx
 eP
 xm
@@ -33145,10 +33849,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+mV
+mV
 eP
 gu
 xm
@@ -33165,7 +33869,7 @@ re
 re
 re
 zE
-re
+zE
 re
 re
 re
@@ -33402,10 +34106,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+JY
+iV
 eP
 oC
 xm
@@ -33415,15 +34119,15 @@ wZ
 eP
 eP
 zE
+Wr
 zE
 zE
 zE
 zE
 zE
 zE
-mV
-re
-re
+zE
+zE
 re
 re
 re
@@ -33659,10 +34363,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+hj
+tc
 eP
 eP
 xm
@@ -33672,14 +34376,15 @@ wZ
 eP
 oC
 SQ
+mV
 SQ
+mV
 SQ
-SQ
-SQ
-SQ
+mV
 mV
 mV
 xu
+zE
 re
 re
 re
@@ -33692,8 +34397,7 @@ re
 re
 re
 re
-re
-re
+FK
 FK
 FK
 Xh
@@ -33916,10 +34620,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
 xu
+xu
+mV
 eP
 nb
 BF
@@ -33928,18 +34632,17 @@ Ar
 wZ
 eP
 eP
-SQ
-SQ
-SQ
-SQ
-SQ
+mV
 SQ
 mV
+SQ
 mV
+jm
+bs
+bs
 xu
-re
-re
-re
+zE
+zE
 re
 re
 re
@@ -33952,9 +34655,10 @@ re
 re
 re
 FK
-rA
-qS
-Qv
+qw
+XK
+PP
+PP
 xP
 FK
 hi
@@ -34173,10 +34877,10 @@ re
 re
 re
 re
-re
-re
-re
+zE
+zE
 xu
+mV
 eP
 xm
 Ar
@@ -34185,18 +34889,17 @@ Ar
 wZ
 eP
 gu
-SQ
-SQ
-SQ
-SQ
-SQ
-SQ
 mV
-mV
+SQ
+ZP
+Jj
+zR
+xE
+eM
+bs
 xu
-re
-re
-re
+xu
+zE
 re
 re
 re
@@ -34209,9 +34912,10 @@ re
 re
 re
 FK
+FK
 YD
 Vz
-Qv
+PP
 Qo
 FK
 iI
@@ -34431,28 +35135,28 @@ re
 re
 re
 re
-re
-re
+zE
 xu
+mV
 eP
 xm
 Ar
-Ar
+GU
 Ar
 wZ
 oC
 eP
 mV
 mV
-mV
-mV
-mV
-mV
-mV
+xE
+cC
+cC
+cC
+xE
+bs
 mV
 xu
-re
-re
+zE
 re
 re
 re
@@ -34466,9 +35170,9 @@ re
 re
 re
 FK
-qS
-qS
-Qv
+XK
+XK
+PP
 kY
 FK
 pF
@@ -34688,9 +35392,9 @@ re
 re
 re
 re
-re
-re
+zE
 xu
+mV
 oC
 xm
 Ar
@@ -34701,15 +35405,15 @@ eP
 eP
 mV
 mV
-mV
-mV
-mV
-mV
+xE
+cC
+cC
+cC
+xE
 mV
 mV
 xu
-re
-re
+zE
 re
 re
 re
@@ -34724,7 +35428,7 @@ re
 re
 FK
 ls
-qS
+XK
 qx
 FK
 FK
@@ -34945,9 +35649,9 @@ re
 re
 re
 re
-re
-re
+zE
 xu
+mV
 eP
 xm
 Ar
@@ -34955,18 +35659,18 @@ Ar
 Ar
 wZ
 eP
-eP
+UG
 mV
 mV
-mV
-mV
-mV
-mV
-mV
+gm
+xE
+ke
+xE
+Cq
 mV
 xu
-re
-re
+xu
+zE
 re
 re
 re
@@ -35026,9 +35730,9 @@ sD
 Ma
 Ma
 dZ
-gm
+Ma
 sD
-gm
+Ma
 dZ
 Ma
 Ma
@@ -35202,9 +35906,9 @@ re
 re
 re
 re
-re
-re
+zE
 xu
+mV
 gu
 xm
 Ar
@@ -35222,8 +35926,8 @@ mV
 mV
 mV
 xu
-re
-re
+zE
+zE
 re
 re
 re
@@ -35459,9 +36163,9 @@ re
 re
 re
 re
-re
-re
+zE
 xu
+mV
 eP
 xm
 Ar
@@ -35474,12 +36178,12 @@ mV
 mV
 mV
 mV
-mV
-mV
-mV
-mV
+Tt
+Tt
+Tt
+Tt
 xu
-re
+zE
 re
 re
 re
@@ -35716,27 +36420,27 @@ re
 re
 re
 re
-re
-re
+zE
+xu
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
 xu
 xu
 xu
 xu
 xu
+yE
+mV
+pY
 xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-xu
-re
+zE
 re
 re
 re
@@ -35973,27 +36677,27 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+xu
+xn
+ul
+qo
+qo
+qo
+De
+xn
+xn
+xu
+zE
+zE
+zE
+xu
+xu
+xu
+xu
+xu
+zE
 re
 re
 re
@@ -36231,26 +36935,26 @@ re
 re
 re
 re
+zE
+xu
+gu
+xm
+Ar
+Ar
+Ar
+wZ
+gu
+oC
+xu
+zE
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+zE
+zE
+zE
+zE
+zE
+zE
 re
 re
 re
@@ -36488,18 +37192,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
+xu
+zE
 re
 re
 re
@@ -36745,18 +37449,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
+xu
+zE
 re
 re
 re
@@ -37002,18 +37706,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
+xu
+zE
 re
 re
 re
@@ -37259,18 +37963,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+gu
+xm
+Ar
+Ar
+Ar
+wZ
+gu
+oC
+xu
+zE
 re
 re
 re
@@ -37516,18 +38220,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
+xu
+zE
 re
 re
 re
@@ -37773,18 +38477,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
+xu
+zE
 re
 re
 re
@@ -38030,18 +38734,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
+xu
+zE
 re
 re
 re
@@ -38287,18 +38991,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+gu
+xm
+Ar
+Ar
+Ar
+wZ
+gu
+oC
+xu
+zE
 re
 re
 re
@@ -38544,18 +39248,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+eP
+xm
+Ar
+Ar
+Ar
+wZ
+eP
+eP
+xu
+zE
 re
 re
 re
@@ -38801,18 +39505,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+xu
+zE
 re
 re
 re
@@ -39058,18 +39762,18 @@ re
 re
 re
 re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
-re
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
+zE
 re
 re
 re

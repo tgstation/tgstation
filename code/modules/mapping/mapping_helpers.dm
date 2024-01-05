@@ -1392,3 +1392,33 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/turf/our_turf = get_turf(src) // In case a locker ate us or something
 	our_turf.AddElement(/datum/element/bombable_turf)
 	return INITIALIZE_HINT_QDEL
+
+/// this helper buckles all mobs on the tile to the first buckleable object
+/obj/effect/mapping_helpers/mob_buckler
+	name = "Buckle Mob"
+	icon_state = "buckle"
+	late = TRUE
+	///whether we force a buckle
+	var/force_buckle = FALSE
+
+/obj/effect/mapping_helpers/mob_buckler/Initialize(mapload)
+	. = ..()
+	var/atom/movable/buckle_to
+	var/list/mobs = list()
+	for(var/thing as anything in loc)
+		var/atom/movable/possible_buckle = thing
+		if(isnull(buckle_to) && istype(possible_buckle) && possible_buckle.can_buckle)
+			buckle_to = possible_buckle
+			continue
+
+		if(isliving(thing))
+			mobs += thing
+	
+	if(isnull(buckle_to))
+		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to"
+		return INITIALIZE_HINT_QDEL
+		
+	for(var/mob/living/mob in mobs)
+		buckle_to.buckle_mob(mob, force = force_buckle)
+	
+	return INITIALIZE_HINT_QDEL
