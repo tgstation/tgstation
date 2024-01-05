@@ -33,12 +33,12 @@
 
 	if(owner)
 		if(owner.bodytemperature > BODYTEMP_CRYO_THRESHOLD)
-			var/air_temperature_factor = min((owner.bodytemperature - BODYTEMP_CRYO_THRESHOLD) / T20C, 1)
+			var/air_temperature_factor = min((owner.bodytemperature - BODYTEMP_CRYO_THRESHOLD) / (T20C - BODYTEMP_CRYO_THRESHOLD), 1)
 			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 	else
 		var/datum/gas_mixture/exposed_air = return_air()
 		if(exposed_air && exposed_air.temperature > BODYTEMP_CRYO_THRESHOLD)
-			var/air_temperature_factor = min((exposed_air.temperature - BODYTEMP_CRYO_THRESHOLD) / T20C, 1)
+			var/air_temperature_factor = min((exposed_air.temperature - BODYTEMP_CRYO_THRESHOLD) / (T20C - BODYTEMP_CRYO_THRESHOLD), 1)
 			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
 /// Called once every life tick on every organ in a carbon's body
