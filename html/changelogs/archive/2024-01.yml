@@ -108,3 +108,48 @@
   vinylspiders:
   - bugfix: fixes some runtimes in pathfinding code, as well as one in the give direct
       control admin verb
+2024-01-05:
+  Ben10Omintrix:
+  - bugfix: stationary medbots will no longer ignore u for a while if u move out of
+      their way while healing
+  Ghommie:
+  - refactor: Introduced a simple budget system to station traits, so that smaller
+      things only count as half a trait, for example.
+  - balance: Increased the odds and maximum number of station traits that can be rolled
+      each shift.
+  Hatterhat:
+  - bugfix: Universal scanners are no longer invisible when set to the export or sales
+      tagger modes.
+  JohnFulpWillard:
+  - spellcheck: Fixed punctuation in Luini Amaretto's description.
+  - bugfix: Guardian host's ability buttons now works while the host is sleeping/unconscious.
+  LT3:
+  - bugfix: Alternate carpet colors will no longer reskin to normal carpet
+  - bugfix: OOC announcements will now be in shown in OOC colors
+  Melbert:
+  - bugfix: Some things which affect everything in an area are less laggy, the "all
+      lights are broken" station trait especially
+  - bugfix: Fixed runtime from blobbernauts attacking non-living things
+  - bugfix: Fixed Fugu Gland applying to mobs incorrectly
+  Rex9001:
+  - qol: Path of moon and lock now actually fit in the heretic tree
+  - balance: Certain path of moon rituals that needed brains now use easier to obtain
+      organs
+  - bugfix: the moon heretic ascension now produces lunatics again
+  - admin: Amputation Shear amputation is now logged
+  Thlumyn:
+  - bugfix: closets now have a working welder deconstruct screentip
+  Thunder12345:
+  - bugfix: 'Birdshot: Released gulag prisoners can now get off the gulag shuttle.'
+  - bugfix: 'Birdshot: The gulag shuttle airlocks will now cycle like other airlocks.'
+  - bugfix: 'Icebox: Added a fire alarm to the upstairs fore primary hallway.'
+  - bugfix: Gibtonite ore on ice planet gulags no longer spawns as lavaland rock.
+  jlsnow301:
+  - bugfix: 'TGUI: Sections should be scrollable on mouse hover'
+  - bugfix: Fixed redundant "Integrity:" in air alarms
+  mc-oofert:
+  - bugfix: you no longer fall down cliffs if you dont have gravity
+  vinylspiders:
+  - bugfix: fixed an /image hard del in ghost code
+  - bugfix: fixed a runtime in datum/thrownthing
+  - code_imp: progressbars no longer qdel their /image

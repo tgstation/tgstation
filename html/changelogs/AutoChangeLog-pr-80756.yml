@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Alternate carpet colors will no longer reskin to normal carpet"
