@@ -1,6 +1,7 @@
 import { capitalizeAll } from 'common/string';
+import { useState } from 'react';
 
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -42,10 +43,7 @@ export const ChemPress = (props) => {
     packaging_types,
     packaging_type,
   } = data;
-  const [categoryName, setCategoryName] = useLocalState(
-    'categoryName',
-    packaging_category,
-  );
+  const [categoryName, setCategoryName] = useState(packaging_category);
   const shownCategory =
     packaging_types.find((category) => category.cat_name === categoryName) ||
     packaging_types[0];

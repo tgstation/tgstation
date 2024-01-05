@@ -1,5 +1,6 @@
 import { BooleanLike } from 'common/react';
 import { classes } from 'common/react';
+import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -184,8 +185,7 @@ export const Biogenerator = (props) => {
 const ItemList = (props) => {
   const { act } = useBackend();
   const items = props.items.map((item) => {
-    const [amount, setAmount] = useLocalState(
-      'amount' + item.name,
+    const [amount, setAmount] = useState(
       item.is_reagent ? Math.min(Math.max(props.space, 1), 10) : 1,
     );
     const disabled =
