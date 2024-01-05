@@ -78,8 +78,8 @@
 
 	var/original = user.mob.zone_selected
 	switch(keybind_signal)
-		if(COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN)
-			user.body_toggle_head()
+		if(COMSIG_KB_MOB_TARGETHEAD_DOWN)
+			user.body_head()
 		if(COMSIG_KB_MOB_TARGETEYES_DOWN)
 			user.body_eyes()
 		if(COMSIG_KB_MOB_TARGETMOUTH_DOWN)
@@ -101,12 +101,12 @@
 			return FALSE
 	user.mob.log_manual_zone_selected_update("keybind", old_target = original)
 
-/datum/keybinding/mob/target/head_cycle
+/datum/keybinding/mob/target/head
 	hotkey_keys = list("Numpad8")
-	name = "target_head_cycle"
-	full_name = "Target: Cycle Head"
-	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
-	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
+	name = "target_head"
+	full_name = "Target: Head"
+	description = "Pressing this key targets the head. This will impact where you hit people, and can be used for surgery."
+	keybind_signal = COMSIG_KB_MOB_TARGETHEAD_DOWN
 
 /datum/keybinding/mob/target/eyes
 	hotkey_keys = list("Numpad7")
