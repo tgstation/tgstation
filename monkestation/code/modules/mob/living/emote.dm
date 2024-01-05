@@ -92,6 +92,7 @@
 	message = "screams!"
 	message_mime = "acts out a scream!"
 	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+	vary = FALSE
 
 /datum/emote/living/scream/get_sound(mob/living/user)
 	if(issilicon(user))
@@ -108,6 +109,11 @@
 		. = human_user.dna.species.get_scream_sound(user)
 	if(is_cat_enough(user))
 		return pick('monkestation/sound/voice/feline/scream1.ogg', 'monkestation/sound/voice/feline/scream2.ogg', 'monkestation/sound/voice/feline/scream3.ogg')
+
+/datum/emote/living/scream/should_vary(mob/living/user)
+	if(ishuman(user) && !is_cat_enough(user))
+		return TRUE
+	return ..()
 
 /datum/emote/living/scream/screech //If a human tries to screech it'll just scream.
 	key = "screech"
