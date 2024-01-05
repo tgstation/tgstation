@@ -190,7 +190,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 	/// The rate at which the internal air mixture cools
 	var/cooling_rate_per_second = 4
 	/// Minimum temperature of the internal air mixture
-	var/minimum_temperature = BODYTEMP_CRYO_THRESHOLD - 7
+	var/minimum_temperature = T0C - 60
 
 
 /obj/structure/bodycontainer/morgue/Initialize(mapload)
@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		internal_air = external_air.copy()
 	else
 		internal_air = new()
-	internal_air.temperature = BODYTEMP_CRYO_THRESHOLD
+	internal_air.temperature = T0C - 4 // Start a little frosty
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/bodycontainer/morgue/return_air()
