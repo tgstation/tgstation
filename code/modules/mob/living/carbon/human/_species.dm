@@ -1463,10 +1463,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		// Apply the damage to all body parts
 		humi.apply_damage(burn_damage, BURN, spread_damage = TRUE)
 
-	// No cold damage if the body is cryogenically frozen
-	if(humi.coretemperature <= BODYTEMP_CRYO_THRESHOLD)
-		return
-
 	// Apply some burn / brute damage to the body (Dependent if the person is hulk or not)
 	var/is_hulk = HAS_TRAIT(humi, TRAIT_HULK)
 
