@@ -154,7 +154,8 @@
 			clear_mood_event(category)
 		else
 			if (the_event.timeout)
-				the_event.timeout = initial(the_event.timeout) * timeout_mod
+				if(isnum(timeout_mod))
+					the_event.timeout = initial(the_event.timeout) * timeout_mod
 				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 			return // Don't need to update the event.
 	var/list/params = args.Copy(3)
@@ -163,8 +164,8 @@
 	the_event = new type(arglist(params))
 	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
 		return
-
-	the_event.timeout *= timeout_mod
+	if(isnum(timeout_mod))
+		the_event.timeout *= timeout_mod
 	the_event.category = category
 	mood_events[category] = the_event
 	update_mood()
