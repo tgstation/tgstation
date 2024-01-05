@@ -1,0 +1,4 @@
+author: "13spacemen"
+delete-after: True
+changes:
+  - qol: "The hub entry shows the next map and shuttle time, and no longer shows the alert"
