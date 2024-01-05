@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "conveyor belts no longer maintain movement if whatever is on them suddenly leaves their z level"
