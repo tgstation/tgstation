@@ -17,6 +17,9 @@
 
 	return ..()
 
+/// A wound applied when receiving significant enough damage to the head.
+/// Will allow other players to take your eyes out of your head, and slipping
+/// will cause your brain to fall out of your head.
 /datum/wound/cranial_fissure
 	name = "Cranial Fissure"
 	desc = "Patient's crown is agape, revealing severe damage to the skull."
