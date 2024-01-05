@@ -28,6 +28,11 @@ Unused icons for new areas are "awaycontent1" ~ "awaycontent30"
 	icon_state = "awaycontent28"
 	sound_environment = SOUND_ENVIRONMENT_CONCERT_HALL
 
+/area/awaymission/museum/mothroachvoid
+	static_lighting = FALSE
+	base_lighting_alpha = 255
+	base_lighting_color = "#FFFFCC"
+
 /area/awaymission/errorroom
 	name = "Super Secret Room"
 	static_lighting = FALSE

@@ -45,13 +45,6 @@
 	icon_state = "dnamod"
 	density = TRUE
 
-/obj/structure/fluff/minecart
-	name = "minecart"
-	desc = "Ore goes here. Also, there are no rails in space, so this wont budge."
-	icon = 'icons/obj/storage/crates.dmi'
-	icon_state = "miningcaropen"
-	density = TRUE
-
 /obj/structure/fluff/preserved_borer
 	name = "preserved borer exhibit"
 	desc = "A preserved cortical borer. Probably been there long enough to not last long outside the exhibit."
@@ -105,3 +98,13 @@
 	density = TRUE
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+
+/obj/item/paper/fluff/museum/noend
+	name = "scrambled note"
+	default_raw_text = {"this place,
+	<br>god whose idea was to build a museum in the void in the middle of god knows where there is no reason we should have done this
+	<br>and those mannequins why do they stare back where the fuck did you get these from
+	<br>how would we even get visitors here
+	<br>sometimes i can catch them moving
+	<br>
+	<br>we should have never come here"}
