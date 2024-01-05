@@ -21,10 +21,11 @@
 		JOB_AI,
 		JOB_CYBORG,
 	)
-	min_players = 30 //no required enemies deu to instead needing enemy antags
+	min_players = 10 //no required enemies deu to instead needing enemy antags
 	weight = 2
 	maximum_antags = 1
 	prompted_picking = TRUE
+	max_occurrences = 2
 
 /datum/round_event_control/antagonist/solo/monsterhunter/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	. = ..()
