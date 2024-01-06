@@ -55,7 +55,6 @@
 		Shielding.control_unit = null
 		qdel(Shielding)
 	QDEL_NULL(fuel_jar)
-	///Our internal radio
 	QDEL_NULL(radio)
 	return ..()
 
@@ -73,7 +72,7 @@
 	if(machine_stat & (NOPOWER|BROKEN) || !active) //can update the icons even without power
 		return
 
-	if(!fuel_jar)//No fuel but we are on, shutdown
+	if(!fuel_jar) //No fuel but we are on, shutdown
 		toggle_power()
 		playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return

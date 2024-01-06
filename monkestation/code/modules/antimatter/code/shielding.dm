@@ -20,9 +20,12 @@
 	active_power_usage = 0
 
 	var/obj/machinery/power/am_control_unit/control_unit = null
-	var/processing = FALSE //To track if we are in the update list or not, we need to be when we are damaged and if we ever
-	var/stability = 100 //If this gets low bad things tend to happen
-	var/efficiency = 1 //How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	///To track if we are in the update list or not, we need to be when we are damaged and if we ever
+	var/processing = FALSE
+	///If this gets low bad things tend to happen
+	var/stability = 100
+	///How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	var/efficiency = 1
 	var/coredirs = 0
 	var/dirs = 0
 
@@ -86,7 +89,7 @@
 	return
 
 
-/obj/machinery/am_shielding/emp_act()//Immune due to not really much in the way of electronics.
+/obj/machinery/am_shielding/emp_act() //Immune due to not really much in the way of electronics.
 	return
 
 /obj/machinery/am_shielding/ex_act(severity, target)
