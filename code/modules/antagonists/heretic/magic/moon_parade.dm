@@ -43,7 +43,8 @@
 	soundloop = new(src,  TRUE)
 
 /obj/projectile/moon_parade/prehit_pierce(atom/A)
-	. = ..()
+	if(!isliving(firer) || !isliving(A))
+		return ..()
 
 	var/mob/living/caster = firer
 	var/mob/living/victim = A
@@ -67,6 +68,7 @@
 		visible_message(span_warning("The parade hits [victim] and a sudden wave of clarity comes over you!"))
 		return PROJECTILE_DELETE_WITHOUT_HITTING
 
+	return ..()
 
 /obj/projectile/moon_parade/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
