@@ -1,5 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - bugfix: "Human mobs (such as IPCs) should once again vary their scream's pitch - unless you're a cat."
-  - code_imp: "\"/datum/emote\" now has a new proc: \"should_vary(mob/living/user)\". If your emote needs to vary in pitch, but only under certain conditions, override that proc."

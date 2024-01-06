@@ -80,3 +80,12 @@
 2024-01-05:
   DexeeXI:
   - rscdel: Removed Oshan as a map from the codebase.
+2024-01-06:
+  MichiRecRoom:
+  - bugfix: Human mobs (such as IPCs) should once again vary their scream's pitch
+      - unless you're a cat.
+  - code_imp: '"/datum/emote" now has a new proc: "should_vary(mob/living/user)".
+      If your emote needs to vary in pitch, but only under certain conditions, override
+      that proc.'
+  Sm0key123:
+  - bugfix: fixes produce console bluescreening when viewing it as ghost
