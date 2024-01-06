@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes an /image harddel in station blueprints"
-  - code_imp: "cleaned up some more /image qdels"
