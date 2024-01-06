@@ -1,4 +1,4 @@
-/obj/item/am_containment
+/obj/item/antimatter_jar
 	name = "antimatter containment jar"
 	desc = "Holds antimatter."
 	icon = 'monkestation/code/modules/antimatter/icons/antimatter.dmi'
@@ -11,14 +11,14 @@
 	throw_range = 2
 
 	var/fuel = 10000
-	var/fuel_max = 10000//Lets try this for now
-	var/stability = 100//TODO: add all the stability things to this so its not very safe if you keep hitting in on things
+	var/fuel_max = 10000 //Lets try this for now
+	var/stability = 100 //TODO: add all the stability things to this so its not very safe if you keep hitting in on things
 
 
-/obj/item/am_containment/ex_act(severity, target)
+/obj/item/antimatter_jar/ex_act(severity, target)
 	switch(severity)
 		if(1)
-			explosion(get_turf(src), 1, 2, 3, 5)//Should likely be larger but this works fine for now I guess
+			explosion(get_turf(src), 1, 2, 3, 5) //Should likely be larger but this works fine for now I guess
 			if(src)
 				qdel(src)
 		if(2)
@@ -33,7 +33,7 @@
 	//check_stability()
 	return
 
-/obj/item/am_containment/proc/usefuel(wanted)
+/obj/item/antimatter_jar/proc/usefuel(wanted)
 	if(fuel < wanted)
 		wanted = fuel
 	fuel -= wanted
