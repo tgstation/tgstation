@@ -118,12 +118,12 @@ SUBSYSTEM_DEF(minimap)
 	var/section_pixel_width = cache.data.section_width * world.icon_size
 	var/section_pixel_height = cache.data.section_height * world.icon_size
 
-	while(section_pixel_width > 4096)
+	while(section_pixel_width > 2048)
 		cache.data.section_width = ROUND_UP(cache.data.section_width * 0.5)
 		section_pixel_width = cache.data.section_width * world.icon_size
 	cache.data.section_columns = ROUND_UP(cache.data.tile_width / cache.data.section_width)
 
-	while(section_pixel_height > 4096)
+	while(section_pixel_height > 2048)
 		cache.data.section_height = ROUND_UP(cache.data.section_height * 0.5)
 		section_pixel_height = cache.data.section_height * world.icon_size
 	cache.data.section_rows = ROUND_UP(cache.data.tile_height / cache.data.section_height)
@@ -154,6 +154,7 @@ SUBSYSTEM_DEF(minimap)
 #endif
 
 	to_generate += cache
+	can_fire = TRUE
 	return TRUE
 
 /datum/controller/subsystem/minimap/fire(resumed)
