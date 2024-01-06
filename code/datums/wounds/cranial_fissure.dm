@@ -150,6 +150,7 @@
 			span_boldwarning("[user] scoops out [victim]'s brain!"),
 			ignored_mobs = victim,
 		)
+		return TRUE
 
 /datum/wound/cranial_fissure/proc/still_has_eyes(obj/item/organ/internal/eyes/eyes)
 	PRIVATE_PROC(TRUE)
