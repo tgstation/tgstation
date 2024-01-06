@@ -180,11 +180,10 @@
 	// If we're about to display this group to a mob who's client is more recent than the last known version with working CENTER, then we need to remake the relays
 	// with the correct screen_loc using the relay override
 	if(viewing_hud.mymob?.client?.byond_build > MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS)
-		for(var/thing in plane_masters)
-			var/atom/movable/screen/plane_master/plane = plane_masters[thing]
+		for(var/atom/movable/screen/plane_master/plane as anything in plane_masters)
 			QDEL_LIST(plane.relays)
 			plane.generate_render_relays(relay_loc_override = "LEFT,TOP")
-	. = ..()
+	return ..()
 
 #undef MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS
 
