@@ -204,7 +204,6 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 		internal_air = external_air.copy()
 	else
 		internal_air = new()
-	internal_air.temperature = T0C - 4 // Start a little frosty
 	START_PROCESSING(SSobj, src)
 
 /obj/structure/bodycontainer/morgue/return_air()
