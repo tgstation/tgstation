@@ -64,7 +64,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// If this plane master is outside of our visual bounds right now
 	var/is_outside_bounds = FALSE
 
-/atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0)
+/atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0, relay_loc_override = null)
 	. = ..()
 	src.offset = offset
 	true_alpha = alpha
@@ -77,7 +77,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
 	if(start_hidden)
 		hide_plane(home.our_hud?.mymob)
-	generate_render_relays()
+	generate_render_relays(relay_loc_override)
 
 /atom/movable/screen/plane_master/Destroy()
 	if(home)
