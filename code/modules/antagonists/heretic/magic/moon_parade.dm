@@ -72,6 +72,8 @@
 
 /obj/projectile/moon_parade/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
+	if(. == BULLET_ACT_BLOCK || !isliving(target))
+		return
 	var/mob/living/victim = target
 
 	RegisterSignal(victim, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, PROC_REF(moon_block_move), override=TRUE)
@@ -90,6 +92,8 @@
 /obj/projectile/moon_parade/Destroy()
 	for(var/datum/weakref/mob_ref in mobs_hit)
 		var/mob/living/real_mob = mob_ref.resolve()
+		if(isnull(real_mob))
+			continue
 		UnregisterSignal(real_mob, COMSIG_MOB_CLIENT_PRE_LIVING_MOVE)
 	mobs_hit.Cut()
 	soundloop.stop()
