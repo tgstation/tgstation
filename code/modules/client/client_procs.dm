@@ -465,22 +465,24 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
-		account_join_date = findJoinDate()
-		if(!account_join_date)
+		if(!SSdbcore.Connect())
 			player_age = 0
 		else
-			var/datum/db_query/query_datediff = SSdbcore.NewQuery(
-				"SELECT DATEDIFF(Now(), :account_join_date)",
-				list("account_join_date" = account_join_date)
-			)
-			if(!query_datediff.Execute())
+			account_join_date = findJoinDate()
+			if(!account_join_date)
+				player_age = 0
+			else
+				var/datum/db_query/query_datediff = SSdbcore.NewQuery(
+					"SELECT DATEDIFF(Now(), :account_join_date)",
+					list("account_join_date" = account_join_date)
+				)
+				if(!query_datediff.Execute())
+					qdel(query_datediff)
+					return
+				if(query_datediff.NextRow())
+					account_age = text2num(query_datediff.item[1])
 				qdel(query_datediff)
-				qdel(query_get_client_age)
-				return
-			if(query_datediff.NextRow())
-				account_age = text2num(query_datediff.item[1])
-			qdel(query_datediff)
-		player_age = account_age
+			player_age = account_age
 
 	var/nnpa = CONFIG_GET(number/notify_new_player_age)
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
