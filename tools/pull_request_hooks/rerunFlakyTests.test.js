@@ -13,7 +13,7 @@ function extractDetailsFromPayload(filename) {
 const chatClient = extractDetailsFromPayload("chat_client");
 assert.equal(
   chatClient.title,
-  "Flaky test create_and_destroy: /datum/computer_file/program/chatclient hard deleted 1 times out of a total del count of 13"
+  "Flaky hard delete: /datum/computer_file/program/chatclient"
 );
 assert.equal(chatClient.failures.length, 1);
 
@@ -37,3 +37,9 @@ assert.equal(
   "Multiple flaky test failures in more_shapeshift_spell, shapeshift_spell"
 );
 assert.equal(multipleFailures.failures.length, 2);
+
+const invalidTimer = extractDetailsFromPayload("invalid_timer");
+assert.equal(
+	invalidTimer.title,
+	"Flaky test monkey_business: Invalid timer: /datum/looping_sound/proc/start_sound_loop() on /datum/looping_sound/showering"
+);

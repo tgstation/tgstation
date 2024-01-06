@@ -137,11 +137,29 @@ export function extractDetails(log) {
   // Common patterns where we can always get a detailed title
   const runtimeMatch = failure.headline.match(/Runtime in .+?: (?<error>.+)/);
   if (runtimeMatch) {
+		const runtime = runtimeMatch.groups.error.trim();
+
+		const invalidTimerMatch = runtime.match(/^Invalid timer:.+object:(?<object>[^[]+).*delegate:(?<proc>.+?), source:/);
+		if (invalidTimerMatch) {
+			return {
+				title: `Flaky test ${failGroup}: Invalid timer: ${invalidTimerMatch.groups.proc.trim()} on ${invalidTimerMatch.groups.object.trim()}`,
+				failures,
+			};
+		}
+
     return {
-      title: `Flaky test ${failGroup}: ${runtimeMatch.groups.error.trim()}`,
+      title: `Flaky test ${failGroup}: ${runtime}`,
       failures,
     };
   }
+
+	const hardDelMatch = failure.headline.match(/^(?<object>\/[\w/]+) hard deleted .* times out of a total del count of/);
+	if (hardDelMatch) {
+		return {
+			title: `Flaky hard delete: ${hardDelMatch.groups.object}`,
+			failures,
+		};
+	}
 
   // Try to normalize the title and remove anything that might be variable
   const normalizedError = failure.headline.replace(/\s*at .+?:[0-9]+.*/g, ""); // "<message> at code.dm:123"
@@ -205,7 +223,7 @@ function createBody({ title, failures }, runUrl) {
 	<!-- title: ${title} -->
 
 	Flaky tests were detected in [this test run](${runUrl}). This means that there was a failure that was cleared when the tests were simply restarted.
-	
+
 	Failures:
 	\`\`\`
 	${failures
