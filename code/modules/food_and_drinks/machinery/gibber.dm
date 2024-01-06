@@ -173,7 +173,9 @@
 
 	if(ishuman(occupant))
 		var/mob/living/carbon/human/gibee = occupant
-		if(gibee.dna && gibee.dna.species)
+		if(sourcejob && sourcejob == JOB_SECURITY_OFFICER)
+			typeofmeat = /obj/item/food/meat/slab/pig
+		else if(gibee.dna && gibee.dna.species)
 			typeofmeat = gibee.dna.species.meat
 			typeofskin = gibee.dna.species.skinned_type
 
