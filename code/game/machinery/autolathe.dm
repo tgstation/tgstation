@@ -145,88 +145,108 @@
 		get_asset_datum(/datum/asset/spritesheet/research_designs),
 	)
 
-/obj/machinery/autolathe/ui_act(action, list/params)
+/obj/machinery/autolathe/ui_act(action, list/params, datum/tgui/ui)
 	. = ..()
 	if(.)
 		return
 
-	if(action == "make")
-		if(disabled)
-			say("The autolathe wires are disabled.")
-			return
-		if(busy)
-			say("The autolathe is busy. Please wait for completion of previous operation.")
-			return
+	if(action != "make")
+		stack_trace("unknown autolathe ui_act: [action]")
+		return
 
-		if(isclosedturf(get_step(src, drop_direction)))
-			say("Output is obstructed.")
-			return
+	if(disabled)
+		say("Unable to print, voltage mismatch in internal wiring.")
+		return
 
-		var/design_id = params["id"]
-		if(!istext(design_id))
-			return
-		if(!stored_research.researched_designs.Find(design_id) && !stored_research.hacked_designs.Find(design_id) && !imported_designs.Find(design_id))
-			return
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
-		if(!(design.build_type & AUTOLATHE) || design.id != design_id)
-			return
+	if(busy)
+		balloon_alert(ui.user, "busy!")
+		return
 
-		being_built = design
-		var/is_stack = ispath(being_built.build_path, /obj/item/stack)
-		var/coeff = (is_stack ? 1 : creation_efficiency) // Stacks are unaffected by production coefficient
+	var/turf/target_location = get_step(src, drop_direction)
+	if(isclosedturf(target_location))
+		say("Output path is obstructed by a large object.")
+		return
 
-		var/multiplier = round(text2num(params["multiplier"]))
-		if(!multiplier || !IS_FINITE(multiplier))
-			return
-		multiplier = clamp(multiplier, 1, 50)
+	var/design_id = params["id"]
 
-		//check for materials
-		var/list/materials_used = list()
-		var/list/custom_materials = list() // These will apply their material effect, should usually only be one.
-		for(var/mat in being_built.materials)
-			var/datum/material/used_material = mat
+	var/valid_design = stored_research.researched_designs[design_id]
+	valid_design ||= stored_research.hacked_designs[design_id]
+	valid_design ||= imported_designs[design_id]
+	if(!valid_design)
+		return
 
-			var/amount_needed = being_built.materials[mat]
-			if(istext(used_material)) // This means its a category
-				var/list/list_to_show = list()
-				//list all materials in said category
-				for(var/i in SSmaterials.materials_by_category[used_material])
-					if(materials.materials[i] > 0)
-						list_to_show += i
-				//ask user to pick specific material from list
-				used_material = tgui_input_list(
-					usr,
-					"Choose [used_material]",
-					"Custom Material",
-					sort_list(list_to_show, GLOBAL_PROC_REF(cmp_typepaths_asc))
-				)
-				if(isnull(used_material))
-					return
-				//the item composition will be made of these materials
-				custom_materials[used_material] += amount_needed
-			materials_used[used_material] = amount_needed
+	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	if(isnull(design))
+		stack_trace("got passed an invalid design id: [design_id] and somehow made it past all checks")
+		return
 
-		if(!materials.has_materials(materials_used, coeff, multiplier))
-			say("Not enough materials for this operation!.")
-			return
+	if(!(design.build_type & AUTOLATHE))
+		return
 
-		//use power
-		var/total_amount = 0
-		for(var/material in being_built.materials)
-			total_amount += being_built.materials[material]
-		use_power(max(active_power_usage, (total_amount) * multiplier / 5))
+	var/build_count = text2num(params["mulitplier"])
+	if(!build_count)
+		return
+	build_count = clamp(build_count, 1, 50)
 
-		//use materials
-		materials.use_materials(materials_used, coeff, multiplier)
-		to_chat(usr, span_notice("You print [multiplier] item(s) from the [src]"))
-		update_static_data_for_all_viewers()
+	var/list/total_materials_used = list()
+	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
+	for(var/datum/material/material as anything in design.materials)
+		var/amount_needed = design.materials[material] * material_cost_coefficient * build_count
+		if(istext(material)) // category
+			var/list/choices = list()
+			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
+				choices[valid_candidate.name] = valid_candidate
+			material = tgui_input_list(
+				ui.user,
+				"Select the material to use",
+				"Material Selection",
+				sort_list(choices),
+			)
 
-		//print item
-		icon_state = "autolathe_n"
-		var/time_per_item = is_stack ? 32 : ((32 * coeff * multiplier) ** 0.8) / multiplier
-		make_items(custom_materials, multiplier, is_stack, usr, time_per_item)
+		if(isnull(material))
+			return // user cancelled or the material was invalid somehow
+		total_materials_used[material] = amount_needed
 
-		return TRUE
+	if(!materials.has_materials(total_materials_used))
+		say("Not enough materials to begin production.")
+		return
+
+	var/power_use_amount = 0
+	for(var/material_used in total_materials_used)
+		power_use_amount += total_materials_used[material_used] * 0.2
+	if(!directly_use_power(power_use_amount))
+		say("Not enough power in local network to begin production.")
+		return
+
+	var/total_build_time = design.construction_time * build_count * creation_efficiency
+	start_making(design, build_count, ui.user, total_build_time, total_materials_used)
+	return TRUE
+
+/obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, mob/user, total_build_time, list/total_materials_used)
+	busy = TRUE
+	materials.use_materials(total_materials_used)
+	update_static_data_for_all_viewers()
+	icon_state = "autolathe_n"
+
+	var/list/materials_per_item = list()
+	for(var/material in total_materials_used)
+		materials_per_item[material] = total_materials_used[material] / build_count
+
+	for(var/_ in 1 to build_count)
+		addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item))
+	addtimer(CALLBACK(src, PROC_REF(finalize_build)), total_build_time)
+
+/obj/machinery/autolathe/proc/do_make_item(datum/design/design, list/materials_per_item)
+	var/turf/target = get_step(src, drop_direction)
+	if(isclosedturf(target))
+		target = get_turf(src)
+	var/atom/movable/created = new design.build_type(design.build_path)
+	created.set_custom_materials(materials_per_item.Copy())
+	created.forceMove(target)
+
+/obj/machinery/autolathe/proc/finalize_build()
+	icon_state = initial(icon_state)
+	busy = FALSE
 
 /obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
@@ -263,7 +283,7 @@
 				if(!blueprint)
 					continue
 				if(blueprint.build_type & AUTOLATHE)
-					imported_designs += blueprint.id
+					imported_designs[blueprint.id] = TRUE
 				else
 					LAZYADD(not_imported, blueprint.name)
 			if(not_imported)
@@ -296,41 +316,6 @@
 		return
 	drop_direction = direction
 	balloon_alert(usr, "dropping [dir2text(drop_direction)]")
-
-/obj/machinery/autolathe/proc/make_items(list/picked_materials, multiplier, is_stack, mob/user, time_per_item)
-	var/atom/our_loc = drop_location()
-	var/atom/drop_loc = get_step(src, drop_direction)
-
-	busy = TRUE
-	SStgui.update_uis(src) //so ui immediatly knows its busy
-	while(multiplier > 0)
-		if(!busy)
-			break
-		stoplag(time_per_item)
-		var/obj/item/new_item
-		if(is_stack)
-			new_item = new being_built.build_path(our_loc, multiplier)
-		else
-			new_item = new being_built.build_path(our_loc)
-
-			//custom materials for toolboxes
-			if(length(picked_materials))
-				new_item.set_custom_materials(picked_materials) //Ensure we get the non multiplied amount
-				for(var/datum/material/mat in picked_materials)
-					if(!istype(mat, /datum/material/glass) && !istype(mat, /datum/material/iron))
-						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
-
-		//no need to call if ontop of us
-		if(drop_direction)
-			new_item.Move(drop_loc)
-		//multiplier already applied in stack initialization. work done
-		if(is_stack)
-			break
-
-		multiplier--
-
-	icon_state = "autolathe"
-	busy = FALSE
 
 /obj/machinery/autolathe/RefreshParts()
 	. = ..()
@@ -380,10 +365,7 @@
 	var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
 	s.set_up(5, 1, src)
 	s.start()
-	if (electrocute_mob(user, get_area(src), src, 0.7, TRUE))
-		return TRUE
-	else
-		return FALSE
+	return electrocute_mob(user, get_area(src), src, 0.7, TRUE)
 
 /obj/machinery/autolathe/proc/adjust_hacked(state)
 	hacked = state
