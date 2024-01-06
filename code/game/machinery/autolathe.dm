@@ -183,7 +183,7 @@
 	if(!(design.build_type & AUTOLATHE))
 		return
 
-	var/build_count = text2num(params["mulitplier"])
+	var/build_count = text2num(params["multiplier"])
 	if(!build_count)
 		return
 	build_count = clamp(build_count, 1, 50)
@@ -195,17 +195,26 @@
 		if(istext(material)) // category
 			var/list/choices = list()
 			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
+				if(materials.get_material_amount(valid_candidate) < amount_needed)
+					continue
 				choices[valid_candidate.name] = valid_candidate
-			material = tgui_input_list(
+			if(!length(choices))
+				say("No valid materials with applicable amounts detected for design.")
+				return
+			var/chosen = tgui_input_list(
 				ui.user,
 				"Select the material to use",
 				"Material Selection",
 				sort_list(choices),
 			)
+			if(isnull(chosen))
+				return // user cancelled
+			material = choices[chosen]
 
 		if(isnull(material))
-			return // user cancelled or the material was invalid somehow
-		total_materials_used[material] = amount_needed
+			stack_trace("got passed an invalid material id: [material]")
+			return
+		total_materials_used[material] += amount_needed
 
 	if(!materials.has_materials(total_materials_used))
 		say("Not enough materials to begin production.")
