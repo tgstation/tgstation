@@ -52,7 +52,6 @@
 
 
 /datum/round_event/antagonist/solo/ghost/paradox_clone/add_datum_to_mind(datum/mind/antag_mind)
-	. = ..()
 	var/datum/antagonist/paradox_clone/new_datum = antag_mind.add_antag_datum(/datum/antagonist/paradox_clone)
 	new_datum.original_ref = WEAKREF(clone_victim.mind)
 	new_datum.setup_clone()
