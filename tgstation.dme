@@ -1842,6 +1842,7 @@
 #include "code\datums\wounds\blunt.dm"
 #include "code\datums\wounds\bones.dm"
 #include "code\datums\wounds\burns.dm"
+#include "code\datums\wounds\cranial_fissure.dm"
 #include "code\datums\wounds\loss.dm"
 #include "code\datums\wounds\pierce.dm"
 #include "code\datums\wounds\slash.dm"
