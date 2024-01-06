@@ -1,7 +1,7 @@
-#define SHIELD_UPDATE_NONE 0
-#define SHIELD_UPDATE_NORMAL 1
-#define SHIELD_UPDATE_FULL 2
-#define CORE_POWER_OUTPUT 25000 // how much do we generate per a single unit of fuel used?
+#define SHIELD_UPDATE_NONE 0 //Dont update our icon
+#define SHIELD_UPDATE_NORMAL 1 //Update the icons of just ourselfes and our neighbors
+#define SHIELD_UPDATE_FULL 2 //Update the icons of every piece of the antimatter reactor
+#define CORE_POWER_OUTPUT 25000 //How much do we generate per a single unit of fuel used?
 
 /obj/machinery/power/am_control_unit
 	name = "antimatter control unit"
@@ -23,17 +23,21 @@
 	var/stability = 100
 	var/exploding = FALSE
 
-	var/active = FALSE //On or not
-	var/fuel_injection = 2 //How much fuel to inject
-	var/shield_icon_delay = FALSE //delays resetting for a short time
+	///Are we currently turned on or off?
+	var/active = FALSE
+	///How much fuel should we inject?
+	var/fuel_injection = 2
+	///Lets not spam resets when we dont need to
+	var/shield_icon_delay = FALSE
 	var/reported_core_efficiency = 0
 
 	var/power_cycle = 0
-	var/power_cycle_delay = 4 //How many ticks till produce_power is called
+	///How many ticks till produce_power is called
+	var/power_cycle_delay = 4
 	var/stored_core_stability = 100
 	var/stored_core_stability_delay = FALSE
-
-	var/stored_power = 0 //Power to deploy per tick
+	///Power to deploy per tick
+	var/stored_power = 0
 
 	///Our internal radio
 	var/obj/item/radio/radio
@@ -58,7 +62,7 @@
 
 /obj/machinery/power/am_control_unit/process()
 	if(exploding)
-		explosion(get_turf(src),8,12,18,12)
+		explosion(get_turf(src), 8, 12, 18, 12)
 		if(src)
 			qdel(src)
 
@@ -100,7 +104,7 @@
 			visible_message(span_warning("Some small cracks form on [src]!"))
 		if(prob(50))
 			core_damage = 1 //Small chance of damage
-		if(((fuel - core_power) > 5 && (fuel - corepower) < 10))
+		if(((fuel - core_power) > 5 && (fuel - core_power) < 10))
 			core_damage = 5 //Now its really starting to overload the cores
 			if(prob(20))
 				radio.talk_into(src, "Warning: Core overload detected, please contact AME technicians", null)
@@ -276,7 +280,7 @@
 	if(shield_icon_delay)
 		return
 	shield_icon_delay = TRUE
-	if(update_shield_icons == SHIELD_UPDATE_FULL) // clear everything and rebuild
+	if(update_shield_icons == SHIELD_UPDATE_FULL) //Clear everything and rebuild
 		for(var/obj/machinery/am_shielding/AMS in linked_shielding)
 			if(AMS.processing)
 				AMS.shutdown_core()
