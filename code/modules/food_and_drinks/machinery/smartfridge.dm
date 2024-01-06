@@ -225,10 +225,10 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 
-	var/initial_state = initial(icon_state)
+	var/initial_icon_state = initial(icon_state)
 	var/shown_contents_length = visible_items()
 	if(visible_contents && shown_contents_length)
-		var/content_level = "[initial_state]-[base_icon_state]"
+		var/content_level = "[initial_icon_state]-[base_icon_state]"
 		switch(shown_contents_length)
 			if(1 to 25)
 				content_level += "-1"
@@ -238,10 +238,10 @@
 				content_level += "-3"
 		. += mutable_appearance(icon, content_level)
 
-	. += mutable_appearance(icon, "[initial_state]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
+	. += mutable_appearance(icon, "[initial_icon_state]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
 
 	if(!machine_stat && has_emissive)
-		. += emissive_appearance(icon, "[initial_state]-light-mask", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "[initial_icon_state]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
