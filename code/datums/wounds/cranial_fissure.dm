@@ -115,9 +115,48 @@
 
 	return TRUE
 
+/datum/wound/cranial_fissure/treat(obj/item/I, mob/user)
+	. = ..()
+	if(user.zone_selected != BODY_ZONE_HEAD)
+		return FALSE
+
+	if(istype(I, /obj/item/kitchen/spoon))
+		var/obj/item/organ/internal/brain/brain = victim?.get_organ_by_type(/obj/item/organ/internal/brain)
+		if(isnull(brain))
+			victim.balloon_alert(user, "no brain to scoop out!")
+			return TRUE
+		victim.balloon_alert(user, "scooping out brain...")
+		victim.show_message(
+			span_userdanger("[victim] starts to scoop out your brain!"),
+			MSG_VISUAL,
+			span_userdanger("You can feel a metalic spoon inside your head, pulling on something important."),
+		)
+
+		// Only 5 seconds, they have a tool for it
+		if (!do_after(user, 5 SECONDS, victim, extra_checks = CALLBACK(src, PROC_REF(still_has_brain), brain)))
+			return TRUE
+
+		brain.Remove(victim)
+
+		var/turf/source_turf = get_turf(victim)
+		brain.forceMove(source_turf)
+
+		log_combat(user, victim, "scooped out the brain of")
+
+		user.visible_message(
+			span_boldwarning("You scoop [victim]'s brain with the [I]!"),
+			span_boldwarning("[user] scoops out [victim]'s brain!"),
+			ignored_mobs = victim,
+		)
+
 /datum/wound/cranial_fissure/proc/still_has_eyes(obj/item/organ/internal/eyes/eyes)
 	PRIVATE_PROC(TRUE)
 
 	return victim?.get_organ_by_type(/obj/item/organ/internal/eyes) == eyes
+
+/datum/wound/cranial_fissure/proc/still_has_brain(obj/item/organ/internal/brain/brain)
+	PRIVATE_PROC(TRUE)
+
+	return victim?.get_organ_by_type(/obj/item/organ/internal/brain) == brain
 
 #undef CRANIAL_FISSURE_FILTER_DISPLACEMENT
