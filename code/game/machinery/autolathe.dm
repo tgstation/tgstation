@@ -240,7 +240,7 @@
 	var/turf/target = get_step(src, drop_direction)
 	if(isclosedturf(target))
 		target = get_turf(src)
-	var/atom/movable/created = new design.build_type(design.build_path)
+	var/atom/movable/created = new design.build_path(design.build_path)
 	created.set_custom_materials(materials_per_item.Copy())
 	created.forceMove(target)
 
