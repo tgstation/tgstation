@@ -1,5 +1,7 @@
 root: true
-extends: prettier
+extends:
+  - plugin:react-hooks/recommended
+  - prettier
 parser: '@typescript-eslint/parser'
 parserOptions:
   ecmaVersion: 2020
@@ -13,6 +15,7 @@ env:
 plugins:
   - sonarjs
   - react
+  - react-hooks
   - unused-imports
   - simple-import-sort
 settings:
