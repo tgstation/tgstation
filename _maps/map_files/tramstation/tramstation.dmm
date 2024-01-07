@@ -33845,6 +33845,9 @@
 	name = "Dynamic Bar Docking Port";
 	desc = "This airlock is a contingency to keep any funny business from the replacable bar system. If it opens to a wall, this is intentional!"
 	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/department/security)
 "jQw" = (
@@ -76580,6 +76583,16 @@
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"xuT" = (
+/obj/machinery/door/airlock/grunge{
+	name = "Dynamic Bar Docking Port";
+	desc = "This airlock is a contingency to keep any funny business from the replacable bar system. If it opens to a wall, this is intentional!"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/department/cargo)
 "xvd" = (
 /turf/closed/wall,
 /area/station/commons/storage/art)
@@ -180758,7 +180771,7 @@ lZW
 lZW
 lZW
 lZW
-sIr
+xuT
 lZW
 lZW
 lZW
