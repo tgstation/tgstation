@@ -6161,6 +6161,7 @@
 #include "monkestation\code\modules\loadouts\donator\personal.dm"
 #include "monkestation\code\modules\loadouts\items\_loadout_datum.dm"
 #include "monkestation\code\modules\loadouts\items\accessories.dm"
+#include "monkestation\code\modules\loadouts\items\admin.dm"
 #include "monkestation\code\modules\loadouts\items\belts.dm"
 #include "monkestation\code\modules\loadouts\items\ears.dm"
 #include "monkestation\code\modules\loadouts\items\effects.dm"
