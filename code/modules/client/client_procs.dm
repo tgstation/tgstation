@@ -466,7 +466,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 	var/cached_player_age = set_client_age_from_db(tdata) //we have to cache this because other shit may change it and we need it's current value now down below.
 	if (isnum(cached_player_age) && cached_player_age == -1) //first connection
 		if(!SSdbcore.Connect())
-			player_age = 0
+			player_age = -1
 		else
 			account_join_date = findJoinDate()
 			if(!account_join_date)
