@@ -17,6 +17,7 @@
 	//this is hellish, we go name = path so its easier for the ui
 	var/list/dispensable_reagents = list(
 		/datum/reagent/aluminium,
+		/datum/reagent/silver,
 		/datum/reagent/bromine,
 		/datum/reagent/carbon,
 		/datum/reagent/chlorine,
