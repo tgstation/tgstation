@@ -6682,6 +6682,7 @@
 #include "monkestation\code\modules\wiremod_chem\components\splitter.dm"
 #include "monkestation\code\modules\wiremod_chem\components\weighted_splitter.dm"
 #include "monkestation\code\modules\wiremod_chem\components\inputs\fermenter_input.dm"
+#include "monkestation\code\modules\wiremod_chem\components\inputs\geyser_input.dm"
 #include "monkestation\code\modules\wiremod_chem\components\inputs\grinder_input.dm"
 #include "monkestation\code\modules\wiremod_chem\components\inputs\tank_input.dm"
 #include "monkestation\code\modules\wiremod_chem\components\ouputs\factory_output.dm"
