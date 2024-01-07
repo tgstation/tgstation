@@ -96,7 +96,6 @@
 	add_avail(power_output)
 	lastgenlev = power_output
 	lastgen -= power_output
-	..()
 
 /obj/machinery/power/generator/proc/get_menu(include_link = TRUE)
 	var/t = ""

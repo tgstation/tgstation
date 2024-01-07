@@ -386,7 +386,7 @@
 /datum/heretic_knowledge/ultimate/blade_final
 	name = "Maelstrom of Silver"
 	desc = "The ascension ritual of the Path of Blades. \
-		Bring 3 headless corpses to a transmutation rune to complete the ritual. \
+		Bring 3 corpses with either no head or a split skull to a transmutation rune to complete the ritual. \
 		When completed, you will be surrounded in a constant, regenerating orbit of blades. \
 		These blades will protect you from all attacks, but are consumed on use. \
 		Your Furious Steel spell will also have a shorter cooldown. \
@@ -401,7 +401,7 @@
 	if(!.)
 		return FALSE
 
-	return !sacrifice.get_bodypart(BODY_ZONE_HEAD)
+	return !sacrifice.get_bodypart(BODY_ZONE_HEAD) || HAS_TRAIT(sacrifice, TRAIT_HAS_CRANIAL_FISSURE)
 
 /datum/heretic_knowledge/ultimate/blade_final/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 	. = ..()

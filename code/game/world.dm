@@ -381,11 +381,12 @@ GLOBAL_VAR(restart_counter)
 		new_status += ": [jointext(features, ", ")]"
 
 	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
+	if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
+		new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
 	if(SSmapping.config)
 		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
-	var/alert_text = SSsecurity_level.get_current_level_as_text()
-	if(alert_text)
-		new_status += "<br>Alert: <b>[capitalize(alert_text)]</b>"
+	if(SSmapping.next_map_config)
+		new_status += "[SSmapping.config ? " | " : "<br>"]Next: <b>[SSmapping.next_map_config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.next_map_config.map_name]</b>"
 
 	status = new_status
 

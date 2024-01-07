@@ -83,6 +83,7 @@
 	button_icon_state = "communicate"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
@@ -119,6 +120,7 @@
 	button_icon_state = "recall"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
@@ -140,6 +142,7 @@
 	button_icon_state = "ghost"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0

@@ -531,6 +531,12 @@
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
 	defer_change = TRUE
 
+/turf/closed/mineral/random/labormineral/ice/mineral_chances()
+	return list(
+		/obj/item/boulder/gulag = 168,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
+	)
+
 /turf/closed/mineral/random/labormineral/ice/Change_Ore(ore_type, random = 0)
 	. = ..()
 	if(mineralType)

@@ -1,6 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
-import { useBackend, useLocalState } from 'tgui/backend';
+import { useState } from 'react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -25,7 +26,7 @@ export const MedicalRecordTabs = (props) => {
     ? 'No records found.'
     : 'No match. Refine your search.';
 
-  const [search, setSearch] = useLocalState('search', '');
+  const [search, setSearch] = useState('');
 
   const sorted: MedicalRecord[] = flow([
     filter((record: MedicalRecord) => isRecordMatch(record, search)),
@@ -82,9 +83,9 @@ export const MedicalRecordTabs = (props) => {
 
 /** Individual crew tab */
 const CrewTab = (props: { record: MedicalRecord }) => {
-  const [selectedRecord, setSelectedRecord] = useLocalState<
+  const [selectedRecord, setSelectedRecord] = useState<
     MedicalRecord | undefined
-  >('medicalRecord', undefined);
+  >();
 
   const { act, data } = useBackend<MedicalRecordData>();
   const { assigned_view } = data;

@@ -151,6 +151,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
+	ADD_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -171,10 +172,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		mind.current.med_hud_set_status()
 
 	GLOB.ghost_images_default -= ghostimage_default
-	QDEL_NULL(ghostimage_default)
+	ghostimage_default = null
 
 	GLOB.ghost_images_simple -= ghostimage_simple
-	QDEL_NULL(ghostimage_simple)
+	ghostimage_simple = null
 
 	updateallghostimages()
 

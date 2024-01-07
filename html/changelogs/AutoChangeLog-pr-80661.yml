@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Refactored the area transformation colossus crystal effect to use the same system dimensional anomalies use. That means the colossus crystal now has access to some dimensional themes (bamboo, plasma, glass) and the dimensional anomaly now has access to some colossus themes (jungle, alien)."

@@ -1,0 +1,5 @@
+author: "DrDiasyl"
+delete-after: True
+changes:
+  - qol: "It is now possible to craft more Security bio suits"
+  - qol: "Bio-emergency crate from Cargo now contains a box of latex gloves and sterile masks"
