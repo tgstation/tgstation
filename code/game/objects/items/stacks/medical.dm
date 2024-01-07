@@ -78,6 +78,8 @@
 /obj/item/stack/medical/proc/try_heal(mob/living/patient, mob/user, silent = FALSE, looping = FALSE)
 	if(!try_heal_checks(patient, user, heal_brute, heal_burn, looping))
 		return
+	var/new_self_delay = looping ? clamp((self_delay-(1 SECONDS)), 0, self_delay) : self_delay
+	var/new_other_delay = looping ? clamp((other_delay-(1 SECONDS)), 0, other_delay) : other_delay
 	if(patient == user)
 		if(!silent)
 			user.visible_message(
@@ -86,7 +88,7 @@
 			)
 		if(!do_after(
 			user,
-			self_delay,
+			new_self_delay,
 			patient,
 			extra_checks = CALLBACK(src, PROC_REF(can_heal), patient, user),
 		))
@@ -100,7 +102,7 @@
 			)
 		if(!do_after(
 			user,
-			other_delay,
+			new_other_delay,
 			patient,
 			extra_checks = CALLBACK(src, PROC_REF(can_heal), patient, user),
 		))
@@ -137,7 +139,8 @@
 /obj/item/stack/medical/proc/try_heal_checks(mob/living/carbon/patient, mob/user, brute, burn, looping = FALSE)
 	if(looping)
 		balloon_alert(user, "assessing damage...")
-		do_after(user, 1 SECONDS, patient)
+		if(!do_after(user, 1 SECONDS, patient))
+			return FALSE
 	var/obj/item/bodypart/affecting = patient.get_bodypart(check_zone(user.zone_selected))
 	if(!affecting) //Missing limb?
 		patient.balloon_alert(user, "no [parse_zone(user.zone_selected)]!")
