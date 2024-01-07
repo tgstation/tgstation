@@ -50,7 +50,7 @@
 	clear_path_hud()
 
 	var/list/path_images = active_hud_list[DIAG_PATH_HUD]
-	QDEL_LIST(path_images)
+	LAZYCLEARLIST(path_images)
 
 	var/list/path_huds_watching_me = list(GLOB.huds[DATA_HUD_DIAGNOSTIC_ADVANCED])
 
@@ -90,9 +90,13 @@
 		hud.add_atom_to_hud(src)
 
 ///proc that handles moving along the bot's drawn path
-/mob/living/basic/bot/proc/handle_loop_movement(atom/movable/source)
+/mob/living/basic/bot/proc/handle_loop_movement(atom/movable/source, atom/oldloc, dir, forced)
 	SIGNAL_HANDLER
 
+	handle_hud_path()
+	on_bot_movement(source, oldloc, dir, forced)
+
+/mob/living/basic/bot/proc/handle_hud_path()
 	if(client || !length(current_pathed_turfs) || isnull(ai_controller))
 		return
 
@@ -106,7 +110,6 @@
 	if(target_image)
 		animate(target_image, alpha = 0, time = 0.3 SECONDS)
 	current_pathed_turfs -= our_turf
-	return
 
 ///proc that handles deleting the bot's drawn path when needed
 /mob/living/basic/bot/proc/clear_path_hud()

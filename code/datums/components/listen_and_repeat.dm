@@ -33,7 +33,7 @@
 
 	ADD_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 
-/datum/component/listen_and_repeat/Destroy(force, silent)
+/datum/component/listen_and_repeat/Destroy(force)
 	REMOVE_TRAIT(parent, TRAIT_SUBTREE_REQUIRED_OPERATIONAL_DATUM, type)
 	return ..()
 

@@ -101,7 +101,7 @@
  *
  * Returns [QDEL_HINT_QUEUE]
  */
-/datum/proc/Destroy(force=FALSE, ...)
+/datum/proc/Destroy(force = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
@@ -129,10 +129,10 @@
 			var/component_or_list = dc[component_key]
 			if(islist(component_or_list))
 				for(var/datum/component/component as anything in component_or_list)
-					qdel(component, FALSE, TRUE)
+					qdel(component, FALSE)
 			else
 				var/datum/component/C = component_or_list
-				qdel(C, FALSE, TRUE)
+				qdel(C, FALSE)
 		dc.Cut()
 
 	_clear_signal_refs()
@@ -406,3 +406,11 @@
 /// Can be called more then once per object, use harddel_deets_dumped to avoid duplicate calls (I am so sorry)
 /datum/proc/dump_harddel_info()
 	return
+
+///images are pretty generic, this should help a bit with tracking harddels related to them
+/image/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	return "Image icon: [icon] - icon_state: [icon_state] [loc ? "loc: [loc] ([loc.x],[loc.y],[loc.z])" : ""]"
+

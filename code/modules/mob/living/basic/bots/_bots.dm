@@ -819,8 +819,13 @@ GLOBAL_LIST_INIT(command_strings, list(
 		diag_hud_set_botmode()
 
 /mob/living/basic/bot/proc/after_attacked(datum/source, atom/attacker, attack_flags)
+	SIGNAL_HANDLER
+
 	if(attack_flags & ATTACKER_DAMAGING_ATTACK)
 		do_sparks(number = 5, cardinal_only = TRUE, source = src)
 
 /mob/living/basic/bot/spawn_gibs(drop_bitflags = NONE)
 	new /obj/effect/gibspawner/robot(drop_location(), src)
+
+/mob/living/basic/bot/proc/on_bot_movement(atom/movable/source, atom/oldloc, dir, forced)
+	return

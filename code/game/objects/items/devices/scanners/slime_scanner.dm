@@ -27,12 +27,12 @@
 
 /proc/slime_scan(mob/living/simple_animal/slime/scanned_slime, mob/living/user)
 	var/to_render = "<b>Slime scan results:</b>\
-					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.is_adult ? "adult" : "baby"] slime")]\
-					\nNutrition: [scanned_slime.nutrition]/[scanned_slime.get_max_nutrition()]"
+					\n[span_notice("[scanned_slime.slime_type.colour] [scanned_slime.life_stage] slime")]\
+					\nNutrition: [scanned_slime.nutrition]/[scanned_slime.max_nutrition]"
 
-	if (scanned_slime.nutrition < scanned_slime.get_starve_nutrition())
+	if (scanned_slime.nutrition < scanned_slime.starve_nutrition)
 		to_render += "\n[span_warning("Warning: slime is starving!")]"
-	else if (scanned_slime.nutrition < scanned_slime.get_hunger_nutrition())
+	else if (scanned_slime.nutrition < scanned_slime.hunger_nutrition)
 		to_render += "\n[span_warning("Warning: slime is hungry")]"
 
 	to_render += "\nElectric charge strength: [scanned_slime.powerlevel]\nHealth: [round(scanned_slime.health/scanned_slime.maxHealth,0.01)*100]%"

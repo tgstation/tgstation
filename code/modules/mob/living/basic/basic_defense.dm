@@ -112,13 +112,6 @@
 		if(damage_done > 0)
 			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage_done, attacking_larva.max_grown)
 
-/mob/living/basic/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime attack
-		var/damage = rand(15, 25)
-		if(M.is_adult)
-			damage = rand(20, 35)
-		return apply_damage(damage, M.melee_damage_type)
-
 /mob/living/basic/attack_drone(mob/living/basic/drone/attacking_drone)
 	if(attacking_drone.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
 		return

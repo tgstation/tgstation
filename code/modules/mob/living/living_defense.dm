@@ -284,30 +284,6 @@
 	user.set_pull_offsets(src, grab_state)
 	return TRUE
 
-
-/mob/living/attack_slime(mob/living/simple_animal/slime/attacking_slime, list/modifiers)
-	if(attacking_slime.buckled)
-		if(attacking_slime in buckled_mobs)
-			attacking_slime.stop_feeding()
-		return // can't attack while eating!
-
-	if(HAS_TRAIT(attacking_slime, TRAIT_PACIFISM))
-		to_chat(attacking_slime, span_warning("You don't want to hurt anyone!"))
-		return FALSE
-
-	if(check_block(src, attacking_slime.melee_damage_upper, "[attacking_slime]'s glomp", MELEE_ATTACK, attacking_slime.armour_penetration, attacking_slime.melee_damage_type))
-		return FALSE
-
-	if (stat != DEAD)
-		log_combat(attacking_slime, src, "attacked")
-		attacking_slime.do_attack_animation(src)
-		visible_message(span_danger("\The [attacking_slime.name] glomps [src]!"), \
-						span_userdanger("\The [attacking_slime.name] glomps you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacking_slime)
-		to_chat(attacking_slime, span_danger("You glomp [src]!"))
-		return TRUE
-
-	return FALSE
-
 /mob/living/attack_animal(mob/living/simple_animal/user, list/modifiers)
 	. = ..()
 	if(.)

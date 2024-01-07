@@ -67,7 +67,7 @@
 
 	mob_parent = null
 
-/datum/mood/Destroy(force, ...)
+/datum/mood/Destroy(force)
 	STOP_PROCESSING(SSmood, src)
 	QDEL_LIST_ASSOC_VAL(mood_events)
 	return ..()

@@ -90,17 +90,14 @@
 	. = ..()
 
 /obj/structure/table/abductor/wabbajack/process()
-	var/area = orange(4, src)
-	if(!our_statue)
-		for(var/obj/machinery/power/emitter/energycannon/magical/M in area)
-			our_statue = M
-			break
+	if(isnull(our_statue))
+		our_statue = locate() in orange(4, src)
 
-	if(!our_statue)
+	if(isnull(our_statue))
 		name = "inert [initial(name)]"
 		return
-	else
-		name = initial(name)
+
+	name = initial(name)
 
 	var/turf/T = get_turf(src)
 	var/list/found = list()

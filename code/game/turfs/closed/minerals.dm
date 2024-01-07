@@ -475,7 +475,7 @@
 		/obj/item/stack/ore/silver = 20,
 		/obj/item/stack/ore/titanium = 8,
 		/obj/item/stack/ore/uranium = 3,
-		/turf/closed/mineral/gibtonite/volcanic = 2,
+		/turf/closed/mineral/gibtonite/ice/icemoon = 2,
 	)
 
 /turf/closed/mineral/random/labormineral/ice/Change_Ore(ore_type, random = 0)

@@ -183,6 +183,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
+	can_dismember = TRUE
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE

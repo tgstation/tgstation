@@ -1,0 +1,209 @@
+2024-01-01:
+  13spacemen:
+  - rscadd: Atmos Holofan projectors can be right-clicked inhand to make their holograms
+      more transparent
+  Ben10Omintrix:
+  - refactor: hygeinebots are now basic bots. please report all the bugs
+  - bugfix: fixes hygenebots not being able to patrol
+  - rscadd: hygeinebots can now be controlled by Players
+  Melbert:
+  - refactor: Refactored the area transformation colossus crystal effect to use the
+      same system dimensional anomalies use. That means the colossus crystal now has
+      access to some dimensional themes (bamboo, plasma, glass) and the dimensional
+      anomaly now has access to some colossus themes (jungle, alien).
+  Time-Green:
+  - rscadd: Adds a geared assistant station trait! Spawn with a skateboard, toolbelt
+      or in your favorite bee suit!
+  - code_imp: Moves assistant code around
+  jlsnow301:
+  - bugfix: Dropdowns and pop-up menus have been rewritten. This should fix an issue
+      where dropdown text was accidentally scrolling if hovered. Please report any
+      issues on the repo
+  kawoppi:
+  - qol: added screentips to the janicart (pimpin' ride)
+  uaioy:
+  - bugfix: The sustenance vendor in perma actually serves food now
+  - bugfix: Cyborgs do not deathgasp twice when dying anymore
+  vinylspiders:
+  - bugfix: fixed fire extinguisher cabinets not appearing opened after removing the
+      fire extinguisher from them
+2024-01-02:
+  00-Steven:
+  - bugfix: slamming through a glass table while previously on a table no longer gives
+      you a negative offset.
+  13spacemen:
+  - qol: Gas analyzer can scan adjacent turfs. No more roasting yourself just to scan
+      your burn mix.
+  - qol: The "Explosive Planted" alert for C4 actually shows the C4
+  Majkl-J:
+  - bugfix: Having an inorganic chest/legs no longer makes you drop your ID, belt
+      or pocketed stuff upon losing your jumpsuit
+  Mothblocks:
+  - bugfix: Fixed footstep sounds.
+  OrionTheFox:
+  - image: resprited the Pirate/Sailor costumes, the pirate jacket, and the pirate
+      spacesuit
+  Rex9001:
+  - rscadd: A new heretic path opens up! Gaze up at the great sky for the path of
+      the moon opens and the lie shall be slain in pursuit of ultimate truth!
+  - bugfix: Fixes the syndicate delusion not working
+  SyncIt21:
+  - bugfix: you can set the chemical reaction chamber temps to 0k again
+  - bugfix: used higher rounding value for reactions thus you get full volumes especially
+      for endothermic reactions(no more 99.99 but 100 units).
+  - bugfix: chem heater now applies heat per reaction step and sends updates to UI
+      more frequently
+  YakumoChen:
+  - qol: Toggling an armour booster module on a MODsuit now gives a balloon alert
+      making the tradeoffs more clear.
+  jlsnow301:
+  - bugfix: Protolathe input should feel more responsive.
+  xXPawnStarrXx:
+  - rscadd: Added new lizard variants of existing foods for equality of edibility.
+  - qol: made pickle jars reusable and vinegar craftable.
+2024-01-03:
+  0-ERRORNAME-0:
+  - image: Improved sprites for sailor school uniform
+  Ghommie:
+  - rscadd: Reworked Binoculars to function like a scope from long-range rifles. They
+      also can be used while moving, albeit that'll slow you down significantly.
+  - rscadd: Authentic mothic softcaps can be found in the "Mothic Pioneer" curator
+      kit, which googles can also used to look into the distance. The date on the
+      boxed kit has been updated to match "muh lore".
+  - qol: Using a scope (and now binocs or moth cap) won't hide your mouse pointer
+      away now, so that you won't slip out of the game screen and close the game tab
+      by accident.
+  Profakos:
+  - refactor: attack_slime is completely gone
+  - refactor: slime lifestate changes now have less boilerplate code
+  - balance: baby slimes do a bit of a less damage on the low end, but all slime damage
+      is much more consistent
+  - balance: instead of taking half brute damage, cyborgs are now immune to slime's
+      melee attacks. Charged slimes attacking cyborgs now lose a bit of charge. They
+      still get massive damage from charged slimes, and every slime attack flashes
+      them.
+  - bugfix: slimes can now properly drain basic mobs and simple animals that they
+      can damage
+  - bugfix: slimes can drift in zero gravity
+  SyncIt21:
+  - bugfix: turbine now shuts itself off when the room apc loses power or if it gets
+      damaged. Also uses a small amount of power for operation of internal electronics,
+      the green light & other stuff
+  - bugfix: No more runtime in turbine computer when parts are not fully connected
+  - qol: adds screentips & examines for turbine
+  - code_imp: removed unused vars, auto doc procs and cleans up some code in turbine
+  Tristrian:
+  - image: Throwing things has now a sprite animation forward your target.
+  - sound: Throwing things also has a sound accompagnying it.
+  - spellcheck: Dwarves don't throw things hard like hulks. Instead their throws are
+      described as "flimsily".
+  Vishenka0704:
+  - admin: The ability to export a part(or z-level) of the map has been added.
+  Watermelon914:
+  - bugfix: Fixed integrated circuit speech logging
+2024-01-04:
+  Ghommie:
+  - bugfix: food made with drying racks now counts as "chef-made" (ergo, can provide
+      a mild buff).
+  vinylspiders:
+  - bugfix: fixes some runtimes in pathfinding code, as well as one in the give direct
+      control admin verb
+2024-01-05:
+  Ben10Omintrix:
+  - bugfix: stationary medbots will no longer ignore u for a while if u move out of
+      their way while healing
+  Ghommie:
+  - refactor: Introduced a simple budget system to station traits, so that smaller
+      things only count as half a trait, for example.
+  - balance: Increased the odds and maximum number of station traits that can be rolled
+      each shift.
+  Hatterhat:
+  - bugfix: Universal scanners are no longer invisible when set to the export or sales
+      tagger modes.
+  JohnFulpWillard:
+  - spellcheck: Fixed punctuation in Luini Amaretto's description.
+  - bugfix: Guardian host's ability buttons now works while the host is sleeping/unconscious.
+  LT3:
+  - bugfix: Alternate carpet colors will no longer reskin to normal carpet
+  - bugfix: OOC announcements will now be in shown in OOC colors
+  Melbert:
+  - bugfix: Some things which affect everything in an area are less laggy, the "all
+      lights are broken" station trait especially
+  - bugfix: Fixed runtime from blobbernauts attacking non-living things
+  - bugfix: Fixed Fugu Gland applying to mobs incorrectly
+  Rex9001:
+  - qol: Path of moon and lock now actually fit in the heretic tree
+  - balance: Certain path of moon rituals that needed brains now use easier to obtain
+      organs
+  - bugfix: the moon heretic ascension now produces lunatics again
+  - admin: Amputation Shear amputation is now logged
+  Thlumyn:
+  - bugfix: closets now have a working welder deconstruct screentip
+  Thunder12345:
+  - bugfix: 'Birdshot: Released gulag prisoners can now get off the gulag shuttle.'
+  - bugfix: 'Birdshot: The gulag shuttle airlocks will now cycle like other airlocks.'
+  - bugfix: 'Icebox: Added a fire alarm to the upstairs fore primary hallway.'
+  - bugfix: Gibtonite ore on ice planet gulags no longer spawns as lavaland rock.
+  jlsnow301:
+  - bugfix: 'TGUI: Sections should be scrollable on mouse hover'
+  - bugfix: Fixed redundant "Integrity:" in air alarms
+  mc-oofert:
+  - bugfix: you no longer fall down cliffs if you dont have gravity
+  vinylspiders:
+  - bugfix: fixed an /image hard del in ghost code
+  - bugfix: fixed a runtime in datum/thrownthing
+  - code_imp: progressbars no longer qdel their /image
+2024-01-06:
+  13spacemen:
+  - qol: The hub entry shows the next map and shuttle time, and no longer shows the
+      alert
+  - qol: Ghosts can now view Wanted Status and Sec Records by examining people
+  Melbert:
+  - bugfix: Strong arm implant users can shove more correctly.
+  Sightld2:
+  - bugfix: Cyborgs no longer think they're hitting themselves when stunned with a
+      stun baton
+  SomeRandomOwl:
+  - bugfix: Build Mode Export's options menu now knows when you want to cancel and
+      not change the options
+  WarlockD:
+  - bugfix: Queen bee's made with cytology now work
+  intercepti0n:
+  - image: resprited onmob cone icon.
+  jlsnow301:
+  - bugfix: Having a netpod destroyed will no longer grant you permanent healing.
+  - bugfix: Search bars for smaller lists should return to their former responsiveness.
+  - bugfix: Randomization button in prefs should look normal again.
+  - bugfix: Quirk customization shouldn't close immediately.
+  mc-oofert:
+  - bugfix: conveyor belts no longer maintain movement if whatever is on them suddenly
+      leaves their z level
+  - bugfix: After a raid on the local drug mafia in the sector by TerraGov, the Russian
+      Mobsters no longer have access to easy drugs and as a result are no longer 24/7
+      running faster than the average spaceman.
+  - bugfix: the eZ-13 MK2 heavy pulse rifle does damage again
+  - bugfix: you can use your hand to make minebots go into combat mode again
+  necromanceranne:
+  - spellcheck: Corrects every misspelled 'kenetic' in the codebase.
+  vinylspiders:
+  - bugfix: fixes an image hard del
+  - code_imp: adds context to image hard dels to make them easier to track
+  - bugfix: fixes an /image harddel in station blueprints
+  - code_imp: cleaned up some more /image qdels
+2024-01-07:
+  13spacemen:
+  - bugfix: Hub shuttle time works correctly
+  LT3:
+  - bugfix: Morgue trays and freezing temperatures will no longer husk bodies
+  - bugfix: Organs outside bodies will properly receive cold damage
+  Mothblocks:
+  - balance: Instead of too much damage to the head beheading someone, it will now
+      split their skull in half. While their skull is open, you can rip out their
+      eyes with your hands. and they will spill their brain out of their head if they
+      slip.
+  - balance: The Path of Blades ascension will accept either a beheaded person, or
+      someone with their skull split open.
+  - rscdel: Removed the beheading objectives from traitor.
+  exdal:
+  - bugfix: Papers no longer crash tgui
+  - bugfix: Biogenerator no longer crash tgui

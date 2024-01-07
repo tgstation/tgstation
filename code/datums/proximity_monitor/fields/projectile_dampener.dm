@@ -35,7 +35,6 @@
 	for(var/obj/projectile/projectile in tracked)
 		if(!(projectile in ranged) || !projectile.loc)
 			release_projectile(projectile)
-	..()
 
 /datum/proximity_monitor/advanced/projectile_dampener/setup_edge_turf(turf/target)
 	. = ..()
