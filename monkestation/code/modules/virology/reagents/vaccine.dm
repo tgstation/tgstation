@@ -10,7 +10,7 @@
 
 /datum/reagent/vaccine/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.immune_system.ApplyVaccine(data["antigen"], 1, 30 MINUTES)
+	drinker.immune_system.ApplyVaccine(data["antigen"], 5, 30 MINUTES)
 
 /datum/reagent/vaccine/on_merge(list/mix_data)
 	if(data && mix_data)

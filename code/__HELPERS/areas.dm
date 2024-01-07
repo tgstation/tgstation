@@ -10,7 +10,7 @@ GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(/area/station/en
 // The dirs are connected turfs in the same space
 // break_if_found is a typecache of turf/area types to return false if found
 // Please keep this proc type agnostic. If you need to restrict it do it elsewhere or add an arg.
-/proc/detect_room(turf/origin, list/break_if_found, max_size=INFINITY)
+/proc/detect_room(turf/origin, list/break_if_found = list(), max_size=INFINITY)
 	if(origin.blocks_air)
 		return list(origin)
 

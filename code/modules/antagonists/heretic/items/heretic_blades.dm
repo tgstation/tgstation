@@ -14,6 +14,8 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	force = 20
 	throwforce = 10
+	wound_bonus = 5
+	bare_wound_bonus = 15
 	demolition_mod = 0.8
 	hitsound = 'sound/weapons/bladeslice.ogg'
 	armour_penetration = 35
@@ -114,3 +116,14 @@
 	icon_state = "cosmic_blade"
 	inhand_icon_state = "cosmic_blade"
 	after_use_message = "The Stargazer hears your call..."
+
+// Path of Knock's blade
+/obj/item/melee/sickly_blade/knock
+	name = "\improper key blade"
+	desc = "A blade and a key, a key to what? \
+		What grand gates does it open?"
+	icon_state = "key_blade"
+	inhand_icon_state = "key_blade"
+	after_use_message = "The Mother of Ants hears your call..."
+	tool_behaviour = TOOL_CROWBAR
+	toolspeed = 1.3

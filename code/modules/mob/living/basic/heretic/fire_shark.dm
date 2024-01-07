@@ -1,16 +1,12 @@
-/mob/living/basic/fire_shark
-	name = "fire shark"
+/mob/living/basic/heretic_summon/fire_shark
+	name = "\improper Fire Shark"
+	real_name = "Fire Shark"
 	desc = "It is a eldritch dwarf space shark, also known as a fire shark."
-	icon = 'icons/mob/nonhuman-player/eldritch_mobs.dmi'
 	icon_state = "fire_shark"
 	icon_living = "fire_shark"
 	pass_flags = PASSTABLE | PASSMOB
 	istate = ISTATE_HARM | ISTATE_BLOCKING
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
-	basic_mob_flags = DEL_ON_DEATH
-	unsuitable_atmos_damage = 0
-	unsuitable_cold_damage = 0
-	unsuitable_heat_damage = 0
 	speed = -0.5
 	health = 16
 	maxHealth = 16
@@ -26,12 +22,9 @@
 	mob_size = MOB_SIZE_TINY
 	speak_emote = list("screams")
 	basic_mob_flags = DEL_ON_DEATH
-	death_message = "implodes into itself."
-	ai_controller = null
 
-/mob/living/basic/fire_shark/Initialize(mapload)
+/mob/living/basic/heretic_summon/fire_shark/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/death_drops, list(/obj/effect/gibspawner/human))
 	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 2)

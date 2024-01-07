@@ -168,7 +168,7 @@
 	return ..()
 
 /datum/status_effect/star_mark/on_apply()
-	if(istype(owner, /mob/living/basic/star_gazer))
+	if(istype(owner, /mob/living/basic/heretic_summon/star_gazer))
 		return FALSE
 	var/mob/living/spell_caster_resolved = spell_caster?.resolve()
 	var/datum/antagonist/heretic_monster/monster = owner.mind?.has_antag_datum(/datum/antagonist/heretic_monster)
@@ -192,3 +192,25 @@
 
 /datum/status_effect/star_mark/extended
 	duration = 3 MINUTES
+
+// Last Resort
+/datum/status_effect/heretic_lastresort
+	id = "heretic_lastresort"
+	alert_type = /atom/movable/screen/alert/status_effect/heretic_lastresort
+	duration = 12 SECONDS
+	status_type = STATUS_EFFECT_REPLACE
+	tick_interval = -1
+
+/atom/movable/screen/alert/status_effect/heretic_lastresort
+	name = "Last Resort"
+	desc = "Your head spins, heart pumping as fast as it can, losing the fight with the ground. Run to safety!"
+	icon_state = "lastresort"
+
+/datum/status_effect/heretic_lastresort/on_apply()
+	ADD_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	to_chat(owner, span_userdanger("You are on the brink of losing consciousness, run!"))
+	return TRUE
+
+/datum/status_effect/heretic_lastresort/on_remove()
+	REMOVE_TRAIT(owner, TRAIT_IGNORESLOWDOWN, TRAIT_STATUS_EFFECT(id))
+	owner.AdjustUnconscious(20 SECONDS, ignore_canstun = TRUE)
