@@ -190,3 +190,20 @@
   - code_imp: adds context to image hard dels to make them easier to track
   - bugfix: fixes an /image harddel in station blueprints
   - code_imp: cleaned up some more /image qdels
+2024-01-07:
+  13spacemen:
+  - bugfix: Hub shuttle time works correctly
+  LT3:
+  - bugfix: Morgue trays and freezing temperatures will no longer husk bodies
+  - bugfix: Organs outside bodies will properly receive cold damage
+  Mothblocks:
+  - balance: Instead of too much damage to the head beheading someone, it will now
+      split their skull in half. While their skull is open, you can rip out their
+      eyes with your hands. and they will spill their brain out of their head if they
+      slip.
+  - balance: The Path of Blades ascension will accept either a beheaded person, or
+      someone with their skull split open.
+  - rscdel: Removed the beheading objectives from traitor.
+  exdal:
+  - bugfix: Papers no longer crash tgui
+  - bugfix: Biogenerator no longer crash tgui
