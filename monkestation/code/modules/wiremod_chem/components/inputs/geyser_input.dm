@@ -23,7 +23,7 @@
 	. = ..()
 	STOP_PROCESSING(SSmachines, src)
 
-/obj/structure/chemical_tank/liquid_pump/attackby(obj/item/attacking_item, mob/user, params)
+/obj/structure/chemical_input/liquid_pump/attackby(obj/item/attacking_item, mob/user, params)
 	if(attacking_item.tool_behaviour == TOOL_WRENCH)
 		if(attacking_item.use_tool(src, user, 40, volume=75))
 			to_chat(user, span_notice("You [anchored ? "un" : ""]secure [src]."))
@@ -33,7 +33,7 @@
 	. = ..()
 
 /obj/structure/chemical_input/liquid_pump/process(seconds_per_tick)
-	if(!anchored || panel_open || geyserless)
+	if(!anchored || geyserless)
 		return
 
 	if(!geyser)
@@ -58,5 +58,5 @@
 	if(geyser)
 		icon_state = "[base_icon_state]-on"
 		return ..()
-	icon_state = "[base_icon_state][panel_open ? "-open" : null]"
+	icon_state = "[base_icon_state]"
 	return ..()
