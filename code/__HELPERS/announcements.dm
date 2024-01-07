@@ -18,7 +18,6 @@
  * * sender_override - optional, modifies the sender of the announcement
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
- * * color_override - optional, set a color for the announcement box
  */
 
 /proc/send_ooc_announcement(
@@ -74,5 +73,12 @@
 /proc/create_announcement_div(message, color = "default")
 	return "<div class='chat_alert_[color]'>[message]</div>"
 
+/**
+ * Inserts a span styled message into an OOC alert style div
+ *
+ *
+ * Arguments
+ * * message - required, the message contents
+ */
 /proc/create_ooc_announcement_div(message)
 	return "<div class='ooc_alert'>[message]</div>"
