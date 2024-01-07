@@ -1,4 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - bugfix: "CentCom ghost players can no longer bypass the area restrictions placed on them by being in a container. Sorry, but while there is some fun to be had, it appears that some exploits were also to be had too."
