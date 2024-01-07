@@ -174,5 +174,5 @@
 		return FALSE
 	if(!hunted.buckle_mob(hunter, force = TRUE))
 		return FALSE
-	hunted.visible_message(span_notice("[hunted] has been latched onto by [hunter]!"))\
+	hunted.visible_message(span_notice("[hunted] has been latched onto by [hunter]!"))
 	return TRUE

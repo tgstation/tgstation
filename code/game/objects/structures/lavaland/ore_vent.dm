@@ -195,7 +195,7 @@
 			if(SSore_generation.ore_vent_minerals[material] <= 0)
 				SSore_generation.ore_vent_minerals -= material
 		else
-			mateiral = pick_weight(SSore_generation.ore_vent_minerals_default)
+			material = pick_weight(SSore_generation.ore_vent_minerals_default)
 		mineral_breakdown[material] = rand(1, 4)
 
 
