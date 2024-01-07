@@ -321,8 +321,8 @@
 	},
 /area/template_noop)
 "BS" = (
-/obj/machinery/computer/pandemic,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
+/obj/machinery/disease2/centrifuge,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},
@@ -385,12 +385,12 @@
 /area/template_noop)
 "Ea" = (
 /obj/structure/table,
-/obj/item/reagent_containers/cup/beaker,
-/obj/item/reagent_containers/cup/beaker,
-/obj/item/reagent_containers/cup/beaker,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 1
 	},
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
+/obj/item/reagent_containers/cup/beaker/vial,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},

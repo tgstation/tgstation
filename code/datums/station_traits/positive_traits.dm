@@ -275,7 +275,7 @@
 	name = "Cybernetic Revolution"
 	trait_type = STATION_TRAIT_POSITIVE
 	show_in_report = TRUE
-	weight = 1
+	weight = 2 // monkestation edit
 	report_message = "The new trends in cybernetics have come to the station! Everyone has some form of cybernetic implant."
 	trait_to_give = STATION_TRAIT_CYBERNETIC_REVOLUTION
 	/// List of all job types with the cybernetics they should receive.
