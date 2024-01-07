@@ -56,7 +56,7 @@
 /obj/item/circuit_component/chem/synthesizer/check_power_modifictions()
 	var/units = per_chemical_amount?.value
 	if(!parent.shell)
-		return power_usage_per_input * 5 * units
+		return power_usage_per_input * 25 * units
 
 	var/obj/structure/chemical_manufacturer/host = parent.shell
 	if(!istype(host, /obj/structure/chemical_manufacturer))
