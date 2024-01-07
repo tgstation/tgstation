@@ -85,3 +85,14 @@ SUBSYSTEM_DEF(weather)
 ///Returns an active storm by its type
 /datum/controller/subsystem/weather/proc/get_weather_by_type(type)
 	return locate(type) in processing
+
+/client/proc/stop_weather()
+	set category = "Debug"
+	set name = "Stop All Active Weather"
+
+	log_admin("[key_name(src)] stopped all currently active weather.")
+	message_admins("[key_name_admin(src)] stopped all currently active weather.")
+	for(var/datum/weather/current_weather in SSweather.processing)
+		if(current_weather in SSweather.processing)
+			current_weather.end()
+	BLACKBOX_LOG_ADMIN_VERB("Stop All Active Weather")
