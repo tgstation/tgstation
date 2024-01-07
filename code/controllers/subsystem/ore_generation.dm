@@ -69,9 +69,7 @@ SUBSYSTEM_DEF(ore_generation)
 		var/obj/structure/ore_vent/current_vent = vent
 
 		var/local_vent_count = 0
-		for(var/obj/item/boulder/old_rock as anything in current_vent.loc) // Optimize?
-			if(!isitem(old_rock))
-				continue
+		for(var/obj/item/boulder/old_rock as anything in current_vent.loc)
 			available_boulders += old_rock
 			local_vent_count++
 

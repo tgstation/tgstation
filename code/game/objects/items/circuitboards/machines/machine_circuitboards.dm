@@ -1584,10 +1584,9 @@
 	greyscale_colors = CIRCUIT_COLOR_SUPPLY
 	build_path = /obj/machinery/bouldertech/refinery/smelter
 	req_components = list(
-		/obj/item/reagent_containers/cup/beaker = 1,
 		/obj/item/assembly/igniter = 1,
 		/datum/stock_part/servo = 2,
-		/datum/stock_part/matter_bin = 1,
+		/datum/stock_part/matter_bin = 2,
 	)
 
 /obj/item/circuitboard/machine/shieldwallgen

@@ -99,9 +99,9 @@
 /obj/structure/ore_vent/attackby(obj/item/attacking_item, mob/user, params)
 	. = ..()
 	if(.)
-		return
+		return TRUE
 	if(!is_type_in_list(attacking_item, scanning_equipment))
-		return
+		return TRUE
 	if(tapped)
 		balloon_alert_to_viewers("vent tapped!")
 		return TRUE
@@ -130,7 +130,6 @@
 	if(!HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
 		return
 	produce_boulder()
-	return
 
 /obj/structure/ore_vent/is_buckle_possible(mob/living/target, force, check_loc)
 	. = ..()
@@ -168,6 +167,18 @@
 		refined_list[material] += ore_quantity_function(iteration)
 	return refined_list
 
+/**
+ * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
+ * The materials available are determined by SSore_generation.ore_vent_minerals, which is a list of all minerals that can be contained in ore vents for a given cave generation.
+ * As a result, minerals use a weighted list as seen by ore_vent_minerals_default, which is then copied to ore_vent_minerals.
+ * Once a material is picked from the weighted list, it's removed from ore_vent_minerals, so that it can't be picked again and provided it's own internal weight used when assigning minerals to boulders spawned by this vent.
+ * May also be called after the fact, as seen in SSore_generation's initialize, to add more minerals to an existing vent.
+ *
+ * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_default.
+ *
+ * @params max_minerals How many minerals should be added to this vent? Defaults to MINERAL_TYPE_OPTIONS_RANDOM, which is 4.
+ * @params map_loading Is this vent being spawned in at mapload? If so, we use the ore_generation subsystem's ore_vent_minerals list to pick minerals. Otherwise, we pick randomly from ore_vent_minerals_default.
+ */
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
@@ -179,16 +190,22 @@
 			material = pick_weight(SSore_generation.ore_vent_minerals)
 		if(is_type_in_list(mineral_breakdown, material))
 			continue
-
 		if(map_loading)
 			SSore_generation.ore_vent_minerals[material] -= 1 //We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
 			if(SSore_generation.ore_vent_minerals[material] <= 0)
 				SSore_generation.ore_vent_minerals -= material
+		else
+			mateiral = pick_weight(SSore_generation.ore_vent_minerals_default)
 		mineral_breakdown[material] = rand(1, 4)
 
 
 /**
- * Returns the quantity of mineral sheets in each ore's boulder contents roll. First roll can produce the most ore, with subsequent rolls scaling lower logarithmically.
+ * Returns the quantity of mineral sheets in each ore vent's boulder contents roll.
+ * First roll can produce the most ore, with subsequent rolls scaling lower logarithmically.
+ * Inversely scales with ore_floor, so that the first roll is the largest, and subsequent rolls are smaller.
+ * (1 -> from 16 to 7 sheets of materials, and 3 -> from 8 to 6 sheets of materials on a small vent)
+ * This also means a large boulder can highroll a boulder with a full stack of 50 sheets of material.
+ * @params ore_floor The number of minerals already rolled. Used to scale the logarithmic function.
  */
 /obj/structure/ore_vent/proc/ore_quantity_function(ore_floor)
 	return SHEET_MATERIAL_AMOUNT * round(boulder_size * (log(rand(1 + ore_floor, 4 + ore_floor)) ** -1))
@@ -345,6 +362,7 @@
 /**
  * Here is where we handle producing a new boulder, based on the qualities of this ore vent.
  * Returns the boulder produced.
+ * @params apply_cooldown Should we apply a cooldown to producing boulders? Default's false, used by manual boulder production (goldgrubs, golems, etc).
  */
 /obj/structure/ore_vent/proc/produce_boulder(apply_cooldown = FALSE)
 	if(!COOLDOWN_FINISHED(src, manual_vent_cooldown))

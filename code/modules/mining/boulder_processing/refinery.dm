@@ -9,7 +9,7 @@
 
 /obj/machinery/bouldertech/refinery
 	name = "boulder refinery"
-	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets. Can be upgraded with stock parts or through chemical inputs."
+	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals. Can be upgraded with stock parts or through chemical inputs."
 	icon_state = "stacker"
 	holds_minerals = TRUE
 	processable_materials = list(

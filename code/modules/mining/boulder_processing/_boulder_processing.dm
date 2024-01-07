@@ -292,6 +292,10 @@
 	playsound(loc, 'sound/machines/ping.ogg', 50, FALSE)
 	return TRUE
 
+/**
+ * Getter proc to determine how many boulders are contained in the machine.
+ * Also adds their reference to the boulders_contained list.
+ */
 /obj/machinery/bouldertech/proc/update_boulder_count()
 	boulders_contained = list()
 	for(var/obj/item/boulder/boulder in contents)
