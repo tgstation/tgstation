@@ -189,9 +189,10 @@
 	build_count = clamp(build_count, 1, 50)
 
 	var/list/total_materials_used = list()
+	var/list/materials_per_item = list()
 	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
 	for(var/datum/material/material as anything in design.materials)
-		var/amount_needed = design.materials[material] * material_cost_coefficient * build_count
+		var/amount_needed = design.materials[material] * material_cost_coefficient
 		if(istext(material)) // category
 			var/list/choices = list()
 			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
@@ -214,7 +215,8 @@
 		if(isnull(material))
 			stack_trace("got passed an invalid material id: [material]")
 			return
-		total_materials_used[material] += amount_needed
+		total_materials_used[material] = amount_needed * build_count
+		materials_per_item[material] = amount_needed
 
 	if(!materials.has_materials(total_materials_used))
 		say("Not enough materials to begin production.")
@@ -227,23 +229,19 @@
 		say("Not enough power in local network to begin production.")
 		return
 
-	var/total_build_time = design.construction_time * build_count * creation_efficiency
-	start_making(design, build_count, ui.user, total_build_time, total_materials_used)
+	var/build_time_per_item = design.construction_time * creation_efficiency * design.lathe_time_factor
+	materials.use_materials(total_materials_used)
+	start_making(design, build_count, ui.user, build_time_per_item, materials_per_item)
 	return TRUE
 
-/obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, mob/user, total_build_time, list/total_materials_used)
+/obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, mob/user, build_time_per_item, list/materials_per_item)
 	busy = TRUE
-	materials.use_materials(total_materials_used)
-	update_static_data_for_all_viewers()
 	icon_state = "autolathe_n"
+	update_static_data_for_all_viewers()
 
-	var/list/materials_per_item = list()
-	for(var/material in total_materials_used)
-		materials_per_item[material] = total_materials_used[material] / build_count
-
-	for(var/_ in 1 to build_count)
-		addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item))
-	addtimer(CALLBACK(src, PROC_REF(finalize_build)), total_build_time)
+	for(var/idx in 1 to build_count)
+		addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item), build_time_per_item * idx)
+	addtimer(CALLBACK(src, PROC_REF(finalize_build)), (build_time_per_item * build_count) + 1)
 
 /obj/machinery/autolathe/proc/do_make_item(datum/design/design, list/materials_per_item)
 	var/turf/target = get_step(src, drop_direction)

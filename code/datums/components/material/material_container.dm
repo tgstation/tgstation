@@ -581,7 +581,9 @@
 		return FALSE
 
 	for(var/x in mats) //Loop through all required materials
-		if(!has_enough_of_material(x, OPTIMAL_COST(mats[x] * coefficient) * multiplier))//Not a category, so just check the normal way
+		var/wanted = OPTIMAL_COST(mats[x] * coefficient) * multiplier
+		if(!has_enough_of_material(x, wanted))//Not a category, so just check the normal way
+			testing("didnt have: [x] wanted: [wanted]")
 			return FALSE
 
 	return TRUE
