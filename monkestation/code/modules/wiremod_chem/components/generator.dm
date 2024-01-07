@@ -60,7 +60,7 @@
 
 	var/obj/structure/chemical_manufacturer/host = parent.shell
 	if(!istype(host, /obj/structure/chemical_manufacturer))
-		return power_usage_per_input * 10 * units// even worse if we manage to get this in a non manufactured cell
+		return power_usage_per_input * 25 * units// even worse if we manage to get this in a non manufactured cell
 
 	if(!host.has_precursor(units))
 		var/precursor = host.connected_tank?.stored_precursor
