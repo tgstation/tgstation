@@ -87,7 +87,7 @@ SUBSYSTEM_DEF(weather)
 	return locate(type) in processing
 
 /**
- * Ends all current weather effects that are currently processing.
+ * Calls end() on all current weather effects that are currently processing in the weather subsystem.
  */
 /client/proc/stop_weather()
 	set category = "Debug"
