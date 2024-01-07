@@ -62,9 +62,7 @@
 
 	if(effect_power >= 10) //Performs something akin to a revenant defile spell.
 		var/effect_range = ghosts_orbiting + 3
-		var/effect_area = range(effect_range, src)
-
-		for(var/impacted_thing in effect_area)
+		for(var/impacted_thing in range(effect_range, src))
 			if(isfloorturf(impacted_thing))
 				if(prob(5))
 					new /obj/effect/decal/cleanable/blood(get_turf(impacted_thing))

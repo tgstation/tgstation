@@ -5,22 +5,22 @@
  *
  * A Steward's Secret
  * Grasp of Lock
+ * Key Keeper’s Burden
  * > Sidepaths:
  *   Mindgate
- * Key Keeper’s Burden
- *
  * Concierge's Rite
  * Mark Of Lock
  * Ritual of Knowledge
  * Burglar's Finesse
  * > Sidepaths:
- * 	 Opening Blast
- *   Apetra Vulnera
+ *   Opening Blast
  *   Unfathomable Curio
  * 	 Unsealed arts
  *
  * Opening Blade
  * Caretaker’s Last Refuge
+ * > Sidepaths:
+ * 	 Apetra Vulnera
  *
  * Unlock the Labyrinth
  */
@@ -46,10 +46,7 @@
 		DNA locks on mechs will be removed, and any pilot will be ejected. Works on consoles. \
 		Makes a distinctive knocking sound on use."
 	gain_text = "Nothing may remain closed from my touch."
-	next_knowledge = list(
-		/datum/heretic_knowledge/key_ring,
-		/datum/heretic_knowledge/medallion,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/key_ring)
 	cost = 1
 	route = PATH_LOCK
 
@@ -105,7 +102,10 @@
 		/obj/item/card/id = 1,
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
-	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
+	next_knowledge = list(
+		/datum/heretic_knowledge/limited_amount/concierge_rite,
+		/datum/heretic_knowledge/spell/mind_gate,
+	)
 	cost = 1
 	route = PATH_LOCK
 
@@ -144,11 +144,9 @@
 		that puts a random item from the victims backpack into your hand."
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 	next_knowledge = list(
-		/datum/heretic_knowledge/spell/apetra_vulnera,
 		/datum/heretic_knowledge/spell/opening_blast,
 		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
 		/datum/heretic_knowledge/unfathomable_curio,
-		/datum/heretic_knowledge/curse/paralysis,
 		/datum/heretic_knowledge/painting,
 	)
 	spell_to_add = /datum/action/cooldown/spell/pointed/burglar_finesse
@@ -174,7 +172,10 @@
 		While in refuge, you cannot use your hands or spells, and you are immune to slowdown. \
 		You are invincible but unable to harm anything. Cancelled by being hit with an anti-magic item."
 	gain_text = "Jealously, the Guard and the Hound hunted me. But I unlocked my form, and was but a haze, untouchable."
-	next_knowledge = list(/datum/heretic_knowledge/ultimate/lock_final)
+	next_knowledge = list(
+		/datum/heretic_knowledge/ultimate/lock_final,
+		/datum/heretic_knowledge/spell/apetra_vulnera,
+	)
 	route = PATH_LOCK
 	spell_to_add = /datum/action/cooldown/spell/caretaker
 	cost = 1

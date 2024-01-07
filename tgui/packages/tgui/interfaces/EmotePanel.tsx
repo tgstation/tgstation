@@ -1,6 +1,8 @@
+import { useState } from 'react';
+
 import { BooleanLike } from '../../common/react';
 import { capitalizeFirst } from '../../common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useBackend } from '../backend';
 import { Box, Button, Flex, Icon, Section } from '../components';
 import { Window } from '../layouts';
 import { SearchBar } from './common/SearchBar';
@@ -23,47 +25,23 @@ export const EmotePanelContent = (props) => {
   const { act, data } = useBackend<EmotePanelData>();
   const { emotes } = data;
 
-  const [filterVisible, toggleVisualFilter] = useLocalState<boolean>(
-    'filterVisible',
-    false,
-  );
+  const [filterVisible, toggleVisualFilter] = useState(false);
 
-  const [filterAudible, toggleAudibleFilter] = useLocalState<boolean>(
-    'filterAudible',
-    false,
-  );
+  const [filterAudible, toggleAudibleFilter] = useState(false);
 
-  const [filterSound, toggleSoundFilter] = useLocalState<boolean>(
-    'filterSound',
-    false,
-  );
+  const [filterSound, toggleSoundFilter] = useState(false);
 
-  const [filterHands, toggleHandsFilter] = useLocalState<boolean>(
-    'filterHands',
-    false,
-  );
+  const [filterHands, toggleHandsFilter] = useState(false);
 
-  const [filterUseParams, toggleUseParamsFilter] = useLocalState<boolean>(
-    'filterUseParams',
-    false,
-  );
+  const [filterUseParams, toggleUseParamsFilter] = useState(false);
 
-  const [useParams, toggleUseParams] = useLocalState<boolean>(
-    'useParams',
-    false,
-  );
+  const [useParams, toggleUseParams] = useState(false);
 
-  const [searchText, setSearchText] = useLocalState<string>('search_text', '');
+  const [searchText, setSearchText] = useState<string>('');
 
-  const [showNames, toggleShowNames] = useLocalState<boolean>(
-    'showNames',
-    true,
-  );
+  const [showNames, toggleShowNames] = useState(true);
 
-  const [showIcons, toggleShowIcons] = useLocalState<boolean>(
-    'showIcons',
-    false,
-  );
+  const [showIcons, toggleShowIcons] = useState(false);
 
   return (
     <Section>

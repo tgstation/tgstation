@@ -37,7 +37,7 @@
 	if(message)
 		if(!check_rights(R_SERVER,0))
 			message = adminscrub(message,500)
-		send_formatted_announcement(message, "From [usr.client.holder.fakekey ? "Administrator" : usr.key]")
+		send_ooc_announcement(message, "From [usr.client.holder.fakekey ? "Administrator" : usr.key]")
 		log_admin("Announce: [key_name(usr)] : [message]")
 	BLACKBOX_LOG_ADMIN_VERB("Announce")
 

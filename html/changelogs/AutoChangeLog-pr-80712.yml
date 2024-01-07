@@ -1,0 +1,4 @@
+author: "fIoppie"
+delete-after: True
+changes:
+  - qol: "Cargo techs can now access the windoor in the delivery office on Delta."

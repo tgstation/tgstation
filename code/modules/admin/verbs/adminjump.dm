@@ -10,7 +10,7 @@
 		return
 
 	var/list/turfs = list()
-	for(var/turf/T in A)
+	for(var/turf/T in A.get_contained_turfs())
 		if(T.density)
 			continue
 		turfs.Add(T)

@@ -1,0 +1,4 @@
+author: "Thunder12345"
+delete-after: True
+changes:
+  - bugfix: "The clown planet biodome and virtual domain can now be completed without slipping directly into the exit."
