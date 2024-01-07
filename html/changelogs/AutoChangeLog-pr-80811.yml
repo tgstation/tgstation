@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Morgue trays and freezing temperatures will no longer husk bodies"
-  - bugfix: "Organs outside bodies will properly receive cold damage"
