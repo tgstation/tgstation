@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "vents that are turned off dont replay their animation if you go out of sight and back in"
