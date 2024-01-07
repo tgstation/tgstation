@@ -142,7 +142,8 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("remote factory output", /obj/structure/chemical_tank/factory, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote chemical input tank", /obj/structure/chemical_input, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote chemical grinder", /obj/structure/chemical_input/grinder, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("remote chemical fermenter", /obj/structure/chemical_input/fermenter, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE)
+	new/datum/stack_recipe("remote chemical fermenter", /obj/structure/chemical_input/fermenter, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote geyser pump", /obj/structure/chemical_input/liquid_pump, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE)
 ))
 
 /obj/item/stack/sheet/iron

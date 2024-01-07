@@ -27,6 +27,10 @@
 	transferrance = new /datum/reagents(10000)
 	transferrance.my_atom = src
 
+/obj/item/circuit_component/chem/internal_tank/Destroy()
+	. = ..()
+	QDEL_NULL(reagent_holder)
+	QDEL_NULL(transferrance)
 
 /obj/item/circuit_component/chem/internal_tank/populate_ports()
 	chemical_inputs = list()

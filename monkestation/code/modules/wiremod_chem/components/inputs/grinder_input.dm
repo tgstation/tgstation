@@ -2,6 +2,7 @@
 	name = "remote chemical grinder"
 	desc = "grinds stuff in chemical."
 	icon = 'icons/obj/plumbing/plumbers.dmi'
+	icon_state = "grinder_chemical"
 	reagent_flags = TRANSPARENT | DRAINABLE
 	component_name = "Grinder Input"
 
