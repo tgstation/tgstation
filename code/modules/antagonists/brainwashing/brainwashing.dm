@@ -1,3 +1,4 @@
+// MONKE: file is unincluded, and replaced by <monkestation\code\modules\antagonists\brainwashing\brainwashing.dm>
 /proc/brainwash(mob/living/brainwash_victim, directives)
 	if(!brainwash_victim.mind)
 		return
