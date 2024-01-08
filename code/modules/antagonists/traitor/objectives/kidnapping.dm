@@ -275,7 +275,7 @@
 		return
 
 	var/list/possible_turfs = list()
-	for(var/turf/open/open_turf in dropoff_area)
+	for(var/turf/open/open_turf in dropoff_area.get_contained_turfs())
 		if(open_turf.is_blocked_turf() || isspaceturf(open_turf))
 			continue
 		possible_turfs += open_turf

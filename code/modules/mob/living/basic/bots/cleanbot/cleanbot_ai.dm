@@ -1,4 +1,5 @@
 #define BOT_CLEAN_PATH_LIMIT 15
+#define POST_CLEAN_COOLDOWN 5 SECONDS
 
 /datum/ai_controller/basic_controller/bot/cleanbot
 	blackboard = list(
@@ -51,7 +52,6 @@
 
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
 	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
-		controller.clear_blackboard_key(BB_BEACON_TARGET)
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -74,7 +74,7 @@
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
-		if(LAZYACCESS(ignore_list, found_item))
+		if(LAZYACCESS(ignore_list, REF(found_item)))
 			continue
 		return found_item
 
@@ -97,7 +97,7 @@
 /datum/ai_behavior/find_and_set/spray_target/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_list, human_target))
+		if(LAZYACCESS(ignore_list, REF(human_target)))
 			continue
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
@@ -128,6 +128,7 @@
 
 /datum/ai_behavior/execute_clean/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
+	controller.set_blackboard_key(BB_POST_CLEAN_COOLDOWN, POST_CLEAN_COOLDOWN + world.time)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target) || is_type_in_typecache(target, controller.blackboard[BB_HUNTABLE_TRASH]))
 		return
@@ -186,7 +187,7 @@
 /datum/ai_planning_subtree/find_patrol_beacon/cleanbot
 
 /datum/ai_planning_subtree/find_patrol_beacon/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
-	if(controller.blackboard_key_exists(BB_CLEAN_TARGET))
+	if(controller.blackboard[BB_POST_CLEAN_COOLDOWN] >= world.time)
 		return
 	return ..()
 
@@ -202,7 +203,7 @@
 		return
 	if(isnull(parent.ai_controller))
 		return
-	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target))
+	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], REF(target)))
 		return
 	return ..()
 
@@ -214,3 +215,4 @@
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 
 #undef BOT_CLEAN_PATH_LIMIT
+#undef POST_CLEAN_COOLDOWN

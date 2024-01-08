@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "\"The sister and He Who Wept\" Heretic painting will no longer cause big lag"

@@ -80,7 +80,6 @@ const UsersScreen = (props) => {
     <Section fill scrollable title="Crew Account Summary">
       {PlayerAccounts.map((account) => (
         <Collapsible
-          fill
           key={account.index}
           title={account.name + ' the ' + account.job}
         >

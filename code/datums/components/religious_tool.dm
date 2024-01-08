@@ -43,7 +43,7 @@
 	RegisterSignal(SSdcs, COMSIG_RELIGIOUS_SECT_CHANGED, PROC_REF(SetGlobalToLocal))
 	RegisterSignal(SSdcs, COMSIG_RELIGIOUS_SECT_RESET, PROC_REF(on_sect_reset))
 
-/datum/component/religious_tool/Destroy(force, silent)
+/datum/component/religious_tool/Destroy(force)
 	easy_access_sect = null
 	performing_rite = null
 	catalyst_type = null

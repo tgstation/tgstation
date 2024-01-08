@@ -103,7 +103,7 @@
 	if(atom_storage.locked == STORAGE_FULLY_LOCKED)
 		atom_storage.locked = STORAGE_NOT_LOCKED
 		replace_beaker(user)
-		SStgui.close_all_uis()
+		SStgui.close_uis(src)
 	else
 		atom_storage.locked = STORAGE_FULLY_LOCKED
 		atom_storage.hide_contents(usr)

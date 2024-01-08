@@ -24,7 +24,7 @@
 		RegisterSignal(game, action_priority, PROC_REF(perform_action_target))
 		RegisterSignal(game, COMSIG_MAFIA_NIGHT_END, PROC_REF(clean_action_refs))
 
-/datum/mafia_ability/Destroy(force, ...)
+/datum/mafia_ability/Destroy(force)
 	host_role = null
 	target_role = null
 	return ..()

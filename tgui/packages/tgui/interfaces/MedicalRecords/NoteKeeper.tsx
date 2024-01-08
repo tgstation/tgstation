@@ -73,7 +73,7 @@ export const NoteKeeper = (props) => {
           <Box color="label" mb={1} mt={1}>
             Content:
           </Box>
-          <BlockQuote wrap>{selectedNote.content}</BlockQuote>
+          <BlockQuote>{selectedNote.content}</BlockQuote>
         </>
       )}
     </Section>
