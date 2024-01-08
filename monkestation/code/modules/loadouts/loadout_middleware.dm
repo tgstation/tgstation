@@ -155,6 +155,11 @@
 				formatted_list.len--
 				continue
 
+		if(item.admin_only) //These checks are also performed in the backend.
+			if(!is_admin(preferences.parent))
+				formatted_list.len--
+				continue
+
 		if(item.required_season && !check_holidays(item.required_season))
 			formatted_list.len--
 			continue
