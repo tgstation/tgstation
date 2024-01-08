@@ -73,7 +73,8 @@
 /datum/symptom/dna/activate(mob/living/carbon/mob)
 	mob.bodytemperature = max(mob.bodytemperature, 350)
 	scramble_dna(mob, TRUE, TRUE, TRUE, rand(15,45))
-	mob.adjustCloneLoss(10)
+	if(mob.cloneloss <= 50)
+		mob.adjustCloneLoss(10)
 
 
 /datum/symptom/immortal

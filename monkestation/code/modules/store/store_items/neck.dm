@@ -84,6 +84,52 @@ GLOBAL_LIST_INIT(store_neck, generate_store_items(/datum/store_item/neck))
 	item_path = /obj/item/clothing/neck/polycloak
 	item_cost = 7500
 
+
+/datum/store_item/neck/trans
+	name = "Trans Pride Cloak"
+	item_path = /obj/item/clothing/neck/trans
+	item_cost = 10000
+
+/datum/store_item/neck/pan
+	name = "Pansexual Pride Cloak"
+	item_path = /obj/item/clothing/neck/pan
+	item_cost = 10000
+
+/datum/store_item/neck/les
+	name = "Lesbian Pride Cloak"
+	item_path = /obj/item/clothing/neck/les
+	item_cost = 10000
+
+/datum/store_item/neck/intersex
+	name = "Intersex Pride Cloak"
+	item_path = /obj/item/clothing/neck/intersex
+	item_cost = 10000
+
+/datum/store_item/neck/gay
+	name = "Gay Pride Cloak"
+	item_path = /obj/item/clothing/neck/gay
+	item_cost = 10000
+
+/datum/store_item/neck/enby
+	name = "Nonbinary Pride Cloak"
+	item_path = /obj/item/clothing/neck/enby
+	item_cost = 10000
+
+/datum/store_item/neck/bi
+	name = "Bisexual Pride Cloak"
+	item_path = /obj/item/clothing/neck/bi
+	item_cost = 10000
+
+/datum/store_item/neck/aro
+	name = "Aro Pride Cloak"
+	item_path = /obj/item/clothing/neck/aro
+	item_cost = 10000
+
+/datum/store_item/neck/ace
+	name = "Asexual Pride Cloak"
+	item_path = /obj/item/clothing/neck/ace
+	item_cost = 10000
+
 /*
 *	NECKTIES
 */

@@ -1116,3 +1116,13 @@
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/board/fishing_portal_generator
+	name = "Fishing Portal Generator Board"
+	desc = "The circuit board for the fishing portal generator"
+	id = "fishing_portal_generator"
+	build_path = /obj/item/circuitboard/machine/fishing_portal_generator
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE

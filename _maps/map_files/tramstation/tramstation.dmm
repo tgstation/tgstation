@@ -18293,8 +18293,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
 "eHN" = (
-/obj/structure/closet/secure_closet/chemical,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/chemical_manufacturer,
+/obj/item/stock_parts/cell/high,
+/obj/item/integrated_circuit/chemical,
+/obj/item/multitool,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "eHR" = (
@@ -30349,7 +30352,7 @@
 /turf/open/openspace,
 /area/station/asteroid)
 "iLD" = (
-/obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/machinery/component_printer,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "iLP" = (
@@ -41527,6 +41530,14 @@
 /obj/machinery/light/directional/west,
 /obj/structure/sign/clock/directional/west,
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 4
+	},
+/obj/item/stack/sheet/mineral/plasma{
+	pixel_y = 10
+	},
+/obj/item/clothing/glasses/science,
+/obj/item/clothing/glasses/science,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "mmk" = (
@@ -50975,6 +50986,7 @@
 	},
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/structure/closet/secure_closet/chemical,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "pvC" = (
@@ -60201,20 +60213,16 @@
 /turf/open/openspace,
 /area/station/security/brig)
 "soL" = (
-/obj/structure/table/glass,
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 10
-	},
-/obj/item/stack/sheet/mineral/plasma{
-	pixel_y = 4
-	},
-/obj/item/clothing/glasses/science,
 /obj/machinery/requests_console/directional/west{
 	department = "Pharmacy";
 	name = "Pharmacy Requests Console";
 	receive_ore_updates = 1
 	},
 /obj/effect/turf_decal/tile/yellow/fourcorners,
+/obj/structure/chemical_manufacturer,
+/obj/item/stock_parts/cell/high,
+/obj/item/integrated_circuit/chemical,
+/obj/item/multitool,
 /turf/open/floor/iron/white,
 /area/station/medical/pharmacy)
 "soT" = (
