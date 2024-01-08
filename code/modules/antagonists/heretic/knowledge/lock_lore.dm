@@ -120,7 +120,7 @@
 	mark_type = /datum/status_effect/eldritch/lock
 
 /datum/heretic_knowledge/knowledge_ritual/lock
-	next_knowledge = list(/datum/heretic_knowledge/spell/concierge_rite)
+	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
 	route = PATH_LOCK
 
 /datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
@@ -134,7 +134,7 @@
 		/obj/item/multitool = 1,
 	)
 	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
-	next_knowledge = list(/datum/heretic_knowledge/mark/burglar_finesse)
+	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
 	cost = 1
 	route = PATH_LOCK
 
