@@ -3,7 +3,7 @@ import { classes } from 'common/react';
 import { storage } from 'common/storage';
 import { multiline } from 'common/string';
 import { createUuid } from 'common/uuid';
-import { Component, Fragment, useState } from 'react';
+import { Component, Fragment } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -25,7 +25,7 @@ const pod_grey = {
 };
 
 const useCompact = () => {
-  const [compact, setCompact] = useState(false);
+  const [compact, setCompact] = useLocalState('compact', false);
   const toggleCompact = () => setCompact(!compact);
   return [compact, toggleCompact];
 };
@@ -830,10 +830,10 @@ class PresetsPage extends Component {
   render() {
     const { presets } = this.state;
     const { act, data } = useBackend();
-    const [presetIndex, setSelectedPreset] = useState(0);
-    const [settingName, setEditingNameStatus] = useState(0);
-    const [newNameText, setText] = useState('');
-    const [hue, setHue] = useState(0);
+    const [presetIndex, setSelectedPreset] = useLocalState('presetIdx', 0);
+    const [settingName, setEditingNameStatus] = useLocalState('settingName', 0);
+    const [newNameText, setText] = useLocalState('nameText', '');
+    const [hue, setHue] = useLocalState('hue', 0);
     return (
       <Section
         scrollable
