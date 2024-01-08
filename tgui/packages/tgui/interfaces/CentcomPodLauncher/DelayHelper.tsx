@@ -2,10 +2,14 @@ import { toFixed } from 'common/math';
 
 import { useBackend } from '../../backend';
 import { Knob, LabeledControls } from '../../components';
-import { PodLauncherData } from './types';
+import { PodDelay, PodLauncherData } from './types';
 
+type Props = {
+  delay_list: PodDelay[];
+  reverse?: boolean;
+};
 
-export function DelayHelper(props) {
+export function DelayHelper(props: Props) {
   const { act, data } = useBackend<PodLauncherData>();
   const { custom_rev_delay, delays, rev_delays } = data;
   const { delay_list, reverse = false } = props;
@@ -18,20 +22,15 @@ export function DelayHelper(props) {
           label={custom_rev_delay ? '' : delay.title}
         >
           <Knob
-            inline
-            step={0.02}
-            size={custom_rev_delay ? 0.75 : 1}
-            value={(reverse ? rev_delays[i + 1] : delays[i + 1]) / 10}
-            unclamped
-            minValue={0}
-            unit={'s'}
-            format={(value) => toFixed(value, 2)}
-            maxValue={10}
             color={
               (reverse ? rev_delays[i + 1] : delays[i + 1]) / 10 > 10
                 ? 'orange'
                 : 'default'
             }
+            format={(value) => toFixed(value, 2)}
+            inline
+            maxValue={10}
+            minValue={0}
             onDrag={(e, value) => {
               act('editTiming', {
                 timer: '' + (i + 1),
@@ -39,6 +38,11 @@ export function DelayHelper(props) {
                 reverse: reverse,
               });
             }}
+            size={custom_rev_delay ? 0.75 : 1}
+            step={0.02}
+            unclamped
+            unit="s"
+            value={(reverse ? rev_delays[i + 1] : delays[i + 1]) / 10}
           />
         </LabeledControls.Item>
       ))}

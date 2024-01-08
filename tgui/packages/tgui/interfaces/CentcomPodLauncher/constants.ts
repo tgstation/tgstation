@@ -1,4 +1,7 @@
+import { Placement } from '@popperjs/core';
+
 import { TabBay, TabDrop, TabPod } from './Tabs';
+import { PodDelay } from './types';
 
 export const POD_GREY = {
   color: 'grey',
@@ -19,7 +22,13 @@ export const TABPAGES = [
   },
 ] as const;
 
-export const REVERSE_OPTIONS = [
+type Option = {
+  title: string;
+  key?: string;
+  icon?: string;
+};
+
+export const REVERSE_OPTIONS: Option[] = [
   {
     title: 'Mobs',
     icon: 'user',
@@ -57,9 +66,9 @@ export const REVERSE_OPTIONS = [
     key: 'Mecha',
     icon: 'truck',
   },
-] as const;
+];
 
-export const DELAYS = [
+export const DELAYS: PodDelay[] = [
   {
     title: 'Pre',
     tooltip: 'Time until pod gets to station',
@@ -76,9 +85,9 @@ export const DELAYS = [
     title: 'Exit',
     tooltip: 'Time for pod to\nleave after opening',
   },
-] as const;
+];
 
-export const REV_DELAYS = [
+export const REV_DELAYS: PodDelay[] = [
   {
     title: 'Pre',
     tooltip: 'Time until pod appears above dropoff point',
@@ -95,7 +104,7 @@ export const REV_DELAYS = [
     title: 'Exit',
     tooltip: 'Time for pod to\nleave after opening',
   },
-] as const;
+];
 
 export const SOUNDS = [
   {
@@ -310,7 +319,14 @@ export const EFFECTS_HARM = [
   },
 ];
 
-export const EFFECTS_ALL = [
+type Effect = {
+  list: typeof EFFECTS_LOAD | typeof EFFECTS_NORMAL | typeof EFFECTS_HARM;
+  label: string;
+  alt_label?: string;
+  tooltipPosition: Placement;
+};
+
+export const EFFECTS_ALL: Effect[] = [
   {
     list: EFFECTS_LOAD,
     label: 'Load From',
@@ -327,4 +343,4 @@ export const EFFECTS_ALL = [
     label: 'Harmful Effects',
     tooltipPosition: 'bottom',
   },
-] as const;
+];

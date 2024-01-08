@@ -2,10 +2,10 @@ import { multiline } from 'common/string';
 
 import { useBackend } from '../../backend';
 import { Box, Button } from '../../components';
+import { useCompact } from './hooks';
 import { PodLauncherData } from './types';
-import { useCompact } from './useCompact';
 
-export function LaunchPage(props) {
+export function PodLaunch(props) {
   const { act, data } = useBackend<PodLauncherData>();
   const { giveLauncher } = data;
 
@@ -14,13 +14,13 @@ export function LaunchPage(props) {
   return (
     <Button
       fluid
+      onClick={() => act('giveLauncher')}
+      selected={giveLauncher}
       textAlign="center"
       tooltip={multiline`
         You should know what the
         Codex Astartes says about this`}
-      selected={giveLauncher}
       tooltipPosition="top"
-      onClick={() => act('giveLauncher')}
     >
       <Box bold fontSize="1.4em" lineHeight={compact ? 1.5 : 3}>
         LAUNCH

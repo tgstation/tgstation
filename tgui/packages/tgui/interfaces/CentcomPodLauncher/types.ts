@@ -16,8 +16,14 @@ export type PodLauncherData = {
   picking_dropoff_turf: BooleanLike;
   renderLighting: BooleanLike;
   rev_delays: number[];
+  reverse_option_list: number[];
   shrapnelMagnitude: number;
   shrapnelType: string;
   soundVolume: number;
   styleChoice: number;
+};
+
+export type PodDelay = {
+  title: string;
+  tooltip: string;
 };

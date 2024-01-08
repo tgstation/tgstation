@@ -12,29 +12,35 @@ export function StylePage(props) {
 
   return (
     <Section
-      fill
-      scrollable
-      title="Style"
       buttons={
         <Button
           color="transparent"
           icon="edit"
+          onClick={() => act('effectName')}
           selected={effectName}
           tooltip={multiline`
             Edit pod's
             name/desc.`}
           tooltipPosition="bottom-start"
-          onClick={() => act('effectName')}
         >
           Name
         </Button>
       }
+      fill
+      scrollable
+      title="Style"
     >
       {STYLES.map((page, i) => (
         <Button
-          key={i}
-          width="45px"
           height="45px"
+          key={i}
+          onClick={() => act('setStyle', { style: i })}
+          selected={styleChoice - 1 === i}
+          style={{
+            verticalAlign: 'middle',
+            marginRight: '5px',
+            borderRadius: '20px',
+          }}
           tooltipPosition={
             i >= STYLES.length - 2
               ? i % 2 === 1
@@ -45,19 +51,13 @@ export function StylePage(props) {
                 : 'bottom-end'
           }
           tooltip={page.title}
-          style={{
-            verticalAlign: 'middle',
-            marginRight: '5px',
-            borderRadius: '20px',
-          }}
-          selected={styleChoice - 1 === i}
-          onClick={() => act('setStyle', { style: i })}
+          width="45px"
         >
           <Box
             className={classes(['supplypods64x64', 'pod_asset' + (i + 1)])}
             style={{
-              transform: 'rotate(45deg) translate(-25%,-10%)',
               pointerEvents: 'none',
+              transform: 'rotate(45deg) translate(-25%,-10%)',
             }}
           />
         </Button>

@@ -8,7 +8,12 @@ import { PodLauncherData } from './types';
 
 export function ReverseMenu(props) {
   const { act, data } = useBackend<PodLauncherData>();
-  const { customDropoff, effectReverse, picking_dropoff_turf } = data;
+  const {
+    customDropoff,
+    effectReverse,
+    picking_dropoff_turf,
+    reverse_option_list,
+  } = data;
 
   const [tabPageIndex, setTabPageIndex] = useState(1);
 
@@ -18,7 +23,7 @@ export function ReverseMenu(props) {
       title="Reverse"
       buttons={
         <Button
-          icon={effectReverse === 1 ? 'toggle-on' : 'toggle-off'}
+          icon={effectReverse ? 'toggle-on' : 'toggle-off'}
           selected={effectReverse}
           tooltip={multiline`
             Doesn't send items.
@@ -36,7 +41,7 @@ export function ReverseMenu(props) {
         />
       }
     >
-      {effectReverse === 1 && (
+      {!!effectReverse && (
         <Stack fill vertical>
           <Stack.Item maxHeight="20px">
             <Button
@@ -85,7 +90,7 @@ export function ReverseMenu(props) {
                 tooltip={option.title}
                 onClick={() =>
                   act('reverseOption', {
-                    reverseOption: option.key ? option.key : option.title,
+                    reverseOption: option.key || option.title,
                   })
                 }
               />

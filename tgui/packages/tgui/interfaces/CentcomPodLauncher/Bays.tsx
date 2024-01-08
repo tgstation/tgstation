@@ -5,7 +5,7 @@ import { Button, Section } from '../../components';
 import { BAYS } from './constants';
 import { PodLauncherData } from './types';
 
-export function Bays(props) {
+export function PodBays(props) {
   const { act, data } = useBackend<PodLauncherData>();
   const { bayNumber } = data;
 
@@ -43,9 +43,9 @@ export function Bays(props) {
       {BAYS.map((bay, i) => (
         <Button
           key={i}
-          tooltipPosition="bottom-end"
-          selected={bayNumber === '' + (i + 1)}
           onClick={() => act('switchBay', { bayNumber: '' + (i + 1) })}
+          selected={bayNumber === '' + (i + 1)}
+          tooltipPosition="bottom-end"
         >
           {bay.title}
         </Button>

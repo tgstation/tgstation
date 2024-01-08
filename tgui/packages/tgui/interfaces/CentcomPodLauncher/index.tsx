@@ -1,14 +1,14 @@
 import { Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { Bays } from './Bays';
-import { LaunchPage } from './LaunchPage';
+import { PodBays } from './Bays';
+import { useCompact } from './hooks';
+import { PodLaunch } from './PodLaunch';
 import { PodSounds } from './PodSounds';
 import { PodStatusPage } from './PodStatusPage';
 import { PresetsPage } from './PresetsPage';
 import { ReverseMenu } from './ReverseMenu';
 import { StylePage } from './StylePage';
 import { Timing } from './Timing';
-import { useCompact } from './useCompact';
 import { ViewTabHolder } from './ViewTabHolder';
 
 export function CentcomPodLauncher(props) {
@@ -16,9 +16,9 @@ export function CentcomPodLauncher(props) {
 
   return (
     <Window
+      height={compact ? 360 : 440}
       title="Supply Pod Menu (Use against Helen Weinstein)"
       width={compact ? 460 : 730}
-      height={compact ? 360 : 440}
     >
       <Window.Content>
         <Stack fill vertical>
@@ -37,7 +37,7 @@ export function CentcomPodLauncher(props) {
                   </Stack.Item>
                   <Stack.Item>
                     <Section>
-                      <LaunchPage />
+                      <PodLaunch />
                     </Section>
                   </Stack.Item>
                 </Stack>
@@ -50,7 +50,7 @@ export function CentcomPodLauncher(props) {
               <Stack.Item basis="8em">
                 <Stack fill vertical>
                   <Stack.Item>
-                    <Bays />
+                    <PodBays />
                   </Stack.Item>
                   <Stack.Item grow>
                     <Timing />

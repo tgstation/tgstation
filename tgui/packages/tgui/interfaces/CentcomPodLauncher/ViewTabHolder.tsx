@@ -21,62 +21,62 @@ export function ViewTabHolder(props) {
         <>
           {!!customDropoff && effectReverse === 1 && (
             <Button
-              inline
               color="transparent"
-              tooltip="View Dropoff Location"
               icon="arrow-circle-down"
-              selected={tabPageIndex === 2}
+              inline
               onClick={() => {
                 setTabPageIndex(2);
                 act('tabSwitch', { tabIndex: 2 });
               }}
+              selected={tabPageIndex === 2}
+              tooltip="View Dropoff Location"
             />
           )}
           <Button
-            inline
             color="transparent"
-            tooltip="View Pod"
             icon="rocket"
-            selected={tabPageIndex === 0}
+            inline
             onClick={() => {
               setTabPageIndex(0);
               act('tabSwitch', { tabIndex: 0 });
             }}
+            selected={tabPageIndex === 0}
+            tooltip="View Pod"
           />
           <Button
-            inline
             color="transparent"
-            tooltip="View Source Bay"
             icon="th"
-            selected={tabPageIndex === 1}
+            inline
             onClick={() => {
               setTabPageIndex(1);
               act('tabSwitch', { tabIndex: 1 });
             }}
+            selected={tabPageIndex === 1}
+            tooltip="View Source Bay"
           />
           <span style={POD_GREY}>|</span>
-          {!!customDropoff && effectReverse === 1 && (
+          {!!customDropoff && !!effectReverse && (
             <Button
-              inline
               color="transparent"
               icon="lightbulb"
-              selected={renderLighting}
-              tooltip="Render Lighting for the dropoff view"
+              inline
               onClick={() => {
                 act('renderLighting');
                 act('refreshView');
               }}
+              selected={renderLighting}
+              tooltip="Render Lighting for the dropoff view"
             />
           )}
           <Button
-            inline
             color="transparent"
             icon="sync-alt"
-            tooltip="Refresh view window in case it breaks"
+            inline
             onClick={() => {
               setTabPageIndex(tabPageIndex);
               act('refreshView');
             }}
+            tooltip="Refresh view window in case it breaks"
           />
         </>
       }

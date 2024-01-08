@@ -3,8 +3,8 @@ import { Fragment } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Button, Section, Stack } from '../../components';
 import { EFFECTS_ALL, POD_GREY } from './constants';
+import { useCompact } from './hooks';
 import { PodLauncherData } from './types';
-import { useCompact } from './useCompact';
 
 export function PodStatusPage(props) {
   const { act, data } = useBackend<PodLauncherData>();
@@ -19,7 +19,7 @@ export function PodStatusPage(props) {
           <Fragment key={i}>
             <Stack.Item>
               <Box bold color="label" mb={1}>
-                {compact && list.alt_label ? list.alt_label : list.label}:
+                {compact && (list.alt_label || list.label)}:
               </Box>
               <Box>
                 {list.list.map((effect, j) => (
@@ -31,6 +31,24 @@ export function PodStatusPage(props) {
                     )}
                     {!effect.divider && (
                       <Button
+                        icon={effect.icon}
+                        onClick={() =>
+                          payload !== 0
+                            ? act(effect.act, effect.payload)
+                            : act(effect.act)
+                        }
+                        selected={
+                          effect.soloSelected
+                            ? data[effect.soloSelected]
+                            : data[effect.selected] === effect.choiceNumber
+                        }
+                        style={{
+                          verticalAlign: 'middle',
+                          marginLeft: j !== 0 ? '1px' : '0px',
+                          marginRight:
+                            j !== list.list.length - 1 ? '1px' : '0px',
+                          borderRadius: '5px',
+                        }}
                         tooltip={
                           effect.details
                             ? effectShrapnel
@@ -43,24 +61,6 @@ export function PodStatusPage(props) {
                             : effect.title
                         }
                         tooltipPosition={list.tooltipPosition}
-                        icon={effect.icon}
-                        selected={
-                          effect.soloSelected
-                            ? data[effect.soloSelected]
-                            : data[effect.selected] === effect.choiceNumber
-                        }
-                        onClick={() =>
-                          payload !== 0
-                            ? act(effect.act, effect.payload)
-                            : act(effect.act)
-                        }
-                        style={{
-                          verticalAlign: 'middle',
-                          marginLeft: j !== 0 ? '1px' : '0px',
-                          marginRight:
-                            j !== list.list.length - 1 ? '1px' : '0px',
-                          borderRadius: '5px',
-                        }}
                       >
                         {effect.content}
                       </Button>

@@ -33,7 +33,7 @@ export function TabBay(props) {
 }
 
 export function TabDrop(props) {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<PodLauncherData>();
   const { oldArea } = data;
 
   return (
@@ -49,5 +49,5 @@ export function TabDrop(props) {
         {oldArea ? oldArea.substring(0, 17) : 'Go Back'}
       </Button>
     </>
-  );
+  ); 
 }

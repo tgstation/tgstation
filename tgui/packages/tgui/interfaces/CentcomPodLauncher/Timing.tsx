@@ -17,26 +17,26 @@ export function Timing(props) {
       buttons={
         <>
           <Button
-            icon="undo"
             color="transparent"
+            icon="undo"
+            onClick={() => act('resetTiming')}
             tooltip={multiline`
             Reset all pod
             timings/delays`}
             tooltipPosition="bottom-end"
-            onClick={() => act('resetTiming')}
           />
           <Button
-            icon={custom_rev_delay === 1 ? 'toggle-on' : 'toggle-off'}
-            selected={custom_rev_delay}
-            disabled={!effectReverse}
             color="transparent"
+            disabled={!effectReverse}
+            icon={custom_rev_delay === 1 ? 'toggle-on' : 'toggle-off'}
+            onClick={() => act('toggleRevDelays')}
+            selected={custom_rev_delay}
             tooltip={multiline`
             Toggle Reverse Delays
             Note: Top set is
             normal delays, bottom set
             is reversing pod's delays`}
             tooltipPosition="bottom-end"
-            onClick={() => act('toggleRevDelays')}
           />
         </>
       }

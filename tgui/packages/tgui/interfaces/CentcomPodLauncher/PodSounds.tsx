@@ -11,8 +11,6 @@ export function PodSounds(props) {
 
   return (
     <Section
-      fill
-      title="Sounds"
       buttons={
         <Button
           icon="volume-up"
@@ -25,14 +23,16 @@ export function PodSounds(props) {
           onClick={() => act('soundVolume')}
         />
       }
+      fill
+      title="Sounds"
     >
       {SOUNDS.map((sound, i) => (
         <Button
           key={i}
+          onClick={() => act(sound.act)}
+          selected={data[sound.act]}
           tooltip={sound.tooltip}
           tooltipPosition="top-end"
-          selected={data[sound.act]}
-          onClick={() => act(sound.act)}
         >
           {sound.title}
         </Button>
