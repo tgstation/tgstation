@@ -1186,7 +1186,7 @@
 /mob/living/proc/resist_restraints()
 	return
 
-/atom/proc/get_visible_name()
+/mob/living/proc/get_visible_name()
 	return name
 
 /mob/living/proc/update_gravity(gravity)

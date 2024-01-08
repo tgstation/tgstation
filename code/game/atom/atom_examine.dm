@@ -100,3 +100,7 @@
 ///Used to insert text after the name but before the description in examine()
 /atom/proc/get_name_chaser(mob/user, list/name_chaser = list())
 	return name_chaser
+
+/// Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face. By default just returns the atom's name.
+/atom/proc/get_face_name(if_no_face="Unknown")
+	return name
