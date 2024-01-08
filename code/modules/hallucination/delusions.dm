@@ -18,8 +18,11 @@
 	var/delusion_icon_file
 	/// The icon state of the delusion image
 	var/delusion_icon_state
-	/// Do we use a generated icon? If yes no icon file or state needed.
-	var/dynamic_icon = FALSE
+
+	/// Appearance to use as a source for our image
+	/// If this exists we'll ignore the icon/state from above
+	var/mutable_appearance/delusion_appearance
+
 	/// The name of the delusion image
 	var/delusion_name
 
@@ -96,7 +99,11 @@
 	return TRUE
 
 /datum/hallucination/delusion/proc/make_delusion_image(mob/over_who)
-	var/image/funny_image = image(delusion_icon_file, over_who, dynamic_icon ? "" : delusion_icon_state)
+	var/image/funny_image
+	if(delusion_appearance)
+		funny_image = image(delusion_appearance, over_who)
+	else
+		funny_image = image(delusion_icon_file, over_who, delusion_icon_state)
 	funny_image.name = delusion_name
 	funny_image.override = TRUE
 	return funny_image
@@ -198,13 +205,12 @@
 
 /datum/hallucination/delusion/preset/syndies
 	random_hallucination_weight = 1
-	dynamic_icon = TRUE
 	delusion_name = "Syndicate"
 	affects_others = TRUE
 	affects_us = FALSE
 
 /datum/hallucination/delusion/preset/syndies/make_delusion_image(mob/over_who)
-	delusion_icon_file = getFlatIcon(get_dynamic_human_appearance(
+	delusion_appearance = get_dynamic_human_appearance(
 		mob_spawn_path = pick(
 			/obj/effect/mob_spawn/corpse/human/syndicatesoldier,
 			/obj/effect/mob_spawn/corpse/human/syndicatecommando,
@@ -217,7 +223,7 @@
 			/obj/item/gun/ballistic/automatic/c20r,
 			/obj/item/gun/ballistic/shotgun/bulldog,
 		),
-	))
+	)
 
 	return ..()
 
@@ -242,17 +248,17 @@
 // Hallucination used by heretic paintings
 /datum/hallucination/delusion/preset/heretic
 	random_hallucination_weight = 0
-	dynamic_icon = TRUE
 	delusion_name = "Heretic"
 	affects_others = TRUE
 	affects_us = FALSE
 	duration = 11 SECONDS
 
 /datum/hallucination/delusion/preset/heretic/make_delusion_image(mob/over_who)
-	var/static/icon/heretic_icon
-	if(isnull(heretic_icon))
-		heretic_icon = getFlatIcon(get_dynamic_human_appearance(/datum/outfit/heretic, r_hand = NO_REPLACE))
-	delusion_icon_file = heretic_icon
+	// This code is dummy hot for DUMB reasons so let's not make a mob constantly yeah?
+	var/static/mutable_appearance/heretic_appearance
+	if(isnull(heretic_appearance))
+		heretic_appearance = get_dynamic_human_appearance(/datum/outfit/heretic, r_hand = NO_REPLACE)
+	delusion_appearance = heretic_appearance
 	return ..()
 
 /datum/hallucination/delusion/preset/heretic/gate
