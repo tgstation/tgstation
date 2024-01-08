@@ -146,8 +146,12 @@ SUBSYSTEM_DEF(gamemode)
 	/// Is storyteller secret or not
 	var/secret_storyteller = FALSE
 
+	/// List of new players we currently want to give our roundstart antag to
+	var/list/roundstart_antag_players = list()
+
 	var/wizardmode = FALSE //refactor this into just being a unique storyteller
 
+	/// What is our currently desired/selected roundstart event
 	var/datum/round_event_control/current_roundstart_event
 	var/list/last_round_events = list()
 	var/ran_roundstart = FALSE

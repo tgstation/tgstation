@@ -54,7 +54,7 @@
 
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates()
-	if(candidates.len < antag_amt)
+	if(length(candidates) < antag_amt)
 		if(.)
 			. += ", "
 		. += "Not Enough Candidates!"
@@ -83,19 +83,26 @@
 /datum/round_event_control/antagonist/proc/trim_candidates(list/candidates)
 	return candidates
 
-/datum/round_event_control/proc/check_enemies()
+/// Check if our enemy_roles requirement is met, if return_count is set then we will return how many enemies we have instead
+/datum/round_event_control/proc/check_enemies(return_count = FALSE)
 	if(!length(enemy_roles))
-		return TRUE
+		return return_count ? 0 : TRUE
+
 	var/job_check = 0
-	for (var/mob/M in GLOB.alive_player_list)
-		if (M.stat == DEAD)
+	for(var/enemy in enemy_roles)
+		var/datum/job/enemy_job = SSjob.GetJob(enemy)
+		if(emeny_job && SSjob.assigned_players_by_job[enemy_job.type])
+			job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
+
+	for(var/mob/M in GLOB.alive_player_list)
+		if(M.stat == DEAD)
 			continue // Dead players cannot count as opponents
-		if (M.mind && (M.mind.assigned_role.title in enemy_roles))
+		if(M.mind && (M.mind.assigned_role.title in enemy_roles))
 			job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 	if(job_check >= required_enemies)
-		return TRUE
-	return FALSE
+		return return_count ? job_check : TRUE
+	return return_count ? job_check : FALSE
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
@@ -139,7 +146,7 @@
 		return
 	var/antag_amt = get_antag_amount()
 	var/list/candidates = get_candidates()
-	if(candidates.len < antag_amt)
+	if(length(candidates) < antag_amt)
 		return FALSE
 
 /datum/round_event_control/antagonist/solo/proc/get_antag_amount()
@@ -199,7 +206,7 @@
 		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
 
 	for(var/i in 1 to antag_count)
-		if(!candidates.len)
+		if(!length(candidates))
 			break
 		var/mob/candidate = pick_n_take(candidates)
 		if(!candidate.mind)
@@ -223,7 +230,7 @@
 		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
 
 	for(var/i in 1 to antag_count)
-		if(!candidates.len)
+		if(!length(candidates))
 			break
 		var/mob/candidate = pick_n_take(candidates)
 		if(!candidate.mind)
