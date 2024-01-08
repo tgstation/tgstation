@@ -13,13 +13,15 @@
 	var/active_offset = 0
 	/// What, if any, submap we render onto
 	var/map = ""
-	/// Due to a Byond bug relating to secondary maps and positional screen_loc arguments, we need to statically set to the loc
-	var/relay_loc_override = null
+	/// Due to a Byond bug where secondary maps have improperly offset render targets, we will need to override this to "LEFT,TOP" for clients >515.1614
+	var/relay_loc = "CENTER"
 
-/datum/plane_master_group/New(key, map = "")
+/datum/plane_master_group/New(key, map = "", relay_loc)
 	. = ..()
 	src.key = key
 	src.map = map
+	if(relay_loc)
+		src.relay_loc = relay_loc
 	build_plane_masters(0, SSmapping.max_plane_offset)
 
 /datum/plane_master_group/Destroy()
@@ -90,7 +92,7 @@
 		for(var/plane_offset in starting_offset to ending_offset)
 			if(plane_offset != 0 && !initial(mytype.allows_offsetting))
 				continue
-			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset, relay_loc_override)
+			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset, relay_loc)
 			plane_masters["[instance.plane]"] = instance
 			prep_plane_instance(instance)
 
@@ -184,7 +186,7 @@
 	// If we're about to display this group to a mob who's client is more recent than the last known version with working CENTER, then we need to remake the relays
 	// with the correct screen_loc using the relay override
 	if(viewing_hud.mymob?.client?.byond_build > MAX_CLIENT_BUILD_WITH_WORKING_SECONDARY_MAPS)
-		relay_loc_override = "LEFT,TOP"
+		relay_loc = "LEFT,TOP"
 		rebuild_plane_masters()
 	return ..()
 

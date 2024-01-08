@@ -38,6 +38,9 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	var/list/atom/movable/render_plane_relay/relays = list()
 	/// if render relays have already be generated
 	var/relays_generated = FALSE
+	/// the screen_loc that the relay connecting plane_masters will render with
+	/// this is needed due to a bug in Byond where secondary maps have incorrect screen_loc offset after 515.1614
+	var/relay_loc = "CENTER"
 
 	/// If this plane master should be hidden from the player at roundstart
 	/// We do this so PMs can opt into being temporary, to reduce load on clients
@@ -64,9 +67,12 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 	/// If this plane master is outside of our visual bounds right now
 	var/is_outside_bounds = FALSE
 
-/atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0, relay_loc_override = null)
+/atom/movable/screen/plane_master/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset = 0, relay_loc)
 	. = ..()
 	src.offset = offset
+	if(relay_loc)
+		src.relay_loc = relay_loc
+
 	true_alpha = alpha
 	real_plane = plane
 
@@ -77,7 +83,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/plane_master)
 		stack_trace("Plane master created without a description. Document how your thing works so people will know in future, and we can display it in the debug menu")
 	if(start_hidden)
 		hide_plane(home.our_hud?.mymob)
-	generate_render_relays(relay_loc_override)
+	generate_render_relays(relay_loc)
 
 /atom/movable/screen/plane_master/Destroy()
 	if(home)
