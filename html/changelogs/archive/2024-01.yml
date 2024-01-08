@@ -207,3 +207,30 @@
   exdal:
   - bugfix: Papers no longer crash tgui
   - bugfix: Biogenerator no longer crash tgui
+2024-01-08:
+  13spacemen:
+  - bugfix: Jumping to C4 via ghost notification works again
+  DrDiasyl:
+  - qol: It is now possible to craft more Security bio suits
+  - qol: Bio-emergency crate from Cargo now contains a box of latex gloves and sterile
+      masks
+  Ghommie:
+  - bugfix: fixed coupon codes with expiration times.
+  - bugfix: Fixed H.A.R.S. fucking up the brains a little.
+  Majkl-J:
+  - bugfix: spasm_animation now correctly resets the transform, as it should
+  - bugfix: Spamming the weld on a robotic part no longer drains the fuel
+  Thunder12345:
+  - bugfix: The clown planet biodome and virtual domain can now be completed without
+      slipping directly into the exit.
+  fIoppie:
+  - qol: Cargo techs can now access the windoor in the delivery office on Delta.
+  jlsnow301:
+  - bugfix: Comms console should now update as you type.
+  mc-oofert:
+  - bugfix: vents that are turned off dont replay their animation if you go out of
+      sight and back in
+  - bugfix: adds missing navigation landmarks to tramstation
+  scriptis:
+  - refactor: some very large tgui lists (air alarms, all recipes techfab view, techweb
+      view) are loaded on-demand as you scroll, making them not lag so hard

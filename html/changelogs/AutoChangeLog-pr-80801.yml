@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - bugfix: "Spamming the weld on a robotic part no longer drains the fuel"
