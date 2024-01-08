@@ -103,7 +103,7 @@
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
 	next_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/concierge_rite,
+		/datum/heretic_knowledge/mark/lock_mark,
 		/datum/heretic_knowledge/spell/mind_gate,
 	)
 	cost = 1
