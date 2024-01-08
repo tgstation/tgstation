@@ -63,6 +63,8 @@
 		var/list/created_atoms = list()
 		for(var/ritual_item_path in knowledge.required_atoms)
 			var/amount_to_create = knowledge.required_atoms[ritual_item_path]
+			if(islist(ritual_item_path))
+				ritual_item_path = pick(ritual_item_path)
 			for(var/i in 1 to amount_to_create)
 				created_atoms += new ritual_item_path(get_turf(our_heretic))
 

@@ -82,3 +82,7 @@ but should see their own spawn message even if the player already dropped as USC
 	for(var/mob/M as anything in targets)
 		M.client?.screen -= T
 	qdel(T)
+
+/proc/show_blurb_all(duration = 3 SECONDS, message, scroll_down, screen_position = "LEFT+0:16,BOTTOM+1:16",\
+	text_alignment = "left", text_color = "#FFFFFF", blurb_key, ignore_key = FALSE, speed = 1)
+	show_blurb(GLOB.player_list, duration, message, scroll_down, screen_position, text_alignment, text_color, blurb_key, ignore_key, speed)

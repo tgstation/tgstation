@@ -205,3 +205,11 @@
 	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
 	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
 	icon_state = "bells"
+
+/obj/item/clothing/head/costume/zed_officercap
+	name = "\improper Zed Officer Cap"
+	desc = "Only dumb furries wear this. You notice a smiley face on the insignia."
+	icon = 'monkestation/code/modules/donator/icons/obj/clothing.dmi'
+	worn_icon = 'monkestation/code/modules/donator/icons/mob/clothing.dmi'
+	icon_state = "zed_officercap"
+	inhand_icon_state = null

@@ -1,0 +1,120 @@
+2024-01-03:
+  Absolucy:
+  - sound: Added audible meow and hiss emotes, although they only work if you have
+      the anime trait, are wearing cat ears, or are just a literal cat.
+  - sound: Having cat ears + tail will change your default scream to a cat-like scream
+      (although scream sounds from certain clothing still take priority).
+  NicoDeLuna:
+  - rscadd: Adds Shipwreck Captain and King of Bugs costumes
+  ? Noodlecat MrMelbert Jackal-boop generalthrax carlarctg TheBoondock DATA-xPUNGED
+    DaydreamIQ Jacquerel lizardqueenlexi ViktorKoL mc-oofert
+  : - bugfix: Ahealing a heretic now properly gives them their heart back
+    - qol: heretic sac targets now appear on the end of round report
+    - balance: the lion hunters rifle has been pegged down the knowledge tree. to
+        make sure the tree is kept happy, the rust path and blade path can access
+        rust charge
+    - rscadd: rust charge
+    - balance: the lion hunter ammo knowledge is free
+    - balance: Lionhunter on charge now has a damage modifier of 2 instead of 1.33
+    - balance: Increased max range of charged shot from 16 to 30
+    - balance: Increased scope modifier so you can use the new max range
+    - rscadd: Added Pulse of Entropy, a new ritual for rust heretic unlocked after
+        leeching walk. This ritual can be completed with 20 iron sheets, 2 garbage
+        items to rust in a 4 tiles radius round the rune. Useful for establishing
+        bases and fighting area.
+    - bugfix: fixed detect_room not running correctly when break_if_found is not passed
+    - rscadd: Sacrificed heretic targets will now receive a phobia of heresy instead
+        of a phobia of the supernatural. Sacrificed heretics will not get this phobia,
+        but will lose knowledge points instead.
+    - bugfix: Items worn on a void cloak's suit storage are no longer visible on the
+        stripping menu.
+    - qol: Misclicking the turf below a heretic influence no longer leaves a fingerprint.
+    - balance: Ascending as an Ash Heretic now reduces the cooldown of Nightwatchers
+        Rebirth to ten seconds, additionally Ash ascension has Bomb immunity added
+        to the resistances it offers (no stun immunity though)
+    - spellcheck: re-writes cosmic heretic lore
+    - rscadd: heretic knock path and its respective items and award
+    - bugfix: If two cosmic heretics ascend in the same round, their star gazer survival
+        will be linked to each individual heretic and not shared by just one of them.
+    - bugfix: You can't click the Knock heretic portal to join as a mob while already
+        signed up to become a mob.
+    - balance: Cosmic heretics can't order the Star Gazer around while jaunting.
+    - balance: The Knock Heretic portal cannot summon Flesh Worms, but can summon
+        Fire Sharks.
+    - balance: The Knock Heretic portal will disperse if its creator is killed.
+    - rscadd: Heretic Rebalance
+    - balance: Researching the Main Knowledge paths that unlock Side Paths will grant
+        one Side Point that can be used only on those side paths. You can still spend
+        normal knowledge points on them if you wish.
+    - balance: Rune drawing time has been reduced from 30->20 seconds. Codex drawing
+        time has been reduced from 15->8.
+    - balance: 'Codex Cicatrix is now a roundstart knowledge, works as an amber focus
+        when held in-hand and opened, and has had its recipe changed to: 1 of any
+        non-standard pen (literally anything that isn''t the base pen), any book,
+        and either animal hide OR a corpse, any kind.'
+    - code_imp: Added support for using a list inside ritual requirements and a special
+        'snowflake check' rituals can utilize.
+    - balance: The first non-path knowledge, the Mansus Hand Mark, has had its cost
+        reduced from 2->1 points.
+    - qol: Bladists can now use silver or titanium while creating their blades
+    - bugfix: Heretic summons should now display the correct name when polling ghosts
+        to play as them.
+    - bugfix: fixed some faulty research connections in between heretic's blade and
+        rust paths.
+    - bugfix: you may not enter knock path caretakers last refuge with the nuke disk
+    - bugfix: you can no longer cuff knock heretics in refuge
+    - rscadd: ctrlclicking the knock path eldritch id card will toggle whether it
+        creates inverted portals or not
+    - balance: Gorillas, Seedlings, Gold Grubs, Mooks, Constructs, Ascended Knock
+        Heretics, Fugu and mobs subject to a Fugu Gland now rip up walls in a slightly
+        slower but more cinematic way.
+  Salted-Zen:
+  - rscadd: The Mining Research Director has decided to authorize the purchasing of
+      surplus necropolis crates for miners. Beware, content quality not guranteed.
+2024-01-04:
+  Jacquerel:
+  - bugfix: Spiders, Morphs, Fire Sharks, and Regal Rats no longer have a reduced
+      click speed.
+  NicoDeLuna:
+  - bugfix: Adjusted minor sprite issues on shipwrecked captain costumes
+2024-01-05:
+  DexeeXI:
+  - rscdel: Removed Oshan as a map from the codebase.
+2024-01-06:
+  MichiRecRoom:
+  - bugfix: Human mobs (such as IPCs) should once again vary their scream's pitch
+      - unless you're a cat.
+  - code_imp: '"/datum/emote" now has a new proc: "should_vary(mob/living/user)".
+      If your emote needs to vary in pitch, but only under certain conditions, override
+      that proc.'
+  Sm0key123:
+  - bugfix: fixes produce console bluescreening when viewing it as ghost
+2024-01-07:
+  KittyNoodle:
+  - rscadd: Natural immunity.
+  - rscadd: Aluxive, an immune repair chem that is created with sugar, seiver and
+      cryptobiolin.
+  - rscadd: Radiohydrate, an immune suppressor that is created with miner's salve
+      and radium.
+  - rscadd: Aetericilide, an immune booster that is created with unstable mutagen,
+      copper, diethylamine, and stable plasma.
+  - rscdel: Removed the buggy species change symptoms
+  - rscdel: Latejoiners no longer have a 10% chance of starting with a disease
+  - balance: Reduced the exposure infection chance on all diseases.
+  - balance: Vaccines now work in 0.1u pills again.
+  - balance: Buffs cryo cell's effects on anti-pathogenics.
+  - bugfix: Internals now actually stop you from emitting(and breathing) disease clouds.
+  MichiRecRoom:
+  - bugfix: CentCom ghost players can no longer bypass the area restrictions placed
+      on them by being in a container. Sorry, but while there is some fun to be had,
+      it appears that some exploits were also to be had too.
+  Rex9001:
+  - balance: doubles the weight of the Cybernetic Revolution station trait
+  SentientVoid:
+  - qol: replaced the emergency medical holodeck's PANDEMIC with a centrifuge. swapped
+      out 3 beakers for 3 vials.
+2024-01-08:
+  Absolucy:
+  - rscadd: Allow departmental techfabs to print appropiate MODsuit modules, i.e medical
+      can print defib or surgical processor modules. Robotics can still print all
+      of them, though, and the mechfab is still needed to make *new* modsuits.

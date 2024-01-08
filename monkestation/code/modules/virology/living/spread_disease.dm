@@ -38,8 +38,8 @@
 
 	if(prob(disease.infectionchance) || forced)
 		var/datum/disease/advanced/D = disease.Copy()
-		if (D.infectionchance > 10)
-			D.infectionchance = max(10, D.infectionchance - 10)//The virus gets weaker as it jumps from people to people
+		if (D.infectionchance > 5)
+			D.infectionchance = max(5, D.infectionchance - 5)//The virus gets weaker as it jumps from people to people
 
 		D.stage = clamp(D.stage+D.stage_variance, 1, D.max_stages)
 		D.log += "<br />[ROUND_TIME()] Infected [key_name(src)] [notes]. Infection chance now [D.infectionchance]%"

@@ -73,7 +73,8 @@
 /datum/symptom/dna/activate(mob/living/carbon/mob)
 	mob.bodytemperature = max(mob.bodytemperature, 350)
 	scramble_dna(mob, TRUE, TRUE, TRUE, rand(15,45))
-	mob.adjustCloneLoss(10)
+	if(mob.cloneloss <= 50)
+		mob.adjustCloneLoss(10)
 
 
 /datum/symptom/immortal
@@ -229,7 +230,7 @@
 		for(var/i=0,i<iter,i++)
 			step_towards(S,mob)
 
-/datum/symptom/dnaspread
+/*/datum/symptom/dnaspread //commented out due to causing enough problems to turn random people into monkies apon curing.
 	name = "Retrotransposis"
 	desc = "This symptom transplants the genetic code of the intial vector into new hosts."
 	badness = EFFECT_DANGER_HARMFUL
@@ -293,7 +294,7 @@
 	name = "Mothification"
 	desc = "Turns you into a Moth."
 	new_species = /datum/species/moth
-
+*/
 /datum/symptom/retrovirus
 	name = "Retrovirus"
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."

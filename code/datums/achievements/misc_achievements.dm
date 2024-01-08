@@ -141,6 +141,12 @@
 	database_id = MEDAL_ARCHMAGE
 	icon = "archmage"
 
+/datum/award/achievement/misc/knock_ascension
+	name = "Secrets behind the Spider Door"
+	desc = "You managed to open a gate into the mansus."
+	database_id = MEDAL_KNOCK_ASCENSION
+	icon = "knockascend"
+
 /datum/award/achievement/misc/toolbox_soul
 	name = "SOUL'd Out"
 	desc = "My eternal soul was destroyed to make a toolbox look funny and all I got was this achievement..."

@@ -1,6 +1,6 @@
 /// Scout and assassin who can appear and disappear from glass surfaces. Damaged by being examined.
 /mob/living/basic/heretic_summon/maid_in_the_mirror
-	name = "Maid in the Mirror"
+	name = "\improper Maid in the Mirror"
 	real_name = "Maid in the Mirror"
 	desc = "A floating and flowing wisp of chilled air. Glancing at it causes it to shimmer slightly."
 	icon = 'icons/mob/simple/mob.dmi'
@@ -23,7 +23,7 @@
 	/// A list of REFs to people who recently examined us
 	var/list/recent_examiner_refs = list()
 
-/mob/living/basic/heretic_summon/Initialize(mapload)
+/mob/living/basic/heretic_summon/maid_in_the_mirror/Initialize(mapload)
 	. = ..()
 	var/static/list/loot = list(
 		/obj/effect/decal/cleanable/ash,

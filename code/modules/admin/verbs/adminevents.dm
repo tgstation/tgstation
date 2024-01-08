@@ -332,7 +332,7 @@
 	if(!isnum(z_level))
 		return
 
-	SSweather.run_weather(weather_type, z_level)
+	SSweather.run_weather(new weather_type(), z_level)
 
 	message_admins("[key_name_admin(usr)] started weather of type [weather_type] on the z-level [z_level].")
 	log_admin("[key_name(usr)] started weather of type [weather_type] on the z-level [z_level].")

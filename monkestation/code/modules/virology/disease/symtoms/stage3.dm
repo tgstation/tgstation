@@ -470,9 +470,9 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 			var/mob/living/basic/mouse/mouse = mob
 			mouse.splat() //tumors are bad for you, tumors equal to your body in size doubley so
 		if(ismonkey(mob)) //monkeys are smaller and thus have less space for human-organ sized tumors
-			for(var/i in 1 to 3)
-				mob.adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_LIVER), 30)
-		mob.adjustOrganLoss(pick(ORGAN_SLOT_HEART, ORGAN_SLOT_LUNGS, ORGAN_SLOT_STOMACH, ORGAN_SLOT_LIVER), 25)
+			mob.adjustBruteLoss(15)
+		if(mob.bruteloss <= 50)
+			mob.adjustBruteLoss(5)
 		mob.visible_message(span_warning("\A [spawned_organ.name] is extruded from \the [mob]'s body and falls to the ground!"),span_warning("\A [spawned_organ.name] is extruded from your body and falls to the ground!"))
 
 /datum/symptom/damage_converter
@@ -583,8 +583,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	name = "Acute respiratory distress syndrome"
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to brain damage in critical patients."
 	badness = EFFECT_DANGER_DEADLY
-	max_chance = 10
-	multiplier = 5
+	max_chance = 5
+	max_multiplier = 5
 	stage = 3
 
 /datum/symptom/asphyxiation/activate(mob/living/carbon/mob)

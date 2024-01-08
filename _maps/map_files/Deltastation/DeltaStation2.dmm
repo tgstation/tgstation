@@ -29843,6 +29843,12 @@
 /obj/structure/sign/poster/official/periodic_table{
 	pixel_y = 32
 	},
+/obj/item/toy/figure/chemist,
+/obj/item/book/manual/wiki/grenades,
+/obj/item/book/manual/wiki/chemistry{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "hja" = (
@@ -62470,6 +62476,10 @@
 	name = "medbay camera";
 	network = list("ss13","medbay")
 	},
+/obj/structure/chemical_manufacturer,
+/obj/item/multitool,
+/obj/item/integrated_circuit/chemical,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "pkd" = (
@@ -73328,14 +73338,11 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port)
 "rQj" = (
-/obj/structure/table,
-/obj/item/book/manual/wiki/chemistry{
-	pixel_x = -4;
-	pixel_y = 4
-	},
-/obj/item/book/manual/wiki/grenades,
-/obj/item/toy/figure/chemist,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/chemical_manufacturer,
+/obj/item/multitool,
+/obj/item/integrated_circuit/chemical,
+/obj/item/stock_parts/cell/high,
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "rQn" = (
@@ -91686,6 +91693,8 @@
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/screwdriver,
+/obj/item/hand_labeler,
+/obj/item/stack/package_wrap,
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "wnD" = (
@@ -93785,11 +93794,9 @@
 "wKN" = (
 /obj/effect/turf_decal/siding/yellow,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/table,
-/obj/item/stack/package_wrap,
-/obj/item/hand_labeler,
 /obj/machinery/light/directional/east,
 /obj/machinery/airalarm/directional/east,
+/obj/machinery/component_printer,
 /turf/open/floor/iron,
 /area/station/medical/pharmacy)
 "wLK" = (
