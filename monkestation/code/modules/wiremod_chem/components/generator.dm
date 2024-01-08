@@ -73,7 +73,7 @@
 	return power_usage_per_input
 
 /obj/item/circuit_component/chem/synthesizer/populate_ports()
-	output = add_output_port("Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), order = 1.1)
+	output = add_output_port("Output", PORT_TYPE_CHEMICAL_LIST, order = 1.1)
 
 	per_chemical_amount = add_input_port("Units", PORT_TYPE_NUMBER, default = 1)
 

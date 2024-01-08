@@ -6672,6 +6672,7 @@
 #include "monkestation\code\modules\virology\subsystems\pathogen_clouds.dm"
 #include "monkestation\code\modules\wiki_templater\templates.dm"
 #include "monkestation\code\modules\wiki_templater\test_generate.dm"
+#include "monkestation\code\modules\wiremod_chem\chemical_list.dm"
 #include "monkestation\code\modules\wiremod_chem\testing_items.dm"
 #include "monkestation\code\modules\wiremod_chem\cargo\imports.dm"
 #include "monkestation\code\modules\wiremod_chem\components\_base.dm"

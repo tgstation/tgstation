@@ -2,6 +2,7 @@
 	display_name = "Internal Chemical Tank"
 	desc = "Holds chemicals inside your circuit."
 	category = "Chemistry"
+	power_usage_per_input = 1
 
 	ui_buttons = list(
 		"plus" = "add",
@@ -38,13 +39,13 @@
 		port_list = chemical_inputs, \
 		add_action = "add", \
 		remove_action = "remove", \
-		port_type = PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), \
+		port_type = PORT_TYPE_CHEMICAL_LIST, \
 		prefix = "Chemical Input", \
 		minimum_amount = 2 \
 	)
 	heat_input = add_input_port("Desired Heat", PORT_TYPE_NUMBER, default = 275)
 	reagent_amount = add_input_port("Reagent Output Amount", PORT_TYPE_NUMBER)
-	chemical_output = add_output_port("Reagent Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
+	chemical_output = add_output_port("Reagent Output", PORT_TYPE_CHEMICAL_LIST)
 	handle_input = add_input_port("Handle Input", PORT_TYPE_SIGNAL, trigger = PROC_REF(handle_input))
 
 /obj/item/circuit_component/chem/internal_tank/input_received(datum/port/input/port, list/return_values)

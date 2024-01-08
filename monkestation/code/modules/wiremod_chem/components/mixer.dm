@@ -31,12 +31,12 @@
 		port_list = chemical_inputs, \
 		add_action = "add", \
 		remove_action = "remove", \
-		port_type = PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), \
+		port_type = PORT_TYPE_CHEMICAL_LIST, \
 		prefix = "Chemical Input", \
 		minimum_amount = 2 \
 	)
 	heat_input = add_input_port("Desired Heat", PORT_TYPE_NUMBER, default = 275)
-	output = add_output_port("Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), order = 1.1, port_type = /datum/port/output/singular)
+	output = add_output_port("Output", PORT_TYPE_CHEMICAL_LIST, order = 1.1, port_type = /datum/port/output/singular)
 
 /obj/item/circuit_component/chem/mixer/input_received(datum/port/input/port, list/return_values)
 

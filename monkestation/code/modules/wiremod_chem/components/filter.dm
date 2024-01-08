@@ -20,9 +20,9 @@
 
 /obj/item/circuit_component/chem/filter/populate_ports()
 	. = ..()
-	chemical_input = add_input_port("Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
-	filtered_output = add_output_port("Filtered Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), port_type = /datum/port/output/singular)
-	junk_output = add_output_port("Unfiltered Chemicals", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), port_type = /datum/port/output/singular)
+	chemical_input = add_input_port("Chemicals", PORT_TYPE_CHEMICAL_LIST)
+	filtered_output = add_output_port("Filtered Chemicals", PORT_TYPE_CHEMICAL_LIST, port_type = /datum/port/output/singular)
+	junk_output = add_output_port("Unfiltered Chemicals", PORT_TYPE_CHEMICAL_LIST, port_type = /datum/port/output/singular)
 	filter_list = add_input_port("Filter List", PORT_TYPE_LIST(PORT_TYPE_STRING))
 
 /obj/item/circuit_component/chem/filter/input_received(datum/port/input/port, list/return_values)

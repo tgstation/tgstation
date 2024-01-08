@@ -112,7 +112,7 @@
 		port_list = chemical_inputs, \
 		add_action = "add", \
 		remove_action = "remove", \
-		port_type = PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER), \
+		port_type = PORT_TYPE_CHEMICAL_LIST, \
 		prefix = "Chemical Input", \
 		minimum_amount = 2 \
 	)

@@ -63,7 +63,7 @@
 
 
 /obj/item/circuit_component/chem/input/populate_ports()
-	chemical_output = add_output_port("Chemical Output", PORT_TYPE_ASSOC_LIST(PORT_TYPE_DATUM, PORT_TYPE_NUMBER))
+	chemical_output = add_output_port("Chemical Output", PORT_TYPE_CHEMICAL_LIST)
 	chem_heat = add_output_port("Chemical Heat", PORT_TYPE_NUMBER)
 	units = add_input_port("Units", PORT_TYPE_NUMBER)
 
