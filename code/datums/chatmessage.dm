@@ -44,10 +44,6 @@
 	var/eol_complete
 	/// Contains the approximate amount of lines for height decay
 	var/approx_lines
-	/// Contains the reference to the next chatmessage in the bucket, used by runechat subsystem
-	var/datum/chatmessage/next
-	/// Contains the reference to the previous chatmessage in the bucket, used by runechat subsystem
-	var/datum/chatmessage/prev
 	/// The current index used for adjusting the layer of each sequential chat message such that recent messages will overlay older ones
 	var/static/current_z_idx = 0
 	/// When we started animating the message
