@@ -1,0 +1,8 @@
+author: "DexeeXI"
+delete-after: True
+changes:
+  - rscadd: "New graphics for pathology related areas for use in StrongDMM."
+  - rscadd: "New graphics for Centcom areas in StrongDMM."
+  - rscdel: "Removed Detroit"
+  - bugfix: "the fucking disposal system for Tram should now work."
+  - bugfix: "various bars for Tram since they were missing some functionality."
