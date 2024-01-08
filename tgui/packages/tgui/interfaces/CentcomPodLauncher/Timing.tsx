@@ -42,7 +42,7 @@ export function Timing(props) {
       }
     >
       <DelayHelper delay_list={DELAYS} />
-      {custom_rev_delay && (
+      {!!custom_rev_delay && (
         <>
           <Divider />
           <DelayHelper delay_list={REV_DELAYS} reverse />

@@ -1,7 +1,7 @@
 import { Placement } from '@popperjs/core';
 
 import { TabBay, TabDrop, TabPod } from './Tabs';
-import { PodDelay } from './types';
+import { PodDelay, PodEffect } from './types';
 
 export const POD_GREY = {
   color: 'grey',
@@ -154,168 +154,168 @@ export const BAYS = [
   { title: 'ERT' },
 ] as const;
 
-export const EFFECTS_LOAD = [
+export const EFFECTS_LOAD: PodEffect[] = [
   {
-    title: 'Launch All Turfs',
-    icon: 'globe',
-    choiceNumber: 0,
-    selected: 'launchChoice',
     act: 'launchAll',
-  },
-  {
-    title: 'Launch Turf Ordered',
-    icon: 'sort-amount-down-alt',
-    choiceNumber: 1,
-    selected: 'launchChoice',
-    act: 'launchOrdered',
-  },
-  {
-    title: 'Pick Random Turf',
-    icon: 'dice',
-    choiceNumber: 2,
-    selected: 'launchChoice',
-    act: 'launchRandomTurf',
-  },
-  {
-    divider: 1,
-  },
-  {
-    title: 'Launch Whole Turf',
-    icon: 'expand',
     choiceNumber: 0,
-    selected: 'launchRandomItem',
-    act: 'launchWholeTurf',
+    icon: 'globe',
+    selected: 'launchChoice',
+    title: 'Launch All Turfs',
   },
   {
-    title: 'Pick Random Item',
-    icon: 'dice',
+    act: 'launchOrdered',
     choiceNumber: 1,
+    icon: 'sort-amount-down-alt',
+    selected: 'launchChoice',
+    title: 'Launch Turf Ordered',
+  },
+  {
+    act: 'launchRandomTurf',
+    choiceNumber: 2,
+    icon: 'dice',
+    selected: 'launchChoice',
+    title: 'Pick Random Turf',
+  },
+  {
+    divider: true,
+  },
+  {
+    act: 'launchWholeTurf',
+    choiceNumber: 0,
+    icon: 'expand',
     selected: 'launchRandomItem',
+    title: 'Launch Whole Turf',
+  },
+  {
     act: 'launchRandomItem',
+    choiceNumber: 1,
+    icon: 'dice',
+    selected: 'launchRandomItem',
+    title: 'Pick Random Item',
   },
   {
-    divider: 1,
+    divider: true,
   },
   {
-    title: 'Clone',
+    act: 'launchClone',
     icon: 'clone',
     soloSelected: 'launchClone',
-    act: 'launchClone',
+    title: 'Clone',
   },
-] as const;
+];
 
-export const EFFECTS_NORMAL = [
+export const EFFECTS_NORMAL: PodEffect[] = [
   {
-    title: 'Specific Target',
+    act: 'effectTarget',
     icon: 'user-check',
     soloSelected: 'effectTarget',
-    act: 'effectTarget',
+    title: 'Specific Target',
   },
   {
-    title: 'Pod Stays',
-    icon: 'hand-paper',
-    choiceNumber: 0,
-    selected: 'effectBluespace',
     act: 'effectBluespace',
+    choiceNumber: 0,
+    icon: 'hand-paper',
+    selected: 'effectBluespace',
+    title: 'Pod Stays',
   },
   {
-    title: 'Stealth',
+    act: 'effectStealth',
     icon: 'user-ninja',
     soloSelected: 'effectStealth',
-    act: 'effectStealth',
+    title: 'Stealth',
   },
   {
-    title: 'Quiet',
+    act: 'effectQuiet',
     icon: 'volume-mute',
     soloSelected: 'effectQuiet',
-    act: 'effectQuiet',
+    title: 'Quiet',
   },
   {
-    title: 'Missile Mode',
+    act: 'effectMissile',
     icon: 'rocket',
     soloSelected: 'effectMissile',
-    act: 'effectMissile',
+    title: 'Missile Mode',
   },
   {
-    title: 'Burst Launch',
+    act: 'effectBurst',
     icon: 'certificate',
     soloSelected: 'effectBurst',
-    act: 'effectBurst',
+    title: 'Burst Launch',
   },
   {
-    title: 'Any Descent Angle',
+    act: 'effectCircle',
     icon: 'ruler-combined',
     soloSelected: 'effectCircle',
-    act: 'effectCircle',
+    title: 'Any Descent Angle',
   },
   {
-    title: 'No Ghost Alert\n(If you dont want to\nentertain bored ghosts)',
-    icon: 'ghost',
-    choiceNumber: 0,
-    selected: 'effectAnnounce',
     act: 'effectAnnounce',
+    choiceNumber: 0,
+    icon: 'ghost',
+    selected: 'effectAnnounce',
+    title: 'No Ghost Alert\n(If you dont want to\nentertain bored ghosts)',
   },
-] as const;
+];
 
-export const EFFECTS_HARM = [
+export const EFFECTS_HARM: PodEffect[] = [
   {
-    title: 'Explosion Custom',
-    icon: 'bomb',
-    choiceNumber: 1,
-    selected: 'explosionChoice',
     act: 'explosionCustom',
-  },
-  {
-    title: 'Adminbus Explosion\nWhat are they gonna do, ban you?',
-    icon: 'bomb',
-    choiceNumber: 2,
-    selected: 'explosionChoice',
-    act: 'explosionBus',
-  },
-  {
-    divider: 1,
-  },
-  {
-    title: 'Custom Damage',
-    icon: 'skull',
     choiceNumber: 1,
-    selected: 'damageChoice',
-    act: 'damageCustom',
+    icon: 'bomb',
+    selected: 'explosionChoice',
+    title: 'Explosion Custom',
   },
   {
-    title: 'Gib',
-    icon: 'skull-crossbones',
+    act: 'explosionBus',
     choiceNumber: 2,
+    icon: 'bomb',
+    selected: 'explosionChoice',
+    title: 'Adminbus Explosion\nWhat are they gonna do, ban you?',
+  },
+  {
+    divider: true,
+  },
+  {
+    act: 'damageCustom',
+    choiceNumber: 1,
+    icon: 'skull',
     selected: 'damageChoice',
+    title: 'Custom Damage',
+  },
+  {
     act: 'damageGib',
+    choiceNumber: 2,
+    icon: 'skull-crossbones',
+    selected: 'damageChoice',
+    title: 'Gib',
   },
   {
-    divider: 1,
+    divider: true,
   },
   {
-    title: 'Projectile Cloud',
+    act: 'effectShrapnel',
     details: true,
     icon: 'cloud-meatball',
     soloSelected: 'effectShrapnel',
-    act: 'effectShrapnel',
+    title: 'Projectile Cloud',
   },
   {
-    title: 'Stun',
+    act: 'effectStun',
     icon: 'sun',
     soloSelected: 'effectStun',
-    act: 'effectStun',
+    title: 'Stun',
   },
   {
-    title: 'Delimb',
+    act: 'effectLimb',
     icon: 'socks',
     soloSelected: 'effectLimb',
-    act: 'effectLimb',
+    title: 'Delimb',
   },
   {
-    title: 'Yeet Organs',
+    act: 'effectOrgans',
     icon: 'book-dead',
     soloSelected: 'effectOrgans',
-    act: 'effectOrgans',
+    title: 'Yeet Organs',
   },
 ];
 

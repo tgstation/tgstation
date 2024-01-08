@@ -22,7 +22,7 @@ export function PodBays(props) {
             tooltip={multiline`
               Clears everything
               from the selected bay`}
-            tooltipPosition="bottom-end"
+            tooltipPosition="top-end"
           />
           <Button
             icon="question"
@@ -35,7 +35,7 @@ export function PodBays(props) {
               in these areas according
               to the "Load from Bay"
               options at the top left.`}
-            tooltipPosition="bottom-end"
+            tooltipPosition="top-end"
           />
         </>
       }

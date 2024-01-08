@@ -33,9 +33,9 @@ export function DelayHelper(props: Props) {
             minValue={0}
             onDrag={(e, value) => {
               act('editTiming', {
+                reverse: reverse,
                 timer: '' + (i + 1),
                 value: Math.max(value, 0),
-                reverse: reverse,
               });
             }}
             size={custom_rev_delay ? 0.75 : 1}
