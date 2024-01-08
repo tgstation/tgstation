@@ -149,11 +149,11 @@
 	else if (extra_classes.Find("emote"))
 		var/image/r_icon = image('icons/ui_icons/chat/chat_icons.dmi', icon_state = "emote")
 		LAZYADD(prefixes, "\icon[r_icon]")
-		chat_color_name_to_use = target.get_face_name() // use face name for nonverbal messages
+		chat_color_name_to_use = target.get_visible_name(add_id_name = FALSE) // use face name for nonverbal messages
 
 	if(isnull(chat_color_name_to_use))
 		if(HAS_TRAIT(target, TRAIT_SIGN_LANG))
-			chat_color_name_to_use = target.get_face_name() // use face name for signers too
+			chat_color_name_to_use = target.get_visible_name(add_id_name = FALSE) // use face name for signers too
 		else
 			chat_color_name_to_use = target.GetVoice() // for everything else, use the target's voice name
 
