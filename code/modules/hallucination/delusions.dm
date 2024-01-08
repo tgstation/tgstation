@@ -19,6 +19,8 @@
 	/// The icon state of the delusion image
 	var/delusion_icon_state
 
+	/// Do we use an appearance/generated icon? If yes no icon file or state needed.
+	var/dynamic_delusion = FALSE
 	/// Appearance to use as a source for our image
 	/// If this exists we'll ignore the icon/state from above
 	var/mutable_appearance/delusion_appearance
@@ -204,6 +206,7 @@
 	return funny_image
 
 /datum/hallucination/delusion/preset/syndies
+	dynamic_delusion = TRUE
 	random_hallucination_weight = 1
 	delusion_name = "Syndicate"
 	affects_others = TRUE
@@ -247,6 +250,7 @@
 
 // Hallucination used by heretic paintings
 /datum/hallucination/delusion/preset/heretic
+	dynamic_delusion = TRUE
 	random_hallucination_weight = 0
 	delusion_name = "Heretic"
 	affects_others = TRUE
