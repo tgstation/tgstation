@@ -133,15 +133,37 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	build_into += "list("
 	var/first_entry = TRUE
 	for(var/item in build_from)
+		CHECK_TICK
 		if(!first_entry)
 			build_into += ", "
 		if(isnum(item) || !build_from[item])
-			. += hashtag_newlines_and_tabs("[item]", list("{"="", "}"="", "\""="", ";"="", ","=""))
+			build_into += "[tgm_encode(item)]"
 		else
-			. += hashtag_newlines_and_tabs("[item] = [build_from[item]]", list("{"="", "}"="", "\""="", ";"="", ","=""))
+			build_into += "[tgm_encode(item)] = [tgm_encode(build_from[item])]"
 		first_entry = FALSE
 	build_into += ")"
 	return build_into.Join("")
+
+/// Takes a constant, encodes it into a TGM valid string
+/proc/tgm_encode(value)
+	if(istext(value))
+		//Prevent symbols from being because otherwise you can name something
+		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
+		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ";"="", ","=""))]\""
+	if(isnum(value) || ispath(value))
+		return value
+	if(islist(value))
+		return to_list_string(value)
+	if(isicon(value) || isfile(value))
+		return "'[value]'"
+	if(isnull(value))
+		return "null"
+	// not handled:
+	// - pops: /obj{name="foo"}
+	// - new(), newlist(), icon(), matrix(), sound()
+
+	// fallback: string
+	return tgm_encode("[value]")
 
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
@@ -263,20 +285,11 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		if(variable == "icon_state" && object.smoothing_flags)
 			continue
 
-		var/text_value
-		if(isnum(value) || ispath(value))
-			text_value = value
-		if(istext(value))
-			//Prevent symbols from being because otherwise you can name something
-			// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
-			text_value = hashtag_newlines_and_tabs("\"[value]\"", list("{"="", "}"="", "\""="", ";"="", ","=""))
-		else if(islist(value))
-			text_value = to_list_string(value)
-		else if(isicon(value) || isfile(value))
-			text_value = "'[value]'"
-		else
+		var/text_value = tgm_encode(value)
+		if(!text_value)
 			continue
 		data_to_add += "[variable] = [text_value]"
+
 	if(!length(data_to_add))
 		return
 	return "{\n\t[data_to_add.Join(";\n\t")]\n\t}"
