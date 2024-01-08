@@ -101,6 +101,6 @@
 /atom/proc/get_name_chaser(mob/user, list/name_chaser = list())
 	return name_chaser
 
-/// Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face. By default just returns the atom's name.
+/// Used by mobs to determine the name for someone wearing a mask, or with a disfigured or missing face. By default just returns the atom's name. add_id_name will control whether or not we append "(as [id_name])".
 /atom/proc/get_visible_name(add_id_name = FALSE)
 	return name
