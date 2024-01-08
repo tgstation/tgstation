@@ -7,8 +7,8 @@
 	RegisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED, PROC_REF(_update_ui_data))
 
 /datum/computer_file/program/crew_manifest/Destroy()
-	. = ..()
 	UnregisterSignal(SSdcs, COMSIG_GLOB_CREWMEMBER_JOINED)
+	return ..()
 
 /datum/computer_file/program/crew_manifest/proc/_update_ui_data()
 	SIGNAL_HANDLER
