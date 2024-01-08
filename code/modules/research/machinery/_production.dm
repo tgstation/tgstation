@@ -237,15 +237,13 @@
 	print_quantity = clamp(print_quantity, 1, 50)
 	var/coefficient = build_efficiency(design.build_path)
 
-	var/list/needed_materials = list()
 	var/list/materials_per_item = list()
 	for(var/material in design.materials)
-		var/needed_per_item = design.materials[material] * coefficient
-		materials_per_item[material] = needed_per_item
-		needed_materials[material] = needed_per_item * print_quantity
+		materials_per_item[material] = design.materials[material] * coefficient
 
-	//check if sufficient materials are available
-	if(!materials.mat_container.has_materials(needed_materials))
+	// check if sufficient materials are available.
+	// don't pass coefficient here, as we already multiplied the design's materials by it for use with custom materials.
+	if(!materials.mat_container.has_materials(materials_per_item, multiplier = print_quantity))
 		say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
 		return FALSE
 
@@ -272,16 +270,18 @@
 			if(our_acc.account_job.departments_bitflags & allowed_department_flags)
 				total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
 
-	if(attempt_charge(src, usr, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
-		say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
-		return FALSE
-	if(iscyborg(usr))
-		var/mob/living/silicon/robot/borg = usr
-		if(!borg.cell)
-			return FALSE
-		borg.cell.use(SILICON_LATHE_TAX)
+	if(total_cost)
+		if(iscyborg(user))
+			var/mob/living/silicon/robot/borg = user
+			if(!borg.cell)
+				return FALSE
+			borg.cell.use(SILICON_LATHE_TAX)
 
-	materials.use_materials(needed_materials, action = "built", name = "[design.name]")
+		else if(attempt_charge(src, user, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
+			say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
+			return FALSE
+
+	materials.use_materials(materials_per_item, multiplier = print_quantity, action = "built", name = "[design.name]")
 	if(production_animation)
 		flick(production_animation, src)
 
@@ -291,7 +291,11 @@
 
 	return TRUE
 
+/// Begins the act of making the given design the given number of items
+/// Does not check or use materials/power/etc
 /obj/machinery/rnd/production/proc/start_making(datum/design/design, build_count, mob/user, build_time_per_item, list/materials_per_item)
+	PRIVATE_PROC(TRUE)
+
 	busy = TRUE
 	update_static_data_for_all_viewers()
 
@@ -299,11 +303,17 @@
 		addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item), build_time_per_item * idx)
 	addtimer(CALLBACK(src, PROC_REF(finalize_build)), (build_time_per_item * build_count) + 1)
 
+/// Callback for start_making, actually makes the item
+/// Called using timers started by start_making
 /obj/machinery/rnd/production/proc/do_make_item(datum/design/design, list/materials_per_item)
+	PRIVATE_PROC(TRUE)
 	var/atom/movable/created = new design.build_path(get_turf(src))
 	created.set_custom_materials(materials_per_item.Copy())
 
+/// Resets the icon state and busy flag
+/// Called using a timer started by start_making which is set to run one tick after the last item is made
 /obj/machinery/rnd/production/proc/finalize_build()
+	PRIVATE_PROC(TRUE)
 	busy = FALSE
 	update_static_data_for_all_viewers()
 

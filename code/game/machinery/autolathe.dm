@@ -188,7 +188,6 @@
 		return
 	build_count = clamp(build_count, 1, 50)
 
-	var/list/total_materials_used = list()
 	var/list/materials_per_item = list()
 	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
 	for(var/datum/material/material as anything in design.materials)
@@ -215,26 +214,30 @@
 		if(isnull(material))
 			stack_trace("got passed an invalid material id: [material]")
 			return
-		total_materials_used[material] = amount_needed * build_count
 		materials_per_item[material] = amount_needed
 
-	if(!materials.has_materials(total_materials_used))
+	// don't pass the coefficient of creation here, we already modify it for use with setting the custom_materials
+	if(!materials.has_materials(materials_per_item, multiplier = build_count))
 		say("Not enough materials to begin production.")
 		return
 
 	var/power_use_amount = 0
-	for(var/material_used in total_materials_used)
-		power_use_amount += total_materials_used[material_used] * 0.2
+	for(var/material_used in materials_per_item)
+		power_use_amount += materials_per_item[material_used] * 0.2 * build_count
 	if(!directly_use_power(power_use_amount))
 		say("Not enough power in local network to begin production.")
 		return
 
 	var/build_time_per_item = design.construction_time * creation_efficiency * design.lathe_time_factor
-	materials.use_materials(total_materials_used)
+	materials.use_materials(materials_per_item, multiplier = build_count) // see above comment about coefficient
 	start_making(design, build_count, ui.user, build_time_per_item, materials_per_item)
 	return TRUE
 
+/// Begins the act of making the given design the given number of items
+/// Does not check or use materials/power/etc
 /obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, mob/user, build_time_per_item, list/materials_per_item)
+	PRIVATE_PROC(TRUE)
+
 	busy = TRUE
 	icon_state = "autolathe_n"
 	update_static_data_for_all_viewers()
@@ -243,7 +246,10 @@
 		addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item), build_time_per_item * idx)
 	addtimer(CALLBACK(src, PROC_REF(finalize_build)), (build_time_per_item * build_count) + 1)
 
+/// Callback for start_making, actually makes the item
+/// Called using timers started by start_making
 /obj/machinery/autolathe/proc/do_make_item(datum/design/design, list/materials_per_item)
+	PRIVATE_PROC(TRUE)
 	var/turf/target = get_step(src, drop_direction)
 	if(isclosedturf(target))
 		target = get_turf(src)
@@ -251,7 +257,10 @@
 	created.set_custom_materials(materials_per_item.Copy())
 	created.forceMove(target)
 
+/// Resets the icon state and busy flag
+/// Called using a timer started by start_making which is set to run one tick after the last item is made
 /obj/machinery/autolathe/proc/finalize_build()
+	PRIVATE_PROC(TRUE)
 	icon_state = initial(icon_state)
 	busy = FALSE
 
