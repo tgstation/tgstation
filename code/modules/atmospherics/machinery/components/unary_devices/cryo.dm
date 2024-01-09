@@ -492,12 +492,12 @@
 	if(istype(I, /obj/item/reagent_containers/cup))
 		. = TRUE //no afterattack
 		if(beaker)
-			balloon_alert(user, span_warning("beaker present!"))
+			balloon_alert(user, "beaker present!")
 			return
 		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		balloon_alert(user, span_warning("beaker inserted!"))
+		balloon_alert(user, "beaker inserted!")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
 		return
