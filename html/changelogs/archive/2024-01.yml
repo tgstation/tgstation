@@ -234,3 +234,7 @@
   scriptis:
   - refactor: some very large tgui lists (air alarms, all recipes techfab view, techweb
       view) are loaded on-demand as you scroll, making them not lag so hard
+2024-01-09:
+  Melbert:
+  - bugfix: '"The sister and He Who Wept" Heretic painting will no longer cause big
+      lag'
