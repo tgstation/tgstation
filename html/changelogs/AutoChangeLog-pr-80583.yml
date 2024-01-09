@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Blood cultists can now convert a Null Rod into a cult weapon on an offer rune. The strength of the weapon it is converted into depends on how many cultists the Chaplain crit / killed with it. At five or more, it will turn into a Bastard Sword. Note, sacrificing someone holding a Null Rod will automatically convert it after they are gibbed."
+  - balance: "Heretics no longer produce a Bastard Sword upon cult conversion. They are still immune to cult stun and cannot be converted by blood cultists."
