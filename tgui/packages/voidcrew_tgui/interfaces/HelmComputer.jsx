@@ -1,6 +1,7 @@
 import { useBackend } from '../../tgui/backend';
 import {
   AnimatedNumber,
+  Box,
   Button,
   ByondUi,
   LabeledList,
@@ -15,60 +16,35 @@ export const HelmComputer = (props, context) => {
   const { act, data, config } = useBackend(context);
   const { mapRef, isViewer } = data;
   return (
-    <Window width={870} height={708} resizable>
+    <Window width={500} height={800} resizable>
       <Window.Content>
-        <Stack fill>
-          <Stack.Item grow>
-            <Section title="Map" fill height="50%">
-              <ByondUi
-                className="CameraConsole__map"
-                params={{
-                  id: mapRef,
-                  type: 'map',
-                }}
-                height="100%"
-                // minHeight="300px"
-              />
-            </Section>
-          </Stack.Item>
-          <Stack.Item>{!isViewer && <ShipControlContent />}</Stack.Item>
-          {/* <Stack.Item>
-            <ShipContent />
-          </Stack.Item> */}
-          {/* <Stack.Item>
-            <SharedContent />
-          </Stack.Item> */}
-        </Stack>
-      </Window.Content>
+        <Box m={1}>
+          <SharedContent />
+        </Box>
 
-      {/* <div className="CameraConsole__right">
-        <ByondUi
-          className="CameraConsole__map"
-          params={{
-            id: mapRef,
-            type: 'map',
-          }}
-        />
-      </div> */}
+        <Box height="50%" m={1}>
+          <Section title="Map" height="100%" fill>
+            <ByondUi
+              className="CameraConsole__map"
+              params={{
+                id: mapRef,
+                type: 'map',
+              }}
+              height="100%"
+            />
+          </Section>
+        </Box>
+
+        <Box m={1}>
+          <Stack>
+            <Stack.Item>{!isViewer && <ShipControlContent />}</Stack.Item>
+            <Stack.Item>
+              <ShipContent />
+            </Stack.Item>
+          </Stack>
+        </Box>
+      </Window.Content>
     </Window>
-    // <Window width={870} height={708} resizable>
-    //   <div className="CameraConsole__left">
-    //     <Window.Content>
-    //       {!isViewer && <ShipControlContent />}
-    //       <ShipContent />
-    //       <SharedContent />
-    //     </Window.Content>
-    //   </div>
-    //   <div className="CameraConsole__right">
-    //     <ByondUi
-    //       className="CameraConsole__map"
-    //       params={{
-    //         id: mapRef,
-    //         type: 'map',
-    //       }}
-    //     />
-    //   </div>
-    // </Window>
   );
 };
 
@@ -129,7 +105,7 @@ const SharedContent = (props, context) => {
           )}
         </LabeledList>
       </Section>
-      <Section
+      {/* <Section
         title="Factions"
         buttons={
           <>
@@ -149,7 +125,7 @@ const SharedContent = (props, context) => {
             />
           </>
         }
-      />
+      /> */}
       <Section title="Radar">
         <Table>
           <Table.Row bold>
@@ -365,35 +341,7 @@ const ShipControlContent = (props, context) => {
     southwest: 2 + 8,
   };
   return (
-    <Section
-      title="Navigation"
-      // buttons={
-      //   <>
-      //     <Button
-      //       tooltip="Undock"
-      //       tooltipPosition="left"
-      //       icon="sign-out-alt"
-      //       disabled={data.state !== 'idle'}
-      //       onClick={() => act('undock')}
-      //     />
-      //     <Button
-      //       tooltip="Dock in Empty Space"
-      //       tooltipPosition="left"
-      //       icon="sign-in-alt"
-      //       disabled={data.state !== 'flying'}
-      //       onClick={() => act('dock_empty')}
-      //     />
-      //     <Button
-      //       tooltip={calibrating ? 'Cancel Jump' : 'Bluespace Jump'}
-      //       tooltipPosition="left"
-      //       icon={calibrating ? 'times' : 'angle-double-right'}
-      //       color={calibrating ? 'bad' : undefined}
-      //       disabled={data.state !== 'flying'}
-      //       onClick={() => act('bluespace_jump')}
-      //     />
-      //   </>
-      // }
-    >
+    <Section title="Navigation">
       {data.state === 'idle' && <div className="NoticeBox">Ship Docked.</div>}
       <Table collapsing>
         <Table.Row height={2}>
