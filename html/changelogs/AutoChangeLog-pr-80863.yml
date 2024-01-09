@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Certain areas are now properly protected against grid check. Namely the supermatter should consistently be protected."
