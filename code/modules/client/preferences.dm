@@ -290,6 +290,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 /datum/preferences/ui_close(mob/user)
 	save_character()
 	save_preferences()
+	deltimer(character_preview_view_timerid)
 	QDEL_NULL(character_preview_view)
 
 /datum/preferences/Topic(href, list/href_list)
