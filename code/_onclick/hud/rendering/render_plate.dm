@@ -431,7 +431,7 @@
 		render_target = OFFSET_RENDER_TARGET(get_plane_master_render_base(name), offset)
 	if(!relay_loc)
 		relay_loc = "CENTER"
-	// If we're using a submap (say for a popup window) make sure we draw onto it
+		// If we're using a submap (say for a popup window) make sure we draw onto it
 		if(home?.map)
 			relay_loc = "[home.map]:[relay_loc]"
 	var/blend_to_use = blend_override
