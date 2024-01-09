@@ -556,6 +556,8 @@ A basic text input, which allow users to enter text into a UI.
 - `onEnter: (e, value) => void` - Fires when the user hits enter.
 - `onEscape: (e) => void` - Fires when the user hits escape.
 - `onInput: (e, value) => void` - Fires when the user types into the input.
+- `expensive: boolean` - Introduces a delay before updating the input. Useful for large filters,
+  where you don't want to update on every keystroke.
 
 ### `Knob`
 

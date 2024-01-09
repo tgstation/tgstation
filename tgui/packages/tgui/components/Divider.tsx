@@ -6,8 +6,14 @@
 
 import { classes } from 'common/react';
 
-export const Divider = (props) => {
-  const { vertical, hidden } = props;
+type Props = Partial<{
+  hidden: boolean;
+  vertical: boolean;
+}>;
+
+export function Divider(props: Props) {
+  const { hidden, vertical } = props;
+
   return (
     <div
       className={classes([
@@ -17,4 +23,4 @@ export const Divider = (props) => {
       ])}
     />
   );
-};
+}

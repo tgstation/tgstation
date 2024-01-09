@@ -57,10 +57,10 @@ SUBSYSTEM_DEF(modular_computers)
 	if(prob(75))
 		chosen_discount = text2num(pick_weight(discounts))
 		if(prob(20))
-			expires_in = rand(8,10)
+			expires_in = rand(8,10) MINUTES
 	else
 		chosen_discount = text2num(pick_weight(flash_discounts))
-		expires_in = rand(2, 4)
+		expires_in = rand(2, 4) MINUTES
 	var/coupon_code = "[uppertext(strip_pack_name.Replace(pack_name, ""))][chosen_discount*100]"
 
 	var/list/targets = list()
@@ -102,7 +102,7 @@ SUBSYSTEM_DEF(modular_computers)
 	var/datum/signal/subspace/messaging/tablet_message/signal = new(announcement_system, list(
 		"fakename" = "Coupon Master",
 		"fakejob" = "Goodies Promotion",
-		"message" = "[chosen_promo_message] [pick(code_messages)]: [coupon_code][expires_in ? " (EXPIRES IN [expires_in] MINUTES)" : ""].",
+		"message" = "[chosen_promo_message] [pick(code_messages)]: [coupon_code][expires_in ? " (EXPIRES IN [uppertext(DisplayTimeText(expires_in))])" : ""].",
 		"targets" = targets,
 		"automated" = TRUE,
 	))

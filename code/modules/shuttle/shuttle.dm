@@ -515,7 +515,7 @@
 		var/max_x = WORLDMAXX_CUTOFF
 		var/max_y = WORLDMAXY_CUTOFF
 		for(var/area/area as anything in shuttle_areas)
-			for(var/turf/turf in area)
+			for(var/turf/turf as anything in area.get_contained_turfs())
 				min_x = max(turf.x, min_x)
 				max_x = min(turf.x, max_x)
 				min_y = max(turf.y, min_y)

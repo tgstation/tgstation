@@ -1,7 +1,7 @@
 import { classes } from 'common/react';
 import { ReactNode, useState } from 'react';
 
-import { BoxProps } from './Box';
+import { Box, BoxProps } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
 import { Popper } from './Popper';
@@ -55,6 +55,7 @@ export function Dropdown(props: Props) {
     options = [],
     over,
     selected,
+    width,
   } = props;
 
   const [open, setOpen] = useState(false);
@@ -129,12 +130,7 @@ export function Dropdown(props: Props) {
         </div>
       }
     >
-      <div
-        className="Dropdown"
-        style={{
-          minWidth: menuWidth,
-        }}
-      >
+      <Box className="Dropdown" width={width}>
         <div
           className={classes([
             'Dropdown__control',
@@ -191,7 +187,7 @@ export function Dropdown(props: Props) {
             />
           </>
         )}
-      </div>
+      </Box>
     </Popper>
   );
 }

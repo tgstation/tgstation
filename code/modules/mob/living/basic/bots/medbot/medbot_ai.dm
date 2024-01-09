@@ -36,8 +36,9 @@
 	if(bot_pawn.medical_mode_flags & MEDBOT_TIPPED_MODE)
 		controller.clear_blackboard_key(BB_PATIENT_TARGET)
 		return
-	var/reach_distance = (bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : BOT_PATIENT_PATH_LIMIT
-	if(controller.reachable_key(BB_PATIENT_TARGET, reach_distance))
+	var/is_stationary = bot_pawn.medical_mode_flags & MEDBOT_STATIONARY_MODE
+	var/reach_distance = (is_stationary) ? 1 : BOT_PATIENT_PATH_LIMIT
+	if(controller.reachable_key(BB_PATIENT_TARGET, distance = reach_distance, bypass_add_to_blacklist = is_stationary))
 		controller.queue_behavior(/datum/ai_behavior/tend_to_patient, BB_PATIENT_TARGET, bot_pawn.heal_threshold, bot_pawn.damage_type_healer, bot_pawn.bot_access_flags)
 		return SUBTREE_RETURN_FINISH_PLANNING
 
@@ -52,7 +53,7 @@
 	search_range = (mode_flags & MEDBOT_STATIONARY_MODE) ? 1 : initial(search_range)
 	var/list/ignore_keys = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/treatable_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_keys, treatable_target) || treatable_target.stat == DEAD)
+		if(LAZYACCESS(ignore_keys, REF(treatable_target)) || treatable_target.stat == DEAD)
 			continue
 		if((access_flags & BOT_COVER_EMAGGED) && treatable_target.stat == CONSCIOUS)
 			controller.set_blackboard_key(BB_PATIENT_TARGET, treatable_target)
