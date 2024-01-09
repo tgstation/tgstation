@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Fixed the Codex Cicatrix always requiring a dead body, despite the description saying leather or a hide would work too."
