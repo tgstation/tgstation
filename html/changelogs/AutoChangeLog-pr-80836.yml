@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "The HoP's cartridge vending machine now sells regular PDAs instead of base command ones."
