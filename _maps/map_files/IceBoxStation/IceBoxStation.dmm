@@ -61765,6 +61765,7 @@
 	pixel_y = 6
 	},
 /obj/machinery/light/directional/east,
+/obj/machinery/light_switch/directional/east,
 /turf/open/floor/iron/kitchen/diagonal,
 /area/station/service/kitchen)
 "sMg" = (
