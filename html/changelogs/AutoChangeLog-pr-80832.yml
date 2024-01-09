@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - admin: "Several types are now more accessible via the \"spawn\" verb (and friends), meaning you can type 'Spawn\" Modsuit' or 'Spawn \"Jumpsuit' in the command bar and it'll just give you a list of modsuits or jumpsuits to pick from."
