@@ -3961,6 +3961,7 @@
 #include "code\modules\logging\categories\log_category_debug.dm"
 #include "code\modules\logging\categories\log_category_game.dm"
 #include "code\modules\logging\categories\log_category_misc.dm"
+#include "code\modules\logging\categories\log_category_monke.dm"
 #include "code\modules\logging\categories\log_category_pda.dm"
 #include "code\modules\logging\categories\log_category_target_zone_switch.dm"
 #include "code\modules\logging\categories\log_category_uplink.dm"
