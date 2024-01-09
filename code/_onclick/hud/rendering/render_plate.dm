@@ -397,6 +397,7 @@
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
 	// If we're using a submap (say for a popup window) make sure we draw onto it
+	var/relay_loc = home?.relay_loc || "CENTER"
 	if(home?.map)
 		relay_loc = "[home.map]:[relay_loc]"
 
