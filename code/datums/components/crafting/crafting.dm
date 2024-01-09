@@ -214,13 +214,14 @@
 				if(result.atom_storage && recipe.delete_contents)
 					for(var/obj/item/thing in result)
 						qdel(thing)
-			result.reagents?.clear_reagents()
-			var/datum/reagents/holder = locate() in parts
-			if(holder) //transfer reagents from ingredients to result
-				if(result.reagents)
-					holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
-				parts -= holder
-				qdel(holder)
+			if(!recipe.unique_reagents)
+				result.reagents?.clear_reagents()
+				var/datum/reagents/holder = locate() in parts
+				if(holder) //transfer reagents from ingredients to result
+					if(result.reagents)
+						holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+					parts -= holder
+					qdel(holder)
 			result.CheckParts(parts, recipe)
 			if(send_feedback)
 				SSblackbox.record_feedback("tally", "object_crafted", 1, result.type)

@@ -13,6 +13,7 @@
 	blacklist = list(/obj/item/organ/external/tail/lizard/fake)
 	result = /obj/item/reagent_containers/cup/glass/bottle/lizardwine
 	category = CAT_DRINK
+	unique_reagents = TRUE
 
 /datum/crafting_recipe/moonshinejug
 	name = "Moonshine Jug"
