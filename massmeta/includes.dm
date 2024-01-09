@@ -6,6 +6,7 @@
 #include "code\modules\reagents\chemistry\drinks.dm"
 #include "code\modules\reagents\containers\cups.dm"
 #include "code\modules\surgery\organs\tongue.dm"
+#include "code\modules\surgery\bodyparts\head.dm"
 #include "code\modules\clothing\suits\chaplainsuits.dm"
 #include "code\modules\admin\verbs\adminhelp.dm"
 #include "code\modules\mob\living\carbon\human\emote.dm"
