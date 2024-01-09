@@ -275,11 +275,9 @@
 	SSair.stop_processing_machine(src)
 
 /obj/machinery/cryo_cell/on_set_is_operational(old_value)
-	if(old_value) //Turned off
+	//Turned off
+	if(old_value)
 		set_on(FALSE)
-		end_processing()
-	else //Turned on
-		begin_processing()
 
 /obj/machinery/cryo_cell/process(seconds_per_tick)
 	if(!occupant || !beaker)
