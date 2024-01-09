@@ -78,7 +78,7 @@
 #define MARKET_TREND_DOWNWARD -1
 #define MARKET_TREND_STABLE 0
 
-#define MARKET_EVENT_PROBABILITY 1 //Probability of a market event firing, in percent. Fires once per material, every 20 seconds.
+#define MARKET_EVENT_PROBABILITY 2 //Probability of a market event firing, in percent. Fires once per material, every 20 seconds.
 
 #define MARKET_PROFIT_MODIFIER 0.8 //We don't make every sale a 1-1 of the actual buy price value, like with real life taxes and to encourage more smart trades
 

@@ -131,6 +131,7 @@
 	var/color_string
 	var/sheet_to_buy
 	var/requested_amount
+	var/minimum_value_threshold
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
 		switch(SSstock_market.materials_trends[traded_mat])
@@ -142,18 +143,18 @@
 				trend_string = "down"
 
 		//get mat color
-		var/initial_colors = initial(traded_mat.greyscale_colors)
+		var/initial_colors = traded_mat::greyscale_colors
 		if(initial_colors)
 			color_string = splicetext(initial_colors, 7, length(initial_colors), "") //slice it to a standard 6 char hex
 		else
-			initial_colors = initial(traded_mat.color)
+			initial_colors = traded_mat::color
 			if(initial_colors)
 				color_string = initial_colors
 			else
 				color_string = COLOR_CYAN
 
 		//get sheet type from material
-		sheet_to_buy = initial(traded_mat.sheet_type)
+		sheet_to_buy = traded_mat::sheet_type
 		if(!sheet_to_buy)
 			CRASH("Material with no sheet type being sold on materials market!")
 
@@ -162,10 +163,17 @@
 		if(!isnull(current_order))
 			requested_amount = current_order.pack.contains[sheet_to_buy]
 
+		if(traded_mat::minimum_value_override)
+			minimum_value_threshold = traded_mat::minimum_value_override
+		else
+			minimum_value_threshold = round((traded_mat::value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
+
+
 		//send data
 		material_data += list(list(
-			"name" = initial(traded_mat.name),
+			"name" = traded_mat::name,
 			"price" = SSstock_market.materials_prices[traded_mat],
+			"threshold" = minimum_value_threshold,
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
 			"trend" = trend_string,
 			"color" = color_string,
@@ -226,12 +234,12 @@
 			var/datum/material/material_bought
 			var/obj/item/stack/sheet/sheet_to_buy
 			for(var/datum/material/mat as anything in SSstock_market.materials_prices)
-				if(initial(mat.name) == material_str)
+				if(mat::name == material_str)
 					material_bought = mat
 					break
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
-			sheet_to_buy = initial(material_bought.sheet_type)
+			sheet_to_buy = material_bought::sheet_type
 			if(!sheet_to_buy)
 				CRASH("Material with no sheet type being sold on materials market!")
 
@@ -341,8 +349,8 @@
 
 /obj/item/stock_block/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES, TIMER_DELETE_ME)
-	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(value_warning)), 1.5 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(update_value)), 3 MINUTES, TIMER_DELETE_ME)
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()

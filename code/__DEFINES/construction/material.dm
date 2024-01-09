@@ -68,10 +68,10 @@
 
 //Stock market stock values.
 /// How much quantity of a material stock exists for common materials like iron & glass.
-#define MATERIAL_QUANTITY_COMMON 25000
+#define MATERIAL_QUANTITY_COMMON 5000
 /// How much quantity of a material stock exists for uncommon materials like silver & titanium.
-#define MATERIAL_QUANTITY_UNCOMMON 10000
+#define MATERIAL_QUANTITY_UNCOMMON 1000
 /// How much quantity of a material stock exists for rare materials like gold, uranium, & diamond.
-#define MATERIAL_QUANTITY_RARE 2500
+#define MATERIAL_QUANTITY_RARE 200
 /// How much quantity of a material stock exists for exotic materials like diamond & bluespace crystals.
-#define MATERIAL_QUANTITY_EXOTIC 500
+#define MATERIAL_QUANTITY_EXOTIC 50
