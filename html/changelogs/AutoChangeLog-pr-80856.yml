@@ -1,0 +1,6 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - bugfix: "Dynamic midround rolls will properly consider roundstart players as part of the living population again, allowing antagonists with a minimum population value to spawn when they should be able to."
+  - bugfix: "Players who observe before roundstart can be considered for midround ghost roles again."
+  - bugfix: "Some antagonists which had elements that scale with living station population now function properly again."
