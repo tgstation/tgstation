@@ -71,7 +71,6 @@
 	density = TRUE
 	max_integrity = 350
 	armor_type = /datum/armor/unary_cryo_cell
-	layer = MOB_LAYER
 	circuit = /obj/item/circuitboard/machine/cryo_tube
 	occupant_typecache = list(/mob/living/carbon, /mob/living/simple_animal)
 	processing_flags = NONE
@@ -195,6 +194,8 @@
 		if(panel_open)
 			. += span_notice("[src] can be [EXAMINE_HINT("pried")] apart.")
 			. += span_notice("[src] can be rotated with a [EXAMINE_HINT("wrench")].")
+		else if(machine_stat & NOPOWER)
+			. += span_notice("[src] can be [EXAMINE_HINT("pried")] open.")
 
 /obj/machinery/cryo_cell/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	context[SCREENTIP_CONTEXT_CTRL_LMB] = "Turn [on ? "off" : "on"]"
@@ -210,17 +211,17 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_CROWBAR)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Deconstruct" : ""]"
+			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Deconstruct" : "Pry Open"]"
 		if(TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Rotate" : ""]"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/machinery/cryo_cell/update_icon_state()
-	icon_state = state_open ? "pod-open" : ((on && is_operational) ? "pod-on" : "pod-off")
-	return ..()
-
 /obj/machinery/cryo_cell/update_icon()
 	SET_PLANE_IMPLICIT(src, initial(plane))
+	return ..()
+
+/obj/machinery/cryo_cell/update_icon_state()
+	icon_state = state_open ? "pod-open" : ((on && is_operational) ? "pod-on" : "pod-off")
 	return ..()
 
 /obj/machinery/cryo_cell/update_overlays()
@@ -280,9 +281,6 @@
 	else //Turned on
 		begin_processing()
 
-/obj/machinery/cryo_cell/nap_violation(mob/violator)
-	open_machine()
-
 /obj/machinery/cryo_cell/process(seconds_per_tick)
 	if(!occupant || !beaker)
 		set_on(FALSE)
@@ -291,8 +289,6 @@
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant.on_fire)
 		mob_occupant.extinguish_mob()
-	if(!check_nap_violations())
-		return
 	if(mob_occupant.stat == DEAD) // Notify doctors and potentially eject if the patient is dead
 		set_on(FALSE)
 		var/msg = "Patient is deceased."
@@ -382,6 +378,11 @@
 /obj/machinery/cryo_cell/assume_air(datum/gas_mixture/giver)
 	internal_connector.gas_connector.airs[1].merge(giver)
 
+/obj/machinery/cryo_cell/return_temperature()
+	var/datum/gas_mixture/internal_air = internal_connector.gas_connector.airs[1]
+
+	return internal_air.total_moles() > 10 ? internal_air.temperature : ..()
+
 /obj/machinery/cryo_cell/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
 		set_on(FALSE)
@@ -390,13 +391,9 @@
 
 /obj/machinery/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
-	if((isnull(user) || istype(user)) && state_open && !panel_open)
-		if(loc == user?.loc)
-			to_chat(user, span_warning("You can't close [src] on yourself!"))
-			return
+	if(state_open && !panel_open)
 		flick("pod-close-anim", src)
-		..(user)
-		return occupant
+		return ..()
 
 /obj/machinery/cryo_cell/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -445,30 +442,37 @@
 	var/unsafe_release = FALSE
 	var/datum/gas_mixture/inside_air = internal_connector.gas_connector.airs[1]
 	if(inside_air.total_moles() > 2 * ONE_ATMOSPHERE)
-		to_chat(user, span_warning("As you begin deconstructing \the [src] a gush of air blows in your face... maybe you should reconsider?"))
+		to_chat(user, span_warning("As you begin prying \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		if(!do_after(user, 2 SECONDS, target = src))
 			return
 		unsafe_release = TRUE
 
-	if(default_deconstruction_crowbar(tool, custom_deconstruct = TRUE))
-		var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
-		var/internal_pressure = 0
+	var/deconstruct = FALSE
+	if(!default_pry_open(tool))
+		if(!default_deconstruction_crowbar(tool, custom_deconstruct = TRUE))
+			return
+		else
+			deconstruct = TRUE
 
-		if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
-			var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
-			internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
+	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
+	var/internal_pressure = 0
 
-		if(inside_air.total_moles() > 0)
-			if(!node || internal_pressure > 0)
-				var/datum/gas_mixture/environment_air = loc.return_air()
-				internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
+	if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
+		var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
+		internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
 
-		if(unsafe_release)
-			internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)
+	if(inside_air.total_moles() > 0)
+		if(!node || internal_pressure > 0)
+			var/datum/gas_mixture/environment_air = loc.return_air()
+			internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
 
-		crowbar.play_tool_sound(src, 50)
+	if(unsafe_release)
+		internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)
+
+	tool.play_tool_sound(src, 50)
+	if(deconstruct)
 		deconstruct(TRUE)
-		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/cryo_cell/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -511,48 +515,53 @@
 		ui = new(user, src, "Cryo", name)
 		ui.open()
 
+/obj/machinery/cryo_cell/ui_static_data(mob/user)
+	. = list()
+	.["T0C"] = T0C
+
 /obj/machinery/cryo_cell/ui_data()
 	. = list()
 	.["isOperating"] = on
-	.["hasOccupant"] = !!occupant
 	.["isOpen"] = state_open
 	.["autoEject"] = autoeject
 
-	.["occupant"] = list()
-	if(occupant)
+	var/list/occupant_data = null
+	if(!QDELETED(occupant))
 		var/mob/living/mob_occupant = occupant
-		.["occupant"]["name"] = mob_occupant.name
+		occupant_data = list()
+
+		occupant_data["name"] = mob_occupant.name
 		if(mob_occupant.stat == DEAD)
-			.["occupant"]["stat"] = "Dead"
-			.["occupant"]["statstate"] = "bad"
+			occupant_data["stat"] = "Dead"
 		else if (HAS_TRAIT(mob_occupant, TRAIT_KNOCKEDOUT))
-			.["occupant"]["stat"] = "Unconscious"
-			.["occupant"]["statstate"] = "good"
+			occupant_data["stat"] = "Unconscious"
 		else
-			.["occupant"]["stat"] = "Conscious"
-			.["occupant"]["statstate"] = "bad"
+			occupant_data["stat"] = "Conscious"
 
-		.["occupant"]["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
-		// Green if the mob can actually be healed by cryoxadone.
-		.["occupant"]["temperaturestatus"] = mob_occupant.bodytemperature < T0C ? "good" : "bad"
+		occupant_data["bodyTemperature"] = round(mob_occupant.bodytemperature, 1)
 
-		.["occupant"]["health"] = round(mob_occupant.health, 1)
-		.["occupant"]["maxHealth"] = mob_occupant.maxHealth
-		.["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
-		.["occupant"]["bruteLoss"] = round(mob_occupant.getBruteLoss(), 1)
-		.["occupant"]["oxyLoss"] = round(mob_occupant.getOxyLoss(), 1)
-		.["occupant"]["toxLoss"] = round(mob_occupant.getToxLoss(), 1)
-		.["occupant"]["fireLoss"] = round(mob_occupant.getFireLoss(), 1)
+		occupant_data["health"] = mob_occupant.health
+		occupant_data["maxHealth"] = mob_occupant.maxHealth
+		occupant_data["bruteLoss"] = mob_occupant.getBruteLoss()
+		occupant_data["oxyLoss"] = mob_occupant.getOxyLoss()
+		occupant_data["toxLoss"] = mob_occupant.getToxLoss()
+		occupant_data["fireLoss"] = mob_occupant.getFireLoss()
+	.["occupant"] = occupant_data
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
-	.["cellTemperature"] = round(air1.temperature, 1)
+	.["cellTemperature"] = air1.temperature
 
-	.["isBeakerLoaded"] = beaker ? TRUE : FALSE
-	var/beakerContents = list()
-	if(beaker && beaker.reagents && beaker.reagents.reagent_list.len)
-		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beakerContents += list(list("name" = R.name, "volume" = R.volume))
-	.["beakerContents"] = beakerContents
+	var/list/beaker_data = null
+	if(!QDELETED(beaker))
+		beaker_data = list()
+		beaker_data["maxVolume"] = beaker.volume
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		var/list/beakerContents = list()
+		if(length(beaker.reagents.reagent_list))
+			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+		beaker_data["contents"] = beakerContents
+	.["beaker"] = beaker_data
 
 /obj/machinery/cryo_cell/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -578,8 +587,8 @@
 			autoeject = !autoeject
 			return TRUE
 
-		if("ejectbeaker")
-			if(beaker)
+		if("eject")
+			if(!QDELETED(beaker))
 				var/mob/living/user = ui.user
 				if(Adjacent(user) && !issilicon(user))
 					user.put_in_hands(beaker)
@@ -607,11 +616,6 @@
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
 	user.overlay_fullscreen("remote_view", /atom/movable/screen/fullscreen/impaired, 1)
-
-/obj/machinery/cryo_cell/return_temperature()
-	var/datum/gas_mixture/internal_air = internal_connector.gas_connector.airs[1]
-
-	return internal_air.total_moles() > 10 ? internal_air.temperature : ..()
 
 #undef MAX_TEMPERATURE
 #undef CRYO_MULTIPLY_FACTOR
