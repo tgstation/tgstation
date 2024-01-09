@@ -406,12 +406,12 @@
 	var/static/chain = 1
 	switch(chain)
 		if (1)
-			. = list_clear_nulls_old(argslist(args))
+			. = list_clear_nulls_old(arglist(args))
 			if (prob(10))
 				chain = 2
 
 		if (2)
-			. = list_clear_nulls_new(argslist(args))
+			. = list_clear_nulls_new(arglist(args))
 			if (prob(10))
 				chain = 1
 		
