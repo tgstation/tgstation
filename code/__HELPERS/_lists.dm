@@ -422,9 +422,8 @@
 	return list_to_clear.len < start_len
 
 /proc/list_clear_nulls_new(list/list_to_clear)
-	var/start_len = list_to_clear.len
-	list_to_clear.RemoveAll(null)
-	return list_to_clear.len < start_len
+	return (list_to_clear.RemoveAll(null) > 0)
+	
 
 /**
  * Removes any empty weakrefs from the list
