@@ -259,6 +259,7 @@ GLOBAL_LIST_INIT(testing_global_profiler, list("_PROFILE_NAME" = "Global"))
 
 
 /proc/log_cloning(text, mob/initiator)
-	if(CONFIG_GET(flag/log_cloning))
-		WRITE_LOG(GLOB.world_cloning_log, "CLONING: [text]")
+	logger.Log(LOG_CATEGORY_CLONING, text, list(initiator))
 
+/proc/log_mechcomp(text, list/data)
+	logger.Log(LOG_CATEGORY_MECHCOMP, text, data)
