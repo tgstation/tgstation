@@ -396,8 +396,8 @@
  * Other vars such as alpha will automatically be applied with the render source
  */
 /atom/movable/screen/plane_master/proc/generate_render_relays()
-	// If we're using a submap (say for a popup window) make sure we draw onto it
 	var/relay_loc = home?.relay_loc || "CENTER"
+	// If we're using a submap (say for a popup window) make sure we draw onto it
 	if(home?.map)
 		relay_loc = "[home.map]:[relay_loc]"
 
