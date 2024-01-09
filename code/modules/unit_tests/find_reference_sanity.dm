@@ -31,7 +31,7 @@
 	//Sanity check
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 3, "Should be: test references: 0 + baseline references: 3 (victim var,loc,allocated list)")
-	victim.DoSearchVar(testbed, "Sanity Check", search_time = 1) //We increment search time to get around an optimization
+	victim.DoSearchVar(testbed, "Sanity Check") //We increment search time to get around an optimization
 
 	TEST_ASSERT(!LAZYLEN(victim.found_refs), "The ref-tracking tool found a ref where none existed")
 	SSgarbage.should_save_refs = FALSE
@@ -48,7 +48,7 @@
 
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
-	victim.DoSearchVar(testbed, "First Run", search_time = 2)
+	victim.DoSearchVar(testbed, "First Run")
 
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, "test"), "The ref-tracking tool failed to find a regular value")
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, testbed.test_list), "The ref-tracking tool failed to find a list entry")
@@ -67,7 +67,7 @@
 
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
-	victim.DoSearchVar(testbed, "Second Run", search_time = 3)
+	victim.DoSearchVar(testbed, "Second Run")
 
 	//This is another sanity check
 	TEST_ASSERT(!LAZYACCESS(victim.found_refs, testbed.overlays), "The ref-tracking tool found an overlays entry? That shouldn't be possible")
@@ -89,8 +89,8 @@
 
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
-	victim.DoSearchVar(victim, "Third Run Self", search_time = 4)
-	victim.DoSearchVar(testbed, "Third Run Testbed", search_time = 4)
+	victim.DoSearchVar(victim, "Third Run Self")
+	victim.DoSearchVar(testbed, "Third Run Testbed")
 
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, "self_ref"), "The ref-tracking tool failed to find a self reference")
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, to_find), "The ref-tracking tool failed to find a nested list entry")
@@ -106,7 +106,7 @@
 	testbed.test_assoc_list = list(null = victim)
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 4, "Should be: test references: 1 + baseline references: 3 (victim var,loc,allocated list)")
-	victim.DoSearchVar(testbed, "Fourth Run", search_time = 5)
+	victim.DoSearchVar(testbed, "Fourth Run")
 
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, testbed.test_assoc_list), "The ref-tracking tool failed to find a null key'd assoc list entry")
 
@@ -123,7 +123,7 @@
 
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 5, "Should be: test references: 2 + baseline references: 3 (victim var,loc,allocated list)")
-	victim.DoSearchVar(testbed, "Fifth Run", search_time = 6)
+	victim.DoSearchVar(testbed, "Fifth Run")
 
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, to_find_in_key), "The ref-tracking tool failed to find a nested assoc list key")
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, to_find_null_assoc_nested), "The ref-tracking tool failed to find a null key'd nested assoc list entry")
@@ -146,7 +146,7 @@
 
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 5, "Should be: test references: 2 + baseline references: 3 (victim var,loc,allocated list)")
-	victim.DoSearchVar(global_vars, "Sixth Run", search_time = 7)
+	victim.DoSearchVar(global_vars, "Sixth Run")
 
 	TEST_ASSERT(LAZYACCESS(victim.found_refs, global_vars), "The ref-tracking tool failed to find a natively global variable")
 	SSgarbage.should_save_refs = FALSE
