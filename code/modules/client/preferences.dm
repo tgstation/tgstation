@@ -88,7 +88,11 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	/// If set to TRUE, will update character_profiles on the next ui_data tick.
 	var/tainted_character_profiles = FALSE
 
+	/// the timerid of the char_preview/updatebody() callback
+	var/character_preview_view_timerid
+
 /datum/preferences/Destroy(force)
+	deltimer(character_preview_view_timerid)
 	QDEL_NULL(character_preview_view)
 	QDEL_LIST(middleware)
 	value_cache = null
@@ -149,7 +153,7 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 		// Lemon from the future: this issue appears to replicate if the byond map (what we're relaying here)
 		// Is shown while the client's mouse is on the screen. As soon as their mouse enters the main map, it's properly scaled
 		// I hate this place
-		addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/atom/movable/screen/map_view/char_preview, update_body)), 1 SECONDS, TIMER_DELETE_ME)
+		character_preview_view_timerid = addtimer(CALLBACK(character_preview_view, TYPE_PROC_REF(/atom/movable/screen/map_view/char_preview, update_body)), 1 SECONDS, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /datum/preferences/ui_state(mob/user)
 	return GLOB.always_state
