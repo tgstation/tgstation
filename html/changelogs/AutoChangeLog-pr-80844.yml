@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - bugfix: "Ripley MK-Is and Paddys now correctly make incoming projectiles hit the pilot again."
