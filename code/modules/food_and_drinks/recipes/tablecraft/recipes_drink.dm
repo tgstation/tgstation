@@ -125,6 +125,7 @@
 				/obj/item/food/candy_corn = 1,
 				/obj/item/reagent_containers/cup/glass/bottle = 1)
 	category = CAT_DRINK
+	unique_reagents = TRUE
 
 /datum/crafting_recipe/kong
 	name = "Kong"
@@ -134,6 +135,7 @@
 				/obj/item/food/monkeycube = 1,
 				/obj/item/reagent_containers/cup/glass/bottle = 1)
 	category = CAT_DRINK
+	unique_reagents = TRUE
 
 /datum/crafting_recipe/pruno
 	name = "pruno mix"
@@ -145,3 +147,4 @@
 	            /obj/item/food/candy_corn = 2,
 	            /datum/reagent/water = 15)
 	category = CAT_DRINK
+	unique_reagents = TRUE
