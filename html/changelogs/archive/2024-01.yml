@@ -118,3 +118,10 @@
   - rscadd: Allow departmental techfabs to print appropiate MODsuit modules, i.e medical
       can print defib or surgical processor modules. Robotics can still print all
       of them, though, and the mechfab is still needed to make *new* modsuits.
+2024-01-09:
+  DexeeXI:
+  - rscadd: New graphics for pathology related areas for use in StrongDMM.
+  - rscadd: New graphics for Centcom areas in StrongDMM.
+  - rscdel: Removed Detroit
+  - bugfix: the fucking disposal system for Tram should now work.
+  - bugfix: various bars for Tram since they were missing some functionality.
