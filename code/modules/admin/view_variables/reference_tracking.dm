@@ -129,9 +129,8 @@
 		for(var/element_in_list in potential_cache)
 			//Check normal sublists
 			if(islist(element_in_list))
-				if(!length(element_in_list))
-					continue
-				DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", search_time, recursion_count + 1)
+				if(length(element_in_list))
+					DoSearchVar(element_in_list, "[container_name] -> [element_in_list] (list)", search_time, recursion_count + 1)
 			//Check normal entrys
 			else if(element_in_list == src)
 				#ifdef REFERENCE_TRACKING_DEBUG
@@ -163,16 +162,15 @@
 					log_reftracker("All references to [type] [text_ref(src)] found, exiting.")
 					return
 
-			if(!isnum(element_in_list) && is_special_list)
+			if(!isnum(element_in_list) && !is_special_list)
 				// This exists to catch an error that throws when we access a special list
 				// is_special_list is a hint, it can be wrong
 				try
 					var/assoc_val = potential_cache[element_in_list]
 					//Check assoc sublists
 					if(islist(assoc_val))
-						if(!length(assoc_val))
-							continue
-						DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", search_time, recursion_count + 1)
+						if(length(assoc_val))
+							DoSearchVar(potential_container[element_in_list], "[container_name]\[[element_in_list]\] -> [assoc_val] (list)", search_time, recursion_count + 1)
 					//Check assoc entry
 					else if(assoc_val == src)
 						#ifdef REFERENCE_TRACKING_DEBUG
@@ -193,6 +191,7 @@
 				catch
 					// So if it goes wrong we kill it
 					is_special_list = TRUE
+					log_reftracker("Curiosity: [container_name] lead to an error when acessing [element_in_list], what is it?")
 
 #undef REFSEARCH_RECURSE_LIMIT
 #endif
