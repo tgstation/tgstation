@@ -6,6 +6,7 @@ import {
   LabeledList,
   ProgressBar,
   Section,
+  Stack,
   Table,
 } from '../../tgui/components';
 import { Window } from '../../tgui/layouts';
@@ -15,14 +16,32 @@ export const HelmComputer = (props, context) => {
   const { mapRef, isViewer } = data;
   return (
     <Window width={870} height={708} resizable>
-      <div className="CameraConsole__left">
-        <Window.Content>
-          {!isViewer && <ShipControlContent />}
-          <ShipContent />
-          <SharedContent />
-        </Window.Content>
-      </div>
-      <div className="CameraConsole__right">
+      <Window.Content>
+        <Stack fill>
+          <Stack.Item grow>
+            <Section title="Map" fill height="50%">
+              <ByondUi
+                className="CameraConsole__map"
+                params={{
+                  id: mapRef,
+                  type: 'map',
+                }}
+                height="100%"
+                // minHeight="300px"
+              />
+            </Section>
+          </Stack.Item>
+          <Stack.Item>{!isViewer && <ShipControlContent />}</Stack.Item>
+          {/* <Stack.Item>
+            <ShipContent />
+          </Stack.Item> */}
+          {/* <Stack.Item>
+            <SharedContent />
+          </Stack.Item> */}
+        </Stack>
+      </Window.Content>
+
+      {/* <div className="CameraConsole__right">
         <ByondUi
           className="CameraConsole__map"
           params={{
@@ -30,8 +49,26 @@ export const HelmComputer = (props, context) => {
             type: 'map',
           }}
         />
-      </div>
+      </div> */}
     </Window>
+    // <Window width={870} height={708} resizable>
+    //   <div className="CameraConsole__left">
+    //     <Window.Content>
+    //       {!isViewer && <ShipControlContent />}
+    //       <ShipContent />
+    //       <SharedContent />
+    //     </Window.Content>
+    //   </div>
+    //   <div className="CameraConsole__right">
+    //     <ByondUi
+    //       className="CameraConsole__map"
+    //       params={{
+    //         id: mapRef,
+    //         type: 'map',
+    //       }}
+    //     />
+    //   </div>
+    // </Window>
   );
 };
 
@@ -330,35 +367,67 @@ const ShipControlContent = (props, context) => {
   return (
     <Section
       title="Navigation"
-      buttons={
-        <>
-          <Button
-            tooltip="Undock"
-            tooltipPosition="left"
-            icon="sign-out-alt"
-            disabled={data.state !== 'idle'}
-            onClick={() => act('undock')}
-          />
-          <Button
-            tooltip="Dock in Empty Space"
-            tooltipPosition="left"
-            icon="sign-in-alt"
-            disabled={data.state !== 'flying'}
-            onClick={() => act('dock_empty')}
-          />
-          <Button
-            tooltip={calibrating ? 'Cancel Jump' : 'Bluespace Jump'}
-            tooltipPosition="left"
-            icon={calibrating ? 'times' : 'angle-double-right'}
-            color={calibrating ? 'bad' : undefined}
-            disabled={data.state !== 'flying'}
-            onClick={() => act('bluespace_jump')}
-          />
-        </>
-      }
+      // buttons={
+      //   <>
+      //     <Button
+      //       tooltip="Undock"
+      //       tooltipPosition="left"
+      //       icon="sign-out-alt"
+      //       disabled={data.state !== 'idle'}
+      //       onClick={() => act('undock')}
+      //     />
+      //     <Button
+      //       tooltip="Dock in Empty Space"
+      //       tooltipPosition="left"
+      //       icon="sign-in-alt"
+      //       disabled={data.state !== 'flying'}
+      //       onClick={() => act('dock_empty')}
+      //     />
+      //     <Button
+      //       tooltip={calibrating ? 'Cancel Jump' : 'Bluespace Jump'}
+      //       tooltipPosition="left"
+      //       icon={calibrating ? 'times' : 'angle-double-right'}
+      //       color={calibrating ? 'bad' : undefined}
+      //       disabled={data.state !== 'flying'}
+      //       onClick={() => act('bluespace_jump')}
+      //     />
+      //   </>
+      // }
     >
       {data.state === 'idle' && <div className="NoticeBox">Ship Docked.</div>}
       <Table collapsing>
+        <Table.Row height={2}>
+          <Table.Cell width={1}>
+            <Button
+              tooltip="Undock"
+              tooltipPosition="right"
+              icon="sign-out-alt"
+              disabled={data.state !== 'idle'}
+              onClick={() => act('undock')}
+            />
+          </Table.Cell>
+
+          <Table.Cell width={1}>
+            <Button
+              tooltip="Dock in Empty Space"
+              tooltipPosition="right"
+              icon="sign-in-alt"
+              disabled={data.state !== 'flying'}
+              onClick={() => act('dock_empty')}
+            />
+          </Table.Cell>
+
+          <Table.Cell width={1}>
+            <Button
+              tooltip={calibrating ? 'Cancel Jump' : 'Bluespace Jump'}
+              tooltipPosition="right"
+              icon={calibrating ? 'times' : 'angle-double-right'}
+              color={calibrating ? 'bad' : undefined}
+              disabled={data.state !== 'flying'}
+              onClick={() => act('bluespace_jump')}
+            />
+          </Table.Cell>
+        </Table.Row>
         <Table.Row height={1}>
           <Table.Cell width={1}>
             <Button
