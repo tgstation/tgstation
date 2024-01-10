@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Lionhunter Rifle is now available at the same point as Mawed Crucible, making it available to all paths again."
-  - bugfix: "Lock knowledge now goes the correct order. Mark -> Ritual -> Unique item, rather than backwards."

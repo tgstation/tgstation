@@ -1,4 +1,0 @@
-author: "zxaber"
-delete-after: True
-changes:
-  - bugfix: "The various borg apparatuses can no longer pick up other internal borg tools."

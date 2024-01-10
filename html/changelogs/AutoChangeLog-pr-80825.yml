@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - code_imp: "smart fridge content overlay now uses `base_icon_state` instead of a separate var"

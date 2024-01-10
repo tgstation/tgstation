@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - qol: "If you can't heal a body part, you won't get a healing time delay. No more spending 5 seconds healing a body part only to get a \"can't heal that\" message."
