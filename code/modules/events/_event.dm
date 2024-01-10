@@ -109,9 +109,8 @@
 		return FALSE
 
 	//monkestation edit start - STORYTELLERS
-	if(checks_antag_cap)
-		if(!roundstart && !SSgamemode.can_inject_antags())
-			return FALSE
+	if(checks_antag_cap && !roundstart && !SSgamemode.can_inject_antags())
+		return FALSE
 	if(!check_enemies())
 		return FALSE
 	if(allowed_storytellers && ((islist(allowed_storytellers) && !is_type_in_list(SSgamemode.storyteller, allowed_storytellers)) || SSgamemode.storyteller.type != allowed_storytellers))

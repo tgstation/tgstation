@@ -146,8 +146,8 @@ SUBSYSTEM_DEF(gamemode)
 	/// Is storyteller secret or not
 	var/secret_storyteller = FALSE
 
-	/// List of new players we currently want to give our roundstart antag to
-	var/list/roundstart_antag_players = list()
+	/// List of new player minds we currently want to give our roundstart antag to
+	var/list/roundstart_antag_minds = list()
 
 	var/wizardmode = FALSE //refactor this into just being a unique storyteller
 
@@ -255,9 +255,9 @@ SUBSYSTEM_DEF(gamemode)
 			var/mob/dead/new_player/new_player = player
 			if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())
 				candidate_candidates += player
-		else if (observers && isobserver(player))
+		else if(observers && isobserver(player))
 			candidate_candidates += player
-		else if (living_players && isliving(player))
+		else if(living_players && isliving(player))
 			if(!ishuman(player) && !isAI(player))
 				continue
 			if(!(player.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
@@ -268,7 +268,7 @@ SUBSYSTEM_DEF(gamemode)
 		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
 			continue
 		if(!observers)
-			if(!isliving(candidate))
+			if(!ready_players && !isliving(candidate))
 				continue
 			if(no_antags && candidate.mind.special_role)
 				continue
@@ -284,7 +284,7 @@ SUBSYSTEM_DEF(gamemode)
 			var/time_to_check
 			if(required_time)
 				time_to_check = required_time
-			else if (inherit_required_time)
+			else if(inherit_required_time)
 				time_to_check = GLOB.special_roles[be_special]
 
 			if(time_to_check && candidate.client.get_remaining_days(time_to_check) > 0)

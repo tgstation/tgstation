@@ -252,10 +252,10 @@ SUBSYSTEM_DEF(job)
 	return candidates
 
 
-/datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player, roundstart = FALSE) //monkestation edit: adds roundstart
+/datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player, roundstart = FALSE, list/restricted_jobs = list()) //monkestation edit: adds roundstart and restricted_jobs
 	JobDebug("GRJ Giving random job, Player: [player]")
 	. = FALSE
-	for(var/datum/job/job as anything in shuffle(joinable_occupations))
+	for(var/datum/job/job as anything in shuffle(joinable_occupations - restricted_jobs)) //monkestation edit: adds - restricted_jobs
 		if(QDELETED(player))
 			JobDebug("GRJ player is deleted, aborting")
 			break
@@ -369,7 +369,7 @@ SUBSYSTEM_DEF(job)
 //					break
 //monkestation removal end
 //monkestation edit start
-				if(handle_temp_assignments(candidate, job))
+				if(handle_temp_assignments(candidate, GetJobType(/datum/job/ai)))
 					break
 //monkestation edit end
 
@@ -529,7 +529,7 @@ SUBSYSTEM_DEF(job)
 				return
 
 //			if(!AssignRole(player, overflow_role_datum, do_eligibility_checks = FALSE)) //monkestation removal
-			if(!handle_temp_assignments(candidate, job)) //monkestation edit
+			if(!handle_temp_assignments(player, overflow_role_datum)) //monkestation edit
 				RejectPlayer(player)
 				return
 		if (BERANDOMJOB)

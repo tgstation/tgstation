@@ -83,26 +83,29 @@
 /datum/round_event_control/antagonist/proc/trim_candidates(list/candidates)
 	return candidates
 
-/// Check if our enemy_roles requirement is met, if return_count is set then we will return how many enemies we have instead
-/datum/round_event_control/proc/check_enemies(return_count = FALSE)
+/// Check if our enemy_roles requirement is met, if return_players is set then we will return the list of enemy players instead
+/datum/round_event_control/proc/check_enemies(return_players = FALSE)
 	if(!length(enemy_roles))
-		return return_count ? 0 : TRUE
+		return return_players ? list() : TRUE
 
 	var/job_check = 0
+	var/list/enemy_players = list()
 	for(var/enemy in enemy_roles)
 		var/datum/job/enemy_job = SSjob.GetJob(enemy)
-		if(emeny_job && SSjob.assigned_players_by_job[enemy_job.type])
+		if(enemy_job && SSjob.assigned_players_by_job[enemy_job.type])
 			job_check += length(SSjob.assigned_players_by_job[enemy_job.type])
+			enemy_players += SSjob.assigned_players_by_job[enemy_job.type]
 
-	for(var/mob/M in GLOB.alive_player_list)
-		if(M.stat == DEAD)
+	for(var/mob/enemy_mob in GLOB.alive_player_list)
+		if(enemy_mob.stat == DEAD)
 			continue // Dead players cannot count as opponents
-		if(M.mind && (M.mind.assigned_role.title in enemy_roles))
+		if(enemy_mob.mind && (enemy_mob.mind.assigned_role.title in enemy_roles))
 			job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+			enemy_players += enemy_mob
 
 	if(job_check >= required_enemies)
-		return return_count ? job_check : TRUE
-	return return_count ? job_check : FALSE
+		return return_players ? enemy_players : TRUE
+	return return_players ? enemy_players : FALSE
 
 /datum/round_event_control/antagonist/New()
 	. = ..()
@@ -205,10 +208,22 @@
 	if(prompted_picking)
 		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
 
+	var/list/roundstart_candidate_mobs = list()
+	if(cast_control == SSgamemode.current_roundstart_event && length(SSgamemode.roundstart_antag_minds))
+		for(var/datum/mind/antag_mind in SSgamemode.roundstart_antag_minds)
+			if(!antag_mind.current)
+				continue
+			roundstart_candidate_mobs += antag_mind.current
+
 	for(var/i in 1 to antag_count)
-		if(!length(candidates))
+		var/mob/candidate
+		if(length(roundstart_candidate_mobs))
+			candidate = pick_n_take(roundstart_candidate_mobs)
+		else if(!length(candidates))
 			break
-		var/mob/candidate = pick_n_take(candidates)
+		else
+			candidate = pick_n_take(candidates)
+
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
