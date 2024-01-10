@@ -2,6 +2,7 @@
 	category = PREFERENCE_CATEGORY_MANUALLY_RENDERED
 	savefile_key = "smoker"
 	savefile_identifier = PREFERENCE_CHARACTER
+	should_generate_icons = TRUE
 
 /datum/preference/choiced/smoker/init_possible_values()
 	return list("Random") + GLOB.favorite_brand

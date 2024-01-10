@@ -116,11 +116,43 @@
 	associated_typepath = /datum/quirk/item_quirk/junkie/smoker
 	customization_options = list(/datum/preference/choiced/smoker)
 
-/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
+/datum/quirk/item_quirk/junkie/smoker/add_unique(client/client_source)
 	drug_container_type = GLOB.favorite_brand[client_source?.prefs?.read_preference(/datum/preference/choiced/smoker)]
 	if(isnull(drug_container_type))
 		drug_container_type = GLOB.favorite_brand[pick(GLOB.favorite_brand)]
-	give_junkie_item()
+
+	var/mob/living/carbon/human/human_holder = quirk_holder
+
+	reagent_instance = new reagent_type()
+
+	for(var/addiction in reagent_instance.addiction_types)
+		human_holder.last_mind?.add_addiction_points(addiction, 1000)
+
+	var/current_turf = get_turf(quirk_holder)
+	var/obj/item/drug_instance = new drug_container_type(current_turf)
+
+	give_item_to_holder(
+		drug_instance,
+		list(
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_HANDS = ITEM_SLOT_HANDS,
+		),
+		flavour_text = drug_flavour_text,
+	)
+
+	if(accessory_type)
+		give_item_to_holder(
+		accessory_type,
+		list(
+			LOCATION_LPOCKET = ITEM_SLOT_LPOCKET,
+			LOCATION_RPOCKET = ITEM_SLOT_RPOCKET,
+			LOCATION_BACKPACK = ITEM_SLOT_BACKPACK,
+			LOCATION_HANDS = ITEM_SLOT_HANDS,
+		)
+	)
+
 
 /datum/quirk/item_quirk/junkie/smoker/post_add(client/client_source)
 	quirk_holder.add_mob_memory(/datum/memory/key/quirk_smoker, protagonist = quirk_holder, preferred_brand = initial(drug_container_type.name))
