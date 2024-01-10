@@ -4,7 +4,7 @@ import { useAtom } from 'jotai';
 import { useBackend } from '../../backend';
 import { Button, Section, Stack } from '../../components';
 import { REVERSE_OPTIONS } from './constants';
-import { tabAtom } from './hooks';
+import { tabAtom } from './store';
 import { PodLauncherData } from './types';
 
 export function ReverseMenu(props) {

@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 
 import { useBackend } from '../../backend';
 import { Box, Button } from '../../components';
-import { compactAtom } from './hooks';
+import { compactAtom } from './store';
 import { PodLauncherData } from './types';
 
 export function PodLaunch(props) {

@@ -3,7 +3,7 @@ import { useAtom } from 'jotai';
 import { useBackend } from '../../backend';
 import { Button, ByondUi, Section, Stack } from '../../components';
 import { POD_GREY, TABPAGES } from './constants';
-import { tabAtom } from './hooks';
+import { tabAtom } from './store';
 import { PodLauncherData } from './types';
 
 export function ViewTabHolder(props) {

@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 import { useBackend } from '../../backend';
 import { Box, Button, Section, Stack } from '../../components';
 import { EFFECTS_ALL, POD_GREY } from './constants';
-import { compactAtom } from './hooks';
+import { compactAtom } from './store';
 import { PodEffect, PodLauncherData } from './types';
 
 export function PodStatusPage(props) {
