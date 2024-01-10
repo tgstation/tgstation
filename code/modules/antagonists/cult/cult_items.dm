@@ -936,7 +936,7 @@ Striking a noncultist, however, will tear their flesh."}
 					if(isshade(target) || isconstruct(target))
 						var/mob/living/basic/construct/healed_guy = target
 						if(healed_guy.health + 15 < healed_guy.maxHealth)
-							healed_guy.adjust_health(-adjust_health)
+							healed_guy.adjust_health(-15)
 						else
 							healed_guy.health = healed_guy.maxHealth
 				else
