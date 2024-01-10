@@ -245,7 +245,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	if(client && !HAS_TRAIT(src, TRAIT_SIGN_LANG))
 		var/ending = copytext_char(message, -1)
 		var/sound/speak_sound
-		if(ending == "?")
+		if(HAS_TRAIT(src, TRAIT_HELIUM))
+			speak_sound = sound('monkestation/sound/effects/helium_squeak.ogg')
+		else if(ending == "?")
 			speak_sound = voice_type2sound[voice_type]["?"]
 		else if(ending == "!")
 			speak_sound = voice_type2sound[voice_type]["!"]
