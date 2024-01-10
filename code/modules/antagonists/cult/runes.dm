@@ -526,19 +526,19 @@ structure_check() searches for nearby cultist structures required for the invoca
 	visible_message(span_warning("There is a sharp crack of inrushing air, and everything above the rune disappears!"), null, span_italic("You hear a sharp crack."))
 	to_chat(user, span_cult("You[move_user_success ? "r vision blurs, and you suddenly appear somewhere else":" send everything above the rune away"]."))
 	if(is_mining_level(z) && !is_mining_level(target.z)) //No effect if you stay on lavaland
-		actual_selected_rune.handle_portal(TELEPORTATION_LAVA)
+		actual_selected_rune.handle_portal(TELEPORTATION_LAVA, our_turf)
 	else if(isspacearea(get_area(our_turf)))
-		actual_selected_rune.handle_portal(TELEPORTATION_SPACE)
+		actual_selected_rune.handle_portal(TELEPORTATION_SPACE, our_turf)
 	return ..()
 
-/obj/effect/rune/teleport/proc/handle_portal(portal_type)
+/obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	close_portal() // To avoid stacking descriptions/animations
 	playsound(loc, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(loc)
 	switch(portal_type)
 		if(TELEPORTATION_SPACE)
 			set_light_color(color)
-			desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space.<br><u>The void feels like it's trying to pull you to the [dir2text(get_dir(T, origin))]!</u></b>"
+			desc += "<br><b>A tear in reality reveals a black void interspersed with dots of light... something recently teleported here from space.<br><u>The void feels like it's trying to pull you to the [dir2text(get_dir(loc, origin))]!</u></b>"
 		if(TELEPORTATION_LAVA)
 			inner_portal.icon_state = "lava"
 			set_light_color(LIGHT_COLOR_FIRE)
