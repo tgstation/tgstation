@@ -125,3 +125,10 @@
   - rscdel: Removed Detroit
   - bugfix: the fucking disposal system for Tram should now work.
   - bugfix: various bars for Tram since they were missing some functionality.
+2024-01-10:
+  Absolucy:
+  - bugfix: Fixed the Codex Cicatrix always requiring a dead body, despite the description
+      saying leather or a hide would work too.
+  DexeeXI:
+  - bugfix: Shakeium's recipe now properly require 3u of Pwr Game with the other ingredients
+      to make 5u of Shakeium.
