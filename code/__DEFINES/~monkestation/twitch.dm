@@ -11,6 +11,7 @@
 #define T_EVENT_CHUCKLENUTS_OOK "chucklenuts-ook"
 #define T_EVENT_CHUCKLENUTS_RANDOM "chucklenuts-random"
 #define T_EVENT_OOK_DIE_FATE "ook-die-fate"
+#define T_EVENT_OOK_DIE_FATE_FORCED "ook-die-fate-forced"
 #define T_EVENT_EVERYONE_DIE_FATE "everyone-die-fate"
 #define T_EVENT_GIVE_OOK_ITEM "give-ook-item"
 #define T_EVENT_GIVE_EVERYONE_ITEM "give-everyone-item"
