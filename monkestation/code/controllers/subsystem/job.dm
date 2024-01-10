@@ -1,5 +1,5 @@
 /datum/controller/subsystem/job
-	/// Assoc list of new players keyed to the type of what job they will currently get
+	/// Assoc list of new players keyed to the type of job they will currently get
 	var/list/assigned_players_by_job = list()
 	/// Nested assoc list of job types with values of lists of players who are viable for that job, keyed to what priority level that player has the job set to in their prefs
 	var/list/assignable_by_job = list()
@@ -29,7 +29,6 @@
 	while(!handle_roundstart_antags() && !sanity >= max_sane_loops)
 		sanity++
 		pick_desired_roundstart()
-		message_admins("H_R_A LOOP")
 		CHECK_TICK
 
 	if(sanity >= max_sane_loops)
@@ -49,6 +48,7 @@
 
 	assigned_players_by_job = list()
 	assignable_by_job = list()
+	JobDebug("h_f_s pass")
 
 /datum/controller/subsystem/job/proc/handle_roundstart_antags()
 	if(!SSgamemode.current_roundstart_event)
@@ -181,4 +181,3 @@
 
 	SSgamemode.current_roundstart_event = pick(valid_rolesets)
 	JobDebug("p_d_r pass, Selected Roleset: [SSgamemode.current_roundstart_event]")
-	message_admins("EVENT [SSgamemode.current_roundstart_event]")

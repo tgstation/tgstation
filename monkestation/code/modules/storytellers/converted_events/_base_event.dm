@@ -214,6 +214,7 @@
 			if(!antag_mind.current)
 				continue
 			roundstart_candidate_mobs += antag_mind.current
+			SSgamemode.roundstart_antag_minds -= antag_mind
 
 	for(var/i in 1 to antag_count)
 		var/mob/candidate

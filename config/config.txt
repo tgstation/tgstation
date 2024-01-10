@@ -147,7 +147,7 @@ LOG_TRAITOR
 LOG_MANIFEST
 
 ## log job divide debugging information
-LOG_JOB_DEBUG
+#LOG_JOB_DEBUG
 
 ## log all world.Topic() calls
 LOG_WORLD_TOPIC
