@@ -324,7 +324,7 @@
 	if(module_active)
 		UnregisterSignal(module_active, COMSIG_QDELETING)
 	module_active = new_module
-	if(!QDELETING(module_active))
+	if(!QDELETED(module_active))
 		RegisterSignal(module_active, COMSIG_QDELETING, PROC_REF(module_active_deleted))
 
 /mob/living/silicon/robot/proc/module_active_deleted(datum/source)
