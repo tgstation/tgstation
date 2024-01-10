@@ -528,14 +528,13 @@ structure_check() searches for nearby cultist structures required for the invoca
 	if(is_mining_level(z) && !is_mining_level(target.z)) //No effect if you stay on lavaland
 		actual_selected_rune.handle_portal(TELEPORTATION_LAVA)
 	else if(isspacearea(get_area(our_turf)))
-		actual_selected_rune.handle_portal(TELEPORTATION_SPACE, our_turf)
+		actual_selected_rune.handle_portal(TELEPORTATION_SPACE)
 	return ..()
 
-/obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
-	var/turf/T = get_turf(src)
+/obj/effect/rune/teleport/proc/handle_portal(portal_type)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
-	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
+	playsound(loc, pick('sound/effects/sparks1.ogg', 'sound/effects/sparks2.ogg', 'sound/effects/sparks3.ogg', 'sound/effects/sparks4.ogg'), 100, TRUE, 14)
+	inner_portal = new /obj/effect/temp_visual/cult/portal(loc)
 	switch(portal_type)
 		if(TELEPORTATION_SPACE)
 			set_light_color(color)
@@ -544,10 +543,10 @@ structure_check() searches for nearby cultist structures required for the invoca
 			inner_portal.icon_state = "lava"
 			set_light_color(LIGHT_COLOR_FIRE)
 			desc += "<br><b>A tear in reality reveals a coursing river of lava... something recently teleported here from the Lavaland Mines!</b>"
-	outer_portal = new(T, 600, color)
+	outer_portal = new(loc, 600, color)
 	set_light_range(4)
 	update_light()
-	addtimer(CALLBACK(src, PROC_REF(close_portal)), 600, TIMER_UNIQUE)
+	addtimer(CALLBACK(src, PROC_REF(close_portal)), 1 MINUTES, TIMER_UNIQUE)
 
 /obj/effect/rune/teleport/proc/close_portal()
 	QDEL_NULL(inner_portal)
