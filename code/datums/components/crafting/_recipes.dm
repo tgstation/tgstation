@@ -41,8 +41,6 @@
 	var/result_amount
 	/// Whether we should delete the contents of the crafted storage item (Only works with storage items, used for ammo boxes, donut boxes, internals boxes, etc)
 	var/delete_contents = TRUE
-	/// Do we transfer reagent contents upon crafting? Used for recipies that we want to create new reagents upon completion.
-	var/unique_reagents = FALSE
 
 /datum/crafting_recipe/New()
 	if(!name && result)
