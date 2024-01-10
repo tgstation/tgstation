@@ -54,6 +54,10 @@
 	var/animate_start = 0
 	/// Our animation lifespan, how long this message will last
 	var/animate_lifespan = 0
+	/// Is our text currently being measured?
+	var/measuring = FALSE
+	/// Weakref to our owning client
+	var/datum/weakref/owner_ref
 
 /**
  * Constructs a chat message overlay
@@ -85,6 +89,7 @@
 			LAZYREMOVEASSOC(owned_by.seen_messages, message_loc, src)
 		owned_by.images.Remove(message)
 
+	owner_ref = WEAKREF(owned_by)
 	owned_by = null
 	message_loc = null
 	message = null
@@ -177,9 +182,10 @@
 	// Approximate text height
 	var/complete_text = "<span style='color: [tgt_color]'><span class='center [extra_classes.Join(" ")]'>[owner.say_emphasis(text)]</span></span>"
 
+	measuring = TRUE
 	var/mheight
 	WXH_TO_HEIGHT(owned_by.MeasureText(complete_text, null, CHAT_MESSAGE_WIDTH), mheight)
-
+	measuring = FALSE
 
 	if(!VERB_SHOULD_YIELD)
 		return finish_image_generation(mheight, target, owner, complete_text, lifespan)
