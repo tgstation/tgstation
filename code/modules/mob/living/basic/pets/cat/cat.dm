@@ -73,9 +73,12 @@
 /mob/living/basic/pet/cat/proc/pre_unarmed_attack(mob/living/hitter, atom/target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(istype(target, /obj/machinery/oven/range))
-		target.attack_hand(src)
-		return COMPONENT_CANCEL_ATTACK_CHAIN
+	if(!proximity || !can_unarmed_attack())
+		return NONE
+	if(!istype(target, /obj/machinery/oven/range))
+		return NONE
+	target.attack_hand(src)
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/basic/pet/cat/Exited(atom/movable/gone, direction)
 	. = ..()

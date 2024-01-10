@@ -203,12 +203,14 @@
 			return
 
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
-			icon_state = "vent_out-off"
+			icon_state = "vent_off"
+			flick("vent_out-shutdown", src)
 		else // pump_direction == SIPHONING
-			icon_state = "vent_in-off"
+			icon_state = "vent_off"
+			flick("vent_in-shutdown", src)
 		return
 
-	if(icon_state == ("vent_out-off" || "vent_in-off" || "vent_off"))
+	if(icon_state == "vent_off")
 		if(pump_direction & ATMOS_DIRECTION_RELEASING)
 			icon_state = "vent_out"
 			flick("vent_out-starting", src)

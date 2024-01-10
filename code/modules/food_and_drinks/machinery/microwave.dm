@@ -486,7 +486,7 @@
 
 /obj/machinery/microwave/CtrlClick(mob/user)
 	. = ..()
-	if(cell_powered && !isnull(cell) && anchored)
+	if(user.can_perform_action(src) && cell_powered && !isnull(cell) && anchored)
 		user.put_in_hands(cell)
 		balloon_alert(user, "removed cell")
 		cell = null
