@@ -94,7 +94,7 @@
 	create_news()
 
 /datum/stock_market_event/large_drop
-	name = "Large Boost!"
+	name = "Large Drop!"
 	trend_value = MARKET_TREND_DOWNWARD
 	trend_duration = 5
 	circumstance = list(
