@@ -1,9 +1,10 @@
 import { multiline } from 'common/string';
-import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import { useBackend } from '../../backend';
 import { Button, Section, Stack } from '../../components';
 import { REVERSE_OPTIONS } from './constants';
+import { tabAtom } from './hooks';
 import { PodLauncherData } from './types';
 
 export function ReverseMenu(props) {
@@ -15,7 +16,7 @@ export function ReverseMenu(props) {
     reverse_option_list,
   } = data;
 
-  const [tabPageIndex, setTabPageIndex] = useState(1);
+  const [tab, setTab] = useAtom(tabAtom);
 
   return (
     <Section
@@ -26,8 +27,8 @@ export function ReverseMenu(props) {
           icon={effectReverse ? 'toggle-on' : 'toggle-off'}
           onClick={() => {
             act('effectReverse');
-            if (tabPageIndex === 2) {
-              setTabPageIndex(1);
+            if (tab === 2) {
+              setTab(1);
               act('tabSwitch', { tabIndex: 1 });
             }
           }}
@@ -60,8 +61,8 @@ export function ReverseMenu(props) {
               inline
               onClick={() => {
                 act('clearDropoffTurf');
-                if (tabPageIndex === 2) {
-                  setTabPageIndex(1);
+                if (tab === 2) {
+                  setTab(1);
                   act('tabSwitch', { tabIndex: 1 });
                 }
               }}

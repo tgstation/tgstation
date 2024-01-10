@@ -1,13 +1,14 @@
+import { useAtom } from 'jotai';
 import { Fragment } from 'react';
 
 import { useBackend } from '../../backend';
 import { Box, Button, Section, Stack } from '../../components';
 import { EFFECTS_ALL, POD_GREY } from './constants';
-import { useCompact } from './hooks';
+import { compactAtom } from './hooks';
 import { PodEffect, PodLauncherData } from './types';
 
 export function PodStatusPage(props) {
-  const { compact } = useCompact();
+  const [compact] = useAtom(compactAtom);
 
   return (
     <Section fill>
@@ -94,7 +95,7 @@ function EffectDisplay(props: EffectDisplayProps) {
 
 function Extras(props) {
   const { act } = useBackend();
-  const { compact, toggleCompact } = useCompact();
+  const [compact, setCompact] = useAtom(compactAtom);
 
   return (
     <Stack.Item>
@@ -127,7 +128,7 @@ function Extras(props) {
             inline
             m={0}
             onClick={() => {
-              toggleCompact();
+              setCompact(!compact);
               act('refreshView');
             }}
             tooltip="Maximize"
@@ -139,7 +140,7 @@ function Extras(props) {
             icon="compress"
             inline
             m={0}
-            onClick={() => toggleCompact()}
+            onClick={() => setCompact(!compact)}
             tooltip="Compact mode"
             tooltipPosition="top-start"
           />

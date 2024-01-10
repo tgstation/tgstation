@@ -1,17 +1,18 @@
-import { useState } from 'react';
+import { useAtom } from 'jotai';
 
 import { useBackend } from '../../backend';
 import { Button, ByondUi, Section, Stack } from '../../components';
 import { POD_GREY, TABPAGES } from './constants';
+import { tabAtom } from './hooks';
 import { PodLauncherData } from './types';
 
 export function ViewTabHolder(props) {
   const { act, data } = useBackend<PodLauncherData>();
   const { mapRef, customDropoff, effectReverse, renderLighting } = data;
 
-  const [tabPageIndex, setTabPageIndex] = useState(1);
+  const [tab, setTab] = useAtom(tabAtom);
 
-  const TabPageComponent = TABPAGES[tabPageIndex].component;
+  const TabPageComponent = TABPAGES[tab].component;
 
   return (
     <Section
@@ -25,10 +26,10 @@ export function ViewTabHolder(props) {
               icon="arrow-circle-down"
               inline
               onClick={() => {
-                setTabPageIndex(2);
+                setTab(2);
                 act('tabSwitch', { tabIndex: 2 });
               }}
-              selected={tabPageIndex === 2}
+              selected={tab === 2}
               tooltip="View Dropoff Location"
             />
           )}
@@ -37,10 +38,10 @@ export function ViewTabHolder(props) {
             icon="rocket"
             inline
             onClick={() => {
-              setTabPageIndex(0);
+              setTab(0);
               act('tabSwitch', { tabIndex: 0 });
             }}
-            selected={tabPageIndex === 0}
+            selected={tab === 0}
             tooltip="View Pod"
           />
           <Button
@@ -48,10 +49,10 @@ export function ViewTabHolder(props) {
             icon="th"
             inline
             onClick={() => {
-              setTabPageIndex(1);
+              setTab(1);
               act('tabSwitch', { tabIndex: 1 });
             }}
-            selected={tabPageIndex === 1}
+            selected={tab === 1}
             tooltip="View Source Bay"
           />
           <span style={POD_GREY}>|</span>
@@ -73,7 +74,7 @@ export function ViewTabHolder(props) {
             icon="sync-alt"
             inline
             onClick={() => {
-              setTabPageIndex(tabPageIndex);
+              setTab(tab);
               act('refreshView');
             }}
             tooltip="Refresh view window in case it breaks"

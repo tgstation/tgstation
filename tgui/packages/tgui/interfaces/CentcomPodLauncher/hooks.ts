@@ -1,11 +1,5 @@
-import { useState } from 'react';
+import { atom } from 'jotai';
 
-export function useCompact() {
-  const [compact, setCompact] = useState(false);
+export const compactAtom = atom(false);
 
-  function toggleCompact() {
-    setCompact(!compact);
-  }
-
-  return { compact, toggleCompact };
-}
+export const tabAtom = atom(1);

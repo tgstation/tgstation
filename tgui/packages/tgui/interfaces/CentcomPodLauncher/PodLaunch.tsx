@@ -1,15 +1,16 @@
 import { multiline } from 'common/string';
+import { useAtom } from 'jotai';
 
 import { useBackend } from '../../backend';
 import { Box, Button } from '../../components';
-import { useCompact } from './hooks';
+import { compactAtom } from './hooks';
 import { PodLauncherData } from './types';
 
 export function PodLaunch(props) {
   const { act, data } = useBackend<PodLauncherData>();
   const { giveLauncher } = data;
 
-  const { compact } = useCompact();
+  const [compact] = useAtom(compactAtom);
 
   return (
     <Button
