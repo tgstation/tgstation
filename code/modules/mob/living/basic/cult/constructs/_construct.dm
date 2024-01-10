@@ -79,7 +79,7 @@
 			/datum/element/structure_repair,\
 			structure_types_typecache = structure_types,\
 			)
-	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK), INNATE_TRAIT)
+	add_traits(list(TRAIT_HEALS_FROM_CULT_PYLONS, TRAIT_SPACEWALK, TRAIT_CULTIST_ANIMAL), INNATE_TRAIT)
 	grant_actions_by_list(construct_spells)
 
 	var/spell_count = 1
