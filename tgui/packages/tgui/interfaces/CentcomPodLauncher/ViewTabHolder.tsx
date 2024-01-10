@@ -14,11 +14,9 @@ export function ViewTabHolder(props) {
 
   return (
     <Section
-      fill
-      title="View"
       buttons={
         <>
-          {!!customDropoff && effectReverse === 1 && (
+          {!!customDropoff && !!effectReverse && (
             <Button
               color="transparent"
               icon="arrow-circle-down"
@@ -79,6 +77,8 @@ export function ViewTabHolder(props) {
           />
         </>
       }
+      fill
+      title="View"
     >
       <Stack fill vertical>
         <Stack.Item>
@@ -88,9 +88,9 @@ export function ViewTabHolder(props) {
           <ByondUi
             height="100%"
             params={{
-              zoom: 0,
               id: mapRef,
               type: 'map',
+              zoom: 0,
             }}
           />
         </Stack.Item>

@@ -19,8 +19,6 @@ export function ReverseMenu(props) {
 
   return (
     <Section
-      fill
-      title="Reverse"
       buttons={
         <Button
           icon={effectReverse ? 'toggle-on' : 'toggle-off'}
@@ -39,6 +37,8 @@ export function ReverseMenu(props) {
             if none specified).`}
         />
       }
+      fill
+      title="Reverse"
     >
       {!!effectReverse && (
         <Stack fill vertical>

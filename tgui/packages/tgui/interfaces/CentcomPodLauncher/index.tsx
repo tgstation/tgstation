@@ -1,7 +1,7 @@
 import { Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { PodBays } from './Bays';
 import { useCompact } from './hooks';
+import { PodBays } from './PodBays';
 import { PodLaunch } from './PodLaunch';
 import { PodSounds } from './PodSounds';
 import { PodStatusPage } from './PodStatusPage';

@@ -69,10 +69,10 @@ function EffectDisplay(props: EffectDisplayProps) {
           : data[effect.selected as string] === effect.choiceNumber
       }
       style={{
-        verticalAlign: 'middle',
+        borderRadius: '5px',
         marginLeft: index !== 0 ? '1px' : '0px',
         marginRight: hasMargin ? '1px' : '0px',
-        borderRadius: '5px',
+        verticalAlign: 'middle',
       }}
       tooltip={
         effect.details

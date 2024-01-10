@@ -13,14 +13,14 @@ export function PodSounds(props) {
     <Section
       buttons={
         <Button
-          icon="volume-up"
           color="transparent"
+          icon="volume-up"
+          onClick={() => act('soundVolume')}
           selected={soundVolume !== defaultSoundVolume}
           tooltip={
             multiline`
             Sound Volume:` + soundVolume
           }
-          onClick={() => act('soundVolume')}
         />
       }
       fill

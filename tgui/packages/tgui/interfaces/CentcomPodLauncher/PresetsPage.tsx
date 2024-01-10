@@ -8,9 +8,9 @@ import { POD_GREY } from './constants';
 import { PodLauncherData } from './types';
 
 type Preset = {
+  hue: number;
   id: number;
   title: string;
-  hue: number;
 };
 
 async function saveDataToPreset(id: string, data: any) {

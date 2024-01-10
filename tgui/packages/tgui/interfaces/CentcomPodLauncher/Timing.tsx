@@ -12,8 +12,6 @@ export function Timing(props) {
 
   return (
     <Section
-      fill
-      title="Time"
       buttons={
         <>
           <Button
@@ -40,6 +38,8 @@ export function Timing(props) {
           />
         </>
       }
+      fill
+      title="Time"
     >
       <DelayHelper delay_list={DELAYS} />
       {!!custom_rev_delay && (

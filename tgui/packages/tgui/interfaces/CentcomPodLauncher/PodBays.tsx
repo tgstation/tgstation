@@ -11,13 +11,11 @@ export function PodBays(props) {
 
   return (
     <Section
-      fill
-      title="Bay"
       buttons={
         <>
           <Button
-            icon="trash"
             color="transparent"
+            icon="trash"
             onClick={() => act('clearBay')}
             tooltip={multiline`
               Clears everything
@@ -25,8 +23,8 @@ export function PodBays(props) {
             tooltipPosition="top-end"
           />
           <Button
-            icon="question"
             color="transparent"
+            icon="question"
             tooltip={multiline`
               Each option corresponds
               to an area on centcom.
@@ -39,6 +37,8 @@ export function PodBays(props) {
           />
         </>
       }
+      fill
+      title="Bay"
     >
       {BAYS.map((bay, i) => (
         <Button
