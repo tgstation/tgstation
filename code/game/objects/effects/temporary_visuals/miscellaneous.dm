@@ -10,7 +10,7 @@
 
 /obj/effect/temp_visual/dir_setting/bloodsplatter/Initialize(mapload, angle, blood_color)
 	if(!blood_color)
-		CRASH("Tried to create a blood splatter without a blood_color")
+		blood_color = COLOR_DARK_RED
 	var/x_component = sin(angle) * -15
 	var/y_component = cos(angle) * -15
 	if(!GLOB.blood_particles[blood_color])

@@ -307,7 +307,7 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_turf)
 			if(isalien(L))
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir, COLOR_DARK_PURPLE)
 			else
 				var/angle = !isnull(Angle) ? Angle : round(get_angle(starting, src), 1)
 				new /obj/effect/temp_visual/dir_setting/bloodsplatter(loc, angle, COLOR_DARK_RED)
