@@ -1,14 +1,13 @@
-import { useAtom } from 'jotai';
 import { Fragment } from 'react';
 
 import { useBackend } from '../../backend';
 import { Box, Button, Section, Stack } from '../../components';
 import { EFFECTS_ALL, POD_GREY } from './constants';
-import { compactAtom } from './store';
+import { useCompact } from './hooks';
 import { PodEffect, PodLauncherData } from './types';
 
 export function PodStatusPage(props) {
-  const [compact] = useAtom(compactAtom);
+  const [compact] = useCompact();
 
   return (
     <Section fill>
@@ -95,7 +94,7 @@ function EffectDisplay(props: EffectDisplayProps) {
 
 function Extras(props) {
   const { act } = useBackend();
-  const [compact, setCompact] = useAtom(compactAtom);
+  const [compact, setCompact] = useCompact();
 
   return (
     <Stack.Item>

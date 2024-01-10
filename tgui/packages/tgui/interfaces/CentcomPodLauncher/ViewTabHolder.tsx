@@ -1,16 +1,14 @@
-import { useAtom } from 'jotai';
-
 import { useBackend } from '../../backend';
 import { Button, ByondUi, Section, Stack } from '../../components';
 import { POD_GREY, TABPAGES } from './constants';
-import { tabAtom } from './store';
+import { useTab } from './hooks';
 import { PodLauncherData } from './types';
 
 export function ViewTabHolder(props) {
   const { act, data } = useBackend<PodLauncherData>();
   const { mapRef, customDropoff, effectReverse, renderLighting } = data;
 
-  const [tab, setTab] = useAtom(tabAtom);
+  const [tab, setTab] = useTab();
 
   const TabPageComponent = TABPAGES[tab].component;
 

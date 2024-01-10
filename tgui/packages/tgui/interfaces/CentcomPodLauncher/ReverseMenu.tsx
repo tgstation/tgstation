@@ -1,10 +1,9 @@
 import { multiline } from 'common/string';
-import { useAtom } from 'jotai';
 
 import { useBackend } from '../../backend';
 import { Button, Section, Stack } from '../../components';
 import { REVERSE_OPTIONS } from './constants';
-import { tabAtom } from './store';
+import { useTab } from './hooks';
 import { PodLauncherData } from './types';
 
 export function ReverseMenu(props) {
@@ -16,7 +15,7 @@ export function ReverseMenu(props) {
     reverse_option_list,
   } = data;
 
-  const [tab, setTab] = useAtom(tabAtom);
+  const [tab, setTab] = useTab();
 
   return (
     <Section

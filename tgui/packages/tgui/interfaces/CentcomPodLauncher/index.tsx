@@ -1,20 +1,18 @@
-import { useAtom } from 'jotai';
-
 import { Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { PodBays } from './Bays';
+import { useCompact } from './hooks';
 import { PodLaunch } from './PodLaunch';
 import { PodSounds } from './PodSounds';
 import { PodStatusPage } from './PodStatusPage';
 import { PresetsPage } from './PresetsPage';
 import { ReverseMenu } from './ReverseMenu';
-import { compactAtom } from './store';
 import { StylePage } from './StylePage';
 import { Timing } from './Timing';
 import { ViewTabHolder } from './ViewTabHolder';
 
 export function CentcomPodLauncher(props) {
-  const [compact] = useAtom(compactAtom);
+  const [compact] = useCompact();
 
   return (
     <Window
