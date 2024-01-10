@@ -28,7 +28,7 @@ type Props = {
   color: string;
   /** Disables the dropdown */
   disabled: boolean;
-  /**  Text to always display in place of the selected text */
+  /** Text to always display in place of the selected text */
   displayText: ReactNode;
   /** Icon to display in dropdown button */
   icon: string;
