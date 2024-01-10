@@ -45,7 +45,7 @@
 
 	victim.adjustOrganLoss(ORGAN_SLOT_BRAIN, 100 - victim_sanity, 160)
 	for(var/i in 1 to round((120 - victim_sanity) / 10))
-		victim.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body), "ringleaders rise")
+		victim.cause_hallucination(get_random_valid_hallucination_subtype(/datum/hallucination/body), name)
 	if(victim_sanity < 15)
 		victim.apply_status_effect(/datum/status_effect/moon_converted)
 		caster.log_message("made [victim] insane.", LOG_GAME)
