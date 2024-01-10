@@ -228,7 +228,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/convert/do_invoke_glow()
 	return
 
-/obj/effect/rune/convert/invoke(list/invokers)
+/obj/effect/rune/convert/invoke(list/invokers, datum/team/cult/cult_team)
 	if(rune_in_use)
 		return
 
@@ -243,32 +243,26 @@ structure_check() searches for nearby cultist structures required for the invoca
 
 	rune_in_use = TRUE
 	visible_message(span_warning("[src] pulses blood red!"))
-	var/oldcolor = color
 	color = RUNE_COLOR_DARKRED
 
 	if(length(myriad_targets))
 		var/mob/living/new_convertee = pick(myriad_targets)
-		var/mob/living/first_invoker = invokers[1]
-		var/datum/antagonist/cult/first_invoker_datum = first_invoker.mind.has_antag_datum(/datum/antagonist/cult)
-		var/datum/team/cult/cult_team = first_invoker_datum.get_team()
-
 		var/is_convertable = is_convertable_to_cult(new_convertee, cult_team)
 		if(new_convertee.stat != DEAD && is_convertable)
 			invocation = "Mah'weyh pleggh at e'ntrath!"
-			..()
 			do_convert(new_convertee, invokers, cult_team)
 
 		else
 			invocation = "Barhah hra zar'garis!"
-			..()
 			do_sacrifice(new_convertee, invokers, cult_team)
 
+		. = ..()
 		cult_team.check_size() // Triggers the eye glow or aura effects if the cult has grown large enough relative to the crew
 
 	else
 		do_invoke_glow()
 
-	animate(src, color = oldcolor, time = 0.5 SECONDS)
+	animate(src, color = initial(color), time = 0.5 SECONDS)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.5 SECONDS)
 	rune_in_use = FALSE
 
@@ -314,11 +308,11 @@ structure_check() searches for nearby cultist structures required for the invoca
 	convertee.mind.special_role = ROLE_CULTIST
 	convertee.mind.add_antag_datum(/datum/antagonist/cult, cult_team)
 
-	to_chat(convertee, span_cultitalic("<b>Your blood pulses. Your head throbs. The world goes red. \
+	to_chat(convertee, span_cultboldtalic("Your blood pulses. Your head throbs. The world goes red. \
 		All at once you are aware of a horrible, horrible, truth. The veil of reality has been ripped away \
-		and something evil takes root.</b>"))
-	to_chat(convertee, span_cultitalic("<b>Assist your new compatriots in their dark dealings. \
-		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back.</b>"))
+		and something evil takes root."))
+	to_chat(convertee, span_cultboldtalic("Assist your new compatriots in their dark dealings. \
+		Your goal is theirs, and theirs is yours. You serve the Geometer above all else. Bring it back."))
 
 	if(istype(human_convertee))
 		human_convertee.uncuff()
@@ -341,7 +335,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 
 	if(sacrificial.mind)
-		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
+		LAZYADD(cult_team.sacrificed, WEAKREF(sacrificial.mind))
 		for(var/datum/objective/sacrifice/sac_objective in cult_team.objectives)
 			if(sac_objective.target == sacrificial.mind)
 				sac_objective.sacced = TRUE
@@ -349,7 +343,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				sac_objective.update_explanation_text()
 				big_sac = TRUE
 	else
-		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
+		LAZYADD(cult_team.sacrificed, WEAKREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(loc)
 
