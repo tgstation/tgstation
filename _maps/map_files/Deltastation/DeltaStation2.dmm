@@ -6773,8 +6773,8 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/door/window/left/directional/west{
 	dir = 4;
-	name = "Mining Desk";
-	req_access = list("mining")
+	name = "Delivery Desk";
+	req_access = list("cargo")
 	},
 /obj/effect/turf_decal/delivery,
 /obj/item/paper_bin,
@@ -77596,7 +77596,8 @@
 	},
 /obj/machinery/door/window/left/directional/south{
 	dir = 1;
-	req_access = list("cargo")
+	req_access = list("cargo");
+	name = "Office Desk"
 	},
 /obj/effect/turf_decal/delivery,
 /obj/structure/desk_bell{

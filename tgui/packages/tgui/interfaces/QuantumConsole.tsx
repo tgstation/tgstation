@@ -103,7 +103,7 @@ const AccessView = (props) => {
   const { act, data } = useBackend<Data>();
 
   if (!isConnected(data)) {
-    return <NoticeBox error>No server connected!</NoticeBox>;
+    return <NoticeBox danger>No server connected!</NoticeBox>;
   }
 
   const {

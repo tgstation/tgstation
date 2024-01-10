@@ -6196,6 +6196,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/tools,
 /turf/open/floor/iron,
 /area/station/commons/storage/primary)
 "aWL" = (
@@ -18863,6 +18864,11 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/aisat_interior)
+"fFO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/landmark/navigate_destination/disposals,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/disposal)
 "fFR" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 10
@@ -20968,6 +20974,7 @@
 /obj/machinery/holopad,
 /obj/effect/turf_decal/bot,
 /obj/structure/cable,
+/obj/effect/landmark/navigate_destination/dorms,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
 "guL" = (
@@ -22269,6 +22276,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/effect/landmark/navigate_destination/janitor,
 /turf/open/floor/iron,
 /area/station/service/janitor)
 "gTu" = (
@@ -46382,6 +46390,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/landmark/navigate_destination/vault,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/command/nuke_storage)
 "pAC" = (
@@ -47023,6 +47032,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/navigate_destination/sec,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "pLs" = (
@@ -50991,6 +51001,7 @@
 	dir = 1
 	},
 /obj/effect/mapping_helpers/airlock/access/all/command/ai_upload,
+/obj/effect/landmark/navigate_destination/aiupload,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai_upload)
 "reU" = (
@@ -68457,7 +68468,7 @@
 /area/station/service/chapel/office)
 "xnH" = (
 /obj/effect/turf_decal/stripes/line,
-/obj/effect/landmark/navigate_destination/dockescpod,
+/obj/effect/landmark/navigate_destination/dockaux,
 /obj/machinery/light/directional/west,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
@@ -70397,6 +70408,7 @@
 	name = "MiniSat Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/any/command/minisat,
+/obj/effect/landmark/navigate_destination/minisat_access_ai,
 /turf/open/floor/iron/dark,
 /area/station/science/lower)
 "yar" = (
@@ -118745,7 +118757,7 @@ kDF
 vso
 nbo
 wqs
-kcB
+fFO
 lHU
 qGM
 emT

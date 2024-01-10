@@ -38,6 +38,7 @@
 #define MONKEYDAY "Monkey Day"
 #define PRIDE_WEEK "Pride Week"
 #define MOTH_WEEK "Moth Week"
+#define IAN_HOLIDAY "Ian's Birthday"
 /*
 
 Days of the week to make it easier to reference them.
