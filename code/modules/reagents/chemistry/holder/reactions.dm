@@ -65,7 +65,7 @@
 					if(reaction.required_container)
 						if(reaction.required_container_accepts_subtypes && !istype(cached_my_atom, reaction.required_container))
 							continue
-						else if(cached_my_atom.type != reaction.required_container)
+						else if((cached_my_atom.type != reaction.required_container) && !reaction.required_container_accepts_subtypes)
 							continue
 
 					if(isliving(cached_my_atom) && !reaction.mob_react) //Makes it so certain chemical reactions don't occur in mobs
