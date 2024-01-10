@@ -622,6 +622,8 @@
 /obj/effect/turf_decal/siding/dark_blue/end{
 	dir = 1
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/circuit,
 /area/station/service/theater)
 "EH" = (
@@ -1047,6 +1049,7 @@
 /obj/effect/turf_decal/siding/blue/end{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/mineral/fake_abductor,
 /area/station/service/theater)
 "VT" = (

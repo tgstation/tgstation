@@ -22,17 +22,17 @@
 	var/clockwork_desc = ""
 	///can this structure be rotated with a crowbar
 	var/can_rotate = TRUE
+	///if set, then the maximum amount of damage this structure can take from take_damage()
+	var/damage_cap
 
 /obj/structure/destructible/clockwork/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/clockwork_description, clockwork_desc)
 
-
 /obj/structure/destructible/clockwork/Destroy()
 	owner = null
 
 	return ..()
-
 
 /obj/structure/destructible/clockwork/attacked_by(obj/item/I, mob/living/user)
 	if(immune_to_servant_attacks && (IS_CLOCK(user)))
@@ -47,3 +47,8 @@
 		balloon_alert(user, "rotated [dir2text(dir)]")
 
 	return TRUE
+
+/obj/structure/destructible/clockwork/take_damage(damage_amount, damage_type, damage_flag, sound_effect, attack_dir, armour_penetration)
+	if(damage_cap)
+		damage_amount = min(damage_cap, damage_amount)
+	. = ..()

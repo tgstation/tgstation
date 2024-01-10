@@ -1,5 +1,5 @@
 /obj/structure/organ_creator
-	name = "all in one organic medial fabricator"
+	name = "all in one organic medical fabricator"
 	desc = "Capable of making all organs and bodyparts needed for practitioners to fix up bodies."
 
 

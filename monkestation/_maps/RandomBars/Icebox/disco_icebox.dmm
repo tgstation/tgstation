@@ -21,7 +21,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "cz" = (
 /obj/machinery/airalarm/directional/east,
 /turf/open/floor/eighties,
@@ -34,7 +34,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "de" = (
 /obj/structure/table/wood,
 /obj/effect/spawner/random/entertainment/dice,
@@ -62,7 +62,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "fW" = (
 /obj/structure/table/wood,
 /obj/item/food/pie/cream,
@@ -77,7 +77,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "gG" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/light/colour_cycle,
@@ -92,16 +92,13 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
-"hI" = (
-/turf/open/floor/wood,
-/area/station/commons/lounge)
 "jr" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
 	},
 /obj/machinery/camera/autoname/directional/east,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "jI" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/clothing/neck/tie/disco,
@@ -112,11 +109,11 @@
 "ke" = (
 /obj/effect/landmark/start/bartender,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "kO" = (
 /obj/machinery/firealarm/directional/south,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "ly" = (
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
@@ -127,6 +124,9 @@
 	},
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
+"mQ" = (
+/turf/open/floor/eighties/red,
+/area/station/service/bar)
 "nn" = (
 /obj/structure/table/wood,
 /obj/item/food/pie/cream,
@@ -158,13 +158,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "qx" = (
 /obj/structure/chair/sofa/corner/maroon{
 	dir = 4
 	},
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "qP" = (
 /obj/structure/chair/wood,
 /turf/open/floor/eighties,
@@ -172,25 +172,25 @@
 "si" = (
 /obj/machinery/smartfridge/food,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "sP" = (
 /obj/structure/sign/poster/official/get_your_legs,
 /turf/closed/wall,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "sQ" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "tJ" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 6
 	},
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "ut" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -214,7 +214,10 @@
 /obj/structure/cable,
 /obj/machinery/vending/boozeomat,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
+"zP" = (
+/turf/closed/wall,
+/area/station/service/bar)
 "zT" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/instrument/piano_synth,
@@ -237,7 +240,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Bb" = (
 /obj/structure/disposalpipe/segment{
 	dir = 9
@@ -261,11 +264,11 @@
 	dir = 4
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "BK" = (
 /obj/structure/chair/sofa/middle/maroon,
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "BL" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/structure/cable,
@@ -274,7 +277,7 @@
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "BO" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
@@ -284,6 +287,13 @@
 "BS" = (
 /obj/structure/cable,
 /turf/open/floor/wood,
+/area/station/service/bar/backroom)
+"Cf" = (
+/obj/structure/table/wood,
+/obj/item/food/pie/cream/nostun{
+	desc = thisone...looks...different....
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/commons/lounge)
 "Cj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -299,7 +309,7 @@
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "Ed" = (
 /obj/structure/cable,
 /turf/open/floor/eighties,
@@ -318,12 +328,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Fi" = (
 /obj/machinery/firealarm/directional/east,
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "Fn" = (
 /obj/machinery/camera/autoname/directional/west,
 /obj/structure/bookcase/random/adult,
@@ -341,7 +351,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Gq" = (
 /obj/structure/disposalpipe/segment,
 /obj/structure/table/wood/fancy/black,
@@ -353,7 +363,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Gv" = (
 /obj/structure/disposalpipe/trunk{
 	dir = 1
@@ -366,7 +376,7 @@
 	dir = 8
 	},
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "HV" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -375,18 +385,21 @@
 	dir = 4
 	},
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Ix" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/item/reagent_containers/cup/rag,
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Iy" = (
 /obj/effect/spawner/random/entertainment/arcade{
 	dir = 1
 	},
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
+"IQ" = (
+/turf/closed/wall,
+/area/station/service/bar/backroom)
 "JP" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -413,7 +426,7 @@
 	name = "HoochMaster Deluxe"
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "LA" = (
 /obj/machinery/jukebox/disco,
 /turf/open/floor/light/colour_cycle/dancefloor_b,
@@ -426,7 +439,7 @@
 /obj/structure/table/wood/fancy/blue,
 /obj/effect/spawner/random/entertainment/dice,
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "MS" = (
 /obj/machinery/firealarm/directional/south,
 /obj/structure/table/wood,
@@ -459,7 +472,7 @@
 	},
 /obj/machinery/disposal/bin,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Od" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -480,20 +493,20 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Pk" = (
 /obj/machinery/airalarm/directional/west,
 /obj/machinery/holopad,
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "Pv" = (
 /obj/structure/closet/secure_closet/bar,
 /obj/item/storage/photo_album/bar,
 /obj/item/ammo_casing/shotgun/stunslug,
 /obj/item/ammo_casing/shotgun/stunslug,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "PB" = (
 /obj/structure/table/wood/fancy/black,
 /obj/machinery/reagentgrinder{
@@ -502,12 +515,12 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "PH" = (
 /obj/structure/table/wood/fancy/blue,
 /obj/effect/spawner/random/entertainment/cigar,
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "PK" = (
 /obj/structure/sign/poster/random/directional/north,
 /obj/structure/cable,
@@ -518,7 +531,7 @@
 	dir = 4
 	},
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "PU" = (
 /obj/machinery/barsign/all_access/directional/north,
 /turf/open/floor/eighties,
@@ -526,14 +539,14 @@
 "QW" = (
 /obj/structure/chair/sofa/left/maroon,
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "RZ" = (
 /mob/living/basic/rabbit{
 	name = "Bun Bun";
 	desc = "Pun Puns bunny cousin?"
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "SC" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 4
@@ -557,7 +570,7 @@
 	},
 /obj/structure/table/wood/fancy,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "Th" = (
 /obj/structure/table/wood/fancy/black,
 /obj/item/clothing/neck/tie/disco,
@@ -568,9 +581,8 @@
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "Tp" = (
-/obj/machinery/airalarm/directional/east,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "TD" = (
 /obj/machinery/requests_console/directional/east{
 	department = "Bar";
@@ -578,7 +590,7 @@
 	supplies_requestable = 1
 	},
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Ux" = (
 /obj/structure/disposalpipe/segment,
 /turf/open/floor/eighties,
@@ -588,18 +600,12 @@
 /turf/open/floor/eighties,
 /area/station/commons/lounge)
 "Ve" = (
+/obj/machinery/airalarm/directional/south,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Vv" = (
 /obj/effect/spawner/xmastree,
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
-"WX" = (
-/obj/structure/table/wood,
-/obj/item/food/pie/cream/nostun{
-	desc = thisone...looks...different....
-	},
-/turf/open/floor/light/colour_cycle,
 /area/station/commons/lounge)
 "XA" = (
 /obj/structure/disposalpipe/segment{
@@ -607,7 +613,7 @@
 	},
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "XK" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/table/wood,
@@ -631,18 +637,18 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/wood,
-/area/station/commons/lounge)
+/area/station/service/bar/backroom)
 "Yh" = (
 /obj/effect/landmark/start/bartender,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Yo" = (
 /turf/open/floor/light/colour_cycle,
 /area/station/commons/lounge)
 "YX" = (
 /obj/structure/table/wood/fancy/blue,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "YZ" = (
 /obj/machinery/holopad,
 /turf/open/floor/light/colour_cycle/dancefloor_a,
@@ -659,7 +665,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/eighties/red,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Zu" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 4
@@ -669,7 +675,7 @@
 "ZK" = (
 /obj/structure/table/wood/fancy/blue,
 /turf/open/floor/eighties,
-/area/station/commons/lounge)
+/area/station/service/bar)
 
 (1,1,1) = {"
 EK
@@ -729,7 +735,7 @@ EK
 "}
 (5,1,1) = {"
 fW
-aG
+Cf
 Yo
 Zl
 aG
@@ -756,7 +762,7 @@ EK
 EK
 "}
 (7,1,1) = {"
-WX
+Yo
 Zl
 aG
 gG
@@ -822,7 +828,7 @@ HV
 PP
 PP
 bV
-EH
+zP
 EK
 "}
 (12,1,1) = {"
@@ -836,7 +842,7 @@ sQ
 PH
 Ix
 YX
-EH
+zP
 EK
 "}
 (13,1,1) = {"
@@ -850,7 +856,7 @@ fy
 RZ
 Yh
 Ve
-EH
+zP
 EK
 "}
 (14,1,1) = {"
@@ -863,22 +869,22 @@ tJ
 XA
 EM
 OG
-Ve
-EH
+mQ
+zP
 EK
 "}
 (15,1,1) = {"
-EH
-EH
-EH
+IQ
+IQ
+IQ
 gm
-EH
-EH
+IQ
+zP
 Br
 PB
 Zp
-Ve
-EH
+mQ
+zP
 EK
 "}
 (16,1,1) = {"
@@ -892,34 +898,34 @@ FM
 Gq
 NC
 kO
-EH
+zP
 EK
 "}
 (17,1,1) = {"
 si
-hI
+Tp
 ke
-hI
+Tp
 Hg
 xU
 cH
 jr
-Ve
+mQ
 TD
-EH
+zP
 EK
 "}
 (18,1,1) = {"
-EH
+IQ
 Pv
 Fi
 Td
 Tp
-EH
+zP
 Az
 sP
 Ld
-EH
-EH
+zP
+zP
 EK
 "}

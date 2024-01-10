@@ -5,5 +5,5 @@
 
 /datum/chemical_reaction/shakeium
 	results = list(/datum/reagent/shakeium = 5)
-	required_reagents = list(/datum/reagent/consumable/vanillashake = 1, /datum/reagent/consumable/corn_syrup = 1, /datum/reagent/consumable/pwr_game)
+	required_reagents = list(/datum/reagent/consumable/vanillashake = 1, /datum/reagent/consumable/corn_syrup = 1, /datum/reagent/consumable/pwr_game = 3)
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_DRINK

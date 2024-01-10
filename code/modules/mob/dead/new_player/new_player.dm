@@ -193,10 +193,10 @@
 		SSchallenges.apply_challenges(character.client)
 	for(var/processing_reward_bitflags in SSticker.bitflags_to_reward)//you really should use department bitflags if possible
 		if(character.mind.assigned_role.departments_bitflags & processing_reward_bitflags)
-			character.client.reward_this_person += 150
+			character.client.reward_this_person += 425
 	for(var/processing_reward_jobs in SSticker.jobs_to_reward)//just in case you really only want to reward a specific job
 		if(character.job == processing_reward_jobs)
-			character.client.reward_this_person += 150
+			character.client.reward_this_person += 425
 	#define IS_NOT_CAPTAIN 0
 	#define IS_ACTING_CAPTAIN 1
 	#define IS_FULL_CAPTAIN 2
@@ -262,8 +262,6 @@
 			if (item.restricted_roles && length(item.restricted_roles) && !(job.title in item.restricted_roles))
 				continue
 			item.post_equip_item(humanc.client?.prefs, humanc)
-
-	DiseaseCarrierCheck(humanc)
 
 /mob/dead/new_player/proc/AddEmploymentContract(mob/living/carbon/human/employee)
 	//TODO:  figure out a way to exclude wizards/nukeops/demons from this.

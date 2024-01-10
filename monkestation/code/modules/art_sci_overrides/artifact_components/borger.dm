@@ -8,6 +8,7 @@
 		/datum/artifact_activator/touch/carbon,
 		/datum/artifact_activator/touch/silicon
 	)
+	explict_examine = "Vaguely Foreboding"
 	///the time between each limb replacement
 	var/limb_replace_time = 1 SECONDS
 	COOLDOWN_DECLARE(borg_cooldown)

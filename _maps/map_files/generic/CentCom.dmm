@@ -531,6 +531,12 @@
 	dir = 4
 	},
 /area/centcom/syndicate_mothership/control)
+"bz" = (
+/obj/structure/railing/wood,
+/obj/effect/turf_decal/trimline/green/line,
+/obj/machinery/composters,
+/turf/open/floor/iron/dark,
+/area/centcom/central_command_areas/botany)
 "bA" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/medkit/regular{
@@ -2319,6 +2325,21 @@
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/hall)
 "gH" = (
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
+/obj/item/stack/cannonball,
 /obj/item/stack/cannonball,
 /turf/open/misc/grass,
 /area/centcom/central_command_areas/admin)
@@ -7227,6 +7248,18 @@
 	},
 /turf/open/floor/mineral/titanium/yellow,
 /area/centcom/syndicate_mothership/control)
+"vo" = (
+/obj/docking_port/stationary{
+	dir = 8;
+	dwidth = 8;
+	height = 7;
+	json_key = "cargo";
+	name = "CentCom";
+	shuttle_id = "cargo_away";
+	width = 20
+	},
+/turf/open/space/basic,
+/area/space)
 "vp" = (
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/wood/large,
@@ -8381,18 +8414,6 @@
 	},
 /turf/open/floor/wood/large,
 /area/centcom/central_command_areas/kitchen)
-"yV" = (
-/obj/docking_port/stationary{
-	dir = 8;
-	dwidth = 8;
-	height = 7;
-	json_key = "cargo";
-	name = "CentCom";
-	shuttle_id = "cargo_away";
-	width = 20
-	},
-/turf/open/space,
-/area/space)
 "yW" = (
 /obj/structure/cable,
 /turf/open/floor/catwalk_floor/iron,
@@ -9183,7 +9204,6 @@
 	layer = 4.1
 	},
 /obj/structure/railing{
-	dir = 6;
 	layer = 3.1
 	},
 /obj/effect/turf_decal/siding/dark{
@@ -10116,6 +10136,12 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/control)
+"DT" = (
+/obj/structure/fermenting_barrel/gunpowder,
+/obj/item/reagent_containers/cup/bucket/wooden,
+/obj/item/flashlight/flare/torch,
+/turf/open/misc/grass,
+/area/centcom/central_command_areas/admin)
 "DU" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
@@ -12532,7 +12558,6 @@
 /area/centcom/syndicate_mothership/control)
 "KX" = (
 /obj/structure/railing{
-	dir = 6;
 	layer = 3.1
 	},
 /obj/effect/turf_decal/siding/dark/corner{
@@ -12965,7 +12990,6 @@
 /area/centcom/central_command_areas/admin)
 "Md" = (
 /obj/structure/railing{
-	dir = 6;
 	layer = 3.1
 	},
 /obj/effect/turf_decal/siding/dark{
@@ -13305,10 +13329,6 @@
 /obj/machinery/light/floor/has_bulb,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
-"Na" = (
-/obj/effect/spawner/structure/window/reinforced,
-/turf/open/indestructible/event/plating,
-/area/centcom/central_command_areas/admin_hangout)
 "Nb" = (
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/medical)
@@ -45987,11 +46007,11 @@ aa
 aa
 aa
 aa
-yV
+ad
 aa
 aa
 aa
-aa
+vo
 aa
 aa
 aa
@@ -47048,7 +47068,7 @@ On
 hA
 gH
 nO
-uk
+DT
 hp
 On
 uo
@@ -56267,7 +56287,7 @@ dS
 dS
 rd
 LK
-RX
+bz
 WJ
 WC
 tv
@@ -59137,9 +59157,9 @@ aa
 aa
 iA
 iA
-Na
-Na
-Na
+Xw
+Xw
+Xw
 iA
 iA
 wc

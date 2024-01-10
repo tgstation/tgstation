@@ -53,15 +53,17 @@
 
 /datum/scripture/create_structure/anchoring_crystal/invoke()
 	if(time_until_invokable) //check again in case they try and make two at once
-		to_chat(invoker, span_warning("Another Anchoring Crystal has already been created!"))
-		return
-	var/datum/scripture/create_structure/anchoring_crystal/global_datum = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
-	START_PROCESSING(SSprocessing, global_datum)
+		var/datum/scripture/create_structure/anchoring_crystal/scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
+		START_PROCESSING(SSprocessing, scripture) //make sure we dont brick somehow
+		to_chat(invoker, span_warning("Another Anchoring Crystal is already charging!"))
+		return FALSE
 	. = ..()
 
 /datum/scripture/create_structure/anchoring_crystal/invoke_success()
 	. = ..()
 	time_until_invokable = TIME_BETWEEN_INVOKES
+	var/datum/scripture/create_structure/anchoring_crystal/scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
+	START_PROCESSING(SSprocessing, scripture)
 
 /datum/scripture/create_structure/anchoring_crystal/proc/update_info()
 	var/datum/objective/anchoring_crystals/crystals_objective = locate() in GLOB.main_clock_cult?.objectives

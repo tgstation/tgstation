@@ -9,6 +9,12 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		option.info = span_boldnotice(initial(guardian_path.creator_desc))
 		.[guardian_path] = option
 
+	//MONKESTATION EDIT START
+	// Hack to change Timestop Guardian's radial icon, since it's in a different DMI
+	var/datum/radial_menu_choice/timestop_opt = .[/mob/living/basic/guardian/standard/timestop]
+	timestop_opt.image = image(icon = 'monkestation/icons/bloodsuckers/timestop_guardian.dmi', icon_state = "timestop")
+	//MONKESTATION EDIT END
+
 /// An item which grants you your very own soul buddy
 /obj/item/guardian_creator
 	name = "enchanted deck of tarot cards"
@@ -51,6 +57,9 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/ranged,
 		/mob/living/basic/guardian/standard,
 		/mob/living/basic/guardian/support,
+		//MONKESTATION EDIT START
+		/mob/living/basic/guardian/standard/timestop,
+		//MONKESTATION EDIT END
 	)
 
 /obj/item/guardian_creator/Initialize(mapload)
@@ -142,6 +151,9 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/protector,
 		/mob/living/basic/guardian/ranged,
 		/mob/living/basic/guardian/standard,
+		//MONKESTATION EDIT START
+		/mob/living/basic/guardian/standard/timestop,
+		//MONKESTATION EDIT END
 	)
 
 /obj/item/guardian_creator/wizard/spawn_guardian(mob/living/user, mob/dead/candidate)
@@ -205,4 +217,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/ranged, // Shoots the bad guys
 		/mob/living/basic/guardian/standard, // Can mine walls
 		/mob/living/basic/guardian/support, // Heals and teleports you
+		//MONKESTATION EDIT START
+		/mob/living/basic/guardian/standard/timestop,
+		//MONKESTATION EDIT END
 	)

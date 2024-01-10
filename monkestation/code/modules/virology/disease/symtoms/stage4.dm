@@ -1,6 +1,6 @@
 /datum/symptom/spaceadapt
 	name = "Space Adaptation Effect"
-	desc = "Heals the infected from the effects of space exposure, should they remain in a vacuum."
+	desc = "Causes the infected to secrete a thin thermally insulating and spaceproof barrier from their skin."
 	stage = 4
 	max_count = 1
 	badness = EFFECT_DANGER_HELPFUL
@@ -73,7 +73,8 @@
 /datum/symptom/dna/activate(mob/living/carbon/mob)
 	mob.bodytemperature = max(mob.bodytemperature, 350)
 	scramble_dna(mob, TRUE, TRUE, TRUE, rand(15,45))
-	mob.adjustCloneLoss(10)
+	if(mob.cloneloss <= 50)
+		mob.adjustCloneLoss(10)
 
 
 /datum/symptom/immortal
@@ -116,15 +117,15 @@
 
 /datum/symptom/bones/activate(mob/living/carbon/mob)
 	if(istype(mob, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = mob
-		for (var/obj/item/bodypart/bp in H.bodyparts)
-			bp.wound_resistance -= 10
+		var/mob/living/carbon/human/victim = mob
+		for (var/obj/item/bodypart/part in victim.bodyparts)
+			part.wound_resistance -= 10
 
 /datum/symptom/bones/deactivate(mob/living/carbon/mob)
 	if(istype(mob, /mob/living/carbon/human))
-		var/mob/living/carbon/human/H = mob
-		for (var/obj/item/bodypart/bp in H.bodyparts)
-			bp.wound_resistance += 10
+		var/mob/living/carbon/human/victim = mob
+		for (var/obj/item/bodypart/part in victim.bodyparts)
+			part.wound_resistance += 10
 
 /datum/symptom/fizzle
 	name = "Fizzle Effect"
@@ -139,11 +140,11 @@
 	name = "Delightful Effect"
 	desc = "A more powerful version of Full Glass. Makes the infected feel delightful."
 	stage = 4
-	badness = EFFECT_DANGER_HELPFUL
+	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/delightful/activate(mob/living/carbon/mob)
 	to_chat(mob, "<span class = 'notice'>You feel delightful!</span>")
-	if (mob.reagents.get_reagent_amount(/datum/reagent/drug/happiness) < 10)
+	if (mob.reagents.get_reagent_amount(/datum/reagent/drug/happiness) < 5)
 		mob.reagents.add_reagent(/datum/reagent/drug/happiness, 10)
 
 /datum/symptom/spawn
@@ -206,7 +207,7 @@
 	name = "Magnitis"
 	desc = "This disease disrupts the magnetic field of the body, making it act as if a powerful magnet."
 	stage = 4
-	badness = EFFECT_DANGER_HARMFUL
+	badness = EFFECT_DANGER_DEADLY
 	chance = 5
 	max_chance = 20
 
@@ -229,7 +230,7 @@
 		for(var/i=0,i<iter,i++)
 			step_towards(S,mob)
 
-/datum/symptom/dnaspread
+/*/datum/symptom/dnaspread //commented out due to causing enough problems to turn random people into monkies apon curing.
 	name = "Retrotransposis"
 	desc = "This symptom transplants the genetic code of the intial vector into new hosts."
 	badness = EFFECT_DANGER_HARMFUL
@@ -273,33 +274,33 @@
 	max_chance = 24
 
 /datum/symptom/species/activate(mob/living/carbon/mob)
-	var/mob/living/carbon/human/H = mob
-	if(!ishuman(H))
+	var/mob/living/carbon/human/victim = mob
+	if(!ishuman(victim))
 		return
 	old_species = mob.dna.species
 	if(!old_species)
 		return
-	H.set_species(new_species)
+	victim.set_species(new_species)
 
 /datum/symptom/species/deactivate(mob/living/carbon/mob)
-	var/mob/living/carbon/human/H = mob
-	if(!ishuman(H))
+	var/mob/living/carbon/human/victim = mob
+	if(!ishuman(victim))
 		return
 	if(!old_species)
 		return
-	H.set_species(old_species)
+	victim.set_species(old_species)
 
 /datum/symptom/species/moth
 	name = "Mothification"
 	desc = "Turns you into a Moth."
 	new_species = /datum/species/moth
-
+*/
 /datum/symptom/retrovirus
 	name = "Retrovirus"
 	desc = "A DNA-altering retrovirus that scrambles the structural and unique enzymes of a host constantly."
 	max_multiplier = 4
 	stage = 4
-	badness = EFFECT_DANGER_ANNOYING
+	badness = EFFECT_DANGER_HARMFUL
 
 /datum/symptom/retrovirus/activate(mob/living/carbon/affected_mob)
 	if(!iscarbon(affected_mob))

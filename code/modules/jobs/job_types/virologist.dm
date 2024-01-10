@@ -4,8 +4,8 @@
 		vaccine for them. Engineer beneficial viruses."
 	department_head = list(JOB_CHIEF_MEDICAL_OFFICER)
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 2
+	spawn_positions = 2
 	supervisors = SUPERVISOR_CMO
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW

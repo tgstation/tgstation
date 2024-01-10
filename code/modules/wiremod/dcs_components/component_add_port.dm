@@ -12,6 +12,8 @@
 	var/port_type = PORT_TYPE_ANY
 	/// Whether we are adding output ports or not
 	var/is_output = FALSE
+	///are we singular
+	var/is_singular = FALSE
 	/// The prefix of the new ports
 	var/prefix = "Port"
 	/// The order of the new ports
@@ -21,7 +23,7 @@
 	/// The maximum amount of ports allowed
 	var/maximum_amount = 10
 
-/datum/component/circuit_component_add_port/Initialize(list/port_list, add_action, remove_action, port_type, is_output = FALSE, prefix = "Port", order = 1, minimum_amount = 1, maximum_amount = 10)
+/datum/component/circuit_component_add_port/Initialize(list/port_list, add_action, remove_action, port_type, is_output = FALSE, prefix = "Port", order = 1, minimum_amount = 1, maximum_amount = 10, is_singular = FALSE)
 	. = ..()
 	if(!istype(parent, /obj/item/circuit_component))
 		return COMPONENT_INCOMPATIBLE
@@ -30,6 +32,7 @@
 	src.remove_action = remove_action
 	src.port_type = port_type
 	src.is_output = is_output
+	src.is_singular = is_singular
 	src.prefix = prefix
 	src.order = order
 	src.minimum_amount = minimum_amount
@@ -73,6 +76,8 @@
 	var/obj/item/circuit_component/component = parent
 	var/list/arguments = list("[prefix] [length(port_list) + 1]", port_type, order = src.order + (length(port_list) + 1) * 0.001)
 	if(is_output)
+		if(is_singular)
+			arguments = list("[prefix] [length(port_list) + 1]", port_type, order = src.order + (length(port_list) + 1) * 0.001, port_type = /datum/port/output/singular)
 		return component.add_output_port(arglist(arguments))
 	else
 		return component.add_input_port(arglist(arguments))

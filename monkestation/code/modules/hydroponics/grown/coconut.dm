@@ -28,7 +28,6 @@
 
 	icon = 'monkestation/icons/obj/hydroponics/fruit.dmi'
 	icon_state = "coconut_gun"
-
 	can_charge = FALSE
 	automatic_charge_overlays = FALSE
 	single_shot_type_overlay = FALSE
@@ -39,6 +38,7 @@
 /obj/item/ammo_casing/energy/laser/coconut
 	projectile_type = /obj/projectile/beam/disabler/coconut
 	harmful = FALSE
+	fire_sound = 'monkestation/sound/effects/bonk.ogg'
 	e_cost = 120
 
 /obj/projectile/beam/disabler/coconut

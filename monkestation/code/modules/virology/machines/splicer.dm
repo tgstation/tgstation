@@ -139,12 +139,12 @@
 /obj/machinery/computer/diseasesplicer/update_overlays()
 	..()
 	if (dish)
-		var/mutable_appearance/dish_outline = mutable_appearance(icon,"smalldish2-outline")
+		var/mutable_appearance/dish_outline = mutable_appearance(icon,"smalldish2-outline", src)
 		dish_outline.alpha = 128
 		dish_outline.pixel_x = -1
 		dish_outline.pixel_y = -13
 		.+= dish_outline
-		var/mutable_appearance/dish_content = mutable_appearance(icon,"smalldish2-empty")
+		var/mutable_appearance/dish_content = mutable_appearance(icon,"smalldish2-empty", src)
 		dish_content.alpha = 128
 		dish_content.pixel_x = -1
 		dish_content.pixel_y = -13
@@ -158,7 +158,7 @@
 
 	if (dish && dish.contained_virus)
 		if (dish.analysed)
-			var/mutable_appearance/scan_pattern = mutable_appearance(icon,"pattern-[dish.contained_virus.pattern]b")
+			var/mutable_appearance/scan_pattern = mutable_appearance(icon,"pattern-[dish.contained_virus.pattern]b", src)
 			scan_pattern.color = "#00FF00"
 			scan_pattern.pixel_x = -2
 			scan_pattern.pixel_y = 4
@@ -167,12 +167,12 @@
 			.+= mutable_appearance(icon,"splicer_unknown")
 
 	if(scanning || splicing)
-		var/mutable_appearance/splicer_glass = emissive_appearance(icon,"splicer_glass")
+		var/mutable_appearance/splicer_glass = emissive_appearance(icon,"splicer_glass", src)
 		splicer_glass.blend_mode = BLEND_ADD
 		.+= splicer_glass
 
 	if (memorybank)
-		.+= emissive_appearance(icon,"splicer_buffer")
+		.+= emissive_appearance(icon,"splicer_buffer", src)
 
 /obj/machinery/computer/diseasesplicer/proc/buffer2dish()
 	if(!memorybank || !dish || !dish.contained_virus)
@@ -236,7 +236,7 @@
 	. = ..()
 	if(.)
 		return TRUE
-	
+
 	if(scanning || splicing || burning)
 		return FALSE
 

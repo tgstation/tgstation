@@ -236,6 +236,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
 	QDEL_LIST(always_visible_inventory)
 	mymob = null
+	hand_slots = null //Monkestation edit: Fixes a harddel
 
 	QDEL_NULL(screentip_text)
 
