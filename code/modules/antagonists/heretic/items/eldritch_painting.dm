@@ -52,8 +52,9 @@
 /obj/structure/sign/painting/eldritch/wirecutter_act(mob/living/user, obj/item/I)
 	if(!user.can_block_magic(MAGIC_RESISTANCE))
 		user.add_mood_event("ripped_eldritch_painting", /datum/mood_event/eldritch_painting)
-		to_chat(user, span_notice("Laughter echoes through your mind...."))
+		to_chat(user, span_hypnophrase("Laughter echoes through your mind...."))
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 // On examine eldritch paintings give a trait so their effects can not be spammed
 /obj/structure/sign/painting/eldritch/examine(mob/user)
