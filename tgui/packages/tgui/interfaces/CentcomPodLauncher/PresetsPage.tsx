@@ -3,7 +3,7 @@ import { createUuid } from 'common/uuid';
 import { useEffect, useState } from 'react';
 
 import { useBackend } from '../../backend';
-import { Button, Divider, Input, NumberInput, Section } from '../../components';
+import { Button, Input, NumberInput, Section, Stack } from '../../components';
 import { POD_GREY } from './constants';
 import { PodLauncherData } from './types';
 
@@ -20,7 +20,7 @@ async function saveDataToPreset(id: string, data: any) {
 export function PresetsPage(props) {
   const { act, data } = useBackend();
 
-  const [editingName, setEditingName] = useState(false);
+  const [editing, setEditing] = useState(false);
   const [hue, setHue] = useState(0);
   const [name, setName] = useState('');
   const [presetID, setPresetID] = useState(0);
@@ -74,57 +74,59 @@ export function PresetsPage(props) {
       buttons={
         <PresetButtons
           deletePreset={deletePreset}
+          editing={editing}
           loadPreset={loadPreset}
           presetIndex={presetID}
-          setEditingNameStatus={setEditingName}
-          settingName={editingName}
+          setEditing={setEditing}
         />
       }
       fill
       scrollable
       title="Presets"
     >
-      {editingName && (
-        <>
-          <Button
-            icon="check"
-            inline
-            onClick={() => {
-              newPreset(name, hue, data);
-              setEditingName(false);
-            }}
-            tooltip="Confirm"
-            tooltipPosition="right"
-          />
-          <Button
-            icon="window-close"
-            inline
-            onClick={() => {
-              setName('');
-              setEditingName(false);
-            }}
-            tooltip="Cancel"
-          />
-          <span color="label"> Hue: </span>
-          <NumberInput
-            animated
-            inline
-            maxValue={360}
-            minValue={0}
-            onChange={(e, value) => setHue(value)}
-            step={5}
-            stepPixelSize={5}
-            value={hue}
-            width="40px"
-          />
-          <Input
-            autoFocus
-            inline
-            onChange={(e, value) => setName(value)}
-            placeholder="Preset Name"
-          />
-          <Divider />
-        </>
+      {editing && (
+        <Stack vertical>
+          <Stack.Item>
+            <Input
+              autoFocus
+              onChange={(e, value) => setName(value)}
+              placeholder="Preset Name"
+            />
+            <Button
+              icon="check"
+              inline
+              onClick={() => {
+                newPreset(name, hue, data);
+                setEditing(false);
+              }}
+              tooltip="Confirm"
+              tooltipPosition="right"
+            />
+            <Button
+              icon="window-close"
+              inline
+              onClick={() => {
+                setName('');
+                setEditing(false);
+              }}
+              tooltip="Cancel"
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <span color="label"> Hue: </span>
+            <NumberInput
+              animated
+              inline
+              maxValue={360}
+              minValue={0}
+              onChange={(e, value) => setHue(value)}
+              step={5}
+              stepPixelSize={5}
+              value={hue}
+              width="40px"
+            />
+          </Stack.Item>
+        </Stack>
       )}
       {(!presets || presets.length === 0) && (
         <span style={POD_GREY}>
@@ -163,29 +165,23 @@ export function PresetsPage(props) {
 
 type PresetButtonsProps = {
   deletePreset: (id: number) => void;
+  editing: boolean;
   loadPreset: (id: number) => void;
   presetIndex: number;
-  setEditingNameStatus: (status: boolean) => void;
-  settingName: boolean;
+  setEditing: (status: boolean) => void;
 };
 
 function PresetButtons(props: PresetButtonsProps) {
   const { data } = useBackend<PodLauncherData>();
-  const {
-    deletePreset,
-    loadPreset,
-    presetIndex,
-    setEditingNameStatus,
-    settingName,
-  } = props;
+  const { editing, deletePreset, loadPreset, presetIndex, setEditing } = props;
 
   return (
     <>
-      {!settingName && (
+      {!editing && (
         <Button
           color="transparent"
           icon="plus"
-          onClick={() => setEditingNameStatus(false)}
+          onClick={() => setEditing(!editing)}
           tooltip="New Preset"
         />
       )}
