@@ -167,7 +167,7 @@
 	sound_vary = FALSE
 	no_source = TRUE
 	sound_type = list(
-		'sound/ambience/antag/bloodcult.ogg',
+		'sound/ambience/antag/bloodcult/bloodcult_gain.ogg',
 		'sound/ambience/antag/clockcultalr.ogg',
 		'sound/ambience/antag/ecult_op.ogg',
 		'sound/ambience/antag/ling_alert.ogg',

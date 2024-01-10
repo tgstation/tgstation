@@ -313,6 +313,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	embed.title = "Round End"
 	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
 	embed.author = "Round Controller"
+	embed.content = "<@&999008528595419278>"
 	if(GLOB.round_end_images.len)
 		embed.image = pick(GLOB.round_end_images)
 	var/round_state = "Round has ended"
@@ -366,6 +367,9 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 //Common part of the report
 /datum/controller/subsystem/ticker/proc/build_roundend_report()
 	var/list/parts = list()
+
+	//might want to make this a full section
+	parts += "<div class='panel stationborder'><span class='header'>[("Storyteller: [SSgamemode.storyteller ? SSgamemode.storyteller.name : "N/A"]")]</span></div>" //monkestation edit
 
 	//AI laws
 	parts += law_report()

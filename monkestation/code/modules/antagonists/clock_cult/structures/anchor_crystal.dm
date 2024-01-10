@@ -22,7 +22,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	can_rotate = FALSE
 	resistance_flags = FIRE_PROOF | ACID_PROOF | LAVA_PROOF
 	armor_type = /datum/armor/anchoring_crystal
-	max_integrity = 400 //pretty hard to break
+	max_integrity = 300 //pretty hard to break
 	///how many hits this can take before taking structure damage, not using the component as its only for items/mobs
 	var/shields = 3
 	///what charge state is this crystal
@@ -92,12 +92,12 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	for(var/mob/living/affected_mob in crystal_area)
 		if(IS_CLOCK(affected_mob))
 			affected_mob.adjustToxLoss(-2.5 * seconds_per_tick) //slightly better tox healing as well as better stam healing around it for servants
-			affected_mob.stamina.adjust(7.5 * seconds_per_tick)
+			affected_mob.stamina.adjust(7.5 * seconds_per_tick, TRUE)
 			continue
 		affected_mob.adjust_silence_up_to(5 SECONDS * seconds_per_tick, 2 MINUTES)
 
 	if(charge_state == FULLY_CHARGED) //if fully charged then add the power and return as we are done here
-		GLOB.clock_power = min(GLOB.clock_power + (3 * seconds_per_tick), GLOB.max_clock_power) //might need to be adjusted
+		GLOB.clock_power = min(GLOB.clock_power + (10 * seconds_per_tick), GLOB.max_clock_power)
 		return
 
 	charging_for = min(charging_for + seconds_per_tick, CRYSTAL_CHARGE_TIMER)
@@ -136,7 +136,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	for(var/turf/turf_to_transform in crystal_area)
 		if(istype(turf_to_transform, /turf/closed) && !(GLOB.anchoring_crystals.len >= 2)) //dont transform walls if its our first crystal, so we can hopefully maintain some stealth
 			continue
-		if (!clock_theme.can_convert(turf_to_transform))
+		if(!clock_theme.can_convert(turf_to_transform))
 			continue
 		addtimer(CALLBACK(src, PROC_REF(do_turf_conversion), turf_to_transform), 3 * timer_counter)
 		timer_counter++
@@ -172,7 +172,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	switch(get_charged_anchor_crystals())
 		if(1) //add 2 more max servants and increase replica fabricator build speed
 			GLOB.main_clock_cult.max_human_servants += SERVANT_CAPACITY_TO_GIVE
-		if(2) //create a steam helios on reebe
+		if(3) //create a steam helios on reebe
 			if(GLOB.abscond_markers.len)
 				var/turf/created_at = get_turf(pick(GLOB.abscond_markers))
 				new /obj/vehicle/sealed/mecha/steam_helios(created_at)
@@ -181,7 +181,7 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 				new /obj/vehicle/sealed/mecha/steam_helios(get_turf(GLOB.clock_ark))
 			else
 				message_admins("No valid location for Steam Helios creation.")
-		if(3) //lock the anchoring crystal scripture and unlock the golem scripture
+		if(4) //lock the anchoring crystal scripture and unlock the golem scripture
 			var/datum/scripture/create_structure/anchoring_crystal/crystal_scripture = GLOB.clock_scriptures_by_type[/datum/scripture/create_structure/anchoring_crystal]
 			crystal_scripture.unique_lock()
 
@@ -209,10 +209,12 @@ GLOBAL_LIST_EMPTY(anchoring_crystals) //list of all anchoring crystals
 	var/message = ""
 	switch(get_charged_anchor_crystals())
 		if(0)
-			message = "[completed ? "We can now" : "We will be able to"] support 2 more servants, gain faster buildspeed with replica fabricators on reebe, and the ark can be opened."
+			message = "[completed ? "We can now" : "We will be able to"] support 2 more servants and gain faster build speed with replica fabricators on reebe."
 		if(1)
-			message = "The Steam Helios, a strong 2 pilot mech, [completed ? "has been" : "will be"] summoned to reebe."
+			message = "[completed ? "We can now" : "We will be able to"] open the ark."
 		if(2)
+			message = "The Steam Helios, a strong 2 pilot mech, [completed ? "has been" : "will be"] summoned to reebe."
+		if(3)
 			message = "Humaniod servants [completed ? "may now" : "will be able to"] ascend their form to that of a clockwork golem, giving them innate armor, environmental immunity, \
 					   and faster invoking for most scriptures."
 	return message

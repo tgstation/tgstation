@@ -107,6 +107,8 @@
 "eZ" = (
 /obj/structure/table/bronze,
 /obj/item/gun/ballistic/revolver/russian,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "fc" = (
@@ -300,6 +302,15 @@
 	},
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
+"oS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
 "qk" = (
 /obj/machinery/newscaster/directional/north,
 /turf/open/floor/bronze,
@@ -364,6 +375,7 @@
 /area/station/service/bar)
 "tm" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "tF" = (
@@ -418,6 +430,7 @@
 	dir = 4
 	},
 /obj/effect/mapping_helpers/mail_sorting/service/bar,
+/obj/structure/cable,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "vh" = (
@@ -525,6 +538,7 @@
 "Bl" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "Cd" = (
@@ -633,6 +647,7 @@
 	},
 /obj/machinery/door/firedoor/border_only,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "HC" = (
@@ -730,6 +745,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "Pw" = (
@@ -811,6 +827,7 @@
 /area/station/service/theater)
 "Ti" = (
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/bronze,
 /area/station/commons/lounge)
 "Ts" = (
@@ -899,6 +916,7 @@
 /turf/open/floor/bronze/filled,
 /area/station/service/bar)
 "YM" = (
+/obj/structure/cable,
 /turf/open/floor/carpet/lone,
 /area/station/service/theater)
 "YU" = (
@@ -1000,7 +1018,7 @@ Pi
 Hj
 Ti
 Ti
-ux
+oS
 TP
 EK
 EK

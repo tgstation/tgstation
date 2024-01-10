@@ -8,3 +8,5 @@
 #define STARGAZER_TRAIT "stargazer"
 /// Prevents the invocation of clockwork scriptures
 #define TRAIT_NO_SLAB_INVOKE "no_slab_invoke"
+/// Indicates that they've inhaled helium.
+#define TRAIT_HELIUM "helium"

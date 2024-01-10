@@ -36,7 +36,7 @@
 	setup = TRUE //MONKESTATION ADDITION
 
 /datum/round_event/tram_malfunction/announce()
-	priority_announce("Our automated control system has lost contact with the tram's on board computer. Please take extra care while we diagnose and resolve the issue. Signals and emergency braking may not be available during this time.", "CentCom Engineering Division")
+	priority_announce("Our automated control system has lost contact with the tram's onboard computer. Please take extra care while engineers diagnose and resolve the issue.", "[command_name()] Engineering Division")
 
 /datum/round_event/tram_malfunction/start()
 	for(var/obj/machinery/crossing_signal/signal as anything in GLOB.tram_signals)
@@ -65,7 +65,7 @@
 	for(var/obj/structure/industrial_lift/tram as anything in GLOB.lifts)
 		tram.collision_lethality = original_lethality
 
-	priority_announce("We've successfully reset the software on the tram, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "CentCom Engineering Division")
+	priority_announce("The software on the tram has been reset, normal operations are now resuming. Sorry for any inconvienence this may have caused.", "[command_name()] Engineering Division")
 
 #undef TRAM_MALFUNCTION_TIME_UPPER
 #undef TRAM_MALFUNCTION_TIME_LOWER

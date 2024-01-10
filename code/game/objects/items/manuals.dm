@@ -279,12 +279,14 @@
 		book_data.set_content(wikiinfo, trusted = TRUE)
 */
 
+//MONKESTATION EDIT BEGIN - basically there isn't a single thing that's not touched below this line. Just going to make this abundantly obvious that we have a lot of changes, between names of some manuals being changed to reflect different jobs to all of the links to the wiki. There's basically zero excuse for me to not leave an edit comment on here.
+
 /obj/item/book/manual/wiki/chemistry
 	name = "Chemistry Textbook"
 	icon_state ="chemistrybook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemistry Textbook"
-	page_link = "Guide_to_chemistry"
+	page_link = "en/jobs/medical/guide-to-chemistry"
 
 /obj/item/book/manual/wiki/engineering_construction
 	name = "Station Repairs and Construction"
@@ -313,11 +315,11 @@
 	return OXYLOSS
 
 /obj/item/book/manual/wiki/infections
-	name = "Infections - Making your own pandemic!"
+	name = "Pathology 101 - Curing Problems"
 	icon_state = "bookInfections"
 	starting_author = "Infections Encyclopedia"
-	starting_title = "Infections - Making your own pandemic!"
-	page_link = "Infections"
+	starting_title = "Pathology 101 - Curing Problems"
+	page_link = "en/jobs/medical/guide-to-pathology"
 
 /obj/item/book/manual/wiki/telescience
 	name = "Teleportation Science - Bluespace for dummies!"
@@ -338,7 +340,7 @@
 	icon_state ="bookDetective"
 	starting_author = "Nanotrasen"
 	starting_title = "The Film Noir: Proper Procedures for Investigations"
-	page_link = "Detective"
+	page_link = "en/jobs/security/detective"
 
 /obj/item/book/manual/wiki/barman_recipes
 	name = "Barman Recipes: Mixing Drinks and Changing Lives"
@@ -352,14 +354,14 @@
 	icon_state = "borgbook"
 	starting_author = "XISC"
 	starting_title = "Robotics for Dummies"
-	page_link = "Guide_to_robotics"
+	page_link = "en/jobs/science/guide-to-robotics"
 
 /obj/item/book/manual/wiki/research_and_development
 	name = "Research and Development 101"
 	icon_state = "rdbook"
 	starting_author = "Dr. L. Ight"
 	starting_title = "Research and Development 101"
-	page_link = "Guide_to_Research_and_Development"
+	page_link = "en/jobs/science/guide-to-rnd"
 
 /obj/item/book/manual/wiki/cooking_to_serve_man
 	name = "To Serve Man"
@@ -374,42 +376,42 @@
 	icon_state = "book3"
 	starting_author = "Engineering Encyclopedia"
 	starting_title = "Subspace Telecommunications And You"
-	page_link = "Guide_to_Telecommunications"
+	page_link = "en/jobs/engineering/guide-to-telcom"
 
 /obj/item/book/manual/wiki/atmospherics
 	name = "Lexica Atmosia"
 	icon_state = "book5"
 	starting_author = "the City-state of Atmosia"
 	starting_title = "Lexica Atmosia"
-	page_link = "Guide_to_Atmospherics"
+	page_link = "en/jobs/engineering/guide-to-atmospherics"
 
 /obj/item/book/manual/wiki/medicine
 	name = "Medical Space Compendium, Volume 638"
 	icon_state = "book8"
 	starting_author = "Medical Journal"
 	starting_title = "Medical Space Compendium, Volume 638"
-	page_link = "Guide_to_medicine"
+	page_link = "en/jobs/medical/guide-to-medicine"
 
 /obj/item/book/manual/wiki/surgery
 	name = "Brain Surgery for Dummies"
 	icon_state = "book4"
 	starting_author = "Dr. F. Fran"
 	starting_title = "Brain Surgery for Dummies"
-	page_link = "Surgery"
+	page_link = "en/jobs/medical/guide-to-surgery"
 
 /obj/item/book/manual/wiki/grenades
 	name = "DIY Chemical Grenades"
 	icon_state = "book2"
 	starting_author = "W. Powell"
 	starting_title = "DIY Chemical Grenades"
-	page_link = "Grenade"
+	page_link = "en/jobs/medical/guide-to-grenades"
 
 /obj/item/book/manual/wiki/ordnance
 	name = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
 	icon_state = "book6"
 	starting_author = "Cuban Pete"
 	starting_title = "Ordnance for Dummies or: How I Learned to Stop Worrying and Love the Maxcap"
-	page_link = "Guide_to_toxins"
+	page_link = "en/jobs/science/guide-to-ordnance"
 
 /obj/item/book/manual/wiki/ordnance/suicide_act(mob/living/user)
 	var/mob/living/carbon/human/H = user
@@ -438,14 +440,14 @@
 	icon_state ="plumbingbook"
 	starting_author = "Nanotrasen"
 	starting_title = "Chemical Factories Without Narcotics"
-	page_link = "Guide_to_plumbing"
+	page_link = "en/jobs/medical/guide-to-plumbing"
 
 /obj/item/book/manual/wiki/cytology
 	name = "Unethically Grown Organics"
 	icon_state ="cytologybook"
 	starting_author = "Kryson"
 	starting_title = "Unethically Grown Organics"
-	page_link = "Guide_to_cytology"
+	page_link = "en/jobs/science/guide-to-cytology"
 
 /obj/item/book/manual/wiki/tgc
 	name = "Tactical Game Cards - Player's Handbook"
@@ -453,3 +455,19 @@
 	starting_author = "Nanotrasen Edu-tainment Division"
 	starting_title = "Tactical Game Cards - Player's Handbook"
 	page_link = "Tactical_Game_Cards"
+
+/obj/item/book/manual/wiki/artsci // manual specific for Artifact Science!
+	name = "Artifact Science!"
+	icon_state = "book6"
+	starting_author = "Dr. Mobius"
+	starting_title = "Artifact Science!"
+	page_link = "en/jobs/science/guide-to-artsci"
+
+/obj/item/book/manual/wiki/banned //manual specific for... well, handing a funny book to people that might be on the verge of breaking rules but we can have a funny way of handling those situations.
+	name = "How to Avoid Getting Banned"
+	icon_state = "bookSpaceLaw"
+	starting_author = "God"
+	starting_title = "How to Avoid Getting Banned"
+	page_link = "en/guides/how-to-avoid-getting-banned"
+
+//MONKESTATION EDIT END

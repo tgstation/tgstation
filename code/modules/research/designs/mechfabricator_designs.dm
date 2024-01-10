@@ -1482,11 +1482,13 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 	research_icon_state = "cosmohonk-plating"
 
+// MONKE START - changed/added lots of department_flags
+
 /datum/design/mod_paint_kit
 	name = "MOD Paint Kit"
 	desc = "A paint kit for Modular Suits."
 	id = "mod_paint_kit"
-	build_type = MECHFAB
+	build_type = PROTOLATHE | MECHFAB
 	materials = list(/datum/material/iron = 1000, /datum/material/plastic = 500)
 	construction_time = 5 SECONDS
 	build_path = /obj/item/mod/paint
@@ -1498,7 +1500,7 @@
 
 /datum/design/module
 	name = "MOD Module"
-	build_type = MECHFAB
+	build_type = PROTOLATHE | MECHFAB
 	construction_time = 1 SECONDS
 	materials = list(/datum/material/iron = 1000, /datum/material/glass = 1000)
 	build_path = /obj/item/mod/module
@@ -1531,6 +1533,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/mod_visor_diaghud
 	name = "Diagnostic Visor Module"
@@ -1540,6 +1543,8 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SCIENCE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/module/mod_visor_sechud
 	name = "Security Visor Module"
 	id = "mod_visor_sechud"
@@ -1548,6 +1553,8 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/module/mod_visor_meson
 	name = "Meson Visor Module"
 	id = "mod_visor_meson"
@@ -1556,6 +1563,8 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/module/mod_visor_welding
 	name = "Welding Protection Module"
 	id = "mod_welding"
@@ -1564,6 +1573,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+
 /datum/design/module/mod_t_ray
 	name = "T-Ray Scanner Module"
 	id = "mod_t_ray"
@@ -1572,6 +1582,8 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/module/mod_health_analyzer
 	name = "Health Analyzer Module"
 	id = "mod_health_analyzer"
@@ -1580,6 +1592,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/mod_stealth
 	name = "Cloak Module"
@@ -1589,6 +1602,8 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
+
 /datum/design/module/mod_jetpack
 	name = "Ion Jetpack Module"
 	id = "mod_jetpack"
@@ -1603,6 +1618,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/module/mod_mag_harness
 	name = "Magnetic Harness Module"
@@ -1612,6 +1628,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/module/mod_tether
 	name = "Emergency Tether Module"
@@ -1621,6 +1638,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/module/mod_mouthhole
 	name = "Eating Apparatus Module"
@@ -1636,6 +1654,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+
 /datum/design/module/mod_emp_shield
 	name = "EMP Shield Module"
 	id = "mod_emp_shield"
@@ -1656,6 +1675,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SCIENCE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/mod_gps
 	name = "Internal GPS Module"
@@ -1665,6 +1685,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/module/mod_constructor
 	name = "Constructor Module"
@@ -1674,6 +1695,8 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/module/mod_quick_carry
 	name = "Quick Carry Module"
 	id = "mod_quick_carry"
@@ -1682,6 +1705,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/mod_longfall
 	name = "Longfall Module"
@@ -1703,6 +1727,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/mod_bikehorn
 	name = "Bike Horn Module"
@@ -1712,6 +1737,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/module/mod_microwave_beam
 	name = "Microwave Beam Module"
@@ -1721,6 +1747,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/module/mod_waddle
 	name = "Waddle Module"
@@ -1730,6 +1757,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SERVICE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
 
 /datum/design/module/mod_clamp
 	name = "Crate Clamp Module"
@@ -1739,6 +1767,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/module/mod_drill
 	name = "Drill Module"
@@ -1748,6 +1777,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/module/mod_orebag
 	name = "Ore Bag Module"
@@ -1757,6 +1787,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/module/mod_organ_thrower
 	name = "Organ Thrower Module"
@@ -1766,6 +1797,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/mod_pathfinder
 	name = "Pathfinder Module"
@@ -1799,6 +1831,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/module/mod_holster
 	name = "Holster Module"
@@ -1808,6 +1841,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/module/mod_sonar
 	name = "Active Sonar Module"
@@ -1817,6 +1851,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/module/projectile_dampener
 	name = "Projectile Dampener Module"
@@ -1826,6 +1861,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 /datum/design/module/surgicalprocessor
 	name = "Surgical Processor Module"
@@ -1835,6 +1871,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/threadripper
 	name = "Thread Ripper Module"
@@ -1844,6 +1881,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/defibrillator
 	name = "Defibrillator Module"
@@ -1853,6 +1891,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/patienttransport
 	name = "Patient Transport Module"
@@ -1862,6 +1901,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_MEDICAL
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/module/criminalcapture
 	name = "Criminal Capture Module"
@@ -1871,6 +1911,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SECURITY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_SECURITY
 
 //MODsuit bepis modules
 /datum/design/module/disposal
@@ -1881,6 +1922,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_CARGO
 
 //MODsuit anomalock modules
 /datum/design/module/mod_antigrav
@@ -1891,6 +1933,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SCIENCE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/module/mod_teleporter
 	name = "Teleporter Module"
@@ -1900,6 +1943,7 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SCIENCE
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/module/mod_kinesis
 	name = "Kinesis Module"
@@ -1909,3 +1953,6 @@
 	category = list(
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_ENGINEERING
 	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
+// MONKE END - changed/added lots of department_flags

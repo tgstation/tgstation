@@ -55,6 +55,7 @@
 	message_mime = "mumbles silently!"
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
+/* monkestation edit start - relocating this to our own code @ <monkestation/code/modules/mob/living/emote.dm>
 /datum/emote/living/carbon/human/scream
 	key = "scream"
 	key_third_person = "screams"
@@ -87,6 +88,7 @@
 	if(ismonkey(user))
 		return TRUE
 	return ..()
+monkestation edit end */
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"

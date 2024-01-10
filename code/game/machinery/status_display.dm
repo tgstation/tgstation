@@ -10,7 +10,7 @@
 /obj/machinery/status_display
 	name = "status display"
 	desc = null
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	icon_state = "frame"
 	verb_say = "beeps"
 	verb_ask = "beeps"
@@ -236,7 +236,7 @@
  * Nice overlay to make text smoothly scroll with no client updates after setup.
  */
 /obj/effect/overlay/status_display_text
-	icon = 'icons/obj/status_display.dmi'
+	icon = 'icons/obj/machines/status_display.dmi'
 	vis_flags = VIS_INHERIT_LAYER | VIS_INHERIT_PLANE | VIS_INHERIT_ID
 
 	/// The message this overlay is displaying.
@@ -503,7 +503,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 	var/list/choices = list()
 	for(var/emotion_const in emotion_map)
 		var/icon_state = emotion_map[emotion_const]
-		choices[emotion_const] = image(icon = 'icons/obj/status_display.dmi', icon_state = icon_state)
+		choices[emotion_const] = image(icon = 'icons/obj/machines/status_display.dmi', icon_state = icon_state)
 
 	var/emotion_result = show_radial_menu(user, src, choices, tooltips = TRUE)
 	for(var/_emote in typesof(/datum/emote/ai/emotion_display))
@@ -549,9 +549,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/ai, 32)
 
 	var/static/list/picture_options = list(
 		"Default" = "default",
+		"Delta Alert" = "deltaalert",
 		"Red Alert" = "redalert",
+		"Blue Alert" = "bluealert",
+		"Green Alert" = "greenalert",
 		"Biohazard" = "biohazard",
 		"Lockdown" = "lockdown",
+		"Radiation" = "radiation",
 		"Happy" = "ai_happy",
 		"Neutral" = "ai_neutral",
 		"Very Happy" = "ai_veryhappy",

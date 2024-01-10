@@ -20,7 +20,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	badness = EFFECT_DANGER_HINDRANCE
 
 /datum/symptom/shakey/activate(mob/living/carbon/mob)
-	shake_camera(mob,5*multiplier)
+	shake_camera(mob, 5*multiplier)
 
 
 /datum/symptom/telepathic
@@ -28,7 +28,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	desc = "Repurposes a portion of the users brain, making them incapable of normal speech but allows you to talk into a hivemind."
 	stage = 3
 	max_count = 1
-	badness = EFFECT_DANGER_HELPFUL
+	badness = EFFECT_DANGER_FLAVOR
 
 /datum/symptom/telepathic/first_activate(mob/living/carbon/mob)
 	GLOB.disease_hivemind_users |= mob
@@ -133,8 +133,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		mob.emote("me",1,"is sweating profusely!")
 
 		if(istype(mob.loc,/turf/open))
-			var/turf/open/T = mob.loc
-			T.add_liquid_list(list(/datum/reagent/water = 20), TRUE)
+			var/turf/open/turf = mob.loc
+			turf.add_liquid_list(list(/datum/reagent/water = 20), TRUE)
 
 /datum/symptom/elvis
 	name = "Elvisism"
@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	if(!ishuman(mob))
 		return
 
-	var/mob/living/carbon/human/H = mob
+	var/mob/living/carbon/human/victim = mob
 
 	/*
 	var/obj/item/clothing/glasses/H_glasses = H.get_item_by_slot(slot_glasses)
@@ -173,19 +173,19 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	else
 		mob.emote("me",1,pick("curls his lip!", "gyrates his hips!", "thrusts his hips!"))
 
-	if(istype(H))
+	if(istype(victim))
 
-		if(!(H.hairstyle == "Pompadour (Big)"))
+		if(!(victim.hairstyle == "Pompadour (Big)"))
 			spawn(50)
-				H.hairstyle = "Pompadour (Big)"
-				H.hair_color = "#242424"
-				H.update_body()
+				victim.hairstyle = "Pompadour (Big)"
+				victim.hair_color = "#242424"
+				victim.update_body()
 
-		if(!(H.facial_hairstyle == "Sideburns (Elvis)"))
+		if(!(victim.facial_hairstyle == "Sideburns (Elvis)"))
 			spawn(50)
-				H.facial_hairstyle = "Sideburns (Elvis)"
-				H.facial_hair_color = "#242424"
-				H.update_body()
+				victim.facial_hairstyle = "Sideburns (Elvis)"
+				victim.facial_hair_color = "#242424"
+				victim.update_body()
 
 /datum/symptom/elvis/deactivate(mob/living/carbon/mob)
 	if(ismouse(mob))
@@ -207,7 +207,6 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	badness = EFFECT_DANGER_HINDRANCE
 
 /datum/symptom/pthroat/activate(mob/living/carbon/mob)
-	//
 	if(ismouse(mob))
 		var/mob/living/basic/mouse/mouse = mob
 		mouse.icon_state = "mouse_clown"
@@ -215,28 +214,24 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		mouse.icon_dead = "mouse_clown_dead"
 		mouse.held_state = "mouse_clown"
 
-	if(!ishuman(mob))
-		return
-
-	var/obj/item/clothing/mask/gas/clown_hat/virus/virusclown_hat = new /obj/item/clothing/mask/gas/clown_hat/virus
-	if(mob.wear_mask && !istype(mob.wear_mask, /obj/item/clothing/mask/gas/clown_hat/virus))
-		mob.dropItemToGround(mob.wear_mask, TRUE)
-		mob.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
-	if(!mob.wear_mask)
-		mob.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
-	mob.reagents.add_reagent(/datum/reagent/drug/mushroomhallucinogen, 20)
 	mob.say(pick("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk..."))
 	if(ishuman(mob))
 		var/mob/living/carbon/human/affected = mob
-		if(multiplier >=2) //clown shoes added
+		if(multiplier >=2) //clown mask added
+			var/obj/item/clothing/mask/gas/clown_hat/virus/virusclown_hat = new /obj/item/clothing/mask/gas/clown_hat/virus
+			if(affected.wear_mask && !istype(affected.wear_mask, /obj/item/clothing/mask/gas/clown_hat/virus))
+				affected.dropItemToGround(mob.wear_mask, TRUE)
+				affected.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
+			if(!affected.wear_mask)
+				affected.equip_to_slot(virusclown_hat, ITEM_SLOT_MASK)
+		if(multiplier >=3) //clown shoes added
+			var/obj/item/clothing/shoes/clown_shoes/virusshoes = new /obj/item/clothing/shoes/clown_shoes
 			if(affected.shoes && !istype(affected.shoes, /obj/item/clothing/shoes/clown_shoes))
-				var/obj/item/clothing/shoes/clown_shoes/virusshoes = new /obj/item/clothing/shoes/clown_shoes
 				affected.dropItemToGround(affected.shoes, TRUE)
 				affected.equip_to_slot(virusshoes, ITEM_SLOT_FEET)
 			if(!affected.shoes)
-				var/obj/item/clothing/shoes/clown_shoes/virusshoes = new /obj/item/clothing/shoes/clown_shoes
 				affected.equip_to_slot(virusshoes, ITEM_SLOT_FEET)
-		if(multiplier >=3) //clown suit added
+		if(multiplier >=4) //clown suit added
 			var/obj/item/clothing/under/rank/civilian/clown/virussuit = new /obj/item/clothing/under/rank/civilian/clown
 			if(affected.w_uniform && !istype(affected.w_uniform, /obj/item/clothing/under/rank/civilian/clown))
 				affected.dropItemToGround(affected.w_uniform, TRUE)
@@ -317,18 +312,19 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 
 		old_haircolor = affected.hair_color
 
-		switch(hair_color)
-			if("pink")
-				affected.hair_color = "#e983d8"
-			if("red")
-				affected.hair_color = "#E01631"
-			if("green")
-				affected.hair_color = "#008000"
-			if("blue")
-				affected.hair_color = "#0000FF"
-			if("purple")
-				affected.hair_color = "#800080"
-		affected.update_body()
+		if(!isethereal(affected)) //ethereals have weird custom hair color handling
+			switch(hair_color)
+				if("pink")
+					affected.hair_color = "#e983d8"
+				if("red")
+					affected.hair_color = "#E01631"
+				if("green")
+					affected.hair_color = "#008000"
+				if("blue")
+					affected.hair_color = "#0000FF"
+				if("purple")
+					affected.hair_color = "#800080"
+			affected.update_body()
 
 		if(multiplier)
 			if(multiplier >= 1.5)
@@ -418,8 +414,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	if(count && !skip)
 		var/obj/item/bodypart/part
 		if(ishuman(mob))
-			var/mob/living/carbon/human/H = mob
-			part = H.get_bodypart(H.get_random_valid_zone())
+			var/mob/living/carbon/human/victim = mob
+			part = victim.get_bodypart(victim.get_random_valid_zone())
 		if(toucher == mob)
 			if(part)
 				to_chat(mob, span_warning("As you bump into \the [touched], some of the skin on your [part] shears off!"))
@@ -444,17 +440,17 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	badness = EFFECT_DANGER_HELPFUL
 
 /datum/symptom/thick_blood/activate(mob/living/carbon/mob)
-	var/mob/living/carbon/human/H = mob
-	if (ishuman(H))
-		if(H.is_bleeding())
-			H.restore_blood()
-			to_chat(H, span_notice("You feel your blood regenerate, and your bleeding to stop!"))
+	var/mob/living/carbon/human/victim = mob
+	if (ishuman(victim))
+		if(victim.is_bleeding())
+			victim.restore_blood()
+			to_chat(victim, span_notice("You feel your blood regenerate, and your bleeding to stop!"))
 
 /datum/symptom/teratoma
 	name = "Teratoma Syndrome"
-	desc = "Causes the infected to oversynthesize stem cells engineered towards organ generation. Said generated organs are expelled from the body upon completion."
+	desc = "Causes the infected to oversynthesize stem cells engineered towards organ generation, causing damage to the host's organs in the process. Said generated organs are expelled from the body upon completion."
 	stage = 3
-	badness = EFFECT_DANGER_FLAVOR
+	badness = EFFECT_DANGER_HARMFUL
 
 /datum/symptom/teratoma/activate(mob/living/carbon/mob)
 	var/fail_counter = 0
@@ -470,6 +466,13 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		not_passed = FALSE
 
 	if(!not_passed)
+		if(ismouse(mob))
+			var/mob/living/basic/mouse/mouse = mob
+			mouse.splat() //tumors are bad for you, tumors equal to your body in size doubley so
+		if(ismonkey(mob)) //monkeys are smaller and thus have less space for human-organ sized tumors
+			mob.adjustBruteLoss(15)
+		if(mob.bruteloss <= 50)
+			mob.adjustBruteLoss(5)
 		mob.visible_message(span_warning("\A [spawned_organ.name] is extruded from \the [mob]'s body and falls to the ground!"),span_warning("\A [spawned_organ.name] is extruded from your body and falls to the ground!"))
 
 /datum/symptom/damage_converter
@@ -510,37 +513,37 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 		crab.loc = M
 		crab.override = 1
 
-		var/client/C = mob.client
-		if(C)
-			C.images += crab
+		var/client/client = mob.client
+		if(client)
+			client.images += crab
 		var/duration = rand(60 SECONDS, 120 SECONDS)
 
 		spawn(duration)
-			if(C)
-				C.images.Remove(crab)
+			if(client)
+				client.images.Remove(crab)
 
 	var/list/turf_list = list()
-	for(var/turf/T in spiral_block(get_turf(mob), 40))
+	for(var/turf/turf in spiral_block(get_turf(mob), 40))
 		if(prob(4))
-			turf_list += T
+			turf_list += turf
 	if(turf_list.len)
-		for(var/turf/open/floor/T in turf_list)
-			var/image/supermatter = image('icons/obj/engine/supermatter.dmi', T ,"sm", ABOVE_MOB_LAYER)
+		for(var/turf/open/floor/turf in turf_list)
+			var/image/supermatter = image('icons/obj/engine/supermatter.dmi', turf ,"sm", ABOVE_MOB_LAYER)
 
-			var/client/C = mob.client
-			if(C)
-				C.images += supermatter
+			var/client/client = mob.client
+			if(client)
+				client.images += supermatter
 			var/duration = rand(60 SECONDS, 120 SECONDS)
 
 			spawn(duration)
-				if(C)
-					C.images.Remove(supermatter)
+				if(client)
+					client.images.Remove(supermatter)
 
 
 /datum/symptom/wendigo_hallucination
 	name = "Eldritch Mind Syndrome"
 	desc = "UNKNOWN"
-	badness = EFFECT_DANGER_HARMFUL
+	badness = EFFECT_DANGER_ANNOYING
 	stage = 3
 
 
@@ -580,8 +583,8 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 	name = "Acute respiratory distress syndrome"
 	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to brain damage in critical patients."
 	badness = EFFECT_DANGER_DEADLY
-	max_chance = 10
-	multiplier = 5
+	max_chance = 5
+	max_multiplier = 5
 	stage = 3
 
 /datum/symptom/asphyxiation/activate(mob/living/carbon/mob)
@@ -625,37 +628,37 @@ GLOBAL_LIST_INIT(disease_hivemind_users, list())
 
 /datum/symptom/wizarditis/proc/spawn_wizard_clothes(chance = 0, mob/living/carbon/affected_mob)
 	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/H = affected_mob
+		var/mob/living/carbon/human/wizard = affected_mob
 		if(prob(chance))
-			if(!istype(H.head, /obj/item/clothing/head/wizard))
-				if(!H.dropItemToGround(H.head))
-					qdel(H.head)
-				H.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(H), ITEM_SLOT_HEAD)
+			if(!istype(wizard.head, /obj/item/clothing/head/wizard))
+				if(!wizard.dropItemToGround(wizard.head))
+					qdel(wizard.head)
+				wizard.equip_to_slot_or_del(new /obj/item/clothing/head/wizard(wizard), ITEM_SLOT_HEAD)
 			return
 		if(prob(chance))
-			if(!istype(H.wear_suit, /obj/item/clothing/suit/wizrobe))
-				if(!H.dropItemToGround(H.wear_suit))
-					qdel(H.wear_suit)
-				H.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(H), ITEM_SLOT_OCLOTHING)
+			if(!istype(wizard.wear_suit, /obj/item/clothing/suit/wizrobe))
+				if(!wizard.dropItemToGround(wizard.wear_suit))
+					qdel(wizard.wear_suit)
+				wizard.equip_to_slot_or_del(new /obj/item/clothing/suit/wizrobe(wizard), ITEM_SLOT_OCLOTHING)
 			return
 		if(prob(chance))
-			if(!istype(H.shoes, /obj/item/clothing/shoes/sandal/magic))
-				if(!H.dropItemToGround(H.shoes))
-					qdel(H.shoes)
-			H.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(H), ITEM_SLOT_FEET)
+			if(!istype(wizard.shoes, /obj/item/clothing/shoes/sandal/magic))
+				if(!wizard.dropItemToGround(wizard.shoes))
+					qdel(wizard.shoes)
+			wizard.equip_to_slot_or_del(new /obj/item/clothing/shoes/sandal/magic(wizard), ITEM_SLOT_FEET)
 			return
 	else
-		var/mob/living/carbon/H = affected_mob
+		var/mob/living/carbon/wizard = affected_mob
 		if(prob(chance))
-			var/obj/item/staff/S = new(H)
-			if(!H.put_in_hands(S))
-				qdel(S)
+			var/obj/item/staff/staff = new(wizard)
+			if(!wizard.put_in_hands(staff))
+				qdel(staff)
 
 
 /datum/symptom/wizarditis/proc/teleport(mob/living/carbon/affected_mob)
 	var/list/theareas = get_areas_in_range(80, affected_mob)
-	for(var/area/space/S in theareas)
-		theareas -= S
+	for(var/area/space/unsafe in theareas)
+		theareas -= unsafe
 
 	if(!theareas || !theareas.len)
 		return

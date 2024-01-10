@@ -133,3 +133,146 @@
   DexeeXI:
   - admin: no, the admins aren't telling you.
   - qol: chameleon gun can't use admin-only weapons.
+2023-12-17:
+  KoboldCommando:
+  - bugfix: removed the ability to break server rules from beepskies, medibots, spray
+      tan and hailers
+2023-12-18:
+  MichiRecRoom:
+  - bugfix: Corporate plastic cards, as well as spare ID code cards, are no longer
+      considered paper by computers that take paper (such as PDAs or the identification
+      consoles)
+2023-12-20:
+  MichiRecRoom:
+  - bugfix: You can once again select a Standard Guardian when using a guardian creator
+      item (such as the Holoparasite Injector).
+  - rscadd: All Guardian Creator items now allow you to get a Timestop Guardian, even
+      if you're not a Bloodsucker. Bloodsuckers, however, are still locked to only
+      getting a Timestop Guardian, because haha funny anime reference.
+  - image: The radial icon for the Timestop Guardian was created by `camriod_core`
+      on Discord.
+  - bugfix: The Timestop Guardian's timestop ability will no longer freeze the guardian's
+      summoner.
+  - bugfix: The Power Miner shard no longer has a chance to spawn Support Guardians,
+      as a stopgap due to Support Guardians being unable to heal, severely limiting
+      their usefulness and causing many an ahelp. This change will be reverted once
+      we figure out how to fix Support Guardian's heal.
+  Skelessant:
+  - rscadd: Green jester shoes added
+  - rscadd: Alternate jester outfit added
+  - rscadd: Clown jester shoes squeak and jingle
+  - rscadd: Jester things in autodrobe
+2023-12-21:
+  CannibalHunter:
+  - rscadd: Added new Gnome Outfit to the MonkeCoin shop!
+  KoboldCommando:
+  - bugfix: removed the sec hailer's ability to break server rules, for real this
+      time
+  MonstieHuntie:
+  - rscadd: Nanotrasen chefs have now been authorized to create corndogs after lengthy
+      legal debate in fear of past incidents regarding them.
+  - rscadd: Popsicle sticks can now be found in the form of small packs in the Chef's
+      Dinnerware Vendor.
+  NicoDeLuna:
+  - rscadd: Adds Street Mime Suit
+  Sealed101:
+  - bugfix: fixed third person throw verbs displaying as just an s
+  SeeBeeSee:
+  - balance: forced NTSS Independence to require emagging to purchase
+  - balance: increased the cost to purchase the NTSS Independence
+  Senri:
+  - admin: admin ban panel updates
+  ma44, Dwasint:
+  - rscadd: Ejected bullet casings now bounce around with the power of simulated physics
+2023-12-22:
+  MichiRecRoom:
+  - bugfix: Support Guardian's heal works once more!
+  - bugfix: Due to how the Support Guardian heal fix was implemented, this also fixes
+      Spider's health display not updating when another spider heals you.
+  - bugfix: Previously, the Power Miner shard was temporarily blocked from spawning
+      Support Guardians due to its healing being nonfunctional. Since its healing
+      works once more, Power Miner shards can once again spawn Support Guardians.
+  MonstieHuntie:
+  - bugfix: Corndogs are no longer condemned to Hell upon being born
+2023-12-23:
+  DexeeXI:
+  - qol: All stations now have cryogenics at or next to Departures. Navigation was
+      adjusted as well to point to the door in each case
+  - bugfix: Centcom got some small fixes. A big fix is readding the cube machine that
+      went missing!
+  - rscadd: two new Wikibooks added
+  - rscadd: all Stations now have the new Wikibooks (Art Sci specifically!)
+  - rscadd: new Pathology zone under departmental maintenance for current and future
+      use
+  - qol: The "maintenance closets" for pathology on Icebox and Tram are now marked
+      as maintenance so the pathologists aren't completely screwed for radiation storms
+  - balance: changed the wrestling belt in lavaland to be the player belt and not
+      the admin belt (TG problem, monke solution)
+  - qol: 'Prisoners now have access to cryo in their chambers. Don''t try to destroy
+      it. It''ll only increase your sentence. (TODO: add tag IDs to cryo cells so
+      send to cryo sends people to normal station cryo not prison cryo)'
+  - qol: all sorts of small fixes all over the place between all maps.
+  - rscdel: Removed Detroit.
+  - qol: fixed the silly mech machine in tram maints
+  - qol: All station former virology clinics renamed to pathology.
+  - bugfix: missing cables and catwalks that should be there on tram are now back.
+  MichiRecRoom:
+  - spellcheck: Two store tabs had errant right parenthesis, which are now removed.
+  Wisemonster:
+  - bugfix: Fix mulebots receiving the wrong message when thier cell is added/removed.
+2023-12-25:
+  CannibalHunter:
+  - balance: changes the price of gnome outfits in monkeshop
+  NicoDeLuna:
+  - rscadd: Added Milkman Outfit
+  Sord213:
+  - rscadd: Dagoth Ur has been hired by NT to make announcements on a station near
+      YOU
+2023-12-27:
+  san7890:
+  - bugfix: Ranged Guardians (Holoparasites/Power Miners/etc.) can no longer use ranged
+      attacks in scouting (incorporeal) mode.
+2023-12-28:
+  DexeeXI:
+  - qol: yet another wikibook fix.
+  MichiRecRoom:
+  - qol: Clothing pieces that make your fingers chunky (currently, only the H.A.U.L.
+      Gauntlets and the Boxing Gloves) will now denote themselves as such upon examining
+      them.
+  MilkForever:
+  - rscadd: Arachnids now click their mandibles in the *click emote
+  - rscadd: Arachnids are now in the "Spider" Faction, this means AI CONTROLLED spiders
+      will no longer go after them.
+  - qol: The eye-wear item slot now gets greyed out if you have arachnid eyes.
+  - balance: Arachnids no longer have brute damage resistance, and they no longer
+      have a burn damage weakness.
+  - balance: Arachnids can eat vegetables now.
+2023-12-29:
+  MichiRecRoom:
+  - qol: The H.A.U.L. Gauntlets will no longer prevent the wearer from opening the
+      closet/crate that they're pulling.
+  - bugfix: The anything-gift now has a very small list of items that it will never
+      spawn. The list consists primarily of items which could majorly endanger game-server/game-client
+      stability - so you still have a chance to get that funny debug uplink!
+2023-12-31:
+  KittyNoodle:
+  - code_imp: cleaned up a lot of pathology code
+  - bugfix: changeling virus cure works again
+  - bugfix: hardlight spears emit light mid-flight(my bad guys)
+  - bugfix: Pro-tagonista Syndrome no longer causes ethereal hair to "flicker"
+  - rscadd: Eye watering makes you cry
+  - balance: Teratomas now cause you harm
+  - balance: Pathogen sterilization heat moved from 726.85C to 100C
+  - balance: Pierrot's Throat no longer gives clown mask until level 2 multiplier.
+  - balance: Changes a lot of the threat levels on symptoms
+  - qol: Pierrot's Throat no longer gives mushroom hallucinogen
+  - qol: Space Adaption Effect now has a better description
+  - bugfix: Chaplains no longer get two null rods(test your code)
+  - bugfix: Those who could not normally vomit no longer vomit with new pathology
+      symptoms.
+  - bugfix: Spaceacillin no longer instantly cures anything
+  lmenvs:
+  - sound: new coconut gun sound
+  wraith-54321:
+  - rscadd: Added a way to trigger twitch events in-game while observing a round
+  - refactor: refactor some code for tokens and admin and such

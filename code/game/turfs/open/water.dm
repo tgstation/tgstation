@@ -31,7 +31,7 @@
 
 /turf/open/water/beach/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/lazy_fishing_spot, FISHING_SPOT_PRESET_BEACH)
+	AddElement(/datum/element/lazy_fishing_spot, /datum/fish_source/ocean/beach)
 
 //Same turf, but instead used in the Beach Biodome
 /turf/open/water/beach/biodome

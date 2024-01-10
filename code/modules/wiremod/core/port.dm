@@ -123,6 +123,13 @@
  * Sends a signal whenever the output value is changed
  */
 /datum/port/output
+	///how many inputs we are connected to
+	var/connected_inputs = 0
+	///max amount of connected inputs
+	var/max_inputs = 100000
+
+/datum/port/output/singular
+	max_inputs = 1
 
 /**
  * Disconnects a port from all other ports.
@@ -142,6 +149,7 @@
 /datum/port/input/proc/disconnect(datum/port/output/output)
 	SIGNAL_HANDLER
 	connected_ports -= output
+	output.connected_inputs--
 	UnregisterSignal(output, COMSIG_PORT_SET_VALUE)
 	UnregisterSignal(output, COMSIG_PORT_SET_TYPE)
 	UnregisterSignal(output, COMSIG_PORT_DISCONNECT)
@@ -185,6 +193,10 @@
 /datum/port/input/proc/connect(datum/port/output/output)
 	if(output in connected_ports)
 		return
+	if(output.max_inputs <= output.connected_inputs)
+		return
+
+	output.connected_inputs++
 	connected_ports += output
 	RegisterSignal(output, COMSIG_PORT_SET_VALUE, PROC_REF(receive_value))
 	RegisterSignal(output, COMSIG_PORT_SET_TYPE, PROC_REF(check_type))

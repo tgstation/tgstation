@@ -57,7 +57,7 @@
 	ore_overlay = mutable_appearance(icon, "mook_ore_overlay")
 
 	AddComponent(/datum/component/ai_listen_to_weather)
-	AddElement(/datum/element/wall_smasher)
+	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
 	RegisterSignal(src, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(drop_ore))
 
@@ -237,6 +237,11 @@
 	held_guitar = new(src)
 	ai_controller.set_blackboard_key(BB_SONG_INSTRUMENT, held_guitar)
 	update_appearance()
+
+//Monkestation edit: Removes a harddel
+/mob/living/basic/mining/mook/worker/bard/Destroy()
+	QDEL_NULL(held_guitar)
+	return ..()
 
 /mob/living/basic/mining/mook/worker/tribal_chief
 	name = "tribal chief"

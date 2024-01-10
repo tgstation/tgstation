@@ -14,15 +14,13 @@
 		/obj/item/organ/external/arachnid_appendages = "long",
 		/obj/item/organ/external/chelicerae = "basic")
 	meat = /obj/item/food/meat/slab/spider
-	disliked_food = VEGETABLES
-	liked_food = GORE | MEAT | SEAFOOD | BUGS | GROSS
+	disliked_food = NONE // Okay listen, i don't actually know what irl spiders don't like to eat and i'm pretty tired of looking for answers.
+	liked_food = GORE | MEAT | BUGS | GROSS
 	species_language_holder = /datum/language_holder/fly
 	mutanttongue = /obj/item/organ/internal/tongue/arachnid
 	mutanteyes = /obj/item/organ/internal/eyes/night_vision/arachnid
-	burnmod = 1.2
-	heatmod = 1.2
-	brutemod = 0.8
 	speedmod = -0.1
+	inherent_factions = list(FACTION_SPIDER)
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/arachnid,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest/arachnid,
@@ -60,7 +58,7 @@
 	return 'monkestation/sound/voice/laugh/arachnid/arachnid_laugh.ogg'
 
 /datum/species/arachnid/get_species_description()
-	return "Arachnids are a species of humanoid spiders recently employed by Nanotrasen."
+	return "Arachnids are a species of humanoid spiders employed by Nanotrasen in recent years." // Allan please add details
 
 /datum/species/arachnid/create_pref_unique_perks()
 	var/list/to_add = list()
@@ -70,7 +68,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "bolt",
 			SPECIES_PERK_NAME = "Agile",
-			SPECIES_PERK_DESC = "Arachnids run slightly faster than other species.",
+			SPECIES_PERK_DESC = "Arachnids run slightly faster than other species, but are still outpaced by Goblins.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
@@ -80,10 +78,10 @@
 			or MODsuits. This can make concealing your identity harder.",
 		),
 		list(
-			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
 			SPECIES_PERK_ICON = "sun",
 			SPECIES_PERK_NAME = "Maybe Too Many Eyes",
-			SPECIES_PERK_DESC = "Arachnids cannot equip any kind of glasses, requiring \
+			SPECIES_PERK_DESC = "Arachnids cannot equip any kind of eyewear, requiring \
 			alternatives like welding helmets or implants. Their eyes have night vision however.",
 		),
 	)

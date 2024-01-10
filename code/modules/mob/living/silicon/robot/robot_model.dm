@@ -77,6 +77,7 @@
 	modules.Cut()
 	added_modules.Cut()
 	storages.Cut()
+	clock_modules.Cut() //MonkeStation Edit: Clears clock modules
 	return ..()
 
 /obj/item/robot_model/proc/get_usable_modules()

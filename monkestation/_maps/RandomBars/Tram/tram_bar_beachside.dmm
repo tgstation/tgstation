@@ -432,6 +432,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/effect/turf_decal/sand,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "nU" = (
@@ -607,6 +608,7 @@
 	name = "Kitchen";
 	req_one_access = list("kitchen")
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "sb" = (
@@ -827,6 +829,7 @@
 	id = "playerscantreadthis";
 	name = "Kitchen Counter Shutters"
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/wood,
 /area/station/service/kitchen)
 "zt" = (
@@ -883,6 +886,7 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /turf/open/floor/wood,
 /area/station/service/bar)
 "AR" = (
@@ -1563,6 +1567,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
 	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
 /turf/open/floor/wood/large,
 /area/station/service/kitchen)
 "Ua" = (

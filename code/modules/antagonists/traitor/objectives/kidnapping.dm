@@ -1,3 +1,5 @@
+//MONKESTATIONFILE REMOVAL, CHECK THE FILE IN THE MODULAR DIRECTORY
+/*
 /datum/traitor_objective/target_player/kidnapping
 	name = "Kidnap %TARGET% the %JOB TITLE% and deliver them to %AREA%"
 	description = "%TARGET% holds extremely important information regarding secret NT projects - and you'll need to kidnap and deliver them to %AREA%, where our transport pod will be waiting. \
@@ -321,3 +323,4 @@
 	for (var/obj/item/implant/storage/internal_bag in kidnapee.implants)
 		belongings += internal_bag.contents
 	return belongings
+*/

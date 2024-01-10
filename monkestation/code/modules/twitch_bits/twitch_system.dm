@@ -4,7 +4,7 @@
 SUBSYSTEM_DEF(twitch)
 	name = "Twitch Events"
 	wait = 0.5 SECONDS
-	flags = SS_KEEP_TIMING | SS_NO_INIT
+	flags = SS_KEEP_TIMING
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 	priority = FIRE_PRIORITY_TWITCH
 	init_order = INIT_ORDER_TWITCH
@@ -14,10 +14,17 @@ SUBSYSTEM_DEF(twitch)
 	var/list/running_events = list()
 	///list of deferred handlers
 	var/list/deferred_handlers = list()
+	///assoc list of instances of all twitch events keyed by their type
+	var/list/twitch_events_by_type = list()
 
 	var/datum/twitch_event/last_event
 	var/last_event_execution = 0
 	var/last_executor
+
+/datum/controller/subsystem/twitch/Initialize()
+	for(var/event as anything in subtypesof(/datum/twitch_event))
+		twitch_events_by_type[event] = new event
+	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/twitch/stat_entry(msg)
 	msg += "Running Events:[running_events.len]"
@@ -44,7 +51,7 @@ SUBSYSTEM_DEF(twitch)
 	for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
 		if(incoming[3] != initial(listed_events.id_tag))
 			continue
-		chosen_one = new listed_events
+		chosen_one = twitch_events_by_type[listed_events]
 	if(!chosen_one)
 		return
 
@@ -76,7 +83,7 @@ SUBSYSTEM_DEF(twitch)
 		for(var/datum/twitch_event/listed_events as anything in subtypesof(/datum/twitch_event))
 			if(listed_item != initial(listed_events.id_tag))
 				continue
-			chosen_one = new listed_events
+			chosen_one = twitch_events_by_type[listed_events]
 		if(!chosen_one)
 			return
 		chosen_one.run_event()

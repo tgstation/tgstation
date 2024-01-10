@@ -49,6 +49,7 @@
 		"extinguisher",
 		"fax",
 		"fishing_rod",
+		"fishing_portal_generator",
 		"flashlight",
 		"fluid_ducts",
 		"foam_dart",
@@ -377,7 +378,14 @@
 		"component_printer",
 		"integrated_circuit",
 		"module_duplicator",
-		"usb_cable"
+		"usb_cable",
+		"chemical_synthesizer",
+		"weighted_splitter",
+		"chemical_splitter",
+		"chemical_mixer",
+		"chemical_filter",
+		"chemical_injector_bci",
+		"internal_chemical_tank",
 	)
 
 /////////////////////////Biotech/////////////////////////
@@ -1463,6 +1471,32 @@
 	discount_experiments = list(/datum/experiment/scanning/random/plants/traits = 2000,
 								/datum/experiment/scanning/random/plants/wild = 2000)
 
+/datum/techweb_node/fishing
+	id = "fishing"
+	display_name = "Fishing Technology"
+	description = "Cutting edge fishing advancements."
+	prereq_ids = list("base")
+	design_ids = list(
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	required_experiments = list(/datum/experiment/scanning/fish)
+
+/datum/techweb_node/fishing
+	id = "fishing"
+	display_name = "Fishing Technology"
+	description = "Cutting edge fishing advancements."
+	prereq_ids = list("base")
+	design_ids = list(
+		"fishing_rod_tech",
+		"stabilized_hook",
+		"fish_analyzer",
+	)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2000)
+	required_experiments = list(/datum/experiment/scanning/fish)
+
 /datum/techweb_node/exp_tools
 	id = "exp_tools"
 	display_name = "Experimental Tools"
@@ -2327,6 +2361,3 @@
 		"stabilized_hook",
 		"fish_analyzer",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	hidden = TRUE
-	experimental = TRUE

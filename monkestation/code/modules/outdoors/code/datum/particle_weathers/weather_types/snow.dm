@@ -1,3 +1,5 @@
+/turf
+	var/weather_affectable = TRUE
 /datum/particle_weather/snow_gentle
 	name = "Snow"
 	display_name = "Snow"

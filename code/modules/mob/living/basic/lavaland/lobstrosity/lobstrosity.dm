@@ -17,7 +17,7 @@
 	attack_verb_continuous = "snips"
 	attack_verb_simple = "snip"
 	attack_sound = 'sound/weapons/bite.ogg'
-	attack_vis_effect = ATTACK_EFFECT_BITE // Closer than a scratch to a crustacean pinching effect
+	attack_vis_effect = ATTACK_EFFECT_BITE //  Closer than a scratch to a crustacean pinching effect
 	melee_attack_cooldown = 1 SECONDS
 	butcher_results = list(
 		/obj/item/food/meat/crab = 2,
@@ -71,6 +71,8 @@
 	if(!isbasicmob(source))
 		return
 	var/mob/living/basic/basic_source = source
+	if(!ismob(target)) //Monkestation edit: Catches a runtime when the lobster charges into a wall.
+		return
 	var/mob/living/living_target = target
 	basic_source.melee_attack(living_target, ignore_cooldown = TRUE)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)

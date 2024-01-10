@@ -62,7 +62,6 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/power/apc/auto_name/directional/south,
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -133,9 +132,9 @@
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/commons/lounge)
 "gc" = (
-/obj/machinery/airalarm/directional/north,
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/computer/arcade/amputation/bar,
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/circuit/green,
 /area/station/service/theater)
 "gS" = (
@@ -210,6 +209,7 @@
 	dir = 4
 	},
 /obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
 /turf/open/floor/eighties,
 /area/station/service/theater)
 "kp" = (
@@ -305,6 +305,8 @@
 	pixel_y = 6
 	},
 /obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/service/bar)
 "rM" = (
@@ -371,6 +373,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/start/hangover,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/commons/lounge)
 "vj" = (
@@ -492,6 +495,7 @@
 /obj/structure/chair/plastic{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/commons/lounge)
 "zW" = (
@@ -530,6 +534,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 9
 	},
+/obj/structure/cable,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "Ca" = (
@@ -540,6 +545,8 @@
 /turf/open/floor/eighties,
 /area/station/service/theater)
 "Ck" = (
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
 /turf/open/floor/wood/large,
 /area/station/commons/lounge)
 "Co" = (
@@ -909,10 +916,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/carpet/neon/simple/red,
 /area/station/commons/lounge)
-"PL" = (
-/obj/machinery/power/apc/auto_name/directional/east,
-/turf/template_noop,
-/area/template_noop)
 "PN" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -930,6 +933,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/dark,
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/commons/lounge)
 "RT" = (
@@ -1083,6 +1087,7 @@
 /obj/structure/chair/plastic{
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/commons/lounge)
 "ZP" = (
@@ -1136,7 +1141,7 @@ dn
 XN
 "}
 (4,1,1) = {"
-PL
+Ow
 Ow
 Ow
 eS

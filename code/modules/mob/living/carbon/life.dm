@@ -112,7 +112,7 @@
 				var/obj/loc_as_obj = loc
 				breath = loc_as_obj.handle_internal_lifeform(src, BREATH_VOLUME)
 			else if(isturf(loc)) //Breathe from loc as turf
-
+				breath_airborne_diseases() //monkestation edit - VIROLOGY
 				var/turf/our_turf = loc
 				if(our_turf.liquids && !HAS_TRAIT(src, TRAIT_NOBREATH) && ((body_position == LYING_DOWN && our_turf.liquids.liquid_state >= LIQUID_STATE_WAIST) || (body_position == STANDING_UP && our_turf.liquids.liquid_state >= LIQUID_STATE_FULLTILE)))
 					//Officially trying to breathe underwater
@@ -151,7 +151,6 @@
 				loc_as_obj.handle_internal_lifeform(src,0)
 
 	check_breath(breath)
-	breath_airborne_diseases() //monkestation edit - VIROLOGY
 
 	if(breath)
 		loc.assume_air(breath)

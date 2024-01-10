@@ -42,6 +42,7 @@
 	if(isitem(parent))
 		RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
+		RegisterSignals(parent, list(COMSIG_ITEM_ATTACK, COMSIG_ITEM_ATTACK_OBJ), PROC_REF(on_attack))
 	else if(ismob(parent))
 		RegisterSignal(parent, COMSIG_MOB_RECEIVE_MAGIC, PROC_REF(block_receiving_magic), override = TRUE)
 		RegisterSignal(parent, COMSIG_MOB_RESTRICT_MAGIC, PROC_REF(restrict_casting_magic), override = TRUE)
@@ -158,3 +159,7 @@
 		return COMPONENT_MAGIC_BLOCKED
 
 	return NONE
+
+/datum/component/anti_magic/proc/on_attack(atom/movable/source, atom/target, mob/user)
+	SIGNAL_HANDLER
+	SEND_SIGNAL(target, COMSIG_ATOM_HOLYATTACK, source, user, antimagic_flags)

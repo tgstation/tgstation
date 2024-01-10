@@ -106,8 +106,9 @@ GLOBAL_LIST_INIT(admin_verbs_fun, list(
 // Client procs
 	/client/proc/admin_away,
 	/client/proc/add_mob_ability,
-	/client/proc/adjust_players_antag_tokens,
-	/client/proc/adjust_players_metacoins,
+	/client/proc/adjust_players_antag_tokens, //monkestation edit
+	/client/proc/adjust_players_event_tokens, //monkestation edit
+	/client/proc/adjust_players_metacoins, //monkestation edit
 	/client/proc/admin_change_sec_level,
 	/client/proc/change_ocean, //monkestation addition
 	/client/proc/cinematic,
@@ -984,8 +985,6 @@ GLOBAL_PROTECT(admin_verbs_poll)
 		var/reqs = initial(spell.spell_requirements)
 		if(reqs & SPELL_CASTABLE_AS_BRAIN)
 			real_reqs += "Castable as brain"
-		if(reqs & SPELL_CASTABLE_WHILE_PHASED)
-			real_reqs += "Castable phased"
 		if(reqs & SPELL_REQUIRES_HUMAN)
 			real_reqs += "Must be human"
 		if(reqs & SPELL_REQUIRES_MIME_VOW)

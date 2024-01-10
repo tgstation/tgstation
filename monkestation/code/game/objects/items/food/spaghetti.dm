@@ -1,6 +1,6 @@
 /obj/item/food/spaghetti/security
 	name = "Robust pasta"
-	desc = "Only the truly robust can eat this safelly"
+	desc = "Only the truly robust can eat this safely."
 	icon_state = "spesslaw"
 	bite_consumption = 5
 	food_reagents = list(

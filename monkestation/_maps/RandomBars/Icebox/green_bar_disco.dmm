@@ -107,6 +107,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/service/theater)
 "ic" = (
@@ -218,6 +219,8 @@
 /obj/structure/disposalpipe/segment{
 	dir = 6
 	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/carpet/green,
 /area/station/service/theater)
 "lG" = (
@@ -446,6 +449,7 @@
 	color = "#43cC1E";
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "ta" = (
@@ -482,6 +486,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
 "tJ" = (
@@ -518,6 +523,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
 "uk" = (
@@ -538,6 +544,7 @@
 	color = "#43cC1E";
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "uF" = (
@@ -781,6 +788,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/disposalpipe/segment,
 /obj/structure/sign/poster/random/directional/west,
+/obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/commons/lounge)
 "DL" = (
@@ -876,6 +884,7 @@
 	},
 /obj/machinery/door/firedoor,
 /obj/structure/sign/poster/random/directional/north,
+/obj/structure/cable,
 /turf/open/floor/carpet/green,
 /area/station/service/theater)
 "In" = (
@@ -1090,6 +1099,7 @@
 	color = "#43cC1E";
 	dir = 1
 	},
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "RJ" = (
