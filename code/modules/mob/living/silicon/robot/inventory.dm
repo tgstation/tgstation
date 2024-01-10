@@ -107,7 +107,7 @@
 		client.screen -= item_module
 
 	if(module_active == item_module)
-		module_active = null
+		set_module_active(null)
 
 	switch(module_num)
 		if(BORG_CHOOSE_MODULE_ONE)
@@ -320,6 +320,21 @@
 
 	return 0
 
+/mob/living/silicon/robot/proc/set_module_active(new_module)
+	if(module_active)
+		UnregisterSignal(module_active, COMSIG_QDELETING)
+	module_active = new_module
+	if(!QDELETING(module_active))
+		RegisterSignal(module_active, COMSIG_QDELETING, PROC_REF(module_active_deleted))
+
+/mob/living/silicon/robot/proc/module_active_deleted(datum/source)
+	SIGNAL_HANDLER
+	// We are assumed to own the active module
+	// If it gets deleted and we aren't also deleting, that's an error case, so rather then hard delete let's yell
+	if(!QDELETED(src))
+		stack_trace("[source] was deleted when its owner, [src] wasn't. What's going on?")
+	set_module_active(null)
+
 /**
  * Selects the module in the slot module_num.
  * Arguments
@@ -339,7 +354,7 @@
 		if(BORG_CHOOSE_MODULE_THREE)
 			if(module_active != held_items[module_num])
 				inv3.icon_state = "[initial(inv3.icon_state)] +a"
-	module_active = held_items[module_num]
+	set_module_active(held_items[module_num])
 	return TRUE
 
 /**
@@ -358,7 +373,7 @@
 		if(BORG_CHOOSE_MODULE_THREE)
 			if(module_active == held_items[module_num])
 				inv3.icon_state = initial(inv3.icon_state)
-	module_active = null
+	set_module_active(null)
 	return TRUE
 
 /**
