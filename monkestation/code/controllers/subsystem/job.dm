@@ -134,6 +134,8 @@
 		for(var/datum/job/enemy_job in enemy_jobs)
 			if(new_enemy_player)
 				break
+			if(!assignable_by_job[enemy_job.type])
+				continue
 			for(var/level in level_order)
 				if(new_enemy_player)
 					break
