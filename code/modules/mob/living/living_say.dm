@@ -439,6 +439,9 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
  *
  * message - The message to treat.
  * capitalize_message - Whether we run capitalize() on the message after we're done.
+ *
+ * Returns a list, which is a packet of information corresponding to the message that has been treated, which
+ * contains the new message, as well as text-to-speech information.
  */
 /mob/living/proc/treat_message(message, capitalize_message = TRUE)
 	if(HAS_TRAIT(src, TRAIT_UNINTELLIGIBLE_SPEECH))

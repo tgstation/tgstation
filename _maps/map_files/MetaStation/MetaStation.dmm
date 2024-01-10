@@ -222,11 +222,11 @@
 	},
 /obj/machinery/keycard_auth/directional/west,
 /obj/machinery/requests_console/directional/north{
-	announcementConsole = 1;
 	department = "Head of Security's Desk";
 	name = "Head of Security Requests Console";
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /obj/machinery/button/door/directional/north{
 	id = "hosspace";
@@ -725,11 +725,11 @@
 /area/space/nearstation)
 "aoE" = (
 /obj/machinery/requests_console/directional/east{
-	announcementConsole = 1;
 	department = "Bridge";
 	name = "Bridge Requests Console";
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /obj/machinery/computer/cargo/request,
 /obj/structure/cable,
@@ -6445,11 +6445,11 @@
 	},
 /obj/machinery/light/small/directional/east,
 /obj/machinery/requests_console/directional/east{
-	announcementConsole = 1;
 	department = "Captain's Desk";
 	name = "Captain's Requests Console";
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain/private)
@@ -31304,11 +31304,11 @@
 	dir = 5
 	},
 /obj/machinery/requests_console/directional/east{
-	announcementConsole = 1;
 	department = "Research Director's Desk";
 	name = "Research Director's Requests Console";
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/rd)
@@ -37080,11 +37080,11 @@
 	pixel_y = 2
 	},
 /obj/machinery/requests_console/directional/north{
-	announcementConsole = 1;
 	department = "Head of Personnel's Desk";
 	name = "Head of Personnel's Requests Console";
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/hop)
@@ -39546,12 +39546,12 @@
 /obj/structure/table,
 /obj/machinery/cell_charger,
 /obj/machinery/requests_console/directional/east{
-	announcementConsole = 1;
 	department = "Research Lab";
 	name = "Research Requests Console";
 	receive_ore_updates = 1;
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /turf/open/floor/iron,
 /area/station/science/lab)
@@ -40565,11 +40565,11 @@
 	},
 /obj/structure/table/wood,
 /obj/machinery/requests_console/directional/south{
-	announcementConsole = 1;
 	department = "Telecomms Admin";
 	name = "Telecomms Requests Console";
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /turf/open/floor/iron/grimy,
 /area/station/tcommsat/computer)
@@ -46727,11 +46727,11 @@
 	dir = 4
 	},
 /obj/machinery/requests_console/directional/west{
-	announcementConsole = 1;
 	department = "Chief Medical Officer's Desk";
 	name = "Chief Medical Officer's Requests Console";
 	assistance_requestable = 1;
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /obj/effect/turf_decal/tile/blue/half/contrasted{
 	dir = 8
@@ -51651,10 +51651,10 @@
 "suJ" = (
 /obj/structure/table/wood/fancy/orange,
 /obj/machinery/requests_console/directional/east{
-	announcementConsole = 1;
 	department = "Quartermaster's Desk";
 	name = "Quartermaster's Requests Console";
-	supplies_requestable = 1
+	supplies_requestable = 1;
+	can_send_announcements = 1
 	},
 /obj/item/reagent_containers/cup/glass/bottle/whiskey{
 	pixel_x = -5;
@@ -55430,10 +55430,10 @@
 /obj/machinery/modular_computer/console/preset/id,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/requests_console/directional/north{
-	announcementConsole = 1;
 	department = "Chief Engineer's Desk";
 	name = "Chief Engineer's Requests Console";
-	anon_tips_receiver = 1
+	anon_tips_receiver = 1;
+	can_send_announcements = 1
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/ce)

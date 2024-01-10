@@ -47,6 +47,8 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 	/// Have the pirates been paid off?
 	var/paid_off = FALSE
+	/// The colour of their announcements when sent to players
+	var/announcement_color = "red"
 
 /datum/pirate_gang/New()
 	. = ..()
@@ -131,3 +133,4 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	response_received = "You guys aren't so bad for being dormants. Next gore-fest goes to you guys. Peace!"
 	response_too_late = "Oh, now you think we're worth the money. Pathetic dormants."
 	response_not_enough = "You really shouldn't have messed with us. You're in for a psychic nightmare."
+	announcement_color = "purple"
