@@ -1186,7 +1186,6 @@
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "rV" = (
-/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /obj/structure/disposalpipe/trunk{
 	dir = 4
 	},
@@ -2952,6 +2951,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron/kitchen/small,
 /area/station/service/kitchen)
 "Tz" = (

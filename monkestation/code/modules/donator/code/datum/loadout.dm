@@ -246,3 +246,11 @@
 	item_path = /obj/item/clothing/head/costume/bells
 	donator_only = TRUE
 	requires_purchase = FALSE
+
+//zedmastermind
+/datum/loadout_item/head/zed_officercap
+	name = "Zed Officer Cap"
+	item_path = /obj/item/clothing/head/costume/zed_officercap
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("zedmastermind")

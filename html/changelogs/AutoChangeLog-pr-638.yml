@@ -1,0 +1,6 @@
+author: "MonstieHuntie"
+delete-after: True
+changes:
+  - rscadd: "The Limited Run of \"Taco\" Edition Pacos have come to an end, returning to form. Every Paco now has a 10% chance of being a Limited Edition model!"
+  - rscadd: "Adds the Stripeless Paco! Accessible by picking the stripe off of a normal Paco by Alt-Clicking."
+  - balance: "Pacos can now use Seclites! A new version of the Paco adds a screw-in slot for Seclites due to popular demand."

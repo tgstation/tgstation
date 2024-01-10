@@ -254,3 +254,25 @@
   - bugfix: The anything-gift now has a very small list of items that it will never
       spawn. The list consists primarily of items which could majorly endanger game-server/game-client
       stability - so you still have a chance to get that funny debug uplink!
+2023-12-31:
+  KittyNoodle:
+  - code_imp: cleaned up a lot of pathology code
+  - bugfix: changeling virus cure works again
+  - bugfix: hardlight spears emit light mid-flight(my bad guys)
+  - bugfix: Pro-tagonista Syndrome no longer causes ethereal hair to "flicker"
+  - rscadd: Eye watering makes you cry
+  - balance: Teratomas now cause you harm
+  - balance: Pathogen sterilization heat moved from 726.85C to 100C
+  - balance: Pierrot's Throat no longer gives clown mask until level 2 multiplier.
+  - balance: Changes a lot of the threat levels on symptoms
+  - qol: Pierrot's Throat no longer gives mushroom hallucinogen
+  - qol: Space Adaption Effect now has a better description
+  - bugfix: Chaplains no longer get two null rods(test your code)
+  - bugfix: Those who could not normally vomit no longer vomit with new pathology
+      symptoms.
+  - bugfix: Spaceacillin no longer instantly cures anything
+  lmenvs:
+  - sound: new coconut gun sound
+  wraith-54321:
+  - rscadd: Added a way to trigger twitch events in-game while observing a round
+  - refactor: refactor some code for tokens and admin and such

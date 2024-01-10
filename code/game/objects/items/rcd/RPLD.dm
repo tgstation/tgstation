@@ -49,7 +49,6 @@
 /obj/item/construction/plumbing/proc/set_plumbing_designs()
 	plumbing_design_types = list(
 		//category 1 Synthesizers i.e devices which creates , reacts & destroys chemicals
-		/obj/machinery/plumbing/synthesizer = 15,
 		/obj/machinery/plumbing/reaction_chamber/chem = 15,
 		/obj/machinery/plumbing/grinder_chemical = 30,
 		/obj/machinery/plumbing/growing_vat = 20,

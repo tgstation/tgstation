@@ -23,9 +23,6 @@
 
 	return "[hour]:[minute]:[second]"
 
-/proc/station_time(display_only = FALSE, wtime=world.time)
-	return ((((wtime - SSticker.round_start_time) * SSticker.station_time_rate_multiplier) + SSticker.gametime_offset) % 864000) - (display_only? GLOB.timezoneOffset : 0)
-
 /proc/station_time_timestamp(format = "hh:mm:ss", wtime)
 	return time2text(station_time(TRUE, wtime), format)
 

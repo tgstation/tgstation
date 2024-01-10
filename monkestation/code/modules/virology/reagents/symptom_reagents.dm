@@ -15,7 +15,7 @@
 	L.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/stimulants)
 	REMOVE_TRAIT(L, TRAIT_BATON_RESISTANCE, type)
 	..()
-	
+
 /datum/reagent/adrenaline/on_mob_life(mob/living/carbon/M, seconds_per_tick, times_fired)
 	. = ..()
 	M.AdjustStun(-0.5 SECONDS)
@@ -23,7 +23,7 @@
 	M.AdjustUnconscious(-0.5 SECONDS)
 	M.AdjustImmobilized(-0.5 SECONDS)
 	M.AdjustParalyzed(-0.5 SECONDS)
-	M.stamina?.adjust(20)
+	M.stamina?.adjust(20, forced = TRUE)
 
 /datum/reagent/adrenaline/overdose_start(mob/living/M)
 	. = ..()
@@ -37,4 +37,3 @@
 		M.losebreath++
 		. = TRUE
 	..()
-	

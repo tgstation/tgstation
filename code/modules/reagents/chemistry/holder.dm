@@ -281,10 +281,10 @@
 	return TRUE
 
 /// Like add_reagent but you can enter a list. Format it like this: list(/datum/reagent/toxin = 10, "beer" = 15)
-/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null, _no_react = FALSE)
+/datum/reagents/proc/add_reagent_list(list/list_reagents, list/data=null, _no_react = FALSE, temperature = DEFAULT_REAGENT_TEMPERATURE)
 	for(var/r_id in list_reagents)
 		var/amt = list_reagents[r_id]
-		add_reagent(r_id, amt, data, no_react = _no_react)
+		add_reagent(r_id, amt, data, temperature, no_react = _no_react)
 
 
 /// Remove a specific reagent
@@ -927,7 +927,7 @@
 			var/is_cold_recipe = reaction.is_cold_recipe
 			var/meets_temp_requirement = FALSE
 			var/meets_ph_requirement = FALSE
-			var/granularity = 1
+			var/granularity = CHEMICAL_VOLUME_MINIMUM
 			if((reaction.reaction_flags & REACTION_NON_INSTANT))
 				granularity = CHEMICAL_VOLUME_MINIMUM
 
@@ -1216,7 +1216,7 @@
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)
 	if(cached_my_atom)
-		if(!ismob(cached_my_atom)) // No bubbling mobs
+		if(!ismob(cached_my_atom) && !istype(cached_my_atom, /obj/item/circuit_component)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
 

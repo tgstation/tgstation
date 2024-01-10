@@ -9,7 +9,7 @@
 	///List of materials actually required, indexed by the atom that is required.
 	var/required_materials = list()
 
-/datum/experiment/scanning/random/material/New()
+/datum/experiment/scanning/random/material/New(datum/techweb/techweb)
 	. = ..()
 	for(var/req_atom in required_atoms)
 		var/chosen_material = pick(possible_material_types)

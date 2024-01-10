@@ -64,3 +64,6 @@
 	#define ATTACKER_SHOVING (1<<1)
 	/// The attack is a damaging-type attack
 	#define ATTACKER_DAMAGING_ATTACK (1<<2)
+
+/// Called on the atom being hit, from /datum/component/anti_magic/on_attack() : (obj/item/weapon, mob/user, antimagic_flags)
+#define COMSIG_ATOM_HOLYATTACK "atom_holyattacked"

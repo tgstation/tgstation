@@ -191,7 +191,7 @@
 	affected_mob.AdjustUnconscious(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustParalyzed(-40 * REM * seconds_per_tick)
 	affected_mob.AdjustImmobilized(-40 * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(2 * REM * seconds_per_tick, FALSE)
+	affected_mob.stamina.adjust(2 * REM * seconds_per_tick, TRUE)
 	affected_mob.set_jitter_if_lower(4 SECONDS * REM * seconds_per_tick)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, rand(1, 4) * REM * seconds_per_tick, required_organtype = affected_organtype)
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -244,7 +244,7 @@
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
 	affected_mob.add_mood_event("salted", /datum/mood_event/stimulant_heavy, name)
-	affected_mob.stamina.adjust(5 * REM * seconds_per_tick, FALSE)
+	affected_mob.stamina.adjust(5 * REM * seconds_per_tick, TRUE)
 	affected_mob.adjustOrganLoss(ORGAN_SLOT_BRAIN, 4 * REM * seconds_per_tick, required_organtype = affected_organtype)
 	affected_mob.adjust_hallucinations(10 SECONDS * REM * seconds_per_tick)
 	if(!HAS_TRAIT(affected_mob, TRAIT_IMMOBILIZED) && !ismovable(affected_mob.loc))
@@ -276,7 +276,7 @@
 	var/high_message = pick("You feel amped up.", "You feel ready.", "You feel like you can push it to the limit.")
 	if(SPT_PROB(2.5, seconds_per_tick))
 		to_chat(affected_mob, span_notice("[high_message]"))
-	affected_mob.stamina.adjust(18 * REM * seconds_per_tick, FALSE)
+	affected_mob.stamina.adjust(18 * REM * seconds_per_tick, TRUE)
 	affected_mob.adjustToxLoss(0.5 * REM * seconds_per_tick, FALSE, required_biotype = affected_biotype)
 	if(SPT_PROB(30, seconds_per_tick))
 		affected_mob.losebreath++
@@ -797,7 +797,7 @@
 	if(!iscarbon(kronkaine_receptacle))
 		return
 	var/mob/living/carbon/druggo = kronkaine_receptacle
-	druggo.stamina.adjust(4 * trans_volume, 0)
+	druggo.stamina.adjust(4 * trans_volume, TRUE)
 	//I wish i could give it some kind of bonus when smoked, but we don't have an INHALE method.
 
 /datum/reagent/drug/kronkaine/on_mob_life(mob/living/carbon/kronkaine_fiend, seconds_per_tick, times_fired)

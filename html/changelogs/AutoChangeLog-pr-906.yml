@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - sound: "The talking sound effect will now also be a squeak if you're inhaling helium!"

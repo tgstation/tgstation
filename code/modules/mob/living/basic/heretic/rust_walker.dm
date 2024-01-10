@@ -1,6 +1,6 @@
 /// Pretty simple mob which creates areas of rust and has a rust-creating projectile spell
 /mob/living/basic/heretic_summon/rust_walker
-	name = "Rust Walker"
+	name = "\improper Rust Walker"
 	real_name = "Rusty"
 	desc = "A grinding, clanking construct which leaches life from its surroundings with every armoured step."
 	icon_state = "rust_walker_s"

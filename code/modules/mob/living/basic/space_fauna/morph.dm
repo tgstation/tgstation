@@ -21,6 +21,7 @@
 	obj_damage = 50
 	melee_damage_lower = 20
 	melee_damage_upper = 20
+	melee_attack_cooldown = CLICK_CD_MELEE
 
 	// Oh you KNOW it's gonna be real green
 	lighting_cutoff_red = 10
