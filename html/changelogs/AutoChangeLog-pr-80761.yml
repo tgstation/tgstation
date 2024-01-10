@@ -1,4 +1,0 @@
-author: "SomeRandomOwl"
-delete-after: True
-changes:
-  - bugfix: "Build Mode Export's options menu now knows when you want to cancel and not change the options"

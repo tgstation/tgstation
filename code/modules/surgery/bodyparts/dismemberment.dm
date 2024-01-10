@@ -186,36 +186,44 @@
 		return dismembering.apply_dismember(src, wounding_type)
 
 /obj/item/organ/internal/eyes/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.eyes = src
-	..()
+	if(istype(head))
+		head.eyes = src
+	return ..()
 
 /obj/item/organ/internal/ears/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.ears = src
-	..()
+	if(istype(head))
+		head.ears = src
+	return ..()
 
 /obj/item/organ/internal/tongue/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.tongue = src
-	..()
+	if(istype(head))
+		head.tongue = src
+	return ..()
 
 /obj/item/organ/internal/brain/on_bodypart_insert(obj/item/bodypart/head/head)
-	head.brain = src
-	..()
+	if(istype(head))
+		head.brain = src
+	return ..()
 
 /obj/item/organ/internal/eyes/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.eyes = null
-	..()
+	if(istype(head))
+		head.eyes = null
+	return ..()
 
 /obj/item/organ/internal/ears/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.ears = null
-	..()
+	if(istype(head))
+		head.ears = null
+	return ..()
 
 /obj/item/organ/internal/tongue/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.tongue = null
-	..()
+	if(istype(head))
+		head.tongue = null
+	return ..()
 
 /obj/item/organ/internal/brain/on_bodypart_remove(obj/item/bodypart/head/head)
-	head.brain = null
-	..()
+	if(istype(head))
+		head.brain = null
+	return ..()
 
 /obj/item/bodypart/chest/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(special)

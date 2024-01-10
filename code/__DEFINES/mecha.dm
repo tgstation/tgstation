@@ -6,7 +6,7 @@
 
 #define PANEL_OPEN (1<<0)
 #define ID_LOCK_ON (1<<1)
-#define CANSTRAFE (1<<2)
+#define CAN_STRAFE (1<<2)
 #define LIGHTS_ON (1<<3)
 #define SILICON_PILOT (1<<4)
 #define IS_ENCLOSED (1<<5)

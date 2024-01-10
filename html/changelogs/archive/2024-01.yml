@@ -153,3 +153,151 @@
   - bugfix: fixed an /image hard del in ghost code
   - bugfix: fixed a runtime in datum/thrownthing
   - code_imp: progressbars no longer qdel their /image
+2024-01-06:
+  13spacemen:
+  - qol: The hub entry shows the next map and shuttle time, and no longer shows the
+      alert
+  - qol: Ghosts can now view Wanted Status and Sec Records by examining people
+  Melbert:
+  - bugfix: Strong arm implant users can shove more correctly.
+  Sightld2:
+  - bugfix: Cyborgs no longer think they're hitting themselves when stunned with a
+      stun baton
+  SomeRandomOwl:
+  - bugfix: Build Mode Export's options menu now knows when you want to cancel and
+      not change the options
+  WarlockD:
+  - bugfix: Queen bee's made with cytology now work
+  intercepti0n:
+  - image: resprited onmob cone icon.
+  jlsnow301:
+  - bugfix: Having a netpod destroyed will no longer grant you permanent healing.
+  - bugfix: Search bars for smaller lists should return to their former responsiveness.
+  - bugfix: Randomization button in prefs should look normal again.
+  - bugfix: Quirk customization shouldn't close immediately.
+  mc-oofert:
+  - bugfix: conveyor belts no longer maintain movement if whatever is on them suddenly
+      leaves their z level
+  - bugfix: After a raid on the local drug mafia in the sector by TerraGov, the Russian
+      Mobsters no longer have access to easy drugs and as a result are no longer 24/7
+      running faster than the average spaceman.
+  - bugfix: the eZ-13 MK2 heavy pulse rifle does damage again
+  - bugfix: you can use your hand to make minebots go into combat mode again
+  necromanceranne:
+  - spellcheck: Corrects every misspelled 'kenetic' in the codebase.
+  vinylspiders:
+  - bugfix: fixes an image hard del
+  - code_imp: adds context to image hard dels to make them easier to track
+  - bugfix: fixes an /image harddel in station blueprints
+  - code_imp: cleaned up some more /image qdels
+2024-01-07:
+  13spacemen:
+  - bugfix: Hub shuttle time works correctly
+  LT3:
+  - bugfix: Morgue trays and freezing temperatures will no longer husk bodies
+  - bugfix: Organs outside bodies will properly receive cold damage
+  Mothblocks:
+  - balance: Instead of too much damage to the head beheading someone, it will now
+      split their skull in half. While their skull is open, you can rip out their
+      eyes with your hands. and they will spill their brain out of their head if they
+      slip.
+  - balance: The Path of Blades ascension will accept either a beheaded person, or
+      someone with their skull split open.
+  - rscdel: Removed the beheading objectives from traitor.
+  exdal:
+  - bugfix: Papers no longer crash tgui
+  - bugfix: Biogenerator no longer crash tgui
+2024-01-08:
+  13spacemen:
+  - bugfix: Jumping to C4 via ghost notification works again
+  DrDiasyl:
+  - qol: It is now possible to craft more Security bio suits
+  - qol: Bio-emergency crate from Cargo now contains a box of latex gloves and sterile
+      masks
+  Ghommie:
+  - bugfix: fixed coupon codes with expiration times.
+  - bugfix: Fixed H.A.R.S. fucking up the brains a little.
+  Majkl-J:
+  - bugfix: spasm_animation now correctly resets the transform, as it should
+  - bugfix: Spamming the weld on a robotic part no longer drains the fuel
+  Thunder12345:
+  - bugfix: The clown planet biodome and virtual domain can now be completed without
+      slipping directly into the exit.
+  fIoppie:
+  - qol: Cargo techs can now access the windoor in the delivery office on Delta.
+  jlsnow301:
+  - bugfix: Comms console should now update as you type.
+  mc-oofert:
+  - bugfix: vents that are turned off dont replay their animation if you go out of
+      sight and back in
+  - bugfix: adds missing navigation landmarks to tramstation
+  scriptis:
+  - refactor: some very large tgui lists (air alarms, all recipes techfab view, techweb
+      view) are loaded on-demand as you scroll, making them not lag so hard
+2024-01-09:
+  Melbert:
+  - bugfix: '"The sister and He Who Wept" Heretic painting will no longer cause big
+      lag'
+2024-01-10:
+  13spacemen:
+  - qol: If you can't heal a body part, you won't get a healing time delay. No more
+      spending 5 seconds healing a body part only to get a "can't heal that" message.
+  Absolucy:
+  - bugfix: Fixed the Codex Cicatrix always requiring a dead body, despite the description
+      saying leather or a hide would work too.
+  Chubbygummibear:
+  - bugfix: popup screen locs will work on clients >1614. Security cameras and Spyglass
+      will work
+  FlufflesTheDog:
+  - bugfix: Certain areas are now properly protected against grid check. Namely the
+      supermatter should consistently be protected.
+  Ghommie:
+  - bugfix: Fixed misfiring for firearms like tinkered detective revolvers.
+  IndieanaJones:
+  - bugfix: Dynamic midround rolls will properly consider roundstart players as part
+      of the living population again, allowing antagonists with a minimum population
+      value to spawn when they should be able to.
+  - bugfix: Players who observe before roundstart can be considered for midround ghost
+      roles again.
+  - bugfix: Some antagonists which had elements that scale with living station population
+      now function properly again.
+  JohnFulpWillard:
+  - bugfix: Refried beans and Spanish rice now lets you take the bowl back after eating
+      it.
+  - bugfix: Eldritch reagent (the one that heals heretics) now heal heretic monsters
+      rather than kill them.
+  - bugfix: The HoP's cartridge vending machine now sells regular PDAs instead of
+      base command ones.
+  LT3:
+  - bugfix: Unencoded server admin announcements will now actually broadcast
+  Melbert:
+  - admin: Several types are now more accessible via the "spawn" verb (and friends),
+      meaning you can type 'Spawn" Modsuit' or 'Spawn "Jumpsuit' in the command bar
+      and it'll just give you a list of modsuits or jumpsuits to pick from.
+  - bugfix: Lionhunter Rifle is now available at the same point as Mawed Crucible,
+      making it available to all paths again.
+  - bugfix: Lock knowledge now goes the correct order. Mark -> Ritual -> Unique item,
+      rather than backwards.
+  - balance: Blood cultists can now convert a Null Rod into a cult weapon on an offer
+      rune. The strength of the weapon it is converted into depends on how many cultists
+      the Chaplain crit / killed with it. At five or more, it will turn into a Bastard
+      Sword. Note, sacrificing someone holding a Null Rod will automatically convert
+      it after they are gibbed.
+  - balance: Heretics no longer produce a Bastard Sword upon cult conversion. They
+      are still immune to cult stun and cannot be converted by blood cultists.
+  - bugfix: Carps now migrate slightly better, probably.
+  - bugfix: And Poly now talks better, probably.
+  OrionTheFox:
+  - image: Resprited a majority of undershirts
+  SyncIt21:
+  - bugfix: ejecting cells from microwaves via ctrl click now requires player proximity.
+  - code_imp: smart fridge content overlay now uses `base_icon_state` instead of a
+      separate var
+  jlsnow301:
+  - bugfix: Medical records console should be useable again
+  - admin: Fixed the bluescreen in the centcom pod launcher.
+  zxaber:
+  - bugfix: Ripley MK-Is and Paddys now correctly make incoming projectiles hit the
+      pilot again.
+  - bugfix: The various borg apparatuses can no longer pick up other internal borg
+      tools.

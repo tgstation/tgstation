@@ -14,6 +14,7 @@ import {
   ProgressBar,
   Section,
   Tabs,
+  VirtualList,
 } from '../components';
 import { NtosWindow, Window } from '../layouts';
 import { Experiment } from './ExperimentConfigure';
@@ -309,9 +310,11 @@ const TechwebOverview = (props) => {
         </Flex>
       </Flex.Item>
       <Flex.Item className={'Techweb__OverviewNodes'} height="100%">
-        {displayedNodes.map((n) => {
-          return <TechNode node={n} key={n.id} />;
-        })}
+        <VirtualList key={tabIndex + searchText}>
+          {displayedNodes.map((n) => {
+            return <TechNode node={n} key={n.id} />;
+          })}
+        </VirtualList>
       </Flex.Item>
     </Flex>
   );
