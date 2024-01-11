@@ -634,7 +634,7 @@
 	/// The uid of this message
 	var/id
 	/// The admin who left this message
-	var/admin_ckey
+	var/admin_key
 	/// The text of this message
 	var/text
 	/// The time this message was first created
@@ -689,7 +689,7 @@
 	var/list/text = list()
 	for(var/datum/admin_message/message in get_message_output("message", display_to.ckey))
 		text += "<font color='[COLOR_RED]' size='3'><b>Admin message left by [span_prefix("[message.admin_key]")] on [message.timestamp]</b></font>"
-		text += "<br><font color='[COLOR_RED]'>[message.text] <A href='?_src_=[REF(display_to)];messageread=[message.id]'>(Click here to verify you have read this message)</A></font><br>"
+		text += "<br><font color='[COLOR_RED]'>[message.text] <A href='?messageread=[message.id]'>(Click here to verify you have read this message)</A></font><br>"
 	if(length(text))
 		to_chat(display_to, text.Join())
 
@@ -703,7 +703,7 @@
 
 /proc/display_admin_memos(client/display_to)
 	var/list/text = list()
-	for(var/datum/admin_message/message in get_message_output("memo", read_from.ckey))
+	for(var/datum/admin_message/message in get_message_output("memo", display_to.ckey))
 		text += "[span_memo("Memo by <span class='prefix'>[message.admin_key]")] on [message.timestamp]"
 		if(message.editor_key)
 			text += "<br>[span_memoedit("Last edit by [message.editor_key] <A href='?_src_=holder;[HrefToken()];messageedits=[message.id]'>(Click here to see edit log)</A>")]"
