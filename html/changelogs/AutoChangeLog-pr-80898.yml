@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Blood Drunk Miner (Hunter version) should dash a bit more."
