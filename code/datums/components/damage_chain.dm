@@ -61,7 +61,7 @@
 /datum/component/damage_chain/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 
-/datum/component/damage_chain/Destroy(force, silent)
+/datum/component/damage_chain/Destroy(force)
 	if (!QDELETED(chain))
 		UnregisterSignal(chain, COMSIG_QDELETING)
 		QDEL_NULL(chain)

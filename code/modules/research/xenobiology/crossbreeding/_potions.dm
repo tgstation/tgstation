@@ -28,7 +28,7 @@ Slimecrossing Potions
 		return
 	var/path = S.type
 	var/obj/item/slime_extract/C = new path(get_turf(target))
-	C.Uses = S.Uses
+	C.extract_uses = S.extract_uses
 	to_chat(user, span_notice("You pour the potion onto [target], and the fluid solidifies into a copy of it!"))
 	qdel(src)
 	return

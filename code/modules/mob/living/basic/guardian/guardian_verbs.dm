@@ -83,6 +83,7 @@
 	button_icon_state = "communicate"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
@@ -119,6 +120,7 @@
 	button_icon_state = "recall"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 0 SECONDS
 	melee_cooldown_time = 0
@@ -140,6 +142,7 @@
 	button_icon_state = "ghost"
 	background_icon = 'icons/hud/guardian.dmi'
 	background_icon_state = "base"
+	check_flags = NONE
 	click_to_activate = FALSE
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0
@@ -166,7 +169,7 @@
 		return FALSE
 
 	to_chat(owner, span_holoparasite("You attempt to reset <font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font>'s personality..."))
-	var/list/mob/dead/observer/ghost_candidates = poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", ROLE_PAI, FALSE, 100)
+	var/list/mob/dead/observer/ghost_candidates = SSpolling.poll_ghost_candidates("Do you want to play as [owner.real_name]'s [chosen_guardian.theme.name]?", check_jobban = ROLE_PAI, poll_time = 10 SECONDS, pic_source = chosen_guardian, role_name_text = chosen_guardian.theme.name)
 	if (!LAZYLEN(ghost_candidates))
 		to_chat(owner, span_holoparasite("Your attempt to reset the personality of \
 			<font color=\"[chosen_guardian.guardian_colour]\">[span_bold(chosen_guardian.real_name)]</font> appears to have failed... \

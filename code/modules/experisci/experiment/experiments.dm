@@ -40,12 +40,12 @@
 	total_requirement = 3
 	max_requirement_per_type = 2
 	possible_types = list(
+		/mob/living/basic/pet/cat,
 		/mob/living/basic/carp,
 		/mob/living/basic/chicken,
 		/mob/living/basic/cow,
 		/mob/living/basic/pet/dog/corgi,
 		/mob/living/basic/snake,
-		/mob/living/simple_animal/pet/cat,
 	)
 
 /datum/experiment/scanning/random/cytology/medium/one
@@ -319,7 +319,7 @@
 	description = "Your exosuit fabricators allow for rapid production on a small scale, but the structural integrity of created parts is inferior to more traditional means."
 	exp_tag = "Scan"
 	possible_types = list(/obj/vehicle/sealed/mecha)
-	total_requirement = 2
+	total_requirement = 1
 	///Damage percent that each mech needs to be at for a scan to work.
 	var/damage_percent
 
@@ -331,13 +331,23 @@
 
 /datum/experiment/scanning/random/mecha_damage_scan/final_contributing_index_checks(atom/target, typepath)
 	var/found_percent = round((target.get_integrity() / target.max_integrity) * 100)
-	return ..() && (found_percent <= (damage_percent + 2) && found_percent >= (damage_percent - 2))
+	return ..() && ISINRANGE(found_percent, damage_percent - 5, damage_percent + 5)
 
-/datum/experiment/scanning/random/mecha_destroyed_scan
-	name = "Exosuit Materials 2: Excessive Damage Test"
-	description = "As an extension of testing exosuit damage results, scanning examples of complete structural failure will accelerate our material stress simulations."
-	possible_types = list(/obj/structure/mecha_wreckage)
+/datum/experiment/scanning/random/mecha_equipped_scan
+	name = "Exosuit Materials 2: Load Strain Test"
+	description = "Exosuit equipment places unique strain upon the structure of the vehicle. Scan exosuits you have assembled from your exosuit fabricator and fully equipped to accelerate our structural stress simulations."
+	possible_types = list(/obj/vehicle/sealed/mecha)
 	total_requirement = 2
+
+/datum/experiment/scanning/random/mecha_equipped_scan/final_contributing_index_checks(atom/target, typepath)
+	var/obj/vehicle/sealed/mecha/stompy = target
+	if(!istype(stompy))
+		return FALSE //Not a mech
+	if(!HAS_TRAIT(stompy,TRAIT_MECHA_CREATED_NORMALLY))
+		return FALSE //Not hand-crafted
+	if(!(stompy.equip_by_category[MECHA_L_ARM] && stompy.equip_by_category[MECHA_R_ARM]))
+		return FALSE //Both arms need be filled
+	return ..()
 
 /// Scan for organs you didn't start the round with
 /datum/experiment/scanning/people/novel_organs

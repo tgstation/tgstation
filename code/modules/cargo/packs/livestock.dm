@@ -6,13 +6,13 @@
 	name = "Bird Crate"
 	desc = "Contains five expert telecommunication birds."
 	cost = CARGO_CRATE_VALUE * 8
-	contains = list(/mob/living/simple_animal/parrot)
+	contains = list(/mob/living/basic/parrot)
 	crate_name = "parrot crate"
 
 /datum/supply_pack/critter/parrot/generate()
 	. = ..()
 	for(var/i in 1 to 4)
-		new /mob/living/simple_animal/parrot(.)
+		new /mob/living/basic/parrot(.)
 
 /datum/supply_pack/critter/butterfly
 	name = "Butterflies Crate"
@@ -31,18 +31,22 @@
 	name = "Cat Crate"
 	desc = "The cat goes meow! Comes with a collar and a nice cat toy! Cheeseburger not included."//i can't believe im making this reference
 	cost = CARGO_CRATE_VALUE * 10 //Cats are worth as much as corgis.
-	contains = list(/mob/living/simple_animal/pet/cat,
-					/obj/item/clothing/neck/petcollar,
-					/obj/item/toy/cattoy,
-				)
+	contains = list(
+		/mob/living/basic/pet/cat,
+		/obj/item/clothing/neck/petcollar,
+		/obj/item/toy/cattoy,
+	)
 	crate_name = "cat crate"
 
 /datum/supply_pack/critter/cat/generate()
 	. = ..()
-	if(prob(50))
-		var/mob/living/simple_animal/pet/cat/C = locate() in .
-		qdel(C)
-		new /mob/living/simple_animal/pet/cat/_proc(.)
+	if(!prob(50))
+		return
+	var/mob/living/basic/pet/cat/delete_cat = locate() in .
+	if(isnull(delete_cat))
+		return
+	qdel(delete_cat)
+	new /mob/living/basic/pet/cat/_proc(.)
 
 /datum/supply_pack/critter/chick
 	name = "Chicken Crate"
@@ -218,6 +222,7 @@
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(/mob/living/basic/garden_gnome)
 	crate_name = "garden gnome crate"
+	discountable = SUPPLY_PACK_RARE_DISCOUNTABLE
 
 /datum/supply_pack/critter/garden_gnome/generate()
 	. = ..()

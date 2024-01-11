@@ -80,6 +80,10 @@
 	for(var/atom/close_atom as anything in range(1, src))
 		if(!ismovable(close_atom))
 			continue
+		if(isitem(close_atom))
+			var/obj/item/close_item = close_atom
+			if(close_item.item_flags & ABSTRACT) //woops sacrificed your own head
+				continue
 		if(close_atom.invisibility)
 			continue
 		if(close_atom == user)
@@ -116,7 +120,6 @@
 			if(length(banned_atom_types))
 				if(nearby_atom.type in banned_atom_types)
 					continue
-
 			// This item is a valid type. Add it to our selected atoms list.
 			selected_atoms |= nearby_atom
 			// If it's a stack, we gotta see if it has more than one inside,
@@ -178,6 +181,7 @@
 	// - If the ritual was success (Returned TRUE), proceede to clean up the atoms involved in the ritual. The result has already been spawned by this point.
 	// - If the ritual failed for some reason (Returned FALSE), likely due to no ghosts taking a role or an error, we shouldn't clean up anything, and reset.
 	var/ritual_result = ritual.on_finished_recipe(user, selected_atoms, loc)
+
 	if(ritual_result)
 		ritual.cleanup_atoms(selected_atoms)
 

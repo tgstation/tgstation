@@ -8,7 +8,7 @@
 
 	if(HAS_TRAIT(src, TRAIT_STASIS))
 		. = ..()
-		reagents.handle_stasis_chems(src, seconds_per_tick, times_fired)
+		reagents?.handle_stasis_chems(src, seconds_per_tick, times_fired)
 	else
 		//Reagent processing needs to come before breathing, to prevent edge cases.
 		handle_dead_metabolization(seconds_per_tick, times_fired) //Dead metabolization first since it can modify life metabolization.
@@ -27,11 +27,9 @@
 	if(stat == DEAD)
 		stop_sound_channel(CHANNEL_HEARTBEAT)
 	else
-
 		if(getStaminaLoss() > 0 && stam_regen_start_time <= world.time)
 			adjustStaminaLoss(-INFINITY)
-
-	handle_bodyparts(seconds_per_tick, times_fired)
+		handle_bodyparts(seconds_per_tick, times_fired)
 
 	if(. && mind) //. == not dead
 		for(var/key in mind.addiction_points)
@@ -454,7 +452,7 @@
 
 /mob/living/carbon/proc/handle_organs(seconds_per_tick, times_fired)
 	if(stat == DEAD)
-		if(reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane)) // No organ decay if the body contains formaldehyde.
+		if(reagents && (reagents.has_reagent(/datum/reagent/toxin/formaldehyde, 1) || reagents.has_reagent(/datum/reagent/cryostylane))) // No organ decay if the body contains formaldehyde.
 			return
 		for(var/obj/item/organ/internal/organ in organs)
 			// On-death is where organ decay is handled
@@ -475,13 +473,13 @@
 
 
 /mob/living/carbon/handle_diseases(seconds_per_tick, times_fired)
-	for(var/thing in diseases)
-		var/datum/disease/D = thing
-		if(SPT_PROB(D.infectivity, seconds_per_tick))
-			D.spread()
-
-		if(stat != DEAD || D.process_dead)
-			D.stage_act(seconds_per_tick, times_fired)
+	for(var/datum/disease/disease as anything in diseases)
+		if(QDELETED(disease)) //Got cured/deleted while the loop was still going.
+			continue
+		if(SPT_PROB(disease.infectivity, seconds_per_tick))
+			disease.spread()
+		if(stat != DEAD || disease.process_dead)
+			disease.stage_act(seconds_per_tick, times_fired)
 
 /mob/living/carbon/handle_wounds(seconds_per_tick, times_fired)
 	for(var/datum/wound/wound as anything in all_wounds)
@@ -535,9 +533,9 @@
  * - times_fired: The number of times SSmobs has ticked.
  */
 /mob/living/carbon/proc/handle_dead_metabolization(seconds_per_tick, times_fired)
-	if (stat != DEAD)
+	if(stat != DEAD)
 		return
-	reagents.metabolize(src, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE) // Your liver doesn't work while you're dead.
+	reagents?.metabolize(src, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE, dead = TRUE) // Your liver doesn't work while you're dead.
 
 /// Base carbon environment handler, adds natural stabilization
 /mob/living/carbon/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
@@ -769,12 +767,19 @@
  */
 /mob/living/carbon/proc/undergoing_cardiac_arrest()
 	var/obj/item/organ/internal/heart/heart = get_organ_slot(ORGAN_SLOT_HEART)
-	if(istype(heart) && heart.beating)
+	if(istype(heart) && heart.is_beating())
 		return FALSE
 	else if(!needs_heart())
 		return FALSE
 	return TRUE
 
+/**
+ * Causes the mob to either start or stop having a heart attack.
+ *
+ * status - Pass TRUE to start a heart attack, or FALSE to stop one.
+ *
+ * Returns TRUE if heart status was changed (heart attack -> no heart attack, or visa versa)
+ */
 /mob/living/carbon/proc/set_heartattack(status)
 	if(!can_heartattack())
 		return FALSE
@@ -783,5 +788,7 @@
 	if(!istype(heart))
 		return FALSE
 
-	heart.beating = !status
-	return TRUE
+	if(status)
+		return heart.Stop()
+
+	return heart.Restart()

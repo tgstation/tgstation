@@ -20,7 +20,7 @@
 
 /datum/round_event/ghost_role/space_dragon/spawn_role()
 
-	var/list/candidates = get_candidates(ROLE_SPACE_DRAGON, ROLE_SPACE_DRAGON)
+	var/list/candidates = SSpolling.poll_ghost_candidates(check_jobban = ROLE_SPACE_DRAGON, role = ROLE_SPACE_DRAGON, pic_source = /mob/living/basic/space_dragon)
 	if(!candidates.len)
 		return NOT_ENOUGH_PLAYERS
 

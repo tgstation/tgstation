@@ -1,12 +1,11 @@
 /datum/computer_file/program/radar //generic parent that handles most of the process
 	filename = "genericfinder"
 	filedesc = "debug_finder"
-	category = PROGRAM_CATEGORY_CREW
+	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	ui_header = "borg_mon.gif" //DEBUG -- new icon before PR
-	program_icon_state = "radarntos"
-	requires_ntnet = TRUE
-	available_on_ntnet = FALSE
-	usage_flags = PROGRAM_LAPTOP | PROGRAM_TABLET
+	program_open_overlay = "radarntos"
+	program_flags = PROGRAM_REQUIRES_NTNET
+	can_run_on_flags = PROGRAM_LAPTOP | PROGRAM_PDA
 	size = 5
 	tgui_id = "NtosRadar"
 	///List of trackable entities. Updated by the scan() proc.
@@ -15,7 +14,7 @@
 	var/selected
 	///Used to store when the next scan is available.
 	COOLDOWN_DECLARE(next_scan)
-	///Used to keep track of the last value program_icon_state was set to, to prevent constant unnecessary update_appearance() calls
+	///Used to keep track of the last value program_open_overlay was set to, to prevent constant unnecessary update_appearance() calls
 	var/last_icon_state = ""
 	///Used by the tgui interface, themed NT or Syndicate.
 	var/arrowstyle = "ntosradarpointer.png"
@@ -174,17 +173,17 @@
 //We use SSfastprocess for the program icon state because it runs faster than process_tick() does.
 /datum/computer_file/program/radar/process()
 	if(computer.active_program != src)
-		STOP_PROCESSING(SSfastprocess, src) //We're not the active program, it's time to stop.
-		return
+		//We're not the active program, it's time to stop.
+		return PROCESS_KILL
 	if(!selected)
 		return
 
 	var/atom/movable/signal = find_atom()
 	if(!trackable(signal))
-		program_icon_state = "[initial(program_icon_state)]lost"
-		if(last_icon_state != program_icon_state)
+		program_open_overlay = "[initial(program_open_overlay)]lost"
+		if(last_icon_state != program_open_overlay)
 			computer.update_appearance()
-			last_icon_state = program_icon_state
+			last_icon_state = program_open_overlay
 		return
 
 	var/here_turf = get_turf(computer)
@@ -192,17 +191,17 @@
 	var/trackdistance = get_dist_euclidian(here_turf, target_turf)
 	switch(trackdistance)
 		if(0)
-			program_icon_state = "[initial(program_icon_state)]direct"
+			program_open_overlay = "[initial(program_open_overlay)]direct"
 		if(1 to 12)
-			program_icon_state = "[initial(program_icon_state)]close"
+			program_open_overlay = "[initial(program_open_overlay)]close"
 		if(13 to 24)
-			program_icon_state = "[initial(program_icon_state)]medium"
+			program_open_overlay = "[initial(program_open_overlay)]medium"
 		if(25 to INFINITY)
-			program_icon_state = "[initial(program_icon_state)]far"
+			program_open_overlay = "[initial(program_open_overlay)]far"
 
-	if(last_icon_state != program_icon_state)
+	if(last_icon_state != program_open_overlay)
 		computer.update_appearance()
-		last_icon_state = program_icon_state
+		last_icon_state = program_open_overlay
 	computer.setDir(get_dir(here_turf, target_turf))
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
@@ -219,9 +218,8 @@
 	filename = "lifeline"
 	filedesc = "Lifeline"
 	extended_desc = "This program allows for tracking of crew members via their suit sensors."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_MEDICAL)
-	available_on_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	download_access = list(ACCESS_MEDICAL)
 	program_icon = "heartbeat"
 
 /datum/computer_file/program/radar/lifeline/find_atom()
@@ -259,9 +257,8 @@
 	filename = "custodiallocator"
 	filedesc = "Custodial Locator"
 	extended_desc = "This program allows for tracking of custodial equipment."
-	requires_ntnet = TRUE
-	transfer_access = list(ACCESS_JANITOR)
-	available_on_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
+	download_access = list(ACCESS_JANITOR)
 	program_icon = "broom"
 	size = 2
 	detomatix_resistance = DETOMATIX_RESIST_MINOR
@@ -284,8 +281,8 @@
 			var/obj/structure/mop_bucket/janitorialcart/janicart = custodial_tools
 			tool_name = "[janicart.name] - Water level: [janicart.reagents.total_volume] / [janicart.reagents.maximum_volume]"
 
-		if(istype(custodial_tools, /mob/living/simple_animal/bot/cleanbot))
-			var/mob/living/simple_animal/bot/cleanbot/cleanbots = custodial_tools
+		if(istype(custodial_tools, /mob/living/basic/bot/cleanbot))
+			var/mob/living/basic/bot/cleanbot/cleanbots = custodial_tools
 			tool_name = "[cleanbots.name] - [cleanbots.bot_mode_flags & BOT_MODE_ON ? "Online" : "Offline"]"
 
 		var/list/tool_information = list(
@@ -302,12 +299,9 @@
 /datum/computer_file/program/radar/fission360
 	filename = "fission360"
 	filedesc = "Fission360"
-	category = PROGRAM_CATEGORY_MISC
-	program_icon_state = "radarsyndicate"
+	program_open_overlay = "radarsyndicate"
 	extended_desc = "This program allows for tracking of nuclear authorization disks and warheads."
-	requires_ntnet = FALSE
-	available_on_ntnet = FALSE
-	available_on_syndinet = TRUE
+	program_flags = PROGRAM_ON_SYNDINET_STORE
 	tgui_id = "NtosRadarSyndicate"
 	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"

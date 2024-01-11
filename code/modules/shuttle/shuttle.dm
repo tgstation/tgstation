@@ -6,7 +6,7 @@
 //NORTH default dir
 /obj/docking_port
 	invisibility = INVISIBILITY_ABSTRACT
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "pinonfar"
 
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -515,7 +515,7 @@
 		var/max_x = WORLDMAXX_CUTOFF
 		var/max_y = WORLDMAXY_CUTOFF
 		for(var/area/area as anything in shuttle_areas)
-			for(var/turf/turf in area)
+			for(var/turf/turf as anything in area.get_contained_turfs())
 				min_x = max(turf.x, min_x)
 				max_x = min(turf.x, max_x)
 				min_y = max(turf.y, min_y)
@@ -820,12 +820,10 @@
 	var/list/L1 = return_ordered_turfs(S1.x, S1.y, S1.z, S1.dir)
 
 	var/list/ripple_turfs = list()
-
-	for(var/i in 1 to L0.len)
+	var/stop = min(L0.len, L1.len)
+	for(var/i in 1 to stop)
 		var/turf/T0 = L0[i]
 		var/turf/T1 = L1[i]
-		if(!T0 || !T1)
-			continue  // out of bounds
 		if(!istype(T0.loc, area_type) || istype(T0.loc, /area/shuttle/transit))
 			continue  // not part of the shuttle
 		ripple_turfs += T1

@@ -26,7 +26,7 @@
 	var/list/boosted_nodes = list()
 	/// Hidden nodes. id = TRUE. Used for unhiding nodes when requirements are met by removing the entry of the node.
 	var/list/hidden_nodes = list()
-	/// Items already deconstructed for a generic point boost, path = list(point_type = points)
+	/// List of items already deconstructed for research points, preventing infinite research point generation.
 	var/list/deconstructed_items = list()
 	/// Available research points, type = number
 	var/list/research_points = list()
@@ -46,11 +46,6 @@
 	/// That is, upon researching a node without completing its associated discounts, their experiments go here.
 	/// Completing these experiments will have a refund.
 	var/list/datum/experiment/skipped_experiment_types = list()
-
-	/// If science researches something without completing its discount experiments,
-	/// they have the option to complete them later for a refund
-	/// This ratio determines how much of the original discount is refunded
-	var/skipped_experiment_refund_ratio = 0.66
 
 	///All RD consoles connected to this individual techweb.
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
@@ -353,7 +348,7 @@
 	for(var/missed_experiment in node.discount_experiments)
 		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
 			continue
-		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment] * skipped_experiment_refund_ratio
+		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment]
 
 	// Gain the experiments from the new node
 	for(var/id in node.unlock_ids)
@@ -400,17 +395,17 @@
 	LAZYINITLIST(boosted_nodes[node.id])
 	for(var/point_type in pointlist)
 		boosted_nodes[node.id][point_type] = max(boosted_nodes[node.id][point_type], pointlist[point_type])
-	if(node.autounlock_by_boost)
-		hidden_nodes -= node.id
+	unhide_node(node)
 	update_node_status(node)
 	return TRUE
 
-/// Boosts a techweb node by using items.
-/datum/techweb/proc/boost_with_item(datum/techweb_node/node, itempath)
-	if(!istype(node) || !ispath(itempath))
+///Removes a node from the hidden_nodes list, making it viewable and researchable (if no experiments are required).
+/datum/techweb/proc/unhide_node(datum/techweb_node/node)
+	if(!istype(node))
 		return FALSE
-	var/list/boost_amount = node.boost_item_paths[itempath]
-	boost_techweb_node(node, boost_amount)
+	hidden_nodes -= node.id
+	///Make it available if the prereq ids are already researched
+	update_node_status(node)
 	return TRUE
 
 /datum/techweb/proc/update_tiers(datum/techweb_node/base)

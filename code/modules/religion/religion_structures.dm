@@ -18,6 +18,7 @@
 	reflect_sect_in_icons()
 	GLOB.chaplain_altars += src
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/altar_of_gods/Destroy()
 	GLOB.chaplain_altars -= src

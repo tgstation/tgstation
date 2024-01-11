@@ -137,6 +137,10 @@
 	to_chat(user, span_boldnotice("[A] materializes onto the floor!"))
 	return A
 
+///For special overrides if an item can be bought or not.
+/datum/uplink_item/proc/can_be_bought(datum/uplink_handler/source)
+	return TRUE
+
 /datum/uplink_category/discounts
 	name = "Discounted Gear"
 	weight = -1

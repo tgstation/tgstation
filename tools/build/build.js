@@ -7,7 +7,7 @@
  */
 
 import fs from 'fs';
-import { get } from 'http';
+import https from 'https';
 import { env } from 'process';
 import Juke from './juke/index.js';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
@@ -25,6 +25,29 @@ Juke.setup({ file: import.meta.url }).then((code) => {
 });
 
 const DME_NAME = 'tgstation';
+const CUTTER_SUFFIX = '.png.toml'
+
+// Stores the contents of dependencies.sh as a key value pair
+// Best way I could figure to get ahold of this stuff
+const dependencies = fs.readFileSync('dependencies.sh', 'utf8')
+  .split("\n")
+  .map((statement) => statement.replace("export", "").trim())
+  .filter((value) => !(value == "" || value.startsWith("#")))
+  .map((statement) => statement.split("="))
+  .reduce((acc, kv_pair) => {
+    acc[kv_pair[0]] = kv_pair[1];
+    return acc
+  }, {})
+
+// Canonical path for the cutter exe at this moment
+const getCutterPath = () => {
+  const ver = dependencies.CUTTER_VERSION;
+  const suffix = process.platform === 'win32' ? '.exe' : '';
+  const file_ver = ver.split('.').join('-');
+  return `tools/icon_cutter/cache/hypnagogic${file_ver}${suffix}`;
+};
+
+const cutter_path = getCutterPath();
 
 export const DefineParameter = new Juke.Parameter({
   type: 'string[]',
@@ -38,9 +61,14 @@ export const PortParameter = new Juke.Parameter({
 
 export const DmVersionParameter = new Juke.Parameter({
   type: 'string',
-})
+});
 
 export const CiParameter = new Juke.Parameter({ type: 'boolean' });
+
+export const ForceRecutParameter = new Juke.Parameter({
+  type: 'boolean',
+  name: "force_recut",
+});
 
 export const WarningParameter = new Juke.Parameter({
   type: 'string[]',
@@ -50,6 +78,89 @@ export const WarningParameter = new Juke.Parameter({
 export const NoWarningParameter = new Juke.Parameter({
   type: 'string[]',
   alias: 'NW',
+});
+
+export const CutterTarget = new Juke.Target({
+  onlyWhen: () => {
+    const files = Juke.glob(cutter_path);
+    return files.length == 0;
+  },
+  executes: async () => {
+    const repo = dependencies.CUTTER_REPO;
+    const ver = dependencies.CUTTER_VERSION;
+    const suffix = process.platform === 'win32' ? '.exe' : '';
+    const download_from = `https://github.com/${repo}/releases/download/${ver}/hypnagogic${suffix}`
+    await download_file(download_from, cutter_path);
+    if(process.platform !== 'win32') {
+      await Juke.exec("chmod", [
+        '+x',
+        cutter_path,
+      ]);
+    }
+  },
+});
+
+async function download_file(url, file) {
+  return new Promise((resolve, reject) => {
+    let file_stream = fs.createWriteStream(file);
+    https.get(url, function(response) {
+      if (response.statusCode === 302) {
+        file_stream.close();
+        download_file(response.headers.location, file)
+          .then((value) => resolve());
+        return;
+      }
+      if (response.statusCode !== 200) {
+        Juke.logger.error(`Failed to download ${url}: Status ${response.statusCode}`);
+        file_stream.close();
+        reject()
+        return
+      }
+      response.pipe(file_stream);
+
+      // after download completed close filestream
+      file_stream.on("finish", () => {
+        file_stream.close();
+        resolve()
+      });
+
+    }).on("error", (err) => {
+      file_stream.close();
+      Juke.rm(download_into);
+      Juke.logger.error(`Failed to download ${url}: ${err.message}`);
+      reject()
+    });
+  });
+}
+
+export const IconCutterTarget = new Juke.Target({
+  parameters: [ForceRecutParameter],
+  dependsOn: () => [
+    CutterTarget,
+  ],
+  inputs: [
+    'icons/**/*.png',
+    `icons/**/*${CUTTER_SUFFIX}`,
+    `cutter_templates/**/*${CUTTER_SUFFIX}`,
+    cutter_path,
+  ],
+  outputs: ({ get }) => {
+    if(get(ForceRecutParameter))
+      return [];
+    const folders = [
+      ...Juke.glob(`icons/**/*${CUTTER_SUFFIX}`),
+    ];
+    return folders
+      .map((file) => file.replace(`${CUTTER_SUFFIX}`, '.dmi'));
+  },
+  executes: async () => {
+    await Juke.exec(cutter_path, [
+      '--dont-wait',
+      '--templates',
+      'cutter_templates',
+      'icons',
+    ]);
+  },
 });
 
 export const DmMapsIncludeTarget = new Juke.Target({
@@ -73,9 +184,11 @@ export const DmTarget = new Juke.Target({
   parameters: [DefineParameter, DmVersionParameter, WarningParameter, NoWarningParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+    IconCutterTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',
+    'maps/**/*.dm',
     'code/**',
     'html/**',
     'icons/**',
@@ -106,6 +219,7 @@ export const DmTestTarget = new Juke.Target({
   parameters: [DefineParameter, DmVersionParameter, WarningParameter, NoWarningParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+    IconCutterTarget,
   ],
   executes: async ({ get }) => {
     fs.copyFileSync(`${DME_NAME}.dme`, `${DME_NAME}.test.dme`);
@@ -141,6 +255,7 @@ export const AutowikiTarget = new Juke.Target({
   parameters: [DefineParameter, DmVersionParameter, WarningParameter, NoWarningParameter],
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_MAPS') && DmMapsIncludeTarget,
+    IconCutterTarget,
   ],
   outputs: [
     'data/autowiki_edits.txt',
@@ -213,7 +328,7 @@ export const TguiTarget = new Juke.Target({
     'tgui/.yarn/install-target',
     'tgui/webpack.config.js',
     'tgui/**/package.json',
-    'tgui/packages/**/*.+(js|cjs|ts|tsx|scss)',
+    'tgui/packages/**/*.+(js|cjs|ts|tsx|jsx|scss)',
   ],
   outputs: [
     'tgui/public/tgui.bundle.css',
@@ -319,8 +434,6 @@ export const CleanTarget = new Juke.Target({
   dependsOn: [TguiCleanTarget],
   executes: async () => {
     Juke.rm('*.{dmb,rsc}');
-    Juke.rm('*.mdme*');
-    Juke.rm('*.m.*');
     Juke.rm('_maps/templates.dm');
   },
 });

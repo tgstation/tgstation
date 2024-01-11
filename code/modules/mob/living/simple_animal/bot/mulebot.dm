@@ -19,7 +19,7 @@
 	health = 50
 	maxHealth = 50
 	speed = 3
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	damage_coeff = list(BRUTE = 0.5, BURN = 0.7, TOX = 0, STAMINA = 0, OXY = 0)
 	combat_mode = TRUE //No swapping
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
@@ -151,7 +151,7 @@
 		return
 	if(!cell)
 		to_chat(user, span_warning("[src] doesn't have a power cell!"))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	cell.add_fingerprint(user)
 	if(Adjacent(user) && !issilicon(user))
 		user.put_in_hands(cell)
@@ -163,7 +163,7 @@
 	)
 	cell = null
 	diag_hud_set_mulebotcell()
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/simple_animal/bot/mulebot/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/stock_parts/cell) && bot_cover_flags & BOT_COVER_OPEN)
@@ -769,7 +769,7 @@
 		unload()
 
 /mob/living/simple_animal/bot/mulebot/UnarmedAttack(atom/A, proximity_flag, list/modifiers)
-	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
+	if(!can_unarmed_attack())
 		return
 	if(isturf(A) && isturf(loc) && loc.Adjacent(A) && load)
 		unload(get_dir(loc, A))

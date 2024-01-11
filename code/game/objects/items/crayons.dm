@@ -14,6 +14,7 @@
 
 #define AVAILABLE_SPRAYCAN_SPACE 8 // enough to fill one radial menu page
 
+#define DRAW_TIME 5 SECONDS
 #define INFINITE_CHARGES -1
 
 /*
@@ -367,7 +368,8 @@
 	.["has_cap"] = has_cap
 	.["is_capped"] = is_capped
 	.["can_change_colour"] = can_change_colour
-	.["current_colour"] = paint_color
+	.["selected_color"] = GLOB.pipe_color_name[paint_color] || paint_color
+	.["paint_colors"] = GLOB.pipe_paint_colors
 
 /obj/item/toy/crayon/ui_act(action, list/params)
 	. = ..()
@@ -390,8 +392,14 @@
 				text_buffer = ""
 			else
 				paint_mode = PAINT_NORMAL
-		if("select_colour")
+		if("custom_color")
 			. = can_change_colour && pick_painting_tool_color(usr, paint_color)
+		if("color")
+			if(!can_change_colour)
+				return
+			paint_color = GLOB.pipe_paint_colors[params["paint_color"]]
+			set_painting_tool_color(paint_color)
+			. = TRUE
 		if("enter_text")
 			var/txt = tgui_input_text(usr, "Choose what to write", "Scribbles", text_buffer)
 			if(isnull(txt))
@@ -497,11 +505,13 @@
 		audible_message(span_notice("You hear spraying."))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
-	var/wait_time = 50
+	var/wait_time = DRAW_TIME
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
+	if(istagger)
+		wait_time *= 0.5
 
-	if(!instant && !do_after(user, 50, target = target))
+	if(!instant && !do_after(user, wait_time, target = target))
 		return
 
 	if(!use_charges(user, cost))
@@ -755,6 +765,30 @@
 		/datum/component/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+	register_context()
+	register_item_context()
+
+/obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return .
+
+	if(has_cap)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle cap"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/toy/crayon/spraycan/add_item_context(datum/source, list/context, atom/target, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return .
+
+	context[SCREENTIP_CONTEXT_LMB] = "Paint"
+	context[SCREENTIP_CONTEXT_RMB] = "Copy color"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (isfloorturf(surface) || iswallturf(surface))
@@ -841,7 +875,6 @@
 		user.visible_message(span_notice("[user] coats [target] with spray paint!"), span_notice("You coat [target] with spray paint."))
 		return
 
-
 	if(isobj(target) && !(target.flags_1 & UNPAINTABLE_1))
 		var/color_is_dark = FALSE
 		if(actually_paints)
@@ -851,7 +884,26 @@
 				to_chat(user, span_warning("A color that dark on an object like this? Surely not..."))
 				return FALSE
 
-			target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+			if(istype(target, /obj/item/pipe))
+				if(GLOB.pipe_color_name.Find(paint_color))
+					var/obj/item/pipe/target_pipe = target
+					target_pipe.pipe_color = paint_color
+					target.add_atom_colour(paint_color, FIXED_COLOUR_PRIORITY)
+					balloon_alert(user, "painted in [GLOB.pipe_color_name[paint_color]] color")
+				else
+					balloon_alert(user, "invalid pipe color!")
+					return FALSE
+			else if(istype(target, /obj/machinery/atmospherics))
+				if(GLOB.pipe_color_name.Find(paint_color))
+					var/obj/machinery/atmospherics/target_pipe = target
+					target_pipe.paint(paint_color)
+					balloon_alert(user, "painted in  [GLOB.pipe_color_name[paint_color]] color")
+				else
+					balloon_alert(user, "invalid pipe color!")
+					return FALSE
+			else
+				target.add_atom_colour(paint_color, WASHABLE_COLOUR_PRIORITY)
+
 			if(isitem(target) && isliving(target.loc))
 				var/obj/item/target_item = target
 				var/mob/living/holder = target.loc
@@ -859,6 +911,7 @@
 					holder.update_held_items()
 				else
 					holder.update_clothing(target_item.slot_flags)
+
 		if(!(SEND_SIGNAL(target, COMSIG_OBJ_PAINTED, user, src, color_is_dark) & DONT_USE_SPRAYCAN_CHARGES))
 			use_charges(user, 2, requires_full = FALSE)
 		reagents.trans_to(target, ., volume_multiplier, transferred_by = user, methods = VAPOR)
@@ -890,7 +943,7 @@
 					part_image.overlays += image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.aux_zone]")
 				skins += list("[skin_option]" = part_image)
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
-			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
+			if(choice && (use_charges(user, 5, requires_full = FALSE)))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1014,3 +1067,4 @@
 #undef PAINT_LARGE_HORIZONTAL_ICON
 
 #undef INFINITE_CHARGES
+#undef DRAW_TIME

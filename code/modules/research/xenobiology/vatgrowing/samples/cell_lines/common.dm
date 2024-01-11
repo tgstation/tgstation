@@ -108,7 +108,7 @@
 		/datum/reagent/consumable/milk/chocolate_milk = -1)
 
 	virus_suspectibility = 1.5
-	resulting_atoms = list(/mob/living/simple_animal/pet/cat = 1) //The basic cat mobs are all male, so you mightt need a gender swap potion if you want to fill the fortress with kittens.
+	resulting_atoms = list(/mob/living/basic/pet/cat = 1)
 
 /datum/micro_organism/cell_line/corgi
 	desc = "Canid cells"
@@ -652,7 +652,7 @@
 		/datum/reagent/drug/nicotine = -1)
 
 	virus_suspectibility = 0
-	resulting_atoms = list(/obj/item/queen_bee = 1)
+	resulting_atoms = list(/obj/item/queen_bee/bought = 1)
 
 /datum/micro_organism/cell_line/queen_bee/fuck_up_growing(obj/machinery/plumbing/growing_vat/vat) //we love job hazards
 	vat.visible_message(span_warning("You hear angry buzzing coming from the inside of the vat!"))

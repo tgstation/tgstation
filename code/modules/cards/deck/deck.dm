@@ -188,10 +188,9 @@
 	if(. || !istype(target)) // was it caught or is the target not a living mob
 		return .
 
-	if(!throwingdatum?.thrower) // if a mob didn't throw it (need two people to play 52 pickup)
+	var/mob/living/thrower = throwingdatum?.get_thrower()
+	if(!thrower) // if a mob didn't throw it (need two people to play 52 pickup)
 		return
-
-	var/mob/living/thrower = throwingdatum.thrower
 
 	target.visible_message(span_warning("[target] is forced to play 52 card pickup!"), span_warning("You are forced to play 52 card pickup."))
 	target.add_mood_event("lost_52_card_pickup", /datum/mood_event/lost_52_card_pickup)

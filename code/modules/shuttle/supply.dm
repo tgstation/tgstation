@@ -135,7 +135,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	var/list/empty_turfs = list()
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/turf/open/floor/shuttle_turf in shuttle_area)
+		for(var/turf/open/floor/shuttle_turf in shuttle_area.get_contained_turfs())
 			if(shuttle_turf.is_blocked_turf())
 				continue
 			empty_turfs += shuttle_turf
@@ -195,10 +195,10 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			paying_for_this = spawning_order.paying_account
 			if(spawning_order.pack.goody)
 				LAZYADD(goodies_by_buyer[spawning_order.paying_account], spawning_order)
-			var/reciever_message = "Cargo order #[spawning_order.id] has shipped."
+			var/receiver_message = "Cargo order #[spawning_order.id] has shipped."
 			if(spawning_order.charge_on_purchase)
-				reciever_message += " [price] credits have been charged to your bank account"
-			paying_for_this.bank_card_talk(reciever_message)
+				receiver_message += " [price] credits have been charged to your bank account"
+			paying_for_this.bank_card_talk(receiver_message)
 			SSeconomy.track_purchase(paying_for_this, price, spawning_order.pack.name)
 			var/datum/bank_account/department/cargo = SSeconomy.get_dep_account(ACCOUNT_CAR)
 			cargo.adjust_money(price - pack_cost) //Cargo gets the handling fee
@@ -272,12 +272,13 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	var/datum/export_report/report = new
 
 	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
-		for(var/atom/movable/exporting_atom in shuttle_area)
-			if(iscameramob(exporting_atom))
-				continue
-			if(exporting_atom.anchored)
-				continue
-			export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
+		for(var/turf/shuttle_turf as anything in shuttle_area.get_contained_turfs())
+			for(var/atom/movable/exporting_atom in shuttle_turf)
+				if(iscameramob(exporting_atom))
+					continue
+				if(exporting_atom.anchored)
+					continue
+				export_item_and_contents(exporting_atom, apply_elastic = TRUE, dry_run = FALSE, external_report = report)
 
 	if(report.exported_atoms)
 		report.exported_atoms += "." //ugh
@@ -296,7 +297,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 /*
 	Generates a box of mail depending on our exports and imports.
 	Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
-	Then, fills the mail crate with mail, by picking applicable crew who can recieve mail at the time to sending.
+	Then, fills the mail crate with mail, by picking applicable crew who can receive mail at the time to sending.
 */
 /obj/docking_port/mobile/supply/proc/create_mail()
 	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
@@ -305,9 +306,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 	//spawn crate
 	var/list/empty_turfs = list()
-	for(var/place as anything in shuttle_areas)
-		var/area/shuttle/shuttle_area = place
-		for(var/turf/open/floor/shuttle_floor in shuttle_area)
+	for(var/area/shuttle/shuttle_area as anything in shuttle_areas)
+		for(var/turf/open/floor/shuttle_floor in shuttle_area.get_contained_turfs())
 			if(shuttle_floor.is_blocked_turf())
 				continue
 			empty_turfs += shuttle_floor

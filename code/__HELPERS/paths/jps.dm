@@ -38,7 +38,7 @@
 		f_value = number_tiles + heuristic
 	// otherwise, no parent node means this is from a subscan lateral scan, so we just need the tile for now until we call [datum/jps/proc/update_parent] on it
 
-/datum/jps_node/Destroy(force, ...)
+/datum/jps_node/Destroy(force)
 	previous_node = null
 	return ..()
 
@@ -50,7 +50,6 @@
 	heuristic = get_dist(tile, node_goal)
 	f_value = number_tiles + heuristic
 
-/// TODO: Macro this to reduce proc overhead
 /proc/HeapPathWeightCompare(datum/jps_node/a, datum/jps_node/b)
 	return b.f_value - a.f_value
 

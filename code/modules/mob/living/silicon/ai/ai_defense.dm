@@ -7,18 +7,8 @@
 			return
 		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
 		return
-	if(W.force && W.damtype != STAMINA && stat != DEAD && !QDELETED(src)) //only sparks if real damage is dealt.
-		spark_system.start()
+
 	return ..()
-
-/mob/living/silicon/ai/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(!SSticker.HasRoundStarted())
-		to_chat(user, "You cannot attack people before the game has started.")
-		return
-	..()
-
-/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
-	return //immune to slimes
 
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
@@ -76,11 +66,11 @@
 	balloon_alert(user, "[!is_anchored ? "tightening" : "loosening"] bolts...")
 	balloon_alert(src, "bolts being [!is_anchored ? "tightened" : "loosened"]...")
 	if(!tool.use_tool(src, user, 4 SECONDS))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	flip_anchored()
 	balloon_alert(user, "bolts [is_anchored ? "tightened" : "loosened"]")
 	balloon_alert(src, "bolts [is_anchored ? "tightened" : "loosened"]")
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/ai/crowbar_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -88,19 +78,19 @@
 		return
 	if(!is_anchored)
 		balloon_alert(user, "bolt it down first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(opened)
 		if(emagged)
 			balloon_alert(user, "access panel lock damaged!")
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		balloon_alert(user, "closing access panel...")
 		balloon_alert(src, "access panel being closed...")
 		if(!tool.use_tool(src, user, 5 SECONDS))
-			return TOOL_ACT_TOOLTYPE_SUCCESS
+			return ITEM_INTERACT_SUCCESS
 		balloon_alert(src, "access panel closed")
 		balloon_alert(user, "access panel closed")
 		opened = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(stat == DEAD)
 		to_chat(user, span_warning("The access panel looks damaged, you try dislodging the cover."))
 	else
@@ -116,24 +106,24 @@
 			consent = tgui_alert(src, "[user] is attempting to open your access panel, unlock the cover?", "AI Access Panel", list("Yes", "No"))
 			if(consent == "No" && !consent_override && !emagged)
 				to_chat(user, span_notice("[src] refuses to unlock its access panel."))
-				return TOOL_ACT_TOOLTYPE_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 			if(consent != "Yes" && (consent_override || emagged))
 				to_chat(user, span_warning("[src] refuses to unlock its access panel...so you[!emagged ? " swipe your ID and " : " "]open it anyway!"))
 		else
 			if(!consent_override && !emagged)
 				to_chat(user, span_notice("[src] did not respond to your request to unlock its access panel cover lock."))
-				return TOOL_ACT_TOOLTYPE_SUCCESS
+				return ITEM_INTERACT_SUCCESS
 			else
 				to_chat(user, span_notice("[src] did not respond to your request to unlock its access panel cover lock. You[!emagged ? " swipe your ID and " : " "]open it anyway."))
 
 	balloon_alert(user, "prying open access panel...")
 	balloon_alert(src, "access panel being pried open...")
 	if(!tool.use_tool(src, user, (stat == DEAD ? 40 SECONDS : 5 SECONDS)))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	balloon_alert(src, "access panel opened")
 	balloon_alert(user, "access panel opened")
 	opened = TRUE
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/silicon/ai/wirecutter_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -141,21 +131,20 @@
 		return
 	if(!is_anchored)
 		balloon_alert(user, "bolt it down first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(!opened)
 		balloon_alert(user, "open the access panel first!")
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	balloon_alert(src, "neural network being disconnected...")
 	balloon_alert(user, "disconnecting neural network...")
 	if(!tool.use_tool(src, user, (stat == DEAD ? 40 SECONDS : 5 SECONDS)))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
 	if(IS_MALF_AI(src))
 		to_chat(user, span_userdanger("The voltage inside the wires rises dramatically!"))
 		user.electrocute_act(120, src)
 		opened = FALSE
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	balloon_alert(user, "disconnected neural network")
+		return ITEM_INTERACT_SUCCESS
 	to_chat(src, span_danger("You feel incredibly confused and disorientated."))
-	if(!ai_mob_to_structure())
-		return TOOL_ACT_TOOLTYPE_SUCCESS
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	var/atom/ai_structure = ai_mob_to_structure()
+	ai_structure.balloon_alert(user, "disconnected neural network")
+	return ITEM_INTERACT_SUCCESS

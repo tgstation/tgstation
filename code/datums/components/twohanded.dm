@@ -56,7 +56,7 @@
 	if(require_twohands)
 		ADD_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS, ABSTRACT_ITEM_TRAIT)
 
-/datum/component/two_handed/Destroy(force, silent)
+/datum/component/two_handed/Destroy(force)
 	offhand_item = null
 	wield_callback = null
 	unwield_callback = null
@@ -173,17 +173,25 @@
 /datum/component/two_handed/proc/wield(mob/living/carbon/user)
 	if(wielded)
 		return
+	var/atom/atom_parent = parent
+	if(HAS_TRAIT(user, TRAIT_NO_TWOHANDING))
+		if(require_twohands)
+			atom_parent.balloon_alert(user, "too weak to wield!")
+			user.dropItemToGround(parent, force = TRUE)
+		else
+			atom_parent.balloon_alert(user, "too weak to wield with both hands!")
+		return
 	if(user.get_inactive_held_item())
 		if(require_twohands)
-			to_chat(user, span_notice("[parent] is too cumbersome to carry in one hand!"))
-			user.dropItemToGround(parent, force=TRUE)
+			atom_parent.balloon_alert(user, "can't carry in one hand!")
+			user.dropItemToGround(parent, force = TRUE)
 		else
-			to_chat(user, span_warning("You need your other hand to be empty!"))
+			atom_parent.balloon_alert(user, "holding something in other hand!")
 		return
 	if(user.usable_hands < 2)
 		if(require_twohands)
 			user.dropItemToGround(parent, force=TRUE)
-		to_chat(user, span_warning("You don't have enough intact hands."))
+		atom_parent.balloon_alert(user, "not enough hands!")
 		return
 
 	// wield update status

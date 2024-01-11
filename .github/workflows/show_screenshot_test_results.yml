@@ -13,7 +13,7 @@ jobs:
   show_screenshot_test_results:
     if: ( !contains(github.event.head_commit.message, '[ci skip]') && github.event.workflow_run.run_attempt == 1 )
     name: Show Screenshot Test Results
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: "Check for ARTIFACTS_FILE_HOUSE_KEY"
         id: secrets_set

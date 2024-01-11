@@ -342,7 +342,7 @@ GLOBAL_VAR(restart_counter)
 	AUXTOOLS_FULL_SHUTDOWN(AUXLUA)
 	var/debug_server = world.GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (debug_server)
-		LIBCALL(debug_server, "auxtools_shutdown")()
+		call_ext(debug_server, "auxtools_shutdown")()
 
 /world/Del()
 	auxcleanup()
@@ -381,11 +381,12 @@ GLOBAL_VAR(restart_counter)
 		new_status += ": [jointext(features, ", ")]"
 
 	new_status += "<br>Time: <b>[gameTimestamp("hh:mm")]</b>"
+	if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
+		new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
 	if(SSmapping.config)
 		new_status += "<br>Map: <b>[SSmapping.config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.config.map_name]</b>"
-	var/alert_text = SSsecurity_level.get_current_level_as_text()
-	if(alert_text)
-		new_status += "<br>Alert: <b>[capitalize(alert_text)]</b>"
+	if(SSmapping.next_map_config)
+		new_status += "[SSmapping.config ? " | " : "<br>"]Next: <b>[SSmapping.next_map_config.map_path == CUSTOM_MAP_PATH ? "Uncharted Territory" : SSmapping.next_map_config.map_name]</b>"
 
 	status = new_status
 
@@ -468,14 +469,14 @@ GLOBAL_VAR(restart_counter)
 		else
 			CRASH("Unsupported platform: [system_type]")
 
-	var/init_result = LIBCALL(library, "init")("block")
+	var/init_result = call_ext(library, "init")("block")
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
 /world/proc/init_debugger()
 	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
 	if (dll)
-		LIBCALL(dll, "auxtools_init")()
+		call_ext(dll, "auxtools_init")()
 		enable_debugging()
 
 /world/Profile(command, type, format)

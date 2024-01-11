@@ -248,7 +248,9 @@
 		/obj/machinery/power/apc,
 	)
 
-	for(var/obj/machine as anything in area)
-		if(is_type_in_list(machine, to_rename))
+	for(var/turf/area_turf as anything in area.get_contained_turfs())
+		for(var/obj/machine in area_turf)
+			if(!is_type_in_list(machine, to_rename))
+				continue
 			machine.name = replacetext(machine.name, oldtitle, title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

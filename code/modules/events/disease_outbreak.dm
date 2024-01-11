@@ -49,7 +49,7 @@
  * Creates a list of people who are elligible to become disease carriers for the event
  *
  * Searches through the player list, adding anyone who is elligible to be a disease carrier for the event. This checks for
- * whether or not the candidate is alive, a crewmember, is able to recieve a disease, and whether or not a disease is already present in them.
+ * whether or not the candidate is alive, a crewmember, is able to receive a disease, and whether or not a disease is already present in them.
  * This proc needs to be run at some point to ensure the event has candidates to infect.
  */
 /datum/round_event_control/disease_outbreak/proc/generate_candidates()
@@ -61,11 +61,13 @@
 			continue
 		if(length(candidate.diseases)) //Is our candidate already sick?
 			continue
+		if(!is_station_level(candidate.z) && !is_mining_level(candidate.z)) //Diseases can't really spread if the vector is in deep space.
+			continue
 		disease_candidates += candidate
 
 ///Handles checking and alerting admins about the number of valid candidates
 /datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak
-	output_text = "There are no candidates eligible to recieve a disease!"
+	output_text = "There are no candidates eligible to receive a disease!"
 
 /datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak/count_candidates()
 	var/datum/round_event_control/disease_outbreak/disease_control = event_control
@@ -100,6 +102,23 @@
 	var/list/afflicted = list()
 
 /datum/round_event/disease_outbreak/announce(fake)
+	if(isnull(illness_type))
+		var/list/virus_candidates = list(
+			/datum/disease/anxiety,
+			/datum/disease/beesease,
+			/datum/disease/brainrot,
+			/datum/disease/cold9,
+			/datum/disease/flu,
+			/datum/disease/fluspanish,
+			/datum/disease/magnitis,
+			/// And here are some that will never roll for real, just to mess around.
+			/datum/disease/death_sandwich_poisoning,
+			/datum/disease/dna_retrovirus,
+			/datum/disease/gbs,
+			/datum/disease/rhumba_beat,
+		)
+		var/datum/disease/fake_virus = pick(virus_candidates)
+		illness_type = initial(fake_virus.name)
 	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[illness_type] Alert", ANNOUNCER_OUTBREAK7)
 
 /datum/round_event/disease_outbreak/setup()
@@ -139,7 +158,8 @@
 			return
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
-		log_game("Event Disease Outbreak: Classic attempted to start, but failed.")
+		message_admins("Event Disease Outbreak: Classic attempted to start, but failed to find a candidate target.")
+		log_game("Event Disease Outbreak: Classic attempted to start, but failed to find a candidate target")
 
 /datum/round_event_control/disease_outbreak/advanced
 	name = "Disease Outbreak: Advanced"
@@ -275,7 +295,8 @@
 			return
 		CHECK_TICK //don't lag the server to death
 	if(isnull(victim))
-		log_game("Event Disease Outbreak: Advanced attempted to start, but failed.")
+		message_admins("Event Disease Outbreak: Advanced attempted to start, but failed to find a candidate target.")
+		log_game("Event Disease Outbreak: Advanced attempted to start, but failed to find a candidate target.")
 
 /datum/disease/advance/random/event
 	name = "Event Disease"

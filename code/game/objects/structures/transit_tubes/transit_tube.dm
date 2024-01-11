@@ -20,6 +20,7 @@
 	init_tube_dirs()
 	update_appearance()
 	AddElement(/datum/element/climbable)
+	AddElement(/datum/element/elevation, pixel_shift = 12)
 
 /obj/structure/transit_tube/Destroy()
 	for(var/obj/structure/transit_tube_pod/P in loc)

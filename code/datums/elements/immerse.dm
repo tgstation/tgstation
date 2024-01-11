@@ -96,8 +96,8 @@
 /datum/element/immerse/proc/stop_immersion(turf/source)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, list(COMSIG_ATOM_ABSTRACT_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, COMSIG_ATOM_ABSTRACT_EXITED))
-	for(var/atom/movable/movable as anything in attached_turfs_and_movables[source])
-		remove_from_element(source, movable)
+	for(var/datum/weakref/movable as anything in attached_turfs_and_movables[source])
+		remove_from_element(source, movable.resolve())
 	attached_turfs_and_movables -= source
 
 /**
@@ -109,7 +109,7 @@
 	SIGNAL_HANDLER
 	if(HAS_TRAIT(movable, TRAIT_IMMERSED))
 		return
-	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE_UPPER_FOV_HIDDEN, source)))
+	if(movable.layer >= ABOVE_ALL_MOB_LAYER || !ISINRANGE(movable.plane, MUTATE_PLANE(FLOOR_PLANE, source), MUTATE_PLANE(GAME_PLANE, source)))
 		return
 	if(is_type_in_typecache(movable, movables_to_ignore))
 		return
@@ -122,7 +122,7 @@
 
 	try_immerse(movable, buckled)
 	RegisterSignal(movable, COMSIG_QDELETING, PROC_REF(on_movable_qdel))
-	LAZYADD(attached_turfs_and_movables[source], movable)
+	LAZYADD(attached_turfs_and_movables[source], WEAKREF(movable))
 	ADD_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
 
 /datum/element/immerse/proc/on_movable_qdel(atom/movable/source)
@@ -170,7 +170,7 @@
 
 	movable.vis_contents |= vis_overlay
 
-	LAZYSET(immersed_movables, movable, vis_overlay)
+	LAZYSET(immersed_movables, WEAKREF(movable), vis_overlay)
 
 ///Initializes and caches a new visual overlay given parameters such as width, height and whether it should appear fully underwater.
 /datum/element/immerse/proc/generate_vis_overlay(width, height, is_below_water)
@@ -212,11 +212,11 @@
 
 ///This proc removes the vis_overlay, the keep together trait and some signals from the movable.
 /datum/element/immerse/proc/remove_immerse_overlay(atom/movable/movable)
-	var/atom/movable/immerse_overlay/vis_overlay = LAZYACCESS(immersed_movables, movable)
+	var/atom/movable/immerse_overlay/vis_overlay = LAZYACCESS(immersed_movables, WEAKREF(movable))
 	if(!vis_overlay)
 		return
 	movable.vis_contents -= vis_overlay
-	LAZYREMOVE(immersed_movables, movable)
+	LAZYREMOVE(immersed_movables, WEAKREF(movable))
 	if(HAS_TRAIT(movable, TRAIT_UNIQUE_IMMERSE))
 		UnregisterSignal(movable, list(COMSIG_ATOM_SPIN_ANIMATION, COMSIG_LIVING_POST_UPDATE_TRANSFORM))
 		qdel(vis_overlay)
@@ -229,7 +229,7 @@
  */
 /datum/element/immerse/proc/try_immerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
-	if(!(to_check.movement_type & (FLYING|FLOATING)) && !movable.throwing)
+	if(!(to_check.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !movable.throwing)
 		add_immerse_overlay(movable)
 	if(!buckled)
 		RegisterSignal(movable, COMSIG_MOVETYPE_FLAG_ENABLED, PROC_REF(on_move_flag_enabled))
@@ -243,7 +243,7 @@
  */
 /datum/element/immerse/proc/try_unimmerse(atom/movable/movable, atom/movable/buckled)
 	var/atom/movable/to_check = buckled || movable
-	if(!(to_check.movement_type & (FLYING|FLOATING)) && !movable.throwing)
+	if(!(to_check.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !movable.throwing)
 		remove_immerse_overlay(movable)
 	if(!buckled)
 		UnregisterSignal(movable, list(COMSIG_MOVETYPE_FLAG_ENABLED, COMSIG_MOVETYPE_FLAG_DISABLED, COMSIG_MOVABLE_POST_THROW, COMSIG_MOVABLE_THROW_LANDED))
@@ -256,7 +256,7 @@
 ///Removes the overlay from mob and bucklees is flying.
 /datum/element/immerse/proc/on_move_flag_enabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
-	if(!(flag & (FLYING|FLOATING)) || old_movement_type & (FLYING|FLOATING) || source.throwing)
+	if(!(flag & MOVETYPES_NOT_TOUCHING_GROUND) || (old_movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || source.throwing)
 		return
 	remove_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
@@ -265,7 +265,7 @@
 ///Works just like on_move_flag_enabled, except it only has to check that movable isn't flying
 /datum/element/immerse/proc/on_throw(atom/movable/source)
 	SIGNAL_HANDLER
-	if(source.movement_type & (FLYING|FLOATING))
+	if(source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
 	remove_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
@@ -274,7 +274,7 @@
 ///Readds the overlay to the mob and bucklees if no longer flying.
 /datum/element/immerse/proc/on_move_flag_disabled(atom/movable/source, flag, old_movement_type)
 	SIGNAL_HANDLER
-	if(!(flag & (FLYING|FLOATING)) || source.movement_type & (FLYING|FLOATING) || source.throwing)
+	if(!(flag & MOVETYPES_NOT_TOUCHING_GROUND) || (source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || source.throwing)
 		return
 	add_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
@@ -283,7 +283,7 @@
 ///Works just like on_move_flag_disabled, except it only has to check that movable isn't flying
 /datum/element/immerse/proc/on_throw_landed(atom/movable/source)
 	SIGNAL_HANDLER
-	if(source.movement_type & (FLYING|FLOATING))
+	if(source.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
 		return
 	add_immerse_overlay(source)
 	for(var/mob/living/buckled_mob as anything in source.buckled_mobs)
@@ -298,8 +298,8 @@
 	if(!(exited.loc in attached_turfs_and_movables))
 		remove_from_element(source, exited)
 	else
-		LAZYREMOVE(attached_turfs_and_movables[source], exited)
-		LAZYADD(attached_turfs_and_movables[exited.loc], exited)
+		LAZYREMOVE(attached_turfs_and_movables[source], WEAKREF(exited))
+		LAZYADD(attached_turfs_and_movables[exited.loc], WEAKREF(exited))
 
 ///Remove any signal, overlay, trait given to the movable and reference to it within the element.
 /datum/element/immerse/proc/remove_from_element(turf/source, atom/movable/movable)
@@ -311,7 +311,7 @@
 
 	UnregisterSignal(movable, list(COMSIG_LIVING_SET_BUCKLED, COMSIG_QDELETING))
 	REMOVE_TRAIT(movable, TRAIT_IMMERSED, ELEMENT_TRAIT(src))
-	LAZYREMOVE(attached_turfs_and_movables[source], movable)
+	LAZYREMOVE(attached_turfs_and_movables[source], WEAKREF(movable))
 
 /// A band-aid to keep the (unique) visual overlay from scaling and rotating along with its owner. I'm sorry.
 /datum/element/immerse/proc/on_update_transform(mob/living/source, resize, new_lying_angle, is_opposite_angle)
@@ -320,7 +320,7 @@
 	new_transform.Scale(1/source.current_size)
 	new_transform.Turn(-new_lying_angle)
 
-	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[source]
+	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[WEAKREF(source)]
 	if(is_opposite_angle)
 		vis_overlay.transform = new_transform
 		vis_overlay.adjust_living_overlay_offset(source)
@@ -361,7 +361,7 @@
 ///Spin the overlay in the opposite direction so it doesn't look like it's spinning at all.
 /datum/element/immerse/proc/on_spin_animation(atom/source, speed, loops, segments, segment)
 	SIGNAL_HANDLER
-	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[source]
+	var/atom/movable/immerse_overlay/vis_overlay = immersed_movables[WEAKREF(source)]
 	vis_overlay.do_spin_animation(speed, loops, segments, -segment)
 
 ///We need to make sure to remove hard refs from the element when deleted.

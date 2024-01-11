@@ -76,6 +76,7 @@ do { \
 
 /obj/item/clothing/glasses/chameleon
 	name = "Optical Meson Scanner"
+	flags_cover = GLASSESCOVERSEYES
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting condition."
 	icon_state = "meson"
 	inhand_icon_state = "meson"

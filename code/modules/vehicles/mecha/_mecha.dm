@@ -10,7 +10,7 @@
  * AI also has special checks becaus it gets in and out of the mech differently
  * Always call remove_occupant(mob) when leaving the mech so the mob is removed properly
  *
- * For multi-crew, you need to set how the occupants recieve ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
+ * For multi-crew, you need to set how the occupants receive ability bitflags corresponding to their status on the vehicle(i.e: driver, gunner etc)
  * Abilities can then be set to only apply for certain bitflags and are assigned as such automatically
  *
  * Clicks are wither translated into mech_melee_attack (see mech_melee_attack.dm)
@@ -54,7 +54,7 @@
 	/// Keeps track of the mech's servo motor
 	var/obj/item/stock_parts/servo/servo
 	///Contains flags for the mecha
-	var/mecha_flags = CANSTRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
+	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE
 
 	///Spark effects are handled by this datum
 	var/datum/effect_system/spark_spread/spark_system
@@ -70,8 +70,6 @@
 	var/bumpsmash = FALSE
 
 	///////////ATMOS
-	///Whether the pilot is hidden from the outside viewers and whether the cabin can be sealed to be airtight
-	var/enclosed = TRUE
 	///Whether the cabin exchanges gases with the environment
 	var/cabin_sealed = FALSE
 	///Internal air mix datum
@@ -267,6 +265,7 @@
 			equip_by_category[key] -= path
 
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
+	AddElement(/datum/element/hostile_machine)
 
 /obj/vehicle/sealed/mecha/Destroy()
 	for(var/ejectee in occupants)
@@ -396,7 +395,7 @@
 
 /obj/vehicle/sealed/mecha/generate_actions()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_eject)
-	if(enclosed)
+	if(mecha_flags & IS_ENCLOSED)
 		initialize_controller_action_type(/datum/action/vehicle/sealed/mecha/mech_toggle_cabin_seal, VEHICLE_CONTROL_SETTINGS)
 	if(can_use_overclock)
 		initialize_passenger_action_type(/datum/action/vehicle/sealed/mecha/mech_overclock)
@@ -467,7 +466,7 @@
 			. += span_warning("It's missing a capacitor.")
 		if(!scanmod)
 			. += span_warning("It's missing a scanning module.")
-	if(enclosed)
+	if(mecha_flags & IS_ENCLOSED)
 		return
 	if(mecha_flags & SILICON_PILOT)
 		. += span_notice("[src] appears to be piloting itself...")
@@ -521,7 +520,8 @@
 	if(!overclock_mode && overclock_temp > 0)
 		overclock_temp -= seconds_per_tick
 		return
-	overclock_temp = min(overclock_temp + seconds_per_tick, overclock_temp_danger * 2)
+	var/temp_gain = seconds_per_tick * (1 + 1 / movedelay)
+	overclock_temp = min(overclock_temp + temp_gain, overclock_temp_danger * 2)
 	if(overclock_temp < overclock_temp_danger)
 		return
 	if(overclock_temp >= overclock_temp_danger && overclock_safety)
@@ -572,10 +572,10 @@
 
 /obj/vehicle/sealed/mecha/proc/process_occupants(seconds_per_tick)
 	for(var/mob/living/occupant as anything in occupants)
-		if(!enclosed && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
+		if(!(mecha_flags & IS_ENCLOSED) && occupant?.incapacitated()) //no sides mean it's easy to just sorta fall out if you're incapacitated.
 			mob_exit(occupant, randomstep = TRUE) //bye bye
 			continue
-		if(cell)
+		if(cell && cell.maxcharge)
 			var/cellcharge = cell.charge/cell.maxcharge
 			switch(cellcharge)
 				if(0.75 to INFINITY)
@@ -588,6 +588,8 @@
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/lowcell/mech, 3)
 				else
 					occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/emptycell/mech)
+		else
+			occupant.throw_alert(ALERT_CHARGE, /atom/movable/screen/alert/nocell)
 		var/integrity = atom_integrity/max_integrity*100
 		switch(integrity)
 			if(30 to 45)
@@ -721,12 +723,12 @@
 /////////////////////////////////////
 
 /obj/vehicle/sealed/mecha/remove_air(amount)
-	if(enclosed && cabin_sealed)
+	if((mecha_flags & IS_ENCLOSED) && cabin_sealed)
 		return cabin_air.remove(amount)
 	return ..()
 
 /obj/vehicle/sealed/mecha/return_air()
-	if(enclosed && cabin_sealed)
+	if((mecha_flags & IS_ENCLOSED) && cabin_sealed)
 		return cabin_air
 	return ..()
 
@@ -745,7 +747,7 @@
 
 ///makes cabin unsealed, dumping cabin air outside or airtight filling the cabin with external air mix
 /obj/vehicle/sealed/mecha/proc/set_cabin_seal(mob/user, cabin_sealed)
-	if(!enclosed)
+	if(!(mecha_flags & IS_ENCLOSED))
 		balloon_alert(user, "cabin can't be sealed!")
 		log_message("Tried to seal cabin. This mech can't be airtight.", LOG_MECHA)
 		return

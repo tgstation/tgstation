@@ -57,7 +57,7 @@
 	return if_no_id
 
 //repurposed proc. Now it combines get_id_name() and get_face_name() to determine a mob's name variable. Made into a separate proc as it'll be useful elsewhere
-/mob/living/carbon/human/get_visible_name()
+/mob/living/carbon/human/get_visible_name(add_id_name = TRUE)
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		return "Unknown"
 	var/list/identity = list(null, null)
@@ -67,7 +67,7 @@
 	var/face_name = !isnull(signal_face) ? signal_face : get_face_name("")
 	var/id_name = !isnull(signal_id) ? signal_id : get_id_name("")
 	if(face_name)
-		if(id_name && (id_name != face_name))
+		if(add_id_name && id_name && (id_name != face_name))
 			return "[face_name] (as [id_name])"
 		return face_name
 	if(id_name)
@@ -83,7 +83,7 @@
 	if( head && (head.flags_inv&HIDEFACE) )
 		return if_no_face //Likewise for hats
 	var/obj/item/bodypart/O = get_bodypart(BODY_ZONE_HEAD)
-	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || cloneloss>50 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
+	if( !O || (HAS_TRAIT(src, TRAIT_DISFIGURED)) || (O.brutestate+O.burnstate)>2 || !real_name || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN)) //disfigured. use id-name if possible
 		return if_no_face
 	return real_name
 
@@ -91,7 +91,7 @@
 //Useful when player is being seen by other mobs
 /mob/living/carbon/human/proc/get_id_name(if_no_id = "Unknown")
 	var/obj/item/storage/wallet/wallet = wear_id
-	var/obj/item/modular_computer/pda/pda = wear_id
+	var/obj/item/modular_computer/pda = wear_id
 	var/obj/item/card/id/id = wear_id
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))
 		. = if_no_id //You get NOTHING, no id name, good day sir
@@ -234,7 +234,7 @@
 	var/t_his = p_their()
 	var/t_is = p_are()
 	//This checks to see if the body is revivable
-	if(key || !get_organ_by_type(/obj/item/organ/internal/brain) || ghost?.can_reenter_corpse || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE))
+	if(get_organ_by_type(/obj/item/organ/internal/brain) && (client || HAS_TRAIT(src, TRAIT_MIND_TEMPORARILY_GONE) || (ghost?.can_reenter_corpse && ghost?.client)))
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life...")
 	else
 		return span_deadsay("[t_He] [t_is] limp and unresponsive; there are no signs of life and [t_his] soul has departed...")

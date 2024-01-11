@@ -18,9 +18,9 @@
 	point_at(hallucinator)
 	talk("[capitalize(hallucinator.real_name)]!!!!") // Your mother won't be fooled by paltry disguises
 	var/list/scold_lines = list(
-		pick(list("CLEAN YOUR ROOM THIS INSTANT!", "IT'S TIME TO WAKE UP FOR SCHOOL!!")),
-		pick(list("YOU INSULT YOUR GRANDPARENTS!", "USELESS!")),
-		pick(list("I BROUGHT YOU INTO THIS WORLD, I CAN TAKE YOU OUT!!!", "YOU'RE GROUNDED!!")),
+		pick_list_replacements(MOTHER_FILE, "do_something"),
+		pick_list_replacements(MOTHER_FILE, "be_upset"),
+		pick_list_replacements(MOTHER_FILE, "get_reprimanded"),
 	)
 	var/delay = 2 SECONDS
 	for(var/line in scold_lines)

@@ -11,6 +11,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/list/selectable_traits_by_types = list(STATION_TRAIT_POSITIVE = list(), STATION_TRAIT_NEUTRAL = list(), STATION_TRAIT_NEGATIVE = list())
 	///Currently active announcer. Starts as a type but gets initialized after traits are selected
 	var/datum/centcom_announcer/announcer = /datum/centcom_announcer/default
+	///A list of trait roles that should be protected from antag
+	var/list/antag_protected_roles = list()
+	///A list of trait roles that should never be able to roll antag
+	var/list/antag_restricted_roles = list()
 
 /datum/controller/subsystem/processing/station/Initialize()
 
@@ -18,6 +22,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
 	SetupTraits()
+	display_lobby_traits()
 	#endif
 
 	announcer = new announcer() //Initialize the station's announcer datum
@@ -57,7 +62,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 			setup_trait(trait_typepath)
 			continue
 
-		if(initial(trait_typepath.trait_flags) & STATION_TRAIT_ABSTRACT)
+		if(initial(trait_typepath.abstract_type) == trait_typepath)
 			continue //Dont add abstract ones to it
 
 		if(!(initial(trait_typepath.trait_flags) & STATION_TRAIT_PLANETARY) && SSmapping.is_planetary()) // we're on a planet but we can't do planet ;_;
@@ -68,22 +73,36 @@ PROCESSING_SUBSYSTEM_DEF(station)
 
 		selectable_traits_by_types[initial(trait_typepath.trait_type)][trait_typepath] = initial(trait_typepath.weight)
 
-	var/positive_trait_count = pick(20;0, 5;1, 1;2)
-	var/neutral_trait_count = pick(10;0, 10;1, 3;2)
-	var/negative_trait_count = pick(20;0, 5;1, 1;2)
+	var/positive_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/positive_station_traits)))
+	var/neutral_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/neutral_station_traits)))
+	var/negative_trait_budget = text2num(pick_weight(CONFIG_GET(keyed_list/negative_station_traits)))
 
-	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_count)
-	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_count)
-	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_count)
+	pick_traits(STATION_TRAIT_POSITIVE, positive_trait_budget)
+	pick_traits(STATION_TRAIT_NEUTRAL, neutral_trait_budget)
+	pick_traits(STATION_TRAIT_NEGATIVE, negative_trait_budget)
 
-///Picks traits of a specific category (e.g. bad or good) and a specified amount, then initializes them, adds them to the list of traits,
-///then removes them from possible traits as to not roll twice.
-/datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, amount)
-	if(!amount)
+/**
+ * Picks traits of a specific category (e.g. bad or good), initializes them, adds them to the list of traits,
+ * then removes them from possible traits as to not roll twice and subtracts their cost from the budget.
+ * All until the whole budget is spent or no more traits can be picked with it.
+ */
+/datum/controller/subsystem/processing/station/proc/pick_traits(trait_sign, budget)
+	if(!budget)
 		return
-	for(var/iterator in 1 to amount)
-		var/datum/station_trait/trait_type = pick_weight(selectable_traits_by_types[trait_sign]) //Rolls from the table for the specific trait type
-		selectable_traits_by_types[trait_sign] -= trait_type
+	///A list of traits of the same trait sign
+	var/list/selectable_traits = selectable_traits_by_types[trait_sign]
+	while(budget)
+		///Remove any station trait with a cost bigger than the budget
+		for(var/datum/station_trait/proto_trait as anything in selectable_traits)
+			if(initial(proto_trait.cost) > budget)
+				selectable_traits -= proto_trait
+		///We have spare budget but no trait that can be bought with what's left of it
+		if(!length(selectable_traits))
+			return
+		//Rolls from the table for the specific trait type
+		var/datum/station_trait/trait_type = pick_weight(selectable_traits)
+		selectable_traits -= trait_type
+		budget -= initial(trait_type.cost)
 		setup_trait(trait_type)
 
 ///Creates a given trait of a specific type, while also removing any blacklisted ones from the future pool.
@@ -96,3 +115,12 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	for(var/i in trait_instance.blacklist)
 		var/datum/station_trait/trait_to_remove = i
 		selectable_traits_by_types[initial(trait_to_remove.trait_type)] -= trait_to_remove
+
+/// Update station trait lobby buttons for clients who joined before we initialised this subsystem
+/datum/controller/subsystem/processing/station/proc/display_lobby_traits()
+	for (var/mob/dead/new_player/player as anything in GLOB.new_player_list)
+		var/datum/hud/new_player/observer_hud = player.hud_used
+		if (!istype(observer_hud))
+			continue
+		observer_hud.add_station_trait_buttons()
+		observer_hud.show_hud(observer_hud.hud_version)

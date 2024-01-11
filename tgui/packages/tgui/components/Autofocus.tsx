@@ -1,19 +1,17 @@
-import { Component, createRef } from 'inferno';
+import { createRef, PropsWithChildren, useEffect } from 'react';
 
-export class Autofocus extends Component {
-  ref = createRef<HTMLDivElement>();
+export const Autofocus = (props: PropsWithChildren) => {
+  const ref = createRef<HTMLDivElement>();
 
-  componentDidMount() {
+  useEffect(() => {
     setTimeout(() => {
-      this.ref.current?.focus();
+      ref.current?.focus();
     }, 1);
-  }
+  }, []);
 
-  render() {
-    return (
-      <div ref={this.ref} tabIndex={-1}>
-        {this.props.children}
-      </div>
-    );
-  }
-}
+  return (
+    <div ref={ref} tabIndex={-1}>
+      {props.children}
+    </div>
+  );
+};

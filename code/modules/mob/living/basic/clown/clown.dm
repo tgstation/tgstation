@@ -112,7 +112,12 @@
 	var/static/list/injection_range
 	if(!injection_range)
 		injection_range = string_numbers_list(list(1, 5))
-	AddElement(/datum/element/venomous, /datum/reagent/consumable/laughter, injection_range)
+	AddElement(\
+		/datum/element/venomous,\
+		/datum/reagent/consumable/laughter,\
+		injection_range,\
+		injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES,\
+	)
 
 /mob/living/basic/clown/fleshclown
 	name = "Fleshclown"
@@ -288,7 +293,12 @@
 	var/static/list/injection_range
 	if(!injection_range)
 		injection_range = string_numbers_list(list(1, 5))
-	AddElement(/datum/element/venomous, /datum/reagent/peaceborg/confuse, injection_range)
+	AddElement(\
+		/datum/element/venomous,\
+		/datum/reagent/peaceborg/confuse,\
+		injection_range,\
+		injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES,\
+	) // I don't really know what a clown is using to inject people but let's assume it doesn't need to penetrate at all
 
 /mob/living/basic/clown/clownhulk/destroyer
 	name = "The Destroyer"
@@ -370,8 +380,7 @@
 	speed = 1
 	melee_damage_lower = 10
 	melee_damage_upper = 15
-	force_threshold = 10 //lots of fat to cushion blows.
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 2, STAMINA = 0, OXY = 1)
+	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	loot = list(
@@ -395,7 +404,7 @@
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_GLUTTON, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/cheesiehonkers, /obj/item/food/cornchips), tame_chance = 30, bonus_tame_chance = 0, after_tame = CALLBACK(src, PROC_REF(tamed)))
-
+	AddElement(/datum/element/damage_threshold, 10) //lots of fat to cushion blows.
 
 /mob/living/basic/clown/mutant/glutton/attacked_by(obj/item/item, mob/living/user)
 	if(!check_edible(item))

@@ -44,8 +44,7 @@
 /obj/item/bot_assembly/cleanbot
 	desc = "It's a bucket with a sensor attached."
 	name = "incomplete cleanbot assembly"
-	icon_state = "bucket_proxy"
-	greyscale_config = /datum/greyscale_config/buckets_cleanbot
+	icon_state = "cleanbot_assembly"
 	throwforce = 5
 	created_name = "Cleanbot"
 	var/obj/item/reagent_containers/cup/bucket/bucket_obj
@@ -61,7 +60,6 @@
 		if(bucket_obj && bucket_obj != arrived)
 			qdel(bucket_obj)
 		bucket_obj = arrived
-		set_greyscale(bucket_obj.greyscale_colors)
 	return ..()
 
 /obj/item/bot_assembly/cleanbot/Exited(atom/movable/gone, direction)
@@ -75,17 +73,19 @@
 	return ..()
 
 
-/obj/item/bot_assembly/cleanbot/attackby(obj/item/W, mob/user, params)
+/obj/item/bot_assembly/cleanbot/attackby(obj/item/item_attached, mob/user, params)
 	..()
-	if(istype(W, /obj/item/bodypart/arm/left/robot) || istype(W, /obj/item/bodypart/arm/right/robot))
-		if(!can_finish_build(W, user))
-			return
-		var/mob/living/simple_animal/bot/cleanbot/A = new(drop_location(), bucket_obj)
-		A.name = created_name
-		A.robot_arm = W.type
-		to_chat(user, span_notice("You add [W] to [src]. Beep boop!"))
-		qdel(W)
-		qdel(src)
+	if(!istype(item_attached, /obj/item/bodypart/arm/left/robot) && !istype(item_attached, /obj/item/bodypart/arm/right/robot))
+		return
+	if(!can_finish_build(item_attached, user))
+		return
+	var/mob/living/basic/bot/cleanbot/bot = new(drop_location())
+	bot.apply_custom_bucket(bucket_obj)
+	bot.name = created_name
+	bot.robot_arm = item_attached.type
+	to_chat(user, span_notice("You add [item_attached] to [src]. Beep boop!"))
+	qdel(item_attached)
+	qdel(src)
 
 
 //Edbot Assembly
@@ -135,7 +135,7 @@
 					build_step++
 
 		if(ASSEMBLY_FIFTH_STEP)
-			if(istype(W, /obj/item/clothing/head/helmet))
+			if(istype(W, /obj/item/clothing/head/helmet/sec))
 				if(!user.temporarilyRemoveItemFromInventory(W))
 					return
 				to_chat(user, span_notice("You add [W] to [src]."))
@@ -287,14 +287,14 @@
 				if(!can_finish_build(W, user))
 					return
 				qdel(W)
-				var/mob/living/simple_animal/bot/medbot/medbot = new(drop_location(), skin)
+				var/mob/living/basic/bot/medbot/medbot = new(drop_location(), skin)
 				to_chat(user, span_notice("You complete the Medbot. Beep boop!"))
 				medbot.name = created_name
 				medbot.medkit_type = medkit_type
 				medbot.robot_arm = robot_arm
-				medbot.healthanalyzer = healthanalyzer
+				medbot.health_analyzer = healthanalyzer
 				var/obj/item/storage/medkit/medkit = medkit_type
-				medbot.damagetype_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
+				medbot.damage_type_healer = initial(medkit.damagetype_healed) ? initial(medkit.damagetype_healed) : BRUTE
 				qdel(src)
 
 
@@ -548,8 +548,8 @@
 				to_chat(user, span_notice("You start to pipe up [src]..."))
 				if(do_after(user, 40, target = src) && D.use(1))
 					to_chat(user, span_notice("You pipe up [src]."))
-					var/mob/living/simple_animal/bot/hygienebot/H = new(drop_location())
-					H.name = created_name
+					var/mob/living/basic/bot/hygienebot/new_bot = new(drop_location())
+					new_bot.name = created_name
 					qdel(src)
 			if(I.tool_behaviour == TOOL_SCREWDRIVER) //deconstruct
 				new /obj/item/assembly/prox_sensor(Tsec)

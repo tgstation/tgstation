@@ -124,30 +124,36 @@
 			. += filling
 
 /obj/machinery/chem_master/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/chem_master/attackby(obj/item/item, mob/user, params)
-	if(default_deconstruction_screwdriver(user, icon_state, icon_state, item))
+/obj/machinery/chem_master/screwdriver_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance(UPDATE_ICON)
-		return
-	if(default_deconstruction_crowbar(item))
-		return
-	if(is_reagent_container(item) && !(item.item_flags & ABSTRACT) && item.is_open_container())
-		. = TRUE // No afterattack
-		var/obj/item/reagent_containers/beaker = item
-		replace_beaker(user, beaker)
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/chem_master/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
+
+/obj/machinery/chem_master/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
+		replace_beaker(user, tool)
 		if(!panel_open)
 			ui_interact(user)
+		return ITEM_INTERACT_SUCCESS
+
 	return ..()
 
 /obj/machinery/chem_master/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
+		return .
 	if(!can_interact(user) || !user.can_perform_action(src, ALLOW_SILICON_REACH|FORBID_TELEKINESIS_REACH))
-		return
+		return .
 	replace_beaker(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
@@ -337,10 +343,11 @@
 
 	// Generate item name
 	var/item_name_default = initial(container_style.name)
+	var/datum/reagent/master_reagent = reagents.get_master_reagent()
 	if(selected_container == default_container) // Tubes and bottles gain reagent name
-		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default]"
+		item_name_default = "[master_reagent.name] [item_name_default]"
 	if(!(initial(container_style.reagent_flags) & OPENCONTAINER)) // Closed containers get both reagent name and units in the name
-		item_name_default = "[reagents.get_master_reagent_name()] [item_name_default] ([volume_in_each]u)"
+		item_name_default = "[master_reagent.name] [item_name_default] ([volume_in_each]u)"
 	var/item_name = tgui_input_text(usr,
 		"Container name",
 		"Name",
@@ -392,7 +399,7 @@
 	if (target == TARGET_BUFFER)
 		if(!check_reactions(reagent, beaker.reagents))
 			return FALSE
-		beaker.reagents.trans_id_to(src, reagent.type, amount)
+		beaker.reagents.trans_to(src, amount, target_id = reagent.type)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 
@@ -403,7 +410,7 @@
 	if (target == TARGET_BEAKER && transfer_mode == TRANSFER_MODE_MOVE)
 		if(!check_reactions(reagent, reagents))
 			return FALSE
-		reagents.trans_id_to(beaker, reagent.type, amount)
+		reagents.trans_to(beaker, amount, target_id = reagent.type)
 		update_appearance(UPDATE_ICON)
 		return TRUE
 

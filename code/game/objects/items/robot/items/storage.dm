@@ -58,22 +58,22 @@
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
 	if(!stored)
 		// Borgs should not be grabbing their own modules
-		if(!istype(atom.loc, /mob/living/silicon/robot))
-			var/itemcheck = FALSE
-			for(var/storable_type in storable)
-				if(istype(atom, storable_type))
-					itemcheck = TRUE
-					break
-			if(itemcheck)
-				var/obj/item/item = atom
-				item.forceMove(src)
-				stored = item
-				RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
-				update_appearance()
-				return TRUE
-	else
-		stored.melee_attack_chain(user, atom, params)
-		return TRUE
+		if(istype(atom.loc, /mob/living/silicon/robot) || istype(atom.loc, /obj/item/robot_model) || HAS_TRAIT(atom, TRAIT_NODROP))
+			stored.melee_attack_chain(user, atom, params)
+			return TRUE
+
+		var/itemcheck = FALSE
+		for(var/storable_type in storable)
+			if(istype(atom, storable_type))
+				itemcheck = TRUE
+				break
+		if(itemcheck)
+			var/obj/item/item = atom
+			item.forceMove(src)
+			stored = item
+			RegisterSignal(stored, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_stored_updated_icon))
+			update_appearance()
+			return TRUE
 	return ..()
 
 /**

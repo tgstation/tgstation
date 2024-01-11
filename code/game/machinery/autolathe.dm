@@ -64,11 +64,17 @@
 /obj/machinery/autolathe/ui_static_data(mob/user)
 	var/list/data = materials.ui_static_data()
 
-	data["designs"] = handle_designs(stored_research.researched_designs)
+	var/max_available = materials.total_amount()
+	for(var/datum/material/container_mat as anything in materials.materials)
+		var/available = materials.materials[container_mat]
+		if(available)
+			max_available = max(max_available, available)
+
+	data["designs"] = handle_designs(stored_research.researched_designs, max_available)
 	if(imported_designs.len)
-		data["designs"] += handle_designs(imported_designs)
+		data["designs"] += handle_designs(imported_designs, max_available)
 	if(hacked)
-		data["designs"] += handle_designs(stored_research.hacked_designs)
+		data["designs"] += handle_designs(stored_research.hacked_designs, max_available)
 
 	return data
 
@@ -83,7 +89,7 @@
 
 	return data
 
-/obj/machinery/autolathe/proc/handle_designs(list/designs)
+/obj/machinery/autolathe/proc/handle_designs(list/designs, max_available)
 	var/list/output = list()
 
 	var/datum/asset/spritesheet/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet/research_designs)
@@ -108,7 +114,13 @@
 			else
 				cost[i] = design_cost
 
-			max_multiplier = min(max_multiplier, 50, round((istype(mat) ? materials.get_material_amount(i) : 0) / design_cost))
+			var/mat_available
+			if(istype(mat)) //regular mat
+				mat_available = materials.get_material_amount(mat)
+			else //category mat means we can make it from any mat, use largest available mat
+				mat_available = max_available
+
+			max_multiplier = min(max_multiplier, 50, round(mat_available / design_cost))
 
 		//create & send ui data
 		var/icon_size = spritesheet.icon_size_id(design.id)
@@ -208,6 +220,7 @@
 		materials.use_materials(materials_used, coeff, multiplier)
 		to_chat(usr, span_notice("You print [multiplier] item(s) from the [src]"))
 		update_static_data_for_all_viewers()
+
 		//print item
 		icon_state = "autolathe_n"
 		var/time_per_item = is_stack ? 32 : ((32 * coeff * multiplier) ** 0.8) / multiplier
@@ -215,20 +228,25 @@
 
 		return TRUE
 
+/obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
+	if(default_deconstruction_crowbar(tool))
+		return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/autolathe/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", tool))
+		return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/autolathe/attackby(obj/item/attacking_item, mob/living/user, params)
+	if(user.combat_mode) //so we can hit the machine
+		return ..()
+
 	if(busy)
 		balloon_alert(user, "it's busy!")
-		return TRUE
-
-	if(default_deconstruction_crowbar(attacking_item))
 		return TRUE
 
 	if(panel_open && is_wire_tool(attacking_item))
 		wires.interact(user)
 		return TRUE
-
-	if(user.combat_mode) //so we can hit the machine
-		return ..()
 
 	if(machine_stat)
 		return TRUE
@@ -258,45 +276,16 @@
 		balloon_alert(user, "close the panel first!")
 		return FALSE
 
-	if(istype(attacking_item, /obj/item/storage/bag/trash))
-		for(var/obj/item/content_item in attacking_item.contents)
-			if(!do_after(user, 0.5 SECONDS, src))
-				return FALSE
-			attackby(content_item, user)
-		return TRUE
-
 	return ..()
-
-/obj/machinery/autolathe/attackby_secondary(obj/item/weapon, mob/living/user, params)
-	. = SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(busy)
-		balloon_alert(user, "it's busy!")
-		return
-
-	if(default_deconstruction_screwdriver(user, "autolathe_t", "autolathe", weapon))
-		return
-
-	if(machine_stat)
-		return SECONDARY_ATTACK_CALL_NORMAL
-
-	if(panel_open)
-		balloon_alert(user, "close the panel first!")
-		return
-
-	return SECONDARY_ATTACK_CALL_NORMAL
 
 /obj/machinery/autolathe/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
 
-	if(ispath(item_inserted, /obj/item/stack/ore/bluespace_crystal))
-		use_power(SHEET_MATERIAL_AMOUNT / 10)
-	else if(item_inserted.has_material_type(/datum/material/glass))
-		flick("autolathe_r", src)//plays glass insertion animation by default otherwise
-	else
-		flick("autolathe_o", src)//plays metal insertion animation
+	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-		use_power(min(active_power_usage * 0.25, amount_inserted / 100))
-		update_static_data_for_all_viewers()
+	use_power(min(active_power_usage * 0.25, amount_inserted / 100))
+
+	update_static_data_for_all_viewers()
 
 /obj/machinery/autolathe/MouseDrop(atom/over, src_location, over_location, src_control, over_control, params)
 	. = ..()
@@ -311,7 +300,6 @@
 /obj/machinery/autolathe/proc/make_items(list/picked_materials, multiplier, is_stack, mob/user, time_per_item)
 	var/atom/our_loc = drop_location()
 	var/atom/drop_loc = get_step(src, drop_direction)
-	var/client_awarded = FALSE
 
 	busy = TRUE
 	SStgui.update_uis(src) //so ui immediatly knows its busy
@@ -327,12 +315,10 @@
 
 			//custom materials for toolboxes
 			if(length(picked_materials))
-				new_item.set_custom_materials(picked_materials, 1 / multiplier) //Ensure we get the non multiplied amount
-				if(!client_awarded) //so we dont award the medal multiple times
-					for(var/datum/material/mat in picked_materials)
-						if(!istype(mat, /datum/material/glass) && !istype(mat, /datum/material/iron))
-							user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
-							client_awarded = TRUE
+				new_item.set_custom_materials(picked_materials) //Ensure we get the non multiplied amount
+				for(var/datum/material/mat in picked_materials)
+					if(!istype(mat, /datum/material/glass) && !istype(mat, /datum/material/iron))
+						user.client.give_award(/datum/award/achievement/misc/getting_an_upgrade, user)
 
 		//no need to call if ontop of us
 		if(drop_direction)

@@ -10,7 +10,7 @@
 		return
 
 	var/list/turfs = list()
-	for(var/turf/T in A)
+	for(var/turf/T in A.get_contained_turfs())
 		if(T.density)
 			continue
 		turfs.Add(T)
@@ -20,7 +20,7 @@
 		usr.forceMove(T)
 		log_admin("[key_name(usr)] jumped to [AREACOORD(T)]")
 		message_admins("[key_name_admin(usr)] jumped to [AREACOORD(T)]")
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Area") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("Jump To Area")
 	else
 		to_chat(src, "Nowhere to jump to!", confidential = TRUE)
 		return
@@ -36,7 +36,7 @@
 	log_admin("[key_name(usr)] jumped to [AREACOORD(T)]")
 	message_admins("[key_name_admin(usr)] jumped to [AREACOORD(T)]")
 	usr.forceMove(T)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Turf") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Jump To Turf")
 	return
 
 /client/proc/jumptomob(mob/M in GLOB.mob_list)
@@ -53,7 +53,7 @@
 		var/mob/A = src.mob
 		var/turf/T = get_turf(M)
 		if(T && isturf(T))
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Mob") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+			BLACKBOX_LOG_ADMIN_VERB("Jump To Mob")
 			A.forceMove(M.loc)
 		else
 			to_chat(A, "This mob is not located in the game world.", confidential = TRUE)
@@ -70,7 +70,7 @@
 		var/mob/A = src.mob
 		var/turf/T = locate(tx,ty,tz)
 		A.forceMove(T)
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Coordiate") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("Jump To Coordiate")
 	message_admins("[key_name_admin(usr)] jumped to coordinates [tx], [ty], [tz]")
 
 /client/proc/jumptokey()
@@ -94,7 +94,7 @@
 
 	usr.forceMove(M.loc)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Jump To Key") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Jump To Key")
 
 /client/proc/Getmob(mob/M in GLOB.mob_list - GLOB.dummy_mob_list)
 	set category = "Admin.Game"
@@ -106,7 +106,7 @@
 
 	var/atom/loc = get_turf(usr)
 	M.admin_teleport(loc)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Mob") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Get Mob")
 
 
 /// Proc to hook user-enacted teleporting behavior and keep logging of the event.
@@ -153,7 +153,7 @@
 	if(M)
 		M.forceMove(get_turf(usr))
 		usr.forceMove(M.loc)
-		SSblackbox.record_feedback("tally", "admin_verb", 1, "Get Key") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+		BLACKBOX_LOG_ADMIN_VERB("Get Key")
 
 /client/proc/sendmob(mob/jumper in sort_mobs())
 	set category = "Admin.Game"
@@ -178,4 +178,4 @@
 		admin_ticket_log(jumper, msg)
 	else
 		to_chat(src, "Failed to move mob to a valid location.", confidential = TRUE)
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Send Mob") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Send Mob")
