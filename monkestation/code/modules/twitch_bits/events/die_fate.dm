@@ -22,7 +22,7 @@
 	event_name = "Change Ook's Fate(forced)"
 	id_tag = T_EVENT_OOK_DIE_FATE_FORCED
 	forced_roll = TRUE
-	token_cost = 0 //cant be bought currently
+	token_cost = null //cant be bought currently
 
 //this is more of a joke, could maybe cost 100k bits or something
 /datum/twitch_event/free_wiz/everyone

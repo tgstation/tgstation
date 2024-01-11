@@ -12,3 +12,11 @@
 	for(var/target in targets) //send a rod at the turf of all targets, not making it target them directly because thats just death
 		var/turf/target_turf = get_turf(target)
 		new /obj/effect/immovablerod(spaceDebrisStartLoc(pick(GLOB.cardinals), target_turf.z), target)
+
+//singulo spawner
+/datum/twitch_event/clang/everyone
+	event_name = "Immovable Rod Everyone"
+	event_flags = TWITCH_AFFECTS_ALL
+	id_tag = T_EVENT_ROD_EVERYONE
+	announce = TRUE //the crew gets to know of their fate
+	token_cost = null

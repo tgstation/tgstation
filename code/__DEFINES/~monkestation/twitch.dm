@@ -16,6 +16,7 @@
 #define T_EVENT_GIVE_OOK_ITEM "give-ook-item"
 #define T_EVENT_GIVE_EVERYONE_ITEM "give-everyone-item"
 #define T_EVENT_ROD_OOK "rod-ook"
+#define T_EVENT_ROD_EVERYONE "rod-everyone"
 #define T_EVENT_SKINNY_5 "skinny-5"
 
 //For linking twitch account to ss13
