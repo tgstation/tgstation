@@ -45,7 +45,6 @@
 
 /obj/machinery/autolathe/Destroy()
 	materials = null
-	QDEL_NULL(wires)
 	return ..()
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)

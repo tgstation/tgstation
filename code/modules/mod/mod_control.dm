@@ -176,7 +176,6 @@
 		qdel(deleting_atom)
 	if(core)
 		QDEL_NULL(core)
-	QDEL_NULL(wires)
 	QDEL_NULL(mod_link)
 	return ..()
 

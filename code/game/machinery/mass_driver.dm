@@ -12,11 +12,7 @@
 
 /obj/machinery/mass_driver/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/mass_driver(src)
-
-/obj/machinery/mass_driver/Destroy()
-	QDEL_NULL(wires)
-	. = ..()
+	set_wires(new /datum/wires/mass_driver(src))
 
 /obj/machinery/mass_driver/chapelgun
 	name = "holy driver"
