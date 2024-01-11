@@ -246,7 +246,10 @@
 
 	var/turf/user_drop_location = get_turf(user) //cache this so it just falls to the ground if they move. also no tk memes allowed.
 	if(!do_after(user, PLACE_SPEED, placed_poster, extra_checks = CALLBACK(placed_poster, TYPE_PROC_REF(/obj/structure/sign/poster, snowflake_closed_turf_check), src)))
-		placed_poster.roll_and_drop(user_drop_location)
+		if(!QDELETED(placed_poster))
+			placed_poster.roll_and_drop(user_drop_location)
+		return
+	if(QDELETED(placed_poster))
 		return
 
 	placed_poster.on_placed_poster(user)
