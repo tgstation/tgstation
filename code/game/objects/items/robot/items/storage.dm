@@ -55,7 +55,6 @@
 		return ..()
 	stored.forceMove(user.drop_location())
 
-
 /obj/item/borg/apparatus/pre_attack(atom/atom, mob/living/user, params)
 	if(stored)
 		stored.melee_attack_chain(user, atom, params)
