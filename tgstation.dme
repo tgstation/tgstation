@@ -5713,6 +5713,7 @@
 #include "monkestation\code\modules\aesthetics\objects\windows.dm"
 #include "monkestation\code\modules\aesthetics\subsystem\coloring.dm"
 #include "monkestation\code\modules\aesthetics\walls\iron.dm"
+#include "monkestation\code\modules\antagonists\_common\antag_datum.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\area.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\dynamic_ruleset.dm"
 #include "monkestation\code\modules\antagonists\clock_cult\globals.dm"

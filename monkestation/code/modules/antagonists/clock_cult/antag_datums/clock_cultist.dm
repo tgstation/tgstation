@@ -20,7 +20,7 @@
 	var/mutable_appearance/forbearance
 	///ref to our turf_healing component, used for deletion when deconverted
 	var/datum/component/turf_healing/owner_turf_healing
-	///used for holy water deconversion, slightly easier to have this here then on the team
+	///used for holy water deconversion, slightly easier to have this here then on the team, might want to refactor this to an assoc global list
 	var/static/list/servant_deconversion_phrases = list("spoken" = list("VG OHEAF!", "SBE GUR TYBEL-BS ENG'INE!", "Gur yvtug jvyy fuvar.", "Whfgv`pne fnir zr.", "Gur Nex zhfg abg snyy.",
 																		"Rzvarapr V pnyy gur`r!", "Lbh frr bayl qnexarff.", "Guv`f vf abg gur raq.", "Gv`px, Gbpx"),
 
@@ -126,9 +126,14 @@
 		to_chat(owner.current, span_warning("You feel something pushing away the light of Rat'var, but you resist it!"))
 	return
 
-/datum/antagonist/clock_cultist/antag_token(datum/mind/hosts_mind)
+/datum/antagonist/clock_cultist/antag_token(datum/mind/hosts_mind, mob/spender)
 	. = ..()
-	hosts_mind.add_antag_datum(/datum/antagonist/clock_cultist)
+	if(isobserver(spender))
+		var/mob/living/carbon/human/newmob = spender.change_mob_type(/mob/living/carbon/human , null, null, TRUE)
+		newmob.equipOutfit(/datum/outfit/job/assistant)
+		newmob.mind.add_antag_datum(/datum/antagonist/clock_cultist)
+	else
+		hosts_mind.add_antag_datum(/datum/antagonist/clock_cultist)
 
 /datum/antagonist/clock_cultist/admin_add(datum/mind/new_owner,mob/admin)
 	new_owner.add_antag_datum(src)
