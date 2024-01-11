@@ -194,6 +194,8 @@
 	var/mob/thrown_by = thrown_item.thrownby?.resolve()
 	if(thrown_by)
 		log_combat(thrown_by, src, "threw and hit", thrown_item)
+	else
+		log_combat(thrown_item, src, "hit ")
 	if(nosell_hit)
 		return ..()
 	visible_message(span_danger("[src] is hit by [thrown_item]!"), \
