@@ -6,13 +6,15 @@
 	desc = "Twitching and disgusting."
 	/// The mind of the original changeling that gave forth to the headslug mob.
 	var/datum/mind/origin
-	/// Tracks how long the egg has been growing.
-	var/time = 0
+	/// When we're expected to hatch.
+	var/hatch_time = 0
+
+/obj/item/organ/internal/body_egg/changeling_egg/Insert(mob/living/carbon/egg_owner, special = FALSE, movement_flags = DELETE_IF_REPLACED)
+	. = ..()
+	hatch_time = world.time + EGG_INCUBATION_TIME
 
 /obj/item/organ/internal/body_egg/changeling_egg/egg_process(seconds_per_tick, times_fired)
-	// Changeling eggs grow in dead people
-	time += seconds_per_tick * 10
-	if(time >= EGG_INCUBATION_TIME)
+	if(owner && hatch_time <= world.time)
 		pop()
 
 /// Once the egg is fully grown, we gib the host and spawn a monkey (with the changeling's player controlling it). Very descriptive proc name.
