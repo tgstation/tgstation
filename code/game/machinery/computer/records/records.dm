@@ -2,8 +2,6 @@
  * Records subtype for the shared functionality between medical/security/warrant consoles.
  */
 /obj/machinery/computer/records
-	/// The character preview view for the UI.
-	var/atom/movable/screen/map_view/char_preview/character_preview_view
 
 /obj/machinery/computer/records/ui_data(mob/user)
 	var/list/data = list()
@@ -103,21 +101,29 @@
 	if(user.client?.screen_maps[assigned_view])
 		return
 
-	var/atom/movable/screen/map_view/char_preview/new_view = new(null, src)
+	var/atom/movable/screen/map_view/records/new_view = new(null)
 	new_view.generate_view(assigned_view)
 	new_view.display_to(user)
 
+/atom/movable/screen/map_view/records
+	var/mutable_appearance/active_appearance
+
+/atom/movable/screen/map_view/records/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
+	add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
+
+/atom/movable/screen/map_view/records/proc/display_record(datum/record/crew/display)
+	cut_overlay(active_appearance)
+	active_appearance = new(display.character_appearance)
+	add_overlay(active_appearance)
+
 /// Takes a record and updates the character preview view to match it.
 /obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target)
-	var/mutable_appearance/preview = new(target.character_appearance)
-	preview.underlays += mutable_appearance('icons/effects/effects.dmi', "static_base", alpha = 20)
-	preview.add_overlay(mutable_appearance(generate_icon_alpha_mask('icons/effects/effects.dmi', "scanline"), alpha = 20))
-
-	var/atom/movable/screen/map_view/char_preview/old_view = user.client?.screen_maps[assigned_view]?[1]
+	var/atom/movable/screen/map_view/records/working_view = user.client?.screen_maps[assigned_view]?[1]
 	if(!old_view)
 		return
-
-	old_view.appearance = preview.appearance
+	working_view.display_record(target)
 
 /// Expunges info from a record.
 /obj/machinery/computer/records/proc/expunge_record_info(datum/record/crew/target)
