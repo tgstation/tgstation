@@ -168,7 +168,3 @@
 
 /datum/callback/ref_search_details()
 	return "[text_ref(src)] (obj: [object] proc: [delegate] args: [json_encode(arguments)] user: [user?.resolve() || "null"])"
-
-/datum/chatmessage/ref_search_details()
-	var/client/lad = owner_ref.resolve()
-	return "[text_ref(src)] (measuring: [measuring] owner: [lad?.ckey])"

@@ -378,6 +378,12 @@
 		if(5)
 			return "#[num2hex(c, 2)][num2hex(m, 2)][num2hex(x, 2)]"
 
+/datum/chatmessage/dump_harddel_info()
+	if(harddel_deets_dumped)
+		return
+	harddel_deets_dumped = TRUE
+	var/client/lad = owner_ref?.resolve()
+	return "Measuring = [measuring], Owner = [lad?.ckey])"
 
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_LAYER_Z_STEP
