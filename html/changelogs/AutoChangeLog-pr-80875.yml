@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "Icebox kitchen has its light switch again"
+  - bugfix: "Icebox medbay hallway now has a fire alarm"
