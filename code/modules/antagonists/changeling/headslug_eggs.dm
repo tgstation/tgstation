@@ -8,10 +8,16 @@
 	var/datum/mind/origin
 	/// When we're expected to hatch.
 	var/hatch_time = 0
+	/// When this egg last got removed from a body. If -1, the egg hasn't been removed from a body.
+	var/removal_time = -1
 
 /obj/item/organ/internal/body_egg/changeling_egg/Insert(mob/living/carbon/egg_owner, special = FALSE, movement_flags = DELETE_IF_REPLACED)
 	. = ..()
-	hatch_time = world.time + EGG_INCUBATION_TIME
+	hatch_time = world.time + (removal_time == -1 ? EGG_INCUBATION_TIME : (hatch_time - removal_time))
+
+/obj/item/organ/internal/body_egg/changeling_egg/Remove(mob/living/carbon/egg_owner, special, movement_flags)
+	. = ..()
+	removal_time = world.time
 
 /obj/item/organ/internal/body_egg/changeling_egg/egg_process(seconds_per_tick, times_fired)
 	if(owner && hatch_time <= world.time)
