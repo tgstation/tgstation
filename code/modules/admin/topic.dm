@@ -362,9 +362,9 @@
 		browse_messages(target_ckey = target, linkless = 1)
 
 	else if(href_list["messageread"])
-		if(!isnum(href_list["message_id"]))
+		if(!isnum(href_list["messageread"]))
 			return
-		var/rounded_message_id = round(href_list["message_id"], 1)
+		var/rounded_message_id = round(href_list["messageread"], 1)
 		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
 			list("id" = rounded_message_id, "player_key" = usr.ckey)
