@@ -299,8 +299,6 @@
 
 /obj/item/pizzabox/proc/unprocess()
 	STOP_PROCESSING(SSobj, src)
-	qdel(wires)
-	set_wires(null)
 	update_appearance()
 
 /obj/item/pizzabox/bomb/Initialize(mapload)

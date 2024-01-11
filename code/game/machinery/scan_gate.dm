@@ -56,11 +56,6 @@
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/machinery/scanner_gate/Destroy()
-	qdel(wires)
-	set_wires(null)
-	. = ..()
-
 /obj/machinery/scanner_gate/examine(mob/user)
 	. = ..()
 	if(locked)

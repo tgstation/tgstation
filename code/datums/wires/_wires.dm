@@ -64,7 +64,7 @@
 
 /datum/wires/Destroy()
 	if(holder?.wires == src)
-		holder.wires = null
+		holder.set_wires(null)
 	holder = null
 	//properly clear refs to avoid harddels & other problems
 	for(var/color in assemblies)
