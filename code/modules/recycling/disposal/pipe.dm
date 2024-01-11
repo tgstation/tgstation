@@ -259,16 +259,18 @@
 	return ..()
 
 /obj/structure/disposalpipe/trunk/proc/null_linked_ref_to_us()
-	if(linked)
-		if(istype(linked, /obj/structure/disposaloutlet))
-			var/obj/structure/disposaloutlet/D = linked
-			D.trunk = null
-		else if(istype(linked, /obj/machinery/disposal))
-			var/obj/machinery/disposal/D = linked
-			D.trunk = null
+	if(istype(linked, /obj/structure/disposaloutlet))
+		var/obj/structure/disposaloutlet/outlet = linked
+		outlet.trunk = null
+	else if(istype(linked, /obj/machinery/disposal))
+		var/obj/machinery/disposal/chute = linked
+		chute.trunk = null
 
 /obj/structure/disposalpipe/trunk/proc/set_linked(obj/to_link)
 	null_linked_ref_to_us()
+	if(QDELETED(to_link))
+		stack_trace("Tried to link with a qdeleted object")
+		return
 	linked = to_link
 
 /obj/structure/disposalpipe/trunk/proc/getlinked()
