@@ -120,30 +120,18 @@ function Extras(props) {
           tooltip="Build Mode"
           tooltipPosition="top-start"
         />
-        {(compact && (
-          <Button
-            color="transparent"
-            icon="expand"
-            inline
-            m={0}
-            onClick={() => {
-              setCompact(!compact);
-              act('refreshView');
-            }}
-            tooltip="Maximize"
-            tooltipPosition="top-start"
-          />
-        )) || (
-          <Button
-            color="transparent"
-            icon="compress"
-            inline
-            m={0}
-            onClick={() => setCompact(!compact)}
-            tooltip="Compact mode"
-            tooltipPosition="top-start"
-          />
-        )}
+        <Button
+          color="transparent"
+          icon={compact ? 'expand' : 'compress'}
+          inline
+          m={0}
+          onClick={() => {
+            setCompact(!compact);
+            compact && act('refreshView');
+          }}
+          tooltip={compact ? 'Expand mode' : 'Compact mode'}
+          tooltipPosition="top-start"
+        />
       </Box>
     </Stack.Item>
   );

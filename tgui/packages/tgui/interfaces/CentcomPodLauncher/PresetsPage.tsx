@@ -3,7 +3,14 @@ import { createUuid } from 'common/uuid';
 import { useEffect, useState } from 'react';
 
 import { useBackend } from '../../backend';
-import { Button, Input, NumberInput, Section, Stack } from '../../components';
+import {
+  Button,
+  Divider,
+  Input,
+  NumberInput,
+  Section,
+  Stack,
+} from '../../components';
 import { POD_GREY } from './constants';
 import { PodLauncherData } from './types';
 
@@ -126,8 +133,10 @@ export function PresetsPage(props) {
               width="40px"
             />
           </Stack.Item>
+          <Divider />
         </Stack>
       )}
+
       {(!presets || presets.length === 0) && (
         <span style={POD_GREY}>
           Click [+] to define a new preset. They are persistent across
