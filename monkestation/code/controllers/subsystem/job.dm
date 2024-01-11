@@ -15,9 +15,11 @@
 
 	if(player.temp_assignment)
 		assigned_players_by_job[player.temp_assignment.type] -= player
+		player.temp_assignment.current_positions--
 
 	assigned_players_by_job[job.type] += player
 	player.temp_assignment = job
+	job.current_positions++
 	JobDebug("h_t_a pass, Player: [player], Job: [job]")
 	return TRUE
 

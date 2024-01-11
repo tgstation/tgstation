@@ -245,7 +245,7 @@ SUBSYSTEM_DEF(job)
 //monkestation edit start
 		if(!assignable_by_job[job.type])
 			assignable_by_job[job.type] = list("[JP_LOW]" = list(), "[JP_MEDIUM]" = list(), "[JP_HIGH]" = list())
-		assignable_by_job[job.type]["[player_job_level]"] += player
+		assignable_by_job[job.type]["[player_job_level]"] |= player
 //monkestation edit end
 		JobDebug("FOC pass, Player: [player], Level: [job_priority_level_to_string(level)]")
 		candidates += player
