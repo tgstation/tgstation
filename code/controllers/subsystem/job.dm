@@ -213,7 +213,11 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 
 	JobDebug("Player: [player] is now Rank: [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
-	player.temp_assignment = null //monkestation edit
+//monkestation edit start
+	if(player.temp_assignment)
+		player.temp_assignment.current_positions--
+	player.temp_assignment = null
+//monkestation edit end
 	player.mind.set_assigned_role(job)
 	unassigned -= player
 	job.current_positions++
