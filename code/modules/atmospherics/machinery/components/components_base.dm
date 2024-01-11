@@ -190,7 +190,6 @@
 		return
 	for(var/i in 1 to device_type)
 		var/datum/pipeline/parent = parents[i]
-		if(!parent)
 			WARNING("Component is missing a pipenet! Rebuilding...")
 			SSair.add_to_rebuild_queue(src)
 		else
@@ -231,7 +230,7 @@
 	if(!panel_open)
 		balloon_alert(user, "open panel!")
 		return ITEM_INTERACT_SUCCESS
-	
+
 	var/unsafe_wrenching = FALSE
 	var/filled_pipe = FALSE
 	var/datum/gas_mixture/environment_air = loc.return_air()
@@ -246,7 +245,7 @@
 	if(!filled_pipe)
 		default_deconstruction_crowbar(tool)
 		return ITEM_INTERACT_SUCCESS
-	
+
 	to_chat(user, span_notice("You begin to unfasten \the [src]..."))
 
 	internal_pressure -= environment_air.return_pressure()

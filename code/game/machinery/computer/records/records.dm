@@ -121,7 +121,7 @@
 /// Takes a record and updates the character preview view to match it.
 /obj/machinery/computer/records/proc/update_preview(mob/user, assigned_view, datum/record/crew/target)
 	var/atom/movable/screen/map_view/records/working_view = user.client?.screen_maps[assigned_view]?[1]
-	if(!old_view)
+	if(!working_view)
 		return
 	working_view.display_record(target)
 
