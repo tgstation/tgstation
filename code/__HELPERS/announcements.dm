@@ -18,7 +18,6 @@
  * * sender_override - optional, modifies the sender of the announcement
  * * encode_title - if TRUE, the title will be HTML encoded
  * * encode_text - if TRUE, the text will be HTML encoded
- * * color_override - optional, set a color for the announcement box
  */
 
 /proc/send_ooc_announcement(
@@ -43,25 +42,25 @@
 			if(!length(text))
 				return
 
-		announcement_strings += span_major_announcement_title(sender_override)
-		announcement_strings += span_subheader_announcement_text(title)
-		announcement_strings += span_ooc_announcement_text(text)
-		var/finalized_announcement = create_ooc_announcement_div(jointext(announcement_strings, ""))
+	announcement_strings += span_major_announcement_title(sender_override)
+	announcement_strings += span_subheader_announcement_text(title)
+	announcement_strings += span_ooc_announcement_text(text)
+	var/finalized_announcement = create_ooc_announcement_div(jointext(announcement_strings, ""))
 
-		if(islist(players))
-			for(var/mob/target in players)
-				to_chat(target, finalized_announcement)
-				if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(target, sound(sound_override))
-		else
-			to_chat(world, finalized_announcement)
+	if(islist(players))
+		for(var/mob/target in players)
+			to_chat(target, finalized_announcement)
+			if(play_sound && target.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+				SEND_SOUND(target, sound(sound_override))
+	else
+		to_chat(world, finalized_announcement)
 
-			if(!play_sound)
-				return
+		if(!play_sound)
+			return
 
-			for(var/mob/player in GLOB.player_list)
-				if(player.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
-					SEND_SOUND(player, sound(sound_override))
+		for(var/mob/player in GLOB.player_list)
+			if(player.client?.prefs.read_preference(/datum/preference/toggle/sound_announcements))
+				SEND_SOUND(player, sound(sound_override))
 
 /**
  * Inserts a span styled message into an alert box div
@@ -74,5 +73,12 @@
 /proc/create_announcement_div(message, color = "default")
 	return "<div class='chat_alert_[color]'>[message]</div>"
 
+/**
+ * Inserts a span styled message into an OOC alert style div
+ *
+ *
+ * Arguments
+ * * message - required, the message contents
+ */
 /proc/create_ooc_announcement_div(message)
 	return "<div class='ooc_alert'>[message]</div>"

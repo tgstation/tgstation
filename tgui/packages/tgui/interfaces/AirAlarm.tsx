@@ -10,6 +10,7 @@ import {
   NumberInput,
   Section,
   Table,
+  VirtualList,
 } from '../components';
 import { Window } from '../layouts';
 import {
@@ -262,11 +263,11 @@ const AirAlarmControlVents = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <>
+    <VirtualList>
       {vents.map((vent) => (
         <Vent key={vent.refID} {...vent} />
       ))}
-    </>
+    </VirtualList>
   );
 };
 
@@ -280,11 +281,11 @@ const AirAlarmControlScrubbers = (props) => {
     return <span>Nothing to show</span>;
   }
   return (
-    <>
+    <VirtualList>
       {scrubbers.map((scrubber) => (
         <Scrubber key={scrubber.refID} {...scrubber} />
       ))}
-    </>
+    </VirtualList>
   );
 };
 
