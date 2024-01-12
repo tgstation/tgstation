@@ -629,7 +629,7 @@
 			close_machine()
 		else
 			open_machine()
-		balloon_alert(user, "Door [state_open ? "Opened" : "Closed"]")
+		balloon_alert(user, "door [state_open ? "opened" : "closed"]")
 	return ..()
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
