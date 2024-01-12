@@ -74,7 +74,7 @@
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
-		if(LAZYACCESS(ignore_list, found_item))
+		if(LAZYACCESS(ignore_list, REF(found_item)))
 			continue
 		return found_item
 
@@ -97,7 +97,7 @@
 /datum/ai_behavior/find_and_set/spray_target/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_list, human_target))
+		if(LAZYACCESS(ignore_list, REF(human_target)))
 			continue
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
@@ -203,7 +203,7 @@
 		return
 	if(isnull(parent.ai_controller))
 		return
-	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target))
+	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], REF(target)))
 		return
 	return ..()
 

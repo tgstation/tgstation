@@ -77,7 +77,7 @@
 	if(!LAZYLEN(speech_buffer)) // what? well whatever let's just move on
 		return
 
-	controller.set_blackboard_key(BB_EXPORTABLE_STRING_BUFFER_LIST, speech_buffer.Copy())
+	controller.override_blackboard_key(BB_EXPORTABLE_STRING_BUFFER_LIST, speech_buffer.Copy())
 
 #undef MAX_SPEECH_BUFFER_SIZE
 #undef RADIO_IGNORE_CHANCE

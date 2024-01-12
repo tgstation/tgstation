@@ -1,5 +1,6 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { useState } from 'react';
 import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
@@ -26,7 +27,7 @@ export const SecurityRecordTabs = (props) => {
     ? 'No records found.'
     : 'No match. Refine your search.';
 
-  const [search, setSearch] = useLocalState('search', '');
+  const [search, setSearch] = useState('');
 
   const sorted: SecurityRecord[] = flow([
     filter((record: SecurityRecord) => isRecordMatch(record, search)),

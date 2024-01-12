@@ -70,7 +70,7 @@
 	return TRUE
 
 ///check if the target is too far away, and delete them if so and add them to the unreachables list
-/datum/ai_controller/basic_controller/bot/proc/reachable_key(key, distance = 10)
+/datum/ai_controller/basic_controller/bot/proc/reachable_key(key, distance = 10, bypass_add_to_blacklist = FALSE)
 	var/datum/target = blackboard[key]
 	if(QDELETED(target))
 		return FALSE
@@ -83,7 +83,8 @@
 	if(current_pathing_attempts >= max_pathing_attempts || !can_reach_target(target, distance))
 		clear_blackboard_key(key)
 		clear_blackboard_key(BB_LAST_ATTEMPTED_PATHING)
-		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+		if(!bypass_add_to_blacklist)
+			set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
 		return FALSE
 	return TRUE
 

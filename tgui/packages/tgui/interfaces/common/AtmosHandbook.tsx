@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 
 import { useBackend, useLocalState } from '../../backend';
 import {
@@ -83,10 +83,7 @@ const GasHandbook = (props) => {
     'activeReactionId',
     '',
   );
-  const [gasActiveInput, setGasActiveInput] = useLocalState(
-    'gasActiveInput',
-    false,
-  );
+  const [gasActiveInput, setGasActiveInput] = useState(false);
   const relevantGas = gasInfo.find((gas) => gas.id === activeGasId);
   return (
     <Section
@@ -136,10 +133,7 @@ const ReactionHandbook = (props) => {
     'activeReactionId',
     '',
   );
-  const [reactionActiveInput, setReactionActiveInput] = useLocalState(
-    'reactionActiveInput',
-    false,
-  );
+  const [reactionActiveInput, setReactionActiveInput] = useState(false);
   const relevantReaction = reactionInfo?.find(
     (reaction) => reaction.id === activeReactionId,
   );
