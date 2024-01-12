@@ -357,10 +357,9 @@
 		emote("flip")
 
 /obj/machinery/jukebox/disco/proc/dance1(mob/living/dancer)
-	addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), 6.5 SECONDS)
+	addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), 6.5 SECONDS, TIMER_CLIENT_TIME)
 	for(var/i in 0 to (6 SECONDS) step (1.5 SECONDS))
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dance_rotate), dancer, CALLBACK(dancer, TYPE_PROC_REF(/mob, dance_flip))), i)
-		addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), 6.5 SECONDS)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dance_rotate), dancer, CALLBACK(dancer, TYPE_PROC_REF(/mob, dance_flip))), i, TIMER_CLIENT_TIME)
 
 /obj/machinery/jukebox/disco/proc/dance2(mob/living/dancer, dance_length = 2.5 SECONDS)
 	var/matrix/initial_matrix = matrix(dancer.transform)
@@ -370,10 +369,10 @@
 		"[SOUTH]" = matrix(dancer.transform).Translate(0, -3),
 		"[WEST]" = matrix(dancer.transform).Translate(-1, -1),
 	)
-	addtimer(VARSET_CALLBACK(dancer, transform, initial_matrix), dance_length + 0.5 SECONDS)
+	addtimer(VARSET_CALLBACK(dancer, transform, initial_matrix), dance_length + 0.5 SECONDS, TIMER_CLIENT_TIME)
 	addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), dance_length + 0.5 SECONDS)
 	for (var/i in 1 to dance_length)
-		addtimer(CALLBACK(src, PROC_REF(animate_dance2), dancer, transforms, initial_matrix), i)
+		addtimer(CALLBACK(src, PROC_REF(animate_dance2), dancer, transforms, initial_matrix), i, TIMER_CLIENT_TIME)
 
 /obj/machinery/jukebox/disco/proc/animate_dance2(mob/living/dancer, list/transforms, matrix/initial_matrix)
 	dancer.setDir(turn(dancer.dir, 90))
@@ -384,9 +383,9 @@
 	var/initially_resting = dancer.resting
 	var/direction_index = 1 //this should allow everyone to dance in the same direction
 	addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), dance_length + 0.2 SECONDS)
-	addtimer(CALLBACK(dancer, TYPE_PROC_REF(/mob/living, set_resting), initially_resting, TRUE, TRUE), dance_length + 0.2 SECONDS)
+	addtimer(CALLBACK(dancer, TYPE_PROC_REF(/mob/living, set_resting), initially_resting, TRUE, TRUE), dance_length + 0.2 SECONDS, TIMER_CLIENT_TIME)
 	for (var/i in 1 to dance_length step 2) // 1 = 0.1 seconds
-		addtimer(CALLBACK(src, PROC_REF(dance3), dancer, GLOB.cardinals[direction_index]), i)
+		addtimer(CALLBACK(src, PROC_REF(dance3), dancer, GLOB.cardinals[direction_index]), i, TIMER_CLIENT_TIME)
 		direction_index++
 		if(direction_index > GLOB.cardinals.len)
 			direction_index = 1
@@ -399,7 +398,7 @@
 	var/matrix/initial_matrix = matrix(dancer.transform)
 	animate(dancer, transform = matrix(dancer.transform).Turn(180), time = 2, loop = 0)
 	dancer.emote("spin")
-	addtimer(CALLBACK(src, PROC_REF(dance4_revert), dancer, initial_matrix), dance_length)
+	addtimer(CALLBACK(src, PROC_REF(dance4_revert), dancer, initial_matrix), dance_length, TIMER_CLIENT_TIME)
 
 /obj/machinery/jukebox/disco/proc/dance4_revert(mob/living/dancer, matrix/starting_matrix)
 	animate(dancer, transform = starting_matrix, time = 5, loop = 0)
