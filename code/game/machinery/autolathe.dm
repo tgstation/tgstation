@@ -258,22 +258,34 @@
 		say("Unable to continue production, power failure.")
 		return
 
-	if(!materials.has_materials(materials_per_item))
+	var/is_stack = ispath(design.build_path, /obj/item/stack)
+	if(!materials.has_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		return
-	materials.use_materials(materials_per_item)
+	materials.use_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1)
 
 	var/turf/target = get_step(src, drop_direction)
 	if(isclosedturf(target))
 		target = get_turf(src)
 
-	var/atom/movable/created = new design.build_path(target)
+	var/atom/movable/created
+	if(is_stack)
+		created = new design.build_path(target, items_remaining)
+	else
+		created = new design.build_path(target)
+
+	created.pixel_x = created.base_pixel_x + rand(-6, 6)
+	created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	for(var/atom/movable/content in created)
 		content.set_custom_materials(list()) // no
 	created.set_custom_materials(materials_per_item.Copy())
 	created.forceMove(target)
 
-	items_remaining -= 1
+	if(is_stack)
+		items_remaining = 0
+	else
+		items_remaining -= 1
+
 	if(!items_remaining)
 		finalize_build()
 		return
