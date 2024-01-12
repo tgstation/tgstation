@@ -1,0 +1,4 @@
+author: "Paxilmaniac"
+delete-after: True
+changes:
+  - bugfix: "The \"required_container_accepts_subtypes\" variable on chemical reactions now actually works again"
