@@ -270,7 +270,6 @@
 	var/atom/movable/created = new design.build_path(target)
 	for(var/atom/movable/content in created)
 		content.set_custom_materials(list()) // no
-
 	created.set_custom_materials(materials_per_item.Copy())
 	created.forceMove(target)
 

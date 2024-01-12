@@ -318,6 +318,8 @@
 	materials.use_materials(materials_per_item, action = "built", name = "[design.name]")
 
 	var/atom/movable/created = new design.build_path(get_turf(src))
+	for(var/atom/movable/content in created)
+		content.set_custom_materials(list()) // no
 	created.set_custom_materials(materials_per_item.Copy())
 
 	items_remaining -= 1
