@@ -1,0 +1,4 @@
+author: "KittyNoodle"
+delete-after: True
+changes:
+  - bugfix: "Natural immune system no longer bricks itself at 60% antibodies"
