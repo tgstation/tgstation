@@ -584,7 +584,7 @@
 			if(on)
 				set_on(FALSE)
 			else if(!state_open)
-				//use to_chat() here because balloon alerts can be blocked by the UI
+				//use chat here because balloon alerts can be blocked by the UI
 				if(QDELETED(occupant))
 					to_chat(ui.user, span_warning("no occupant inside machine!"))
 					return
