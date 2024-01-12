@@ -145,7 +145,7 @@
 */
 /datum/computer_file/program/radar/proc/trackable(atom/movable/signal)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!signal || !computer)
+	if(isnull(signal) || isnull(computer))
 		return RADAR_NOT_TRACKABLE
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(signal)
@@ -157,7 +157,7 @@
 	switch(trackable_signal)
 		if(COMPONENT_RADAR_TRACK_ANYWAY)
 			return RADAR_TRACKABLE_ANYWAY
-		else if(COMPONENT_RADAR_DONT_TRACK)
+		if(COMPONENT_RADAR_DONT_TRACK)
 			return RADAR_NOT_TRACKABLE
 	return RADAR_TRACKABLE
 

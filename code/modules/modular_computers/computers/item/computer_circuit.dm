@@ -22,6 +22,17 @@
 		var/obj/machinery/modular_computer/console = shell
 		computer = console.cpu
 
+	/**
+	 * Some mod pc have lights while some don't, but populate_ports()
+	 * is called before we get to know which object this has attahed to,
+	 * I hope you're cool with me doing it here.
+	 */
+	if(computer?.has_light)
+		lights = add_input_port("Toggle Lights", PORT_TYPE_SIGNAL)
+		red = add_input_port("Red", PORT_TYPE_NUMBER)
+		green = add_input_port("Green", PORT_TYPE_NUMBER)
+		blue = add_input_port("Blue", PORT_TYPE_NUMBER)
+
 /obj/item/circuit_component/modpc/unregister_shell(atom/movable/shell)
 	computer = null
 	return ..()
@@ -29,13 +40,10 @@
 /obj/item/circuit_component/modpc/populate_ports()
 	on_off = add_input_port("Turn On/Off", PORT_TYPE_SIGNAL)
 	print = add_input_port("Print Text", PORT_TYPE_STRING)
-	if(computer?.has_light)
-		lights = add_input_port("Toggle Lights", PORT_TYPE_SIGNAL)
-		red = add_input_port("Red", PORT_TYPE_NUMBER)
-		green = add_input_port("Green", PORT_TYPE_NUMBER)
-		blue = add_input_port("Blue", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/modpc/pre_input_received(datum/port/input/port)
+	if(isnull(computer))
+		return
 	if(COMPONENT_TRIGGERED_BY(print, port))
 		print.set_value(html_encode(trim(print.value, MAX_PAPER_LENGTH)))
 	else if(COMPONENT_TRIGGERED_BY(red, port))
