@@ -6,7 +6,8 @@ GLOBAL_LIST_EMPTY_TYPED(has_antagonist_huds, /datum/atom_hud/alternate_appearanc
 	var/antag_datum_type
 
 /datum/atom_hud/alternate_appearance/basic/has_antagonist/New(key, image/I, antag_datum_type)
-	src.antag_datum_type = antag_datum_type
+	if(antag_datum_type)
+		src.antag_datum_type = antag_datum_type
 	GLOB.has_antagonist_huds += src
 	return ..(key, I, NONE)
 

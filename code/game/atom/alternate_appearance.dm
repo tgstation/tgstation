@@ -35,16 +35,16 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 	GLOB.active_alternate_appearances += src
 
 	for(var/mob in GLOB.player_list)
-		if(mobShouldSee(mob))
-			show_to(mob)
+		apply_to_new_mob(mob)
 
 /datum/atom_hud/alternate_appearance/Destroy()
 	GLOB.active_alternate_appearances -= src
 	return ..()
 
-/datum/atom_hud/alternate_appearance/proc/onNewMob(mob/M)
-	if(mobShouldSee(M))
-		show_to(M)
+/// Wrapper for applying this alt hud to the passed mob (if they should see it)
+/datum/atom_hud/alternate_appearance/proc/apply_to_new_mob(mob/applying_to)
+	if(mobShouldSee(applying_to))
+		show_to(applying_to)
 
 /datum/atom_hud/alternate_appearance/proc/mobShouldSee(mob/M)
 	return FALSE
@@ -136,16 +136,10 @@ GLOBAL_LIST_EMPTY(active_alternate_appearances)
 /datum/atom_hud/alternate_appearance/basic/noncult
 
 /datum/atom_hud/alternate_appearance/basic/noncult/mobShouldSee(mob/M)
-	if(!IS_CULTIST(M))
-		return TRUE
-	return FALSE
+	return !IS_CULTIST(M)
 
-/datum/atom_hud/alternate_appearance/basic/cult
-
-/datum/atom_hud/alternate_appearance/basic/cult/mobShouldSee(mob/M)
-	if(IS_CULTIST(M))
-		return TRUE
-	return FALSE
+/datum/atom_hud/alternate_appearance/basic/has_antagonist/cult
+	antag_datum_type = /datum/antagonist/cult
 
 /datum/atom_hud/alternate_appearance/basic/blessed_aware
 

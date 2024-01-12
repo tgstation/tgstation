@@ -4,6 +4,8 @@
 	SStgui.on_logout(src)
 	unset_machine()
 	remove_from_player_list()
+	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
+		alt_hud.hide_from(src)
 	..()
 
 	if(loc)
