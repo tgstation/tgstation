@@ -237,9 +237,10 @@ const JobRow = (
       style={{
         'margin-top': 0,
       }}>
-      <Stack align="center">
+      <Stack>
         <Tooltip content={job.description} position="right">
           <Stack.Item
+            align="center"
             className="job-name"
             width="50%"
             style={{
