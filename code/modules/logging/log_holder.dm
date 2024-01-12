@@ -34,7 +34,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 
 /client/proc/log_viewer_new()
 	set name = "View Round Logs"
-	set category = "Admin"
+	set category = "Admin.Logging"
 	logger.ui_interact(mob)
 
 /datum/log_holder/ui_interact(mob/user, datum/tgui/ui)
