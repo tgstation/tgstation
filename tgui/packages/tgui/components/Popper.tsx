@@ -8,21 +8,26 @@ import {
 } from 'react';
 import { usePopper } from 'react-popper';
 
-type Props = {
+type RequiredProps = {
   /** The content to display in the popper */
   content: ReactNode;
   /** Whether the popper is open */
   isOpen: boolean;
-  /** Called when the user clicks outside the popper */
-  onClickOutside?: () => void;
-  /** Where to place the popper relative to the reference element */
-  placement?: Placement;
 };
+
+type OptionalProps = Partial<{
+  /** Called when the user clicks outside the popper */
+  onClickOutside: () => void;
+  /** Where to place the popper relative to the reference element */
+  placement: Placement;
+}>;
+
+type Props = RequiredProps & OptionalProps;
 
 /**
  * ## Popper
  *  Popper lets you position elements so that they don't go out of the bounds of the window.
- * @url https://popper.js.org/ for more information.
+ * @url https://popper.js.org/react-popper/ for more information.
  */
 export function Popper(props: PropsWithChildren<Props>) {
   const { children, content, isOpen, onClickOutside, placement } = props;
@@ -34,6 +39,7 @@ export function Popper(props: PropsWithChildren<Props>) {
   );
 
   // One would imagine we could just use useref here, but it's against react-popper documentation and causes a positioning bug
+  // We still need them to call focus and clickoutside events :(
   const popperRef = useRef<HTMLDivElement | null>(null);
   const parentRef = useRef<HTMLDivElement | null>(null);
 
