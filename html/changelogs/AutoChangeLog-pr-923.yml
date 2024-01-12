@@ -1,0 +1,5 @@
+author: "Tractor Mann"
+delete-after: True
+changes:
+  - rscdel: "Yuletide is over. (Christmas songs can no longer roll as lobby songs.)"
+  - rscdel: "Removed herobrine."
