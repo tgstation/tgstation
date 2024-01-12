@@ -620,7 +620,7 @@
 /obj/machinery/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
 		set_on(!on)
-		balloon_alert(user, "turned [on ? "on : off"]")
+		balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
 
 /obj/machinery/cryo_cell/AltClick(mob/user)
