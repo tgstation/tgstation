@@ -102,8 +102,8 @@
 	log_combat(user, victim, "pulled out the eyes of")
 
 	user.visible_message(
-		span_boldwarning("You rip out [victim]'s eyes!"),
 		span_boldwarning("[user] rips out [victim]'s eyes!"),
+		span_boldwarning("You rip out [victim]'s eyes!"),
 		ignored_mobs = victim,
 	)
 
