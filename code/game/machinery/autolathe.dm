@@ -256,6 +256,7 @@
 
 	if(!is_operational)
 		say("Unable to continue production, power failure.")
+		finalize_build()
 		return
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
