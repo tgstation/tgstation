@@ -9,9 +9,9 @@ import {
   Button,
   Flex,
   LabeledList,
+  Popper,
   Stack,
 } from '../../components';
-import { Popper } from '../../components/Popper';
 import { CharacterPreview } from '../common/CharacterPreview';
 import {
   createSetPreference,
@@ -264,8 +264,9 @@ const MainFeature = (props: {
 
   return (
     <Popper
-      placement="bottom-end"
+      placement="bottom-start"
       isOpen={isOpen}
+      onClickOutside={handleClose}
       content={
         <ChoicedSelection
           name={catalog.name}

@@ -2,8 +2,7 @@ import { filterMap } from 'common/collections';
 import { useState } from 'react';
 
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, Stack, Tooltip } from '../../components';
-import { Popper } from '../../components/Popper';
+import { Box, Button, Icon, Popper, Stack, Tooltip } from '../../components';
 import { PreferencesMenuData, Quirk, RandomSetting, ServerData } from './data';
 import { getRandomization, PreferenceList } from './MainPage';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
