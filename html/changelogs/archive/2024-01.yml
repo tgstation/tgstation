@@ -238,3 +238,102 @@
   Melbert:
   - bugfix: '"The sister and He Who Wept" Heretic painting will no longer cause big
       lag'
+2024-01-10:
+  13spacemen:
+  - qol: If you can't heal a body part, you won't get a healing time delay. No more
+      spending 5 seconds healing a body part only to get a "can't heal that" message.
+  Absolucy:
+  - bugfix: Fixed the Codex Cicatrix always requiring a dead body, despite the description
+      saying leather or a hide would work too.
+  Chubbygummibear:
+  - bugfix: popup screen locs will work on clients >1614. Security cameras and Spyglass
+      will work
+  FlufflesTheDog:
+  - bugfix: Certain areas are now properly protected against grid check. Namely the
+      supermatter should consistently be protected.
+  Ghommie:
+  - bugfix: Fixed misfiring for firearms like tinkered detective revolvers.
+  IndieanaJones:
+  - bugfix: Dynamic midround rolls will properly consider roundstart players as part
+      of the living population again, allowing antagonists with a minimum population
+      value to spawn when they should be able to.
+  - bugfix: Players who observe before roundstart can be considered for midround ghost
+      roles again.
+  - bugfix: Some antagonists which had elements that scale with living station population
+      now function properly again.
+  JohnFulpWillard:
+  - bugfix: Refried beans and Spanish rice now lets you take the bowl back after eating
+      it.
+  - bugfix: Eldritch reagent (the one that heals heretics) now heal heretic monsters
+      rather than kill them.
+  - bugfix: The HoP's cartridge vending machine now sells regular PDAs instead of
+      base command ones.
+  LT3:
+  - bugfix: Unencoded server admin announcements will now actually broadcast
+  Melbert:
+  - admin: Several types are now more accessible via the "spawn" verb (and friends),
+      meaning you can type 'Spawn" Modsuit' or 'Spawn "Jumpsuit' in the command bar
+      and it'll just give you a list of modsuits or jumpsuits to pick from.
+  - bugfix: Lionhunter Rifle is now available at the same point as Mawed Crucible,
+      making it available to all paths again.
+  - bugfix: Lock knowledge now goes the correct order. Mark -> Ritual -> Unique item,
+      rather than backwards.
+  - balance: Blood cultists can now convert a Null Rod into a cult weapon on an offer
+      rune. The strength of the weapon it is converted into depends on how many cultists
+      the Chaplain crit / killed with it. At five or more, it will turn into a Bastard
+      Sword. Note, sacrificing someone holding a Null Rod will automatically convert
+      it after they are gibbed.
+  - balance: Heretics no longer produce a Bastard Sword upon cult conversion. They
+      are still immune to cult stun and cannot be converted by blood cultists.
+  - bugfix: Carps now migrate slightly better, probably.
+  - bugfix: And Poly now talks better, probably.
+  OrionTheFox:
+  - image: Resprited a majority of undershirts
+  SyncIt21:
+  - bugfix: ejecting cells from microwaves via ctrl click now requires player proximity.
+  - code_imp: smart fridge content overlay now uses `base_icon_state` instead of a
+      separate var
+  jlsnow301:
+  - bugfix: Medical records console should be useable again
+  - admin: Fixed the bluescreen in the centcom pod launcher.
+  zxaber:
+  - bugfix: Ripley MK-Is and Paddys now correctly make incoming projectiles hit the
+      pilot again.
+  - bugfix: The various borg apparatuses can no longer pick up other internal borg
+      tools.
+2024-01-11:
+  Thunder12345:
+  - bugfix: Pipeguns no longer have floating bayonets
+  vinylspiders:
+  - bugfix: if your voice changes (e.g. through a voice changer or changeling mimicry)
+      your runechat will now appear as the mob you are speaking in the voice of
+  - bugfix: when doing emotes with your face obscured, your runechat color will now
+      appear as either that of Unknown or the mob you are wearing the id of (if you
+      are wearing a mask with someone else's id)
+2024-01-12:
+  13spacemen:
+  - bugfix: Healing simplemobs with sutures and other stacks works again
+  - spellcheck: Healing mobs with medical stacks like suture and mesh give better
+      user feedback messages
+  - image: New liquid plasma sprites from SS14!
+  ArcaneMusic:
+  - admin: Added a new admin verb that ends all active weather within the weather
+      subsystem.
+  IndieanaJones:
+  - balance: Nightmare's Light Eater can now stun targets under certain conditions.
+  LT3:
+  - bugfix: Icebox kitchen has its light switch again
+  - bugfix: Icebox medbay hallway now has a fire alarm
+  Melbert:
+  - bugfix: Fix Ringleader's Rise not causing as many hallucinations as expected
+  - bugfix: Fixes some cult spells being unable to heal constructs (blood rites particularly)
+  - bugfix: Chameleon Suits will now automatically set your helmet into a hood if
+      using a hooded suit again
+  - bugfix: Blood Drunk Miner (Hunter version) should dash a bit more.
+  - bugfix: Ghost alert for buying a badass balloon should have a proper icon
+  TheVekter:
+  - admin: Made logging for BSA targeting and firing easier to find for admins.
+  Watermelon914:
+  - bugfix: Fixed being able to download the contractor program on the syndie store.
+  vinylspiders:
+  - code_imp: removed a dupe trait entry in the traits_by_type list

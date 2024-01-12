@@ -227,10 +227,7 @@
 		During this process, you will rapidly regenerate stamina and quickly recover from stuns, however, you will be unable to attack. \
 		This spell can be cast in rapid succession, but doing so will increase the cooldown."
 	gain_text = "In the flurry of death, he found peace within himself. Despite insurmountable odds, he forged on."
-	next_knowledge = list(
-		/datum/heretic_knowledge/duel_stance,
-		/datum/heretic_knowledge/rifle,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/duel_stance)
 	spell_to_add = /datum/action/cooldown/spell/realignment
 	cost = 1
 	route = PATH_BLADE
@@ -250,6 +247,7 @@
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/rune_carver,
 		/datum/heretic_knowledge/crucible,
+		/datum/heretic_knowledge/rifle,
 	)
 	cost = 1
 	route = PATH_BLADE
