@@ -283,8 +283,11 @@
 		set_on(FALSE)
 
 /obj/machinery/cryo_cell/process(seconds_per_tick)
-	if(!occupant || !beaker)
+	if(QDELETED(occupant) || QDELETED(beaker))
 		set_on(FALSE)
+		if(occupant && autoeject)
+			open_machine()
+			say("Patient ejected because beaker was removed mid healing. Operation aborted")
 		return PROCESS_KILL
 
 	var/mob/living/mob_occupant = occupant
@@ -619,6 +622,14 @@
 
 /obj/machinery/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
+		//were turning it on so do some checks
+		if(!on)
+			if(QDELETED(occupant))
+				balloon_alert(user, "no occupant!")
+				return
+			if(QDELETED(beaker))
+				balloon_alert(user, "no beaker!")
+				return
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
