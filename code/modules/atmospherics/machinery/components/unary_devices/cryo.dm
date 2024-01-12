@@ -211,7 +211,10 @@
 		if(TOOL_SCREWDRIVER)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
 		if(TOOL_CROWBAR)
-			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Deconstruct" : "Pry Open"]"
+			if(!state_open && !panel_open && !is_operational)
+				context[SCREENTIP_CONTEXT_LMB] = "Pry Open"
+			else if(panel_open)
+				context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
 		if(TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Rotate" : ""]"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -390,6 +393,8 @@
 /obj/machinery/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if(state_open && !panel_open)
+		if(get_turf(user) == get_turf(src))
+			return
 		flick("pod-close-anim", src)
 		return ..()
 
@@ -437,9 +442,17 @@
 		balloon_alert(user, "turn off!")
 		return
 
+	var/can_crowbar = FALSE
+	if(!state_open && !panel_open && !is_operational) //can pry open
+		can_crowbar = TRUE
+	else if(panel_open) //can deconstruct
+		can_crowbar = TRUE
+	if(!can_crowbar)
+		return
+
 	var/unsafe_release = FALSE
 	var/datum/gas_mixture/inside_air = internal_connector.gas_connector.airs[1]
-	if(inside_air.total_moles() > 2 * ONE_ATMOSPHERE)
+	if(inside_air.return_pressure() > 2 * ONE_ATMOSPHERE)
 		to_chat(user, span_warning("As you begin prying \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		if(!do_after(user, 2 SECONDS, target = src))
 			return
@@ -497,7 +510,7 @@
 		if(!user.transferItemToLoc(I, src))
 			return
 		beaker = I
-		balloon_alert(user, "beaker inserted!")
+		balloon_alert(user, "beaker inserted")
 		var/reagentlist = pretty_string_from_reagent_list(I.reagents.reagent_list)
 		user.log_message("added an [I] to cryo containing [reagentlist].", LOG_GAME)
 		return
@@ -571,11 +584,18 @@
 			if(on)
 				set_on(FALSE)
 			else if(!state_open)
+				//use to_chat() here because balloon alerts can be blocked by the UI
+				if(QDELETED(occupant))
+					to_chat(ui.user, span_warning("no occupant inside machine!"))
+					return
+				if(QDELETED(beaker))
+					to_chat(ui.user, span_warning("no beaker inserted!"))
+					return
 				set_on(TRUE)
 			return TRUE
 
 		if("door")
-			if(state_open)
+			if(state_open && get_turf(ui.user) != get_turf(src)) //no closing the machine on yourself & dying lol!
 				close_machine()
 			else
 				open_machine()
@@ -595,21 +615,21 @@
 				return TRUE
 
 /obj/machinery/cryo_cell/can_interact(mob/user)
-	return user.loc != src && ..()
+	return get_turf(user) != get_turf(src) && ..()
 
 /obj/machinery/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
-		if(set_on(!on))
-			balloon_alert(user, "turned [on ? "on" : "off"]")
+		set_on(!on)
+		balloon_alert(user, "turned [on ? "on : off"]")
 	return ..()
 
 /obj/machinery/cryo_cell/AltClick(mob/user)
 	if(can_interact(user))
-		balloon_alert(user, "[state_open ? "closing" : "opening"] door")
 		if(state_open)
 			close_machine()
 		else
 			open_machine()
+		balloon_alert(user, "Door [state_open ? "Opened" : "Closed"]")
 	return ..()
 
 /obj/machinery/cryo_cell/get_remote_view_fullscreens(mob/user)
