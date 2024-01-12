@@ -57,9 +57,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/ranged,
 		/mob/living/basic/guardian/standard,
 		/mob/living/basic/guardian/support,
-		//MONKESTATION EDIT START
-		/mob/living/basic/guardian/standard/timestop,
-		//MONKESTATION EDIT END
 	)
 
 /obj/item/guardian_creator/Initialize(mapload)
@@ -151,9 +148,6 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/protector,
 		/mob/living/basic/guardian/ranged,
 		/mob/living/basic/guardian/standard,
-		//MONKESTATION EDIT START
-		/mob/living/basic/guardian/standard/timestop,
-		//MONKESTATION EDIT END
 	)
 
 /obj/item/guardian_creator/wizard/spawn_guardian(mob/living/user, mob/dead/candidate)
@@ -217,7 +211,4 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		/mob/living/basic/guardian/ranged, // Shoots the bad guys
 		/mob/living/basic/guardian/standard, // Can mine walls
 		/mob/living/basic/guardian/support, // Heals and teleports you
-		//MONKESTATION EDIT START
-		/mob/living/basic/guardian/standard/timestop,
-		//MONKESTATION EDIT END
 	)
