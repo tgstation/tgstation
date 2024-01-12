@@ -1,10 +1,10 @@
 import { classes } from 'common/react';
 import { ReactNode, useCallback, useEffect, useRef, useState } from 'react';
-import { Popover } from 'react-tiny-popover';
 
 import { BoxProps, unit } from './Box';
 import { Button } from './Button';
 import { Icon } from './Icon';
+import { Popper } from './Popper';
 
 type DropdownEntry = {
   displayText: ReactNode;
@@ -74,8 +74,7 @@ export function Dropdown(props: Props) {
     width,
   } = props;
 
-  const [opacity, setOpacity] = useState(0);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const adjustedOpen = over ? !open : open;
   const innerRef = useRef<HTMLDivElement>(null);
 
@@ -108,21 +107,6 @@ export function Dropdown(props: Props) {
     [disabled, onSelected, options, selected],
   );
 
-  /**
-   * HACK: Just like the original dropdown,
-   * the menu does not propagate correctly on the first event.
-   * This tricks it into getting the parent component's position
-   * so there is no flickering on open.
-   */
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setOpen(false);
-      setOpacity(1);
-    }, 1);
-
-    return () => clearTimeout(timer);
-  }, []);
-
   /** Allows the menu to be scrollable on open */
   useEffect(() => {
     if (!open) return;
@@ -131,14 +115,14 @@ export function Dropdown(props: Props) {
   }, [open]);
 
   return (
-    <Popover
+    <Popper
       isOpen={open}
       onClickOutside={() => setOpen(false)}
-      positions={over ? 'top' : 'bottom'}
+      placement={over ? 'top-start' : 'bottom-start'}
       content={
         <div
           className="Layout Dropdown__menu"
-          style={{ minWidth: menuWidth, opacity }}
+          style={{ minWidth: menuWidth }}
           ref={innerRef}
         >
           {options.length === 0 && (
@@ -231,6 +215,6 @@ export function Dropdown(props: Props) {
           )}
         </div>
       </div>
-    </Popover>
+    </Popper>
   );
 }

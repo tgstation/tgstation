@@ -1,9 +1,9 @@
 import { filterMap } from 'common/collections';
 import { useState } from 'react';
-import { Popover } from 'react-tiny-popover';
 
 import { useBackend } from '../../backend';
 import { Box, Button, Icon, Stack, Tooltip } from '../../components';
+import { Popper } from '../../components/Popper';
 import { PreferencesMenuData, Quirk, RandomSetting, ServerData } from './data';
 import { getRandomization, PreferenceList } from './MainPage';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
@@ -212,8 +212,8 @@ function QuirkPopper(props: QuirkPopperProps) {
     Object.entries(customization_options).length > 0;
 
   return (
-    <Popover
-      positions="bottom"
+    <Popper
+      placement="bottom-end"
       onClickOutside={() => setCustomizationExpanded(false)}
       isOpen={customizationExpanded}
       content={
@@ -274,7 +274,7 @@ function QuirkPopper(props: QuirkPopperProps) {
           />
         )}
       </div>
-    </Popover>
+    </Popper>
   );
 }
 

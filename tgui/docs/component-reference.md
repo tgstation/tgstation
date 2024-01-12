@@ -735,7 +735,14 @@ to fine tune the value, or single click it to manually type a number.
 
 ### `Popper`
 
-Popper lets you position elements so that they don't go out of the bounds of the window. See [react-tiny-popover](https://github.com/alexkatz/react-tiny-popover) for more information.
+Popper lets you position elements so that they don't go out of the bounds of the window. See [popper.js](https://popper.js.org/) for more information.
+
+**Props:**
+
+- `content: ReactNode` - The content that will be put inside the popper.
+- `isOpen: boolean` - Whether or not the popper is open.
+- `onClickOutside?: (e) => void` - A function that will be called when the user clicks outside of the popper.
+- `placement?: string` - The placement of the popper. See [https://popper.js.org/docs/v2/constructors/#placement]
 
 ### `ProgressBar`
 
