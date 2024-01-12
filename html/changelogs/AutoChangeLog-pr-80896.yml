@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Chameleon Suits will now automatically set your helmet into a hood if using a hooded suit again"

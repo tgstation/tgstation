@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Ghost alert for buying a badass balloon should have a proper icon"

@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix Ringleader's Rise not causing as many hallucinations as expected"

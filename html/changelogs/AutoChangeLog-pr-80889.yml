@@ -1,5 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - bugfix: "Healing simplemobs with sutures and other stacks works again"
-  - spellcheck: "Healing mobs with medical stacks like suture and mesh give better user feedback messages"

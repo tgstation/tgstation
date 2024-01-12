@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes some cult spells being unable to heal constructs (blood rites particularly)"
