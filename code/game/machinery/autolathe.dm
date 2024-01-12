@@ -274,12 +274,12 @@
 		created = new design.build_path(target, items_remaining)
 	else
 		created = new design.build_path(target)
+		created.set_custom_materials(materials_per_item.Copy())
 
 	created.pixel_x = created.base_pixel_x + rand(-6, 6)
 	created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	for(var/atom/movable/content in created)
 		content.set_custom_materials(list()) // no
-	created.set_custom_materials(materials_per_item.Copy())
 	created.forceMove(target)
 
 	if(is_stack)
@@ -298,6 +298,7 @@
 	PRIVATE_PROC(TRUE)
 	icon_state = initial(icon_state)
 	busy = FALSE
+	update_static_data_for_all_viewers()
 
 /obj/machinery/autolathe/crowbar_act(mob/living/user, obj/item/tool)
 	if(default_deconstruction_crowbar(tool))
