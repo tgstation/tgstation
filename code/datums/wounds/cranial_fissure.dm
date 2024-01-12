@@ -87,6 +87,10 @@
 		return TRUE
 
 	victim.balloon_alert(user, "pulling out eyes...")
+	user.visible_message(
+		span_boldwarning("[user] reaches inside [victim]'s skull..."),
+		ignored_mobs = user
+	)
 	victim.show_message(
 		span_userdanger("[victim] starts to pull out your eyes!"),
 		MSG_VISUAL,
