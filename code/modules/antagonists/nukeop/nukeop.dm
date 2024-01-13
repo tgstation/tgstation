@@ -591,7 +591,7 @@
 				break
 
 		var/list/turf/options = list()
-		for(var/turf/open/open_turf in spawn_in?.get_contained_turfs())
+		for(var/turf/open/open_turf in spawn_in?.get_turfs_from_all_zlevels())
 			if(open_turf.is_blocked_turf())
 				continue
 			options += open_turf
