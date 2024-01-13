@@ -1,0 +1,5 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - bugfix: "Changeling eggs laid by headslugs work again"
+  - bugfix: "Changeling egg incubation times should feel much more consistent, hatching after 4 minutes"
