@@ -1,4 +1,0 @@
-author: "Majkl-J"
-delete-after: True
-changes:
-  - code_imp: "The check that prevents your stuff from dropping when you have robotic parts is now more robust"

@@ -1,6 +1,0 @@
-author: "Paxilmaniac"
-delete-after: True
-changes:
-  - qol: "The heat-proof catwalk made by heat-proof rods will go away when a tile is placed on it, rather than sticking around and needing to be removed manually"
-  - bugfix: "The lighting will not irreparably break on tiles where plating was placed on lava-proof catwalks"
-  - code_imp: "Some single letter variables and the structure of the code around placing tiles on lava-proof catwalks has been improved"
