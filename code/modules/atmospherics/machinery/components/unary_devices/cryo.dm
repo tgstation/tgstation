@@ -203,7 +203,7 @@
 	if(isnull(held_item))
 		return CONTEXTUAL_SCREENTIP_SET
 
-	if(istype(held_item, /obj/item/reagent_containers/cup))
+	if(QDELETED(beaker) && istype(held_item, /obj/item/reagent_containers/cup))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -258,6 +258,11 @@
 
 	if(on == active)
 		return
+	if(active && QDELETED(occupant))
+		if(occupant) //an occupant that is not null but is getting deleted. spit it out
+			open_machine()
+		return
+
 	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
 	on = active
@@ -283,11 +288,10 @@
 		set_on(FALSE)
 
 /obj/machinery/cryo_cell/process(seconds_per_tick)
-	if(QDELETED(occupant) || QDELETED(beaker))
+	if(!on || QDELETED(occupant))
 		set_on(FALSE)
-		if(occupant && autoeject)
+		if(occupant)
 			open_machine()
-			say("Patient ejected because beaker was removed mid healing. Operation aborted")
 		return PROCESS_KILL
 
 	var/mob/living/mob_occupant = occupant
@@ -335,7 +339,7 @@
 		)
 
 /obj/machinery/cryo_cell/process_atmos()
-	if(!on)
+	if(!on || QDELETED(occupant))
 		return PROCESS_KILL
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
@@ -399,7 +403,8 @@
 		if(get_turf(user) == get_turf(src))
 			return
 		flick("pod-close-anim", src)
-		return ..()
+		. = ..()
+		set_on(TRUE) //auto on
 
 /obj/machinery/cryo_cell/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
@@ -587,18 +592,11 @@
 			if(on)
 				set_on(FALSE)
 			else if(!state_open)
-				//use chat here because balloon alerts can be blocked by the UI
-				if(QDELETED(occupant))
-					to_chat(ui.user, span_warning("no occupant inside machine!"))
-					return
-				if(QDELETED(beaker))
-					to_chat(ui.user, span_warning("no beaker inserted!"))
-					return
 				set_on(TRUE)
 			return TRUE
 
 		if("door")
-			if(state_open && get_turf(ui.user) != get_turf(src)) //no closing the machine on yourself & dying lol!
+			if(state_open && get_turf(ui.user) != get_turf(src))
 				close_machine()
 			else
 				open_machine()
@@ -623,13 +621,6 @@
 /obj/machinery/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
 		//were turning it on so do some checks
-		if(!on)
-			if(QDELETED(occupant))
-				balloon_alert(user, "no occupant!")
-				return
-			if(QDELETED(beaker))
-				balloon_alert(user, "no beaker!")
-				return
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
