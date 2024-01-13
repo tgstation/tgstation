@@ -44,6 +44,10 @@
 	suffix = "northstar"
 	name = "mining shuttle (North Star)"
 
+/datum/map_template/shuttle/mining/nebula
+	suffix = "nebula"
+	name = "mining shuttle (Nebula)"
+
 // MINING COMMON SHUTTLES
 /datum/map_template/shuttle/mining_common
 	port_id = "mining_common"
