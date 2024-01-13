@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tramstation east APC will no longer be destroyed when the tram crashes"
-  - qol: "Tramstation central power and disposals moved out of the wall"

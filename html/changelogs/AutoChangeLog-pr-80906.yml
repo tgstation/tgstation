@@ -1,5 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "ID cards now set their accounts with Alt-Right click."
-  - bugfix: "ID cards now once again have contextual screen tips showing what buttons do what actions."
