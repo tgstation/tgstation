@@ -106,17 +106,15 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 		return
 	// Admin message
 	if(href_list["messageread"])
-		if(!isnum(href_list["messageread"]))
+		var/message_id = round(text2num(href_list["messageread"]), 1)
+		if(!isnum(message_id))
 			return
-		var/rounded_message_id = round(href_list["messageread"], 1)
 		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
 			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
-			list("id" = rounded_message_id, "player_key" = usr.ckey)
+			list("id" = message_id, "player_key" = usr.ckey)
 		)
-		if(!query_message_read.warn_execute())
-			qdel(query_message_read)
-			return
-		qdel(query_message_read)
+		query_message_read.warn_execute()
+		return
 
 	// TGUIless adminhelp
 	if(href_list["tguiless_adminhelp"])
@@ -446,7 +444,7 @@ GLOBAL_LIST_INIT(blacklisted_builds, list(
 
 	if(holder)
 		add_admin_verbs()
-		display_admin_memos()
+		display_admin_memos(src)
 		adminGreet()
 	if (mob && reconnecting)
 		var/stealth_admin = mob.client?.holder?.fakekey

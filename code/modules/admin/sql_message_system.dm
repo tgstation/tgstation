@@ -673,7 +673,7 @@
 	if(!query_get_message_output.warn_execute())
 		qdel(query_get_message_output)
 		return
-	var/list/datum/admin_message/messages
+	var/list/datum/admin_message/messages = list()
 	while(query_get_message_output.NextRow())
 		var/datum/admin_message/message = new()
 		message.id = query_get_message_output.item[1]
@@ -683,6 +683,8 @@
 		message.editor_key = query_get_message_output.item[5]
 		messages += message
 	qdel(query_get_message_output)
+	if(!length(messages))
+		return
 	return messages
 
 /proc/display_admin_messages(client/display_to)
