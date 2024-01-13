@@ -190,6 +190,9 @@
 		else
 			. += span_warning("Its missing a beaker.")
 
+		. += span_notice("Use [EXAMINE_HINT("Alt-Click")] to [state_open ? "Close" : "Open"] the machine.")
+		. += span_notice("Use [EXAMINE_HINT("Ctrl-Click")] to turn [on ? "Off" : "On"] the machine.")
+
 		. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] open.")
 		if(panel_open)
 			. += span_notice("[src] can be [EXAMINE_HINT("pried")] apart.")
@@ -233,10 +236,7 @@
 		. += "pod-panel"
 	if(state_open)
 		return
-	if(on && is_operational)
-		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-on", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
-	else
-		. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-off", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
+	. += mutable_appearance('icons/obj/medical/cryogenics.dmi', "cover-[on && is_operational ? "on" : "off"]", ABOVE_ALL_MOB_LAYER, src, plane = ABOVE_GAME_PLANE)
 
 /obj/machinery/cryo_cell/dump_inventory_contents(list/subset = list(occupant))
 	//only drop the mob and nothing else by default when opening the machine
@@ -343,7 +343,7 @@
 		return PROCESS_KILL
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
-	if(!internal_connector.gas_connector.nodes[1] || !internal_connector.gas_connector.airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
+	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		set_on(FALSE)
 		var/msg = "Insufficient cryogenic gas, shutting down."
 		if(autoeject) // Eject if configured.
@@ -373,19 +373,23 @@
 				var/mob/living/carbon/human/humi = mob_occupant
 				humi.adjust_coretemperature(humi.bodytemperature - humi.coretemperature)
 
-		air1.garbage_collect()
-
 		if(air1.temperature > 2000)
 			take_damage(clamp((air1.temperature) / 200, 10, 20), BURN)
 
+		//spread temperature changes throughout the pipenet
 		internal_connector.gas_connector.update_parents()
 
 /obj/machinery/cryo_cell/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	if(breath_request <= 0)
 		return null
+
+	//return breathable air
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 	var/breath_percentage = breath_request / air1.volume
-	return air1.remove(air1.total_moles() * breath_percentage)
+	. = air1.remove(air1.total_moles() * breath_percentage)
+
+	//update molar changes throughout the pipenet
+	internal_connector.gas_connector.update_parents()
 
 /obj/machinery/cryo_cell/assume_air(datum/gas_mixture/giver)
 	internal_connector.gas_connector.airs[1].merge(giver)
