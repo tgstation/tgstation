@@ -25,7 +25,6 @@
 	result = /obj/item/food/corndog
 
 /datum/crafting_recipe/food/corndog/rod
-	machinery = list(/obj/machinery/oven)
 	reqs = list(/obj/item/food/raw_corndog/rod = 1)
 	result = /obj/item/food/corndog/rod
 
