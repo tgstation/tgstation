@@ -53,7 +53,7 @@
 	. =..()
 
 	var/antag_amt = get_antag_amount()
-	var/list/candidates = get_candidates()
+	var/list/candidates = get_candidates() //we should optimize this
 	if(length(candidates) < antag_amt)
 		if(.)
 			. += ", "
@@ -163,7 +163,8 @@
 	var/living_players_arg = round_started ? TRUE : FALSE
 	var/midround_antag_pref_arg = round_started ? FALSE : TRUE
 
-	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, ready_newplayers = new_players_arg, living_players = living_players_arg, midround_antag_pref = midround_antag_pref_arg, restricted_roles = restricted_roles, required_roles = exclusive_roles)
+	var/list/candidates = SSgamemode.get_candidates(antag_flag, antag_flag, FALSE, new_players_arg, living_players_arg, midround_antag_pref = midround_antag_pref_arg, \
+													restricted_roles = restricted_roles, required_roles = exclusive_roles)
 	candidates = trim_candidates(candidates)
 	return candidates
 
