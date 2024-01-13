@@ -52,9 +52,9 @@
 		var/turf/T = H.loc
 		light_amount = min(1, T.get_lumcount()) - 0.5
 		if(light_amount > 0.3)
-			H.heal_overall_damage(brute = 0.5 * seconds_per_tick, burn = 0.5 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
-			H.adjustToxLoss(-0.5 * seconds_per_tick)
-			H.adjustOxyLoss(-0.5 * seconds_per_tick)
+			H.heal_overall_damage(brute = 0.25 * seconds_per_tick, burn = 0.25 * seconds_per_tick, required_bodytype = BODYTYPE_ORGANIC) //Lowered to 0.25
+			H.adjustToxLoss(-0.25 * seconds_per_tick)
+			H.adjustOxyLoss(-0.25 * seconds_per_tick)
 
 /datum/species/floran/on_species_gain(mob/living/carbon/new_floran, datum/species/old_species, pref_load)
 	. = ..()
