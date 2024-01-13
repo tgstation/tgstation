@@ -24,6 +24,7 @@
 	buckle_lying = 0
 	mob_size = MOB_SIZE_LARGE
 	buckle_prevents_pull = TRUE // No pulling loaded shit
+	bot_mode_flags = ~BOT_MODE_ROUNDSTART_POSSESSION
 
 	maints_access_required = list(ACCESS_ROBOTICS, ACCESS_CARGO)
 	radio_key = /obj/item/encryptionkey/headset_cargo
@@ -69,7 +70,7 @@
 	if(prob(0.666) && mapload)
 		new /mob/living/simple_animal/bot/mulebot/paranormal(loc)
 		return INITIALIZE_HINT_QDEL
-	wires = new /datum/wires/mulebot(src)
+	set_wires(new /datum/wires/mulebot(src))
 
 	// Doing this hurts my soul, but simplebot access reworks are for another day.
 	var/datum/id_trim/job/cargo_trim = SSid_access.trim_singletons_by_path[/datum/id_trim/job/cargo_technician]
@@ -234,7 +235,7 @@
 			unload(0)
 		if(prob(25))
 			visible_message(span_danger("Something shorts out inside [src]!"))
-			wires.cut_random()
+			wires.cut_random(source = Proj.firer)
 
 /mob/living/simple_animal/bot/mulebot/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -672,6 +673,12 @@
 
 // when mulebot is in the same loc
 /mob/living/simple_animal/bot/mulebot/proc/run_over(mob/living/carbon/human/crushed)
+	if (!(bot_cover_flags & BOT_COVER_EMAGGED) && !wires.is_cut(WIRE_AVOIDANCE))
+		if (!has_status_effect(/datum/status_effect/careful_driving))
+			crushed.visible_message(span_notice("[src] slows down to avoid crushing [crushed]."))
+		apply_status_effect(/datum/status_effect/careful_driving)
+		return // Player mules must be emagged before they can trample
+
 	log_combat(src, crushed, "run over", addition = "(DAMTYPE: [uppertext(BRUTE)])")
 	crushed.visible_message(
 		span_danger("[src] drives over [crushed]!"),
