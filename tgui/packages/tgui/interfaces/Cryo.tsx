@@ -83,15 +83,15 @@ export const Cryo = () => {
                   label="Temperature"
                   color={occupant.bodyTemperature < data.T0C ? 'good' : 'bad'} // Green if the mob can actually be healed by cryoxadone.
                 >
-                  <AnimatedNumber value={round(occupant.bodyTemperature, 1)} />
+                  <AnimatedNumber value={round(occupant.bodyTemperature, 0)} />
                   {' K'}
                 </LabeledList.Item>
                 <LabeledList.Item label="Health">
                   <ProgressBar
-                    value={round(occupant.health / occupant.maxHealth, 1)}
+                    value={round(occupant.health / occupant.maxHealth, 2)}
                     color={occupant.health > 0 ? 'good' : 'average'}
                   >
-                    <AnimatedNumber value={round(occupant.health, 1)} />
+                    <AnimatedNumber value={round(occupant.health, 0)} />
                   </ProgressBar>
                 </LabeledList.Item>
                 {damageTypes.map((damageType) => (
@@ -100,10 +100,10 @@ export const Cryo = () => {
                     label={damageType.label}
                   >
                     <ProgressBar
-                      value={round(data.occupant[damageType.type] / 100, 1)}
+                      value={round(data.occupant[damageType.type] / 100, 2)}
                     >
                       <AnimatedNumber
-                        value={round(data.occupant[damageType.type], 1)}
+                        value={round(data.occupant[damageType.type], 0)}
                       />
                     </ProgressBar>
                   </LabeledList.Item>
@@ -125,7 +125,7 @@ export const Cryo = () => {
               </Button>
             </LabeledList.Item>
             <LabeledList.Item label="Temperature">
-              <AnimatedNumber value={round(data.cellTemperature, 1)} /> K
+              <AnimatedNumber value={round(data.cellTemperature, 0)} /> K
             </LabeledList.Item>
             <LabeledList.Item label="Door">
               <Button
