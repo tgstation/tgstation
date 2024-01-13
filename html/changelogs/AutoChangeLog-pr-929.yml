@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "The jobs page will no longer constantly get bigger when picking a new job title (or not)."

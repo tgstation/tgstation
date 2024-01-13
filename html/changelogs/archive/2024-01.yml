@@ -192,3 +192,20 @@
   - bugfix: 'Profakos: fixes request console messages not being trimmed and encoded
       properly'
   - refactor: 'Profakos: converts the request console to tgui'
+2024-01-13:
+  13spacemen:
+  - rscadd: Atmos Holofan projectors can be right-clicked inhand to make their holograms
+      more transparent
+  Gboster-0:
+  - rscadd: The antimatter now screams on comms if it sustains too much damage in
+      a short peroid
+  JohnFulpWillard:
+  - bugfix: The jobs page will no longer constantly get bigger when picking a new
+      job title (or not).
+  KittyNoodle:
+  - bugfix: Natural immune system no longer bricks itself at 60% antibodies
+  MichiRecRoom:
+  - balance: Timestop Guardian is once again restricted to Bloodsuckers only.
+  Tractor Mann:
+  - rscdel: Yuletide is over. (Christmas songs can no longer roll as lobby songs.)
+  - rscdel: Removed herobrine.
