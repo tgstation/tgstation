@@ -24,7 +24,7 @@
 						TEST_FAIL("Found a shared turf [turf_to_check.type] between [area_to_test.type] and [existing.type]'s turf listings")
 
 				var/area/turfs_actual_area = turf_to_check.loc
-				if (turfs_actual_area != turf_to_check)
+				if (turfs_actual_area != area_to_test)
 					TEST_FAIL("Found a turf [turf_to_check.type] which is IN [turfs_actual_area.type], but is registered as being in [area_to_test.type]")
 
 				turf_to_check.in_contents_of = turf_to_check
