@@ -618,7 +618,10 @@
 				return TRUE
 
 /obj/machinery/cryo_cell/can_interact(mob/user)
-	return get_turf(user) != get_turf(src) && ..()
+	//must not be in the machine or on its turf to interact
+	if(get_turf(user) == get_turf(src))
+		return FALSE
+	return ..()
 
 /obj/machinery/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
