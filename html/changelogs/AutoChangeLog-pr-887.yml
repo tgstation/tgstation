@@ -1,0 +1,7 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - balance: "You can't possess a MULE as soon as the round starts, someone will have to give you permission."
+  - balance: "MULEbots no longer crush prone characters unless they have been hacked (or emagged)."
+  - bugfix: "Bots can put numbers in their names, what with being robots."
+  - admin: "Adds attack logging when certain wires are cut (for instance: MULEbot safeties)"
