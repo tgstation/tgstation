@@ -123,8 +123,9 @@
 	register_context()
 
 /obj/machinery/cryo_cell/Destroy()
-	vis_contents.Cut()
+	on = FALSE
 
+	vis_contents.Cut()
 	QDEL_NULL(occupant_vis)
 	QDEL_NULL(radio)
 	QDEL_NULL(beaker)
@@ -258,10 +259,6 @@
 
 	if(on == active)
 		return
-	if(active && QDELETED(occupant))
-		if(occupant) //an occupant that is not null but is getting deleted. spit it out
-			open_machine()
-		return
 
 	SEND_SIGNAL(src, COMSIG_CRYO_SET_ON, active)
 	. = on
@@ -289,10 +286,17 @@
 
 /obj/machinery/cryo_cell/process(seconds_per_tick)
 	if(!on || QDELETED(occupant))
-		set_on(FALSE)
+		//somehow an deleting mob is inside us. dump everything out
 		if(occupant)
 			open_machine()
-		return PROCESS_KILL
+			on = FALSE //in case panel was open we need to set to FALSE explicitly
+
+		//if not on end processing
+		if(!on)
+			set_on(FALSE) //this explicitly disables processing so is nessassary
+			. = PROCESS_KILL
+
+		return
 
 	var/mob/living/mob_occupant = occupant
 	if(mob_occupant.on_fire)
@@ -339,10 +343,12 @@
 		)
 
 /obj/machinery/cryo_cell/process_atmos()
-	if(!on || QDELETED(occupant))
+	if(!on)
 		return PROCESS_KILL
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
+
+	//check for workable conditions
 	if(!internal_connector.gas_connector.nodes[1] || !air1 || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
 		set_on(FALSE)
 		var/msg = "Insufficient cryogenic gas, shutting down."
@@ -352,7 +358,12 @@
 		radio.talk_into(src, msg, RADIO_CHANNEL_MEDICAL)
 		return PROCESS_KILL
 
-	if(occupant)
+	//take damage from high temperatures
+	if(air1.temperature > 2000)
+		take_damage(clamp((air1.temperature) / 200, 10, 20), BURN)
+
+	//adjust temperature of mob
+	if(!QDELETED(occupant))
 		var/mob/living/mob_occupant = occupant
 		var/cold_protection = 0
 		var/temperature_delta = air1.temperature - mob_occupant.bodytemperature // The only semi-realistic thing here: share temperature between the cell and the occupant.
@@ -373,11 +384,8 @@
 				var/mob/living/carbon/human/humi = mob_occupant
 				humi.adjust_coretemperature(humi.bodytemperature - humi.coretemperature)
 
-		if(air1.temperature > 2000)
-			take_damage(clamp((air1.temperature) / 200, 10, 20), BURN)
-
-		//spread temperature changes throughout the pipenet
-		internal_connector.gas_connector.update_parents()
+	//spread temperature changes throughout the pipenet
+	internal_connector.gas_connector.update_parents()
 
 /obj/machinery/cryo_cell/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
 	if(breath_request <= 0)
@@ -397,7 +405,7 @@
 /obj/machinery/cryo_cell/return_temperature()
 	var/datum/gas_mixture/internal_air = internal_connector.gas_connector.airs[1]
 
-	return internal_air.total_moles() > 10 ? internal_air.temperature : ..()
+	return internal_air.total_moles() > CRYO_MIN_GAS_MOLES ? internal_air.temperature : ..()
 
 /obj/machinery/cryo_cell/open_machine(drop = TRUE, density_to_set = FALSE)
 	if(!state_open && !panel_open)
@@ -410,7 +418,8 @@
 	if(state_open && !panel_open)
 		flick("pod-close-anim", src)
 		. = ..()
-		set_on(TRUE) //auto on
+		if(!QDELETED(occupant)) //auto on if an occupant is inside
+			set_on(TRUE)
 
 /obj/machinery/cryo_cell/container_resist_act(mob/living/user)
 	user.changeNext_move(CLICK_CD_BREAKOUT)
