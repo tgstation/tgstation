@@ -330,7 +330,7 @@
 			return PROCESS_KILL
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
-	if(air1.total_moles() > CRYO_MIN_GAS_MOLES)
+	if(!QDELETED(beaker) && air1.total_moles() > CRYO_MIN_GAS_MOLES)
 		beaker.reagents.trans_to(
 			occupant,
 			(CRYO_TX_QTY / (efficiency * CRYO_MULTIPLY_FACTOR)) * seconds_per_tick,
@@ -344,8 +344,12 @@
 
 	var/datum/gas_mixture/air1 = internal_connector.gas_connector.airs[1]
 	if(!internal_connector.gas_connector.nodes[1] || !internal_connector.gas_connector.airs[1] || !air1.gases.len || air1.total_moles() < CRYO_MIN_GAS_MOLES) // Turn off if the machine won't work.
-		radio.talk_into(src, "Insufficient cryogenic gas, shutting down.", RADIO_CHANNEL_MEDICAL)
 		set_on(FALSE)
+		var/msg = "Insufficient cryogenic gas, shutting down."
+		if(autoeject) // Eject if configured.
+			msg += " Auto ejecting patient now."
+			open_machine()
+		radio.talk_into(src, msg, RADIO_CHANNEL_MEDICAL)
 		return PROCESS_KILL
 
 	if(occupant)
@@ -400,8 +404,6 @@
 /obj/machinery/cryo_cell/close_machine(mob/living/carbon/user, density_to_set = TRUE)
 	treating_wounds = FALSE
 	if(state_open && !panel_open)
-		if(get_turf(user) == get_turf(src))
-			return
 		flick("pod-close-anim", src)
 		. = ..()
 		set_on(TRUE) //auto on
@@ -620,7 +622,6 @@
 
 /obj/machinery/cryo_cell/CtrlClick(mob/user)
 	if(can_interact(user) && !state_open)
-		//were turning it on so do some checks
 		set_on(!on)
 		balloon_alert(user, "turned [on ? "on" : "off"]")
 	return ..()
