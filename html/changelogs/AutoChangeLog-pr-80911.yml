@@ -1,0 +1,4 @@
+author: "IndieanaJones"
+delete-after: True
+changes:
+  - bugfix: "Rat King's abilities no longer require the user to click twice in order to activate them."
