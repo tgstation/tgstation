@@ -167,13 +167,13 @@
 	for(var/job in assigned_players_by_job)
 		player_count += length(assigned_players_by_job[job])
 
-	var/list/test = list()
+	var/list/actual_valid_rolesets = list()
 	for(var/datum/round_event_control/antagonist/solo/roleset in valid_rolesets)
 		if(!roleset.roundstart || !roleset.can_spawn_event(player_count))
 			valid_rolesets -= roleset
 		else
-			test += roleset
-	valid_rolesets = test
+			actual_valid_rolesets[roleset] = roleset.weight
+	valid_rolesets = actual_valid_rolesets
 
 	if(SSgamemode.current_roundstart_event && (SSgamemode.current_roundstart_event in valid_rolesets))
 		JobDebug("p_d_r failed, SSgamemode.current_roundstart_event in valid_rolesets")
@@ -183,5 +183,5 @@
 		JobDebug("p_d_r failed, no valid_rolesets")
 		return
 
-	SSgamemode.current_roundstart_event = pick(valid_rolesets)
+	SSgamemode.current_roundstart_event = pick_weight(valid_rolesets)
 	JobDebug("p_d_r pass, Selected Roleset: [SSgamemode.current_roundstart_event]")
