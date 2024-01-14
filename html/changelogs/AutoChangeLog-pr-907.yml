@@ -1,6 +1,0 @@
-author: "TacticalTortoise"
-delete-after: True
-changes:
-  - bugfix: "changed pipes from hiddin layer to visible layer"
-  - bugfix: "changed pipes from /purple to purple/visible (Delta)"
-  - bugfix: "made multilayer manifold visible (ICE/Meta)"

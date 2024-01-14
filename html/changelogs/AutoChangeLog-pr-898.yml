@@ -1,4 +1,0 @@
-author: "SSensum, Diamond-74, Absolucy"
-delete-after: True
-changes:
-  - balance: "Reviver Implants will now actually revive people, albeit slowly, with a 10 minute cooldown before the implant is ready again."

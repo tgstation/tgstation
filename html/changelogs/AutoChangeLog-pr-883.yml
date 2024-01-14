@@ -1,6 +1,0 @@
-author: "SentientVoid"
-delete-after: True
-changes:
-  - balance: "removed the tram slum bar's cleric mace and bone axe"
-  - bugfix: "added pipes and wires below the docking port airlocks for the dynamic bars, which will hopefully resolve other bar's pipes and power issues. if they're even present."
-  - bugfix: "fixed the slum bar pipe and power network for tram, added missing equipment (one griddle)"

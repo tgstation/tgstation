@@ -209,3 +209,39 @@
   Tractor Mann:
   - rscdel: Yuletide is over. (Christmas songs can no longer roll as lobby songs.)
   - rscdel: Removed herobrine.
+2024-01-14:
+  Gboster-0:
+  - bugfix: radio host messages are properly sorted in fancychat
+  Jacquerel:
+  - balance: You can't possess a MULE as soon as the round starts, someone will have
+      to give you permission.
+  - balance: MULEbots no longer crush prone characters unless they have been hacked
+      (or emagged).
+  - bugfix: Bots can put numbers in their names, what with being robots.
+  - admin: 'Adds attack logging when certain wires are cut (for instance: MULEbot
+      safeties)'
+  MichiRecRoom:
+  - admin: Admin logs that relate to priming grenades or planting bombs will now contain
+      "(pacifist)" or "(while pacifist)" near the beginning of the log, if the mob
+      had the Pacifist trait at the time of the log being generated.
+  - code_imp: log_bomber() now has a new targeted variant, which should be used whenever
+      a bomb has a target (such as with C4 or X4, which are used on mobs or turfs,
+      rather than primed and thrown like grenades).
+  MonstieHuntie:
+  - qol: The Food Crafting Menu now shows you how a corndog is made
+  SSensum, Diamond-74, Absolucy:
+  - balance: Reviver Implants will now actually revive people, albeit slowly, with
+      a 10 minute cooldown before the implant is ready again.
+  Salted-Zen:
+  - balance: Skeleton roll from dragons blood can now process chems! Rejoice!
+  SentientVoid:
+  - balance: removed the tram slum bar's cleric mace and bone axe
+  - bugfix: added pipes and wires below the docking port airlocks for the dynamic
+      bars, which will hopefully resolve other bar's pipes and power issues. if they're
+      even present.
+  - bugfix: fixed the slum bar pipe and power network for tram, added missing equipment
+      (one griddle)
+  TacticalTortoise:
+  - bugfix: changed pipes from hiddin layer to visible layer
+  - bugfix: changed pipes from /purple to purple/visible (Delta)
+  - bugfix: made multilayer manifold visible (ICE/Meta)

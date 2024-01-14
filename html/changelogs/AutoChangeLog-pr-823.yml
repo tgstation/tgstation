@@ -1,5 +1,0 @@
-author: "MichiRecRoom"
-delete-after: True
-changes:
-  - admin: "Admin logs that relate to priming grenades or planting bombs will now contain \"(pacifist)\" or \"(while pacifist)\" near the beginning of the log, if the mob had the Pacifist trait at the time of the log being generated."
-  - code_imp: "log_bomber() now has a new targeted variant, which should be used whenever a bomb has a target (such as with C4 or X4, which are used on mobs or turfs, rather than primed and thrown like grenades)."
