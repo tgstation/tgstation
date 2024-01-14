@@ -62,8 +62,7 @@
 	name = "mushroom cap"
 	desc = "These are yummie, no cap."
 
-	icon = 'icons/mob/human/species/mush_cap.dmi'
-	icon_state = "round"
+	use_mob_sprite_as_obj_sprite = TRUE
 
 	zone = BODY_ZONE_HEAD
 	slot = ORGAN_SLOT_EXTERNAL_POD_HAIR
