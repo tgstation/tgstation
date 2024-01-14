@@ -396,8 +396,9 @@
 /turf/open/floor/iron,
 /area/station/escapepodbay)
 "abE" = (
+/obj/structure/sign/warning/electric_shock,
 /turf/closed/wall/r_wall,
-/area/station/hallway/primary/tram/center)
+/area/station/maintenance/port/central)
 "abF" = (
 /obj/effect/turf_decal/tile/bar{
 	dir = 8
@@ -54923,7 +54924,6 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 5
 	},
-/obj/structure/sign/warning/electric_shock,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
 /area/station/maintenance/port/central)
@@ -69535,6 +69535,16 @@
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/plating,
 /area/station/security/processing)
+"xGM" = (
+/obj/machinery/door/airlock/hatch{
+	name = "Emergency Exit"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/catwalk_floor,
+/area/station/hallway/primary/tram/center)
 "xGX" = (
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 8
@@ -86507,7 +86517,7 @@ qQq
 lQM
 swR
 pxp
-lQM
+abE
 dIy
 pZW
 tUM
@@ -166434,7 +166444,7 @@ lwN
 eSz
 izU
 izU
-dIJ
+xGM
 jyH
 wmy
 iYv
@@ -171306,7 +171316,7 @@ lZW
 aaa
 aaa
 aaa
-abE
+izU
 xGn
 gtY
 sXZ
@@ -171563,7 +171573,7 @@ dcz
 aaa
 aaa
 aaa
-abE
+izU
 eKI
 wki
 izU
@@ -171820,7 +171830,7 @@ lZW
 aaa
 aaa
 aaa
-abE
+izU
 bdX
 izU
 izU
@@ -172077,7 +172087,7 @@ lZW
 aaa
 aaa
 aaa
-abE
+izU
 mwN
 wYw
 izU
@@ -172334,7 +172344,7 @@ lZW
 aaa
 aaa
 aaa
-abE
+izU
 gEC
 wYw
 nEl
