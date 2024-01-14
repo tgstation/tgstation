@@ -181,7 +181,7 @@
 
 /datum/round_event/antagonist
 	fakeable = FALSE
-	end_when = 60 //This is so prompted picking events have time to run //TODO: refactor events so they can be the masters of themselves, instead of relying on some weirdly timed vars
+	end_when = 6000 //This is so prompted picking events have time to run //TODO: refactor events so they can be the masters of themselves, instead of relying on some weirdly timed vars
 
 /datum/round_event/antagonist/solo
 	// ALL of those variables are internal. Check the control event to change them
@@ -205,27 +205,27 @@
 	antag_datum = cast_control.antag_datum
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
-	var/list/candidates = cast_control.get_candidates()
-	if(prompted_picking)
-		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
-
-	var/list/roundstart_candidate_mobs = list()
+	var/list/possible_candidates = cast_control.get_candidates()
+	var/list/candidates = list()
 	if(cast_control == SSgamemode.current_roundstart_event && length(SSgamemode.roundstart_antag_minds))
 		for(var/datum/mind/antag_mind in SSgamemode.roundstart_antag_minds)
 			if(!antag_mind.current)
 				continue
-			roundstart_candidate_mobs += antag_mind.current
-			SSgamemode.roundstart_antag_minds -= antag_mind
+			candidates += antag_mind.current
+//			SSgamemode.roundstart_antag_minds -= antag_mind //commented out for debugging in case something breaks
+
+	while(length(possible_candidates) && length(candidates) < antag_count) //both of these pick_n_take from possible_candidates so this should be fine
+		if(prompted_picking)
+			candidates |= poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, list(pick_n_take(possible_candidates)))
+		else
+			candidates |= pick_n_take(possible_candidates)
 
 	for(var/i in 1 to antag_count)
-		var/mob/candidate
-		if(length(roundstart_candidate_mobs))
-			candidate = pick_n_take(roundstart_candidate_mobs)
-		else if(!length(candidates))
+		if(!length(candidates))
+			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")
 			break
-		else
-			candidate = pick_n_take(candidates)
 
+		var/mob/candidate = pick_n_take(candidates)
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
