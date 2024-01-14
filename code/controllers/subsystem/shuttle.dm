@@ -261,13 +261,27 @@ SUBSYSTEM_DEF(shuttle)
 		message_admins(msg)
 		log_shuttle("[msg] Alive: [alive], Roundstart: [total], Threshold: [threshold]")
 		emergency_no_recall = TRUE
-		priority_announce("Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.")
+		priority_announce(
+			text = "Catastrophic casualties detected: crisis shuttle protocols activated - jamming recall signals across all frequencies.",
+			title = "Emergency Shuttle Dispatched",
+			sound = ANNOUNCER_SHUTTLECALLED,
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "orange",
+		)
 		if(emergency.timeLeft(1) > emergency_call_time * 0.4)
 			emergency.request(null, set_coefficient = 0.4)
 
 /datum/controller/subsystem/shuttle/proc/block_recall(lockout_timer)
+	if(isnull(lockout_timer))
+		CRASH("Emergency shuttle block was called, but missing a value for the lockout duration")
 	if(admin_emergency_no_recall)
-		priority_announce("Error!", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
+		priority_announce(
+			text = "Emergency shuttle uplink interference detected, shuttle call disabled while the system reinitializes. Estimated restore in [DisplayTimeText(lockout_timer, round_seconds_to = 60)].",
+			title = "Uplink Interference",
+			sound = 'sound/misc/announce_dig.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "grey",
+		)
 		addtimer(CALLBACK(src, PROC_REF(unblock_recall)), lockout_timer)
 		return
 	emergency_no_recall = TRUE
@@ -275,7 +289,13 @@ SUBSYSTEM_DEF(shuttle)
 
 /datum/controller/subsystem/shuttle/proc/unblock_recall()
 	if(admin_emergency_no_recall)
-		priority_announce("Error!", "Emergency Shuttle Uplink Alert", 'sound/misc/announce_dig.ogg')
+		priority_announce(
+			text= "Emergency shuttle uplink services are now back online.",
+			title = "Uplink Restored",
+			sound = 'sound/misc/announce_dig.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "green",
+		)
 		return
 	emergency_no_recall = FALSE
 
@@ -366,7 +386,7 @@ SUBSYSTEM_DEF(shuttle)
 
 	call_reason = trim(html_encode(call_reason))
 
-	var/emergency_reason = "\nNature of emergency:\n\n[call_reason]"
+	var/emergency_reason = "\n\nNature of emergency:\n[call_reason]"
 
 	emergency.request(
 		signal_origin = signal_origin,
@@ -503,15 +523,23 @@ SUBSYSTEM_DEF(shuttle)
 		emergency.mode = SHUTTLE_STRANDED
 		emergency.timer = null
 		emergency.sound_played = FALSE
-		priority_announce("Hostile environment detected. \
-			Departure has been postponed indefinitely pending \
-			conflict resolution.", null, 'sound/misc/notice1.ogg', "Priority")
+		priority_announce(
+			text = "Departure has been postponed indefinitely pending conflict resolution.",
+			title = "Hostile Environment Detected",
+			sound = 'sound/misc/notice1.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "grey",
+		)
 	if(!emergency_no_escape && (emergency.mode == SHUTTLE_STRANDED))
 		emergency.mode = SHUTTLE_DOCKED
 		emergency.setTimer(emergency_dock_time)
-		priority_announce("Hostile environment resolved. \
-			You have 3 minutes to board the Emergency Shuttle.",
-			null, ANNOUNCER_SHUTTLEDOCK, "Priority")
+		priority_announce(
+			text = "You have [DisplayTimeText(emergency_dock_time)] to board the emergency shuttle.",
+			title = "Hostile Environment Resolved",
+			sound = 'sound/misc/announce_dig.ogg',
+			sender_override = "Emergency Shuttle Uplink Alert",
+			color_override = "green",
+		)
 
 //try to move/request to dock_home if possible, otherwise dock_away. Mainly used for admin buttons
 /datum/controller/subsystem/shuttle/proc/toggleShuttle(shuttle_id, dock_home, dock_away, timed)

@@ -1,4 +1,5 @@
 #define SPECIES_ARACHNIDS "arachnid"
+#define SPECIES_DRACONIC_SKELETON "draconic_skeleton"
 
 GLOBAL_REAL_VAR(list/voice_type2sound) = list(
 	"1" = list(

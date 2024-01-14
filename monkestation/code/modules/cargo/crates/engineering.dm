@@ -127,7 +127,7 @@
 	name = "Antimatter Containment Jar Crate"
 	desc = "Two Antimatter containment jars stuffed into a single crate."
 	cost = CARGO_CRATE_VALUE * 10
-	contains = list(/obj/item/am_containment = 2)
+	contains = list(/obj/item/antimatter_jar = 2)
 	crate_name = "antimatter jar crate"
 
 /datum/supply_pack/engine/am_core

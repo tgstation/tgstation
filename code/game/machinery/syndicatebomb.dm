@@ -99,7 +99,7 @@
 
 /obj/machinery/syndicatebomb/Initialize(mapload)
 	. = ..()
-	wires = new /datum/wires/syndicatebomb(src)
+	set_wires(new /datum/wires/syndicatebomb(src))
 	if(payload)
 		payload = new payload(src)
 	update_appearance()

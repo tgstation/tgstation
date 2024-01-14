@@ -313,6 +313,7 @@ GLOBAL_LIST_INIT(round_end_images, world.file2list("data/image_urls.txt")) // MO
 	embed.title = "Round End"
 	embed.description = @"[Join Server!](http://play.monkestation.com:7420)"
 	embed.author = "Round Controller"
+	embed.content = "<@&999008528595419278>"
 	if(GLOB.round_end_images.len)
 		embed.image = pick(GLOB.round_end_images)
 	var/round_state = "Round has ended"

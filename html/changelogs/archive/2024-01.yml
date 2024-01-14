@@ -113,3 +113,135 @@
   SentientVoid:
   - qol: replaced the emergency medical holodeck's PANDEMIC with a centrifuge. swapped
       out 3 beakers for 3 vials.
+2024-01-08:
+  Absolucy:
+  - rscadd: Allow departmental techfabs to print appropiate MODsuit modules, i.e medical
+      can print defib or surgical processor modules. Robotics can still print all
+      of them, though, and the mechfab is still needed to make *new* modsuits.
+2024-01-09:
+  DexeeXI:
+  - rscadd: New graphics for pathology related areas for use in StrongDMM.
+  - rscadd: New graphics for Centcom areas in StrongDMM.
+  - rscdel: Removed Detroit
+  - bugfix: the fucking disposal system for Tram should now work.
+  - bugfix: various bars for Tram since they were missing some functionality.
+2024-01-10:
+  Absolucy:
+  - bugfix: Fixed the Codex Cicatrix always requiring a dead body, despite the description
+      saying leather or a hide would work too.
+  DexeeXI:
+  - bugfix: Shakeium's recipe now properly require 3u of Pwr Game with the other ingredients
+      to make 5u of Shakeium.
+2024-01-11:
+  Absolucy:
+  - sound: The talking sound effect will now also be a squeak if you're inhaling helium!
+  MonstieHuntie:
+  - rscadd: The Limited Run of "Taco" Edition Pacos have come to an end, returning
+      to form. Every Paco now has a 10% chance of being a Limited Edition model!
+  - rscadd: Adds the Stripeless Paco! Accessible by picking the stripe off of a normal
+      Paco by Alt-Clicking.
+  - balance: Pacos can now use Seclites! A new version of the Paco adds a screw-in
+      slot for Seclites due to popular demand.
+  OctusGit, Zonespace27, tf-4, Gyrandola, Hatterhat, Nerev4r:
+  - rscadd: Added contractors
+  Profakos, SSensum, Melbert, BlueMemesauce, Watermelon914, DrDiasyl, distributivgesetz, ViktorKoL, LT3, san7890, jlsnow301:
+  - rscadd: 'jlsnow301: Just in time for Halloween- ghost notifications have been
+      upgraded to their own announcements. Boo!'
+  - rscadd: 'LT3 and san7890: Announcements have gotten a fresh coat of paint! They
+      should be popping with splendid new colors and should have a lot less ugly linebreaks,
+      while still managing to keep your attention at the screen.'
+  - code_imp: 'LT3: Emergency shuttle announcements no longer use hardcoded values'
+  - code_imp: 'LT3: Central Command announcements now correctly use its new name when
+      changed'
+  - spellcheck: 'LT3: Consistency pass on event announcements'
+  - spellcheck: 'LT3: More announcement CSS fixes, now including light mode'
+  - bugfix: 'LT3: Fixed font scaling for announcements'
+  - sound: 'ViktorKoL: the blood cult''s rise to power is now accompanied by several
+      new sound effects'
+  - admin: 'distributivgesetz: The "Create Command Report" verb now has the option
+      to not print report papers at communications consoles.'
+  - sound: 'DrDiasyl: Adds/modifies next sound files: airraid.ogg, bloblarm.ogg, alert.ogg,
+      notice3.ogg, announce_syndi.ogg'
+  - sound: 'DrDiasyl: Code Red, Delta, and other extreme emergencies now possess more
+      unique alarm sound effect'
+  - sound: 'DrDiasyl: Captain''s arrival now is announced by Captain''s announcement
+      sound, but not for Acting Captain''s'
+  - sound: 'DrDiasyl: Making Captain announcement through emagged console; hijacking
+      or fully corrupting evacuation shuttle now plays more ominous sound'
+  - sound: 'DrDiasyl: Making announcements through Requests Console now plays a more
+      noticeable sound'
+  - image: Status Displays sprites have been fully changed. Now they include displays
+      for every Security Level
+  - qol: 'DrDiasyl: The "Red Alert" button in the Communications console status display
+      menu has been replaced with a "Current Alert" button showing the current station
+      Security Level display on Status Displays'
+  - qol: 'DrDiasyl: Communications console status display menu got a new "Radiation"
+      button which shows radiation symbol on Status Displays'
+  - rscadd: 'Watermelon914: Reworked the colour schemes for the minor and major announcements
+      as well as their layout'
+  - rscdel: 'Watermelon914: Rolled back changes to deadchat notifications'
+  - admin: 'Watermelon914: Admins can now select the colour of their announcements
+      as well as the subheader when creating a command report.'
+  - bugfix: 'Watermelon914: Fixed the AI vox announcement interrupting every other
+      sound being played.'
+  - qol: 'BlueMemesauce: AI VOX messages are sent over announcement instead of radio'
+  - bugfix: 'BlueMemesauce: AI VOX messages work properly on multi-Z stations'
+  - bugfix: 'Melbert: Request Console Announcements breaking and reporting "/list"'
+  - qol: 'SSensum: Players now are able to use other languages for announcements via
+      requests console.'
+  - bugfix: 'Profakos: fixes request console messages not being trimmed and encoded
+      properly'
+  - refactor: 'Profakos: converts the request console to tgui'
+2024-01-13:
+  13spacemen:
+  - rscadd: Atmos Holofan projectors can be right-clicked inhand to make their holograms
+      more transparent
+  Gboster-0:
+  - rscadd: The antimatter now screams on comms if it sustains too much damage in
+      a short peroid
+  JohnFulpWillard:
+  - bugfix: The jobs page will no longer constantly get bigger when picking a new
+      job title (or not).
+  KittyNoodle:
+  - bugfix: Natural immune system no longer bricks itself at 60% antibodies
+  MichiRecRoom:
+  - balance: Timestop Guardian is once again restricted to Bloodsuckers only.
+  Tractor Mann:
+  - rscdel: Yuletide is over. (Christmas songs can no longer roll as lobby songs.)
+  - rscdel: Removed herobrine.
+2024-01-14:
+  Gboster-0:
+  - bugfix: radio host messages are properly sorted in fancychat
+  Jacquerel:
+  - balance: You can't possess a MULE as soon as the round starts, someone will have
+      to give you permission.
+  - balance: MULEbots no longer crush prone characters unless they have been hacked
+      (or emagged).
+  - bugfix: Bots can put numbers in their names, what with being robots.
+  - admin: 'Adds attack logging when certain wires are cut (for instance: MULEbot
+      safeties)'
+  MichiRecRoom:
+  - admin: Admin logs that relate to priming grenades or planting bombs will now contain
+      "(pacifist)" or "(while pacifist)" near the beginning of the log, if the mob
+      had the Pacifist trait at the time of the log being generated.
+  - code_imp: log_bomber() now has a new targeted variant, which should be used whenever
+      a bomb has a target (such as with C4 or X4, which are used on mobs or turfs,
+      rather than primed and thrown like grenades).
+  MonstieHuntie:
+  - qol: The Food Crafting Menu now shows you how a corndog is made
+  SSensum, Diamond-74, Absolucy:
+  - balance: Reviver Implants will now actually revive people, albeit slowly, with
+      a 10 minute cooldown before the implant is ready again.
+  Salted-Zen:
+  - balance: Skeleton roll from dragons blood can now process chems! Rejoice!
+  SentientVoid:
+  - balance: removed the tram slum bar's cleric mace and bone axe
+  - bugfix: added pipes and wires below the docking port airlocks for the dynamic
+      bars, which will hopefully resolve other bar's pipes and power issues. if they're
+      even present.
+  - bugfix: fixed the slum bar pipe and power network for tram, added missing equipment
+      (one griddle)
+  TacticalTortoise:
+  - bugfix: changed pipes from hiddin layer to visible layer
+  - bugfix: changed pipes from /purple to purple/visible (Delta)
+  - bugfix: made multilayer manifold visible (ICE/Meta)

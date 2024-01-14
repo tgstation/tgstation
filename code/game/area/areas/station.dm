@@ -1041,7 +1041,7 @@
 	icon_state = "patients"
 
 /area/station/medical/virology
-	name = "Pathology"
+	name = "Virology"
 	icon_state = "virology"
 	ambience_index = AMBIENCE_VIROLOGY
 
