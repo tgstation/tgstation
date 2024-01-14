@@ -17,7 +17,16 @@
 	var/token_cost = 0
 
 /datum/twitch_event/proc/run_event(name)
+	get_tagets()
+
 	targets = list() //clear targets each time, if you for some reason dont want this then just add your own var on the type
+	if(announce)
+		minor_announce("[event_name] has just been triggered by [name].", "The Observers")
+
+/datum/twitch_event/proc/end_event()
+	return
+
+/datum/twitch_event/proc/get_targets()
 	if(event_flags & TWITCH_AFFECTS_STREAMER)
 		targets += get_mob_by_ckey("taocat")
 
@@ -27,12 +36,4 @@
 	if(event_flags & TWITCH_AFFECTS_RANDOM)
 		var/list/living_players = GLOB.alive_player_list
 		for(var/num in 1 to random_count)
-			var/mob/living/picked = pick(living_players)
-			targets += picked
-			living_players -= picked
-
-	if(announce)
-		minor_announce("[event_name] has just been triggered by [name].", "The Observers")
-
-/datum/twitch_event/proc/end_event()
-	return
+			targets += pick_n_take(living_players)
