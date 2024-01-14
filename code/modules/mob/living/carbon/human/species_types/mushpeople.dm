@@ -43,7 +43,7 @@
 	. = ..()
 	if(ishuman(C))
 		mush = new(null)
-		mush.teach(H)
+		mush.teach(C)
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
