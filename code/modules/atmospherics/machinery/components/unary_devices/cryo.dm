@@ -287,7 +287,7 @@
 /obj/machinery/cryo_cell/process(seconds_per_tick)
 	if(!on || QDELETED(occupant))
 		//somehow an deleting mob is inside us. dump everything out
-		if(!isnull(occupant) && QDELEING(occupant))
+		if(!isnull(occupant) && QDELING(occupant))
 			open_machine()
 			on = FALSE //in case panel was open we need to set to FALSE explicitly
 
