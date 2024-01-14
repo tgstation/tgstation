@@ -77,7 +77,7 @@
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
 	layers = EXTERNAL_ADJACENT
-	feature_key = "cap"
+	feature_key = "caps"
 
 /datum/bodypart_overlay/mutant/mushroom_cap/get_global_feature_list()
 	return GLOB.caps_list
