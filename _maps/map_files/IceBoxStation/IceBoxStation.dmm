@@ -31559,8 +31559,8 @@
 /area/station/engineering/atmos)
 "khf" = (
 /obj/machinery/atmospherics/pipe/bridge_pipe/yellow/visible,
-/obj/machinery/atmospherics/pipe/layer_manifold/dark{
-	dir = 8
+/obj/machinery/atmospherics/pipe/layer_manifold/dark/visible{
+	dir = 4
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
