@@ -338,7 +338,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 
 	update_appearance()
 	LAZYADD(GLOB.conveyors_by_id[id], src)
-	wires = new /datum/wires/conveyor(src)
+	set_wires(new /datum/wires/conveyor(src))
 	AddComponent(/datum/component/usb_port, list(
 		/obj/item/circuit_component/conveyor_switch,
 	))
