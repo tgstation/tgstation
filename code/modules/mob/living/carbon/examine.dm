@@ -82,6 +82,34 @@
 			else
 				msg += "<B>[t_He] [t_has] severe burns!</B>\n"
 
+		
+		temp = getFireLoss()
+		if(temp)
+			if(temp < 25)
+				msg += "[t_He] [t_has] minor [damage_desc[BURN]].\n"
+			else if (temp < 50)
+				msg += "[t_He] [t_has] <b>moderate</b> [damage_desc[BURN]]!\n"
+			else
+				msg += "<B>[t_He] [t_has] severe [damage_desc[BURN]]!</B>\n"
+
+		temp = getToxLoss()
+		if(temp)
+			if(temp < 25)
+				msg += "They look a little nauseated.\n"
+			else if (temp < 50)
+				msg += "They look pretty sick.\n"
+			else
+				msg += "<B>They are practically green at the gills!</B>\n"
+
+		temp = getOxyLoss()
+		if(temp)
+			if(temp < 25)
+				msg += "They look a little out of breath.\n"
+			else if (temp < 50)
+				msg += "They look like they're a bit blue.\n"
+			else
+				msg += "<B>They look to have blueing lips and seem to be struggling for a good breath!</B>\n"
+
 	if(HAS_TRAIT(src, TRAIT_DUMB))
 		msg += "[t_He] seem[p_s()] to be clumsy and unable to think.\n"
 
