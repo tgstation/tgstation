@@ -4862,7 +4862,7 @@
 	"artist": "John Lennon",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4872,7 +4872,7 @@
 	"artist": "The Irish Rovers",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4882,7 +4882,7 @@
 	"artist": "Love to Sing",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4892,7 +4892,7 @@
 	"artist": "Frank Sinatra",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4902,7 +4902,7 @@
 	"artist": "Gene Autry",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4922,7 +4922,7 @@
 	"artist": "WHAM!",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4932,7 +4932,7 @@
 	"artist": "Bobbly Helms",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4942,7 +4942,7 @@
 	"artist": "Trans-Siberian Orchestra",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4952,7 +4952,7 @@
 	"artist": "Trans-Siberian Orchestra",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	},
 	{
@@ -4962,7 +4962,7 @@
 	"artist": "Mariah Carey",
 	"genre": "Holiday",
 	"secret": false,
-	"lobby": true,
+	"lobby": false,
 	"jukebox": true
 	}
 	]

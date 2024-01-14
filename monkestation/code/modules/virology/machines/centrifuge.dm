@@ -419,7 +419,7 @@
 						var/delay = max(1,60 / max(1,(antibodies[antibody] - 50)))
 						antibody_choices["[antibody] (Expected Duration: [round(delay)] seconds)"] = antibody
 					else if (antibodies[antibody] < 50)
-						var/delay = max(1,50 - min(49,antibodies[antibody]))
+						var/delay = max(1,50 - min(49,antibodies[antibody] - 25))
 						antibody_choices["[antibody] (Expected Duration: [round(delay)] minutes)"] = antibody
 					else
 						antibody_choices["[antibody] (Expected Duration: one minute)"] = antibody

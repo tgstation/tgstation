@@ -40,7 +40,7 @@
 				A.aidisabled = TRUE
 				addtimer(CALLBACK(A, TYPE_PROC_REF(/obj/machinery/power/apc, reset), wire), 1 SECONDS)
 
-/datum/wires/apc/on_cut(wire, mend)
+/datum/wires/apc/on_cut(wire, mend, source)
 	var/obj/machinery/power/apc/A = holder
 	switch(wire)
 		if(WIRE_POWER1, WIRE_POWER2) // Short out.

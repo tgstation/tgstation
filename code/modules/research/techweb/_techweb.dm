@@ -47,11 +47,6 @@
 	/// Completing these experiments will have a refund.
 	var/list/datum/experiment/skipped_experiment_types = list()
 
-	/// If science researches something without completing its discount experiments,
-	/// they have the option to complete them later for a refund
-	/// This ratio determines how much of the original discount is refunded
-	var/skipped_experiment_refund_ratio = 0.66
-
 	///All RD consoles connected to this individual techweb.
 	var/list/obj/machinery/computer/rdconsole/consoles_accessing = list()
 	///All research servers connected to this individual techweb.
@@ -282,7 +277,7 @@
 		var/datum/experiment/experiment = completed_experiment
 		if (experiment == experiment_type)
 			return FALSE
-	available_experiments += new experiment_type()
+	available_experiments += new experiment_type(src)
 
 /**
  * Adds a list of experiments to this techweb by their types, ensures that no duplicates are added.
@@ -309,13 +304,21 @@
 	var/refund = skipped_experiment_types[completed_experiment.type] || 0
 	if(refund > 0)
 		add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = refund))
-		result_text += ", refunding [refund] points."
+		result_text += ", refunding [refund] points"
 		// Nothing more to gain here, but we keep it in the list to prevent double dipping
 		skipped_experiment_types[completed_experiment.type] = -1
-	else
-		result_text += "!"
+	var/points_rewarded
+	if(completed_experiment.points_reward)
+		add_point_list(completed_experiment.points_reward)
+		points_rewarded = ",[refund > 0 ? " and" : ""] rewarding "
+		var/list/english_list_keys = list()
+		for(var/points_type in completed_experiment.points_reward)
+			english_list_keys += "[completed_experiment.points_reward[points_type]] [points_type]"
+		points_rewarded += "[english_list(english_list_keys)] points"
+		result_text += points_rewarded
+	result_text += "!"
 
-	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""].")
+	log_research("[completed_experiment.name] ([completed_experiment.type]) has been completed on techweb [id]/[organization][refund ? ", refunding [refund] points" : ""][points_rewarded].")
 	return result_text
 
 /datum/techweb/proc/printout_points()
@@ -344,7 +347,7 @@
 	for(var/missed_experiment in node.discount_experiments)
 		if(completed_experiments[missed_experiment] || skipped_experiment_types[missed_experiment])
 			continue
-		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment] * skipped_experiment_refund_ratio
+		skipped_experiment_types[missed_experiment] = node.discount_experiments[missed_experiment]
 
 	// Gain the experiments from the new node
 	for(var/id in node.unlock_ids)

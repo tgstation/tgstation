@@ -37,6 +37,9 @@
 * log_ooc
 * log_prayer
 * log_silicon
+* log_meta
+* log_artifact
+* log_mechcomp
 */
 
 /datum/config_entry/flag/sqlgamelogs
