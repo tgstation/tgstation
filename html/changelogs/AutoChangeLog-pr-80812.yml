@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "if your voice changes (e.g. through a voice changer or changeling mimicry) your runechat will now appear as the mob you are speaking in the voice of"
-  - bugfix: "when doing emotes with your face obscured, your runechat color will now appear as either that of Unknown or the mob you are wearing the id of (if you are wearing a mask with someone else's id)"

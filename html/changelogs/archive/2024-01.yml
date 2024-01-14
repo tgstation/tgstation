@@ -301,3 +301,78 @@
       pilot again.
   - bugfix: The various borg apparatuses can no longer pick up other internal borg
       tools.
+2024-01-11:
+  Thunder12345:
+  - bugfix: Pipeguns no longer have floating bayonets
+  vinylspiders:
+  - bugfix: if your voice changes (e.g. through a voice changer or changeling mimicry)
+      your runechat will now appear as the mob you are speaking in the voice of
+  - bugfix: when doing emotes with your face obscured, your runechat color will now
+      appear as either that of Unknown or the mob you are wearing the id of (if you
+      are wearing a mask with someone else's id)
+2024-01-12:
+  13spacemen:
+  - bugfix: Healing simplemobs with sutures and other stacks works again
+  - spellcheck: Healing mobs with medical stacks like suture and mesh give better
+      user feedback messages
+  - image: New liquid plasma sprites from SS14!
+  ArcaneMusic:
+  - admin: Added a new admin verb that ends all active weather within the weather
+      subsystem.
+  IndieanaJones:
+  - balance: Nightmare's Light Eater can now stun targets under certain conditions.
+  LT3:
+  - bugfix: Icebox kitchen has its light switch again
+  - bugfix: Icebox medbay hallway now has a fire alarm
+  Melbert:
+  - bugfix: Fix Ringleader's Rise not causing as many hallucinations as expected
+  - bugfix: Fixes some cult spells being unable to heal constructs (blood rites particularly)
+  - bugfix: Chameleon Suits will now automatically set your helmet into a hood if
+      using a hooded suit again
+  - bugfix: Blood Drunk Miner (Hunter version) should dash a bit more.
+  - bugfix: Ghost alert for buying a badass balloon should have a proper icon
+  TheVekter:
+  - admin: Made logging for BSA targeting and firing easier to find for admins.
+  Watermelon914:
+  - bugfix: Fixed being able to download the contractor program on the syndie store.
+  vinylspiders:
+  - code_imp: removed a dupe trait entry in the traits_by_type list
+2024-01-13:
+  ArcaneMusic:
+  - qol: ID cards now set their accounts with Alt-Right click.
+  - bugfix: ID cards now once again have contextual screen tips showing what buttons
+      do what actions.
+  LT3:
+  - bugfix: Tramstation east APC will no longer be destroyed when the tram crashes
+  - qol: Tramstation central power and disposals moved out of the wall
+  Majkl-J:
+  - code_imp: The check that prevents your stuff from dropping when you have robotic
+      parts is now more robust
+  Melbert:
+  - bugfix: Lunar Parade has the potential to break less.
+  Paxilmaniac:
+  - qol: The heat-proof catwalk made by heat-proof rods will go away when a tile is
+      placed on it, rather than sticking around and needing to be removed manually
+  - bugfix: The lighting will not irreparably break on tiles where plating was placed
+      on lava-proof catwalks
+  - code_imp: Some single letter variables and the structure of the code around placing
+      tiles on lava-proof catwalks has been improved
+  - bugfix: The deployable component will now actually stop rotating things when the
+      variable to not do that is set
+  - bugfix: The "required_container_accepts_subtypes" variable on chemical reactions
+      now actually works again
+  Rhials:
+  - bugfix: Specialty drinks crafted in the crafting menu will now create the intended
+      reagents, instead of containing the reagents used to craft it.
+  jlsnow301:
+  - bugfix: Dropdowns should be more performant
+2024-01-14:
+  IndieanaJones:
+  - bugfix: Changeling eggs laid by headslugs work again
+  - bugfix: Changeling egg incubation times should feel much more consistent, hatching
+      after 4 minutes
+  LemonInTheDark:
+  - admin: Confirming that you have read an admin message now uh, works. it's been
+      2 years bros
+  zxaber:
+  - bugfix: Borg tools that hold and use specific items now work correctly again.
