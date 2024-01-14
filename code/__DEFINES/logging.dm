@@ -111,6 +111,9 @@
 #define LOG_CATEGORY_VIRUS "virus"
 #define LOG_CATEGORY_MECHCOMP "mechcomp"
 #define LOG_CATEGORY_CLONING "cloning"
+#define LOG_CATEGORY_MUSIC "music"
+#define LOG_CATEGORY_META "currency"
+#define LOG_CATEGORY_ARTIFACT "artifact"
 
 // Admin categories
 #define LOG_CATEGORY_ADMIN "admin"

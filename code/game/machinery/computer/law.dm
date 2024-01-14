@@ -10,7 +10,6 @@
 	AddComponent(/datum/component/gps, "Encrypted Upload")
 	if(!mapload)
 		log_silicon("\A [name] was created at [loc_name(src)].")
-		add_event_to_buffer(src, data = "was created at [loc_name(src)].", log_key = "SILICON")
 		message_admins("\A [name] was created at [ADMIN_VERBOSEJMP(src)].")
 
 /obj/machinery/computer/upload/attackby(obj/item/O, mob/user, params)

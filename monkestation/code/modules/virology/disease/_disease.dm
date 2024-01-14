@@ -486,7 +486,7 @@ GLOBAL_LIST_INIT(virusDB, list())
 	for(var/datum/symptom/e in symptoms)
 		e.disable_effect(mob, src)
 	mob.diseases -= src
-	add_event_to_buffer(mob,  data = "was cured of virus: [admin_details()] at [loc_name(mob.loc)].", log_key = "VIRUS")
+	logger.Log(LOG_CATEGORY_VIRUS, "[mob.name] was cured of virus [real_name()] at [loc_name(mob.loc)]", list("disease_data" = admin_details(), "location" = loc_name(mob.loc)))
 	//--Plague Stuff--
 	/*
 	var/datum/faction/plague_mice/plague = find_active_faction_by_type(/datum/faction/plague_mice)

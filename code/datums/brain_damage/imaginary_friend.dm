@@ -287,7 +287,6 @@
 
 // We have to create our own since we can only show emotes to ourselves and our owner
 /datum/emote/imaginary_friend/run_emote(mob/user, params, type_override, intentional = FALSE)
-	add_event_to_buffer(user, data = message, log_key = "EMOTE", voluntary = intentional)
 	user.log_talk(message, LOG_EMOTE)
 	if(!can_run_emote(user, FALSE, intentional))
 		return FALSE
