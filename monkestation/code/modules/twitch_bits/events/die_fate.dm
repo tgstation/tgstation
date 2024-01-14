@@ -1,15 +1,13 @@
 /datum/twitch_event/free_wiz
 	event_name = "Change Ook's Fate"
 	event_duration = 1 SECONDS
-	event_flags = TWITCH_AFFECTS_STREAMER
+	event_flags = TWITCH_AFFECTS_STREAMER | CLEAR_TARGETS_AFTER_EFFECTS
 	id_tag = T_EVENT_OOK_DIE_FATE
 	token_cost = 1000
 	///do we force rolling the die or not
 	var/forced_roll = FALSE
 
-/datum/twitch_event/free_wiz/run_event(name)
-	. = ..()
-
+/datum/twitch_event/free_wiz/apply_effects()
 	for(var/target in targets)
 		var/mob/living/future_wiz = target
 		var/obj/item/dice/d20/fate/one_use/the_die = new(get_turf(future_wiz))
@@ -22,9 +20,8 @@
 	event_name = "Change Ook's Fate(forced)"
 	id_tag = T_EVENT_OOK_DIE_FATE_FORCED
 	forced_roll = TRUE
-	token_cost = null //cant be bought currently
+	token_cost = 0 //cant be bought currently
 
-//this is more of a joke, could maybe cost 100k bits or something
 /datum/twitch_event/free_wiz/everyone
 	event_name = "Change Everyone's Fate"
 	event_flags = TWITCH_AFFECTS_ALL

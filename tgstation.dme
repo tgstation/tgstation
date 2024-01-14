@@ -6621,6 +6621,7 @@
 #include "monkestation\code\modules\twitch_bits\events\buff.dm"
 #include "monkestation\code\modules\twitch_bits\events\chuckle_nut.dm"
 #include "monkestation\code\modules\twitch_bits\events\die_fate.dm"
+#include "monkestation\code\modules\twitch_bits\events\hypno.dm"
 #include "monkestation\code\modules\twitch_bits\events\random_item.dm"
 #include "monkestation\code\modules\twitch_bits\events\rod.dm"
 #include "monkestation\code\modules\twitch_bits\events\skinny.dm"
