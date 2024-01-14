@@ -366,3 +366,13 @@
       reagents, instead of containing the reagents used to craft it.
   jlsnow301:
   - bugfix: Dropdowns should be more performant
+2024-01-14:
+  IndieanaJones:
+  - bugfix: Changeling eggs laid by headslugs work again
+  - bugfix: Changeling egg incubation times should feel much more consistent, hatching
+      after 4 minutes
+  LemonInTheDark:
+  - admin: Confirming that you have read an admin message now uh, works. it's been
+      2 years bros
+  zxaber:
+  - bugfix: Borg tools that hold and use specific items now work correctly again.
