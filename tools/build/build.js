@@ -75,6 +75,8 @@ export const DmTarget = new Juke.Target({
     'html/**',
     'icons/**',
     'interface/**',
+    'monkestation/code/**', // monke edit: ensure it also checks for updates in modular code
+    'monkestation/icons/**',
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],

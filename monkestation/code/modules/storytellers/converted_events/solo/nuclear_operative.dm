@@ -39,12 +39,14 @@
 
 /datum/round_event/antagonist/solo/nuclear_operative
 	excute_round_end_reports = TRUE
-	end_when = 60000 /// we will end on our own when revs win
 	var/static/datum/team/nuclear/nuke_team
 	var/set_leader = FALSE
 	var/required_role = ROLE_NUCLEAR_OPERATIVE
+	var/datum/mind/most_experienced
 
 /datum/round_event/antagonist/solo/nuclear_operative/add_datum_to_mind(datum/mind/antag_mind)
+	if(most_experienced == antag_mind)
+		return
 	var/mob/living/current_mob = antag_mind.current
 	SSjob.FreeRole(antag_mind.assigned_role.title)
 	var/list/items = current_mob.get_equipped_items(TRUE)
@@ -52,7 +54,8 @@
 	for(var/obj/item/item as anything in items)
 		qdel(item)
 
-	var/datum/mind/most_experienced = get_most_experienced(setup_minds, required_role)
+	if(!most_experienced)
+		most_experienced = get_most_experienced(setup_minds, required_role)
 	antag_mind.set_assigned_role(SSjob.GetJobType(/datum/job/nuclear_operative))
 	antag_mind.special_role = ROLE_NUCLEAR_OPERATIVE
 
@@ -61,9 +64,8 @@
 
 	if(!set_leader)
 		set_leader = TRUE
-		var/datum/antagonist/nukeop/leader/leader_antag_datum = new()
+		var/datum/antagonist/nukeop/leader/leader_antag_datum = most_experienced.add_antag_datum(/datum/antagonist/nukeop/leader)
 		nuke_team = leader_antag_datum.nuke_team
-		most_experienced.add_antag_datum(leader_antag_datum)
 
 	if(antag_mind == most_experienced)
 		return

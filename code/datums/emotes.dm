@@ -102,7 +102,11 @@
 	var/tmp_sound = get_sound(user)
 	if(tmp_sound && should_play_sound(user, intentional) && !TIMER_COOLDOWN_CHECK(user, type))
 		TIMER_COOLDOWN_START(user, type, audio_cooldown)
-		playsound(user, tmp_sound, 50, vary, mixer_channel = CHANNEL_MOB_SOUNDS)
+		//MONKESTATION EDIT START - Allows sounds to vary based on their calling conditions.
+		//playsound(user, tmp_sound, 50, vary, mixer_channel = CHANNEL_MOB_SOUNDS) //MONKESTATION EDIT ORIGINAL
+		var/tmp_vary = should_vary(user)
+		playsound(user, tmp_sound, 50, tmp_vary, mixer_channel = CHANNEL_MOB_SOUNDS)
+		//MONKESTATION EDIT END
 
 	var/user_turf = get_turf(user)
 	if (user.client)

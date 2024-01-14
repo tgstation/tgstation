@@ -59,13 +59,7 @@
 	source.immune_system.antibodies = antibodies.Copy()
 
 /datum/immune_system/proc/GetImmunity()
-	var/effective_strength = strength
-
-	if(host)
-		if(HAS_TRAIT(host, TRAIT_HULK))
-			effective_strength *= 2
-
-	return list(effective_strength, antibodies.Copy())
+	return list(strength, antibodies.Copy())
 
 /datum/immune_system/proc/Overload()
 	host.adjustToxLoss(100)
@@ -88,7 +82,7 @@
 		return TRUE
 
 	for (var/antigen in disease.antigen)
-		if ((strength * antibodies[antigen]) >= disease.strength)
+		if ((antibodies[antigen]) >= disease.strength)
 			return FALSE
 	return TRUE
 
@@ -110,7 +104,7 @@
 					else
 						tally += 2//if we're sleeping in a bed, we get up to 4
 			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
-				tally += 1.5
+				tally += 2.5
 
 			if (antibodies[A] < threshold)
 				antibodies[A] = min(antibodies[A] + tally, threshold)//no overshooting here
@@ -118,6 +112,42 @@
 				if (prob(threshold) && prob(tally * 10) && prob((100 - antibodies[A])*100/(100-threshold)))//smaller and smaller chance for further increase
 					antibodies[A] = min(antibodies[A] + 1, 100)
 
+/datum/immune_system/proc/NaturalImmune() //called with a 8% chance every time a virus activates
+	for (var/datum/disease/advanced/disease as anything in host.diseases)
+		for (var/A in disease.antigen)
+			var/tally = 1.5
+			if (isturf(host.loc) && (host.body_position == LYING_DOWN))
+				tally += 0.5
+				var/obj/structure/bed/B = locate() in host.loc
+				if (host.buckled == B)//fucking chairs n stuff
+					tally += 0.5
+				if (host.IsUnconscious())
+					if (tally < 2.5)
+						tally += 1
+					else
+						tally += 2//if we're sleeping in a bed, we get up to 5.5
+			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
+				tally += 3.5
+
+			if (antibodies[A] < 69)
+				antibodies[A] = min(antibodies[A] + tally * strength, 70)
+			else
+				if(strength < 0.7) //stop trying at all once below 70% strength and above 70% antibodies
+					return
+				if(prob(80)) //immune system begins gaining attrition over 70% antigen.
+					strength = max(strength - 0.05, 0)
+				antibodies[A] = min(antibodies[A] + tally * strength, 100)
+
+// fix immune system damage
+/datum/immune_system/proc/ImmuneRepair(level, threshold)
+	if(level < 0)
+		strength = max(strength + level, 0)
+		return
+	if(strength > threshold) //do not turn 500% into 100% because you drank a lower level immune healer
+		return
+	strength = min(strength + level, threshold)
+
+//instantly maxxes the antibodies for any disease in your body
 /datum/immune_system/proc/AntibodyCure()
 	if (overloaded)
 		return
@@ -137,4 +167,4 @@
 
 /datum/immune_system/proc/decay_vaccine(list/antigens, amount = 1)
 	for (var/A in antigens)
-		antibodies[A] = max(antibodies[A] - 8 * amount, 10)
+		antibodies[A] = max(antibodies[A] - 5 * amount, 10)
