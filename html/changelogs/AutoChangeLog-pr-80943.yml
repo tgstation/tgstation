@@ -1,0 +1,4 @@
+author: "jlsnow301"
+delete-after: True
+changes:
+  - bugfix: "Sections will be more polite by not stealing focus from Input boxes in TGUI"

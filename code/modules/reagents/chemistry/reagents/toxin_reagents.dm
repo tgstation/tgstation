@@ -709,7 +709,7 @@
 	if(affected_mob.toxloss <= 60)
 		need_mob_update += affected_mob.adjustToxLoss(1 * REM * normalise_creation_purity() * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
 	if(current_cycle > 4)
-		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, name)
+		affected_mob.add_mood_event("smacked out", /datum/mood_event/narcotic_heavy, 1, name)
 	if(current_cycle > 18)
 		affected_mob.Sleeping(40 * REM * normalise_creation_purity() * seconds_per_tick)
 	if(need_mob_update)

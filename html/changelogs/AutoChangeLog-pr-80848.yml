@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - admin: "Added a new admin verb that ends all active weather within the weather subsystem."
