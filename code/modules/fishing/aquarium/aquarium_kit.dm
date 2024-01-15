@@ -113,10 +113,9 @@
 	. = ..()
 	AddComponent(/datum/component/aquarium_content)
 
-/obj/item/aquarium_prop/sand
-	name = "aquarium sand"
-	icon_state = "sand"
-	layer_mode = AQUARIUM_LAYER_MODE_BEHIND_GLASS
+/obj/item/aquarium_prop/rocks
+	name = "rocks"
+	icon_state = "rocks"
 
 /obj/item/aquarium_prop/seaweed_top
 	name = "dense seaweeds"
@@ -128,10 +127,10 @@
 	icon_state = "seaweeds_back"
 	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
 
-/obj/item/aquarium_prop/rockfloor
-	name = "rock floor"
-	icon_state = "rockfloor"
-	layer_mode = AQUARIUM_LAYER_MODE_BOTTOM
+/obj/item/aquarium_prop/sand
+	name = "aquarium sand"
+	icon_state = "sand"
+	layer_mode = AQUARIUM_LAYER_MODE_BEHIND_GLASS
 
 /obj/item/aquarium_prop/treasure
 	name = "tiny treasure chest"
