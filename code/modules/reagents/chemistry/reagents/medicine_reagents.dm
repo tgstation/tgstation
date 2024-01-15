@@ -680,7 +680,7 @@
 /datum/reagent/medicine/morphine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
 	if(current_cycle > 5)
-		affected_mob.add_mood_event("numb", /datum/mood_event/narcotic_medium, name)
+		affected_mob.add_mood_event("numb", /datum/mood_event/narcotic_medium, 1, name)
 	switch(current_cycle)
 		if(12)
 			to_chat(affected_mob, span_warning("You start to feel tired...") )

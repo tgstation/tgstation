@@ -376,3 +376,20 @@
       2 years bros
   zxaber:
   - bugfix: Borg tools that hold and use specific items now work correctly again.
+2024-01-15:
+  Ghommie:
+  - bugfix: Animals enlargened by the fugu gland are now visually aligned with the
+      turf they're standing on.
+  IndieanaJones:
+  - qol: The combat mode toggle button is now present on the HUD for simple and basic
+      mobs.
+  - bugfix: Rat King's abilities no longer require the user to click twice in order
+      to activate them.
+  LT3:
+  - bugfix: Fixed missing power cable outside Tramstation medbay
+  Melbert:
+  - bugfix: Anomalies spawned by grand ritual runes sound act more like anomalies
+  RikuTheKiller:
+  - bugfix: Fixed round event controller pirate spawns.
+  SyncIt21:
+  - bugfix: chem heater with empty buffers can be refilled again
