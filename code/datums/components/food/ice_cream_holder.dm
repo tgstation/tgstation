@@ -223,7 +223,7 @@ GLOBAL_LIST_INIT_TYPED(ice_cream_flavours, /datum/ice_cream_flavour, init_ice_cr
 
 /datum/ice_cream_flavour/New()
 	if(ingredients)
-		ingredients_text = "(Ingredients: [reagent_paths_list_to_text(ingredients, ingredients_text)])"
+		ingredients_text = "Requires: [reagent_paths_list_to_text(ingredients, ingredients_text)]"
 
 /// Adds a new flavour to the ice cream cone.
 /datum/ice_cream_flavour/proc/add_flavour(datum/component/ice_cream_holder/target)

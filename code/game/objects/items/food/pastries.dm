@@ -373,7 +373,7 @@
 
 /obj/item/food/icecream/New(loc, list/prefill_flavours)
 	if(ingredients)
-		ingredients_text = "(Ingredients: [reagent_paths_list_to_text(ingredients)])"
+		ingredients_text = "Requires: [reagent_paths_list_to_text(ingredients)]"
 	return ..()
 
 /obj/item/food/icecream/Initialize(mapload, list/prefill_flavours)

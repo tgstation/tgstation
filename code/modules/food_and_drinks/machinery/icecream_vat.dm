@@ -153,10 +153,18 @@
 	switch(vat_mode)
 		if(VAT_MODE_ICECREAM)
 			for(var/flavor_key in ice_cream_icons)
-				choices[flavor_key] = ice_cream_icons[flavor_key]
+				var/datum/ice_cream_flavour/flavor_datum = GLOB.ice_cream_flavours[flavor_key]
+				var/datum/radial_menu_choice/option = new
+				option.image = ice_cream_icons[flavor_key]
+				option.info = span_boldnotice("[flavor_datum.ingredients_text]")
+				choices[flavor_key] = option
 		if(VAT_MODE_CONES)
 			for(var/cone_key in cone_prototypes)
-				choices[cone_key] = cone_prototypes[cone_key]
+				var/obj/item/food/icecream/cone_item = cone_prototypes[cone_key]
+				var/datum/radial_menu_choice/option = new
+				option.image = cone_prototypes[cone_key]
+				option.info = span_boldnotice("[cone_item.ingredients_text]")
+				choices[cone_key] = option
 
 	var/choice = show_radial_menu(
 		user,
