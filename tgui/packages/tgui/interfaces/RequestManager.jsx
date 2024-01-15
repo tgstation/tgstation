@@ -3,13 +3,12 @@
  * @copyright 2021 bobbahbrown (https://github.com/bobbahbrown)
  * @license MIT
  */
-
 import { decodeHtmlEntities } from 'common/string';
 import { useState } from 'react';
+import { Popover } from 'react-tiny-popover';
 
 import { useBackend, useLocalState } from '../backend';
 import { Button, Input, Section, Table } from '../components';
-import { Popper } from '../components/Popper';
 import { Window } from '../layouts';
 
 export const RequestManager = (props) => {
@@ -141,9 +140,9 @@ const FilterPanel = (props) => {
   );
 
   return (
-    <Popper
-      placement="bottom-start"
-      popperContent={
+    <Popover
+      positions="bottom"
+      content={
         <div
           className="RequestManager__filterPanel"
           style={{
@@ -174,9 +173,11 @@ const FilterPanel = (props) => {
         </div>
       }
     >
-      <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
-        Type Filter
-      </Button>
-    </Popper>
+      <div>
+        <Button icon="cog" onClick={() => setFilterVisible(!filterVisible)}>
+          Type Filter
+        </Button>
+      </div>
+    </Popover>
   );
 };

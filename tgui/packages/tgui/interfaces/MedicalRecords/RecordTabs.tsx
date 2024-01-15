@@ -1,7 +1,7 @@
 import { filter, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { useState } from 'react';
-import { useBackend } from 'tgui/backend';
+import { useBackend, useLocalState } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -83,9 +83,9 @@ export const MedicalRecordTabs = (props) => {
 
 /** Individual crew tab */
 const CrewTab = (props: { record: MedicalRecord }) => {
-  const [selectedRecord, setSelectedRecord] = useState<
+  const [selectedRecord, setSelectedRecord] = useLocalState<
     MedicalRecord | undefined
-  >();
+  >('medicalRecord', undefined);
 
   const { act, data } = useBackend<MedicalRecordData>();
   const { assigned_view } = data;

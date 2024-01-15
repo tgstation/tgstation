@@ -1186,9 +1186,6 @@
 /mob/living/proc/resist_restraints()
 	return
 
-/mob/living/proc/get_visible_name()
-	return name
-
 /mob/living/proc/update_gravity(gravity)
 	// Handle movespeed stuff
 	var/speed_change = max(0, gravity - STANDARD_GRAVITY)
