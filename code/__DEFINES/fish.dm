@@ -90,6 +90,7 @@
 #define AQUARIUM_LAYER_MODE_BOTTOM "bottom"
 #define AQUARIUM_LAYER_MODE_TOP "top"
 #define AQUARIUM_LAYER_MODE_AUTO "auto"
+#define AQUARIUM_LAYER_MODE_BEHIND_GLASS "behind_glass"
 
 #define FISH_ALIVE "alive"
 #define FISH_DEAD "dead"
