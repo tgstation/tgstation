@@ -45959,6 +45959,9 @@
 	},
 /obj/machinery/newscaster/directional/north,
 /obj/item/pai_card,
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "nKb" = (
@@ -61780,6 +61783,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "sNS" = (
@@ -71345,6 +71351,15 @@
 	dir = 8
 	},
 /area/station/ai_monitored/command/storage/eva)
+"vHx" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/center)
 "vHy" = (
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -177699,7 +177714,7 @@ vXM
 vXM
 vXM
 moU
-aEl
+vHx
 jWY
 jJV
 oor
