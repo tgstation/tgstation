@@ -648,7 +648,6 @@
 		return
 	if(!type)
 		return
-	var/output
 	var/list/parameters = list(
 		"targetckey" = target_ckey,
 		"type" = type,
