@@ -274,7 +274,7 @@
 				return
 
 		if(loaded_rounds && is_target_face)
-			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, loaded_rounds)
+			user.add_mood_event("russian_roulette_win", /datum/mood_event/russian_roulette_win, 1, loaded_rounds)
 
 		user.visible_message(span_danger("*click*"))
 		playsound(src, dry_fire_sound, 30, TRUE)
