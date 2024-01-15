@@ -460,10 +460,10 @@
 			else
 				if(bodytemperature > helper.bodytemperature)
 					if(!HAS_TRAIT(helper, TRAIT_BADTOUCH))
-						helper.add_mood_event("hug", /datum/mood_event/warmhug, 1, src) // Hugger got a warm hug (Unless they hate hugs)
+						helper.add_mood_event("hug", /datum/mood_event/warmhug, src) // Hugger got a warm hug (Unless they hate hugs)
 					add_mood_event("hug", /datum/mood_event/hug) // Receiver always gets a mood for being hugged
 				else
-					add_mood_event("hug", /datum/mood_event/warmhug, 1, helper) // You got a warm hug
+					add_mood_event("hug", /datum/mood_event/warmhug, helper) // You got a warm hug
 		else
 			if (helper.grab_state >= GRAB_AGGRESSIVE)
 				add_mood_event("hug", /datum/mood_event/bad_touch_bear_hug)
@@ -482,9 +482,9 @@
 		if(HAS_TRAIT(helper, TRAIT_FRIENDLY))
 			if (helper.mob_mood.sanity >= SANITY_GREAT)
 				new /obj/effect/temp_visual/heart(loc)
-				add_mood_event("friendly_hug", /datum/mood_event/besthug, 1, helper)
+				add_mood_event("friendly_hug", /datum/mood_event/besthug, helper)
 			else if (helper.mob_mood.sanity >= SANITY_DISTURBED)
-				add_mood_event("friendly_hug", /datum/mood_event/betterhug, 1, helper)
+				add_mood_event("friendly_hug", /datum/mood_event/betterhug, helper)
 
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you hug [p_them()]."))
