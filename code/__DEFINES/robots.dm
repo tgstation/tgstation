@@ -88,6 +88,8 @@
 #define BOT_MODE_REMOTE_ENABLED (1<<2)
 ///The Bot is allowed to have a ghost placed in control of it.
 #define BOT_MODE_GHOST_CONTROLLABLE (1<<3)
+///The Bot is allowed to be possessed if it is present on mapload.
+#define BOT_MODE_ROUNDSTART_POSSESSION (1<<4)
 
 //Bot cover defines indicating the Bot's status
 ///The Bot's cover is open and can be modified/emagged by anyone.

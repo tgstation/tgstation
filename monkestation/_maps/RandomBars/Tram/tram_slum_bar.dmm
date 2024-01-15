@@ -104,17 +104,13 @@
 /turf/closed/wall/mineral/iron,
 /area/station/service/kitchen)
 "fB" = (
-/obj/machinery/door/firedoor,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 1;
-	id = "drawbridge";
-	color = "#5c4300"
-	},
-/turf/open/floor/iron/stairs/old,
-/area/station/commons/lounge)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wood{
@@ -175,7 +171,6 @@
 "hL" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
-/obj/item/fireaxe/boneaxe,
 /obj/item/food/pie/cream{
 	pixel_x = -8;
 	pixel_y = 3
@@ -450,6 +445,14 @@
 /obj/structure/chair/stool/directional/east,
 /turf/open/floor/stone,
 /area/station/commons/lounge)
+"pj" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/stone,
+/area/station/commons/lounge)
 "pR" = (
 /obj/effect/landmark/start/mime,
 /obj/structure/chair/wood/wings{
@@ -525,6 +528,12 @@
 /obj/item/food/baguette,
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
+"tR" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "ui" = (
 /turf/open/chasm{
 	icon_state = "moon_shaft";
@@ -625,9 +634,7 @@
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
 "yE" = (
-/obj/structure/table,
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
-/obj/item/book/manual/chef_recipes,
+/obj/machinery/griddle,
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
 "yH" = (
@@ -923,7 +930,6 @@
 "Jx" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/siding/wood,
-/obj/item/melee/cleric_mace,
 /obj/item/food/pie/cream,
 /obj/item/food/pie/cream{
 	pixel_x = -9;
@@ -995,6 +1001,11 @@
 "Lx" = (
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
+/turf/open/floor/iron/white/diagonal,
+/area/station/service/kitchen)
+"LF" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
 "Mc" = (
@@ -1096,6 +1107,13 @@
 /obj/structure/sink/kitchen/directional/south,
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
+"QE" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "QQ" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1113,6 +1131,11 @@
 /area/station/commons/lounge)
 "QV" = (
 /obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/white/diagonal,
+/area/station/service/kitchen)
+"Rb" = (
+/obj/structure/table,
+/obj/item/book/manual/chef_recipes,
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
 "RI" = (
@@ -1265,6 +1288,13 @@
 	},
 /turf/open/floor/wood/tile,
 /area/station/service/bar/atrium)
+"Wg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/misc/asteroid,
+/area/station/asteroid)
 "Wq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -1329,10 +1359,28 @@
 /obj/structure/table/wood,
 /turf/open/floor/stone,
 /area/station/commons/lounge)
+"Zn" = (
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 1;
+	id = "drawbridge";
+	color = "#5c4300"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron/stairs/old,
+/area/station/commons/lounge)
 "Zr" = (
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/wood/tile,
 /area/station/service/theater)
+"Zt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/closed/wall/mineral/iron,
+/area/station/service/bar/atrium)
 "ZG" = (
 /obj/structure/table/wood,
 /obj/item/lipstick/random{
@@ -1353,9 +1401,9 @@ Ue
 Ue
 Ue
 Ue
-Ue
-Ue
-Ue
+tR
+tR
+fB
 Ue
 jh
 jh
@@ -1382,7 +1430,7 @@ zk
 zk
 zk
 Ue
-Ue
+tR
 Ue
 jh
 qi
@@ -1409,7 +1457,7 @@ zk
 zk
 zk
 Ue
-Ue
+tR
 Ue
 jh
 iY
@@ -1436,7 +1484,7 @@ zk
 zk
 zk
 Ue
-Ue
+QE
 jh
 jh
 nq
@@ -1463,7 +1511,7 @@ Ue
 Ue
 Ue
 Ue
-Ue
+Wg
 jh
 GC
 NQ
@@ -1490,7 +1538,7 @@ Ue
 Ue
 Ue
 Ue
-Ue
+tR
 jh
 qi
 iY
@@ -1517,7 +1565,7 @@ Ue
 Ue
 Ue
 Ue
-Ue
+tR
 jh
 dN
 iY
@@ -1728,7 +1776,7 @@ js
 pV
 pV
 Hw
-oV
+LF
 qT
 oV
 oV
@@ -1754,7 +1802,7 @@ eW
 uB
 oA
 kI
-bx
+Rb
 Hg
 qT
 he
@@ -1799,7 +1847,7 @@ SI
 mD
 mD
 mD
-mD
+Zt
 "}
 (18,1,1) = {"
 zk
@@ -1825,8 +1873,8 @@ Co
 nd
 hN
 hG
-de
-AE
+pj
+Zn
 "}
 (19,1,1) = {"
 zk
@@ -1851,9 +1899,9 @@ Eu
 Co
 Co
 VC
-Wq
-hG
-fB
+dN
+iY
+AE
 "}
 (20,1,1) = {"
 zk

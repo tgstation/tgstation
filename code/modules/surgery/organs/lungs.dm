@@ -433,14 +433,17 @@
 	breathe_gas_volume(breath, /datum/gas/helium)
 	if(helium_pp > helium_speech_min)
 		if(old_helium_pp <= helium_speech_min)
+			ADD_TRAIT(breather, TRAIT_HELIUM, ORGAN_TRAIT) // monke edit: funny helium voice
 			RegisterSignal(breather, COMSIG_MOB_SAY, PROC_REF(handle_helium_speech))
 	else
 		if(old_helium_pp > helium_speech_min)
 			UnregisterSignal(breather, COMSIG_MOB_SAY)
+			REMOVE_TRAIT(breather, TRAIT_HELIUM, ORGAN_TRAIT) // monke edit: funny helium voice
 
 /// Lose helium high pitched voice
 /obj/item/organ/internal/lungs/proc/lose_helium(mob/living/carbon/breather, datum/gas_mixture/breath, old_helium_pp)
 	UnregisterSignal(breather, COMSIG_MOB_SAY)
+	REMOVE_TRAIT(breather, TRAIT_HELIUM, ORGAN_TRAIT) // monke edit: funny helium voice
 
 /// React to speach while hopped up on the high pitched voice juice
 /obj/item/organ/internal/lungs/proc/handle_helium_speech(mob/living/carbon/breather, list/speech_args)

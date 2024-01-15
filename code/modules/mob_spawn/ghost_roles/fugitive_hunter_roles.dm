@@ -9,7 +9,7 @@
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/Initialize(mapload)
 	. = ..()
-	notify_ghosts("Hunters are waking up looking for refugees!", source = src, action=NOTIFY_ATTACK, flashwindow = FALSE, ignore_key = POLL_IGNORE_FUGITIVE)
+	notify_ghosts("Hunters are waking up looking for refugees!", source = src, action = NOTIFY_PLAY, flashwindow = FALSE, ignore_key = POLL_IGNORE_FUGITIVE)
 
 /obj/effect/mob_spawn/ghost_role/human/fugitive/special(mob/living/carbon/human/spawned_human)
 	. = ..()

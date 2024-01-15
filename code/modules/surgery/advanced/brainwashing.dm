@@ -7,6 +7,7 @@
 	name = "Brainwashing"
 	desc = "A surgical procedure which directly implants a directive into the patient's brain, making it their absolute priority. It can be cleared using a mindshield implant."
 	possible_locs = list(BODY_ZONE_HEAD)
+	requires_bodypart_type = NONE // monke edit: you can now install limewire on your local IPC
 	steps = list(
 		/datum/surgery_step/incise,
 		/datum/surgery_step/retract_skin,
@@ -29,8 +30,11 @@
 	implements = list(
 		TOOL_HEMOSTAT = 85,
 		TOOL_WIRECUTTER = 50,
+		/obj/item/soap = 45, // monke edit: it's funny
 		/obj/item/stack/package_wrap = 35,
-		/obj/item/stack/cable_coil = 15)
+		/obj/item/stack/cable_coil = 15
+	)
+	repeatable = TRUE // monke edit: you can repeat the brainwashing step to add more objectives
 	time = 200
 	preop_sound = 'sound/surgery/hemostat1.ogg'
 	success_sound = 'sound/surgery/hemostat1.ogg'
@@ -55,7 +59,7 @@
 		to_chat(user, span_warning("[target] doesn't respond to the brainwashing, as if [target.p_they()] lacked a mind..."))
 		return FALSE
 	if(HAS_TRAIT(target, TRAIT_MINDSHIELD))
-		to_chat(user, span_warning("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased."))
+		to_chat(user, span_boldwarning("You hear a faint buzzing from a device inside [target]'s brain, and the brainwashing is erased.")) // monke edit: make mindshields a bit more obvious.
 		return FALSE
 	display_results(
 		user,
@@ -64,8 +68,11 @@
 		span_notice("[user] successfully fixes [target]'s brain!"),
 		span_notice("[user] completes the surgery on [target]'s brain."),
 	)
+	// monke edit: brainwashing also somewhat cures brain damage, because why wouldn't ya make sure those neurons are squeaky clean while you've poking around in there?
+	target.setOrganLoss(ORGAN_SLOT_BRAIN, target.get_organ_loss(ORGAN_SLOT_BRAIN) - 75)
+	target.cure_all_traumas(TRAUMA_RESILIENCE_SURGERY)
 	to_chat(target, span_userdanger("A new compulsion fills your mind... you feel forced to obey it!"))
-	brainwash(target, objective)
+	brainwash(target, objective, "brainwashing surgery from [user.mind ? user.mind.name : user.real_name]") // monke edit: brainwash refactor
 	message_admins("[ADMIN_LOOKUPFLW(user)] surgically brainwashed [ADMIN_LOOKUPFLW(target)] with the objective '[objective]'.")
 	user.log_message("has brainwashed [key_name(target)] with the objective '[objective]' using brainwashing surgery.", LOG_ATTACK)
 	target.log_message("has been brainwashed with the objective '[objective]' by [key_name(user)] using brainwashing surgery.", LOG_VICTIM, log_globally=FALSE)

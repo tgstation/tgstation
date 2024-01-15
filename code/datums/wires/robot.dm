@@ -68,7 +68,7 @@
 			if(R.has_model())
 				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
 
-/datum/wires/robot/on_cut(wire, mend)
+/datum/wires/robot/on_cut(wire, mend, source)
 	var/mob/living/silicon/robot/R = holder
 	switch(wire)
 		if(WIRE_AI) // Cut the AI wire to reset AI control.
