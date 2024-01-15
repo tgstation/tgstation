@@ -366,12 +366,11 @@
 
 	//trying to absorb buffer from currently inserted beaker
 	if(volume < 0)
-		var/datum/reagent/buffer_reagent = reagents.has_reagent(buffer_type)
-		if(!buffer_reagent)
+		if(!beaker.reagents.has_reagent(buffer_type))
 			var/name = initial(buffer_type.name)
 			say("Unable to find [name] in beaker to draw from! Please insert a beaker containing [name].")
 			return FALSE
-		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - buffer_reagent.volume, target_id = buffer_type)
+		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - reagents.get_reagent_amount(buffer_type), target_id = buffer_type)
 		return TRUE
 
 	//trying to inject buffer into currently inserted beaker

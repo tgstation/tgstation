@@ -1,4 +1,5 @@
 import { sortBy } from 'common/collections';
+import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -144,7 +145,7 @@ const CitationManager = (props) => {
 
   const { crew_ref } = foundRecord;
 
-  const [paying, setPaying] = useLocalState('citationAmount', 5);
+  const [paying, setPaying] = useState(5);
 
   return (
     <Collapsible

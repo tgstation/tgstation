@@ -830,9 +830,9 @@ class PresetsPage extends Component {
   render() {
     const { presets } = this.state;
     const { act, data } = useBackend();
-    const [presetIndex, setSelectedPreset] = useLocalState('presetIndex', 0);
+    const [presetIndex, setSelectedPreset] = useLocalState('presetIdx', 0);
     const [settingName, setEditingNameStatus] = useLocalState('settingName', 0);
-    const [newNameText, setText] = useLocalState('newNameText', '');
+    const [newNameText, setText] = useLocalState('nameText', '');
     const [hue, setHue] = useLocalState('hue', 0);
     return (
       <Section

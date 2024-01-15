@@ -625,7 +625,7 @@
 	. = list()
 
 	.["visible"] = span_danger("[user] tries to stun [target] with [src], and predictably fails!")
-	.["local"] = span_userdanger("[target] tries to... stun you with [src]?")
+	.["local"] = span_userdanger("[user] tries to... stun you with [src]?")
 
 /obj/item/melee/baton/security/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()

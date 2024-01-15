@@ -18,6 +18,8 @@
 		"Object Property Saving" = SAVE_OBJECT_PROPERTIES,
 	)
 	var/what_to_change = tgui_input_list(builder, "What export setting would you like to toggle?", "Map Exporter", options)
+	if (!what_to_change)
+		return
 	save_flag ^= options[what_to_change]
 	to_chat(builder, "<span class='notice'>[what_to_change] is now [save_flag & options[what_to_change] ? "ENABLED" : "DISABLED"].</span>")
 

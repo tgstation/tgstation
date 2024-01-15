@@ -272,7 +272,7 @@
 	desc = "Fires a kinetic accelerator projectile at the target."
 	cooldown_time = 1.5 SECONDS
 	projectile_type = /obj/projectile/kinetic/miner
-	projectile_sound = 'sound/weapons/kenetic_accel.ogg'
+	projectile_sound = 'sound/weapons/kinetic_accel.ogg'
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/kinetic_accelerator/Activate(atom/target_atom)
 	. = ..()

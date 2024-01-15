@@ -136,7 +136,7 @@
 	next_knowledge = list(/datum/heretic_knowledge/blade_upgrade/moon)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
-		/obj/item/organ/internal/brain = 1,
+		/obj/item/organ/internal/heart = 1,
 		/obj/item/stack/sheet/glass = 2,
 		/obj/item/clothing/neck/tie = 1,
 	)
@@ -214,11 +214,14 @@
 	for (var/mob/living/carbon/human/crewmate as anything in GLOB.human_list)
 		// How many lunatics we have
 		var/amount_of_lunatics = 0
+		// Where the crewmate is, used to check their z-level
+		var/turf/crewmate_turf = get_turf(crewmate)
+		var/crewmate_z = crewmate_turf?.z
 		if(isnull(crewmate.mind))
 			continue
-		if(crewmate.stat == DEAD | UNCONSCIOUS)
+		if(crewmate.stat != CONSCIOUS)
 			continue
-		if(!is_station_level(crewmate))
+		if(!is_station_level(crewmate_z))
 			continue
 		// Heretics, lunatics and monsters shouldn't become lunatics because they either have a master or have a mansus grasp
 		if(IS_HERETIC_OR_MONSTER(crewmate))
@@ -236,6 +239,7 @@
 		var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
 		crewmate.put_in_active_hand(moon_amulette)
 		crewmate.emote("laugh")
+		amount_of_lunatics += 1
 
 /datum/heretic_knowledge/ultimate/moon_final/proc/on_life(mob/living/source, seconds_per_tick, times_fired)
 	SIGNAL_HANDLER
@@ -248,7 +252,7 @@
 
 	for(var/mob/living/carbon/carbon_view in view(5, source))
 		var/carbon_sanity = carbon_view.mob_mood.sanity
-		if(carbon_view.stat == DEAD | UNCONSCIOUS)
+		if(carbon_view.stat != CONSCIOUS)
 			continue
 		if(IS_HERETIC_OR_MONSTER(carbon_view))
 			continue

@@ -40,6 +40,7 @@ export function SearchBar(props: Props) {
       <Stack.Item grow>
         <Input
           autoFocus={autoFocus}
+          expensive
           fluid
           onInput={(e, value) => onSearch(value)}
           placeholder={placeholder}
