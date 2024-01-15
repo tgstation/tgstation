@@ -3561,6 +3561,10 @@
 /obj/machinery/door/airlock{
 	name = "Locker Room"
 	},
+/obj/structure/sign/directions/dorms/directional/east{
+	pixel_x = 0;
+	pixel_y = -32
+	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
 "aOK" = (
@@ -11954,14 +11958,6 @@
 /obj/item/storage/secure/safe/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
-"cNz" = (
-/obj/structure/sign/directions/dorms{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/turf/closed/wall,
-/area/station/commons/toilet/locker)
 "cNH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29103,9 +29099,9 @@
 "gYS" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /obj/item/radio/intercom/directional/east,
-/obj/structure/sign/directions/dorms{
-	pixel_x = 32;
-	pixel_y = -8
+/obj/structure/sign/directions/dorms/directional/south{
+	pixel_y = -8;
+	pixel_x = 32
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
@@ -77770,9 +77766,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/directions/dorms{
-	pixel_x = 32;
-	pixel_y = -8
+/obj/structure/sign/directions/dorms/directional/south{
+	pixel_y = -8;
+	pixel_x = 32
 	},
 /obj/structure/sign/directions/supply{
 	dir = 1;
@@ -146944,7 +146940,7 @@ iVq
 nMd
 crR
 szQ
-cNz
+iYi
 uqq
 dCT
 ggc
