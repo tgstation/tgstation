@@ -101,17 +101,10 @@
 	switch(vat_mode)
 		if(VAT_MODE_ICECREAM)
 			context[SCREENTIP_CONTEXT_LMB] = "Select flavor"
-			if(iscyborg(user))
-				context[SCREENTIP_CONTEXT_ALT_LMB] = "Change mode to cones"
-			else
-				context[SCREENTIP_CONTEXT_RMB] = "Change mode to cones"
+			context[SCREENTIP_CONTEXT_RMB] = "Change mode to cones"
 		if(VAT_MODE_CONES)
 			context[SCREENTIP_CONTEXT_LMB] = "Make cone"
-			if(iscyborg(user))
-				context[SCREENTIP_CONTEXT_ALT_LMB] = "Change mode to flavors"
-			else
-				context[SCREENTIP_CONTEXT_RMB] = "Change mode to flavors"
-			istype(held_item, /obj/item/food/icecream)
+			context[SCREENTIP_CONTEXT_RMB] = "Change mode to flavors"
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/icecream_vat/attackby(obj/item/reagent_containers/beaker, mob/user, params)
@@ -135,6 +128,11 @@
 		balloon_alert(user, "no reagents to transfer!")
 
 /obj/machinery/icecream_vat/attack_hand_secondary(mob/user, list/modifiers)
+	if(swap_modes(user))
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	return ..()
+
+/obj/machinery/icecream_vat/attack_robot_secondary(mob/living/silicon/robot/user)
 	if(swap_modes(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	return ..()
