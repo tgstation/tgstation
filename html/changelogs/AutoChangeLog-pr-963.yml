@@ -1,0 +1,5 @@
+author: "Iamgoofball"
+delete-after: True
+changes:
+  - balance: "Light Footed now makes stepping on glass Knockdown instead of Paralyze"
+  - code_imp: "Fixes some single letter variable usage in caltrop.dm"
