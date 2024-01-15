@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Using a Lawyer badge in your hand now shows a thought bubble with the badge, rather than giving a lousy message in your chat."
