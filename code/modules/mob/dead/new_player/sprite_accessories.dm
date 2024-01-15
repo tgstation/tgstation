@@ -1743,6 +1743,10 @@
 	name = "Spikes"
 	icon_state = "spikes"
 
+/datum/sprite_accessory/tails/lizard/short
+	name = "Short"
+	icon_state = "short"
+
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
 	icon = 'icons/mob/species/human/cat_features.dmi'
@@ -2064,11 +2068,11 @@
 	name = "Long + Membrane"
 	icon_state = "longmeme"
 
-/datum/sprite_accessory/spines/aqautic
+/datum/sprite_accessory/spines/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 
-/datum/sprite_accessory/spines_animated/aqautic
+/datum/sprite_accessory/spines_animated/aquatic
 	name = "Aquatic"
 	icon_state = "aqua"
 
