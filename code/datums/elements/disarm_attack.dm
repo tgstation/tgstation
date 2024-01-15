@@ -25,11 +25,11 @@
 
 ///check if the item conditions for the disarm action are met.
 /datum/element/disarm_attack/proc/can_disarm_attack(obj/item/source, mob/living/victim, mob/living/user, message = TRUE)
-	if(SEND_SIGNAL(source, COMSIG_ITEM_CAN_DISARM_ATTACK, victim, user) & COMPONENT_BLOCK_ITEM_DISARM_ATTACK)
+	if(SEND_SIGNAL(source, COMSIG_ITEM_CAN_DISARM_ATTACK, victim, user, message) & COMPONENT_BLOCK_ITEM_DISARM_ATTACK)
 		return FALSE
 	return TRUE
 
 /datum/element/disarm_attack/proc/examine(obj/item/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(can_disarm_attack(source, null, user, FALSE))
+	if(can_disarm_attack(source, user, user, FALSE))
 		examine_list += span_notice("You can use it to <b>shove</b> people with <b>right-click</b>.")

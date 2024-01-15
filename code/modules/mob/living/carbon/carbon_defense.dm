@@ -725,9 +725,8 @@
 
 /mob/living/carbon/get_shove_flags(mob/living/shover, obj/item/weapon)
 	. = ..()
+	. |= SHOVE_CAN_STAGGER
 	if(IsKnockdown() && !IsParalyzed())
 		. |= SHOVE_CAN_KICK_SIDE
-	if(!HAS_TRAIT(src, TRAIT_SHOVE_NO_STAGGER))
-		. |= SHOVE_CAN_STAGGER
 
 #undef SHAKE_ANIMATION_OFFSET

@@ -326,7 +326,7 @@
 	playsound(src, active ? 'sound/weapons/saberon.ogg' : 'sound/weapons/saberoff.ogg', 35, TRUE)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 
-/obj/item/shield/energy/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message)
+/obj/item/shield/energy/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, send_message = TRUE)
 	SIGNAL_HANDLER
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		if(send_message)
@@ -369,7 +369,7 @@
 	)
 
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
-	RegisterSignal(src, COMSIG_ITEM_CAN_DISARM_ATTACK, PROC_REF(can_disarm_attack))
+	RegisterSignal(src, COMSIG_ITEM_CAN_DISARM_ATTACK, PROC_REF(can_disarm_attack = TRUE))
 
 /obj/item/shield/riot/tele/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
