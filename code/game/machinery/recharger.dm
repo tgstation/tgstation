@@ -13,6 +13,8 @@
 	var/finished_recharging = FALSE
 
 	var/static/list/allowed_devices = typecacheof(list(
+		/obj/item/stock_parts/cell/microfusion, //SKYRAT EDIT ADDITION
+		/obj/item/gun/microfusion, // SKYRAT EDIT ADDITION
 		/obj/item/gun/energy,
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
@@ -85,6 +87,19 @@
 					to_chat(user, span_notice("Your gun has no external power connector."))
 					return 1
 
+			//SKYRAT EDIT ADDITION
+			if (istype(G, /obj/item/gun/microfusion))
+				var/obj/item/gun/microfusion/microfusion_gun = G
+				if(microfusion_gun.cell?.chargerate <= 0)
+					to_chat(user, span_notice("[microfusion_gun] cannot be recharged!"))
+					return TRUE
+
+			if(istype(G, /obj/item/stock_parts/cell/microfusion))
+				var/obj/item/stock_parts/cell/microfusion/inserting_cell = G
+				if(inserting_cell.chargerate <= 0)
+					to_chat(user, span_notice("[inserting_cell] cannot be recharged!"))
+					return TRUE
+			//SKYRAT EDIT END
 			if(!user.transferItemToLoc(G, src))
 				return 1
 			setCharging(G)
