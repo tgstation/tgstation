@@ -58,6 +58,9 @@
 	else
 		stop_wag()
 	owner.update_body_parts()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		human.update_mutant_bodyparts()
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag()

@@ -26,6 +26,12 @@
 		else
 			external_sprite = external_organ.bodypart_overlay.sprite_datum.icon_state
 
+		if(external_organ) // i made this proc to dejank this shit than I add this... the codebase has fallen - Borbop P.S Ignore whatever the hell is going on above this.
+			if(istype(external_organ.bodypart_overlay, /datum/bodypart_overlay/mutant/tail))
+				var/datum/bodypart_overlay/mutant/tail/tail = external_organ.bodypart_overlay
+				if(tail.wagging)
+					list_item = "[list_item]_wagging"
+
 		var/mutable_appearance/new_overlay = mutable_appearance(added_accessory.icon, layer = -layer)
 		if(added_accessory.gender_specific)
 			new_overlay.icon_state = "[g]_[list_item]_[added_accessory.icon_state]_[external_sprite]_[layertext]"
