@@ -218,9 +218,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 	//This is before anything that sends say a radio message, and after all important message type modifications, so you can scumb in alien chat or something
 	if(saymode && !saymode.handle_message(src, message, language))
 		return
-	var/radio_message = message
 
-	var/radio_return = radio(radio_message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
+	var/radio_return = radio(message, message_mods, spans, language)//roughly 27% of living/say()'s total cost
 	if(radio_return & ITALICS)
 		spans |= SPAN_ITALICS
 	if(radio_return & REDUCE_RANGE)
