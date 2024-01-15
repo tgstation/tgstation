@@ -154,16 +154,19 @@
 			clear_mood_event(category)
 		else
 			if (the_event.timeout)
+				if(!isnum(timeout_mod))
+					CRASH("An invalid (non-numeric) timeout_mod was passed to [the_event]. Ask a coder to look at the variables passed through.")
 				the_event.timeout = initial(the_event.timeout) * timeout_mod
 				addtimer(CALLBACK(src, PROC_REF(clear_mood_event), category), the_event.timeout, (TIMER_UNIQUE|TIMER_OVERRIDE))
 			return // Don't need to update the event.
-	var/list/params = args.Copy(3)
+	var/list/params = args.Copy(4)
 
 	params.Insert(1, mob_parent)
 	the_event = new type(arglist(params))
 	if (QDELETED(the_event)) // the mood event has been deleted for whatever reason (requires a job, etc)
 		return
-
+	if(!isnum(timeout_mod))
+		CRASH("An invalid (non-numeric) timeout_mod was passed to [the_event]. Ask a coder to look at the variables passed through.")
 	the_event.timeout *= timeout_mod
 	the_event.category = category
 	mood_events[category] = the_event
@@ -371,7 +374,7 @@
 
 	update_beauty(new_area)
 	if (new_area.mood_bonus && (!new_area.mood_trait || HAS_TRAIT(source, new_area.mood_trait)))
-		add_mood_event("area", /datum/mood_event/area, new_area.mood_bonus, new_area.mood_message)
+		add_mood_event("area", /datum/mood_event/area, new_area.mood_bonus, 1, new_area.mood_message)
 	else
 		clear_mood_event("area")
 
