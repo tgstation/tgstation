@@ -167,7 +167,7 @@
 			blocked = TRUE
 		else
 			playsound(loc, 'sound/weapons/genhit.ogg', 50, TRUE, -1) //Item sounds are handled in the item itself
-			if(isvendor(AM) == FALSE) //Vendors have special interactions!
+			if(!isvendor(AM) && !iscarbon(AM)) //Vendors have special interactions, while carbon mobs already generate visible messages!
 				visible_message(span_danger("[src] is hit by [AM]!"), \
 							span_userdanger("You're hit by [AM]!"))
 		log_combat(AM, src, "hit ")
