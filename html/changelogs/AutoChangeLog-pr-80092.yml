@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Signers no longer use the wrong verb when speaking directly into a radio for the first message after toggling sign language."
+  - refactor: "Moved the updating of verb variables into a new method which is called earlier in living's say, which should avoid this happening for other things which updated their verbs the same way."
