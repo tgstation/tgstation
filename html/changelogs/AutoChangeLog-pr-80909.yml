@@ -1,0 +1,5 @@
+author: "Voudez"
+delete-after: True
+changes:
+  - qol: "Players are now able to see in chat when they are being hit by obj/machinery, got crushed into dense turf or get hit by thrown non carbon mob."
+  - admin: "Scenarios like mob hits dense turf, obj/machinery hits mob, item without \"living thrower\" hitting mob, mob gets hit by thrown non carbon mob now appear in logs."
