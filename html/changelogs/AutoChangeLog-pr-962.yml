@@ -1,0 +1,6 @@
+author: "san7890, thegrb93, whataboutism-alos"
+delete-after: True
+changes:
+  - bugfix: "Carbons with tails (felinids, lizards) who have that tail removed will now have that tail actually look like it came from the person in question, rather than just be a grey thing of sadness."
+  - bugfix: "Lizard tail wagging graphics"
+  - rscadd: "Sprited and implemented a short lizard tail"
