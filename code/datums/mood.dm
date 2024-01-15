@@ -142,9 +142,9 @@
  */
 /datum/mood/proc/add_mood_event(category, type, ...)
 	// we may be passed an instantiated mood datum with a modified timeout
-	// only used by the food quality system currently
 	// it is to be used as a vehicle to copy data from and then cleaned up afterwards.
 	// why do it this way? because the params list may contain numbers, and we may not necessarily want those to be interpreted as a timeout modifier.
+	// this is only used by the food quality system currently
 	var/datum/mood_event/mood_to_copy_from
 	if (istype(type, /datum/mood_event))
 		mood_to_copy_from = type
