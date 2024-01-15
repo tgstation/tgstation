@@ -75,6 +75,22 @@
 	memorizer_mind = null
 	return ..()
 
+/datum/memory/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["name"] = name
+	.["memorizer"] = memorizer
+	.["story_value"] = story_value
+	.["memory_flags"] = memory_flags
+	.["mood_verb"] = mood_verb
+	.["protagonist_name"] = protagonist_name
+	.["deuteragonist_name"] = deuteragonist_name
+	.["antagonist_name"] = antagonist_name
+	.["where"] = where
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
+
 /**
  * Generates a name for the memory.
  */

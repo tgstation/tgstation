@@ -15,6 +15,7 @@
 	var/spin_delay = 10
 	var/recent_spin = 0
 	var/last_fire = 0
+	gun_flags = GUN_SMOKE_PARTICLES
 
 /obj/item/gun/ballistic/revolver/process_fire(atom/target, mob/living/user, message, params, zone_override, bonus_spread)
 	..()
