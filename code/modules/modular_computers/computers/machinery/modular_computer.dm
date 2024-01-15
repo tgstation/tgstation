@@ -9,8 +9,6 @@
 	max_integrity = 300
 	integrity_failure = 0.5
 
-	///The power cell path used by the processor, by default a very weak one as we generally use the APC we're in instead.
-	var/internal_cell = null
 	///A flag that describes this device type
 	var/hardware_flag = PROGRAM_CONSOLE
 	/// Amount of programs that can be ran at once

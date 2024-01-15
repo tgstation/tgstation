@@ -7,7 +7,8 @@
 	icon_state = null
 	icon_state_unpowered = null
 	icon_state_menu = null
-	hardware_flag = 0
+	hardware_flag = NONE
+	internal_cell = /obj/item/stock_parts/crap
 
 	///The modular computer MACHINE that hosts us.
 	var/obj/machinery/modular_computer/machinery_computer
@@ -25,7 +26,6 @@
 	physical = loc
 	machinery_computer = loc
 	machinery_computer.cpu = src
-	internal_cell = machinery_computer.internal_cell
 	hardware_flag = machinery_computer.hardware_flag
 	steel_sheet_cost = machinery_computer.steel_sheet_cost
 	max_idle_programs = machinery_computer.max_idle_programs
