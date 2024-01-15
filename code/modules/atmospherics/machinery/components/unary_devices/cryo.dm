@@ -473,9 +473,21 @@
 	if(!can_crowbar)
 		return
 
-	var/unsafe_release = FALSE
+	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
+	var/internal_pressure = 0
+
+	if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
+		var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
+		internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
+
 	var/datum/gas_mixture/inside_air = internal_connector.gas_connector.airs[1]
-	if(inside_air.return_pressure() > 2 * ONE_ATMOSPHERE)
+	if(inside_air.total_moles() > 0)
+		if(!node || internal_pressure > 0)
+			var/datum/gas_mixture/environment_air = loc.return_air()
+			internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
+
+	var/unsafe_release = FALSE
+	if(internal_pressure > 2 * ONE_ATMOSPHERE)
 		to_chat(user, span_warning("As you begin prying \the [src] a gush of air blows in your face... maybe you should reconsider?"))
 		if(!do_after(user, 2 SECONDS, target = src))
 			return
@@ -487,18 +499,6 @@
 			return
 		else
 			deconstruct = TRUE
-
-	var/obj/machinery/atmospherics/node = internal_connector.gas_connector.nodes[1]
-	var/internal_pressure = 0
-
-	if(istype(node, /obj/machinery/atmospherics/components/unary/portables_connector))
-		var/obj/machinery/atmospherics/components/unary/portables_connector/portable_devices_connector = node
-		internal_pressure = !portable_devices_connector.connected_device ? 1 : 0
-
-	if(inside_air.total_moles() > 0)
-		if(!node || internal_pressure > 0)
-			var/datum/gas_mixture/environment_air = loc.return_air()
-			internal_pressure = inside_air.return_pressure() - environment_air.return_pressure()
 
 	if(unsafe_release)
 		internal_connector.gas_connector.unsafe_pressure_release(user, internal_pressure)
