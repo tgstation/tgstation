@@ -21,6 +21,7 @@
 	/// The list of factions this atom belongs to
 	var/list/faction
 
+	/// Use get_default_say_verb() in say.dm instead of reading verb_say.
 	var/verb_say = "says"
 	var/verb_ask = "asks"
 	var/verb_exclaim = "exclaims"
