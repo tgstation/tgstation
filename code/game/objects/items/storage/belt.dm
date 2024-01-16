@@ -344,7 +344,7 @@
 		/obj/item/restraints/handcuffs,
 		/obj/item/restraints/legcuffs/bola,
 		/obj/item/food/spaghetti/security, //monkestation change: tactical belt spaghetti,
-		/obj/item/stock_parts/cell/microfusion, //SKYRAT EDIT ADDITION
+		/obj/item/stock_parts/cell/microfusion, //MONKESTATION EDIT ADDITION
 	))
 
 /obj/item/storage/belt/security/full/PopulateContents()

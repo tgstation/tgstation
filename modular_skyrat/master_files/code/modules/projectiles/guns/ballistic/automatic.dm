@@ -340,7 +340,7 @@
 	fire_delay = 2
 	can_suppress = FALSE
 	burst_size = 0
-	//actions_types = list() SKYRAT EDIT REMOVAL
+	//actions_types = list() MONKESTATION EDIT REMOVAL
 	fire_select_modes = list(SELECT_SEMI_AUTOMATIC)
 	fire_sound = 'sound/weapons/laser.ogg'
 	casing_ejector = FALSE

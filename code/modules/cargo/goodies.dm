@@ -3,7 +3,7 @@
 	access = NONE
 	group = "Goodies"
 	goody = TRUE
-/* // SKYRAT EDIT START - CARGO GUN
+/* // MONKESTATION EDIT START - CARGO GUN
 /datum/supply_pack/goody/dumdum38
 	name = ".38 DumDum Speedloader"
 	desc = "Contains one speedloader of .38 DumDum ammunition, good for embedding in soft targets."
@@ -31,7 +31,7 @@
 	cost = PAYCHECK_HARD * 40 //they really mean a premium here
 	access_view = ACCESS_FORENSICS
 	contains = list(/obj/item/gun/ballistic/revolver/detective)
-*/ //SKYRAT EDIT END
+*/ //MONKESTATION EDIT END
 /datum/supply_pack/goody/stingbang
 	name = "Stingbang Single-Pack"
 	desc = "Contains one \"stingbang\" grenade, perfect for playing meanhearted pranks."
@@ -44,7 +44,7 @@
 	desc = "Contains one sharpened survival knive. Guaranteed to fit snugly inside any Nanotrasen-standard boot."
 	cost = PAYCHECK_COMMAND * 1.75
 	contains = list(/obj/item/knife/combat/survival)
-/* //SKYRAT EDIT START - GUN CARGO
+/* //MONKESTATION EDIT START - GUN CARGO
 /datum/supply_pack/goody/ballistic_single
 	name = "Combat Shotgun Single-Pack"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains one Aussec-designed Combat Shotgun, and one Shotgun Bandolier."
@@ -86,7 +86,7 @@
 	cost = PAYCHECK_HARD * 15
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/storage/belt/holster/thermal)
-*/ //SKYRAT EDIT END
+*/ //MONKESTATION EDIT END
 
 /datum/supply_pack/goody/sologamermitts
 	name = "Insulated Gloves Single-Pack"

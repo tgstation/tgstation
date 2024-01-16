@@ -165,37 +165,14 @@
 
 //Allowed equipment lists for security vests.
 
-GLOBAL_LIST_INIT(advanced_hardsuit_allowed, typecacheof(list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
-	/obj/item/flashlight,
-	/obj/item/gun,
-	/obj/item/melee/baton,
-	/obj/item/reagent_containers/spray/pepper,
-	/obj/item/restraints/handcuffs,
-	/obj/item/tank/internals,
-	)))
-
-GLOBAL_LIST_INIT(security_hardsuit_allowed, typecacheof(list(
-	/obj/item/ammo_box,
-	/obj/item/ammo_casing,
-	/obj/item/flashlight,
-	/obj/item/gun/ballistic,
-	/obj/item/gun/energy,
-	/obj/item/melee/baton,
-	/obj/item/reagent_containers/spray/pepper,
-	/obj/item/restraints/handcuffs,
-	/obj/item/tank/internals,
-	/obj/item/gun/microfusion, //SKYRAT EDIT ADDITION
-	)))
-
-GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
+GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/ammo_box,
 	/obj/item/ammo_casing,
 	/obj/item/detective_scanner,
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
+	/obj/item/gun/microfusion, //monkestation edit
 	/obj/item/lighter,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -206,7 +183,6 @@ GLOBAL_LIST_INIT(detective_vest_allowed, typecacheof(list(
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
-	/obj/item/gun/microfusion, //SKYRAT EDIT ADDITION
 	/obj/item/storage/belt/holster/energy,
 ))
 
@@ -216,6 +192,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/flashlight,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
+	/obj/item/gun/microfusion, //monkestation edit
 	/obj/item/knife/combat,
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
@@ -224,7 +201,6 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/tank/internals/plasmaman,
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
-	/obj/item/gun/microfusion, //SKYRAT EDIT ADDITION
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/clothing/mask/breath/sec_bandana
 ))
@@ -234,12 +210,12 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/ammo_casing,
 	/obj/item/gun/ballistic,
 	/obj/item/gun/energy,
+	/obj/item/gun/microfusion, //monkestation edit
 	/obj/item/melee/baton,
 	/obj/item/reagent_containers/spray/pepper,
 	/obj/item/restraints/handcuffs,
 	/obj/item/storage/belt/holster/detective,
 	/obj/item/storage/belt/holster/nukie,
-	/obj/item/gun/microfusion, //SKYRAT EDIT ADDITION
 	/obj/item/storage/belt/holster/energy,
 ))
 

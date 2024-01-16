@@ -464,11 +464,11 @@
 				if(SO.applied_coupon)
 					say("Coupon refunded.")
 					SO.applied_coupon.forceMove(get_turf(src))
-				//SKYRAT EDIT START
+				//MONKESTATION EDIT START
 				if(istype(SO, /datum/supply_order/armament))
 					var/datum/supply_order/armament/the_order = SO
 					the_order.reimburse_armament()
-				//SKYRAT EDIT END
+				//MONKESTATION EDIT END
 				SSshuttle.shopping_list -= SO
 				. = TRUE
 				break
@@ -500,12 +500,12 @@
 		if("toggleprivate")
 			self_paid = !self_paid
 			. = TRUE
-		//SKYRAT EDIT START
+		//MONKESTATION EDIT START
 		if("gun_window")
 			var/datum/component/armament/cargo_gun/gun_comp = GetComponent(/datum/component/armament/cargo_gun)
 			gun_comp.ui_interact(usr)
 			. = TRUE
-		//SKYRAT EDIT END
+		//MONKESTATION EDIT END
 	if(.)
 		post_signal(cargo_shuttle)
 

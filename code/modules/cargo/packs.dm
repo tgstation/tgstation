@@ -279,7 +279,7 @@
 	group = "Security"
 	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
-/* //SKYRAT EDIT START - CARGO ARMAMENTS
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
 	desc = "Contains three boxes of beanbag shotgun shells, three boxes of rubbershot shotgun shells and one of each special .38 speedloarders. Requires Security access to open."
@@ -295,8 +295,8 @@
 					/obj/item/ammo_box/c38/hotshot,
 					/obj/item/ammo_box/c38/iceblox)
 	crate_name = "ammo crate"
-*/ //SKYRAT EDIT END
-/* SKYRAT EDIT: Moved to Bloat.dm	name = "Armor Crate"
+*/ //MONKESTATION EDIT END
+/* MONKESTATION EDIT: Moved to Bloat.dm	name = "Armor Crate"
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
 	desc = "Three vests of well-rounded, decently-protective armor. Requires Security access to open."
@@ -306,12 +306,12 @@
 					/obj/item/clothing/suit/armor/vest,
 					/obj/item/clothing/suit/armor/vest)
 	crate_name = "armor crate"
-*/ //SKYRAT EDIT END
+*/ //MONKESTATION EDIT END
 
 /datum/supply_pack/security/disabler
 	name = "Disabler Crate"
 	desc = "Three stamina-draining disabler weapons. Requires Security access to open."
-	cost = CARGO_CRATE_VALUE * 5 //SKYRAT EDIT 3 -> 5
+	cost = CARGO_CRATE_VALUE * 5 //MONKESTATION EDIT 3 -> 5
 	access_view = ACCESS_SECURITY
 	contains = list(/obj/item/gun/energy/disabler,
 					/obj/item/gun/energy/disabler,
@@ -340,7 +340,7 @@
 					/obj/item/clothing/head/helmet/sec)
 	crate_name = "helmet crate"
 
-/* //SKYRAT EDIT START - CARGO ARMAMENTS
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
 	desc = "Contains three lethal, high-energy laser guns. Requires Security access to open."
@@ -350,7 +350,7 @@
 					/obj/item/gun/energy/laser,
 					/obj/item/gun/energy/laser)
 	crate_name = "laser crate"
-*/ //SKYRAT EDIT END
+*/ //MONKESTATION EDIT END
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
@@ -363,7 +363,7 @@
 	cost = CARGO_CRATE_VALUE * 2
 	crate_name = "security barriers crate"
 
-/* - SKYRAT EDIT REMOVAL - SEC_HUAL
+/* - MONKESTATION EDIT REMOVAL - SEC_HUAL
 /datum/supply_pack/security/securityclothes
 	name = "Security Clothing Crate"
 	desc = "Contains appropriate outfits for the station's private security force. Contains outfits for the Warden, Head of Security, and two Security Officers. Each outfit comes with a rank-appropriate jumpsuit, suit, and beret. Requires Security access to open."
@@ -495,7 +495,7 @@
 	cost = CARGO_CRATE_VALUE * 3.5
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
-/* //SKYRAT EDIT START - CARGO ARMAMENTS
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
 	desc = "For when the enemy absolutely needs to be replaced with lead. Contains three Aussec-designed Combat Shotguns, and three Shotgun Bandoliers. Requires Armory access to open."
@@ -526,7 +526,7 @@
 					/obj/item/gun/energy/e_gun)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
-*/ //SKYRAT EDIT END
+*/ //MONKESTATION EDIT END
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"
@@ -568,7 +568,7 @@
 					/obj/item/ammo_box/c38/trac)
 	crate_name = "tracking implant crate"
 
-/datum/supply_pack/security/armory/riotshotguns //SKYRAT EDIT ADDITION
+/datum/supply_pack/security/armory/riotshotguns //MONKESTATION EDIT ADDITION
 
 /datum/supply_pack/security/armory/laserarmor
 	name = "Reflector Vest Crate"
@@ -633,7 +633,7 @@
 		var/item = pick(contains)
 		new item(C)
 
-/datum/supply_pack/security/armory/mafia //SKYRAT EDIT ADDITION
+/datum/supply_pack/security/armory/mafia //MONKESTATION EDIT ADDITION
 
 /datum/supply_pack/security/armory/swat
 	name = "SWAT Crate"
@@ -650,7 +650,7 @@
 					/obj/item/clothing/gloves/tackler/combat,
 					/obj/item/clothing/gloves/tackler/combat)
 	crate_name = "swat crate"
-/* //SKYRAT EDIT START - CARGO ARMAMENTS
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/armory/thermal
 	name = "Thermal Pistol Crate"
 	desc = "Contains a pair of holsters each with two experimental thermal pistols, using nanites as the basis for their ammo. Requires Armory access to open."
@@ -658,7 +658,7 @@
 	contains = list(/obj/item/storage/belt/holster/thermal,
 					/obj/item/storage/belt/holster/thermal)
 	crate_name = "thermal pistol crate"
-*/ //SKYRAT EDIT END
+*/ //MONKESTATION EDIT END
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////// Engineering /////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -831,7 +831,7 @@
 	contains = list(/obj/item/circuitboard/machine/bsa/front,
 					/obj/item/circuitboard/machine/bsa/middle,
 					/obj/item/circuitboard/machine/bsa/back,
-					/obj/item/circuitboard/machine/bsa/powercore, //SKYRAT EDIT ADDITION
+					/obj/item/circuitboard/machine/bsa/powercore, //MONKESTATION EDIT ADDITION
 					/obj/item/circuitboard/computer/bsa_control
 					)
 	crate_name= "bluespace artillery parts crate"
@@ -1436,7 +1436,7 @@
 	crate_name = "shield generators crate"
 	crate_type = /obj/structure/closet/crate/secure/science
 
-/datum/supply_pack/science/techshellpack //SKYRAT EDIT ADDITION
+/datum/supply_pack/science/techshellpack //MONKESTATION EDIT ADDITION
 
 /datum/supply_pack/science/transfer_valves
 	name = "Tank Transfer Valves Crate"
@@ -2423,8 +2423,8 @@
 		if(prob(50))
 			the_toy = pick_weight(GLOB.arcade_prize_pool)
 		else
-			//the_toy = pick(subtypesof(/obj/item/toy/plush)) // SKYRAT EDIT -- Original
-			the_toy = pick(subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/donator)) // SKYRAT EDIT -- No more donator plushies in toy crates
+			//the_toy = pick(subtypesof(/obj/item/toy/plush)) // MONKESTATION EDIT -- Original
+			the_toy = pick(subtypesof(/obj/item/toy/plush) - typesof(/obj/item/toy/plush/donator)) // MONKESTATION EDIT -- No more donator plushies in toy crates
 		new the_toy(C)
 
 /datum/supply_pack/costumes_toys/wizard
@@ -2862,7 +2862,7 @@
 	contains = list(/obj/item/vending_refill/cart)
 	crate_name = "\improper PTech supply crate"
 
-/* - SKYRAT EDIT REMOVAL - SEC_HAUL - MOVED TO PACKS.DM
+/* - MONKESTATION EDIT REMOVAL - SEC_HAUL - MOVED TO PACKS.DM
 /datum/supply_pack/vending/sectech
 	name = "SecTech Supply Crate"
 	desc = "Officer Paul bought all the donuts? Then refill the security vendor with ths crate."
@@ -2964,7 +2964,7 @@
 					/obj/item/vending_refill/wardrobe/science_wardrobe)
 	crate_name = "science department wardrobe supply crate"
 
-/* - SKYRAT EDIT REMOVAL - SEC_HAUL - MOVED TO PACKS.DM
+/* - MONKESTATION EDIT REMOVAL - SEC_HAUL - MOVED TO PACKS.DM
 /datum/supply_pack/vending/wardrobes/security
 	name = "Security Wardrobe Supply Crate"
 	desc = "This crate contains refills for the SecDrobe, DetDrobe and LawDrobe."

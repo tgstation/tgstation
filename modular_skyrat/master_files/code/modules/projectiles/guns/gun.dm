@@ -277,8 +277,8 @@
 				user.visible_message(span_danger("[user] fires [src]!"), \
 								span_danger("You fire [src]!"), \
 								span_hear("You hear a gunshot!"), COMBAT_MESSAGE_RANGE)
-	if(user.resting) // SKYRAT EDIT ADD - no crawlshooting
-		user.Immobilize(20, TRUE) // SKYRAT EDIT END
+	if(user.resting) // MONKESTATION EDIT ADD - no crawlshooting
+		user.Immobilize(20, TRUE) // MONKESTATION EDIT END
 
 /obj/item/gun/emp_act(severity)
 	. = ..()

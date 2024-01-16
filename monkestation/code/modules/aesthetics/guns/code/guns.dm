@@ -202,7 +202,7 @@
 	fire_delay = 55 //Slightly smaller than standard sniper
 	burst_size = 1
 	slot_flags = ITEM_SLOT_BACK
-	fire_select_modes = list(SELECT_SEMI_AUTOMATIC) //SKYRAT EDIT CHANGE
+	fire_select_modes = list(SELECT_SEMI_AUTOMATIC) //MONKESTATION EDIT CHANGE
 	mag_display = TRUE
 
 /obj/item/gun/ballistic/automatic/ar/modular

@@ -636,7 +636,7 @@
 	icon = 'monkestation/code/modules/aesthetics/airlock/icons/airlocks/blast_door.dmi'
 	door_align_type = /obj/machinery/door/poddoor
 
-//SKYRAT EDIT ADDITION BEGIN - AESTHETICS
+//MONKESTATION EDIT ADDITION BEGIN - AESTHETICS
 #undef AIRLOCK_LIGHT_POWER
 #undef AIRLOCK_LIGHT_RANGE
 #undef AIRLOCK_LIGHT_ENGINEERING
@@ -646,7 +646,7 @@
 #undef AIRLOCK_ACCESS_LIGHT_COLOR
 #undef AIRLOCK_EMERGENCY_LIGHT_COLOR
 #undef AIRLOCK_DENY_LIGHT_COLOR
-//SKYRAT EDIT END
+//MONKESTATION EDIT END
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

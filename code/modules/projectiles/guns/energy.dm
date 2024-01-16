@@ -101,7 +101,7 @@
 		ammo_type[i] = shot
 	shot = ammo_type[select]
 	fire_sound = shot.fire_sound
-	fire_sound_volume = shot.fire_sound_volume //SKYRAT EDIT ADDITION
+	fire_sound_volume = shot.fire_sound_volume //MONKESTATION EDIT ADDITION
 	fire_delay = shot.delay
 
 /obj/item/gun/energy/Destroy()
@@ -183,7 +183,7 @@
 		select = 1
 	var/obj/item/ammo_casing/energy/shot = ammo_type[select]
 	fire_sound = shot.fire_sound
-	fire_sound_volume = shot.fire_sound_volume //SKYRAT EDIT ADDITION
+	fire_sound_volume = shot.fire_sound_volume //MONKESTATION EDIT ADDITION
 	fire_delay = shot.delay
 	if (shot.select_name && user)
 		balloon_alert(user, "set to [shot.select_name]")

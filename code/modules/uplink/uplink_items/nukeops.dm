@@ -138,7 +138,7 @@
 /datum/uplink_item/dangerous/machinegun
 	name = "L6 Machine Gun"
 	desc = "A fully-loaded Scarborough Arms belt-fed machine gun. \
-			This deadly weapon has a 50-round box chambered for 7.12x82mm ammunition." //SKYRAT EDIT - AUSSEC TO SCARBOROUGH
+			This deadly weapon has a 50-round box chambered for 7.12x82mm ammunition." //MONKESTATION EDIT - AUSSEC TO SCARBOROUGH
 	item = /obj/item/gun/ballistic/automatic/l6_saw
 	cost = 18
 	surplus = 10 //monkestation edit: from 0 to 10

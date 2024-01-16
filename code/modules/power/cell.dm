@@ -52,10 +52,10 @@
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
 	charge = maxcharge
-	/* SKYRAT EDIT REMOVAL
+	/* MONKESTATION EDIT REMOVAL
 	if(ratingdesc)
 		desc += " This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
-	*/ // SKYRAT EDIT END
+	*/ // MONKESTATION EDIT END
 	update_appearance()
 
 	// Guns need to process their chamber when we've been charged
@@ -86,7 +86,7 @@
 		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
-	. += mutable_appearance(charge_overlay_icon, "cell-o[((charge / maxcharge) >= 0.995) ? 2 : 1]") //SKYRAT EDIT CHANGE
+	. += mutable_appearance(charge_overlay_icon, "cell-o[((charge / maxcharge) >= 0.995) ? 2 : 1]") //MONKESTATION EDIT CHANGE
 
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
@@ -116,16 +116,16 @@
 
 /obj/item/stock_parts/cell/examine(mob/user)
 	. = ..()
-	// SKYRAT EDIT ADDITION
+	// MONKESTATION EDIT ADDITION
 	if(ratingdesc && !microfusion_readout)
 		. += "This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
-	// SKYRAT EDIT END
+	// MONKESTATION EDIT END
 	if(rigged)
 		. += span_danger("This power cell seems to be faulty!")
-	// SKYRAT EDIT ADDITION
+	// MONKESTATION EDIT ADDITION
 	else if(microfusion_readout)
 		. += "The charge meter reads [charge]/[maxcharge] MF."
-	// SKYRAT EDIT END
+	// MONKESTATION EDIT END
 	else
 		. += "The charge meter reads [CEILING(percent(), 0.1)]%." //so it doesn't say 0% charge when the overlay indicates it still has charge
 
