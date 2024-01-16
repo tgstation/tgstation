@@ -29,6 +29,8 @@ Simple datum which is instanced once per type and is used for every object of sa
 	var/list/categories = list()
 	///The type of sheet this material creates. This should be replaced as soon as possible by greyscale sheets
 	var/sheet_type
+	/// What type of ore is this material associated with? Used for mining, and not every material has one.
+	var/obj/item/ore_type
 	///This is a modifier for force, and resembles the strength of the material
 	var/strength_modifier = 1
 	///This is a modifier for integrity, and resembles the strength of the material

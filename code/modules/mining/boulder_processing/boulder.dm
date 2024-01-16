@@ -177,25 +177,12 @@
 	for(var/datum/material/picked in custom_materials)
 		var/obj/item/stack/ore/cracked_ore // Take the associated value and convert it into ore stacks...
 		var/quantity = clamp(round((custom_materials[picked] - SHEET_MATERIAL_AMOUNT)/SHEET_MATERIAL_AMOUNT), 1, 10) //but less resources than if they processed it by hand.
-		switch(picked.type)
-			if(/datum/material/iron)
-				cracked_ore = new /obj/item/stack/ore/iron(drop_location(), quantity)
-			if(/datum/material/gold)
-				cracked_ore = new /obj/item/stack/ore/gold(drop_location(), quantity)
-			if(/datum/material/silver)
-				cracked_ore = new /obj/item/stack/ore/silver(drop_location(), quantity)
-			if(/datum/material/plasma)
-				cracked_ore = new /obj/item/stack/ore/plasma(drop_location(), quantity)
-			if(/datum/material/diamond)
-				cracked_ore = new /obj/item/stack/ore/diamond(drop_location(), quantity)
-			if(/datum/material/glass)
-				cracked_ore = new /obj/item/stack/ore/glass/basalt(drop_location(), quantity)
-			if(/datum/material/bluespace)
-				cracked_ore = new /obj/item/stack/ore/bluespace_crystal(drop_location(), quantity)
-			if(/datum/material/titanium)
-				cracked_ore = new /obj/item/stack/ore/titanium(drop_location(), quantity)
-			if(/datum/material/uranium)
-				cracked_ore = new /obj/item/stack/ore/uranium(drop_location(), quantity)
+
+		var/cracked_ore_type = picked.ore_type
+		if(isnull(cracked_ore_type))
+			stack_trace("boulder found containing material type [picked.type] with no set ore_type")
+			continue
+		cracked_ore = new cracked_ore_type (drop_location(), quantity)
 		SSblackbox.record_feedback("tally", "ore_mined", quantity, cracked_ore)
 
 /**

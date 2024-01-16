@@ -6,6 +6,7 @@
 	greyscale_colors = "#878687"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/iron
+	ore_type = /obj/item/stack/ore/iron
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
@@ -27,6 +28,7 @@
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	integrity_modifier = 0.1
 	sheet_type = /obj/item/stack/sheet/glass
+	ore_type = /obj/item/stack/ore/glass
 	shard_type = /obj/item/shard
 	debris_type = /obj/effect/decal/cleanable/glass
 	value_per_unit = 5 / SHEET_MATERIAL_AMOUNT
@@ -65,6 +67,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#e3f1f8"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
+	ore_type = /obj/item/stack/ore/silver
 	value_per_unit = 50 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
@@ -85,6 +88,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.2
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/gold
+	ore_type = /obj/item/stack/ore/gold
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
@@ -105,6 +109,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#71c8f784"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/diamond
+	ore_type = /obj/item/stack/ore/diamond
 	alpha = 132
 	starlight_color = COLOR_BLUE_LIGHT
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
@@ -127,6 +132,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = rgb(48, 237, 26)
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/uranium
+	ore_type = /obj/item/stack/ore/uranium
 	value_per_unit = 100 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
@@ -166,6 +172,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#c162ec"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/plasma
+	ore_type = /obj/item/stack/ore/plasma
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.15
 	armor_modifiers = list(MELEE = 1.4, BULLET = 0.7, ENERGY = 1.2, BIO = 1.2, ACID = 0.5)
@@ -200,6 +207,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_ITEM_MATERIAL = TRUE)
 	beauty_modifier = 0.5
 	sheet_type = /obj/item/stack/sheet/bluespace_crystal
+	ore_type = /obj/item/stack/ore/bluespace_crystal
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
@@ -219,6 +227,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#ffff00"
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/bananium
+	ore_type = /obj/item/stack/ore/bananium
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = 0.5
 	armor_modifiers = list(BOMB = 100, FIRE = 10) //Clowns cant be blown away.
@@ -249,6 +258,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	strength_modifier = 1.3
 	categories = list(MAT_CATEGORY_ORE = TRUE, MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
+	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
@@ -286,6 +296,7 @@ Unless you know what you're doing, only use the first three numbers. They're in 
 	greyscale_colors = "#caccd9"
 	strength_modifier = 0.85
 	sheet_type = /obj/item/stack/sheet/plastic
+	ore_type = /obj/item/stack/ore/slag //No plastic or coal ore, so we use slag.
 	categories = list(MAT_CATEGORY_RIGID = TRUE, MAT_CATEGORY_BASE_RECIPES = TRUE, MAT_CATEGORY_ITEM_MATERIAL=TRUE)
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	beauty_modifier = -0.01
