@@ -50,7 +50,7 @@ export const OreSilo = (props: any, context: any) => {
   const [currentTab, setCurrentTab] = useState(0);
 
   return (
-    <Window title="Ore Silo" width={400} height={600}>
+    <Window title="Ore Silo" width={380} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -73,16 +73,22 @@ export const OreSilo = (props: any, context: any) => {
           </Stack.Item>
           <Stack.Item grow>
             {currentTab === 0 ? (
-              <Section fill scrollable>
-                {machines.map((machine) => (
-                  <MachineDisplay
-                    key={machine.name}
-                    machine={machine}
-                    onPause={(machine) => act('hold', { ref: machine.ref })}
-                    onRemove={(machine) => act('remove', { ref: machine.ref })}
-                  />
-                ))}
-              </Section>
+              !!machines && machines.length > 0 ? (
+                <Section fill scrollable>
+                  {machines.map((machine, index) => (
+                    <MachineDisplay
+                      key={machine.name}
+                      machine={machine}
+                      onPause={(machine) => act('hold', { ref: machine.ref })}
+                      onRemove={(machine) =>
+                        act('remove', { ref: machine.ref })
+                      }
+                    />
+                  ))}
+                </Section>
+              ) : (
+                <NoticeBox>No machines connected!</NoticeBox>
+              )
             ) : null}
             {currentTab === 1 ? (
               !!logs && logs.length > 0 ? (
