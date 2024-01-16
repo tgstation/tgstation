@@ -54,10 +54,10 @@ export const MaterialAccessBar = (props: MaterialAccessBarProps) => {
   const { availableMaterials, SHEET_MATERIAL_AMOUNT, onEjectRequested } = props;
 
   return (
-    <Flex wrap>
+    <Flex wrap justify="space-between">
       {sortBy((m: Material) => MATERIAL_RARITY[m.name])(availableMaterials).map(
         (material) => (
-          <Flex.Item key={material.name} grow={1}>
+          <Flex.Item key={material.name}>
             <MaterialCounter
               material={material}
               SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
@@ -96,45 +96,47 @@ const MaterialCounter = (props: MaterialCounterProps) => {
       ])}
     >
       <Stack vertical direction="column-reverse">
-        <Flex
-          direction="column"
-          textAlign="center"
-          onClick={() => onEjectRequested(1)}
-          className="MaterialDock__Label"
-        >
-          <Flex.Item>
-            <MaterialIcon materialName={material.name} sheets={sheets} />
-          </Flex.Item>
-          <Flex.Item>
-            <AnimatedNumber value={sheets} format={LABEL_FORMAT} />
-          </Flex.Item>
-        </Flex>
-        {hovering && (
-          <div className={'MaterialDock__Dock'}>
-            <Flex vertical direction={'column-reverse'}>
-              <EjectButton
-                sheets={sheets}
-                amount={5}
-                onEject={onEjectRequested}
-              />
-              <EjectButton
-                sheets={sheets}
-                amount={10}
-                onEject={onEjectRequested}
-              />
-              <EjectButton
-                sheets={sheets}
-                amount={25}
-                onEject={onEjectRequested}
-              />
-              <EjectButton
-                sheets={sheets}
-                amount={50}
-                onEject={onEjectRequested}
-              />
-            </Flex>
-          </div>
-        )}
+        <Stack.Item className="MaterialDock__Counter">
+          <Flex
+            direction="column"
+            textAlign="center"
+            onClick={() => onEjectRequested(1)}
+            className="MaterialDock__Label"
+          >
+            <Flex.Item>
+              <MaterialIcon materialName={material.name} sheets={sheets} />
+            </Flex.Item>
+            <Flex.Item>
+              <AnimatedNumber value={sheets} format={LABEL_FORMAT} />
+            </Flex.Item>
+          </Flex>
+          {hovering && (
+            <div className={'MaterialDock__Dock'}>
+              <Flex vertical direction={'column-reverse'}>
+                <EjectButton
+                  sheets={sheets}
+                  amount={5}
+                  onEject={onEjectRequested}
+                />
+                <EjectButton
+                  sheets={sheets}
+                  amount={10}
+                  onEject={onEjectRequested}
+                />
+                <EjectButton
+                  sheets={sheets}
+                  amount={25}
+                  onEject={onEjectRequested}
+                />
+                <EjectButton
+                  sheets={sheets}
+                  amount={50}
+                  onEject={onEjectRequested}
+                />
+              </Flex>
+            </div>
+          )}
+        </Stack.Item>
       </Stack>
     </div>
   );
