@@ -149,7 +149,9 @@
 /obj/machinery/icecream_vat/AltClick(mob/user)
 	if(!user.can_interact_with(src))
 		return FALSE
-	try_put_in_hand(custom_ice_cream_beaker, user)
+	if(custom_ice_cream_beaker)
+		balloon_alert(user, "removed beaker")
+		try_put_in_hand(custom_ice_cream_beaker, user)
 	return ..()
 
 /obj/machinery/icecream_vat/interact(mob/living/user)
