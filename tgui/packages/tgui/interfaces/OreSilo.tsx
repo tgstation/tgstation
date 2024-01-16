@@ -18,15 +18,15 @@ import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { Material } from './Fabrication/Types';
 
-interface Machine {
+type Machine = {
   ref: string;
   name: string;
   icon: string;
   onHold: boolean;
   location: string;
-}
+};
 
-interface Log {
+type Log = {
   rawMaterials: string;
   machineName: string;
   areaName: string;
@@ -34,7 +34,7 @@ interface Log {
   amount: number;
   time: string;
   noun: string;
-}
+};
 
 type OreSiloData = {
   SHEET_MATERIAL_AMOUNT: number;
@@ -113,11 +113,11 @@ export const OreSilo = (props: any, context: any) => {
   );
 };
 
-interface MachineProps {
+type MachineProps = {
   machine: Machine;
   onPause: (machine: Machine) => void;
   onRemove: (machine: Machine) => void;
-}
+};
 
 const MachineDisplay = (props: MachineProps) => {
   const { machine, onPause, onRemove } = props;
@@ -171,9 +171,9 @@ const MachineDisplay = (props: MachineProps) => {
   );
 };
 
-interface LogProps {
+type LogProps = {
   log: Log;
-}
+};
 
 const LogEntry = (props: LogProps) => {
   const { log } = props;
