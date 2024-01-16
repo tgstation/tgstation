@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Adds a new (negative) station trait, where the clown spawns with bridge access! Honk!"
