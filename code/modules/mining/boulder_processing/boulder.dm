@@ -76,14 +76,6 @@
 		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
 		return
 
-/obj/item/boulder/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
