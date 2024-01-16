@@ -6337,6 +6337,7 @@
 #include "monkestation\code\modules\modular_bartending\item_modifications\attack_additions.dm"
 #include "monkestation\code\modules\modular_bartending\item_modifications\reagent_modification.dm"
 #include "monkestation\code\modules\modular_bartending\reactions\food_reactions.dm"
+#include "monkestation\code\modules\modular_computers\file_system\programs\crewmanifest.dm"
 #include "monkestation\code\modules\ocean_content\department_consoles\engineering.dm"
 #include "monkestation\code\modules\ocean_content\fluff\barrier.dm"
 #include "monkestation\code\modules\ocean_content\fluff\base_turf_editor.dm"
