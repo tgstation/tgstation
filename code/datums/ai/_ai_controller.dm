@@ -67,7 +67,7 @@ multiple modular subtrees with behaviors
 	if(!isnull(new_pawn)) // unit tests need the ai_controller to exist in isolation due to list schenanigans i hate it here
 		PossessPawn(new_pawn)
 
-/datum/ai_controller/Destroy(force, ...)
+/datum/ai_controller/Destroy(force)
 	set_ai_status(AI_STATUS_OFF)
 	UnpossessPawn(FALSE)
 	set_movement_target(type, null)
@@ -175,6 +175,7 @@ multiple modular subtrees with behaviors
 
 ///Runs any actions that are currently running
 /datum/ai_controller/process(seconds_per_tick)
+
 	if(!able_to_run())
 		SSmove_manager.stop_looping(pawn) //stop moving
 		return //this should remove them from processing in the future through event-based stuff.
@@ -433,6 +434,25 @@ multiple modular subtrees with behaviors
 	TRACK_AI_DATUM_TARGET(thing, key)
 	blackboard[key] = thing
 	post_blackboard_key_set(key)
+
+/**
+ * Helper to force a key to be a certain thing no matter what's already there
+ *
+ * Useful for if you're overriding a list with a new list entirely,
+ * as otherwise it would throw a runtime error from trying to override a list
+ *
+ * Not necessary to use if you aren't dealing with lists, as set_blackboard_key will clear the existing value
+ * in that case already, but may be useful for clarity.
+ *
+ * * key - A blackboard key
+ * * thing - a value to set the blackboard key to.
+ */
+/datum/ai_controller/proc/override_blackboard_key(key, thing)
+	if(blackboard[key] == thing)
+		return
+
+	clear_blackboard_key(key)
+	set_blackboard_key(key, thing)
 
 /**
  * Sets the key at index thing to the passed value

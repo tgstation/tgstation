@@ -9,16 +9,13 @@
 			message = tongueless_upper.Replace(message, pick("AA","OO","'"))
 	return ..()
 
-/mob/living/carbon/human/say_mod(input, list/message_mods = list())
+/mob/living/carbon/human/get_default_say_verb()
 	var/obj/item/organ/internal/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
-	if(!tongue)
+	if(isnull(tongue))
 		if(HAS_TRAIT(src, TRAIT_SIGN_LANG))
-			verb_say = "signs"
-		else
-			verb_say = "gurgles"
-	else
-		verb_say = tongue.temp_say_mod || tongue.say_mod
-	return ..()
+			return "signs"
+		return "gurgles"
+	return  tongue.temp_say_mod || tongue.say_mod || ..()
 
 /mob/living/carbon/human/GetVoice()
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN))

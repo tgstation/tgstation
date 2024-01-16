@@ -1,5 +1,6 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -47,7 +48,7 @@ const ApcLoggedOut = (props) => {
 const ApcLoggedIn = (props) => {
   const { act, data } = useBackend();
   const { restoring } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [tabIndex, setTabIndex] = useState(1);
   return (
     <Box>
       <Tabs>

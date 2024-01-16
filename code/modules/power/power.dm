@@ -60,6 +60,8 @@
 	return can_change_cable_layer
 
 /obj/machinery/power/multitool_act(mob/living/user, obj/item/tool)
+	. = ITEM_INTERACT_BLOCKING
+
 	if(!can_change_cable_layer || !cable_layer_change_checks(user, tool))
 		return
 

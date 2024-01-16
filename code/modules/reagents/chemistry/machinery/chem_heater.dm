@@ -77,7 +77,7 @@
 			update_appearance()
 			return FALSE
 		beaker = new_beaker
-		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_heater, refresh_ui))
+		RegisterSignal(beaker.reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_heater, on_reaction_step))
 
 	update_appearance()
 
@@ -89,10 +89,32 @@
 	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
 		heater_coefficient *= micro_laser.tier
 
-/obj/machinery/chem_heater/proc/refresh_ui()
+/**
+ * Heats the reagents of the currently inserted beaker only if machine is on & beaker has some reagents inside
+ * Arguments
+ * * seconds_per_tick - passed from process() or from reaction_step()
+ */
+/obj/machinery/chem_heater/proc/heat_reagents(seconds_per_tick)
+	PRIVATE_PROC(TRUE)
+
+	//must be on and beaker must have something inside to heat
+	if(!on || (machine_stat & NOPOWER) || QDELETED(beaker) || !beaker.reagents.total_volume)
+		return FALSE
+
+	//heat the beaker and use some power. we want to use only a small amount of power since this proc gets called frequently
+	beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume)
+	use_power(active_power_usage * seconds_per_tick * 0.3)
+	return TRUE
+
+/obj/machinery/chem_heater/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
 	SIGNAL_HANDLER
 
-	SStgui.update_uis(src)
+	//adjust temp
+	heat_reagents(seconds_per_tick)
+
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
 
 /obj/machinery/chem_heater/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) || (held_item.item_flags & ABSTRACT) || (held_item.flags_1 & HOLOGRAM_1))
@@ -136,21 +158,17 @@
 			. += span_notice("Its panel can be [EXAMINE_HINT("pried")] open")
 
 /obj/machinery/chem_heater/process(seconds_per_tick)
-	if(!on || (machine_stat & NOPOWER) || QDELETED(beaker))
+	//is_reacting is handled in reaction_step()
+	if(QDELETED(beaker) || beaker.reagents.is_reacting)
 		return
 
-	if(beaker.reagents.total_volume)
-		var/randomness = 1
-		if(beaker.reagents.is_reacting) //Give it a little wiggle room since we're actively reacting
-			randomness = rand(8, 11) * 0.1
+	if(heat_reagents(seconds_per_tick))
+		//create new reactions after temperature adjust
+		beaker.reagents.handle_reactions()
 
-		//keep constant with the chemical acclimator please
-		beaker.reagents.adjust_thermal_energy((target_temperature - beaker.reagents.chem_temp) * heater_coefficient * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * beaker.reagents.total_volume * randomness)
-		if(!beaker.reagents.is_reacting)
-			beaker.reagents.handle_reactions()
-
-		//use power
-		use_power(active_power_usage * seconds_per_tick)
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
 
 /obj/machinery/chem_heater/wrench_act(mob/living/user, obj/item/tool)
 	. = ITEM_INTERACT_BLOCKING
@@ -176,8 +194,10 @@
 			var/obj/item/reagent_containers/injector = held_item
 			injector.afterattack(beaker, user, proximity_flag = TRUE)
 			return TRUE
+
 	if(is_reagent_container(held_item)  && held_item.is_open_container())
-		replace_beaker(user, held_item)
+		if(replace_beaker(user, held_item))
+			ui_interact(user)
 		balloon_alert(user, "beaker added!")
 		return TRUE
 
@@ -200,7 +220,6 @@
 	if(!QDELETED(beaker))
 		beaker_data = list()
 		beaker_data["maxVolume"] = beaker.volume
-		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
 		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
 		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
 		var/list/beakerContents = list()
@@ -284,7 +303,7 @@
 
 		if("temperature")
 			var/target = params["target"]
-			if(!target)
+			if(isnull(target))
 				return FALSE
 
 			target = text2num(target)
@@ -328,7 +347,7 @@
 				return FALSE
 
 			dispense_volume = target
-			return FALSE
+			return TRUE
 
 /**
  * Injects either acid/base buffer into the beaker
@@ -346,12 +365,11 @@
 
 	//trying to absorb buffer from currently inserted beaker
 	if(volume < 0)
-		var/datum/reagent/buffer_reagent = reagents.has_reagent(buffer_type)
-		if(!buffer_reagent)
+		if(!beaker.reagents.has_reagent(buffer_type))
 			var/name = initial(buffer_type.name)
 			say("Unable to find [name] in beaker to draw from! Please insert a beaker containing [name].")
 			return FALSE
-		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - buffer_reagent.volume, target_id = buffer_type)
+		beaker.reagents.trans_to(src, (reagents.maximum_volume / 2) - reagents.get_reagent_amount(buffer_type), target_id = buffer_type)
 		return TRUE
 
 	//trying to inject buffer into currently inserted beaker

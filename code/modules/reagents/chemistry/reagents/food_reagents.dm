@@ -1139,7 +1139,7 @@
 /datum/reagent/consumable/peanut_butter/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired) //ET loves peanut butter
 	. = ..()
 	if(isabductor(affected_mob))
-		affected_mob.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, name)
+		affected_mob.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, 1, name)
 		affected_mob.set_drugginess(30 SECONDS * REM * seconds_per_tick)
 
 /datum/reagent/consumable/vinegar

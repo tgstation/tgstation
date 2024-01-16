@@ -170,10 +170,13 @@ GLOBAL_LIST_INIT(specific_fish_icons, zebra_typecacheof(list(
 
 	var/atom/movable/reward = spawn_reward(reward_path, fisherman, fishing_spot)
 	if(!reward) //balloon alert instead
-		fisherman.balloon_alert(fisherman,pick(duds))
+		fisherman.balloon_alert(fisherman, pick(duds))
 		return
 	if(isitem(reward)) //Try to put it in hand
 		INVOKE_ASYNC(fisherman, TYPE_PROC_REF(/mob, put_in_hands), reward)
+	else if(istype(reward, /obj/effect/spawner)) // Do not attempt to forceMove() a spawner. It will break things, and the spawned item should already be at the mob's turf by now.
+		fisherman.balloon_alert(fisherman, "caught something!")
+		return
 	else // for fishing things like corpses, move them to the turf of the fisherman
 		INVOKE_ASYNC(reward, TYPE_PROC_REF(/atom/movable, forceMove), get_turf(fisherman))
 	fisherman.balloon_alert(fisherman, "caught [reward]!")

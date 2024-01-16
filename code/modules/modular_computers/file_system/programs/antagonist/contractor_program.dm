@@ -6,7 +6,7 @@
 	program_icon = "tasks"
 	size = 10
 
-	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
+	program_flags = PROGRAM_UNIQUE_COPY
 	can_run_on_flags = PROGRAM_PDA //this is all we've got sprites for :sob:
 	undeletable = TRUE
 	tgui_id = "SyndicateContractor"
