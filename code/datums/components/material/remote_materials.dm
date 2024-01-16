@@ -74,7 +74,6 @@ handles linking back and forth.
 	if (silo)
 		silo.ore_connected_machines -= src
 		silo.holds -= src
-		silo.updateUsrDialog()
 		silo = null
 	mat_container = null
 	return ..()
@@ -170,7 +169,6 @@ handles linking back and forth.
 		if (silo)
 			silo.ore_connected_machines -= src
 			silo.holds -= src
-			silo.updateUsrDialog()
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -183,7 +181,6 @@ handles linking back and forth.
 			qdel(mat_container)
 		silo = new_silo
 		silo.ore_connected_machines += src
-		silo.updateUsrDialog()
 		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
