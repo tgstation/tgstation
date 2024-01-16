@@ -464,7 +464,7 @@
 	else
 		outer = circle_range_turfs(center, outer_range)
 		inner = circle_range_turfs(center, inner_range)
-	for(var/turf/possible_spawn in outer)
+	for(var/turf/possible_spawn as anything in outer)
 		if(possible_spawn in inner)
 			continue
 		peel += possible_spawn

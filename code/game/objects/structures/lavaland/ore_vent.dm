@@ -182,7 +182,7 @@
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	if(max_minerals < 1)
 		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
-	for(var/iterator = 1; iterator <= max_minerals; iterator++)
+	for(var/iterator in 1 to max_minerals)
 		if(!SSore_generation.ore_vent_minerals.len && map_loading)
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material
@@ -261,11 +261,10 @@
 		update_appearance(UPDATE_ICON_STATE)
 		return FALSE //Bad end, try again.
 
-	for(var/mob/living/carbon/human/potential_miner in range(7, src)) //Give the miners who are near the vent points and xp.
-		var/mob/living/carbon/human/true_miner = potential_miner
-		var/obj/item/card/id/user_id_card = true_miner.get_idcard(TRUE)
-		if(true_miner?.mind)
-			true_miner.mind.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
+	for(var/mob/living/miner in range(7, src)) //Give the miners who are near the vent points and xp.
+		var/obj/item/card/id/user_id_card = miner.get_idcard(TRUE)
+		if(miner.stat <= SOFTCRIT)
+			miner.mind?.adjust_experience(/datum/skill/mining, MINING_SKILL_BOULDER_SIZE_XP * boulder_size)
 		if(!user_id_card)
 			continue
 		var/point_reward_val = (MINER_POINT_MULTIPLIER * boulder_size) - MINER_POINT_MULTIPLIER // We remove the base value of discovering the vent
@@ -281,7 +280,7 @@
  * @params user The user who tapped the vent.
  * @params scan_only If TRUE, the vent will only scan, and not prompt to start wave defense. Used by the mech mineral scanner.
  */
-/obj/structure/ore_vent/proc/scan_and_confirm(mob/user, scan_only = FALSE)
+/obj/structure/ore_vent/proc/scan_and_confirm(mob/living/user, scan_only = FALSE)
 	if(tapped)
 		balloon_alert_to_viewers("vent tapped!")
 		return
@@ -298,10 +297,7 @@
 				discovered = TRUE
 				balloon_alert(user, "vent scanned!")
 			generate_description(user)
-			if(!ishuman(user))
-				return
-			var/mob/living/carbon/human/scanning_miner = user
-			var/obj/item/card/id/user_id_card = scanning_miner.get_idcard(TRUE)
+			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
 			if(isnull(user_id_card))
 				return
 			user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
