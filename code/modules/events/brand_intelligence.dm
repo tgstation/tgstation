@@ -33,6 +33,7 @@
 	)
 
 /datum/round_event/brand_intelligence/setup()
+	// MONKE EDIT: fully overridden in <monkestation/code/modules/events/brand_intelligence.dm>
 	//select our origin machine (which will also be the type of vending machine affected.)
 	for(var/obj/machinery/vending/vendor in GLOB.machines)
 		if(!is_station_level(vendor.z))
