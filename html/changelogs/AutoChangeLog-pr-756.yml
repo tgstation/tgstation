@@ -1,0 +1,4 @@
+author: "nednaZ"
+delete-after: True
+changes:
+  - rscadd: "Adds \"Miner Training\" as a Neutral Quirk"
