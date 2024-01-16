@@ -23,10 +23,10 @@
 	var/vat_mode = VAT_MODE_ICECREAM
 	///Boolean on whether or not to add 'icecream_vat_reagents' into the icecream vat on Initialize.
 	var/preinstall_reagents = TRUE
-	///How much of each product type the ice cream vat can make.
-	var/list/product_types = list()
 	///The selected flavor of ice cream that we'll dispense when hit with an ice cream cone.
 	var/selected_flavour = ICE_CREAM_VANILLA
+	///The beaker inside of the vat used to make custom ice cream.
+	var/obj/item/reagent_containers/custom_ice_cream_beaker
 	///List of ice creams as icons used for the radial menu.
 	var/static/list/ice_cream_icons
 	/// List of prototypes of dispensable ice cream cones. path as key, instance as assoc.
@@ -65,6 +65,7 @@
 			if(cone.ingredients)
 				cone_prototypes[cone_path] = cone
 			else
+				stack_trace("Ice cream cone [cone] (TYPE: [cone_path]) has been found without ingredients, please make a bug report about this.")
 				qdel(cone)
 	if(!ice_cream_icons)
 		ice_cream_icons = list()
@@ -80,17 +81,14 @@
 	reagents.chem_temp = T0C //So ice doesn't melt
 	register_context()
 
-	if(!preinstall_reagents)
-		return
+	if(preinstall_reagents)
+		for(var/reagent in icecream_vat_reagents)
+			reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
 
-	for(var/flavour in GLOB.ice_cream_flavours)
-		if(GLOB.ice_cream_flavours[flavour].hidden)
-			continue
-		product_types[flavour] = PREFILL_AMOUNT
-	for(var/cone in cone_prototypes)
-		product_types[cone] = PREFILL_AMOUNT
-	for(var/reagent in icecream_vat_reagents)
-		reagents.add_reagent(reagent, icecream_vat_reagents[reagent], reagtemp = T0C)
+/obj/machinery/icecream_vat/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == custom_ice_cream_beaker)
+		custom_ice_cream_beaker = null
 
 /obj/machinery/icecream_vat/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
@@ -127,6 +125,17 @@
 	else
 		balloon_alert(user, "no reagents to transfer!")
 
+/obj/machinery/icecream_vat/attackby_secondary(obj/item/reagent_containers/beaker, mob/user, params)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!beaker || !istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
+		return SECONDARY_ATTACK_CONTINUE_CHAIN
+	if(beaker.forceMove(src))
+		balloon_alert(user, "beaker inserted")
+		custom_ice_cream_beaker = beaker
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
 /obj/machinery/icecream_vat/attack_hand_secondary(mob/user, list/modifiers)
 	if(swap_modes(user))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -138,8 +147,10 @@
 	return ..()
 
 /obj/machinery/icecream_vat/AltClick(mob/user)
-	. = ..()
-	swap_modes(user)
+	if(!user.can_interact_with(src))
+		return FALSE
+	try_put_in_hand(custom_ice_cream_beaker, user)
+	return ..()
 
 /obj/machinery/icecream_vat/interact(mob/living/user)
 	. = ..()
@@ -210,6 +221,22 @@
 		reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
 	balloon_alert_to_viewers("cooks up [cone.name]", "cooks up [cone.name]")
 	try_put_in_hand(cone, user)
+
+///Makes ice cream if it can, then puts it in the ice cream cone we're being attacked with.
+/obj/machinery/icecream_vat/proc/add_flavor_to_cone(datum/component/ice_cream_holder/source, mob/user, obj/item/food/icecream/cone)
+	var/datum/ice_cream_flavour/flavor = GLOB.ice_cream_flavours[selected_flavour]
+	if(!flavor)
+		CRASH("[user] was making ice cream of [selected_flavour] but had no flavor datum for it!")
+
+	for(var/reagents_needed in flavor.ingredients)
+		if(!reagents.has_reagent(reagents_needed, CONE_REAGENET_NEEDED))
+			balloon_alert(user, "not enough ingredients!")
+			return
+
+	if(flavor.add_flavour(source))
+		for(var/reagents_used in flavor.ingredients)
+			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
+		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
 
 ///Swaps the mode to the next one meant to be selected, then tells the user who changed it.
 /obj/machinery/icecream_vat/proc/swap_modes(mob/user)
