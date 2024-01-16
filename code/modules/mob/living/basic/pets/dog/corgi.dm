@@ -213,7 +213,7 @@
 			user.visible_message(span_notice("[user] pets [src]."), span_notice("You rest your hand on [src]'s head for a moment."))
 			if(flags_1 & HOLOGRAM_1)
 				return
-			user.add_mood_event(REF(src), /datum/mood_event/pet_animal, 1, src)
+			user.add_mood_event(REF(src), /datum/mood_event/pet_animal, src)
 		return FALSE
 
 	if(user && !user.temporarilyRemoveItemFromInventory(item_to_add))
