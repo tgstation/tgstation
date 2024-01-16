@@ -4,7 +4,7 @@
 	actions_types = null
 
 /obj/item/implant/mindshield/get_data()
-	return "<b>Implant Specifications:</b> \
+	return "<b>Implant Specifications:</b><BR> \
 		<b>Name:</b> Nanotrasen Employee Management Implant<BR> \
 		<b>Life:</b> Ten years.<BR> \
 		<b>Important Notes:</b> Personnel injected with this device are much more resistant to brainwashing.<BR> \
