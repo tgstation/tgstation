@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - code_imp: "removed the timeout_mod arg from add_mood_event, which was only used for one thing and causes more issues than it's worth"
