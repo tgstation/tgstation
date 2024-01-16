@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 		if("eject")
 			var/datum/material/ejecting = locate(params["ref"])
 			var/amount = text2num(params["amount"])
-			if(!isnum(amount) || !isnull(ejecting))
+			if(!isnum(amount) || !istype(ejecting))
 				return TRUE
 
 			materials.retrieve_sheets(amount, ejecting, drop_location())
