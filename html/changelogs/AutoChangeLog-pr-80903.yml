@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes some eldritch painting messages having no chat span"
-  - bugfix: "Fixes eldritch painting messages triggering before the examine, making it hard to see"
-  - bugfix: "Fix beauty eldritch painting doing nothing to heretics who examine it"

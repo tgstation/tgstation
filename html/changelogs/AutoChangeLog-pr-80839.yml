@@ -1,6 +1,0 @@
-author: "ZephyrTFA"
-delete-after: True
-changes:
-  - bugfix: "Autolathes no longer allow you to duplicate materials at higher levels of stock parts"
-  - qol: "Autolathes now show name instead of typepath when selecting a custom material"
-  - qol: "Autolathe now print out items one by one instead of waiting for all of them to print at once"

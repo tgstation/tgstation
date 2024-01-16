@@ -393,3 +393,45 @@
   - bugfix: Fixed round event controller pirate spawns.
   SyncIt21:
   - bugfix: chem heater with empty buffers can be refilled again
+2024-01-16:
+  00-Steven:
+  - bugfix: Signers no longer use the wrong verb when speaking directly into a radio
+      for the first message after toggling sign language.
+  - refactor: Moved the updating of verb variables into a new method which is called
+      earlier in living's say, which should avoid this happening for other things
+      which updated their verbs the same way.
+  13spacemen:
+  - code_imp: Hub status shows if server is restarting, starting, time to start. The
+      "Time" is more accurate and based on roundstart now
+  Ben10Omintrix:
+  - bugfix: fix bileworm ai going insane after eating someone
+  Hatterhat:
+  - bugfix: Moodlets with parameters/effects e.g. limb reattachment moodlets should
+      probably disappear more appropriately.
+  JohnFulpWillard:
+  - qol: Using a Lawyer badge in your hand now shows a thought bubble with the badge,
+      rather than giving a lousy message in your chat.
+  Melbert:
+  - bugfix: Fixes some eldritch painting messages having no chat span
+  - bugfix: Fixes eldritch painting messages triggering before the examine, making
+      it hard to see
+  - bugfix: Fix beauty eldritch painting doing nothing to heretics who examine it
+  Time-Green:
+  - bugfix: Radiation shelters (wherever they are) will protect against nebula storms
+  Voudez:
+  - qol: Players are now able to see in chat when they are being hit by obj/machinery,
+      got crushed into dense turf or get hit by thrown non carbon mob.
+  - admin: Scenarios like mob hits dense turf, obj/machinery hits mob, item without
+      "living thrower" hitting mob, mob gets hit by thrown non carbon mob now appear
+      in logs.
+  ZephyrTFA:
+  - bugfix: Autolathes no longer allow you to duplicate materials at higher levels
+      of stock parts
+  - qol: Autolathes now show name instead of typepath when selecting a custom material
+  - qol: Autolathe now print out items one by one instead of waiting for all of them
+      to print at once
+  jlsnow301:
+  - bugfix: Sections will be more polite by not stealing focus from Input boxes in
+      TGUI
+  - bugfix: Poppers (like the prefs menu options) shouldn't be hidden beneath the
+      character preview anymore.
