@@ -16,7 +16,8 @@
 	var/base_name
 	///is the weapon in its transformed state?
 	var/enabled = FALSE
-
+	///wounding chance while on
+	var/on_wound_bonus
 
 /obj/item/melee/trick_weapon/proc/upgrade_weapon()
 	SIGNAL_HANDLER
@@ -223,6 +224,44 @@
 	enabled = FALSE
 	block_chance = 20
 
+/obj/item/melee/trick_weapon/beast_claw
+	name = "Beast Claw"
+	base_name = "Beast Claw"
+	desc = "The bones seem to still be twitching."
+	icon_state = "beast_claw"
+	base_icon_state = "beast_claw"
+	w_class =  WEIGHT_CLASS_SMALL
+	block_chance = 20
+	base_force = 18
+	on_force = 23
+	throwforce = 10
+	wound_bonus = 25
+	bare_wound_bonus = 35
+	reach = 1
+	sharpness = SHARP_EDGED
+	hitsound = 'sound/weapons/fwoosh.ogg'
+	damtype = BURN
+	attack_verb_continuous = list("rips", "claws", "gashes", "tears", "lacerates", "dices", "cuts", "attacks")
+	attack_verb_simple = list("rip", "claw", "gash", "tear", "lacerate", "dice", "cut", "attack" )
+
+/obj/item/melee/trick_weapon/beast_claw/Initialize(mapload)
+	. = ..()
+	force = base_force
+	AddComponent(/datum/component/transforming, \
+		force_on = on_force, \
+		w_class_on = WEIGHT_CLASS_BULKY)
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	RegisterSignal(src,WEAPON_UPGRADE, PROC_REF(upgrade_weapon))
+
+/obj/item/melee/trick_weapon/beast_claw/proc/on_transform/(obj/item/source, mob/user, active)
+	SIGNAL_HANDLER
+	balloon_alert(user, active ? "extended" : "collapsed")
+	//inhand_icon_state (skipping until i have the icons)
+	if(active)
+		playsound(src, 'sound/weapons/fwoosh.ogg',50)
+	enabled = active
+	active = wound_bonus ? 45 : 0
+	force = active ? upgraded_val(on_force, upgrade_level) : upgraded_val(base_force, upgrade_level)
 /obj/item/rabbit_eye
 	name = "Rabbit eye"
 	desc = "An item that resonates with trick weapons."
