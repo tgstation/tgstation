@@ -49,7 +49,7 @@
 		else if(!(user.istate & ISTATE_HARM))
 			holder.visible_message(span_notice("[user] gently pushes [user.pulling] against the [holder]."))
 			process_stimuli(STIMULUS_CARBON_TOUCH)
-			add_event_to_buffer(user, user.pulling, "pushes [user.pulling] into [src.parent]", "ARTIFACT")
+			logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has pushed [user.pulling] into [parent]")
 		return
 
 	if(artifact_size == ARTIFACT_SIZE_LARGE) //only large artifacts since the average spessman wouldnt notice)
@@ -60,19 +60,19 @@
 		var/obj/item/bodypart/arm = human.get_active_hand()
 		if(arm.bodytype & BODYTYPE_ROBOTIC)
 			process_stimuli(STIMULUS_SILICON_TOUCH)
-			add_event_to_buffer(user, src.parent, "touched the [src.parent] with the [arm]", "ARTIFACT")
+			logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
 		else
 			process_stimuli(STIMULUS_CARBON_TOUCH)
-			add_event_to_buffer(user, src.parent, "touched the [src.parent] with the [arm]", "ARTIFACT")
+			logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent] with [arm]")
 	else if(iscarbon(user))
 		process_stimuli(STIMULUS_CARBON_TOUCH)
-		add_event_to_buffer(user, src.parent, "touched the [src.parent]", "ARTIFACT")
+		logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent]")
 	else if(issilicon(user))
 		process_stimuli(STIMULUS_SILICON_TOUCH)
-		add_event_to_buffer(user, src.parent, "touched the [src.parent]", "ARTIFACT")
+		logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent]")
 
 	process_stimuli(STIMULUS_FORCE, 1)
-	add_event_to_buffer(user, src.parent, "touched the [src.parent]", "ARTIFACT")
+	logger.Log(LOG_CATEGORY_ARTIFACT, "[user] has touched [parent]")
 
 	if(active)
 		effect_touched(user)
@@ -101,8 +101,8 @@
 
 /datum/component/artifact/proc/log_pull(datum/source, atom/puller)
 	SIGNAL_HANDLER
-	add_event_to_buffer(puller, source, "has started pulling [parent]", "ARTIFACT")
+	logger.Log(LOG_CATEGORY_ARTIFACT, "[puller] has started pulling the [parent]")
 
 /datum/component/artifact/proc/log_stop_pull(datum/source, atom/puller)
 	SIGNAL_HANDLER
-	add_event_to_buffer(puller, source, "has stopped pulling [parent]", "ARTIFACT")
+	logger.Log(LOG_CATEGORY_ARTIFACT, "[puller] has stopped pulling the [parent]")

@@ -60,7 +60,7 @@ GLOBAL_LIST_INIT(infected_items, list())
 		//SSdisease.active_diseases += D
 		D.after_add()
 
-		add_event_to_buffer(src,  data = "was infected by virus: [D.admin_details()] at [loc_name(loc)].", log_key = "VIRUS")
+		logger.Log(LOG_CATEGORY_VIRUS, "[src.name] was infected by virus [D.real_name()] at [loc_name(loc)]", list("disease_data" = D.admin_details(), "location" = loc_name(loc)))
 
 		if (!pathogen)
 			pathogen = image('monkestation/code/modules/virology/icons/effects.dmi', src, "pathogen_contact")

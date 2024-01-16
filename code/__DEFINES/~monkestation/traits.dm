@@ -14,3 +14,5 @@
 #define TRAIT_ALL_SURGERIES "all_surgeries"
 /// Prevents the user from ever (unintentionally) failing a surgery step, and ensures they always have the maximum surgery speed.
 #define TRAIT_PERFECT_SURGEON "perfect_surgeon"
+/// Station trait for when the clown has bridge access *shudders*
+#define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"

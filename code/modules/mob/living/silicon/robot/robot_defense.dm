@@ -353,20 +353,17 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		logevent("ALERT: Foreign software execution prevented.")
 		to_chat(connected_ai, span_danger("ALERT: Cyborg unit \[[src]\] successfully defended against subversion."))
 		log_silicon("EMAG: [key_name(user)] attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].")
-		add_event_to_buffer(user, src,  data ="attempted to emag cyborg [key_name(src)], but they were slaved to traitor AI [connected_ai].", log_key = "SILICON")
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit start
 	if(IS_CLOCK(src)) //cant emag clock borgs
 		to_chat(src, span_brass("The light of Rat'var protects you from subversion!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag cyborg [key_name(src)], but they were a clockwork borg.")
-		add_event_to_buffer(user, src,  data ="attempted to emag cyborg [key_name(src)], but they were a clockwork borg.", log_key = "SILICON")
 		return TRUE // emag succeeded, it was just counteracted
 //monkestation edit end
 
 	if(shell) //AI shells cannot be emagged, so we try to make it look like a standard reset. Smart players may see through this, however.
 		to_chat(user, span_danger("[src] is remotely controlled! Your emag attempt has triggered a system reset instead!"))
 		log_silicon("EMAG: [key_name(user)] attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.")
-		add_event_to_buffer(user, src,  data ="attempted to emag an AI shell belonging to [key_name(src) ? key_name(src) : connected_ai]. The shell has been reset as a result.", log_key = "SILICON")
 		ResetModel()
 		return TRUE
 
@@ -376,7 +373,6 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 	set_connected_ai(null)
 	message_admins("[ADMIN_LOOKUPFLW(user)] emagged cyborg [ADMIN_LOOKUPFLW(src)].  Laws overridden.")
 	log_silicon("EMAG: [key_name(user)] emagged cyborg [key_name(src)]. Laws overridden.")
-	add_event_to_buffer(user, src,  data ="emagged cyborg [key_name(src)]. Laws overridden.", log_key = "SILICON")
 	var/time = time2text(world.realtime,"hh:mm:ss")
 	if(user)
 		GLOB.lawchanges.Add("[time] <B>:</B> [user.name]([user.key]) emagged [name]([key])")

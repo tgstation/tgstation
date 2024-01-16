@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - bugfix: "Ghost players now have their quirks and actual name applied to them, including their ID."
