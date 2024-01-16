@@ -236,8 +236,11 @@
 			continue
 		var/datum/antagonist/lunatic/lunatic = crewmate.mind.add_antag_datum(/datum/antagonist/lunatic)
 		lunatic.set_master(user.mind, user)
-		var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
-		crewmate.put_in_active_hand(moon_amulette)
+		if(crewmate.get_active_held_item())
+			new /obj/item/clothing/neck/heretic_focus/moon_amulette(crewmate_turf)
+		else
+			var/obj/item/clothing/neck/heretic_focus/moon_amulette/moon_amulette = new
+			crewmate.put_in_active_hand(moon_amulette)
 		crewmate.emote("laugh")
 		amount_of_lunatics += 1
 
