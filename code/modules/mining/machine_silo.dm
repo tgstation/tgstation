@@ -104,7 +104,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 			"ref" = REF(remote),
 			"icon" = icon2base64(parent_icon),
 			"name" = parent.name,
-			"onHold" = !!holds[remote],
+			"onHold" = holds[remote] ? TRUE : FALSE,
 			"location" = get_area_name(parent, TRUE)
 		)
 		LAZYADD(connected_data, list(remote_data))
@@ -136,10 +136,12 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 			var/datum/component/remote_materials/remote = locate(params["ref"]) in ore_connected_machines
 			remote?.disconnect_from(src)
 			return TRUE
+
 		if("hold")
 			var/datum/component/remote_materials/remote = locate(params["ref"]) in ore_connected_machines
 			remote?.toggle_holding()
 			return TRUE
+
 		if("eject")
 			var/datum/material/ejecting = locate(params["ref"])
 			var/amount = text2num(params["amount"])
