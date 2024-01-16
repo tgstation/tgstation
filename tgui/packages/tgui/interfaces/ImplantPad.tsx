@@ -1,7 +1,8 @@
 import { BooleanLike } from '../../common/react';
 import { useBackend } from '../backend';
-import { Button, Divider, Flex } from '../components';
+import { Box, Button, Divider, Flex } from '../components';
 import { Window } from '../layouts';
+import { sanitizeText } from '../sanitize';
 
 type Data = {
   has_case: BooleanLike;
@@ -12,31 +13,40 @@ type Data = {
 export const ImplantPad = (props) => {
   const { act, data } = useBackend<Data>();
   const { has_case, has_implant, case_information } = data;
+  const textHtml = {
+    __html: sanitizeText(case_information),
+  };
   return (
-    <Window width={300} height={200}>
+    <Window width={300} height={case_information ? 300 : 200}>
       <Window.Content scrollable>
-        <Flex>
+        <Flex bold>
           <Flex.Item grow color="good" align="center">
             Implant Mini-Computer
           </Flex.Item>
           <Flex.Item>
             <Button
               icon="eject"
-              content="Eject Implant"
               disabled={!has_case}
               onClick={() => act('eject_implant')}
-            />
+            >
+              Eject Case
+            </Button>
           </Flex.Item>
         </Flex>
         <Divider />
-        <Flex bold>
+        <Flex>
           <Flex.Item>
             {!has_case &&
               'No implant case detected. Please insert one to see its contents.'}
             {!!has_case &&
               !has_implant &&
               'Implant case does not have an implant. Please insert one to continue.'}
-            {!!has_case && !!has_implant && case_information}
+            {!!has_case && !!has_implant && (
+              <Box
+                style={{ whiteSpace: 'pre-line' }}
+                dangerouslySetInnerHTML={textHtml}
+              />
+            )}
           </Flex.Item>
         </Flex>
       </Window.Content>

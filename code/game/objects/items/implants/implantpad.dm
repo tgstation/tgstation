@@ -78,11 +78,12 @@
 ///Removes the implant from the pad and puts it in the user's hands if possible.
 /obj/item/implantpad/proc/remove_implant(mob/user)
 	if(!inserted_case)
-		user.balloon_alert(user, "no implant inside!")
+		user.balloon_alert(user, "no case inside!")
 		return FALSE
 	add_fingerprint(user)
 	inserted_case.add_fingerprint(user)
 	user.put_in_hands(inserted_case)
+	user.balloon_alert(user, "case removed")
 	update_appearance(UPDATE_ICON)
 	update_static_data_for_all_viewers()
 	return TRUE
