@@ -245,3 +245,18 @@
   - bugfix: changed pipes from hiddin layer to visible layer
   - bugfix: changed pipes from /purple to purple/visible (Delta)
   - bugfix: made multilayer manifold visible (ICE/Meta)
+2024-01-16:
+  DexeeXI:
+  - rscadd: Cryo signs
+  - bugfix: other sign fixed
+  Iamgoofball:
+  - balance: Light Footed now makes stepping on glass Knockdown instead of Paralyze
+  - code_imp: Fixes some single letter variable usage in caltrop.dm
+  NicoDeLuna:
+  - rscadd: ' Constable Uniform in Security Wardrobe'
+  san7890, thegrb93, whataboutism-alos:
+  - bugfix: Carbons with tails (felinids, lizards) who have that tail removed will
+      now have that tail actually look like it came from the person in question, rather
+      than just be a grey thing of sadness.
+  - bugfix: Lizard tail wagging graphics
+  - rscadd: Sprited and implemented a short lizard tail
