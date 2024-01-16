@@ -1,4 +1,0 @@
-author: "Hatterhat"
-delete-after: True
-changes:
-  - bugfix: "Moodlets with parameters/effects e.g. limb reattachment moodlets should probably disappear more appropriately."

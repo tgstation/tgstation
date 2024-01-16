@@ -1,0 +1,10 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - qol: "adds more examines, screentips & balloon alerts for cryo actions, cryo can be pried open with a crowbar when there is no power to free someone trapped inside"
+  - qol: "cryo auto turns on immediately without a 2 second delay & without needing auto eject mode on"
+  - bugfix: "ejecting beaker from cryotube will put it in the players hand & not drop it on the floor"
+  - bugfix: "mobs & other stuff now render on top of cryo tubes and not bottom of it"
+  - bugfix: "cryo checks for if the mob is on the same turf as cryo is now fixed, i.e. you can no longer close the machine on yourself"
+  - code_imp: "removed unused vars from cryo, autodocs vars, removed unused `transfer_amounts` from some chem machinery ui"
+  - refactor: "removed unused icon states for cryo tube, cryo no longer processes round start and it's UI is now typescript"
