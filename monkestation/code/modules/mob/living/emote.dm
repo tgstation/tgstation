@@ -177,7 +177,6 @@
 		return FALSE
 
 /datum/emote/living/weh/can_run_emote(mob/user, status_check, intentional)
-	. = ..()
 	if(islizard(user))
 		return TRUE
 	else
