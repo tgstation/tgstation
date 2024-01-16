@@ -4,9 +4,9 @@
 #define CONE_REAGENET_NEEDED 1
 
 ///The vat is set to dispense ice cream.
-#define VAT_MODE_ICECREAM "cones"
+#define VAT_MODE_ICECREAM "ice cream"
 ///The vat is set to dispense cones.
-#define VAT_MODE_CONES "ice cream"
+#define VAT_MODE_CONES "cones"
 
 /obj/machinery/icecream_vat
 	name = "ice cream vat"
@@ -77,7 +77,7 @@
 
 	RegisterSignal(src, COMSIG_ATOM_REAGENT_EXAMINE, PROC_REF(allow_reagent_scan))
 
-	create_reagents(300, NO_REACT|OPENCONTAINER)
+	create_reagents(300, NO_REACT|TRANSPARENT)
 	reagents.chem_temp = T0C //So ice doesn't melt
 	register_context()
 
@@ -92,7 +92,10 @@
 
 /obj/machinery/icecream_vat/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	if(held_item)
-		if(istype(held_item, /obj/item/food/icecream))
+		if(is_reagent_container(held_item))
+			context[SCREENTIP_CONTEXT_LMB] = "Insert beaker"
+			context[SCREENTIP_CONTEXT_RMB] = "Transfer beaker reagents"
+		else if(istype(held_item, /obj/item/food/icecream))
 			context[SCREENTIP_CONTEXT_LMB] = "Take scoop of [selected_flavour] ice cream"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -112,18 +115,17 @@
 	if(!beaker || !istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
 		return
 
-	var/added_reagents = FALSE
-	for(var/datum/reagent/beaker_reagents in beaker.reagents.reagent_list)
-		if(beaker_reagents.type in icecream_vat_reagents)
-			added_reagents = TRUE
-			beaker.reagents.trans_to(src, beaker_reagents.volume, target_id = beaker_reagents.type)
-
-	if(added_reagents)
-		update_appearance()
-		balloon_alert(user, "refilling reagents")
-		playsound(src, 'sound/items/drink.ogg', 25, TRUE)
-	else
-		balloon_alert(user, "no reagents to transfer!")
+	if(custom_ice_cream_beaker)
+		if(beaker.forceMove(src))
+			try_put_in_hand(custom_ice_cream_beaker, user)
+			balloon_alert(user, "beakers swapped")
+			custom_ice_cream_beaker = beaker
+		else
+			balloon_alert(user, "beaker slot full!")
+		return
+	if(beaker.forceMove(src))
+		balloon_alert(user, "beaker inserted")
+		custom_ice_cream_beaker = beaker
 
 /obj/machinery/icecream_vat/attackby_secondary(obj/item/reagent_containers/beaker, mob/user, params)
 	. = ..()
@@ -131,9 +133,17 @@
 		return
 	if(!beaker || !istype(beaker) || !beaker.reagents || (beaker.item_flags & ABSTRACT) || !beaker.is_open_container())
 		return SECONDARY_ATTACK_CONTINUE_CHAIN
-	if(beaker.forceMove(src))
-		balloon_alert(user, "beaker inserted")
-		custom_ice_cream_beaker = beaker
+	var/added_reagents = FALSE
+	for(var/datum/reagent/beaker_reagents in beaker.reagents.reagent_list)
+		if(beaker_reagents.type in icecream_vat_reagents)
+			added_reagents = TRUE
+			beaker.reagents.trans_to(src, beaker_reagents.volume, target_id = beaker_reagents.type)
+
+	if(added_reagents)
+		balloon_alert(user, "refilling reagents")
+		playsound(src, 'sound/items/drink.ogg', 25, TRUE)
+	else
+		balloon_alert(user, "no reagents to transfer!")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/icecream_vat/attack_hand_secondary(mob/user, list/modifiers)
@@ -206,6 +216,8 @@
 /obj/machinery/icecream_vat/deconstruct(disassembled = TRUE)
 	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 4)
+	if(custom_ice_cream_beaker)
+		custom_ice_cream_beaker.forceMove(loc)
 	qdel(src)
 
 ///Makes an ice cream cone of the make_type, using ingredients list as reagents used to make it. Puts in user's hand if possible.
@@ -235,7 +247,8 @@
 			balloon_alert(user, "not enough ingredients!")
 			return
 
-	if(flavor.add_flavour(source))
+	var/should_use_custom_ingredients = (flavor.takes_custom_ingredients && custom_ice_cream_beaker && custom_ice_cream_beaker.reagents.total_volume)
+	if(flavor.add_flavour(source, should_use_custom_ingredients ? custom_ice_cream_beaker.reagents : null))
 		for(var/reagents_used in flavor.ingredients)
 			reagents.remove_reagent(reagents_used, CONE_REAGENET_NEEDED)
 		balloon_alert_to_viewers("scoops [selected_flavour]", "scoops [selected_flavour]")
