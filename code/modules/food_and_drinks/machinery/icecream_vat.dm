@@ -1,5 +1,3 @@
-///How many units of each reagent should be added to the icecream vat on Initialize.
-#define PREFILL_AMOUNT 5
 ///How many units of a reagent is needed to make a cone.
 #define CONE_REAGENET_NEEDED 1
 
@@ -273,4 +271,3 @@
 #undef VAT_MODE_ICECREAM
 #undef VAT_MODE_CONES
 #undef CONE_REAGENET_NEEDED
-#undef PREFILL_AMOUNT
