@@ -9,7 +9,6 @@
 	var/obj/item/stock_parts/cell/charging = null
 	var/charge_rate = 250
 
-/* OVERWRITTEN IN modular_skyrat\modules\aesthetics\cells\cell.dm
 /obj/machinery/cell_charger/update_overlays()
 	. = ..()
 
@@ -25,7 +24,6 @@
 	. += "ccharger-[charging.connector_type]-on"
 	if((charging.charge > 0.01) && charging.charge_light_type)
 		. += mutable_appearance('icons/obj/power.dmi', "cell-[charging.charge_light_type]-o[(charging.percent() >= 99.5) ? 2 : 1]")
-*/
 
 /obj/machinery/cell_charger/examine(mob/user)
 	. = ..()
@@ -141,6 +139,7 @@
 /obj/machinery/cell_charger/process(seconds_per_tick)
 	if(!charging || !anchored || (machine_stat & (BROKEN|NOPOWER)))
 		return
+
 	if(charging.percent() >= 100)
 		return
 

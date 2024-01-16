@@ -51,11 +51,44 @@
 	create_reagents(5, INJECTABLE | DRAINABLE)
 	if (override_maxcharge)
 		maxcharge = override_maxcharge
+	rating = max(round(maxcharge / 10000, 1), 1)
+	if(!charge)
+		charge = maxcharge
+	if(empty)
+		charge = 0
+	if(ratingdesc && !microfusion_readout) //monkestation edit: adds the microfusion_readout check
+		desc += " This one has a rating of [display_energy(maxcharge)][prob(10) ? ", and you should not swallow it" : ""]." //joke works better if it's not on every cell
+	update_appearance()
+
+	RegisterSignal(src, COMSIG_ITEM_MAGICALLY_CHARGED, PROC_REF(on_magic_charge))
+	var/static/list/loc_connections = list(
+		COMSIG_ITEM_MAGICALLY_CHARGED = PROC_REF(on_magic_charge),
+	)
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/**
+ * Signal proc for [COMSIG_ITEM_MAGICALLY_CHARGED]
+ *
+ * If we, or the item we're located in, is subject to the charge spell, gain some charge back
+ */
+/obj/item/stock_parts/cell/proc/on_magic_charge(datum/source, datum/action/cooldown/spell/charge/spell, mob/living/caster)
+	SIGNAL_HANDLER
+
+	// This shouldn't be running if we're not being held by a mob,
+	// or if we're not within an object being held by a mob, but just in case...
+	if(!ismovable(loc))
+		return
+
+	. = COMPONENT_ITEM_CHARGED
+
+	if(prob(80))
+		maxcharge -= 200
+
+	if(maxcharge <= 1) // Div by 0 protection
+		maxcharge = 1
+		. |= COMPONENT_ITEM_BURNT_OUT
+
 	charge = maxcharge
-	/* MONKESTATION EDIT REMOVAL
-	if(ratingdesc)
-		desc += " This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
-	*/ // MONKESTATION EDIT END
 	update_appearance()
 
 	// Guns need to process their chamber when we've been charged
@@ -86,7 +119,20 @@
 		. += mutable_appearance('icons/obj/power.dmi', "grown_wires")
 	if((charge < 0.01) || !charge_light_type)
 		return
-	. += mutable_appearance(charge_overlay_icon, "cell-o[((charge / maxcharge) >= 0.995) ? 2 : 1]") //MONKESTATION EDIT CHANGE
+	. += mutable_appearance('icons/obj/power.dmi', "cell-[charge_light_type]-o[(percent() >= 99.5) ? 2 : 1]")
+
+/obj/item/stock_parts/cell/vv_edit_var(vname, vval)
+	if(vname == NAMEOF(src, charge))
+		charge = clamp(vval, 0, maxcharge)
+		return TRUE
+	if(vname == NAMEOF(src, maxcharge))
+		if(charge > vval)
+			charge = vval
+	if(vname == NAMEOF(src, corrupted) && vval && !corrupted)
+		corrupt(TRUE)
+		return TRUE
+	return ..()
+
 
 /obj/item/stock_parts/cell/proc/percent() // return % charge of cell
 	return 100 * charge / maxcharge
@@ -116,10 +162,6 @@
 
 /obj/item/stock_parts/cell/examine(mob/user)
 	. = ..()
-	// MONKESTATION EDIT ADDITION
-	if(ratingdesc && !microfusion_readout)
-		. += "This one has a rating of [display_energy(maxcharge)], and you should not swallow it."
-	// MONKESTATION EDIT END
 	if(rigged)
 		. += span_danger("This power cell seems to be faulty!")
 	// MONKESTATION EDIT ADDITION

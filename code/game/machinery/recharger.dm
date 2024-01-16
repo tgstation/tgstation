@@ -13,12 +13,12 @@
 	var/finished_recharging = FALSE
 
 	var/static/list/allowed_devices = typecacheof(list(
-		/obj/item/stock_parts/cell/microfusion, //MONKESTATION EDIT ADDITION
-		/obj/item/gun/microfusion, // MONKESTATION EDIT ADDITION
 		/obj/item/gun/energy,
+		/obj/item/gun/microfusion, //monkestation edit
 		/obj/item/melee/baton/security,
 		/obj/item/ammo_box/magazine/recharge,
 		/obj/item/modular_computer,
+		/obj/item/stock_parts/cell/microfusion, //monkestation edit
 	))
 
 /obj/machinery/recharger/RefreshParts()

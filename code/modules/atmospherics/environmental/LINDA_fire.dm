@@ -156,7 +156,7 @@
 			volume += cached_results[reaction] * FIRE_GROWTH_RATE
 		temperature = reference.temperature
 
-	location.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP) //MONKESTATION EDIT ADDITION
+	location.pollute_turf_list(list(/datum/pollutant/smoke = 15, /datum/pollutant/carbon_air_pollution = 5), POLLUTION_ACTIVE_EMITTER_CAP) //SKYRAT EDIT ADDITION
 
 	// Handles the burning of atoms.
 	if(cold_fire)

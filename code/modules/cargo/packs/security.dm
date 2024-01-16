@@ -3,6 +3,7 @@
 	access = ACCESS_SECURITY
 	crate_type = /obj/structure/closet/crate/secure/gear
 
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/ammo
 	name = "Ammo Crate"
 	desc = "Contains two boxes of beanbag shotgun shells, two boxes \
@@ -17,6 +18,7 @@
 					/obj/item/ammo_box/c38/iceblox,
 				)
 	crate_name = "ammo crate"
+*/ //MONKESTATION EDIT END
 
 /datum/supply_pack/security/armor
 	name = "Armor Crate"
@@ -57,6 +59,7 @@
 	contains = list(/obj/item/clothing/head/helmet/sec = 3)
 	crate_name = "helmet crate"
 
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/laser
 	name = "Lasers Crate"
 	desc = "Contains three lethal, high-energy laser guns."
@@ -64,6 +67,7 @@
 	access_view = ACCESS_ARMORY
 	contains = list(/obj/item/gun/energy/laser = 3)
 	crate_name = "laser crate"
+*/ //MONKESTATION EDIT END
 
 /datum/supply_pack/security/securitybarriers
 	name = "Security Barrier Grenades"
@@ -200,6 +204,7 @@
 	contains = list(/obj/item/storage/box/chemimp)
 	crate_name = "chemical implant crate"
 
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/armory/ballistic
 	name = "Combat Shotguns Crate"
 	desc = "For when the enemy absolutely needs to be replaced with lead. \
@@ -225,6 +230,7 @@
 	contains = list(/obj/item/gun/energy/e_gun = 2)
 	crate_name = "energy gun crate"
 	crate_type = /obj/structure/closet/crate/secure/plasma
+*/ //MONKESTATION EDIT END
 
 /datum/supply_pack/security/armory/exileimp
 	name = "Exile Implants Crate"
@@ -310,6 +316,7 @@
 				)
 	crate_name = "swat crate"
 
+/* //MONKESTATION EDIT START - CARGO ARMAMENTS
 /datum/supply_pack/security/armory/thermal
 	name = "Thermal Pistol Crate"
 	desc = "Contains a pair of holsters each with two experimental thermal pistols, \
@@ -317,3 +324,4 @@
 	cost = CARGO_CRATE_VALUE * 7
 	contains = list(/obj/item/storage/belt/holster/energy/thermal = 2)
 	crate_name = "thermal pistol crate"
+*/ //MONKESTATION EDIT END

@@ -286,6 +286,11 @@
 		if(order.applied_coupon)
 			say("Coupon refunded.")
 			order.applied_coupon.forceMove(get_turf(src))
+		//MONKESTATION EDIT START
+		if(istype(order, /datum/supply_order/armament))
+			var/datum/supply_order/armament/the_order = order
+			the_order.reimburse_armament()
+		//MONKESTATION EDIT END
 		SSshuttle.shopping_list -= order
 		. = TRUE
 		break
@@ -458,20 +463,27 @@
 			for(var/datum/supply_order/order in shopping_cart)
 				if(order.pack.name != order_name)
 					continue
-				if(SO.department_destination)
-					say("Only the department that ordered this item may cancel it.")
-					return
-				if(SO.applied_coupon)
-					say("Coupon refunded.")
-					SO.applied_coupon.forceMove(get_turf(src))
-				//MONKESTATION EDIT START
-				if(istype(SO, /datum/supply_order/armament))
-					var/datum/supply_order/armament/the_order = SO
-					the_order.reimburse_armament()
-				//MONKESTATION EDIT END
-				SSshuttle.shopping_list -= SO
-				. = TRUE
-				break
+				if(remove_item(list("id" = order.id)))
+					return TRUE
+
+			return TRUE
+		if("modify")
+			var/order_name = params["order_name"]
+
+			//clear out all orders with the above mentioned order_name name to make space for the new amount
+			var/list/shopping_cart = SSshuttle.shopping_list.Copy() //we operate on the list copy else we would get runtimes when removing & iterating over the same SSshuttle.shopping_list
+			for(var/datum/supply_order/order in shopping_cart) //find corresponding order id for the order name
+				if(order.pack.name == order_name)
+					remove_item(list("id" = "[order.id]"))
+
+			//now add the new amount stuff
+			var/amount = text2num(params["amount"])
+			if(amount == 0)
+				return TRUE
+			var/supply_pack_id = name_to_id(order_name) //map order name to supply pack id for adding
+			if(!supply_pack_id)
+				return
+			return add_item(list("id" = supply_pack_id, "amount" = amount, "account_to_charge" = cargo_account))
 		if("clear")
 			//create copy of list else we will get runtimes when iterating & removing items on the same list SSshuttle.shopping_list
 			var/list/shopping_cart = SSshuttle.shopping_list.Copy()
