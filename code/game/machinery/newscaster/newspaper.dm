@@ -27,8 +27,11 @@
 	///The page with something scribbled on it, can only have one at a time.
 	var/scribble_page
 
-	///List of information related to a wanted issue, if one existed at the time of creation.
-	var/list/wanted_information
+	///Stored information of the wanted criminal's name, if one existed at the time of creation.
+	var/saved_wanted_criminal
+	///Stored information of the wanted criminal's description, if one existed at the time of creation.
+	var/saved_wanted_body
+	///Stored icon of the wanted criminal, if one existed at the time of creation.
 	var/icon/saved_wanted_icon
 
 /obj/item/newspaper/Initialize(mapload)
@@ -39,12 +42,10 @@
 
 	if(!GLOB.news_network.wanted_issue.active)
 		return
+	saved_wanted_criminal = GLOB.news_network.wanted_issue.criminal
+	saved_wanted_body = GLOB.news_network.wanted_issue.body
 	if(GLOB.news_network.wanted_issue.img)
 		saved_wanted_icon = GLOB.news_network.wanted_issue.img
-	wanted_information = list(list(
-		"wanted_criminal" = GLOB.news_network.wanted_issue.criminal,
-		"wanted_body" = GLOB.news_network.wanted_issue.body,
-	))
 
 /obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(\
@@ -139,7 +140,11 @@
 	data["scribble_message"] = (scribble_page == current_page) ? scribble_text : null
 	if(saved_wanted_icon)
 		user << browse_rsc(saved_wanted_icon, "wanted_photo.png")
-		data["wanted_information"] += list(list("wanted_photo" = "wanted_photo.png"))
+	data["wanted_criminal"] = list(list(
+		"wanted_criminal" = saved_wanted_criminal,
+		"wanted_body" = saved_wanted_body,
+		"wanted_photo" = (saved_wanted_icon ? "wanted_photo.png" : null),
+	))
 	var/list/channel_data = list()
 	if(!current_page || (current_page == news_content.len + 1))
 		channel_data["channel_name"] = null
