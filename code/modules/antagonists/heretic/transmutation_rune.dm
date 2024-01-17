@@ -217,8 +217,9 @@
 	duration = 30 SECONDS
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -33
-	pixel_y = -32
+	pixel_x = -32
+	pixel_y = 16
+	pixel_z = -48
 	plane = GAME_PLANE
 	layer = SIGIL_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
