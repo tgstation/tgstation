@@ -61,7 +61,7 @@
 	/// Create Skulls ability
 	var/datum/action/cooldown/mob_cooldown/create_skull/create_skull
 	/// Charge Target Ability
-	var/datum/action/cooldown/mob_cooldown/chase_target/chase_target
+	var/datum/action/cooldown/mob_cooldown/charge_target/charge_target
 	/// Create Turrets Ability
 	var/datum/action/cooldown/mob_cooldown/create_turrets/create_turrets
 
@@ -69,15 +69,15 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
 	create_skull = new(src)
-	chase_target = new(src)
+	charge_target = new(src)
 	create_turrets = new(src)
 	create_skull.Grant(src)
-	chase_target.Grant(src)
+	charge_target.Grant(src)
 	create_turrets.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/Destroy()
 	create_skull = null
-	chase_target = null
+	charge_target = null
 	create_turrets = null
 	return ..()
 

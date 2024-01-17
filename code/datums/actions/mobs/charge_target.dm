@@ -14,7 +14,7 @@
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/charge_target/proc/charge(atom/target)
-	visible_message(span_warning("<b>[owner] charges!</b>"))
+	owner.visible_message(span_warning("<b>[owner] charges!</b>"))
 	owner.SpinAnimation(speed = 20, loops = 3, parallel = FALSE)
 	if(ishostile(owner))
 		var/mob/living/simple_animal/hostile/hostile_mob = owner

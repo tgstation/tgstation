@@ -162,7 +162,7 @@
 /datum/action/proc/IsAvailable(feedback = FALSE)
 	if(!owner)
 		return FALSE
-	if(check_flags & AB_TEMPORARY_DISABLE)
+	if(check_flags & AB_DISABLED)
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)

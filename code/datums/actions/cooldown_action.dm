@@ -195,13 +195,13 @@
 
 /// Re-enables this cooldown action
 /datum/action/cooldown/proc/enable()
-	check_flags &= ~AB_TEMPORARY_DISABLE
+	check_flags &= ~AB_DISABLED
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
 /// Disables this cooldown action
 /datum/action/cooldown/proc/disable()
-	check_flags |= AB_TEMPORARY_DISABLE
+	check_flags |= AB_DISABLED
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
