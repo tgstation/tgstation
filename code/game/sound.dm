@@ -416,4 +416,12 @@
 				soundin = pick('sound/effects/rocktap1.ogg', 'sound/effects/rocktap2.ogg', 'sound/effects/rocktap3.ogg')
 			if(SFX_SEAR)
 				soundin = 'sound/weapons/sear.ogg'
+			if(SFX_REEL)
+				soundin = pick(
+					'sound/items/reel1.ogg',
+					'sound/items/reel2.ogg',
+					'sound/items/reel3.ogg',
+					'sound/items/reel4.ogg',
+					'sound/items/reel5.ogg',
+				)
 	return soundin

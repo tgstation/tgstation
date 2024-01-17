@@ -1,0 +1,5 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Immobile shells no longer work regardless of anchor state if you put the circuit in while it's unanchored."
+  - bugfix: "Immobile shells properly propagate their on/off state after wrenching to inner modules."

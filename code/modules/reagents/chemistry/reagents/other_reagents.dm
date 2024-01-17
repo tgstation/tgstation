@@ -3019,7 +3019,7 @@
 	// When we exit the system we'll leave the moodlet based on the amount we had
 	var/duration_of_moodlet = current_cycle * 20 SECONDS
 	affected_mob.clear_mood_event(name)
-	affected_mob.add_mood_event(name, /datum/mood_event/love_reagent, 1, duration_of_moodlet)
+	affected_mob.add_mood_event(name, /datum/mood_event/love_reagent, duration_of_moodlet)
 
 /datum/reagent/love/overdose_process(mob/living/metabolizer, seconds_per_tick, times_fired)
 	. = ..()
@@ -3051,9 +3051,9 @@
 /datum/reagent/hauntium/on_mob_metabolize(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	to_chat(affected_mob, span_userdanger("You feel an evil presence inside you!"))
 	if(affected_mob.mob_biotypes & MOB_UNDEAD || HAS_MIND_TRAIT(affected_mob, TRAIT_MORBID))
-		affected_mob.add_mood_event("morbid_hauntium", /datum/mood_event/morbid_hauntium, 1, name) //8 minutes of slight mood buff if undead or morbid
+		affected_mob.add_mood_event("morbid_hauntium", /datum/mood_event/morbid_hauntium, name) //8 minutes of slight mood buff if undead or morbid
 	else
-		affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, 1, name) //8 minutes of mood debuff
+		affected_mob.add_mood_event("hauntium_spirits", /datum/mood_event/hauntium_spirits, name) //8 minutes of mood debuff
 
 /datum/reagent/hauntium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
 	. = ..()

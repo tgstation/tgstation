@@ -237,7 +237,7 @@
 /// Begins the act of making the given design the given number of items
 /// Does not check or use materials/power/etc
 /obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, mob/user, build_time_per_item, list/materials_per_item)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	busy = TRUE
 	icon_state = "autolathe_n"
@@ -248,7 +248,7 @@
 /// Callback for start_making, actually makes the item
 /// Called using timers started by start_making
 /obj/machinery/autolathe/proc/do_make_item(datum/design/design, list/materials_per_item, time_per_item, items_remaining)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
 		finalize_build()
@@ -295,7 +295,7 @@
 /// Resets the icon state and busy flag
 /// Called at the end of do_make_item's timer loop
 /obj/machinery/autolathe/proc/finalize_build()
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 	icon_state = initial(icon_state)
 	busy = FALSE
 	update_static_data_for_all_viewers()
