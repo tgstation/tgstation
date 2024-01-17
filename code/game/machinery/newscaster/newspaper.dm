@@ -36,6 +36,7 @@
 
 /obj/item/newspaper/Initialize(mapload)
 	. = ..()
+	register_context()
 	creation_time = GLOB.news_network.last_action
 	for(var/datum/feed_channel/iterated_feed_channel in GLOB.news_network.network_channels)
 		news_content += iterated_feed_channel
@@ -46,6 +47,15 @@
 	saved_wanted_body = GLOB.news_network.wanted_issue.body
 	if(GLOB.news_network.wanted_issue.img)
 		saved_wanted_icon = GLOB.news_network.wanted_issue.img
+
+/obj/item/newspaper/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	if(held_item)
+		if(istype(held_item, /obj/item/pen))
+			context[SCREENTIP_CONTEXT_LMB] = "Scribble"
+			return CONTEXTUAL_SCREENTIP_SET
+		if(held_item.get_temperature())
+			context[SCREENTIP_CONTEXT_LMB] = "Burn"
+			return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/newspaper/suicide_act(mob/living/user)
 	user.visible_message(span_suicide(\
