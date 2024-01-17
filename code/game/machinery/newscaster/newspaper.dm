@@ -125,7 +125,6 @@
 
 /obj/item/newspaper/ui_static_data(mob/user)
 	var/list/data = list()
-	data["wanted_information"] = wanted_information || null
 	data["channels"] = list()
 	for(var/datum/feed_channel/news_channels as anything in news_content)
 		data["channels"] += list(list(
@@ -140,7 +139,7 @@
 	data["scribble_message"] = (scribble_page == current_page) ? scribble_text : null
 	if(saved_wanted_icon)
 		user << browse_rsc(saved_wanted_icon, "wanted_photo.png")
-	data["wanted_criminal"] = list(list(
+	data["wanted_information"] = list(list(
 		"wanted_criminal" = saved_wanted_criminal,
 		"wanted_body" = saved_wanted_body,
 		"wanted_photo" = (saved_wanted_icon ? "wanted_photo.png" : null),
