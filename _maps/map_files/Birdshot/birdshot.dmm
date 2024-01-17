@@ -25274,7 +25274,7 @@
 	dir = 9
 	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/components/trinary/filter,
+/obj/machinery/atmospherics/components/trinary/filter/critical,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "jeg" = (
