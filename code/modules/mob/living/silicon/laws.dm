@@ -15,7 +15,6 @@
 	var/list/the_laws = laws.get_law_list(include_zeroth = TRUE)
 	var/lawtext = the_laws.Join(" ")
 	log_silicon("LAW: [key_name(src)] spawned with [lawtext]")
-	add_event_to_buffer(src, data = "spawned with [lawtext].", log_key = "SILICON")
 
 /mob/living/silicon/proc/deadchat_lawchange()
 	var/list/the_laws = laws.get_law_list(include_zeroth = TRUE)

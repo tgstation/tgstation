@@ -245,6 +245,23 @@
 			return !zebra || list_to_check[path]
 	return FALSE
 
+/**
+ * Checks for specific paths in a list, while returning the path found.
+ *
+ * Subpaths must come before parent paths if subtypes are to be considered.
+ *
+ * Arguments:
+ * - path_to_check: A typepath to check.
+ * - [list_to_check][/list]: A list of typepaths to check the path_to_check against.
+ */
+/proc/is_path_in_list_return_path(path_to_check, list/list_to_check)
+	if(!LAZYLEN(list_to_check) || !path_to_check)
+		return FALSE
+	for(var/path in list_to_check)
+		if(ispath(path_to_check, path))
+			return path
+	return FALSE
+
 ///Checks for specific types in specifically structured (Assoc "type" = TRUE|FALSE) lists ('typecaches')
 #define is_type_in_typecache(A, L) (A && length(L) && L[(ispath(A) ? A : A:type)])
 

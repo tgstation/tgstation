@@ -110,7 +110,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 		if(client_token_holder.event_tokens >= selected_event.token_cost)
 			client_token_holder.queued_token_event = selected_event
 			to_chat(src, "Your request has been sent.")
-			add_event_to_buffer(usr,  data = "has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).", log_key =  "META")
+			logger.Log(LOG_CATEGORY_META, "[usr] has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).")
 			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("TOKEN EVENT:")] <EM>[key_name(src)]</EM> \
 																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \
 																				[src] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).")]")

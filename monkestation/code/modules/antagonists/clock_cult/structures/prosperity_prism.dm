@@ -33,7 +33,7 @@
 			continue
 
 		possible_cultist.adjustToxLoss(-2.5 * seconds_per_tick, forced = TRUE)
-		possible_cultist.stamina.adjust(7.5 * seconds_per_tick)
+		possible_cultist.stamina.adjust(7.5 * seconds_per_tick, TRUE)
 		possible_cultist.adjustBruteLoss(-2.5 * seconds_per_tick)
 		possible_cultist.adjustFireLoss(-2.5 * seconds_per_tick)
 		possible_cultist.adjustOxyLoss(-2.5 * seconds_per_tick)

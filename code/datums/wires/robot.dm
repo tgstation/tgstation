@@ -43,7 +43,6 @@
 				if(new_ai && (new_ai != R.connected_ai))
 					R.set_connected_ai(new_ai)
 					log_silicon("[key_name(usr)] synced [key_name(R)] [R.connected_ai ? "from [key_name(R.connected_ai)]": ""] to [key_name(new_ai)]")
-					add_event_to_buffer(usr, R, "synced [key_name(R)] [R.connected_ai ? "from [key_name(R.connected_ai)]": ""] to [key_name(new_ai)]", "SILICON")
 					if(R.shell)
 						R.undeploy() //If this borg is an AI shell, disconnect the controlling AI and assign ti to a new AI
 						R.notify_ai(AI_NOTIFICATION_AI_SHELL)
@@ -54,32 +53,28 @@
 				R.builtInCamera.toggle_cam(usr, FALSE)
 				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
 				log_silicon("[key_name(usr)] toggled [key_name(R)]'s camera to [R.builtInCamera.status ? "on" : "off"] via pulse")
-				add_event_to_buffer(usr, R, "toggled [key_name(R)]'s camera to [R.builtInCamera.status ? "on" : "off"] via pulse", "SILICON")
 		if(WIRE_LAWSYNC) // Forces a law update if possible.
 			if(R.lawupdate)
 				R.visible_message(span_notice("[R] gently chimes."), span_notice("LawSync protocol engaged."))
 				log_silicon("[key_name(usr)] forcibly synced [key_name(R)]'s laws via pulse")
-				add_event_to_buffer(usr, R, "forcibly synced [key_name(R)]'s laws via pulse", "SILICON")
 				// TODO, log the laws they gained here
 				R.lawsync()
 				R.show_laws()
 		if(WIRE_LOCKDOWN)
 			R.SetLockdown(!R.lockcharge) // Toggle
 			log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)] via pulse")
-			add_event_to_buffer(usr, R, "[!R.lockcharge ? "locked down" : "released"] [key_name(R)] via pulse", "SILICON")
 
 		if(WIRE_RESET_MODEL)
 			if(R.has_model())
 				R.visible_message(span_notice("[R]'s model servos twitch."), span_notice("Your model display flickers."))
 
-/datum/wires/robot/on_cut(wire, mend)
+/datum/wires/robot/on_cut(wire, mend, source)
 	var/mob/living/silicon/robot/R = holder
 	switch(wire)
 		if(WIRE_AI) // Cut the AI wire to reset AI control.
 			if(!mend)
 				R.notify_ai(AI_NOTIFICATION_CYBORG_DISCONNECTED)
 				log_silicon("[key_name(usr)] cut AI wire on [key_name(R)][R.connected_ai ? " and disconnected from [key_name(R.connected_ai)]": ""]")
-				add_event_to_buffer(usr, R, "cut AI wire on [key_name(R)][R.connected_ai ? " and disconnected from [key_name(R.connected_ai)]": ""]", "SILICON")
 				if(R.shell)
 					R.undeploy()
 				R.set_connected_ai(null)
@@ -89,11 +84,9 @@
 				if(!R.emagged)
 					R.lawupdate = TRUE
 					log_silicon("[key_name(usr)] enabled [key_name(R)]'s lawsync via wire")
-					add_event_to_buffer(usr, R, "enabled [key_name(R)]'s lawsync via wire", "SILICON")
 			else if(!R.deployed) //AI shells must always have the same laws as the AI
 				R.lawupdate = FALSE
 				log_silicon("[key_name(usr)] disabled [key_name(R)]'s lawsync via wire")
-				add_event_to_buffer(usr, R, "disabled [key_name(R)]'s lawsync via wire", "SILICON")
 			R.logevent("Lawsync Module fault [mend ? "cleared" : "detected"]")
 		if (WIRE_CAMERA) // Disable the camera.
 			if(!QDELETED(R.builtInCamera) && !R.scrambledcodes)
@@ -102,17 +95,14 @@
 				R.visible_message(span_notice("[R]'s camera lens focuses loudly."), span_notice("Your camera lens focuses loudly."))
 				R.logevent("Camera Module fault [mend?"cleared":"detected"]")
 				log_silicon("[key_name(usr)] [mend ? "enabled" : "disabled"] [key_name(R)]'s camera via wire")
-				add_event_to_buffer(usr, R, "[mend ? "enabled" : "disabled"] [key_name(R)]'s camera via wire", "SILICON")
 		if(WIRE_LOCKDOWN) // Simple lockdown.
 			R.SetLockdown(!mend)
 			R.logevent("Motor Controller fault [mend?"cleared":"detected"]")
 			log_silicon("[key_name(usr)] [!R.lockcharge ? "locked down" : "released"] [key_name(R)] via wire")
-			add_event_to_buffer(usr, R, "[!R.lockcharge ? "locked down" : "released"] [key_name(R)] via wire", "SILICON")
 		if(WIRE_RESET_MODEL)
 			if(R.has_model() && !mend)
 				R.ResetModel()
 				log_silicon("[key_name(usr)] reset [key_name(R)]'s module via wire")
-				add_event_to_buffer(usr, R, "reset [key_name(R)]'s module via wire", "SILICON")
 
 /datum/wires/robot/can_reveal_wires(mob/user)
 	if(HAS_TRAIT(user, TRAIT_KNOW_CYBORG_WIRES))

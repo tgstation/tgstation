@@ -40,6 +40,7 @@
 /// Associative List datatype. Derivative of list.
 #define PORT_TYPE_ASSOC_LIST(key_datatype, datatype) SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_ASSOC_LIST, key_datatype, datatype)
 
+
 // Other datatypes
 /// Atom datatype
 #define PORT_TYPE_ATOM "entity"
@@ -131,3 +132,7 @@
 #define DATATYPE_FLAG_ALLOW_ATOM_INPUT (1<<2)
 /// The datatype has been generated and is an existing composite datatype
 #define DATATYPE_FLAG_COMPOSITE (1<<3)
+
+
+#define PORT_COMPOSITE_TYPE_CHEMICAL "chemical list"
+#define PORT_TYPE_CHEMICAL_LIST SSwiremod_composite.composite_datatype(PORT_COMPOSITE_TYPE_CHEMICAL, PORT_TYPE_DATUM, PORT_TYPE_NUMBER)

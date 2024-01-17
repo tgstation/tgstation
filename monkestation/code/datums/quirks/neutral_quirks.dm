@@ -83,3 +83,20 @@
 /datum/quirk/clown_disbelief/proc/disable(datum/source)
 	for(var/image/image as anything in GLOB.hidden_image_holders["clown"])
 		quirk_holder.client.images -= image
+
+
+//DRG style callouts
+//Useful mainly for Shaft Miners, but can be taken by anyone.
+/datum/quirk/drg_callout
+	name = "Miner Training"
+	desc = "You arrive with a strange skillchip that teaches you how to reflexively call out mining-related entities you point at."
+	mob_trait = TRAIT_MINING_CALLOUTS
+	value = 0
+	icon = "bullhorn"
+	quirk_flags = QUIRK_HIDE_FROM_SCAN
+
+/datum/quirk/drg_callout/add(client/client_source)
+	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/obj/item/skillchip/drg_callout/skillchip = new
+	human_holder.implant_skillchip(skillchip)
+	skillchip.try_activate_skillchip()

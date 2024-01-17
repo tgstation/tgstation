@@ -23,7 +23,7 @@
 	if(mule.bot_cover_flags & BOT_COVER_OPEN)
 		return TRUE
 
-/datum/wires/mulebot/on_cut(wire, mend)
+/datum/wires/mulebot/on_cut(wire, mend, source)
 	var/mob/living/simple_animal/bot/mulebot/mule = holder
 	switch(wire)
 		if(WIRE_MOTOR1, WIRE_MOTOR2)
@@ -38,6 +38,9 @@
 				mule.set_varspeed(AVERAGE_MOTOR_SPEED)
 			else
 				mule.set_varspeed(SLOW_MOTOR_SPEED)
+		if(WIRE_AVOIDANCE)
+			if (!isnull(source))
+				log_combat(source, mule, "[is_cut(WIRE_AVOIDANCE) ? "cut" : "mended"] the MULE safety wire of")
 
 /datum/wires/mulebot/on_pulse(wire)
 	var/mob/living/simple_animal/bot/mulebot/mule = holder

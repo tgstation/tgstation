@@ -342,7 +342,7 @@ GLOBAL_VAR_INIT(dynamic_forced_threat_level, -1)
 	if(length(SScommunications.command_report_footnotes))
 		. += generate_report_footnote()
 
-	print_command_report(., "Central Command Status Summary", announce=FALSE)
+	print_command_report(., "[command_name()] Status Summary", announce=FALSE)
 	if(greenshift)
 		priority_announce("Thanks to the tireless efforts of our security and intelligence divisions, there are currently no credible threats to [station_name()]. All station construction projects have been authorized. Have a secure shift!", "Security Report", SSstation.announcer.get_rand_report_sound())
 	else

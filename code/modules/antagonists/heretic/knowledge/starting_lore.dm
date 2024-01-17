@@ -250,12 +250,20 @@ GLOBAL_LIST_INIT(heretic_start_knowledge, initialize_starting_knowledge())
 	if(!.)
 		return FALSE
 
-	for(var/mob/living/body in atoms)
-		if(body.stat != DEAD)
-			continue
+	// monke edit start: fix for codex cicatrix ritual
+	var/static/list/non_body_items = typecacheof(list(/obj/item/stack/sheet/leather, /obj/item/stack/sheet/animalhide))
 
-		selected_atoms += body
-		return TRUE
+	for(var/thingy in atoms)
+		if(is_type_in_typecache(thingy, non_body_items))
+			selected_atoms += thingy
+			return TRUE
+		else if(isliving(thingy))
+			var/mob/living/body = thingy
+			if(body.stat != DEAD)
+				continue
+			selected_atoms += body
+			return TRUE
+	// monke end
 	return FALSE
 
 /datum/heretic_knowledge/codex_cicatrix/cleanup_atoms(list/selected_atoms)

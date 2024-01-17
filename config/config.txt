@@ -3,6 +3,7 @@
 $include game_options.txt
 $include dbconfig.txt
 $include comms.txt
+$include logging.txt
 $include resources.txt
 $include interviews.txt
 $include lua.txt
@@ -79,106 +80,6 @@ ENABLE_LOCALHOST_RANK
 #USE_LOW_LIVING_HOUR_INTERN
 ## If USE_LOW_LIVING_HOUR_INTERN is unhashed, players under this number of living hours have [Intern] added to their ID card. If this isn't set, uses USE_EXP_RESTRICTIONS_HEADS_HOURS instead. If that isn't set, it finally defaults to a hardcoded fallback of 15 hours.
 #USE_LOW_LIVING_HOUR_INTERN_HOURS 50
-
-## log OOC channel
-LOG_OOC
-
-## log client Say
-LOG_SAY
-
-## log admin actions
-LOG_ADMIN
-
-## log admin chat
-LOG_ADMINCHAT
-
-## log asset debug logs
-#LOG_ASSET
-
-## log client access (logon/logoff)
-LOG_ACCESS
-
-## Enables log entries for logins that failed due to suspicious circumstances (banned player, CID randomiser, spoofed BYOND version, etc.) to a dedicated file.
-LOG_SUSPICIOUS_LOGIN
-
-## log game actions (start of round, results, etc.)
-LOG_GAME
-
-## log player votes
-LOG_VOTE
-
-## log manual target zone switching
-LOG_ZONE_SWITCH
-
-## log client Whisper
-LOG_WHISPER
-
-## log emotes
-LOG_EMOTE
-
-## log attack messages
-LOG_ATTACK
-
-## log pda messages
-LOG_PDA
-
-## log uplink purchases
-LOG_UPLINK
-
-## log telecomms messages
-LOG_TELECOMMS
-
-## log prayers
-LOG_PRAYER
-
-## Log Music requests
-LOG_INTERNET_REQUEST
-
-## log silicons
-LOG_SILICON
-
-## log economy actions
-LOG_ECON
-
-## log traitor objectives
-LOG_TRAITOR
-
-## log crew manifest to separate file
-LOG_MANIFEST
-
-## log job divide debugging information
-#LOG_JOB_DEBUG
-
-## log all world.Topic() calls
-LOG_WORLD_TOPIC
-
-## enables use of the proc twitterize() that lets you take a large list of strings and turn it into a JSON file of tweet sized strings.
-## As an example of how this could be """useful""" look towards Poly (https://twitter.com/Poly_the_Parrot)
-# LOG_TWITTER
-
-## Enable logging pictures
-LOG_PICTURES
-
-## log mecha actions
-# LOG_MECHA
-
-## log virus and actions
-LOG_VIRUS
-
-## log cloning actions
-LOG_CLONING
-
-## log shuttle actions
-LOG_SHUTTLE
-
-## log tool interactions [/atom/proc/tool_act]
-LOG_TOOLS
-
-## Log all timers on timer auto reset
-# LOG_TIMERS_ON_BUCKET_RESET
-
-## log speech indicators
-LOG_SPEECH_INDICATORS
 
 ##Log camera pictures - Must have picture logging enabled
 PICTURE_LOGGING_CAMERA

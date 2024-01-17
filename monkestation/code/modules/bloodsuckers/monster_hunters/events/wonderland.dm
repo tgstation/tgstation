@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 
 	affected_mob.AdjustAllImmobility(-60  * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(7 * REM * seconds_per_tick)
+	affected_mob.stamina.adjust(7 * REM * seconds_per_tick, TRUE)
 	..()
 	. = TRUE
 

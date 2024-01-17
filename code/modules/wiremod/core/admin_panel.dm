@@ -1,6 +1,6 @@
 /// An admin verb to view all circuits, plus useful information
 /datum/admins/proc/view_all_circuits()
-	set category = "Admin.Game"
+	set category = "Admin.Logging"
 	set name = "View All Circuits"
 
 	var/static/datum/circuit_admin_panel/circuit_admin_panel = new
