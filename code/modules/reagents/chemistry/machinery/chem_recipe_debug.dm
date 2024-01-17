@@ -127,25 +127,24 @@
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
-
 ///Retrives the target temperature to be imposed on the test reaction based on temp_mode
 /obj/machinery/chem_recipe_debug/proc/decode_target_temperature()
 	PRIVATE_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
 
-	. = null
-	var/actual_index = current_reaction_index || 1
-	switch(temp_mode)
-		if(USE_MINIMUM_TEMPERATURE)
-			var/datum/chemical_reaction/test_reaction = reactions_to_test[actual_index]
-			return test_reaction.is_cold_recipe ? test_reaction.required_temp - 1 : test_reaction.required_temp + 1
-		if(USE_OPTIMAL_TEMPERATURE)
-			var/datum/chemical_reaction/test_reaction = reactions_to_test[actual_index]
-			return test_reaction.optimal_temp
-		if(USE_OVERHEAT_TEMPERATURE)
-			var/datum/chemical_reaction/test_reaction = reactions_to_test[actual_index]
-			return test_reaction.overheat_temp
-		if(USE_USER_TEMPERATURE)
-			return forced_temp
+	if(temp_mode == USE_REACTION_TEMPERATURE)
+		return null //simply means don't alter the reaction temperature
+	else if(temp_mode == USE_USER_TEMPERATURE)
+		return forced_temp
+	else
+		var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index || 1]
+		switch(temp_mode)
+			if(USE_MINIMUM_TEMPERATURE)
+				return test_reaction.required_temp + (test_reaction.is_cold_recipe ? - 20 : 20) //20k is good enough offset to account for reaction rate rounding
+			if(USE_OPTIMAL_TEMPERATURE)
+				return test_reaction.optimal_temp
+			if(USE_OVERHEAT_TEMPERATURE)
+				return test_reaction.overheat_temp
 
 /**
  * Adjusts the temperature, ph & purity of the holder
@@ -481,9 +480,10 @@
 						var/list/reaction_names = list()
 						for(var/datum/chemical_reaction/reaction as anything in reactions_to_test)
 							if(!length(reaction.results))
-								continue
-							var/datum/reagent/result = reaction.results[1]
-							reaction_names += initial(result.name)
+								reaction_names += "[reaction]"
+							else
+								var/datum/reagent/result = reaction.results[1]
+								reaction_names += initial(result.name)
 						if(!reaction_names.len)
 							return
 
