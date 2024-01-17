@@ -68,6 +68,7 @@
 	name = "One Lean, Mean, Cleaning Machine"
 	desc = "How does it feel to know that your workplace values a mop bucket on wheels more than you?" // i can do better than this give me time
 	database_id = MEDAL_CLEANBOSS
+	icon = "cleanboss"
 
 /datum/award/achievement/misc/rule8
 	name = "Rule 8"
