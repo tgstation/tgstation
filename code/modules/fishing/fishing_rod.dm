@@ -118,9 +118,18 @@
 	if(currently_hooked.anchored || currently_hooked.move_resist >= MOVE_FORCE_STRONG)
 		balloon_alert(user, "[currently_hooked.p_they()] won't budge!")
 		return
-	// Should probably respect and used force move later
-	step_towards(currently_hooked, get_turf(src))
-	if(get_dist(currently_hooked,get_turf(src)) < 1)
+	//Try to move it 'till it's under the user's feet, then try to pick it up
+	if(isitem(currently_hooked))
+		step_towards(currently_hooked, get_turf(src))
+		if(currently_hooked.loc == user.loc)
+			user.put_in_inactive_hand(currently_hooked)
+			QDEL_NULL(fishing_line)
+	//Not an item, so just delete the line if it's adjacent to the user.
+	else if(get_dist(currently_hooked,get_turf(src)) > 1)
+		step_towards(currently_hooked, get_turf(src))
+		if(get_dist(currently_hooked,get_turf(src)) <= 1)
+			QDEL_NULL(fishing_line)
+	else
 		QDEL_NULL(fishing_line)
 
 /obj/item/fishing_rod/proc/fishing_line_check()
