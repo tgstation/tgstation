@@ -1,7 +1,3 @@
-#define NEWSPAPER_SCREEN_COVER 0
-#define NEWSPAPER_SCREEN_CHANNEL 1
-#define NEWSPAPER_SCREEN_END 2
-
 /**
  * Newspapers
  * A static version of the newscaster, that won't update as new stories are added.
@@ -24,17 +20,16 @@
 	var/list/datum/feed_channel/news_content = list()
 	///The time the newspaper was made in terms of newscaster's last action, used to tell the newspaper whether a story should be in it.
 	var/creation_time
-	///The screen in the newspaper currently being viewed.
-	var/current_screen = NEWSPAPER_SCREEN_COVER
-	///The page in the newspaper currently being read, used when the screen is on NEWSPAPER_SCREEN_CHANNEL.
+	///The page in the newspaper currently being read. 0 is the title screen while the last is the security screen.
 	var/current_page = 0
 	///The currently scribbled text written in scribble_page
-	var/scribble = ""
+	var/scribble_text
 	///The page with something scribbled on it, can only have one at a time.
-	var/scribble_page = null
+	var/scribble_page
 
 	///List of information related to a wanted issue, if one existed at the time of creation.
 	var/list/wanted_information
+	var/icon/saved_wanted_icon
 
 /obj/item/newspaper/Initialize(mapload)
 	. = ..()
@@ -44,37 +39,17 @@
 
 	if(!GLOB.news_network.wanted_issue.active)
 		return
-	wanted_information = list(
+	if(GLOB.news_network.wanted_issue.img)
+		saved_wanted_icon = GLOB.news_network.wanted_issue.img
+	wanted_information = list(list(
 		"wanted_criminal" = GLOB.news_network.wanted_issue.criminal,
 		"wanted_body" = GLOB.news_network.wanted_issue.body,
-		"wanted_photo" = GLOB.news_network.wanted_issue.img || null,
-	)
-
-/obj/item/newspaper/attackby(obj/item/attacking_item, mob/user, params)
-	if(burn_paper_product_attackby_check(attacking_item, user))
-		return
-
-	if(!istype(attacking_item, /obj/item/pen))
-		return ..()
-	if(!user.can_write(attacking_item))
-		return
-	if(scribble_page == current_page)
-		user.balloon_alert(user, "already scribbled!")
-		return
-	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something")
-	if(isnull(new_scribble_text))
-		return
-	add_fingerprint(user)
-	if(!do_after(user, 2 SECONDS, src))
-		return
-	user.balloon_alert(user, "scribbled!")
-	scribble_page = current_page
-	scribble = new_scribble_text
+	))
 
 /obj/item/newspaper/suicide_act(mob/living/user)
-	user.visible_message(span_suicide(
+	user.visible_message(span_suicide(\
 		"[user] is focusing intently on [src]! It looks like [user.p_theyre()] trying to commit sudoku... \
-		until [user.p_their()] eyes light up with realization!",
+		until [user.p_their()] eyes light up with realization!"\
 	))
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced = "newspaper suicide")
 	var/obj/item/reagent_containers/cup/glass/bottle/whiskey/last_drink = new(user.loc)
@@ -83,120 +58,115 @@
 	user.visible_message(span_suicide("[user] downs the contents of [last_drink.name] in one gulp! Shoulda stuck to sudoku!"))
 	return TOXLOSS
 
-/obj/item/newspaper/attack_self(mob/user)
-	if(!istype(user) || !user.can_read(src))
+/obj/item/newspaper/attackby(obj/item/attacking_item, mob/user, params)
+	if(burn_paper_product_attackby_check(attacking_item, user))
+		SStgui.close_uis(src)
 		return
-	var/dat
-	switch(current_screen)
-		if(NEWSPAPER_SCREEN_COVER)
-			dat+="<DIV ALIGN='center'><B><FONT SIZE=6>The Griffon</FONT></B></div>"
-			dat+="<DIV ALIGN='center'><FONT SIZE=2>Nanotrasen-standard newspaper, for use on Nanotrasen? Space Facilities</FONT></div><HR>"
-			if(!length(news_content))
-				if(!isnull(wanted_information))
-					dat+="Contents:<BR><ul><B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [news_content.len + 2]\]</FONT><BR></ul>"
-				else
-					dat+="<I>Other than the title, the rest of the newspaper is unprinted...</I>"
-			else
-				dat+="Contents:<BR><ul>"
-				if(!isnull(wanted_information))
-					dat+="<B><FONT COLOR='red'>**</FONT>Important Security Announcement<FONT COLOR='red'>**</FONT></B> <FONT SIZE=2>\[page [news_content.len + 2]\]</FONT><BR>"
-				var/temp_page=0
-				for(var/datum/feed_channel/NP in news_content)
-					temp_page++
-					dat+="<B>[NP.channel_name]</B> <FONT SIZE=2>\[page [temp_page+1]\]</FONT><BR>"
-				dat+="</ul>"
-			if(scribble_page == current_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-			dat+= "<HR><DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV> <div style='float:left;'><A href='?src=[REF(user)];mach_close=newspaper_main'>Done reading</A></DIV>"
-		if(NEWSPAPER_SCREEN_CHANNEL)
-			var/datum/feed_channel/C = news_content[current_page]
-			dat += "<FONT SIZE=4><B>[C.channel_name]</B></FONT><FONT SIZE=1> \[created by: <FONT COLOR='maroon'>[C.return_author(notContent(C.author_censor_time))]</FONT>\]</FONT><BR><BR>"
-			if(notContent(C.D_class_censor_time))
-				dat+="This channel was deemed dangerous to the general welfare of the station and therefore marked with a <B><FONT COLOR='red'>D-Notice</B></FONT>. Its contents were not transferred to the newspaper at the time of printing."
-			else
-				if(!length(C.messages))
-					dat+="No Feed stories stem from this channel..."
-				else
-					var/i = 0
-					for(var/datum/feed_message/MESSAGE in C.messages)
-						if(MESSAGE.creation_time > creation_time)
-							if(i == 0)
-								dat+="No Feed stories stem from this channel..."
-							break
-						if(i == 0)
-							dat+="<ul>"
-						i++
-						dat+="-[MESSAGE.return_body(notContent(MESSAGE.body_censor_time))] <BR>"
-						if(MESSAGE.img)
-							user << browse_rsc(MESSAGE.img, "tmp_photo[i].png")
-							dat+="<img src='tmp_photo[i].png' width = '180'><BR>"
-						dat+="<FONT SIZE=1>\[Story by <FONT COLOR='maroon'>[MESSAGE.return_author(notContent(MESSAGE.author_censor_time))]</FONT>\]</FONT><BR><BR>"
-					dat+="</ul>"
-			if(scribble_page == current_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-			dat+= "<BR><HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV> <DIV STYLE='float:right;'><A href='?src=[REF(src)];next_page=1'>Next Page</A></DIV>"
-		if(NEWSPAPER_SCREEN_END)
-			if(!isnull(wanted_information))
-				dat+="<DIV STYLE='float:center;'><FONT SIZE=4><B>Wanted Issue:</B></FONT SIZE></DIV><BR><BR>"
-				dat+="<B>Criminal name</B>: <FONT COLOR='maroon'>[wanted_information["wanted_criminal"]]</FONT><BR>"
-				dat+="<B>Description</B>: [wanted_information["wanted_body"]]<BR>"
-				dat+="<B>Photo:</B> "
-				if(wanted_information["wanted_photo"])
-					user << browse_rsc(wanted_information["wanted_photo"], "tmp_photow.png")
-					dat+="<BR><img src='tmp_photow.png' width = '180'>"
-				else
-					dat+="None"
-			else
-				dat+="<I>Apart from some uninteresting classified ads, there's nothing on this page...</I>"
-			if(scribble_page == current_page)
-				dat+="<BR><I>There is a small scribble near the end of this page... It reads: \"[scribble]\"</I>"
-			dat+= "<HR><DIV STYLE='float:left;'><A href='?src=[REF(src)];prev_page=1'>Previous Page</A></DIV>"
-	dat+="<BR><HR><div align='center'>[current_page+1]</div>"
-	user << browse(dat, "window=newspaper_main;size=300x400")
-	onclose(user, "newspaper_main")
 
-/obj/item/newspaper/proc/notContent(list/L)
-	if(!L.len)
+	if(!user.can_write(attacking_item))
+		return ..()
+	if(scribble_page == current_page)
+		user.balloon_alert(user, "already scribbled!")
+		return
+	var/new_scribble_text = tgui_input_text(user, "What do you want to scribble?", "Write something")
+	if(isnull(new_scribble_text))
+		return
+	add_fingerprint(user)
+	user.balloon_alert(user, "scribbling...")
+	if(!do_after(user, 2 SECONDS, src))
+		return
+	user.balloon_alert(user, "scribbled!")
+	scribble_page = current_page
+	scribble_text = new_scribble_text
+
+///Checks the creation time of the newspaper and compares it to list to see if the list is meant to be censored at the time of printing.
+/obj/item/newspaper/proc/censored_check(list/times_censored)
+	if(!times_censored.len)
 		return FALSE
-	for(var/i = L.len; i > 0; i--)
-		var/num = abs(L[i])
+	for(var/i = times_censored.len; i > 0; i--)
+		var/num = abs(times_censored[i])
 		if(creation_time <= num)
 			continue
 		else
-			if(L[i] > 0)
+			if(times_censored[i] > 0)
 				return TRUE
 			else
 				return FALSE
 	return FALSE
 
-/obj/item/newspaper/Topic(href, href_list)
-	var/mob/living/U = usr
-	. = ..()
-	if((src in U.contents) || (isturf(loc) && in_range(src, U)))
-		U.set_machine(src)
-		if(href_list["next_page"])
-			if(current_page == news_content.len + 1)
-				return //Don't need that at all, but anyway.
-			if(current_page == news_content.len) //We're at the middle, get to the end
-				current_screen = NEWSPAPER_SCREEN_END
-			else
-				if(current_page == 0) //We're at the start, get to the middle
-					current_screen = NEWSPAPER_SCREEN_CHANNEL
-			current_page++
-			playsound(loc, SFX_PAGE_TURN, 50, TRUE)
-		else if(href_list["prev_page"])
-			if(current_page == 0)
-				return
-			if(current_page == 1)
-				current_screen = NEWSPAPER_SCREEN_COVER
-			else
-				if(current_page == news_content.len + 1) //we're at the end, let's go back to the middle.
-					current_screen = NEWSPAPER_SCREEN_CHANNEL
-			current_page--
-			playsound(loc, SFX_PAGE_TURN, 50, TRUE)
-		if(ismob(loc))
-			attack_self(loc)
+/obj/item/newspaper/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Newspaper", name)
+		ui.open()
 
-#undef NEWSPAPER_SCREEN_END
-#undef NEWSPAPER_SCREEN_CHANNEL
-#undef NEWSPAPER_SCREEN_COVER
+/obj/item/newspaper/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+
+	switch(action)
+		if("next_page")
+			//We're at the very end, nowhere else to go.
+			if(current_page == news_content.len + 1)
+				return TRUE
+			current_page++
+		if("prev_page")
+			//We haven't started yet, nowhere else to go.
+			if(!current_page)
+				return TRUE
+			current_page--
+		else
+			return TRUE
+	SStgui.update_uis(src)
+	playsound(loc, SFX_PAGE_TURN, 50, TRUE)
+	return TRUE
+
+/obj/item/newspaper/ui_static_data(mob/user)
+	var/list/data = list()
+	data["wanted_information"] = wanted_information || null
+	data["channels"] = list()
+	for(var/datum/feed_channel/news_channels as anything in news_content)
+		data["channels"] += list(list(
+			"name" = news_channels.channel_name,
+			"page_number" = news_content.Find(news_channels),
+		))
+	return data
+
+/obj/item/newspaper/ui_data(mob/user)
+	var/list/data = list()
+	data["current_page"] = current_page
+	data["scribble_message"] = (scribble_page == current_page) ? scribble_text : null
+	if(saved_wanted_icon)
+		user << browse_rsc(saved_wanted_icon, "wanted_photo.png")
+		data["wanted_information"] += list(list("wanted_photo" = "wanted_photo.png"))
+	var/list/channel_data = list()
+	if(!current_page || (current_page == news_content.len + 1))
+		channel_data["channel_name"] = null
+		channel_data["author_name"] = null
+		channel_data["is_censored"] = null
+		channel_data["channel_messages"] = list()
+		data["channel_data"] = list(channel_data)
+		return data
+	var/datum/feed_channel/current_channel = news_content[current_page]
+	if(current_channel && istype(current_channel))
+		channel_data["channel_name"] = current_channel.channel_name
+		channel_data["author_name"] = current_channel.return_author(censored_check(current_channel.author_censor_time))
+		channel_data["is_censored"] = censored_check(current_channel.D_class_censor_time)
+		channel_data["channel_messages"] = list()
+		for(var/datum/feed_message/feed_messages as anything in current_channel.messages)
+			if(feed_messages.creation_time > creation_time)
+				data["channel_has_messages"] = FALSE
+				break
+			data["channel_has_messages"] = TRUE
+			var/has_image = FALSE
+			if(feed_messages.img)
+				has_image = TRUE
+				user << browse_rsc(feed_messages.img, "tmp_photo[feed_messages.message_ID].png")
+			channel_data["channel_messages"] += list(list(
+				"message" = "-[feed_messages.return_body(censored_check(feed_messages.body_censor_time))]",
+				"photo" = (has_image ? "tmp_photo[feed_messages.message_ID].png" : null),
+				"author" = feed_messages.return_author(censored_check(feed_messages.author_censor_time)),
+			))
+	data["channel_data"] = list(channel_data)
+	return data

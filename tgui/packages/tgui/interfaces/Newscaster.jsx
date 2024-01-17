@@ -514,7 +514,7 @@ const NewscasterChannelSelector = (props) => {
   );
 };
 
-const processedText = (value) => {
+export const processedText = (value) => {
   const textHtml = {
     __html: sanitizeText(
       marked(value, {
