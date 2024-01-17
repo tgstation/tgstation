@@ -1,4 +1,5 @@
 /datum/stock_market_event
+	/// The name of the event, used to describe it in the news.
 	var/name = "Stock Market Event!"
 	/// A list of company names to use for the event and the circumstance.
 	var/static/list/company_name = list(
@@ -55,6 +56,9 @@
 	SSstock_market.active_events -= src
 	qdel(src)
 
+/**
+ * This proc is called to create a news string for the event, which is passed along to SSstock_market to be appended to the automatic newscaster messages.
+ */
 /datum/stock_market_event/proc/create_news()
 	var/temp_company = pick(company_name)
 	var/temp_circumstance = pick(circumstance)
