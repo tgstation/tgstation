@@ -133,15 +133,16 @@
 	PRIVATE_PROC(TRUE)
 
 	. = null
+	var/actual_index = current_reaction_index || 1
 	switch(temp_mode)
 		if(USE_MINIMUM_TEMPERATURE)
-			var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index]
+			var/datum/chemical_reaction/test_reaction = reactions_to_test[actual_index]
 			return test_reaction.is_cold_recipe ? test_reaction.required_temp - 1 : test_reaction.required_temp + 1
 		if(USE_OPTIMAL_TEMPERATURE)
-			var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index]
+			var/datum/chemical_reaction/test_reaction = reactions_to_test[actual_index]
 			return test_reaction.optimal_temp
 		if(USE_OVERHEAT_TEMPERATURE)
-			var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index]
+			var/datum/chemical_reaction/test_reaction = reactions_to_test[actual_index]
 			return test_reaction.overheat_temp
 		if(USE_USER_TEMPERATURE)
 			return forced_temp
