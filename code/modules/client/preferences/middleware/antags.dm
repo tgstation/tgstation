@@ -108,7 +108,6 @@
 /datum/asset/spritesheet/antagonists
 	name = "antagonists"
 	early = TRUE
-	cross_round_cachable = TRUE
 
 	/// Mapping of spritesheet keys -> icons
 	var/list/antag_icons = list()

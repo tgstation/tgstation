@@ -22,7 +22,7 @@
 	src.secured_callback = secured_callback
 	src.unsecured_callback = unsecured_callback
 
-/datum/component/keep_me_secure/Destroy(force, silent)
+/datum/component/keep_me_secure/Destroy(force)
 	secured_callback = null
 	unsecured_callback = null
 	return ..()

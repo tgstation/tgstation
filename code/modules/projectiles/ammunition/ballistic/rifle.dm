@@ -60,7 +60,7 @@
 
 /obj/item/ammo_casing/rebar/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/caseless)
+	AddElement(/datum/element/caseless, TRUE)
 
 /obj/item/ammo_casing/rebar/update_icon_state()
 	. = ..()

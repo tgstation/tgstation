@@ -1,6 +1,18 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
-import { useLocalState } from '../../backend';
-import { Box, Button, FitText, Icon, Input, LabeledList, Modal, Section, Stack, TrackOutsideClicks } from '../../components';
+import { useState } from 'react';
+
+import {
+  Box,
+  Button,
+  FitText,
+  Icon,
+  Input,
+  LabeledList,
+  Modal,
+  Section,
+  Stack,
+  TrackOutsideClicks,
+} from '../../components';
 import { Name } from './data';
 import { ServerPreferencesFetcher } from './ServerPreferencesFetcher';
 
@@ -13,18 +25,15 @@ const binaryInsertName = binaryInsertWith<NameWithKey>(({ key }) => key);
 
 const sortNameWithKeyEntries = sortBy<[string, NameWithKey[]]>(([key]) => key);
 
-export const MultiNameInput = (
-  props: {
-    handleClose: () => void;
-    handleRandomizeName: (nameType: string) => void;
-    handleUpdateName: (nameType: string, value: string) => void;
-    names: Record<string, string>;
-  },
-  context
-) => {
-  const [currentlyEditingName, setCurrentlyEditingName] = useLocalState<
+export const MultiNameInput = (props: {
+  handleClose: () => void;
+  handleRandomizeName: (nameType: string) => void;
+  handleUpdateName: (nameType: string, value: string) => void;
+  names: Record<string, string>;
+}) => {
+  const [currentlyEditingName, setCurrentlyEditingName] = useState<
     string | null
-  >(context, 'currentlyEditingName', null);
+  >(null);
 
   return (
     <ServerPreferencesFetcher
@@ -41,16 +50,17 @@ export const MultiNameInput = (
             {
               key,
               name,
-            }
+            },
           );
         }
 
         return (
           <Modal
             style={{
-              'margin': '0 auto',
-              'width': '40%',
-            }}>
+              margin: '0 auto',
+              width: '40%',
+            }}
+          >
             <TrackOutsideClicks onOutsideClick={props.handleClose}>
               <Section
                 buttons={
@@ -58,7 +68,8 @@ export const MultiNameInput = (
                     Close
                   </Button>
                 }
-                title="Alternate names">
+                title="Alternate names"
+              >
                 <LabeledList>
                   {sortNameWithKeyEntries(Object.entries(namesIntoGroups)).map(
                     ([_, names], index, collection) => (
@@ -92,7 +103,8 @@ export const MultiNameInput = (
                                   setCurrentlyEditingName(key);
                                   event.cancelBubble = true;
                                   event.stopPropagation();
-                                }}>
+                                }}
+                              >
                                 <FitText maxFontSize={12} maxWidth={130}>
                                   {props.names[key]}
                                 </FitText>
@@ -103,7 +115,8 @@ export const MultiNameInput = (
                           return (
                             <LabeledList.Item
                               key={key}
-                              label={name.explanation}>
+                              label={name.explanation}
+                            >
                               <Stack fill>
                                 <Stack.Item grow>{content}</Stack.Item>
 
@@ -128,7 +141,7 @@ export const MultiNameInput = (
                           <LabeledList.Divider />
                         )}
                       </>
-                    )
+                    ),
                   )}
                 </LabeledList>
               </Section>
@@ -140,17 +153,14 @@ export const MultiNameInput = (
   );
 };
 
-export const NameInput = (
-  props: {
-    handleUpdateName: (name: string) => void;
-    name: string;
-    openMultiNameInput: () => void;
-  },
-  context
-) => {
-  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useLocalState<
-    string | null
-  >(context, 'lastNameBeforeEdit', null);
+export const NameInput = (props: {
+  handleUpdateName: (name: string) => void;
+  name: string;
+  openMultiNameInput: () => void;
+}) => {
+  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
+    null,
+  );
   const editing = lastNameBeforeEdit === props.name;
 
   const updateName = (e, value) => {
@@ -166,13 +176,14 @@ export const NameInput = (
       }}
       textAlign="center"
       width="100%"
-      height="28px">
+      height="28px"
+    >
       <Stack align="center" fill>
         <Stack.Item>
           <Icon
             style={{
-              'color': 'rgba(255, 255, 255, 0.5)',
-              'font-size': '17px',
+              color: 'rgba(255, 255, 255, 0.5)',
+              fontSize: '17px',
             }}
             name="edit"
           />
@@ -197,7 +208,7 @@ export const NameInput = (
 
           <Box
             style={{
-              'border-bottom': '2px dotted rgba(255, 255, 255, 0.8)',
+              borderBottom: '2px dotted rgba(255, 255, 255, 0.8)',
               right: '50%',
               transform: 'translateX(50%)',
               position: 'absolute',
@@ -231,13 +242,14 @@ export const NameInput = (
                     // Did you know that's against the W3C standard? :)
                     event.cancelBubble = true;
                     event.stopPropagation();
-                  }}>
+                  }}
+                >
                   <Icon
                     name="ellipsis-v"
                     style={{
-                      'position': 'relative',
-                      'left': '1px',
-                      'min-width': '0px',
+                      position: 'relative',
+                      left: '1px',
+                      minWidth: '0px',
                     }}
                   />
                 </Button>

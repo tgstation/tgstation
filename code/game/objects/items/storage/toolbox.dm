@@ -6,7 +6,7 @@
 	inhand_icon_state = "toolbox_default"
 	lefthand_file = 'icons/mob/inhands/equipment/toolbox_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/toolbox_righthand.dmi'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	force = 12
 	throwforce = 12
 	throw_speed = 2
@@ -416,7 +416,7 @@
 	dog_fashion = null
 
 /obj/item/storage/toolbox/guncase/doublesword
-	name = "double-energy sword weapon case"
+	name = "double-bladed energy sword weapon case"
 	weapon_to_spawn = /obj/item/dualsaber
 	extra_to_spawn = /obj/item/soap/syndie
 

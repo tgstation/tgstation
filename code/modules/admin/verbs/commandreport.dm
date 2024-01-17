@@ -30,7 +30,7 @@
 	if(!check_rights(R_ADMIN))
 		return
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Create Command Report") // If you are copy-pasting this, ensure the 4th parameter is unique to the new proc!
+	BLACKBOX_LOG_ADMIN_VERB("Create Command Report")
 	var/datum/command_report_menu/tgui = new(usr)
 	tgui.ui_interact(usr)
 

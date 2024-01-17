@@ -70,6 +70,11 @@
 	air_contents.gases[/datum/gas/oxygen][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
 	air_contents.gases[/datum/gas/nitrous_oxide][MOLES] = (3*ONE_ATMOSPHERE)*volume/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
 
+/obj/item/tank/internals/anesthetic/examine(mob/user)
+	. = ..()
+	. += span_notice("A warning is etched into [src]...")
+	. += span_warning("There is no process in the body that uses N2O, so patients will exhale the N2O... exposing you to it. Make sure to work in a well-ventilated space to avoid sleepy mishaps.")
+
 /*
  * Plasma
  */
@@ -80,7 +85,7 @@
 	inhand_icon_state = "plasma_tank"
 	worn_icon_state = "plasmatank"
 	tank_holder_icon_state = null
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = null //they have no straps!
 	force = 8
 
@@ -162,7 +167,7 @@
 	worn_icon_state = "emergency"
 	tank_holder_icon_state = "holder_emergency"
 	worn_icon = null
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_SMALL
 	force = 4

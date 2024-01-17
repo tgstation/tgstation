@@ -1,7 +1,18 @@
 import { BooleanLike } from 'common/react';
-import { FakeTerminal } from '../components/FakeTerminal';
+
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Grid, Icon, LabeledList, Modal, NoticeBox, Section } from '../components';
+import {
+  Box,
+  Button,
+  Flex,
+  Grid,
+  Icon,
+  LabeledList,
+  Modal,
+  NoticeBox,
+  Section,
+} from '../components';
+import { FakeTerminal } from '../components/FakeTerminal';
 import { NtosWindow } from '../layouts';
 
 const CONTRACT_STATUS_INACTIVE = 1;
@@ -11,7 +22,7 @@ const CONTRACT_STATUS_EXTRACTING = 4;
 const CONTRACT_STATUS_COMPLETE = 5;
 const CONTRACT_STATUS_ABORTED = 6;
 
-export const SyndicateContractor = (props, context) => {
+export const SyndicateContractor = (props) => {
   return (
     <NtosWindow width={500} height={600}>
       <NtosWindow.Content scrollable>
@@ -48,8 +59,8 @@ type ContractData = {
   payout_bonus: Number;
 };
 
-export const SyndicateContractorContent = (props, context) => {
-  const { data, act } = useBackend<Data>(context);
+export const SyndicateContractorContent = (props) => {
+  const { data, act } = useBackend<Data>();
   const { error, logged_in, first_load, info_screen } = data;
 
   const terminalMessages = [
@@ -89,7 +100,7 @@ export const SyndicateContractorContent = (props, context) => {
     'a specialised extraction unit to put the body into.',
     '',
     'We want targets alive - but we will sometimes pay slight',
-    "amounts if they're not, you just won't recieve the shown",
+    "amounts if they're not, you just won't receive the shown",
     'bonus. You can redeem your payment through this uplink in',
     'the form of raw telecrystals, which can be put into your',
     'regular Syndicate uplink to purchase whatever you may need.',
@@ -174,8 +185,8 @@ export const SyndicateContractorContent = (props, context) => {
   );
 };
 
-export const StatusPane = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const StatusPane = (props) => {
+  const { act, data } = useBackend<Data>();
   const { redeemable_tc, earned_tc, contracts_completed } = data;
 
   return (
@@ -191,7 +202,8 @@ export const StatusPane = (props, context) => {
             onClick={() => act('PRG_toggle_info')}
           />
         </>
-      }>
+      }
+    >
       <Grid>
         <Grid.Column size={0.85}>
           <LabeledList>
@@ -203,16 +215,19 @@ export const StatusPane = (props, context) => {
                   disabled={redeemable_tc <= 0}
                   onClick={() => act('PRG_redeem_TC')}
                 />
-              }>
-              {redeemable_tc}
+              }
+            >
+              {String(redeemable_tc)}
             </LabeledList.Item>
-            <LabeledList.Item label="TC Earned">{earned_tc}</LabeledList.Item>
+            <LabeledList.Item label="TC Earned">
+              {String(earned_tc)}
+            </LabeledList.Item>
           </LabeledList>
         </Grid.Column>
         <Grid.Column>
           <LabeledList>
             <LabeledList.Item label="Contracts Completed">
-              {contracts_completed}
+              {String(contracts_completed)}
             </LabeledList.Item>
             <LabeledList.Item label="Current Status">ACTIVE</LabeledList.Item>
           </LabeledList>
@@ -222,8 +237,8 @@ export const StatusPane = (props, context) => {
   );
 };
 
-const ContractsTab = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+const ContractsTab = (props) => {
+  const { act, data } = useBackend<Data>();
   const { contracts, ongoing_contract, extraction_enroute, dropoff_direction } =
     data;
 
@@ -237,7 +252,8 @@ const ContractsTab = (props, context) => {
             disabled={!ongoing_contract || extraction_enroute}
             onClick={() => act('PRG_call_extraction')}
           />
-        }>
+        }
+      >
         {contracts.map((contract) => {
           if (ongoing_contract && contract.status !== CONTRACT_STATUS_ACTIVE) {
             return;
@@ -257,7 +273,7 @@ const ContractsTab = (props, context) => {
               buttons={
                 <>
                   <Box inline bold mr={1}>
-                    {contract.payout} (+{contract.payout_bonus}) TC
+                    {`${contract.payout} (+${contract.payout_bonus}) TC`}
                   </Box>
                   <Button
                     content={active ? 'Abort' : 'Accept'}
@@ -270,7 +286,8 @@ const ContractsTab = (props, context) => {
                     }
                   />
                 </>
-              }>
+              }
+            >
               <Grid>
                 <Grid.Column>{contract.message}</Grid.Column>
                 <Grid.Column size={0.5}>
@@ -287,7 +304,8 @@ const ContractsTab = (props, context) => {
       <Section
         title="Dropoff Locator"
         textAlign="center"
-        opacity={ongoing_contract ? 100 : 0}>
+        opacity={ongoing_contract ? 100 : 0}
+      >
         <Box bold>{dropoff_direction}</Box>
       </Section>
     </>

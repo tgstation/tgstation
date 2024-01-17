@@ -24,7 +24,7 @@
 
 /mob/living/basic/cow/moonicorn/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/venomous, /datum/reagent/pax, 5)
+	AddElement(/datum/element/venomous, /datum/reagent/pax, 5, injection_flags = INJECT_CHECK_PENETRATE_THICK | INJECT_CHECK_IGNORE_SPECIES)
 	AddElement(/datum/element/movement_turf_changer, /turf/open/floor/grass/fairy)
 
 /mob/living/basic/cow/moonicorn/udder_component()

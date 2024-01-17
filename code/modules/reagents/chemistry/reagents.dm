@@ -222,10 +222,6 @@ Primarily used in reagents/reaction_agents
 /datum/reagent/proc/on_merge(data, amount)
 	return
 
-/// Called by [/datum/reagents/proc/conditional_update]
-/datum/reagent/proc/on_update(atom/A)
-	return
-
 /// Called if the reagent has passed the overdose threshold and is set to be triggering overdose effects. Returning UPDATE_MOB_HEALTH will cause updatehealth() to be called on the holder mob by /datum/reagents/proc/metabolize.
 /datum/reagent/proc/overdose_process(mob/living/affected_mob, seconds_per_tick, times_fired)
 	return

@@ -103,7 +103,7 @@
 	UnregisterSignal(parent, list(COMSIG_LIVING_UNARMED_ATTACK, COMSIG_HOSTILE_PRE_ATTACKINGTARGET))
 	return ..()
 
-/datum/component/healing_touch/Destroy(force, silent)
+/datum/component/healing_touch/Destroy(force)
 	extra_checks = null
 	return ..()
 

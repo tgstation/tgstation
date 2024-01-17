@@ -1,0 +1,2 @@
+/obj/structure/closet/crate/maint : /obj/effect/spawner/random/structure/closet_empty/crate/with_loot{@OLD}
+/obj/effect/spawner/random/structure/crate_empty : /obj/effect/spawner/random/structure/closet_empty/crate{@OLD}

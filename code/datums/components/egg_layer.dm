@@ -47,7 +47,7 @@
 	. = ..()
 	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 
-/datum/component/egg_layer/Destroy(force, silent)
+/datum/component/egg_layer/Destroy(force)
 	. = ..()
 	STOP_PROCESSING(SSobj, src)
 	egg_laid_callback = null

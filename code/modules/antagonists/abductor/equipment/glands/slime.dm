@@ -7,12 +7,12 @@
 	mind_control_uses = 1
 	mind_control_duration = 2400
 
-/obj/item/organ/internal/heart/gland/slime/on_insert(mob/living/carbon/gland_owner)
+/obj/item/organ/internal/heart/gland/slime/on_mob_insert(mob/living/carbon/gland_owner)
 	. = ..()
 	gland_owner.faction |= FACTION_SLIME
 	gland_owner.grant_language(/datum/language/slime, source = LANGUAGE_GLAND)
 
-/obj/item/organ/internal/heart/gland/slime/on_remove(mob/living/carbon/gland_owner)
+/obj/item/organ/internal/heart/gland/slime/on_mob_remove(mob/living/carbon/gland_owner)
 	. = ..()
 	gland_owner.faction -= FACTION_SLIME
 	gland_owner.remove_language(/datum/language/slime, source = LANGUAGE_GLAND)
@@ -21,6 +21,6 @@
 	to_chat(owner, span_warning("You feel nauseated!"))
 	owner.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = 20)
 
-	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), "grey")
+	var/mob/living/simple_animal/slime/Slime = new(get_turf(owner), /datum/slime_type/grey)
 	Slime.set_friends(list(owner))
 	Slime.set_leader(owner)

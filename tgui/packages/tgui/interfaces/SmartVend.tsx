@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Button, NoticeBox, Section, Table } from '../components';
 import { Window } from '../layouts';
@@ -15,8 +16,8 @@ type Data = {
   drying: BooleanLike;
 };
 
-export const SmartVend = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const SmartVend = (props) => {
+  const { act, data } = useBackend<Data>();
   const { contents = [] } = data;
   return (
     <Window width={440} height={550}>
@@ -27,11 +28,13 @@ export const SmartVend = (props, context) => {
             !!data.isdryer && (
               <Button
                 icon={data.drying ? 'stop' : 'tint'}
-                onClick={() => act('Dry')}>
+                onClick={() => act('Dry')}
+              >
                 {data.drying ? 'Stop drying' : 'Dry'}
               </Button>
             )
-          }>
+          }
+        >
           {contents.length === 0 ? (
             <NoticeBox>Unfortunately, this {data.name} is empty.</NoticeBox>
           ) : (

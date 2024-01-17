@@ -159,7 +159,7 @@
 		/datum/component/material_container, \
 		allowed_materials, \
 		INFINITY, \
-		MATCONTAINER_EXAMINE | BREAKDOWN_FLAGS_ORE_PROCESSOR, \
+		MATCONTAINER_EXAMINE, \
 		allowed_items = /obj/item/stack \
 	)
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
@@ -176,11 +176,11 @@
 /obj/machinery/mineral/processing_unit/proc/process_ore(obj/item/stack/ore/O)
 	if(QDELETED(O))
 		return
-	var/material_amount = materials.get_item_material_amount(O, BREAKDOWN_FLAGS_ORE_PROCESSOR)
+	var/material_amount = materials.get_item_material_amount(O)
 	if(!materials.has_space(material_amount))
 		unload_mineral(O)
 	else
-		materials.insert_item(O, breakdown_flags = BREAKDOWN_FLAGS_ORE_PROCESSOR)
+		materials.insert_item(O)
 		if(mineral_machine)
 			mineral_machine.updateUsrDialog()
 

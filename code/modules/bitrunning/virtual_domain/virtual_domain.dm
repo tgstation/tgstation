@@ -9,8 +9,6 @@
 
 	/// Cost of this map to load
 	var/cost = BITRUNNER_COST_NONE
-	/// The safehouse to load into the map
-	var/datum/map_template/safehouse/safehouse_path = /datum/map_template/safehouse/den
 	/// Any outfit that you wish to force on avatars. Overrides preferences
 	var/datum/outfit/forced_outfit
 	/// The description of the map for the console UI

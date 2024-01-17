@@ -56,10 +56,10 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 	switch(controller)
 		if("Master")
 			Recreate_MC()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Master Controller")
+			BLACKBOX_LOG_ADMIN_VERB("Restart Master Controller")
 		if("Failsafe")
 			new /datum/controller/failsafe()
-			SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
+			BLACKBOX_LOG_ADMIN_VERB("Restart Failsafe Controller")
 
 	message_admins("Admin [key_name_admin(usr)] has restarted the [controller] controller.")
 
@@ -87,5 +87,5 @@ INITIALIZE_IMMEDIATE(/obj/effect/statclick)
 		return
 	debug_variables(controller)
 
-	SSblackbox.record_feedback("tally", "admin_verb", 1, "Restart Failsafe Controller")
+	BLACKBOX_LOG_ADMIN_VERB("Debug Controller")
 	message_admins("Admin [key_name_admin(usr)] is debugging the [controller] controller.")

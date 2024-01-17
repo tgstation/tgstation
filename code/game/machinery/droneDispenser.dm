@@ -56,8 +56,8 @@
 		/datum/component/material_container, \
 		list(/datum/material/iron, /datum/material/glass), \
 		SHEET_MATERIAL_AMOUNT * MAX_STACK_SIZE * 2, \
-		MATCONTAINER_EXAMINE|BREAKDOWN_FLAGS_DRONE_DISPENSER, \
-		allowed_items=/obj/item/stack \
+		MATCONTAINER_EXAMINE, \
+		allowed_items = /obj/item/stack \
 	)
 	materials.insert_amount_mat(starting_amount)
 	materials.precise_insertion = TRUE
@@ -152,7 +152,6 @@
 		. += span_warning("[recharging_text]")
 
 /obj/machinery/drone_dispenser/process()
-	..()
 	if((machine_stat & (NOPOWER|BROKEN)) || !anchored)
 		return
 
@@ -262,7 +261,7 @@
 		playsound(src, break_sound, 50, TRUE)
 
 /obj/machinery/drone_dispenser/deconstruct(disassembled = TRUE)
-	if(!(flags_1 & NODECONSTRUCT_1))
+	if(!(obj_flags & NO_DECONSTRUCTION))
 		new /obj/item/stack/sheet/iron(loc, 5)
 	qdel(src)
 

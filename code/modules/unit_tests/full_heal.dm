@@ -43,7 +43,7 @@
 /datum/unit_test/full_heal_damage_types/Run()
 	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
 
-	dummy.apply_damages(brute = 10, burn = 10, tox = 10, oxy = 10, clone = 10, stamina = 10)
+	dummy.apply_damages(brute = 10, burn = 10, tox = 10, oxy = 10, stamina = 10)
 	dummy.fully_heal(HEAL_DAMAGE)
 
 	if(dummy.getBruteLoss())
@@ -54,7 +54,5 @@
 		TEST_FAIL("The dummy still had toxins damage after a fully heal!")
 	if(dummy.getOxyLoss())
 		TEST_FAIL("The dummy still had oxy damage after a fully heal!")
-	if(dummy.getCloneLoss())
-		TEST_FAIL("The dummy still had clone damage after a fully heal!")
 	if(dummy.getStaminaLoss())
 		TEST_FAIL("The dummy still had stamina damage after a fully heal!")

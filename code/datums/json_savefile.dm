@@ -57,7 +57,7 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 
 /datum/json_savefile/proc/save()
 	if(path)
-		rustg_file_write(json_encode(tree), path)
+		rustg_file_write(json_encode(tree, JSON_PRETTY_PRINT), path)
 
 /datum/json_savefile/serialize_list(list/options, list/semvers)
 	SHOULD_CALL_PARENT(FALSE)
@@ -98,15 +98,9 @@ GENERAL_PROTECT_DATUM(/datum/json_savefile)
 	var/file_name = "[account_name ? "[account_name]_" : ""]preferences_[time2text(world.timeofday, "MMM_DD_YYYY_hh-mm-ss")].json"
 	var/temporary_file_storage = "data/preferences_export_working_directory/[file_name]"
 
-#if DM_VERSION >= 515
 	if(!text2file(json_encode(tree, JSON_PRETTY_PRINT), temporary_file_storage))
 		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
 		return
-#else
-	if(!text2file(json_encode(tree), temporary_file_storage))
-		tgui_alert(requester, "Failed to export preferences to JSON! You might need to try again later.", "Export Preferences JSON")
-		return
-#endif
 
 	var/exportable_json = file(temporary_file_storage)
 

@@ -1,11 +1,33 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, LabeledList, NumberInput, ColorBox, Input, Dropdown, Stack } from '../../components';
-import { EntryCoordProps, EntryFloatProps, EntryGradientProps, EntryIconStateProps, EntryTransformProps, MatrixTypes, ParticleUIData, P_DATA_ICON_ADD, P_DATA_ICON_REMOVE, P_DATA_ICON_WEIGHT, SpaceToNum, SpaceTypes } from './data';
+import {
+  Box,
+  Button,
+  ColorBox,
+  Dropdown,
+  Input,
+  LabeledList,
+  NumberInput,
+  Stack,
+} from '../../components';
+import {
+  EntryCoordProps,
+  EntryFloatProps,
+  EntryGradientProps,
+  EntryIconStateProps,
+  EntryTransformProps,
+  MatrixTypes,
+  P_DATA_ICON_ADD,
+  P_DATA_ICON_REMOVE,
+  P_DATA_ICON_WEIGHT,
+  ParticleUIData,
+  SpaceToNum,
+  SpaceTypes,
+} from './data';
 import { editKeyOf, editWeightOf, setGradientSpace } from './helpers';
 
-export const EntryFloat = (props: EntryFloatProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryFloat = (props: EntryFloatProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, float } = props;
   return (
     <LabeledList.Item label={name}>
@@ -29,9 +51,9 @@ export const EntryFloat = (props: EntryFloatProps, context) => {
   );
 };
 
-export const EntryCoord = (props: EntryCoordProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryCoord = (props: EntryCoordProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, coord } = props;
   return (
     <LabeledList.Item label={name}>
@@ -74,15 +96,15 @@ export const EntryCoord = (props: EntryCoordProps, context) => {
   );
 };
 
-export const EntryGradient = (props: EntryGradientProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryGradient = (props: EntryGradientProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, gradient } = props;
   const isLooping = gradient?.find((x) => x === 'loop');
   const space_type = gradient?.includes('space')
     ? Object.keys(SpaceToNum).find(
-      (space) => SpaceToNum[space] === gradient['space']
-    )
+        (space) => SpaceToNum[space] === gradient['space'],
+      )
     : 'COLORSPACE_RGB';
   return (
     <LabeledList.Item label={name}>
@@ -98,7 +120,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
           <Button
             tooltip={'Loop'}
             icon={'sync'}
-            selected={isLooping}
+            selected={!!isLooping}
             onClick={() =>
               act('edit', {
                 var: var_name,
@@ -118,7 +140,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
                 var: var_name,
                 new_value: gradient
                   ? setGradientSpace(gradient, SpaceToNum[e])
-                  : { 'space': SpaceToNum[e] },
+                  : { space: SpaceToNum[e] },
               })
             }
             width="145px"
@@ -139,7 +161,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
                     act('edit', {
                       var: var_name,
                       new_value: gradient!.map((x, i) =>
-                        i === index ? value : x
+                        i === index ? value : x,
                       ),
                     })
                   }
@@ -155,7 +177,7 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
                   }
                 />
               </>
-            )
+            ),
           )}
         </Stack.Item>
         <Stack.Item>
@@ -175,9 +197,9 @@ export const EntryGradient = (props: EntryGradientProps, context) => {
   );
 };
 
-export const EntryTransform = (props: EntryTransformProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryTransform = (props: EntryTransformProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const len = props.transform?.length ? props.transform.length : 0;
   const selected =
     len < 7
@@ -216,7 +238,7 @@ export const EntryTransform = (props: EntryTransformProps, context) => {
                 act('edit', {
                   var: var_name,
                   new_value: transform!.map((x, i) =>
-                    i === index ? value : x
+                    i === index ? value : x,
                   ),
                 })
               }
@@ -228,9 +250,9 @@ export const EntryTransform = (props: EntryTransformProps, context) => {
   );
 };
 
-export const EntryIcon = (props: EntryIconStateProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryIcon = (props: EntryIconStateProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, icon_state } = props;
   return (
     <LabeledList.Item label={name}>
@@ -300,14 +322,14 @@ export const EntryIcon = (props: EntryIconStateProps, context) => {
   );
 };
 
-export const EntryIconState = (props: EntryIconStateProps, context) => {
-  const { act, data } = useBackend<ParticleUIData>(context);
-  const [desc, setdesc] = useLocalState(context, 'desc', '');
+export const EntryIconState = (props: EntryIconStateProps) => {
+  const { act, data } = useBackend<ParticleUIData>();
+  const [desc, setdesc] = useLocalState('desc', '');
   const { name, var_name, icon_state } = props;
   const newValue =
     typeof icon_state === 'string'
-      ? { [icon_state]: 1, 'None': 0 }
-      : { ...icon_state, 'None': 0 };
+      ? { [icon_state]: 1, None: 0 }
+      : { ...icon_state, None: 0 };
   return (
     <LabeledList.Item label={name}>
       <Stack>
@@ -359,8 +381,8 @@ export const EntryIconState = (props: EntryIconStateProps, context) => {
                       var: var_name,
                       new_value: Object.fromEntries(
                         Object.entries(icon_state).filter(
-                          ([key]) => key !== iconstate
-                        )
+                          ([key]) => key !== iconstate,
+                        ),
                       ),
                     })
                   }

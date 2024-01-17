@@ -1,4 +1,5 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import { Box, Flex } from '../components';
 import { Window } from '../layouts';
@@ -11,8 +12,8 @@ type Data = {
   lock_code: BooleanLike;
 };
 
-export const LockedSafe = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const LockedSafe = (props) => {
+  const { act, data } = useBackend<Data>();
   const { input_code, locked, lock_code } = data;
   return (
     <Window width={300} height={400} theme="ntos">

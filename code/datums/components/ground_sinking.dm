@@ -36,7 +36,7 @@
 			heal_when_sinked = TRUE,
 			health_per_second = 1,
 			outline_colour = COLOR_PALE_GREEN,
-			damage_res_sinked = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1))
+			damage_res_sinked = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1))
 
 	if (!isbasicmob(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -59,7 +59,7 @@
 		deltimer(ground_sinking_start_timer)
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
 
-/datum/component/ground_sinking/Destroy(force, silent)
+/datum/component/ground_sinking/Destroy(force)
 	if(sinked || is_sinking)
 		unsink()
 	. = ..()
@@ -112,7 +112,7 @@
 	if(sinked && heal_when_sinked)
 		stop_regenerating()
 	living_target.icon_state = target_icon_state
-	living_target.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, CLONE = 1, STAMINA = 0, OXY = 1)
+	living_target.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
 	living_target.density = TRUE
 	sinked = FALSE
 

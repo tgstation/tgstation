@@ -26,12 +26,6 @@
 	unarmed_effectiveness = 0
 	bodypart_trait_source = HEAD_TRAIT
 
-	var/mob/living/brain/brainmob //The current occupant.
-	var/obj/item/organ/internal/brain/brain //The brain organ
-	var/obj/item/organ/internal/eyes/eyes
-	var/obj/item/organ/internal/ears/ears
-	var/obj/item/organ/internal/tongue/tongue
-
 	/// Do we show the information about missing organs upon being examined? Defaults to TRUE, useful for Dullahan heads.
 	var/show_organs_on_examine = TRUE
 
@@ -76,11 +70,6 @@
 	///Current lipstick trait, if any (such as TRAIT_KISS_OF_DEATH)
 	var/stored_lipstick_trait
 
-	/// Draw this head as "debrained"
-	VAR_PROTECTED/show_debrained = FALSE
-	/// Draw this head as missing eyes
-	VAR_PROTECTED/show_eyeless = FALSE
-
 	/// Offset to apply to equipment worn on the ears
 	var/datum/worn_feature_offset/worn_ears_offset
 	/// Offset to apply to equipment worn on the eyes
@@ -92,13 +81,17 @@
 	/// Offset to apply to overlays placed on the face
 	var/datum/worn_feature_offset/worn_face_offset
 
-/obj/item/bodypart/head/Destroy()
-	QDEL_NULL(brainmob) //order is sensitive, see warning in Exited() below
-	QDEL_NULL(brain)
-	QDEL_NULL(eyes)
-	QDEL_NULL(ears)
-	QDEL_NULL(tongue)
+	VAR_PROTECTED
+		/// Draw this head as "debrained"
+		show_debrained = FALSE
 
+		/// Draw this head as missing eyes
+		show_eyeless = FALSE
+
+		/// Can this head be dismembered normally?
+		can_dismember = FALSE
+
+/obj/item/bodypart/head/Destroy()
 	QDEL_NULL(worn_ears_offset)
 	QDEL_NULL(worn_glasses_offset)
 	QDEL_NULL(worn_mask_offset)
@@ -106,35 +99,18 @@
 	QDEL_NULL(worn_face_offset)
 	return ..()
 
-/obj/item/bodypart/head/Exited(atom/movable/gone, direction)
-	if(gone == brain)
-		brain = null
-		update_icon_dropped()
-		if(!QDELETED(brainmob)) //this shouldn't happen without badminnery.
-			message_admins("Brainmob: ([ADMIN_LOOKUPFLW(brainmob)]) was left stranded in [src] at [ADMIN_VERBOSEJMP(src)] without a brain!")
-			brainmob.log_message(", brainmob, was left stranded in [src] without a brain", LOG_GAME)
-	if(gone == brainmob)
-		brainmob = null
-	if(gone == eyes)
-		eyes = null
-		update_icon_dropped()
-	if(gone == ears)
-		ears = null
-	if(gone == tongue)
-		tongue = null
-	return ..()
-
 /obj/item/bodypart/head/examine(mob/user)
 	. = ..()
 	if(show_organs_on_examine && IS_ORGANIC_LIMB(src))
+		var/obj/item/organ/internal/brain/brain = locate(/obj/item/organ/internal/brain) in src
 		if(!brain)
 			. += span_info("The brain has been removed from [src].")
-		else if(brain.suicided || (brainmob && HAS_TRAIT(brainmob, TRAIT_SUICIDED)))
+		else if(brain.suicided || (brain.brainmob && HAS_TRAIT(brain.brainmob, TRAIT_SUICIDED)))
 			. += span_info("There's a miserable expression on [real_name]'s face; they must have really hated life. There's no hope of recovery.")
-		else if(brainmob?.health <= HEALTH_THRESHOLD_DEAD)
-			. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
-		else if(brainmob)
-			if(brainmob.key || brainmob.get_ghost(FALSE, TRUE))
+		else if(brain.brainmob)
+			if(brain.brainmob?.health <= HEALTH_THRESHOLD_DEAD)
+				. += span_info("It's leaking some kind of... clear fluid? The brain inside must be in pretty bad shape.")
+			if(brain.brainmob.key || brain.brainmob.get_ghost(FALSE, TRUE))
 				. += span_info("Its muscles are twitching slightly... It seems to have some life still in it.")
 			else
 				. += span_info("It's completely lifeless. Perhaps there'll be a chance for them later.")
@@ -143,48 +119,32 @@
 		else
 			. += span_info("It's completely lifeless.")
 
-		if(!eyes)
+		if(!(locate(/obj/item/organ/internal/eyes) in src))
 			. += span_info("[real_name]'s eyes have been removed.")
 
-		if(!ears)
+		if(!(locate(/obj/item/organ/internal/ears) in src))
 			. += span_info("[real_name]'s ears have been removed.")
 
-		if(!tongue)
+		if(!(locate(/obj/item/organ/internal/tongue) in src))
 			. += span_info("[real_name]'s tongue has been removed.")
 
 /obj/item/bodypart/head/can_dismember(obj/item/item)
+	if (!can_dismember)
+		return FALSE
+
 	if(owner.stat < HARD_CRIT)
 		return FALSE
+
 	return ..()
 
 /obj/item/bodypart/head/drop_organs(mob/user, violent_removal)
-	var/atom/drop_loc = drop_location()
-	for(var/obj/item/head_item in src)
-		if(head_item == brain)
-			if(user)
-				user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
-			if(brainmob)
-				brainmob.container = null
-				brain.brainmob = brainmob
-				brainmob = null
-			if(violent_removal && prob(rand(80, 100))) //ghetto surgery can damage the brain.
-				to_chat(user, span_warning("[brain] was damaged in the process!"))
-				brain.set_organ_damage(brain.maxHealth)
-			brain.forceMove(drop_loc)
-			brain = null
-			update_icon_dropped()
-		else
-			if(istype(head_item, /obj/item/reagent_containers/pill))
-				for(var/datum/action/item_action/hands_free/activate_pill/pill_action in head_item.actions)
-					qdel(pill_action)
-			else if(isorgan(head_item))
-				var/obj/item/organ/organ = head_item
-				if(organ.organ_flags & ORGAN_UNREMOVABLE)
-					continue
-			head_item.forceMove(drop_loc)
-	eyes = null
-	ears = null
-	tongue = null
+	if(user)
+		user.visible_message(span_warning("[user] saws [src] open and pulls out a brain!"), span_notice("You saw [src] open and pull out a brain."))
+	var/obj/item/organ/internal/brain/brain = locate(/obj/item/organ/internal/brain) in src
+	if(brain && violent_removal && prob(90)) //ghetto surgery can damage the brain.
+		to_chat(user, span_warning("[brain] was damaged in the process!"))
+		brain.set_organ_damage(brain.maxHealth)
+
 	update_limb()
 	return ..()
 
@@ -205,6 +165,7 @@
 	. += get_hair_and_lips_icon(dropped)
 	// We need to get the eyes if we are dropped (ugh)
 	if(dropped)
+		var/obj/item/organ/internal/eyes/eyes = locate(/obj/item/organ/internal/eyes) in src
 		// This is a bit of copy/paste code from eyes.dm:generate_body_overlay
 		if(eyes?.eye_icon_state && (head_flags & HEAD_EYESPRITES))
 			var/image/eye_left = image('icons/mob/human/human_face.dmi', "[eyes.eye_icon_state]_l", -BODY_LAYER, SOUTH)

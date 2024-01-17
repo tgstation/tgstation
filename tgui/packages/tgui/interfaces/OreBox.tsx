@@ -1,6 +1,7 @@
 import { toTitleCase } from 'common/string';
-import { Box, Button, Section, Table } from '../components';
+
 import { useBackend } from '../backend';
+import { Box, Button, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -16,8 +17,8 @@ type Material = {
 const OREBOX_INFO = `All ores will be placed in here when you are wearing a
 mining stachel on your belt or in a pocket while dragging the ore box.`;
 
-export const OreBox = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const OreBox = (props) => {
+  const { act, data } = useBackend<Data>();
   const { materials } = data;
 
   return (
@@ -25,7 +26,8 @@ export const OreBox = (props, context) => {
       <Window.Content scrollable>
         <Section
           title="Ores"
-          buttons={<Button content="Empty" onClick={() => act('removeall')} />}>
+          buttons={<Button content="Empty" onClick={() => act('removeall')} />}
+        >
           <Table>
             <Table.Row header>
               <Table.Cell>Ore</Table.Cell>

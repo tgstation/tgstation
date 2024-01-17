@@ -8,7 +8,7 @@
 	. = ..()
 	if(prob(1))
 		user.say("The testimony contradicts the evidence!", forced = "[src]")
-	user.visible_message(span_notice("[user] shows [user.p_their()] attorney's badge."), span_notice("You show your attorney's badge."))
+	user.point_at(src)
 
 /obj/item/clothing/accessory/lawyers_badge/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	RegisterSignal(user, COMSIG_LIVING_SLAM_TABLE, PROC_REF(table_slam))
@@ -187,8 +187,7 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
-	obj_flags = UNIQUE_RENAME
-	infinite_reskin = TRUE
+	obj_flags = UNIQUE_RENAME | INFINITE_RESKIN
 
 /obj/item/clothing/accessory/pride/Initialize(mapload)
 	. = ..()
@@ -204,3 +203,36 @@ GLOBAL_LIST_INIT(pride_pin_reskins, list(
 	name = "debt payer pin"
 	desc = "I've paid my debt and all I've got was this pin."
 	icon_state = "debt_payer_pin"
+
+/// Self-identify as a dangerous subversive
+/obj/item/clothing/accessory/anti_sec_pin
+	name = "subversive pin"
+	desc = "A badge which loudly and proudly proclaims your hostility to the Nanotrasen Security Team, and authority in general."
+	icon_state = "anti_sec"
+
+/obj/item/clothing/accessory/anti_sec_pin/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/pinnable_accessory, silent = TRUE, pinning_time = 5 SECONDS)
+
+/obj/item/clothing/accessory/anti_sec_pin/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+	. = ..()
+	if (!.)
+		return FALSE
+
+	var/target = ishuman(attach_to.loc) ? attach_to.loc : attach_to
+	log_combat(attacher, target, "pinned an 'arrest me immediately' pin onto", src)
+	return TRUE
+
+/obj/item/clothing/accessory/anti_sec_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	ADD_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_wearer = user
+		human_wearer.sec_hud_set_security_status()
+
+/obj/item/clothing/accessory/anti_sec_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
+	. = ..()
+	REMOVE_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
+	if (ishuman(user))
+		var/mob/living/carbon/human/human_wearer = user
+		human_wearer.sec_hud_set_security_status()

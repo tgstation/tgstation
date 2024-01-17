@@ -93,7 +93,7 @@
 	is_dimorphic = TRUE
 	dmg_overlay_type = null
 	burn_modifier = 0.5 // = 1/2x generic burn damage
-	wing_types = NONE
+	wing_types = list(/obj/item/organ/external/wings/functional/slime)
 
 /obj/item/bodypart/arm/left/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -130,7 +130,7 @@
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_SLIMEPERSON
 	is_dimorphic = TRUE
-	wing_types = NONE
+	wing_types = list(/obj/item/organ/external/wings/functional/slime)
 
 /obj/item/bodypart/arm/left/slime
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -159,7 +159,7 @@
 	biological_state = (BIO_FLESH|BIO_BLOODED)
 	limb_id = SPECIES_LUMINESCENT
 	is_dimorphic = TRUE
-	wing_types = NONE
+	wing_types = list(/obj/item/organ/external/wings/functional/slime)
 
 /obj/item/bodypart/arm/left/luminescent
 	biological_state = (BIO_FLESH|BIO_BLOODED)
@@ -183,6 +183,7 @@
 	is_dimorphic = FALSE
 	should_draw_greyscale = FALSE
 	head_flags = HEAD_EYESPRITES|HEAD_DEBRAIN
+	can_dismember = TRUE
 
 /obj/item/bodypart/chest/zombie
 	limb_id = SPECIES_ZOMBIE
@@ -232,6 +233,7 @@
 /obj/item/bodypart/arm/left/pod
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verb = "slash"
+	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -240,6 +242,7 @@
 /obj/item/bodypart/arm/right/pod
 	limb_id = SPECIES_PODPERSON
 	unarmed_attack_verb = "slash"
+	grappled_attack_verb = "lacerate"
 	unarmed_attack_effect = ATTACK_EFFECT_CLAW
 	unarmed_attack_sound = 'sound/weapons/slice.ogg'
 	unarmed_miss_sound = 'sound/weapons/slashmiss.ogg'
@@ -516,16 +519,15 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/left/golem/set_owner(new_owner)
+/obj/item/bodypart/arm/left/golem/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
-	if (. == FALSE)
-		return
-	if (owner)
-		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
-	if (isnull(.))
-		return
-	var/mob/living/carbon/old_owner = .
+
 	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
+/obj/item/bodypart/arm/left/golem/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+
+	new_owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/arm/right/golem
 	icon = 'icons/mob/human/species/golems.dmi'
@@ -550,16 +552,15 @@
 	)
 	return ..()
 
-/obj/item/bodypart/arm/right/golem/set_owner(new_owner)
+/obj/item/bodypart/arm/right/golem/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
-	if (. == FALSE)
-		return
-	if (owner)
-		owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
-	if (isnull(.))
-		return
-	var/mob/living/carbon/old_owner = .
+
 	old_owner.RemoveComponentSource(REF(src), /datum/component/shovel_hands)
+
+/obj/item/bodypart/arm/right/golem/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+
+	new_owner.AddComponentFrom(REF(src), /datum/component/shovel_hands)
 
 /obj/item/bodypart/leg/left/golem
 	icon = 'icons/mob/human/species/golems.dmi'

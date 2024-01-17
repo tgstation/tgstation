@@ -52,11 +52,21 @@
 	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
 		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
-	materials = AddComponent(
+
+	//mat_container_signals is for reedeming points from local storage if silo is not required
+	var/list/local_signals = null
+	if(!requires_silo)
+		local_signals = list(
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, local_redeem_points)
+		)
+	materials = AddComponent( \
 		/datum/component/remote_materials, \
 		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_ORM \
+		mat_container_signals = local_signals \
 	)
+
+	//for reedeming points from items inserted into ore silo
+	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/mineral/ore_redemption, silo_redeem_points))
 
 /obj/machinery/mineral/ore_redemption/Destroy()
 	stored_research = null
@@ -68,34 +78,17 @@
 	if(panel_open)
 		. += span_notice("Alt-click to rotate the input and output direction.")
 
-/// Turns ore into its refined type, and sends it to its material container
-/obj/machinery/mineral/ore_redemption/proc/smelt_ore(obj/item/stack/ore/gathered_ore)
-	if(QDELETED(gathered_ore))
-		return
-	var/datum/component/material_container/mat_container = materials.mat_container
-	if (!mat_container)
-		return
 
-	if(gathered_ore.refined_type == null)
-		return
+/obj/machinery/mineral/ore_redemption/proc/silo_redeem_points(obj/machinery/mineral/ore_redemption/machine, container, obj/item/stack/ore/gathered_ore)
+	SIGNAL_HANDLER
 
-	var/material_amount = mat_container.get_item_material_amount(gathered_ore, BREAKDOWN_FLAGS_ORM)
+	local_redeem_points(container, gathered_ore)
 
-	if(!material_amount)
-		qdel(gathered_ore) //no materials, incinerate it
+/obj/machinery/mineral/ore_redemption/proc/local_redeem_points(container, obj/item/stack/ore/gathered_ore)
+	SIGNAL_HANDLER
 
-	else if(!mat_container.has_space(material_amount * gathered_ore.amount)) //if there is no space, eject it
-		unload_mineral(gathered_ore)
-
-	else
-		var/ore_amount = gathered_ore.amount
-		var/ore_points= gathered_ore.points
-		var/refined_type = gathered_ore?.refined_type
-		if(mat_container.insert_item(gathered_ore, ore_multiplier, breakdown_flags = BREAKDOWN_FLAGS_ORM, context = src) > 0) //increase points only if insertion was successfull
-			if(refined_type)
-				points += ore_points * point_upgrade * ore_amount
-
-	SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
+	if(istype(gathered_ore) && gathered_ore.refined_type)
+		points += gathered_ore.points * point_upgrade * gathered_ore.amount
 
 /// Returns the amount of a specific alloy design, based on the accessible materials
 /obj/machinery/mineral/ore_redemption/proc/can_smelt_alloy(datum/design/D)
@@ -123,11 +116,6 @@
 		build_amount = min(build_amount, smeltable_sheets)
 
 	return build_amount
-
-/// Smelts the passed ores one by one
-/obj/machinery/mineral/ore_redemption/proc/process_ores(list/ores_to_process)
-	for(var/ore in ores_to_process)
-		smelt_ore(ore)
 
 /// Sends a message to the request consoles that signed up for ore updates
 /obj/machinery/mineral/ore_redemption/proc/send_console_message()
@@ -169,14 +157,26 @@
 	if(!materials.mat_container || panel_open || !powered())
 		return
 
+	//gethering the ore
+	var/list/obj/item/stack/ore/ore_list = list()
 	if(istype(target, /obj/structure/ore_box))
 		var/obj/structure/ore_box/box = target
-		process_ores(box.contents)
+		for(var/obj/item/stack/ore/ore_item in box.contents)
+			ore_list += ore_item
 	else if(istype(target, /obj/item/stack/ore))
-		var/obj/item/stack/ore/O = target
-		smelt_ore(O)
+		ore_list += target
 	else
 		return
+
+	//smelting the ore
+	for(var/obj/item/stack/ore/gathered_ore as anything in ore_list)
+		if(isnull(gathered_ore.refined_type))
+			continue
+
+		if(materials.insert_item(gathered_ore, ore_multiplier) <= 0)
+			unload_mineral(gathered_ore) //if rejected unload
+
+		SEND_SIGNAL(src, COMSIG_ORM_COLLECTED_ORE)
 
 	if(!console_notify_timer)
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
@@ -191,28 +191,17 @@
 	else
 		unregister_input_turf() // someone just un-wrenched us, unregister the turf
 
+/obj/machinery/mineral/ore_redemption/screwdriver_act(mob/living/user, obj/item/tool)
+	default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/mineral/ore_redemption/crowbar_act(mob/living/user, obj/item/tool)
+	default_deconstruction_crowbar(tool)
+	return ITEM_INTERACT_SUCCESS
+
 /obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	default_unfasten_wrench(user, tool)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
-
-/obj/machinery/mineral/ore_redemption/attackby(obj/item/W, mob/user, params)
-	if(default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", W))
-		return
-	if(default_deconstruction_crowbar(W))
-		return
-
-	if(!powered())
-		return ..()
-
-	var/obj/item/stack/ore/O = W
-	if(istype(O))
-		if(isnull(O.refined_type))
-			to_chat(user, span_warning("[O] has already been refined!"))
-			return
-		smelt_ore(O)
-		return TRUE
-	return ..()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
 	. = ..()
@@ -317,21 +306,26 @@
 	var/datum/component/material_container/mat_container = materials.mat_container
 	switch(action)
 		if("Claim")
+			//requires silo but silo not in range
+			if(requires_silo && !materials.check_z_level())
+				return FALSE
+
+			//no ID
 			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
 				var/mob/living/user = usr
 				user_id_card = user.get_idcard(TRUE)
-			if(!materials.check_z_level() && (requires_silo || !user_id_card.registered_account.replaceable))
-				return TRUE
+			if(isnull(user_id_card))
+				to_chat(usr, span_warning("No valid ID detected."))
+				return FALSE
+
+			//we have points
 			if(points)
-				if(user_id_card)
-					user_id_card.registered_account.mining_points += points
-					points = 0
-				else
-					to_chat(usr, span_warning("No valid ID detected."))
-			else
-				to_chat(usr, span_warning("No points to claim."))
-			return TRUE
+				user_id_card.registered_account.mining_points += points
+				points = 0
+				return TRUE
+
+			return FALSE
 		if("Release")
 			if(!mat_container)
 				return
@@ -422,4 +416,3 @@
 	. += ore_output
 	. += light_in
 	. += light_out
-

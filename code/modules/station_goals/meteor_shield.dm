@@ -89,7 +89,7 @@
 /obj/machinery/satellite/meteor_shield/process()
 	if(obj_flags & EMAGGED)
 		//kills the processing because emagged meteor shields no longer stop meteors in any way
-		return ..()
+		return PROCESS_KILL
 	if(!active)
 		return
 	for(var/obj/effect/meteor/meteor_to_destroy in GLOB.meteor_list)

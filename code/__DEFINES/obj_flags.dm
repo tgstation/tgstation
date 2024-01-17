@@ -13,6 +13,9 @@
 #define BLOCKS_CONSTRUCTION (1<<9) //! Does this object prevent things from being built on it?
 #define BLOCKS_CONSTRUCTION_DIR (1<<10) //! Does this object prevent same-direction things from being built on it?
 #define IGNORE_DENSITY (1<<11) //! Can we ignore density when building on this object? (for example, directional windows and grilles)
+#define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
+#define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
+#define NO_DECONSTRUCTION (1<<14) //! Prevent deconstruction of this object.
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
@@ -65,28 +68,26 @@
 #define VOICEBOX_TOGGLABLE (1<<6)
 /// The voicebox is currently turned off.
 #define VOICEBOX_DISABLED (1<<7)
-/// Prevents shovies against a dense object from knocking the wearer down.
-#define BLOCKS_SHOVE_KNOCKDOWN (1<<8)
 /// Prevents knock-off from things like hat-throwing.
-#define SNUG_FIT (1<<9)
+#define SNUG_FIT (1<<8)
 /// Hats with negative effects when worn (i.e the tinfoil hat).
-#define ANTI_TINFOIL_MANEUVER (1<<10)
+#define ANTI_TINFOIL_MANEUVER (1<<9)
 /// Clothes that cause a larger notification when placed on a person.
-#define DANGEROUS_OBJECT (1<<11)
+#define DANGEROUS_OBJECT (1<<10)
 /// Clothes that use large icons, for applying the proper overlays like blood
-#define LARGE_WORN_ICON (1<<12)
+#define LARGE_WORN_ICON (1<<11)
 /// Clothes that block speech (i.e the muzzle). Can be applied to any clothing piece.
-#define BLOCKS_SPEECH (1<<13)
+#define BLOCKS_SPEECH (1<<12)
 /// prevents from placing on plasmaman helmet or modsuit hat holder
-#define STACKABLE_HELMET_EXEMPT (1<<14)
+#define STACKABLE_HELMET_EXEMPT (1<<13)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<15)
+#define PLASMAMAN_PREVENT_IGNITION (1<<14)
 /// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
-#define CASTING_CLOTHES (1<<16)
+#define CASTING_CLOTHES (1<<15)
 ///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<17)
+#define INEDIBLE_CLOTHING (1<<16)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<18)
+#define HEADINTERNALS (1<<17)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
