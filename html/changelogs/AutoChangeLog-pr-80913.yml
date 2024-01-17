@@ -1,0 +1,5 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - code_imp: "slightly cleans up dance machine code"
+  - bugfix: "disco dances are less comparable to having a seizure"
