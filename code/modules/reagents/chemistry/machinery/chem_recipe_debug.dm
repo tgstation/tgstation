@@ -47,6 +47,8 @@
 	///The multiplier to be applied on the selected reaction required reagents to start the reaction
 	var/volume_multiplier = 1
 
+	///Cached copy all reactions mapped with their name
+	var/static/list/all_reaction_list
 	///The list of reactions to test
 	var/list/datum/chemical_reaction/reactions_to_test = list()
 	///The index in reactions_to_test list which points to the current reaction under test
@@ -67,10 +69,17 @@
 
 /obj/machinery/chem_recipe_debug/Initialize(mapload)
 	. = ..()
+
 	create_reagents(MAXIMUM_HOLDER_VOLUME)
 	target_reagents = reagents
 	RegisterSignal(reagents, COMSIG_REAGENTS_REACTION_STEP, TYPE_PROC_REF(/obj/machinery/chem_recipe_debug, on_reaction_step))
 	register_context()
+
+	if(isnull(all_reaction_list))
+		all_reaction_list = list()
+		for(var/datum/reagent/reagent as anything in GLOB.chemical_reactions_list_reactant_index)
+			for(var/datum/chemical_reaction/reaction as anything in GLOB.chemical_reactions_list_reactant_index[reagent])
+				all_reaction_list[extract_reaction_name(reaction)] = reaction
 
 /obj/machinery/chem_recipe_debug/Destroy()
 	reactions_to_test.Cut()
@@ -126,6 +135,21 @@
 	//send updates to ui. faster than SStgui.update_uis
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
+
+/**
+ * Extracts a human readable name for this chemical reaction
+ * Arguments
+ *
+ * * datum/chemical_reaction/reaction - the reaction who's name we have to decode
+ */
+/obj/machinery/chem_recipe_debug/proc/extract_reaction_name(datum/chemical_reaction/reaction)
+	PRIVATE_PROC(TRUE)
+	SHOULD_BE_PURE(TRUE)
+
+	var/reaction_name = "[reaction]"
+	reaction_name = copytext(reaction_name, findlasttext(reaction_name, "/") + 1)
+	reaction_name = replacetext(reaction_name, "_", " ")
+	return full_capitalize(reaction_name)
 
 ///Retrives the target temperature to be imposed on the test reaction based on temp_mode
 /obj/machinery/chem_recipe_debug/proc/decode_target_temperature()
@@ -235,11 +259,7 @@
 	if(isnull(current_reaction))
 		.["current_reaction_name"] = "N/A"
 	else
-		if(length(current_reaction.results)) //soups can have no results
-			var/datum/reagent/reagent = current_reaction.results[1]
-			.["current_reaction_name"] = initial(reagent.name)
-		else
-			.["current_reaction_name"] = "[current_reaction]"
+		.["current_reaction_name"] = extract_reaction_name(current_reaction)
 	.["current_reaction_mode"] = current_reaction_mode
 
 	var/list/active_reactions = list()
@@ -422,30 +442,25 @@
 			volume_multiplier = target
 			return TRUE
 
-		if("pick_reagent")
+		if("pick_reaction")
 			var/mode = tgui_alert(usr, "Play all or an specific reaction?","Select Reaction", list("All", "Specific"))
 			if(mode == "All")
 				reactions_to_test.Cut()
-				for(var/datum/reagent/reagent as anything in GLOB.chemical_reactions_list_reactant_index)
-					reactions_to_test += GLOB.chemical_reactions_list_reactant_index[reagent]
+				for(var/reaction as anything in all_reaction_list)
+					reactions_to_test += all_reaction_list[reaction]
 				current_reaction_index = 0
 				return TRUE
 
-			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
-			if(!selected_reagent)
+			var/selected_reaction = tgui_input_list(ui.user, "Select Reaction", "Reaction", all_reaction_list)
+			if(!selected_reaction)
 				return
 
-			var/datum/reagent/input_reagent = GLOB.name2reagent[selected_reagent]
-			if(!input_reagent)
-				return
-
-			var/list/datum/chemical_reaction/reactions = GLOB.chemical_reactions_list_product_index[input_reagent.type]
-			if(!length(reactions))
-				say("Unable to find reaction for [input_reagent.name]")
+			var/datum/chemical_reaction/reaction = all_reaction_list[selected_reaction]
+			if(!reaction)
 				return
 
 			reactions_to_test.Cut()
-			reactions_to_test += reactions
+			reactions_to_test += reaction
 			current_reaction_index = 0
 			return TRUE
 
@@ -479,11 +494,7 @@
 					if(PLAY_USER_REACTION)
 						var/list/reaction_names = list()
 						for(var/datum/chemical_reaction/reaction as anything in reactions_to_test)
-							if(!length(reaction.results))
-								reaction_names += "[reaction]"
-							else
-								var/datum/reagent/result = reaction.results[1]
-								reaction_names += initial(result.name)
+							reaction_names += extract_reaction_name(reaction)
 						if(!reaction_names.len)
 							return
 
@@ -553,20 +564,15 @@
 			target_reagents.handle_reactions()
 
 		if("edit_reaction")
-			var/selected_reagent = tgui_input_list(ui.user, "Select reagent", "Reagent", GLOB.name2reagent)
-			if(!selected_reagent)
+			var/selected_reaction = tgui_input_list(ui.user, "Select Reaction", "Reaction", all_reaction_list)
+			if(!selected_reaction)
 				return
 
-			var/datum/reagent/input_reagent = GLOB.name2reagent[selected_reagent]
-			if(!input_reagent)
+			var/datum/chemical_reaction/reaction = all_reaction_list[selected_reaction]
+			if(!reaction)
 				return
 
-			var/list/datum/chemical_reaction/reactions = GLOB.chemical_reactions_list_product_index[input_reagent.type]
-			if(!length(reactions))
-				say("Unable to find reaction for [input_reagent.name]")
-				return
-
-			edit_reaction = reactions[1]
+			edit_reaction = reaction
 			edit_var = initial(edit_var)
 
 		if("edit_var")
@@ -655,7 +661,7 @@
 				return
 			if(QDELETED(beaker))
 				beaker = new /obj/item/reagent_containers/cup/beaker/bluespace(src)
-			target_reagents.trans_to(beaker, reagents.total_volume)
+			target_reagents.trans_to(beaker, target_reagents.total_volume)
 			try_put_in_hand(beaker, ui.user)
 			return TRUE
 

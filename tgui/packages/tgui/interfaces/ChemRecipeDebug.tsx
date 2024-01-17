@@ -258,7 +258,10 @@ export const ChemRecipeDebug = (props) => {
                 <Stack.Item>
                   <LabeledList>
                     <LabeledList.Item label="Reagent">
-                      <Button color="green" onClick={() => act('pick_reagent')}>
+                      <Button
+                        color="green"
+                        onClick={() => act('pick_reaction')}
+                      >
                         Select Reaction
                       </Button>
                     </LabeledList.Item>
@@ -285,7 +288,7 @@ export const ChemRecipeDebug = (props) => {
                       }
                     >
                       <Dropdown
-                        width="30%"
+                        width="35%"
                         selected={REACTION_MODES[current_reaction_mode]}
                         options={REACTION_MODES}
                         disabled={current_reaction_name === 'N/A'}
