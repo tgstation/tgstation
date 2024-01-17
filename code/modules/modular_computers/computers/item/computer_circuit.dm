@@ -1,7 +1,7 @@
 ///A simple circuit component compatible with stationary consoles, laptops and PDAs, independent from programs.
 /obj/item/circuit_component/modpc
 	display_name = "Modular Computer"
-	desc = "Circuit of a modular computer. Ports depend on the programs installed. Only open (idle or active) programs will receive inputs."
+	desc = "Circuit for basic functions of a modular computer."
 	var/obj/item/modular_computer/computer
 	///Turns the PC on/off
 	var/datum/port/input/on_off

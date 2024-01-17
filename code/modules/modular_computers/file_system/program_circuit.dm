@@ -56,3 +56,8 @@
 	if(computer.active_program == associated_program || (associated_program in computer.idle_threads))
 		return TRUE
 	return FALSE
+
+/obj/item/circuit_component/mod_program/get_ui_notices()
+	. = ..()
+	if(!(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED))
+		. += create_ui_notice("Requires open program to work", "purple")
