@@ -5,9 +5,9 @@
 /obj/item/ammo_casing/energy/laser/microfusion
 	name = "microfusion energy lens"
 	projectile_type = /obj/projectile/beam/laser/microfusion
-	e_cost = LASER_SHOTS(10, STANDARD_CELL_CHARGE) // 10 shots with a normal cell.
+	e_cost = 100 //LASER_SHOTS(10, STANDARD_CELL_CHARGE) // 10 shots with a normal cell. //monkestation edit, replaced to simply be 100(still 10 shots I think)
 	select_name = "laser"
-	fire_sound = 'modular_skyrat/modules/microfusion/sound/laser_1.ogg'
+	fire_sound = 'monkestation/code/modules/microfusion/sound/laser_1.ogg'
 	fire_sound_volume = 100
 
 /obj/item/ammo_casing/proc/refresh_shot()
@@ -15,12 +15,12 @@
 
 /obj/projectile/beam/laser/microfusion
 	name = "microfusion laser"
-	icon = 'modular_skyrat/modules/microfusion/icons/projectiles.dmi'
+	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
 	damage = 25
 
 /obj/projectile/beam/microfusion_disabler
 	name = "microfusion disabler laser"
-	icon = 'modular_skyrat/modules/microfusion/icons/projectiles.dmi'
+	icon = 'monkestation/code/modules/microfusion/icons/projectiles.dmi'
 	icon_state = "disabler"
 	damage = 41
 	damage_type = STAMINA

@@ -23,7 +23,7 @@
 	icon = 'icons/obj/abductor.dmi'
 	icon_state = "tile_abductor"
 	inhand_icon_state = "tile-abductor"
-	mats_per_unit = list(/datum/material/iron = MINERAL_MATERIAL_AMOUNT*0.25)
+	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*0.25)
 	turf_type = /turf/open/floor/mineral/fake_abductor
 	mineralType = "iron"
 	merge_type = /obj/item/stack/tile/mineral/abductor

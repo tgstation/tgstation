@@ -6,11 +6,11 @@
 /obj/item/gun/microfusion
 	name = "prototype detatchable cell energy projection aparatus"
 	desc = "The coders have obviously failed to realise this is broken."
-	icon = 'modular_skyrat/modules/microfusion/icons/microfusion_gun40x32.dmi'
+	icon = 'monkestation/code/modules/microfusion/icons/microfusion_gun40x32.dmi'
 	icon_state = "mcr01"
 	inhand_icon_state = "mcr01"
-	lefthand_file = 'modular_skyrat/modules/microfusion/icons/guns_lefthand.dmi'
-	righthand_file = 'modular_skyrat/modules/microfusion/icons/guns_righthand.dmi'
+	lefthand_file = 'monkestation/code/modules/microfusion/icons/guns_lefthand.dmi'
+	righthand_file = 'monkestation/code/modules/microfusion/icons/guns_righthand.dmi'
 	can_bayonet = FALSE
 	weapon_weight = WEAPON_HEAVY
 	w_class = WEIGHT_CLASS_BULKY
@@ -39,13 +39,13 @@
 	/// The microfusion lens used for generating the beams.
 	var/obj/item/ammo_casing/energy/laser/microfusion/microfusion_lens
 	/// The sound played when you insert a cell.
-	var/sound_cell_insert = 'modular_skyrat/modules/microfusion/sound/mag_insert.ogg'
+	var/sound_cell_insert = 'monkestation/code/modules/microfusion/sound/mag_insert.ogg'
 	/// Should the insertion sound played vary?
 	var/sound_cell_insert_vary = TRUE
 	/// The volume at which we will play the insertion sound.
 	var/sound_cell_insert_volume = 50
 	/// The sound played when you remove a cell.
-	var/sound_cell_remove = 'modular_skyrat/modules/microfusion/sound/mag_insert.ogg'
+	var/sound_cell_remove = 'monkestation/code/modules/microfusion/sound/mag_insert.ogg'
 	/// Should the removal sound played vary?
 	var/sound_cell_remove_vary = TRUE
 	/// The volume at which we will play the removal sound.
@@ -103,13 +103,14 @@
 	recharge_newshot(TRUE)
 	AddElement(/datum/element/update_icon_updates_onmob)
 	update_appearance()
-	AddComponent(/datum/component/ammo_hud)
+//	AddComponent(/datum/component/ammo_hud) //monkestation removal, no ammo huds for us
 	RegisterSignal(src, COMSIG_ITEM_RECHARGED, PROC_REF(instant_recharge))
 	base_fire_delay = fire_delay
 	START_PROCESSING(SSobj, src)
 
-/obj/item/gun/microfusion/give_gun_safeties()
-	AddComponent(/datum/component/gun_safety)
+//monkestation temp removal: we dont have gun safeties
+///obj/item/gun/microfusion/give_gun_safeties()
+//	AddComponent(/datum/component/gun_safety)
 
 /obj/item/gun/microfusion/add_weapon_description()
 	AddElement(/datum/element/weapon_description, attached_proc = PROC_REF(add_notes_energy))
@@ -188,7 +189,7 @@
 
 /obj/item/gun/microfusion/update_overlays()
 	. = ..()
-	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) //update the ammo hud since it's heavily dependent on the gun's state
+//	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) //update the ammo hud since it's heavily dependent on the gun's state //monkestation removal: still no ammo huds
 	if(!phase_emitter)
 		. += "[icon_state]_phase_emitter_missing"
 	else if(phase_emitter.damaged)
@@ -245,7 +246,7 @@
 	if(istype(attacking_item, base_phase_emitter_type))
 		insert_emitter(attacking_item, user)
 
-/obj/item/gun/microfusion/process_chamber(empty_chamber, from_firing, chamber_next_round)
+/obj/item/gun/microfusion/process_chamber(mob/living/user, empty_chamber, from_firing, chamber_next_round)
 	. = ..()
 	if(!cell?.stabilised && prob(40))
 		do_sparks(2, FALSE, src) //Microfusion guns create sparks!
@@ -329,11 +330,12 @@
 // To maintain modularity, I am moving this proc override here.
 /obj/item/gun/microfusion/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
 	var/base_bonus_spread = 0
-	if(user)
+//monkestation removal: whatever it is, we dont have it
+/*	if(user)
 		var/list/bonus_spread_values = list(base_bonus_spread, bonus_spread)
 		SEND_SIGNAL(user, COMSIG_MOB_FIRED_GUN, src, target, params, zone_override, bonus_spread_values)
 		base_bonus_spread = bonus_spread_values[MIN_BONUS_SPREAD_INDEX]
-		bonus_spread = bonus_spread_values[MAX_BONUS_SPREAD_INDEX]
+		bonus_spread = bonus_spread_values[MAX_BONUS_SPREAD_INDEX]*/
 
 	SEND_SIGNAL(src, COMSIG_GUN_FIRED, user, target, params, zone_override)
 
@@ -390,7 +392,7 @@
 		user.update_held_items()
 	SSblackbox.record_feedback("tally", "gun_fired", 1, type)
 
-	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
+//	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) //monkestation edit: no hud
 
 	return TRUE
 
@@ -447,7 +449,7 @@
 		return FALSE
 	process_chamber()
 	update_appearance()
-	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD)
+//	SEND_SIGNAL(src, COMSIG_UPDATE_AMMO_HUD) //no hud
 	return TRUE
 
 /obj/item/gun/microfusion/shoot_live_shot(mob/living/user, pointblank, atom/pbtarget, message)

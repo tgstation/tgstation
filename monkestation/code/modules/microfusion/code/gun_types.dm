@@ -4,9 +4,9 @@
 	icon_state = "mcr01"
 	inhand_icon_state = "mcr01"
 	shaded_charge = TRUE
-
-/obj/item/gun/microfusion/mcr01/give_manufacturer_examine()
-	AddElement(/datum/element/manufacturer_examine, COMPANY_MICRON)
+//monkestation module part removal, we dont have gun companies
+///obj/item/gun/microfusion/mcr01/give_manufacturer_examine()
+//	AddElement(/datum/element/manufacturer_examine, COMPANY_MICRON)
 
 /// Gun for cargo crates.
 /obj/item/gun/microfusion/mcr01/advanced
@@ -48,11 +48,13 @@
 *	MICROFUSION SPAWNERS
 */
 
-/obj/effect/spawner/armory_spawn/microfusion
+//monkestation temp removal, we dont have this type of spawner currently
+/*/obj/effect/spawner/armory_spawn/microfusion
+
 	guns = list(
 		/obj/item/gun/microfusion/mcr01,
 		/obj/item/gun/microfusion/mcr01,
 		/obj/item/gun/microfusion/mcr01,
 		/obj/item/gun/microfusion/mcr01,
-	)
+	)*/
 

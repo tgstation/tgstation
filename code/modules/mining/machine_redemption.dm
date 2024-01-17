@@ -139,7 +139,7 @@
 	var/list/appended_list = list()
 
 	for(var/mat in mat_container.materials)
-		var/datum/material/M = mat
+		var/datum/material/material_datum = mat
 		var/mineral_amount = mat_container.materials[mat] / SHEET_MATERIAL_AMOUNT
 		if(mineral_amount)
 			has_minerals = TRUE

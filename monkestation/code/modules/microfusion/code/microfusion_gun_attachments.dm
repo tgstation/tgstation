@@ -6,7 +6,7 @@
 /obj/item/microfusion_gun_attachment
 	name = "microfusion gun attachment"
 	desc = "If you see this yell at a coder"
-	icon = 'modular_skyrat/modules/microfusion/icons/microfusion_gun_attachments.dmi'
+	icon = 'monkestation/code/modules/microfusion/icons/microfusion_gun_attachments.dmi'
 	w_class = WEIGHT_CLASS_NORMAL
 	/// The attachment overlay icon state.
 	var/attachment_overlay_icon_state
@@ -179,7 +179,7 @@ Lasers set the target on fire.
 	heat_addition = 90
 	slot = GUN_SLOT_BARREL
 	projectile_override = /obj/projectile/beam/laser/microfusion/superheated
-	new_fire_sound = 'modular_skyrat/modules/microfusion/sound/vaporize.ogg'
+	new_fire_sound = 'monkestation/code/modules/microfusion/sound/vaporize.ogg'
 
 /*
 HELLFIRE ATTACHMENT
@@ -195,7 +195,7 @@ Makes the gun shoot hellfire lasers.
 	power_usage = 20
 	slot = GUN_SLOT_BARREL
 	projectile_override = /obj/projectile/beam/laser/microfusion/hellfire
-	new_fire_sound = 'modular_skyrat/modules/microfusion/sound/melt.ogg'
+	new_fire_sound = 'monkestation/code/modules/microfusion/sound/melt.ogg'
 
 /*
 REPEATER ATTACHMENT
@@ -247,7 +247,7 @@ The gun can fire X-RAY shots.
 	attachment_overlay_icon_state = "attachment_xray"
 	heat_addition = 90
 	power_usage = 50
-	new_fire_sound = 'modular_skyrat/modules/microfusion/sound/incinerate.ogg'
+	new_fire_sound = 'monkestation/code/modules/microfusion/sound/incinerate.ogg'
 	projectile_override = /obj/projectile/beam/laser/microfusion/xray
 
 /obj/item/microfusion_gun_attachment/barrel/xray/examine(mob/user)
@@ -427,7 +427,7 @@ Allows for flashlights bayonets and adds 1 slot to equipment.
 /obj/item/microfusion_gun_attachment/rail/run_attachment(obj/item/gun/microfusion/microfusion_gun)
 	. = ..()
 	microfusion_gun.AddComponent(/datum/component/seclite_attachable, \
-		light_overlay_icon = 'modular_skyrat/modules/microfusion/icons/microfusion_gun40x32.dmi', \
+		light_overlay_icon = 'monkestation/code/modules/microfusion/icons/microfusion_gun40x32.dmi', \
 		light_overlay = "flight")
 	microfusion_gun.can_bayonet = TRUE
 

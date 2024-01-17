@@ -8,7 +8,7 @@
 /obj/item/microfusion_phase_emitter
 	name = "basic microfusion phase emitter"
 	desc = "A first-generation phase emitter, this is the core of the weapon and the source of the beam."
-	icon = 'modular_skyrat/modules/microfusion/icons/microfusion_gun_attachments.dmi'
+	icon = 'monkestation/code/modules/microfusion/icons/microfusion_gun_attachments.dmi'
 	icon_state = "phase_emitter"
 	base_icon_state = "phase_emitter"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -169,7 +169,7 @@
 /obj/item/microfusion_phase_emitter/proc/kill()
 	damaged = TRUE
 	name = "damaged [name]"
-	playsound(src, 'modular_skyrat/modules/microfusion/sound/overheat.ogg', 70)
+	playsound(src, 'monkestation/code/modules/microfusion/sound/overheat.ogg', 70)
 	say("ERROR: Integrity failure!")
 	STOP_PROCESSING(SSobj, src)
 

@@ -9,8 +9,7 @@ Essentially, power cells that malfunction if not used in an MCR, and should only
 /obj/item/stock_parts/cell/microfusion //Just a standard cell.
 	name = "microfusion cell"
 	desc = "A standard-issue microfusion cell, produced by Micron Control Systems. For safety reasons, they cannot be charged unless they are inside of a compatible Micron Control Systems firearm."
-	icon = 'modular_skyrat/modules/microfusion/icons/microfusion_cells.dmi'
-	charging_icon = "mf_in" //This is stored in cell.dmi in the aesthetics module
+	icon = 'monkestation/code/modules/microfusion/icons/microfusion_cells.dmi'
 	icon_state = "microfusion"
 	w_class = WEIGHT_CLASS_NORMAL
 	maxcharge = 1200 //12 shots
