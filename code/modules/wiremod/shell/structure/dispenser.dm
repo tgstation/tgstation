@@ -63,8 +63,13 @@
 /obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()
-	if(istype(item, /obj/item/wrench) || istype(item, /obj/item/multitool) || istype(item, /obj/item/integrated_circuit))
-		return ..()
+
+	/// If left clicking, do not insert circuit-important items
+	var/is_right_clicking = LAZYACCESS(params2list(params), RIGHT_CLICK)
+	if(isnull(is_right_clicking))
+		if(istype(item, /obj/item/integrated_circuit) || istype(item, /obj/item/circuit_component) || isidcard(item))
+			return ..()
+
 	if(item.w_class > max_weight && !istype(item, /obj/item/storage/bag))
 		balloon_alert(user, "item too big!")
 		return FALSE
