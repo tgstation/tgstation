@@ -490,7 +490,7 @@
 					if(PLAY_NEXT_REACTION)
 						current_reaction_index = (current_reaction_index + 1) % len
 					if(PLAY_PREVIOUS_REACTION)
-						current_reaction_index = (current_reaction_index - 1) % len
+						current_reaction_index = max(current_reaction_index - 1, 1)
 					if(PLAY_USER_REACTION)
 						var/list/reaction_names = list()
 						for(var/datum/chemical_reaction/reaction as anything in reactions_to_test)
