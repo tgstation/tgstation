@@ -675,7 +675,7 @@
 	slowdown = 0
 	armor_type = /datum/armor/hardsuit_syndi_admin
 	cell = /obj/item/stock_parts/cell/infinite
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
+	clothing_flags = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
 	strip_delay = 1000
 	equip_delay_other = 1000
 
