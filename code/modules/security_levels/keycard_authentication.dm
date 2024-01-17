@@ -5,7 +5,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 #define KEYCARD_BSA_UNLOCK "Bluespace Artillery Unlock"
 
 #define ACCESS_GRANTING_COOLDOWN (30 SECONDS)
-#define KEYCARD_PIN_UNRESTRICT "Unrestrict Permit Firing Pins" //MONKESTATION EDIT
 
 /obj/machinery/keycard_auth
 	name = "Keycard Authentication Device"
@@ -105,12 +104,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 				SEND_GLOBAL_SIGNAL(COMSIG_ON_DEPARTMENT_ACCESS, info["regions"])
 				balloon_alert(usr, "key access sent")
 				return
-		//MONKESTATION EDIT START
-		if("pin_unrestrict")
-			if(!event_source)
-				sendEvent(KEYCARD_PIN_UNRESTRICT)
-				. = TRUE
-		//MONKESTATION EDIT END
 
 /obj/machinery/keycard_auth/update_appearance(updates)
 	. = ..()
@@ -164,10 +157,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/keycard_auth, 26)
 			make_maint_all_access()
 		if(KEYCARD_BSA_UNLOCK)
 			toggle_bluespace_artillery()
-		//MONKESTATION EDIT START
-		if(KEYCARD_PIN_UNRESTRICT)
-			toggle_permit_pins()
-		//MONKESTATION EDIT END
 
 GLOBAL_VAR_INIT(emergency_access, FALSE)
 /proc/make_maint_all_access()
@@ -199,4 +188,3 @@ GLOBAL_VAR_INIT(emergency_access, FALSE)
 #undef KEYCARD_RED_ALERT
 #undef KEYCARD_EMERGENCY_MAINTENANCE_ACCESS
 #undef KEYCARD_BSA_UNLOCK
-#undef KEYCARD_PIN_UNRESTRICT //MONKESTATION EDIT

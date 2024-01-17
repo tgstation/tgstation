@@ -129,10 +129,6 @@
 	..()
 	new /obj/item/clothing/accessory/armband/cargo(src)
 	new /obj/item/encryptionkey/headset_cargo(src)
-//monkestation edit start
-	new /obj/item/clothing/glasses/hud/gun_permit(src)
-	new /obj/item/storage/box/gunset/pepperball(src)
-//monkestation edit end
 
 /obj/structure/closet/secure_closet/security/engine
 
@@ -140,7 +136,6 @@
 	..()
 	new /obj/item/clothing/accessory/armband/engine(src)
 	new /obj/item/encryptionkey/headset_eng(src)
-	new /obj/item/storage/box/gunset/pepperball(src) //monkestation edit
 
 /obj/structure/closet/secure_closet/security/science
 
@@ -148,7 +143,6 @@
 	..()
 	new /obj/item/clothing/accessory/armband/science(src)
 	new /obj/item/encryptionkey/headset_sci(src)
-	new /obj/item/storage/box/gunset/pepperball(src) //monkestation edit
 
 /obj/structure/closet/secure_closet/security/med
 
@@ -156,7 +150,6 @@
 	..()
 	new /obj/item/clothing/accessory/armband/medblue(src)
 	new /obj/item/encryptionkey/headset_med(src)
-	new /obj/item/storage/box/gunset/pepperball(src) //monkestation edit
 
 /obj/structure/closet/secure_closet/detective
 	name = "\improper detective's cabinet"

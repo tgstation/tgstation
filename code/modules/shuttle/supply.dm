@@ -166,7 +166,6 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 		SSshuttle.order_history += spawning_order
 		QDEL_NULL(spawning_order.applied_coupon)
 
-		spawning_order.on_spawn() //MONKESTATION EDIT
 		if(!spawning_order.pack.goody) //we handle goody crates below
 			spawning_order.generate(pick_n_take(empty_turfs))
 

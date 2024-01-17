@@ -282,16 +282,6 @@
 		if("toggleprivate")
 			self_paid = !self_paid
 			. = TRUE
-		//MONKESTATION EDIT START
-		if("gun_window")
-			var/datum/component/armament/cargo_gun/gun_comp = holder.holder.GetComponent(/datum/component/armament/cargo_gun)
-			if(!gun_comp)
-				holder.holder.AddComponent(/datum/component/armament/cargo_gun, subtypesof(/datum/armament_entry/cargo_gun), 0)
-			gun_comp = holder.holder.GetComponent(/datum/component/armament/cargo_gun)
-			gun_comp.parent_prog ||= src
-			gun_comp.ui_interact(usr)
-			. = TRUE
-		//MONKESTATION EDIT END
 	if(.)
 		post_signal(cargo_shuttle)
 

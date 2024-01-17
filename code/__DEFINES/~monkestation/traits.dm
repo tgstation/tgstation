@@ -10,5 +10,3 @@
 #define TRAIT_NO_SLAB_INVOKE "no_slab_invoke"
 /// Indicates that they've inhaled helium.
 #define TRAIT_HELIUM "helium"
-/// Allows the user to instantly reload.
-#define TRAIT_INSTANT_RELOAD "instant_reload"

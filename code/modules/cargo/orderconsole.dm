@@ -286,11 +286,6 @@
 		if(order.applied_coupon)
 			say("Coupon refunded.")
 			order.applied_coupon.forceMove(get_turf(src))
-		//MONKESTATION EDIT START
-		if(istype(order, /datum/supply_order/armament))
-			var/datum/supply_order/armament/the_order = order
-			the_order.reimburse_armament()
-		//MONKESTATION EDIT END
 		SSshuttle.shopping_list -= order
 		. = TRUE
 		break
@@ -512,12 +507,6 @@
 		if("toggleprivate")
 			self_paid = !self_paid
 			. = TRUE
-		//MONKESTATION EDIT START
-		if("gun_window")
-			var/datum/component/armament/cargo_gun/gun_comp = GetComponent(/datum/component/armament/cargo_gun)
-			gun_comp.ui_interact(usr)
-			. = TRUE
-		//MONKESTATION EDIT END
 	if(.)
 		post_signal(cargo_shuttle)
 
