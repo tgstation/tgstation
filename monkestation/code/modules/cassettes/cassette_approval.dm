@@ -119,7 +119,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 			approve_review(usr)
 		if("deny")
 			to_chat(submitter, span_warning("You feel a wave of disapointment wash over you, you can tell that your cassette was denied by the Space Board of Music"))
-			add_event_to_buffer(submitter,  data = "tape has been rejected.", log_key = "MUSIC")
+			logger.Log(LOG_CATEGORY_MUSIC, "[submitter]'s tape has been rejected by [usr]", list("approver" = usr.name, "submitter" = submitter.name))
 			action_taken = TRUE
 
 /datum/cassette_review/proc/approve_review(mob/user)
@@ -129,7 +129,7 @@ GLOBAL_LIST_INIT(cassette_reviews, list())
 	to_chat(submitter, span_notice("You can feel the Space Board of Music has approved your cassette:[submitted_tape.name]."))
 	submitted_tape.forceMove(get_turf(submitter))
 	message_admins("[submitter]'s tape has been approved by [user]")
-	add_event_to_buffer(submitter, user,  data = "tape has been approved by [user].", log_key = "MUSIC")
+	logger.Log(LOG_CATEGORY_MUSIC, "[submitter]'s tape has been approved by [user]", list("approver" = user.name, "submitter" = submitter.name))
 	action_taken = TRUE
 
 /proc/fetch_review(id)

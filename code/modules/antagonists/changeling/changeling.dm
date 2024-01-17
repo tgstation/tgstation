@@ -412,7 +412,6 @@
 	purchased_powers[power_path] = new_action
 	new_action.on_purchase(owner.current) // Grant() is ran in this proc, see changeling_powers.dm.
 	log_changeling_power("[key_name(owner)] adapted the [new_action] power")
-	add_event_to_buffer(owner, data = "adapted the [new_action] power.", log_key = "CHANGELING")
 
 	return TRUE
 
@@ -437,7 +436,6 @@
 	can_respec = FALSE
 	SSblackbox.record_feedback("tally", "changeling_power_purchase", 1, "Readapt")
 	log_changeling_power("[key_name(owner)] readapted their changeling powers")
-	add_event_to_buffer(owner, data = "readapted their changeling powers", log_key = "CHANGELING")
 	return TRUE
 
 /*

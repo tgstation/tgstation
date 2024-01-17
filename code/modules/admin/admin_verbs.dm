@@ -95,6 +95,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/cmd_admin_law_panel,
 	/client/proc/spawn_pollution,
 	/client/proc/view_player_camera,
+	/client/proc/log_viewer_new,
 	)
 GLOBAL_LIST_INIT(admin_verbs_ban, list(/client/proc/unban_panel, /client/proc/ban_panel, /client/proc/stickybanpanel))
 GLOBAL_PROTECT(admin_verbs_ban)
@@ -391,7 +392,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_bombers()
 	set name = "List Bombers"
-	set category = "Admin.Game"
+	set category = "Admin.Logging"
 	if(!holder)
 		return
 	holder.list_bombers()
@@ -399,7 +400,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_signalers()
 	set name = "List Signalers"
-	set category = "Admin.Game"
+	set category = "Admin.Logging"
 	if(!holder)
 		return
 	holder.list_signalers()
@@ -407,7 +408,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_law_changes()
 	set name = "List Law Changes"
-	set category = "Debug"
+	set category = "Admin.Logging"
 	if(!holder)
 		return
 	holder.list_law_changes()
@@ -423,7 +424,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_dna()
 	set name = "List DNA"
-	set category = "Debug"
+	set category = "Admin.Logging"
 	if(!holder)
 		return
 	holder.list_dna()
@@ -431,7 +432,7 @@ GLOBAL_PROTECT(admin_verbs_poll)
 
 /client/proc/list_fingerprints()
 	set name = "List Fingerprints"
-	set category = "Debug"
+	set category = "Admin.Logging"
 	if(!holder)
 		return
 	holder.list_fingerprints()

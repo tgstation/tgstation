@@ -44,7 +44,6 @@
 	powers += power
 	power.Grant(owner.current)
 	log_uplink("[key_name(owner.current)] purchased [power].")
-	add_event_to_buffer(owner.current, data = "purchased [power].", log_key = "UPLINK")
 
 /datum/antagonist/vassal/proc/LevelUpPowers()
 	for(var/datum/action/cooldown/bloodsucker/power in powers)

@@ -111,7 +111,6 @@
 /datum/uplink_item/proc/purchase(mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
 	var/atom/A = spawn_item(item, user, uplink_handler, source)
 	log_uplink("[key_name(user)] purchased [src] for [cost] telecrystals from [source]'s uplink")
-	add_event_to_buffer(user, data = "purchased [src] for [cost] telecrystals from [source]'s uplink", log_key = "UPLINK")
 	if(purchase_log_vis && uplink_handler.purchase_log)
 		uplink_handler.purchase_log.LogPurchase(A, src, cost)
 	if(lock_other_purchases)
