@@ -193,24 +193,24 @@
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
-/// Re-enables this cooldown actions
+/// Re-enables this cooldown action
 /datum/action/cooldown/proc/enable()
 	check_flags &= ~AB_TEMPORARY_DISABLE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
-/// Disables this cooldown actions
+/// Disables this cooldown action
 /datum/action/cooldown/proc/disable()
 	check_flags |= AB_TEMPORARY_DISABLE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 	START_PROCESSING(SSfastprocess, src)
 
-/// Re-enables cooldown actions
+/// Re-enables all cooldown actions
 /datum/action/cooldown/proc/enable_cooldown_actions()
 	for(var/datum/action/cooldown/cd_action in owner.actions)
 		cd_action.enable()
 
-/// Disables cooldown actions
+/// Disables all cooldown actions
 /datum/action/cooldown/proc/disable_cooldown_actions()
 	for(var/datum/action/cooldown/cd_action in owner.actions)
 		cd_action.disable()

@@ -1,108 +1,114 @@
 /datum/action/cooldown/mob_cooldown/create_turrets
-	name = "Create Turrets"
-	button_icon = 'icons/mob/actions/actions_spells.dmi'
-	button_icon_state = "fireball"
-	desc = "Create turrets that fire at any enemies."
-	cooldown_time = 3 SECONDS
+	name = "Create Sentinels"
+	button_icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	button_icon_state = "legion_turret"
+	desc = "Create legion sentinels that fire at any enemies."
+	cooldown_time = 2 SECONDS
+	var/minimum_turrets = 2
+	var/maximum_turrets = 2
 
-/datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
-	attack_sequence(target_atom)
+/datum/action/cooldown/mob_cooldown/create_turrets/Activate(atom/target_atom)
+	disable_cooldown_actions()
+	create(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
-/// Apply our specific fire breathing shape, in proc form so we can override it in subtypes
-/datum/action/cooldown/mob_cooldown/fire_breath/proc/attack_sequence(atom/target)
-	playsound(owner.loc, fire_sound, 200, TRUE)
-	fire_line(target)
-
-/// Breathe fire in a line towards the target, optionally rotated at an offset from the target
-/datum/action/cooldown/mob_cooldown/fire_breath/proc/fire_line(atom/target, offset)
-	if (isnull(target))
-		return
-	var/turf/target_turf = get_ranged_target_turf_direct(owner, target, fire_range, offset)
-	var/list/turfs = get_line(owner, target_turf) - get_turf(owner)
-	INVOKE_ASYNC(src, PROC_REF(progressive_fire_line), turfs)
-
-/// Creates fire with a delay on the list of targeted turfs
-/datum/action/cooldown/mob_cooldown/fire_breath/proc/progressive_fire_line(list/burn_turfs)
-	if (QDELETED(owner) || owner.stat == DEAD)
-		return
-	// Guys we have already hit, no double dipping
-	var/list/hit_list = list(owner) // also don't burn ourselves
-	for(var/turf/target_turf in burn_turfs)
-		if (target_turf.is_blocked_turf(exclude_mobs = TRUE))
-			return
-		burn_turf(target_turf, hit_list, owner)
-		sleep(fire_delay)
-
-/// Finally spawn the actual fire, spawns the fire hotspot in case you want to recolour it or something
-/datum/action/cooldown/mob_cooldown/fire_breath/proc/burn_turf(turf/fire_turf, list/hit_list, mob/living/source)
-	var/obj/effect/hotspot/fire_hotspot = new /obj/effect/hotspot(fire_turf)
-	fire_turf.hotspot_expose(fire_temperature, fire_volume, TRUE)
-
-	for(var/mob/living/barbecued in fire_turf.contents)
-		if(barbecued in hit_list)
+/datum/action/cooldown/mob_cooldown/create_turrets/proc/create(atom/target)
+	playsound(owner, 'sound/magic/RATTLEMEBONES.ogg', 100, TRUE)
+	var/list/possiblelocations = list()
+	for(var/turf/T in oview(owner, 4)) //Only place the turrets on open turfs
+		if(T.is_blocked_turf())
 			continue
-		hit_list |= barbecued
-		on_burn_mob(barbecued, source)
+		possiblelocations += T
+	for(var/i in 1 to min(rand(minimum_turrets, maximum_turrets), LAZYLEN(possiblelocations))) //Makes sure aren't spawning in nullspace.
+		var/chosen = pick(possiblelocations)
+		new /obj/structure/legionturret(chosen)
+		possiblelocations -= chosen
 
-	for(var/obj/vehicle/sealed/mecha/robotron in fire_turf.contents)
-		if(robotron in hit_list)
+///A basic turret that shoots at nearby mobs. Intended to be used for the legion megafauna.
+/obj/structure/legionturret
+	name = "\improper Legion sentinel"
+	desc = "The eye pierces your soul."
+	icon = 'icons/mob/simple/lavaland/lavaland_monsters.dmi'
+	icon_state = "legion_turret"
+	light_power = 0.5
+	light_range = 2
+	max_integrity = 80
+	luminosity = 6
+	anchored = TRUE
+	density = TRUE
+	layer = ABOVE_OBJ_LAYER
+	armor_type = /datum/armor/structure_legionturret
+	//Compared with the targeted mobs. If they have the faction, turret won't shoot.
+	faction = list(FACTION_MINING)
+	///What kind of projectile the actual damaging part should be.
+	var/projectile_type = /obj/projectile/beam/legion
+	///Time until the tracer gets shot
+	var/initial_firing_time = 18
+	///How long it takes between shooting the tracer and the projectile.
+	var/shot_delay = 8
+
+/datum/armor/structure_legionturret
+	laser = 100
+
+/obj/structure/legionturret/Initialize(mapload)
+	. = ..()
+	addtimer(CALLBACK(src, PROC_REF(set_up_shot)), initial_firing_time)
+	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
+
+///Handles an extremely basic AI
+/obj/structure/legionturret/proc/set_up_shot()
+	for(var/mob/living/L in oview(9, src))
+		if(L.stat == DEAD || L.stat == UNCONSCIOUS)
 			continue
-		hit_list |= robotron
-		robotron.take_damage(mech_damage, BURN, FIRE)
+		if(faction_check(faction, L.faction))
+			continue
+		fire(L)
+		return
+	fire(get_edge_target_turf(src, pick(GLOB.cardinals)))
 
-	return fire_hotspot
+///Called when attacking a target. Shoots a projectile at the turf underneath the target.
+/obj/structure/legionturret/proc/fire(atom/target)
+	var/turf/T = get_turf(target)
+	var/turf/T1 = get_turf(src)
+	if(!T || !T1)
+		return
+	//Now we generate the tracer.
+	var/angle = get_angle(T1, T)
+	var/datum/point/vector/V = new(T1.x, T1.y, T1.z, 0, 0, angle)
+	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
+	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)
+	addtimer(CALLBACK(src, PROC_REF(fire_beam), angle), shot_delay)
 
-/// Do something unpleasant to someone we set on fire
-/datum/action/cooldown/mob_cooldown/fire_breath/proc/on_burn_mob(mob/living/barbecued, mob/living/source)
-	to_chat(barbecued, span_userdanger("You are burned by [source]'s fire breath!"))
-	barbecued.adjustFireLoss(fire_damage)
+///Called shot_delay after the turret shot the tracer. Shoots a projectile into the same direction.
+/obj/structure/legionturret/proc/fire_beam(angle)
+	var/obj/projectile/ouchie = new projectile_type(loc)
+	ouchie.firer = src
+	ouchie.fire(angle)
+	playsound(src, 'sound/effects/bin_close.ogg', 100, TRUE)
+	QDEL_IN(src, 5)
 
-/// Shoot three lines of fire in a sort of fork pattern approximating a cone
-/datum/action/cooldown/mob_cooldown/fire_breath/cone
-	name = "Fire Cone"
-	desc = "Breathe several lines of fire directed at a target."
-	/// The angles relative to the target that shoot lines of fire
-	var/list/angles = list(-40, 0, 40)
+///Used for the legion turret.
+/obj/projectile/beam/legion
+	name = "blood pulse"
+	hitsound = 'sound/magic/magic_missile.ogg'
+	damage = 19
+	range = 6
+	light_color = COLOR_SOFT_RED
+	impact_effect_type = /obj/effect/temp_visual/kinetic_blast
+	tracer_type = /obj/effect/projectile/tracer/legion
+	muzzle_type = /obj/effect/projectile/tracer/legion
+	impact_type = /obj/effect/projectile/tracer/legion
+	hitscan = TRUE
+	projectile_piercing = ALL
 
-/datum/action/cooldown/mob_cooldown/fire_breath/cone/attack_sequence(atom/target)
-	playsound(owner.loc, fire_sound, 200, TRUE)
-	for(var/offset in angles)
-		fire_line(target, offset)
+///Used for the legion turret tracer.
+/obj/effect/projectile/tracer/legion/tracer
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "blood_light"
 
-/// Shoot fire in a whole bunch of directions
-/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire
-	name = "Mass Fire"
-	button_icon = 'icons/effects/fire.dmi'
-	button_icon_state = "1"
-	desc = "Breathe flames in all directions."
-	cooldown_time = 3 SECONDS
-	click_to_activate = FALSE
-	/// How many fire lines do we produce to turn a full circle?
-	var/sectors = 12
-	/// How long do we wait between each spin?
-	var/breath_delay = 2.5 SECONDS
-	/// How many full circles do we perform?
-	var/total_spins = 3
-
-/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/Activate(atom/target_atom)
-	target_atom = get_step(owner, owner.dir) // Just shoot it forwards, we don't need to click on someone for this one
-	return ..()
-
-/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/attack_sequence(atom/target)
-	var/queued_spins = 0
-	for (var/i in 1 to total_spins)
-		var/delay = queued_spins * breath_delay
-		queued_spins++
-		addtimer(CALLBACK(src, PROC_REF(fire_spin), target, queued_spins), delay)
-
-/// Breathe fire in a circle, with a slight angle offset based on which of our several circles it is
-/datum/action/cooldown/mob_cooldown/fire_breath/mass_fire/proc/fire_spin(target, spin_count)
-	if (QDELETED(owner) || owner.stat == DEAD)
-		return // Too dead to spin
-	playsound(owner.loc, fire_sound, 200, TRUE)
-	var/angle_increment = 360 / sectors
-	var/additional_offset = spin_count * angle_increment / 2
-	for (var/i in 1 to sectors)
-		fire_line(target, (angle_increment * i) + (additional_offset))
+///Used for the legion turret beam.
+/obj/effect/projectile/tracer/legion
+	icon = 'icons/effects/beam.dmi'
+	icon_state = "blood"
