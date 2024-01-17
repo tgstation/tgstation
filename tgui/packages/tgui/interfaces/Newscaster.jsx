@@ -6,7 +6,6 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
-import { marked } from 'marked';
 import { useState } from 'react';
 
 import { useBackend, useSharedState } from '../backend';
@@ -23,7 +22,7 @@ import {
   Tabs,
   TextArea,
 } from '../components';
-import { sanitizeText } from '../sanitize';
+import { processedText } from '../process';
 import { BountyBoardContent } from './BountyBoard';
 import { UserDetails } from './Vending';
 
@@ -512,20 +511,6 @@ const NewscasterChannelSelector = (props) => {
       </Tabs>
     </Section>
   );
-};
-
-export const processedText = (value) => {
-  const textHtml = {
-    __html: sanitizeText(
-      marked(value, {
-        breaks: true,
-        smartypants: true,
-        smartLists: true,
-        baseUrl: 'thisshouldbreakhttp',
-      }),
-    ),
-  };
-  return textHtml;
 };
 
 /** This is where the channels comments get spangled out (tm) */
