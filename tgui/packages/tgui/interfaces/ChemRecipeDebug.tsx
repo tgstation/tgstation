@@ -16,7 +16,13 @@ import { Window } from '../layouts';
 import { ActiveReaction, ReactionDisplay } from './ChemHeater';
 import { Beaker, BeakerSectionDisplay } from './common/BeakerDisplay';
 
-const TEMP_MODES = ['Reaction Temp', 'Forced Temp', 'Minimum Temp'];
+const TEMP_MODES = [
+  'Reaction Temp',
+  'Forced Temp',
+  'Minimum Temp',
+  'Optimal Temp',
+  'Overheat Temp',
+];
 const REACTION_MODES = ['Next Reaction', 'Previous Reaction', 'Pick Reaction'];
 const REACTION_VARS = [
   'Required Temp',
@@ -282,6 +288,7 @@ export const ChemRecipeDebug = (props) => {
                         width="30%"
                         selected={REACTION_MODES[current_reaction_mode]}
                         options={REACTION_MODES}
+                        disabled={current_reaction_name === 'N/A'}
                         onSelected={(value) =>
                           act('reaction_mode', {
                             target: value,
@@ -297,7 +304,7 @@ export const ChemRecipeDebug = (props) => {
                       <Button
                         color="green"
                         icon="play"
-                        disabled={isReacting}
+                        disabled={isReacting || current_reaction_name === 'N/A'}
                         onClick={() => act('start_reaction')}
                       >
                         Play

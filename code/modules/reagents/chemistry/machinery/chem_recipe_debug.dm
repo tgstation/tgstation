@@ -9,6 +9,10 @@
 #define USE_USER_TEMPERATURE 1
 ///force the minimum required temperature for the reaction to start on the reaction
 #define USE_MINIMUM_TEMPERATURE 2
+///force the optimal temperature for the reaction
+#define USE_OPTIMAL_TEMPERATURE 3
+///force the overheat temperature for the reaction. At this point reagents start to decrease
+#define USE_OVERHEAT_TEMPERATURE 4
 
 ///Play the next reaction i.e. increment current_reaction_index
 #define PLAY_NEXT_REACTION 0
@@ -123,6 +127,25 @@
 	for(var/datum/tgui/ui in src.open_uis)
 		ui.send_update()
 
+
+///Retrives the target temperature to be imposed on the test reaction based on temp_mode
+/obj/machinery/chem_recipe_debug/proc/decode_target_temperature()
+	PRIVATE_PROC(TRUE)
+
+	. = null
+	switch(temp_mode)
+		if(USE_MINIMUM_TEMPERATURE)
+			var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index]
+			return test_reaction.is_cold_recipe ? test_reaction.required_temp - 1 : test_reaction.required_temp + 1
+		if(USE_OPTIMAL_TEMPERATURE)
+			var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index]
+			return test_reaction.optimal_temp
+		if(USE_OVERHEAT_TEMPERATURE)
+			var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index]
+			return test_reaction.overheat_temp
+		if(USE_USER_TEMPERATURE)
+			return forced_temp
+
 /**
  * Adjusts the temperature, ph & purity of the holder
  * Arguments
@@ -132,15 +155,7 @@
 /obj/machinery/chem_recipe_debug/proc/adjust_environment(seconds_per_tick)
 	PRIVATE_PROC(TRUE)
 
-	var/target_temperature
-	switch(temp_mode)
-		if(USE_REACTION_TEMPERATURE)
-			target_temperature = null
-		if(USE_MINIMUM_TEMPERATURE)
-			var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index]
-			target_temperature = test_reaction.is_cold_recipe ? test_reaction.required_temp - 1 : test_reaction.required_temp + 1
-		if(USE_USER_TEMPERATURE)
-			target_temperature = forced_temp
+	var/target_temperature = decode_target_temperature()
 	if(!isnull(target_temperature))
 		target_reagents.adjust_thermal_energy((target_temperature - target_reagents.chem_temp) * 0.4 * seconds_per_tick * SPECIFIC_HEAT_DEFAULT * target_reagents.total_volume)
 
@@ -356,6 +371,12 @@
 				if("Minimum Temp")
 					temp_mode = USE_MINIMUM_TEMPERATURE
 					return TRUE
+				if("Optimal Temp")
+					temp_mode = USE_OPTIMAL_TEMPERATURE
+					return TRUE
+				if("Overheat Temp")
+					temp_mode = USE_OVERHEAT_TEMPERATURE
+					return TRUE
 
 		if("forced_ph")
 			var/target = params["target"]
@@ -503,10 +524,8 @@
 			switch(temp_mode)
 				if(USE_REACTION_TEMPERATURE)
 					target_temperature = DEFAULT_REAGENT_TEMPERATURE
-				if(USE_MINIMUM_TEMPERATURE)
-					target_temperature = test_reaction.is_cold_recipe ? test_reaction.required_temp - 1 : test_reaction.required_temp + 1
-				if(USE_USER_TEMPERATURE)
-					target_temperature = forced_temp
+				else
+					target_temperature = decode_target_temperature()
 			for(var/datum/reagent/_reagent as anything in reagent_list)
 				var/vol_mul = volume_multiplier
 				if(length(test_reaction.required_catalysts) && test_reaction.required_catalysts[_reagent.type])
@@ -608,7 +627,6 @@
 				if("Purity Min")
 					edit_reaction.purity_min = initial(edit_reaction.purity_min)
 					return TRUE
-			return
 
 		if("export")
 			var/export = "[edit_reaction]\n"
@@ -643,6 +661,8 @@
 #undef USE_REACTION_TEMPERATURE
 #undef USE_MINIMUM_TEMPERATURE
 #undef USE_USER_TEMPERATURE
+#undef USE_OPTIMAL_TEMPERATURE
+#undef USE_OVERHEAT_TEMPERATURE
 #undef PLAY_NEXT_REACTION
 #undef PLAY_PREVIOUS_REACTION
 #undef PLAY_USER_REACTION
