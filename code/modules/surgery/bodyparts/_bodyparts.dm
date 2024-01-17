@@ -1021,6 +1021,9 @@
 					. += overlay.get_overlay(external_layer, src)
 					if(overlay.get_secondary_overlay(external_layer, src))
 						. += overlay.get_secondary_overlay(external_layer, src)
+					if(overlay.get_extended_overlay(external_layer, src))
+						for(var/mutable_appearance/item as anything in overlay.get_extended_overlay(external_layer, src))
+							. += item
 
 	return .
 

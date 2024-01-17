@@ -422,22 +422,18 @@
 				return
 			created_name = new_name
 			log_silicon("[key_name(user)] has set \"[new_name]\" as a cyborg shell name at [loc_name(user)]")
-			add_event_to_buffer(user, src, "has set \"[new_name]\" as a cyborg shell name at [loc_name(user)].", "SILICON")
 			return TRUE
 		if("locomotion")
 			locomotion = !locomotion
 			log_silicon("[key_name(user)] has [locomotion ? "enabled" : "disabled"] movement on a cyborg shell at [loc_name(user)]")
-			add_event_to_buffer(user, src, "has [locomotion ? "enabled" : "disabled"] movement on a cyborg shell at [loc_name(user)].", "SILICON")
 			return TRUE
 		if("panel")
 			panel_locked = !panel_locked
 			log_silicon("[key_name(user)] has [panel_locked ? "locked" : "unlocked"] the panel on a cyborg shell at [loc_name(user)]")
-			add_event_to_buffer(user, src, "has [panel_locked ? "locked" : "unlocked"] the panel on a cyborg shell at [loc_name(user)].", "SILICON")
 			return TRUE
 		if("aisync")
 			aisync = !aisync
 			log_silicon("[key_name(user)] has [aisync ? "enabled" : "disabled"] the AI sync for a cyborg shell at [loc_name(user)]")
-			add_event_to_buffer(user, src, "has [aisync ? "enabled" : "disabled"] the AI sync for a cyborg shell at [loc_name(user)].", "SILICON")
 			return TRUE
 		if("set_ai")
 			var/selected_ai = select_active_ai(user, z)
@@ -448,10 +444,8 @@
 				return
 			forced_ai = selected_ai
 			log_silicon("[key_name(user)] set the default AI for a cyborg shell to [key_name(selected_ai)] at [loc_name(user)]")
-			add_event_to_buffer(user, src, "set the default AI for a cyborg shell to [key_name(selected_ai)] at [loc_name(user)].", "SILICON")
 			return TRUE
 		if("lawsync")
 			lawsync = !lawsync
 			log_silicon("[key_name(user)] has [lawsync ? "enabled" : "disabled"] the law sync for a cyborg shell at [loc_name(user)]")
-			add_event_to_buffer(user, src, "has [lawsync ? "enabled" : "disabled"] the law sync for a cyborg shell at [loc_name(user)].", "SILICON")
 			return TRUE

@@ -267,7 +267,7 @@
 
 /obj/item/clothing/glasses/hud/spacecop
 	name = "police aviators"
-	desc = "For thinking you look cool while brutalizing protestors and minorities."
+	desc = "For thinking you look like an action hero."
 	icon_state = "bigsunglasses"
 	flash_protect = FLASH_PROTECTION_FLASH
 	tint = 1

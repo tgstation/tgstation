@@ -123,5 +123,4 @@
 				action.build_all_button_icons()
 	processing_time -= AM.cost
 	log_malf_upgrades("[key_name(AI)] purchased [AM.name]")
-	add_event_to_buffer(AI, data = "purchased [AM.name].", log_key = "MALF")
 	SSblackbox.record_feedback("nested tally", "malfunction_modules_bought", 1, list("[initial(AM.name)]", "[AM.cost]"))

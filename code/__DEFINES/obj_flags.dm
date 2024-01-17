@@ -100,6 +100,7 @@
 #define TOY_FIREARM_OVERLAY (1<<0) // If update_overlay would add some indicator that the gun is a toy, like a plastic cap on a pistol
 /// Currently used to identify valid guns to steal
 #define NOT_A_REAL_GUN (1<<1)
+#define GUN_SMOKE_PARTICLES (1<<2)
 
 /// Flags for sharpness in obj/item
 #define SHARP_EDGED (1<<0)
