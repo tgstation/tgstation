@@ -162,3 +162,23 @@
 	else
 		return pick('monkestation/sound/voice/feline/bark.ogg','monkestation/sound/voice/feline/bark2.ogg') // Yes, bark trait in feline folder [Bad To The Bone]
 
+/datum/emote/living/weh
+	key = "weh"
+	key_third_person = "wehs"
+	message = "wehs!"
+	message_param = "wehs at %t!"
+	message_mime = "wehs silently!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/weh/get_sound(mob/living/user)
+	if(islizard(user))
+		return 'monkestation/sound/voice/weh.ogg'
+	else
+		return FALSE
+
+/datum/emote/living/weh/can_run_emote(mob/user, status_check, intentional)
+	if(islizard(user))
+		return TRUE
+	else
+		return FALSE
+
