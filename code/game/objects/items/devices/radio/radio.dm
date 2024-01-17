@@ -286,7 +286,7 @@
 		spans |= SPAN_COMMAND
 
 	var/radio_message = message
-	if(message_mods[WHISPER_MODE])
+	if(LAZYACCESS(message_mods, WHISPER_MODE))
 		// Radios don't pick up whispers very well
 		radio_message = stars(radio_message)
 		spans |= SPAN_ITALICS

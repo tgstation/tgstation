@@ -13,6 +13,8 @@ import Juke from './juke/index.js';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond.js';
 import { yarn } from './lib/yarn.js';
 
+const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
+
 Juke.chdir('../..', import.meta.url);
 Juke.setup({ file: import.meta.url }).then((code) => {
   // We're using the currently available quirk in Juke Build, which
@@ -21,7 +23,15 @@ Juke.setup({ file: import.meta.url }).then((code) => {
     Juke.logger.error('Please inspect the error and close the window.');
     return;
   }
-  process.exit(code);
+
+  if (TGS_MODE) {
+    // workaround for ESBuild process lingering
+    // Once https://github.com/privatenumber/esbuild-loader/pull/354 is merged and updated to, this can be removed
+    setTimeout(() => process.exit(code), 10000);
+  }
+  else {
+    process.exit(code);
+  }
 });
 
 const DME_NAME = 'tgstation';
@@ -471,6 +481,5 @@ export const TgsTarget = new Juke.Target({
   },
 });
 
-const TGS_MODE = process.env.CBT_BUILD_MODE === 'TGS';
 
 export default TGS_MODE ? TgsTarget : BuildTarget;

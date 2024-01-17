@@ -1,0 +1,15 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - rscadd: "Most fishing rods come with a hook and line preinstalled. Fishing toolboxes come with separate reel and lines as usual."
+  - balance: "Fishing hooks are now required to fish."
+  - balance: "Without a reel line, the range of fishing rods is reduced by two tiles. Conversely, having one installed gives a mild buff to the minigame completion speed."
+  - balance: "The craftable sinewy reel line can now be used to fish on lava or liquid plasma, but it's a bit harder to use."
+  - balance: "The rare-to-find-in-maintenance master fishing rod now comes with a flexible line and weighted hook preinstalled, and has better range than other rods."
+  - balance: "Fishing reel lines are now small enough to fit pockets."
+  - rscadd: "The rescue and jawed hook can now snag and reel in mobs, not only items. The jawed hook also slows down when applied, a la beartrap."
+  - qol: "Fish bounties now accept filled (stasis) fish cases."
+  - qol: "Several balloon alerts for fishing rod interactions."
+  - bugfix: "Reeling in items (and mobs) now respects movement resistance and anchorage."
+  - bugfix: "Fixed the fishing rod equipment UI being too small to fit its components."
+  - sound: "Reeling in something now plays a sound."
