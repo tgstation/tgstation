@@ -16,7 +16,6 @@
 	var/capacity = 20
 
 	var/list/obj/item/stored_items = list()
-	var/locked = FALSE
 
 /obj/structure/dispenser_bot/deconstruct(disassembled)
 	for(var/obj/item/stored_item as anything in stored_items)
@@ -59,7 +58,7 @@
 	. = ..()
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/dispenser_bot()
-	), SHELL_CAPACITY_LARGE)
+	), SHELL_CAPACITY_LARGE, SHELL_FLAG_REQUIRE_ANCHOR)
 
 /obj/structure/dispenser_bot/attackby(obj/item/item, mob/living/user, params)
 	if(user.combat_mode)
@@ -81,14 +80,6 @@
 			add_item(user, bag_item)
 		return TRUE
 	add_item(user, item)
-	return TRUE
-
-/obj/structure/dispenser_bot/wrench_act(mob/living/user, obj/item/tool)
-	if(locked)
-		return
-	set_anchored(!anchored)
-	tool.play_tool_sound(src)
-	balloon_alert(user, "[anchored? "secured" : "unsecured"]")
 	return TRUE
 
 /obj/item/circuit_component/dispenser_bot

@@ -1,9 +1,13 @@
+/**
+ * # Scanner Gate Shell
+ *
+ * Immobile (but not dense) shells that can scan passing entities.
+ */
 /obj/structure/scanner_gate_shell
 	name = "circuit scanner gate"
 	desc = "A gate able to perform mid-depth scans on any organisms who pass under it."
 	icon = 'icons/obj/machines/scangate.dmi'
 	icon_state = "scangate_black"
-	var/locked = FALSE
 
 /obj/structure/scanner_gate_shell/Initialize(mapload)
 	. = ..()
@@ -16,14 +20,6 @@
 	AddComponent(/datum/component/shell, list(
 		new /obj/item/circuit_component/scanner_gate()
 	), SHELL_CAPACITY_LARGE, SHELL_FLAG_REQUIRE_ANCHOR)
-
-/obj/structure/scanner_gate_shell/wrench_act(mob/living/user, obj/item/tool)
-	if(locked)
-		return
-	set_anchored(!anchored)
-	tool.play_tool_sound(src)
-	balloon_alert(user, anchored ? "secured" : "unsecured")
-	return TRUE
 
 /obj/structure/scanner_gate_shell/proc/on_entered(datum/source, atom/movable/AM)
 	SIGNAL_HANDLER
@@ -40,6 +36,7 @@
 	display_name = "Scanner Gate"
 	desc = "A gate able to perform mid-depth scans on any object that pass through it."
 
+	/// The output for scanned entities
 	var/datum/port/output/scanned
 
 	var/obj/structure/scanner_gate_shell/attached_gate
@@ -53,14 +50,9 @@
 	if(istype(shell, /obj/structure/scanner_gate_shell))
 		attached_gate = shell
 		RegisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS, PROC_REF(on_trigger))
-		RegisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED, PROC_REF(on_set_locked))
-		attached_gate.locked = parent.locked
 
 /obj/item/circuit_component/scanner_gate/unregister_shell(atom/movable/shell)
 	UnregisterSignal(attached_gate, COMSIG_SCANGATE_SHELL_PASS)
-	if(attached_gate)
-		attached_gate.locked = FALSE
-		UnregisterSignal(parent, COMSIG_CIRCUIT_SET_LOCKED)
 	attached_gate = null
 	return ..()
 
@@ -68,13 +60,3 @@
 	SIGNAL_HANDLER
 	scanned.set_output(passed)
 	trigger_output.set_output(COMPONENT_SIGNAL)
-
-/**
- * Locks the attached bot when the circuit is locked.
- *
- * Arguments:
- * * new_value - A boolean that determines if the circuit is locked or not.
- **/
-/obj/item/circuit_component/scanner_gate/proc/on_set_locked(datum/source, new_value)
-	SIGNAL_HANDLER
-	attached_gate.locked = new_value

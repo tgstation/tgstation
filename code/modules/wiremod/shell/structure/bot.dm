@@ -1,7 +1,7 @@
 /**
  * # Bot
  *
- * Immobile (but not dense) shells that can interact with world.
+ * Immobile (but not dense) shells that can interact with the world.
  */
 /obj/structure/bot
 	name = "bot"
@@ -18,7 +18,7 @@
 		/datum/component/shell, \
 		unremovable_circuit_components = list(new /obj/item/circuit_component/bot), \
 		capacity = SHELL_CAPACITY_LARGE, \
-		shell_flags = SHELL_FLAG_USB_PORT, \
+		shell_flags = SHELL_FLAG_USB_PORT|SHELL_FLAG_REQUIRE_ANCHOR, \
 	)
 
 /obj/item/circuit_component/bot

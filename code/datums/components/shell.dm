@@ -49,6 +49,7 @@
 		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER), PROC_REF(on_screwdriver_act))
 		RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_object_deconstruct))
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
+		RegisterSignal(parent, COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH), PROC_REF(on_wrench_act))
 		RegisterSignal(parent, COMSIG_MOVABLE_SET_ANCHORED, PROC_REF(on_set_anchored))
 	RegisterSignal(parent, COMSIG_ATOM_USB_CABLE_TRY_ATTACH, PROC_REF(on_atom_usb_cable_try_attach))
 	RegisterSignal(parent, COMSIG_MOVABLE_CIRCUIT_LOADED, PROC_REF(on_load))
@@ -89,6 +90,7 @@
 /datum/component/shell/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACKBY,
+		COMSIG_ATOM_TOOL_ACT(TOOL_WRENCH),
 		COMSIG_ATOM_TOOL_ACT(TOOL_SCREWDRIVER),
 		COMSIG_ATOM_TOOL_ACT(TOOL_MULTITOOL),
 		COMSIG_OBJ_DECONSTRUCT,
@@ -250,6 +252,29 @@
 	tool.play_tool_sound(parent)
 	source.balloon_alert(user, "you unscrew [attached_circuit] from [parent].")
 	remove_circuit()
+	return ITEM_INTERACT_BLOCKING
+
+/**
+ * Called when a wrench is used on the parent, if it has the SHELL_FLAG_REQUIRE_ANCHOR flag.
+ * Toggles parent anchoring state if not locked.
+ */
+/datum/component/shell/proc/on_wrench_act(atom/source, mob/user, obj/item/tool)
+	SIGNAL_HANDLER
+	if(!is_authorized(user))
+		return
+
+	if(!isstructure(parent))
+		return
+
+	var/obj/structure/struct = parent
+	if(locked)
+		if(shell_flags & SHELL_FLAG_ALLOW_FAILURE_ACTION)
+			return
+		source.balloon_alert(user, "it's locked!")
+		return ITEM_INTERACT_BLOCKING
+	struct.set_anchored(!struct.anchored)
+	tool.play_tool_sound(struct)
+	source.balloon_alert(user, struct.anchored ? "secured" : "unsecured")
 	return ITEM_INTERACT_BLOCKING
 
 /**
