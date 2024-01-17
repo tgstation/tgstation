@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - rscadd: "Adds a specific preference to enable/disable AI VOX (text-to-speech) announcements."
