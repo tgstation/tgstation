@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	icon_state = "silo"
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/ore_silo
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 
 	/// The machine UI's page of logs showing ore history.
 	var/log_page = 1
@@ -77,93 +77,79 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 /obj/machinery/ore_silo/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(tool)
 
-/obj/machinery/ore_silo/ui_interact(mob/user)
-	user.set_machine(src)
-	var/datum/browser/popup = new(user, "ore_silo", null, 600, 550)
-	popup.set_content(generate_ui())
-	popup.open()
+/obj/machinery/ore_silo/ui_assets(mob/user)
+	return list(
+		get_asset_datum(/datum/asset/spritesheet/sheetmaterials)
+	)
 
-/obj/machinery/ore_silo/proc/generate_ui()
-	var/list/ui = list("<head><title>Ore Silo</title></head><body><div class='statusDisplay'><h2>Stored Material:</h2>")
-	var/any = FALSE
-	for(var/M in materials.materials)
-		var/datum/material/mat = M
-		var/amount = materials.materials[M]
-		var/sheets = round(amount) / SHEET_MATERIAL_AMOUNT
-		var/ref = REF(M)
-		if (sheets)
-			if (sheets >= 1)
-				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=1'>Eject</a>"
-			else
-				ui += "<span class='linkOff'>Eject</span>"
-			if (sheets >= 20)
-				ui += "<a href='?src=[REF(src)];ejectsheet=[ref];eject_amt=20'>20x</a>"
-			else
-				ui += "<span class='linkOff'>20x</span>"
-			ui += "<b>[mat.name]</b>: [sheets] sheets<br>"
-			any = TRUE
-	if(!any)
-		ui += "Nothing!"
+/obj/machinery/ore_silo/ui_interact(mob/user, datum/tgui/ui)
+	ui = SStgui.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "OreSilo")
+		ui.open()
 
-	ui += "</div><div class='statusDisplay'><h2>Connected Machines:</h2>"
-	for(var/datum/component/remote_materials/mats as anything in ore_connected_machines)
-		var/atom/parent = mats.parent
-		ui += "<a href='?src=[REF(src)];remove=[REF(mats)]'>Remove</a>"
-		ui += "<a href='?src=[REF(src)];hold=[REF(mats)]'>[holds[mats] ? "Allow" : "Hold"]</a>"
-		ui += " <b>[parent.name]</b> in [get_area_name(parent, TRUE)]<br>"
-	if(!ore_connected_machines.len)
-		ui += "Nothing!"
+/obj/machinery/ore_silo/ui_static_data(mob/user)
+	return materials.ui_static_data()
 
-	ui += "</div><div class='statusDisplay'><h2>Access Logs:</h2>"
-	var/list/logs = GLOB.silo_access_logs[REF(src)]
-	var/len = LAZYLEN(logs)
-	var/num_pages = 1 + round((len - 1) / 30)
-	var/page = clamp(log_page, 1, num_pages)
-	if(num_pages > 1)
-		for(var/i in 1 to num_pages)
-			if(i == page)
-				ui += "<span class='linkOff'>[i]</span>"
-			else
-				ui += "<a href='?src=[REF(src)];page=[i]'>[i]</a>"
+/obj/machinery/ore_silo/ui_data(mob/user)
+	var/list/data = list(
+		"materials" =  materials.ui_data()
+	)
 
-	ui += "<ol>"
-	any = FALSE
-	for(var/i in (page - 1) * 30 + 1 to min(page * 30, len))
-		var/datum/ore_silo_log/entry = logs[i]
-		ui += "<li value=[len + 1 - i]>[entry.formatted]</li>"
-		any = TRUE
-	if (!any)
-		ui += "<li>Nothing!</li>"
+	var/list/connected_data
+	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
+		var/atom/parent = remote.parent
+		var/icon/parent_icon = icon(initial(parent.icon), initial(parent.icon_state), frame = 1)
+		var/list/remote_data = list(
+			"ref" = REF(remote),
+			"icon" = icon2base64(parent_icon),
+			"name" = parent.name,
+			"onHold" = holds[remote] ? TRUE : FALSE,
+			"location" = get_area_name(parent, TRUE)
+		)
+		LAZYADD(connected_data, list(remote_data))
+	LAZYSET(data, "machines", connected_data)
 
-	ui += "</ol></div>"
-	return ui.Join()
+	var/list/logs_data
+	for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
+		var/list/log_data = list(
+			"rawMaterials" = entry.get_raw_materials(""),
+			"machineName" = entry.machine_name,
+			"areaName" = entry.area_name,
+			"action" = entry.action,
+			"amount" = entry.amount,
+			"time" = entry.timestamp,
+			"noun" = entry.noun
+		)
+		LAZYADD(logs_data, list(log_data))
+	LAZYSET(data, "logs", logs_data)
 
-/obj/machinery/ore_silo/Topic(href, href_list)
-	if(..())
+	return data
+
+/obj/machinery/ore_silo/ui_act(action, list/params)
+	. = ..()
+	if(.)
 		return
-	add_fingerprint(usr)
-	usr.set_machine(src)
 
-	if(href_list["remove"])
-		var/datum/component/remote_materials/mats = locate(href_list["remove"]) in ore_connected_machines
-		if (mats)
-			mats.disconnect_from(src)
-			updateUsrDialog()
+	switch(action)
+		if("remove")
+			var/datum/component/remote_materials/remote = locate(params["ref"]) in ore_connected_machines
+			remote?.disconnect_from(src)
 			return TRUE
-	else if(href_list["hold"])
-		var/datum/component/remote_materials/mats = locate(href_list["hold"]) in ore_connected_machines
-		mats.toggle_holding()
-		updateUsrDialog()
-		return TRUE
-	else if(href_list["ejectsheet"])
-		var/datum/material/eject_sheet = locate(href_list["ejectsheet"])
-		var/amount = text2num(href_list["eject_amt"])
-		materials.retrieve_sheets(amount, eject_sheet, drop_location())
-		return TRUE
-	else if(href_list["page"])
-		log_page = text2num(href_list["page"]) || 1
-		updateUsrDialog()
-		return TRUE
+
+		if("hold")
+			var/datum/component/remote_materials/remote = locate(params["ref"]) in ore_connected_machines
+			remote?.toggle_holding()
+			return TRUE
+
+		if("eject")
+			var/datum/material/ejecting = locate(params["ref"])
+			var/amount = text2num(params["amount"])
+			if(!isnum(amount) || !istype(ejecting))
+				return TRUE
+
+			materials.retrieve_sheets(amount, ejecting, drop_location())
+			return TRUE
 
 /obj/machinery/ore_silo/multitool_act(mob/living/user, obj/item/multitool/I)
 	. = ..()
@@ -192,7 +178,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	else if(!logs[1].merge(entry))
 		logs.Insert(1, entry)
 
-	updateUsrDialog()
 	flick("silo_active", src)
 
 /obj/machinery/ore_silo/examine(mob/user)
@@ -219,7 +204,6 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	amount = _amount
 	noun = _noun
 	materials = mats.Copy()
-	format()
 	var/list/data = list(
 		"machine_name" = machine_name,
 		"area_name" = AREACOORD(M),
@@ -245,12 +229,7 @@ GLOBAL_LIST_EMPTY(silo_access_logs)
 	amount += other.amount
 	for(var/each in other.materials)
 		materials[each] += other.materials[each]
-	format()
 	return TRUE
-
-/datum/ore_silo_log/proc/format()
-	name = "[machine_name]: [action] [amount]x [noun]"
-	formatted = "([timestamp]) <b>[machine_name]</b> in [area_name]<br>[action] [abs(amount)]x [noun]<br> [get_raw_materials("")]"
 
 /datum/ore_silo_log/proc/get_raw_materials(separator)
 	var/list/msg = list()

@@ -31,6 +31,7 @@
 		force_unwielded = 5, \
 		force_wielded = 10, \
 	)
+	AddElement(/datum/element/disarm_attack)
 
 	var/static/list/slapcraft_recipe_list = list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\

@@ -12,10 +12,14 @@ type DispensableReagent = {
   pH: number;
 };
 
+type TransferableBeaker = Beaker & {
+  transferAmounts: number[];
+};
+
 type Data = {
   amount: number;
   chemicals: DispensableReagent[];
-  beaker: Beaker;
+  beaker: TransferableBeaker;
 };
 
 export const PortableChemMixer = (props) => {

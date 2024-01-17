@@ -376,3 +376,90 @@
       2 years bros
   zxaber:
   - bugfix: Borg tools that hold and use specific items now work correctly again.
+2024-01-15:
+  Ghommie:
+  - bugfix: Animals enlargened by the fugu gland are now visually aligned with the
+      turf they're standing on.
+  IndieanaJones:
+  - qol: The combat mode toggle button is now present on the HUD for simple and basic
+      mobs.
+  - bugfix: Rat King's abilities no longer require the user to click twice in order
+      to activate them.
+  LT3:
+  - bugfix: Fixed missing power cable outside Tramstation medbay
+  Melbert:
+  - bugfix: Anomalies spawned by grand ritual runes sound act more like anomalies
+  RikuTheKiller:
+  - bugfix: Fixed round event controller pirate spawns.
+  SyncIt21:
+  - bugfix: chem heater with empty buffers can be refilled again
+2024-01-16:
+  00-Steven:
+  - bugfix: Signers no longer use the wrong verb when speaking directly into a radio
+      for the first message after toggling sign language.
+  - refactor: Moved the updating of verb variables into a new method which is called
+      earlier in living's say, which should avoid this happening for other things
+      which updated their verbs the same way.
+  13spacemen:
+  - code_imp: Hub status shows if server is restarting, starting, time to start. The
+      "Time" is more accurate and based on roundstart now
+  Ben10Omintrix:
+  - bugfix: fix bileworm ai going insane after eating someone
+  Hatterhat:
+  - bugfix: Moodlets with parameters/effects e.g. limb reattachment moodlets should
+      probably disappear more appropriately.
+  JohnFulpWillard:
+  - qol: Using a Lawyer badge in your hand now shows a thought bubble with the badge,
+      rather than giving a lousy message in your chat.
+  Melbert:
+  - bugfix: Fixes some eldritch painting messages having no chat span
+  - bugfix: Fixes eldritch painting messages triggering before the examine, making
+      it hard to see
+  - bugfix: Fix beauty eldritch painting doing nothing to heretics who examine it
+  Time-Green:
+  - bugfix: Radiation shelters (wherever they are) will protect against nebula storms
+  Voudez:
+  - qol: Players are now able to see in chat when they are being hit by obj/machinery,
+      got crushed into dense turf or get hit by thrown non carbon mob.
+  - admin: Scenarios like mob hits dense turf, obj/machinery hits mob, item without
+      "living thrower" hitting mob, mob gets hit by thrown non carbon mob now appear
+      in logs.
+  ZephyrTFA:
+  - bugfix: Autolathes no longer allow you to duplicate materials at higher levels
+      of stock parts
+  - qol: Autolathes now show name instead of typepath when selecting a custom material
+  - qol: Autolathe now print out items one by one instead of waiting for all of them
+      to print at once
+  jlsnow301:
+  - bugfix: Sections will be more polite by not stealing focus from Input boxes in
+      TGUI
+  - bugfix: Poppers (like the prefs menu options) shouldn't be hidden beneath the
+      character preview anymore.
+2024-01-17:
+  SyncIt21:
+  - qol: adds more examines, screentips & balloon alerts for cryo actions, cryo can
+      be pried open with a crowbar when there is no power to free someone trapped
+      inside
+  - qol: cryo auto turns on immediately without a 2 second delay & without needing
+      auto eject mode on
+  - bugfix: ejecting beaker from cryotube will put it in the players hand & not drop
+      it on the floor
+  - bugfix: mobs & other stuff now render on top of cryo tubes and not bottom of it
+  - bugfix: cryo checks for if the mob is on the same turf as cryo is now fixed, i.e.
+      you can no longer close the machine on yourself
+  - code_imp: removed unused vars from cryo, autodocs vars, removed unused `transfer_amounts`
+      from some chem machinery ui
+  - refactor: removed unused icon states for cryo tube, cryo no longer processes round
+      start and it's UI is now typescript
+  Time-Green:
+  - code_imp: The mushroom cap is now an external organ (jungle station will never
+      happen)
+  - bugfix: Mushpeople caps are no longer solid black
+  mc-oofert:
+  - image: the plumbing chemical splitter no longer has a wrongly rotated direction
+  the-orange-cow:
+  - bugfix: Lock heretics may once again access 'the relentless heartbeat' after purchasing
+      'burglars fineness'.
+  vinylspiders:
+  - code_imp: removed the timeout_mod arg from add_mood_event, which was only used
+      for one thing and causes more issues than it's worth

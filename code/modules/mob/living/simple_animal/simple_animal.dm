@@ -413,10 +413,8 @@
 		new /obj/effect/temp_visual/gib_animation/animal(loc, icon_gib)
 
 
-/mob/living/simple_animal/say_mod(input, list/message_mods = list())
-	if(length(speak_emote))
-		verb_say = pick(speak_emote)
-	return ..()
+/mob/living/simple_animal/get_default_say_verb()
+	return length(speak_emote) ? pick(speak_emote) : ..()
 
 /mob/living/simple_animal/proc/set_varspeed(var_value)
 	speed = var_value
