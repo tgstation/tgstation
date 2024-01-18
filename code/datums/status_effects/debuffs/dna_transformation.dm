@@ -5,6 +5,7 @@
 	tick_interval = -1
 	duration = 1 MINUTES // set in on creation, this just needs to be any value to process
 	alert_type = null
+	remove_on_fullheal = TRUE
 	/// A reference to a COPY of the DNA that the mob will be transformed into.
 	var/datum/dna/new_dna
 	/// A reference to a COPY of the DNA of the mob prior to transformation.
