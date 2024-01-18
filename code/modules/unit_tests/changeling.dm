@@ -91,7 +91,6 @@
 	ling.real_name = ling_name
 	ling.dna.real_name = ling_name
 	ling.name = ling_name
-	ling.dna.initialize_dna(skip_index = TRUE)
 
 	ling.mind_initialize()
 	ling.mind.add_antag_datum(/datum/antagonist/changeling)
