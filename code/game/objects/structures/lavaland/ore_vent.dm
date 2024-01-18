@@ -287,23 +287,23 @@
 	if(!COOLDOWN_FINISHED(src, wave_cooldown))
 		balloon_alert_to_viewers("protect the node drone!")
 		return
+	if(scan_only)
+		discovered = TRUE
+		generate_description(user)
+		balloon_alert_to_viewers("vent scanned!")
+		return
 	if(!discovered)
 		balloon_alert(user, "scanning...")
 		playsound(src, 'sound/items/timer.ogg', 30, TRUE)
-		if(scan_only)
+		if(do_after(user, 4 SECONDS))
 			discovered = TRUE
-		if(!discovered)
-			if(do_after(user, 4 SECONDS))
-				discovered = TRUE
-				balloon_alert(user, "vent scanned!")
-			generate_description(user)
-			var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
-			if(isnull(user_id_card))
-				return
-			user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
-			user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
+			balloon_alert(user, "vent scanned!")
+		generate_description(user)
+		var/obj/item/card/id/user_id_card = user.get_idcard(TRUE)
+		if(isnull(user_id_card))
 			return
-	if(scan_only)
+		user_id_card.registered_account.mining_points += (MINER_POINT_MULTIPLIER)
+		user_id_card.registered_account.bank_card_talk("You've been awarded [MINER_POINT_MULTIPLIER] mining points for discovery of an ore vent.")
 		return
 
 	if(tgui_alert(user, excavation_warning, "Begin defending ore vent?", list("Yes", "No")) != "Yes")
