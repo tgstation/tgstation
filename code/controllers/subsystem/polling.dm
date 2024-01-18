@@ -1,3 +1,6 @@
+///The maximum number of polls active at once before we stop playing the sound (to prevent audio spam/loud noises).
+#define AUDIBLE_NOTIFICATION_LIMIT 3
+
 SUBSYSTEM_DEF(polling)
 	name = "Polling"
 	flags = SS_BACKGROUND | SS_NO_INIT
@@ -49,7 +52,6 @@ SUBSYSTEM_DEF(polling)
 		if(!is_eligible(candidate_mob, role, check_jobban, ignore_category))
 			continue
 
-		SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
 		if(flash_window)
 			window_flash(candidate_mob.client)
 
@@ -116,7 +118,10 @@ SUBSYSTEM_DEF(polling)
 		var/act_never = ""
 		if(ignore_category)
 			act_never = "<a href='?src=[REF(poll_alert_button)];never=1'>\[Never For This Round]</a>"
-		to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
+
+		if(length(currently_polling) <= AUDIBLE_NOTIFICATION_LIMIT) //We make sure we aren't spamming chat or the player's ears.
+			SEND_SOUND(candidate_mob, 'sound/misc/notice2.ogg')
+			to_chat(candidate_mob, span_boldnotice(examine_block("Now looking for candidates [role_name_text ? "to play as \an [role_name_text]." : "\"[question]\""] [act_jump] [act_signup] [act_never]")))
 
 		// Start processing it so it updates visually the timer
 		START_PROCESSING(SSprocessing, poll_alert_button)
@@ -227,3 +232,5 @@ SUBSYSTEM_DEF(polling)
 		return FALSE
 
 	return next_poll_to_finish
+
+#undef AUDIBLE_NOTIFICATION_LIMIT
