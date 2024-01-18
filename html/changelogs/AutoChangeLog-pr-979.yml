@@ -1,0 +1,4 @@
+author: "Chubbygummibear, Absolucy"
+delete-after: True
+changes:
+  - bugfix: "popup screen locs will work on clients >1614. Security cameras, spyglass, and character previews will work again."

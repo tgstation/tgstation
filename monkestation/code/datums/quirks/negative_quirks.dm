@@ -2,7 +2,7 @@
 	name = "Jailbird"
 	desc = "You're a ex-criminal! You start the round set to parole for a random crime."
 	value = 0
-	icon = "bird"
+	icon = FA_ICON_CROW
 
 /datum/quirk/jailbird/post_add()
 	. = ..()
@@ -27,7 +27,7 @@
 	name = "Stowaway"
 	desc = "You wake up up inside a random locker with only a crude fake for an ID card."
 	value = -2
-	icon = "suitcase"
+	icon = FA_ICON_SUITCASE
 
 /datum/quirk/stowaway/add_unique()
 	. = ..()
@@ -119,7 +119,7 @@
 	desc = "The station's just full of free stuff!  Nobody would notice if you just... took it, right?"
 	mob_trait = TRAIT_KLEPTOMANIAC
 	value = -2
-	icon = "bag-shopping"
+	icon = FA_ICON_BAG_SHOPPING
 
 /datum/quirk/kleptomaniac/add()
 	var/datum/brain_trauma/mild/kleptomania/T = new()
@@ -134,7 +134,7 @@
 	name = "Unstable Rear"
 	desc = "For reasons unknown, your posterior is unstable and will fall off more often."
 	value = -1
-	icon = "diamond-exclamation"
+	icon = FA_ICON_BOMB
 	//All effects are handled directly in butts.dm
 
 //IPC PUNISHMENT SYSTEM//
@@ -208,7 +208,7 @@
 	desc = "You feel like something wants to kill you..."
 	mob_trait = TRAIT_PARANOIA
 	value = -8
-	icon = "fa-optin-monster" // "fa-ghost"
+	icon = FA_ICON_OPTIN_MONSTER
 
 /datum/quirk/extra_sensory_paranoia/add()
 	var/datum/brain_trauma/magic/stalker/T = new()
