@@ -209,3 +209,75 @@
   Tractor Mann:
   - rscdel: Yuletide is over. (Christmas songs can no longer roll as lobby songs.)
   - rscdel: Removed herobrine.
+2024-01-14:
+  Gboster-0:
+  - bugfix: radio host messages are properly sorted in fancychat
+  Jacquerel:
+  - balance: You can't possess a MULE as soon as the round starts, someone will have
+      to give you permission.
+  - balance: MULEbots no longer crush prone characters unless they have been hacked
+      (or emagged).
+  - bugfix: Bots can put numbers in their names, what with being robots.
+  - admin: 'Adds attack logging when certain wires are cut (for instance: MULEbot
+      safeties)'
+  MichiRecRoom:
+  - admin: Admin logs that relate to priming grenades or planting bombs will now contain
+      "(pacifist)" or "(while pacifist)" near the beginning of the log, if the mob
+      had the Pacifist trait at the time of the log being generated.
+  - code_imp: log_bomber() now has a new targeted variant, which should be used whenever
+      a bomb has a target (such as with C4 or X4, which are used on mobs or turfs,
+      rather than primed and thrown like grenades).
+  MonstieHuntie:
+  - qol: The Food Crafting Menu now shows you how a corndog is made
+  SSensum, Diamond-74, Absolucy:
+  - balance: Reviver Implants will now actually revive people, albeit slowly, with
+      a 10 minute cooldown before the implant is ready again.
+  Salted-Zen:
+  - balance: Skeleton roll from dragons blood can now process chems! Rejoice!
+  SentientVoid:
+  - balance: removed the tram slum bar's cleric mace and bone axe
+  - bugfix: added pipes and wires below the docking port airlocks for the dynamic
+      bars, which will hopefully resolve other bar's pipes and power issues. if they're
+      even present.
+  - bugfix: fixed the slum bar pipe and power network for tram, added missing equipment
+      (one griddle)
+  TacticalTortoise:
+  - bugfix: changed pipes from hiddin layer to visible layer
+  - bugfix: changed pipes from /purple to purple/visible (Delta)
+  - bugfix: made multilayer manifold visible (ICE/Meta)
+2024-01-16:
+  DexeeXI:
+  - rscadd: Cryo signs
+  - bugfix: other sign fixed
+  Iamgoofball:
+  - balance: Light Footed now makes stepping on glass Knockdown instead of Paralyze
+  - code_imp: Fixes some single letter variable usage in caltrop.dm
+  NicoDeLuna:
+  - rscadd: ' Constable Uniform in Security Wardrobe'
+  san7890, thegrb93, whataboutism-alos:
+  - bugfix: Carbons with tails (felinids, lizards) who have that tail removed will
+      now have that tail actually look like it came from the person in question, rather
+      than just be a grey thing of sadness.
+  - bugfix: Lizard tail wagging graphics
+  - rscadd: Sprited and implemented a short lizard tail
+2024-01-17:
+  Absolucy:
+  - rscadd: Adds a specific preference to enable/disable AI VOX (text-to-speech) announcements.
+  - balance: The Brand Intelligence event is now isolated to a single part of the
+      station, and will not spread outside of said department. Public areas such as
+      hallways and service (i.e bar, kitchen) are the most likely to be affected by
+      such an uprising, though.
+  - bugfix: Ghost players now have their quirks and actual name applied to them, including
+      their ID.
+  - rscadd: Adds a new (negative) station trait, where the clown spawns with bridge
+      access! Honk!
+  - bugfix: Storyteller votes actually work again.
+  - qol: Poly is much less likely to speak as often if wearing a common, command,
+      or loudmode headset.
+  krimelizard:
+  - sound: Adds *bark for Anime quirk users. Clowns will always get a squeaky bark.
+  nednaZ:
+  - rscadd: Adds "Miner Training" as a Neutral Quirk
+2024-01-18:
+  KnigTheThrasher:
+  - rscadd: You can "*weh" as a lizard now

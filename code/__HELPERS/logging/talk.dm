@@ -14,25 +14,15 @@
 /atom/proc/log_talk(message, message_type, tag = null, log_globally = TRUE, forced_by = null, custom_say_emote = null)
 	var/prefix = tag ? "([tag]) " : ""
 	var/suffix = forced_by ? " FORCED by [forced_by]" : ""
-
-	var/voluntary = TRUE
-	if(forced_by)
-		voluntary = FALSE
-
-	if(!(message_type & LOG_OOC) && !(message_type & LOG_ASAY) && !(message_type & LOG_EMOTE))
-		add_event_to_buffer(src, data = "[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", log_key = "SAY", voluntary = voluntary)
-
 	log_message("[prefix][custom_say_emote ? "*[custom_say_emote]*, " : ""]\"[message]\"[suffix]", message_type, log_globally = log_globally)
 
 /// Logging for generic spoken messages
-/proc/log_say(text)
-	if (CONFIG_GET(flag/log_say))
-		WRITE_LOG(GLOB.world_game_log, "SAY: [text]")
+/proc/log_say(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_SAY, text, data)
 
 /// Logging for whispered messages
-/proc/log_whisper(text)
-	if (CONFIG_GET(flag/log_whisper))
-		WRITE_LOG(GLOB.world_game_log, "WHISPER: [text]")
+/proc/log_whisper(text, list/data)
+	logger.Log(LOG_CATEGORY_GAME_WHISPER, text, data)
 
 /// Helper for logging of messages with only one sender and receiver (i.e. mind links)
 /proc/log_directed_talk(atom/source, atom/target, message, message_type, tag)
@@ -45,11 +35,9 @@
 		target.log_talk(message, LOG_VICTIM, tag = "[tag] from [key_name(source)]", log_globally = FALSE)
 
 /// Logging for speech taking place over comms, as well as tcomms equipment
-/proc/log_telecomms(text)
-	if (CONFIG_GET(flag/log_telecomms))
-		WRITE_LOG(GLOB.world_telecomms_log, "TCOMMS: [text]")
+/proc/log_telecomms(text, list/data)
+	logger.Log(LOG_CATEGORY_TELECOMMS, text, data)
 
 /// Logging for speech indicators.
-/proc/log_speech_indicators(text)
-	if (CONFIG_GET(flag/log_speech_indicators))
-		WRITE_LOG(GLOB.world_speech_indicators_log, "SPEECH INDICATOR: [text]")
+/proc/log_speech_indicators(text, list/data)
+	logger.Log(LOG_CATEGORY_SPEECH_INDICATOR, text, data)

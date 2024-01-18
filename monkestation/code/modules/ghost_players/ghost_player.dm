@@ -35,8 +35,6 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
-	equipOutfit(/datum/outfit/job/assistant)
-	regenerate_icons()
 
 /mob/living/carbon/human/ghost/Destroy()
 	. = ..()
@@ -131,11 +129,14 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 		if(brain)
 			brain.temporary_sleep = TRUE
 
+	var/client/our_client = client || GLOB.directory[ckey]
 	var/mob/living/carbon/human/ghost/new_existance = new(key, mind, can_reenter_corpse, brain)
-	client?.prefs.safe_transfer_prefs_to(new_existance, TRUE, FALSE)
+	our_client?.prefs.safe_transfer_prefs_to(new_existance, TRUE, FALSE)
 	new_existance.move_to_ghostspawn()
 	new_existance.key = key
-	client?.init_verbs()
+	new_existance.equipOutfit(/datum/outfit/job/assistant)
+	SSquirks.AssignQuirks(new_existance, our_client)
+	our_client?.init_verbs()
 	qdel(src)
 	return TRUE
 

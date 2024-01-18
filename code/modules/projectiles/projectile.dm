@@ -307,9 +307,10 @@
 			if(starting)
 				splatter_dir = get_dir(starting, target_turf)
 			if(isalien(L))
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_turf, splatter_dir, COLOR_DARK_PURPLE)
 			else
-				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_turf, splatter_dir)
+				var/angle = !isnull(Angle) ? Angle : round(get_angle(starting, src), 1)
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(loc, angle, COLOR_DARK_RED)
 			if(prob(33))
 				L.add_splatter_floor(target_turf)
 		else if(impact_effect_type && !hitscan)

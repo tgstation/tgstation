@@ -6,7 +6,7 @@
 	max_capacity = 32
 	///Static list of programss ALL command tablets have.
 	var/static/list/datum/computer_file/command_programs = list(
-		/datum/computer_file/program/crew_manifest,
+		// /datum/computer_file/program/crew_manifest, monke edit: everyone has the crew manifest anyways now
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/status,
 	)

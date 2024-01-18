@@ -1,6 +1,6 @@
 /datum/admins/proc/trophy_manager()
 	set name = "Trophy Manager"
-	set category = "Admin"
+	set category = "Admin.Logging"
 
 	if(!check_rights(R_ADMIN))
 		return

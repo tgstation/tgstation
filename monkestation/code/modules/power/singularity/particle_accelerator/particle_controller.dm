@@ -21,7 +21,7 @@
 
 /obj/machinery/particle_accelerator/control_box/Initialize()
 	. = ..()
-	wires = new /datum/wires/particle_accelerator/control_box(src)
+	set_wires(new /datum/wires/particle_accelerator/control_box(src))
 	connected_parts = list()
 
 /obj/machinery/particle_accelerator/control_box/Destroy()

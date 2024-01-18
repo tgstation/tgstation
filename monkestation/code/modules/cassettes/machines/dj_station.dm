@@ -75,7 +75,7 @@ GLOBAL_VAR(dj_booth)
 		to_chat(user, span_info("You estimate it will take about [time_left ? DisplayTimeText(((time_left * 10) + 6000)) : DisplayTimeText(COOLDOWN_TIMELEFT(src, next_song_timer))] to cool down."))
 		return
 	message_admins("[src] started broadcasting [inserted_tape] interacted with by [user]")
-	add_event_to_buffer(user, src,  data = "started broadcasting [inserted_tape].", log_key = "MUSIC")
+	logger.Log(LOG_CATEGORY_MUSIC, "[src] started broadcasting [inserted_tape]")
 	start_broadcast()
 
 /obj/machinery/cassette/dj_station/AltClick(mob/user)
@@ -153,7 +153,7 @@ GLOBAL_VAR(dj_booth)
 	GLOB.dj_broadcast = FALSE
 	broadcasting = FALSE
 	message_admins("[src] has stopped broadcasting [inserted_tape].")
-	add_event_to_buffer(src,  data = "has stopped broadcasting [inserted_tape].", log_key = "MUSIC")
+	logger.Log(LOG_CATEGORY_MUSIC, "[src] has stopped broadcasting [inserted_tape]")
 	for(var/client/anything as anything in active_listeners)
 		if(!istype(anything))
 			continue
