@@ -84,9 +84,9 @@
 
 #define ISABOUTEQUAL(a, b, deviation) (deviation ? abs((a) - (b)) <= deviation : abs((a) - (b)) <= 0.1)
 
-#define ISEVEN(x) (x % 2 == 0)
+#define ISEVEN(x) (!((x) & 1))
 
-#define ISODD(x) (x % 2 != 0)
+#define ISODD(x) ((x) & 1)
 
 // Returns true if val is from min to max, inclusive.
 #define ISINRANGE(val, min, max) (min <= val && val <= max)
