@@ -24,12 +24,9 @@ export const MicrofusionGunControl = (props, context) => {
       <Window.Content>
         <Stack vertical grow>
           <Stack.Item>
-            <Section
-              title={'Gun Info'}>
+            <Section title={'Gun Info'}>
               <LabeledList>
-                <LabeledList.Item label="Name">
-                  {gun_name}
-                </LabeledList.Item>
+                <LabeledList.Item label="Name">{gun_name}</LabeledList.Item>
                 <LabeledList.Item label="Description">
                   {gun_desc}
                 </LabeledList.Item>
@@ -42,13 +39,14 @@ export const MicrofusionGunControl = (props, context) => {
           <Stack.Item>
             <Section
               title="Power Cell"
-              buttons={(
+              buttons={
                 <Button
                   icon="eject"
                   content="Eject Cell"
                   disabled={!has_cell}
-                  onClick={() => act('eject_cell')} />
-              )}>
+                  onClick={() => act('eject_cell')}
+                />
+              }>
               {has_cell ? (
                 <LabeledList>
                   <LabeledList.Item label="Cell Type">
@@ -63,9 +61,15 @@ export const MicrofusionGunControl = (props, context) => {
                       minValue={0}
                       maxValue={cell_data.max_charge}
                       ranges={{
-                        "good": [cell_data.max_charge * 0.85, cell_data.max_charge],
-                        "average": [cell_data.max_charge * 0.25, cell_data.max_charge * 0.85],
-                        "bad": [0, cell_data.max_charge * 0.25],
+                        'good': [
+                          cell_data.max_charge * 0.85,
+                          cell_data.max_charge,
+                        ],
+                        'average': [
+                          cell_data.max_charge * 0.25,
+                          cell_data.max_charge * 0.85,
+                        ],
+                        'bad': [0, cell_data.max_charge * 0.25],
                       }}>
                       {cell_data.charge + '/' + cell_data.max_charge + 'MF'}
                     </ProgressBar>
@@ -73,35 +77,30 @@ export const MicrofusionGunControl = (props, context) => {
                   {!!cell_data.charge <= 0 && (
                     <LabeledList.Item>
                       <Section>
-                        <NoticeBox color="bad">
-                          Charge depleted!
-                        </NoticeBox>
+                        <NoticeBox color="bad">Charge depleted!</NoticeBox>
                       </Section>
                     </LabeledList.Item>
                   )}
                 </LabeledList>
               ) : (
-                <NoticeBox color="bad">
-                  No cell installed!
-                </NoticeBox>
+                <NoticeBox color="bad">No cell installed!</NoticeBox>
               )}
             </Section>
           </Stack.Item>
           <Stack.Item>
             <Section
               title="Phase Emitter"
-              buttons={(
+              buttons={
                 <Button
                   icon="eject"
                   content="Eject Emitter"
                   disabled={!has_emitter}
-                  onClick={() => act('eject_emitter')} />
-              )}>
+                  onClick={() => act('eject_emitter')}
+                />
+              }>
               {has_emitter ? (
                 phase_emitter_data.damaged ? (
-                  <NoticeBox color="bad">
-                    Phase emitter is damaged!
-                  </NoticeBox>
+                  <NoticeBox color="bad">Phase emitter is damaged!</NoticeBox>
                 ) : (
                   <LabeledList>
                     <LabeledList.Item label="Emitter Type">
@@ -113,11 +112,21 @@ export const MicrofusionGunControl = (props, context) => {
                         minValue={0}
                         maxValue={phase_emitter_data.max_heat}
                         ranges={{
-                          "bad": [phase_emitter_data.max_heat * 0.85, phase_emitter_data.max_heat * 2],
-                          "average": [phase_emitter_data.max_heat * 0.25, phase_emitter_data.max_heat * 0.85],
-                          "good": [0, phase_emitter_data.max_heat * 0.25],
+                          'bad': [
+                            phase_emitter_data.max_heat * 0.85,
+                            phase_emitter_data.max_heat * 2,
+                          ],
+                          'average': [
+                            phase_emitter_data.max_heat * 0.25,
+                            phase_emitter_data.max_heat * 0.85,
+                          ],
+                          'good': [0, phase_emitter_data.max_heat * 0.25],
                         }}>
-                        {toFixed(phase_emitter_data.current_heat) + ' C' + ' (' + phase_emitter_data.heat_percent + '%)'}
+                        {toFixed(phase_emitter_data.current_heat) +
+                          ' C' +
+                          ' (' +
+                          phase_emitter_data.heat_percent +
+                          '%)'}
                       </ProgressBar>
                     </LabeledList.Item>
                     <LabeledList.Item label="Maximum Temperature">
@@ -130,7 +139,8 @@ export const MicrofusionGunControl = (props, context) => {
                         content="Overclock"
                         color="bad"
                         disabled={!phase_emitter_data.hacked}
-                        onClick={() => act('overclock_emitter')} />
+                        onClick={() => act('overclock_emitter')}
+                      />
                     </LabeledList.Item>
                     <LabeledList.Item label="Passive Heat Dissipation">
                       {phase_emitter_data.heat_dissipation_per_tick + ' C/s'}
@@ -138,18 +148,30 @@ export const MicrofusionGunControl = (props, context) => {
                     <LabeledList.Item label="Cooling System">
                       <Button
                         icon="snowflake"
-                        content={phase_emitter_data.cooling_system ? "ONLINE" : "OFFLINE"}
-                        color={phase_emitter_data.cooling_system ? "blue" : "bad"}
+                        content={
+                          phase_emitter_data.cooling_system
+                            ? 'ONLINE'
+                            : 'OFFLINE'
+                        }
+                        color={
+                          phase_emitter_data.cooling_system ? 'blue' : 'bad'
+                        }
                         disabled={!has_cell}
-                        onClick={() => act('toggle_cooling_system')} />
-                      {' Cooling System Rate: ' + phase_emitter_data.cooling_system_rate + ' C/s'}
+                        onClick={() => act('toggle_cooling_system')}
+                      />
+                      {' Cooling System Rate: ' +
+                        phase_emitter_data.cooling_system_rate +
+                        ' C/s'}
                     </LabeledList.Item>
                     <LabeledList.Item label="Total Heat Dissipation">
-                      {phase_emitter_data.cooling_system ? (
-                        phase_emitter_data.heat_dissipation_per_tick + gun_heat_dissipation + phase_emitter_data.cooling_system_rate + ' C/s'
-                      ) : (
-                        phase_emitter_data.heat_dissipation_per_tick + gun_heat_dissipation + ' C/s'
-                      )}
+                      {phase_emitter_data.cooling_system
+                        ? phase_emitter_data.heat_dissipation_per_tick +
+                        gun_heat_dissipation +
+                        phase_emitter_data.cooling_system_rate +
+                        ' C/s'
+                        : phase_emitter_data.heat_dissipation_per_tick +
+                        gun_heat_dissipation +
+                        ' C/s'}
                     </LabeledList.Item>
                     <LabeledList.Item label="Integrity">
                       <ProgressBar
@@ -157,9 +179,9 @@ export const MicrofusionGunControl = (props, context) => {
                         minValue={0}
                         maxValue={100}
                         ranges={{
-                          "good": [85, 100],
-                          "average": [25, 85],
-                          "bad": [0, 25],
+                          'good': [85, 100],
+                          'average': [25, 85],
+                          'bad': [0, 25],
                         }}>
                         {phase_emitter_data.integrity + '%'}
                       </ProgressBar>
@@ -170,53 +192,52 @@ export const MicrofusionGunControl = (props, context) => {
                         minValue={0}
                         maxValue={5}
                         ranges={{
-                          "good": [0, 1],
-                          "average": [1, 3],
-                          "bad": [3, 5],
+                          'good': [0, 1],
+                          'average': [1, 3],
+                          'bad': [3, 5],
                         }}>
                         {phase_emitter_data.process_time / 10 + 's'}
                       </ProgressBar>
                     </LabeledList.Item>
-                    {phase_emitter_data.heat_percent
-                    >= phase_emitter_data.throttle_percentage && (
+                    {phase_emitter_data.heat_percent >=
+                      phase_emitter_data.throttle_percentage && (
                       <LabeledList.Item>
                         <NoticeBox color="orange">
                           Thermal throttle active!
                         </NoticeBox>
                       </LabeledList.Item>
                     )}
-                    {phase_emitter_data.current_heat
-                    >= phase_emitter_data.max_heat && (
+                    {phase_emitter_data.current_heat >=
+                      phase_emitter_data.max_heat && (
                       <LabeledList.Item>
-                        <NoticeBox color="bad">
-                          Overheating!
-                        </NoticeBox>
+                        <NoticeBox color="bad">Overheating!</NoticeBox>
                       </LabeledList.Item>
                     )}
                   </LabeledList>
                 )
               ) : (
-                <NoticeBox color="bad">
-                  No phase emitter installed!
-                </NoticeBox>
+                <NoticeBox color="bad">No phase emitter installed!</NoticeBox>
               )}
             </Section>
           </Stack.Item>
           <Stack.Item>
-            <Section title={"Attachments"}>
+            <Section title={'Attachments'}>
               {has_attachments ? (
                 attachments.map((attachment, index) => (
                   <Section
                     key={index}
                     title={attachment.name}
-                    buttons={(
+                    buttons={
                       <Button
                         icon="eject"
                         content="Eject Attachment"
-                        onClick={() => act('remove_attachment', {
-                          attachment_ref: attachment.ref,
-                        })} />
-                    )}>
+                        onClick={() =>
+                          act('remove_attachment', {
+                            attachment_ref: attachment.ref,
+                          })
+                        }
+                      />
+                    }>
                     <LabeledList>
                       <LabeledList.Item label="Description">
                         {attachment.desc}
@@ -229,30 +250,31 @@ export const MicrofusionGunControl = (props, context) => {
                           {attachment.information}
                         </LabeledList.Item>
                       )}
-                      {!!attachment.has_modifications && (
+                      {!!attachment.has_modifications &&
                         attachment.modify.map((mod, index) => (
                           <LabeledList.Item
                             key={index}
-                            buttons={(
+                            buttons={
                               <Button
                                 key={index}
                                 icon={mod.icon}
                                 color={mod.color}
                                 content={mod.title}
-                                onClick={() => act('modify_attachment', {
-                                  attachment_ref: attachment.ref,
-                                  modify_ref: mod.reference,
-                                })} />
-                            )} />
-                        ))
-                      )}
+                                onClick={() =>
+                                  act('modify_attachment', {
+                                    attachment_ref: attachment.ref,
+                                    modify_ref: mod.reference,
+                                  })
+                                }
+                              />
+                            }
+                          />
+                        ))}
                     </LabeledList>
                   </Section>
                 ))
               ) : (
-                <NoticeBox color="blue">
-                  No attachments installed!
-                </NoticeBox>
+                <NoticeBox color="blue">No attachments installed!</NoticeBox>
               )}
             </Section>
           </Stack.Item>
