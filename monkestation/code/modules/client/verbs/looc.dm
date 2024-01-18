@@ -77,14 +77,19 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 	msg = emoji_parse(msg)
 	mob.log_talk(raw_msg, LOG_OOC, tag = "LOOC")
 
+	var/looc_runechat = CONFIG_GET(flag/looc_runechat)
+
 	var/list/hearers = list()
 	for(var/mob/hearer in get_hearers_in_view(9, mob))
-		if(QDELETED(hearer.client) || !CHECK_BITFIELD(hearer.client.prefs.chat_toggles, CHAT_OOC))
+		var/client/client = hearer.client
+		if(QDELETED(client) || !CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC))
 			continue
-		hearers[hearer.client] = TRUE
-		if(hearer.client in GLOB.admins)
+		hearers[client] = TRUE
+		if(client in GLOB.admins)
 			continue
 		to_chat(hearer, span_looc("[span_prefix("LOOC:")] <EM>[span_name("[mob.name]")]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (hearer == mob))
+		if(looc_runechat && client.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+			hearer.create_chat_message(mob, /datum/language/common, "<span class='looc'><B>LOOC: [msg]</B></span>")
 
 	for(var/client/client in GLOB.admins)
 		if(!CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC))
