@@ -17,5 +17,4 @@
 	max_ammo = 1
 
 /obj/item/ammo_box/magazine/internal/rocketlauncher/empty
-	name = "rocket launcher internal magazine (empty)"
-	ammo_type = null
+	start_empty = TRUE
