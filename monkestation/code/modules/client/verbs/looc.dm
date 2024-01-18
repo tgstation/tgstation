@@ -89,7 +89,7 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 			continue
 		to_chat(hearer, span_looc("[span_prefix("LOOC:")] <EM>[span_name("[mob.name]")]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (hearer == mob))
 		if(looc_runechat && client.prefs.read_preference(/datum/preference/toggle/enable_runechat))
-			hearer.create_chat_message(mob, /datum/language/common, "<span class='looc'><B>LOOC: [msg]</B></span>")
+			hearer.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
 
 	for(var/client/client in GLOB.admins)
 		if(!CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC))
