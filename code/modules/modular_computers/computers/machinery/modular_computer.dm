@@ -61,16 +61,16 @@
 		return
 	if(HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)))
 		REMOVE_TRAIT(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user))
-		balloon_alert(user, "now interacting with processor")
+		balloon_alert(user, "now interacting with computer")
 	else
 		ADD_TRAIT(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user))
-		balloon_alert(user, "now interacting with machine frame")
+		balloon_alert(user, "now interacting with frame")
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/modular_computer/examine(mob/user)
 	. = cpu?.examine(user) || ..()
-	. += span_info("You can toggle interaction between processor and machinery frame with [EXAMINE_HINT("Right-Click")]")
-	if(HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)))
-		. += span_info("Currently interacting with frame.")
+	. += span_info("You can toggle interaction between computer and its machinery frame with [EXAMINE_HINT("Right-Click")] while empty-handed.")
+	. += span_info("Currently interacting with [EXAMINE_HINT(HAS_TRAIT_FROM(src, TRAIT_MODPC_INTERACTING_WITH_FRAME, REF(user)) ? "frame" : "computer")].")
 
 /obj/machinery/modular_computer/attack_ghost(mob/dead/observer/user)
 	. = ..()
