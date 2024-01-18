@@ -67,7 +67,7 @@
 
 	if(!control_unit)
 		if(!priorscan)
-			addtimer(CALLBACK(src, PROC_REF(controllerscan, 1)), 20)
+			addtimer(CALLBACK(src, PROC_REF(controllerscan), 1), 20)
 			return
 		collapse()
 

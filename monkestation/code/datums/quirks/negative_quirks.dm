@@ -9,7 +9,7 @@
 	var/mob/living/carbon/human/jailbird = quirk_holder
 	var/quirk_crime	= pick(world.file2list("monkestation/strings/random_crimes.txt"))
 	to_chat(jailbird, "<span class='boldnotice'>You are on parole for the crime of: [quirk_crime]!</span>")
-	addtimer(CALLBACK(src, PROC_REF(apply_arrest, quirk_crime)), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_arrest), quirk_crime), 10 SECONDS)
 
 
 /datum/quirk/jailbird/proc/apply_arrest(crime_name)
