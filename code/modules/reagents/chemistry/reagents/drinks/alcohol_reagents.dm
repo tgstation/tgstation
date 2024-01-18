@@ -2361,7 +2361,7 @@
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
-	drinker.add_mood_event("numb", /datum/mood_event/narcotic_medium, 1, name) //comfortably numb
+	drinker.add_mood_event("numb", /datum/mood_event/narcotic_medium, name) //comfortably numb
 
 /datum/reagent/consumable/ethanol/drunken_espatier/on_mob_metabolize(mob/living/drinker)
 	. = ..()
@@ -2410,7 +2410,7 @@
 /datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
 	. = ..()
 	if(islizard(drinker))
-		drinker.add_mood_event("triumph", /datum/mood_event/memories_of_home, 1, name)
+		drinker.add_mood_event("triumph", /datum/mood_event/memories_of_home, name)
 
 /datum/reagent/consumable/ethanol/the_juice
 	name = "The Juice"

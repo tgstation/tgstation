@@ -407,8 +407,8 @@
 		offerer.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
 		taker.add_mob_memory(/datum/memory/helped_up, protagonist = offerer, deuteragonist = taker)
 
-		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, 1, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
-		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, 1, offerer, FALSE)
+		offerer.add_mood_event("helping_up", /datum/mood_event/helped_up, taker, TRUE) // Different IDs because you could be helped up and then help someone else up.
+		taker.add_mood_event("helped_up", /datum/mood_event/helped_up, offerer, FALSE)
 
 		qdel(src)
 		return
@@ -566,7 +566,7 @@
 		living_target.visible_message(span_danger("[living_target] is hit by \a [src]."), span_userdanger("You're hit by \a [src]!"), vision_distance=COMBAT_MESSAGE_RANGE)
 
 	living_target.add_mob_memory(/datum/memory/kissed, deuteragonist = firer)
-	living_target.add_mood_event("kiss", /datum/mood_event/kiss, 1, firer, suppressed)
+	living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 	if(isliving(firer))
 		var/mob/living/kisser = firer
 		kisser.add_mob_memory(/datum/memory/kissed, protagonist = living_target, deuteragonist = firer)
@@ -605,7 +605,7 @@
 	. = ..()
 	if(isliving(target))
 		var/mob/living/living_target = target
-		living_target.add_mood_event("kiss", /datum/mood_event/kiss, 1, firer, suppressed)
+		living_target.add_mood_event("kiss", /datum/mood_event/kiss, firer, suppressed)
 		try_fluster(living_target)
 
 /obj/projectile/kiss/death

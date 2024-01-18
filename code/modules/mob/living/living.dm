@@ -2518,7 +2518,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	mob_mood.clear_mood_event(mood_events[chosen])
 
 /// Adds a mood event to the mob
-/mob/living/proc/add_mood_event(category, type, timeout_mod, ...)
+/mob/living/proc/add_mood_event(category, type, ...)
 	if(QDELETED(mob_mood))
 		return
 	mob_mood.add_mood_event(arglist(args))

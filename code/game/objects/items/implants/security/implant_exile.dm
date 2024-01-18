@@ -9,11 +9,10 @@
 	hud_icon_state = "hud_imp_exile"
 
 /obj/item/implant/exile/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nanotrasen Employee Exile Implant<BR>
-				<b>Implant Details:</b> The onboard gateway system has been modified to reject entry by individuals containing this implant.
-				Additionally, station mining shuttles will lock their controls if handled by someone with this implant.<BR>"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Nanotrasen Employee Exile Implant<BR> \
+		<b>Implant Details:</b> The onboard gateway system has been modified to reject entry by individuals containing this implant. \
+		Additionally, station mining shuttles will lock their controls if handled by someone with this implant.<BR>"
 
 
 ///Used to help the staff of the space hotel resist the urge to use the space hotel's incredibly alluring roundstart teleporter to ignore their flavor/greeting text and come to the station.
@@ -22,10 +21,9 @@
 	desc = "Uses impressive bluespace grounding techniques to deny the person implanted by this implant the ability to teleport (or be teleported). Used by certain slavers (or particularly strict employers) to keep their slaves from using teleporters to escape their grasp."
 
 /obj/item/implant/exile/noteleport/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Anti-Teleportation Implant<BR>
-				<b>Implant Details:</b> Keeps the implantee from using most teleportation devices. In addition, it spoofs the implant signature of an exile implant to keep the implantee from using certain gateway systems.<BR>"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Anti-Teleportation Implant<BR> \
+		<b>Implant Details:</b> Keeps the implantee from using most teleportation devices. In addition, it spoofs the implant signature of an exile implant to keep the implantee from using certain gateway systems.<BR>"
 
 /obj/item/implant/exile/noteleport/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
