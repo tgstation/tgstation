@@ -77,8 +77,6 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 	msg = emoji_parse(msg)
 	mob.log_talk(raw_msg, LOG_OOC, tag = "LOOC")
 
-	var/looc_runechat = CONFIG_GET(flag/looc_runechat)
-
 	var/list/hearers = list()
 	for(var/mob/hearer in get_hearers_in_view(9, mob))
 		var/client/client = hearer.client
@@ -88,13 +86,15 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		if(client in GLOB.admins)
 			continue
 		to_chat(hearer, span_looc("[span_prefix("LOOC:")] <EM>[span_name("[mob.name]")]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (hearer == mob))
-		if(looc_runechat && client.prefs.read_preference(/datum/preference/toggle/enable_runechat))
+		if(client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
 			hearer.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
 
 	for(var/client/client in GLOB.admins)
 		if(!CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC))
 			continue
 		var/prefix = "[hearers[client] ? "" : "(R)"]LOOC"
+		if(client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
+			client.mob?.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
 		to_chat(client, span_looc("[span_prefix("[prefix]:")] <EM>[ADMIN_LOOKUPFLW(mob)]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (client == src))
 
 /// Logging for messages sent in LOOC
