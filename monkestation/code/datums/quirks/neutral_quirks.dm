@@ -17,7 +17,7 @@
 	desc = "You are an anime enjoyer! Show your enthusiasm with some fashionable attire."
 	mob_trait = TRAIT_ANIME
 	value = 0
-	icon = "cat"
+	icon = FA_ICON_PAW
 	quirk_flags = QUIRK_CHANGES_APPEARANCE
 
 	var/list/anime_list = list(
@@ -57,7 +57,7 @@
 	desc = "You never really believed in clowns."
 	mob_trait = TRAIT_HIDDEN_CLOWN
 	value = 0
-	icon = "fa-hippo"
+	icon = FA_ICON_HIPPO
 
 /datum/quirk/clown_disbelief/add(client/client_source)
 	. = ..()
@@ -92,7 +92,7 @@
 	desc = "You arrive with a strange skillchip that teaches you how to reflexively call out mining-related entities you point at."
 	mob_trait = TRAIT_MINING_CALLOUTS
 	value = 0
-	icon = "bullhorn"
+	icon = FA_ICON_BULLHORN
 	quirk_flags = QUIRK_HIDE_FROM_SCAN
 
 /datum/quirk/drg_callout/add(client/client_source)
