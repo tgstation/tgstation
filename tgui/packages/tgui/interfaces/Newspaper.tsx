@@ -6,35 +6,31 @@ import { processedText } from '../process';
 
 type Data = {
   current_page: number;
-  scribble_message: string;
+  scribble_message: string | null;
   channel_has_messages: BooleanLike;
   channels: ChannelNames[];
   channel_data: ChannelData[];
-  wanted_information: WantedInformation[];
+  wanted_criminal: string | null;
+  wanted_body: string | null;
+  wanted_photo: string | null;
 };
 
 type ChannelNames = {
-  name: string;
+  name: string | null;
   page_number: number;
 };
 
-type WantedInformation = {
-  wanted_criminal: string;
-  wanted_body: string;
-  wanted_photo: string;
-};
-
 type ChannelData = {
-  channel_name: string;
-  author_name: string;
+  channel_name: string | null;
+  author_name: string | null;
   is_censored: BooleanLike;
   channel_messages: ChannelMessages[];
 };
 
 type ChannelMessages = {
-  message: string;
-  photo: string;
-  author: string;
+  message: string | null;
+  photo: string | null;
+  author: string | null;
 };
 
 export const Newspaper = (props) => {
@@ -86,7 +82,7 @@ export const Newspaper = (props) => {
 
 const NewspaperIntro = (props) => {
   const { act, data } = useBackend<Data>();
-  const { channels = [], wanted_information = [] } = data;
+  const { channels = [], wanted_criminal = [] } = data;
 
   return (
     <Section>
@@ -102,7 +98,7 @@ const NewspaperIntro = (props) => {
           Page {channel.page_number || 0}: {channel.name}
         </Box>
       ))}
-      {!!wanted_information && (
+      {!!wanted_criminal && (
         <Box bold>Last Page: Important Security Announcement</Box>
       )}
     </Section>
@@ -149,22 +145,18 @@ const NewspaperChannel = (props) => {
 
 const NewspaperEnding = (props) => {
   const { act, data } = useBackend<Data>();
-  const { wanted_information = [] } = data;
+  const { wanted_criminal, wanted_body, wanted_photo } = data;
 
   return (
     <Section>
-      {wanted_information ? (
+      {wanted_criminal ? (
         <>
           <Box bold fontSize="15px">
             Wanted Issue
           </Box>
-          {wanted_information.map((wanted) => (
-            <Box key={wanted.wanted_criminal}>
-              <Box fontSize="12px">Criminal Name: {wanted.wanted_criminal}</Box>
-              <Box>Description: {wanted.wanted_body}</Box>
-              {!!wanted.wanted_photo && <Image src={wanted.wanted_photo} />}
-            </Box>
-          ))}
+          <Box fontSize="12px">Criminal Name: {wanted_criminal}</Box>
+          <Box>Description: {wanted_body}</Box>
+          {!!wanted_photo && <Image src={wanted_photo} />}
         </>
       ) : (
         'Apart from some uninteresting classified ads, theres nothing in this page...'

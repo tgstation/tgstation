@@ -64,7 +64,7 @@
 	))
 	user.say(";JOURNALISM IS MY CALLING! EVERYBODY APPRECIATES UNBIASED REPORTI-GLORF", forced = "newspaper suicide")
 	var/obj/item/reagent_containers/cup/glass/bottle/whiskey/last_drink = new(user.loc)
-	playsound(user.loc, 'sound/items/drink.ogg', vol = rand(10, 50), vary = TRUE)
+	playsound(user, 'sound/items/drink.ogg', vol = rand(10, 50), vary = TRUE)
 	last_drink.reagents.trans_to(user, last_drink.reagents.total_volume, transferred_by = user)
 	user.visible_message(span_suicide("[user] downs the contents of [last_drink.name] in one gulp! Shoulda stuck to sudoku!"))
 	return TOXLOSS
@@ -130,7 +130,7 @@
 		else
 			return TRUE
 	SStgui.update_uis(src)
-	playsound(loc, SFX_PAGE_TURN, 50, TRUE)
+	playsound(src, SFX_PAGE_TURN, 50, TRUE)
 	return TRUE
 
 /obj/item/newspaper/ui_static_data(mob/user)
@@ -149,11 +149,10 @@
 	data["scribble_message"] = (scribble_page == current_page) ? scribble_text : null
 	if(saved_wanted_icon)
 		user << browse_rsc(saved_wanted_icon, "wanted_photo.png")
-	data["wanted_information"] = list(list(
-		"wanted_criminal" = saved_wanted_criminal,
-		"wanted_body" = saved_wanted_body,
-		"wanted_photo" = (saved_wanted_icon ? "wanted_photo.png" : null),
-	))
+	data["wanted_criminal"] = saved_wanted_criminal
+	data["wanted_body"] = saved_wanted_body
+	data["wanted_photo"] = (saved_wanted_icon ? "wanted_photo.png" : null)
+
 	var/list/channel_data = list()
 	if(!current_page || (current_page == news_content.len + 1))
 		channel_data["channel_name"] = null
@@ -163,7 +162,7 @@
 		data["channel_data"] = list(channel_data)
 		return data
 	var/datum/feed_channel/current_channel = news_content[current_page]
-	if(current_channel && istype(current_channel))
+	if(istype(current_channel))
 		channel_data["channel_name"] = current_channel.channel_name
 		channel_data["author_name"] = current_channel.return_author(censored_check(current_channel.author_censor_time))
 		channel_data["is_censored"] = censored_check(current_channel.D_class_censor_time)

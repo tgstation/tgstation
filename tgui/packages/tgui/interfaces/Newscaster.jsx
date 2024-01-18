@@ -90,13 +90,12 @@ const NewscasterChannelCreation = (props) => {
               Enter channel name here:
               <Button
                 color="red"
+                icon="times"
                 position="relative"
                 top="20%"
                 left="15%"
                 onClick={() => act('cancelCreation')}
-              >
-                X
-              </Button>
+              />
             </Box>
             <TextArea
               fluid
@@ -186,12 +185,11 @@ const NewscasterCommentCreation = (props) => {
             <Button
               color="red"
               position="relative"
+              icon="times"
               top="20%"
               left="25%"
               onClick={() => act('cancelCreation')}
-            >
-              X
-            </Button>
+            />
           </Box>
           <TextArea
             fluid
@@ -253,12 +251,11 @@ const NewscasterWantedScreen = (props) => {
                 <Button
                   color="red"
                   position="relative"
+                  icon="times"
                   top="20%"
                   left="15%"
                   onClick={() => act('cancelCreation')}
-                >
-                  X
-                </Button>
+                />
               </Box>
               {!!activeWanted.criminal && (
                 <>
