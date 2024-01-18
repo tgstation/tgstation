@@ -228,8 +228,8 @@
 	name = "Beast Claw"
 	base_name = "Beast Claw"
 	desc = "The bones seem to still be twitching."
-	icon_state = "beast_claw"
-	base_icon_state = "beast_claw"
+	icon_state = "BoneClaw"
+	base_icon_state = "Claw"
 	w_class =  WEIGHT_CLASS_SMALL
 	block_chance = 20
 	base_force = 18
@@ -237,6 +237,7 @@
 	throwforce = 10
 	wound_bonus = 25
 	bare_wound_bonus = 35
+	demolition_mod = 1.5 //ripping through doors and windows should be a little easier with a claw shouldnt it?
 	reach = 1
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/fwoosh.ogg'
@@ -256,12 +257,13 @@
 /obj/item/melee/trick_weapon/beast_claw/proc/on_transform/(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 	balloon_alert(user, active ? "extended" : "collapsed")
-	//inhand_icon_state (skipping until i have the icons)
+	inhand_icon_state = active ? "Claw" : "BoneClaw"
 	if(active)
 		playsound(src, 'sound/weapons/fwoosh.ogg',50)
 	enabled = active
 	active = wound_bonus ? 45 : 0
 	force = active ? upgraded_val(on_force, upgrade_level) : upgraded_val(base_force, upgrade_level)
+	return COMPONENT_NO_DEFAULT_MESSAGE
 /obj/item/rabbit_eye
 	name = "Rabbit eye"
 	desc = "An item that resonates with trick weapons."
