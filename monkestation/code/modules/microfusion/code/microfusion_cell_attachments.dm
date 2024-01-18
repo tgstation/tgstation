@@ -34,7 +34,8 @@ Increases the cell capacity by a set percentage.
 
 /obj/item/microfusion_cell_attachment/overcapacity
 	name = "overcapacity microfusion cell attachment"
-	desc = "An attachment which increases the capacity of the microfusion cell it's attached to. These are an additional, smaller capacitor, using a system to automatically switch from the cell to the capacitor as it's depleted, maximizing the weapon's charge."
+	desc = "An attachment which increases the capacity of the microfusion cell it's attached to. \
+			These are an additional, smaller capacitor, using a system to automatically switch from the cell to the capacitor as it's depleted, maximizing the weapon's charge."
 	icon_state = "attachment_overcapacity"
 	attachment_overlay_icon_state = "microfusion_overcapacity"
 	/// How much the attachment increases the cell's capacity by, as a percentage
@@ -62,7 +63,8 @@ The cell is stable and will not emit sparks when firing.
 
 /obj/item/microfusion_cell_attachment/stabiliser
 	name = "stabilising microfusion cell attachment"
-	desc = "A stabilizer system attachment combining a grounding system with additional containment coils for self-charging purposes, this gives additional safety to the cell it's attached to; preventing both sparks and leakage."
+	desc = "A stabilizer system attachment combining a grounding system with additional containment coils for self-charging purposes, \
+			this gives additional safety to the cell it's attached to; preventing both sparks and leakage."
 	icon_state = "attachment_stabiliser"
 	attachment_overlay_icon_state = "microfusion_stabiliser"
 
@@ -83,7 +85,8 @@ If the cell isn't stabilised by a stabiliser, it may emit a radiation pulse.
 
 /obj/item/microfusion_cell_attachment/selfcharging
 	name = "self-charging microfusion cell attachment"
-	desc = "While microfusion cells are normally shipped without their fuel source, this attachment comes with fifteen grams of hydrogen fuel; allowing the cell to sustain a small, yet active reaction to self-charge. These can keep going for weeks to months in ideal conditions, making them more than enough for most campaigns."
+	desc = "While microfusion cells are normally shipped without their fuel source, this attachment comes with fifteen grams of hydrogen fuel; allowing the cell to sustain a small, \
+			yet active reaction to self-charge. These can keep going for weeks to months in ideal conditions, making them more than enough for most campaigns."
 	icon_state = "attachment_selfcharge"
 	attachment_overlay_icon_state = "microfusion_selfcharge"
 	/// The amount of charge this cell will passively gain!
