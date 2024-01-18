@@ -1,9 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Shields (and pillows) can be used to shove people around the same way barehanded right-clicking does. Xenos and borgs can actually be moved this way."
-  - rscadd: "Added a new MODsuit module, the bulwark module, which prevents knockdown and staggering from shoving, and getting pushed away by thrown objects. Inbuilt for the safeguard MODsuit, but one might also it in the black market."
-  - refactor: "Disarming has been refactored. You can now shove simple critters onto tables and into bins and closets"
-  - balance: "Shields now take their own armor values and the armor penetration of the attack they blocked when damaged. This means shields are a bit sturdier now."
-  - balance: "Riot shields can tank a lot more damage against melee weapons, but less against bullets."
-  - qol: "strobe shields can now be used to bash people while combat mode is on."

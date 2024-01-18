@@ -1,5 +1,0 @@
-author: "DATA-xPUNGED"
-delete-after: True
-changes:
-  - bugfix: "Bystanders will no longer think they've pulled out a victim's eyes after seeing someone else do it."
-  - qol: "They will also be able to tell when someone starts pulling out a victim's eyes."
