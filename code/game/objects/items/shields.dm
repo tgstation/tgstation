@@ -397,4 +397,20 @@
 			balloon_alert(user, "extend it first!")
 		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
 
+/datum/armor/item_shield/ballistic
+	melee = 5
+	bullet = 80
+	bomb = 10
+	laser = 20
+
+/obj/item/shield/ballistic
+	name = "ballistic shield"
+	desc = "A heavy shield designed for blocking bullets and other ballistic projectiles, weak against lasers and melee."
+	icon_state = "ballistic"
+	inhand_icon_state = "ballistic"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3.75)
+	max_integrity = 75
+	shield_break_leftover = /obj/item/stack/rods/two
+	armor_type = /datum/armor/item_shield/ballistic
+
 #undef BATON_BASH_COOLDOWN
