@@ -127,15 +127,6 @@
 			return
 		beaker = held_item
 
-/obj/machinery/chem_recipe_debug/process(seconds_per_tick)
-	if(!target_reagents.is_reacting)
-		adjust_environment(seconds_per_tick)
-	target_reagents.handle_reactions()
-
-	//send updates to ui. faster than SStgui.update_uis
-	for(var/datum/tgui/ui in src.open_uis)
-		ui.send_update()
-
 /**
  * Extracts a human readable name for this chemical reaction
  * Arguments
@@ -170,6 +161,7 @@
 			if(USE_OVERHEAT_TEMPERATURE)
 				return test_reaction.overheat_temp
 
+
 /**
  * Adjusts the temperature, ph & purity of the holder
  * Arguments
@@ -191,6 +183,15 @@
 			reagent.ph = clamp(forced_ph, CHEMICAL_MIN_PH, CHEMICAL_MAX_PH)
 
 	target_reagents.update_total()
+
+/obj/machinery/chem_recipe_debug/process(seconds_per_tick)
+	if(!target_reagents.is_reacting)
+		adjust_environment(seconds_per_tick)
+	target_reagents.handle_reactions()
+
+	//send updates to ui. faster than SStgui.update_uis
+	for(var/datum/tgui/ui in src.open_uis)
+		ui.send_update()
 
 /obj/machinery/chem_recipe_debug/proc/on_reaction_step(datum/reagents/holder, num_reactions, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -345,16 +346,23 @@
 		if(length(target_reagents.reagent_list))
 			for(var/datum/reagent/reagent in target_reagents.reagent_list)
 				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING)))
-		//as of now we only decode soup pots. If more exotic containers are made make sure to add them here
-		if(!QDELETED(required_container) && istype(required_container, /obj/item/reagent_containers/cup/soup_pot))
-			var/obj/item/reagent_containers/cup/soup_pot/pot = required_container
-			for(var/obj/item as anything in pot.added_ingredients)
-				var/list/entry = beakerContents["[item.name]"]
-				if(length(entry))
-					entry["volume"] += 1
-				else
-					entry = list("name" = item.name, "volume" = 1)
-					beakerContents += list(entry)
+
+		if(!QDELETED(required_container))
+			//as of now we only decode soup pots. If more exotic containers are made make sure to add them here
+			if(istype(required_container, /obj/item/reagent_containers/cup/soup_pot))
+				var/obj/item/reagent_containers/cup/soup_pot/pot = required_container
+				for(var/obj/item as anything in pot.added_ingredients)
+					//increment count if item already exists
+					var/entry_found = FALSE
+					for(var/list/entry as anything in beakerContents)
+						if(entry["name"] == item.name)
+							entry["volume"] += 1
+							entry_found = TRUE
+							break
+					//new entry if non existent
+					if(!entry_found)
+						beakerContents += list(list("name" = item.name, "volume" = 1))
+
 		beaker_data["contents"] = beakerContents
 	.["beaker"] = beaker_data
 
@@ -562,6 +570,7 @@
 							LAZYADD(pot.added_ingredients, new item(pot))
 
 			target_reagents.handle_reactions()
+			return TRUE
 
 		if("edit_reaction")
 			var/selected_reaction = tgui_input_list(ui.user, "Select Reaction", "Reaction", all_reaction_list)
@@ -574,6 +583,7 @@
 
 			edit_reaction = reaction
 			edit_var = initial(edit_var)
+			return TRUE
 
 		if("edit_var")
 			var/target = params["target"]
@@ -654,7 +664,6 @@
 			var/dest = "[GLOB.log_directory]/chem_parse.txt"
 			text2file(export, dest)
 			tgui_alert(ui.user, "Saved to [dest]")
-			return
 
 		if("eject")
 			if(!target_reagents.total_volume)
