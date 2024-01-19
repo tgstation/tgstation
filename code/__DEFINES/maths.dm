@@ -84,6 +84,8 @@
 
 #define ISABOUTEQUAL(a, b, deviation) (deviation ? abs((a) - (b)) <= deviation : abs((a) - (b)) <= 0.1)
 
+// Note for even and odd:
+// you can get the same result with 'x % 2 == 0', but calculation(divide by 2) is more expensive than comparison. We don't have to calculate when we know first bitflag determines if a value is odd or even.
 #define ISEVEN(x) (!((x) & 1))
 
 #define ISODD(x) ((x) & 1)
