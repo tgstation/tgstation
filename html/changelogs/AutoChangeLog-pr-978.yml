@@ -1,4 +1,0 @@
-author: "lmenvs"
-delete-after: True
-changes:
-  - bugfix: "Simians now have their appropriate biotype (They're no longer undead)"
