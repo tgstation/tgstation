@@ -296,7 +296,7 @@
 		if(mobile_docking_port.launch_status != check_for_launch_status)
 			continue
 		for(var/area/shuttle/shuttle_area as anything in mobile_docking_port.shuttle_areas)
-			if(current_turf in shuttle_area.get_contained_turfs())
+			if(shuttle_area == current_turf.loc)
 				return TRUE
 
 	return FALSE

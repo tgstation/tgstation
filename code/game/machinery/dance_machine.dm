@@ -263,8 +263,6 @@
 				S.pixel_y = 7
 				S.forceMove(get_turf(src))
 		sleep(0.7 SECONDS)
-	if(selection.song_name == "Engineering's Ultimate High-Energy Hustle")
-		sleep(28 SECONDS)
 	for(var/s in sparkles)
 		var/obj/effect/overlay/sparkles/reveal = s
 		reveal.alpha = 255
@@ -342,128 +340,69 @@
 
 #undef DISCO_INFENO_RANGE
 
-/obj/machinery/jukebox/disco/proc/dance(mob/living/M) //Show your moves
-	set waitfor = FALSE
-	switch(rand(0,9))
-		if(0 to 1)
-			dance2(M)
-		if(2 to 3)
-			dance3(M)
-		if(4 to 6)
-			dance4(M)
-		if(7 to 9)
-			dance5(M)
-
-/obj/machinery/jukebox/disco/proc/dance2(mob/living/M)
-	for(var/i in 0 to 9)
-		dance_rotate(M, CALLBACK(M, TYPE_PROC_REF(/mob, dance_flip)))
-		sleep(2 SECONDS)
+/obj/machinery/jukebox/disco/proc/dance(mob/living/dancer, dance_num) //Show your moves
+	ADD_TRAIT(dancer, TRAIT_DISCO_DANCER, REF(src))
+	switch(dance_num)
+		if(1)
+			dance1(dancer)
+		if(2)
+			dance2(dancer)
+		if(3)
+			start_dance3(dancer)
+		if(4)
+			dance4(dancer)
 
 /mob/proc/dance_flip()
 	if(dir == WEST)
 		emote("flip")
 
-/obj/machinery/jukebox/disco/proc/dance3(mob/living/M)
-	var/matrix/initial_matrix = matrix(M.transform)
-	for (var/i in 1 to 75)
-		if (!M)
-			return
-		switch(i)
-			if (1 to 15)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (16 to 30)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(1,-1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (31 to 45)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(-1,-1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (46 to 60)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(-1,1)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (61 to 75)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(1,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		M.setDir(turn(M.dir, 90))
-		switch (M.dir)
-			if (NORTH)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (SOUTH)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,-3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (EAST)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (WEST)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(-3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep(0.1 SECONDS)
-	M.lying_fix()
+/obj/machinery/jukebox/disco/proc/dance1(mob/living/dancer)
+	addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), 6.5 SECONDS, TIMER_CLIENT_TIME)
+	for(var/i in 0 to (6 SECONDS) step (1.5 SECONDS))
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(dance_rotate), dancer, CALLBACK(dancer, TYPE_PROC_REF(/mob, dance_flip))), i, TIMER_CLIENT_TIME)
 
-/obj/machinery/jukebox/disco/proc/dance4(mob/living/lead_dancer)
-	var/speed = rand(1,3)
-	set waitfor = 0
-	var/time = 30
-	while(time)
-		sleep(speed)
-		for(var/i in 1 to speed)
-			lead_dancer.setDir(pick(GLOB.cardinals))
-			// makes people dance with us nearby
-			for(var/datum/weakref/weak_dancer as anything in rangers)
-				var/mob/living/carbon/dancer = weak_dancer.resolve()
-				if(!istype(dancer))
-					continue
-				dancer.set_resting(!dancer.resting, silent = TRUE, instant = TRUE)
-		time--
+/obj/machinery/jukebox/disco/proc/dance2(mob/living/dancer, dance_length = 2.5 SECONDS)
+	var/matrix/initial_matrix = matrix(dancer.transform)
+	var/list/transforms = list(
+		"[NORTH]" = matrix(dancer.transform).Translate(0, 3),
+		"[EAST]" = matrix(dancer.transform).Translate(3, 0),
+		"[SOUTH]" = matrix(dancer.transform).Translate(0, -3),
+		"[WEST]" = matrix(dancer.transform).Translate(-1, -1),
+	)
+	addtimer(VARSET_CALLBACK(dancer, transform, initial_matrix), dance_length + 0.5 SECONDS, TIMER_CLIENT_TIME)
+	addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), dance_length + 0.5 SECONDS)
+	for (var/i in 1 to dance_length)
+		addtimer(CALLBACK(src, PROC_REF(animate_dance2), dancer, transforms, initial_matrix), i, TIMER_CLIENT_TIME)
 
-/obj/machinery/jukebox/disco/proc/dance5(mob/living/M)
-	animate(M, transform = matrix(180, MATRIX_ROTATE), time = 1, loop = 0)
-	var/matrix/initial_matrix = matrix(M.transform)
-	for (var/i in 1 to 60)
-		if (!M)
-			return
-		if (i<31)
-			initial_matrix = matrix(M.transform)
-			initial_matrix.Translate(0,1)
-			animate(M, transform = initial_matrix, time = 1, loop = 0)
-		if (i>30)
-			initial_matrix = matrix(M.transform)
-			initial_matrix.Translate(0,-1)
-			animate(M, transform = initial_matrix, time = 1, loop = 0)
-		M.setDir(turn(M.dir, 90))
-		switch (M.dir)
-			if (NORTH)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (SOUTH)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(0,-3)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (EAST)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-			if (WEST)
-				initial_matrix = matrix(M.transform)
-				initial_matrix.Translate(-3,0)
-				animate(M, transform = initial_matrix, time = 1, loop = 0)
-		sleep(1 SECONDS)
-	M.lying_fix()
+/obj/machinery/jukebox/disco/proc/animate_dance2(mob/living/dancer, list/transforms, matrix/initial_matrix)
+	dancer.setDir(turn(dancer.dir, 90))
+	animate(dancer, transform = transforms[num2text(dancer.dir)], time = 1, loop = 0)
+	animate(transform = initial_matrix, time = 2, loop = 0)
 
-/mob/living/proc/lying_fix()
-	animate(src, transform = null, time = 1, loop = 0)
-	lying_prev = 0
+/obj/machinery/jukebox/disco/proc/start_dance3(mob/living/dancer, dance_length = 3 SECONDS)
+	var/initially_resting = dancer.resting
+	var/direction_index = 1 //this should allow everyone to dance in the same direction
+	addtimer(TRAIT_CALLBACK_REMOVE(dancer, TRAIT_DISCO_DANCER, REF(src)), dance_length + 0.2 SECONDS)
+	addtimer(CALLBACK(dancer, TYPE_PROC_REF(/mob/living, set_resting), initially_resting, TRUE, TRUE), dance_length + 0.2 SECONDS, TIMER_CLIENT_TIME)
+	for (var/i in 1 to dance_length step 2) // 1 = 0.1 seconds
+		addtimer(CALLBACK(src, PROC_REF(dance3), dancer, GLOB.cardinals[direction_index]), i, TIMER_CLIENT_TIME)
+		direction_index++
+		if(direction_index > GLOB.cardinals.len)
+			direction_index = 1
+
+/obj/machinery/jukebox/disco/proc/dance3(mob/living/dancer, dir)
+	dancer.setDir(dir)
+	dancer.set_resting(!dancer.resting, silent = TRUE, instant = TRUE)
+
+/obj/machinery/jukebox/disco/proc/dance4(mob/living/dancer, dance_length = 1.5 SECONDS)
+	var/matrix/initial_matrix = matrix(dancer.transform)
+	animate(dancer, transform = matrix(dancer.transform).Turn(180), time = 2, loop = 0)
+	dancer.emote("spin")
+	addtimer(CALLBACK(src, PROC_REF(dance4_revert), dancer, initial_matrix), dance_length, TIMER_CLIENT_TIME)
+
+/obj/machinery/jukebox/disco/proc/dance4_revert(mob/living/dancer, matrix/starting_matrix)
+	animate(dancer, transform = starting_matrix, time = 5, loop = 0)
+	REMOVE_TRAIT(dancer, TRAIT_DISCO_DANCER, REF(src))
 
 /obj/machinery/jukebox/proc/dance_over()
 	for(var/datum/weakref/weak_to_hide_from as anything in rangers)
@@ -514,11 +453,12 @@
 	if(!active)
 		return
 
+	var/dance_num = rand(1,4) //all will do the same dance
 	for(var/datum/weakref/weak_dancer as anything in rangers)
 		var/mob/living/to_dance = weak_dancer.resolve()
 		if(!istype(to_dance) || !(to_dance.mobility_flags & MOBILITY_MOVE))
 			continue
-		if(prob(5 + (allowed(to_dance) * 4)))
-			dance(to_dance)
+		if(!HAS_TRAIT(to_dance, TRAIT_DISCO_DANCER))
+			dance(to_dance, dance_num)
 
 #undef HAS_JUKEBOX_PREF

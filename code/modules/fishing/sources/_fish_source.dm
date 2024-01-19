@@ -240,8 +240,8 @@ GLOBAL_LIST(fishing_property_cache)
 
 	var/list/final_table = fish_table.Copy()
 	for(var/result in final_table)
-		final_table[result] *= rod.multiplicative_fish_bonus(result, src)
-		final_table[result] += rod.additive_fish_bonus(result, src) //Decide on order here so it can be multiplicative
+		final_table[result] *= rod.hook?.get_hook_bonus_multiplicative(result)
+		final_table[result] += rod.hook?.get_hook_bonus_additive(result)//Decide on order here so it can be multiplicative
 		if(ispath(result, /obj/item/fish))
 			//Modify fish roll chance
 			var/obj/item/fish/caught_fish = result
