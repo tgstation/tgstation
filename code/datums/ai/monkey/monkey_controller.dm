@@ -5,6 +5,7 @@ have ways of interacting with a specific mob and control it.
 ///OOK OOK OOK
 
 /datum/ai_controller/monkey
+	ai_movement = /datum/ai_movement/basic_avoidance
 	movement_delay = 0.4 SECONDS
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/generic_resist,
