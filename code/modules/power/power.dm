@@ -24,9 +24,7 @@
 
 /obj/machinery/power/Initialize(mapload)
 	. = ..()
-	if(isturf(loc))
-		var/turf/turf_loc = loc
-		turf_loc.add_blueprints_preround(src)
+	ADD_BLUEPRINTS_PREROUND(loc)
 
 /obj/machinery/power/Destroy()
 	disconnect_from_network()

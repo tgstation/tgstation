@@ -97,3 +97,20 @@
 #define VENTCRAWL_ENTRANCE_ALLOWED (1<<1)
 ///Used to check if a machinery is visible. Called by update_pipe_vision(). On by default for all except cryo.
 #define VENTCRAWL_CAN_SEE	(1<<2)
+
+/**
+ * During mapload and before smoothing happens, this will add src to the blueprint data (or queue, to be added during icon smoothing) if necessary.
+ * Args:
+ * loc - The location of the turf to add the blueprints to.
+ */
+#define ADD_BLUEPRINTS_PREROUND(loc) \
+	if(mapload && !SSicon_smooth.initialized) { \
+		var/turf/_turf_loc = loc; \
+		if(isturf(_turf_loc)) { \
+			if(layer == WIRE_LAYER) { \
+				SSicon_smooth.blueprint_queue += src \
+			} else { \
+				_turf_loc.add_blueprints(src) \
+			}; \
+		}; \
+	}; \

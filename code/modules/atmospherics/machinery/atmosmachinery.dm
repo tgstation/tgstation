@@ -101,12 +101,9 @@
 /obj/machinery/atmospherics/Initialize(mapload)
 	if(mapload && name != initial(name))
 		override_naming = TRUE
-	var/turf/turf_loc = null
-	if(isturf(loc))
-		turf_loc = loc
-		turf_loc.add_blueprints_preround(src)
+	ADD_BLUEPRINTS_PREROUND(loc)
 	SSspatial_grid.add_grid_awareness(src, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
-	SSspatial_grid.add_grid_membership(src, turf_loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
+	SSspatial_grid.add_grid_membership(src, loc, SPATIAL_GRID_CONTENTS_TYPE_ATMOS)
 	if(init_processing)
 		SSair.start_processing_machine(src)
 	return ..()

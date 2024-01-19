@@ -95,9 +95,7 @@ By design, d1 is the smallest direction and d2 is the highest
 	stored?.set_pipecleaner_color(pipecleaner_color)
 	update_appearance()
 
-	if(isturf(loc))
-		var/turf/turf_loc = loc
-		turf_loc.add_blueprints_preround(src)
+	ADD_BLUEPRINTS_PREROUND(loc)
 
 /obj/structure/pipe_cleaner/Destroy() // called when a pipe_cleaner is deleted
 	//If we have a stored item at this point, lets just delete it, since that should be

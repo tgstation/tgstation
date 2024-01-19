@@ -52,9 +52,7 @@
 			dpdir |= REVERSE_DIR(dir)
 
 	AddElement(/datum/element/undertile, TRAIT_T_RAY_VISIBLE)
-	if(isturf(loc))
-		var/turf/turf_loc = loc
-		turf_loc.add_blueprints_preround(src)
+	ADD_BLUEPRINTS_PREROUND(loc)
 
 /obj/structure/disposalpipe/Destroy()
 	spawn_pipe = FALSE
