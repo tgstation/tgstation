@@ -53,8 +53,6 @@
 #include "code\modules\jobs\job_types\head_of_personnel.dm"
 #include "game\objects\items\storage\garment.dm"
 #include "code\modules\hooch.dm"
-#include "code\__DEFINES\text.dm"
-#include "code\datums\brain_damage\mild.dm"
 #include "code\datums\quirks\positive_quirks\augmented.dm"
 #include "code\game\machinery\computer\orders\order_items\mining\order_mining.dm"
 #include "code\game\objects\structures\crates_lockers\closets\secure\engineering.dm"
@@ -70,6 +68,7 @@
 #include "code\modules\projectiles\ammunition\ballistic\rifle.dm"
 #include "code\modules\projectiles\projectile\bullets\rifle.dm"
 #include "code\modules\map_vote.dm"
+#include "code\modules\hallucination\fake_chat.dm"
 //features
 #include "features\additional_circuit\includes.dm"
 #include "features\hardsuits\code\_jetpack.dm"
