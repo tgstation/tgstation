@@ -288,7 +288,7 @@
 /// Begins the act of making the given design the given number of items
 /// Does not check or use materials/power/etc
 /obj/machinery/rnd/production/proc/start_making(datum/design/design, build_count, build_time_per_item, build_efficiency)
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	busy = TRUE
 	update_static_data_for_all_viewers()
@@ -338,7 +338,7 @@
 /// Resets the busy flag
 /// Called at the end of do_make_item's timer loop
 /obj/machinery/rnd/production/proc/finalize_build()
-	PRIVATE_PROC(TRUE)
+	PROTECTED_PROC(TRUE)
 	busy = FALSE
 	update_static_data_for_all_viewers()
 
