@@ -63,10 +63,10 @@
 /**
  * divides a list of materials uniformly among all contents of the target_object reccursively
  * Used to set materials of printed items with their design cost by taking into consideration their already existing materials
- * e.g. if 12 iron is to be divided uniformly 2 objects A,B who's current iron contents are 3 & 7
+ * e.g. if 12 iron is to be divided uniformly among 2 objects A, B who's current iron contents are 3 & 7
  * Then first we normalize those values i.e. find their weights to decide who gets an higher share of iron
  * total_sum = 3 + 7 = 10, A = 3/10 = 0.3, B = 7/10 = 0.7
- * Then we finally multiply those weights with the user value of 10 we get
+ * Then we finally multiply those weights with the user value of 12 we get
  * A = 0.3 * 12 = 3.6, B = 0.7 * 12 = 8.4 i.e. 3.6 + 8.4 = 12!!
  * Off course we round the values so we don't have to deal with floating point materials so the actual value
  * ends being less but that's not an issue
