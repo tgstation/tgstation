@@ -515,3 +515,8 @@
   mc-oofert:
   - code_imp: slightly cleans up dance machine code
   - bugfix: disco dances are less comparable to having a seizure
+2024-01-19:
+  13spacemen:
+  - bugfix: Hub time should be correct again
+  Ben10Omintrix:
+  - bugfix: fix a runtime when loading ghosts to a mulebot
