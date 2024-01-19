@@ -44,8 +44,8 @@ handles linking back and forth.
 	var/connect_to_silo = FALSE
 	if(force_connect || (mapload && is_station_level(T.z)))
 		connect_to_silo = TRUE
-		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
+	if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
+		RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 
 	if(mapload) // wait for silo to initialize during mapload
 		addtimer(CALLBACK(src, PROC_REF(_PrepareStorage), connect_to_silo))
@@ -182,10 +182,8 @@ handles linking back and forth.
 		silo = new_silo
 		silo.ore_connected_machines += src
 		mat_container = new_container
-		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
-			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc
