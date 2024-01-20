@@ -561,6 +561,9 @@ GLOBAL_LIST_INIT(traits_by_type, list(
 	/obj/item/reagent_containers = list(
 		"TRAIT_MAY_CONTAIN_BLENDED_DUST" = TRAIT_MAY_CONTAIN_BLENDED_DUST,
 	),
+	/obj/machinery/modular_computer = list(
+		"TRAIT_MODPC_INTERACTING_WITH_FRAME" = TRAIT_MODPC_INTERACTING_WITH_FRAME,
+	),
 	/obj/projectile = list(
 		"TRAIT_ALWAYS_HIT_ZONE" = TRAIT_ALWAYS_HIT_ZONE,
 	),
