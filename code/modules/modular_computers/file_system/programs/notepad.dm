@@ -42,6 +42,7 @@
 	var/datum/port/output/updated_text
 
 /obj/item/circuit_component/mod_program/notepad/populate_ports()
+	. = ..()
 	set_text = add_input_port("Set Notes", PORT_TYPE_STRING)
 	updated_text = add_output_port("Updated Notes", PORT_TYPE_STRING)
 

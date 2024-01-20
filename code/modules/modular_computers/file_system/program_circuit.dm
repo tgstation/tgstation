@@ -1,5 +1,3 @@
-
-
 /**
  * Circuit components of modular programs are special.
  * They're added to the unremovable components of the shell when the prog is installed and deleted if uninstalled.
@@ -14,6 +12,13 @@
 	 * Just make sure each of these components is associated to one and only type of program, no subtypes of anything.
 	 */
 	var/datum/computer_file/program/associated_program
+
+	///Starts the program if possible, placing it in the background if another's active.
+	var/datum/port/input/start
+	///kills the program.
+	var/datum/port/input/kill
+	///binary for whether the program is running or not
+	var/datum/port/output/running
 
 /obj/item/circuit_component/mod_program/Initialize(mapload)
 	if(associated_program)
@@ -39,9 +44,19 @@
 	else
 		associated_program = found_program
 
+	RegisterSignal(associated_program, COMSIG_COMPUTER_PROGRAM_START, PROC_REF(on_start))
+	RegisterSignal(associated_program, COMSIG_COMPUTER_PROGRAM_KILL, PROC_REF(on_kill))
+
 /obj/item/circuit_component/mod_program/unregister_shell()
+	UnregisterSignal(associated_program, list(COMSIG_COMPUTER_PROGRAM_START, COMSIG_COMPUTER_PROGRAM_KILL))
 	associated_program = initial(associated_program)
 	return ..()
+
+/obj/item/circuit_component/mod_program/populate_ports()
+	SHOULD_CALL_PARENT(TRUE)
+	start = add_input_port("Start", PORT_TYPE_SIGNAL, trigger = PROC_REF(start_prog))
+	kill = add_input_port("Kill", PORT_TYPE_SIGNAL, trigger = PROC_REF(kill_prog))
+	running = add_output_port("Running", PORT_TYPE_NUMBER)
 
 ///For most programs, triggers only work if they're open (either active or idle).
 /obj/item/circuit_component/mod_program/should_receive_input(datum/port/input/port)
@@ -50,14 +65,28 @@
 		return FALSE
 	if(isnull(associated_program))
 		return FALSE
-	if(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED)
+	if(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED || COMPONENT_TRIGGERED_BY(start, port))
 		return TRUE
 	var/obj/item/modular_computer/computer = associated_program.computer
 	if(computer.active_program == associated_program || (associated_program in computer.idle_threads))
 		return TRUE
 	return FALSE
 
+/obj/item/circuit_component/mod_program/proc/start_prog(datum/port/input/port)
+	associated_program.computer.open_program(program = associated_program)
+
+/obj/item/circuit_component/mod_program/proc/on_start(mob/living/user)
+	SIGNAL_HANDLER
+	running.set_value(TRUE)
+
+/obj/item/circuit_component/mod_program/proc/kill_prog(datum/port/input/port)
+	associated_program.kill_program()
+
+/obj/item/circuit_component/mod_program/proc/on_kill(mob/living/user)
+	SIGNAL_HANDLER
+	running.set_value(FALSE)
+
 /obj/item/circuit_component/mod_program/get_ui_notices()
 	. = ..()
 	if(!(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED))
-		. += create_ui_notice("Requires open program to work", "purple")
+		. += create_ui_notice("Requires program to be running", "purple")

@@ -427,6 +427,7 @@
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 /obj/item/circuit_component/mod_program/radar/populate_ports()
+	. = ..()
 	target = add_input_port("Target", PORT_TYPE_ATOM)
 	selected_by_app = add_output_port("Selected From Program", PORT_TYPE_ATOM)
 	x_pos = add_output_port("X", PORT_TYPE_NUMBER)

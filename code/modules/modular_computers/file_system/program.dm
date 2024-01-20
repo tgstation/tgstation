@@ -197,12 +197,13 @@
  **/
 /datum/computer_file/program/proc/on_start(mob/living/user)
 	SHOULD_CALL_PARENT(TRUE)
-	if(can_run(user, loud = TRUE))
-		if(program_flags & PROGRAM_REQUIRES_NTNET)
-			var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
-			generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
-		return TRUE
-	return FALSE
+	if(!can_run(user, loud = TRUE))
+		return FALSE
+	if(program_flags & PROGRAM_REQUIRES_NTNET)
+		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
+		generate_network_log("Connection opened -- Program ID:[filename] User:[ID?"[ID.registered_name]":"None"]")
+	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_START, user)
+	return TRUE
 
 /**
  * Kills the running program
@@ -219,20 +220,23 @@
 		computer.active_program = null
 		if(!QDELETED(computer) && computer.enabled)
 			INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
-	if(src in computer.idle_threads)
+	else if(src in computer.idle_threads)
 		computer.idle_threads.Remove(src)
+	else //The program wasn't running to begin with.
+		return FALSE
 
 	if(program_flags & PROGRAM_REQUIRES_NTNET)
 		var/obj/item/card/id/ID = computer.computer_id_slot?.GetID()
 		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
 
 	computer.update_appearance(UPDATE_ICON)
+	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_KILL, user)
 	return TRUE
 
 ///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
 /datum/computer_file/program/proc/background_program()
 	SHOULD_CALL_PARENT(TRUE)
-	if(program_flags & PROGRAM_HEADER)
+	if(program_flags & PROGRAM_HEADER || length(computer.idle_threads) > computer.max_idle_programs)
 		return kill_program()
 
 	computer.idle_threads.Add(src)

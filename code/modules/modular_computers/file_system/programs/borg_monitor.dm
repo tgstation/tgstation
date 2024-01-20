@@ -184,7 +184,6 @@
 /datum/computer_file/program/borg_monitor/syndicate/checkID()
 	return "\[CLASSIFIED\]" //no ID is needed for the syndicate version's message function, and the borg will see "[CLASSIFIED]" as the message sender.
 
-
 /obj/item/circuit_component/mod_program/borg_monitor
 	associated_program = /datum/computer_file/program/borg_monitor
 	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
@@ -195,6 +194,7 @@
 	var/datum/port/input/set_message
 
 /obj/item/circuit_component/mod_program/borg_monitor/populate_ports()
+	. = ..()
 	target_robot = add_input_port("Receiver", PORT_TYPE_ATOM)
 	set_message = add_input_port("Set Message", PORT_TYPE_STRING, trigger = PROC_REF(sanitize_borg_message))
 

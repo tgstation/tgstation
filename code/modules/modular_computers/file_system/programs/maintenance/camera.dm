@@ -27,6 +27,7 @@
 	var/datum/port/output/photographed
 
 /obj/item/circuit_component/mod_program/camera/populate_ports()
+	. = ..()
 	picture_target = add_input_port("Picture Target", PORT_TYPE_ATOM)
 	photographed = add_output_port("Photographed Entity", PORT_TYPE_ATOM)
 

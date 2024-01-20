@@ -26,6 +26,7 @@
 	var/datum/port/input/set_ring
 
 /obj/item/circuit_component/mod_program/messenger/populate_ports()
+	. = ..()
 	received_message = add_output_port("Received Message", PORT_TYPE_STRING)
 	sender_name = add_output_port("Sender Name", PORT_TYPE_STRING)
 	sender_job =  add_output_port("Sender Job", PORT_TYPE_STRING)

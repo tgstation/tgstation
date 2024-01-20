@@ -606,13 +606,17 @@
 	if(program.computer != src)
 		CRASH("tried to open program that does not belong to this computer")
 
-	if(!program || !istype(program)) // Program not found or it's not executable program.
+	if(isnull(program) || !istype(program)) // Program not found or it's not executable program.
 		if(user)
 			to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
 		return FALSE
 
+	if(active_program == program)
+		return FALSE
+
 	// The program is already running. Resume it.
 	if(program in idle_threads)
+		active_program?.background_program()
 		active_program = program
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
@@ -636,6 +640,8 @@
 
 	if(!program.on_start(user))
 		return FALSE
+
+	active_program?.background_program()
 
 	active_program = program
 	program.alert_pending = FALSE

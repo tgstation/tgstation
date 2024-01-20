@@ -9,6 +9,12 @@
 /// From /obj/item/modular_computer/proc/store_file: ()
 #define COMSIG_COMPUTER_FILE_DELETE "comsig_computer_file_delete"
 
+/// From /datum/computer_file/program/on_start: (user)
+#define COMSIG_COMPUTER_PROGRAM_START "computer_program_start"
+
+/// From /datum/computer_file/program/kill_program: (user)
+#define COMSIG_COMPUTER_PROGRAM_KILL "computer_program_kill"
+
 /// From /datum/computer_file/program/nt_pay/make_payment: (payment_result)
 #define COMSIG_MODULAR_COMPUTER_NT_PAY_RESULT "comsig_modular_computer_nt_pay_result"
 

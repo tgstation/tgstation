@@ -1,9 +1,9 @@
-
 #define SPOOK_VALUE_SAME_TURF_MULT 1.5
 #define SPOOK_VALUE_LIVING_MULT 6
 #define SPOOK_VALUE_DEF_MOB 10
 #define SPOOK_VALUE_ICON_STATE_MAX 120
 #define SPOOK_VALUE_SEGMENT 15
+#define SPOOK_COOLDOWN 2 SECONDS
 
 /datum/computer_file/program/maintenance/spectre_meter
 	filename = "spectre_meter"
@@ -106,7 +106,7 @@
 		computer.update_appearance(UPDATE_OVERLAYS)
 
 	if(manual)
-		COOLDOWN_START(src, manual_scan_cd, 2 SECONDS)
+		COOLDOWN_START(src, manual_scan_cd, SPOOK_COOLDOWN)
 		playsound(computer, 'sound/effects/ping_hit.ogg', vol = 40, vary = TRUE)
 
 	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_SPECTRE_SCAN, last_spook_value)
@@ -145,6 +145,7 @@
 	var/datum/port/output/scan_results
 
 /obj/item/circuit_component/mod_program/spectre_meter/populate_ports()
+	. = ..()
 	scan_results = add_output_port("Scan Results", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/mod_program/spectre_meter/register_shell(atom/movable/shell)
@@ -154,6 +155,10 @@
 /obj/item/circuit_component/mod_program/spectre_meter/unregister_shell()
 	UnregisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_SPECTRE_SCAN)
 	return ..()
+
+/obj/item/circuit_component/mod_program/spectre_meter/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Scan Coooldown: [SPOOK_COOLDOWN]", "orange", "stopwatch")
 
 /obj/item/circuit_component/mod_program/spectre_meter/input_received(datum/port/port)
 	var/datum/computer_file/program/maintenance/spectre_meter/meter = associated_program
@@ -168,3 +173,4 @@
 #undef SPOOK_VALUE_DEF_MOB
 #undef SPOOK_VALUE_ICON_STATE_MAX
 #undef SPOOK_VALUE_SEGMENT
+#undef SPOOK_COOLDOWN
