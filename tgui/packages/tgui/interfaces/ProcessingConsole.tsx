@@ -24,10 +24,10 @@ type Alloy = {
 };
 
 type ProcessingConsoleProps = {
-  materials: Material[] | undefined;
+  materials: Material[];
   materialIcons: IconData[];
   selectedMaterial: string | null;
-  alloys: Alloy[] | undefined;
+  alloys: Alloy[];
   alloyIcons: IconData[];
   selectedAlloy: string | null;
   state: boolean;
@@ -73,7 +73,7 @@ const MaterialSelection = (props: any) => {
   const { act, data } = useBackend<ProcessingConsoleProps>();
   const { materials, materialIcons, selectedMaterial } = data;
 
-  return !!materials && materials?.length > 0 ? (
+  return materials.length > 0 ? (
     <Table>
       {materials.map((material) => (
         <DisplayRow
@@ -94,7 +94,7 @@ const AlloySelection = (props: any) => {
   const { act, data } = useBackend<ProcessingConsoleProps>();
   const { alloys, alloyIcons, selectedAlloy } = data;
 
-  return !!alloys && alloys.length > 0 ? (
+  return alloys.length > 0 ? (
     <Table>
       {alloys.map((alloy) => (
         <DisplayRow
