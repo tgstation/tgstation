@@ -186,6 +186,7 @@
 	)
 	result = /obj/item/food/rootdough
 	category = CAT_LIZARD
+	recipe_flags = RECIPE_DONT_TRANSFER_REAGENTS
 
 /datum/crafting_recipe/food/rootdough2
 	name = "Rootdough"
@@ -197,6 +198,7 @@
 	)
 	result = /obj/item/food/rootdough
 	category = CAT_LIZARD
+	recipe_flags = RECIPE_DONT_TRANSFER_REAGENTS
 
 /datum/crafting_recipe/food/snail_nizaya
 	name = "Desert snail nizaya"
