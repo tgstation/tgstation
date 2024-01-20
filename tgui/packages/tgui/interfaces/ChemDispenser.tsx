@@ -22,6 +22,10 @@ type DispensableReagent = {
   pHCol: string;
 };
 
+type TransferableBeaker = Beaker & {
+  transferAmounts: number[];
+};
+
 type Data = {
   showpH: BooleanLike;
   amount: number;
@@ -31,7 +35,7 @@ type Data = {
   recipes: string[];
   recordingRecipe: string[];
   recipeReagents: string[];
-  beaker: Beaker;
+  beaker: TransferableBeaker;
 };
 
 export const ChemDispenser = (props) => {

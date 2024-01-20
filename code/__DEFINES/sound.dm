@@ -172,3 +172,4 @@ GLOBAL_LIST_INIT(announcer_keys, list(
 #define SFX_TREE_CHOP "tree_chop"
 #define SFX_ROCK_TAP "rock_tap"
 #define SFX_SEAR "sear"
+#define SFX_REEL "reel"

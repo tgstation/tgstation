@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Items and mobs no longer hide behind big runes (heretic, cult, wizard)"

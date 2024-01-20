@@ -97,7 +97,7 @@
 	data["capacitor_rating"] = capacitor?.rating
 
 	data["weapons_safety"] = weapons_safety
-	data["enclosed"] = enclosed
+	data["enclosed"] = mecha_flags & IS_ENCLOSED
 	data["cabin_sealed"] = cabin_sealed
 	data["cabin_temp"] =  round(cabin_air.temperature - T0C)
 	data["cabin_pressure"] = round(cabin_air.return_pressure())

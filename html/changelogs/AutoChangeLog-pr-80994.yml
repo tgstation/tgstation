@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Prototype emitters now work."
+  - bugfix: "Prototype emitters don't go invisible if screwdriver'd open."
+  - bugfix: "Emitters no longer show up as their panel being closed when it is open."
