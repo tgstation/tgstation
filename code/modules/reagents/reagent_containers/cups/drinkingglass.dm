@@ -17,6 +17,7 @@
 	custom_price = PAYCHECK_LOWER
 	//the screwdriver cocktail can make a drinking glass into the world's worst screwdriver. beautiful.
 	toolspeed = 25
+	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 
 	/// The type to compare to glass_style.required_container type, or null to use class type.
 	/// This allows subtypes to utilize parent styles.
