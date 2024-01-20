@@ -297,6 +297,7 @@
 		/obj/item/storage/toolbox = 1,
 	)
 	category = CAT_WEAPON_RANGED
+	recipe_flags = RECIPE_DONT_TRANSFER_REAGENTS
 
 /datum/crafting_recipe/laser_musket
 	name = "Laser Musket"

@@ -218,7 +218,7 @@
 			if(holder) //transfer reagents from ingredients to result
 				if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
 					result.reagents.clear_reagents()
-					if(!(recipe.recipe_flags & RECIPE_DELETE_CRAFTING_REAGENTS))
+					if(!(recipe.recipe_flags & RECIPE_DONT_TRANSFER_REAGENTS))
 						holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 				parts -= holder
 				qdel(holder)
