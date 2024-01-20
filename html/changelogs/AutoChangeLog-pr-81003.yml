@@ -1,0 +1,4 @@
+author: "Majkl-J"
+delete-after: True
+changes:
+  - bugfix: "Borgs now use the hug module to substitute for hands, allowing them to finish previously unfinishable surgeries"
