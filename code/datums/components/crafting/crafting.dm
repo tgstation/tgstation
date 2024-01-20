@@ -211,14 +211,15 @@
 				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
 			else
 				result = new recipe.result(get_turf(crafter.loc))
-				if(result.atom_storage && recipe.delete_contents)
+				if(result.atom_storage && (recipe.recipe_flags & RECIPE_DELETE_CONTENTS))
 					for(var/obj/item/thing in result)
 						qdel(thing)
 			var/datum/reagents/holder = locate() in parts
 			if(holder) //transfer reagents from ingredients to result
 				if(!ispath(recipe.result,  /obj/item/reagent_containers) && result.reagents)
 					result.reagents.clear_reagents()
-					holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
+					if(!(recipe.recipe_flags & RECIPE_DELETE_CRAFTING_REAGENTS))
+						holder.trans_to(result.reagents, holder.total_volume, no_react = TRUE)
 				parts -= holder
 				qdel(holder)
 			result.CheckParts(parts, recipe)
