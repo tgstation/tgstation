@@ -41,10 +41,17 @@
 	. = ..()
 	fill_icon_thresholds = null
 
+	// Turn glass into a screwdriver (tool) if it's a screwdriver (cocktail)
+	if(istype(style, /datum/glass_style/drinking_glass/screwdrivercocktail))
+		tool_behaviour = TOOL_SCREWDRIVER
+	else
+		tool_behaviour = initial(tool_behaviour)
+
 // And having our icon reset restores our fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
 	. = ..()
 	fill_icon_thresholds ||= list(0)
+	tool_behaviour = initial(tool_behaviour)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
