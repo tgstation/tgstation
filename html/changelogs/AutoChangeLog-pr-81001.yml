@@ -1,4 +1,0 @@
-author: "Diamond-74"
-delete-after: True
-changes:
-  - bugfix: "Monkeys don't get stuck on obstacles as often."
