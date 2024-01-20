@@ -73,6 +73,7 @@
 * This has been made semi-modular so you should be able to use these functions
 * elsewhere in code if you ever need to get a file in the .dmm format
 **/
+
 /atom/proc/get_save_vars()
 	return list(
 		NAMEOF(src, color),
@@ -127,18 +128,42 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	"Y","Z",
 ))
 
-/proc/to_list_string(list/future_string)
-	. = "list("
+/proc/to_list_string(list/build_from)
+	var/list/build_into = list()
+	build_into += "list("
 	var/first_entry = TRUE
-	for(var/item in future_string)
+	for(var/item in build_from)
+		CHECK_TICK
 		if(!first_entry)
-			. += ", "
-		if(future_string[item])
-			. += hashtag_newlines_and_tabs("[item] = [future_string[item]]", list("{"="", "}"="", "\""="", ";"="", ","=""))
+			build_into += ", "
+		if(isnum(item) || !build_from[item])
+			build_into += "[tgm_encode(item)]"
 		else
-			. += hashtag_newlines_and_tabs("[item]", list("{"="", "}"="", "\""="", ";"="", ","=""))
+			build_into += "[tgm_encode(item)] = [tgm_encode(build_from[item])]"
 		first_entry = FALSE
-	. += ")"
+	build_into += ")"
+	return build_into.Join("")
+
+/// Takes a constant, encodes it into a TGM valid string
+/proc/tgm_encode(value)
+	if(istext(value))
+		//Prevent symbols from being because otherwise you can name something
+		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
+		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ";"="", ","=""))]\""
+	if(isnum(value) || ispath(value))
+		return "[value]"
+	if(islist(value))
+		return to_list_string(value)
+	if(isnull(value))
+		return "null"
+	if(isicon(value) || isfile(value))
+		return "'[value]'"
+	// not handled:
+	// - pops: /obj{name="foo"}
+	// - new(), newlist(), icon(), matrix(), sound()
+
+	// fallback: string
+	return tgm_encode("[value]")
 
 /**
  *Procedure for converting a coordinate-selected part of the map into text for the .dmi format
@@ -154,7 +179,6 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	shuttle_area_flag = SAVE_SHUTTLEAREA_DONTCARE,
 	list/obj_blacklist = list(),
 )
-
 	var/width = maxx - minx
 	var/height = maxy - miny
 	var/depth = maxz - minz
@@ -164,56 +188,57 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	var/layers = FLOOR(log(GLOB.save_file_chars.len, turfs_needed) + 0.999,1)
 
 	//Step 1: Run through the area and generate file data
-	var/list/header_chars = list() //The characters of the header
-	var/list/header_dat = list() //The data of the header, lines up with chars
-	var/header = "" //The actual header in text
-	var/contents = "" //The contents in text (bit at the end)
-	var/index = 1
+	var/list/header_data = list() //holds the data of a header -> to its key
+	var/list/header = list() //The actual header in text
+	var/list/contents = list() //The contents in text (bit at the end)
+	var/key_index = 1 // How many keys we've generated so far
 	for(var/z in 0 to depth)
 		for(var/x in 0 to width)
 			contents += "\n([x + 1],1,[z + 1]) = {\"\n"
 			for(var/y in height to 0 step -1)
 				CHECK_TICK
 				//====Get turfs Data====
-				var/turf/place = locate((minx + x), (miny + y), (minz + z))
+				var/turf/place
 				var/area/location
-				var/list/objects
-				var/area/place_area = get_area(place)
+				var/turf/pull_from = locate((minx + x), (miny + y), (minz + z))
 				//If there is nothing there, save as a noop (For odd shapes)
-				if(!place)
+				if(isnull(pull_from))
 					place = /turf/template_noop
 					location = /area/template_noop
-					objects = list()
 				//Ignore things in space, must be a space turf
-				else if(istype(place, /turf/open/space) && !(save_flag & SAVE_SPACE))
+				else if(istype(pull_from, /turf/open/space) && !(save_flag & SAVE_SPACE))
 					place = /turf/template_noop
 					location = /area/template_noop
+					pull_from = null
 				//Stuff to add
 				else
+					var/area/place_area = get_area(pull_from)
 					location = place_area.type
-					objects = place
-					place = place.type
+					place = pull_from.type
+
 				//====Saving shuttles only / non shuttles only====
-				var/is_shuttle_area = istype(location, /area/shuttle)
+				var/is_shuttle_area = ispath(location, /area/shuttle)
 				if((is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_IGNORE) || (!is_shuttle_area && shuttle_area_flag == SAVE_SHUTTLEAREA_ONLY))
 					place = /turf/template_noop
 					location = /area/template_noop
-					objects = list()
+					pull_from = null
 				//====For toggling not saving areas and turfs====
 				if(!(save_flag & SAVE_AREAS))
 					location = /area/template_noop
 				if(!(save_flag & SAVE_TURFS))
 					place = /turf/template_noop
 				//====Generate Header Character====
-				var/header_char = calculate_tgm_header_index(index, layers)	//The characters of the header
-				var/current_header = "(\n" //The actual stuff inside the header
+				// Info that describes this turf and all its contents
+				// Unique, will be checked for existing later
+				var/list/current_header = list()
+				current_header += "(\n"
 				//Add objects to the header file
 				var/empty = TRUE
 				//====SAVING OBJECTS====
 				if(save_flag & SAVE_OBJECTS)
-					for(var/obj/thing in objects)
+					for(var/obj/thing in pull_from)
 						CHECK_TICK
-						if(thing.type in obj_blacklist)
+						if(obj_blacklist[thing.type])
 							continue
 						var/metadata = generate_tgm_metadata(thing)
 						current_header += "[empty ? "" : ",\n"][thing.type][metadata]"
@@ -225,7 +250,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 							current_header += "[custom_data ? ",\n[custom_data]" : ""]"
 				//====SAVING MOBS====
 				if(save_flag & SAVE_MOBS)
-					for(var/mob/living/thing in objects)
+					for(var/mob/living/thing in pull_from)
 						CHECK_TICK
 						if(istype(thing, /mob/living/carbon)) //Ignore people, but not animals
 							continue
@@ -234,65 +259,48 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 						empty = FALSE
 				current_header += "[empty ? "" : ",\n"][place],\n[location])\n"
 				//====Fill the contents file====
-				//Compression is done here
-				var/position_of_header = header_dat.Find(current_header)
-				if(position_of_header)
-					//If the header has already been saved, change the character to the other saved header
-					header_char = header_chars[position_of_header]
-				else
-					header += "\"[header_char]\" = [current_header]"
-					header_chars += header_char
-					header_dat += current_header
-					index ++
-				contents += "[header_char]\n"
+				var/textiftied_header = current_header.Join()
+				// If we already know this header just use its key, otherwise we gotta make a new one
+				var/key = header_data[textiftied_header]
+				if(!key)
+					key = calculate_tgm_header_index(key_index, layers)
+					key_index++
+					header += "\"[key]\" = [textiftied_header]"
+					header_data[textiftied_header] = key
+				contents += "[key]\n"
 			contents += "\"}"
-	return "//[DMM2TGM_MESSAGE]\n[header][contents]"
+	return "//[DMM2TGM_MESSAGE]\n[header.Join()][contents.Join()]"
 
-//vars_to_save = list() to save all vars
 /proc/generate_tgm_metadata(atom/object)
-	var/dat = ""
-	var/data_to_add = list()
+	var/list/data_to_add = list()
+
 	var/list/vars_to_save = object.get_save_vars()
-	if(!vars_to_save)
-		return
-	for(var/variable in object.vars)
+	for(var/variable in vars_to_save)
 		CHECK_TICK
-		if(!(variable in vars_to_save))
-			continue
 		var/value = object.vars[variable]
-		if(!value)
-			continue
 		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
 			continue
 		if(variable == "icon_state" && object.smoothing_flags)
 			continue
-		var/symbol = ""
-		if(istext(value))
-			symbol = "\""
-			value = hashtag_newlines_and_tabs(value, list("{"="", "}"="", "\""="", ";"="", ","=""))
-		else if(islist(value))
-			value = to_list_string(value)
-		else if(isicon(value) || isfile(value))
-			symbol = "'"
-		else if(!(isnum(value) || ispath(value)))
-			continue
-		//Prevent symbols from being because otherwise you can name something [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
-		data_to_add += "[variable] = [symbol][value][symbol]"
-	//Process data to add
-	var/first = TRUE
-	for(var/data in data_to_add)
-		dat += "[first ? "" : ";\n"]\t[data]"
-		first = FALSE
-	if(dat)
-		dat = "{\n[dat]\n\t}"
-	return dat
 
-/proc/calculate_tgm_header_index(index, layers)
-	var/output = ""
-	for(var/i in 1 to layers)
-		CHECK_TICK
-		var/length = GLOB.save_file_chars.len
+		var/text_value = tgm_encode(value)
+		if(!text_value)
+			continue
+		data_to_add += "[variable] = [text_value]"
+
+	if(!length(data_to_add))
+		return
+	return "{\n\t[data_to_add.Join(";\n\t")]\n\t}"
+
+// Could be inlined, not a massive cost tho so it's fine
+/// Generates a key matching our index
+/proc/calculate_tgm_header_index(index, key_length)
+	var/list/output = list()
+	// We want to stick the first one last, so we walk backwards
+	var/list/pull_from = GLOB.save_file_chars
+	var/length = length(pull_from)
+	for(var/i in key_length to 1 step -1)
 		var/calculated = FLOOR((index-1) / (length ** (i - 1)), 1)
 		calculated = (calculated % length) + 1
-		output = "[GLOB.save_file_chars[calculated]][output]"
-	return output
+		output += pull_from[calculated]
+	return output.Join()

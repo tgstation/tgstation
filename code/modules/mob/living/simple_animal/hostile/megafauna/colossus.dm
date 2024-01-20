@@ -366,7 +366,7 @@
 	var/area/current_area = get_area(src)
 	if (current_area in converted_areas)
 		return FALSE
-	terrain_theme.apply_theme_to_list_of_turfs(current_area.get_contained_turfs())
+	terrain_theme.apply_theme_to_list_of_turfs(current_area.get_turfs_from_all_zlevels())
 	converted_areas += current_area
 	return TRUE
 
