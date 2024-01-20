@@ -139,7 +139,7 @@
 		if(is_type_in_list(get_area(coffeemaker), possible_coffeemaker_positions))
 			return
 	var/list/tables = list()
-	for(var/turf/area_turf as anything in bridge.get_contained_turfs())
+	for(var/turf/area_turf as anything in bridge.get_turfs_from_all_zlevels())
 		var/obj/structure/table/table = locate() in area_turf
 		if(isnull(table))
 			continue

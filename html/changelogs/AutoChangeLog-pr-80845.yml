@@ -1,0 +1,6 @@
+author: "LemonInTheDark"
+delete-after: True
+changes:
+  - bugfix: "The map saving tool will no longer lock up and prevent all further action at random"
+  - bugfix: "Map saving now takes on the order of seconds, not minutes"
+  - bugfix: "Fixes an issue with lists that caused strongdmm to report saved maps as broken"
