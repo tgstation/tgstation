@@ -51,7 +51,7 @@
 	var/calculated_weight = 0
 	var/tags = list() 	/// Tags of the event
 	/// List of the shared occurence types.
-	var/static/list/shared_occurences = list()
+	var/list/shared_occurences = list()
 	/// Whether a roundstart event can happen post roundstart. Very important for events which override job assignments.
 	var/can_run_post_roundstart = TRUE
 	/// If set then the type or list of types of storytellers we are restricted to being trigged by

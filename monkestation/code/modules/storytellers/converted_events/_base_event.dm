@@ -87,11 +87,12 @@
 	if(!length(enemy_roles))
 		return TRUE
 	var/job_check = 0
-	for (var/mob/M in GLOB.alive_player_list)
-		if (M.stat == DEAD)
-			continue // Dead players cannot count as opponents
+	for (var/mob/M in GLOB.player_list)
 		if (M.mind && (M.mind.assigned_role.title in enemy_roles))
-			job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
+			if (M.stat == DEAD)
+				job_check += 0.5 //should probably revive the dead people yea
+			else
+				job_check++ // Checking for "enemies" (such as sec officers). To be counters, they must either not be candidates to that rule, or have a job that restricts them from it
 
 	if(job_check >= required_enemies)
 		return TRUE
@@ -195,19 +196,45 @@
 	restricted_roles = cast_control.restricted_roles
 	prompted_picking = cast_control.prompted_picking
 	var/list/candidates = cast_control.get_candidates()
-	if(prompted_picking)
-		candidates = poll_candidates("Would you like to be a [cast_control.name]", antag_flag, antag_flag, 20 SECONDS, FALSE, FALSE, candidates)
 
+	var/failed_antags = 0
 	for(var/i in 1 to antag_count)
 		if(!candidates.len)
 			break
 		var/mob/candidate = pick_n_take(candidates)
+
+		if(prompted_picking)
+			var/choice = tgui_input_list(candidate, "Would you like to be a [cast_control.name]?", "Antag Selection", list("Yes", "No"), "No", 7 SECONDS)
+			if(!choice || (choice == "No"))
+				failed_antags++
+				continue
+
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
 		setup_minds += candidate.mind
 		candidate.mind.special_role = antag_flag
 		candidate.mind.restricted_roles = restricted_roles
+
+	while((failed_antags > 0) && (length(candidates)))
+		for(var/i in 1 to failed_antags)
+			if(!candidates.len)
+				break
+			var/mob/candidate = pick_n_take(candidates)
+
+			if(!candidate.mind)
+				candidate.mind = new /datum/mind(candidate.key)
+
+			if(prompted_picking)
+				var/choice = tgui_input_list(candidate, "Would you like to be a [cast_control.name]?", "Antag Selection", list("Yes", "No"), "No", 7 SECONDS)
+				if(!choice || (choice == "No"))
+					continue
+
+			setup_minds += candidate.mind
+			candidate.mind.special_role = antag_flag
+			candidate.mind.restricted_roles = restricted_roles
+			failed_antags--
+
 	setup = TRUE
 
 

@@ -5,6 +5,7 @@
 	icon_state = "grinder_chemical"
 	reagent_flags = TRANSPARENT | DRAINABLE
 	component_name = "Grinder Input"
+	density = FALSE
 
 /obj/structure/chemical_input/grinder/Initialize(mapload, bolt, layer)
 	. = ..()

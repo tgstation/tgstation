@@ -5,6 +5,7 @@
 	icon = 'icons/obj/plumbing/plumbers.dmi'
 	reagent_flags = TRANSPARENT | DRAINABLE
 	component_name = "Fermenter Input"
+	density = FALSE
 
 
 /obj/structure/chemical_input/fermenter/Initialize(mapload, bolt, layer)
