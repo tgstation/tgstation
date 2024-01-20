@@ -151,13 +151,13 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 		// [";},/obj/item/gun/energy/laser/instakill{name="da epic gun] and spawn yourself an instakill gun.
 		return "\"[hashtag_newlines_and_tabs("[value]", list("{"="", "}"="", "\""="", ";"="", ","=""))]\""
 	if(isnum(value) || ispath(value))
-		return value
+		return "[value]"
 	if(islist(value))
 		return to_list_string(value)
-	if(isicon(value) || isfile(value))
-		return "'[value]'"
 	if(isnull(value))
 		return "null"
+	if(isicon(value) || isfile(value))
+		return "'[value]'"
 	// not handled:
 	// - pops: /obj{name="foo"}
 	// - new(), newlist(), icon(), matrix(), sound()
@@ -202,7 +202,7 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 				var/area/location
 				var/turf/pull_from = locate((minx + x), (miny + y), (minz + z))
 				//If there is nothing there, save as a noop (For odd shapes)
-				if(!pull_from)
+				if(isnull(pull_from))
 					place = /turf/template_noop
 					location = /area/template_noop
 				//Ignore things in space, must be a space turf
@@ -278,8 +278,6 @@ GLOBAL_LIST_INIT(save_file_chars, list(
 	for(var/variable in vars_to_save)
 		CHECK_TICK
 		var/value = object.vars[variable]
-		if(!value)
-			continue
 		if(value == initial(object.vars[variable]) || !issaved(object.vars[variable]))
 			continue
 		if(variable == "icon_state" && object.smoothing_flags)
