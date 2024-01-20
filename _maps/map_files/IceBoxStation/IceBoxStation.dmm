@@ -8249,6 +8249,7 @@
 	dir = 4
 	},
 /obj/structure/sign/poster/official/moth_piping/directional/west,
+/obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/work)
 "cvN" = (
@@ -62495,6 +62496,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/effect/landmark/start/prisoner,
+/obj/machinery/duct,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/prison/work)
 "sZD" = (
