@@ -82,9 +82,6 @@
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/bouldertech/attackby(obj/item/attacking_item, mob/user, params)
-	. = ..()
-	if(.)
-		return
 	if(holds_minerals && istype(attacking_item, /obj/item/boulder))
 		var/obj/item/boulder/my_boulder = attacking_item
 		update_boulder_count()
@@ -94,27 +91,25 @@
 		balloon_alert_to_viewers("accepted")
 		START_PROCESSING(SSmachines, src)
 		return TRUE
-	if(!istype(attacking_item, /obj/item/card/id))
-		return TRUE
-	if(!holds_mining_points)
-		return FALSE
-	if(points_held <= 0)
-		balloon_alert_to_viewers("no points to claim!")
-		if(!COOLDOWN_FINISHED(src, sound_cooldown))
+	if(istype(attacking_item, /obj/item/card/id) && holds_mining_points)
+		if(points_held <= 0)
+			balloon_alert_to_viewers("no points to claim!")
+			if(!COOLDOWN_FINISHED(src, sound_cooldown))
+				return TRUE
+			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
+			return FALSE
+		var/obj/item/card/id/id_card = attacking_item
+		var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
+		if(!amount)
 			return TRUE
-		COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-		playsound(src, 'sound/machines/buzz-sigh.ogg', 30, FALSE)
-		return FALSE
-	var/obj/item/card/id/id_card = attacking_item
-	var/amount = tgui_input_number(user, "How many mining points do you wish to claim? ID Balance: [id_card.registered_account.mining_points], stored mining points: [points_held]", "Transfer Points", max_value = points_held, min_value = 0, round_value = 1)
-	if(!amount)
+		if(amount > points_held)
+			amount = points_held
+		id_card.registered_account.mining_points += amount
+		points_held = round(points_held - amount)
+		to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
 		return TRUE
-	if(amount > points_held)
-		amount = points_held
-	id_card.registered_account.mining_points += amount
-	points_held = round(points_held - amount)
-	to_chat(user, span_notice("You claim [amount] mining points from \the [src] to [id_card]."))
-	return TRUE
+	return ..()
 
 /obj/machinery/bouldertech/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -154,6 +149,8 @@
 			CRASH("\The [src] had a non-boulder in it's boulders contained!")
 
 		var/obj/item/boulder/boulder = potential_boulder
+		if(boulder.durability < 0)
+			CRASH("\The [src] had a boulder with negative durability!")
 		if(!check_for_processable_materials(boulder.custom_materials)) //Checks for any new materials we can process.
 			boulders_concurrent-- //We count skipped boulders
 			remove_boulder(boulder)
@@ -162,7 +159,7 @@
 		boulder.durability-- //One less durability to the processed boulder.
 		if(COOLDOWN_FINISHED(src, sound_cooldown))
 			COOLDOWN_START(src, sound_cooldown, 1.5 SECONDS)
-			playsound(loc, usage_sound, 40, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
+			playsound(loc, usage_sound, 29, FALSE, SHORT_RANGE_SOUND_EXTRARANGE) //This can get annoying. One play per process() call.
 		stop_processing_check = TRUE
 		if(boulder.durability <= 0)
 			breakdown_boulder(boulder) //Crack that bouwlder open!
@@ -274,8 +271,7 @@
 /obj/machinery/bouldertech/proc/remove_boulder(obj/item/boulder/specific_boulder, turf/drop_turf = null)
 	if(isnull(specific_boulder))
 		CRASH("remove_boulder() called with no boulder!")
-	if(!specific_boulder.custom_materials)
-		say("Empty boulder removed!")
+	if(!length(specific_boulder.custom_materials))
 		qdel(specific_boulder)
 		update_boulder_count()
 		playsound(loc, 'sound/weapons/drill.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)

@@ -95,11 +95,14 @@
 	sleep(2 SECONDS)
 	if(funny_ending)
 		playsound(src, 'sound/effects/explosion3.ogg', 50, FALSE) //node drone died on the way back to his home planet.
+		visible_message(span_notice("...or maybe not."))
 	qdel(src)
 
 
 /mob/living/basic/node_drone/proc/pre_escape()
-	attached_vent?.unbuckle_mob(src)
+	if(attached_vent)
+		attached_vent.unbuckle_mob(src)
+		attached_vent = null
 	if(!escaping)
 		escaping = TRUE
 		flick("mining_node_escape", src)
@@ -112,7 +115,7 @@
 	blackboard = list(
 		BB_BASIC_MOB_FLEEING = FALSE, // Will flee when the vent lies undefended.
 		BB_CURRENT_HUNTING_TARGET = null, // Hunts for vents.
-		BB_TARGETTING_DATUM = /datum/targeting_strategy/basic, // Use this to find vents to run away from
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic, // Use this to find vents to run away from
 	)
 
 	ai_traits = STOP_MOVING_WHEN_PULLED

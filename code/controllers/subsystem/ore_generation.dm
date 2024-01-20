@@ -31,9 +31,9 @@ SUBSYSTEM_DEF(ore_generation)
 		/datum/material/plastic = 1,
 	)
 	var/list/ore_vent_sizes = list(
-		"large" = 3,
-		"medium" = 5,
-		"small" = 7,
+		LARGE_VENT_TYPE = 3,
+		MEDIUM_VENT_TYPE = 5,
+		SMALL_VENT_TYPE = 7,
 	)
 	/// Ores spawned by proximity to an ore vent. Useful for logging purposes.
 	var/list/post_ore_random = list(
@@ -65,11 +65,10 @@ SUBSYSTEM_DEF(ore_generation)
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
 	available_boulders = list() // reset upon new fire.
-	for(var/vent in processed_vents)
-		var/obj/structure/ore_vent/current_vent = vent
+	for(var/obj/structure/ore_vent/current_vent as anything in processed_vents)
 
 		var/local_vent_count = 0
-		for(var/obj/item/boulder/old_rock as anything in current_vent.loc)
+		for(var/obj/item/boulder/old_rock in current_vent.loc)
 			available_boulders += old_rock
 			local_vent_count++
 

@@ -2,9 +2,6 @@
 #define MINERAL_TYPE_OPTIONS_RANDOM 4
 #define OVERLAY_OFFSET_START 0
 #define OVERLAY_OFFSET_EACH 5
-#define LARGE_VENT_TYPE "large"
-#define MEDIUM_VENT_TYPE "medium"
-#define SMALL_VENT_TYPE "small"
 
 /obj/structure/ore_vent
 	name = "ore vent"
@@ -36,13 +33,13 @@
 	var/boulder_size = BOULDER_SIZE_SMALL
 	/// Reference to this ore vent's NODE drone, to track wave success.
 	var/mob/living/basic/node_drone/node = null //this path is a placeholder.
-	/// String of ores that this vent can produce.
+	/// String containing the formatted list of ores that this vent can produce, and who first discovered this vent.
 	var/ore_string = ""
 	/// Associated list of vent size weights to pick from.
 	var/list/ore_vent_options = list(
-		LARGE_VENT_TYPE,
-		MEDIUM_VENT_TYPE,
-		SMALL_VENT_TYPE,
+		LARGE_VENT_TYPE = 3,
+		MEDIUM_VENT_TYPE = 5,
+		SMALL_VENT_TYPE = 7,
 	)
 
 	/// What string do we use to warn the player about the excavation event?
@@ -74,7 +71,8 @@
 
 
 /obj/structure/ore_vent/Initialize(mapload)
-	generate_description()
+	if(mapload)
+		generate_description()
 	register_context()
 	SSore_generation.possible_vents += src
 	boulder_icon_state = pick(list(
@@ -157,7 +155,7 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 /**
- * Picks n types materials to pack into a boulder created by this ore vent, where n is this vent's minerals_per_boulder.
+ * Picks n types of materials to pack into a boulder created by this ore vent, where n is this vent's minerals_per_boulder.
  * Then assigns custom_materials based on boulder_size, assigned via the ore_quantity_function
  */
 /obj/structure/ore_vent/proc/create_mineral_contents()
@@ -334,9 +332,9 @@
  * Ore_string is passed to examine().
  */
 /obj/structure/ore_vent/proc/generate_description(mob/user)
-	for(var/mineral_count in 1 to mineral_breakdown.len)
+	for(var/mineral_count in 1 to length(mineral_breakdown))
 		var/datum/material/resource = mineral_breakdown[mineral_count]
-		if(mineral_count == mineral_breakdown.len)
+		if(mineral_count == length(mineral_breakdown))
 			ore_string += "and " + span_bold(initial(resource.name)) + "."
 		else
 			ore_string += span_bold(initial(resource.name)) + ", "
@@ -367,7 +365,7 @@
 	if(prob(artifact_chance))
 		new_rock = new /obj/item/boulder/artifact(loc)
 	else
-		new_rock = new (loc)
+		new_rock = new /obj/item/boulder(loc)
 	var/list/mats_list = create_mineral_contents()
 	Shake(duration = 1.5 SECONDS)
 	new_rock.set_custom_materials(mats_list)
@@ -402,19 +400,23 @@
 	. = ..()
 	if(!unique_vent && !mapload)
 		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
+		generate_description()
 	artifact_chance = rand(0, MAX_ARTIFACT_ROLL_CHANCE)
 	var/string_boulder_size = pick_weight(ore_vent_options)
 	name = "[string_boulder_size] ore vent"
 	switch(string_boulder_size)
-		if("large")
+		if(LARGE_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_LARGE
-			SSore_generation.ore_vent_sizes["large"] -= 1
-		if("medium")
+			if(mapload)
+				SSore_generation.ore_vent_sizes["large"] -= 1
+		if(MEDIUM_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_MEDIUM
-			SSore_generation.ore_vent_sizes["medium"] -= 1
-		if("small")
+			if(mapload)
+				SSore_generation.ore_vent_sizes["medium"] -= 1
+		if(SMALL_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_SMALL
-			SSore_generation.ore_vent_sizes["small"] -= 1
+			if(mapload)
+				SSore_generation.ore_vent_sizes["small"] -= 1
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
 			name = initial(name)
@@ -521,6 +523,3 @@
 #undef MINERAL_TYPE_OPTIONS_RANDOM
 #undef OVERLAY_OFFSET_START
 #undef OVERLAY_OFFSET_EACH
-#undef LARGE_VENT_TYPE
-#undef MEDIUM_VENT_TYPE
-#undef SMALL_VENT_TYPE
