@@ -515,3 +515,15 @@
   mc-oofert:
   - code_imp: slightly cleans up dance machine code
   - bugfix: disco dances are less comparable to having a seizure
+2024-01-19:
+  13spacemen:
+  - bugfix: Hub time should be correct again
+  Ben10Omintrix:
+  - bugfix: fix a runtime when loading ghosts to a mulebot
+2024-01-20:
+  Diamond-74:
+  - bugfix: Monkeys don't get stuck on obstacles as often.
+  Ghommie:
+  - image: The "One Lean, Mean, Cleaning Machine" achievement now has its own icon.
+  Momo8289, Pepsilawn, Sinsinins, JohnFulpWillard:
+  - bugfix: Clown ops now get a code set for their nuke.
