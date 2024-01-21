@@ -5686,6 +5686,7 @@
 /obj/structure/railing{
 	dir = 4
 	},
+/obj/effect/mapping_helpers/apc/cell_10k,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
 "aMp" = (
@@ -44068,6 +44069,11 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/central/lesser)
+"neR" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/security/execution/transfer)
 "neX" = (
 /obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
@@ -45959,6 +45965,9 @@
 	},
 /obj/machinery/newscaster/directional/north,
 /obj/item/pai_card,
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "nKb" = (
@@ -61780,6 +61789,9 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_y = 32
+	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit)
 "sNS" = (
@@ -68198,7 +68210,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
-/area/station/security/prison)
+/area/station/security/execution/transfer)
 "uLX" = (
 /obj/effect/turf_decal/delivery,
 /obj/machinery/door/window/left/directional/east{
@@ -71345,6 +71357,15 @@
 	dir = 8
 	},
 /area/station/ai_monitored/command/storage/eva)
+"vHx" = (
+/obj/effect/turf_decal/trimline/neutral/filled/corner{
+	dir = 4
+	},
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_y = 32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/center)
 "vHy" = (
 /obj/effect/spawner/random/structure/furniture_parts,
 /obj/effect/decal/cleanable/dirt/dust,
@@ -75587,7 +75608,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/security/brig,
 /turf/open/floor/iron,
-/area/station/security/prison)
+/area/station/security/execution/transfer)
 "xck" = (
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/lobby)
@@ -95431,7 +95452,7 @@ oEN
 oEN
 oEN
 uLW
-abj
+neR
 xcj
 oEN
 oVM
@@ -177699,7 +177720,7 @@ vXM
 vXM
 vXM
 moU
-aEl
+vHx
 jWY
 jJV
 oor

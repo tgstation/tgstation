@@ -89,11 +89,11 @@
 		return
 
 	var/picked_def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/O = H.get_bodypart(picked_def_zone)
-	if(!istype(O))
+	var/obj/item/bodypart/leg = H.get_bodypart(picked_def_zone)
+	if(!istype(leg))
 		return
 
-	if(!IS_ORGANIC_LIMB(O))
+	if(!IS_ORGANIC_LIMB(leg))
 		return
 
 	if (!(flags & CALTROP_BYPASS_SHOES))
@@ -115,8 +115,10 @@
 	H.apply_damage(damage, BRUTE, picked_def_zone, wound_bonus = CANT_WOUND)
 
 	if(!(flags & CALTROP_NOSTUN)) // Won't set off the paralysis.
-		H.Paralyze(paralyze_duration)
-
+		if(!HAS_TRAIT(H, TRAIT_LIGHT_STEP))
+			H.Paralyze(paralyze_duration)
+		else
+			H.Knockdown(paralyze_duration)
 	if(!soundfile)
 		return
 	playsound(H, soundfile, 15, TRUE, -3)

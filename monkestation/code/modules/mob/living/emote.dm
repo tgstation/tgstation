@@ -141,3 +141,44 @@
 
 /datum/emote/living/meow/get_sound(mob/living/user)
 	return pick('monkestation/sound/voice/feline/meow1.ogg', 'monkestation/sound/voice/feline/meow2.ogg', 'monkestation/sound/voice/feline/meow3.ogg', 'monkestation/sound/voice/feline/meow4.ogg')
+
+/datum/emote/living/bark/can_run_emote(mob/user, status_check = TRUE, intentional = FALSE)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_ANIME))
+	 return TRUE
+	else
+	 return FALSE
+/datum/emote/living/bark
+	key = "bark"
+	key_third_person = "barks"
+	message = "barks!"
+	message_mime = "barks out silence!"
+	message_ipc = "makes a synthetic bark!"
+	message_param = "barks at %t!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+/datum/emote/living/bark/get_sound(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_CLUMSY))
+		return 'monkestation/sound/voice/feline/bark.ogg'
+	else
+		return pick('monkestation/sound/voice/feline/bark.ogg','monkestation/sound/voice/feline/bark2.ogg') // Yes, bark trait in feline folder [Bad To The Bone]
+
+/datum/emote/living/weh
+	key = "weh"
+	key_third_person = "wehs"
+	message = "wehs!"
+	message_param = "wehs at %t!"
+	message_mime = "wehs silently!"
+	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
+
+/datum/emote/living/weh/get_sound(mob/living/user)
+	if(islizard(user))
+		return 'monkestation/sound/voice/weh.ogg'
+	else
+		return FALSE
+
+/datum/emote/living/weh/can_run_emote(mob/user, status_check, intentional)
+	if(islizard(user))
+		return TRUE
+	else
+		return FALSE
+
