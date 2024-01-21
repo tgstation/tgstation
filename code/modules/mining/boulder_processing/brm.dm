@@ -26,12 +26,15 @@
 
 /obj/machinery/bouldertech/brm/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
-	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
+	if(!handle_teleport_conditions(user))
 		return
-	if(panel_open)
-		balloon_alert(user, "close panel first!")
+	pre_collect_boulder()
+
+	COOLDOWN_START(src, manual_teleport_cooldown, teleportation_time)
+
+/obj/machinery/bouldertech/brm/attack_robot(mob/user)
+	if(!handle_teleport_conditions(user))
 		return
-	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	pre_collect_boulder()
 
 	COOLDOWN_START(src, manual_teleport_cooldown, teleportation_time)
@@ -43,6 +46,16 @@
 	return ..()
 
 /obj/machinery/bouldertech/brm/attack_hand_secondary(mob/user, list/modifiers)
+	. = ..()
+	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
+		return
+	if(!anchored)
+		balloon_alert(user, "anchor first!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	toggle_auto_on(user)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/bouldertech/brm/attack_robot_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return
@@ -99,6 +112,19 @@
 		icon_state = "[initial(icon_state)]-toggled"
 		return
 	return ..()
+
+/**
+ * Handles qualifiers for enabling teleportation of boulders.
+ * Returns TRUE if the teleportation can proceed, FALSE otherwise.
+ */
+/obj/machinery/bouldertech/brm/proc/handle_teleport_conditions(mob/user)
+	if(!COOLDOWN_FINISHED(src, manual_teleport_cooldown))
+		return FALSE
+	if(panel_open)
+		balloon_alert(user, "close panel first!")
+		return FALSE
+	playsound(src, MANUAL_TELEPORT_SOUND, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	return TRUE
 
 /**
  * Begins to collect a boulder from the available boulders list in SSore_generation.

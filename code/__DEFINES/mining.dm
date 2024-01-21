@@ -41,5 +41,7 @@
 
 /// The number of points a miner gets for discovering a vent, multiplied by BOULDER_SIZE when completing a wave defense minus the discovery bonus.
 #define MINER_POINT_MULTIPLIER 100
+/// The multiplier that gets applied for automatically generated mining points.
+#define MINING_POINT_MACHINE_MULTIPLIER 0.8
 
 

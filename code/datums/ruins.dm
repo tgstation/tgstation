@@ -14,7 +14,7 @@
 	var/placement_weight = 1
 	///Cost in ruin budget placement system
 	var/cost = 0
-	/// Cost in the ruin budget placement system associated with mineral spawning. We use a different budget for mineral sources like ore vents.
+	/// Cost in the ruin budget placement system associated with mineral spawning. We use a different budget for mineral sources like ore vents. For practical use see seedRuins
 	var/mineral_cost = 0
 	/// If TRUE, this ruin can be placed multiple times in the same map
 	var/allow_duplicates = TRUE
