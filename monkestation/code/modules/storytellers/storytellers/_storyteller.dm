@@ -68,6 +68,8 @@
 		roundstart_checks = TRUE
 		if(!ignores_roundstart)
 			SSgamemode.ran_roundstart = TRUE
+		if(SSgamemode.current_roundstart_event)
+			buy_event(SSgamemode.current_roundstart_event, EVENT_TRACK_ROLESET)
 
 	add_points(delta_time)
 	handle_tracks()
@@ -154,7 +156,6 @@
 	if(bought_event.roundstart)
 		if(!ignores_roundstart)
 			SSgamemode.ran_roundstart = TRUE
-		SSgamemode.current_roundstart_event = bought_event
 		mode.TriggerEvent(bought_event, forced)
 	else
 		mode.schedule_event(bought_event, 3 MINUTES, total_cost, _forced = forced)

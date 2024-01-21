@@ -16,6 +16,7 @@
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_CHAPLAIN,
 	)
 	required_enemies = 5
 	weight = 2
