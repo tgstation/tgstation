@@ -89,8 +89,10 @@
 // Admin-created events override this.
 /datum/round_event_control/proc/can_spawn_event(players_amt, allow_magic = FALSE, fake_check = FALSE)
 	SHOULD_CALL_PARENT(TRUE)
+//monkestation edit start
 	if(roundstart && (world.time-SSticker.round_start_time >= 2 MINUTES || (SSgamemode.ran_roundstart && !fake_check)))
 		return FALSE
+//monkestation edit end
 	if(occurrences >= max_occurrences)
 		return FALSE
 	if(earliest_start >= world.time-SSticker.round_start_time)
@@ -107,9 +109,8 @@
 		return FALSE
 
 	//monkestation edit start - STORYTELLERS
-	if(checks_antag_cap)
-		if(!roundstart && !SSgamemode.can_inject_antags())
-			return FALSE
+	if(checks_antag_cap && !roundstart && !SSgamemode.can_inject_antags())
+		return FALSE
 	if(!check_enemies())
 		return FALSE
 	if(allowed_storytellers && ((islist(allowed_storytellers) && !is_type_in_list(SSgamemode.storyteller, allowed_storytellers)) || SSgamemode.storyteller.type != allowed_storytellers))
