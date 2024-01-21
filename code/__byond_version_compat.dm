@@ -11,9 +11,7 @@
 
 
 // Keep savefile compatibilty at minimum supported level
-#if DM_VERSION >= 515
 /savefile/byond_version = MIN_COMPILER_VERSION
-#endif
 
 // So we want to have compile time guarantees these methods exist on local type, unfortunately 515 killed the .proc/procname and .verb/verbname syntax so we have to use nameof()
 // For the record: GLOBAL_VERB_REF would be useless as verbs can't be global.

@@ -26,11 +26,8 @@
 	var/atom/movable/ref_holder/testbed = allocate(/atom/movable/ref_holder)
 	SSgarbage.should_save_refs = TRUE
 
-	//Sanity check
-	#if DM_VERSION >= 515
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 3, "Should be: test references: 0 + baseline references: 3 (victim var,loc,allocated list)")
-	#endif
 	victim.DoSearchVar(testbed, "Sanity Check", search_time = 1) //We increment search time to get around an optimization
 	TEST_ASSERT(!victim.found_refs.len, "The ref-tracking tool found a ref where none existed")
 	SSgarbage.should_save_refs = FALSE
@@ -45,10 +42,8 @@
 	testbed.test_list += victim
 	testbed.test_assoc_list["baseline"] = victim
 
-	#if DM_VERSION >= 515
 	var/refcount = refcount(victim)
 	TEST_ASSERT_EQUAL(refcount, 6, "Should be: test references: 3 + baseline references: 3 (victim var,loc,allocated list)")
-	#endif
 	victim.DoSearchVar(testbed, "First Run", search_time = 2)
 
 	TEST_ASSERT(victim.found_refs["test"], "The ref-tracking tool failed to find a regular value")
