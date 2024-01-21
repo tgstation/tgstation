@@ -5,7 +5,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throwforce = 5
-	w_class = WEIGHT_CLASS_NORMAL
+	w_class = WEIGHT_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
 	obj_flags = CONDUCTS_ELECTRICITY
