@@ -17,7 +17,6 @@
 	custom_price = PAYCHECK_LOWER
 	//the screwdriver cocktail can make a drinking glass into the world's worst screwdriver. beautiful.
 	toolspeed = 25
-	usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 
 	/// The type to compare to glass_style.required_container type, or null to use class type.
 	/// This allows subtypes to utilize parent styles.
@@ -45,14 +44,17 @@
 	// Turn glass into a screwdriver (tool) if it's a screwdriver (cocktail)
 	if(istype(style, /datum/glass_style/drinking_glass/screwdrivercocktail))
 		tool_behaviour = TOOL_SCREWDRIVER
+		usesound = list('sound/items/screwdriver.ogg', 'sound/items/screwdriver2.ogg')
 	else
 		tool_behaviour = initial(tool_behaviour)
+		usesound = initial(usesound)
 
 // And having our icon reset restores our fill thresholds
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_cup_reset()
 	. = ..()
 	fill_icon_thresholds ||= list(0)
 	tool_behaviour = initial(tool_behaviour)
+	usesound = initial(usesound)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
