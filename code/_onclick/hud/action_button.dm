@@ -48,6 +48,9 @@
 		return FALSE
 
 	var/list/modifiers = params2list(params)
+	if(LAZYACCESS(modifiers, ALT_CLICK))
+		begin_creating_bind(usr)
+		return TRUE
 	if(LAZYACCESS(modifiers, SHIFT_CLICK))
 		var/datum/hud/our_hud = usr.hud_used
 		our_hud.position_action(src, SCRN_OBJ_DEFAULT)
@@ -60,6 +63,10 @@
 		trigger_flags |= TRIGGER_SECONDARY_ACTION
 	linked_action.Trigger(trigger_flags = trigger_flags)
 	return TRUE
+
+/atom/movable/screen/movable/action_button/begin_creating_bind(mob/user)
+	var/key = input("Buy something!", "Shop") //use something else for this this is not good
+	user.key_to_action_weakref[key] += WEAKREF(src)
 
 // Entered and Exited won't fire while you're dragging something, because you're still "holding" it
 // Very much byond logic, but I want nice behavior, so we fake it with drag

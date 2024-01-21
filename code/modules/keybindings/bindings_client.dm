@@ -75,9 +75,17 @@
 			break
 
 	holder?.key_down(_key, src)
+	holder?.handleActionBinds(full_key, src)
 	mob.focus?.key_down(_key, src)
 	mob.update_mouse_pointer()
 
+/mob/handleActionBinds(key, client)
+	for(var/datum/weakref/bound in key_to_action_weakref[key])
+		var/atom/movable/screen/movable/action_button/action_button = bound.Resolve()
+		if(isnull(action_button/action_button))
+			key_to_action_weakref[key] -= bound
+		continue
+		action_button.Click()
 
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
