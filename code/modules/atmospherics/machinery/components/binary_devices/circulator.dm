@@ -5,26 +5,22 @@
 	name = "circulator/heat exchanger"
 	desc = "A gas circulator pump and heat exchanger."
 	icon_state = "circ-off-0"
-
-	var/active = FALSE
-
-	var/last_pressure_delta = 0
 	pipe_flags = PIPING_ONE_PER_TURF | PIPING_DEFAULT_LAYER_ONLY
-
+	vent_movement = VENTCRAWL_CAN_SEE
 	density = TRUE
-
 	circuit = /obj/item/circuitboard/machine/circulator
 
+	var/active = FALSE
+	var/last_pressure_delta = 0
 	var/flipped = 0
+	///Which circulator mode we are on, the generator requires one of each to work.
 	var/mode = CIRCULATOR_HOT
-	var/obj/machinery/power/generator/generator
+	///The generator we are connected to.
+	var/obj/machinery/power/thermoelectric_generator/generator
 
 /obj/machinery/atmospherics/components/binary/circulator/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/simple_rotation)
-
-/obj/machinery/atmospherics/components/binary/circulator/AltClick(mob/user)
-	return ..() // This hotkey is BLACKLISTED since it's used by /datum/component/simple_rotation
 
 //default cold circ for mappers
 /obj/machinery/atmospherics/components/binary/circulator/cold
@@ -49,25 +45,18 @@
 		return null
 
 	//Calculate necessary moles to transfer using PV = nRT
-	if(air2.temperature>0)
-		var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
-
-		var/transfer_moles = (pressure_delta*air1.volume)/(air2.temperature * R_IDEAL_GAS_EQUATION)
-
-		last_pressure_delta = pressure_delta
-
-		//Actually transfer the gas
-		var/datum/gas_mixture/removed = air2.remove(transfer_moles)
-
-		update_parents()
-
-		return removed
-
-	else
+	if(!air2.temperature > 0)
 		last_pressure_delta = 0
+		return
+	var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
+	var/transfer_moles = (pressure_delta*air1.volume)/(air2.temperature * R_IDEAL_GAS_EQUATION)
+	last_pressure_delta = pressure_delta
+	//Actually transfer the gas
+	var/datum/gas_mixture/removed = air2.remove(transfer_moles)
+	update_parents()
+	return removed
 
 /obj/machinery/atmospherics/components/binary/circulator/process_atmos()
-	..()
 	update_appearance()
 
 /obj/machinery/atmospherics/components/binary/circulator/update_icon_state()
@@ -92,7 +81,6 @@
 	if(generator)
 		disconnectFromGenerator()
 	to_chat(user, span_notice("You [anchored?"secure":"unsecure"] [src]."))
-
 
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
@@ -149,7 +137,8 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/screwdriver_act(mob/user, obj/item/I)
-	if(..())
+	. = ..()
+	if(.)
 		return TRUE
 	toggle_panel_open()
 	I.play_tool_sound(src)
@@ -157,8 +146,9 @@
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/crowbar_act(mob/user, obj/item/I)
-	default_deconstruction_crowbar(I)
-	return TRUE
+	if(default_deconstruction_crowbar(I))
+		return TRUE
+	return ..()
 
 /obj/machinery/atmospherics/components/binary/circulator/on_deconstruction()
 	if(generator)
@@ -176,19 +166,3 @@
 	..()
 	pixel_x = 0
 	pixel_y = 0
-
-/obj/machinery/atmospherics/components/binary/circulator/verb/circulator_flip()
-	set name = "Flip"
-	set category = "Object"
-	set src in oview(1)
-
-	if(!ishuman(usr))
-		return
-
-	if(anchored)
-		to_chat(usr, span_danger("[src] is anchored!"))
-		return
-
-	flipped = !flipped
-	to_chat(usr, span_notice("You flip [src]."))
-	update_appearance()

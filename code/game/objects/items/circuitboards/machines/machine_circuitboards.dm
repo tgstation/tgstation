@@ -243,10 +243,10 @@
 		/datum/stock_part/servo = 1)
 	needs_anchored = FALSE
 
-/obj/item/circuitboard/machine/generator
+/obj/item/circuitboard/machine/thermoelectric_generator
 	name = "Thermo-Electric Generator"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/generator
+	build_path = /obj/machinery/power/thermoelectric_generator
 	req_components = list()
 
 /obj/item/circuitboard/machine/ntnet_relay
