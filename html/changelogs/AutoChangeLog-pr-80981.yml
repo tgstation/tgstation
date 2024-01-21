@@ -1,5 +1,0 @@
-author: "Rex9001"
-delete-after: True
-changes:
-  - bugfix: "Lunatics spawned from moon ascension now actually have an objective to assist their ringleader"
-  - bugfix: "Lunatics now get a moonlight amulette on the ground if they have full hands"

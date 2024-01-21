@@ -1,5 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - rscadd: "Modular Computers now support integrated circuits. What can be done with them depends on the programs installed and whether they're running (open or background)."
-  - rscadd: "Modular Consoles (the machinery) now have a small backup cell they draw power from if the power goes out."
