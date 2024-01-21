@@ -6,7 +6,7 @@
 	reagent_flags = TRANSPARENT | DRAINABLE
 	component_name = "Grinder Input"
 	density = FALSE
-
+//a
 /obj/structure/chemical_input/grinder/Initialize(mapload, bolt, layer)
 	. = ..()
 	var/static/list/loc_connections = list(
