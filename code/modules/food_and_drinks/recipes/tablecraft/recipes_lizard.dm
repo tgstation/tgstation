@@ -444,6 +444,7 @@
 	)
 	result = /obj/item/food/steeped_mushrooms
 	category = CAT_LIZARD
+	recipe_flags = RECIPE_KEEP_CONTENTS
 
 /datum/crafting_recipe/food/rootbreadpbj
 	name = "Peanut butter and jelly rootwich"
