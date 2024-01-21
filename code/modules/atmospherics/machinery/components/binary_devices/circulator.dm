@@ -75,12 +75,13 @@
 
 /obj/machinery/atmospherics/components/binary/circulator/wrench_act(mob/living/user, obj/item/I)
 	if(!panel_open)
+		balloon_alert(user, "open the panel!")
 		return
 	set_anchored(!anchored)
 	I.play_tool_sound(src)
 	if(generator)
 		disconnectFromGenerator()
-	to_chat(user, span_notice("You [anchored?"secure":"unsecure"] [src]."))
+	balloon_alert(user, "[anchored ? "secure" : "unsecure"]")
 
 	var/obj/machinery/atmospherics/node1 = nodes[1]
 	var/obj/machinery/atmospherics/node2 = nodes[2]
@@ -133,16 +134,16 @@
 	if(generator)
 		disconnectFromGenerator()
 	mode = !mode
-	to_chat(user, span_notice("You set [src] to [mode ? "cold" : "hot"] mode."))
+	balloon_alert(user, "set to [mode ? "cold" : "hot"]")
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/screwdriver_act(mob/user, obj/item/I)
-	. = ..()
-	if(.)
-		return TRUE
+	if(!anchored)
+		balloon_alert(user, "anchor it down!")
+		return
 	toggle_panel_open()
 	I.play_tool_sound(src)
-	to_chat(user, span_notice("You [panel_open ? "open" : "close"] the panel on [src]."))
+	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	return TRUE
 
 /obj/machinery/atmospherics/components/binary/circulator/crowbar_act(mob/user, obj/item/I)
