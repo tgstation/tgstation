@@ -30723,6 +30723,16 @@
 /obj/effect/spawner/random/trash/janitor_supplies,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"lcL" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "lcM" = (
 /obj/machinery/light/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -47510,6 +47520,16 @@
 	pixel_y = 6
 	},
 /obj/effect/turf_decal/tile/purple/fourcorners,
+/turf/open/floor/iron,
+/area/station/hallway/primary/aft)
+"qYu" = (
+/obj/effect/turf_decal/tile/purple/half/contrasted{
+	dir = 4
+	},
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = 32
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/aft)
 "qYw" = (
@@ -64979,6 +64999,15 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/port)
+"xfe" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/disposalpipe/segment,
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central)
 "xff" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -90895,7 +90924,7 @@ stC
 sPY
 hRW
 cYQ
-aLA
+xfe
 aLA
 vVw
 aLA
@@ -95807,7 +95836,7 @@ kFK
 kFK
 bQM
 kFK
-ceZ
+qYu
 lTB
 cbi
 wWG
@@ -100144,7 +100173,7 @@ kwQ
 jZR
 sqM
 sEn
-sqM
+lcL
 mWS
 rIB
 mmS
