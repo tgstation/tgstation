@@ -452,5 +452,5 @@
 
 /// The maximum amount of positive quirks one character can have at roundstart.
 /datum/config_entry/number/max_positive_quirks
-	default = 0
-	min_val = 0
+	default = -1
+	min_val = -1

@@ -104,7 +104,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/bonus_quirks = max((length(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding
-	var/good_count = 0 //Maximum of 6 good perks
+	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
+	var/good_count = 0
 	var/score //What point score we're at
 	///Cached list of possible quirks
 	var/list/possible_quirks = quirks.Copy()
@@ -137,19 +138,20 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirks_to_add += quirk
 
 	//And have benefits too
-	while(score < 0 && good_count <= CONFIG_GET(number/max_positive_quirks))
-		if(!length(possible_quirks))//Lets not get stuck
-			break
-		var/quirk = pick(quirks)
-		if(quirk in GLOB.quirk_blacklist) //prevent blacklisted
-			possible_quirks -= quirk
-			continue
-		if(!quirk_points[quirk] > 0) //positive only
-			possible_quirks -= quirk
-			continue
-		good_count++
-		score += quirk_points[quirk]
-		quirks_to_add += quirk
+	if(max_positive_quirks > 0)
+		while(score < 0 && good_count <= max_positive_quirks)
+			if(!length(possible_quirks))//Lets not get stuck
+				break
+			var/quirk = pick(quirks)
+			if(quirk in GLOB.quirk_blacklist) //prevent blacklisted
+				possible_quirks -= quirk
+				continue
+			if(!(quirk_points[quirk] > 0)) //positive only
+				possible_quirks -= quirk
+				continue
+			good_count++
+			score += quirk_points[quirk]
+			quirks_to_add += quirk
 
 	for(var/datum/quirk/quirk as anything in user.quirks)
 		if(quirk.name in quirks_to_add) //Don't delete ones we keep
@@ -168,6 +170,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
 	var/points_enabled = !CONFIG_GET(flag/disable_quirk_points)
+	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
 	var/balance = 0
 
 	var/list/all_quirks = get_quirks()
@@ -199,7 +202,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 		var/value = initial(quirk.value)
 		if (value > 0)
-			if (positive_quirks.len == CONFIG_GET(number/max_positive_quirks))
+			if ((max_positive_quirks >= 0) && (positive_quirks.len == max_positive_quirks))
 				continue
 
 			positive_quirks[quirk_name] = value

@@ -348,7 +348,7 @@ export function QuirksPage(props) {
           const quirk = quirkInfo[quirkName];
 
           if (quirk.value > 0) {
-            if (positiveQuirks >= maxPositiveQuirks) {
+            if (maxPositiveQuirks >= 0 && positiveQuirks >= maxPositiveQuirks) {
               return "You can't have any more positive quirks!";
             } else if (pointsEnabled && balance + quirk.value > 0) {
               return 'You need a negative quirk to balance this out!';
@@ -397,7 +397,7 @@ export function QuirksPage(props) {
 
                 <Stack.Item>
                   <StatDisplay>
-                    {positiveQuirks} / {maxPositiveQuirks}
+                    {positiveQuirks}{maxPositiveQuirks >= 0 ? ` / ${maxPositiveQuirks}` : ""}
                   </StatDisplay>
                 </Stack.Item>
 
