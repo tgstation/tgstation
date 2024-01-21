@@ -211,7 +211,7 @@
 				result = new recipe.result(get_turf(crafter.loc), recipe.result_amount || 1)
 			else
 				result = new recipe.result(get_turf(crafter.loc))
-				if(result.atom_storage && (recipe.recipe_flags & RECIPE_DELETE_CONTENTS))
+				if(result.atom_storage && !(recipe.recipe_flags & RECIPE_KEEP_CONTENTS))
 					for(var/obj/item/thing in result)
 						qdel(thing)
 			var/datum/reagents/holder = locate() in parts

@@ -40,7 +40,7 @@
 	/// Resulting amount (for stacks only)
 	var/result_amount
 	/// Flags for crafting recipes. See code\__DEFINES\recipes.dm
-	var/recipe_flags = RECIPE_DELETE_CONTENTS
+	var/recipe_flags = NONE
 
 /datum/crafting_recipe/New()
 	if(!name && result)

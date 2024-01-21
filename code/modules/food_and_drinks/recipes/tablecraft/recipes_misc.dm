@@ -426,7 +426,7 @@
 	)
 	result = /obj/item/storage/fancy/pickles_jar
 	category = CAT_MISCFOOD
-	recipe_flags = NONE
+	recipe_flags = RECIPE_KEEP_CONTENTS
 
 /datum/crafting_recipe/food/sauteed_eggplant
 	name = "Sauteed eggplant"
