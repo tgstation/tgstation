@@ -101,5 +101,5 @@
 DEFINE_BITFIELD(vent_movement, list(
 	"Ventcrawl Allowed" = VENTCRAWL_ALLOWED,
 	"Ventcrawl Entrance Allowed" = VENTCRAWL_ENTRANCE_ALLOWED,
-	"Ventcrawl can see" = VENTCRAWL_CAN_SEE,
+	"Ventcrawl Can See" = VENTCRAWL_CAN_SEE,
 ))
