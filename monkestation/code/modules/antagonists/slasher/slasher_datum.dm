@@ -73,7 +73,8 @@
 		powers |= new_ability
 
 	var/mob/living/carbon/human/human = current_mob
-	human.equipOutfit(/datum/outfit/slasher)
+	if(istype(human))
+		human.equipOutfit(/datum/outfit/slasher)
 	cached_brute_mod = human.dna.species.brutemod
 
 

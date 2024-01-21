@@ -9,7 +9,7 @@
 	var/mob/living/carbon/human/jailbird = quirk_holder
 	var/quirk_crime	= pick(world.file2list("monkestation/strings/random_crimes.txt"))
 	to_chat(jailbird, "<span class='boldnotice'>You are on parole for the crime of: [quirk_crime]!</span>")
-	addtimer(CALLBACK(src, .proc/apply_arrest, quirk_crime), 10 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(apply_arrest), quirk_crime), 10 SECONDS)
 
 
 /datum/quirk/jailbird/proc/apply_arrest(crime_name)
@@ -48,8 +48,8 @@
 
 /datum/quirk/stowaway/post_add()
 	. = ..()
-	to_chat(quirk_holder, "<span class='boldnotice'>You've awoken to find yourself inside [GLOB.station_name] without real identification!</span>")
-	addtimer(CALLBACK(src, .proc/datacore_deletion), 5 SECONDS)
+	to_chat(quirk_holder, span_boldnotice("You've awoken to find yourself inside [GLOB.station_name] without real identification!"))
+	addtimer(CALLBACK(src, PROC_REF(datacore_deletion)), 5 SECONDS)
 
 /datum/quirk/stowaway/proc/datacore_deletion()
 	var/mob/living/carbon/human/stowaway = quirk_holder
