@@ -104,11 +104,15 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 	var/bonus_quirks = max((length(user.quirks) + rand(-RANDOM_QUIRK_BONUS, RANDOM_QUIRK_BONUS)), MINIMUM_RANDOM_QUIRKS)
 	var/added_quirk_count = 0 //How many we've added
 	var/list/quirks_to_add = list() //Quirks we're adding
-	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
 	var/good_count = 0
 	var/score //What point score we're at
 	///Cached list of possible quirks
 	var/list/possible_quirks = quirks.Copy()
+
+	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
+	if(max_positive_quirks < 0)
+		max_positive_quirks = 6
+
 	//Create a random list of stuff to start with
 	while(bonus_quirks > added_quirk_count)
 		var/quirk = pick(possible_quirks) //quirk is a string
@@ -138,8 +142,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirks_to_add += quirk
 
 	//And have benefits too
-	if(max_positive_quirks < 0)
-		max_positive_quirks = 6
 	if(max_positive_quirks > 0)
 		while(score < 0 && good_count <= max_positive_quirks)
 			if(!length(possible_quirks))//Lets not get stuck
@@ -204,7 +206,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 		var/value = initial(quirk.value)
 		if (value > 0)
-			if ((max_positive_quirks >= 0) && (positive_quirks.len == max_positive_quirks))
+			if (max_positive_quirks >= 0 && positive_quirks.len == max_positive_quirks)
 				continue
 
 			positive_quirks[quirk_name] = value
@@ -212,7 +214,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		balance += value
 		new_quirks += quirk_name
 
-	if (points_enabled && (balance > 0))
+	if (points_enabled && balance > 0)
 		var/balance_left_to_remove = balance
 
 		for (var/positive_quirk in positive_quirks)
