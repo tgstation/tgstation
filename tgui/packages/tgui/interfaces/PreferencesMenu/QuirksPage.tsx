@@ -397,7 +397,8 @@ export function QuirksPage(props) {
 
                 <Stack.Item>
                   <StatDisplay>
-                    {positiveQuirks}{maxPositiveQuirks >= 0 ? ` / ${maxPositiveQuirks}` : ""}
+                    {positiveQuirks}
+                    {maxPositiveQuirks >= 0 ? ` / ${maxPositiveQuirks}` : ''}
                   </StatDisplay>
                 </Stack.Item>
 
