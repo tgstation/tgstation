@@ -261,8 +261,7 @@ GENERAL_PROTECT_DATUM(/datum/log_holder)
 /datum/log_holder/proc/Log(category, message, list/data)
 	// This is Log because log is a byond internal proc
 	if(shutdown)
-		stack_trace("Performing logging after shutdown! This might not be functional in the future!")
-	// but for right now it's fine
+		return
 
 	// do not include the message because these go into the runtime log and we might be secret!
 	if(!istext(message))
