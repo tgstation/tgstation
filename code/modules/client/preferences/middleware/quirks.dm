@@ -49,6 +49,7 @@
 		"max_positive_quirks" = MAX_QUIRKS,
 		"quirk_info" = quirk_info,
 		"quirk_blacklist" = GLOB.quirk_string_blacklist,
+		"points_enabled" = !CONFIG_GET(flag/disable_quirk_points),
 	)
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)

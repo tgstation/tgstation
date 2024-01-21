@@ -547,3 +547,9 @@ NEGATIVE_STATION_TRAITS 0 8
 NEGATIVE_STATION_TRAITS 1 4
 NEGATIVE_STATION_TRAITS 2 2
 NEGATIVE_STATION_TRAITS 3 1
+
+# Configuration for character Quirks.
+# Uncomment to disable Quirk point balancing for the server and clients.
+# If enabled, players will be able to select positive quirks without first selecting negative quirks.
+# If enabled, randomized Quirks will still use points internally, in order to maintain balance.
+#DISABLE_QUIRK_POINTS

@@ -167,6 +167,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 /datum/controller/subsystem/processing/quirks/proc/filter_invalid_quirks(list/quirks)
 	var/list/new_quirks = list()
 	var/list/positive_quirks = list()
+	var/points_enabled = !CONFIG_GET(flag/disable_quirk_points)
 	var/balance = 0
 
 	var/list/all_quirks = get_quirks()
@@ -206,7 +207,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		balance += value
 		new_quirks += quirk_name
 
-	if (balance > 0)
+	if (points_enabled && (balance > 0))
 		var/balance_left_to_remove = balance
 
 		for (var/positive_quirk in positive_quirks)
