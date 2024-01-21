@@ -27,7 +27,7 @@
 	 * is called before we get to know which object this has attahed to,
 	 * I hope you're cool with me doing it here.
 	 */
-	if(computer?.has_light)
+	if(computer?.has_light && isnull(lights))
 		lights = add_input_port("Toggle Lights", PORT_TYPE_SIGNAL)
 		red = add_input_port("Red", PORT_TYPE_NUMBER)
 		green = add_input_port("Green", PORT_TYPE_NUMBER)
