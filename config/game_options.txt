@@ -558,6 +558,7 @@ NEGATIVE_STATION_TRAITS 3 1
 #DISABLE_QUIRK_POINTS
 
 # The maximum amount of positive quirks one character can have at roundstart.
-# If set to -1 or commented-out, then players will be able to select any quantity of positive quirks.
+# If set to -1, then players will be able to select any quantity of positive quirks.
 # If set to 0, then players won't be able to select any positive quirks.
+# If commented-out or undefined, the maximum default is 6.
 MAX_POSITIVE_QUIRKS 6
