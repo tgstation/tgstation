@@ -46,7 +46,7 @@
 		)
 
 	return list(
-		"max_positive_quirks" = MAX_QUIRKS,
+		"max_positive_quirks" = CONFIG_GET(number/max_positive_quirks),
 		"quirk_info" = quirk_info,
 		"quirk_blacklist" = GLOB.quirk_string_blacklist,
 		"points_enabled" = !CONFIG_GET(flag/disable_quirk_points),

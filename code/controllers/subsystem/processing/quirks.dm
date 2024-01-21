@@ -137,7 +137,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirks_to_add += quirk
 
 	//And have benefits too
-	while(score < 0 && good_count <= MAX_QUIRKS)
+	while(score < 0 && good_count <= CONFIG_GET(number/max_positive_quirks))
 		if(!length(possible_quirks))//Lets not get stuck
 			break
 		var/quirk = pick(quirks)
@@ -199,7 +199,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 		var/value = initial(quirk.value)
 		if (value > 0)
-			if (positive_quirks.len == MAX_QUIRKS)
+			if (positive_quirks.len == CONFIG_GET(number/max_positive_quirks))
 				continue
 
 			positive_quirks[quirk_name] = value

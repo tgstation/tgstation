@@ -446,4 +446,11 @@
 	key_mode = KEY_MODE_TEXT
 	value_mode = VALUE_MODE_NUM
 
+// Configs for the Quirk system
+/// Disables Quirk point balancing for the server and clients.
 /datum/config_entry/flag/disable_quirk_points
+
+/// The maximum amount of positive quirks one character can have at roundstart.
+/datum/config_entry/number/max_positive_quirks
+	default = 0
+	min_val = 0
