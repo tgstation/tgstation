@@ -386,9 +386,9 @@
 		to_delete = TRUE
 		return
 
-	//end reactions faster so plumbing is faster
-	//length is so that plumbing is faster - but it doesn't disable competitive reactions. Basically, competitive reactions will likely reach their step target at the start, so this will disable that. We want to avoid that. But equally, we do want to full stop a holder from reacting asap so plumbing isn't waiting an tick to resolve.
-	if((step_add >= step_target_vol) && (length(holder.reaction_list) == 1))
+	//If the volume of reagents created(total_step_added) >= volume of reagents still to be created(step_target_vol) then end
+	//i.e. we have created all the reagents needed for this reaction
+	if(total_step_added >= step_target_vol)
 		to_delete = TRUE
 
 /*
