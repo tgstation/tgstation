@@ -3,7 +3,6 @@
 	desc = "This shouldn't exist"
 	icon_state = ""
 	smoothing_flags = SMOOTH_BITMASK
-	canSmoothWith = null
 	rcd_memory = null
 	material_flags = MATERIAL_EFFECTS
 
@@ -219,7 +218,8 @@
 	explosive_resistance = 0
 	slicing_duration = 30
 	sheet_type = /obj/item/stack/sheet/mineral/snow
-	canSmoothWith = null
+	smoothing_groups = SMOOTH_GROUP_SNOW_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_SNOW_WALLS
 	girder_type = null
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null

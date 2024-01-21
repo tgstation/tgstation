@@ -640,8 +640,7 @@
 
 /turf/closed/mineral/asteroid
 	name = "iron rock"
-	// wallening todo red walls
-	icon = MAP_SWITCH(/*'icons/turf/walls/red_wall.dmi'*/'icons/turf/mining.dmi', 'icons/turf/mining.dmi')
+	icon = MAP_SWITCH('icons/turf/walls/red_rock_wall.dmi', 'icons/turf/mining.dmi')
 	icon_state = "redrock"
 	base_icon_state = "red_wall"
 
