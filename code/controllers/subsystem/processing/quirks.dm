@@ -138,6 +138,8 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		quirks_to_add += quirk
 
 	//And have benefits too
+	if(max_positive_quirks < 0)
+		max_positive_quirks = 6
 	if(max_positive_quirks > 0)
 		while(score < 0 && good_count <= max_positive_quirks)
 			if(!length(possible_quirks))//Lets not get stuck
