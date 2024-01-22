@@ -430,6 +430,7 @@ MAPPING_DIRECTIONAL_HELPERS_EMPTY(/obj/structure/chair/stool/bar)
 	origin_type = /obj/structure/chair/wood/wings
 
 /obj/structure/chair/old
+	SET_BASE_VISUAL_PIXEL(0, 0)
 	name = "strange chair"
 	desc = "You sit in this. Either by will or force. Looks REALLY uncomfortable."
 	icon_state = "chairold"
