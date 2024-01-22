@@ -41,20 +41,10 @@
 /turf/closed/indestructible/weeb
 	name = "paper wall"
 	desc = "Reinforced paper walling. Someone really doesn't want you to leave."
-	icon = 'icons/obj/smooth_structures/paperframes.dmi'
-	icon_state = "paperframes-0"
-	base_icon_state = "paperframes"
-	smoothing_groups = SMOOTH_GROUP_PAPERFRAME
-	canSmoothWith = SMOOTH_GROUP_PAPERFRAME
-	var/static/mutable_appearance/indestructible_paper = mutable_appearance('icons/obj/smooth_structures/structure_variations.dmi',icon_state = "paper-whole", layer = CLOSED_TURF_LAYER - 0.1)
-
-/turf/closed/indestructible/weeb/Initialize(mapload)
-	. = ..()
-	update_appearance()
-
-/turf/closed/indestructible/weeb/update_overlays()
-	. = ..()
-	. += indestructible_paper
+	icon = 'icons/turf/walls/paperframe_wall.dmi'
+	icon_state = "paperwall"
+	smoothing_groups = SMOOTH_GROUP_PAPERFRAME + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_PAPERFRAME + SMOOTH_GROUP_CLOSED_TURFS
 
 /turf/closed/indestructible/sandstone
 	name = "sandstone wall"
@@ -222,9 +212,9 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 
 /turf/closed/indestructible/opsglass
 	name = "window"
-	icon = 'icons/obj/smooth_structures/plastitanium_window.dmi'
-	icon_state = "plastitanium_window-0"
-	base_icon_state = "plastitanium_window"
+	icon = 'icons/obj/smooth_structures/windows/plastitanium_window.dmi'
+	icon_state = "window_plastitanium-0"
+	base_icon_state = "window_plastitanium"
 	opacity = FALSE
 	use_splitvis = FALSE
 	smoothing_groups = SMOOTH_GROUP_SHUTTLE_PARTS + SMOOTH_GROUP_WINDOW_FULLTILE_PLASTITANIUM
@@ -280,11 +270,14 @@ INITIALIZE_IMMEDIATE(/turf/closed/indestructible/splashscreen)
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_BORDER
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
 
+// Is it ok that this looks the same as its parent? why does it exist?
+// Something is wrong here huh
+#warn wallenin todo, the above
 /turf/closed/indestructible/rock/snow/ice/ore
 /turf/closed/indestructible/paper
 	name = "thick paper wall"
 	desc = "A wall layered with impenetrable sheets of paper."
-	icon = 'icons/turf/walls/paperframe_wall.dmi'
+	icon = 'icons/turf/walls/paper_wall.dmi'
 	icon_state = "paperwall"
 	smoothing_groups = SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
 	canSmoothWith = SMOOTH_GROUP_CLOSED_TURFS
