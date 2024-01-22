@@ -131,12 +131,11 @@
 	.["machines"] = list()
 	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
 		var/atom/parent = remote.parent
-		var/icon/parent_icon = icon(initial(parent.icon), initial(parent.icon_state), frame = 1)
 		.["machines"] += list(
 			list(
-				"icon" = icon2base64(parent_icon),
+				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
 				"name" = parent.name,
-				"onHold" = holds[remote] ? TRUE : FALSE,
+				"onHold" = !!holds[remote],
 				"location" = get_area_name(parent, TRUE)
 				)
 		)
