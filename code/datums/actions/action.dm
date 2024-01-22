@@ -46,6 +46,9 @@
 	var/overlay_icon = 'icons/mob/actions/backgrounds.dmi'
 	/// This is the icon state for any FOREGROUND overlay icons on the button (such as borders)
 	var/overlay_icon_state
+	
+	/// full key we are bound to
+	var/full_key
 
 /datum/action/New(Target)
 	link_to(Target)
@@ -308,6 +311,7 @@
  * force - whether an update is forced regardless of existing status
  */
 /datum/action/proc/update_button_status(atom/movable/screen/movable/action_button/current_button, force = FALSE)
+	current_button.update_keybind_maptext(full_key)
 	if(IsAvailable())
 		current_button.color = rgb(255,255,255,255)
 	else

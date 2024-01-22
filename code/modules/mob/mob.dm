@@ -36,6 +36,7 @@
 	remove_from_alive_mob_list()
 	remove_from_mob_suicide_list()
 	focus = null
+	key_to_action_weakref = null
 	if(length(progressbars))
 		stack_trace("[src] destroyed with elements in its progressbars list")
 		progressbars = null
@@ -1656,3 +1657,13 @@
 	set name = "View Skills"
 
 	mind?.print_levels(src)
+
+/mob/proc/handleActionBinds(key, client)
+	for(var/datum/action/act in actions)
+		if(act.full_key != key)
+			continue
+		if(next_click > world.time)
+			continue
+		next_click = world.time + CLICK_CD_RANGE
+		act.Trigger()
+		break
