@@ -46,6 +46,7 @@
 	)
 	result = /obj/item/food/melonfruitbowl
 	category = CAT_SALAD
+	recipe_flags = RECIPE_DONT_TRANSFER_REAGENTS
 
 /datum/crafting_recipe/food/fruitsalad
 	name = "Fruit salad"
@@ -71,6 +72,7 @@
 	)
 	result = /obj/item/food/salad/jungle
 	category = CAT_SALAD
+	recipe_flags = RECIPE_DONT_TRANSFER_REAGENTS
 
 /datum/crafting_recipe/food/citrusdelight
 	name = "Citrus delight"
