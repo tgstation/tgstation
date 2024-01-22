@@ -480,4 +480,5 @@
 
 ///Removes the messenger ability from the pAI, but does not delete it.
 /mob/living/silicon/pai/proc/remove_messenger_ability()
-	messenger_ability.Remove(src)
+	if(messenger_ability)
+		messenger_ability.Remove(src)
