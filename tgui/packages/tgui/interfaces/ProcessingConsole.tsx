@@ -38,18 +38,22 @@ export const ProcessingConsole = (props: any) => {
   const { state } = data;
 
   return (
-    <Window title="Processing Unit Console" width={350} height={500}>
+    <Window title="Processing Unit Console" width={535} height={485}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow basis={0}>
-            <Section fill scrollable textAlign="center" title="Materials">
-              <MaterialSelection />
-            </Section>
-          </Stack.Item>
-          <Stack.Item grow basis={0}>
-            <Section fill scrollable title="Alloys" textAlign="center">
-              <AlloySelection />
-            </Section>
+            <Stack fill>
+              <Stack.Item grow basis={0}>
+                <Section fill scrollable textAlign="center" title="Materials">
+                  <MaterialSelection />
+                </Section>
+              </Stack.Item>
+              <Stack.Item grow basis={0}>
+                <Section fill scrollable title="Alloys" textAlign="center">
+                  <AlloySelection />
+                </Section>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
           <Stack.Item>
             <Button
