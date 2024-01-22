@@ -1,6 +1,6 @@
 /// Makes an atom a shell that is able to take in an attached circuit.
 /datum/component/shell
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	/// The circuitboard attached to this shell
 	var/obj/item/integrated_circuit/attached_circuit
@@ -60,12 +60,15 @@
 	unremovable_circuit_components = list()
 
 	for(var/obj/item/circuit_component/circuit_component as anything in components)
-		if(ispath(circuit_component))
-			circuit_component = new circuit_component()
-		circuit_component.removable = FALSE
-		circuit_component.set_circuit_size(0)
-		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
-		unremovable_circuit_components += circuit_component
+		add_unremovable_circuit_component(circuit_component)
+
+/datum/component/shell/proc/add_unremovable_circuit_component(obj/item/circuit_component/component)
+	if(ispath(component))
+		component = new component()
+	component.removable = FALSE
+	component.set_circuit_size(0)
+	RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
+	unremovable_circuit_components += component
 
 /datum/component/shell/proc/save_component(datum/source, list/objects)
 	SIGNAL_HANDLER
@@ -305,6 +308,7 @@
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
+	SEND_SIGNAL(src, COMSIG_SHELL_CIRCUIT_ATTACHED)
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && !circuitboard.admin_only)
 		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, PROC_REF(on_circuit_moved))
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
@@ -348,6 +352,7 @@
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
 	attached_circuit.set_locked(FALSE)
+	SEND_SIGNAL(src, COMSIG_SHELL_CIRCUIT_REMOVED)
 	attached_circuit = null
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
