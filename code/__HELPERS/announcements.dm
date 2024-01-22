@@ -28,7 +28,7 @@
 	sound_override = 'sound/misc/bloop.ogg',
 	sender_override = "Server Admin Announcement",
 	encode_title = TRUE,
-	encode_text = TRUE,
+	encode_text = FALSE,
 )
 	if(isnull(text))
 		return
