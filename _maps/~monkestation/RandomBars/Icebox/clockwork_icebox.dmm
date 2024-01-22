@@ -91,7 +91,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 1;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,

@@ -235,10 +235,6 @@
 	c_tag = "Singularity Engine #2"
 	},
 /turf/open/floor/iron,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "pa" = (
 /turf/closed/wall/r_wall/rust,
@@ -902,7 +898,7 @@ pa
 zP
 zs
 oN
-km
+Zp
 km
 Zp
 Ib

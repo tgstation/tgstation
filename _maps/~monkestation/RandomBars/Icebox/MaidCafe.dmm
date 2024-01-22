@@ -135,11 +135,6 @@
 	},
 /turf/open/floor/carpet/black,
 /area/station/service/bar)
-"oY" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/bamboo,
-/area/station/commons/lounge)
 "pA" = (
 /turf/open/floor/wood/tile,
 /area/station/service/bar)
@@ -865,7 +860,7 @@ xW
 EK
 "}
 (5,1,1) = {"
-oY
+Qu
 XZ
 XZ
 XZ

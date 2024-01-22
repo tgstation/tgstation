@@ -275,22 +275,12 @@
 /obj/effect/decal/cleanable/ash,
 /turf/open/floor/iron,
 /area/station/commons/lounge)
-"fZ" = (
-/turf/open/floor/plating,
-/turf/open/floor/plating,
-/turf/open/floor/plating,
-/area/station/commons/lounge)
 "gH" = (
 /obj/machinery/grill,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gJ" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating,
-/area/station/commons/lounge)
-"gK" = (
-/obj/effect/landmark/start/hangover,
-/turf/open/floor/plating,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "gZ" = (
@@ -869,7 +859,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/light/small/directional/north,
 /turf/open/floor/catwalk_floor,
 /area/station/service/theater)
@@ -966,7 +955,6 @@
 	},
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/plating,
-/turf/open/floor/plating,
 /area/station/commons/lounge)
 "vP" = (
 /obj/structure/sign/clock/directional/north,
@@ -1018,7 +1006,6 @@
 /area/station/commons/lounge)
 "wM" = (
 /obj/structure/chair/stool/bar/directional/north,
-/turf/open/floor/plating,
 /turf/open/floor/plating,
 /area/station/commons/lounge)
 "wO" = (
@@ -1224,7 +1211,6 @@
 	dir = 6
 	},
 /turf/open/floor/plating,
-/turf/open/floor/plating,
 /area/station/commons/lounge)
 "BE" = (
 /obj/structure/table,
@@ -1238,7 +1224,6 @@
 /area/station/service/theater)
 "BK" = (
 /obj/structure/ladder,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
@@ -1259,10 +1244,6 @@
 /obj/effect/spawner/random/trash/food_packaging,
 /turf/open/floor/plating,
 /area/station/service/bar)
-"Cf" = (
-/turf/open/floor/plating,
-/turf/open/floor/plating,
-/area/station/commons/lounge)
 "Ci" = (
 /obj/structure/shipping_container/conarex,
 /turf/open/floor/plating,
@@ -1547,10 +1528,6 @@
 "GV" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/grimy,
-/area/station/commons/lounge)
-"Hb" = (
-/turf/open/floor/plating,
-/turf/open/floor/iron,
 /area/station/commons/lounge)
 "Hj" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -1916,13 +1893,6 @@
 "QC" = (
 /turf/template_noop,
 /area/template_noop)
-"QE" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/floor/catwalk_floor,
-/area/station/service/theater)
 "QF" = (
 /obj/structure/table/reinforced,
 /obj/structure/displaycase/forsale/kitchen{
@@ -2689,7 +2659,7 @@ qu
 aW
 RO
 CR
-gK
+AF
 Oc
 XI
 GB
@@ -2716,7 +2686,7 @@ tc
 VZ
 ox
 YM
-Cf
+hC
 Va
 FW
 lH
@@ -2743,7 +2713,7 @@ qu
 Ln
 Ik
 PJ
-Hb
+QM
 bk
 oO
 Ds
@@ -2770,7 +2740,7 @@ BK
 rd
 fJ
 Gy
-fZ
+hC
 fW
 Xu
 WF
@@ -3015,7 +2985,7 @@ on
 bh
 sR
 mC
-QE
+sd
 dA
 BF
 QX

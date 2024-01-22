@@ -291,7 +291,7 @@
 "Cf" = (
 /obj/structure/table/wood,
 /obj/item/food/pie/cream/nostun{
-	desc = thisone...looks...different....
+	desc = "this one looks... different..."
 	},
 /turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/station/commons/lounge)

@@ -492,14 +492,6 @@
 /obj/structure/disposalpipe/segment,
 /turf/closed/wall,
 /area/station/service/bar)
-"YA" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/wood,
-/area/station/commons/lounge)
 "YU" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -519,7 +511,7 @@ xY
 OC
 Vc
 TK
-YA
+Ke
 pl
 zS
 nX

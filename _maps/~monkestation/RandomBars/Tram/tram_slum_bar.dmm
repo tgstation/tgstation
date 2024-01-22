@@ -103,14 +103,6 @@
 "eW" = (
 /turf/closed/wall/mineral/iron,
 /area/station/service/kitchen)
-"fB" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/structure/cable,
-/turf/open/misc/asteroid,
-/area/station/asteroid)
 "fL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/siding/wood{
@@ -1403,7 +1395,7 @@ Ue
 Ue
 tR
 tR
-fB
+Wg
 Ue
 jh
 jh
