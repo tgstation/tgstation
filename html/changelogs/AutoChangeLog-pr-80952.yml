@@ -1,5 +1,0 @@
-author: "Time-Green"
-delete-after: True
-changes:
-  - code_imp: "The mushroom cap is now an external organ (jungle station will never happen)"
-  - bugfix: "Mushpeople caps are no longer solid black"

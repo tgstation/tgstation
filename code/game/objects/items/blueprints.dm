@@ -238,7 +238,7 @@
 		return
 
 	//stuff tied to the area to rename
-	var/list/to_rename = list(
+	var/static/list/to_rename = typecacheof(list(
 		/obj/machinery/airalarm,
 		/obj/machinery/atmospherics/components/unary/vent_scrubber,
 		/obj/machinery/atmospherics/components/unary/vent_pump,
@@ -246,11 +246,9 @@
 		/obj/machinery/firealarm,
 		/obj/machinery/light_switch,
 		/obj/machinery/power/apc,
-	)
-
-	for(var/turf/area_turf as anything in area.get_contained_turfs())
-		for(var/obj/machine in area_turf)
-			if(!is_type_in_list(machine, to_rename))
-				continue
-			machine.name = replacetext(machine.name, oldtitle, title)
+	))
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for (var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machine as anything in typecache_filter_list(area_turf.contents, to_rename))
+				machine.name = replacetext(machine.name, oldtitle, title)
 	//TODO: much much more. Unnamed airlocks, cameras, etc.

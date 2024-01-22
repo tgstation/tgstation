@@ -1,6 +1,6 @@
 /// Makes an atom a shell that is able to take in an attached circuit.
 /datum/component/shell
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
 	/// The circuitboard attached to this shell
 	var/obj/item/integrated_circuit/attached_circuit
@@ -60,12 +60,15 @@
 	unremovable_circuit_components = list()
 
 	for(var/obj/item/circuit_component/circuit_component as anything in components)
-		if(ispath(circuit_component))
-			circuit_component = new circuit_component()
-		circuit_component.removable = FALSE
-		circuit_component.set_circuit_size(0)
-		RegisterSignal(circuit_component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
-		unremovable_circuit_components += circuit_component
+		add_unremovable_circuit_component(circuit_component)
+
+/datum/component/shell/proc/add_unremovable_circuit_component(obj/item/circuit_component/component)
+	if(ispath(component))
+		component = new component()
+	component.removable = FALSE
+	component.set_circuit_size(0)
+	RegisterSignal(component, COMSIG_CIRCUIT_COMPONENT_SAVE, PROC_REF(save_component))
+	unremovable_circuit_components += component
 
 /datum/component/shell/proc/save_component(datum/source, list/objects)
 	SIGNAL_HANDLER
@@ -154,7 +157,7 @@
  */
 /datum/component/shell/proc/on_set_anchored(atom/movable/source, previous_value)
 	SIGNAL_HANDLER
-	attached_circuit?.on = source.anchored
+	attached_circuit?.set_on(source.anchored)
 
 /**
  * Called when an item hits the parent. This is the method to add the circuitboard to the component.
@@ -305,6 +308,7 @@
 		return
 	locked = FALSE
 	attached_circuit = circuitboard
+	SEND_SIGNAL(src, COMSIG_SHELL_CIRCUIT_ATTACHED)
 	if(!(shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) && !circuitboard.admin_only)
 		RegisterSignal(circuitboard, COMSIG_MOVABLE_MOVED, PROC_REF(on_circuit_moved))
 	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
@@ -318,20 +322,21 @@
 		parent_atom.name = "[initial(parent_atom.name)] ([attached_circuit.display_name])"
 	attached_circuit.set_locked(FALSE)
 
-	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
-		attached_circuit.on = parent_atom.anchored
-
 	if((shell_flags & SHELL_FLAG_CIRCUIT_UNREMOVABLE) || circuitboard.admin_only)
 		circuitboard.moveToNullspace()
 	else if(circuitboard.loc != parent_atom)
 		circuitboard.forceMove(parent_atom)
 	attached_circuit.set_shell(parent_atom)
+	
+	// call after set_shell() sets on to true
+	if(shell_flags & SHELL_FLAG_REQUIRE_ANCHOR)
+		attached_circuit.set_on(parent_atom.anchored)
 
 /**
  * Removes the circuit from the component. Doesn't do any checks to see for an existing circuit so that should be done beforehand.
  */
 /datum/component/shell/proc/remove_circuit()
-	attached_circuit.on = TRUE
+	// remove_current_shell() also turns off the circuit
 	attached_circuit.remove_current_shell()
 	UnregisterSignal(attached_circuit, list(
 		COMSIG_MOVABLE_MOVED,
@@ -347,6 +352,7 @@
 		attached_circuit.remove_component(to_remove)
 		to_remove.moveToNullspace()
 	attached_circuit.set_locked(FALSE)
+	SEND_SIGNAL(src, COMSIG_SHELL_CIRCUIT_REMOVED)
 	attached_circuit = null
 
 /datum/component/shell/proc/on_atom_usb_cable_try_attach(atom/source, obj/item/usb_cable/usb_cable, mob/user)
