@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - bugfix: "Goldgrubs should no longer spit out things that aren't ore (e.g. stasised mobs from the polymorph belt)."
