@@ -239,7 +239,6 @@
 /area/station/service/bar)
 "ox" = (
 /obj/structure/cable,
-/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/fakespace,
@@ -940,7 +939,6 @@
 /turf/closed/wall/mineral/plastitanium/nodiagonal,
 /area/station/service/bar/backroom)
 "TT" = (
-/obj/structure/cable,
 /obj/structure/cable,
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
 	dir = 1
