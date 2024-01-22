@@ -569,3 +569,15 @@
   - bugfix: Filled trash bags show up properly when worn.
   mc-oofert:
   - bugfix: cyborg inducer respects cell changes
+2024-01-22:
+  Absolucy:
+  - bugfix: Tool arm implant hotkeys will properly work even after you change your
+      arm/species now.
+  Ghommie:
+  - bugfix: fixed some visual artifacts from achievement icons.
+  carshalash:
+  - bugfix: Nanotrasen is now stocking proper french Cognac instead of discount Irish
+      Cognac. It will now taste Smooth and French
+  lizardqueenlexi:
+  - bugfix: Wagging tail spines now sync up properly with the tails they're attached
+      to.

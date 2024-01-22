@@ -1,4 +1,0 @@
-author: "lizardqueenlexi"
-delete-after: True
-changes:
-  - bugfix: "Wagging tail spines now sync up properly with the tails they're attached to."
