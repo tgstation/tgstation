@@ -142,18 +142,21 @@
 	busy = TRUE
 	close_door(target_door)
 
-/obj/machinery/door_buttons/airlock_controller/proc/close_door(obj/machinery/door/airlock/target_door)
+/obj/machinery/door_buttons/airlock_controller/proc/close_door(obj/machinery/door/airlock/target_door, turn_idle_on_terminate = TRUE)
 	if(isnull(target_door) || target_door.density)
 		go_idle()
 		return FALSE
 	update_appearance()
 	target_door.safe = FALSE //Door crushies, manual door after all. Set every time in case someone changed it, safe doors can end up waiting forever.
 	target_door.unbolt()
-	if(!target_door.close() || machine_stat & NOPOWER)
+	if(!target_door.close() || (machine_stat & NOPOWER))
 		go_idle()
 		return FALSE
 	target_door?.bolt()
-	go_idle()
+
+	if(turn_idle_on_terminate)
+		go_idle()
+
 	return TRUE
 
 
@@ -166,7 +169,7 @@
 	update_appearance()
 	var/obj/machinery/door/airlock/opposite_airlock = (target_door == exterior_airlock ? interior_airlock : exterior_airlock)
 
-	if(!close_door(opposite_airlock))
+	if(!close_door(opposite_airlock, turn_idle_on_terminate = FALSE))
 		return go_idle()
 
 	addtimer(CALLBACK(src, PROC_REF(cycle_open), target_door), 2 SECONDS)
@@ -185,7 +188,7 @@
 		return go_idle()
 
 	target_door.unbolt()
-	if(!target_door.open() || machine_stat | (NOPOWER))
+	if(!target_door.open() || (machine_stat & NOPOWER))
 		return go_idle()
 
 	target_door?.bolt()
@@ -216,7 +219,7 @@
 	. = ..()
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
-		ui = new(user, src, "AirlockButtonController")
+		ui = new(user, src, "AirlockButtonController", name)
 		ui.open()
 
 /obj/machinery/door_buttons/airlock_controller/ui_data(mob/user)

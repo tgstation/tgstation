@@ -9,49 +9,31 @@ type Data = {
   exterior_door: string;
   interior_door_closed: BooleanLike;
   exterior_door_closed: BooleanLike;
+  busy: BooleanLike;
 };
 
 export const AirlockButtonController = (props) => {
   const { data } = useBackend<Data>();
-  const {
-    interior_door,
-    exterior_door,
-    interior_door_closed,
-    exterior_door_closed,
-  } = data;
+  const { interior_door, exterior_door } = data;
   return (
-    <Window width={600} height={190}>
+    <Window width={500} height={170}>
       <Window.Content>
-        <Section title="Airlock Status">
+        <Section title="Airlock Controller" textAlign="center">
           {!interior_door && !exterior_door ? (
             <NoticeBox danger>No doors detected</NoticeBox>
           ) : (
-            <>
-              <Stack>
-                {interior_door && (
-                  <Stack.Item grow>
-                    Interior Door: {interior_door_closed ? 'closed' : 'open'}
-                  </Stack.Item>
-                )}
-                {exterior_door && (
-                  <Stack.Item grow>
-                    Exterior Door: {exterior_door_closed ? 'closed' : 'open'}
-                  </Stack.Item>
-                )}
-              </Stack>
-              <Stack>
-                {interior_door && (
-                  <Stack.Item grow>
-                    <RetrieveButton airlockType={interior_door} />
-                  </Stack.Item>
-                )}
-                {exterior_door && (
-                  <Stack.Item>
-                    <RetrieveButton airlockType={exterior_door} />
-                  </Stack.Item>
-                )}
-              </Stack>
-            </>
+            <Stack>
+              {interior_door && (
+                <Stack.Item grow textAlign="center">
+                  <RetrieveButton airlockType={interior_door} />
+                </Stack.Item>
+              )}
+              {exterior_door && (
+                <Stack.Item grow textAlign="center">
+                  <RetrieveButton airlockType={exterior_door} />
+                </Stack.Item>
+              )}
+            </Stack>
           )}
         </Section>
       </Window.Content>
@@ -61,7 +43,8 @@ export const AirlockButtonController = (props) => {
 
 const RetrieveButton = (props) => {
   const { act, data } = useBackend<Data>();
-  const { interior_door, interior_door_closed, exterior_door_closed } = data;
+  const { interior_door, interior_door_closed, exterior_door_closed, busy } =
+    data;
   const { airlockType } = props;
   const our_door_closed =
     airlockType === interior_door ? interior_door_closed : exterior_door_closed;
@@ -70,10 +53,13 @@ const RetrieveButton = (props) => {
 
   return (
     <Button
+      mt={2}
+      icon={our_door_closed ? 'lock-open' : 'lock'}
       color="green"
-      fontSize={2}
+      fontSize={1.5}
       textAlign="center"
-      lineHeight="2"
+      lineHeight="1.5"
+      disabled={busy}
       onClick={() => {
         if (!our_door_closed) {
           act('close', {
