@@ -54,7 +54,6 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/cable,
-/obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
 "bV" = (

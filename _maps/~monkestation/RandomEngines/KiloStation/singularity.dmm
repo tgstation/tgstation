@@ -419,11 +419,6 @@
 /obj/structure/window/plasma,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"Eh" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "En" = (
 /obj/structure/cable,
 /obj/structure/lattice/catwalk,
@@ -971,7 +966,7 @@ hD
 hD
 Uw
 DA
-Eh
+RL
 WZ
 WZ
 IJ

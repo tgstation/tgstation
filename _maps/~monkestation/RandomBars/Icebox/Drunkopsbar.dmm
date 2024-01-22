@@ -720,7 +720,7 @@
 /obj/item/toy/plush/nukeplushie{
 	desc = "A stuffed toy that resembles a syndicate nuclear operative. The tag claims operatives to be purely fictitious. Has crude nametag - Bar-Dweetos toy, return if found.";
 	name = "DrunkOps plushie";
-	squeak_override = sssssssssssssssssssssssssssssssssssssslist('sound/effects/hit_punch.ogg'=1)
+	squeak_override = list('sound/effects/hit_punch.ogg'=1)
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/station/commons/lounge)
