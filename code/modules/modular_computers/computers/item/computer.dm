@@ -927,17 +927,16 @@
 		return FALSE
 	inserted_pai = card
 	balloon_alert(user, "inserted pai")
-	var/datum/action/innate/pai/messenger/messenger_ability = new(inserted_pai.pai)
-	messenger_ability.Grant(inserted_pai.pai)
+	if(inserted_pai.pai)
+		inserted_pai.pai.give_messenger_ability()
 	update_appearance(UPDATE_ICON)
 	return TRUE
 
 /obj/item/modular_computer/proc/remove_pai(mob/user)
 	if(!inserted_pai)
 		return FALSE
-	var/datum/action/innate/pai/messenger/messenger_ability = locate() in inserted_pai.pai.actions
-	messenger_ability.Remove(inserted_pai.pai)
-	qdel(messenger_ability)
+	if(inserted_pai.pai)
+		inserted_pai.pai.remove_messenger_ability()
 	if(user)
 		user.put_in_hands(inserted_pai)
 		balloon_alert(user, "removed pAI")
