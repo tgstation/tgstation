@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Tool arm implant hotkeys will properly work even after you change your arm/species now."
