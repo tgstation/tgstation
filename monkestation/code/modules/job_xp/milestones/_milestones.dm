@@ -11,16 +11,17 @@
 		return
 
 	if(milestones[num2text(level)])
-		var/datum/milestone_type = milestones[level]
+		var/datum/milestone_type = milestones[num2text(level)]
 
 		//handles adding loadout items
-		if(istype(milestone_type, /datum/loadout_item))
+		if(ispath(milestone_type, /datum/loadout_item))
 			var/datum/loadout_item/listed_loadout = milestone_type
 			for(var/path in user.prefs.job_rewards_claimed[key_id])
 				if(path == initial(milestone_type))
 					return
-
-			user.prefs.job_rewards_claimed[key_id] |= initial(milestone_type)
+			if(!user.prefs.job_rewards_claimed[key_id])
+				user.prefs.job_rewards_claimed[key_id] = list()
+			user.prefs.job_rewards_claimed[key_id] |= milestone_type
 			if(!user.prefs.inventory[initial(listed_loadout.item_path)])
 				user.prefs.inventory += initial(listed_loadout.item_path)
 				var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
@@ -48,7 +49,7 @@
 		var/obj/item/milestone_item = new temp
 		if(!islist(user.prefs.job_rewards_per_round[key_id]))
 			user.prefs.job_rewards_per_round[key_id] = list()
-		user.prefs.job_rewards_per_round[key_id] += milestone_item.type
+		user.prefs.job_rewards_per_round[key_id] += "[milestone_item.type]" //Path2String
 		user.prefs.save_preferences()
 		qdel(milestone_item)
 
