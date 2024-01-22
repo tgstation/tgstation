@@ -118,6 +118,14 @@
 
 /obj/structure/bed/medical/AltClick(mob/user)
 	. = ..()
+	if(!can_interact(user))
+		return
+
+	if(has_buckled_mobs())
+		for(var/mob/passenger as anything in buckled_mobs)
+			if(passenger == user)
+				return
+
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
 	update_appearance()
