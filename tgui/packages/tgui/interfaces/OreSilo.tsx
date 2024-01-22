@@ -49,7 +49,7 @@ export const OreSilo = (props: any) => {
   const [currentTab, setCurrentTab] = useState(0);
 
   return (
-    <Window title="Ore Silo" width={380} height={600}>
+    <Window title="Ore Silo" width={620} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -125,9 +125,25 @@ type MachineProps = {
 const MachineDisplay = (props: MachineProps) => {
   const { machine, onPause, onRemove } = props;
 
+  let machineName = machine.name;
+  const index = machineName.indexOf('('); // some techfabs have their location attached to their name
+  if (index >= 0) {
+    machineName = machineName.substring(0, index);
+  }
+  machineName = `${machineName.trimEnd()}(${machine.location})`;
+
   return (
     <Box className="FabricatorRecipe">
-      <Box className="FabricatorRecipe__Title">
+      <Box
+        className={
+          machine.onHold
+            ? classes([
+                'FabricatorRecipe__Title',
+                'FabricatorRecipe__Title--disabled',
+              ])
+            : 'FabricatorRecipe__Title'
+        }
+      >
         <Box className="FabricatorRecipe__Icon">
           <Image
             width={'32px'}
@@ -135,7 +151,7 @@ const MachineDisplay = (props: MachineProps) => {
             src={`data:image/jpeg;base64,${machine.icon}`}
           />
         </Box>
-        <Box className="FabricatorRecipe__Label">{machine.name}</Box>
+        <Box className="FabricatorRecipe__Label">{machineName}</Box>
       </Box>
 
       <Tooltip
