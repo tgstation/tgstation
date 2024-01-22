@@ -624,7 +624,7 @@
 /obj/machinery/airalarm/directional/north,
 /obj/structure/cable,
 /obj/machinery/door/window/right/directional/west{
-	name = "bar mixing area"
+	name = "Bar Mixing Area"
 	},
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/service/bar)

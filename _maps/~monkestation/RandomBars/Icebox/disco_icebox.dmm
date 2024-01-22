@@ -70,10 +70,9 @@
 /area/station/commons/lounge)
 "gm" = (
 /obj/effect/mapping_helpers/airlock/access/all/service,
-/obj/machinery/door/airlock{
+/obj/machinery/door/airlock/wood{
 	name = "Service Hall"
 	},
-/obj/machinery/door/airlock/wood,
 /obj/machinery/door/firedoor,
 /obj/structure/cable,
 /turf/open/floor/wood,
@@ -149,14 +148,13 @@
 /area/station/commons/lounge)
 "pW" = (
 /obj/effect/mapping_helpers/airlock/access/all/service,
-/obj/machinery/door/airlock{
-	name = "Service Hall"
-	},
-/obj/machinery/door/airlock/wood,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/machinery/door/airlock/wood{
+	name = "Bar"
+	},
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
 "qx" = (
@@ -272,10 +270,11 @@
 "BL" = (
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/structure/cable,
-/obj/machinery/door/airlock/silver/glass,
-/obj/machinery/door/airlock/wood,
 /obj/machinery/door/firedoor,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/door/airlock/wood{
+	name = "Service Hall"
+	},
 /turf/open/floor/eighties/red,
 /area/station/service/bar)
 "BO" = (

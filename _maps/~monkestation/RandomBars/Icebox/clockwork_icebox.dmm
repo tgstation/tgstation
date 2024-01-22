@@ -132,7 +132,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 1;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
@@ -175,7 +175,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 1;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
@@ -199,7 +199,7 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 8;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
@@ -418,7 +418,7 @@
 "uH" = (
 /obj/structure/table/bronze,
 /obj/machinery/door/poddoor/shutters/window/preopen{
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
@@ -493,7 +493,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 8;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
@@ -562,7 +562,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 8;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
@@ -642,7 +642,7 @@
 /area/station/commons/lounge)
 "Hj" = (
 /obj/machinery/door/window{
-	color = #c09e13;
+	color = "#c09e13";
 	name = "bronze windoor"
 	},
 /obj/machinery/door/firedoor/border_only,
@@ -726,7 +726,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 8;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
@@ -905,7 +905,7 @@
 	},
 /obj/machinery/door/poddoor/shutters/window/preopen{
 	dir = 8;
-	color = #c09e13;
+	color = "#c09e13";
 	name = "Bar shutters"
 	},
 /turf/open/floor/bronze/filled,
