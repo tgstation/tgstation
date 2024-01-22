@@ -4,7 +4,7 @@
 	var/list/in_round_milestones
 
 
-/datum/job_milestone/proc/check_milestones(level, client/user, force)
+/datum/job_milestone/proc/check_milestones(level, client/user, force = FALSE)
 	if(!length(milestones) && !length(in_round_milestones))
 		return
 	if(!milestones[num2text(level)] && !in_round_milestones[num2text(level)])
