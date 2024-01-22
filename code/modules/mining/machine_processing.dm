@@ -116,10 +116,7 @@
 
 		if("toggle")
 			processing_machine.on = !processing_machine.on
-                     if(on)
-			  processing_machine.begin_processing()
-		     else
-		         processing_machine.end_processing()
+			processing_machine.begin_processing()
 			return TRUE
 
 /obj/machinery/mineral/processing_unit_console/Destroy()
