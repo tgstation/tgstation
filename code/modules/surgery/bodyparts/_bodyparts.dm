@@ -1070,7 +1070,7 @@
 	husk_icon.ColorTone(husk_color_mod)
 	var/icon/husk_mask = new(icon_to_husk)
 	husk_mask.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,0)
-	var/icon/husk_overlay = new(icon_of_husk, "[type_husk]_husk_[zone_body]_blood")
+	var/icon/husk_overlay = new(icon_of_husk, "[type_husk]_husk_[zone_body]")
 	husk_overlay.Blend(husk_mask, ICON_ADD)
 	husk_icon.Blend(husk_overlay, ICON_OVERLAY)
 	thing_to_husk.icon = husk_icon
