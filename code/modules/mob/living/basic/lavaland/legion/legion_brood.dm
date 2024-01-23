@@ -90,7 +90,6 @@
 /// Reference handling
 /mob/living/basic/legion_brood/proc/creator_destroyed()
 	SIGNAL_HANDLER
-
 	created_by = null
 
 /// Like the Legion's summoned skull but funnier (it's snow now)
