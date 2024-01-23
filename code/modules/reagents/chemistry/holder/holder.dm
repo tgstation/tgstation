@@ -532,10 +532,13 @@
 		remove_reagent(reagent.type, transfer_amount)
 		transfer_log[reagent.type] = list(REAGENT_TRANSFER_AMOUNT = transfer_amount, REAGENT_PURITY = reagent.purity)
 
-	if(isorgan(target_atom) && transferred_by)
-		var/obj/item/organ/target_organ = target_atom
-		target_organ.owner?.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
-		log_combat(transferred_by, target_organ.owner ? target_organ.owner : target_organ, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
+	if(transferred_by)
+		if(isorgan(target_atom))
+			var/obj/item/organ/target_organ = target_atom
+			target_organ.owner?.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
+			log_combat(transferred_by, target_organ.owner ? target_organ.owner : target_organ, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
+		else
+			log_combat(transferred_by, target_atom, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
 	update_total()
 	target_holder.update_total()
