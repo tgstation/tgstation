@@ -101,7 +101,7 @@
     name = "Edgerunner"
     icon_state = "edgerunner"
 
-    /datum/sprite_accessory/hair/alchemist
+/datum/sprite_accessory/hair/alchemist
     icon = 'monkestation/icons/mob/sprite_accessories/hair.dmi'
     name = "Alchemist"
     icon_state = "alchemist"
