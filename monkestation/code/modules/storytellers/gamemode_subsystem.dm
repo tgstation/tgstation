@@ -146,9 +146,13 @@ SUBSYSTEM_DEF(gamemode)
 	/// Is storyteller secret or not
 	var/secret_storyteller = FALSE
 
+	/// List of new player minds we currently want to give our roundstart antag to
+	var/list/roundstart_antag_minds = list()
+
 	var/wizardmode = FALSE //refactor this into just being a unique storyteller
 
-	var/datum/round_event_control/current_roundstart_event
+	/// What is our currently desired/selected roundstart event
+	var/datum/round_event_control/antagonist/solo/current_roundstart_event
 	var/list/last_round_events = list()
 	var/ran_roundstart = FALSE
 	var/list/triggered_round_events = list()
@@ -251,9 +255,9 @@ SUBSYSTEM_DEF(gamemode)
 			var/mob/dead/new_player/new_player = player
 			if(new_player.ready == PLAYER_READY_TO_PLAY && new_player.mind && new_player.check_preferences())
 				candidate_candidates += player
-		else if (observers && isobserver(player))
+		else if(observers && isobserver(player))
 			candidate_candidates += player
-		else if (living_players && isliving(player))
+		else if(living_players && isliving(player))
 			if(!ishuman(player) && !isAI(player))
 				continue
 			if(!(player.z in SSmapping.levels_by_trait(ZTRAIT_STATION)))
@@ -264,7 +268,7 @@ SUBSYSTEM_DEF(gamemode)
 		if(QDELETED(candidate) || !candidate.key || !candidate.client || (!observers && !candidate.mind))
 			continue
 		if(!observers)
-			if(!isliving(candidate))
+			if(!ready_players && !isliving(candidate))
 				continue
 			if(no_antags && candidate.mind.special_role)
 				continue
@@ -280,7 +284,7 @@ SUBSYSTEM_DEF(gamemode)
 			var/time_to_check
 			if(required_time)
 				time_to_check = required_time
-			else if (inherit_required_time)
+			else if(inherit_required_time)
 				time_to_check = GLOB.special_roles[be_special]
 
 			if(time_to_check && candidate.client.get_remaining_days(time_to_check) > 0)
@@ -385,7 +389,7 @@ SUBSYSTEM_DEF(gamemode)
 			continue
 		ASYNC
 			event.try_start()
-//		INVOKE_ASYNC(event, /datum/round_event.proc/try_start)
+		INVOKE_ASYNC(event, TYPE_PROC_REF(/datum/round_event, try_start))
 
 /// Schedules an event to run later.
 /datum/controller/subsystem/gamemode/proc/schedule_event(datum/round_event_control/passed_event, passed_time, passed_cost, passed_ignore, passed_announce, _forced = FALSE)
@@ -545,7 +549,7 @@ SUBSYSTEM_DEF(gamemode)
 /datum/controller/subsystem/gamemode/proc/post_setup(report) //Gamemodes can override the intercept report. Passing TRUE as the argument will force a report.
 	if(!report)
 		report = !CONFIG_GET(flag/no_intercept_report)
-	addtimer(CALLBACK(GLOBAL_PROC, .proc/display_roundstart_logout_report), ROUNDSTART_LOGOUT_REPORT_TIME)
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(display_roundstart_logout_report)), ROUNDSTART_LOGOUT_REPORT_TIME)
 
 	if(CONFIG_GET(flag/reopen_roundstart_suicide_roles))
 		var/delay = CONFIG_GET(number/reopen_roundstart_suicide_roles_delay)
@@ -553,7 +557,7 @@ SUBSYSTEM_DEF(gamemode)
 			delay = (delay SECONDS)
 		else
 			delay = (4 MINUTES) //default to 4 minutes if the delay isn't defined.
-		addtimer(CALLBACK(GLOBAL_PROC, .proc/reopen_roundstart_suicide_roles), delay)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(reopen_roundstart_suicide_roles)), delay)
 
 	if(SSdbcore.Connect())
 		var/list/to_set = list()

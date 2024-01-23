@@ -518,6 +518,3 @@ GLOBAL_LIST_EMPTY(antagonists)
 /// Used to create objectives for the antagonist.
 /datum/antagonist/proc/forge_objectives()
 	return
-
-/datum/antagonist/proc/antag_token(datum/mind/hosts_mind, mob/spender)
-	return
