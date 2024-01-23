@@ -238,7 +238,10 @@
 	var/beaker_contents[0]
 	if(beaker)
 		for(var/datum/reagent/R in beaker.reagents.reagent_list)
-			beaker_contents.Add(list(list("name" = R.name, "id" = ckey(R.name), "volume" = round(R.volume, 0.01)))) // list in a list because Byond merges the first list...
+			var/chem_name = R.name
+			if(istype(R, /datum/reagent/ammonia/urine) && user.client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
+				chem_name = "Ammonia?"
+			beaker_contents.Add(list(list("name" = chem_name, "id" = ckey(R.name), "volume" = round(R.volume, 0.01)))) // list in a list because Byond merges the first list...
 	data["beakerContents"] = beaker_contents
 
 	var/buffer_contents[0]
