@@ -1,0 +1,6 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Contractor support units now don't have flavortext telling them they work for someone else but their agent."
+  - bugfix: "Contractor support units now comes in an antag spawner (like syndicate monkey, nukie borgs/reinforcements)."
+  - bugfix: "Syndicate monkeys now get their monkey antag datum."
