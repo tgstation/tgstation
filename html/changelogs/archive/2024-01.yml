@@ -581,3 +581,13 @@
   lizardqueenlexi:
   - bugfix: Wagging tail spines now sync up properly with the tails they're attached
       to.
+2024-01-23:
+  00-Steven:
+  - sound: APCs actually play the tool sound when exposing their wires.
+  A.C.M.O.:
+  - config: Added two new config flags for quirks, DISABLE_QUIRK_POINTS and MAX_POSITIVE_QUIRKS.
+  Ghommie:
+  - bugfix: Goldgrubs should no longer spit out things that aren't ore (e.g. stasised
+      mobs from the polymorph belt).
+  scriptis:
+  - spellcheck: iron sheets's what?
