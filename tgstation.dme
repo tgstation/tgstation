@@ -6049,6 +6049,7 @@
 #include "monkestation\code\modules\client\preferences\interaction_mode.dm"
 #include "monkestation\code\modules\client\preferences\inventory.dm"
 #include "monkestation\code\modules\client\preferences\loadout_override_preference.dm"
+#include "monkestation\code\modules\client\preferences\prude.dm"
 #include "monkestation\code\modules\client\preferences\sounds.dm"
 #include "monkestation\code\modules\client\preferences\alt_jobs\_job.dm"
 #include "monkestation\code\modules\client\preferences\alt_jobs\titles.dm"

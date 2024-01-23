@@ -33,7 +33,7 @@
 				dyn_explosion(Location, 1, 0)
 			return
 
-	playsound(ass_holder, "monkestation/sound/effects/superfart.ogg", 100, FALSE, pressure_affected = FALSE)
+	playsound(ass_holder, "monkestation/sound/effects/superfart.ogg", 100, FALSE, pressure_affected = FALSE, mixer_channel = CHANNEL_PRUDE)
 	spawn(8)
 		Location = get_turf(user)
 		switch(rand(1000))

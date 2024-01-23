@@ -24,6 +24,7 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	CHANNEL_INSTRUMENTS,
 	CHANNEL_INSTRUMENTS_ROBOT,
 	CHANNEL_MOB_SOUNDS,
+	CHANNEL_PRUDE,
 ))
 
 
@@ -148,6 +149,9 @@ GLOBAL_LIST_INIT(proxy_sound_channels, list(
 	sound_to_use.volume = vol
 	if("[CHANNEL_MASTER_VOLUME]" in client?.prefs?.channel_volume)
 		sound_to_use.volume *= client.prefs.channel_volume["[CHANNEL_MASTER_VOLUME]"] * 0.01
+
+	if((mixer_channel == CHANNEL_PRUDE) && client?.prefs.read_preference(/datum/preference/toggle/prude_mode))
+		sound_to_use.volume *= 0
 
 	if(vary)
 		if(frequency)

@@ -79,6 +79,14 @@
 			valid_urinal = TRUE
 			break
 
+	var/list/ignored_mobs = list()
+	for(var/mob/anything in GLOB.player_list)
+		if(!anything.client)
+			continue
+		if(!anything.client.prefs.read_preference(/datum/preference/toggle/prude_mode))
+			continue
+		ignored_mobs |= anything
+
 	var/obj/item/reagent_containers/held_container
 	if(owner.held_items[owner.active_hand_index] != null)
 		var/obj/item/listed_item = owner.held_items[owner.active_hand_index]
@@ -90,14 +98,14 @@
 			return
 
 	if(valid_toilet)
-		owner.visible_message(span_notice("[owner] pisses into the toilet."))
+		owner.visible_message(span_notice("[owner] pisses into the toilet."), ignored_mobs = ignored_mobs)
 		return
 
 	if(valid_urinal)
-		owner.visible_message(span_notice("[owner] carefully pisses into the urinal not spilling a drop."))
+		owner.visible_message(span_notice("[owner] carefully pisses into the urinal not spilling a drop."), ignored_mobs = ignored_mobs)
 		return
 
-	owner.visible_message(span_warning("[owner] pisses all over the floor!"))
+	owner.visible_message(span_warning("[owner] pisses all over the floor!"), ignored_mobs = ignored_mobs)
 	stored_piss -= per_piss_usage
 
 
