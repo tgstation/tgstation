@@ -106,6 +106,9 @@
 	size = LEGION_SMALL
 
 /mob/living/simple_animal/hostile/megafauna/legion/OpenFire(the_target)
+	if(client)
+		return
+
 	switch(rand(4)) //Larger skulls use more attacks.
 		if(0 to 2)
 			create_skull.Trigger(target = target)
