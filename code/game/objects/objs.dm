@@ -173,7 +173,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 		interact(nearby_mob)
 		is_in_use = TRUE
 	for(var/mob/living/silicon/ai/all_ais as anything in GLOB.ai_list)
-		if ((!all_ais.client || all_ais.machine != subject))
+		if ((!all_ais.client || all_ais.machine != src))
 			continue
 		attack_ai(all_ais)
 		is_in_use = TRUE
