@@ -277,13 +277,14 @@
 	if(computer_id_slot)
 		return FALSE
 
-	computer_id_slot = inserting_id
 	if(user)
 		if(!user.transferItemToLoc(inserting_id, src))
 			return FALSE
 		to_chat(user, span_notice("You insert \the [inserting_id] into the card slot."))
 	else
 		inserting_id.forceMove(src)
+
+	computer_id_slot = inserting_id
 
 	playsound(src, 'sound/machines/terminal_insert_disc.ogg', 50, FALSE)
 	if(ishuman(loc))
@@ -292,6 +293,7 @@
 			human_wearer.sec_hud_set_ID()
 	update_appearance()
 	update_slot_icon()
+	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_INSERTED_ID, inserting_id, user)
 	return TRUE
 
 /**
@@ -488,6 +490,7 @@
 				to_chat(user, span_notice("You press the power button and start up \the [src]."))
 			if(open_ui)
 				update_tablet_open_uis(user)
+		SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
 		return TRUE
 	else // Unpowered
 		if(user)
@@ -692,6 +695,7 @@
 		physical.visible_message(span_notice("\The [src] shuts down."))
 	enabled = FALSE
 	update_appearance()
+	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_SHUT_DOWN, loud)
 
 ///Imprints name and job into the modular computer, and calls back to necessary functions.
 ///Acts as a replacement to directly setting the imprints fields. All fields are optional, the proc will try to fill in missing gaps.
