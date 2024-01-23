@@ -70,7 +70,7 @@
 	icon = 'icons/obj/machines/mining_machines.dmi'
 	icon_state = "console"
 	density = TRUE
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	/// Connected ore processing machine.
 	var/obj/machinery/mineral/processing_unit/processing_machine
 
