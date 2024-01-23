@@ -41208,6 +41208,7 @@
 /obj/machinery/camera/autoname/directional/east,
 /obj/item/wrench,
 /obj/item/paper/fluff/jobs/engineering/frequencies,
+/obj/machinery/firealarm/directional/east,
 /turf/open/floor/circuit,
 /area/station/tcommsat/server)
 "oJz" = (
