@@ -234,11 +234,7 @@
 	requires_purchase = FALSE
 
 //rickdude
-/datum/loadout_item/suit/aotcloak
-	name = "Survey Corps Cloak"
-	item_path = /obj/item/clothing/suit/hooded/aotcloak
-	donator_only = TRUE
-	requires_purchase = FALSE
+
 
 //kon chieko
 /datum/loadout_item/head/bells
@@ -248,9 +244,45 @@
 	requires_purchase = FALSE
 
 //zedmastermind
-/datum/loadout_item/head/zed_officercap
+/datum/loadout_item/head/zed_offic/datum/loadout_item/suit/aotcloak
+	name = "Survey Corps Cloak"
+	item_path = /obj/item/clothing/suit/hooded/aotcloak
+	donator_only = TRUE
+	requires_purchase = FALSE
 	name = "Zed Officer Cap"
 	item_path = /obj/item/clothing/head/costume/zed_officercap
 	donator_only = TRUE
 	requires_purchase = FALSE
-	ckeywhitelist = list("zedmastermind")
+
+//tonymcp
+
+/datum/loadout_item/mask/igor
+	name = "Igor Mask"
+	item_path = /obj/item/clothing/mask/igor
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/suit/violet_jacket
+	name = "Violet's Phantom Thief Jacket"
+	item_path = /obj/item/clothing/suit/costume/violet_jacket
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/toys/puppycat
+	name = "Jack Frost Plush"
+	item_path = /obj/item/toy/plush/jackfrost
+	donator_only = TRUE
+	requires_purchase = FALSE
+
+/datum/loadout_item/pocket_items/donator/void_butterfly
+	name = "Pet Delivery Beacon - Void Butterfly"
+	item_path = /obj/item/choice_beacon/pet/donator/void_butterfly
+	donator_only = TRUE
+	requires_purchase = FALSE
+	ckeywhitelist = list("tonymcsp")
+
+/datum/loadout_item/effects/void_butterfly
+	ckeywhitelist = list("tonymcsp")
+	name = "Void Butterfly Transformation"
+	item_path = /obj/item/effect_granter/donator/void_butterfly
+	requires_purchase = FALSE
