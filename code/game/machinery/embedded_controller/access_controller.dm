@@ -201,6 +201,8 @@
 
 /obj/machinery/door_buttons/airlock_controller/find_objects_by_tag()
 	for(var/obj/machinery/door/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door))
+		if(isnull(idInterior) || isnull(idExterior))
+			break
 		if(door.id_tag == idInterior)
 			interior_airlock = door
 			RegisterSignal(interior_airlock, COMSIG_PREQDELETED, PROC_REF(remove_door))
