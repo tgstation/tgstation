@@ -219,7 +219,7 @@
 		.["alloys"] += list(
 			list(
 				"name" = design.name,
-				"id" = design.id
+				"id" = design.id,
 				)
 		)
 	.["selectedAlloy"] = selected_alloy
