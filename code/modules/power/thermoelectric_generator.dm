@@ -17,19 +17,17 @@
 	var/lastgen = 0
 	///The amount of power the generator has last produced.
 	var/lastgenlev = -1
-
 	/**
 	 * Used in overlays for the TEG, basically;
 	 * one number is for the cold mix, one is for the hot mix
 	 * If the cold mix has pressure in it, then the first number is 1, else 0
-	 * If the hot mix has pressure in it, then the first number is 1, else 0
+	 * If the hot mix has pressure in it, then the second number is 1, else 0
 	 * Neither has pressure: 00
 	 * Only cold has pressure: 10
 	 * Only hot has pressure: 01
 	 * Both has pressure: 11
 	 */
 	var/last_pressure_overlay = "00"
-
 
 /obj/machinery/power/thermoelectric_generator/Initialize(mapload)
 	. = ..()
@@ -54,16 +52,16 @@
 
 	var/L = min(round(lastgenlev / 100000), 11)
 	if(L != 0)
-		. += mutable_appearance('icons/obj/machines/engine/other.dmi', "teg-op[L]")
+		. += mutable_appearance('icons/obj/machines/engine/other.dmi', "[base_icon_state]-op[L]")
 	if(hot_circ && cold_circ)
 		. += "[base_icon_state]-oc[last_pressure_overlay]"
 
-/obj/machinery/power/thermoelectric_generator/wrench_act(mob/living/user, obj/item/I)
+/obj/machinery/power/thermoelectric_generator/wrench_act(mob/living/user, obj/item/tool)
 	if(!panel_open)
 		balloon_alert(user, "open the panel!")
 		return
 	set_anchored(!anchored)
-	I.play_tool_sound(src)
+	tool.play_tool_sound(src)
 	if(anchored)
 		connect_to_network()
 	else
@@ -88,8 +86,8 @@
 	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	return TRUE
 
-/obj/machinery/power/thermoelectric_generator/crowbar_act(mob/user, obj/item/I)
-	default_deconstruction_crowbar(I)
+/obj/machinery/power/thermoelectric_generator/crowbar_act(mob/living/user, obj/item/tool)
+	default_deconstruction_crowbar(tool)
 	return TRUE
 
 /obj/machinery/power/thermoelectric_generator/process()

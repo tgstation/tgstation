@@ -45,7 +45,7 @@
 		return null
 
 	//Calculate necessary moles to transfer using PV = nRT
-	if(!air2.temperature > 0)
+	if(air2.temperature <= 0)
 		last_pressure_delta = 0
 		return
 	var/pressure_delta = (input_starting_pressure - output_starting_pressure)/2
