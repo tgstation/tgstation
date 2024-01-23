@@ -194,7 +194,7 @@
 		.["materialIcons"] += list(
 			list(
 				"id" = REF(material),
-				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1))
+				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1)),
 				)
 			)
 
@@ -204,7 +204,7 @@
 		.["alloyIcons"] += list(
 			list(
 				"id" = design.id,
-				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1))
+				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1)),
 				)
 			)
 
