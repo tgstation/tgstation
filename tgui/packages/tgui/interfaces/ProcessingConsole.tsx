@@ -2,6 +2,7 @@ import { toTitleCase } from 'common/string';
 
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   Icon,
   Image,
@@ -10,6 +11,7 @@ import {
   Stack,
   Table,
 } from '../components';
+import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
 import { Material } from './Fabrication/Types';
 
@@ -23,7 +25,7 @@ type Alloy = {
   id: string;
 };
 
-type ProcessingConsoleProps = {
+type Data = {
   materials: Material[];
   materialIcons: IconData[];
   selectedMaterial: string | null;
@@ -31,25 +33,26 @@ type ProcessingConsoleProps = {
   alloyIcons: IconData[];
   selectedAlloy: string | null;
   state: boolean;
+  SHEET_MATERIAL_AMOUNT: number;
 };
 
 export const ProcessingConsole = (props: any) => {
-  const { act, data } = useBackend<ProcessingConsoleProps>();
+  const { act, data } = useBackend<Data>();
   const { state } = data;
 
   return (
-    <Window title="Processing Unit Console" width={535} height={485}>
+    <Window title="Processing Unit Console" width={580} height={500}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item grow basis={0}>
             <Stack fill>
-              <Stack.Item grow basis={0}>
-                <Section fill scrollable textAlign="center" title="Materials">
+              <Stack.Item grow={1.2} basis={0}>
+                <Section fill textAlign="center" title="Materials">
                   <MaterialSelection />
                 </Section>
               </Stack.Item>
               <Stack.Item grow basis={0}>
-                <Section fill scrollable title="Alloys" textAlign="center">
+                <Section fill title="Alloys" textAlign="center">
                   <AlloySelection />
                 </Section>
               </Stack.Item>
@@ -57,8 +60,11 @@ export const ProcessingConsole = (props: any) => {
           </Stack.Item>
           <Stack.Item>
             <Button
+              icon="arrows-spin"
+              iconSpin={state}
               color={state ? 'bad' : 'good'}
               textAlign="center"
+              fontSize={1.25}
               py={1}
               fluid
               bold
@@ -74,8 +80,9 @@ export const ProcessingConsole = (props: any) => {
 };
 
 const MaterialSelection = (props: any) => {
-  const { act, data } = useBackend<ProcessingConsoleProps>();
-  const { materials, materialIcons, selectedMaterial } = data;
+  const { act, data } = useBackend<Data>();
+  const { materials, materialIcons, selectedMaterial, SHEET_MATERIAL_AMOUNT } =
+    data;
 
   return materials.length > 0 ? (
     <Table>
@@ -84,6 +91,7 @@ const MaterialSelection = (props: any) => {
           key={material.name}
           name={material.name}
           icon={materialIcons.find((icon) => icon.id === material.ref)?.icon}
+          amount={Math.floor(material.amount / SHEET_MATERIAL_AMOUNT)}
           selected={selectedMaterial === material.name}
           onSelect={() => act('setMaterial', { value: material.ref })}
         />
@@ -95,7 +103,7 @@ const MaterialSelection = (props: any) => {
 };
 
 const AlloySelection = (props: any) => {
-  const { act, data } = useBackend<ProcessingConsoleProps>();
+  const { act, data } = useBackend<Data>();
   const { alloys, alloyIcons, selectedAlloy } = data;
 
   return alloys.length > 0 ? (
@@ -117,13 +125,14 @@ const AlloySelection = (props: any) => {
 
 type DisplayRowProps = {
   name: string;
-  icon: string | undefined;
+  icon?: string;
+  amount?: number;
   selected: boolean;
   onSelect: () => void;
 };
 
 const DisplayRow = (props: DisplayRowProps) => {
-  const { name, icon, selected, onSelect } = props;
+  const { name, icon, amount, selected, onSelect } = props;
 
   return (
     <Table.Row collapsing className="candystripe">
@@ -137,11 +146,18 @@ const DisplayRow = (props: DisplayRowProps) => {
             src={`data:image/jpeg;base64,${icon}`}
           />
         ) : (
-          <Icon name="circle-question" />
+          <Icon name="circle-question" verticalAlign="middle" />
         )}
       </Table.Cell>
-      <Table.Cell textAlign="left">{toTitleCase(name)}</Table.Cell>
-      <Table.Cell collapsing pr={1}>
+      <Table.Cell collapsing textAlign="left">
+        {toTitleCase(name)}
+      </Table.Cell>
+      {amount !== undefined ? (
+        <Box color="label">
+          {`${formatSiUnit(amount, 0)} ${amount === 1 ? 'sheet' : 'sheets'}`}
+        </Box>
+      ) : null}
+      <Table.Cell collapsing pr={1} textAlign="right">
         <Button.Checkbox
           color="transparent"
           checked={selected}
