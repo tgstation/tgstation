@@ -10448,6 +10448,7 @@
 /obj/effect/turf_decal/siding/red{
 	dir = 6
 	},
+/obj/machinery/firealarm/directional/south,
 /turf/open/floor/iron/white/small,
 /area/station/security/warden)
 "dXE" = (
