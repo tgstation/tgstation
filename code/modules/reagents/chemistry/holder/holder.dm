@@ -538,7 +538,7 @@
 			target_organ.owner?.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 			log_combat(transferred_by, target_organ.owner ? target_organ.owner : target_organ, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 		else
-			target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
+			target_atom?.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 			log_combat(transferred_by, target_atom, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
 	update_total()
