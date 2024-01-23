@@ -666,12 +666,16 @@
 /obj/item/storage/organbox/Initialize(mapload)
 	. = ..()
 
-	create_storage(storage_type = /datum/storage/organ_box, max_specific_storage = WEIGHT_CLASS_BULKY, max_total_storage = 21)
-	atom_storage.set_holdable(list(
-		/obj/item/organ,
-		/obj/item/bodypart,
-		/obj/item/food/icecream
-		))
+	create_storage(
+		storage_type = /datum/storage/organ_box,
+		max_specific_storage = WEIGHT_CLASS_BULKY,
+		max_total_storage = 21,
+		canhold = list(
+			/obj/item/organ,
+			/obj/item/bodypart,
+			/obj/item/food/icecream,
+		),
+	)
 
 	create_reagents(100, TRANSPARENT)
 	START_PROCESSING(SSobj, src)
@@ -766,9 +770,7 @@
 	atom_storage.max_slots = 8
 	atom_storage.screen_max_columns = 4
 	atom_storage.screen_max_rows = 2
-	atom_storage.set_holdable(list(
-		/obj/item/reagent_containers/cup/tube,
-	))
+	atom_storage.set_holdable(/obj/item/reagent_containers/cup/tube)
 
 /obj/item/storage/test_tube_rack/attack_self(mob/user)
 	emptyStorage()

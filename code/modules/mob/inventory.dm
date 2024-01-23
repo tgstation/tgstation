@@ -562,9 +562,7 @@
 	while(i < length(processing_list))
 		var/atom/A = processing_list[++i]
 		if(A.atom_storage)
-			var/list/item_stuff = list()
-			A.atom_storage.return_inv(item_stuff)
-			processing_list += item_stuff
+			processing_list += A.atom_storage.return_inv()
 	return processing_list
 
 /// Returns a list of things that the provided mob has, including any storage-capable implants.

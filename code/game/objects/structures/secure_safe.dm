@@ -60,7 +60,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/secure_safe/caps_spare, 32)
 
 /obj/structure/secure_safe/caps_spare/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(can_hold_list = list(/obj/item/card/id))
+	atom_storage.set_holdable(/obj/item/card/id)
 	AddComponent(/datum/component/lockable_storage, \
 		lock_code = SSid_access.spare_id_safe_code, \
 		can_hack_open = FALSE, \

@@ -5,61 +5,46 @@
 	max_specific_storage = WEIGHT_CLASS_TINY
 	max_slots = 30
 	max_total_storage = WEIGHT_CLASS_TINY * 30
-	
-/datum/storage/tcg/New()
-	. = ..()
-	set_holdable(list(/obj/item/tcgcard))
 
-/datum/storage/tcg/attempt_remove(obj/item/thing, atom/newLoc, silent = FALSE)
+/datum/storage/tcg/New(
+	atom/parent,
+	max_slots,
+	max_specific_storage,
+	max_total_storage,
+)
+	. = ..()
+	set_holdable(/obj/item/tcgcard)
+
+/datum/storage/tcg/attempt_remove(obj/item/thing, atom/remove_to_loc, silent = FALSE)
 	. = ..()
 	handle_empty_deck()
 
 /datum/storage/tcg/show_contents(mob/to_show)
 	. = ..()
-
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
-	to_show.visible_message(span_notice("[to_show] starts to look through the contents of \the [resolve_parent]!"), \
-					span_notice("You begin looking into the contents of \the [resolve_parent]!"))
+	to_show.visible_message(
+		span_notice("[to_show] starts to look through the contents of [parent]!"),
+		span_notice("You begin looking into the contents of [parent]."),
+	)
 
 /datum/storage/tcg/hide_contents()
 	. = ..()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
+	real_location.visible_message(span_notice("[parent] is shuffled after looking through it."))
+	real_location.contents = shuffle(real_location.contents)
 
-	var/obj/item/resolve_location = real_location?.resolve()
-	if(!resolve_location)
-		return
-
-	resolve_location.visible_message(span_notice("\the [resolve_parent] is shuffled after looking through it."))
-	resolve_location.contents = shuffle(resolve_location.contents)
-
-/datum/storage/tcg/dump_content_at(atom/dest_object, mob/user)
-	. = ..()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
-	if(!resolve_parent.contents.len)
-		qdel(resolve_parent)
+// Melbert todo
+// /datum/storage/tcg/dump_content_at(atom/dest_object, mob/user)
+// 	. = ..()
+// 	if(real_location.contents.len == 0)
+// 		qdel(parent)
 
 /datum/storage/tcg/proc/handle_empty_deck()
-	var/obj/item/resolve_parent = parent?.resolve()
-	if(!resolve_parent)
-		return
-
-	var/obj/item/resolve_location = real_location?.resolve()
-	if(!real_location)
-		return
-
 	//You can't have a deck of one card!
-	if(resolve_location.contents.len == 1)
-		var/obj/item/tcgcard_deck/deck = resolve_location
-		var/obj/item/tcgcard/card = resolve_location.contents[1]
-		attempt_remove(card, card.drop_location())
-		card.flipped = deck.flipped
-		card.update_icon_state()
-		qdel(resolve_parent)
+	if(real_location.contents.len != 1)
+		return
+
+	var/obj/item/tcgcard_deck/deck = real_location
+	var/obj/item/tcgcard/card = real_location.contents[1]
+	attempt_remove(card, card.drop_location())
+	card.flipped = deck.flipped
+	card.update_icon_state()
+	qdel(parent)

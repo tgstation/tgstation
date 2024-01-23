@@ -59,7 +59,7 @@
 	. = ..()
 
 	var/obj/item/clothing/under/attached_to = loc
-	
+
 	if(!istype(attached_to))
 		return
 
@@ -78,9 +78,7 @@
 /obj/item/clothing/accessory/proc/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(atom_storage)
-		attach_to.clone_storage(atom_storage)
-		attach_to.atom_storage.set_real_location(src)
+	atom_storage?.set_real_location(attach_to)
 
 	var/num_other_accessories = LAZYLEN(attach_to.attached_accessories)
 	layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
@@ -118,12 +116,10 @@
 /obj/item/clothing/accessory/proc/detach(obj/item/clothing/under/detach_from)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(IS_WEAKREF_OF(src, detach_from.atom_storage?.real_location))
+	if(atom_storage?.real_location == detach_from)
 		// Ensure void items do not stick around
 		atom_storage.close_all()
-		detach_from.atom_storage.close_all()
-		// And clean up the storage we made
-		QDEL_NULL(detach_from.atom_storage)
+		atom_storage.set_real_location(src)
 
 	UnregisterSignal(detach_from, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED, COMSIG_CLOTHING_UNDER_ADJUSTED, COMSIG_ATOM_UPDATE_OVERLAYS))
 	var/mob/dropped_from = detach_from.loc
