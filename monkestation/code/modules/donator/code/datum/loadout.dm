@@ -234,7 +234,10 @@
 	requires_purchase = FALSE
 
 //rickdude
-
+/datum/item_loadout/head/aotcloak	name = "Survey Corps Cloak"
+	item_path = /obj/item/clothing/suit/hooded/aotcloak
+	donator_only = TRUE
+	requires_purchase = FALSE
 
 //kon chieko
 /datum/loadout_item/head/bells
@@ -244,11 +247,7 @@
 	requires_purchase = FALSE
 
 //zedmastermind
-/datum/loadout_item/head/zed_offic/datum/loadout_item/suit/aotcloak
-	name = "Survey Corps Cloak"
-	item_path = /obj/item/clothing/suit/hooded/aotcloak
-	donator_only = TRUE
-	requires_purchase = FALSE
+/datum/loadout_item/head/zed_officercap
 	name = "Zed Officer Cap"
 	item_path = /obj/item/clothing/head/costume/zed_officercap
 	donator_only = TRUE
