@@ -51,7 +51,7 @@
 	user.imode.keybind_act(4)
 
 /datum/keybinding/living/interaction_action5
-	hotkey_keys = null
+	hotkey_keys = list("Unbound")
 	name = "interaction_mode_action_5"
 	full_name = "Intent Cycle"
 	description = "Cycles through intents"

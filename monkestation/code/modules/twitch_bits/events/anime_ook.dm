@@ -1,13 +1,11 @@
 /datum/twitch_event/anime_ook
 	event_name = "Anime Ook"
 	event_duration = 1 SECONDS
-	event_flags = TWITCH_AFFECTS_STREAMER
+	event_flags = TWITCH_AFFECTS_STREAMER | CLEAR_TARGETS_AFTER_EFFECTS
 	id_tag = T_EVENT_ANIME_OOK
 	token_cost = 100
 
-/datum/twitch_event/anime_ook/run_event(name)
-	. = ..()
-
+/datum/twitch_event/anime_ook/apply_effects()
 	for(var/target in targets)
 		var/mob/living/ook = target
 		if(ishuman(ook))

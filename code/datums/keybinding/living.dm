@@ -61,7 +61,7 @@
 	return TRUE
 
 /datum/keybinding/living/rest
-	hotkey_keys = list("U")
+	hotkey_keys = list("R") // monke: move this, so LOOC can be U, adjacent to other communication keys.
 	name = "rest"
 	full_name = "Rest"
 	description = "Lay down, or get up."
