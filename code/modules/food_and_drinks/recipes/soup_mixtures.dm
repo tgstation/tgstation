@@ -1228,7 +1228,6 @@
 	)
 	results =  list(
 		/datum/reagent/consumable/nutriment/soup/oatmeal = 20,
-		/datum/reagent/consumable/milk = 12,
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	percentage_of_nutriment_converted = 0 // Oats have barely any nutrients
