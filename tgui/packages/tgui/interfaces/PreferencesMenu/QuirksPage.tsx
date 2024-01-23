@@ -316,6 +316,7 @@ export function QuirksPage(props) {
           max_positive_quirks: maxPositiveQuirks,
           quirk_blacklist: quirkBlacklist,
           quirk_info: quirkInfo,
+          points_enabled: pointsEnabled,
         } = server_data.quirks;
 
         const quirks = Object.entries(quirkInfo);
@@ -347,9 +348,12 @@ export function QuirksPage(props) {
           const quirk = quirkInfo[quirkName];
 
           if (quirk.value > 0) {
-            if (positiveQuirks >= maxPositiveQuirks) {
+            if (
+              maxPositiveQuirks !== -1 &&
+              positiveQuirks >= maxPositiveQuirks
+            ) {
               return "You can't have any more positive quirks!";
-            } else if (balance + quirk.value > 0) {
+            } else if (pointsEnabled && balance + quirk.value > 0) {
               return 'You need a negative quirk to balance this out!';
             }
           }
@@ -379,7 +383,7 @@ export function QuirksPage(props) {
         const getReasonToNotRemove = (quirkName: string) => {
           const quirk = quirkInfo[quirkName];
 
-          if (balance - quirk.value > 0) {
+          if (pointsEnabled && balance - quirk.value > 0) {
             return 'You need to remove a positive quirk first!';
           }
 
@@ -391,13 +395,21 @@ export function QuirksPage(props) {
             <Stack.Item basis="50%">
               <Stack vertical fill align="center">
                 <Stack.Item>
-                  <Box fontSize="1.3em">Positive Quirks</Box>
+                  {maxPositiveQuirks > 0 ? (
+                    <Box fontSize="1.3em">Positive Quirks</Box>
+                  ) : (
+                    <Box mt={pointsEnabled ? 3.4 : 0} />
+                  )}
                 </Stack.Item>
 
                 <Stack.Item>
-                  <StatDisplay>
-                    {positiveQuirks} / {maxPositiveQuirks}
-                  </StatDisplay>
+                  {maxPositiveQuirks > 0 ? (
+                    <StatDisplay>
+                      {positiveQuirks} / {maxPositiveQuirks}
+                    </StatDisplay>
+                  ) : (
+                    <Box mt={pointsEnabled ? 3.4 : 0} />
+                  )}
                 </Stack.Item>
 
                 <Stack.Item>
@@ -445,11 +457,19 @@ export function QuirksPage(props) {
             <Stack.Item basis="50%">
               <Stack vertical fill align="center">
                 <Stack.Item>
-                  <Box fontSize="1.3em">Quirk Balance</Box>
+                  {pointsEnabled ? (
+                    <Box fontSize="1.3em">Quirk Balance</Box>
+                  ) : (
+                    <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
+                  )}
                 </Stack.Item>
 
                 <Stack.Item>
-                  <StatDisplay>{balance}</StatDisplay>
+                  {pointsEnabled ? (
+                    <StatDisplay>{balance}</StatDisplay>
+                  ) : (
+                    <Box mt={maxPositiveQuirks > 0 ? 3.4 : 0} />
+                  )}
                 </Stack.Item>
 
                 <Stack.Item>
