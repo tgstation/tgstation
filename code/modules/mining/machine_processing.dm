@@ -116,7 +116,8 @@
 
 		if("toggle")
 			processing_machine.on = !processing_machine.on
-			processing_machine.begin_processing()
+			if(processing_machine.on)
+				processing_machine.begin_processing()
 			return TRUE
 
 /obj/machinery/mineral/processing_unit_console/Destroy()
@@ -186,11 +187,11 @@
 		materials.insert_item(O)
 
 /obj/machinery/mineral/processing_unit/ui_static_data()
-	. = list()
+	var/list/data = list()
 
 	for(var/datum/material/material as anything in materials.materials)
 		var/obj/display = initial(material.sheet_type)
-		.["materialIcons"] += list(
+		data["materialIcons"] += list(
 			list(
 				"id" = REF(material),
 				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1))
@@ -200,31 +201,37 @@
 	for(var/research in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(research)
 		var/obj/display = initial(design.build_path)
-		.["alloyIcons"] += list(
+		data["alloyIcons"] += list(
 			list(
 				"id" = design.id,
 				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1))
 				)
 			)
 
+	data += materials.ui_static_data()
+
+	return data
+
 /obj/machinery/mineral/processing_unit/ui_data()
-	. = list()
+	var/list/data = list()
 
-	.["materials"] = materials.ui_data()
-	.["selectedMaterial"] = selected_material?.name
+	data["materials"] = materials.ui_data()
+	data["selectedMaterial"] = selected_material?.name
 
-	.["alloys"] = list()
+	data["alloys"] = list()
 	for(var/research in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(research)
-		.["alloys"] += list(
+		data["alloys"] += list(
 			list(
 				"name" = design.name,
 				"id" = design.id,
 				)
 		)
-	.["selectedAlloy"] = selected_alloy
+	data["selectedAlloy"] = selected_alloy
 
-	.["state"] = on
+	data["state"] = on
+
+	return data
 
 /obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
@@ -234,8 +241,7 @@
 
 /obj/machinery/mineral/processing_unit/process(seconds_per_tick)
 	if(!on)
-		end_processing()
-		return
+		return PROCESS_KILL
 
 	if(selected_material)
 		smelt_ore(seconds_per_tick)
