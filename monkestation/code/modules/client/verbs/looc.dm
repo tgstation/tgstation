@@ -83,14 +83,14 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 		if(QDELETED(client) || !CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC))
 			continue
 		hearers[client] = TRUE
-		if(client in GLOB.admins)
+		if((client in GLOB.admins) && is_admin_looc_omnipotent(client))
 			continue
 		to_chat(hearer, span_looc("[span_prefix("LOOC:")] <EM>[span_name("[mob.name]")]:</EM> <span class='message linkify'>[msg]</span>"), type = MESSAGE_TYPE_LOOC, avoid_highlighting = (hearer == mob))
 		if(client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
 			hearer.create_chat_message(mob, /datum/language/common, "\[LOOC: [raw_msg]\]", runechat_flags = LOOC_MESSAGE)
 
 	for(var/client/client in GLOB.admins)
-		if(!CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC))
+		if(!CHECK_BITFIELD(client.prefs.chat_toggles, CHAT_OOC) || !is_admin_looc_omnipotent(client))
 			continue
 		var/prefix = "[hearers[client] ? "" : "(R)"]LOOC"
 		if(client.prefs.read_preference(/datum/preference/toggle/enable_runechat_looc))
@@ -118,3 +118,14 @@ GLOBAL_VAR_INIT(looc_allowed, TRUE)
 	log_admin("[key_name(usr)] toggled LOOC.")
 	message_admins("[key_name_admin(usr)] toggled LOOC.")
 	SSblackbox.record_feedback("nested tally", "admin_toggle", 1, list("Toggle LOOC", "[GLOB.looc_allowed ? "Enabled" : "Disabled"]")) //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
+
+/proc/is_admin_looc_omnipotent(client/admin)
+	if(QDELETED(admin))
+		return FALSE
+	switch(admin.prefs.read_preference(/datum/preference/choiced/admin_hear_looc))
+		if("Always")
+			return TRUE
+		if("When Observing")
+			return isdead(admin.mob) || admin.mob.stat == DEAD
+		else
+			return FALSE
