@@ -16,7 +16,7 @@ export const AirlockButtonController = (props) => {
   const { data } = useBackend<Data>();
   const { interior_door, exterior_door } = data;
   return (
-    <Window width={500} height={170}>
+    <Window width={500} height={130}>
       <Window.Content>
         <Section title="Airlock Controller" textAlign="center">
           {!interior_door && !exterior_door ? (
@@ -43,13 +43,20 @@ export const AirlockButtonController = (props) => {
 
 const RetrieveButton = (props) => {
   const { act, data } = useBackend<Data>();
-  const { interior_door, interior_door_closed, exterior_door_closed, busy } =
-    data;
+  const {
+    interior_door,
+    exterior_door,
+    interior_door_closed,
+    exterior_door_closed,
+    busy,
+  } = data;
   const { airlockType } = props;
   const our_door_closed =
     airlockType === interior_door ? interior_door_closed : exterior_door_closed;
   const opposite_door_closed =
     airlockType === interior_door ? exterior_door_closed : interior_door_closed;
+  const opposite_door =
+    airlockType === interior_door ? exterior_door : interior_door;
 
   return (
     <Button
@@ -76,11 +83,11 @@ const RetrieveButton = (props) => {
         ? `Close ${
             airlockType === interior_door ? 'interior door' : 'exterior door'
           }`
-        : opposite_door_closed
-          ? `Open ${
+        : !opposite_door_closed && opposite_door
+          ? `Cycle to ${
               airlockType === interior_door ? 'interior door' : 'exterior door'
             }`
-          : `Cycle to ${
+          : `Open ${
               airlockType === interior_door ? 'interior door' : 'exterior door'
             }`}
     </Button>

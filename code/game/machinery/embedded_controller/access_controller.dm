@@ -107,7 +107,7 @@
 	icon = 'icons/obj/machines/wallmounts.dmi'
 	icon_state = "access_control_standby"
 	base_icon_state = "access_control"
-	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON|INTERACT_MACHINE_SET_MACHINE
+	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	///the id of the interior airlock
 	var/idInterior
 	///the id of the exterior airlock
@@ -119,6 +119,7 @@
 	///our exterior airlock
 	var/obj/machinery/door/airlock/exterior_airlock
 
+///set our doors to null upon deletion
 /obj/machinery/door_buttons/airlock_controller/proc/remove_door(datum/source)
 	SIGNAL_HANDLER
 
@@ -129,6 +130,7 @@
 	if(source == exterior_airlock)
 		exterior_airlock = null
 
+///proc called when we want to open doors without any cycling involved
 /obj/machinery/door_buttons/airlock_controller/proc/only_open(obj/machinery/door/airlock/target_door)
 	if(isnull(target_door))
 		return
@@ -136,13 +138,16 @@
 	update_appearance()
 	open_door(target_door)
 
+///proc called when we want to close doors without any cycling involved
 /obj/machinery/door_buttons/airlock_controller/proc/only_close(obj/machinery/door/airlock/target_door)
 	if(isnull(target_door))
 		return
 	busy = TRUE
 	close_door(target_door)
 
+///proc that handles closing doors
 /obj/machinery/door_buttons/airlock_controller/proc/close_door(obj/machinery/door/airlock/target_door, turn_idle_on_terminate = TRUE)
+	busy = TRUE
 	if(isnull(target_door) || target_door.density)
 		go_idle()
 		return FALSE
@@ -159,7 +164,7 @@
 
 	return TRUE
 
-
+///proc called when we want to close doors with cycling
 /obj/machinery/door_buttons/airlock_controller/proc/cycle_close(obj/machinery/door/airlock/target_door)
 	if(isnull(exterior_airlock) || isnull(interior_airlock))
 		return
@@ -174,6 +179,7 @@
 
 	addtimer(CALLBACK(src, PROC_REF(cycle_open), target_door), 2 SECONDS)
 
+///proc called when we want to open doors with cycling
 /obj/machinery/door_buttons/airlock_controller/proc/cycle_open(obj/machinery/door/airlock/target_door)
 	if(isnull(target_door))
 		return go_idle()
@@ -183,6 +189,7 @@
 	busy = TRUE
 	open_door(target_door)
 
+///proc that handles opening and unbolting the door
 /obj/machinery/door_buttons/airlock_controller/proc/open_door(obj/machinery/door/airlock/target_door)
 	if(!target_door.density)
 		return go_idle()
@@ -195,6 +202,7 @@
 	return go_idle()
 
 
+///unsets our busy state and update our appearance
 /obj/machinery/door_buttons/airlock_controller/proc/go_idle()
 	busy = FALSE
 	update_appearance()
@@ -212,7 +220,7 @@
 
 /obj/machinery/door_buttons/airlock_controller/update_icon_state()
 	if(machine_stat & NOPOWER)
-		icon_state = "access_control_off"
+		icon_state = "[base_icon_state]_off"
 		return ..()
 	icon_state = "[base_icon_state]_[(busy) ? "process" : "standby"]"
 	return ..()
