@@ -3,5 +3,5 @@ template = "bitmask/walls"
 [slice_point]
 west = 10
 north = 16
-south = 18
+south = 17
 east = 24
