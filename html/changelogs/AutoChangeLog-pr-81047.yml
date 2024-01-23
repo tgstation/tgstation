@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "pAIs downloaded while in a PDA now gets the action button to control said PDA."
+  - bugfix: "pAI cards can now be ejected from a PDA when there is no pAI inhabiting it."
