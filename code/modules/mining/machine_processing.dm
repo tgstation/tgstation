@@ -187,11 +187,11 @@
 		materials.insert_item(O)
 
 /obj/machinery/mineral/processing_unit/ui_static_data()
-	var/list/data = list()
+	. = list()
 
 	for(var/datum/material/material as anything in materials.materials)
 		var/obj/display = initial(material.sheet_type)
-		data["materialIcons"] += list(
+		.["materialIcons"] += list(
 			list(
 				"id" = REF(material),
 				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1))
@@ -201,37 +201,33 @@
 	for(var/research in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(research)
 		var/obj/display = initial(design.build_path)
-		data["alloyIcons"] += list(
+		.["alloyIcons"] += list(
 			list(
 				"id" = design.id,
 				"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1))
 				)
 			)
 
-	data += materials.ui_static_data()
-
-	return data
+	. += materials.ui_static_data()
 
 /obj/machinery/mineral/processing_unit/ui_data()
-	var/list/data = list()
+	. = list()
 
-	data["materials"] = materials.ui_data()
-	data["selectedMaterial"] = selected_material?.name
+	.["materials"] = materials.ui_data()
+	.["selectedMaterial"] = selected_material?.name
 
-	data["alloys"] = list()
+	.["alloys"] = list()
 	for(var/research in stored_research.researched_designs)
 		var/datum/design/design = SSresearch.techweb_design_by_id(research)
-		data["alloys"] += list(
+		.["alloys"] += list(
 			list(
 				"name" = design.name,
 				"id" = design.id,
 				)
 		)
-	data["selectedAlloy"] = selected_alloy
+	.["selectedAlloy"] = selected_alloy
 
-	data["state"] = on
-
-	return data
+	.["state"] = on
 
 /obj/machinery/mineral/processing_unit/pickup_item(datum/source, atom/movable/target, direction)
 	if(QDELETED(target))
