@@ -49,6 +49,8 @@
 	var/chosen_attack = 1
 	/// Attack actions, sets chosen_attack to the number in the action
 	var/list/attack_action_types = list()
+	/// Summoning line, said when summoned via megafauna vents.
+	var/summon_line = "I'll kick your ass!"
 
 /mob/living/simple_animal/hostile/megafauna/Initialize(mapload)
 	. = ..()
