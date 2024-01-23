@@ -4,18 +4,14 @@
 	attachment_icon = 'monkestation/code/modules/modular_guns/icons/mk58.dmi'
 	attachment_rail = GUN_ATTACH_MK_58
 
-/obj/item/attachment/stock/mk_58/wood
-	icon_state = "stock_wood"
-	attachment_icon_state = "stock_wood"
-
-/obj/item/attachment/stock/mk_58/excelsior
-	icon_state = "stock_excelsior"
-	attachment_icon_state = "stock_excelsior"
-
 /obj/item/attachment/stock/mk_58/black
-	icon_state = "stock_black"
-	attachment_icon_state = "stock_black"
+	icon_state = "frame_black"
+	attachment_icon_state = "frame_black"
 
-/obj/item/attachment/stock/mk_58/serbian
-	icon_state = "stock_serbian"
-	attachment_icon_state = "stock_serbian"
+/obj/item/attachment/stock/mk_58/gray
+	icon_state = "frame_gray"
+	attachment_icon_state = "frame_gray"
+
+/obj/item/attachment/stock/mk_58/tan
+	icon_state = "frame_tan"
+	attachment_icon_state = "frame_tan"
