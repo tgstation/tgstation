@@ -126,8 +126,8 @@
 	max_specific_storage = src.max_specific_storage,
 	max_total_storage = src.max_total_storage,
 )
-	if(isnull(parent))
-		stack_trace("Storage datum ([type]) created without a parent!")
+	if(!istype(parent))
+		stack_trace("Storage datum ([type]) created without a [isnull(parent) ? "null parent" : "invalid parent ([parent.type])"]!")
 		qdel(src)
 		return
 
@@ -198,14 +198,12 @@
 	ASSERT(isnull(parent))
 
 	parent = new_parent
-	// melbert todo : a lot of these should be moved to real location
+	// a few of theses should probably be on the real_location rather than the parent
 	RegisterSignals(parent, list(COMSIG_ATOM_ATTACK_PAW, COMSIG_ATOM_ATTACK_HAND), PROC_REF(on_attack))
 	RegisterSignal(parent, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_mousedrop_onto))
 	RegisterSignal(parent, COMSIG_MOUSEDROPPED_ONTO, PROC_REF(on_mousedropped_onto))
-	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK, PROC_REF(on_preattack))
-	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(mass_empty))
 	RegisterSignals(parent, list(COMSIG_CLICK_ALT, COMSIG_ATOM_ATTACK_GHOST, COMSIG_ATOM_ATTACK_HAND_SECONDARY), PROC_REF(open_storage_on_signal))
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY_SECONDARY, PROC_REF(open_storage_attackby_secondary))
@@ -224,19 +222,28 @@
  */
 /datum/storage/proc/set_real_location(atom/new_real_location, should_drop = FALSE)
 	if(!isnull(real_location))
-		UnregisterSignal(real_location, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_EXITED, COMSIG_QDELETING))
+		UnregisterSignal(real_location, list(
+			COMSIG_ATOM_ENTERED,
+			COMSIG_ATOM_EXITED,
+			COMSIG_OBJ_DECONSTRUCT,
+			COMSIG_QDELETING,
+			COMSIG_ATOM_EMP_ACT,
+		))
 		real_location.flags_1 &= ~HAS_DISASSOCIATED_STORAGE_1
 		if(should_drop)
-			remove_all(real_location.drop_location())
+			remove_all()
 
 	if(isnull(new_real_location))
 		return
 
 	real_location = new_real_location
-	real_location.flags_1 |= HAS_DISASSOCIATED_STORAGE_1
+	if(real_location != parent)
+		real_location.flags_1 |= HAS_DISASSOCIATED_STORAGE_1
 	RegisterSignal(real_location, COMSIG_ATOM_ENTERED, PROC_REF(handle_enter))
 	RegisterSignal(real_location, COMSIG_ATOM_EXITED, PROC_REF(handle_exit))
+	RegisterSignal(real_location, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 	RegisterSignal(real_location, COMSIG_QDELETING, PROC_REF(real_location_deleted))
+	RegisterSignal(real_location, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /// Signal handler for when the real location is deleted.
 /datum/storage/proc/real_location_deleted(datum/deleting_real_location)
@@ -374,12 +381,10 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			user.balloon_alert(user, "no room!")
 		return FALSE
 
-	if(!is_type_in_typecache(to_insert, can_hold))
-		if(messages && user)
-			user.balloon_alert(user, "can't hold!")
-		return FALSE
-
-	if(is_type_in_typecache(to_insert, cant_hold) || HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT))
+	var/can_hold_it = isnull(can_hold) || is_type_in_typecache(to_insert, can_hold)
+	var/cant_hold_it = is_type_in_typecache(to_insert, cant_hold)
+	var/trait_says_no = HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT)
+	if(!can_hold_it || cant_hold_it || trait_says_no)
 		if(messages && user)
 			user.balloon_alert(user, "can't hold!")
 		return FALSE
@@ -1047,21 +1052,22 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * Arguments
  * * mob/toshow - the mob to hide the storage from
  */
-/datum/storage/proc/hide_contents(mob/toshow)
-	if(!toshow.client)
+/datum/storage/proc/hide_contents(mob/to_hide)
+	if(!to_hide.client)
 		return TRUE
-	if(toshow.active_storage == src)
-		toshow.active_storage = null
+	if(to_hide.active_storage == src)
+		to_hide.active_storage = null
 
 	if(!length(is_using) && ismovable(real_location))
 		var/atom/movable/movable_loc = real_location
 		movable_loc.lose_active_storage(src)
 
-	is_using -= toshow
+	is_using -= to_hide
 
-	toshow.client.screen -= boxes
-	toshow.client.screen -= closer
-	toshow.client.screen -= real_location.contents
+	to_hide.client.screen -= boxes
+	to_hide.client.screen -= closer
+	to_hide.client.screen -= real_location.contents
+	return TRUE
 
 /datum/storage/proc/action_trigger(datum/source, datum/action/triggered)
 	SIGNAL_HANDLER

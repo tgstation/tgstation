@@ -1004,7 +1004,6 @@
 		var/mob/living/L = pulledby
 		L.set_pull_offsets(src, pulledby.grab_state)
 
-	// melbert todo check this
 	if(active_storage)
 		var/storage_is_important_recurisve = (active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE])
 		var/can_reach_active_storage = CanReach(active_storage.real_location, view_only = TRUE)
