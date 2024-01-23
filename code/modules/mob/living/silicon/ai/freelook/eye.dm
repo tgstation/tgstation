@@ -193,7 +193,6 @@
 		current = null
 	if(ai_tracking_tool && ai_tracking_tool.tracking)
 		ai_tracking_tool.set_tracking(FALSE)
-	unset_machine()
 
 	if(isturf(loc) && (QDELETED(eyeobj) || !eyeobj.loc))
 		to_chat(src, "ERROR: Eyeobj not found. Creating new eye...")

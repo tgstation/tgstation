@@ -847,7 +847,6 @@
 	set name = "Cancel Camera View"
 	set category = "OOC"
 	reset_perspective(null)
-	unset_machine()
 
 //suppress the .click/dblclick macros so people can't use them to identify the location of items or aimbot
 /mob/verb/DisClick(argu = null as anything, sec = "" as text, number1 = 0 as num  , number2 = 0 as num)

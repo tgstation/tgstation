@@ -1,16 +1,17 @@
-/*
-	Telecomms monitor tracks the overall trafficing of a telecommunications network
-	and displays a heirarchy of linked machines.
-*/
-
 #define MAIN_VIEW 0
 #define MACHINE_VIEW 1
 #define MAX_NETWORK_ID_LENGTH 15
 
+/*
+ * ## Telecomms monitor
+ * Tracks the overall trafficing of a telecommunications network
+ * and displays a heirarchy of linked machines.
+ */
 /obj/machinery/computer/telecomms/monitor
 	name = "telecommunications monitoring console"
 	icon_screen = "comm_monitor"
 	desc = "Monitors the details of the telecommunications network it's synced with."
+	circuit = /obj/item/circuitboard/computer/comm_monitor
 
 	/// Current screen the user is viewing
 	var/screen = MAIN_VIEW
@@ -22,7 +23,6 @@
 	var/network = "NULL"
 	/// Error message to show
 	var/error_message = ""
-	circuit = /obj/item/circuitboard/computer/comm_monitor
 
 /obj/machinery/computer/telecomms/monitor/ui_data(mob/user)
 	var/list/data = list(
@@ -110,10 +110,6 @@
 			screen = MAIN_VIEW
 			return TRUE
 	return TRUE
-
-/obj/machinery/computer/telecomms/monitor/attackby()
-	. = ..()
-	updateUsrDialog()
 
 /obj/machinery/computer/telecomms/monitor/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

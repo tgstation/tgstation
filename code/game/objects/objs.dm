@@ -123,6 +123,14 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	else
 		return null
 
+/obj/attack_ghost(mob/user)
+	. = ..()
+	if(.)
+		return
+	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
+	ui_interact(user)
+
+
 /obj/proc/updateUsrDialog()
 	if(!(obj_flags & IN_USE))
 		return
@@ -141,8 +149,8 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 	// check for TK users
 
-	if(ishuman(usr))
-		var/mob/living/carbon/human/H = usr
+	if(iscarbon(usr))
+		var/mob/living/carbon/H = usr
 		if(!(usr in nearby))
 			if(usr.client && usr.machine == src)
 				if(H.dna.check_mutation(/datum/mutation/human/telekinesis))
@@ -153,42 +161,32 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	else
 		obj_flags &= ~IN_USE
 
-/obj/proc/updateDialog(update_viewers = TRUE,update_ais = TRUE)
-	// Check that people are actually using the machine. If not, don't update anymore.
-	if(obj_flags & IN_USE)
-		var/is_in_use = FALSE
-		if(update_viewers)
-			for(var/mob/M in viewers(1, src))
-				if ((M.client && M.machine == src))
-					is_in_use = TRUE
-					src.interact(M)
-		var/ai_in_use = FALSE
-		if(update_ais)
-			ai_in_use = AutoUpdateAI(src)
-
-		if(update_viewers && update_ais) //State change is sure only if we check both
-			if(!ai_in_use && !is_in_use)
-				obj_flags &= ~IN_USE
-
-
-/obj/attack_ghost(mob/user)
-	. = ..()
-	if(.)
+/// Check that people are actually using the machine. If not, don't update anymore.
+/obj/proc/updateDialog(update_viewers = TRUE)
+	if(!(obj_flags & IN_USE))
 		return
-	SEND_SIGNAL(src, COMSIG_ATOM_UI_INTERACT, user)
-	ui_interact(user)
+
+	var/is_in_use = FALSE
+	for(var/mob/nearby_mob in viewers(1, src))
+		if ((!nearby_mob.client || nearby_mob.machine != src))
+			continue
+		interact(nearby_mob)
+		is_in_use = TRUE
+	for(var/mob/living/silicon/ai/all_ais as anything in GLOB.ai_list)
+		if ((!all_ais.client || all_ais.machine != subject))
+			continue
+		attack_ai(all_ais)
+		is_in_use = TRUE
+
+	if(!is_in_use)
+		obj_flags &= ~IN_USE
 
 /mob/proc/unset_machine()
 	SIGNAL_HANDLER
 	if(!machine)
 		return
 	UnregisterSignal(machine, COMSIG_QDELETING)
-	machine.on_unset_machine(src)
 	machine = null
-
-//called when the user unsets the machine.
-/atom/movable/proc/on_unset_machine(mob/user)
-	return
 
 /mob/proc/set_machine(obj/O)
 	if(QDELETED(src) || QDELETED(O))
@@ -200,11 +198,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 	if(istype(O))
 		O.obj_flags |= IN_USE
 
-/obj/item/proc/updateSelfDialog()
-	var/mob/M = src.loc
-	if(istype(M) && M.client && M.machine == src)
-		src.attack_self(M)
-
 /obj/singularity_pull(S, current_size)
 	..()
 	if(move_resist == INFINITY)
@@ -214,9 +207,6 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 /obj/get_dumping_location()
 	return get_turf(src)
-
-/obj/proc/check_uplink_validity()
-	return 1
 
 /obj/vv_get_dropdown()
 	. = ..()
@@ -339,6 +329,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
 
 // Should move all contained objects to it's location.
 /obj/proc/dump_contents()
+	SHOULD_CALL_PARENT(FALSE)
 	CRASH("Unimplemented.")
 
 /obj/handle_ricochet(obj/projectile/P)

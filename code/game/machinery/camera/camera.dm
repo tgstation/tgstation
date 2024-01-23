@@ -179,7 +179,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 			for(var/i in GLOB.player_list)
 				var/mob/M = i
 				if (M.client?.eye == src)
-					M.unset_machine()
 					M.reset_perspective(null)
 					to_chat(M, span_warning("The screen bursts into static!"))
 
@@ -511,7 +510,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 	//I guess that doesn't matter since they can't use it anyway?
 	for(var/mob/O in GLOB.player_list)
 		if (O.client?.eye == src)
-			O.unset_machine()
 			O.reset_perspective(null)
 			to_chat(O, span_warning("The screen bursts into static!"))
 
