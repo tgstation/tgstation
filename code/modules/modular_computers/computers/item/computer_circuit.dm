@@ -38,7 +38,7 @@
 	 * is called before we get to know which object this has attahed to,
 	 * I hope you're cool with me doing it here.
 	 */
-	if(computer.has_light)
+	if(computer.has_light && isnull(lights))
 		lights = add_input_port("Toggle Lights", PORT_TYPE_SIGNAL)
 		red = add_input_port("Red", PORT_TYPE_NUMBER)
 		green = add_input_port("Green", PORT_TYPE_NUMBER)
@@ -91,10 +91,10 @@
 		if(COMPONENT_TRIGGERED_BY(red, port) || COMPONENT_TRIGGERED_BY(green, port) || COMPONENT_TRIGGERED_BY(blue, port))
 			computer.set_flashlight_color(rgb(red.value || 0, green.value || 0, blue.value || 0))
 
-/obj/item/circuit_component/modpc/proc/computer_on(datum/source)
+/obj/item/circuit_component/modpc/proc/computer_on(datum/source, mob/user)
 	SIGNAL_HANDLER
 	is_on.set_output(COMPONENT_SIGNAL)
 
-/obj/item/circuit_component/modpc/proc/computer_off(datum/source)
+/obj/item/circuit_component/modpc/proc/computer_off(datum/source, loud)
 	SIGNAL_HANDLER
 	is_off.set_output(COMPONENT_SIGNAL)
