@@ -1019,9 +1019,9 @@
 			aux.color = "[draw_color]"
 
 	if(is_husked)
-		huskify(limb.icon, limb, husk_type, body_zone, icon_husk)
+		huskify_image(thing_to_husk = limb)
 		if(aux)
-			huskify(aux.icon, aux, husk_type, body_zone, icon_husk)
+			huskify_image(thing_to_husk = aux)
 
 
 		//EMISSIVE CODE START
@@ -1064,16 +1064,16 @@
 
 	return .
 
-/proc/huskify(icon_to_husk, image/thing_to_husk, type_husk, zone_body, icon_of_husk)
+/obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
 	var/husk_color_mod = rgb(96, 88, 80)
-	var/icon/husk_icon = new(icon_to_husk)
+	var/icon/husk_icon = new(thing_to_husk.icon)
 	husk_icon.ColorTone(husk_color_mod)
-	var/icon/husk_mask = new(icon_to_husk)
-	husk_mask.MapColors(0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,1, 0,0,0,0)
-	var/icon/husk_overlay = new(icon_of_husk, "[type_husk]_husk_[zone_body]")
-	husk_overlay.Blend(husk_mask, ICON_ADD)
-	husk_icon.Blend(husk_overlay, ICON_OVERLAY)
 	thing_to_husk.icon = husk_icon
+	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]")
+	husk_blood.blend_mode |= BLEND_INSET_OVERLAY
+	husk_blood.appearance_flags |= RESET_COLOR
+	husk_blood.dir = thing_to_husk.dir
+	thing_to_husk.add_overlay(husk_blood)
 
 ///Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay)
