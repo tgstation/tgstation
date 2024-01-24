@@ -143,18 +143,18 @@
 				trend_string = "down"
 
 		//get mat color
-		var/initial_colors = traded_mat::greyscale_colors
+		var/initial_colors = initial(traded_mat.greyscale_colors)
 		if(initial_colors)
 			color_string = splicetext(initial_colors, 7, length(initial_colors), "") //slice it to a standard 6 char hex
 		else
-			initial_colors = traded_mat::color
+			initial_colors = initial(traded_mat.color)
 			if(initial_colors)
 				color_string = initial_colors
 			else
 				color_string = COLOR_CYAN
 
 		//get sheet type from material
-		sheet_to_buy = traded_mat::sheet_type
+		sheet_to_buy = initial(traded_mat.sheet_type)
 		if(!sheet_to_buy)
 			CRASH("Material with no sheet type being sold on materials market!")
 
@@ -163,13 +163,14 @@
 		if(!isnull(current_order))
 			requested_amount = current_order.pack.contains[sheet_to_buy]
 
-		if(traded_mat::minimum_value_override)
-			minimum_value_threshold = traded_mat::minimum_value_override
+		var/min_value_override = initial(traded_mat.minimum_value_override)
+		if(min_value_override)
+			minimum_value_threshold = min_value_override
 
 
 		//send data
 		material_data += list(list(
-			"name" = traded_mat::name,
+			"name" = initial(traded_mat.name),
 			"price" = SSstock_market.materials_prices[traded_mat],
 			"threshold" = minimum_value_threshold,
 			"quantity" = SSstock_market.materials_quantity[traded_mat],
@@ -232,12 +233,12 @@
 			var/datum/material/material_bought
 			var/obj/item/stack/sheet/sheet_to_buy
 			for(var/datum/material/mat as anything in SSstock_market.materials_prices)
-				if(mat::name == material_str)
+				if(initial(mat.name) == material_str)
 					material_bought = mat
 					break
 			if(!material_bought)
 				CRASH("Invalid material name passed to materials market!")
-			sheet_to_buy = material_bought::sheet_type
+			sheet_to_buy = initial(material_bought.sheet_type)
 			if(!sheet_to_buy)
 				CRASH("Material with no sheet type being sold on materials market!")
 
