@@ -281,3 +281,11 @@
 2024-01-18:
   KnigTheThrasher:
   - rscadd: You can "*weh" as a lizard now
+2024-01-19:
+  Absolucy:
+  - image: Added and fixed icons for all quriks.
+  Chubbygummibear, Absolucy:
+  - bugfix: popup screen locs will work on clients >1614. Security cameras, spyglass,
+      and character previews will work again.
+  lmenvs:
+  - bugfix: Simians now have their appropriate biotype (They're no longer undead)

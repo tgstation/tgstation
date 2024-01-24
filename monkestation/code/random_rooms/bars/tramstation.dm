@@ -1,7 +1,7 @@
 /datum/map_template/random_room/random_bar/tramstation_base
 	name = "Baseline Tram Bar"
 	room_id = "tram_bar_base"
-	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_base.dmm"
+	mappath = "_maps/~monkestation/RandomBars/Tram/tram_bar_base.dmm"
 	centerspawner = FALSE
 	template_height = 25
 	template_width = 30
@@ -11,35 +11,35 @@
 /datum/map_template/random_room/random_bar/tramstation_base/slum_bar
     name = "Slum Tram Bar"
     room_id = "tram_slum_bar"
-    mappath = "monkestation/_maps/RandomBars/Tram/tram_slum_bar.dmm"
+    mappath = "_maps/~monkestation/RandomBars/Tram/tram_slum_bar.dmm"
     weight = 6
 
 /datum/map_template/random_room/random_bar/tramstation_base/ocean
 	name = "Ocean Tram Bar"
 	room_id = "tram_bar_ocean"
-	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_ocean.dmm"
+	mappath = "_maps/~monkestation/RandomBars/Tram/tram_bar_ocean.dmm"
 	weight = 6
 
 /datum/map_template/random_room/random_bar/tramstation_base/beachside
 	name = "Beachside Tram Bar"
 	room_id = "tram_bar_beach"
-	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_beachside.dmm"
+	mappath = "_maps/~monkestation/RandomBars/Tram/tram_bar_beachside.dmm"
 	weight = 8
 
 /datum/map_template/random_room/random_bar/tramstation_base/tram_rvb_bar
     name = "Red and Blue Bar"
     room_id = "tram_rvb_bar"
-    mappath = "monkestation/_maps/RandomBars/Tram/tram_rvb_bar.dmm"
+    mappath = "_maps/~monkestation/RandomBars/Tram/tram_rvb_bar.dmm"
     weight = 4
 
 /datum/map_template/random_room/random_bar/tramstation_base/biodome
 	name = "Winter Biodome Tram Bar"
 	room_id = "biodome_tram_bar"
-	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_biodome.dmm"
+	mappath = "_maps/~monkestation/RandomBars/Tram/tram_bar_biodome.dmm"
 	weight = 4
 
 /datum/map_template/random_room/random_bar/tramstation_base/cult
 	name = "Tram cult bar"
 	room_id = "tram_bar_cult"
-	mappath = "monkestation/_maps/RandomBars/Tram/tram_bar_cult.dmm"
+	mappath = "_maps/~monkestation/RandomBars/Tram/tram_bar_cult.dmm"
 	weight = 4 // has a rune that summons booze across the station, lets keep it a bit more rare than other bars

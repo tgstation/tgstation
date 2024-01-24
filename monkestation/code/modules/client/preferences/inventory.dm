@@ -30,7 +30,7 @@
 	metacoins = text2num(mc_count)
 
 
-/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE, donator_multipler = TRUE, respects_roundcap = FALSE)
+/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces = TRUE, donator_multipler = TRUE, respects_roundcap = FALSE)
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 

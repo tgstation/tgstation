@@ -42,6 +42,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/datum/admins/proc/toggleguests, /*toggles whether guests can join the current game*/
 	/datum/admins/proc/toggleooc, /*toggles ooc on/off for everyone*/
 	/datum/admins/proc/toggleoocdead, /*toggles ooc on/off for everyone who is dead*/
+	/datum/admins/proc/togglelooc, /*MONKESTATION EDIT; toggles looc on/off for everyone*/
 	/datum/admins/proc/trophy_manager,
 	/datum/admins/proc/view_all_circuits,
 	/datum/admins/proc/open_artifactpanel,

@@ -1,0 +1,1381 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"bQ" = (
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/white/corner,
+/obj/machinery/duct,
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"bR" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"bU" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"dm" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"dB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/greyscale{
+	color = "#6041aa"
+	},
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"ff" = (
+/obj/effect/landmark/event_spawn,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"fp" = (
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"fu" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/item/restraints/handcuffs/alien,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"gd" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"gu" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/airalarm/directional/east,
+/obj/structure/table/fake_abductor,
+/obj/item/toy/cards/deck/tarot,
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 6
+	},
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"gH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 10
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"gV" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"hj" = (
+/obj/machinery/firealarm/directional/south,
+/obj/effect/spawner/random/entertainment/arcade{
+	dir = 8
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"hm" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"hD" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"hJ" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/item/surgicaldrill/fake_alien,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"ig" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 6
+	},
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"ih" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"ii" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"iv" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"iE" = (
+/obj/structure/extinguisher_cabinet/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/obj/machinery/camera/directional/east{
+	c_tag = "Service Bar - Backroom"
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"jj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"jl" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"jF" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/structure/table/fake_abductor,
+/obj/item/food/pie/cream,
+/obj/item/instrument/piano_synth/headphones/spacepods,
+/obj/effect/turf_decal/siding/blue/end{
+	dir = 4
+	},
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"jX" = (
+/obj/machinery/airalarm/directional/north,
+/obj/machinery/firealarm/directional/west,
+/obj/structure/showcase/abductor_console,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"kb" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 8
+	},
+/obj/effect/landmark/start/clown,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"kg" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 9
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"lb" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"mn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"mI" = (
+/obj/machinery/newscaster/directional/north,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"mP" = (
+/obj/effect/turf_decal/siding/wood{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/fake_abductor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"nm" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark_green/end{
+	dir = 1
+	},
+/obj/item/toy/cards/deck{
+	pixel_y = 4
+	},
+/obj/machinery/light/directional/west,
+/turf/open/floor/circuit/green/anim,
+/area/station/commons/lounge)
+"nq" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 10
+	},
+/obj/item/gun/ballistic/shotgun/toy/crossbow,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"nJ" = (
+/obj/item/radio/intercom/directional/west{
+	pixel_y = -9
+	},
+/obj/structure/table/fake_abductor,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"nZ" = (
+/obj/machinery/firealarm/directional/north,
+/obj/structure/closet/secure_closet/bar,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"oP" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/item/scalpel/fake_alien,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"oW" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/item/holosign_creator/robot_seat/bar,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"pk" = (
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/commons/lounge)
+"pD" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/obj/structure/sign/poster/random/directional/east,
+/obj/machinery/limbgrower,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"pR" = (
+/obj/structure/sign/picture_frame/portrait/bar{
+	pixel_y = -32
+	},
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"pW" = (
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"qe" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/chair/greyscale{
+	color = "#6041aa"
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"qt" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 8
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"qL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/obj/machinery/duct,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"qO" = (
+/obj/machinery/holopad,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"qT" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 5
+	},
+/obj/item/toy/cards/deck{
+	pixel_y = 4
+	},
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"sg" = (
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"si" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark_red{
+	dir = 9
+	},
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"sn" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"sH" = (
+/obj/machinery/atm,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"tL" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/obj/item/toy/plush/abductor/agent,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"tT" = (
+/obj/machinery/status_display/evac/directional/west,
+/obj/structure/table/fake_abductor,
+/obj/item/instrument/piano_synth,
+/obj/item/instrument/glockenspiel,
+/obj/machinery/light/small/directional/west,
+/obj/effect/turf_decal/siding/green/end,
+/turf/open/floor/circuit/green/anim,
+/area/station/service/theater)
+"vG" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 5
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"xc" = (
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"xv" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 10
+	},
+/obj/item/pai_card,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"yk" = (
+/turf/template_noop,
+/area/template_noop)
+"ym" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"yo" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/siding/purple{
+	dir = 6
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"yr" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa"
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"yP" = (
+/obj/structure/table/fake_abductor,
+/obj/structure/desk_bell{
+	desc = "Why, I'm always here! I should get absolute service. Pronto, garcon!";
+	name = "The Regular's Bell";
+	pixel_x = -6
+	},
+/mob/living/carbon/human/species/monkey/punpun,
+/obj/machinery/door/window/left/directional/east{
+	name = "Bar Mixing Area"
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"zj" = (
+/obj/effect/landmark/start/hangover,
+/obj/machinery/holopad,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"zr" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark,
+/obj/item/organ/internal/butt/bluespace,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"zB" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"zS" = (
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/maintenance/department/crew_quarters/bar)
+"Ad" = (
+/obj/effect/turf_decal/siding/dark{
+	dir = 4
+	},
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"Ak" = (
+/obj/machinery/camera{
+	c_tag = "Xenobiology Lab - Pen #4";
+	dir = 6;
+	network = list("ss13","rd","xeno")
+	},
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"AS" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 9
+	},
+/obj/item/retractor/fake_alien,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"BG" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/effect/spawner/random/medical/organs,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"BW" = (
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/maintenance/starboard/lesser)
+"Cd" = (
+/obj/machinery/camera{
+	c_tag = "Xenobiology Lab - Pen #8";
+	dir = 10;
+	network = list("ss13","rd","xeno")
+	},
+/obj/structure/table/fake_abductor,
+/obj/item/soap/nanotrasen,
+/obj/item/clothing/under/abductor,
+/obj/effect/turf_decal/siding/green{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/green{
+	dir = 4
+	},
+/turf/open/floor/circuit/green/anim,
+/area/station/service/theater)
+"Cj" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa"
+	},
+/obj/effect/turf_decal/siding/purple,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"CI" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 1
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"CJ" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 1
+	},
+/obj/item/paper/guides/antag/abductor,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"Dg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"Dp" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"DB" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark_green/end,
+/obj/item/storage/dice,
+/turf/open/floor/circuit/green/anim,
+/area/station/commons/lounge)
+"Ea" = (
+/obj/effect/turf_decal/siding/wood,
+/obj/effect/turf_decal/siding/wood{
+	dir = 1
+	},
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/airlock/fake_abductor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"Eu" = (
+/obj/structure/table/fake_abductor,
+/obj/item/toy/cards/deck/kotahi,
+/obj/effect/turf_decal/siding/dark_blue/end{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"EH" = (
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/service/theater)
+"Fg" = (
+/obj/machinery/newscaster/directional/south,
+/obj/machinery/status_display/evac/directional/west,
+/obj/structure/table/fake_abductor,
+/obj/item/toy/cards/deck/wizoff,
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 10
+	},
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"Fv" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/door/airlock/fake_abductor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/maintenance/starboard/lesser)
+"FG" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 6
+	},
+/obj/item/cautery/fake_alien,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"Ga" = (
+/obj/machinery/light/small/directional/east,
+/obj/machinery/airalarm/directional/east,
+/obj/structure/closet/abductor/fake,
+/obj/item/vending_refill/cigarette,
+/obj/item/stack/package_wrap{
+	pixel_x = 2;
+	pixel_y = 3
+	},
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"GV" = (
+/obj/structure/sign/poster/random/directional/north,
+/obj/structure/table/fake_abductor,
+/obj/item/food/pie/cream,
+/obj/item/instrument/piano_synth/headphones,
+/obj/effect/turf_decal/siding/blue/end{
+	dir = 8
+	},
+/obj/machinery/light/small/directional/north,
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"Hc" = (
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Ht" = (
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/service/bar)
+"HW" = (
+/obj/machinery/smartfridge,
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/service/bar/backroom)
+"HY" = (
+/obj/machinery/camera/directional/east{
+	c_tag = "Service Bar - Backroom"
+	},
+/obj/machinery/requests_console/auto_name/directional/east,
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"Ij" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Jb" = (
+/obj/structure/table/fake_abductor,
+/obj/item/instrument/eguitar,
+/obj/item/instrument/musicalmoth,
+/obj/effect/turf_decal/siding/green/end{
+	dir = 1
+	},
+/turf/open/floor/circuit/green/anim,
+/area/station/service/theater)
+"Jg" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/fake_abductor,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Bar Mixing Area"
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"Jh" = (
+/obj/effect/turf_decal/siding/white/corner{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white/corner,
+/obj/structure/cable,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"JA" = (
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"JE" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"JQ" = (
+/obj/effect/turf_decal/siding/white/end{
+	dir = 4
+	},
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"JV" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"KM" = (
+/obj/machinery/vending/boozeomat,
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/service/bar)
+"KR" = (
+/obj/item/radio/intercom/directional/east,
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"Lz" = (
+/obj/machinery/barsign/all_access/directional/south,
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Mf" = (
+/obj/machinery/airalarm/directional/east,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Mm" = (
+/obj/structure/sign/poster/random/directional/north,
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/service/theater)
+"Mq" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"MJ" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"MN" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"Nn" = (
+/obj/machinery/camera{
+	c_tag = "Service Bar North";
+	dir = 9
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Nz" = (
+/obj/machinery/barsign/all_access/directional/north,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"NE" = (
+/obj/machinery/vending/coffee,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Of" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Oi" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/structure/table/fake_abductor,
+/obj/item/toy/cards/deck/cas,
+/obj/effect/turf_decal/siding/dark_blue/end{
+	dir = 1
+	},
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"OF" = (
+/obj/machinery/duct,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"OQ" = (
+/obj/machinery/airalarm/directional/south,
+/obj/effect/turf_decal/siding/white,
+/obj/machinery/camera/directional/south{
+	c_tag = "Service Bar"
+	},
+/obj/structure/table/fake_abductor,
+/obj/machinery/chem_dispenser/drinks/fake_abductor,
+/obj/machinery/duct,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"PR" = (
+/obj/effect/turf_decal/siding/purple{
+	dir = 8
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"PU" = (
+/obj/item/radio/intercom/directional/east,
+/obj/effect/turf_decal/siding/white{
+	dir = 6
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/structure/table/fake_abductor,
+/obj/machinery/reagentgrinder{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_x = -4;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/rag,
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -6
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"PZ" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark,
+/obj/item/hemostat/fake_alien,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"Qp" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"QA" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa"
+	},
+/obj/effect/landmark/start/mime,
+/obj/effect/turf_decal/siding/blue/end,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"QI" = (
+/obj/structure/window/reinforced/spawner/directional/east{
+	color = "#6041aa"
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"Rn" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 9
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"RA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/structure/sink/kitchen/directional/south,
+/obj/effect/turf_decal/siding/white{
+	dir = 5
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"RJ" = (
+/obj/machinery/door/airlock/fake_abductor,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"RV" = (
+/obj/machinery/status_display/evac/directional/east,
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Sr" = (
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"SS" = (
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/status_display/evac/directional/west,
+/obj/machinery/computer/arcade/amputation{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"Tb" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark,
+/obj/item/surgical_drapes{
+	pixel_y = -5
+	},
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"TC" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 8
+	},
+/obj/item/toy/plush/abductor,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"Uo" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/airlock/fake_abductor,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"Ux" = (
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"UN" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/power/apc/auto_name/directional/south,
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"UW" = (
+/turf/closed/wall/mineral/abductor/fake,
+/area/station/service/bar/backroom)
+"Vw" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/chair/greyscale{
+	color = "#6041aa";
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/purple{
+	dir = 1
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"VA" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east{
+	color = "#6041aa"
+	},
+/obj/machinery/computer/slot_machine{
+	pixel_y = -6
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"VH" = (
+/obj/effect/turf_decal/siding/blue/end{
+	dir = 1
+	},
+/obj/structure/cable,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+"VT" = (
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"VV" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark{
+	dir = 5
+	},
+/obj/item/ai_module/toy_ai,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"Wa" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/sorting/mail{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
+/obj/effect/turf_decal/siding/white{
+	dir = 1
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"Wj" = (
+/obj/effect/turf_decal/siding/white/end,
+/obj/machinery/chem_dispenser/drinks/beer/fake_abductor,
+/obj/machinery/duct,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"Wk" = (
+/obj/structure/table/fake_abductor,
+/obj/effect/turf_decal/siding/dark,
+/obj/item/circular_saw/fake_alien,
+/turf/open/floor/circuit/red/anim,
+/area/station/commons/lounge)
+"WO" = (
+/obj/structure/table/fake_abductor,
+/obj/item/toy/cards/deck{
+	pixel_y = 4
+	},
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/siding/dark_blue,
+/obj/machinery/light/small/directional/south,
+/turf/open/floor/circuit,
+/area/station/service/theater)
+"Xm" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/effect/turf_decal/siding/white{
+	dir = 8
+	},
+/obj/machinery/duct,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar)
+"ZA" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/bar/backroom)
+"ZC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/commons/lounge)
+"ZM" = (
+/obj/machinery/door/window{
+	base_state = "right";
+	icon_state = "right";
+	name = "Theater Stage";
+	dir = 4;
+	color = "#6041aa"
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/mineral/fake_abductor,
+/area/station/service/theater)
+
+(1,1,1) = {"
+yk
+yk
+yk
+jX
+ii
+Jb
+Cd
+tT
+jl
+Eu
+nJ
+Fg
+"}
+(2,1,1) = {"
+yk
+yk
+yk
+GV
+Dg
+zB
+zB
+zB
+bR
+VH
+QA
+WO
+"}
+(3,1,1) = {"
+yk
+yk
+yk
+jF
+kb
+lb
+zj
+MN
+jl
+Oi
+Dp
+gu
+"}
+(4,1,1) = {"
+yk
+yk
+yk
+Mm
+EH
+EH
+ZM
+QI
+VA
+EH
+EH
+yk
+"}
+(5,1,1) = {"
+MJ
+JA
+yr
+nm
+DB
+CI
+fp
+Qp
+JE
+Ux
+yk
+yk
+"}
+(6,1,1) = {"
+NE
+Ux
+Ux
+Ux
+dm
+Ux
+Ux
+Ux
+bU
+Ux
+yk
+yk
+"}
+(7,1,1) = {"
+Ux
+sg
+AS
+fu
+ym
+TC
+xv
+Ux
+UN
+pk
+pk
+yk
+"}
+(8,1,1) = {"
+sH
+Ux
+CJ
+kg
+PR
+gH
+PZ
+mn
+hm
+Hc
+SS
+yk
+"}
+(9,1,1) = {"
+Nz
+Ux
+oP
+Ij
+mn
+dB
+Tb
+JV
+gd
+Sr
+Lz
+yk
+"}
+(10,1,1) = {"
+Nn
+sn
+BG
+Vw
+Ux
+Cj
+Wk
+Ux
+qe
+si
+nq
+yk
+"}
+(11,1,1) = {"
+mI
+JV
+hJ
+vG
+Of
+yo
+zr
+Ux
+qe
+qT
+ig
+yk
+"}
+(12,1,1) = {"
+xc
+dm
+VV
+tL
+Ad
+oW
+FG
+qO
+ff
+qt
+pR
+yk
+"}
+(13,1,1) = {"
+pW
+JV
+JV
+JV
+Ux
+Ak
+ZC
+Qp
+jj
+Ux
+hj
+yk
+"}
+(14,1,1) = {"
+pD
+sg
+Mf
+Ux
+RV
+Ht
+Jg
+yP
+Ht
+RJ
+Ht
+yk
+"}
+(15,1,1) = {"
+UW
+UW
+UW
+mP
+UW
+KM
+Rn
+hD
+Xm
+bQ
+Wj
+yk
+"}
+(16,1,1) = {"
+Ea
+Mq
+OF
+gV
+iv
+Uo
+Wa
+qL
+ih
+OQ
+zS
+yk
+"}
+(17,1,1) = {"
+HW
+VT
+ZA
+VT
+VT
+Ht
+RA
+iE
+Jh
+PU
+BW
+yk
+"}
+(18,1,1) = {"
+UW
+nZ
+Ga
+HY
+KR
+BW
+Fv
+BW
+JQ
+BW
+BW
+yk
+"}
