@@ -14,13 +14,15 @@
 
 	src.connections = connections
 
-	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_changed), override = TRUE)
+	RegisterSignal(listener.loc, COMSIG_TURF_CHANGE, PROC_REF(on_loc_changed), override = TRUE)
 	update_signals(listener)
 
 /datum/element/connect_loc/Detach(atom/movable/listener)
 	. = ..()
 	unregister_signals(listener, listener.loc)
 	UnregisterSignal(listener, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(listener.loc, COMSIG_TURF_CHANGE)
 
 /datum/element/connect_loc/proc/update_signals(atom/movable/listener)
 	var/atom/listener_loc = listener.loc
@@ -37,7 +39,7 @@
 
 	listener.UnregisterSignal(old_loc, connections)
 
-/datum/element/connect_loc/proc/on_moved(atom/movable/listener, atom/old_loc)
+/datum/element/connect_loc/proc/on_loc_changed(atom/movable/listener, atom/old_loc)
 	SIGNAL_HANDLER
 	unregister_signals(listener, old_loc)
 	update_signals(listener)
