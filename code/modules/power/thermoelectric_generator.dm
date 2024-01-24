@@ -77,12 +77,12 @@
 	balloon_alert(user, "circulators updated")
 	return TRUE
 
-/obj/machinery/power/thermoelectric_generator/screwdriver_act(mob/user, obj/item/I)
+/obj/machinery/power/thermoelectric_generator/screwdriver_act(mob/user, obj/item/tool)
 	if(!anchored)
 		balloon_alert(user, "anchor it down!")
 		return
 	toggle_panel_open()
-	I.play_tool_sound(src)
+	tool.play_tool_sound(src)
 	balloon_alert(user, "panel [panel_open ? "open" : "closed"]")
 	return TRUE
 
