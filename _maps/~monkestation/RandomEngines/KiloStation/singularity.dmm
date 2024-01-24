@@ -21,11 +21,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"eo" = (
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "eq" = (
 /obj/structure/cable/multilayer/connected,
 /turf/open/floor/plating/airless,
@@ -128,14 +123,6 @@
 /obj/machinery/field/generator,
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
-"km" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "kI" = (
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/machinery/power/terminal{
@@ -234,10 +221,6 @@
 /obj/machinery/camera/emp_proof/directional/west{
 	c_tag = "Singularity Engine #2"
 	},
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
-/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "pa" = (
@@ -434,11 +417,6 @@
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
 /obj/structure/window/plasma,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
-"Eh" = (
-/obj/effect/spawner/structure/window/reinforced/plasma,
-/turf/open/floor/iron,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "En" = (
@@ -704,12 +682,6 @@
 /obj/machinery/power/apc/auto_name/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
-"UJ" = (
-/obj/structure/cable,
-/obj/structure/cable,
-/obj/structure/window/plasma,
-/turf/open/floor/iron,
-/area/station/engineering/supermatter/room)
 "UP" = (
 /obj/structure/particle_accelerator/fuel_chamber,
 /turf/open/floor/plating,
@@ -902,8 +874,8 @@ pa
 zP
 zs
 oN
-km
-km
+Zp
+Zp
 Zp
 Ib
 Ib
@@ -925,7 +897,7 @@ zs
 hV
 Nv
 iW
-eo
+oK
 oK
 or
 VI
@@ -948,7 +920,7 @@ re
 oK
 pk
 iW
-eo
+oK
 Fu
 or
 VI
@@ -994,7 +966,7 @@ hD
 hD
 Uw
 DA
-Eh
+RL
 WZ
 WZ
 IJ
@@ -1062,7 +1034,7 @@ pk
 lZ
 lZ
 lZ
-UJ
+Fj
 RL
 WZ
 zu
@@ -1177,7 +1149,7 @@ IL
 IL
 IL
 IL
-UJ
+Fj
 RL
 WZ
 zu

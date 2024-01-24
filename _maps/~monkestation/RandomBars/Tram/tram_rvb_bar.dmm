@@ -652,7 +652,6 @@
 /area/station/service/theater)
 "kC" = (
 /obj/structure/table,
-/obj/structure/table,
 /obj/machinery/microwave,
 /obj/machinery/status_display/ai/directional/north,
 /turf/open/floor/iron/kitchen/small,
@@ -1402,7 +1401,6 @@
 /turf/open/floor/iron,
 /area/station/commons/lounge)
 "uP" = (
-/obj/structure/table,
 /obj/structure/table,
 /obj/machinery/reagentgrinder{
 	pixel_x = -5;

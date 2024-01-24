@@ -466,19 +466,15 @@
 /area/station/commons/lounge)
 "yP" = (
 /obj/structure/table/fake_abductor,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "bar mixing area";
-	req_access = list("bar")
-	},
 /obj/structure/desk_bell{
 	desc = "Why, I'm always here! I should get absolute service. Pronto, garcon!";
 	name = "The Regular's Bell";
 	pixel_x = -6
 	},
 /mob/living/carbon/human/species/monkey/punpun,
+/obj/machinery/door/window/left/directional/east{
+	name = "Bar Mixing Area"
+	},
 /turf/open/floor/mineral/fake_abductor,
 /area/station/service/bar)
 "zj" = (
@@ -733,15 +729,11 @@
 	dir = 4
 	},
 /obj/structure/table/fake_abductor,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 4;
-	icon_state = "right";
-	name = "bar mixing area";
-	req_access = list("bar")
-	},
 /obj/structure/displaycase/forsale/kitchen{
 	pixel_y = 8
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Bar Mixing Area"
 	},
 /turf/open/floor/mineral/fake_abductor,
 /area/station/service/bar)

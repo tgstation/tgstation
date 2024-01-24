@@ -426,7 +426,7 @@
 "nN" = (
 /obj/structure/ladder,
 /obj/machinery/door/window/left/directional/north{
-	name = "Bar backroom Access";
+	name = "Bar Backroom Access";
 	req_one_access = list("bar")
 	},
 /obj/structure/window/reinforced/spawner/directional/west,

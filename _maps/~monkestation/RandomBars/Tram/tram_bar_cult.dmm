@@ -27,12 +27,6 @@
 	},
 /turf/open/floor/cult,
 /area/station/commons/lounge)
-"aC" = (
-/obj/machinery/camera/directional/south{
-	c_tag = "Service - Bar Lounge South West"
-	},
-/turf/open/floor/cult,
-/area/station/commons/lounge)
 "aL" = (
 /turf/open/openspace,
 /area/station/service/kitchen)
@@ -148,7 +142,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/door/airlock/cult/friendly{
-	name = "Church backstage"
+	name = "Church Backstage"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/service/theatre,
 /obj/machinery/door/firedoor,
@@ -442,9 +436,7 @@
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "jF" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
-/obj/structure/window_sill,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/service/theater)
 "jH" = (
@@ -1262,10 +1254,10 @@
 /turf/open/floor/cult,
 /area/station/service/bar)
 "DA" = (
-/obj/structure/window/reinforced/fulltile,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Ek" = (
@@ -1319,7 +1311,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "EV" = (
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Fb" = (
@@ -1637,8 +1629,7 @@
 /turf/open/floor/cult,
 /area/template_noop)
 "MO" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/effect/decal/cleanable/blood/splatter/over_window,
+/obj/machinery/camera/directional/west,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "MS" = (
@@ -1666,7 +1657,7 @@
 /area/station/service/bar)
 "NH" = (
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/obj/structure/window/reinforced/fulltile,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "NP" = (
@@ -1712,9 +1703,7 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "OY" = (
-/obj/structure/window/reinforced/fulltile,
-/obj/structure/grille,
-/obj/structure/window_sill,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "Pc" = (
@@ -1725,8 +1714,8 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "Pp" = (
-/obj/structure/window/reinforced/fulltile,
 /obj/structure/disposalpipe/segment,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "PH" = (
@@ -1866,10 +1855,8 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "SG" = (
-/obj/structure/window/reinforced/fulltile,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/obj/structure/grille,
-/obj/structure/window_sill,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/service/kitchen)
 "SI" = (
@@ -1945,10 +1932,8 @@
 /turf/open/floor/cult,
 /area/station/commons/lounge)
 "VA" = (
-/obj/structure/window/reinforced/fulltile,
 /obj/effect/decal/cleanable/blood/splatter/over_window,
-/obj/structure/grille,
-/obj/structure/window_sill,
+/obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/cult,
 /area/station/service/theater)
 "VB" = (
@@ -2423,7 +2408,7 @@ jH
 EV
 Yh
 OB
-MO
+NH
 jH
 jH
 jv
@@ -2451,7 +2436,7 @@ Vd
 iu
 Vd
 Vd
-Vd
+MO
 EV
 XG
 hf
@@ -2478,7 +2463,7 @@ iu
 iu
 Vd
 Vd
-aC
+Vd
 NH
 EV
 EV

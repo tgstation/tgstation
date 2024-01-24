@@ -7,9 +7,7 @@
 	},
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "ap" = (
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
@@ -34,9 +32,7 @@
 /obj/effect/mapping_helpers/airlock/access/all/service/bar,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/room/icebox_bar)
 "br" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
@@ -57,7 +53,6 @@
 	dir = 6
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
-/obj/structure/cable,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
 /area/station/commons/lounge)
@@ -88,9 +83,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "dg" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron/showroomfloor,
@@ -140,9 +133,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/caution/stand_clear,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "fn" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -160,9 +151,7 @@
 	layer = 4
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/room/icebox_bar)
 "gj" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -189,9 +178,7 @@
 	},
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "hq" = (
 /obj/machinery/vending/boozeomat,
 /turf/closed/wall,
@@ -218,9 +205,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/room/icebox_bar)
 "iY" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 9
@@ -228,9 +213,7 @@
 /obj/effect/turf_decal/trimline/yellow/corner,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
 /turf/open/floor/pod/dark,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "jn" = (
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
 	id = "barsm";
@@ -240,9 +223,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "jx" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -285,9 +266,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "mv" = (
 /obj/structure/chair/stool/bar/directional/east,
 /obj/effect/turf_decal/trimline/yellow/filled/line{
@@ -305,9 +284,7 @@
 	pixel_y = -17
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "mW" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/door/poddoor/shutters/radiation/preopen{
@@ -318,9 +295,7 @@
 /obj/structure/cable,
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "nt" = (
 /obj/structure/chair/comfy/lime{
 	dir = 8
@@ -384,9 +359,7 @@
 	},
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "oT" = (
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
 /obj/structure/cable,
@@ -396,9 +369,7 @@
 /obj/structure/table/glass/plasmaglass,
 /obj/item/geiger_counter,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "pC" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -419,9 +390,7 @@
 	pixel_y = 26
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "pV" = (
 /turf/closed/wall/r_wall,
 /area/station/service/bar/backroom)
@@ -445,9 +414,7 @@
 	dir = 10
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "qh" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 8
@@ -458,9 +425,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "qu" = (
 /obj/effect/landmark/start/bartender,
 /obj/structure/chair/office/tactical{
@@ -477,9 +442,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "rq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/pod/dark,
@@ -526,9 +489,7 @@
 	},
 /obj/structure/window/reinforced/plasma/spawner/directional/east,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "tf" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -595,9 +556,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "uq" = (
 /obj/structure/table/glass/plasmaglass,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -661,15 +620,11 @@
 /area/station/commons/lounge)
 "vN" = (
 /turf/closed/wall/r_wall,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "wz" = (
 /obj/effect/decal/cleanable/fuel_pool,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "wG" = (
 /obj/structure/reagent_dispensers/beerkeg,
 /turf/open/floor/carpet/neon/simple/yellow/nodots,
@@ -693,9 +648,7 @@
 /obj/machinery/camera/directional/west,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "xn" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -727,9 +680,7 @@
 /obj/machinery/power/emitter/welded,
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "yh" = (
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
@@ -787,9 +738,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "AS" = (
 /obj/item/holosign_creator/robot_seat/bar,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -829,9 +778,7 @@
 /obj/machinery/power/supermatter_crystal/engine,
 /obj/effect/turf_decal/stripes/box,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/room/icebox_bar)
 "BI" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/effect/turf_decal/trimline/yellow/warning,
@@ -850,9 +797,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Cc" = (
 /obj/machinery/power/energy_accumulator/grounding_rod/anchored,
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
@@ -864,9 +809,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Cd" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
 	dir = 1
@@ -906,9 +849,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Ev" = (
 /obj/structure/chair/comfy/lime{
 	dir = 1
@@ -916,9 +857,7 @@
 /obj/structure/sign/warning/radiation/rad_area/directional/west,
 /obj/structure/cable,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "EK" = (
 /turf/template_noop,
 /area/template_noop)
@@ -955,9 +894,7 @@
 	},
 /obj/effect/turf_decal/trimline/yellow/warning,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "FO" = (
 /obj/machinery/firealarm/directional/south,
 /mob/living/carbon/human/species/monkey/punpun,
@@ -1006,9 +943,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/machinery/vending/coffee,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "GX" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/effect/turf_decal/trimline/yellow/line{
@@ -1053,9 +988,7 @@
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "HK" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1065,9 +998,7 @@
 	dir = 1
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Ie" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/pod/dark,
@@ -1083,9 +1014,7 @@
 	dir = 4
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Ix" = (
 /turf/open/floor/carpet/neon/simple/yellow/nodots,
 /area/station/service/bar/backroom)
@@ -1113,9 +1042,7 @@
 /obj/effect/spawner/random/engineering/tank,
 /obj/structure/railing,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Jr" = (
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
@@ -1126,9 +1053,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Jz" = (
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/pod/dark,
@@ -1145,9 +1070,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Ka" = (
 /obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
 	dir = 8;
@@ -1160,9 +1083,7 @@
 	dir = 4
 	},
 /turf/open/floor/pod/dark,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "Kf" = (
 /obj/machinery/smartfridge,
 /turf/closed/wall,
@@ -1228,9 +1149,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "LN" = (
 /turf/closed/wall/r_wall,
 /area/station/service/bar)
@@ -1252,9 +1171,7 @@
 	dir = 8
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "ML" = (
 /obj/structure/disposalpipe/segment{
 	dir = 6
@@ -1270,9 +1187,7 @@
 	},
 /obj/structure/railing,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Nh" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -1390,9 +1305,7 @@
 /obj/structure/table/glass/plasmaglass,
 /obj/effect/spawner/random/engineering/toolbox,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "SP" = (
 /obj/structure/table/glass/plasmaglass,
 /obj/effect/turf_decal/tile/yellow/opposingcorners,
@@ -1413,9 +1326,7 @@
 /obj/machinery/atmospherics/components/trinary/filter/critical,
 /obj/structure/cable,
 /turf/open/floor/pod/dark,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "Tz" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -1448,9 +1359,7 @@
 	dir = 9
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Us" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/effect/turf_decal/siding/wood{
@@ -1524,9 +1433,7 @@
 	pixel_y = -3
 	},
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/commons/lounge)
 "Yf" = (
 /obj/effect/landmark/start/bartender,
 /obj/machinery/duct,
@@ -1558,9 +1465,7 @@
 	},
 /obj/machinery/cell_charger,
 /turf/open/floor/engine,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Yv" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
@@ -1593,9 +1498,7 @@
 "Zc" = (
 /obj/structure/sign/poster/traitor/lick_supermatter,
 /turf/closed/wall/r_wall,
-/area/station/engineering{
-	name = "Bar Supermatter"
-	})
+/area/station/engineering/supermatter/icebox_bar)
 "Zi" = (
 /obj/structure/chair/comfy/lime{
 	dir = 8

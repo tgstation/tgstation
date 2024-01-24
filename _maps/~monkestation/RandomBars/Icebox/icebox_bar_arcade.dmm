@@ -130,7 +130,7 @@
 /obj/effect/spawner/random/entertainment/gambling,
 /obj/structure/sign/poster/random/directional/east,
 /turf/open/floor/carpet/neon/simple/yellow,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "gc" = (
 /obj/machinery/firealarm/directional/west,
 /obj/machinery/computer/arcade/amputation/bar,
@@ -283,7 +283,7 @@
 /obj/machinery/duct,
 /obj/structure/cable,
 /turf/open/floor/carpet/neon/simple/yellow,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "pH" = (
 /obj/effect/turf_decal/siding/purple,
 /turf/open/floor/eighties,
@@ -622,14 +622,10 @@
 	dir = 8
 	},
 /obj/machinery/airalarm/directional/north,
-/obj/machinery/door/window{
-	base_state = "right";
-	dir = 8;
-	icon_state = "right";
-	name = "bar mixing area";
-	req_access = list("bar")
-	},
 /obj/structure/cable,
+/obj/machinery/door/window/right/directional/west{
+	name = "Bar Mixing Area"
+	},
 /turf/open/floor/carpet/neon/simple/yellow,
 /area/station/service/bar)
 "FR" = (
@@ -757,7 +753,7 @@
 /obj/structure/disposalpipe/trunk,
 /obj/machinery/disposal/bin,
 /turf/open/floor/carpet/neon/simple/yellow,
-/area/station/commons/lounge)
+/area/station/service/bar)
 "Kq" = (
 /obj/machinery/door/airlock{
 	name = "Bar"
