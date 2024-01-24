@@ -326,8 +326,9 @@
 		created = new design.build_path(get_turf(src))
 		created.set_custom_materials(materials_per_item.Copy())
 
-	created.pixel_x = created.base_pixel_x + rand(-6, 6)
-	created.pixel_y = created.base_pixel_y + rand(-6, 6)
+	if(!design.prevent_automatic_shift)
+		created.pixel_x = created.base_pixel_x + rand(-6, 6)
+		created.pixel_y = created.base_pixel_y + rand(-6, 6)
 	for(var/atom/movable/content in created)
 		content.set_custom_materials(list()) // no
 
