@@ -494,11 +494,14 @@
 		to_chat(victim, span_warning("[user] teleports into you, knocking you to the floor with the bluespace wave!"))
 
 ///Bleed and make blood splatters at tele start and end points
-/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/user)
+/obj/item/syndicate_teleporter/proc/make_bloods(turf/old_location, turf/new_location, mob/living/user)
+	user.add_splatter_floor(old_location)
+	user.add_splatter_floor(new_location)
+	if(!iscarbon(user))
+		return
 	var/mob/living/carbon/carbon_user = user
-	carbon_user.add_splatter_floor(old_location)
-	carbon_user.add_splatter_floor(new_location)
 	carbon_user.bleed(10)
+
 
 /obj/item/paper/syndicate_teleporter
 	name = "Teleporter Guide"

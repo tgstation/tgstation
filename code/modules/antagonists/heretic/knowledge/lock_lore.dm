@@ -103,24 +103,9 @@
 	)
 	result_atoms = list(/obj/item/card/id/advanced/heretic)
 	next_knowledge = list(
-		/datum/heretic_knowledge/limited_amount/concierge_rite,
+		/datum/heretic_knowledge/mark/lock_mark,
 		/datum/heretic_knowledge/spell/mind_gate,
 	)
-	cost = 1
-	route = PATH_LOCK
-
-/datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
-	name = "Concierge's Rite"
-	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
-		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
-	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
-	required_atoms = list(
-		/obj/item/toy/crayon/white = 1,
-		/obj/item/stack/sheet/mineral/wood = 1,
-		/obj/item/multitool = 1,
-	)
-	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
-	next_knowledge = list(/datum/heretic_knowledge/mark/lock_mark)
 	cost = 1
 	route = PATH_LOCK
 
@@ -135,7 +120,22 @@
 	mark_type = /datum/status_effect/eldritch/lock
 
 /datum/heretic_knowledge/knowledge_ritual/lock
+	next_knowledge = list(/datum/heretic_knowledge/limited_amount/concierge_rite)
+	route = PATH_LOCK
+
+/datum/heretic_knowledge/limited_amount/concierge_rite // item that creates 3 max at a time heretic only barriers, probably should limit to 1 only, holy people can also pass
+	name = "Concierge's Rite"
+	desc = "Allows you to transmute a white crayon, a wooden plank, and a multitool to create a Labyrinth Handbook. \
+		It can materialize a barricade at range that only you and people resistant to magic can pass. 3 uses."
+	gain_text = "The Concierge scribbled my name into the Handbook. \"Welcome to your new home, fellow Steward.\""
+	required_atoms = list(
+		/obj/item/toy/crayon/white = 1,
+		/obj/item/stack/sheet/mineral/wood = 1,
+		/obj/item/multitool = 1,
+	)
+	result_atoms = list(/obj/item/heretic_labyrinth_handbook)
 	next_knowledge = list(/datum/heretic_knowledge/spell/burglar_finesse)
+	cost = 1
 	route = PATH_LOCK
 
 /datum/heretic_knowledge/spell/burglar_finesse
@@ -145,6 +145,7 @@
 	gain_text = "Consorting with Burglar spirits is frowned upon, but a Steward will always want to learn about new doors."
 	next_knowledge = list(
 		/datum/heretic_knowledge/spell/opening_blast,
+		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/blade_upgrade/flesh/lock,
 		/datum/heretic_knowledge/unfathomable_curio,
 		/datum/heretic_knowledge/painting,

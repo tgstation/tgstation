@@ -6,7 +6,7 @@
 	program_icon = "tasks"
 	size = 10
 
-	program_flags = PROGRAM_ON_SYNDINET_STORE | PROGRAM_UNIQUE_COPY
+	program_flags = PROGRAM_UNIQUE_COPY
 	can_run_on_flags = PROGRAM_PDA //this is all we've got sprites for :sob:
 	undeletable = TRUE
 	tgui_id = "SyndicateContractor"
@@ -29,7 +29,7 @@
 	traitor_data = null
 	return ..()
 
-/datum/computer_file/program/contract_uplink/ui_act(action, params)
+/datum/computer_file/program/contract_uplink/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return

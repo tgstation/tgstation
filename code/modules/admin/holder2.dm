@@ -73,7 +73,6 @@ GLOBAL_PROTECT(href_token)
 		activate()
 	else
 		deactivate()
-	plane_debug = new(src)
 
 /datum/admins/Destroy()
 	if(IsAdminAdvancedProcCall())
@@ -88,7 +87,7 @@ GLOBAL_PROTECT(href_token)
 	GLOB.deadmins -= target
 	GLOB.admin_datums[target] = src
 	deadmined = FALSE
-	QDEL_NULL(plane_debug)
+	plane_debug = new(src)
 	if (GLOB.directory[target])
 		associate(GLOB.directory[target]) //find the client for a ckey if they are connected and associate them with us
 
@@ -99,6 +98,7 @@ GLOBAL_PROTECT(href_token)
 		return
 	GLOB.deadmins[target] = src
 	GLOB.admin_datums -= target
+	QDEL_NULL(plane_debug)
 	deadmined = TRUE
 
 	var/client/client = owner || GLOB.directory[target]

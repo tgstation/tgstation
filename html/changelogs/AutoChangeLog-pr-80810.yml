@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - bugfix: "Jumping to C4 via ghost notification works again"

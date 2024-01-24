@@ -6,6 +6,7 @@
 	desc = "Keeps cold things cold and hot things cold."
 	icon = 'icons/obj/machines/smartfridge.dmi'
 	icon_state = "smartfridge"
+	base_icon_state = "plant"
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smartfridge
@@ -17,8 +18,6 @@
 	var/base_build_path = /obj/machinery/smartfridge
 	/// Maximum number of items that can be loaded into the machine
 	var/max_n_of_items = 1500
-	/// The overlay for this fridge when it is filled with stuff
-	var/contents_icon_state = "plant"
 	/// List of items that the machine starts with upon spawn
 	var/list/initial_contents
 	/// If the machine shows an approximate number of its contents on its sprite
@@ -226,9 +225,10 @@
 /obj/machinery/smartfridge/update_overlays()
 	. = ..()
 
+	var/initial_icon_state = initial(icon_state)
 	var/shown_contents_length = visible_items()
 	if(visible_contents && shown_contents_length)
-		var/content_level = "[initial(icon_state)]-[contents_icon_state]"
+		var/content_level = "[initial_icon_state]-[base_icon_state]"
 		switch(shown_contents_length)
 			if(1 to 25)
 				content_level += "-1"
@@ -238,10 +238,10 @@
 				content_level += "-3"
 		. += mutable_appearance(icon, content_level)
 
-	. += mutable_appearance(icon, "[initial(icon_state)]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
+	. += mutable_appearance(icon, "[initial_icon_state]-glass[(machine_stat & BROKEN) ? "-broken" : ""]")
 
 	if(!machine_stat && has_emissive)
-		. += emissive_appearance(icon, "[initial(icon_state)]-light-mask", src, alpha = src.alpha)
+		. += emissive_appearance(icon, "[initial_icon_state]-light-mask", src, alpha = src.alpha)
 
 /obj/machinery/smartfridge/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	switch(damage_type)
@@ -584,7 +584,7 @@
 	name = "drink showcase"
 	desc = "A refrigerated storage unit for tasty tasty alcohol."
 	base_build_path = /obj/machinery/smartfridge/drinks
-	contents_icon_state = "drink"
+	base_icon_state = "drink"
 
 /obj/machinery/smartfridge/drinks/accept_check(obj/item/weapon)
 	//not an item or valid container
@@ -604,7 +604,7 @@
 /obj/machinery/smartfridge/food
 	desc = "A refrigerated storage unit for food."
 	base_build_path = /obj/machinery/smartfridge/food
-	contents_icon_state = "food"
+	base_icon_state = "food"
 
 /obj/machinery/smartfridge/food/accept_check(obj/item/weapon)
 	if(weapon.w_class >= WEIGHT_CLASS_BULKY)
@@ -622,7 +622,7 @@
 	name = "smart slime extract storage"
 	desc = "A refrigerated storage unit for slime extracts."
 	base_build_path = /obj/machinery/smartfridge/extract
-	contents_icon_state = "slime"
+	base_icon_state = "slime"
 
 /obj/machinery/smartfridge/extract/accept_check(obj/item/weapon)
 	return (istype(weapon, /obj/item/slime_extract) || istype(weapon, /obj/item/slime_scanner))
@@ -637,7 +637,7 @@
 	name = "smart petri dish storage"
 	desc = "A refrigerated storage unit for petri dishes."
 	base_build_path = /obj/machinery/smartfridge/petri
-	contents_icon_state = "petri"
+	base_icon_state = "petri"
 
 /obj/machinery/smartfridge/petri/accept_check(obj/item/weapon)
 	return istype(weapon, /obj/item/petri_dish)
@@ -653,7 +653,7 @@
 	desc = "A refrigerated storage unit for organ storage."
 	max_n_of_items = 20 //vastly lower to prevent processing too long
 	base_build_path = /obj/machinery/smartfridge/organ
-	contents_icon_state = "organ"
+	base_icon_state = "organ"
 	/// The rate at which this fridge will repair damaged organs
 	var/repair_rate = 0
 
@@ -706,7 +706,7 @@
 	name = "smart chemical storage"
 	desc = "A refrigerated storage unit for medicine storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry
-	contents_icon_state = "chem"
+	base_icon_state = "chem"
 
 /obj/machinery/smartfridge/chemistry/accept_check(obj/item/weapon)
 	// not an item or reagent container
@@ -756,7 +756,7 @@
 	name = "smart virus storage"
 	desc = "A refrigerated storage unit for volatile sample storage."
 	base_build_path = /obj/machinery/smartfridge/chemistry/virology
-	contents_icon_state = "viro"
+	base_icon_state = "viro"
 
 /obj/machinery/smartfridge/chemistry/virology/preloaded
 	initial_contents = list(

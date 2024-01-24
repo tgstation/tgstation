@@ -10,8 +10,9 @@
 	pressure_resistance = 5*ONE_ATMOSPHERE
 
 /obj/structure/ore_box/attackby(obj/item/W, mob/user, params)
-	if (istype(W, /obj/item/stack/ore))
-		user.transferItemToLoc(W, src)
+	if (istype(W, /obj/item/stack/ore) || istype(W, /obj/item/boulder))
+		if(!user.transferItemToLoc(W, src))
+			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	else if(W.atom_storage)
 		W.atom_storage.remove_type(/obj/item/stack/ore, src, INFINITY, TRUE, FALSE, user, null)
 		to_chat(user, span_notice("You empty the ore in [W] into \the [src]."))
@@ -45,7 +46,7 @@
 /obj/structure/ore_box/proc/dump_box_contents()
 	var/drop = drop_location()
 	var/turf/our_turf = get_turf(src)
-	for(var/obj/item/stack/ore/O in src)
+	for(var/obj/item/O in src)
 		if(QDELETED(O))
 			continue
 		if(QDELETED(src))
@@ -64,17 +65,24 @@
 		ui.open()
 
 /obj/structure/ore_box/ui_data()
-	var/contents = list()
-	for(var/obj/item/stack/ore/O in src)
-		contents[O.type] += O.amount
+	var/item_contents = list()
+	var/boulder_count = 0
+	for(var/obj/item/stack/ore/potental_ore as anything in contents)
+		if(istype(potental_ore, /obj/item/stack/ore))
+			item_contents[potental_ore.type] += potental_ore.amount
+		else
+			boulder_count++
 
 	var/data = list()
-	data["materials"] = list()
-	for(var/type in contents)
-		var/obj/item/stack/ore/O = type
-		var/name = initial(O.name)
-		data["materials"] += list(list("name" = name, "amount" = contents[type], "id" = type))
 
+	data["materials"] = list()
+
+	for(var/obj/item/stone as anything in item_contents)
+		if(ispath(stone, /obj/item/stack/ore))
+			var/obj/item/stack/ore/found_ore = stone
+			var/name = initial(found_ore.name)
+			data["materials"] += list(list("name" = name, "amount" = item_contents[stone], "id" = type))
+	data["boulders"] = boulder_count
 	return data
 
 /obj/structure/ore_box/ui_act(action, params)
