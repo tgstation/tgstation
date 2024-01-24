@@ -79,7 +79,7 @@
 	//Now we generate the tracer.
 	var/angle = get_angle(our_turf, target_turf)
 	var/datum/point/vector/V = new(our_turf.x, our_turf.y, our_turf.z, 0, 0, angle)
-	generate_tracer_between_points(target_turf, target_turf.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
+	generate_tracer_between_points(V, V.return_vector_after_increments(6), /obj/effect/projectile/tracer/legion/tracer, 0, shot_delay, 0, 0, 0, null)
 	playsound(src, 'sound/machines/airlockopen.ogg', 100, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(fire_beam), angle), shot_delay)
 
