@@ -194,12 +194,12 @@
 
 /// Re-enables this cooldown action
 /datum/action/cooldown/proc/enable()
-	action_disabled = TRUE
+	action_disabled = FALSE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /// Disables this cooldown action
 /datum/action/cooldown/proc/disable()
-	action_disabled = FALSE
+	action_disabled = TRUE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
 
 /// Re-enables all cooldown actions
