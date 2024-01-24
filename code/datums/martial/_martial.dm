@@ -308,7 +308,7 @@
  * * FALSE - If nothing happened
  */
 /datum/martial_art/proc/fully_remove(mob/living/maybe_holder)
-	var/datum/martial_art/holder_art = maybe_holder.mind.martial_art
+	var/datum/martial_art/holder_art = maybe_holder.mind?.martial_art
 	if(isnull(holder_art))
 		return FALSE
 
