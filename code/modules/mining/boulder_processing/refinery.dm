@@ -1,15 +1,11 @@
 /**
  * Your new favorite industrial waste magnet!
  * Accepts boulders and produces sheets of non-metalic materials.
- * Can be upgraded with stock parts or through chemical inputs.
  * When upgraded, it can hold more boulders and process more at once.
- *
- * Chemical inputs can be used to boost the refinery's efficiency, but produces industrial waste, which eats through the station and is generally difficult to store.
  */
-
 /obj/machinery/bouldertech/refinery
 	name = "boulder refinery"
-	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals. Can be upgraded with stock parts or through chemical inputs."
+	desc = "BR for short. Accepts boulders and refines non-metallic ores into sheets using internal chemicals."
 	icon_state = "stacker"
 	holds_minerals = TRUE
 	processable_materials = list(
@@ -53,14 +49,11 @@
 /**
  * Your other new favorite industrial waste magnet!
  * Accepts boulders and produces sheets of metalic materials.
- * Can be upgraded with stock parts or through chemical inputs.
  * When upgraded, it can hold more boulders and process more at once.
- *
- * Chemical inputs can be used to boost the refinery's efficiency, but produces industrial waste, which eats through the station and is generally difficult to store.
  */
 /obj/machinery/bouldertech/refinery/smelter
 	name = "boulder smelter"
-	desc = "BS for short. Accept boulders and refines metallic ores into sheets. Can be upgraded with stock parts or through gas inputs."
+	desc = "BS for short. Accept boulders and refines metallic ores into sheets."
 	icon_state = "smelter"
 	processable_materials = list(
 		/datum/material/iron,
@@ -89,7 +82,6 @@
 	if(.)
 		set_light_on(TRUE)
 		return TRUE
-
 
 /obj/machinery/bouldertech/refinery/smelter/process()
 	. = ..()

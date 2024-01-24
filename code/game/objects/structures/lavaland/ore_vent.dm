@@ -168,14 +168,14 @@
 /**
  * This proc is called when the ore vent is initialized, in order to determine what minerals boulders it spawns can contain.
  * The materials available are determined by SSore_generation.ore_vent_minerals, which is a list of all minerals that can be contained in ore vents for a given cave generation.
- * As a result, minerals use a weighted list as seen by ore_vent_minerals_default, which is then copied to ore_vent_minerals.
+ * As a result, minerals use a weighted list as seen by ore_vent_minerals_lavaland, which is then copied to ore_vent_minerals.
  * Once a material is picked from the weighted list, it's removed from ore_vent_minerals, so that it can't be picked again and provided it's own internal weight used when assigning minerals to boulders spawned by this vent.
  * May also be called after the fact, as seen in SSore_generation's initialize, to add more minerals to an existing vent.
  *
- * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_default.
+ * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_lavaland.
  *
  * @params max_minerals How many minerals should be added to this vent? Defaults to MINERAL_TYPE_OPTIONS_RANDOM, which is 4.
- * @params map_loading Is this vent being spawned in at mapload? If so, we use the ore_generation subsystem's ore_vent_minerals list to pick minerals. Otherwise, we pick randomly from ore_vent_minerals_default.
+ * @params map_loading Is this vent being spawned in at mapload? If so, we use the ore_generation subsystem's ore_vent_minerals list to pick minerals. Otherwise, we pick randomly from ore_vent_minerals_lavaland.
  */
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	if(max_minerals < 1)
@@ -193,7 +193,7 @@
 			if(SSore_generation.ore_vent_minerals[material] <= 0)
 				SSore_generation.ore_vent_minerals -= material
 		else
-			material = pick_weight(SSore_generation.ore_vent_minerals_default)
+			material = pick_weight(GLOB.ore_vent_minerals_lavaland)
 		mineral_breakdown[material] = rand(1, 4)
 
 
@@ -408,15 +408,15 @@
 		if(LARGE_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_LARGE
 			if(mapload)
-				SSore_generation.ore_vent_sizes["large"] -= 1
+				SSore_generation.ore_vent_sizes["large"] += 1
 		if(MEDIUM_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_MEDIUM
 			if(mapload)
-				SSore_generation.ore_vent_sizes["medium"] -= 1
+				SSore_generation.ore_vent_sizes["medium"] += 1
 		if(SMALL_VENT_TYPE)
 			boulder_size = BOULDER_SIZE_SMALL
 			if(mapload)
-				SSore_generation.ore_vent_sizes["small"] -= 1
+				SSore_generation.ore_vent_sizes["small"] += 1
 		else
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
 			name = initial(name)
