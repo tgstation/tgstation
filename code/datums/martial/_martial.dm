@@ -236,10 +236,10 @@
 				return FALSE
 			store(new_holder.mind.martial_art, new_holder)
 			// melbert todo : is a fuck
+			// maybe fix by giving martial arts priority levels? krav maga gloves should not override real cqc, etc
 
 		else
 			new_holder.mind.martial_art.remove(new_holder)
-			new_holder.mind.martial_art.base = null
 			// The old martial art will be nulled out, and probably get GC'd if not handled by something else.
 
 	new_holder.mind.martial_art = src
@@ -285,6 +285,7 @@
 	on_remove(old_holder)
 	old_holder.mind.martial_art = null
 	base?.teach(old_holder)
+	// base = null
 	holder = null
 
 /**
