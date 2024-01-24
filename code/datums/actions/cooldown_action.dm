@@ -191,19 +191,16 @@
 /datum/action/cooldown/proc/ResetCooldown()
 	next_use_time = world.time
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-	START_PROCESSING(SSfastprocess, src)
 
 /// Re-enables this cooldown action
 /datum/action/cooldown/proc/enable()
-	check_flags &= ~AB_DISABLED
+	action_disabled = TRUE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-	START_PROCESSING(SSfastprocess, src)
 
 /// Disables this cooldown action
 /datum/action/cooldown/proc/disable()
-	check_flags |= AB_DISABLED
+	action_disabled = FALSE
 	build_all_button_icons(UPDATE_BUTTON_STATUS)
-	START_PROCESSING(SSfastprocess, src)
 
 /// Re-enables all cooldown actions
 /datum/action/cooldown/proc/enable_cooldown_actions()

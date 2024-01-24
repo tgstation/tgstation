@@ -59,26 +59,28 @@
 	mouse_opacity = MOUSE_OPACITY_ICON
 	var/size = LEGION_LARGE
 	/// Create Skulls ability
-	var/datum/action/cooldown/mob_cooldown/create_skull/create_skull
+	var/datum/action/cooldown/mob_cooldown/create_legion_skull/create_legion_skull
 	/// Charge Target Ability
-	var/datum/action/cooldown/mob_cooldown/charge_target/charge_target
+	var/datum/action/cooldown/mob_cooldown/chase_target/chase_target
 	/// Create Turrets Ability
-	var/datum/action/cooldown/mob_cooldown/create_turrets/create_turrets
+	var/datum/action/cooldown/mob_cooldown/create_legion_turrets/create_legion_turrets
 
 /mob/living/simple_animal/hostile/megafauna/legion/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_FLOATING_ANIM, INNATE_TRAIT)
-	create_skull = new(src)
-	charge_target = new(src)
-	create_turrets = new(src)
-	create_skull.Grant(src)
-	charge_target.Grant(src)
-	create_turrets.Grant(src)
+	create_legion_skull = new(src)
+	chase_target = new(src)
+	chase_target.size = size
+	create_legion_turrets = new(src)
+	create_legion_turrets.maximum_turrets = size * 2
+	create_legion_skull.Grant(src)
+	chase_target.Grant(src)
+	create_legion_turrets.Grant(src)
 
 /mob/living/simple_animal/hostile/megafauna/legion/Destroy()
-	create_skull = null
-	charge_target = null
-	create_turrets = null
+	create_legion_skull = null
+	chase_target = null
+	create_legion_turrets = null
 	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/legion/medium
@@ -111,13 +113,11 @@
 
 	switch(rand(4)) //Larger skulls use more attacks.
 		if(0 to 2)
-			create_skull.Trigger(target = target)
+			create_legion_skull.Trigger(target = target)
 		if(3)
-			charge_target.size = size
-			charge_target.Trigger(target = target)
+			chase_target.Trigger(target = target)
 		if(4)
-			create_turrets.maximum_turrets = size * 2
-			create_turrets.Trigger(target = target)
+			create_legion_turrets.Trigger(target = target)
 
 ///Deals some extra damage on throw impact.
 /mob/living/simple_animal/hostile/megafauna/legion/throw_impact(mob/living/hit_atom, datum/thrownthing/throwingdatum)
