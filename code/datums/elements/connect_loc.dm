@@ -15,7 +15,9 @@
 	src.connections = connections
 
 	RegisterSignal(listener, COMSIG_MOVABLE_MOVED, PROC_REF(on_loc_changed), override = TRUE)
-	RegisterSignal(listener.loc, COMSIG_TURF_CHANGE, PROC_REF(on_loc_changed), override = TRUE)
+	var/turf/listener_loc = listener.loc
+	if(istype(listener_loc))
+		RegisterSignal(listener.loc, COMSIG_TURF_CHANGE, PROC_REF(on_loc_changed), override = TRUE)
 	update_signals(listener)
 
 /datum/element/connect_loc/Detach(atom/movable/listener)
