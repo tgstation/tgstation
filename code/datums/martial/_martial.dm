@@ -135,7 +135,6 @@
 	PROTECTED_PROC(TRUE)
 	return MARTIAL_ATTACK_INVALID
 
-
 /**
  * Called when grabbing someone
  *

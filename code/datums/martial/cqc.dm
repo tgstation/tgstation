@@ -211,7 +211,7 @@
 
 /datum/martial_art/cqc/grab_act(mob/living/attacker, mob/living/defender)
 	if(attacker == defender)
-		return NONE
+		return MARTIAL_ATTACK_INVALID
 
 	add_to_streak("G", defender)
 	if(check_streak(attacker, defender)) //if a combo is made no grab upgrade is done
