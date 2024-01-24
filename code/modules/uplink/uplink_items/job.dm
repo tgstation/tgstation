@@ -369,3 +369,15 @@
 	restricted_roles = list(JOB_ASSISTANT, JOB_MIME, JOB_CLOWN)
 	restricted = TRUE
 	refundable = FALSE
+
+
+/datum/uplink_item/role_restricted/reticence
+
+name = "Reticence Cloaked Assasination exosuit"
+	desc = "A silent, fast, and nigh-invisible but exepctionally fragile miming exosuit! \
+	 fully equipped with a Near-Silenced pistol, and a RCD for your best assasination needs."
+	item = /obj/vehicle/sealed/mecha/reticence
+	cost = 20
+	restricted_roles = list(JOB_MIME)
+	restricted = TRUE
+	refundable = FALSE
