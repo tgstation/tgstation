@@ -90,7 +90,7 @@
 		job_level_list[job]++
 		level_up_reward(job)
 		for(var/datum/job_milestone/subtype as anything in subtypesof(/datum/job_milestone))
-			if(!initial(subtype.key_id) == job)
+			if(!(initial(subtype.key_id) == job))
 				continue
 			var/datum/job_milestone/subtype_created = new subtype
 			subtype_created.check_milestones(job_level_list[job], parent)

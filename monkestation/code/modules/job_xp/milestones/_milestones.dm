@@ -111,8 +111,8 @@
 	var/job_string = listed_mob.assigned_role.title
 
 	for(var/datum/job_milestone/subtype as anything in subtypesof(/datum/job_milestone))
-		if(!initial(subtype.key_id) == job_string)
+		if(!(initial(subtype.key_id) == job_string) || !isnum(prefs.job_level_list[job_string]))
 			continue
 		var/datum/job_milestone/subtype_created = new subtype
-		for(var/level in 1 to mob.client.prefs.job_level_list[job_string])
+		for(var/level in 1 to prefs.job_level_list[job_string])
 			subtype_created.check_milestones(level, mob.client, force = TRUE)
