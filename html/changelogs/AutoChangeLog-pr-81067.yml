@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "The smelter and refinery now properly hold mining points, only taking a small amount out of net gained points."
