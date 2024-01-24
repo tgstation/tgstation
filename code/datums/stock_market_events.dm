@@ -62,7 +62,7 @@
 /datum/stock_market_event/proc/create_news()
 	var/temp_company = pick(company_name)
 	var/temp_circumstance = pick(circumstance)
-	SSstock_market.news_string += "<b>[name] [temp_company]</b> [temp_circumstance]<b>[mat::name].</b><br>"
+	SSstock_market.news_string += "<b>[name] [temp_company]</b> [temp_circumstance]<b>[mat.name].</b><br>"
 
 
 /datum/stock_market_event/market_reset
@@ -77,7 +77,7 @@
 
 /datum/stock_market_event/market_reset/start_event()
 	. = ..()
-	SSstock_market.materials_prices[mat] = (mat::value_per_unit) * SHEET_MATERIAL_AMOUNT
+	SSstock_market.materials_prices[mat] = (initial(mat.value_per_unit)) * SHEET_MATERIAL_AMOUNT
 	create_news()
 
 /datum/stock_market_event/large_boost
@@ -94,7 +94,7 @@
 	. = ..()
 	var/price_units = SSstock_market.materials_prices[mat]
 	SSstock_market.materials_prices[mat] += round(gaussian(price_units * 0.5, price_units * 0.1))
-	SSstock_market.materials_prices[mat] = clamp(SSstock_market.materials_prices[mat], price_minimum * mat::value_per_unit, price_maximum * mat::value_per_unit)
+	SSstock_market.materials_prices[mat] = clamp(SSstock_market.materials_prices[mat], price_minimum * mat.value_per_unit, price_maximum * mat.value_per_unit)
 	create_news()
 
 /datum/stock_market_event/large_drop
@@ -111,5 +111,5 @@
 	. = ..()
 	var/price_units = SSstock_market.materials_prices[mat]
 	SSstock_market.materials_prices[mat] -= round(gaussian(price_units * 1.5, price_units * 0.1))
-	SSstock_market.materials_prices[mat] = clamp(SSstock_market.materials_prices[mat], price_minimum * mat::value_per_unit, price_maximum * mat::value_per_unit)
+	SSstock_market.materials_prices[mat] = clamp(SSstock_market.materials_prices[mat], price_minimum * mat.value_per_unit, price_maximum * mat.value_per_unit)
 	create_news()
