@@ -3,6 +3,9 @@
 /client/verb/keyDown(_key as text)
 	set instant = TRUE
 	set hidden = TRUE
+	
+	if (length(_key) == 1) // Ensure letter keys are uppercase 
+		_key = uppertext(_key)
 
 	client_keysend_amount += 1
 
@@ -82,6 +85,9 @@
 /client/verb/keyUp(_key as text)
 	set instant = TRUE
 	set hidden = TRUE
+	
+	if (length(_key) == 1) // Ensure letter keys are uppercase 
+		_key = uppertext(_key)
 
 	var/key_combo = key_combos_held[_key]
 	if(key_combo)
