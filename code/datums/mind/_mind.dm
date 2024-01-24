@@ -179,9 +179,9 @@
 		new_character.mind.set_current(null)
 
 	var/mob/living/old_current = current
-	if(current)
+	if(old_current)
 		//transfer anyone observing the old character to the new one
-		current.transfer_observers_to(new_character)
+		old_current.transfer_observers_to(new_character)
 
 		// Offload all mind languages from the old holder to a temp one
 		var/datum/language_holder/empty/temp_holder = new()
@@ -213,7 +213,8 @@
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
 	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
-	SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
+	if(!isnull(old_current))
+		SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
@@ -509,10 +510,6 @@
 		usr = current
 	traitor_panel()
 
-/datum/mind/proc/has_martialart(string)
-	if(martial_art && martial_art.id == string)
-		return martial_art
-	return FALSE
 
 /datum/mind/proc/get_ghost(even_if_they_cant_reenter, ghosts_with_clients)
 	for(var/mob/dead/observer/G in (ghosts_with_clients ? GLOB.player_list : GLOB.dead_mob_list))

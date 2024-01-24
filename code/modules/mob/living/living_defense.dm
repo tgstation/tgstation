@@ -223,13 +223,6 @@
 		return FALSE
 	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
 		return FALSE
-	return TRUE
-
-/mob/living/carbon/grab(mob/living/target)
-	. = ..()
-	if(!.)
-		return .
-
 	if(target.check_block(src, 0, "[src]'s grab"))
 		return FALSE
 	target.grabbedby(src)
@@ -244,11 +237,12 @@
 	if(!user.pulling || user.pulling != src)
 		user.start_pulling(src, supress_message = supress_message)
 		return
-
+	// This line arbitrarily prevents any non-carbon from upgrading grabs
+	if(!iscarbon(user))
+		return
 	if(!(status_flags & CANPUSH) || HAS_TRAIT(src, TRAIT_PUSHIMMUNE))
 		to_chat(user, span_warning("[src] can't be grabbed more aggressively!"))
 		return FALSE
-
 	if(user.grab_state >= GRAB_AGGRESSIVE && HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_warning("You don't want to risk hurting [src]!"))
 		return FALSE

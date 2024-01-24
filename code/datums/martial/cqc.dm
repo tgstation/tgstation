@@ -218,6 +218,8 @@
 	add_to_streak("G", defender)
 	if(check_streak(attacker, defender)) //if a combo is made no grab upgrade is done
 		return MARTIAL_ATTACK_SUCCESS
+	if(attacker.body_position == LYING_DOWN)
+		return MARTIAL_ATTACK_INVALID
 
 	var/old_grab_state = attacker.grab_state
 	defender.grabbedby(attacker, TRUE)

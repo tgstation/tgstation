@@ -26,6 +26,8 @@
 		if(3)
 			if(defender.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))
 				return MARTIAL_ATTACK_FAIL
+			if(attacker.body_position == LYING_DOWN)
+				return MARTIAL_ATTACK_INVALID
 
 			if(attacker.grab_state >= GRAB_AGGRESSIVE)
 				defender.grabbedby(attacker, 1)

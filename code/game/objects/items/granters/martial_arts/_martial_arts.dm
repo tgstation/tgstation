@@ -9,7 +9,7 @@
 /obj/item/book/granter/martial/can_learn(mob/user)
 	if(!martial)
 		CRASH("Someone attempted to learn [type], which did not have a martial arts set.")
-	if(user.mind.has_martialart(initial(martial.id)))
+	if(istype(user.mind?.martial_art, martial))
 		to_chat(user, span_warning("You already know [martial_name]!"))
 		return FALSE
 	return TRUE

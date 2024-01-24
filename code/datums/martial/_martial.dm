@@ -1,7 +1,7 @@
 /datum/martial_art
 	/// Player readable name of the martial art
 	var/name = "Martial Art"
-	/// ID of the martial art, used by [/datum/mind/proc/has_martialart]
+	/// ID of the martial art
 	var/id = ""
 	/// The streak of attacks the user has performed
 	var/streak = ""
@@ -246,7 +246,7 @@
 		if(make_temporary && !existing_martial.allow_temp_override)
 			return FALSE
 
-		if(existing_martial.base)
+		if(!isnull(existing_martial.base))
 			store_martial_art(existing_martial.base)
 			existing_martial.unstore_martial_art()
 		else if(make_temporary)
@@ -270,8 +270,6 @@
 
 /// Unstores the base var.
 /datum/martial_art/proc/unstore_martial_art()
-	if(isnull(base))
-		return
 	UnregisterSignal(base, COMSIG_QDELETING)
 	base = null
 
@@ -280,7 +278,7 @@
 	base = null
 
 /**
- * Removes this martial art from the passed mob.
+ * Removes this martial art from the passed mob AND their mind.
  *
  * Arguments
  * * mob/living/old_holder - The mob to remove this martial art from.
@@ -293,8 +291,9 @@
 
 	on_remove(old_holder)
 	old_holder.mind.martial_art = null
-	base?.teach(old_holder)
-	unstore_martial_art()
+	if(!isnull(base))
+		base.teach(old_holder)
+		unstore_martial_art()
 	holder = null
 
 /**
@@ -346,9 +345,18 @@
 	SIGNAL_HANDLER
 	holder = null
 
-/// Signal proc for [COMSIG_MOB_MIND_TRANSFERRED_OUT_OF] to pass martial arts between bodies on mindswap
+/// Signal proc for [COMSIG_MOB_MIND_TRANSFERRED_OUT_OF] to pass martial arts between bodies on mind transfer
+/// By this point the martial art's holder is the old body, but the mind that owns it is in the new body
 /datum/martial_art/proc/transfer_martial_arts(mob/living/old_body, mob/living/new_body)
 	SIGNAL_HANDLER
 
-	remove(old_body)
+	// This has some notable issues in that martial arts granted by items like Krav Maga
+	// will follow the body swap, the easiest fix would be to move martial arts off of the mind
+
+	if(!isnull(base)) // If we're home to a temporary one just don't touch it, give the base to the new body and leave it at that
+		base.teach(new_body)
+		unstore_martial_art()
+		return
+
+	on_remove(old_body) // on_remove rather than remove, because by this point the mind is already in the new body, which remove handles.
 	teach(new_body)
