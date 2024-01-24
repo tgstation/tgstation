@@ -150,16 +150,19 @@
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/krav_maga/harm_act(mob/living/attacker, mob/living/defender)
-	if(check_streak(attacker, defender))
-		return MARTIAL_ATTACK_SUCCESS
-
-	log_combat(attacker, defender, "punched")
-	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	var/picked_hit_type = pick("punch", "kick")
 	var/bonus_damage = 0
 	if(defender.body_position == LYING_DOWN)
 		bonus_damage += 5
 		picked_hit_type = "stomp"
+
+	if(defender.check_block(attacker, 10 + bonus_damage, "[attacker]'s [picked_hit_type]", UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
+	if(check_streak(attacker, defender))
+		return MARTIAL_ATTACK_SUCCESS
+
+	log_combat(attacker, defender, "[picked_hit_type]ed")
+	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))
 	defender.apply_damage(10 + bonus_damage, attacker.get_attack_type(), affecting)
 	if(picked_hit_type == "kick" || picked_hit_type == "stomp")
 		attacker.do_attack_animation(defender, ATTACK_EFFECT_KICK)
@@ -179,6 +182,8 @@
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/krav_maga/disarm_act(mob/living/attacker, mob/living/defender)
+	if(defender.check_block(attacker, 0, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_DISARM)

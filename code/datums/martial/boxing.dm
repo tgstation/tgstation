@@ -21,7 +21,6 @@
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 
 	var/atk_verb = pick("left hook", "right hook", "straight punch")
-	var/damage = rand(5, 8) + active_arm.unarmed_damage_low
 	if(damage <= 0)
 		playsound(defender, active_arm.unarmed_miss_sound, 25, TRUE, -1)
 		defender.visible_message(
@@ -33,6 +32,10 @@
 		)
 		to_chat(attacker, span_warning("Your [atk_verb] misses [defender]!"))
 		log_combat(attacker, defender, "attempted to hit", atk_verb)
+		return MARTIAL_ATTACK_FAIL
+
+	var/damage = rand(5, 8) + active_arm.unarmed_damage_low
+	if(defender.check_block(attacker, damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 		return MARTIAL_ATTACK_FAIL
 
 	var/obj/item/bodypart/affecting = defender.get_bodypart(defender.get_random_valid_zone(attacker.zone_selected))

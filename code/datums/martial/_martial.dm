@@ -8,8 +8,8 @@
 	/// The maximum length of streaks allowed
 	var/max_streak_length = 6
 
-	/// The current mob associated with this martial art datum.
-	VAR_PRIVATE/mob/living/holder
+	/// The current mob associated with this martial art datum. Do not set directly.
+	VAR_FINAL/mob/living/holder
 	/// Weakref to the last mob we attacked, for determining when to reset streaks
 	VAR_PRIVATE/datum/weakref/current_target
 	/// Used for temporary martial arts.
@@ -93,6 +93,8 @@
 /**
  * Called when help-intenting on someone
  *
+ * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
+ *
  * Arguments
  * * mob/living/attacker - The mob attacking
  * * mob/living/defender - The mob being attacked
@@ -109,6 +111,8 @@
 
 /**
  * Called when disarm-intenting on someone
+ *
+ * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
  *
  * Arguments
  * * mob/living/attacker - The mob attacking
@@ -127,6 +131,8 @@
 /**
  * Called when harm-intenting on someone
  *
+ * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
+ *
  * Arguments
  * * mob/living/attacker - The mob attacking
  * * mob/living/defender - The mob being attacked
@@ -143,6 +149,8 @@
 
 /**
  * Called when grabbing someone
+ *
+ * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
  *
  * Arguments
  * * mob/living/attacker - The mob attacking
@@ -226,11 +234,12 @@
 		if(make_temporary)
 			if(!new_holder.mind.martial_art.allow_temp_override)
 				return FALSE
-
 			store(new_holder.mind.martial_art, new_holder)
+			// melbert todo : is a fuck
 
 		else
 			new_holder.mind.martial_art.remove(new_holder)
+			new_holder.mind.martial_art.base = null
 			// The old martial art will be nulled out, and probably get GC'd if not handled by something else.
 
 	new_holder.mind.martial_art = src

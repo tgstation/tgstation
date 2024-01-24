@@ -138,20 +138,29 @@
 	dying.death()
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/attacker, mob/living/defender)
+	if(defender.check_block(attacker, final_damage, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
+
 	add_to_streak("H", defender)
-	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_FAIL
+	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_INVALID
 
 /datum/martial_art/plasma_fist/disarm_act(mob/living/attacker, mob/living/defender)
+	if(defender.check_block(attacker, 0, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
 	add_to_streak("D", defender)
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
 	if(attacker == defender)//there is no disarming yourself, so we need to let plasma fist user know
 		to_chat(attacker, span_notice("You have added a disarm to your streak."))
-	return MARTIAL_ATTACK_FAIL
+		return MARTIAL_ATTACK_FAIL
+	return MARTIAL_ATTACK_INVALID
 
 /datum/martial_art/plasma_fist/grab_act(mob/living/attacker, mob/living/defender)
+	if(defender.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
+
 	add_to_streak("G", defender)
-	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_FAIL
+	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_INVALID
 
 /mob/living/proc/plasma_fist_help()
 	set name = "Recall Teachings"

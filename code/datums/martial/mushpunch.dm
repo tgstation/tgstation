@@ -13,8 +13,12 @@
 		to_chat(attacker, span_spiderbroodmother("<b>Your attack was interrupted!</b>"))
 		return
 
-	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
+	var/final_damage = rand(15, 30)
 	var/atk_verb = pick("punch", "smash", "crack")
+	if(defender.check_block(attacker, final_damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
+		return
+
+	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 	defender.visible_message(
 		span_danger("[attacker] [atk_verb]ed [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"), \
 		span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
@@ -23,7 +27,7 @@
 		attacker,
 	)
 	to_chat(attacker, span_danger("You [atk_verb] [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"))
-	defender.apply_damage(rand(15, 30), attacker.get_attack_type())
+	defender.apply_damage(final_damage, attacker.get_attack_type())
 	playsound(defender, 'sound/effects/meteorimpact.ogg', 25, TRUE, -1)
 	var/throwtarget = get_edge_target_turf(attacker, get_dir(attacker, get_step_away(defender, attacker)))
 	defender.throw_at(throwtarget, 4, 2, attacker)//So stuff gets tossed around at the same time.

@@ -24,6 +24,9 @@
 			attacker.Stun(2 SECONDS)
 			atk_verb = "cried looking at"
 		if(3)
+			if(defender.check_block(attacker, 0, "[attacker]'s grab", UNARMED_ATTACK))
+				return MARTIAL_ATTACK_FAIL
+
 			if(attacker.grab_state >= GRAB_AGGRESSIVE)
 				defender.grabbedby(attacker, 1)
 			else
@@ -46,9 +49,13 @@
 						log_combat(attacker, defender, "grabbed", addition="passively")
 						attacker.setGrabState(GRAB_PASSIVE)
 		if(4)
+			atk_verb = "headbutt"
+			var/defender_damage = rand(5, 10)
+			if(defender.check_block(attacker, defender_damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
+				return MARTIAL_ATTACK_FAIL
+
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			attacker.emote("flip")
-			atk_verb = "headbutt"
 			defender.visible_message(
 				span_danger("[attacker] [atk_verb]s [defender]!"),
 				span_userdanger("You're [atk_verb]ed by [attacker]!"),
@@ -58,8 +65,8 @@
 			)
 			to_chat(attacker, span_danger("You [atk_verb] [defender]!"))
 			playsound(defender, 'sound/weapons/punch1.ogg', 40, TRUE, -1)
-			defender.apply_damage(rand(5,10), attacker.get_attack_type(), BODY_ZONE_HEAD)
-			attacker.apply_damage(rand(5,10), attacker.get_attack_type(), BODY_ZONE_HEAD)
+			defender.apply_damage(defender_damage, attacker.get_attack_type(), BODY_ZONE_HEAD)
+			attacker.apply_damage(rand(5, 10), attacker.get_attack_type(), BODY_ZONE_HEAD)
 			if(iscarbon(defender))
 				var/mob/living/carbon/carbon_defender = defender
 				if(!istype(carbon_defender.head, /obj/item/clothing/head/helmet/) && !istype(carbon_defender.head, /obj/item/clothing/head/utility/hardhat))
@@ -67,8 +74,11 @@
 			attacker.Stun(rand(1 SECONDS, 4.5 SECONDS))
 			defender.Stun(rand(0.5 SECONDS, 3 SECONDS))
 		if(5,6)
-			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			atk_verb = pick("kick", "hit", "slam")
+			if(defender.check_block(attacker, 0, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
+				return MARTIAL_ATTACK_FAIL
+
+			attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 			defender.visible_message(
 				span_danger("[attacker] [atk_verb]s [defender] with such inhuman strength that it sends [defender.p_them()] flying backwards!"),
 				span_userdanger("You're [atk_verb]ed by [attacker] with such inhuman strength that it sends you flying backwards!"),
