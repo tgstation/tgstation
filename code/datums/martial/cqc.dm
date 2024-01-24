@@ -15,7 +15,7 @@
 	/// Probability of successfully blocking attacks while on throw mode
 	var/block_chance = 75
 
-/datum/martial_art/cqc/teach(mob/living/new_holder, make_temporary)
+/datum/martial_art/cqc/on_teach(mob/living/new_holder)
 	. = ..()
 	RegisterSignal(new_holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attackby))
 	RegisterSignal(new_holder, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))

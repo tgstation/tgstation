@@ -41,10 +41,11 @@
 	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
 	return .
 
+/// Signal proc for [COMSIG_LIVING_UNARMED_ATTACK] to hook into the appropriate proc
 /datum/martial_art/proc/unarmed_strike(mob/living/source, atom/attack_target, proximity, modifiers)
 	SIGNAL_HANDLER
 
-	if(!proximity)
+	if(!proximity || !isliving(attack_target))
 		return NONE
 
 	if(HAS_TRAIT(attack_target, TRAIT_MARTIAL_ARTS_IMMUNE))
@@ -52,6 +53,8 @@
 
 	if(!can_use(source))
 		return NONE
+
+	// melbert todo : handle check_block
 
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		return disarm_act(source, attack_target)
@@ -64,19 +67,22 @@
 
 	return help_act(source, attack_target)
 
-/datum/martial_art/proc/attempt_grab(mob/living/source, atom/clicked_on)
+/// Signal proc for [COMSIG_LIVING_GRAB] to hook into the grab
+/datum/martial_art/proc/attempt_grab(mob/living/source, mob/living/grabbing)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(clicked_on, TRAIT_MARTIAL_ARTS_IMMUNE))
+	if(HAS_TRAIT(grabbing, TRAIT_MARTIAL_ARTS_IMMUNE))
 		return NONE
 
-	if(!source.can_unarmed_attack() || !source.CanReach(clicked_on) || source.incapacitated() || source.next_move > world.time)
+	if(!source.can_unarmed_attack()) // For parity with unarmed attacks
 		return NONE
 
 	if(!can_use(source))
 		return NONE
 
-	return grab_act(source, clicked_on)
+	// melbert todo : handle check_block
+
+	return grab_act(source, grabbing)
 
 /**
  * Called when help-intenting on someone
@@ -206,6 +212,8 @@
  * * FALSE - The mob failed to learn the martial art, for whatever reason.
  */
 /datum/martial_art/proc/teach(mob/living/new_holder, make_temporary = FALSE)
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(!istype(new_holder) || isnull(new_holder.mind))
 		return FALSE
 
@@ -219,14 +227,9 @@
 		else
 			new_holder.mind.martial_art.on_remove(new_holder)
 
-	if(help_verb)
-		add_verb(new_holder, help_verb)
-
 	new_holder.mind.martial_art = src
 	holder = new_holder
-	RegisterSignal(holder, COMSIG_QDELETING, PROC_REF(holder_deleted))
-	RegisterSignal(holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
-	RegisterSignal(holder, COMSIG_MOB_CTRL_CLICKED, PROC_REF(attempt_grab))
+	on_teach(new_holder)
 	return TRUE
 
 /**
@@ -257,15 +260,24 @@
  * * mob/living/old_holder - The mob to remove this martial art from.
  */
 /datum/martial_art/proc/remove(mob/living/old_holder)
-	SHOULD_NOT_OVERRIDE(TRUE) // Use on_remove!
+	SHOULD_CALL_PARENT(TRUE)
 
 	ASSERT(old_holder == holder)
 	ASSERT(old_holder.mind.martial_art == src)
 
 	on_remove(old_holder)
 	base?.teach(old_holder)
-	UnregisterSignal(holder, list(COMSIG_QDELETING, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_MOB_CTRL_CLICKED))
 	holder = null
+
+/**
+ * Called when this martial art is added to a mob.
+ */
+/datum/martial_art/proc/on_teach(mob/living/new_holder)
+	if(help_verb)
+		add_verb(new_holder, help_verb)
+	RegisterSignal(new_holder, COMSIG_QDELETING, PROC_REF(holder_deleted))
+	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
+	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
 
 /**
  * Called when this martial art is removed from a mob.
@@ -273,6 +285,7 @@
 /datum/martial_art/proc/on_remove(mob/living/remove_from)
 	if(help_verb)
 		remove_verb(remove_from, help_verb)
+	UnregisterSignal(remove_from, list(COMSIG_QDELETING, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB))
 
 /datum/martial_art/proc/holder_deleted(datum/source)
 	SIGNAL_HANDLER

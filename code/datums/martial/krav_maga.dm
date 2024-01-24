@@ -68,10 +68,8 @@
 		owner.visible_message(span_danger("[owner] assumes the Lung Punch stance!"), "<b><i>Your next attack will be a Lung Punch.</i></b>")
 		owner.mind.martial_art.streak = "quick_choke"//internal name for lung punch
 
-/datum/martial_art/krav_maga/teach(mob/living/new_holder, make_temporary=FALSE)
+/datum/martial_art/krav_maga/on_teach(mob/living/new_holder)
 	. = ..()
-	if(!.)
-		return
 	to_chat(new_holder, span_userdanger("You know the arts of [name]!"))
 	to_chat(new_holder, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
 	neckchop.Grant(new_holder)

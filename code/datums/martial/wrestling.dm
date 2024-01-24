@@ -124,10 +124,8 @@ If you make a derivative work from this code, you must include this notification
 	owner.visible_message(span_danger("[owner] prepares to LEG DROP!"), "<b><i>Your next attack will be a LEG DROP.</i></b>")
 	owner.mind.martial_art.streak = "drop"
 
-/datum/martial_art/wrestling/teach(mob/living/new_holder, make_temporary=FALSE)
+/datum/martial_art/wrestling/on_teach(mob/living/new_holder)
 	. = ..()
-	if(!.)
-		return
 	to_chat(new_holder, span_userdanger("SNAP INTO A THIN TIM!"))
 	to_chat(new_holder, span_danger("Place your cursor over a move at the top of the screen to see what it does."))
 	drop.Grant(new_holder)

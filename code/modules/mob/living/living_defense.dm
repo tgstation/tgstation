@@ -221,6 +221,8 @@
 /mob/living/proc/grab(mob/living/target)
 	if(!istype(target))
 		return FALSE
+	if(SEND_SIGNAL(src, COMSIG_LIVING_GRAB, target) & (COMPONENT_CANCEL_ATTACK_CHAIN|COMPONENT_SKIP_ATTACK))
+		return FALSE
 	if(target.check_block(src, 0, "[src]'s grab"))
 		return FALSE
 	target.grabbedby(src)
