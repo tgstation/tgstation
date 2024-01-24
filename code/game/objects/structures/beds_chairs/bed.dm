@@ -121,10 +121,8 @@
 	if(!can_interact(user))
 		return
 
-	if(has_buckled_mobs())
-		for(var/mob/passenger as anything in buckled_mobs)
-			if(passenger == user)
-				return
+	if(has_buckled_mobs() && (user in buckled_mobs))
+		return
 
 	anchored = !anchored
 	balloon_alert(user, "brakes [anchored ? "applied" : "released"]")
