@@ -67,8 +67,10 @@
 			defender.throw_at(throwtarget, 4, 2, attacker)//So stuff gets tossed around at the same time.
 			defender.Paralyze(6 SECONDS)
 		if(7,8)
-			return FALSE //Resume default behaviour
+			return MARTIAL_ATTACK_INVALID //Resume default behaviour
 
 	if(atk_verb)
 		log_combat(attacker, defender, "[atk_verb] (Psychotic Brawling)")
-	return TRUE
+		return MARTIAL_ATTACK_SUCCESS
+
+	return MARTIAL_ATTACK_FAIL

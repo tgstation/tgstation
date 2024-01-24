@@ -215,7 +215,21 @@
 	adjust_fire_stacks(3)
 	ignite_mob()
 
-/mob/living/proc/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+/**
+ * Called when a mob is grabbing another mob.
+ */
+/mob/living/proc/grab(mob/living/target)
+	if(!istype(target))
+		return FALSE
+	if(target.check_block(src, 0, "[src]'s grab"))
+		return FALSE
+	target.grabbedby(src)
+	return TRUE
+
+/**
+ * Called when this mob is grabbed by another mob.
+ */
+/mob/living/proc/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user == src || anchored || !isturf(user.loc))
 		return FALSE
 	if(!user.pulling || user.pulling != src)
@@ -359,17 +373,9 @@
 		if(operations.next_step(user, modifiers))
 			return TRUE
 
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
 	return FALSE
 
 /mob/living/attack_paw(mob/living/carbon/human/user, list/modifiers)
-	var/martial_result = user.apply_martial_art(src, modifiers)
-	if (martial_result != MARTIAL_ATTACK_INVALID)
-		return martial_result
-
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		user.disarm(src)
 		return TRUE

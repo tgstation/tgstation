@@ -53,7 +53,6 @@
 
 	/// Martial art on this mind
 	var/datum/martial_art/martial_art
-	var/static/default_martial_art = new/datum/martial_art
 	/// List of antag datums on this mind
 	var/list/antag_datums
 	/// this mind's ANTAG_HUD should have this icon_state
@@ -107,7 +106,6 @@
 
 /datum/mind/New(_key)
 	key = _key
-	martial_art = default_martial_art
 	init_known_skills()
 	set_assigned_role(SSjob.GetJobType(/datum/job/unassigned)) // Unassigned by default.
 
@@ -205,7 +203,7 @@
 	if(iscarbon(new_character))
 		var/mob/living/carbon/carbon_character = new_character
 		carbon_character.last_mind = src
-	transfer_martial_arts(new_character)
+	martial_art?.transfer_to(new_character)
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		new_character.key = key //now transfer the key to link the client to our new body
@@ -509,15 +507,6 @@
 	if(self_antagging && (!usr || !usr.client) && current.client)
 		usr = current
 	traitor_panel()
-
-/datum/mind/proc/transfer_martial_arts(mob/living/new_character)
-	if(!ishuman(new_character))
-		return
-	if(martial_art)
-		if(martial_art.base) //Is the martial art temporary?
-			martial_art.remove(new_character)
-		else
-			martial_art.teach(new_character)
 
 /datum/mind/proc/has_martialart(string)
 	if(martial_art && martial_art.id == string)

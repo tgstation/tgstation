@@ -234,7 +234,7 @@
 			target.Knockdown(3 SECONDS)
 			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
+				INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
 				human_sacker.setGrabState(GRAB_PASSIVE)
 
 		if(50 to INFINITY) // absolutely BODIED
@@ -260,7 +260,7 @@
 				target.Knockdown(3 SECONDS)
 				target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
 				if(ishuman(target) && ishuman(user))
-					INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
+					INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
 					human_sacker.setGrabState(GRAB_AGGRESSIVE)
 
 /**
