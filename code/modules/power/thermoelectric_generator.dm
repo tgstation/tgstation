@@ -50,9 +50,9 @@
 	if(machine_stat & (NOPOWER|BROKEN))
 		return
 
-	var/L = min(round(lastgenlev / 100000), 11)
-	if(L != 0)
-		. += mutable_appearance('icons/obj/machines/engine/other.dmi', "[base_icon_state]-op[L]")
+	var/level = min(round(lastgenlev / 100000), 11)
+	if(level)
+		. += mutable_appearance('icons/obj/machines/engine/other.dmi', "[base_icon_state]-op[level]")
 	if(hot_circ && cold_circ)
 		. += "[base_icon_state]-oc[last_pressure_overlay]"
 
