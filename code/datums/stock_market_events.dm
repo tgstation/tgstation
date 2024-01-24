@@ -107,7 +107,7 @@
 		"has produced a report that lowered the price of ",
 	)
 
-/datum/stock_market_event/large_boost/start_event()
+/datum/stock_market_event/large_drop/start_event()
 	. = ..()
 	var/price_units = SSstock_market.materials_prices[mat]
 	SSstock_market.materials_prices[mat] -= round(gaussian(price_units * 1.5, price_units * 0.1))
