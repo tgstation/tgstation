@@ -30,10 +30,10 @@
  * When a new stock_market_event is created, this proc is called to set up the event if there's anything that needs to happen upon it starting.
  * @param _mat The material that this event will affect.
  */
-/datum/stock_market_event/proc/start_event(datum/material/_mat)
-	if(istype(_mat, /datum/material))
+/datum/stock_market_event/proc/start_event(datum/material/mat)
+	if(istype(mat, /datum/material))
 		return FALSE
-	mat = _mat
+	src.mat = mat
 	if(!isnull(trend_value))
 		SSstock_market.materials_trends[mat] =	trend_value
 		if(!isnull(trend_duration))
