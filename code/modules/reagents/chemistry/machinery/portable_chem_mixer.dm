@@ -74,11 +74,9 @@
 	icon_state = "portablechemicalmixer_empty"
 	return ..()
 
-/obj/item/storage/portable_chem_mixer/Exited(atom/movable/gone, direction)
+/obj/item/storage/portable_chem_mixer/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
-	if(gone == beaker)
-		beaker = null
-	else
+	if(!atom_storage.locked)
 		update_contents()
 
 /// Reload dispensable reagents from new contents
@@ -97,9 +95,11 @@
 			dispensable_reagents[key_type]["reagents"] = list()
 		dispensable_reagents[key_type]["reagents"] += container.reagents
 
-/obj/item/storage/portable_chem_mixer/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+/obj/item/storage/portable_chem_mixer/Exited(atom/movable/gone, direction)
 	. = ..()
-	if(!atom_storage.locked)
+	if(gone == beaker)
+		beaker = null
+	else
 		update_contents()
 
 /obj/item/storage/portable_chem_mixer/ex_act(severity, target)
