@@ -10,8 +10,8 @@
 	help_verb = /mob/living/proc/CQC_help
 	smashes_tables = TRUE
 	display_combos = TRUE
-	var/old_grab_state = null
-	var/datum/weakref/restraining_mob
+	/// Weakref to a mob we're currently restraining (with grab-grab combo)
+	VAR_PRIVATE/datum/weakref/restraining_mob
 	/// Probability of successfully blocking attacks while on throw mode
 	var/block_chance = 75
 
@@ -217,7 +217,7 @@
 	if(check_streak(attacker, defender)) //if a combo is made no grab upgrade is done
 		return MARTIAL_ATTACK_SUCCESS
 
-	old_grab_state = attacker.grab_state
+	var/old_grab_state = attacker.grab_state
 	defender.grabbedby(attacker, TRUE)
 	if(old_grab_state == GRAB_PASSIVE)
 		defender.drop_all_held_items()
