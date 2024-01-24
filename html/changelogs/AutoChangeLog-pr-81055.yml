@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Replacing a limb fully claimed by an infested burn wound now properly grants you control of the limb back"
-  - bugfix: "Losing control of a limb now sounds less weird in chat"
