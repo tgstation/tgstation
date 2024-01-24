@@ -106,7 +106,7 @@
 	playsound(defender, 'sound/weapons/punch1.ogg', 25, TRUE, -1)
 	if(defender.stat != DEAD && !defender.IsUnconscious() && defender.getStaminaLoss() >= 80) //We put our target to sleep.
 		defender.visible_message(
-			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold"),
+			span_danger("[attacker] carefully pinch a nerve in [defender]'s neck, knocking them out cold!"),
 			span_userdanger("[attacker] pinches something in your neck, and you fall unconscious!"),
 		)
 		grab_log_description = "grabbed and nerve pinched"

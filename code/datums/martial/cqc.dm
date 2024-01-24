@@ -69,7 +69,7 @@
 
 
 /datum/martial_art/cqc/reset_streak(mob/living/new_target)
-	if(IS_WEAKREF_OF(new_target, restraining_mob))
+	if(!IS_WEAKREF_OF(new_target, restraining_mob))
 		restraining_mob = null
 	return ..()
 

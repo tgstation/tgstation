@@ -31,6 +31,13 @@
 	/// If TRUE, this style allows you to punch people despite being a pacifist (IE: Boxing, which does no damage)
 	var/pacifist_style = FALSE
 
+/datum/martial_art/Destroy()
+	if(!isnull(holder))
+		var/mob/living/go_away = holder
+		remove(holder)
+		go_away.mind.martial_art = null
+	return ..()
+
 /datum/martial_art/serialize_list(list/options, list/semvers)
 	. = ..()
 
@@ -223,8 +230,9 @@
 
 			store(new_holder.mind.martial_art, new_holder)
 
-		else
-			new_holder.mind.martial_art.on_remove(new_holder)
+		// melbert todo
+		// else
+		// 	new_holder.mind.martial_art.on_remove(new_holder)
 
 	new_holder.mind.martial_art = src
 	holder = new_holder
