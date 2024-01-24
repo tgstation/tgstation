@@ -78,9 +78,9 @@
 
 /datum/martial_art/krav_maga/on_remove(mob/living/remove_from)
 	to_chat(remove_from, span_userdanger("You suddenly forget the arts of [name]..."))
-	neckchop.Remove(remove_from)
-	legsweep.Remove(remove_from)
-	lungpunch.Remove(remove_from)
+	neckchop?.Remove(remove_from)
+	legsweep?.Remove(remove_from)
+	lungpunch?.Remove(remove_from)
 	return ..()
 
 /datum/martial_art/krav_maga/proc/check_streak(mob/living/attacker, mob/living/defender)
@@ -212,7 +212,16 @@
 //Krav Maga Gloves
 
 /obj/item/clothing/gloves/krav_maga
-	var/datum/martial_art/krav_maga/style = new
+	var/datum/martial_art/krav_maga/style
+
+/obj/item/clothing/gloves/krav_maga/Initialize(mapload)
+	. = ..()
+	style = new()
+	style.allow_temp_override = FALSE
+
+/obj/item/clothing/gloves/krav_maga/Destroy()
+	QDEL_NULL(style)
+	return ..()
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	. = ..()

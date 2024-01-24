@@ -203,7 +203,7 @@
 	if(iscarbon(new_character))
 		var/mob/living/carbon/carbon_character = new_character
 		carbon_character.last_mind = src
-	martial_art?.transfer_to(new_character)
+
 	RegisterSignal(new_character, COMSIG_LIVING_DEATH, PROC_REF(set_death_time))
 	if(active || force_key_move)
 		new_character.key = key //now transfer the key to link the client to our new body
@@ -212,7 +212,8 @@
 		new_character.client.init_verbs() // re-initialize character specific verbs
 
 	SEND_SIGNAL(src, COMSIG_MIND_TRANSFERRED, old_current)
-	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO)
+	SEND_SIGNAL(current, COMSIG_MOB_MIND_TRANSFERRED_INTO, old_current)
+	SEND_SIGNAL(old_current, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, current)
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)

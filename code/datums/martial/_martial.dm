@@ -18,7 +18,8 @@
 
 	/// Path to verb to display help text for this martial art.
 	var/help_verb
-	/// If TRUE, this martial art can be overridden by temporary martial arts
+	/// If TRUE, this martial art can be overridden and stored (via base) by other martial arts if deemed "temporary" via teach().
+	/// If FALSE, the martial art cannot be overridden, meaning new martial arts cannot be taught unless this is first removed.
 	var/allow_temp_override = TRUE
 	/// If TRUE, this martial art smashes tables when performing table slams and head smashes
 	var/smashes_tables = FALSE
@@ -33,9 +34,7 @@
 
 /datum/martial_art/Destroy()
 	if(!isnull(holder))
-		var/mob/living/go_away = holder
 		remove(holder)
-		go_away.mind.martial_art = null
 	return ..()
 
 /datum/martial_art/serialize_list(list/options, list/semvers)
@@ -230,9 +229,9 @@
 
 			store(new_holder.mind.martial_art, new_holder)
 
-		// melbert todo
-		// else
-		// 	new_holder.mind.martial_art.on_remove(new_holder)
+		else
+			new_holder.mind.martial_art.remove(new_holder)
+			// The old martial art will be nulled out, and probably get GC'd if not handled by something else.
 
 	new_holder.mind.martial_art = src
 	holder = new_holder
@@ -253,12 +252,14 @@
 	ASSERT(current_holder == old.holder)
 	ASSERT(current_holder.mind.martial_art == old)
 
-	old.on_remove(current_holder)
 	if (old.base) //Checks if old is temporary, if so it will not be stored.
 		base = old.base
+		old.base = null
 
 	else //Otherwise, old is stored.
 		base = old
+
+	old.remove(current_holder)
 
 /**
  * Removes this martial art from the passed mob.
@@ -273,6 +274,7 @@
 	ASSERT(old_holder.mind.martial_art == src)
 
 	on_remove(old_holder)
+	old_holder.mind.martial_art = null
 	base?.teach(old_holder)
 	holder = null
 
@@ -285,6 +287,7 @@
 	RegisterSignal(new_holder, COMSIG_QDELETING, PROC_REF(holder_deleted))
 	RegisterSignal(new_holder, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 	RegisterSignal(new_holder, COMSIG_LIVING_GRAB, PROC_REF(attempt_grab))
+	RegisterSignal(new_holder, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF, PROC_REF(transfer_martial_arts))
 
 /**
  * Called when this martial art is removed from a mob.
@@ -292,17 +295,15 @@
 /datum/martial_art/proc/on_remove(mob/living/remove_from)
 	if(help_verb)
 		remove_verb(remove_from, help_verb)
-	UnregisterSignal(remove_from, list(COMSIG_QDELETING, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB))
+	UnregisterSignal(remove_from, list(COMSIG_QDELETING, COMSIG_LIVING_UNARMED_ATTACK, COMSIG_LIVING_GRAB, COMSIG_MOB_MIND_TRANSFERRED_OUT_OF))
 
 /datum/martial_art/proc/holder_deleted(datum/source)
 	SIGNAL_HANDLER
 	holder = null
 
-/**
- * Transfers this martial art to the passed mob.
- */
-/datum/martial_art/proc/transfer_to(mob/living/new_character)
-	if(base) //Is the martial art temporary?
-		remove(new_character)
-	else
-		teach(new_character)
+/// Signal proc for [COMSIG_MOB_MIND_TRANSFERRED_OUT_OF] to pass martial arts between bodies on mindswap
+/datum/martial_art/proc/transfer_martial_arts(mob/living/old_body, mob/living/new_body)
+	SIGNAL_HANDLER
+
+	remove(old_body)
+	teach(new_body)

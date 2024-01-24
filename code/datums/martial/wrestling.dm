@@ -136,11 +136,11 @@ If you make a derivative work from this code, you must include this notification
 
 /datum/martial_art/wrestling/on_remove(mob/living/remove_from)
 	to_chat(remove_from, span_userdanger("You no longer feel that the tower of power is too sweet to be sour..."))
-	drop.Remove(remove_from)
-	kick.Remove(remove_from)
-	slam.Remove(remove_from)
-	throw_wrassle.Remove(remove_from)
-	strike.Remove(remove_from)
+	drop?.Remove(remove_from)
+	kick?.Remove(remove_from)
+	slam?.Remove(remove_from)
+	throw_wrassle?.Remove(remove_from)
+	strike?.Remove(remove_from)
 	return ..()
 
 /datum/martial_art/wrestling/harm_act(mob/living/attacker, mob/living/defender)
@@ -485,16 +485,23 @@ If you make a derivative work from this code, you must include this notification
 
 /obj/item/storage/belt/champion/wrestling
 	name = "Wrestling Belt"
-	var/datum/martial_art/wrestling/style = new
+	var/datum/martial_art/wrestling/style
+
+/obj/item/storage/belt/champion/wrestling/Initialize(mapload)
+	. = ..()
+	style = new()
+	style.allow_temp_override = FALSE
+
+/obj/item/storage/belt/champion/wrestling/Destroy()
+	QDEL_NULL(style)
+	return ..()
 
 /obj/item/storage/belt/champion/wrestling/equipped(mob/user, slot)
 	. = ..()
 	if(slot & ITEM_SLOT_BELT)
 		style.teach(user, TRUE)
-	return
 
 /obj/item/storage/belt/champion/wrestling/dropped(mob/user)
 	. = ..()
-	if(user.get_item_by_slot(ITEM_SLOT_BELT) == src)
+	if(style.holder == user)
 		style.remove(user)
-	return
