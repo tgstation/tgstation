@@ -42,12 +42,13 @@
 /datum/species/mush/on_species_gain(mob/living/carbon/C, datum/species/old_species)
 	. = ..()
 	if(ishuman(C))
-		mush = new(null)
+		mush = new()
 		mush.teach(C)
+		mush.allow_temp_override = FALSE
 
 /datum/species/mush/on_species_loss(mob/living/carbon/C)
 	. = ..()
-	mush.remove(C)
+	mush.fully_remove(C)
 	QDEL_NULL(mush)
 
 /datum/species/mush/handle_chemical(datum/reagent/chem, mob/living/carbon/human/affected, seconds_per_tick, times_fired)
@@ -87,4 +88,3 @@
 		return FALSE
 
 	return TRUE
-

@@ -508,5 +508,4 @@ If you make a derivative work from this code, you must include this notification
 
 /obj/item/storage/belt/champion/wrestling/dropped(mob/user)
 	. = ..()
-	if(style.holder == user)
-		style.remove(user)
+	style.fully_remove(user)

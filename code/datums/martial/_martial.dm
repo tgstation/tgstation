@@ -9,7 +9,7 @@
 	var/max_streak_length = 6
 
 	/// The current mob associated with this martial art datum. Do not set directly.
-	VAR_FINAL/mob/living/holder
+	VAR_PRIVATE/mob/living/holder
 	/// Weakref to the last mob we attacked, for determining when to reset streaks
 	VAR_PRIVATE/datum/weakref/current_target
 	/// Used for temporary martial arts.
@@ -19,7 +19,6 @@
 	/// Path to verb to display help text for this martial art.
 	var/help_verb
 	/// If TRUE, this martial art can be overridden and stored (via base) by other martial arts if deemed "temporary" via teach().
-	/// If FALSE, the martial art cannot be overridden, meaning new martial arts cannot be taught unless this is first removed.
 	var/allow_temp_override = TRUE
 	/// If TRUE, this martial art smashes tables when performing table slams and head smashes
 	var/smashes_tables = FALSE
@@ -60,8 +59,6 @@
 	if(!can_use(source))
 		return NONE
 
-	// melbert todo : handle check_block
-
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
 		return disarm_act(source, attack_target)
 
@@ -86,14 +83,16 @@
 	if(!can_use(source))
 		return NONE
 
-	// melbert todo : handle check_block
-
 	return grab_act(source, grabbing)
 
 /**
  * Called when help-intenting on someone
  *
- * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
+ * What is checked going into this:
+ * Adjacency, [TRAIT_MARTIAL_ARTS_IMMUNE], attacker incapacitated, can_unarmed_attack, can_use
+ *
+ * What is NOT:
+ * check_block
  *
  * Arguments
  * * mob/living/attacker - The mob attacking
@@ -112,7 +111,11 @@
 /**
  * Called when disarm-intenting on someone
  *
- * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
+ * What is checked going into this:
+ * Adjacency, [TRAIT_MARTIAL_ARTS_IMMUNE], attacker incapacitated, can_unarmed_attack, can_use
+ *
+ * What is NOT:
+ * check_block
  *
  * Arguments
  * * mob/living/attacker - The mob attacking
@@ -131,7 +134,11 @@
 /**
  * Called when harm-intenting on someone
  *
- * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
+ * What is checked going into this:
+ * Adjacency, [TRAIT_MARTIAL_ARTS_IMMUNE], attacker incapacitated, can_unarmed_attack, can_use
+ *
+ * What is NOT:
+ * check_block
  *
  * Arguments
  * * mob/living/attacker - The mob attacking
@@ -150,7 +157,11 @@
 /**
  * Called when grabbing someone
  *
- * Block is NOT checked going into this, you must check for block yourself if you want the attack to be blockable.
+ * What is checked going into this:
+ * Adjacency, [TRAIT_MARTIAL_ARTS_IMMUNE], attacker incapacitated, can_unarmed_attack, can_use
+ *
+ * What is NOT:
+ * check_block
  *
  * Arguments
  * * mob/living/attacker - The mob attacking
@@ -230,45 +241,43 @@
 	if(!istype(new_holder) || isnull(new_holder.mind))
 		return FALSE
 
-	if(!isnull(new_holder.mind.martial_art))
-		if(make_temporary)
-			if(!new_holder.mind.martial_art.allow_temp_override)
-				return FALSE
-			store(new_holder.mind.martial_art, new_holder)
-			// melbert todo : is a fuck
-			// maybe fix by giving martial arts priority levels? krav maga gloves should not override real cqc, etc
+	var/datum/martial_art/existing_martial = new_holder.mind.martial_art
+	if(!isnull(existing_martial))
+		if(make_temporary && !existing_martial.allow_temp_override)
+			return FALSE
 
-		else
-			new_holder.mind.martial_art.remove(new_holder)
-			// The old martial art will be nulled out, and probably get GC'd if not handled by something else.
+		if(existing_martial.base)
+			store_martial_art(existing_martial.base)
+			existing_martial.unstore_martial_art()
+		else if(make_temporary)
+			store_martial_art(existing_martial)
+
+		// Nulls out any existing martial art, it'll get GC'd if nothing owns it
+		existing_martial.remove(new_holder)
 
 	new_holder.mind.martial_art = src
 	holder = new_holder
 	on_teach(new_holder)
 	return TRUE
 
-/**
- * Stores the passed martial art in this martial art's base variable.
- *
- * If the passed martial art is ALSO temporary (has its own base), it will not be stored -
- * instead we will store IT'S base.
- *
- * Arguments
- * * datum/martial_art/old - The martial art to store.
- * * mob/living/current_holder - The mob that currently has the martial art.
- */
-/datum/martial_art/proc/store(datum/martial_art/old, mob/living/current_holder)
-	ASSERT(current_holder == old.holder)
-	ASSERT(current_holder.mind.martial_art == old)
+/// Stores the passed martial art in the base var.
+/datum/martial_art/proc/store_martial_art(datum/martial_art/martial)
+	if(!isnull(base))
+		UnregisterSignal(base, COMSIG_QDELETING)
 
-	if (old.base) //Checks if old is temporary, if so it will not be stored.
-		base = old.base
-		old.base = null
+	base = martial
+	RegisterSignal(base, COMSIG_QDELETING, PROC_REF(base_deleted))
 
-	else //Otherwise, old is stored.
-		base = old
+/// Unstores the base var.
+/datum/martial_art/proc/unstore_martial_art()
+	if(isnull(base))
+		return
+	UnregisterSignal(base, COMSIG_QDELETING)
+	base = null
 
-	old.remove(current_holder)
+/datum/martial_art/proc/base_deleted(datum/source)
+	SIGNAL_HANDLER
+	base = null
 
 /**
  * Removes this martial art from the passed mob.
@@ -285,8 +294,34 @@
 	on_remove(old_holder)
 	old_holder.mind.martial_art = null
 	base?.teach(old_holder)
-	// base = null
+	unstore_martial_art()
 	holder = null
+
+/**
+ * A helper proc to remove the martial art from the passed mob fully, e
+ * ven if stored in another martial art's base.
+ *
+ * Arguments
+ * * mob/living/maybe_holder - The mob to check.
+ *
+ * Returns
+ * * TRUE - If the martial art was removed in some way
+ * * FALSE - If nothing happened
+ */
+/datum/martial_art/proc/fully_remove(mob/living/maybe_holder)
+	var/datum/martial_art/holder_art = maybe_holder.mind.martial_art
+	if(isnull(holder_art))
+		return FALSE
+
+	if(holder_art == src)
+		remove(maybe_holder)
+		return TRUE
+
+	if(holder_art.base == src)
+		holder_art.unstore_martial_art()
+		return TRUE
+
+	return FALSE
 
 /**
  * Called when this martial art is added to a mob.

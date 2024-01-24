@@ -26,11 +26,10 @@
 	. = ..()
 	if(isnull(imp_in.mind))
 		return
-	if(style.holder == imp_in)
-		style.remove(imp_in)
+	if(style.fully_remove(imp_in))
+		return
 
-	else
-		style.teach(imp_in, TRUE)
+	style.teach(imp_in, TRUE)
 
 /obj/item/implanter/krav_maga
 	name = "implanter (krav maga)"

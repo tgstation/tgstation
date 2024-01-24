@@ -20,6 +20,7 @@
 	var/obj/item/bodypart/arm/active_arm = attacker.get_active_hand()
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
 
+	var/damage = rand(5, 8) + active_arm.unarmed_damage_low
 	var/atk_verb = pick("left hook", "right hook", "straight punch")
 	if(damage <= 0)
 		playsound(defender, active_arm.unarmed_miss_sound, 25, TRUE, -1)
@@ -34,7 +35,6 @@
 		log_combat(attacker, defender, "attempted to hit", atk_verb)
 		return MARTIAL_ATTACK_FAIL
 
-	var/damage = rand(5, 8) + active_arm.unarmed_damage_low
 	if(defender.check_block(attacker, damage, "[attacker]'s [atk_verb]", UNARMED_ATTACK))
 		return MARTIAL_ATTACK_FAIL
 
@@ -99,5 +99,4 @@
 
 /obj/item/clothing/gloves/boxing/dropped(mob/user)
 	. = ..()
-	if(style.holder == user)
-		style.remove(user)
+	style.fully_remove(user)

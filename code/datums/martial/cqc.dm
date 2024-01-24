@@ -236,21 +236,6 @@
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
-	if(defender.check_block(attacker, 10, attacker.name, UNARMED_ATTACK))
-		return MARTIAL_ATTACK_FAIL
-
-	if(attacker.resting && defender.stat != DEAD && defender.body_position == STANDING_UP)
-		defender.visible_message(span_danger("[attacker] leg sweeps [defender]!"), \
-						span_userdanger("Your legs are sweeped by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), null, attacker)
-		to_chat(attacker, span_danger("You leg sweep [defender]!"))
-		playsound(get_turf(attacker), 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
-		attacker.do_attack_animation(defender)
-		defender.apply_damage(10, BRUTE)
-		defender.Knockdown(5 SECONDS)
-		log_combat(attacker, defender, "sweeped (CQC)")
-		reset_streak()
-		return MARTIAL_ATTACK_SUCCESS
-
 	if((attacker.grab_state == GRAB_KILL) && attacker.zone_selected == BODY_ZONE_HEAD && defender.stat != DEAD)
 		var/obj/item/bodypart/head = defender.get_bodypart("head")
 		if(head)
@@ -268,6 +253,26 @@
 				defender.death()
 				defender.investigate_log("has had [defender.p_their()] neck snapped by [attacker].", INVESTIGATE_DEATHS)
 			return MARTIAL_ATTACK_SUCCESS
+
+	if(defender.check_block(attacker, 10, attacker.name, UNARMED_ATTACK))
+		return MARTIAL_ATTACK_FAIL
+
+	if(attacker.resting && defender.stat != DEAD && defender.body_position == STANDING_UP)
+		defender.visible_message(
+			span_danger("[attacker] leg sweeps [defender]!"),
+			span_userdanger("Your legs are sweeped by [attacker]!"),
+			span_hear("You hear a sickening sound of flesh hitting flesh!"),
+			null,
+			attacker,
+		)
+		to_chat(attacker, span_danger("You leg sweep [defender]!"))
+		playsound(attacker, 'sound/effects/hit_kick.ogg', 50, TRUE, -1)
+		attacker.do_attack_animation(defender)
+		defender.apply_damage(10, BRUTE)
+		defender.Knockdown(5 SECONDS)
+		log_combat(attacker, defender, "sweeped (CQC)")
+		reset_streak()
+		return MARTIAL_ATTACK_SUCCESS
 
 	add_to_streak("H", defender)
 	if(check_streak(attacker, defender))

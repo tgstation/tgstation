@@ -138,7 +138,7 @@
 	dying.death()
 
 /datum/martial_art/plasma_fist/harm_act(mob/living/attacker, mob/living/defender)
-	if(defender.check_block(attacker, final_damage, attacker.name, UNARMED_ATTACK))
+	if(defender.check_block(attacker, 10, attacker.name, UNARMED_ATTACK))
 		return MARTIAL_ATTACK_FAIL
 
 	add_to_streak("H", defender)

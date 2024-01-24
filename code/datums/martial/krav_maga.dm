@@ -235,8 +235,7 @@
 
 /obj/item/clothing/gloves/krav_maga/dropped(mob/user)
 	. = ..()
-	if(user.get_item_by_slot(ITEM_SLOT_GLOVES) == src)
-		style.remove(user)
+	style.fully_remove(user)
 
 /obj/item/clothing/gloves/krav_maga/sec//more obviously named, given to sec
 	name = "krav maga gloves"
