@@ -1,7 +1,7 @@
 /datum/map_template/random_room/random_engines/kilo_supermatter
 	name = "Kilo Supermatter"
 	room_id = "kilo_supermatter"
-	mappath = "monkestation/_maps/RandomEngines/KiloStation/supermatter.dmm"
+	mappath = "_maps/~monkestation/RandomEngines/KiloStation/supermatter.dmm"
 	centerspawner = FALSE
 	template_height = 21
 	template_width = 20
@@ -11,7 +11,7 @@
 /datum/map_template/random_room/random_engines/kilo_singularity
 	name = "Kilo Singularity"
 	room_id = "kilo_singularity"
-	mappath = "monkestation/_maps/RandomEngines/KiloStation/singularity.dmm"
+	mappath = "_maps/~monkestation/RandomEngines/KiloStation/singularity.dmm"
 	centerspawner = FALSE
 	template_height = 21
 	template_width = 20

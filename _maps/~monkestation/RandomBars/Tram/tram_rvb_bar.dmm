@@ -1,0 +1,4155 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ax" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue"
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"aG" = (
+/obj/machinery/vending/snack,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"aL" = (
+/obj/structure/sign/clock/directional/north,
+/turf/open/openspace,
+/area/station/commons/lounge)
+"aR" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"bh" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"bo" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"bw" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/barricade/security,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"bS" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/cable,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"bZ" = (
+/obj/structure/rack,
+/obj/item/holosign_creator/robot_seat/restaurant,
+/obj/item/book/manual/chef_recipes,
+/obj/item/knife/kitchen,
+/obj/machinery/light/small/directional/east,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"cu" = (
+/obj/structure/chair/sofa/right{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 8;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"cy" = (
+/obj/machinery/vending/cola/red,
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"cD" = (
+/obj/structure/chair/sofa/right{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 4;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"cG" = (
+/obj/effect/turf_decal/tile/dark/half,
+/obj/effect/landmark/start/mime,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_half,
+/area/station/service/theater)
+"cH" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/poster/official/random/directional/south,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"cI" = (
+/obj/structure/chair/sofa/left{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 8;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"cZ" = (
+/turf/closed/wall,
+/area/station/service/theater)
+"dk" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/machinery/atm{
+	pixel_x = 30;
+	pixel_y = 0
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"dn" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"dp" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/south,
+/obj/machinery/computer/slot_machine{
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"dy" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"dS" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"dT" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ep" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/effect/landmark/start/bartender,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"eB" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Bar Lounge South East"
+	},
+/obj/structure/cable,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"eF" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"eJ" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"eP" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"eW" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"eX" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"fl" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/machinery/door/airlock{
+	name = "Bar Storage"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"fm" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/table/wood,
+/obj/item/flashlight/lamp/bananalamp{
+	pixel_y = 3
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"fr" = (
+/obj/item/radio/intercom/directional/east,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 8
+	},
+/area/station/service/theater)
+"fG" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=1";
+	location = "Bar";
+	name = "navigation beacon (Bar Delivery)"
+	},
+/obj/machinery/door/window/right/directional/north{
+	name = "Bar Delivery Chute"
+	},
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/service/bar)
+"fI" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/landmark/start/assistant,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"fR" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"fU" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/item/kirbyplants{
+	icon_state = "plant-19"
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"fW" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=2";
+	location = "Theatre";
+	name = "navigation beacon (Theatre Delivery)"
+	},
+/obj/machinery/door/window/right/directional/south{
+	name = "Theatre Delivery Chute";
+	req_access = "theatre"
+	},
+/obj/effect/turf_decal/trimline/yellow/warning,
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/turf/open/floor/plating,
+/area/station/service/theater)
+"gb" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/structure/sink/kitchen/directional/north,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/station/service/bar)
+"gh" = (
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"gy" = (
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/obj/machinery/door/airlock{
+	name = "Bar Storage"
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"gN" = (
+/obj/machinery/navbeacon{
+	codes_txt = "delivery;dir=4";
+	location = "Kitchen";
+	name = "navigation beacon (Kitchen Delivery)"
+	},
+/obj/machinery/door/window/right/directional/west{
+	name = "Kitchen Delivery Chute";
+	req_access = "kitchen"
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/commons/lounge)
+"gX" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"hN" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"hW" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"hZ" = (
+/obj/machinery/vending/cigarette,
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ib" = (
+/obj/machinery/button/door/directional/south{
+	id = "playerscantreadthis";
+	name = "Kitchen Shutters Control"
+	},
+/obj/structure/table,
+/obj/machinery/processor{
+	pixel_y = 12
+	},
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Bar Lounge South East"
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"ic" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ij" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"ip" = (
+/obj/structure/table/wood,
+/obj/item/lipstick/random{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"iE" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/effect/turf_decal/trimline/white/corner{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"js" = (
+/obj/effect/turf_decal/trimline/yellow/warning{
+	dir = 1
+	},
+/obj/machinery/door/window/left/directional/north{
+	name = "Dumbwaiter Safety Door"
+	},
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"jv" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/dresser,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"jG" = (
+/obj/machinery/chem_master/condimaster{
+	name = "CondiMaster Neo"
+	},
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"jP" = (
+/obj/machinery/grill,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"jW" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/item/reagent_containers/condiment/saltshaker{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/condiment/peppermill{
+	pixel_x = 3
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"ke" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"kl" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"kq" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/junction/flip,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"kw" = (
+/obj/structure/closet/secure_closet/bar,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
+"ky" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 8
+	},
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 4
+	},
+/area/station/service/theater)
+"kC" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/status_display/ai/directional/north,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"kM" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"kV" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/west,
+/obj/machinery/recharger,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ln" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"lB" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"lZ" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/item/gun/ballistic/revolver/russian,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"mb" = (
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue"
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ml" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"mw" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/white/corner,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"mO" = (
+/obj/structure/table,
+/obj/item/storage/bag/tray,
+/obj/item/kitchen/rollingpin,
+/obj/item/clothing/head/utility/chefhat{
+	color = "#AF2020";
+	name = "blood-red chef's hat"
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"mP" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/table/wood,
+/obj/item/clothing/head/costume/irs,
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/station/service/bar)
+"mQ" = (
+/obj/machinery/vending/autodrobe,
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"mS" = (
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/food/flour,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"mZ" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"nk" = (
+/obj/machinery/vending/donksofttoyvendor,
+/obj/effect/turf_decal/tile/red/fourcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"no" = (
+/obj/structure/rack,
+/obj/item/food/pie/cream,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"nB" = (
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"nR" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/item/kitchen/spoon{
+	pixel_x = -2;
+	pixel_y = 7
+	},
+/obj/item/kitchen/fork{
+	pixel_x = -10;
+	pixel_y = 7
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"nU" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"nY" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ob" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Bar Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/turf/open/floor/plating,
+/area/station/service/kitchen)
+"oc" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"og" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/machinery/camera/directional/north{
+	c_tag = "Civilian - Theatre Backstage"
+	},
+/obj/structure/closet/crate/wooden/toy,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron,
+/area/station/service/theater)
+"op" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"os" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/window/reinforced/spawner/directional/north,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ov" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ox" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/turf/open/floor/iron/white/side,
+/area/station/service/bar)
+"oA" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
+/area/station/service/bar)
+"oC" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"oH" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/light/dim/directional/west,
+/obj/machinery/duct,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/obj/structure/disposalpipe/junction{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"oJ" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/machinery/recharger,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"oO" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"pa" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/status_display/ai/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"pb" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/obj/structure/desk_bell{
+	pixel_x = 7;
+	pixel_y = 12
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"pp" = (
+/obj/effect/landmark/start/cook,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"pE" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"pJ" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"pN" = (
+/obj/structure/closet/lasertag/blue,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/machinery/camera/directional/east,
+/obj/machinery/status_display/ai/directional/east,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"pP" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"qf" = (
+/obj/structure/closet/lasertag/red,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ql" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"qn" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"qG" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 8
+	},
+/obj/structure/table,
+/obj/item/food/baguette,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 4
+	},
+/area/station/service/theater)
+"qW" = (
+/obj/structure/chair/sofa/left{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 4;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"rm" = (
+/obj/structure/closet/lasertag/red,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/west,
+/obj/structure/sign/poster/official/enlist{
+	pixel_x = -32
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ru" = (
+/obj/machinery/griddle,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"ry" = (
+/obj/effect/landmark/navigate_destination/kitchen,
+/obj/effect/decal/cleanable/food/flour,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"rG" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/machinery/firealarm/directional/east,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"rV" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"sj" = (
+/turf/closed/wall,
+/area/station/service/kitchen)
+"sq" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"sC" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"sI" = (
+/obj/machinery/vending/cola/blue,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"sL" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "The Cantina"
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"sO" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"sP" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"tk" = (
+/obj/structure/table/wood,
+/obj/structure/mirror/directional/south,
+/obj/item/clothing/glasses/eyepatch,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"tn" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/firedoor,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"tt" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"tw" = (
+/obj/machinery/restaurant_portal/bar,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"tx" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/east,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 8
+	},
+/area/station/service/theater)
+"tG" = (
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Bar Lounge South East"
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/turf/open/floor/wood,
+/area/station/service/bar)
+"tL" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"tT" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/side,
+/area/station/service/bar)
+"uf" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/junction{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ug" = (
+/obj/machinery/door/airlock/freezer,
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"uu" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"uw" = (
+/obj/structure/musician/piano,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"uJ" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/turf/open/floor/iron,
+/area/station/service/theater)
+"uK" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/machinery/vending/snack/blue,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"uP" = (
+/obj/structure/table,
+/obj/machinery/reagentgrinder{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/food/piedough,
+/obj/effect/spawner/random/food_or_drink/cake_ingredients,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"uQ" = (
+/obj/structure/table,
+/obj/machinery/microwave,
+/obj/machinery/requests_console/directional/west{
+	assistance_requestable = 1;
+	department = "Kitchen";
+	name = "Kitchen Requests Console";
+	supplies_requestable = 1
+	},
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"uS" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"uX" = (
+/obj/structure/rack,
+/obj/item/hand_labeler,
+/obj/item/stack/package_wrap,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/obj/effect/spawner/random/food_or_drink/donkpockets,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"vn" = (
+/obj/machinery/restaurant_portal/restaurant,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/camera/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"vp" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"vQ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"wx" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/window/reinforced/spawner/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"wD" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/west,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/white/corner,
+/area/station/service/bar)
+"wF" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
+"wG" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"xb" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/structure/table/wood,
+/obj/item/holosign_creator/robot_seat/bar,
+/obj/machinery/airalarm/directional/east,
+/turf/open/floor/iron/white/side{
+	dir = 8
+	},
+/area/station/service/bar)
+"xj" = (
+/obj/machinery/vending/donksofttoyvendor,
+/obj/effect/turf_decal/tile/dark_blue/fourcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"xl" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"xC" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"xV" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"xX" = (
+/obj/machinery/stove,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"yb" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Theatre Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/commons/lounge)
+"yi" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"yu" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/landmark/navigate_destination/bar,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/white/side,
+/area/station/service/bar)
+"yz" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"yW" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"yY" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"zk" = (
+/turf/closed/mineral/random/stationside/asteroid/porus,
+/area/station/asteroid)
+"zm" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"zn" = (
+/obj/structure/reagent_dispensers/cooking_oil,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"zz" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"zD" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/mob/living/carbon/human/species/monkey/punpun,
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/station/service/bar)
+"zF" = (
+/obj/structure/closet/secure_closet/freezer/kitchen,
+/obj/item/reagent_containers/condiment/rice,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"zQ" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/east,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"At" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/machinery/computer/slot_machine{
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Av" = (
+/obj/effect/turf_decal/tile/dark/half,
+/obj/structure/table,
+/obj/item/lipstick/random{
+	pixel_x = 2;
+	pixel_y = 2
+	},
+/obj/item/clothing/glasses/monocle,
+/turf/open/floor/iron/white/smooth_half,
+/area/station/service/theater)
+"Ax" = (
+/obj/structure/closet/secure_closet/freezer/meat,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"Ay" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/machinery/vending/boozeomat{
+	pixel_y = -32
+	},
+/obj/machinery/light/dim/directional/west,
+/obj/structure/sign/poster/official/work_for_a_future{
+	pixel_x = -31;
+	pixel_y = 4
+	},
+/turf/open/floor/iron/white/corner{
+	dir = 4
+	},
+/area/station/service/bar)
+"AG" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/structure/table/reinforced,
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/east,
+/obj/machinery/recharger,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"AR" = (
+/obj/effect/spawner/structure/window,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/service/bar)
+"AX" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Bc" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/warning,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Bi" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"Bv" = (
+/obj/item/kirbyplants{
+	icon_state = "plant-14"
+	},
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"By" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/item/storage/dice,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"BV" = (
+/obj/effect/spawner/structure/window,
+/turf/open/space/basic,
+/area/station/commons/lounge)
+"Cd" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "Kitchen"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/kitchen,
+/obj/machinery/duct,
+/obj/machinery/door/firedoor,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"Co" = (
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"CD" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"CP" = (
+/obj/machinery/door/window/left/directional/north{
+	dir = 4;
+	name = "Dumbwaiter Safety Door"
+	},
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Di" = (
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/computer/security/telescreen/entertainment/directional/west,
+/turf/closed/wall,
+/area/station/service/kitchen)
+"Dn" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Dp" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Dr" = (
+/turf/closed/wall,
+/area/station/service/bar)
+"Dx" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"DB" = (
+/obj/structure/closet/secure_closet/freezer/fridge,
+/obj/machinery/light/small/directional/west,
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"DK" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"DL" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"DT" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"Eu" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/obj/structure/displaycase/forsale/kitchen{
+	pixel_y = 8
+	},
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"EN" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"EY" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ft" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/east,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron/white/corner{
+	dir = 8
+	},
+/area/station/service/bar)
+"Fy" = (
+/obj/machinery/light/dim/directional/north,
+/obj/structure/closet/secure_closet/freezer/cream_pie,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"FQ" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"FT" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ga" = (
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"Gc" = (
+/obj/machinery/griddle,
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"Gi" = (
+/obj/structure/chair/sofa/right{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 8;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Gs" = (
+/obj/structure/table/wood/fancy/red,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "playerscantreadthis";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/structure/desk_bell{
+	pixel_w = 8;
+	pixel_x = 7
+	},
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/service/kitchen)
+"GF" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"GS" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"GT" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"He" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Hj" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Hk" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/mapping_helpers/mail_sorting/service/theater,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 2
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Hm" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Hp" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 4
+	},
+/area/station/service/theater)
+"Hw" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"HD" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"HR" = (
+/obj/structure/closet/lasertag/blue,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/east,
+/obj/structure/sign/poster/official/enlist{
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"HZ" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ic" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ii" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Io" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ip" = (
+/obj/structure/closet/lasertag/blue,
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Iq" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"IB" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/machinery/camera/directional/north,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"IC" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"IQ" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/machinery/atm{
+	pixel_x = -30;
+	pixel_y = 0
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Jn" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/corner{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Jp" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/chem_master/condimaster{
+	desc = "Looks like a knock-off chem-master. Perhaps useful for separating liquids when mixing drinks precisely. Also dispenses condiments.";
+	name = "HoochMaster Deluxe"
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
+"Jt" = (
+/obj/effect/turf_decal/tile/dark/half/contrasted{
+	dir = 4
+	},
+/obj/structure/mirror/directional/north,
+/obj/structure/table,
+/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing,
+/turf/open/floor/iron/white/smooth_edge{
+	dir = 8
+	},
+/area/station/service/theater)
+"Jv" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/machinery/computer/slot_machine{
+	pixel_y = 2
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Jy" = (
+/obj/effect/decal/cleanable/confetti,
+/obj/structure/chair/wood,
+/obj/effect/landmark/start/clown,
+/turf/open/floor/iron/vaporwave,
+/area/station/service/theater)
+"Jz" = (
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue"
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"JQ" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ka" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Kh" = (
+/obj/structure/chair/sofa/right{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 4;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Km" = (
+/obj/machinery/vending/wardrobe/chef_wardrobe,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"Kt" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"KA" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/trimline/white/corner{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"KY" = (
+/obj/structure/chair/sofa/left{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 4;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/machinery/camera/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Lg" = (
+/obj/machinery/deepfryer,
+/obj/structure/sign/poster/official/random/directional/south,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"LC" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"LS" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/status_display/ai/directional/south,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/station/service/bar)
+"LW" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/machinery/light/dim/directional/north,
+/obj/machinery/status_display/ai/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Mb" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 1
+	},
+/obj/machinery/light/dim/directional/north,
+/obj/item/radio/intercom/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Mr" = (
+/obj/machinery/barsign/directional/south{
+	icon_state = "theouterspess"
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ME" = (
+/obj/machinery/elevator_control_panel/directional/north{
+	desc = "A small control panel used to move the kitchen dumbwaiter up and down.";
+	linked_elevator_id = "dumbwaiter_lift";
+	name = "Dumbwaiter Control Panel";
+	preset_destination_names = list("2"="Hydroponics","3"="Kitchen")
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"MO" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Nn" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/machinery/light/dim/directional/north,
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"NE" = (
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue"
+	},
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"NM" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/reagentgrinder{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
+"NT" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/machinery/light/dim/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/sign/poster/official/random/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"NV" = (
+/obj/machinery/vending/dinnerware,
+/obj/machinery/light/dim/directional/south,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"NZ" = (
+/obj/machinery/power/apc/auto_name/directional/east,
+/obj/structure/cable,
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"Om" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Or" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/obj/effect/spawner/random/entertainment/lighter,
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"Oz" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "The Cantina"
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"OG" = (
+/obj/structure/table/wood/fancy/royalblue,
+/obj/effect/turf_decal/tile/dark/fourcorners,
+/obj/machinery/door/firedoor,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"OK" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/light/dim/directional/east,
+/turf/open/floor/iron/white/corner{
+	dir = 1
+	},
+/area/station/service/bar)
+"OX" = (
+/obj/structure/reagent_dispensers/beerkeg,
+/obj/machinery/light/dim/directional/west,
+/obj/structure/table/wood,
+/turf/open/floor/wood,
+/area/station/service/bar)
+"Pb" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Pg" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/structure/barricade/security,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"PI" = (
+/obj/effect/decal/cleanable/confetti,
+/turf/closed/wall,
+/area/station/commons/lounge)
+"PT" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"PV" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Qo" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"QA" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 4
+	},
+/turf/open/floor/iron/freezer,
+/area/station/service/kitchen)
+"QC" = (
+/turf/template_noop,
+/area/template_noop)
+"QR" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Rc" = (
+/obj/machinery/deepfryer,
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"Rf" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ru" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"RC" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/landmark/start/assistant,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"RP" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"RY" = (
+/obj/effect/turf_decal/tile/dark/half,
+/obj/machinery/light/dim/directional/north,
+/obj/structure/rack,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/effect/spawner/random/entertainment/musical_instrument,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron/white/smooth_half,
+/area/station/service/theater)
+"Sc" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Sd" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Sj" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Sm" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Su" = (
+/obj/machinery/door/airlock{
+	name = "Theatre Backstage"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/service/theatre,
+/obj/machinery/door/firedoor,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
+/turf/open/floor/iron,
+/area/station/service/theater)
+"SJ" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/turf/open/floor/iron/white/side{
+	dir = 4
+	},
+/area/station/service/bar)
+"Tb" = (
+/obj/structure/chair/sofa/left{
+	color = "#3b88df";
+	desc = "You sit in this. Either by will or force. It has been recently reupholstered with a fresh blue cloth.";
+	dir = 8;
+	name = "blue sofa"
+	},
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Td" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue";
+	dir = 8
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Tj" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Tu" = (
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Tv" = (
+/obj/effect/decal/cleanable/food/flour,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"Tz" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"TH" = (
+/turf/closed/wall,
+/area/station/commons/lounge)
+"TI" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/mapping_helpers/mail_sorting/service/kitchen,
+/obj/structure/disposalpipe/sorting/mail/flip{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"TL" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/machinery/camera/directional/east,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"TS" = (
+/obj/structure/closet/lasertag/red,
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/red,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/camera/directional/west,
+/obj/machinery/status_display/ai/directional/west,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ub" = (
+/obj/effect/turf_decal/tile/red/opposingcorners,
+/obj/structure/barricade/security,
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ue" = (
+/turf/open/misc/asteroid,
+/area/station/asteroid)
+"Uk" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/red{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 1
+	},
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ul" = (
+/obj/structure/table,
+/obj/item/reagent_containers/condiment/enzyme,
+/obj/item/reagent_containers/cup/soup_pot,
+/obj/item/kitchen/spoon/soup_ladle,
+/obj/machinery/light/dim/directional/north,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"Ux" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue";
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Uz" = (
+/obj/effect/turf_decal/tile/red/anticorner/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/firealarm/directional/west,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"UQ" = (
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"UU" = (
+/obj/effect/turf_decal/tile/red/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/trimline/white/warning{
+	dir = 4
+	},
+/obj/machinery/light/dim/directional/east,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"UW" = (
+/obj/machinery/door/window/left/directional/north{
+	dir = 8;
+	name = "Dumbwaiter Safety Door"
+	},
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Vb" = (
+/obj/effect/turf_decal/tile/dark_blue/anticorner/contrasted,
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Vg" = (
+/obj/structure/sink/kitchen/directional/east,
+/obj/machinery/duct,
+/obj/effect/decal/cleanable/food/egg_smudge,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"Vw" = (
+/obj/machinery/door/airlock/public/glass{
+	name = "The Cantina"
+	},
+/obj/machinery/door/firedoor,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Vy" = (
+/obj/effect/turf_decal/tile/dark{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/machinery/camera/directional/south{
+	c_tag = "Service - Bar Lounge South East"
+	},
+/obj/machinery/firealarm/directional/south,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/white/side{
+	dir = 1
+	},
+/area/station/service/bar)
+"VL" = (
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"VP" = (
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"VT" = (
+/obj/machinery/door/airlock/maintenance_hatch{
+	name = "Bar Maintenance Hatch"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/machinery/duct,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/turf/open/floor/plating,
+/area/station/commons/lounge)
+"Wb" = (
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/effect/turf_decal/tile/red{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Wm" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Ww" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/turf/open/floor/iron,
+/area/station/service/bar)
+"WK" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/structure/barricade/sandbags,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"WV" = (
+/obj/effect/turf_decal/tile/dark_blue,
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark{
+	dir = 1
+	},
+/obj/structure/chair/stool/bar/directional/south{
+	color = "#0000FF";
+	desc = "A metal bar stool. Someone has hastily spray-painted these chairs blue";
+	dir = 4
+	},
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"XM" = (
+/obj/machinery/oven,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"XP" = (
+/obj/effect/landmark/start/cook,
+/obj/effect/decal/cleanable/food/flour,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron/kitchen/small,
+/area/station/service/kitchen)
+"Yg" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/landmark/start/hangover,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"Yq" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 4
+	},
+/obj/effect/landmark/start/assistant,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"YD" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/theater)
+"Ze" = (
+/obj/effect/turf_decal/tile/dark_blue/opposingcorners,
+/obj/effect/turf_decal/tile/dark/opposingcorners{
+	dir = 1
+	},
+/obj/structure/table/wood,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/service/bar)
+"Zo" = (
+/obj/effect/turf_decal/tile/dark/opposingcorners,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/iron,
+/area/station/service/theater)
+"Zu" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/service/theater)
+"ZG" = (
+/obj/effect/turf_decal/tile/dark_blue/half/contrasted{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/dark_blue{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/dark,
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+"ZI" = (
+/obj/structure/chair/stool/bar/directional/west,
+/obj/effect/turf_decal/tile/red/opposingcorners{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/machinery/duct,
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/iron,
+/area/station/commons/lounge)
+
+(1,1,1) = {"
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+sj
+sj
+sj
+sj
+sj
+sj
+QC
+QC
+QC
+QC
+QC
+"}
+(2,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+sj
+zF
+DB
+jP
+zn
+sj
+QC
+QC
+QC
+QC
+QC
+"}
+(3,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+ob
+yY
+yY
+yY
+tL
+sj
+QC
+QC
+QC
+QC
+QC
+"}
+(4,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+sj
+sj
+QA
+Ax
+Ax
+eB
+sj
+sj
+QC
+QC
+QC
+QC
+"}
+(5,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
+sj
+Km
+Bi
+uX
+bZ
+NZ
+jG
+sj
+QC
+QC
+QC
+QC
+"}
+(6,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
+sj
+sj
+ug
+sj
+sj
+sj
+sj
+sj
+QC
+QC
+QC
+QC
+"}
+(7,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+Ue
+Ue
+Ue
+sj
+uQ
+vQ
+ru
+Gc
+Vg
+Lg
+sj
+QC
+QC
+QC
+QC
+"}
+(8,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+zk
+TH
+VT
+sj
+kC
+vQ
+ry
+VL
+pp
+Rc
+sj
+sj
+QC
+QC
+QC
+"}
+(9,1,1) = {"
+zk
+zk
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+TH
+mZ
+sj
+Ul
+XP
+uP
+XM
+mS
+pJ
+NV
+sj
+QC
+QC
+QC
+"}
+(10,1,1) = {"
+zk
+TH
+TH
+dS
+FQ
+TS
+rm
+qf
+FQ
+GT
+Uz
+TH
+IB
+Di
+rV
+CD
+mO
+xX
+Co
+ib
+sj
+sj
+TH
+TH
+TH
+"}
+(11,1,1) = {"
+zk
+TH
+NT
+eX
+eW
+ln
+eW
+eW
+eW
+eW
+PT
+kV
+mZ
+tn
+Tv
+ql
+eP
+eP
+gh
+gh
+Cd
+VP
+IQ
+aG
+BV
+"}
+(12,1,1) = {"
+zk
+TH
+Ru
+vp
+uS
+Ka
+uS
+ke
+Ka
+Ka
+Ka
+Wb
+mZ
+DT
+DT
+jW
+DT
+nR
+Gs
+DT
+sj
+vn
+Kt
+Bv
+BV
+"}
+(13,1,1) = {"
+TH
+TH
+pa
+HZ
+bw
+zm
+zm
+zm
+Ub
+nY
+EN
+cy
+xl
+Yg
+ZI
+uf
+yi
+ZI
+ZI
+ZI
+oH
+IC
+TI
+DK
+Vw
+"}
+(14,1,1) = {"
+TH
+nk
+CP
+PV
+pE
+mw
+UU
+Jn
+pE
+pE
+pE
+oJ
+QR
+wG
+wG
+oO
+wG
+RC
+wG
+Tz
+nU
+wG
+kl
+Uk
+sL
+"}
+(15,1,1) = {"
+TH
+TH
+aL
+js
+Ic
+Bc
+TH
+Mb
+Ic
+WK
+yW
+Iq
+Qo
+sP
+DL
+pP
+yW
+sO
+yW
+yW
+pP
+lB
+kM
+ic
+BV
+"}
+(16,1,1) = {"
+TH
+xj
+UW
+qn
+fR
+KA
+bh
+iE
+qn
+qn
+qn
+eF
+aR
+tt
+Sm
+sq
+Sm
+sq
+Sm
+HD
+JQ
+sq
+Dn
+Wm
+sL
+"}
+(17,1,1) = {"
+TH
+TH
+ME
+gX
+Pg
+Rf
+Rf
+Rf
+Pg
+gX
+Pb
+sI
+eJ
+uw
+wx
+Dp
+Tu
+xC
+UQ
+xC
+UQ
+xC
+ov
+EY
+Oz
+"}
+(18,1,1) = {"
+zk
+TH
+Hj
+yz
+yz
+yz
+yz
+Yq
+yz
+yz
+dT
+Tj
+eJ
+Td
+os
+Hk
+TL
+LC
+Ux
+oC
+WV
+dk
+FT
+fU
+BV
+"}
+(19,1,1) = {"
+zk
+TH
+zQ
+AX
+Sj
+zz
+dy
+Pb
+Pb
+Pb
+sC
+AG
+ZG
+kq
+Sc
+cH
+TH
+hZ
+Jv
+At
+dp
+TH
+Nn
+uK
+BV
+"}
+(20,1,1) = {"
+zk
+TH
+TH
+Dx
+Om
+Ip
+HR
+pN
+Om
+Om
+Vb
+PI
+rG
+Hw
+fI
+xV
+Dr
+Dr
+AR
+AR
+Dr
+Dr
+TH
+TH
+TH
+"}
+(21,1,1) = {"
+Ue
+Ue
+TH
+gN
+TH
+TH
+TH
+cZ
+Zu
+Zu
+Zu
+cZ
+TH
+tw
+He
+mb
+Or
+wD
+mP
+SJ
+Ay
+Dr
+QC
+QC
+QC
+"}
+(22,1,1) = {"
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+cZ
+dn
+Ga
+tk
+cZ
+KY
+cD
+oc
+Jz
+OG
+tT
+ep
+GS
+Vy
+Dr
+QC
+QC
+QC
+"}
+(23,1,1) = {"
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+Ue
+cZ
+Fy
+Jy
+fm
+Zu
+By
+MO
+ml
+ax
+pb
+yu
+NM
+wF
+gb
+Dr
+QC
+QC
+QC
+"}
+(24,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+cZ
+no
+bS
+ip
+Zu
+Gi
+Tb
+RP
+ax
+OG
+tT
+Jp
+Ze
+LS
+Dr
+QC
+QC
+QC
+"}
+(25,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+cZ
+jv
+YD
+mQ
+cZ
+LW
+bo
+oc
+ax
+OG
+ox
+Ww
+GF
+zD
+Dr
+zk
+zk
+zk
+"}
+(26,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+cZ
+og
+Zo
+uJ
+Su
+Sd
+Io
+op
+NE
+Eu
+Ft
+xb
+oA
+OK
+fG
+zk
+zk
+zk
+"}
+(27,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+fW
+ky
+Hp
+qG
+cZ
+qW
+Kh
+oc
+Mr
+Dr
+Dr
+Dr
+fl
+Dr
+Dr
+zk
+zk
+zk
+"}
+(28,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+cZ
+RY
+cG
+Av
+Zu
+hW
+lZ
+hN
+uu
+Dr
+OX
+kw
+ij
+nB
+Dr
+zk
+zk
+zk
+"}
+(29,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+cZ
+Jt
+fr
+tx
+Zu
+cu
+cI
+Om
+Ii
+gy
+Hm
+Hm
+tG
+Dr
+Dr
+zk
+zk
+zk
+"}
+(30,1,1) = {"
+zk
+zk
+zk
+zk
+zk
+Ue
+Ue
+cZ
+cZ
+cZ
+cZ
+cZ
+TH
+TH
+TH
+yb
+Dr
+Dr
+Dr
+Dr
+Dr
+zk
+zk
+zk
+zk
+"}

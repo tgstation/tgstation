@@ -1,0 +1,1183 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ag" = (
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"ak" = (
+/obj/structure/table/bronze,
+/obj/item/instrument/trumpet,
+/obj/item/instrument/piano_synth/robot,
+/obj/machinery/light/directional/north,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"aC" = (
+/obj/item/poster,
+/turf/closed/wall/mineral/bronze,
+/area/station/service/bar/backroom)
+"bL" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"cp" = (
+/obj/item/radio/intercom/directional/east,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"cx" = (
+/obj/machinery/computer/slot_machine,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"cG" = (
+/obj/structure/chair/bronze,
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"cR" = (
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"cX" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"df" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"dJ" = (
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"dK" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"dU" = (
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"ea" = (
+/obj/item/poster,
+/turf/template_noop,
+/area/template_noop)
+"eh" = (
+/obj/machinery/barsign/directional/north,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"eu" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"eC" = (
+/obj/structure/table/bronze,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 1;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"eU" = (
+/obj/structure/table/bronze,
+/obj/item/instrument/saxophone,
+/obj/item/instrument/trombone,
+/obj/machinery/firealarm/directional/west,
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"eZ" = (
+/obj/structure/table/bronze,
+/obj/item/gun/ballistic/revolver/russian,
+/obj/machinery/power/apc/auto_name/directional/north,
+/obj/structure/cable,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"fc" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"fY" = (
+/obj/effect/spawner/random/structure/musician/piano/random_piano,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"gO" = (
+/obj/structure/table/bronze,
+/obj/structure/desk_bell{
+	pixel_y = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 1;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"gP" = (
+/obj/structure/sign/poster/contraband/red_rum,
+/turf/closed/wall/mineral/bronze,
+/area/station/service/bar/backroom)
+"gS" = (
+/obj/structure/sign/picture_frame/portrait/bar,
+/turf/closed/wall/mineral/bronze,
+/area/station/service/bar)
+"ha" = (
+/obj/structure/table/bronze,
+/obj/item/holosign_creator/robot_seat/bar,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"hh" = (
+/obj/structure/chair/bronze,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"hH" = (
+/obj/structure/chair/bronze,
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"hQ" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/west,
+/obj/machinery/camera/autoname/directional/north,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"hS" = (
+/obj/structure/table/bronze,
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 1;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"iu" = (
+/obj/effect/spawner/random/entertainment/arcade,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"iv" = (
+/obj/effect/landmark/event_spawn,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"iL" = (
+/turf/closed/wall/mineral/bronze,
+/area/station/service/bar/backroom)
+"iU" = (
+/obj/structure/table/bronze,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 8;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"jb" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"kt" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/sign/poster/official/bless_this_spess,
+/turf/closed/wall/mineral/bronze,
+/area/station/service/bar/backroom)
+"kQ" = (
+/obj/item/poster,
+/turf/closed/wall/mineral/bronze,
+/area/station/commons/lounge)
+"kU" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"le" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"lz" = (
+/obj/machinery/vending/wardrobe/bar_wardrobe,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"lM" = (
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"mI" = (
+/obj/machinery/vending/cigarette,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"nh" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/south,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"nl" = (
+/obj/machinery/barsign/directional/south,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"nm" = (
+/obj/structure/table/bronze,
+/obj/item/book/manual/wiki/barman_recipes{
+	pixel_x = 6;
+	pixel_y = 1
+	},
+/obj/item/reagent_containers/cup/rag{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"np" = (
+/obj/structure/table/bronze,
+/obj/item/toy/plush/ratplush,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"nZ" = (
+/obj/structure/table/bronze,
+/obj/machinery/light/directional/west,
+/obj/effect/spawner/random/entertainment/plushie,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"og" = (
+/obj/structure/table/bronze,
+/obj/item/toy/cards/deck/cas{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/toy/cards/deck/cas/black{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"oC" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"oS" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"qk" = (
+/obj/machinery/newscaster/directional/north,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"qq" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 1
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"rs" = (
+/obj/structure/chair/sofa/right/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet/lone,
+/area/station/commons/lounge)
+"rv" = (
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"ss" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"sy" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/bronze,
+/obj/effect/spawner/random/food_or_drink/booze,
+/obj/effect/spawner/random/food_or_drink/booze{
+	pixel_x = -9
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"sG" = (
+/obj/machinery/light/directional/south,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"tm" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/cable,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"tF" = (
+/obj/machinery/door/airlock/bronze,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"tI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/chair/bronze{
+	dir = 4
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"tX" = (
+/obj/structure/table/bronze,
+/obj/machinery/chem_dispenser/drinks/beer{
+	dir = 1
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"uw" = (
+/obj/structure/table/bronze,
+/obj/machinery/chem_dispenser/drinks{
+	dir = 1
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"ux" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/junction/flip{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"uH" = (
+/obj/structure/table/bronze,
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"va" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/effect/mapping_helpers/mail_sorting/service/bar,
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"vh" = (
+/obj/structure/chair/bronze{
+	dir = 1
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"vC" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"wb" = (
+/obj/machinery/atm,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"wg" = (
+/obj/machinery/door/airlock/bronze,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"wW" = (
+/obj/structure/table/bronze,
+/obj/item/food/pie/cream,
+/obj/item/food/pie/cream,
+/obj/item/food/pie/cream,
+/obj/effect/spawner/random/trash/soap{
+	pixel_y = 8
+	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"xw" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/bronze,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"xJ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"xS" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/bronze,
+/mob/living/carbon/human/species/monkey/punpun,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 8;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"yC" = (
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"zS" = (
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"Ag" = (
+/obj/structure/table/bronze,
+/obj/machinery/reagentgrinder{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/obj/item/reagent_containers/cup/glass/shaker{
+	pixel_x = -6
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"Aj" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Ba" = (
+/obj/structure/table/bronze,
+/obj/item/clothing/head/costume/bronze{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/obj/item/clothing/shoes/bronze{
+	pixel_x = -9
+	},
+/obj/item/clothing/suit/costume/bronze{
+	pixel_x = 5
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"Bl" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/cable,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"Cd" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Df" = (
+/obj/structure/table/bronze,
+/obj/machinery/light/directional/east,
+/obj/item/vending_refill/cigarette,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"Dm" = (
+/obj/structure/table/bronze,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 8;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"DI" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/obj/structure/reagent_dispensers/beerkeg,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"Ed" = (
+/obj/machinery/button/door/directional/south{
+	name = "bar shutters";
+	id = "barshutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"EK" = (
+/turf/template_noop,
+/area/template_noop)
+"EU" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"Fm" = (
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"FS" = (
+/obj/machinery/restaurant_portal/bar,
+/turf/open/floor/bronze/filled,
+/area/station/commons/lounge)
+"Gg" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/table/bronze,
+/obj/item/clothing/shoes/bronze{
+	pixel_x = -9
+	},
+/obj/item/clothing/shoes/bronze{
+	pixel_x = -9
+	},
+/obj/item/clothing/shoes/bronze{
+	pixel_x = -9
+	},
+/obj/item/clothing/suit/costume/bronze{
+	pixel_x = 5
+	},
+/obj/item/clothing/suit/costume/bronze{
+	pixel_x = 5
+	},
+/obj/item/clothing/suit/costume/bronze{
+	pixel_x = 5
+	},
+/obj/item/clothing/head/costume/bronze{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/obj/item/clothing/head/costume/bronze{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/obj/item/clothing/head/costume/bronze{
+	pixel_y = 8;
+	pixel_x = -7
+	},
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"GP" = (
+/obj/structure/chair/sofa/left/brown{
+	dir = 4
+	},
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"Hj" = (
+/obj/machinery/door/window{
+	color = "#c09e13";
+	name = "Bronze Windoor"
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"HC" = (
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"Iv" = (
+/obj/structure/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/machinery/disposal/bin,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"IC" = (
+/turf/closed/wall/mineral/bronze,
+/area/station/commons/lounge)
+"IQ" = (
+/obj/machinery/vending/boozeomat,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"IT" = (
+/obj/effect/landmark/event_spawn,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"Jr" = (
+/obj/structure/closet/secure_closet/bar,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"Ky" = (
+/obj/machinery/camera/autoname/directional/west,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"KP" = (
+/obj/effect/landmark/start/assistant,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"KQ" = (
+/turf/closed/wall/mineral/bronze,
+/area/station/service/bar)
+"Lx" = (
+/obj/structure/chair/bronze,
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"Mn" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
+/obj/structure/cable,
+/obj/machinery/power/apc/auto_name/directional/north,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"ME" = (
+/obj/structure/chair/sofa/middle/brown{
+	dir = 4
+	},
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"MJ" = (
+/obj/structure/sink/kitchen/directional/south{
+	name = "sink"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"Ny" = (
+/obj/structure/table/bronze,
+/obj/structure/displaycase/forsale,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 8;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"OY" = (
+/obj/structure/chair/bronze{
+	dir = 8
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"Pi" = (
+/obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
+	dir = 1
+	},
+/obj/structure/disposalpipe/segment{
+	dir = 10
+	},
+/obj/structure/cable,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"Pw" = (
+/obj/structure/window/bronze,
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/obj/machinery/door/firedoor/border_only,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"Pz" = (
+/obj/effect/landmark/start/clown,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"PC" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"PI" = (
+/obj/structure/table/bronze,
+/obj/item/gun/ballistic/shotgun/doublebarrel,
+/obj/item/stack/package_wrap{
+	pixel_y = 8
+	},
+/obj/item/stack/package_wrap{
+	pixel_y = 8
+	},
+/obj/item/stack/package_wrap{
+	pixel_y = 8
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"PL" = (
+/obj/machinery/light/directional/east,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"Qf" = (
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"Ql" = (
+/obj/item/kirbyplants/random,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Rh" = (
+/obj/machinery/firealarm/directional/south,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"RH" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/airalarm/directional/south,
+/obj/machinery/light/directional/south,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"RJ" = (
+/obj/effect/landmark/start/mime,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"SW" = (
+/obj/item/radio/intercom/directional/west,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"Ti" = (
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Ts" = (
+/obj/structure/window/bronze{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/door/firedoor/border_only{
+	dir = 4
+	},
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"TP" = (
+/obj/machinery/door/firedoor/border_only{
+	dir = 1
+	},
+/turf/open/floor/bronze/flat,
+/area/station/commons/lounge)
+"Ub" = (
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
+/obj/structure/chair/bronze,
+/obj/machinery/firealarm/directional/north,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Uz" = (
+/obj/structure/chair/sofa/middle/brown{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/carpet/lone,
+/area/station/commons/lounge)
+"Vw" = (
+/obj/structure/chair/sofa/corner/brown{
+	dir = 1
+	},
+/turf/open/floor/carpet/lone,
+/area/station/commons/lounge)
+"VC" = (
+/obj/machinery/chem_master/condimaster{
+	name = "Hoochmaster Deluxe"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"VG" = (
+/obj/machinery/door/airlock/bronze,
+/obj/machinery/door/firedoor,
+/obj/effect/mapping_helpers/airlock/access/all/service/bar,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"Xo" = (
+/obj/structure/window/bronze,
+/obj/machinery/door/firedoor/border_only,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"Xp" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/cable,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"Xx" = (
+/obj/machinery/light/directional/west,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"XI" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/table/bronze,
+/obj/item/pai_card,
+/obj/machinery/door/firedoor/border_only{
+	dir = 8
+	},
+/obj/machinery/door/poddoor/shutters/window/preopen{
+	dir = 8;
+	color = "#c09e13";
+	name = "Bar Shutters"
+	},
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"YK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/effect/landmark/start/bartender,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar)
+"YM" = (
+/obj/structure/cable,
+/turf/open/floor/carpet/lone,
+/area/station/service/theater)
+"YU" = (
+/obj/machinery/airalarm/directional/west,
+/turf/open/floor/bronze/filled,
+/area/station/service/bar/backroom)
+"ZA" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/structure/table/bronze,
+/obj/item/toy/clockwork_watch,
+/obj/item/toy/clockwork_watch,
+/obj/item/toy/clockwork_watch,
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+"ZP" = (
+/turf/open/floor/bronze,
+/area/station/commons/lounge)
+
+(1,1,1) = {"
+EK
+EK
+EK
+eU
+kU
+Xo
+mI
+Xx
+Xp
+GP
+ME
+Vw
+"}
+(2,1,1) = {"
+EK
+EK
+ea
+ak
+RJ
+Xo
+iu
+vh
+Xp
+ZP
+ZP
+Uz
+"}
+(3,1,1) = {"
+EK
+EK
+EK
+wW
+IT
+Xo
+iu
+vh
+Xp
+ZP
+cp
+rs
+"}
+(4,1,1) = {"
+EK
+EK
+EK
+fY
+kU
+Xo
+cx
+cX
+nh
+IC
+IC
+EK
+"}
+(5,1,1) = {"
+nZ
+Fm
+SW
+OY
+Pz
+Xo
+cx
+vh
+va
+TP
+EK
+EK
+"}
+(6,1,1) = {"
+eZ
+YM
+tm
+Bl
+Pi
+Hj
+Ti
+Ti
+oS
+TP
+EK
+EK
+"}
+(7,1,1) = {"
+rv
+rv
+rv
+Ts
+rv
+Pw
+KP
+ZP
+RH
+IC
+kQ
+EK
+"}
+(8,1,1) = {"
+eh
+ZP
+Cd
+oC
+oC
+oC
+oC
+oC
+ux
+Ky
+nl
+EK
+"}
+(9,1,1) = {"
+hh
+og
+sy
+vh
+Ql
+HC
+lM
+tI
+eu
+lM
+HC
+EK
+"}
+(10,1,1) = {"
+hH
+np
+xw
+vh
+HC
+FS
+Ny
+XI
+xS
+Dm
+iU
+EK
+"}
+(11,1,1) = {"
+Ub
+Gg
+ZA
+dK
+cG
+eC
+uH
+jb
+PC
+zS
+Ed
+EK
+"}
+(12,1,1) = {"
+qk
+iv
+Aj
+ZP
+Lx
+gO
+zS
+YK
+ss
+Qf
+sG
+EK
+"}
+(13,1,1) = {"
+wb
+vC
+Iv
+ZP
+cG
+hS
+zS
+ha
+nm
+fc
+Rh
+EK
+"}
+(14,1,1) = {"
+aC
+iL
+iL
+VG
+gP
+KQ
+dJ
+uw
+Ag
+PC
+IQ
+EK
+"}
+(15,1,1) = {"
+kt
+hQ
+YU
+yC
+DI
+KQ
+MJ
+tX
+Ba
+dU
+qq
+EK
+"}
+(16,1,1) = {"
+VG
+yC
+df
+ag
+bL
+tF
+EU
+le
+cR
+xJ
+gS
+EK
+"}
+(17,1,1) = {"
+iL
+Jr
+Df
+PI
+lz
+KQ
+Mn
+PL
+zS
+zS
+KQ
+EK
+"}
+(18,1,1) = {"
+iL
+iL
+iL
+iL
+iL
+KQ
+wg
+KQ
+VC
+KQ
+KQ
+EK
+"}
