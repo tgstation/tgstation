@@ -238,9 +238,13 @@
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
-	if((attacker.grab_state == GRAB_KILL) && attacker.zone_selected == BODY_ZONE_HEAD && defender.stat != DEAD)
-		var/obj/item/bodypart/head = defender.get_bodypart("head")
-		if(head)
+	if(attacker.grab_state == GRAB_KILL \
+		&& attacker.zone_selected == BODY_ZONE_HEAD \
+		&& attacker.pulling == defender \
+		&& defender.stat != DEAD \
+	)
+		var/obj/item/bodypart/head = defender.get_bodypart(BODY_ZONE_HEAD)
+		if(!isnull(head))
 			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
 			defender.visible_message(
 				span_danger("[attacker] snaps the neck of [defender]!"),
@@ -279,7 +283,6 @@
 	add_to_streak("H", defender)
 	if(check_streak(attacker, defender))
 		return MARTIAL_ATTACK_SUCCESS
-
 	attacker.do_attack_animation(defender)
 	var/picked_hit_type = pick("CQC", "Big Boss")
 	var/bonus_damage = 13

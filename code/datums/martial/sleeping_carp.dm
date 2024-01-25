@@ -119,10 +119,13 @@
 	return MARTIAL_ATTACK_INVALID // normal grab
 
 /datum/martial_art/the_sleeping_carp/harm_act(mob/living/attacker, mob/living/defender)
-
-	if((attacker.grab_state == GRAB_KILL) && attacker.zone_selected == BODY_ZONE_HEAD && defender.stat != DEAD)
-		var/obj/item/bodypart/head = defender.get_bodypart("head")
-		if(head)
+	if(attacker.grab_state == GRAB_KILL \
+		&& attacker.zone_selected == BODY_ZONE_HEAD \
+		&& attacker.pulling == defender \
+		&& defender.stat != DEAD \
+	)
+		var/obj/item/bodypart/head = defender.get_bodypart(BODY_ZONE_HEAD)
+		if(!isnull(head))
 			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
 			defender.visible_message(
 				span_danger("[attacker] snaps the neck of [defender]!"),
@@ -136,7 +139,7 @@
 			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
 				defender.death()
 				defender.investigate_log("has had [defender.p_their()] neck snapped by [attacker].", INVESTIGATE_DEATHS)
-		return MARTIAL_ATTACK_SUCCESS
+			return MARTIAL_ATTACK_SUCCESS
 
 	var/atk_verb = pick("kick", "chop", "hit", "slam")
 	var/final_damage = rand(10, 15)

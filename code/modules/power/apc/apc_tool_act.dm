@@ -77,6 +77,7 @@
 			return
 		toggle_panel_open()
 		balloon_alert(user, "wires [panel_open ? "exposed" : "unexposed"]")
+		W.play_tool_sound(src)
 		update_appearance()
 		return
 

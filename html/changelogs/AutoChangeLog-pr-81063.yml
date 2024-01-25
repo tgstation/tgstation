@@ -1,0 +1,4 @@
+author: "Isratosh"
+delete-after: True
+changes:
+  - bugfix: "Missing fire alarms added to several rooms on Birdshot"
