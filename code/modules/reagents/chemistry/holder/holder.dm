@@ -534,14 +534,11 @@
 
 	//combat log
 	if(transferred_by && target_atom)
-		var/atom/log_target
 		if(isorgan(target_atom))
 			var/obj/item/organ/organ_item = target_atom
-			log_target = organ_item.owner
-		else
-			log_target = target_atom
-		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
-		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
+			target_atom = organ_item.owner
+		target_atom.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
+		log_combat(transferred_by, target_atom, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
 	update_total()
 	target_holder.update_total()
