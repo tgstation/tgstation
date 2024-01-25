@@ -1062,16 +1062,17 @@
 
 	return .
 
-/obj/item/bodypart/proc/huskify_image(image/thing_to_husk)
+/obj/item/bodypart/proc/huskify_image(image/thing_to_husk, draw_blood = TRUE)
 	var/husk_color_mod = rgb(96, 88, 80)
 	var/icon/husk_icon = new(thing_to_husk.icon)
 	husk_icon.ColorTone(husk_color_mod)
 	thing_to_husk.icon = husk_icon
-	var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]")
-	husk_blood.blend_mode |= BLEND_INSET_OVERLAY
-	husk_blood.appearance_flags |= RESET_COLOR
-	husk_blood.dir = thing_to_husk.dir
-	thing_to_husk.add_overlay(husk_blood)
+	if(draw_blood)
+		var/mutable_appearance/husk_blood = mutable_appearance(icon_husk, "[husk_type]_husk_[body_zone]")
+		husk_blood.blend_mode |= BLEND_INSET_OVERLAY
+		husk_blood.appearance_flags |= RESET_COLOR
+		husk_blood.dir = thing_to_husk.dir
+		thing_to_husk.add_overlay(husk_blood)
 
 ///Add a bodypart overlay and call the appropriate update procs
 /obj/item/bodypart/proc/add_bodypart_overlay(datum/bodypart_overlay/overlay)
