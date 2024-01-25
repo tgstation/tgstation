@@ -34,7 +34,8 @@
 
 /obj/item/organ/internal/monster_core/rush_gland/proc/trigger_organ_action_on_sig(datum/source)
 	SIGNAL_HANDLER
-	trigger_organ_action()
+	ASYNC
+		trigger_organ_action()
 
 /**
  * Status effect: Makes you run really fast and ignore speed penalties for a short duration.
