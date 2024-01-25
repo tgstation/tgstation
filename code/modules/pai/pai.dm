@@ -80,6 +80,9 @@
 	/// Remote signaler
 	var/obj/item/assembly/signaler/internal/signaler
 
+	///The messeenger ability that pAIs get when they are put in a PDA.
+	var/datum/action/innate/pai/messenger/messenger_ability
+
 	// Static lists
 	/// List of all available downloads
 	var/static/list/available_software = list(
@@ -149,6 +152,7 @@
 	return ..(target, action_bitflags)
 
 /mob/living/silicon/pai/Destroy()
+	QDEL_NULL(messenger_ability)
 	QDEL_NULL(atmos_analyzer)
 	QDEL_NULL(hacking_cable)
 	QDEL_NULL(instrument)
@@ -211,6 +215,8 @@
 
 /mob/living/silicon/pai/Initialize(mapload)
 	. = ..()
+	if(istype(loc, /obj/item/modular_computer))
+		give_messenger_ability()
 	START_PROCESSING(SSfastprocess, src)
 	GLOB.pai_list += src
 	make_laws()
@@ -465,3 +471,14 @@
 	if (new_distance < HOLOFORM_MIN_RANGE || new_distance > HOLOFORM_MAX_RANGE)
 		return
 	leash.set_distance(new_distance)
+
+///Gives the messenger ability to the pAI, creating a new one if it doesn't have one already.
+/mob/living/silicon/pai/proc/give_messenger_ability()
+	if(!messenger_ability)
+		messenger_ability = new(src)
+	messenger_ability.Grant(src)
+
+///Removes the messenger ability from the pAI, but does not delete it.
+/mob/living/silicon/pai/proc/remove_messenger_ability()
+	if(messenger_ability)
+		messenger_ability.Remove(src)
