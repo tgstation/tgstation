@@ -18082,6 +18082,7 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/transport/power_rectifier,
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/left)
 "fnO" = (
@@ -25133,6 +25134,11 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/science/genetics)
+"hXW" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/transport/power_rectifier,
+/turf/open/floor/catwalk_floor,
+/area/station/hallway/primary/tram/center)
 "hYd" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
@@ -48425,6 +48431,7 @@
 "qfQ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
+/obj/machinery/transport/power_rectifier,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/right)
 "qfS" = (
@@ -166744,7 +166751,7 @@ bKM
 aBQ
 rWd
 izU
-ghg
+hXW
 cTc
 rOu
 xCp
