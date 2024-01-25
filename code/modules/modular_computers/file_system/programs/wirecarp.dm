@@ -71,6 +71,7 @@
 
 /obj/item/circuit_component/mod_program/ntnetmonitor
 	associated_program = /datum/computer_file/program/ntnetmonitor
+	circuit_flags = CIRCUIT_FLAG_OUTPUT_SIGNAL
 	///The stored NTnet relay or PDA to be used as the target of triggers
 	var/datum/port/input/target
 	///Sets `intrusion_detection_alarm` when triggered
@@ -103,8 +104,8 @@
 	var/list/computers_with_messenger = list()
 	for(var/messenger_ref as anything in GLOB.pda_messengers)
 		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
-		computers_with_messenger += messenger.computer
-	all_messengers.set_value(computers_with_messenger)
+		computers_with_messenger |= WEAKREF(messenger.computer)
+	all_messengers.set_output(computers_with_messenger)
 
 /obj/item/circuit_component/mod_program/ntnetmonitor/proc/toggle_ids(datum/port/port)
 	SSmodular_computers.intrusion_detection_enabled = !SSmodular_computers.intrusion_detection_enabled
