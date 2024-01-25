@@ -124,14 +124,14 @@
 	return materials.ui_static_data()
 
 /obj/machinery/ore_silo/ui_data(mob/user)
-	. = list()
+	var/list/data = list()
 
-	.["materials"] =  materials.ui_data()
+	data["materials"] =  materials.ui_data()
 
-	.["machines"] = list()
+	data["machines"] = list()
 	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
 		var/atom/parent = remote.parent
-		.["machines"] += list(
+		data["machines"] += list(
 			list(
 				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
 				"name" = parent.name,
@@ -140,9 +140,9 @@
 				)
 		)
 
-	.["logs"] = list()
+	data["logs"] = list()
 	for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
-		.["logs"] += list(
+		data["logs"] += list(
 			list(
 				"rawMaterials" = entry.get_raw_materials(""),
 				"machineName" = entry.machine_name,
@@ -153,6 +153,8 @@
 				"noun" = entry.noun
 			)
 		)
+
+	return data
 
 /obj/machinery/ore_silo/ui_act(action, list/params)
 	. = ..()
