@@ -308,7 +308,7 @@
 		return // the statue ended up getting destroyed while in nullspace?
 
 	var/mob/living/carbon/carbon_owner = owner
-	RegisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(carbon_owner, COMSIG_MOVABLE_MOVED)
 
 	to_chat(carbon_owner, span_userdanger("Your existence as a living creature snaps as your statue form crumbles!"))
 	carbon_owner.forceMove(get_turf(statue))
