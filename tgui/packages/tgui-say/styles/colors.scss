@@ -13,6 +13,7 @@ $say: #a4bad6;
 $radio: #1ecc43;
 $me: #5975da;
 $ooc: #cca300;
+$looc: #fafa3b; // monke: looc
 
 ////////////////////////////////////////////////
 // Subchannel chat colors
@@ -36,6 +37,7 @@ $_channel_map: (
   'radio': $radio,
   'me': $me,
   'ooc': $ooc,
+  'looc': $looc,
   'ai': $ai,
   'admin': $admin,
   'mentor': $mentor,

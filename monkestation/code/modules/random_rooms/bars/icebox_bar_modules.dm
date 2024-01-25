@@ -111,7 +111,7 @@
 	icon_state = "console"
 
 ///////////////
-//ARCAEDE BAR//
+//ARCADE BAR//
 ///////////////
 
 /obj/machinery/computer/arcade/amputation/bar
@@ -120,3 +120,10 @@
 
 /obj/item/circuitboard/computer/arcade/amputation/bar
 	build_path = /obj/machinery/computer/arcade/amputation/bar
+
+//SM BAR
+/area/station/engineering/supermatter/icebox_bar
+	name = "Bar Supermatter"
+
+/area/station/engineering/supermatter/room/icebox_bar
+	name = "Bar Supermatter Chamber"

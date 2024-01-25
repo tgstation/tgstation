@@ -9,7 +9,6 @@
 	count_against_dynamic_roll_chance = FALSE
 	ui_name = "AntagInfoBrainwashed"
 	suicide_cry = "FOR... SOMEONE!!"
-	show_to_ghosts = TRUE // ghosts are notified when someone's brain gets washed anyways
 	var/popup_shown = FALSE // since it's not uncommon for someone to be brainwashed while dead, it's easy for them to completely miss the fact they're brainwashed once they're revived.
 
 /datum/antagonist/brainwashed/on_gain()
