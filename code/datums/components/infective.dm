@@ -174,7 +174,7 @@
 		COMSIG_ITEM_ATTACK,
 		COMSIG_ITEM_EQUIPPED,
 		COMSIG_GLASS_DRANK,
-		OMSIG_ORGAN_IMPLANTED,
+		COMSIG_ORGAN_IMPLANTED,
 		COMSIG_GIBS_STREAK,
 	))
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
