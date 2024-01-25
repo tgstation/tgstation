@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - refactor: "Stock market events are now their own objects, and are handled by the stock market individually."
