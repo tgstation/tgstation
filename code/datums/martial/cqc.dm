@@ -165,10 +165,14 @@
 
 /datum/martial_art/cqc/harm_act(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
-		return FALSE
-	if((attacker.grab_state == GRAB_KILL) && attacker.zone_selected == BODY_ZONE_HEAD && defender.stat != DEAD)
-		var/obj/item/bodypart/head = defender.get_bodypart("head")
-		if(head)
+		return MARTIAL_ATTACK_FAIL
+	if(attacker.grab_state == GRAB_KILL \
+		&& attacker.zone_selected == BODY_ZONE_HEAD \
+		&& attacker.pulling == defender \
+		&& defender.stat != DEAD \
+	)
+		var/obj/item/bodypart/head = defender.get_bodypart(BODY_ZONE_HEAD)
+		if(!isnull(head))
 			playsound(defender, 'sound/effects/wounds/crack1.ogg', 100)
 			defender.visible_message(
 				span_danger("[attacker] snaps the neck of [defender]!"),
@@ -182,12 +186,11 @@
 			if(!HAS_TRAIT(defender, TRAIT_NODEATH))
 				defender.death()
 				defender.investigate_log("has had [defender.p_their()] neck snapped by [attacker].", INVESTIGATE_DEATHS)
-
-			return TRUE
+			return MARTIAL_ATTACK_SUCCESS
 
 	add_to_streak("H", defender)
 	if(check_streak(attacker, defender))
-		return TRUE
+		return MARTIAL_ATTACK_SUCCESS
 	log_combat(attacker, defender, "attacked (CQC)")
 	attacker.do_attack_animation(defender)
 	var/picked_hit_type = pick("CQC", "Big Boss")
@@ -212,7 +215,7 @@
 		defender.apply_damage(10, BRUTE)
 		defender.Paralyze(6 SECONDS)
 		log_combat(attacker, defender, "sweeped (CQC)")
-	return TRUE
+	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/cqc/disarm_act(mob/living/attacker, mob/living/defender)
 	if(!can_use(attacker))
