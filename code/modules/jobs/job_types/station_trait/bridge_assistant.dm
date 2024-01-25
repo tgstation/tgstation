@@ -45,13 +45,14 @@
 	var/area/bridge = GLOB.areas_by_type[/area/station/command/bridge]
 	if(isnull(bridge))
 		return ..() //if no bridge, spawn on the arrivals shuttle (but also what the fuck)
-	for(var/turf/possible_turf as anything in bridge.get_contained_turfs())
-		if(possible_turf.is_blocked_turf())
-			continue
-		if(locate(/obj/structure/chair) in possible_turf)
-			chair_turfs += possible_turf
-			continue
-		possible_turfs += possible_turf
+	for (var/list/zlevel_turfs as anything in bridge.get_zlevel_turf_lists())
+		for (var/turf/possible_turf as anything in zlevel_turfs)
+			if(possible_turf.is_blocked_turf())
+				continue
+			if(locate(/obj/structure/chair) in possible_turf)
+				chair_turfs += possible_turf
+				continue
+			possible_turfs += possible_turf
 	if(length(chair_turfs))
 		return pick(chair_turfs) //prioritize turfs with a chair
 	if(length(possible_turfs))

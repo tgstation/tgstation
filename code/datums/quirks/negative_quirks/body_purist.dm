@@ -42,7 +42,7 @@
 /datum/quirk/body_purist/proc/update_mood()
 	quirk_holder.clear_mood_event("body_purist")
 	if(cybernetics_level)
-		quirk_holder.add_mood_event("body_purist", /datum/mood_event/body_purist, 1, -cybernetics_level * 10)
+		quirk_holder.add_mood_event("body_purist", /datum/mood_event/body_purist, -cybernetics_level * 10)
 
 /datum/quirk/body_purist/proc/on_organ_gain(datum/source, obj/item/organ/new_organ, special)
 	SIGNAL_HANDLER

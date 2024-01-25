@@ -69,9 +69,6 @@
 	},
 /turf/open/floor/mineral/titanium,
 /area/shuttle/supply)
-"t" = (
-/turf/closed/wall/mineral/titanium/nosmooth,
-/area/shuttle/supply)
 "w" = (
 /obj/effect/turf_decal/stripes/box,
 /obj/machinery/conveyor{
@@ -247,7 +244,7 @@ T
 X
 W
 Z
-t
+T
 M
 J
 w
@@ -289,7 +286,7 @@ T
 R
 m
 i
-t
+T
 P
 e
 I
