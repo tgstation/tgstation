@@ -591,3 +591,43 @@
       mobs from the polymorph belt).
   scriptis:
   - spellcheck: iron sheets's what?
+2024-01-24:
+  JohnFulpWillard:
+  - bugfix: pAIs downloaded while in a PDA now gets the action button to control said
+      PDA.
+  - bugfix: pAI cards can now be ejected from a PDA when there is no pAI inhabiting
+      it.
+  - bugfix: Moved the curator's treasure hunter fedora up by a single pixel.
+  - bugfix: Contractor support units now don't have flavortext telling them they work
+      for someone else but their agent.
+  - bugfix: Contractor support units now comes in an antag spawner (like syndicate
+      monkey, nukie borgs/reinforcements).
+  - bugfix: Syndicate monkeys now get their monkey antag datum.
+  LT3:
+  - bugfix: Server announcements again no longer escape HTML by default
+  Melbert:
+  - bugfix: Replacing a limb fully claimed by an infested burn wound now properly
+      grants you control of the limb back
+  - bugfix: Losing control of a limb now sounds less weird in chat
+  SyncIt21:
+  - bugfix: reactions that create multiple reagents now terminate without looping
+      endlessly.
+  - bugfix: oatmeal reactions now terminate & produce the right quantity of results
+      but without milk.
+  vinylspiders:
+  - bugfix: fixes features not updating when changing character slots
+  - bugfix: fixes a spurious CI failure from do_charge() signal overrides
+2024-01-25:
+  ArcaneMusic:
+  - refactor: Stock market events are now their own objects, and are handled by the
+      stock market individually.
+  - bugfix: The smelter and refinery now properly hold mining points, only taking
+      a small amount out of net gained points.
+  FernandoJ8:
+  - bugfix: the blur effects for hallucinogenic withdrawal and psychic projection
+      are now properly centered on the screen
+  LT3:
+  - bugfix: You can no longer interact with medical beds while incapacitated
+  SyncIt21:
+  - bugfix: fixes runtime when mineral scanning, passes right argument for scanner
+      in golem eyes

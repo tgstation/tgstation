@@ -789,6 +789,7 @@
 #include "code\datums\sprite_accessories.dm"
 #include "code\datums\station_alert.dm"
 #include "code\datums\station_integrity.dm"
+#include "code\datums\stock_market_events.dm"
 #include "code\datums\tgs_event_handler.dm"
 #include "code\datums\verb_callbacks.dm"
 #include "code\datums\verbs.dm"

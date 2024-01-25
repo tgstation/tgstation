@@ -332,7 +332,15 @@
 		return
 
 	to_chat(user, span_notice("You activate [src] and wait for confirmation."))
-	var/list/baddie_candidates = SSpolling.poll_ghost_candidates("Do you want to play as a [role_to_play]?", check_jobban = poll_role_check, role = poll_role_check, poll_time = 10 SECONDS, ignore_category = poll_ignore_category, pic_source = src, role_name_text = role_to_play)
+	var/list/baddie_candidates = SSpolling.poll_ghost_candidates(
+		"Do you want to play as a [role_to_play]?",
+		check_jobban = poll_role_check,
+		role = poll_role_check,
+		poll_time = 10 SECONDS,
+		ignore_category = poll_ignore_category,
+		pic_source = src,
+		role_name_text = role_to_play,
+	)
 	if(!LAZYLEN(baddie_candidates))
 		to_chat(user, span_warning(fail_text))
 		return
@@ -359,7 +367,7 @@
 	else
 		spawned_mob.forceMove(locate(1,1,1))
 
-	antag_datum = new()
+	op_mind.add_antag_datum(antag_datum)
 
 	if(ishuman(spawned_mob))
 		var/mob/living/carbon/human/human_mob = spawned_mob
@@ -372,6 +380,21 @@
 
 	spawned_mob.forceMove(pod)
 	new /obj/effect/pod_landingzone(get_turf(src), pod)
+
+/obj/item/antag_spawner/loadout/contractor
+	name = "contractor support beacon"
+	desc = "A beacon sold to the most prestigeous syndicate members, a single-use radio for calling immediate backup."
+	icon = 'icons/obj/devices/voice.dmi'
+	icon_state = "nukietalkie"
+	outfit = /datum/outfit/contractor_partner
+	use_subtypes = FALSE
+	antag_datum = /datum/antagonist/traitor/contractor_support
+	poll_ignore_category = ROLE_TRAITOR
+	role_to_play = ROLE_CONTRACTOR_SUPPORT
+
+/obj/item/antag_spawner/loadout/contractor/do_special_things(mob/living/carbon/human/contractor_support, mob/user)
+	to_chat(contractor_support, "\n[span_alertwarning("[user.real_name] is your superior. Follow any, and all orders given by them. You're here to support their mission only.")]")
+	to_chat(contractor_support, "[span_alertwarning("Should they perish, or be otherwise unavailable, you're to assist other active agents in this mission area to the best of your ability.")]")
 
 /obj/item/antag_spawner/loadout/monkey_man
 	name = "monkey agent beacon"
