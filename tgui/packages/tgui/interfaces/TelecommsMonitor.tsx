@@ -169,7 +169,7 @@ const MachineList = (props: MachineListProps) => {
             icon="magnifying-glass"
             selected={searching}
             disabled={machines.length === 0}
-            tooltip="Seacrh by ID"
+            tooltip="Search by ID"
             onClick={() => setSearching(!searching)}
           />
           {buttons}
