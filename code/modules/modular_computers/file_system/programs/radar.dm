@@ -460,11 +460,11 @@
 		SStgui.update_uis(radar.computer)
 	if(radar.trackable(radar_atom))
 		var/turf/turf = get_turf(radar_atom)
-		x_pos.set_value(turf.x)
-		y_pos.set_value(turf.y)
+		x_pos.set_output(turf.x)
+		y_pos.set_output(turf.y)
 	else
-		x_pos.set_value(null)
-		y_pos.set_value(null)
+		x_pos.set_output(null)
+		y_pos.set_output(null)
 
 /**
  * Check if we can track the object. When making different definitions of this proc for subtypes, include typical
@@ -491,14 +491,16 @@
 	target.set_value(null)
 	var/datum/computer_file/program/radar/radar = associated_program
 	var/atom/selected_atom = radar.find_atom()
-	selected_by_app.set_value(selected_atom)
+	selected_by_app.set_output(selected_atom)
 	if(radar.trackable(selected_atom))
 		var/turf/turf = get_turf(radar.selected)
-		x_pos.set_value(turf.x)
-		y_pos.set_value(turf.y)
+		x_pos.set_output(turf.x)
+		y_pos.set_output(turf.y)
 	else
-		x_pos.set_value(null)
-		y_pos.set_value(null)
+		x_pos.set_output(null)
+		y_pos.set_output(null)
+
+	trigger_output.set_output(COMPONENT_SIGNAL)
 
 
 /obj/item/circuit_component/mod_program/radar/medical

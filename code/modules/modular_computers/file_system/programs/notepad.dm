@@ -40,11 +40,14 @@
 	var/datum/port/input/set_text
 	///The written note output, sent everytime notes are updated.
 	var/datum/port/output/updated_text
+	///Pinged whenever the text is updated
+	var/datum/port/output/updated
 
 /obj/item/circuit_component/mod_program/notepad/populate_ports()
 	. = ..()
 	set_text = add_input_port("Set Notes", PORT_TYPE_STRING)
-	updated_text = add_output_port("Updated Notes", PORT_TYPE_STRING)
+	updated_text = add_output_port("Notes", PORT_TYPE_STRING)
+	updated = add_output_port("Updated", PORT_TYPE_SIGNAL)
 
 /obj/item/circuit_component/mod_program/notepad/register_shell(atom/movable/shell)
 	. = ..()
@@ -58,9 +61,11 @@
 	SIGNAL_HANDLER
 	if(action == "UpdateNote")
 		updated_text.set_output(params["newnote"])
+		updated.set_output(COMPONENT_SIGNAL)
 
 /obj/item/circuit_component/mod_program/notepad/input_received(datum/port/port)
 	var/datum/computer_file/program/notepad/pad = associated_program
 	pad.written_note = set_text.value
 	SStgui.update_uis(pad.computer)
 	updated_text.set_output(pad.written_note)
+	updated.set_output(COMPONENT_SIGNAL)
