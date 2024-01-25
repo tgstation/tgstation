@@ -21866,7 +21866,7 @@
 "gIj" = (
 /obj/machinery/atmospherics/components/unary/portables_connector/visible{
 	dir = 1;
-	name = ssssssssssssssssss
+	name = "Oxygen Tank Injection Port"
 	},
 /obj/effect/turf_decal/box,
 /obj/effect/turf_decal/stripes/line,
