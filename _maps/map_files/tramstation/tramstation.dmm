@@ -11293,7 +11293,8 @@
 /obj/machinery/light/small/directional/west,
 /obj/machinery/flasher/directional/west{
 	pixel_x = -24;
-	pixel_y = -8
+	pixel_y = -8;
+	id = "hopflash"
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/hop)
