@@ -206,6 +206,7 @@ const MachineList = (props: MachineListProps) => {
               <Input
                 mx={1}
                 fluid
+                autoFocus
                 value={search}
                 verticalAlign="middle"
                 placeholder="Enter machine ID..."
