@@ -2874,8 +2874,12 @@
 	ph = 4.6 // Ants contain Formic Acid
 	/// How much damage the ants are going to be doing (rises with each tick the ants are in someone's body)
 	var/ant_damage = 0
+	/// Multiplied by ant_damage to find the damage dealt
+	var/ant_damage_coeff = 0.025
 	/// Tells the debuff how many ants we are being covered with.
 	var/amount_left = 0
+	/// Decal to spawn when spilled
+	var/ants_decal = /obj/effect/decal/cleanable/ants
 	/// List of possible common statements to scream when eating ants
 	var/static/list/ant_screams = list(
 		"THEY'RE UNDER MY SKIN!!",
@@ -2892,7 +2896,7 @@
 
 /datum/reagent/ants/on_mob_life(mob/living/carbon/victim, seconds_per_tick)
 	. = ..()
-	victim.adjustBruteLoss(max(0.1, round((ant_damage * 0.025),0.1))) //Scales with time. Roughly 32 brute with 100u.
+	victim.adjustBruteLoss(max(0.1, round((ant_damage * ant_damage_coeff),0.1))) //Scales with time. Roughly 32 brute with 100u.
 	ant_damage++
 	if(ant_damage < 5) // Makes ant food a little more appetizing, since you won't be screaming as much.
 		return
@@ -2909,7 +2913,7 @@
 /datum/reagent/ants/on_mob_end_metabolize(mob/living/living_anthill)
 	. = ..()
 	ant_damage = 0
-	to_chat(living_anthill, "<span class='notice'>You feel like the last of the ants are out of your system.</span>")
+	to_chat(living_anthill, span_notice("You feel like the last of the [src.name] are out of your system."))
 
 /datum/reagent/ants/expose_mob(mob/living/exposed_mob, methods=TOUCH, reac_volume)
 	. = ..()
@@ -2936,13 +2940,26 @@
 	if((reac_volume <= 10)) // Makes sure people don't duplicate ants.
 		return
 
-	var/obj/effect/decal/cleanable/ants/pests = exposed_turf.spawn_unique_cleanable(/obj/effect/decal/cleanable/ants)
+	var/obj/effect/decal/cleanable/ants/pests = exposed_turf.spawn_unique_cleanable(ants_decal)
 	if(!pests)
 		return
 
 	var/spilled_ants = (round(reac_volume,1) - 5) // To account for ant decals giving 3-5 ants on initialize.
-	pests.reagents.add_reagent(/datum/reagent/ants, spilled_ants)
+	pests.reagents.add_reagent(src.type, spilled_ants)
 	pests.update_ant_damage()
+
+/datum/reagent/ants/fire
+	name = "Fire ants"
+	description = "A rare mutation of space ants, born from the heat of a plasma fire. Their bites land a 3.7 on the Schmidt Pain Scale."
+	color = "#b51f1f"
+	taste_description = "tiny flaming legs scuttling down the back of your throat"
+	ant_damage_coeff = 0.05 // Roughly 64 brute with 100u
+	ants_decal = /obj/effect/decal/cleanable/ants/fire
+
+/datum/glass_style/drinking_glass/fire_ants
+	required_drink_type = /datum/reagent/ants/fire
+	name = "glass of fire ants"
+	desc = "This is a terrible idea."
 
 //This is intended to a be a scarce reagent to gate certain drugs and toxins with. Do not put in a synthesizer. Renewable sources of this reagent should be inefficient.
 /datum/reagent/lead
