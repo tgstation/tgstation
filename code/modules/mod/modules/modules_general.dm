@@ -31,11 +31,10 @@
 	RegisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_chestplate_unequip))
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
-	var/datum/storage/modstorage = mod.atom_storage
 	atom_storage.locked = STORAGE_FULLY_LOCKED
-	qdel(modstorage)
+	QDEL_NULL(mod.atom_storage)
 	if(!deleting)
-		atom_storage.remove_all(get_turf(src))
+		atom_storage.remove_all(mod.drop_location())
 	UnregisterSignal(mod.chestplate, COMSIG_ITEM_PRE_UNEQUIP)
 
 /obj/item/mod/module/storage/proc/on_chestplate_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
