@@ -11,6 +11,8 @@
 	inherent_traits = list(
 		TRAIT_PLANT_SAFE,
 		TRAIT_NO_JUMPSUIT,
+		TRAIT_LIMBATTACHMENT,
+		TRAIT_EASYDISMEMBER
 	)
 	external_organs = list(
 		/obj/item/organ/external/pod_hair = "None",
@@ -133,7 +135,7 @@
 /obj/item/organ/external/floran_leaves
 	name = "floran leaves"
 	desc = "you shouldn't see this"
-	organ_flags = ORGAN_UNREMOVABLE
+	organ_flags = ORGAN_UNREMOVABLE | ORGAN_HIDDEN
 	icon_state = "floran_leaves"
 	icon = 'monkestation/icons/obj/medical/organs/organs.dmi'
 
