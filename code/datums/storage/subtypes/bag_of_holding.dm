@@ -18,16 +18,16 @@
 /datum/storage/bag_of_holding/proc/recursive_insertion(obj/item/to_insert, mob/living/user)
 	var/safety = tgui_alert(user, "Doing this will have extremely dire consequences for the station and its crew. Be sure you know what you're doing.", "Put in [to_insert.name]?", list("Proceed", "Abort"))
 	if(safety != "Proceed" \
-		|| QDELETED(src) \
 		|| QDELETED(to_insert) \
+		|| QDELETED(parent) \
 		|| QDELETED(real_location) \
 		|| QDELETED(user) \
-		|| !user.can_perform_action(real_location, NEED_DEXTERITY) \
+		|| !user.can_perform_action(parent, NEED_DEXTERITY) \
 		|| !can_insert(to_insert, user) \
 	)
 		return
 
-	var/turf/rift_loc = get_turf(real_location)
+	var/turf/rift_loc = get_turf(parent)
 	user.visible_message(
 		span_userdanger("The Bluespace interfaces of the two devices catastrophically malfunction!"),
 		span_danger("The Bluespace interfaces of the two devices catastrophically malfunction!"),

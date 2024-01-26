@@ -23,7 +23,6 @@
 
 	return atom_storage
 
-///
 /**
  * A quick and easy way to /clone/ a storage datum for an atom (does not copy over contents, only the datum details)
  *

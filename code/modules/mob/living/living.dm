@@ -1006,7 +1006,7 @@
 
 	if(active_storage)
 		var/storage_is_important_recurisve = (active_storage.parent in important_recursive_contents?[RECURSIVE_CONTENTS_ACTIVE_STORAGE])
-		var/can_reach_active_storage = CanReach(active_storage.real_location, view_only = TRUE)
+		var/can_reach_active_storage = CanReach(active_storage.parent, view_only = TRUE)
 		if(!storage_is_important_recurisve && !can_reach_active_storage)
 			active_storage.hide_contents(src)
 

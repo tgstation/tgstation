@@ -8,10 +8,6 @@
 	/**
 	 * A reference to the atom linked to this storage object
 	 * If the parent goes, we go. Will never be null.
-	 *
-	 * If you are iterating over contents of the storage,
-	 * or otherwise operating off of the storage atom itself,
-	 * you should GENERALLY be using real_location.
 	 */
 	VAR_FINAL/atom/parent
 	/**
@@ -19,10 +15,7 @@
 	 * By default this is parent. Should generally never be null.
 	 * Sometimes it's not the parent, that's what is called "dissassociated storage".
 	 *
-	 * For example: a pocket protector has storage to hold pens, but when attached to a suit,
-	 * the suit becomes the real_location while the parent is still the pocket protector.
-	 *
-	 * Do NOT set this directly, use set_real_location
+	 * Do NOT set this directly, use set_real_location.
 	 */
 	VAR_FINAL/atom/real_location
 
@@ -172,11 +165,11 @@
 	if(!istype(arrived))
 		return
 
-	real_location.update_appearance()
 	arrived.item_flags |= IN_STORAGE
 	refresh_views()
 	arrived.on_enter_storage(src)
 	SEND_SIGNAL(arrived, COMSIG_ITEM_STORED, src)
+	parent.update_appearance()
 
 /// Automatically ran on all object removals: flag marking and view refreshing.
 /datum/storage/proc/handle_exit(datum/source, obj/item/gone)
@@ -185,11 +178,11 @@
 	if(!istype(gone))
 		return
 
-	real_location.update_appearance()
 	gone.item_flags &= ~IN_STORAGE
 	remove_and_refresh(gone)
 	gone.on_exit_storage(src)
 	SEND_SIGNAL(gone, COMSIG_ITEM_UNSTORED, src)
+	parent.update_appearance()
 
 /// Set the passed atom as the parent
 /datum/storage/proc/set_parent(atom/new_parent)
@@ -212,9 +205,13 @@
 	RegisterSignal(parent, COMSIG_TOPIC, PROC_REF(topic_handle))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(handle_examination))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE_MORE, PROC_REF(handle_extra_examination))
+	RegisterSignal(parent, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /**
  * Sets where items are physically being stored in the case it shouldn't be on the parent.
+ *
+ * Does not handle moving any existing items, that must be done manually.
  *
  * Arguments
  * * atom/new_real_location - the new real location of the datum
@@ -225,7 +222,6 @@
 		UnregisterSignal(real_location, list(
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATOM_EXITED,
-			COMSIG_OBJ_DECONSTRUCT,
 			COMSIG_QDELETING,
 			COMSIG_ATOM_EMP_ACT,
 		))
@@ -241,9 +237,7 @@
 		real_location.flags_1 |= HAS_DISASSOCIATED_STORAGE_1
 	RegisterSignal(real_location, COMSIG_ATOM_ENTERED, PROC_REF(handle_enter))
 	RegisterSignal(real_location, COMSIG_ATOM_EXITED, PROC_REF(handle_exit))
-	RegisterSignal(real_location, COMSIG_OBJ_DECONSTRUCT, PROC_REF(on_deconstruct))
 	RegisterSignal(real_location, COMSIG_QDELETING, PROC_REF(real_location_deleted))
-	RegisterSignal(real_location, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /// Signal handler for when the real location is deleted.
 /datum/storage/proc/real_location_deleted(datum/deleting_real_location)
@@ -395,16 +389,16 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	// this is valid if the container our location is being held in is a storage item
-	var/datum/storage/bigger_fish = real_location.loc.atom_storage
+	var/datum/storage/bigger_fish = parent.loc.atom_storage
 	if(bigger_fish && bigger_fish.max_specific_storage < max_specific_storage)
 		if(messages && user)
-			user.balloon_alert(user, "[lowertext(real_location.loc.name)] is in the way!")
+			user.balloon_alert(user, "[lowertext(parent.loc.name)] is in the way!")
 		return FALSE
 
-	if(isitem(real_location))
-		var/obj/item/item_real_loc = real_location
+	if(isitem(parent))
+		var/obj/item/item_parent = parent
 		var/datum/storage/smaller_fish = to_insert.atom_storage
-		if(smaller_fish && !allow_big_nesting && to_insert.w_class >= item_real_loc.w_class)
+		if(smaller_fish && !allow_big_nesting && to_insert.w_class >= item_parent.w_class)
 			if(messages && user)
 				user.balloon_alert(user, "too big!")
 			return FALSE
@@ -441,11 +435,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(!can_insert(to_insert, user, force = force))
 		return FALSE
 
-	SEND_SIGNAL(real_location, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
+	SEND_SIGNAL(parent, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
 	to_insert.item_flags |= IN_STORAGE
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
-	real_location.update_appearance()
+	parent.update_appearance()
 	return TRUE
 
 /**
@@ -497,21 +491,15 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return
 
 	if(rustle_sound)
-		playsound(real_location, SFX_RUSTLE, 50, TRUE, -5)
-
-	// These feedback messages use parent rather than real_location intentionally,
-	// so to say "You put the pen in the pocket protector" rather than "You put the pen in the jumpsuit".
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 	if(!silent_for_user)
 		to_chat(user, span_notice("You put [thing] [insert_preposition]to [parent]."))
 
 	for(var/mob/viewing in oviewers(user))
-		if(in_range(user, viewing))
+		if(in_range(user, viewing) || (thing?.w_class >= WEIGHT_CLASS_NORMAL))
 			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [parent]."), MSG_VISUAL)
-			return
-		if(thing && thing.w_class >= 3)
-			viewing.show_message(span_notice("[user] puts [thing] [insert_preposition]to [parent]."), MSG_VISUAL)
-			return
+
 
 /**
  * Attempts to remove an item from the storage
@@ -534,7 +522,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		thing.forceMove(remove_to_loc)
 
 		if(rustle_sound && !silent)
-			playsound(real_location, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
 
@@ -544,7 +532,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	refresh_views()
-	real_location.update_appearance()
+	parent.update_appearance()
 	return TRUE
 
 /**
@@ -553,7 +541,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  * Arguments
  * * atom/drop_loc - where we're placing the item
  */
-/datum/storage/proc/remove_all(atom/drop_loc = real_location.drop_location())
+/datum/storage/proc/remove_all(atom/drop_loc = parent.drop_location())
 	for(var/obj/item/thing in real_location)
 		if(!attempt_remove(thing, drop_loc, silent = TRUE))
 			continue
@@ -586,7 +574,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
  */
 /datum/storage/proc/remove_type(type, atom/destination, amount = INFINITY, check_adjacent = FALSE, force = FALSE, mob/user, list/inserted)
 	if(!force && check_adjacent)
-		if(isnull(user) || !user.CanReach(destination) || !user.CanReach(real_location))
+		if(isnull(user) || !user.CanReach(destination) || !user.CanReach(parent))
 			return FALSE
 
 	var/list/taking = typecache_filter_list(real_location.contents, typecacheof(type))
@@ -687,13 +675,13 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	var/amount = length(pick_up)
 	if(!amount)
-		real_location.balloon_alert(user, "nothing to pick up!")
+		parent.balloon_alert(user, "nothing to pick up!")
 		return
 
 	var/datum/progressbar/progress = new(user, amount, thing.loc)
 	var/list/rejections = list()
 
-	while(do_after(user, 1 SECONDS, real_location, NONE, FALSE, CALLBACK(src, PROC_REF(handle_mass_pickup), user, pick_up.Copy(), thing.loc, rejections, progress)))
+	while(do_after(user, 1 SECONDS, parent, NONE, FALSE, CALLBACK(src, PROC_REF(handle_mass_pickup), user, pick_up.Copy(), thing.loc, rejections, progress)))
 		stoplag(1)
 
 	progress.end_progress()
@@ -701,7 +689,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	var/list/current_contents = holder.contents.Copy()
 	if(length(pick_up | current_contents) == length(current_contents))
 		return
-	real_location.balloon_alert(user, "picked up")
+	parent.balloon_alert(user, "picked up")
 
 /// Signal handler for whenever we drag the storage somewhere.
 /datum/storage/proc/on_mousedrop_onto(datum/source, atom/over_object, mob/user)
@@ -710,14 +698,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(ismecha(user.loc) || user.incapacitated() || !user.canUseStorage())
 		return
 
-	real_location.add_fingerprint(user)
+	parent.add_fingerprint(user)
 
 	if(istype(over_object, /atom/movable/screen/inventory/hand))
 		if(real_location.loc != user)
 			return
 
 		var/atom/movable/screen/inventory/hand/hand = over_object
-		user.putItemFromInventoryInHandIfPossible(real_location, hand.held_index)
+		user.putItemFromInventoryInHandIfPossible(parent, hand.held_index)
 
 	else if(ismob(over_object))
 		if(over_object != user)
@@ -738,7 +726,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	if(locked)
 		user.balloon_alert(user, "closed!")
 		return
-	if(!user.CanReach(real_location) || !user.CanReach(dest_object))
+	if(!user.CanReach(parent) || !user.CanReach(dest_object))
 		return
 
 	if(SEND_SIGNAL(dest_object, COMSIG_STORAGE_DUMP_CONTENT, src, user) & STORAGE_DUMP_HANDLED)
@@ -749,11 +737,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		to_chat(user, span_notice("You dump the contents of [parent] into [dest_object]."))
 
 		if(rustle_sound)
-			playsound(real_location, SFX_RUSTLE, 50, TRUE, -5)
+			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 		for(var/obj/item/to_dump in real_location)
 			dest_object.atom_storage.attempt_insert(to_dump, user)
-		real_location.update_appearance()
+		parent.update_appearance()
 		SEND_SIGNAL(src, COMSIG_STORAGE_DUMP_POST_TRANSFER, dest_object, user)
 		return
 
@@ -791,7 +779,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/on_attackby(datum/source, obj/item/thing, mob/user, params)
 	SIGNAL_HANDLER
 
-	if(!thing.attackby_storage_insert(src, real_location, user))
+	if(!thing.attackby_storage_insert(src, parent, user))
 		return
 
 	if(iscyborg(user))
@@ -829,7 +817,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/process_numerical_display()
 	var/list/toreturn = list()
 
-	for(var/obj/item/thing in real_location.contents)
+	for(var/obj/item/thing in real_location)
 		var/total_amnt = 1
 
 		if(isstack(thing))
@@ -930,8 +918,8 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		show_contents(to_show)
 		return FALSE
 
-	if(!to_show.CanReach(real_location))
-		real_location.balloon_alert(to_show, "can't reach!")
+	if(!to_show.CanReach(parent))
+		parent.balloon_alert(to_show, "can't reach!")
 		return FALSE
 
 	if(!isliving(to_show) || to_show.incapacitated())
@@ -939,7 +927,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 
 	if(locked)
 		if(!silent)
-			real_location.balloon_alert(to_show, "closed!")
+			parent.balloon_alert(to_show, "closed!")
 		return FALSE
 
 	// If we're quickdrawing boys
@@ -965,7 +953,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(rustle_sound)
-		playsound(real_location, SFX_RUSTLE, 50, TRUE, -5)
+		playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 
 	return TRUE
 
@@ -982,7 +970,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	SIGNAL_HANDLER
 
 	for(var/mob/user in can_see_contents())
-		if (!user.CanReach(real_location))
+		if (!user.CanReach(parent))
 			hide_contents(user)
 
 /// Close the storage UI for everyone viewing us.
@@ -1088,14 +1076,14 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 	collection_mode = (collection_mode + 1) % 3
 	switch(collection_mode)
 		if(COLLECT_SAME)
-			real_location.balloon_alert(user, "will now only pick up a single type")
+			parent.balloon_alert(user, "will now only pick up a single type")
 		if(COLLECT_EVERYTHING)
-			real_location.balloon_alert(user, "will now pick up everything")
+			parent.balloon_alert(user, "will now pick up everything")
 		if(COLLECT_ONE)
-			real_location.balloon_alert(user, "will now pick up one at a time")
+			parent.balloon_alert(user, "will now pick up one at a time")
 
 /// Gives a spiffy animation to our parent to represent opening and closing.
 /datum/storage/proc/animate_parent()
-	var/matrix/old_matrix = real_location.transform
-	animate(real_location, time = 1.5, loop = 0, transform = real_location.transform.Scale(1.07, 0.9))
+	var/matrix/old_matrix = parent.transform
+	animate(parent, time = 1.5, loop = 0, transform = parent.transform.Scale(1.07, 0.9))
 	animate(time = 2, transform = old_matrix)

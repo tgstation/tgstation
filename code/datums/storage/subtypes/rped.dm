@@ -89,7 +89,7 @@
  * Arguments
  * * atom/dump_loc - where we're placing the item
  */
-/datum/storage/rped/proc/remove_lowest_tier(atom/dump_loc = real_location.drop_location())
+/datum/storage/rped/proc/remove_lowest_tier(atom/dump_loc = parent.drop_location())
 	var/list/obj/item/parts_list = list()
 	var/current_lowest_tier = INFINITY
 
@@ -99,8 +99,8 @@
 	if(parts_list.len > 0)
 		parts_list = reverse_range(sortTim(parts_list, GLOBAL_PROC_REF(cmp_rped_sort)))
 		current_lowest_tier = parts_list[1].get_part_rating()
-		if(ismob(real_location.loc))
-			real_location.balloon_alert(real_location.loc, "dropping lowest rated parts...")
+		if(ismob(parent.loc))
+			parent.balloon_alert(parent.loc, "dropping lowest rated parts...")
 		for(var/obj/item/part in parts_list)
 			if(part.get_part_rating() != current_lowest_tier)
 				break

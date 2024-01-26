@@ -117,10 +117,10 @@
 	return ..()
 
 /obj/item/melee/sabre/on_exit_storage(datum/storage/container)
-	playsound(container.real_location, 'sound/items/unsheath.ogg', 25, TRUE)
+	playsound(container.parent, 'sound/items/unsheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/on_enter_storage(datum/storage/container)
-	playsound(container.real_location, 'sound/items/sheath.ogg', 25, TRUE)
+	playsound(container.parent, 'sound/items/sheath.ogg', 25, TRUE)
 
 /obj/item/melee/sabre/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is trying to cut off all [user.p_their()] limbs with [src]! it looks like [user.p_theyre()] trying to commit suicide!"))

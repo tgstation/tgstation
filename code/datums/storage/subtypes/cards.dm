@@ -20,7 +20,7 @@
 	if(!.)
 		return
 
-	var/obj/item/tcgcard_deck/deck = real_location
+	var/obj/item/tcgcard_deck/deck = parent
 	var/obj/item/tcgcard/card = thing
 	card.flipped = deck.flipped
 	card.update_appearance(UPDATE_ICON_STATE)

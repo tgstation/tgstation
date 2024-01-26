@@ -13,30 +13,36 @@
 		return FALSE
 	return .
 
-/**
+/*
  * Change the size of the storage item to match the inserted item's
  * Because of that, we also check if conditions to keep it inside another storage or pockets are still met.
  */
-/datum/storage/fish_case/handle_enter(obj/item/storage/fish_case/source, obj/item/arrived)
+/datum/storage/fish_case/handle_enter(datum/source, obj/item/arrived)
 	. = ..()
-	if(!istype(arrived) || arrived.w_class <= source.w_class)
+	if(!isitem(parent) || !istype(arrived))
 		return
-	source.w_class = arrived.w_class
-	// melbert todo : general solution for this
+	var/obj/item/item_parent = parent
+	if(arrived.w_class <= item_parent.w_class)
+		return
+	item_parent.w_class = arrived.w_class
 	// Since we're changing weight class we need to check if our storage's loc's storage can still hold us
-	if(!isnull(real_location.loc.atom_storage) && !real_location.loc.atom_storage.can_insert(source))
-		source.forceMove(real_location.loc.drop_location())
-		source.visible_message(span_warning("[source] spills out of [real_location.loc] as it expands to hold [arrived]!"), vision_distance = 1)
-
-	else if(!isliving(source.loc))
+	// in the future we need a generic solution to this to solve a bunch of other exploits
+	var/datum/storage/loc_storage = item_parent.loc.atom_storage
+	if(!isnull(loc_storage) && !loc_storage.can_insert(item_parent))
+		item_parent.forceMove(item_parent.loc.drop_location())
+		item_parent.visible_message(span_warning("[item_parent] spills out of [item_parent.loc] as it expands to hold [arrived]!"), vision_distance = 1)
 		return
 
-	var/mob/living/living_loc = source.loc
-	if((living_loc.get_slot_by_item(source) & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET)) && source.w_class > WEIGHT_CLASS_SMALL)
-		source.forceMove(living_loc.drop_location())
-		to_chat(living_loc, span_warning("[source] drops out of your pockets as it expands to hold [arrived]!"))
+	if(isliving(item_parent.loc))
+		var/mob/living/living_loc = item_parent.loc
+		if((living_loc.get_slot_by_item(item_parent) & (ITEM_SLOT_RPOCKET|ITEM_SLOT_LPOCKET)) && item_parent.w_class > WEIGHT_CLASS_SMALL)
+			item_parent.forceMove(living_loc.drop_location())
+			to_chat(living_loc, span_warning("[item_parent] drops out of your pockets as it expands to hold [arrived]!"))
+		return
 
-/datum/storage/fish_case/handle_exit(obj/item/storage/fish_case/source, obj/item/gone)
+/datum/storage/fish_case/handle_exit(datum/source, obj/item/gone)
 	. = ..()
-	if(istype(gone))
-		source.w_class = initial(source.w_class)
+	if(!isitem(parent) || !istype(gone))
+		return
+	var/obj/item/item_parent = parent
+	item_parent.w_class = initial(item_parent.w_class)
