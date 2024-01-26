@@ -69,6 +69,9 @@
 	. += mutable_appearance(icon, "rec-active-0")
 	. += emissive_appearance(icon, "rec-active-0", src, alpha = src.alpha)
 
+/**
+ * Clear reference to the connected landmark if it gets destroyed.
+ */
 /obj/machinery/transport/power_rectifier/proc/on_landmark_qdel()
 	log_transport("[id_tag]: Power rectifier received QDEL from landmark [connected_platform.name]")
 	connected_platform = null
