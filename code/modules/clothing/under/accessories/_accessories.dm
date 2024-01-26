@@ -82,6 +82,7 @@
 		atom_storage.close_all()
 		attach_to.clone_storage(atom_storage)
 		attach_to.atom_storage.set_real_location(src)
+		attach_to.atom_storage.rustle_sound = TRUE // it's on the suit now
 
 	var/num_other_accessories = LAZYLEN(attach_to.attached_accessories)
 	layer = FLOAT_LAYER + clamp(attach_to.max_number_of_accessories - num_other_accessories, 0, 10)
