@@ -1,4 +1,0 @@
-author: "Isratosh"
-delete-after: True
-changes:
-  - bugfix: "Kidnapping traitor objective now properly returns the victim to the station with their items"

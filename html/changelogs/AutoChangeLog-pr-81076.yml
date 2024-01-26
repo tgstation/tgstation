@@ -1,6 +1,0 @@
-author: "Ghommie"
-delete-after: True
-changes:
-  - bugfix: "Fixed the messenger circuit not sending messages."
-  - bugfix: "Added several ports to modpc circuits that were missing or needing them."
-  - bugfix: "Fixes ever-expanding ports whenever circuits are re-inserted in a modular computer."
