@@ -121,6 +121,8 @@
 	icon_living = "void_butterfly"
 	icon_dead = "void_butterfly_dead"
 	gold_core_spawnable = NO_SPAWN
+	health = 20
+	maxHealth = 20
 
 /mob/living/basic/butterfly/void/spacial
 	fixed_color = TRUE
