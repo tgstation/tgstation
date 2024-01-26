@@ -537,7 +537,7 @@
 		var/atom/log_target = target_atom
 		if(isorgan(target_atom))
 			var/obj/item/organ/organ_item = target_atom
-			log_target = organ_item.owner 
+			log_target = organ_item.owner ? organ_item.owner : organ_item
 		log_target.add_hiddenprint(transferred_by) //log prints so admins can figure out who touched it last.
 		log_combat(transferred_by, log_target, "transferred reagents to", my_atom, "which had [get_external_reagent_log_string(transfer_log)]")
 
