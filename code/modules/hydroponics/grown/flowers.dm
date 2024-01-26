@@ -169,7 +169,7 @@
 	growing_icon = 'icons/obj/hydroponics/growing_flowers.dmi'
 	icon_grow = "sunflower-grow"
 	icon_dead = "sunflower-dead"
-	possible_mutations = list(/datum/hydroponics/plant_mutation/moon_flower, /datum/hydroponics/plant_mutation/nova_floor)
+	possible_mutations = list(/datum/hydroponics/plant_mutation/moon_flower, /datum/hydroponics/plant_mutation/nova_flower)
 	reagents_add = list(/datum/reagent/consumable/cornoil = 0.08, /datum/reagent/consumable/nutriment = 0.04)
 
 /obj/item/food/grown/sunflower // FLOWER POWER!
