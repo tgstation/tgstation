@@ -3,9 +3,7 @@
 
 /datum/asset/spritesheet/telecomms/create_spritesheets()
 	var/list/inserted_states = list() // No need to send entire `telecomms.dmi`.
-	for(var/path as anything in subtypesof(/obj/machinery/telecomms))
-		var/obj/machinery/telecomms/machine = path
-
+	for(var/obj/machinery/telecomms/machine as anything in subtypesof(/obj/machinery/telecomms))
 		var/icon_state = machine::icon_state
 		if(icon_state in inserted_states)
 			continue

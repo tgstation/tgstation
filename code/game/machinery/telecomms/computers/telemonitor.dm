@@ -28,7 +28,7 @@
 
 /obj/machinery/computer/telecomms/monitor/ui_assets(mob/user)
 	return list(
-		get_asset_datum(/datum/asset/spritesheet/telecomms)
+		get_asset_datum(/datum/asset/spritesheet/telecomms),
 	)
 
 /obj/machinery/computer/telecomms/monitor/ui_interact(mob/user, datum/tgui/ui)
@@ -59,7 +59,7 @@
 				data["machines"] += list(list(
 					"id" = machine.id,
 					"name" = machine.name,
-					"icon" = initial(machine.icon_state)
+					"icon" = initial(machine.icon_state),
 				))
 
 		if(MACHINE_VIEW)
@@ -70,14 +70,14 @@
 					linked_machines += list(list(
 						"id" = machine.id,
 						"name" = machine.name,
-						"icon" = initial(machine.icon_state)
+						"icon" = initial(machine.icon_state),
 					))
 
 				data["machine"] = list(
 					"id" = selected.id,
 					"name" = selected.name,
 					"network" = selected.network,
-					"linkedMachines" = linked_machines
+					"linkedMachines" = linked_machines,
 				)
 
 	return data
@@ -137,17 +137,17 @@
 			network = network_id
 
 			var/list/telecomms_machines = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/telecomms)
-			for(var/obj/machinery/telecomms/T as anything in telecomms_machines)
-				if(T.network != network)
+			for(var/obj/machinery/telecomms/machine as anything in telecomms_machines)
+				if(machine.network != network)
 					continue
 
-				machine_refs += WEAKREF(T)
+				machine_refs += WEAKREF(machine)
 
 			if(length(machine_refs) == 0)
-				status_message = "OPERATION FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN  [network]."
+				status_message = "OPERATION FAILED: UNABLE TO LOCATE NETWORK ENTITIES IN [network]."
 				return TRUE
 
-			status_message = "[length(machine_refs)] ENTITIES LOCATED & BUFFERED";
+			status_message = "[length(machine_refs)] ENTITIES LOCATED & BUFFERED"
 			return TRUE
 
 	return TRUE
