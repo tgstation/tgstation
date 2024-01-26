@@ -67,6 +67,8 @@
 #include "code\modules\projectiles\boxes_magazines\ammo_boxes.dm"
 #include "code\modules\projectiles\ammunition\ballistic\rifle.dm"
 #include "code\modules\projectiles\projectile\bullets\rifle.dm"
+#include "code\modules\vehicles\vehicle_actions.dm"
+#include "code\modules\vehicles\cars\cheburek.dm"
 #include "code\modules\map_vote.dm"
 #include "code\modules\hallucination\fake_chat.dm"
 //features
