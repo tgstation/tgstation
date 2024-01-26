@@ -69,4 +69,4 @@
 /obj/item/choice_beacon/pet/donator/void_butterfly
 	name = "Void Butterfly"
 	default_name = "Void Butterfly"
-	donator_pet = 	/mob/living/basic/butterfly/void
+	donator_pet = 	/mob/living/basic/butterfly/void/spacial

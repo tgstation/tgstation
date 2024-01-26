@@ -284,5 +284,5 @@
 /datum/loadout_item/effects/void_butterfly
 	ckeywhitelist = list("tonymcsp")
 	name = "Void Butterfly Transformation"
-	item_path = /obj/item/effect_granter/donator/void_butterfly/spacial
+	item_path = /obj/item/effect_granter/donator/void_butterfly/
 	requires_purchase = FALSE
