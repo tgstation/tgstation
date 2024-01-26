@@ -435,6 +435,12 @@
 	amount_per_transfer_from_this = 10
 	volume = 100
 	isGlass = FALSE
+	/// Whether or not poured drinks should use custom names and descriptions
+	var/using_custom_drinks = FALSE
+	/// Name custom drinks will have
+	var/custom_drink_name = "Custom drink"
+	/// Description custom drinks will have
+	var/custom_drink_desc = "Mixed by your favourite bartender!"
 
 /obj/item/reagent_containers/cup/glass/shaker/Initialize(mapload)
 	. = ..()
@@ -442,6 +448,37 @@
 		name = "\improper Nanotrasen 20th Anniversary Shaker"
 		desc += " It has an emblazoned Nanotrasen logo on it."
 		icon_state = "shaker_n"
+
+/obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click to [using_custom_drinks?"disable":"enable"] custom drink naming")
+	. += span_notice("Custom name: [custom_drink_name]")
+	. += span_notice("Custom desc: [custom_drink_desc]")
+
+/obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
+	. = ..()
+	using_custom_drinks = !using_custom_drinks
+
+	if(!using_custom_drinks)
+		balloon_alert(user, "custom drinks disabled!")
+		return
+
+	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
+	if(!new_name)
+		balloon_alert(user, "invalid drink name!")
+		using_custom_drinks = FALSE
+		return
+
+	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
+	if(!new_desc)
+		balloon_alert(user, "invalid drink description!")
+		using_custom_drinks = FALSE
+		return
+
+	custom_drink_name = new_name
+	custom_drink_desc = new_desc
+
+	balloon_alert(user, "now pouring custom drinks!")
 
 /obj/item/reagent_containers/cup/glass/flask
 	name = "flask"
