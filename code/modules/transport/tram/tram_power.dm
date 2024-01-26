@@ -33,6 +33,7 @@
 	for(var/obj/effect/landmark/transport/nav_beacon/tram/platform/candidate_platform in SStransport.nav_beacons[configured_transport_id])
 		if(get_area(candidate_platform) == my_area)
 			connected_platform = candidate_platform
+			RegisterSignal(connected_platform, COMSIG_QDELETING, PROC_REF(on_landmark_qdel))
 			log_transport("[id_tag]: Power rectifier linked to landmark [connected_platform.name]")
 			return
 
@@ -67,3 +68,7 @@
 
 	. += mutable_appearance(icon, "rec-active-0")
 	. += emissive_appearance(icon, "rec-active-0", src, alpha = src.alpha)
+
+/obj/machinery/transport/power_rectifier/proc/on_landmark_qdel()
+	log_transport("[id_tag]: Power rectifier received QDEL from landmark [connected_platform.name]")
+	connected_platform = null
