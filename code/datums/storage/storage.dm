@@ -436,7 +436,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		return FALSE
 
 	SEND_SIGNAL(parent, COMSIG_STORAGE_STORED_ITEM, to_insert, user, force)
-	to_insert.item_flags |= IN_STORAGE
 	to_insert.forceMove(real_location)
 	item_insertion_feedback(user, to_insert, override)
 	parent.update_appearance()
@@ -525,8 +524,6 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			playsound(parent, SFX_RUSTLE, 50, TRUE, -5)
 	else
 		thing.moveToNullspace()
-
-	// thing.item_flags &= ~IN_STORAGE
 
 	if(animated)
 		animate_parent()
