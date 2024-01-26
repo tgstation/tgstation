@@ -65,7 +65,7 @@
 
 /datum/sprite_accessory/anime_head/playbunny
 	name = "Bunny Ears"
-	icon = 'monkestation/icons/mob/anime/anime_head/32x48'
+	icon = 'monkestation/icons/mob/anime/anime_head32x48.dmi'
 	icon_state = "playbunny"
 
 /datum/sprite_accessory/anime_middle
