@@ -121,4 +121,6 @@
 	icon_living = "void_butterfly"
 	icon_dead = "void_butterfly_dead"
 	gold_core_spawnable = NO_SPAWN
-	ai_controller = /datum/ai_controller/basic_controller/
+
+/mob/living/basic/butterfly/void/spacial
+	fixed_color = TRUE

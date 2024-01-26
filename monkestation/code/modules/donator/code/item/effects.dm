@@ -58,7 +58,9 @@
 	icon_state = "crab_red"
 	animal_transformation = /mob/living/basic/crab/spycrab
 
+//tonymcp
+
 /obj/item/effect_granter/donator/void_butterfly
 	name = "void butterfly transformation"
 	icon_state = "void_butterfly"
-	animal_transformation = /mob/living/basic/butterfly/void
+	animal_transformation = /mob/living/basic/butterfly/void/spacial

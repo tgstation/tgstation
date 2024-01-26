@@ -234,7 +234,8 @@
 	requires_purchase = FALSE
 
 //rickdude
-/datum/item_loadout/head/aotcloak	name = "Survey Corps Cloak"
+/datum/loadout_item/suit/aotcloak
+	name = "Survey Corps Cloak"
 	item_path = /obj/item/clothing/suit/hooded/aotcloak
 	donator_only = TRUE
 	requires_purchase = FALSE
@@ -283,5 +284,5 @@
 /datum/loadout_item/effects/void_butterfly
 	ckeywhitelist = list("tonymcsp")
 	name = "Void Butterfly Transformation"
-	item_path = /obj/item/effect_granter/donator/void_butterfly
+	item_path = /obj/item/effect_granter/donator/void_butterfly/spacial
 	requires_purchase = FALSE
