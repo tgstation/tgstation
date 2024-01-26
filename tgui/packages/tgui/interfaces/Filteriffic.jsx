@@ -1,5 +1,7 @@
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
+import { useState } from 'react';
+
 import { numberOfDecimalDigits } from '../../common/math';
 import { useBackend } from '../backend';
 import {
@@ -15,7 +17,6 @@ import {
   Section,
 } from '../components';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 const FilterIntegerEntry = (props) => {
   const { value, name, filterName } = props;
@@ -85,7 +86,7 @@ const FilterTextEntry = (props) => {
     <Input
       value={value}
       width="250px"
-      onInput={(e, value) =>
+      onChange={(e, value) =>
         act('modify_filter_value', {
           name: filterName,
           new_data: {
@@ -114,7 +115,7 @@ const FilterColorEntry = (props) => {
       <Input
         value={value}
         width="90px"
-        onInput={(e, value) =>
+        onChange={(e, value) =>
           act('transition_filter_value', {
             name: filterName,
             new_data: {
@@ -304,7 +305,7 @@ export const Filteriffic = (props) => {
                 <Input
                   value={massApplyPath}
                   width="100px"
-                  onInput={(e, value) => setMassApplyPath(value)}
+                  onChange={(e, value) => setMassApplyPath(value)}
                 />
                 <Button.Confirm
                   content="Apply"
@@ -322,7 +323,7 @@ export const Filteriffic = (props) => {
             <Dropdown
               icon="plus"
               displayText="Add Filter"
-              nochevron
+              noChevron
               options={Object.keys(filterDefaults)}
               onSelected={(value) =>
                 act('add_filter', {

@@ -94,10 +94,9 @@
 	return ..()
 
 /obj/item/implant/mod/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR>
-				<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Nakamura Engineering Pathfinder Implant<BR> \
+		<b>Implant Details:</b> Allows for the recall of a Modular Outerwear Device by the implant owner at any time.<BR>"
 
 /obj/item/implant/mod/proc/recall()
 	if(!module?.mod)

@@ -832,9 +832,9 @@ Striking a noncultist, however, will tear their flesh."}
 		var/mob/living/carbon/carbon_cultist = our_target
 		carbon_cultist.reagents.add_reagent(/datum/reagent/fuel/unholywater, 4)
 	if(isshade(our_target) || isconstruct(our_target))
-		var/mob/living/simple_animal/undead_abomination = our_target
-		if(undead_abomination.health+5 < undead_abomination.maxHealth)
-			undead_abomination.adjustHealth(-5)
+		var/mob/living/basic/construct/undead_abomination = our_target
+		if(undead_abomination.health + 5 < undead_abomination.maxHealth)
+			undead_abomination.adjust_health(-5)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/item/blood_beam
@@ -934,11 +934,11 @@ Striking a noncultist, however, will tear their flesh."}
 						if(H.stat != DEAD)
 							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
 					if(isshade(target) || isconstruct(target))
-						var/mob/living/simple_animal/M = target
-						if(M.health+15 < M.maxHealth)
-							M.adjustHealth(-15)
+						var/mob/living/basic/construct/healed_guy = target
+						if(healed_guy.health + 15 < healed_guy.maxHealth)
+							healed_guy.adjust_health(-15)
 						else
-							M.health = M.maxHealth
+							healed_guy.health = healed_guy.maxHealth
 				else
 					var/mob/living/L = target
 					if(L.density)
@@ -1023,8 +1023,7 @@ Striking a noncultist, however, will tear their flesh."}
 	return FALSE
 
 /obj/item/shield/mirror/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	var/turf/T = get_turf(hit_atom)
-	var/datum/thrownthing/D = throwingdatum
+	var/turf/impact_turf = get_turf(hit_atom)
 	if(isliving(hit_atom))
 		var/mob/living/target = hit_atom
 
@@ -1037,13 +1036,14 @@ Striking a noncultist, however, will tear their flesh."}
 			return
 		if(!..())
 			target.Paralyze(30)
-			if(D?.thrower)
-				for(var/mob/living/Next in orange(2, T))
+			var/mob/thrower = throwingdatum?.get_thrower()
+			if(thrower)
+				for(var/mob/living/Next in orange(2, impact_turf))
 					if(!Next.density || IS_CULTIST(Next))
 						continue
-					throw_at(Next, 3, 1, D.thrower)
+					throw_at(Next, 3, 1, thrower)
 					return
-				throw_at(D.thrower, 7, 1, null)
+				throw_at(thrower, 7, 1, null)
 	else
 		..()
 

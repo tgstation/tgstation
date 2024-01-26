@@ -2,6 +2,7 @@ import { BooleanLike, classes } from 'common/react';
 import { multiline } from 'common/string';
 import { capitalizeAll } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -10,8 +11,8 @@ import {
   LabeledList,
   Section,
   Stack,
-  Tabs,
   Table,
+  Tabs,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -47,6 +48,29 @@ const TOOLS = [
     bitmask: 8,
   },
 ];
+
+const LAYERS = [
+  {
+    name: '1',
+    bitmask: 1,
+  },
+  {
+    name: '2',
+    bitmask: 2,
+  },
+  {
+    name: '3',
+    bitmask: 4,
+  },
+  {
+    name: '4',
+    bitmask: 8,
+  },
+  {
+    name: '5',
+    bitmask: 16,
+  },
+] as const;
 
 type DirectionsAllowed = {
   north: BooleanLike;
@@ -92,7 +116,8 @@ type Preview = {
 type Data = {
   // Dynamic
   category: number;
-  piping_layer: number;
+  pipe_layers: number;
+  multi_layer: BooleanLike;
   ducting_layer: number;
   categories: Category[];
   selected_recipe: string;
@@ -191,23 +216,33 @@ const SelectionSection = (props) => {
   );
 };
 
-export const LayerSelect = (props) => {
+const LayerSelect = (props) => {
   const { act, data } = useBackend<Data>();
-  const { piping_layer } = data;
+  const { pipe_layers } = data;
+  const { multi_layer } = data;
   return (
     <LabeledList.Item label="Layer">
-      {[1, 2, 3, 4, 5].map((layer) => (
+      {LAYERS.map((layer) => (
         <Button.Checkbox
-          key={layer}
-          checked={layer === piping_layer}
-          content={layer}
-          onClick={() =>
-            act('piping_layer', {
-              piping_layer: layer,
-            })
+          key={layer.bitmask}
+          checked={
+            multi_layer
+              ? pipe_layers & layer.bitmask
+              : layer.bitmask === pipe_layers
           }
+          content={layer.name}
+          onClick={() => act('pipe_layers', { pipe_layers: layer.bitmask })}
         />
       ))}
+      <Button.Checkbox
+        key="multilayer"
+        checked={multi_layer}
+        content="Multi"
+        tooltip="Build on multiple pipe layers simultaneously"
+        onClick={() => {
+          act('toggle_multi_layer');
+        }}
+      />
     </LabeledList.Item>
   );
 };
@@ -220,12 +255,12 @@ const PreviewSelect = (props) => {
         <Button
           ml={0}
           key={preview.dir}
-          title={preview.dir_name}
+          tooltip={preview.dir_name}
           selected={preview.selected}
           style={{
             width: '40px',
             height: '40px',
-            padding: 0,
+            padding: '0',
           }}
           onClick={() => {
             act('pipe_type', {
@@ -266,7 +301,6 @@ const PipeTypeSection = (props) => {
       <Tabs>
         {categories.map((category, i) => (
           <Tabs.Tab
-            fluid
             key={category.cat_name}
             icon={ICON_BY_CATEGORY_NAME[category.cat_name]}
             selected={category.cat_name === shownCategory.cat_name}

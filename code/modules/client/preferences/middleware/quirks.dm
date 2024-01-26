@@ -31,8 +31,13 @@
 
 	var/list/quirks = SSquirks.get_quirks()
 
+	var/max_positive_quirks = CONFIG_GET(number/max_positive_quirks)
+	var/positive_quirks_disabled = max_positive_quirks == 0
 	for (var/quirk_name in quirks)
 		var/datum/quirk/quirk = quirks[quirk_name]
+		if(positive_quirks_disabled && initial(quirk.value) > 0)
+			continue
+
 		var/datum/quirk_constant_data/constant_data = GLOB.all_quirk_constant_data[quirk]
 		var/list/datum/preference/customization_options = constant_data?.get_customization_data()
 
@@ -46,9 +51,10 @@
 		)
 
 	return list(
-		"max_positive_quirks" = MAX_QUIRKS,
+		"max_positive_quirks" = max_positive_quirks,
 		"quirk_info" = quirk_info,
 		"quirk_blacklist" = GLOB.quirk_string_blacklist,
+		"points_enabled" = !CONFIG_GET(flag/disable_quirk_points),
 	)
 
 /datum/preference_middleware/quirks/on_new_character(mob/user)

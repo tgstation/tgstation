@@ -23,6 +23,10 @@
 		BB_PREVIOUS_BEACON_TARGET,
 		BB_BOT_SUMMON_TARGET,
 	)
+	///how many times we tried to reach the target
+	var/current_pathing_attempts = 0
+	///if we cant reach it after this many attempts, add it to our ignore list
+	var/max_pathing_attempts = 25
 
 /datum/ai_controller/basic_controller/bot/TryPossessPawn(atom/new_pawn)
 	. = ..()
@@ -66,13 +70,21 @@
 	return TRUE
 
 ///check if the target is too far away, and delete them if so and add them to the unreachables list
-/datum/ai_controller/basic_controller/bot/proc/reachable_key(key, distance = 10)
+/datum/ai_controller/basic_controller/bot/proc/reachable_key(key, distance = 10, bypass_add_to_blacklist = FALSE)
 	var/datum/target = blackboard[key]
 	if(QDELETED(target))
 		return FALSE
-	if(!can_reach_target(target, distance))
+	var/datum/last_attempt = blackboard[BB_LAST_ATTEMPTED_PATHING]
+	if(last_attempt != target)
+		current_pathing_attempts = 0
+		set_blackboard_key(BB_LAST_ATTEMPTED_PATHING, target)
+	else
+		current_pathing_attempts++
+	if(current_pathing_attempts >= max_pathing_attempts || !can_reach_target(target, distance))
 		clear_blackboard_key(key)
-		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, target, TRUE)
+		clear_blackboard_key(BB_LAST_ATTEMPTED_PATHING)
+		if(!bypass_add_to_blacklist)
+			set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
 		return FALSE
 	return TRUE
 
@@ -84,7 +96,7 @@
 
 /datum/ai_behavior/manage_unreachable_list
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 15 SECONDS
+	action_cooldown = 45 SECONDS
 
 /datum/ai_behavior/manage_unreachable_list/perform(seconds_per_tick, datum/ai_controller/controller, list_key)
 	. = ..()
@@ -97,7 +109,7 @@
 
 /datum/ai_planning_subtree/find_patrol_beacon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(QDELETED(bot_pawn) || !(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
+	if(!(bot_pawn.bot_mode_flags & BOT_MODE_AUTOPATROL) || bot_pawn.mode == BOT_SUMMON)
 		return
 
 	if(controller.blackboard_key_exists(BB_BEACON_TARGET))
@@ -179,6 +191,8 @@
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
+	if(QDELETED(bot_pawn)) // pawn can be null at this point
+		return ..()
 	bot_pawn.calling_ai_ref = null
 	bot_pawn.update_bot_mode(new_mode = BOT_IDLE)
 	return ..()
@@ -188,7 +202,7 @@
 /datum/ai_planning_subtree/salute_authority/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are criminals, dont salute the dirty pigs
-	if(QDELETED(bot_pawn) || bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_SALUTE_TARGET))
 		controller.queue_behavior(/datum/ai_behavior/salute_authority, BB_SALUTE_TARGET, BB_SALUTE_MESSAGES)

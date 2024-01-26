@@ -2,6 +2,7 @@ import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -21,6 +22,10 @@ type DispensableReagent = {
   pHCol: string;
 };
 
+type TransferableBeaker = Beaker & {
+  transferAmounts: number[];
+};
+
 type Data = {
   showpH: BooleanLike;
   amount: number;
@@ -30,7 +35,7 @@ type Data = {
   recipes: string[];
   recordingRecipe: string[];
   recipeReagents: string[];
-  beaker: Beaker;
+  beaker: TransferableBeaker;
 };
 
 export const ChemDispenser = (props) => {

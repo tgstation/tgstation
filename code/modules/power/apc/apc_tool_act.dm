@@ -77,6 +77,7 @@
 			return
 		toggle_panel_open()
 		balloon_alert(user, "wires [panel_open ? "exposed" : "unexposed"]")
+		W.play_tool_sound(src)
 		update_appearance()
 		return
 
@@ -220,6 +221,7 @@
 		locked = FALSE
 		balloon_alert(user, "interface damaged")
 		update_appearance()
+		flicker_hacked_icon()
 		return TRUE
 
 // damage and destruction acts

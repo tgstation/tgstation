@@ -283,7 +283,7 @@
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/inlet_compressor/constructed
+	build_path = /obj/machinery/power/turbine/inlet_compressor
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -291,7 +291,7 @@
 /obj/item/circuitboard/machine/turbine_rotor
 	name = "Turbine - Core Rotor"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/core_rotor/constructed
+	build_path = /obj/machinery/power/turbine/core_rotor
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -299,7 +299,7 @@
 /obj/item/circuitboard/machine/turbine_stator
 	name = "Turbine - Turbine Outlet"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
-	build_path = /obj/machinery/power/turbine/turbine_outlet/constructed
+	build_path = /obj/machinery/power/turbine/turbine_outlet
 	req_components = list(
 		/obj/item/stack/cable_coil = 5,
 		/obj/item/stack/sheet/iron = 5)
@@ -1556,6 +1556,37 @@
 		/datum/stock_part/capacitor = 2,
 		/obj/item/mod/module/rad_protection = 1,
 		/obj/item/stack/sheet/plasteel = 2,
+	)
+
+/obj/item/circuitboard/machine/brm
+	name = "Boulder Retrieval Matrix"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/bouldertech/brm
+	req_components = list(
+		/datum/stock_part/capacitor = 1,
+		/datum/stock_part/scanning_module = 1,
+		/datum/stock_part/micro_laser = 1,
+	)
+
+/obj/item/circuitboard/machine/refinery
+	name = "Boulder Refinery"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/bouldertech/refinery
+	req_components = list(
+		/obj/item/reagent_containers/cup/beaker = 1,
+		/obj/item/assembly/igniter/condenser = 1,
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/matter_bin = 1,
+	)
+
+/obj/item/circuitboard/machine/smelter
+	name = "Boulder Smelter"
+	greyscale_colors = CIRCUIT_COLOR_SUPPLY
+	build_path = /obj/machinery/bouldertech/refinery/smelter
+	req_components = list(
+		/obj/item/assembly/igniter = 1,
+		/datum/stock_part/servo = 2,
+		/datum/stock_part/matter_bin = 2,
 	)
 
 /obj/item/circuitboard/machine/shieldwallgen

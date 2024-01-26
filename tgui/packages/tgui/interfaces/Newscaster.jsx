@@ -6,14 +6,16 @@
  */
 
 import { decodeHtmlEntities } from 'common/string';
+import { marked } from 'marked';
+import { useState } from 'react';
+
 import { useBackend, useSharedState } from '../backend';
-import { BountyBoardContent } from './BountyBoard';
-import { UserDetails } from './Vending';
 import {
   BlockQuote,
   Box,
   Button,
   Divider,
+  Image,
   LabeledList,
   Modal,
   Section,
@@ -21,9 +23,9 @@ import {
   Tabs,
   TextArea,
 } from '../components';
-import { marked } from 'marked';
 import { sanitizeText } from '../sanitize';
-import { useState } from 'react';
+import { BountyBoardContent } from './BountyBoard';
+import { UserDetails } from './Vending';
 
 const CENSOR_MESSAGE =
   'This channel has been deemed as threatening to \
@@ -256,10 +258,7 @@ const NewscasterWantedScreen = (props) => {
                 <Box bold>{activeWanted.criminal}</Box>
                 <Box italic>{activeWanted.crime}</Box>
               </Section>
-              <Box
-                as="img"
-                src={activeWanted.image ? activeWanted.image : null}
-              />
+              <Image src={activeWanted.image ? activeWanted.image : null} />
               <Box italic>
                 Posted by {activeWanted.author ? activeWanted.author : 'N/A'}
               </Box>
@@ -603,13 +602,12 @@ const NewscasterChannelMessages = (props) => {
                   the station and therefore marked with a <b>D-Notice</b>.
                 </Section>
               ) : (
-                <Section
-                  dangerouslySetInnerHTML={processedText(message.body)}
-                  pl={1}
-                />
+                <Section pl={1}>
+                  <Box dangerouslySetInnerHTML={processedText(message.body)} />
+                </Section>
               )}
               {message.photo !== null && !message.censored_message && (
-                <Box as="img" src={message.photo} />
+                <Image src={message.photo} />
               )}
               {!!message.comments && (
                 <Box>
@@ -618,10 +616,11 @@ const NewscasterChannelMessages = (props) => {
                       <Box italic textColor="white">
                         By: {comment.auth} at {comment.time}
                       </Box>
-                      <Section
-                        dangerouslySetInnerHTML={processedText(comment.body)}
-                        ml={2.5}
-                      />
+                      <Section ml={2.5}>
+                        <Box
+                          dangerouslySetInnerHTML={processedText(comment.body)}
+                        />
+                      </Section>
                     </BlockQuote>
                   ))}
                 </Box>

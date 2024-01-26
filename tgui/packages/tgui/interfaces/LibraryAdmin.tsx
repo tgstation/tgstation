@@ -1,6 +1,8 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { capitalize } from 'common/string';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -134,7 +136,7 @@ const SearchAndDisplay = (props) => {
             <Stack.Item>
               <Input
                 value={book_id}
-                placeholder={book_id === null ? 'ID' : book_id}
+                placeholder={book_id === null ? 'ID' : String(book_id)}
                 width="70px"
                 onChange={(e, value) =>
                   act('set_search_id', {
@@ -336,7 +338,7 @@ const ModifyPage = (props) => {
   const { can_db_request, view_raw, history } = data;
   const [modifyMethod, setModifyMethod] = useLocalState('ModifyMethod', '');
   const [modifyTarget, setModifyTarget] = useLocalState('ModifyTarget', 0);
-  const [reason, setReason] = useLocalState('Reason', 'null');
+  const [reason, setReason] = useState('null');
 
   const entries = history[modifyTarget.toString()]
     ? history[modifyTarget.toString()].sort((a, b) => b.id - a.id)
@@ -344,7 +346,7 @@ const ModifyPage = (props) => {
 
   return (
     <Window.Content scrollable>
-      <NoticeBox warning>
+      <NoticeBox>
         Heads Up! We do not allow you to fully delete books in game
         <br />
         What you&apos;re doing here is a &quot;don&apos;t show this to

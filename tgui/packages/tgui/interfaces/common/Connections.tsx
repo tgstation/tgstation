@@ -1,5 +1,5 @@
-import { CSS_COLORS } from '../../constants';
 import { classes } from '../../../common/react';
+import { CSS_COLORS } from '../../constants';
 
 const SVG_CURVE_INTENSITY = 64;
 
@@ -35,7 +35,7 @@ export const Connections = (props: {
 
   const isColorClass = (str) => {
     if (typeof str === 'string') {
-      return CSS_COLORS.includes(str);
+      return CSS_COLORS.includes(str as any);
     }
   };
 

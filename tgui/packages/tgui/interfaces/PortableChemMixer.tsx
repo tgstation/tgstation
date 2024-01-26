@@ -1,8 +1,9 @@
 import { sortBy } from 'common/collections';
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+
 import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type DispensableReagent = {
   title: string;
@@ -11,10 +12,14 @@ type DispensableReagent = {
   pH: number;
 };
 
+type TransferableBeaker = Beaker & {
+  transferAmounts: number[];
+};
+
 type Data = {
   amount: number;
   chemicals: DispensableReagent[];
-  beaker: Beaker;
+  beaker: TransferableBeaker;
 };
 
 export const PortableChemMixer = (props) => {

@@ -1,15 +1,17 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
   Dimmer,
   Icon,
+  Section,
+  Stack,
   Table,
   Tabs,
-  Stack,
-  Section,
 } from '../components';
 import { Window } from '../layouts';
 import { AreaCharge, powerRank } from './PowerMonitor';
@@ -46,7 +48,7 @@ const ApcLoggedOut = (props) => {
 const ApcLoggedIn = (props) => {
   const { act, data } = useBackend();
   const { restoring } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [tabIndex, setTabIndex] = useState(1);
   return (
     <Box>
       <Tabs>

@@ -1,3 +1,7 @@
+import { useState } from 'react';
+
+import { createSearch } from '../../common/string';
+import { useBackend } from '../backend';
 import {
   Button,
   Divider,
@@ -7,11 +11,7 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { useBackend } from '../backend';
-
 import { Window } from '../layouts';
-import { createSearch } from '../../common/string';
-import { useState } from 'react';
 
 type Data = {
   netsuit: string;
@@ -57,7 +57,7 @@ export const NetpodOutfits = (props) => {
               buttons={
                 <Input
                   autoFocus
-                  onInput={(event, value) => setSearch(value)}
+                  onChange={(event, value) => setSearch(value)}
                   placeholder="Search"
                   value={search}
                 />

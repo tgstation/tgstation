@@ -1,3 +1,7 @@
+import { createSearch, decodeHtmlEntities } from 'common/string';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   Button,
   Icon,
@@ -9,12 +13,9 @@ import {
   Tooltip,
 } from '../components';
 import { TableCell, TableRow } from '../components/Table';
-import { createSearch, decodeHtmlEntities } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
-
+import { Window } from '../layouts';
 import { InputButtons } from './common/InputButtons';
 import { Loader } from './common/Loader';
-import { Window } from '../layouts';
 
 type Data = {
   items: string[];
@@ -37,12 +38,9 @@ export const CheckboxInput = (props) => {
     title,
   } = data;
 
-  const [selections, setSelections] = useLocalState<string[]>('selections', []);
+  const [selections, setSelections] = useState<string[]>([]);
 
-  const [searchQuery, setSearchQuery] = useLocalState<string>(
-    'searchQuery',
-    '',
-  );
+  const [searchQuery, setSearchQuery] = useState('');
   const search = createSearch(searchQuery, (item: string) => item);
   const toDisplay = items.filter(search);
 

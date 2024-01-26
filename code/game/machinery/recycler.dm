@@ -32,12 +32,18 @@
 		/datum/material/titanium,
 		/datum/material/bluespace
 	)
-	materials = AddComponent(/datum/component/material_container, allowed_materials, INFINITY, MATCONTAINER_NO_INSERT|BREAKDOWN_FLAGS_RECYCLER)
+	materials = AddComponent(
+		/datum/component/material_container, \
+		allowed_materials, \
+		INFINITY, \
+		MATCONTAINER_NO_INSERT \
+	)
 	AddComponent(/datum/component/simple_rotation)
-	AddComponent(/datum/component/butchering/recycler, \
-	speed = 0.1 SECONDS, \
-	effectiveness = amount_produced, \
-	bonus_modifier = amount_produced/5, \
+	AddComponent(
+		/datum/component/butchering/recycler, \
+		speed = 0.1 SECONDS, \
+		effectiveness = amount_produced, \
+		bonus_modifier = amount_produced / 5, \
 	)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
@@ -149,7 +155,7 @@
 				continue
 			var/obj/item/bodypart/head/as_head = thing
 			var/obj/item/mmi/as_mmi = thing
-			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && as_head.brain) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
+			if(istype(thing, /obj/item/organ/internal/brain) || (istype(as_head) && locate(/obj/item/organ/internal/brain) in as_head) || (istype(as_mmi) && as_mmi.brain) || istype(thing, /obj/item/dullahan_relay))
 				living_detected = TRUE
 			if(isitem(as_object))
 				var/obj/item/as_item = as_object
@@ -197,7 +203,7 @@
 		new wood.plank_type(loc, 1 + seed_modifier)
 		. = TRUE
 	else
-		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100), breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+		var/retrieved = materials.insert_item(weapon, multiplier = (amount_produced / 100))
 		if(retrieved > 0) //item was salvaged i.e. deleted
 			materials.retrieve_all()
 			return TRUE

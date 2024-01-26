@@ -1,4 +1,5 @@
 #define BOT_CLEAN_PATH_LIMIT 15
+#define POST_CLEAN_COOLDOWN 5 SECONDS
 
 /datum/ai_controller/basic_controller/bot/cleanbot
 	blackboard = list(
@@ -21,7 +22,7 @@
 		/datum/ai_planning_subtree/acid_spray,
 		/datum/ai_planning_subtree/use_mob_ability/foam_area,
 		/datum/ai_planning_subtree/salute_authority,
-		/datum/ai_planning_subtree/find_patrol_beacon,
+		/datum/ai_planning_subtree/find_patrol_beacon/cleanbot,
 	)
 	reset_keys = list(
 		BB_ACTIVE_PET_COMMAND,
@@ -37,11 +38,12 @@
 		BB_CLEANABLE_DRAWINGS = CLEANBOT_CLEAN_DRAWINGS,
 		BB_HUNTABLE_TRASH = CLEANBOT_CLEAN_TRASH,
 	)
+	ai_traits = PAUSE_DURING_DO_AFTER
 
 /datum/ai_planning_subtree/pet_planning/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are DONE listening to orders
-	if(QDELETED(bot_pawn) || bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	return ..()
 
@@ -49,11 +51,6 @@
 /datum/ai_planning_subtree/cleaning_subtree
 
 /datum/ai_planning_subtree/cleaning_subtree/SelectBehaviors(datum/ai_controller/basic_controller/bot/cleanbot/controller, seconds_per_tick)
-	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
-
-	if(QDELETED(bot_pawn) || LAZYLEN(bot_pawn.do_afters))
-		return SUBTREE_RETURN_FINISH_PLANNING
-
 	if(controller.reachable_key(BB_CLEAN_TARGET, BOT_CLEAN_PATH_LIMIT))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_CLEAN_TARGET)
 		return SUBTREE_RETURN_FINISH_PLANNING
@@ -62,6 +59,7 @@
 
 	final_hunt_list += controller.blackboard[BB_CLEANABLE_DECALS]
 	var/list/flag_list = controller.clean_flags
+	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
 	for(var/list_key in flag_list)
 		if(!(bot_pawn.janitor_mode_flags & flag_list[list_key]))
 			continue
@@ -70,13 +68,13 @@
 	controller.queue_behavior(/datum/ai_behavior/find_and_set/in_list/clean_targets, BB_CLEAN_TARGET, final_hunt_list)
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets
-	action_cooldown = 2 SECONDS
+	action_cooldown = 1 SECONDS
 
 /datum/ai_behavior/find_and_set/in_list/clean_targets/search_tactic(datum/ai_controller/controller, locate_paths, search_range)
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
-		if(LAZYACCESS(ignore_list, found_item))
+		if(LAZYACCESS(ignore_list, REF(found_item)))
 			continue
 		return found_item
 
@@ -84,7 +82,7 @@
 
 /datum/ai_planning_subtree/acid_spray/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/cleanbot/bot_pawn = controller.pawn
-	if(QDELETED(bot_pawn) || !(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	if(controller.reachable_key(BB_ACID_SPRAY_TARGET, BOT_CLEAN_PATH_LIMIT))
 		controller.queue_behavior(/datum/ai_behavior/execute_clean, BB_ACID_SPRAY_TARGET)
@@ -99,7 +97,7 @@
 /datum/ai_behavior/find_and_set/spray_target/search_tactic(datum/ai_controller/controller, locate_path, search_range)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/mob/living/carbon/human/human_target in oview(search_range, controller.pawn))
-		if(LAZYACCESS(ignore_list, human_target))
+		if(LAZYACCESS(ignore_list, REF(human_target)))
 			continue
 		if(human_target.stat != CONSCIOUS || isnull(human_target.mind))
 			continue
@@ -130,6 +128,7 @@
 
 /datum/ai_behavior/execute_clean/finish_action(datum/ai_controller/controller, succeeded, target_key, targeting_strategy_key, hiding_location_key)
 	. = ..()
+	controller.set_blackboard_key(BB_POST_CLEAN_COOLDOWN, POST_CLEAN_COOLDOWN + world.time)
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target) || is_type_in_typecache(target, controller.blackboard[BB_HUNTABLE_TRASH]))
 		return
@@ -140,6 +139,9 @@
 	if(!length(speech_list))
 		return
 	var/mob/living/living_pawn = controller.pawn
+	if(QDELETED(living_pawn)) // pawn can be null at this point
+		controller.clear_blackboard_key(target_key)
+		return
 	living_pawn.say(pick(controller.blackboard[BB_CLEANBOT_EMAGGED_PHRASES]), forced = "ai controller")
 	controller.clear_blackboard_key(target_key)
 
@@ -149,7 +151,7 @@
 
 /datum/ai_planning_subtree/use_mob_ability/foam_area/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
-	if(QDELETED(bot_pawn) || !(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(!(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	return ..()
 
@@ -158,7 +160,7 @@
 /datum/ai_planning_subtree/befriend_janitors/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
 	//we are now evil. dont befriend the janitors
-	if((bot_pawn.bot_access_flags & BOT_COVER_EMAGGED))
+	if(bot_pawn.bot_access_flags & BOT_COVER_EMAGGED)
 		return
 	if(controller.blackboard_key_exists(BB_FRIENDLY_JANITOR))
 		controller.queue_behavior(/datum/ai_behavior/befriend_target, BB_FRIENDLY_JANITOR, BB_FRIENDLY_MESSAGE)
@@ -182,6 +184,13 @@
 		return human_target
 	return null
 
+/datum/ai_planning_subtree/find_patrol_beacon/cleanbot
+
+/datum/ai_planning_subtree/find_patrol_beacon/cleanbot/SelectBehaviors(datum/ai_controller/basic_controller/bot/controller, seconds_per_tick)
+	if(controller.blackboard[BB_POST_CLEAN_COOLDOWN] >= world.time)
+		return
+	return ..()
+
 /datum/pet_command/point_targeting/clean
 	command_name = "Clean"
 	command_desc = "Command a cleanbot to clean the mess."
@@ -194,7 +203,7 @@
 		return
 	if(isnull(parent.ai_controller))
 		return
-	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], target))
+	if(LAZYACCESS(parent.ai_controller.blackboard[BB_TEMPORARY_IGNORE_LIST], REF(target)))
 		return
 	return ..()
 
@@ -206,3 +215,4 @@
 	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 
 #undef BOT_CLEAN_PATH_LIMIT
+#undef POST_CLEAN_COOLDOWN

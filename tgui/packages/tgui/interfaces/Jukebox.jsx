@@ -1,14 +1,15 @@
 import { sortBy } from 'common/collections';
 import { flow } from 'common/fp';
+
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
   Dropdown,
-  Section,
   Knob,
   LabeledControls,
   LabeledList,
+  Section,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -33,7 +34,6 @@ export const Jukebox = (props) => {
           <LabeledList>
             <LabeledList.Item label="Track Selected">
               <Dropdown
-                overflow-y="scroll"
                 width="240px"
                 options={songs.map((song) => song.name)}
                 disabled={active}

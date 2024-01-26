@@ -1,19 +1,21 @@
 import { map, sortBy } from 'common/collections';
 import { flow } from 'common/fp';
 import { classes } from 'common/react';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
   Button,
   Dropdown,
+  Flex,
   Input,
+  LabeledList,
   Modal,
   NoticeBox,
   NumberInput,
-  LabeledList,
   Section,
   Stack,
-  Flex,
   Table,
 } from '../components';
 import { Window } from '../layouts';
@@ -269,15 +271,9 @@ const CheckoutModal = (props) => {
   ])(data.inventory);
 
   const [checkoutBook, setCheckoutBook] = useLocalState('CheckoutBook', false);
-  const [bookName, setBookName] = useLocalState(
-    'CheckoutBookName',
-    'Insert Book name...',
-  );
-  const [checkoutee, setCheckoutee] = useLocalState('Checkoutee', 'Recipient');
-  const [checkoutPeriod, setCheckoutPeriod] = useLocalState(
-    'CheckoutPeriod',
-    5,
-  );
+  const [bookName, setBookName] = useState('Insert Book name...');
+  const [checkoutee, setCheckoutee] = useState('Recipient');
+  const [checkoutPeriod, setCheckoutPeriod] = useState(5);
   return (
     <Modal width="500px">
       <Box fontSize="20px" pb={1}>
@@ -419,6 +415,7 @@ export const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Dropdown
+                width="120px"
                 options={search_categories}
                 selected={category}
                 onSelected={(value) =>
@@ -643,7 +640,7 @@ const UploadModal = (props) => {
 
   const { upload_categories, default_category, can_db_request } = data;
   const [uploadToDB, setUploadToDB] = useLocalState('UploadDB', false);
-  const [uploadCategory, setUploadCategory] = useLocalState('ModalUpload', '');
+  const [uploadCategory, setUploadCategory] = useState('');
 
   const display_category = uploadCategory || default_category;
   return (
@@ -695,10 +692,7 @@ const UploadModal = (props) => {
 export const Print = (props) => {
   const { act, data } = useBackend();
   const { deity, religion, bible_name, bible_sprite, posters } = data;
-  const [selectedPoster, setSelectedPoster] = useLocalState(
-    'selected_poster',
-    posters[0],
-  );
+  const [selectedPoster, setSelectedPoster] = useState(posters[0]);
 
   return (
     <Stack vertical fill>

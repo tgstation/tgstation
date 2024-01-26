@@ -41,7 +41,7 @@
 	// Easier to handle edits to the cooldown duration, prevents timer spam for short cooldown emitters
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/component/radioactive_emitter/Destroy(force, silent)
+/datum/component/radioactive_emitter/Destroy(force)
 	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 

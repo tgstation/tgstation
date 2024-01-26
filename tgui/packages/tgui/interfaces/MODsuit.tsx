@@ -1,25 +1,26 @@
 import { BooleanLike } from 'common/react';
-import { formatSiUnit } from '../format';
+import { useState } from 'react';
+
 import { useBackend } from '../backend';
 import {
+  AnimatedNumber,
+  Box,
   Button,
+  Collapsible,
   ColorBox,
+  Dimmer,
+  Dropdown,
+  Icon,
   LabeledList,
+  NoticeBox,
+  NumberInput,
   ProgressBar,
   Section,
-  Collapsible,
-  Box,
-  Icon,
   Stack,
   Table,
-  Dimmer,
-  NumberInput,
-  AnimatedNumber,
-  Dropdown,
-  NoticeBox,
 } from '../components';
+import { formatSiUnit } from '../format';
 import { Window } from '../layouts';
-import { useState } from 'react';
 
 type MODsuitData = {
   // Static
@@ -237,6 +238,22 @@ const ConfigureListEntry = (props) => {
   );
 };
 
+const ConfigurePinEntry = (props) => {
+  const { name, value, module_ref } = props;
+  const { act } = useBackend();
+  return (
+    <Button
+      onClick={() =>
+        act('configure', { key: name, value: !value, ref: module_ref })
+      }
+      icon="thumbtack"
+      selected={value}
+      tooltip="Pin"
+      tooltipPosition="left"
+    />
+  );
+};
+
 const ConfigureDataEntry = (props) => {
   const { name, display_name, type, value, values, module_ref } = props;
   const configureEntryTypes = {
@@ -244,6 +261,7 @@ const ConfigureDataEntry = (props) => {
     bool: <ConfigureBoolEntry {...props} />,
     color: <ConfigureColorEntry {...props} />,
     list: <ConfigureListEntry {...props} />,
+    pin: <ConfigurePinEntry {...props} />,
   };
   return (
     <LabeledList.Item label={display_name}>

@@ -156,8 +156,12 @@
 			trait.minigame_mod(rod, user, src)
 	/// Enable special parameters
 	if(rod.line)
+		completion_gain += 1 // Any fishing line will provide a small boost by default
 		if(rod.line.fishing_line_traits & FISHING_LINE_BOUNCY)
 			completion_loss -= 2
+		if(rod.line.fishing_line_traits & FISHING_LINE_STIFF)
+			completion_loss += 1
+			completion_gain -= 1
 	if(rod.hook)
 		if(rod.hook.fishing_hook_traits & FISHING_HOOK_WEIGHTED)
 			bait_bounce_mult = 0.1
@@ -199,7 +203,7 @@
 	bait_height -= difficulty
 	bait_pixel_height = round(MINIGAME_BAIT_HEIGHT * (bait_height/initial(bait_height)), 1)
 
-/datum/fishing_challenge/Destroy(force, ...)
+/datum/fishing_challenge/Destroy(force)
 	if(!completed)
 		complete(win = FALSE)
 	if(fishing_line)

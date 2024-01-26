@@ -529,3 +529,32 @@ DISALLOW_TITLE_MUSIC
 ## This is primarily useful for developing tutorials. If you have a proper DB setup, you
 ## don't need (or want) this.
 #GIVE_TUTORIALS_WITHOUT_DB
+
+## Configuration for station traits of each type.
+## The first value (key) is the budget, or the space available to use for station traits of that type. Some take more space than others.
+## The second value (assoc) is the weight associated with said budget compared to the rest for that type.
+POSITIVE_STATION_TRAITS 0 8
+POSITIVE_STATION_TRAITS 1 4
+POSITIVE_STATION_TRAITS 2 2
+POSITIVE_STATION_TRAITS 3 1
+
+NEUTRAL_STATION_TRAITS 0 10
+NEUTRAL_STATION_TRAITS 1 10
+NEUTRAL_STATION_TRAITS 2 3
+NEUTRAL_STATION_TRAITS 2.5 1
+
+NEGATIVE_STATION_TRAITS 0 8
+NEGATIVE_STATION_TRAITS 1 4
+NEGATIVE_STATION_TRAITS 2 2
+NEGATIVE_STATION_TRAITS 3 1
+
+# Uncomment to disable Quirk point balancing for the server and clients.
+# If enabled, players will be able to select positive quirks without first selecting negative quirks.
+# If enabled, randomized Quirks will still use points internally, in order to maintain balance.
+#DISABLE_QUIRK_POINTS
+
+# The maximum amount of positive quirks one character can have at roundstart.
+# If set to -1, then players will be able to select any quantity of positive quirks.
+# If set to 0, then players won't be able to select any positive quirks.
+# If commented-out or undefined, the maximum default is 6.
+MAX_POSITIVE_QUIRKS 6

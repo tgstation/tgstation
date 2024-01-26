@@ -36,7 +36,7 @@
 /datum/component/ghost_edible/UnregisterFromParent()
 	STOP_PROCESSING(SSdcs, src)
 
-/datum/component/ghost_edible/Destroy(force, silent)
+/datum/component/ghost_edible/Destroy(force)
 	STOP_PROCESSING(SSdcs, src)
 	return ..()
 

@@ -77,7 +77,6 @@
 
 
 /obj/machinery/smoke_machine/process()
-	..()
 	if(reagents.total_volume == 0)
 		on = FALSE
 		update_appearance()

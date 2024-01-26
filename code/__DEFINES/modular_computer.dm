@@ -28,6 +28,8 @@
 #define PROGRAM_HEADER (1<<4)
 ///The program will run despite the ModPC not having any power in it.
 #define PROGRAM_RUNS_WITHOUT_POWER (1<<5)
+///The circuit ports of this program can be triggered even if the program is not open
+#define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<6)
 
 //Program categories
 #define PROGRAM_CATEGORY_DEVICE "Device Tools"
@@ -38,12 +40,17 @@
 #define PROGRAM_CATEGORY_SUPPLY "Supply"
 #define PROGRAM_CATEGORY_SCIENCE "Science"
 
+///The default amount a program should take in cell use.
+#define PROGRAM_BASIC_CELL_USE 15
+
 ///This app grants a minor protection against being PDA bombed if installed.
 ///(can sometimes prevent it from being sent, while wasting a PDA bomb from the sender).
 #define DETOMATIX_RESIST_MINOR 1
 ///This app grants a larger protection against being PDA bombed if installed.
 ///(can sometimes prevent it from being sent, while wasting a PDA bomb from the sender).
 #define DETOMATIX_RESIST_MAJOR 2
+///This app gives a diminished protection against being PDA bombed if installed.
+#define DETOMATIX_RESIST_MALUS -4
 
 /**
  * NTNet transfer speeds, used when downloading/uploading a file/program.

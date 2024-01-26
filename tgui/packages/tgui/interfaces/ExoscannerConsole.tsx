@@ -4,14 +4,14 @@ import {
   Box,
   Button,
   Icon,
-  Modal,
-  Section,
   LabeledList,
+  Modal,
   NoticeBox,
+  Section,
   Stack,
 } from '../components';
-import { Window } from '../layouts';
 import { formatTime } from '../format';
+import { Window } from '../layouts';
 
 type SiteData = {
   name: string;
@@ -225,9 +225,7 @@ export const ExoscannerConsole = (props) => {
               <Section title="Special Scan Condtions">
                 {scan_conditions &&
                   scan_conditions.map((condition) => (
-                    <NoticeBox key={condition} warning>
-                      {condition}
-                    </NoticeBox>
+                    <NoticeBox key={condition}>{condition}</NoticeBox>
                   ))}
               </Section>
             </Section>

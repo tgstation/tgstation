@@ -66,3 +66,6 @@
 		take_damage(power * 2.5e-4, BURN, "energy")
 	power -= power * 5e-4 //walls take a lot out of ya
 	. = ..()
+
+/obj/structure/animate_atom_living(mob/living/owner)
+	new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)

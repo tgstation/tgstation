@@ -1,3 +1,7 @@
+import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   BlockQuote,
   Collapsible,
@@ -6,10 +10,7 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { BooleanLike } from 'common/react';
-import { useState } from 'react';
 
 type Data = {
   PlayerAccounts: PlayerAccount[];
@@ -79,7 +80,6 @@ const UsersScreen = (props) => {
     <Section fill scrollable title="Crew Account Summary">
       {PlayerAccounts.map((account) => (
         <Collapsible
-          fill
           key={account.index}
           title={account.name + ' the ' + account.job}
         >

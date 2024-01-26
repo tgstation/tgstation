@@ -42,7 +42,7 @@
 	//If someones chest is teleported away, they die pretty hard
 	if(!old_owner)
 		return
-	message_admins("[ADMIN_LOOKUPFLW(old_owner)] was gibbed after their chest teleport to [ADMIN_VERBOSEJMP(loc)].")
+	message_admins("[ADMIN_LOOKUPFLW(old_owner)] was gibbed after their chest teleported to [ADMIN_VERBOSEJMP(loc)].")
 	old_owner.gib(DROP_ALL_REMAINS)
 
 /obj/item/bodypart/chest/can_dismember(obj/item/item)
@@ -227,7 +227,7 @@
 		if(bodypart_disabled)
 			owner.set_usable_hands(owner.usable_hands - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
+				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(!bodypart_disabled)
@@ -324,7 +324,7 @@
 		if(bodypart_disabled)
 			owner.set_usable_hands(owner.usable_hands - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
+				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
 	else if(!bodypart_disabled)
@@ -443,7 +443,7 @@
 		if(bodypart_disabled)
 			owner.set_usable_legs(owner.usable_legs - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
+				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 
@@ -532,7 +532,7 @@
 		if(bodypart_disabled)
 			owner.set_usable_legs(owner.usable_legs - 1)
 			if(owner.stat < UNCONSCIOUS)
-				to_chat(owner, span_userdanger("You lose control of your [name]!"))
+				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)
 

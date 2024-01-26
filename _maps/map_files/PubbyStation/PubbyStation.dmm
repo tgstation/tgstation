@@ -28974,7 +28974,7 @@
 	dir = 8
 	},
 /obj/structure/bed/dogbed/runtime,
-/mob/living/simple_animal/pet/cat/runtime,
+/mob/living/basic/pet/cat/runtime,
 /turf/open/floor/iron/white,
 /area/station/command/heads_quarters/cmo)
 "cSK" = (
@@ -37697,6 +37697,13 @@
 /obj/machinery/atmospherics/components/trinary/mixer/airmix,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
+"kSC" = (
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 9
+	},
+/obj/machinery/vending/cigarette,
+/turf/open/floor/iron,
+/area/station/security/prison)
 "kSD" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/red/half/contrasted{
@@ -41150,10 +41157,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "nVI" = (
-/mob/living/simple_animal/pet/cat{
-	desc = "Yoss, queen, slay.";
-	name = "Katie"
-	},
 /turf/open/floor/plating,
 /area/station/service/chapel/office)
 "nVN" = (
@@ -75808,7 +75811,7 @@ acM
 aem
 aem
 aem
-sfh
+kSC
 afs
 agy
 pgV

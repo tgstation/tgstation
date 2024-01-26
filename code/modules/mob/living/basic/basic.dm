@@ -138,10 +138,8 @@
 	if(staminaloss > 0)
 		adjustStaminaLoss(-stamina_recovery * seconds_per_tick, forced = TRUE)
 
-/mob/living/basic/say_mod(input, list/message_mods = list())
-	if(length(speak_emote))
-		verb_say = pick(speak_emote)
-	return ..()
+/mob/living/basic/get_default_say_verb()
+	return length(speak_emote) ? pick(speak_emote) : ..()
 
 /mob/living/basic/death(gibbed)
 	. = ..()

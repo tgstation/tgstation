@@ -1,8 +1,10 @@
-import { useBackend, useLocalState } from '../backend';
+import { paginate, range } from 'common/collections';
+import { multiline } from 'common/string';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
-import { multiline } from 'common/string';
-import { paginate, range } from 'common/collections';
 
 type Entry = {
   name: string;
@@ -72,13 +74,10 @@ export const InfuserBook = (props) => {
   const { data, act } = useBackend<DnaInfuserData>();
   const { entries } = data;
 
-  const [bookPosition, setBookPosition] = useLocalState<BookPosition>(
-    'bookPosition',
-    {
-      chapter: 0,
-      pageInChapter: 0,
-    },
-  );
+  const [bookPosition, setBookPosition] = useState({
+    chapter: 0,
+    pageInChapter: 0,
+  });
   const { chapter, pageInChapter } = bookPosition;
 
   const paginatedEntries = paginateEntries(entries);

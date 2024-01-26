@@ -1,0 +1,21 @@
+{
+    "version": 1,
+	"map_name": "Box Station",
+	"map_path": "map_files/BoxStation",
+	"map_file": "BoxStation.dmm",
+    "shuttles": {
+	    "cargo": "cargo_box",
+	    "ferry": "ferry_fancy",
+	    "whiteship": "whiteship_box",
+	    "emergency": "emergency_box"
+    },
+    "job_changes": {
+		"Cook": {
+			"additional_cqc_areas": ["/area/station/service/bar", "/area/station/commons/lounge"]
+		},
+		"Psychologist": {
+			"spawn_positions": 0,
+            "total_positions": 0
+		}
+	}
+}

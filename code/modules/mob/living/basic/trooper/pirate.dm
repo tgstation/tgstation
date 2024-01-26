@@ -4,7 +4,6 @@
 	desc = "Does what he wants cause a pirate is free."
 	response_help_continuous = "pushes"
 	response_help_simple = "push"
-	speed = 0
 	speak_emote = list("yarrs")
 	faction = list(FACTION_PIRATE)
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate)
@@ -42,7 +41,6 @@
 	name = "Space Pirate Swashbuckler"
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
-	speed = 1
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/melee/space)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/melee/space
 
@@ -79,7 +77,6 @@
 	name = "Space Pirate Gunner"
 	unsuitable_atmos_damage = 0
 	minimum_survivable_temperature = 0
-	speed = 1
 	loot = list(/obj/effect/mob_spawn/corpse/human/pirate/ranged/space)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/pirate/ranged/space
 	r_hand = /obj/item/gun/energy/e_gun/lethal
