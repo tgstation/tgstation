@@ -688,8 +688,8 @@
 	integrity_failure = 0.25
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 4.8
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 4.8
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
+	power_channel = AREA_USAGE_ENVIRON
 	var/datum/transport_controller/linear/tram/controller_datum
 	/// If the cover is open
 	var/cover_open = FALSE
@@ -743,6 +743,9 @@
 		context[SCREENTIP_CONTEXT_LMB] = "emag controller"
 
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/transport/tram_controller/update_current_power_usage()
+	return // We get power from area rectifiers
 
 /obj/machinery/transport/tram_controller/examine(mob/user)
 	. = ..()

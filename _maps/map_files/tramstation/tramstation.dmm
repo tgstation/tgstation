@@ -4431,6 +4431,7 @@
 /obj/effect/turf_decal/siding/thinplating/corner{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "aEn" = (
@@ -18082,7 +18083,6 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/transport/power_rectifier,
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/left)
 "fnO" = (
@@ -25135,10 +25135,15 @@
 /turf/open/floor/glass/reinforced,
 /area/station/science/genetics)
 "hXW" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/turf_decal/trimline/red/filled/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/trimline/neutral/filled/warning{
+	dir = 1
+	},
 /obj/machinery/transport/power_rectifier,
-/turf/open/floor/catwalk_floor,
-/area/station/hallway/primary/tram/center)
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/right)
 "hYd" = (
 /obj/structure/lattice/catwalk,
 /obj/machinery/atmospherics/pipe/smart/simple/green/visible,
@@ -52273,6 +52278,16 @@
 	},
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"rxI" = (
+/obj/effect/turf_decal/trimline/neutral/filled/line{
+	dir = 1
+	},
+/obj/structure/cable,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/transport/power_rectifier,
+/turf/open/floor/iron,
+/area/station/hallway/primary/tram/left)
 "rxN" = (
 /obj/machinery/photocopier,
 /obj/structure/extinguisher_cabinet/directional/north,
@@ -58170,7 +58185,7 @@
 /obj/effect/turf_decal/trimline/neutral/filled/line{
 	dir = 1
 	},
-/obj/machinery/airalarm/directional/north,
+/obj/machinery/transport/power_rectifier,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "tBa" = (
@@ -154163,7 +154178,7 @@ aQO
 aQO
 aQO
 aQO
-qhM
+rxI
 nYq
 yiM
 cFs
@@ -166751,7 +166766,7 @@ bKM
 aBQ
 rWd
 izU
-hXW
+ghg
 cTc
 rOu
 xCp
@@ -167783,7 +167798,7 @@ izU
 izU
 izU
 izU
-hce
+izU
 tAL
 sOD
 izU
@@ -170353,7 +170368,7 @@ izU
 izU
 izU
 izU
-izU
+hce
 aEm
 gnK
 izU
@@ -180891,7 +180906,7 @@ jnJ
 ged
 whL
 vUE
-aEz
+hXW
 yeB
 ipC
 seR
