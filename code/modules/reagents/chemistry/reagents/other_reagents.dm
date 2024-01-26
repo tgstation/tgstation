@@ -2880,6 +2880,8 @@
 	var/amount_left = 0
 	/// Decal to spawn when spilled
 	var/ants_decal = /obj/effect/decal/cleanable/ants
+	/// Status effect applied by splashing ants
+	var/status_effect = /datum/status_effect/ants
 	/// List of possible common statements to scream when eating ants
 	var/static/list/ant_screams = list(
 		"THEY'RE UNDER MY SKIN!!",
@@ -2902,9 +2904,9 @@
 		return
 	if(SPT_PROB(5, seconds_per_tick))
 		if(SPT_PROB(5, seconds_per_tick)) //Super rare statement
-			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = /datum/reagent/ants)
+			victim.say("AUGH NO NOT THE ANTS! NOT THE ANTS! AAAAUUGH THEY'RE IN MY EYES! MY EYES! AUUGH!!", forced = src.type)
 		else
-			victim.say(pick(ant_screams), forced = /datum/reagent/ants)
+			victim.say(pick(ant_screams), forced = src.type)
 	if(SPT_PROB(15, seconds_per_tick))
 		victim.emote("scream")
 	if(SPT_PROB(2, seconds_per_tick)) // Stuns, but purges ants.
@@ -2921,7 +2923,7 @@
 		return
 	if(methods & (PATCH|TOUCH|VAPOR))
 		amount_left = round(reac_volume,0.1)
-		exposed_mob.apply_status_effect(/datum/status_effect/ants, amount_left)
+		exposed_mob.apply_status_effect(status_effect, amount_left)
 
 /datum/reagent/ants/expose_obj(obj/exposed_obj, reac_volume)
 	. = ..()
@@ -2955,6 +2957,7 @@
 	taste_description = "tiny flaming legs scuttling down the back of your throat"
 	ant_damage_coeff = 0.05 // Roughly 64 brute with 100u
 	ants_decal = /obj/effect/decal/cleanable/ants/fire
+	status_effect = /datum/status_effect/ants/fire
 
 /datum/glass_style/drinking_glass/fire_ants
 	required_drink_type = /datum/reagent/ants/fire
