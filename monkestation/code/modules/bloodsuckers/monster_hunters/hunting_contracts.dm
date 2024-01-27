@@ -129,5 +129,5 @@
 
 /datum/hunter_weapons/beast_claw
 	name = "Beast Claw"
-	desc = "a claw made from the bones of monster, can be transformed into a heavy wounding claw"
+	desc = "A claw made from the bones of monster. It can be transformed into a heavier, more wound-inducing version."
 	item = /obj/item/melee/trick_weapon/beast_claw
