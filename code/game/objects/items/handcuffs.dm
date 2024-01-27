@@ -47,7 +47,7 @@
 	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 5)
 	breakouttime = 1 MINUTES
 	var/handcuff_time = 4 SECONDS
-	/// Multiplier for handcuff time
+	///Multiplier for handcuff time
 	var/handcuff_time_mod = 1
 	armor_type = /datum/armor/restraints_handcuffs
 	custom_price = PAYCHECK_COMMAND * 0.35
