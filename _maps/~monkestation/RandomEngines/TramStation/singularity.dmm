@@ -310,6 +310,10 @@
 "Ho" = (
 /turf/closed/wall/r_wall,
 /area/station/engineering/supermatter/room)
+"HD" = (
+/obj/machinery/camera/emp_proof/directional/south,
+/turf/open/floor/iron,
+/area/station/engineering/supermatter/room)
 "HO" = (
 /obj/machinery/particle_accelerator/control_box,
 /obj/effect/turf_decal/stripes/line{
@@ -489,12 +493,6 @@
 /obj/structure/lattice,
 /turf/open/space/basic,
 /area/space/nearstation)
-"ZX" = (
-/obj/machinery/camera/emp_proof/directional/north{
-	c_tag = "Singularity Engine #3"
-	},
-/turf/open/space/basic,
-/area/station/engineering/supermatter/room)
 
 (1,1,1) = {"
 TZ
@@ -899,7 +897,7 @@ Sb
 JE
 JE
 JE
-JE
+HD
 tY
 Zh
 Zh
@@ -946,7 +944,7 @@ Gn
 Ho
 Ho
 Ho
-ZX
+Zh
 Zh
 jS
 zz
