@@ -220,19 +220,19 @@
 			user.visible_message(span_danger("[user] tries to light [to_ignite.loc == user ? "[user.p_their()] [to_ignite.name]" : to_ignite] with [src], but it doesn't do anything. Dumbass."))
 			playsound(user, microfusion_lens.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
-			cell.use(microfusion_lens.e_cost)
+			cell.use(microfusion_lens.e_cost + extra_power_usage)
 			. = ""
 		else if(loaded_projectile.damage_type != BURN)
 			user.visible_message(span_danger("[user] tries to light [to_ignite.loc == user ? "[user.p_their()] [to_ignite.name]" : to_ignite] with [src], but only succeeds in utterly destroying it. Dumbass."))
 			playsound(user, microfusion_lens.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
-			cell.use(microfusion_lens.e_cost)
+			cell.use(microfusion_lens.e_cost + extra_power_usage)
 			qdel(to_ignite)
 			. = ""
 		else
 			playsound(user, microfusion_lens.fire_sound, 50, TRUE)
 			playsound(user, loaded_projectile.hitsound, 50, TRUE)
-			cell.use(microfusion_lens.e_cost)
+			cell.use(microfusion_lens.e_cost + extra_power_usage)
 			. = span_danger("[user] casually lights [to_ignite.loc == user ? "[user.p_their()] [to_ignite.name]" : to_ignite] with [src]. Damn.")
 
 /obj/item/gun/microfusion/attackby(obj/item/attacking_item, mob/user, params)
@@ -304,7 +304,7 @@
 		if(user.is_holding(src))
 			user.visible_message(span_suicide("[user] melts [user.p_their()] face off with [src]!"))
 			playsound(loc, fire_sound, 50, TRUE, -1)
-			cell.use(microfusion_lens.e_cost)
+			cell.use(microfusion_lens.e_cost + extra_power_usage)
 			update_appearance()
 			return(FIRELOSS)
 		else
