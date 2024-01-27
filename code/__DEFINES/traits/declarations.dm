@@ -506,6 +506,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Sells for more money on the pirate bounty pad.
 #define TRAIT_HIGH_VALUE_RANSOM "high_value_ransom"
 
+/// Makes the user handcuff others faster
+#define TRAIT_FAST_CUFFING "fast_cuffing"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
