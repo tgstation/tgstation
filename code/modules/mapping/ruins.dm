@@ -93,7 +93,7 @@
 	if(PERFORM_ALL_TESTS(log_mapping))
 		log_mapping("All ruins being loaded for map testing.")
 
-	switch(mineral_budget_update)
+	switch(config.minetype)
 		if(OREGEN_PRESET_LAVALAND)
 			SSore_generation.ore_vent_minerals = GLOB.ore_vent_minerals_lavaland.Copy()
 		if(OREGEN_PRESET_ICEBOX_UPPER)
