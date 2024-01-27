@@ -265,8 +265,6 @@
 		return
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
-	if(machine_stat & BROKEN)
-		return
 	set_broken()
 
 /obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
@@ -301,6 +299,8 @@
 	return TRUE
 
 /obj/machinery/power/apc/proc/set_broken()
+	if(machine_stat & BROKEN)
+		return
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	operating = FALSE
