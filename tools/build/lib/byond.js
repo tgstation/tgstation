@@ -153,9 +153,12 @@ export const DreamMaker = async (dmeFile, options = {}) => {
       Juke.logger.error(`Unexpected DreamMaker return, ensure "${dmPath}" is correct DM path.`)
       throw new Juke.ExitCode(1);
     }
-    const requiredMajorVersion = 515; // for -D Functionality
-    if(version[1] < requiredMajorVersion){
-      Juke.logger.error(`${requiredMajorVersion} DM version required`)
+    const requiredMajorVersion = 515;
+    const requiredMinorVersion = 1597 // First with -D switch functionality
+    const major = Number(version[1]);
+    const minor = Number(version[2]);
+    if(major < requiredMajorVersion || major == requiredMajorVersion && minor < requiredMinorVersion){
+      Juke.logger.error(`${requiredMajorVersion}.${requiredMinorVersion} DM version required`)
       throw new Juke.ExitCode(1);
     }
   }
