@@ -12,6 +12,12 @@
 	///our gun jamming cd to prevent spam jammings
 	COOLDOWN_DECLARE(jam_cooldown)
 
+
+/datum/component/gun_jammable/Initialize(jamming_prob = 5, jam_time = 1 SECONDS)
+	. = ..()
+	src.jamming_prob = jamming_prob
+	src.jam_time = jam_time
+
 /datum/component/gun_jammable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATTACHMENT_ATTACHED, PROC_REF(handle_stat_gain))
 	RegisterSignal(parent, COMSIG_ATTACHMENT_DETACHED, PROC_REF(handle_stat_loss))
