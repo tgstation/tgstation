@@ -1,0 +1,4 @@
+author: "intercepti0n"
+delete-after: True
+changes:
+  - refactor: "Refactored Telecommunications Monitoring Console UI: added search bar, made UI more compact."
