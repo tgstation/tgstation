@@ -1,41 +1,46 @@
-/// Helper macro to check if the passed mob has jukebox sound preference enabled
-#define HAS_JUKEBOX_PREF(mob) (!QDELETED(mob) && !isnull(mob.client) && mob.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox))
-
 /obj/machinery/jukebox
 	name = "jukebox"
 	desc = "A classic music player."
 	icon = 'icons/obj/machines/music.dmi'
 	icon_state = "jukebox"
+	base_icon_state = "jukebox"
 	verb_say = "states"
 	density = TRUE
 	req_access = list(ACCESS_BAR)
-	/// Whether we're actively playing music
-	VAR_PRIVATE/active = FALSE
-	// /// List of weakrefs to mobs listening to the current song
-	// var/list/datum/weakref/rangers = list()
-	/// World.time when the current song will stop playing, but also a cooldown between activations
-	VAR_PRIVATE/stop = 0
-	/// List of /datum/tracks we can play
-	/// Inited from config every time a jukebox is instantiated
-	var/list/songs = list()
-	/// Current song selected
-	VAR_PRIVATE/datum/track/selection = null
-	/// Volume of the songs played
-	var/volume = 50
+	processing_flags = START_PROCESSING_MANUALLY
 	/// Cooldown between "Error" sound effects being played
 	COOLDOWN_DECLARE(jukebox_error_cd)
+	/// Cooldown between being allowed to play another song
+	COOLDOWN_DECLARE(jukebox_song_cd)
+	/// TimerID to when the current song ends
+	var/song_timerid
+	/// The actual music player datum that handles the music
+	var/datum/jukebox/music_player
 
-	var/dance = TRUE
+/obj/machinery/jukebox/Initialize(mapload)
+	. = ..()
+	music_player = new(src)
+
+/obj/machinery/jukebox/Destroy()
+	stop_music()
+	QDEL_NULL(music_player)
+	return ..()
+
+/obj/machinery/jukebox/no_access
+	req_access = null
 
 /obj/machinery/jukebox/disco
 	name = "radiant dance machine mark IV"
 	desc = "The first three prototypes were discontinued after mass casualty incidents."
 	icon_state = "disco"
+	base_icon_state = "disco"
 	req_access = list(ACCESS_ENGINEERING)
 	anchored = FALSE
 
-	var/list/spotlights = list()
-	var/list/sparkles = list()
+	/// Spotlight effects being played
+	VAR_PRIVATE/list/obj/item/flashlight/spotlight/spotlights = list()
+	/// Sparkle effects being played
+	VAR_PRIVATE/list/obj/effect/overlay/sparkles/sparkles = list()
 
 /obj/machinery/jukebox/disco/indestructible
 	name = "radiant dance machine mark V"
@@ -45,80 +50,32 @@
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
 
-/datum/track
-	var/song_name = "generic"
-	var/song_path = null
-	var/song_length = 0
-	var/song_beat = 0
+/obj/machinery/jukebox/wrench_act(mob/living/user, obj/item/tool)
+	if(!isnull(music_player.active_song_sound))
+		return NONE
+	if(obj_flags & NO_DECONSTRUCTION)
+		return NONE
 
-/datum/track/default
-	song_path = 'sound/ambience/title3.ogg'
-	song_name = "Tintin on the Moon"
-	song_length = 3 MINUTES + 52 SECONDS
-	song_beat = 1 SECONDS
+	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
+		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/jukebox/Initialize(mapload)
-	. = ..()
-	songs = load_songs_from_config()
-	if(length(songs))
-		selection = pick(songs)
-
-/// Loads the config sounds once, and returns a copy of them.
-/obj/machinery/jukebox/proc/load_songs_from_config()
-	var/static/list/config_songs
-	if(isnull(config_songs))
-		config_songs = list()
-		var/list/tracks = flist("[global.config.directory]/jukebox_music/sounds/")
-		for(var/track_file in tracks)
-			var/datum/track/new_track = new()
-			new_track.song_path = file("[global.config.directory]/jukebox_music/sounds/[track_file]")
-			var/list/track_data = splittext(track_file, "+")
-			if(length(track_data) != 3)
-				continue
-			new_track.song_name = track_data[1]
-			new_track.song_length = text2num(track_data[2])
-			new_track.song_beat = text2num(track_data[3])
-			config_songs += new_track
-
-		if(!length(config_songs))
-			// Includes title3 as a default for testing / "no config" support, also because it's a banger
-			config_songs += new /datum/track/default()
-
-	// returns a copy so it can mutate if desired.
-	return config_songs.Copy()
-
-/obj/machinery/jukebox/Destroy()
-	dance_over()
-	selection = null
-	songs.Cut()
-	return ..()
-
-/obj/machinery/jukebox/attackby(obj/item/O, mob/user, params)
-	if(!active && !(obj_flags & NO_DECONSTRUCTION))
-		if(O.tool_behaviour == TOOL_WRENCH)
-			if(!anchored && !isinspace())
-				to_chat(user,span_notice("You secure [src] to the floor."))
-				set_anchored(TRUE)
-			else if(anchored)
-				to_chat(user,span_notice("You unsecure and disconnect [src]."))
-				set_anchored(FALSE)
-			playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-			return
-	return ..()
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/jukebox/update_icon_state()
-	icon_state = "[initial(icon_state)][active ? "-active" : null]"
+	icon_state = "[base_icon_state][music_player.active_song_sound ? "-active" : null]"
 	return ..()
 
 /obj/machinery/jukebox/ui_status(mob/user)
+	if(isobserver(user))
+		return ..()
 	if(!anchored)
 		to_chat(user,span_warning("This device must be anchored by a wrench!"))
 		return UI_CLOSE
-	if(!allowed(user) && !isobserver(user))
+	if(!allowed(user))
 		to_chat(user,span_warning("Error: Access Denied."))
 		user.playsound_local(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
 		return UI_CLOSE
-	if(!songs.len && !isobserver(user))
+	if(!length(music_player.songs))
 		to_chat(user,span_warning("Error: No music tracks have been authorized for your station. Petition Central Command to resolve this issue."))
 		user.playsound_local(src, 'sound/misc/compiler-failure.ogg', 25, TRUE)
 		return UI_CLOSE
@@ -131,19 +88,7 @@
 		ui.open()
 
 /obj/machinery/jukebox/ui_data(mob/user)
-	var/list/data = list()
-	data["active"] = active
-	data["songs"] = list()
-	for(var/datum/track/S in songs)
-		var/list/track_data = list(
-			name = S.song_name
-		)
-		data["songs"] += list(track_data)
-	data["track_selected"] = selection ? selection.song_name : null
-	data["track_length"] = selection ? DisplayTimeText(selection.song_length) : null
-	data["track_beat"] = selection ? selection.song_beat : null
-	data["volume"] = volume
-	return data
+	return music_player.get_ui_data()
 
 /obj/machinery/jukebox/ui_act(action, list/params)
 	. = ..()
@@ -152,83 +97,90 @@
 
 	switch(action)
 		if("toggle")
-			if(QDELETED(src))
-				return
-			if(!active)
-				if(stop > world.time)
-					to_chat(usr, span_warning("Error: The device is still resetting from the last activation, it will be ready again in [DisplayTimeText(stop-world.time)]."))
-					if(!COOLDOWN_FINISHED(src, jukebox_error_cd))
-						return
-					playsound(src, 'sound/misc/compiler-failure.ogg', 50, TRUE)
-					COOLDOWN_START(src, jukebox_error_cd, 15 SECONDS)
-					return
+			if(isnull(music_player.active_song_sound))
+				if(!COOLDOWN_FINISHED(src, jukebox_song_cd))
+					to_chat(usr, span_warning("Error: The device is still resetting from the last activation, \
+						it will be ready again in [DisplayTimeText(COOLDOWN_TIMELEFT(src, jukebox_song_cd))]."))
+					if(COOLDOWN_FINISHED(src, jukebox_error_cd))
+						playsound(src, 'sound/misc/compiler-failure.ogg', 33, TRUE)
+						COOLDOWN_START(src, jukebox_error_cd, 15 SECONDS)
+					return TRUE
+
 				activate_music()
-				START_PROCESSING(SSobj, src)
-				return TRUE
 			else
-				stop = 0
-				return TRUE
+				stop_music()
+
+			return TRUE
 
 		if("select_track")
-			if(active)
+			if(!isnull(music_player.active_song_sound))
 				to_chat(usr, span_warning("Error: You cannot change the song until the current one is over."))
-				return
-			var/list/available = list()
-			for(var/datum/track/S in songs)
-				available[S.song_name] = S
-			var/selected = params["track"]
-			if(QDELETED(src) || !selected || !istype(available[selected], /datum/track))
-				return
-			selection = available[selected]
+				return TRUE
+
+			var/datum/track/new_song = music_player.songs[params["track"]]
+			if(QDELETED(src) || !istype(new_song, /datum/track))
+				return TRUE
+
+			music_player.selection = new_song
 			return TRUE
 
 		if("set_volume")
 			var/new_volume = params["volume"]
-			if(new_volume == "reset")
-				set_new_volume(initial(volume))
-				return TRUE
+			if(new_volume == "reset" || new_volume == "max")
+				music_player.set_volume_to_max()
 			else if(new_volume == "min")
-				set_new_volume(0)
-				return TRUE
-			else if(new_volume == "max")
-				set_new_volume(initial(volume))
-				return TRUE
+				music_player.set_new_volume(0)
 			else if(isnum(text2num(new_volume)))
-				set_new_volume(text2num(new_volume))
-				return TRUE
+				music_player.set_new_volume(text2num(new_volume))
+			return TRUE
 
-/obj/machinery/jukebox/proc/set_new_volume(new_vol)
-	new_vol = clamp(new_vol, 0, 50)
-	if(volume == new_vol)
-		return
-	volume = new_vol
-	if(!active || !active_song_sound)
-		return
-	active_song_sound = volume
-	for(var/mob/listening as anything in listeners)
-		update_listener(listening)
-
-/obj/machinery/jukebox/proc/proc/set_new_environment(new_env)
-	if(!active || !active_song_sound || active_song_sound.environment == new_env)
-		return
-	active_song_sound.environment = new_env
-	for(var/mob/listening as anything in listeners)
-		update_listener(listening)
+		if("loop")
+			music_player.sound_loops = !!params["looping"]
+			return TRUE
 
 /obj/machinery/jukebox/proc/activate_music()
-	active = TRUE
+	if(!isnull(music_player.active_song_sound))
+		return FALSE
+
+	music_player.start_music()
 	update_use_power(ACTIVE_POWER_USE)
 	update_appearance(UPDATE_ICON_STATE)
-	START_PROCESSING(SSobj, src)
-	stop = world.time + selection.song_length
-	for(var/mob/nearby in hearers(world.view, src))
-		register_listener(nearby)
-
+	if(!music_player.sound_loops)
+		song_timerid = addtimer(CALLBACK(src, PROC_REF(stop_music)), music_player.selection.song_length, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
+	return TRUE
 
 /obj/machinery/jukebox/disco/activate_music()
-	..()
+	. = ..()
+	if(!.)
+		return
 	dance_setup()
 	lights_spin()
+	begin_processing()
+
+/obj/machinery/jukebox/proc/stop_music()
+	if(!isnull(song_timerid))
+		deltimer(song_timerid)
+
+	music_player.unlisten_all()
+
+	if(!QDELING(src))
+		COOLDOWN_START(src, jukebox_song_cd, 10 SECONDS)
+		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
+		update_use_power(IDLE_POWER_USE)
+		update_appearance(UPDATE_ICON_STATE)
+	return TRUE
+
+/obj/machinery/jukebox/disco/stop_music()
+	. = ..()
+	if(!.)
+		return
+	QDEL_LIST(spotlights)
+	QDEL_LIST(sparkles)
+	end_processing()
+
+/obj/machinery/jukebox/on_set_is_operational(old_value)
+	if(!is_operational)
+		stop_music()
 
 /obj/machinery/jukebox/disco/proc/dance_setup()
 	var/turf/cen = get_turf(src)
@@ -269,7 +221,7 @@
 
 /obj/machinery/jukebox/disco/proc/lights_spin()
 	for(var/i in 1 to 25)
-		if(QDELETED(src) || !active)
+		if(QDELETED(src) || isnull(music_player.active_song_sound))
 			return
 		var/obj/effect/overlay/sparkles/S = new /obj/effect/overlay/sparkles(src)
 		S.alpha = 0
@@ -288,7 +240,7 @@
 	for(var/s in sparkles)
 		var/obj/effect/overlay/sparkles/reveal = s
 		reveal.alpha = 255
-	while(active)
+	while(!isnull(music_player.active_song_sound))
 		for(var/g in spotlights) // The multiples reflects custom adjustments to each colors after dozens of tests
 			var/obj/item/flashlight/spotlight/glow = g
 			if(QDELETED(glow))
@@ -356,7 +308,7 @@
 					glow.even_cycle = !glow.even_cycle
 		if(prob(2))  // Unique effects for the dance floor that show up randomly to mix things up
 			INVOKE_ASYNC(src, PROC_REF(hierofunk))
-		sleep(selection.song_beat)
+		sleep(music_player.selection.song_beat)
 		if(QDELETED(src))
 			return
 
@@ -426,137 +378,11 @@
 	animate(dancer, transform = starting_matrix, time = 5, loop = 0)
 	REMOVE_TRAIT(dancer, TRAIT_DISCO_DANCER, REF(src))
 
-/obj/machinery/jukebox/proc/dance_over()
-	for(var/mob/listening as anything in listeners)
-		deregister_listener(listening)
-	active_song_sound = null
-
-/obj/machinery/jukebox/disco/dance_over()
-	..()
-	QDEL_LIST(spotlights)
-	QDEL_LIST(sparkles)
-
-/obj/machinery/jukebox/process()
-	if(world.time >= stop && active)
-		active = FALSE
-		update_use_power(IDLE_POWER_USE)
-		dance_over()
-		playsound(src,'sound/machines/terminal_off.ogg',50,TRUE)
-		update_appearance(UPDATE_ICON_STATE)
-		stop = world.time + 100
-		return PROCESS_KILL
-
-	if(!active)
-		return PROCESS_KILL
-
-	for(var/mob/nearby in hearers(world.view, src) - listeners)
-		register_listener(nearby)
-
 /obj/machinery/jukebox/disco/process()
-	. = ..()
-	if(!active || !dance)
-		return
-
-	// var/dance_num = rand(1,4) //all will do the same dance
-	// for(var/datum/weakref/weak_dancer as anything in rangers)
-	// 	var/mob/living/to_dance = weak_dancer.resolve()
-	// 	if(!istype(to_dance) || !(to_dance.mobility_flags & MOBILITY_MOVE))
-	// 		continue
-	// 	if(!HAS_TRAIT(to_dance, TRAIT_DISCO_DANCER))
-	// 		dance(to_dance, dance_num)
-
-#undef HAS_JUKEBOX_PREF
-
-/obj/machinery/jukebox
-	VAR_PRIVATE/list/mob/listeners = list()
-	VAR_PRIVATE/sound/active_song_sound
-	VAR_PRIVATE/x_cutoff
-	VAR_PRIVATE/z_cutoff
-
-/obj/machinery/jukebox/Initialize(mapload)
-	. = ..()
-	var/list/worldviewsize = getviewsize(world.view)
-	x_cutoff = ceil(worldviewsize[1] / 2)
-	z_cutoff = ceil(worldviewsize[2] / 2)
-
-/obj/machinery/jukebox/Destroy()
-	for(var/mob/leftover as anything in listeners)
-		deregister_listener(leftover)
-	return ..()
-
-/obj/machinery/jukebox/proc/register_listener(mob/new_listener)
-	listeners[new_listener] = NONE
-
-	RegisterSignal(new_listener, COMSIG_QDELETING, PROC_REF(listener_deleted))
-	RegisterSignal(new_listener, COMSIG_MOVABLE_MOVED, PROC_REF(listener_moved))
-
-	if(isnull(new_listener.client))
-		RegisterSignal(new_listener, COMSIG_MOB_LOGIN, PROC_REF(listener_login))
-
-	else
-		update_listener(new_listener)
-		// if you have a sound with status SOUND_UPDATE,
-		// and try to play it to a client who is not listening to the sound already,
-		// it will not work.
-		// so we only add this status AFTER the first update, which plays the first sound.
-		// and after that it's fine to keep it on the sound so it updates as the x/z does.
-		listeners[new_listener] |= SOUND_UPDATE
-
-/obj/machinery/jukebox/proc/listener_deleted(mob/source)
-	SIGNAL_HANDLER
-	deregister_listener(source)
-
-/obj/machinery/jukebox/proc/listener_moved(mob/source)
-	SIGNAL_HANDLER
-	update_listener(source)
-
-/obj/machinery/jukebox/proc/listener_login(mob/source)
-	SIGNAL_HANDLER
-	register_listener(source)
-
-/obj/machinery/jukebox/proc/deregister_listener(mob/no_longer_listening)
-	listeners -= no_longer_listening
-	no_longer_listening.stop_sound_channel(CHANNEL_JUKEBOX)
-	UnregisterSignal(no_longer_listening, list(COMSIG_MOB_LOGIN, COMSIG_QDELETING, COMSIG_MOVABLE_MOVED))
-
-/obj/machinery/jukebox/proc/update_listener(mob/listener)
-	if(isnull(active_song_sound))
-		var/area/juke_area = get_area(src)
-		active_song_sound = sound(selection.song_path)
-		active_song_sound.channel = CHANNEL_JUKEBOX
-		active_song_sound.priority = 255
-		active_song_sound.falloff = 2
-		active_song_sound.volume = volume
-		active_song_sound.y = 1
-		active_song_sound.environment = juke_area.sound_environment || SOUND_ENVIRONMENT_NONE
-
-	active_song_sound.status = listeners[listener] || NONE
-
-	var/new_x = src.x - listener.x
-	var/new_z = src.y - listener.y
-
-	if(abs(new_x) > x_cutoff || abs(new_z) > z_cutoff)
-		deregister_listener(listener)
-		return
-
-	// if(!listerner.can_hear() || !listener.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox))
-	// 	active_song_sound.status |= SOUND_MUTE
-	// else
-	// 	active_song_sound.status &= ~SOUND_MUTE
-
-	// keep in mind sound XYZ is different to world XYZ. sound +-z = world +-y
-	active_song_sound.x = new_x
-	active_song_sound.z = new_z
-
-	SEND_SOUND(listener, active_song_sound)
-
-/obj/machinery/jukebox/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
-	. = ..()
-	if(!active)
-		return
-	for(var/mob/listening as anything in listeners)
-		update_listener(listening)
-
-/obj/machinery/jukebox/on_enter_area(datum/source, area/area_to_register)
-	. = ..()
-	set_new_environment(area_to_register.sound_environment || SOUND_ENVIRONMENT_NONE)
+	var/dance_num = rand(1, 4) //all will do the same dance
+	for(var/mob/living/dancer in music_player.get_active_listeners())
+		if(!(dancer.mobility_flags & MOBILITY_MOVE))
+			continue
+		if(HAS_TRAIT(dancer, TRAIT_DISCO_DANCER))
+			continue
+		dance(dancer, dance_num)
