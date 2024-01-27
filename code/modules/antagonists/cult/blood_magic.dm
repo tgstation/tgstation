@@ -412,20 +412,18 @@
 
 		if(IS_HERETIC(target))
 			to_chat(user, span_warning("Some force greater than you intervenes! [target] is protected by the Forgotten Gods!"))
-			to_chat(target, span_warning("You are protected by your faith to the Forgotten Gods."))
+			to_chat(target, span_warning("You are protected by your faith to the Forgotten Gods!"))
 			var/old_color = target.color
 			target.color = rgb(0, 128, 0)
 			animate(target, color = old_color, time = 1 SECONDS, easing = EASE_IN)
-
 		// MONKESTATION EDIT START
-		if(IS_CLOCK(target))
+		else if(IS_CLOCK(target))
 			to_chat(user, span_warning("Some force greater than you intervenes! [target] is protected by the heretic Ratvar!"))
 			to_chat(target, span_warning("You are protected by your faith to Ratvar!"))
 			var/old_color = target.color
 			target.color = rgb(190, 135, 0)
 			animate(target, color = old_color, time = 1 SECONDS, easing = EASE_IN)
 		// MONKESTATION EDIT END
-
 		else if(target.can_block_magic())
 			to_chat(user, span_warning("The spell had no effect!"))
 		else

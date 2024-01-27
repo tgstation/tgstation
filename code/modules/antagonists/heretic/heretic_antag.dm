@@ -224,7 +224,6 @@
 	RegisterSignal(our_mob, COMSIG_MOB_ITEM_AFTERATTACK, PROC_REF(on_item_afterattack))
 	RegisterSignal(our_mob, COMSIG_MOB_LOGIN, PROC_REF(fix_influence_network))
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
-	RegisterSignal(our_mob, COMSIG_LIVING_CULT_SACRIFICED, PROC_REF(on_cult_sacrificed))
 
 /datum/antagonist/heretic/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/our_mob = mob_override || owner.current
@@ -237,7 +236,6 @@
 		COMSIG_MOB_ITEM_AFTERATTACK,
 		COMSIG_MOB_LOGIN,
 		COMSIG_LIVING_POST_FULLY_HEAL,
-		COMSIG_LIVING_CULT_SACRIFICED
 	))
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
@@ -381,15 +379,6 @@
 	if(heal_flags & (HEAL_REFRESH_ORGANS|HEAL_ADMIN))
 		var/datum/heretic_knowledge/living_heart/heart_knowledge = get_knowledge(/datum/heretic_knowledge/living_heart)
 		heart_knowledge.on_research(source, src)
-
-/// Signal proc for [COMSIG_LIVING_CULT_SACRIFICED] to reward cultists for sacrificing a heretic
-/datum/antagonist/heretic/proc/on_cult_sacrificed(mob/living/source, list/invokers)
-	SIGNAL_HANDLER
-
-	new /obj/item/cult_bastard(source.loc)
-	for(var/mob/living/cultist as anything in invokers)
-		to_chat(cultist, span_cultlarge("\"A follower of the forgotten gods! You must be rewarded for such a valuable sacrifice.\""))
-	return SILENCE_SACRIFICE_MESSAGE
 
 /**
  * Create our objectives for our heretic.
