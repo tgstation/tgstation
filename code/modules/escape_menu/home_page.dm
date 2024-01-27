@@ -93,7 +93,7 @@
 		if("Tramstation")
 			redirect = "TramStation"
 	if(client)
-		client << link("https://monkestation.com/map/Monke/[redirect]/")
+		client << link("https://maps.monkestation.com/Monke/[redirect]/")
 
 /datum/escape_menu/proc/home_open_settings()
 	client?.prefs.ui_interact(client?.mob)
