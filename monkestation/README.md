@@ -50,7 +50,7 @@ Our answer to this is modularization of the code.
 
 ## The Modularization Protocol
 
-Always start by thinking of the theme/purpose of your work. It's oftentimes a good idea to see if there isn't an already existing one, that you should append to. Zonenote
+Always start by thinking of the theme/purpose of your work. It's oftentimes a good idea to see if there isn't an already existing one, that you should append to.
 
 **If it's a tgcode-specific tweak or bugfix, first course of action should be an attempt to discuss and PR it upstream, and then cherry-pick pulling the PR down here.**
 
