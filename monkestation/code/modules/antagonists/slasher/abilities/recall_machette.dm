@@ -15,7 +15,7 @@
 
 /datum/action/cooldown/slasher/summon_machette/Activate(atom/target)
 	. = ..()
-	if(!stored_machette)
+	if(!stored_machette || QDELETED(stored_machette))
 		stored_machette = new /obj/item/slasher_machette
 		var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 		if(!slasherdatum)
@@ -39,6 +39,7 @@
 
 	force = 15 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
+	demolition_mod = 1.25
 
 	tool_behaviour = TOOL_CROWBAR // lets you pry open doors forcibly
 
