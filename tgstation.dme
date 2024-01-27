@@ -3273,6 +3273,7 @@
 #include "code\modules\asset_cache\assets\seeds.dm"
 #include "code\modules\asset_cache\assets\sheetmaterials.dm"
 #include "code\modules\asset_cache\assets\supplypods.dm"
+#include "code\modules\asset_cache\assets\tcomms.dm"
 #include "code\modules\asset_cache\assets\tgfont.dm"
 #include "code\modules\asset_cache\assets\tgui.dm"
 #include "code\modules\asset_cache\assets\uplink.dm"
