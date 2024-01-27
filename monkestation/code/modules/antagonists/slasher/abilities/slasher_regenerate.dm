@@ -36,3 +36,6 @@
 	human_owner.adjustOxyLoss(-20)
 	human_owner.adjustToxLoss(-20)
 	human_owner.blood_volume = BLOOD_VOLUME_NORMAL
+	for(var/i in human_owner.all_wounds)
+		var/datum/wound/iter_wound = i
+		iter_wound.on_xadone(4 * REM * seconds_per_tick) // plasmamen use plasma to reform their bones or whatever
