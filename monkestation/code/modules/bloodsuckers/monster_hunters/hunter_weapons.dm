@@ -254,7 +254,7 @@
 	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 	RegisterSignal(src,WEAPON_UPGRADE, PROC_REF(upgrade_weapon))
 
-/obj/item/melee/trick_weapon/beast_claw/proc/on_transform/(obj/item/source, mob/user, active)
+/obj/item/melee/trick_weapon/beast_claw/proc/on_transform(obj/item/source, mob/user, active)
 	SIGNAL_HANDLER
 	balloon_alert(user, active ? "extended" : "collapsed")
 	inhand_icon_state = active ? "Claw" : "BoneClaw"
