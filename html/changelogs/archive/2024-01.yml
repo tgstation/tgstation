@@ -682,3 +682,15 @@
   intercepti0n:
   - refactor: Refactored Ore Processing Unit UI.
   - bugfix: Ore Processing Unit UI no longer lags client.
+2024-01-27:
+  00-Steven:
+  - bugfix: Cats can be swabbed for feliform cells again.
+  - sound: Cats have had their mastery of silent walking revoked, and have their pitter-pattering
+      footsteps back again.
+  Melbert:
+  - bugfix: Rush Gland now triggers correctly on being grabbed by a Goliath
+  Whoneedspacee:
+  - refactor: Legions abilities have been changed into actions that can be added to
+      any mob.
+  vinylspiders:
+  - bugfix: fixes a hard del with decals
