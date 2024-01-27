@@ -35,3 +35,33 @@
 	cost = CARGO_CRATE_VALUE * 20 //the crew shouldnt be able to just buy 15 jukeboxes all playing among us at the same time
 	contains = list(/obj/item/choice_beacon/jukebox)
 	crate_name = "jukebox beacon crate"
+
+/datum/supply_pack/service/cassettes
+	name = "Bulk Cassette Crate"
+	desc = "In the unlikely event all your cassettes are the same, or the likely event youve run out of songs to play, this crate is here to help you, contains 10 Approved Cassettes for use in the DJ Station."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/device/cassette_tape/random = 10)
+	crate_name = "cassette crate"
+
+/datum/supply_pack/service/blankcassettes
+	name = "Blank Cassettes Crate"
+	desc = "in the VERY unlikely event you have run out of blank cassettes, you can get 10 blank ones here. Contains 10 blank cassettes for use in Walkmans."
+	cost = CARGO_CRATE_VALUE * 2
+	contains = list(/obj/item/device/cassette_tape/blank = 10)
+	crate_name = "cassette crate"
+
+/datum/supply_pack/service/walkmen
+	name = "Walkman Crate"
+	desc = "In the EXTREMELY unlikely event you have run out of walkmans in the library, this crate has 5 walkman devices for listening to cassettes personally. Cassettes Sold Seperately."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/obj/item/device/walkman = 5)
+	crate_name = "walkman crate"
+
+/datum/supply_pack/service/cassettedeck
+	name = "Advanced Cassette Deck Crate"
+	desc = "In the event you simply refuse to interact with the Curator at all. Contains 1 Advanced Cassette Deck and a wrench for moving it."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/machinery/cassette/adv_cassette_deck,
+					/obj/item/wrench)
+	crate_name = "cassette deck crate"
+	crate_type = /obj/structure/closet/crate/large
