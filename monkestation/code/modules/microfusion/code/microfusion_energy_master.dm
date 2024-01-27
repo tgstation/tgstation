@@ -143,7 +143,7 @@
 		update_appearance()
 
 /obj/item/gun/microfusion/can_shoot()
-	return !QDELETED(cell) ? (cell.charge >= microfusion_lens.e_cost) : FALSE
+	return !QDELETED(cell) ? (cell.charge >= (microfusion_lens.e_cost + extra_power_usage)) : FALSE
 
 /obj/item/gun/microfusion/recharge_newshot()
 	if (!microfusion_lens || !cell || !phase_emitter)
