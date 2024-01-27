@@ -264,6 +264,7 @@
 	active = wound_bonus ? 45 : initial(wound_bonus)
 	force = active ? upgraded_val(on_force, upgrade_level) : upgraded_val(base_force, upgrade_level)
 	return COMPONENT_NO_DEFAULT_MESSAGE
+	
 /obj/item/rabbit_eye
 	name = "Rabbit eye"
 	desc = "An item that resonates with trick weapons."
