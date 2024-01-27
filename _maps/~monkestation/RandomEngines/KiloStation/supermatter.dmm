@@ -563,7 +563,7 @@
 	},
 /obj/structure/lattice,
 /turf/open/space,
-/area/station/engineering/supermatter/room)
+/area/space/nearstation)
 "uW" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/structure/cable,
