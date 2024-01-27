@@ -261,7 +261,7 @@
 	if(active)
 		playsound(src, 'sound/weapons/fwoosh.ogg',50)
 	enabled = active
-	active = wound_bonus ? 45 : 0
+	active = wound_bonus ? 45 : initial(wound_bonus)
 	force = active ? upgraded_val(on_force, upgrade_level) : upgraded_val(base_force, upgrade_level)
 	return COMPONENT_NO_DEFAULT_MESSAGE
 /obj/item/rabbit_eye
