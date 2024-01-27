@@ -225,8 +225,8 @@
 	block_chance = 20
 
 /obj/item/melee/trick_weapon/beast_claw
-	name = "Beast Claw"
-	base_name = "Beast Claw"
+	name = "\improper Beast Claw"
+	base_name = "\improper Beast Claw"
 	desc = "The bones seem to still be twitching."
 	icon_state = "Bone_Claw"
 	base_icon_state = "Claw"
