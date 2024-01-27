@@ -1,0 +1,4 @@
+author: "VladinXXV"
+delete-after: True
+changes:
+  - bugfix: "Oppenheimer, the nukie medbot, has been reprogrammed to use Airplane Mode as a factory default. The station AI is no longer immediately aware of his presence!"
