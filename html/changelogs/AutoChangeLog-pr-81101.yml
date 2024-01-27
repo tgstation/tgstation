@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Rush Gland now triggers correctly on being grabbed by a Goliath"
