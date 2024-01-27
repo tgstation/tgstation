@@ -55,7 +55,7 @@
 		playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
 	if(isliving(hit_atom))
 		var/mob/living/hit_living = hit_atom
-		hit_carbon.Knockdown(3 SECONDS)
+		hit_living.Knockdown(3 SECONDS)
 
 /obj/item/slasher_machette/attack_hand(mob/user, list/modifiers)
 	if(isliving(user))
