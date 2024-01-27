@@ -18,6 +18,15 @@ GLOBAL_LIST_INIT(limb_choice, list(
 	"Right leg" = /obj/item/bodypart/leg/right/robot/surplus,
 ))
 
+///Junkie quirk
+GLOBAL_LIST_INIT(junkie_drug, list(
+	"bLaSToFF" = /datum/reagent/drug/blastoff,
+	"Krokodil" = /datum/reagent/drug/krokodil,
+	"Morphine" = /datum/reagent/medicine/morphine,
+	"Happiness" = /datum/reagent/drug/happiness,
+	"Methamphetamine" = /datum/reagent/drug/methamphetamine
+))
+
 ///Options for the SMOKER quirk to choose from
 GLOBAL_LIST_INIT(favorite_brand, list(
 	"Space Cigarettes" = /obj/item/storage/fancy/cigarettes,

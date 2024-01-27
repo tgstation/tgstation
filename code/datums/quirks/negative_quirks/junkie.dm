@@ -8,7 +8,6 @@
 	hardcore_value = 4
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
 	mail_goodies = list(/obj/effect/spawner/random/contraband/narcotics)
-	var/drug_list = list(/datum/reagent/drug/blastoff, /datum/reagent/drug/krokodil, /datum/reagent/medicine/morphine, /datum/reagent/drug/happiness, /datum/reagent/drug/methamphetamine) //List of possible IDs
 	var/datum/reagent/reagent_type //!If this is defined, reagent_id will be unused and the defined reagent type will be instead.
 	var/datum/reagent/reagent_instance //! actual instanced version of the reagent
 	var/where_drug //! Where the drug spawned
@@ -19,11 +18,16 @@
 	var/next_process = 0 //! ticker for processing
 	var/drug_flavour_text = "Better hope you don't run out..."
 
-/datum/quirk/item_quirk/junkie/proc/give_junkie_item()
+/datum/quirk_constant_data/junkie
+	associated_typepath = /datum/quirk/item_quirk/junkie
+	customization_options = list(/datum/preference/choiced/junkie)
+
+/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 
-	if(!reagent_type)
-		reagent_type = pick(drug_list)
+	reagent_type = GLOB.junkie_drug[client_source?.prefs?.read_preference(/datum/preference/choiced/junkie)]
+	if(isnull(reagent_type))
+		reagent_type = GLOB.junkie_drug[pick(GLOB.junkie_drug)]
 
 	reagent_instance = new reagent_type()
 
@@ -64,11 +68,6 @@
 			LOCATION_HANDS = ITEM_SLOT_HANDS,
 		)
 	)
-
-
-/datum/quirk/item_quirk/junkie/add_unique(client/client_source)
-	give_junkie_item()
-
 /datum/quirk/item_quirk/junkie/remove()
 	if(quirk_holder && reagent_instance)
 		for(var/addiction_type in subtypesof(/datum/addiction))
