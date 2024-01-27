@@ -1,0 +1,5 @@
+author: "SyncIt21"
+delete-after: True
+changes:
+  - spellcheck: "shortened description for the PCM and capitalized some text for its examines."
+  - code_imp: "adds sanity checks and removed deprecated `content` tag from PCM UI. Stops hologram items from being inserted."
