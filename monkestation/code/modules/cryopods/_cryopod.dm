@@ -410,7 +410,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/cryopod, 32)
 				if(!newmob.equip_to_appropriate_slot(listed_item))
 					listed_item.forceMove(get_turf(newmob))
 				control_computer.frozen_item -= listed_item
-		control_computer.frozen_crew -= listed
+
+		listed["ckey"] = null //incase we fuck up down below
+		control_computer.frozen_crew -= list(listed)
 		control_computer.announce("CRYO_JOIN", newmob.real_name, listed["job"])
 
 /// It's time to kill GLOB
