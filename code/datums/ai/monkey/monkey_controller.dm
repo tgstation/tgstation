@@ -148,14 +148,14 @@ have ways of interacting with a specific mob and control it.
 
 ///Reactive events to being hit
 /datum/ai_controller/monkey/proc/retaliate(mob/living/living_mob)
-	if(HAS_TRAIT(living_mob, TRAIT_MONKEYFRIEND))
-		REMOVE_TRAIT(living_mob, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
-		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(monkeyfriend_check), living_mob), 60 SECONDS)
 	// just to be safe
 	if(QDELETED(living_mob))
 		return
 
 	add_blackboard_key_assoc(BB_MONKEY_ENEMIES, living_mob, MONKEY_HATRED_AMOUNT)
+	if(HAS_TRAIT(living_mob, TRAIT_MONKEYFRIEND))
+		REMOVE_TRAIT(living_mob, TRAIT_MONKEYFRIEND, SPECIES_TRAIT)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(monkeyfriend_check), living_mob), 60 SECONDS)
 
 /proc/monkeyfriend_check(mob/living/user)
 	var/obj/item/clothing/suit/costume/monkeysuit/S
