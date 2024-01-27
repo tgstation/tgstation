@@ -265,6 +265,8 @@
 		return
 
 /obj/machinery/power/apc/blob_act(obj/structure/blob/B)
+	if(machine_stat & BROKEN)
+		return
 	set_broken()
 
 /obj/machinery/power/apc/take_damage(damage_amount, damage_type = BRUTE, damage_flag = "", sound_effect = TRUE, attack_dir, armor_penetration = 0)
