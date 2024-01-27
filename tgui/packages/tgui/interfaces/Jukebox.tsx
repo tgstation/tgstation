@@ -32,7 +32,7 @@ export const Jukebox = () => {
   const { act, data } = useBackend<Data>();
   const { active, looping, track_selected, volume, songs } = data;
 
-  const songs_sorted: Song[] = flow([sortBy((song) => song.name)])(songs);
+  const songs_sorted: Song[] = flow([sortBy((song: Song) => song.name)])(songs);
   const song_selected: Song | undefined = songs.find(
     (song) => song.name === track_selected,
   );

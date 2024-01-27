@@ -12,8 +12,8 @@
 	VAR_FINAL/datum/track/selection
 	/// Current song datum playing
 	VAR_FINAL/sound/active_song_sound
-	/// Whether the jukebox requires a proximity monitor to check for new listeners
-	var/requires_proximity_monitor = TRUE
+	/// Whether the jukebox requires a connect_range component to check for new listeners
+	VAR_PROTECTED/requires_range_check = TRUE
 
 	/// Assoc list of all mobs listening to the jukebox to their sound status.
 	VAR_PRIVATE/list/mob/listeners = list()
@@ -46,7 +46,7 @@
 		x_cutoff = ceil(worldviewsize[1] * 1.25 / 2) // * 1.25 gives us some extra range to fade out with
 		z_cutoff = ceil(worldviewsize[2] * 1.25 / 2) // and / 2 is because world view is the whole screen, and we want the centre
 
-	if(requires_proximity_monitor)
+	if(requires_range_check)
 		var/static/list/connections = list(COMSIG_ATOM_ENTERED = PROC_REF(check_new_listener))
 		AddComponent(/datum/component/connect_range, parent, connections, max(x_cutoff, z_cutoff))
 
@@ -64,7 +64,6 @@
 	selection = null
 	songs.Cut()
 	active_song_sound = null
-	QDEL_NULL(proximity_monitor)
 	return ..()
 
 /// When our parent is deleted, we should go too.
@@ -331,7 +330,7 @@
  * Multiple mobs can still listen at once, but you must register them all manually via start_music().
  */
 /datum/jukebox/single_mob
-	requires_proximity_monitor = FALSE
+	requires_range_check = FALSE
 
 /datum/jukebox/single_mob/start_music(mob/solo_listener)
 	register_listener(solo_listener)
