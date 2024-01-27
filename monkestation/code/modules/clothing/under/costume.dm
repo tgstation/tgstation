@@ -122,3 +122,28 @@
 	name = "sexy green christmas costume"
 	desc = "Stupid. Ugly. Out of date. If I can't find something nice to wear I'm not going."
 	icon_state = "christmas_crop_green"
+
+/*
+BUNNY SUITS
+*/
+
+/obj/item/clothing/under/costume/playbunny
+	name = "bunny suit"
+	desc = "The staple of any bunny themed waiters and the like. It has a little cottonball tail too."
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "playbunny"
+	body_parts_covered = CHEST|GROIN|LEGS
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/syndicate/syndibunny //heh
+	name = "blood-red bunny suit"
+	desc = "The staple of any bunny themed syndicate assassins. It has a little cottonball tail too. Are those carbon nanotube stockings?"
+	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	icon_state = "syndibunny"
+	body_parts_covered = CHEST|GROIN|LEGS
+
+/*
+END OF BUNNY SUITS
+*/

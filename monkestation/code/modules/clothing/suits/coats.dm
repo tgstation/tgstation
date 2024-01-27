@@ -190,3 +190,32 @@
 	name = "science security duster"
 	icon_state = "cowboy_sec_science"
 	masktype = /obj/item/clothing/mask/breath/sec_bandana/science
+
+//End of Sec Dusters
+
+//Bunny costume Jackets
+
+/obj/item/clothing/suit/jacket/tailcoat
+	name = "tailcoat"
+	desc = "A coat usually worn by bunny themed waiters and the like."
+	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
+	icon = 'monkestation/icons/obj/clothing/suits.dmi'
+	icon_state = "tailcoat"
+
+/obj/item/clothing/suit/jacket/tailcoat/syndicate
+	name = "suspicious tailcoat"
+	desc = "A oddly intimidating coat usually worn by bunny themed assassins. It's reinforced with some extremely flexible lightweight alloy. How much did they pay for this?"
+	icon_state = "tailcoat_syndi"
+	armor_type = /datum/armor/tailcoat_syndi
+
+/datum/armor/tailcoat_syndi
+	melee = 30
+	bullet = 20
+	laser = 30
+	energy = 35
+	fire = 20
+	bomb = 15
+	acid = 50
+	wound = 5
+
+//End of Bunny Costume Jackets

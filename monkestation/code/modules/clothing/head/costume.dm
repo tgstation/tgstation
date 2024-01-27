@@ -52,3 +52,36 @@
 	icon = 'monkestation/icons/obj/clothing/hats.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/head.dmi'
 	icon_state = "guardman_helmet"
+
+/*
+BUNNY EARS
+*/
+
+/obj/item/clothing/head/playbunnyears
+	name = "bunny ears headband"
+	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
+	icon = 'monkestation/icons/obj/clothing/hats.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
+	icon_state = "playbunny_ears"
+	clothing_flags = LARGE_WORN_ICON
+
+/obj/item/clothing/head/playbunnyears/syndicate
+	name = "blood-red bunny ears headband"
+	desc = "An unusually suspicious pair of bunny ears attached to a headband. The headband looks reinforced with plasteel... but why?"
+	icon_state = "syndibunny_ears"
+	clothing_flags = SNUG_FIT
+	armor_type = /datum/armor/playbunnyears_syndicate
+
+/datum/armor/playbunnyears_syndicate
+	melee = 30
+	bullet = 20
+	laser = 30
+	energy = 35
+	fire = 20
+	bomb = 15
+	acid = 50
+	wound = 5
+
+/*
+END OF BUNNY EARS
+*/
