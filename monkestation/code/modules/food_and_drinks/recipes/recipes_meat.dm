@@ -16,6 +16,18 @@
 	result = /obj/item/food/raw_corndog/rod
 	category = CAT_MEAT
 
+/datum/crafting_recipe/food/corndog
+	machinery = list(/obj/machinery/oven)
+	steps = list("Bake in the oven until ready")
+	category = CAT_MEAT
+	non_craftable = TRUE
+	reqs = list(/obj/item/food/raw_corndog= 1)
+	result = /obj/item/food/corndog
+
+/datum/crafting_recipe/food/corndog/rod
+	reqs = list(/obj/item/food/raw_corndog/rod = 1)
+	result = /obj/item/food/corndog/rod
+
 /datum/crafting_recipe/food/fullcondiment
 	name = "corndog with toppings"
 	reqs = list(

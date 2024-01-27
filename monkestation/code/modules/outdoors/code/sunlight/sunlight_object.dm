@@ -188,6 +188,10 @@ Sunlight System
 	if(outdoor_effect)
 		outdoor_effect.state = TempState
 		outdoor_effect.weatherproof = roofStat["WEATHERPROOF"]
+		UnregisterSignal(SSdcs, COMSIG_GLOB_WEATHER_EFFECT)
+		if(!outdoor_effect.weatherproof)
+			turf_flags |= TURF_WEATHER
+			//RegisterSignal(SSdcs, COMSIG_GLOB_WEATHER_EFFECT, PROC_REF(apply_weather_effect))
 
 /* runs up the Z stack for this turf, returns a assoc (SKYVISIBLE, WEATHERPROOF)*/
 /* pass recursion_started=TRUE when we are checking our ceiling's stats */
@@ -231,6 +235,13 @@ Sunlight System
 	if((!isspaceturf(src) && !istype(src, /turf/open/floor/plating/ocean) && !above_turf && !SSmapping.level_trait(src.z, ZTRAIT_UP) && !turf_area.outdoors && !turf_area.false_outdoors) || (!SSmapping.level_trait(src.z, ZTRAIT_DAYCYCLE) && !SSmapping.level_trait(src.z, ZTRAIT_STARLIGHT)))
 		.["SKYVISIBLE"]   =  FALSE
 		.["WEATHERPROOF"] =  TRUE
+
+/turf/proc/apply_weather_effect(datum/source, datum/weather_effect/effect)
+	SIGNAL_HANDLER
+	if(!weather_affectable || !prob(effect.probability))
+		return
+
+	effect.effect_affect(src)
 
 /* moved this out of reconsider lights so we can call it in multiz refresh  */
 /turf/proc/reconsider_sunlight()

@@ -179,7 +179,7 @@
 /datum/tgs_api/v3210/Revision()
 	if(!warned_revison)
 		var/datum/tgs_version/api_version = ApiVersion()
-		TGS_ERROR_LOG("Use of TgsRevision on [api_version.deprefixed_parameter] origin_commit only points to master!")
+		TGS_WARNING_LOG("Use of TgsRevision on [api_version.deprefixed_parameter] origin_commit only points to master!")
 		warned_revison = TRUE
 	var/datum/tgs_revision_information/ri = new
 	ri.commit = commit

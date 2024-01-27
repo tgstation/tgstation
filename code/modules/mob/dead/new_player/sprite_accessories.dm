@@ -1708,13 +1708,10 @@
 /datum/sprite_accessory/body_markings/dtiger
 	name = "Dark Tiger Body"
 	icon_state = "dtiger"
-	gender_specific = 1
 
 /datum/sprite_accessory/body_markings/ltiger
 	name = "Light Tiger Body"
 	icon_state = "ltiger"
-	gender_specific = 1
-
 /*
 /datum/sprite_accessory/body_markings/lbelly
 	name = "Light Belly"
@@ -1742,6 +1739,10 @@
 /datum/sprite_accessory/tails/lizard/spikes
 	name = "Spikes"
 	icon_state = "spikes"
+
+/datum/sprite_accessory/tails/lizard/short
+	name = "Short"
+	icon_state = "short"
 
 /datum/sprite_accessory/tails/human/cat
 	name = "Cat"
@@ -2031,46 +2032,6 @@
 /datum/sprite_accessory/spines_animated/none
 	name = "None"
 	icon_state = "none"
-
-/datum/sprite_accessory/spines/short
-	name = "Short"
-	icon_state = "short"
-
-/datum/sprite_accessory/spines_animated/short
-	name = "Short"
-	icon_state = "short"
-
-/datum/sprite_accessory/spines/shortmeme
-	name = "Short + Membrane"
-	icon_state = "shortmeme"
-
-/datum/sprite_accessory/spines_animated/shortmeme
-	name = "Short + Membrane"
-	icon_state = "shortmeme"
-
-/datum/sprite_accessory/spines/long
-	name = "Long"
-	icon_state = "long"
-
-/datum/sprite_accessory/spines_animated/long
-	name = "Long"
-	icon_state = "long"
-
-/datum/sprite_accessory/spines/longmeme
-	name = "Long + Membrane"
-	icon_state = "longmeme"
-
-/datum/sprite_accessory/spines_animated/longmeme
-	name = "Long + Membrane"
-	icon_state = "longmeme"
-
-/datum/sprite_accessory/spines/aqautic
-	name = "Aquatic"
-	icon_state = "aqua"
-
-/datum/sprite_accessory/spines_animated/aqautic
-	name = "Aquatic"
-	icon_state = "aqua"
 
 /datum/sprite_accessory/legs //legs are a special case, they aren't actually sprite_accessories but are updated with them.
 	icon = null //These datums exist for selecting legs on preference, and little else

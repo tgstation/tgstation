@@ -34,7 +34,6 @@
 	if(possible_items.len)
 		var/datum/uplink_item/uplink_item = pick(possible_items)
 		log_uplink("[key_name(user)] purchased a random uplink item from [handler.owner]'s uplink with [handler.telecrystals] telecrystals remaining")
-		add_event_to_buffer(user, data = "purchased a random uplink item from [handler.owner]'s uplink with [handler.telecrystals] telecrystals remaining", log_key = "UPLINK")
 		SSblackbox.record_feedback("tally", "traitor_random_uplink_items_gotten", 1, initial(uplink_item.name))
 		handler.purchase_item(user, uplink_item)
 	handler.debug_mode = debug_mode //monkestation edit

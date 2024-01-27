@@ -30,7 +30,7 @@
 	metacoins = text2num(mc_count)
 
 
-/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces =TRUE, donator_multipler = TRUE, respects_roundcap = FALSE)
+/datum/preferences/proc/adjust_metacoins(ckey, amount, reason = null, announces = TRUE, donator_multipler = TRUE, respects_roundcap = FALSE)
 	if(!ckey || !SSdbcore.IsConnected())
 		return FALSE
 
@@ -64,7 +64,7 @@
 	amount = round(amount, 1) //make sure whole number
 	metacoins += amount //store the updated metacoins in a variable, but not the actual game-to-game storage mechanism (load_metacoins() pulls from database)
 
-	add_event_to_buffer(parent,  data = "monkecoins were changed by [amount] Reason: [reason].", log_key = "META")
+	logger.Log(LOG_CATEGORY_META, "[parent]'s monkecoins were changed by [amount] Reason: [reason]", list("currency_left" = metacoins, "reason" = reason))
 
 	//SQL query - updates the metacoins in the database (this is where the storage actually happens)
 	var/datum/db_query/query_inc_metacoins = SSdbcore.NewQuery("UPDATE [format_table_name("player")] SET metacoins = metacoins + '[amount]' WHERE ckey = '[ckey]'")

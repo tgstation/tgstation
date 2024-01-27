@@ -129,8 +129,8 @@
 			else if(istype(host.loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 				tally += 3.5
 
-			if (antibodies[A] < 70)
-				antibodies[A] = min(antibodies[A] + tally * strength, 60)
+			if (antibodies[A] < 69)
+				antibodies[A] = min(antibodies[A] + tally * strength, 70)
 			else
 				if(strength < 0.7) //stop trying at all once below 70% strength and above 70% antibodies
 					return

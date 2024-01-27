@@ -57,3 +57,92 @@
 	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
 	icon_state = "worldchampion_cape"
 	worn_icon_state = "worldchampion_cape"
+
+/obj/item/clothing/neck/trans
+	name = "trans pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "trans"
+	worn_icon_state = "trans"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/pan
+	name = "pansexual pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "pan"
+	worn_icon_state = "pan"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/les
+	name = "lesbian pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "les"
+	worn_icon_state = "les"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/intersex
+	name = "intersex pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "intersex"
+	worn_icon_state = "intersex"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/gay
+	name = "gay pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "gay"
+	worn_icon_state = "gay"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/enby
+	name = "nonbinary pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "enby"
+	worn_icon_state = "enby"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/bi
+	name = "bisexual pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "bi"
+	worn_icon_state = "bi"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/aro
+	name = "aro pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "aro"
+	worn_icon_state = "aro"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/ace
+	name = "asexual pride cloak"
+	desc = "Rep your preferred sexuality."
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "ace"
+	worn_icon_state = "ace"
+	resistance_flags = FIRE_PROOF
+
+/obj/item/clothing/neck/admin
+	name = "admin cloak"
+	desc = "Weh!"
+	icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	worn_icon = 'monkestation/icons/obj/clothing/necks.dmi'
+	icon_state = "admin"
+	worn_icon_state = "admin"

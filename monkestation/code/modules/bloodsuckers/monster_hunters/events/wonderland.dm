@@ -11,7 +11,7 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 
 /datum/map_template/wonderland
 	name = "Wonderland"
-	mappath = "monkestation/_maps/hunter_events/wonderland.dmm"
+	mappath = "_maps/~monkestation/hunter_events/wonderland.dmm"
 
 /obj/effect/mob_spawn/corpse/rabbit
 	mob_type = /mob/living/basic/rabbit
@@ -145,7 +145,7 @@ GLOBAL_LIST_EMPTY(wonderland_marks)
 		affected_mob.adjustFireLoss(-2 * REM * seconds_per_tick, FALSE, required_bodytype = affected_bodytype)
 
 	affected_mob.AdjustAllImmobility(-60  * REM * seconds_per_tick)
-	affected_mob.stamina.adjust(7 * REM * seconds_per_tick)
+	affected_mob.stamina.adjust(7 * REM * seconds_per_tick, TRUE)
 	..()
 	. = TRUE
 

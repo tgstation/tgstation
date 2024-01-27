@@ -56,6 +56,8 @@ GLOBAL_LIST_EMPTY(all_loadout_datums)
 	var/required_season = null
 	///does this item require being bought to show up?
 	var/requires_purchase = TRUE
+	///can only admins use this?
+	var/admin_only = FALSE
 
 /*
  * Place our [var/item_path] into [outfit].

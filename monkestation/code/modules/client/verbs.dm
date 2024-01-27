@@ -2,10 +2,11 @@ GLOBAL_LIST_INIT(high_threat_antags, list(
 	/datum/antagonist/cult,
 	/datum/antagonist/rev/head,
 	/datum/antagonist/wizard,
+	/datum/antagonist/clock_cultist,
+	/datum/antagonist/ninja,
 ))
 
 GLOBAL_LIST_INIT(medium_threat_antags, list(
-	/datum/antagonist/ninja,
 	/datum/antagonist/heretic,
 	/datum/antagonist/bloodsucker,
 ))
@@ -36,10 +37,10 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 	if(!client_token_holder)
 		client_token_holder = new(src)
 
-	var/tier = tgui_input_list(src, "High:[client_token_holder.total_high_threat_tokens] | \
+	var/tier = tgui_input_list(src, "High: [client_token_holder.total_high_threat_tokens] | \
 									Med: [client_token_holder.total_medium_threat_tokens] | \
 									Low: [client_token_holder.total_low_threat_tokens] | \
-									Donator:[client_token_holder.donator_token]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
+									Donator: [client_token_holder.donator_token ? "Yes" : "No"]", "Choose A Tier To Spend", list(HIGH_THREAT, MEDIUM_THREAT, LOW_THREAT))
 	if(!tier)
 		return
 
@@ -110,7 +111,7 @@ GLOBAL_LIST_INIT(low_threat_antags, list(
 		if(client_token_holder.event_tokens >= selected_event.token_cost)
 			client_token_holder.queued_token_event = selected_event
 			to_chat(src, "Your request has been sent.")
-			add_event_to_buffer(usr,  data = "has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).", log_key =  "META")
+			logger.Log(LOG_CATEGORY_META, "[usr] has requested to use their event tokens to trigger [selected_event.event_name]([selected_event]).")
 			SEND_NOTFIED_ADMIN_MESSAGE('sound/items/bikehorn.ogg', "[span_admin("[span_prefix("TOKEN EVENT:")] <EM>[key_name(src)]</EM> \
 																				[ADMIN_APPROVE_TOKEN_EVENT(src)] [ADMIN_REJECT_TOKEN_EVENT(src)] | \
 																				[src] has requested use their event tokens to trigger [selected_event.event_name]([selected_event]).")]")

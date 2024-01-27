@@ -484,7 +484,6 @@
 /mob/living/_pointed(atom/pointing_at)
 	if(!..())
 		return FALSE
-	add_event_to_buffer(src, pointing_at, "points at [pointing_at]", "EMOTE")
 
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message("<span class='infoplain'>[span_name("[src]")] points at [pointing_at].</span>", span_notice("You point at [pointing_at]."))

@@ -132,7 +132,16 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("hygienebot assembly", /obj/item/bot_assembly/hygienebot, 2, time = 5 SECONDS, check_density = FALSE, category = CAT_ROBOT), \
 	new/datum/stack_recipe("shower frame", /obj/structure/showerframe, 2, time = 2 SECONDS, check_density = FALSE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("urinal", /obj/item/wallframe/urinal, 2, time = 1 SECONDS, check_density = FALSE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("window sill", /obj/structure/window_sill, 1, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE)
+	new/datum/stack_recipe("window sill", /obj/structure/window_sill, 1, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+
+	new/datum/stack_recipe("remote chemical tank", /obj/structure/chemical_tank, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote injector",/obj/structure/chemical_tank/injector, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote patcher",/obj/structure/chemical_tank/patcher, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote factory output", /obj/structure/chemical_tank/factory, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote chemical input tank", /obj/structure/chemical_input, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote chemical grinder", /obj/structure/chemical_input/grinder, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote chemical fermenter", /obj/structure/chemical_input/fermenter, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote geyser pump", /obj/structure/chemical_input/liquid_pump, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE)
 ))
 
 /obj/item/stack/sheet/iron

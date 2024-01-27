@@ -293,6 +293,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BLOOD_DEFICIENCY "blood_deficiency"
 #define TRAIT_JOLLY "jolly"
 #define TRAIT_NOCRITDAMAGE "no_crit"
+///Added to mob or mind, changes the icons of the fish shown in the minigame UI depending on the possible reward.
+#define TRAIT_REVEAL_FISH "reveal_fish"
 
 /// Stops the mob from slipping on water, or banana peels, or pretty much anything that doesn't have [GALOSHES_DONT_HELP] set
 #define TRAIT_NO_SLIP_WATER "noslip_water"
@@ -681,6 +683,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_SAFE_STORAGE "fish_case"
 /// Stuff that can go inside fish cases
 #define TRAIT_FISH_CASE_COMPATIBILE "fish_case_compatibile"
+/// If the item can be used as a bit.
+#define TRAIT_FISHING_BAIT "fishing_bait"
+/// The quality of the bait. It influences odds of catching fish
+#define TRAIT_BASIC_QUALITY_BAIT "baic_quality_bait"
+#define TRAIT_GOOD_QUALITY_BAIT "good_quality_bait"
+#define TRAIT_GREAT_QUALITY_BAIT "great_quality_bait"
+/// Baits with this trait will ignore bait preferences and related fish traits.
+#define OMNI_BAIT_TRAIT "omni_bait"
 /// Plants that were mutated as a result of passive instability, not a mutation threshold.
 #define TRAIT_PLANT_WILDMUTATE "wildmutation"
 /// If you hit an APC with exposed internals with this item it will try to shock you
@@ -755,6 +765,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CAT				"cat"
 #define TRAIT_HIDDEN_IMAGE		"generic-hidden-image"
 #define TRAIT_HIDDEN_CLOWN		"clown_disbelief"
+#define TRAIT_MINING_CALLOUTS	"miner_callouts"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"
@@ -860,6 +871,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_FISH_AMPHIBIOUS "fish_amphibious"
 ///Trait needed for the lubefish evolution
 #define TRAIT_FISH_FED_LUBE "fish_fed_lube"
+#define TRAIT_FISH_NO_HUNGER "fish_no_hunger"
 
 /// Trait given to angelic constructs to let them purge cult runes
 #define TRAIT_ANGELIC "angelic"
@@ -1024,6 +1036,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// sticky nodrop sounds like a bad soundcloud rapper's name
 #define STICKY_NODROP "sticky-nodrop"
 #define SKILLCHIP_TRAIT "skillchip"
+#define SKILL_TRAIT "skill"
 #define BUSY_FLOORBOT_TRAIT "busy-floorbot"
 #define PULLED_WHILE_SOFTCRIT_TRAIT "pulled-while-softcrit"
 #define LOCKED_BORG_TRAIT "locked-borg"

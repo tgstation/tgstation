@@ -105,7 +105,6 @@
 	flick("relay_traitor_activate", src)
 	do_sparks(number = 5, cardinal_only = FALSE, source = src)
 	log_traitor("[key_name(resolved_owner)] acquired a replacement uplink via the syndicate uplink beacon.")
-	add_event_to_buffer(resolved_owner, data = "acquired a replacement uplink via the syndicate uplink beacon.", log_key = "TRAITOR")
 
 // Adds screentips
 /obj/structure/syndicate_uplink_beacon/add_context(atom/source, list/context, obj/item/held_item, mob/user)

@@ -80,7 +80,7 @@
 
 /datum/antagonist/bloodsucker/proc/give_warning(atom/source, danger_level, vampire_warning_message, vassal_warning_message)
 	SIGNAL_HANDLER
-	if(!owner)
+	if(!owner || !owner.current)
 		return
 	to_chat(owner, vampire_warning_message)
 

@@ -2,10 +2,10 @@
 /proc/cardinalrange(var/center)
 	var/list/things = list()
 	for(var/direction in GLOB.cardinals)
-		var/turf/T = get_step(center, direction)
-		if(!T)
+		var/turf/Turf = get_step(center, direction)
+		if(!Turf)
 			continue
-		things += T.contents
+		things += Turf.contents
 	return things
 
 /obj/machinery/am_shielding
@@ -15,29 +15,32 @@
 	icon_state = "shield"
 	density = TRUE
 	dir = NORTH
-	use_power = NO_POWER_USE//Living things generally dont use power
+	use_power = NO_POWER_USE //Living things generally dont use power
 	idle_power_usage = 0
 	active_power_usage = 0
 
 	var/obj/machinery/power/am_control_unit/control_unit = null
-	var/processing = FALSE//To track if we are in the update list or not, we need to be when we are damaged and if we ever
-	var/stability = 100//If this gets low bad things tend to happen
-	var/efficiency = 1//How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	///To track if we are in the update list or not, we need to be when we are damaged and if we ever
+	var/processing = FALSE
+	///If this gets low bad things tend to happen
+	var/stability = 100
+	///How many cores this core counts for when doing power processing, plasma in the air and stability could affect this
+	var/efficiency = 1
 	var/coredirs = 0
 	var/dirs = 0
 
 
 /obj/machinery/am_shielding/Initialize()
 	. = ..()
-	addtimer(CALLBACK(src, .proc/controllerscan), 10)
+	addtimer(CALLBACK(src, PROC_REF(controllerscan)), 10)
 
 /obj/machinery/am_shielding/proc/overheat()
-	visible_message("<span class='danger'>[src] melts!</span>")
+	visible_message(span_danger("[src] melts!"))
 	new /obj/effect/hotspot(loc)
 	qdel(src)
 
 /obj/machinery/am_shielding/proc/collapse()
-	visible_message("<span class='notice'>[src] collapses back into a container!</span>")
+	visible_message(span_notice("[src] collapses back into a container!"))
 	new /obj/item/am_shielding_container(drop_location())
 	qdel(src)
 
@@ -56,7 +59,7 @@
 		if(AMS && AMS.control_unit && link_control(AMS.control_unit))
 			break
 
-	if(!control_unit)//No other guys nearby look for a control unit
+	if(!control_unit) //No other guys nearby look for a control unit
 		for(var/direction in GLOB.cardinals)
 		for(var/obj/machinery/power/am_control_unit/AMC in cardinalrange(src))
 			if(AMC.add_shielding(src))
@@ -64,7 +67,7 @@
 
 	if(!control_unit)
 		if(!priorscan)
-			addtimer(CALLBACK(src, .proc/controllerscan, 1), 20)
+			addtimer(CALLBACK(src, PROC_REF(controllerscan), 1), 20)
 			return
 		collapse()
 
@@ -86,7 +89,7 @@
 	return
 
 
-/obj/machinery/am_shielding/emp_act()//Immune due to not really much in the way of electronics.
+/obj/machinery/am_shielding/emp_act() //Immune due to not really much in the way of electronics.
 	return
 
 /obj/machinery/am_shielding/ex_act(severity, target)
@@ -163,7 +166,7 @@
 	if(!istype(AMC))
 		return 0
 	if(control_unit && control_unit != AMC)
-		return 0//Already have one
+		return 0 //Already have one
 	control_unit = AMC
 	control_unit.add_shielding(src,1)
 	return 1
@@ -175,7 +178,7 @@
 		var/found_am_device=0
 		for(var/obj/machinery/machine in get_step(loc, direction))
 			if(!machine)
-				continue//Need all for a core
+				continue //Need all for a core
 			if(istype(machine, /obj/machinery/am_shielding) || istype(machine, /obj/machinery/power/am_control_unit))
 				found_am_device = 1
 				break
@@ -214,7 +217,7 @@
 	return
 
 
-/obj/machinery/am_shielding/proc/recalc_efficiency(new_efficiency)//tbh still not 100% sure how I want to deal with efficiency so this is likely temp
+/obj/machinery/am_shielding/proc/recalc_efficiency(new_efficiency) //tbh still not 100% sure how I want to deal with efficiency so this is likely temp
 	if(!control_unit || !processing)
 		return
 	if(stability < 50)

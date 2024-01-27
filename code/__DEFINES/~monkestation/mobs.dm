@@ -1,6 +1,7 @@
 #define SPECIES_ARACHNIDS "arachnid"
+#define SPECIES_DRACONIC_SKELETON "draconic_skeleton"
 
-GLOBAL_REAL_VAR(list/voice_type2sound) = list(
+GLOBAL_REAL_VAR(list/voice_type2sound = list(
 	"1" = list(
 		"1" = sound('goon/sounds/speak_1.ogg'),
 		"!" = sound('goon/sounds/speak_1_exclaim.ogg'),
@@ -21,7 +22,7 @@ GLOBAL_REAL_VAR(list/voice_type2sound) = list(
 		"!" = sound('goon/sounds/speak_4_exclaim.ogg'),
 		"?" = sound('goon/sounds/speak_4_ask.ogg')
 	),
-)
+))
 
 ///Managed global that is a reference to the real global
 GLOBAL_LIST_INIT(voice_type2sound_ref, voice_type2sound)

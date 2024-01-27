@@ -1199,3 +1199,15 @@ GLOBAL_LIST_INIT(binary, list("0","1"))
 /proc/sanitize_css_class_name(name)
 	var/static/regex/regex = new(@"[^a-zA-Z0-9]","g")
 	return replacetext(name, regex, "")
+
+/// Converts a semver string into a list of numbers
+/proc/semver_to_list(semver_string)
+	var/static/regex/semver_regex = regex(@"(\d+)\.(\d+)\.(\d+)", "")
+	if(!semver_regex.Find(semver_string))
+		return null
+
+	return list(
+		text2num(semver_regex.group[1]),
+		text2num(semver_regex.group[2]),
+		text2num(semver_regex.group[3]),
+	)
