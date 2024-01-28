@@ -647,7 +647,7 @@
 		reagent_volume = round(reagent.volume, CHEMICAL_QUANTISATION_LEVEL) //round to this many decimal places
 
 		//remove very small amounts of reagents
-		if(!reagent_volume || (reagent_volume <= 0.05 && !is_reacting))
+		if(reagent_volume <= 0 || (!is_reacting && reagent_volume < CHEMICAL_VOLUME_ROUNDING))
 			//end metabolization
 			if(isliving(my_atom))
 				if(reagent.metabolizing)
