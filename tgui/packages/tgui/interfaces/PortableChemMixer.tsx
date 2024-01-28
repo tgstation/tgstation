@@ -39,13 +39,14 @@ export const PortableChemMixer = (props) => {
               key={amount}
               icon="plus"
               selected={amount === data.amount}
-              content={amount}
               onClick={() =>
                 act('amount', {
                   target: amount,
                 })
               }
-            />
+            >
+              {amount}
+            </Button>
           ))}
         >
           <Box>
@@ -55,14 +56,15 @@ export const PortableChemMixer = (props) => {
                 icon="tint"
                 fluid
                 lineHeight={1.75}
-                content={`(${chemical.volume}) ${chemical.title}`}
                 tooltip={'pH: ' + chemical.pH}
                 onClick={() =>
                   act('dispense', {
                     reagent: chemical.id,
                   })
                 }
-              />
+              >
+                {`(${chemical.volume}) ${chemical.title}`}
+              </Button>
             ))}
           </Box>
         </Section>
@@ -72,9 +74,10 @@ export const PortableChemMixer = (props) => {
             <Button
               key={amount}
               icon="minus"
-              content={amount}
               onClick={() => act('remove', { amount })}
-            />
+            >
+              {amount}
+            </Button>
           ))}
         >
           <BeakerDisplay beaker={beaker} showpH />
