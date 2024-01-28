@@ -694,3 +694,23 @@
       any mob.
   vinylspiders:
   - bugfix: fixes a hard del with decals
+2024-01-28:
+  00-Steven:
+  - spellcheck: You no longer fail to find "a anything" when swabbing something for
+      cytology that doesn't have swabbing results.
+  - bugfix: Removed kitten omniscience. (They stop pointing at you now.)
+  Ghommie:
+  - image: Added an icon to the "My Watchlist Status is Not Important" achievement.
+  LT3:
+  - bugfix: Emergency shuttle console now only works while on the emergency shuttle
+  SyncIt21:
+  - spellcheck: shortened description for the PCM and capitalized some text for its
+      examines.
+  - code_imp: adds sanity checks and removed deprecated `content` tag from PCM UI.
+      Stops hologram items from being inserted.
+  VladinXXV:
+  - bugfix: Oppenheimer, the nukie medbot, has been reprogrammed to use Airplane Mode
+      as a factory default. The station AI is no longer immediately aware of his presence!
+  intercepti0n:
+  - refactor: 'Refactored Telecommunications Monitoring Console UI: added search bar,
+      made UI more compact.'

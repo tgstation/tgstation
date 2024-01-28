@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - spellcheck: "You no longer fail to find \"a anything\" when swabbing something for cytology that doesn't have swabbing results."

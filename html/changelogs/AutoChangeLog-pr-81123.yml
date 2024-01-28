@@ -1,4 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Emergency shuttle console now only works while on the emergency shuttle"
