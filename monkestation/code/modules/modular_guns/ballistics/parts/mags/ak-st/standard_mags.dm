@@ -44,12 +44,6 @@
 	icon_state = "mag_8.35-st"
 	attachment_icon_state = "well_pistol-st"
 
-/obj/item/attachment/mag/ak_st/mag_8_40_magnum
-	name = "ak mag 8.40 magnum"
-
-	icon_state = "mag_8.40 magnum-st"
-	attachment_icon_state = "well_magnum-st"
-
 /obj/item/attachment/mag/ak_st/mag_128_shotgun
 	name = "ak mag 128 Shotgun Shell"
 

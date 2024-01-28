@@ -6385,7 +6385,6 @@
 #include "monkestation\code\modules\modular_guns\ballistics\parts\stocks\ak\standard_stocks.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\stocks\ak-st\makeshift.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\stocks\ak-st\standard_stocks.dm"
-#include "monkestation\code\modules\modular_guns\ballistics\parts\stocks\mk58\makeshift.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\stocks\mk58\standard_stocks.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\stocks\wintermute\makeshift.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\stocks\wintermute\standard_stocks.dm"
