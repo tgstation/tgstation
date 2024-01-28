@@ -6921,6 +6921,10 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/courtroom)
+"Fn" = (
+/obj/effect/landmark/deathmatch_map_spawner,
+/turf/open/space/basic,
+/area/space)
 "Fo" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/sign/directions/engineering{
@@ -22337,7 +22341,7 @@ aa
 aa
 aa
 aa
-aa
+Fn
 aa
 aa
 aa
@@ -34416,7 +34420,7 @@ aa
 aa
 aa
 aa
-aa
+Fn
 aa
 aa
 aa
@@ -44953,7 +44957,7 @@ aa
 aa
 aa
 aa
-aa
+Fn
 aa
 aa
 aa

@@ -37,6 +37,10 @@
 			ui.close()
 			basketball()
 			return TRUE
+		if("deathmatch")
+			ui.close()
+			deathmatch()
+			return TRUE
 
 /datum/minigames_menu/proc/mafia()
 	var/datum/mafia_controller/game = GLOB.mafia_game //this needs to change if you want multiple mafia games up at once.
@@ -54,4 +58,10 @@
 	var/datum/basketball_controller/game = GLOB.basketball_game
 	if(!game)
 		game = create_basketball_game()
+	game.ui_interact(usr)
+
+/datum/minigames_menu/proc/deathmatch()
+	var/datum/deathmatch_controller/game = GLOB.deathmatch_game
+	if(!game)
+		game = new
 	game.ui_interact(usr)

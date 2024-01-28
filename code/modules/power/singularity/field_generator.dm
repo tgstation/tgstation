@@ -413,6 +413,14 @@ no power level overlay is currently in the overlays list.
 	if(fields.len)
 		..()
 
+/obj/machinery/field/generator/starts_on
+	anchored = TRUE
+	state = FG_WELDED
+
+/obj/machinery/field/generator/starts_on/Initialize(mapload)
+	. = ..()
+	turn_on()
+
 #undef FG_UNSECURED
 #undef FG_SECURED
 #undef FG_WELDED
