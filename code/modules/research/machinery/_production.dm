@@ -10,7 +10,7 @@
 	/// The material storage used by this fabricator.
 	var/datum/component/remote_materials/materials
 
-	/// Which departments forego the lathe tax when using this lathe.
+	/// Which departments are allowed to process this design
 	var/allowed_department_flags = ALL
 
 	/// What's flick()'d on print.
@@ -253,33 +253,6 @@
 		power += round(design.materials[material] * print_quantity / 35)
 	power = min(active_power_usage, power)
 	use_power(power)
-
-	// Charge the lathe tax at least once per ten items.
-	var/total_cost = LATHE_TAX * max(round(print_quantity / 10), 1)
-	if(!charges_tax)
-		total_cost = 0
-	if(isliving(user))
-		var/mob/living/living_user = user
-		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
-
-		if(!card && istype(user.pulling, /obj/item/card/id))
-			card = user.pulling
-
-		if(card && card.registered_account)
-			var/datum/bank_account/our_acc = card.registered_account
-			if(our_acc.account_job.departments_bitflags & allowed_department_flags)
-				total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
-
-	if(total_cost)
-		if(iscyborg(user))
-			var/mob/living/silicon/robot/borg = user
-			if(!borg.cell)
-				return FALSE
-			borg.cell.use(SILICON_LATHE_TAX)
-
-		else if(attempt_charge(src, user, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
-			say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
-			return FALSE
 
 	if(production_animation)
 		flick(production_animation, src)
