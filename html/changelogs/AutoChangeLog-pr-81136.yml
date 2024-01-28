@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Wizarditis Timestop now has the desired effect."
+  - admin: "Admins can now VV Timestop to make the caster not immune to their own Timestop. If they really wanted."
