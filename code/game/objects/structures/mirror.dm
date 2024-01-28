@@ -243,7 +243,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 				else
 					return TRUE
 			amazed_human.dna.update_ui_block(DNA_GENDER_BLOCK)
-			amazed_human.update_body()
+			amazed_human.update_body(is_creating = TRUE) //MONKESTATION EDIT
 			amazed_human.update_mutations_overlay() //(hulk male/female)
 
 		if("hair")
