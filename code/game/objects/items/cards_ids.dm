@@ -783,6 +783,8 @@
 				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
 		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
 		. += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
+		if(registered_account.replaceable)
+			. += span_info("Alt-Right-Click the ID to change the linked bank account.")
 		if(registered_account.civilian_bounty)
 			. += "<span class='info'><b>There is an active civilian bounty.</b>"
 			. += span_info("<i>[registered_account.bounty_text()]</i>")
