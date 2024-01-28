@@ -221,7 +221,7 @@
 		return
 
 	//use power
-	var/power = active_power_usage
+	var/power = 0
 	for(var/material in design.materials)
 		power += round(design.materials[material] * material_cost_coefficient * build_count)
 	power = min(active_power_usage, power)
@@ -354,7 +354,7 @@
 
 	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-	use_power(min(active_power_usage * 0.25, amount_inserted / 100))
+	use_power(min(active_power_usage * 0.25, amount_inserted / SHEET_MATERIAL_AMOUNT))
 
 	update_static_data_for_all_viewers()
 
