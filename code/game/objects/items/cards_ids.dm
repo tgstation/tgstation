@@ -730,11 +730,13 @@
 	if(!user.can_read(src))
 		return
 
-	if(registered_account)
+	if(registered_account && !isnull(registered_account.account_id))
 		. += "The account linked to the ID belongs to '[registered_account.account_holder]' and reports a balance of [registered_account.account_balance] cr."
 		if(ACCESS_COMMAND in access)
 			var/datum/bank_account/linked_dept = SSeconomy.get_dep_account(registered_account.account_job.paycheck_department)
 			. += "The [linked_dept.account_holder] linked to the ID reports a balance of [linked_dept.account_balance] cr."
+	else
+		. += span_notice("Alt-Right-Click the ID to set the linked bank account.")
 
 	if(HAS_TRAIT(user, TRAIT_ID_APPRAISER))
 		. += HAS_TRAIT(src, TRAIT_JOB_FIRST_ID_CARD) ? span_boldnotice("Hmm... yes, this ID was issued from Central Command!") : span_boldnotice("This ID was created in this sector, not by Central Command.")
@@ -780,8 +782,6 @@
 			if(D)
 				. += "The [D.account_holder] reports a balance of [D.account_balance] cr."
 		. += span_info("Alt-Click the ID to pull money from the linked account in the form of holochips.")
-		if(registered_account.replaceable)
-			. += span_info("Alt-Right-Click the ID to set the linked bank account.")
 		. += span_info("You can insert credits into the linked account by pressing holochips, cash, or coins against the ID.")
 		if(registered_account.civilian_bounty)
 			. += "<span class='info'><b>There is an active civilian bounty.</b>"
