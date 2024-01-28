@@ -84,6 +84,11 @@
 	music_player = new(src)
 	music_player.sound_loops = TRUE
 
+/obj/item/mod/module/visor/rave/Destroy()
+	QDEL_NULL(music_player)
+	QDEL_NULL(rave_screen)
+	return ..()
+
 /obj/item/mod/module/visor/rave/on_activation()
 	. = ..()
 	if(!.)

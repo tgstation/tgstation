@@ -29,27 +29,6 @@
 /obj/machinery/jukebox/no_access
 	req_access = null
 
-/obj/machinery/jukebox/disco
-	name = "radiant dance machine mark IV"
-	desc = "The first three prototypes were discontinued after mass casualty incidents."
-	icon_state = "disco"
-	base_icon_state = "disco"
-	req_access = list(ACCESS_ENGINEERING)
-	anchored = FALSE
-
-	/// Spotlight effects being played
-	VAR_PRIVATE/list/obj/item/flashlight/spotlight/spotlights = list()
-	/// Sparkle effects being played
-	VAR_PRIVATE/list/obj/effect/overlay/sparkles/sparkles = list()
-
-/obj/machinery/jukebox/disco/indestructible
-	name = "radiant dance machine mark V"
-	desc = "Now redesigned with data gathered from the extensive disco and plasma research."
-	req_access = null
-	anchored = TRUE
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
-
 /obj/machinery/jukebox/wrench_act(mob/living/user, obj/item/tool)
 	if(!isnull(music_player.active_song_sound))
 		return NONE
@@ -149,14 +128,6 @@
 		song_timerid = addtimer(CALLBACK(src, PROC_REF(stop_music)), music_player.selection.song_length, TIMER_UNIQUE|TIMER_STOPPABLE|TIMER_DELETE_ME)
 	return TRUE
 
-/obj/machinery/jukebox/disco/activate_music()
-	. = ..()
-	if(!.)
-		return
-	dance_setup()
-	lights_spin()
-	begin_processing()
-
 /obj/machinery/jukebox/proc/stop_music()
 	if(!isnull(song_timerid))
 		deltimer(song_timerid)
@@ -170,6 +141,39 @@
 		update_appearance(UPDATE_ICON_STATE)
 	return TRUE
 
+/obj/machinery/jukebox/on_set_is_operational(old_value)
+	if(!is_operational)
+		stop_music()
+
+/obj/machinery/jukebox/disco
+	name = "radiant dance machine mark IV"
+	desc = "The first three prototypes were discontinued after mass casualty incidents."
+	icon_state = "disco"
+	base_icon_state = "disco"
+	req_access = list(ACCESS_ENGINEERING)
+	anchored = FALSE
+
+	/// Spotlight effects being played
+	VAR_PRIVATE/list/obj/item/flashlight/spotlight/spotlights = list()
+	/// Sparkle effects being played
+	VAR_PRIVATE/list/obj/effect/overlay/sparkles/sparkles = list()
+
+/obj/machinery/jukebox/disco/indestructible
+	name = "radiant dance machine mark V"
+	desc = "Now redesigned with data gathered from the extensive disco and plasma research."
+	req_access = null
+	anchored = TRUE
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+
+/obj/machinery/jukebox/disco/activate_music()
+	. = ..()
+	if(!.)
+		return
+	dance_setup()
+	lights_spin()
+	begin_processing()
+
 /obj/machinery/jukebox/disco/stop_music()
 	. = ..()
 	if(!.)
@@ -178,9 +182,14 @@
 	QDEL_LIST(sparkles)
 	end_processing()
 
-/obj/machinery/jukebox/on_set_is_operational(old_value)
-	if(!is_operational)
-		stop_music()
+/obj/machinery/jukebox/disco/process()
+	var/dance_num = rand(1, 4) //all will do the same dance
+	for(var/mob/living/dancer in music_player.get_active_listeners())
+		if(!(dancer.mobility_flags & MOBILITY_MOVE))
+			continue
+		if(HAS_TRAIT(dancer, TRAIT_DISCO_DANCER))
+			continue
+		dance(dancer, dance_num)
 
 /obj/machinery/jukebox/disco/proc/dance_setup()
 	var/turf/cen = get_turf(src)
@@ -377,12 +386,3 @@
 /obj/machinery/jukebox/disco/proc/dance4_revert(mob/living/dancer, matrix/starting_matrix)
 	animate(dancer, transform = starting_matrix, time = 5, loop = 0)
 	REMOVE_TRAIT(dancer, TRAIT_DISCO_DANCER, REF(src))
-
-/obj/machinery/jukebox/disco/process()
-	var/dance_num = rand(1, 4) //all will do the same dance
-	for(var/mob/living/dancer in music_player.get_active_listeners())
-		if(!(dancer.mobility_flags & MOBILITY_MOVE))
-			continue
-		if(HAS_TRAIT(dancer, TRAIT_DISCO_DANCER))
-			continue
-		dance(dancer, dance_num)

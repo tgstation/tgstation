@@ -1,3 +1,14 @@
+/// Checks if the mob has jukebox muted in their preferences
+#define IS_PREF_MUTED(mob) (!isnull(mob.client) && !mob.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox))
+
+// Reasons for appling STATUS_MUTE to a mob's sound status
+/// The mob is deaf
+#define MUTE_DEAF (1<<0)
+/// The mob has disabled jukeboxes in their preferences
+#define MUTE_PREF (1<<1)
+/// The mob is out of range of the jukebox
+#define MUTE_RANGE (1<<2)
+
 /**
  * ## Jukebox datum
  *
@@ -210,7 +221,7 @@
 	RegisterSignal(new_listener, COMSIG_MOVABLE_MOVED, PROC_REF(listener_moved))
 	RegisterSignals(new_listener, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deaf))
 
-	if(!new_listener.can_hear() || !new_listener.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox))
+	if(HAS_TRAIT(new_listener, TRAIT_DEAF) || IS_PREF_MUTED(new_listener))
 		listeners[new_listener] |= SOUND_MUTE
 
 	if(isnull(active_song_sound))
@@ -252,14 +263,44 @@
 /datum/jukebox/proc/listener_deaf(mob/source)
 	SIGNAL_HANDLER
 
-	// Don't override pref mute
-	if(!isnull(source.client) && !source.client.prefs.read_preference(/datum/preference/toggle/sound_jukebox))
-		return
 	if(HAS_TRAIT(source, TRAIT_DEAF))
 		listeners[source] |= SOUND_MUTE
-	else
-		listeners[source] &= ~SOUND_MUTE
+	else if(!unmute_listener(source, MUTE_DEAF))
+		return
 	update_listener(source)
+
+/**
+ * Unmutes the passed mob's sound from the passed reason.
+ *
+ * Arguments
+ * * mob/listener - The mob to unmute.
+ * * reason - The reason to unmute them for. Can be a combination of MUTE_DEAF, MUTE_PREF, MUTE_RANGE.
+ */
+/datum/jukebox/proc/unmute_listener(mob/listener, reason)
+	// We need to check everything BUT the reason we're unmuting for
+	// Because if we're muted for a different reason we don't wanna touch it
+	reason = ~reason
+
+	if((reason & MUTE_DEAF) && HAS_TRAIT(listener, TRAIT_DEAF))
+		return FALSE
+
+	if((reason & MUTE_PREF) && IS_PREF_MUTED(listener))
+		return FALSE
+
+	if((reason & MUTE_RANGE))
+		var/turf/sound_turf = get_turf(parent)
+		var/turf/listener_turf = get_turf(listener)
+		if(isnull(sound_turf) || isnull(listener_turf))
+			return FALSE
+		if(sound_turf.z != listener_turf.z)
+			return FALSE
+		if(abs(sound_turf.x - listener_turf.x) > x_cutoff)
+			return FALSE
+		if(abs(sound_turf.y - listener_turf.y) > z_cutoff)
+			return FALSE
+
+	listeners[listener] &= ~SOUND_MUTE
+	return TRUE
 
 /// Deregisters the passed mob as a listener to the jukebox, stopping the music.
 /datum/jukebox/proc/deregister_listener(mob/no_longer_listening)
@@ -287,15 +328,19 @@
 		active_song_sound.x = 0
 		active_song_sound.z = 0
 
+	else if(sound_turf.z != listener_turf.z) // Could MAYBE model multi-z jukeboxes but that's too complex for now
+		listeners[listener] |= SOUND_MUTE
+
 	else
 		// keep in mind sound XYZ is different to world XYZ. sound +-z = world +-y
 		var/new_x = sound_turf.x - listener_turf.x
 		var/new_z = sound_turf.y - listener_turf.y
 
-		if(abs(new_x) > x_cutoff || abs(new_z) > z_cutoff)
-			deregister_listener(listener)
-			// if we wanted to be fancy, we could keep tracking them and mute / unmute when they enter / exit range
-			return
+		if((abs(new_x) > x_cutoff || abs(new_z) > z_cutoff))
+			listeners[listener] |= SOUND_MUTE
+
+		else if(listeners[listener] & SOUND_MUTE)
+			unmute_listener(listener, MUTE_RANGE)
 
 		active_song_sound.x = new_x
 		active_song_sound.z = new_z
@@ -334,6 +379,12 @@
 
 /datum/jukebox/single_mob/start_music(mob/solo_listener)
 	register_listener(solo_listener)
+
+#undef IS_PREF_MUTED
+
+#undef MUTE_DEAF
+#undef MUTE_PREF
+#undef MUTE_RANGE
 
 /// Track datums, used in jukeboxes
 /datum/track
