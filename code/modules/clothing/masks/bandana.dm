@@ -206,7 +206,7 @@
 	desc = "Cover your face like in the cowboy movies. It also has breathtube so you can wear it everywhere!"
 	actions_types = /datum/action/item_action/adjust
 	icon_state = "facescarf"
-	inhand_icon_state = "facescarf"
+	inhand_icon_state = "greyscale_facescarf"
 	alternate_worn_layer = BACK_LAYER
 	clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
 	flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
@@ -220,6 +220,8 @@
 	greyscale_colors = "#eeeeee"
 	greyscale_config = /datum/greyscale_config/facescarf
 	greyscale_config_worn = /datum/greyscale_config/facescarf/worn
+	greyscale_config_inhand_left = /datum/greyscale_config/facescarf/inhands_left
+	greyscale_config_inhand_right = /datum/greyscale_config/facescarf/inhands_right
 	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/mask/facescarf/AltClick(mob/user)
