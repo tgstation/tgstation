@@ -1,0 +1,4 @@
+author: "Krypandenej"
+delete-after: True
+changes:
+  - bugfix: "pesto pizza (cooked) is no longer raw, and cilbir is meat instead of fruit"
