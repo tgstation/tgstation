@@ -31,8 +31,7 @@ GLOBAL_LIST_EMPTY(deliverybeacontags)
 /// List of all singularity components that exist
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
 
-/// list of all /datum/tech datums indexed by id.
-GLOBAL_LIST_EMPTY(tech_list)
+GLOBAL_LIST_EMPTY(item_to_design_list)
 /// list of all surgeries by name, associated with their path.
 GLOBAL_LIST_INIT(surgeries_list, init_surgeries())
 
