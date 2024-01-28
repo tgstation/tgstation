@@ -179,6 +179,7 @@
 
 /datum/ai_behavior/travel_towards/bot_summon
 	clear_target = TRUE
+	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
