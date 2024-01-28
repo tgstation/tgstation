@@ -344,6 +344,8 @@
 		return
 	adjusted = !adjusted
 	if(adjusted)
+		if(alt_covers_chest) //For snowflake suits that do NOT expose the chest. //MONKESTATION EDIT
+			return
 		if(!(female_sprite_flags & FEMALE_UNIFORM_TOP_ONLY))
 			female_sprite_flags = NO_FEMALE_UNIFORM
 		if(!alt_covers_chest) // for the special snowflake suits that expose the chest when adjusted (and also the arms, realistically)
