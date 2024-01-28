@@ -200,3 +200,33 @@
 	desc = "A fine black bandana with nanotech lining and a skull emblem."
 	greyscale_colors = "#2e2e2e#C6C6C6"
 	flags_1 = NONE
+
+/obj/item/clothing/mask/facescarf
+    name = "facescarf"
+    desc = "Cover your face like in the cowboy movies. It also has breathtube so you can wear it everywhere!"
+    actions_types = /datum/action/item_action/adjust
+    icon_state = "facescarf"
+    inhand_icon_state = "facescarf"
+    alternate_worn_layer = BACK_LAYER
+    clothing_flags = BLOCK_GAS_SMOKE_EFFECT|MASKINTERNALS
+    flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+    w_class = WEIGHT_CLASS_SMALL
+    visor_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
+    visor_flags_inv = HIDEFACIALHAIR | HIDEFACE | HIDESNOUT
+    flags_cover = MASKCOVERSMOUTH
+    visor_flags_cover = MASKCOVERSMOUTH
+    custom_price = PAYCHECK_CREW
+    tint = 0
+    greyscale_colors = "#eeeeee"
+    greyscale_config = /datum/greyscale_config/facescarf
+    greyscale_config_worn = /datum/greyscale_config/facescarf/worn
+    flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/mask/facescarf/AltClick(mob/user)
+	..()
+	if(user.can_perform_action(src, NEED_DEXTERITY))
+		adjustmask(user)
+
+/obj/item/clothing/mask/facescarf/examine(mob/user)
+	. = ..()
+	. += span_notice("Alt-click [src] to adjust it.")
