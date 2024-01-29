@@ -617,7 +617,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				LAZYADD(saviors, WEAKREF(lucky_engi))
 
 			return // delam averted
-
 		sleep(1 SECONDS)
 
 	delamination_strategy.delaminate(src)
