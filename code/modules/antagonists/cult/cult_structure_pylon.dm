@@ -45,12 +45,12 @@
 		if(istype(nearby_turf, /turf/open/floor/engine/cult))
 			cultturfs |= nearby_turf
 			continue
-		var/static/list/blacklisted_pylon_turfs = GLOB.turfs_without_ground + typecacheof(list(
+		var/static/list/blacklisted_pylon_turfs = typecacheof(list(
 			/turf/closed,
 			/turf/open/floor/engine/cult,
 			/turf/open/misc/asteroid,
 		))
-		if(is_type_in_typecache(nearby_turf, blacklisted_pylon_turfs))
+		if(isgroundlessturf(nearby_turf) || is_type_in_typecache(nearby_turf, blacklisted_pylon_turfs))
 			continue
 		validturfs |= nearby_turf
 
