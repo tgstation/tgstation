@@ -218,10 +218,12 @@
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
 	icon_state = "mecha_rcd"
-	equip_cooldown = 10
+	equip_cooldown = 0 // internal RCD already handles it
 	energy_drain = 0 // internal RCD handles power consumption based on matter use
 	range = MECHA_MELEE|MECHA_RANGED
 	item_flags = NO_MAT_REDEMPTION
+	///Maximum range the RCD can construct at.
+	var/rcd_range = 3
 	///The type of internal RCD this equipment uses.
 	var/rcd_type = /obj/item/construction/rcd/exosuit
 	///The internal RCD item used by this equipment.
@@ -256,7 +258,10 @@
 /obj/item/mecha_parts/mecha_equipment/rcd/handle_ui_act(action, list/params)
 	switch(action)
 		if("rcd_scan")
+			if(!COOLDOWN_FINISHED(internal_rcd, destructive_scan_cooldown))
+				return FALSE
 			rcd_scan(internal_rcd)
+			COOLDOWN_START(internal_rcd, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
 			return TRUE
 		if("change_mode")
 			for(var/mob/driver as anything in chassis.return_drivers())
@@ -264,11 +269,17 @@
 			return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/rcd/action(mob/source, atom/target, list/modifiers)
+	if(!action_checks(target))
+		return
+	if(get_dist(chassis, target) > rcd_range)
+		balloon_alert(source, "out of range!")
+		return
 	if(!internal_rcd) // if it somehow went missing
 		internal_rcd = new rcd_type(src)
 		stack_trace("Exosuit-mounted RCD had no internal RCD!")
+	..() // do this now because the do_after can take a while
 	internal_rcd.rcd_create(target, source)
-	return ..()
+	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/rcd/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/rcd_upgrade))

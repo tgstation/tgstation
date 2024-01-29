@@ -1,9 +1,6 @@
 /// Multiplier applied on construction & deconstruction time when building multiple structures
 #define FREQUENT_USE_DEBUFF_MULTIPLIER 3
 
-/// Delay before another rcd scan can be performed in the UI
-#define RCD_DESTRUCTIVE_SCAN_COOLDOWN (RCD_HOLOGRAM_FADE_TIME + 1 SECONDS)
-
 //RAPID CONSTRUCTION DEVICE
 
 /obj/item/construction/rcd
@@ -514,6 +511,7 @@
 /obj/item/construction/rcd/exosuit
 	name = "mounted RCD"
 	desc = "An exosuit-mounted Rapid Construction Device."
+	max_matter = INFINITY // mass-energy equivalence go brrrrrr
 	canRturf = TRUE
 	ranged = TRUE
 	has_ammobar = FALSE
@@ -528,14 +526,16 @@
 	return UI_CLOSE
 
 /obj/item/construction/rcd/exosuit/get_matter(mob/user)
+	if(silo_link)
+		return ..()
 	if(!ismecha(owner))
 		return 0
 	var/obj/vehicle/sealed/mecha/gundam = owner
-	var/obj/item/stock_parts/cell/cell = gundam.get_cell()
-	max_matter = cell.maxcharge
 	return round(gundam.get_charge() / mass_to_energy)
 
 /obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
+	if(silo_link)
+		return ..()
 	if(!ismecha(owner))
 		return 0
 	var/obj/vehicle/sealed/mecha/gundam = owner
@@ -545,6 +545,8 @@
 	return TRUE
 
 /obj/item/construction/rcd/exosuit/checkResource(amount, mob/user)
+	if(silo_link)
+		return ..()
 	if(!ismecha(owner))
 		return 0
 	var/obj/vehicle/sealed/mecha/gundam = owner
@@ -554,7 +556,6 @@
 	return TRUE
 
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
-#undef RCD_DESTRUCTIVE_SCAN_COOLDOWN
 
 /obj/item/rcd_ammo
 	name = "RCD matter cartridge"

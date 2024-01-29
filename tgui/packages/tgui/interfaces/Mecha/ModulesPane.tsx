@@ -988,7 +988,7 @@ const SnowflakeRCD = (props) => {
   const { scan_ready, mode } = props.module.snowflake;
   return (
     <>
-      <LabeledList.Item label="Reconstruction Scan">
+      <LabeledList.Item label="Destruction Scan">
         <Button
           icon="satellite-dish"
           color={scan_ready ? 'green' : 'transparent'}
