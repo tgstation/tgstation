@@ -15,9 +15,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/list/antag_protected_roles = list()
 	///A list of trait roles that should never be able to roll antag
 	var/list/antag_restricted_roles = list()
+	/// Assosciative list of goal type -> goal instance
+	var/list/datum/station_goal/goals_by_type = list()
 
 /datum/controller/subsystem/processing/station/Initialize()
-
 	//If doing unit tests we don't do none of that trait shit ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
@@ -29,6 +30,61 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	SSparallax.post_station_setup() //Apply station effects that parallax might have
 
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/processing/station/Recover()
+	station_traits = SSstation.station_traits
+	selectable_traits_by_types = SSstation.selectable_traits_by_types
+	announcer = SSstation.announcer
+	antag_protected_roles = SSstation.antag_protected_roles
+	antag_restricted_roles = SSstation.antag_restricted_roles
+	goals_by_type = SSstation.goals_by_type
+	..()
+
+/// This gets called by SSdynamic during initial gamemode setup.
+/// This is done because for a greenshift we want all goals to be generated
+/datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget)
+	var/list/possible = subtypesof(/datum/station_goal)
+
+	// Remove all goals that require space if space is not present
+	if(SSmapping.is_planetary())
+		for(var/datum/station_goal/goal as anything in possible)
+			if(initial(goal.requires_space))
+				possible -= goal
+
+	var/goal_weights = 0
+	var/chosen_goals = list()
+	while(possible.len && goal_weights < goal_budget)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		goal_weights += initial(picked.weight)
+		chosen_goals += picked
+
+	for(var/chosen in chosen_goals)
+		add_new_station_goal(chosen)
+
+/// Returns all station goals that are currently active
+/datum/controller/subsystem/processing/station/proc/get_station_goals()
+	var/list/goals = list()
+	for(var/goal_type in goals_by_type)
+		goals += goals_by_type[goal_type]
+	return goals
+
+/// Returns a specific station goal by type
+/datum/controller/subsystem/processing/station/proc/get_station_goal(goal_type)
+	return goals_by_type[goal_type]
+
+/// Generates a station goal and registers it
+/datum/controller/subsystem/processing/station/proc/add_new_station_goal(datum/station_goal/goal_type_or_instance)
+	if(!istype(goal_type_or_instance))
+		if(!ispath(goal_type_or_instance, /datum/station_goal))
+			CRASH("Invalid station goal type path [goal_type_or_instance] was requested!")
+		goal_type_or_instance = new goal_type_or_instance
+
+	goals_by_type[goal_type_or_instance.type] = goal_type_or_instance
+	RegisterSignal(goal_type_or_instance, COMSIG_QDELETING, PROC_REF(handle_goal_deletion))
+
+/// Handles the deletion of a station goal
+/datum/controller/subsystem/processing/station/proc/handle_goal_deletion(datum/station_goal/goal)
+	goals_by_type -= goal.type
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()

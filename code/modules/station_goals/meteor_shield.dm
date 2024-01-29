@@ -14,8 +14,9 @@
 // Satellites be actived to generate a shield that will block unorganic matter from passing it.
 /datum/station_goal/station_shield
 	name = "Station Shield"
-	var/coverage_goal = 500
 	requires_space = TRUE
+	var/coverage_goal = 500
+	VAR_PRIVATE/cached_coverage_length
 
 /datum/station_goal/station_shield/get_report()
 	return list(
@@ -37,17 +38,27 @@
 /datum/station_goal/station_shield/check_completion()
 	if(..())
 		return TRUE
-	if(get_coverage() >= coverage_goal)
+	if(cached_coverage_length >= coverage_goal)
 		return TRUE
 	return FALSE
 
-/datum/station_goal/proc/get_coverage()
+/datum/station_goal/station_shield/proc/get_coverage()
+	return cached_coverage_length
+
+/// Gets the coverage of all active meteor shield satellites
+/// Can be expensive, ensure you need this before calling it
+/datum/station_goal/station_shield/proc/update_coverage()
 	var/list/coverage = list()
 	for(var/obj/machinery/satellite/meteor_shield/shield_satt as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/satellite/meteor_shield))
 		if(!shield_satt.active || !is_station_level(shield_satt.z))
 			continue
-		coverage |= view(shield_satt.kill_range, shield_satt)
-	return coverage.len
+		for(var/turf/covered in view(shield_satt.kill_range, get_turf(shield_satt)))
+			coverage |= covered
+	cached_coverage_length = length(coverage)
+
+/client/verb/debug_check_one_two()
+	for(var/turf/covered in view(src))
+		to_chat(src, span_notice("[loc_name(covered)]"))
 
 /obj/machinery/satellite/meteor_shield
 	name = "\improper Meteor Shield Satellite"
@@ -108,6 +119,9 @@
 		return FALSE
 	if(obj_flags & EMAGGED)
 		update_emagged_meteor_sat(user)
+
+	var/datum/station_goal/station_shield/goal = SSstation.get_station_goal(__IMPLIED_TYPE__)
+	goal?.update_coverage()
 
 /obj/machinery/satellite/meteor_shield/Destroy()
 	. = ..()

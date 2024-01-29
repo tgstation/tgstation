@@ -67,6 +67,9 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
+	/// List of initialized station goals
+	var/list/datum/station_goal/goals_by_type = list()
+
 /datum/controller/subsystem/ticker/Initialize()
 	var/list/byond_sound_formats = list(
 		"mid" = TRUE,
@@ -225,7 +228,6 @@ SUBSYSTEM_DEF(ticker)
 	if(GLOB.revolutionary_win)
 		return TRUE
 	return FALSE
-
 
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
