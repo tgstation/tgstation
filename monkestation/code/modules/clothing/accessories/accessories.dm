@@ -10,8 +10,8 @@
 /obj/item/clothing/accessory/bunnytie
 	name = "bowtie collar"
 	desc = "A fancy tie that includes a collar. Looking snazzy."
-	icon = 'monkestation/icons/obj/clothing/necks.dmi'
-	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
+	icon = 'monkestation/icons/obj/clothing/accessories.dmi'
+	worn_icon = 'monkestation/icons/mob/clothing/accessories.dmi'
 	icon_state = "bowtie_collar"
 
 /obj/item/clothing/accessory/bunnytie/syndicate
