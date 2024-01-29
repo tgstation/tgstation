@@ -38,6 +38,13 @@
 	else if(href_list["remove"])
 		qdel(src)
 
+/datum/station_goal/New()
+	if(type in SSstation.goals_by_type)
+		stack_trace("Creating a new station_goal of type [type] when one already exists in SSstation.goals_by_type this is not supported anywhere. I trust you tho")
+	else
+		SSstation.goals_by_type[type] = src
+	return ..()
+
 /datum/station_goal/Destroy(force)
 	if(SSstation.goals_by_type[type] == src)
 		SSstation.goals_by_type -= type

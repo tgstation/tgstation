@@ -77,7 +77,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(!ispath(goal_type_or_instance, /datum/station_goal))
 			CRASH("Invalid station goal type path [goal_type_or_instance] was requested!")
 		goal_type_or_instance = new goal_type_or_instance
-	goals_by_type[goal_type_or_instance.type] = goal_type_or_instance
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
