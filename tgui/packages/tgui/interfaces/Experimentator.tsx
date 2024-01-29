@@ -1,3 +1,4 @@
+import { BooleanLike } from 'common/react';
 import { toTitleCase } from 'common/string';
 
 import { useBackend } from '../backend';
@@ -14,22 +15,22 @@ import {
 import { Window } from '../layouts';
 
 type Data = {
-  hasItem: boolean;
-  isOnCooldown: boolean;
-  isServerConnected: boolean;
+  hasItem: BooleanLike;
+  isOnCooldown: BooleanLike;
+  isServerConnected: BooleanLike;
   loadedItem: Item;
 };
 
 type Item = {
   name: string;
   icon: string;
-  isRelic: boolean;
+  isRelic: BooleanLike;
   associatedNodes: Node[];
 };
 
 type Node = {
   name: string;
-  isUnlocked: boolean;
+  isUnlocked: BooleanLike;
 };
 
 export const Experimentator = (props: any) => {
@@ -82,7 +83,7 @@ const EXPERIMENT2ICON = {
 
 type ExperimentScreenProps = {
   item: Item;
-  isOnCooldown: boolean;
+  isOnCooldown: BooleanLike;
   onEject: () => void;
   onExperiment: (id: number) => void;
 };
@@ -201,8 +202,8 @@ const NodePreview = (props: NodePreviewProps) => {
 };
 
 type ExperimentButtonsProps = {
-  isRelic: boolean;
-  disabled: boolean;
+  isRelic: BooleanLike;
+  disabled: BooleanLike;
   onExperiment: (id: number) => void;
 };
 
