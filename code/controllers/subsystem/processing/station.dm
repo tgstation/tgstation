@@ -58,7 +58,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		chosen_goals += picked
 
 	for(var/chosen in chosen_goals)
-		add_new_station_goal(chosen)
+		new chosen()
 
 /// Returns all station goals that are currently active
 /datum/controller/subsystem/processing/station/proc/get_station_goals()
@@ -70,13 +70,6 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /// Returns a specific station goal by type
 /datum/controller/subsystem/processing/station/proc/get_station_goal(goal_type)
 	return goals_by_type[goal_type]
-
-/// Generates a station goal and registers it
-/datum/controller/subsystem/processing/station/proc/add_new_station_goal(datum/station_goal/goal_type_or_instance)
-	if(!istype(goal_type_or_instance))
-		if(!ispath(goal_type_or_instance, /datum/station_goal))
-			CRASH("Invalid station goal type path [goal_type_or_instance] was requested!")
-		goal_type_or_instance = new goal_type_or_instance
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
