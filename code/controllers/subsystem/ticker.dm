@@ -67,9 +67,6 @@ SUBSYSTEM_DEF(ticker)
 	/// Why an emergency shuttle was called
 	var/emergency_reason
 
-	/// List of initialized station goals
-	var/list/datum/station_goal/goals_by_type = list()
-
 /datum/controller/subsystem/ticker/Initialize()
 	var/list/byond_sound_formats = list(
 		"mid" = TRUE,

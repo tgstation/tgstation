@@ -15,7 +15,8 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	var/list/antag_protected_roles = list()
 	///A list of trait roles that should never be able to roll antag
 	var/list/antag_restricted_roles = list()
-	/// Assosciative list of goal type -> goal instance
+
+	/// Assosciative list of station goal type -> goal instance
 	var/list/datum/station_goal/goals_by_type = list()
 
 /datum/controller/subsystem/processing/station/Initialize()
