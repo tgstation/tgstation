@@ -14,9 +14,12 @@
 #define SMES_INPUTTING 8
 #define SMES_INPUT_ATTEMPT 9
 
+#define SMESEMPTIME 20 SECONDS // the time it takes for the SMES to go back to normal operation when emped
+
 /obj/machinery/power/smes
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	icon = 'icons/obj/machines/smes.dmi'
 	icon_state = "smes"
 	density = TRUE
 	use_power = NO_POWER_USE
@@ -37,6 +40,9 @@
 	var/output_level = 50000 // amount of power the SMES attempts to output
 	var/output_level_max = 200000 // cap on output_level
 	var/output_used = 0 // amount of power actually outputted. may be less than output_level if the powernet returns excess power
+
+	var/emp_timer = TIMER_ID_NULL
+	var/is_emped = FALSE 	//checks if SMES was EMPED or NO, purerly cosmetic
 
 	var/obj/machinery/power/terminal/terminal = null
 
@@ -88,7 +94,7 @@
 
 /obj/machinery/power/smes/attackby(obj/item/I, mob/user, params)
 	//opening using screwdriver
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), I))
+	if(default_deconstruction_screwdriver(user, icon_state, icon_state, I))
 		update_appearance()
 		return
 
@@ -221,18 +227,60 @@
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
+	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
+
+	if(panel_open)
+		. += "panel"
+		return
+
 	if(machine_stat & BROKEN)
 		return
 
-	if(panel_open)
-		return
-
-	. += "smes-op[outputting ? 1 : 0]"
-	. += "smes-oc[inputting ? 1 : 0]"
-
 	var/clevel = chargedisplay()
-	if(clevel > 0)
-		. += "smes-og[clevel]"
+	if(!terminal)
+		. += "failing"
+		SSvis_overlays.add_vis_overlay(src, icon, "failing", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "failing", layer, EMISSIVE_PLANE, dir)
+	if(clevel>0)
+		. += "charge[clevel]"
+		SSvis_overlays.add_vis_overlay(src, icon, "charge[clevel]", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "charge[clevel]", layer, EMISSIVE_PLANE, dir)
+	if(is_emped)
+		. += "emp"
+		SSvis_overlays.add_vis_overlay(src, icon, "emp", layer, plane, dir)
+		SSvis_overlays.add_vis_overlay(src, icon, "emp", layer, EMISSIVE_PLANE, dir)
+	else
+		if(inputting)
+			if(clevel == SMES_CLEVEL_5)
+				. += "input-2"
+				SSvis_overlays.add_vis_overlay(src, icon, "input-2", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "input-2", layer, EMISSIVE_PLANE, dir)
+			else
+				. += "input-1"
+				SSvis_overlays.add_vis_overlay(src, icon, "input-1", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "input-1", layer, EMISSIVE_PLANE, dir)
+		else if(input_attempt)
+			. += "input-0"
+			SSvis_overlays.add_vis_overlay(src, icon, "input-0", layer, plane, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "input-0", layer, EMISSIVE_PLANE, dir)
+		else
+			. += "input-off"
+			SSvis_overlays.add_vis_overlay(src, icon, "input-off", layer, plane, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "input-off", layer, EMISSIVE_PLANE, dir)
+
+		if(outputting)
+			if(clevel == SMES_CLEVEL_5)
+				. += "output2"
+				SSvis_overlays.add_vis_overlay(src, icon, "output2", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "output2", layer, EMISSIVE_PLANE, dir)
+			else
+				. += "output1"
+				SSvis_overlays.add_vis_overlay(src, icon, "output1", layer, plane, dir)
+				SSvis_overlays.add_vis_overlay(src, icon, "output1", layer, EMISSIVE_PLANE, dir)
+		else
+			. += "output0"
+			SSvis_overlays.add_vis_overlay(src, icon, "output0", layer, plane, dir)
+			SSvis_overlays.add_vis_overlay(src, icon, "output0", layer, EMISSIVE_PLANE, dir)
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
@@ -410,6 +458,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
+	emp_timer = addtimer(CALLBACK(src, .proc/emp_end, output_attempt), SMESEMPTIME, TIMER_UNIQUE | TIMER_OVERRIDE)
 	input_attempt = rand(0,1)
 	inputting = input_attempt
 	output_attempt = rand(0,1)
@@ -435,6 +484,12 @@
 	charge = INFINITY
 	..()
 
+/obj/machinery/power/smes/proc/emp_end() //used to check if SMES was EMPED
+	is_emped = FALSE
+	update_icon()
+	log_smes()
+
+
 
 #undef SMESRATE
 
@@ -447,3 +502,4 @@
 #undef SMES_NOT_OUTPUTTING
 #undef SMES_INPUTTING
 #undef SMES_INPUT_ATTEMPT
+#undef SMESEMPTIME
