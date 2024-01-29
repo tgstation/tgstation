@@ -101,7 +101,7 @@
 		F.parent = src
 		fillers += F
 
-	var/datum/station_goal/dna_vault/dna_vault_goal = SSstation.get_station_goal(__IMPLIED_TYPE__)
+	var/datum/station_goal/dna_vault/dna_vault_goal = SSstation.get_station_goal(/datum/station_goal/dna_vault)
 	if(!isnull(dna_vault_goal))
 		animals_max = dna_vault_goal.animal_count
 		plants_max = dna_vault_goal.plant_count

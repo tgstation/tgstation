@@ -45,16 +45,14 @@ PROCESSING_SUBSYSTEM_DEF(station)
 /datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget)
 	var/list/possible = subtypesof(/datum/station_goal)
 
-	// Remove all goals that require space if space is not present
-	if(SSmapping.is_planetary())
-		for(var/datum/station_goal/goal as anything in possible)
-			if(initial(goal.requires_space))
-				possible -= goal
-
 	var/goal_weights = 0
 	var/chosen_goals = list()
+	var/is_planetary = SSmapping.is_planetary()
 	while(possible.len && goal_weights < goal_budget)
 		var/datum/station_goal/picked = pick_n_take(possible)
+		if(picked::requires_space && is_planetary)
+			continue
+
 		goal_weights += initial(picked.weight)
 		chosen_goals += picked
 
@@ -78,13 +76,7 @@ PROCESSING_SUBSYSTEM_DEF(station)
 		if(!ispath(goal_type_or_instance, /datum/station_goal))
 			CRASH("Invalid station goal type path [goal_type_or_instance] was requested!")
 		goal_type_or_instance = new goal_type_or_instance
-
 	goals_by_type[goal_type_or_instance.type] = goal_type_or_instance
-	RegisterSignal(goal_type_or_instance, COMSIG_QDELETING, PROC_REF(handle_goal_deletion))
-
-/// Handles the deletion of a station goal
-/datum/controller/subsystem/processing/station/proc/handle_goal_deletion(datum/station_goal/goal)
-	goals_by_type -= goal.type
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()

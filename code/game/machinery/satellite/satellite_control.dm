@@ -44,7 +44,7 @@
 		))
 	data["notice"] = notice
 
-	var/datum/station_goal/station_shield/goal = SSstation.get_station_goal(__IMPLIED_TYPE__)
+	var/datum/station_goal/station_shield/goal = SSstation.get_station_goal(/datum/station_goal/station_shield)
 	if(!isnull(goal))
 		data["meteor_shield"] = TRUE
 		data["meteor_shield_coverage"] = goal.get_coverage()

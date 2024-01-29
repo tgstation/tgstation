@@ -37,3 +37,8 @@
 		send_report()
 	else if(href_list["remove"])
 		qdel(src)
+
+/datum/station_goal/Destroy(force)
+	if(SSstation.goals_by_type[type] == src)
+		SSstation.goals_by_type -= type
+	return ..()
