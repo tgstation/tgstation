@@ -143,9 +143,9 @@
 /obj/machinery/rnd/experimentor/ui_data(mob/user)
 	var/list/data = list()
 
-	data["hasItem"] = loaded_item ? TRUE : FALSE
+	data["hasItem"] = !!loaded_item
 	data["isOnCooldown"] = recentlyExperimented
-	data["isServerConnected"] = stored_research ? TRUE : FALSE
+	data["isServerConnected"] = !!stored_research
 
 	if(!isnull(loaded_item))
 		var/list/item_data = list()
@@ -179,7 +179,7 @@
 			return TRUE
 
 		if("experiment")
-			_try_perform_experiment(params["id"])
+			try_perform_experiment(params["id"])
 			return TRUE
 
 /obj/machinery/rnd/experimentor/proc/ejectItem(delete = FALSE)
@@ -200,8 +200,9 @@
 	loaded_item.forceMove(drop_atom)
 	loaded_item = null
 
-/obj/machinery/rnd/experimentor/proc/_match_reaction(obj/item/matching, target_reaction)
-	if(isnull(matching) | isnull(target_reaction))
+/obj/machinery/rnd/experimentor/proc/match_reaction(obj/item/matching, target_reaction)
+	PRIVATE_PROC(TRUE)
+	if(isnull(matching) || isnull(target_reaction))
 		return FAIL
 
 	var/list/item_reactions = item_reactions()
@@ -212,7 +213,8 @@
 
 	return FAIL
 
-/obj/machinery/rnd/experimentor/proc/_try_perform_experiment(reaction_id)
+/obj/machinery/rnd/experimentor/proc/try_perform_experiment(reaction_id)
+	PRIVATE_PROC(TRUE)
 	if(isnull(stored_research))
 		balloon_alert_to_viewers("not connected to server!")
 		return
@@ -229,7 +231,7 @@
 		return
 
 	if(reaction != SCANTYPE_DISCOVER)
-		reaction = _match_reaction(loaded_item, reaction)
+		reaction = match_reaction(loaded_item, reaction)
 
 	if(reaction != FAIL)
 		var/picked_node_id = pick(techweb_item_unlock_check(loaded_item))
