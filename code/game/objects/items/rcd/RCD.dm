@@ -33,8 +33,8 @@
 	/// The path of the structure the rcd is currently creating
 	var/atom/movable/rcd_design_path
 
-	/// owner of this rcd. It can either be an construction console or an player
-	var/owner
+	/// Owner of this rcd. It can either be a construction console, player, or mech.
+	var/atom/owner
 	/// used by arcd, can this rcd work from a range
 	var/ranged = FALSE
 	/// delay multiplier for all construction types
@@ -243,8 +243,9 @@
 		return FALSE
 	var/beam
 	if(ranged)
-		beam = user.Beam(target, icon_state = "rped_upgrade", time = delay)
-	if(!do_after(user, delay, target = target))
+		var/atom/beam_source = owner ? owner : user
+		beam = beam_source.Beam(target, icon_state = "rped_upgrade", time = delay)
+	if(delay && !do_after(user, delay, target = target)) // no need for do_after with no delay
 		qdel(rcd_effect)
 		if(!isnull(beam))
 			qdel(beam)
@@ -509,6 +510,48 @@
 	inhand_icon_state = "oldrcd"
 	has_ammobar = FALSE
 	upgrade = RCD_ALL_UPGRADES & ~RCD_UPGRADE_SILO_LINK
+
+/obj/item/construction/rcd/exosuit
+	name = "mounted RCD"
+	desc = "An exosuit-mounted Rapid Construction Device."
+	canRturf = TRUE
+	ranged = TRUE
+	has_ammobar = FALSE
+	resistance_flags = FIRE_PROOF | INDESTRUCTIBLE // should NOT be destroyed unless the equipment is destroyed
+	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON | DROPDEL // already qdeleted in the equipment's Destroy() but you can never be too sure
+	delay_mod = 0.5
+	var/mass_to_energy = 16 // speed of light is now 4
+
+/obj/item/construction/rcd/exosuit/ui_status(mob/user)
+	if(ismecha(owner))
+		return owner.ui_status(user)
+	return UI_CLOSE
+
+/obj/item/construction/rcd/exosuit/get_matter(mob/user)
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	var/obj/item/stock_parts/cell/cell = gundam.get_cell()
+	max_matter = cell.maxcharge
+	return round(gundam.get_charge() / mass_to_energy)
+
+/obj/item/construction/rcd/exosuit/useResource(amount, mob/user)
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	if(!gundam.use_power(amount * mass_to_energy))
+		gundam.balloon_alert(user, "insufficient charge!")
+		return FALSE
+	return TRUE
+
+/obj/item/construction/rcd/exosuit/checkResource(amount, mob/user)
+	if(!ismecha(owner))
+		return 0
+	var/obj/vehicle/sealed/mecha/gundam = owner
+	if(!gundam.has_charge(amount * mass_to_energy))
+		gundam.balloon_alert(user, "insufficient charge!")
+		return FALSE
+	return TRUE
 
 #undef FREQUENT_USE_DEBUFF_MULTIPLIER
 #undef RCD_DESTRUCTIVE_SCAN_COOLDOWN
