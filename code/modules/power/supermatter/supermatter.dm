@@ -587,9 +587,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			)
 
 	for(var/i in delamination_countdown_time to 0 step -10)
-		if(last_delamination_strategy != delamination_strategy)
-			count_down_messages = delamination_strategy.count_down_messages()
-
 		var/message
 		var/healed = FALSE
 
@@ -620,9 +617,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				LAZYADD(saviors, WEAKREF(lucky_engi))
 
 			return // delam averted
-
-		if(last_delamination_strategy != delamination_strategy)
-			last_delamination_strategy = delamination_strategy
 
 		sleep(1 SECONDS)
 
