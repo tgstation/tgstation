@@ -2,7 +2,10 @@
 	name = "caseless .45 bullet"
 	desc = "A .45 bullet casing. This one is caseless!"
 	caliber = CALIBER_45
-	projectile_type = /obj/projectile/bullet/c45
+	projectile_type = /obj/projectile/bullet/c45/caseless
+
+/obj/projectile/bullet/c45/caseless
+	damage = 26
 
 /obj/item/ammo_box/c45/caseless
 	name = "ammo box (caseless .45)"
