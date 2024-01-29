@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Blobs sitting on APCs no longer break them when already broken, and so no longer spam the power down noise."

@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - bugfix: "fixes a runtime that sometimes happens in ai controllers"

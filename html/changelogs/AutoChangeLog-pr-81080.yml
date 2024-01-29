@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - refactor: "Husk icons are now dynamically generated. See if you can identify what species it was!"
