@@ -38,6 +38,7 @@
 /datum/station_goal/station_shield/check_completion()
 	if(..())
 		return TRUE
+	update_coverage()
 	if(cached_coverage_length >= coverage_goal)
 		return TRUE
 	return FALSE
