@@ -130,7 +130,7 @@
 
 /mob/living/carbon/human/adjustToxLoss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
 	. = ..()
-	if(. <= 0) // melbert todo : should be . >= 0 ?
+	if(. >= 0) // 0 = no damage, + values = healed damage
 		return .
 
 	if(AT_TOXIN_VOMIT_THRESHOLD(src))
@@ -138,7 +138,7 @@
 
 /mob/living/carbon/human/setToxLoss(amount, updating_health, forced, required_biotype)
 	. = ..()
-	if(. <= 0) // melbert todo : should be . >= 0 ?
+	if(. >= 0)
 		return .
 
 	if(AT_TOXIN_VOMIT_THRESHOLD(src))
