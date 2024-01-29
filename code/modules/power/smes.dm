@@ -459,6 +459,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	emp_timer = addtimer(CALLBACK(src, .proc/emp_end, output_attempt), SMESEMPTIME, TIMER_UNIQUE | TIMER_OVERRIDE)
+	is_emped = TRUE
 	input_attempt = rand(0,1)
 	inputting = input_attempt
 	output_attempt = rand(0,1)
@@ -484,7 +485,7 @@
 	charge = INFINITY
 	..()
 
-/obj/machinery/power/smes/proc/emp_end() //used to check if SMES was EMPED
+/obj/machinery/power/smes/proc/emp_end() //used to check if SMES was EMPED and reset the overlay state
 	is_emped = FALSE
 	update_icon()
 	log_smes()
