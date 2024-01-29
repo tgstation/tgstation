@@ -164,7 +164,7 @@
 	req_access = null
 	anchored = TRUE
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type:obj_flags | NO_DECONSTRUCTION
 
 /obj/machinery/jukebox/disco/activate_music()
 	. = ..()

@@ -287,7 +287,7 @@
 	if((reason & MUTE_PREF) && IS_PREF_MUTED(listener))
 		return FALSE
 
-	if((reason & MUTE_RANGE))
+	if(reason & MUTE_RANGE)
 		var/turf/sound_turf = get_turf(parent)
 		var/turf/listener_turf = get_turf(listener)
 		if(isnull(sound_turf) || isnull(listener_turf))
