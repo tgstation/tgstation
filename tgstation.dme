@@ -1795,6 +1795,7 @@
 #include "code\datums\status_effects\debuffs\strandling.dm"
 #include "code\datums\status_effects\debuffs\terrified.dm"
 #include "code\datums\status_effects\debuffs\tower_of_babel.dm"
+#include "code\datums\status_effects\debuffs\tox_vomit.dm"
 #include "code\datums\storage\storage.dm"
 #include "code\datums\storage\subtypes\backpack.dm"
 #include "code\datums\storage\subtypes\bag_of_holding.dm"

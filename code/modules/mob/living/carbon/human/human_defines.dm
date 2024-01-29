@@ -73,7 +73,7 @@
 		/mob/living/carbon/human,
 		/mob/living/simple_animal/slime,
 	))
-	var/lastpuke = 0
+
 	var/account_id
 
 	var/hardcore_survival_score = 0
