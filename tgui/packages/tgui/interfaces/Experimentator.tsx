@@ -10,7 +10,6 @@ import {
   NoticeBox,
   Section,
   Stack,
-  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -186,14 +185,12 @@ const NodePreview = (props: NodePreviewProps) => {
         </LabeledList>
       ) : (
         <Stack fill vertical align="center" justify="center">
-          <Stack.Item>
-            <Tooltip content="This item doesn't provide any valueble research.">
-              <Icon
-                fontSize={4}
-                name="circle-question"
-                className="FabricatorRecipe__Title--disabled"
-              />
-            </Tooltip>
+          <Stack.Item className="hypertorus__unselectable">
+            <Icon
+              fontSize={4}
+              name="circle-question"
+              className={'FabricatorRecipe__Title--disabled'}
+            />
           </Stack.Item>
         </Stack>
       )}
@@ -219,9 +216,9 @@ const ExperimentButtons = (props: ExperimentButtonsProps) => {
               width={3}
               height={3}
               fontSize={1.6}
-              tooltip={value}
               textAlign="center"
               disabled={disabled}
+              tooltip={Experiment[value]}
               verticalAlignContent="middle"
               icon={EXPERIMENT2ICON[value]}
               onClick={() => onExperiment(index + 1)}
@@ -239,7 +236,6 @@ const ExperimentButtons = (props: ExperimentButtonsProps) => {
             verticalAlignContent="middle"
             disabled={!isRelic || disabled}
             onClick={() => onExperiment(7)}
-            tooltip="Uncover the true purpose of this item."
           >
             Discover!
           </Button>
