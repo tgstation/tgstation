@@ -36,7 +36,7 @@
 		/obj/item/clothing/head/playbunnyears/syndicate = 1,
 		/obj/item/clothing/under/syndicate/syndibunny = 1,
 		/obj/item/clothing/suit/jacket/tailcoat/syndicate = 1,
-		/obj/item/clothing/neck/bunnytie/syndicate = 1,
+		/obj/item/clothing/neck/accessory/syndicate = 1,
 		/obj/item/clothing/shoes/heels= 1,)
 	generate_items_inside(items_inside, src)
 
