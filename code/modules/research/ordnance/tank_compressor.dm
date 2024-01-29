@@ -85,9 +85,6 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/atmospherics/components/binary/circulator/get_node_connects()
-	return list(REVERSE_DIR(dir), dir) // airs[2] is input which is facing dir, airs[1] is output which is facing the other side of dir
-
 /obj/machinery/atmospherics/components/binary/tank_compressor/screwdriver_act(mob/living/user, obj/item/tool)
 	if(active || inserted_tank)
 		return FALSE

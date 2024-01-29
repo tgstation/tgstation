@@ -1,11 +1,10 @@
 /**
- * todo: make this a supply_pack/custom. Drop pog? ohoho yes. Would be VERY fun.
+ * todo: make this a supply_pack/custom. Drop pod? ohoho yes. Would be VERY fun.
  */
 /datum/supply_pack/market_materials
 	name = "A Single Sheet of Bananium"
 	desc = "Going market price for this kind of sheet, by Australicus Industrial Mining."
 	cost = CARGO_CRATE_VALUE * 2
-	// contains = list(/obj/item/stack/sheet/mineral/bananium)
 	crate_name = "mineral stock sheet crate"
 	group = "Canisters & Materials"
 	/// What material we are trying to buy sheets of?

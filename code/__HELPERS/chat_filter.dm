@@ -85,6 +85,14 @@
 
 	return null
 
+///Given a pda message, will replace any match in the message with grawlixs.
+/proc/censor_ic_filter_for_pdas(message)
+	if(config.ic_outside_pda_filter_regex)
+		message = config.ic_outside_pda_filter_regex.Replace(message, GLOBAL_PROC_REF(grawlix))
+	if(config.soft_ic_outside_pda_filter_regex)
+		message = config.soft_ic_outside_pda_filter_regex.Replace(message, GLOBAL_PROC_REF(grawlix))
+	return message
+
 /// Logs to the filter log with the given message, match, and scope
 /proc/log_filter(scope, message, filter_result)
 	log_filter_raw("[scope] filter:\n\tMessage: [message]\n\tFilter match: [filter_result[CHAT_FILTER_INDEX_WORD]]")

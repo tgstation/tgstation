@@ -22,9 +22,10 @@
 	var/list/charging = list()
 
 /datum/action/cooldown/mob_cooldown/charge/Activate(atom/target_atom)
-	StartCooldown(360 SECONDS, 360 SECONDS)
+	disable_cooldown_actions()
 	charge_sequence(owner, target_atom, charge_delay, charge_past)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /datum/action/cooldown/mob_cooldown/charge/proc/charge_sequence(atom/movable/charger, atom/target_atom, delay, past)
