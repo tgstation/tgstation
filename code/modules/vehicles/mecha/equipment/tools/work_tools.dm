@@ -224,6 +224,8 @@
 	item_flags = NO_MAT_REDEMPTION
 	///Maximum range the RCD can construct at.
 	var/rcd_range = 3
+	///Whether or not to deconstruct instead.
+	var/deconstruct_active = FALSE
 	///The type of internal RCD this equipment uses.
 	var/rcd_type = /obj/item/construction/rcd/exosuit
 	///The internal RCD item used by this equipment.
@@ -243,6 +245,7 @@
 	return list(
 		"snowflake_id" = MECHA_SNOWFLAKE_ID_RCD,
 		"scan_ready" = COOLDOWN_FINISHED(internal_rcd, destructive_scan_cooldown),
+		"deconstructing" = deconstruct_active,
 		"mode" = internal_rcd.design_title,
 	)
 
@@ -263,6 +266,9 @@
 			rcd_scan(internal_rcd)
 			COOLDOWN_START(internal_rcd, destructive_scan_cooldown, RCD_DESTRUCTIVE_SCAN_COOLDOWN)
 			return TRUE
+		if("toggle_deconstruct")
+			deconstruct_active = !deconstruct_active
+			return TRUE
 		if("change_mode")
 			for(var/mob/driver as anything in chassis.return_drivers())
 				internal_rcd.ui_interact(driver)
@@ -278,7 +284,11 @@
 		internal_rcd = new rcd_type(src)
 		stack_trace("Exosuit-mounted RCD had no internal RCD!")
 	..() // do this now because the do_after can take a while
+	var/construction_mode = internal_rcd.mode
+	if(deconstruct_active) // i hate this solution
+		internal_rcd.mode = RCD_DECONSTRUCT
 	internal_rcd.rcd_create(target, source)
+	internal_rcd.mode = construction_mode
 	return TRUE
 
 /obj/item/mecha_parts/mecha_equipment/rcd/attackby(obj/item/attacking_item, mob/user, params)

@@ -314,11 +314,6 @@
 	icon = 'icons/hud/radial.dmi'
 	icon_state = "wallfloor"
 
-/turf/open/floor/plating/deconstruct
-	name = "Deconstruct"
-	icon = 'icons/hud/radial.dmi'
-	icon_state = "delete"
-
 #undef PLATE_INTACT
 #undef PLATE_BOLTS_LOOSENED
 #undef PLATE_CUT

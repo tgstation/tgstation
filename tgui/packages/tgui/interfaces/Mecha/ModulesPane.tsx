@@ -985,7 +985,7 @@ const SnowflakeLawClaw = (props) => {
 const SnowflakeRCD = (props) => {
   const { act, data } = useBackend<MainData>();
   const { ref } = props.module;
-  const { scan_ready, mode } = props.module.snowflake;
+  const { scan_ready, deconstructing, mode } = props.module.snowflake;
   return (
     <>
       <LabeledList.Item label="Destruction Scan">
@@ -996,6 +996,19 @@ const SnowflakeRCD = (props) => {
             act('equip_act', {
               ref: ref,
               gear_action: 'rcd_scan',
+            })
+          }
+        />
+      </LabeledList.Item>
+      <LabeledList.Item label="Deconstructing">
+        <Button
+          icon="power-off"
+          content={deconstructing ? 'On' : 'Off'}
+          color={deconstructing ? 'green' : 'blue'}
+          onClick={() =>
+            act('equip_act', {
+              ref: ref,
+              gear_action: 'toggle_deconstruct',
             })
           }
         />
