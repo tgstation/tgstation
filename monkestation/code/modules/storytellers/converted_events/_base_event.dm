@@ -228,37 +228,12 @@
 
 		var/mob/candidate = pick_n_take(candidates)
 
-		if(prompted_picking)
-			var/choice = tgui_input_list(candidate, "Would you like to be a [cast_control.name]?", "Antag Selection", list("Yes", "No"), "No", 7 SECONDS)
-			if(!choice || (choice == "No"))
-				failed_antags++
-				continue
-
 		if(!candidate.mind)
 			candidate.mind = new /datum/mind(candidate.key)
 
 		setup_minds += candidate.mind
 		candidate.mind.special_role = antag_flag
 		candidate.mind.restricted_roles = restricted_roles
-
-	while((failed_antags > 0) && (length(candidates)))
-		for(var/i in 1 to failed_antags)
-			if(!candidates.len)
-				break
-			var/mob/candidate = pick_n_take(candidates)
-
-			if(!candidate.mind)
-				candidate.mind = new /datum/mind(candidate.key)
-
-			if(prompted_picking)
-				var/choice = tgui_input_list(candidate, "Would you like to be a [cast_control.name]?", "Antag Selection", list("Yes", "No"), "No", 7 SECONDS)
-				if(!choice || (choice == "No"))
-					continue
-
-			setup_minds += candidate.mind
-			candidate.mind.special_role = antag_flag
-			candidate.mind.restricted_roles = restricted_roles
-			failed_antags--
 
 	setup = TRUE
 
