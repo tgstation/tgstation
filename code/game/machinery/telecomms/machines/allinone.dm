@@ -20,7 +20,7 @@
 
 /obj/machinery/telecomms/allinone/indestructible
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	obj_flags = /obj::obj_flags | NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/machinery/telecomms/allinone/receive_signal(datum/signal/subspace/signal)
 	if(!istype(signal) || signal.transmission_method != TRANSMISSION_SUBSPACE)  // receives on subspace only
