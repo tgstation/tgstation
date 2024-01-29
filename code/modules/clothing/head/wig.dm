@@ -6,6 +6,7 @@
 	icon_state = "hair_vlong"
 	inhand_icon_state = "pwig"
 	worn_icon_state = "wig"
+	slot_flags = ITEM_SLOT_HEAD | ITEM_SLOT_NECK
 	flags_inv = HIDEHAIR
 	color = "#000000"
 	var/hairstyle = "Very Long Hair"

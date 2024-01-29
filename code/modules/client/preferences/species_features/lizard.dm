@@ -90,17 +90,14 @@
 /datum/preference/choiced/lizard_horns/apply_to_human(mob/living/carbon/human/target, value)
 	target.dna.features["horns"] = value
 
-/datum/preference/choiced/lizard_legs
-	savefile_key = "feature_lizard_legs"
-	savefile_identifier = PREFERENCE_CHARACTER
-	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
-	relevant_mutant_bodypart = "legs"
+///datum/preference/choiced/lizard_legs//Monkestation removal
 
-/datum/preference/choiced/lizard_legs/init_possible_values()
-	return assoc_to_keys_features(GLOB.legs_list)
 
-/datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.features["legs"] = value
+///datum/preference/choiced/lizard_legs/init_possible_values()
+
+
+///datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)//Monkestation removal end
+
 
 /datum/preference/choiced/lizard_snout
 	savefile_key = "feature_lizard_snout"
