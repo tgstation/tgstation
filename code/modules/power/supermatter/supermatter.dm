@@ -589,7 +589,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	for(var/i in delamination_countdown_time to 0 step -10)
 		if(last_delamination_strategy != delamination_strategy)
 			count_down_messages = delamination_strategy.count_down_messages()
-			last_delamination_strategy = delamination_strategy
 
 		var/message
 		var/healed = FALSE
@@ -610,7 +609,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		if(healed)
 			final_countdown = FALSE
 
-			if(!istype(delamination_strategy, /datum/sm_delam/cascade))
+			if(!istype(last_delamination_strategy, /datum/sm_delam/cascade))
 				return
 
 			for(var/mob/living/lucky_engi as anything in mobs_in_area_type(list(/area/station/engineering/supermatter)))
@@ -621,6 +620,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 				LAZYADD(saviors, WEAKREF(lucky_engi))
 
 			return // delam averted
+
+		if(last_delamination_strategy != delamination_strategy)
+			last_delamination_strategy = delamination_strategy
+
 		sleep(1 SECONDS)
 
 	delamination_strategy.delaminate(src)
