@@ -168,6 +168,7 @@
 	name = "Facescarf (Held, Right)"
 	icon_file = 'icons/mob/inhands/clothing/masks_righthand.dmi'
 	json_config = 'code/datums/greyscale/json_configs/facescarf_inhands.json'
+
 /datum/greyscale_config/kitsune
 	name = "Kitsune mask"
 	icon_file = 'icons/obj/clothing/masks.dmi'
