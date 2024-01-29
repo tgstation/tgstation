@@ -52,7 +52,7 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 	slot.stored = attacher
 	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_ATTACHED, attacher)
 	update_attached_overlays()
-	attacher.unique_attachment_effects()
+	attacher.unique_attachment_effects(parent)
 
 /datum/component/weapon_attachments/proc/update_attached_overlays(atom/parent_atom, list/overlays)
 	SIGNAL_HANDLER
@@ -60,4 +60,8 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 	for(var/datum/attachment_handler/listed as anything in (hand_slots + tool_slots))
 		if(!listed.stored)
 			continue
-		overlays += mutable_appearance(listed.stored.attachment_icon, listed.stored.attachment_icon_state, item.layer + listed.stored.layer_modifier, offset_spokesman = parent)
+
+		var/mutable_appearance/gun_attachment =  mutable_appearance(listed.stored.attachment_icon, listed.stored.attachment_icon_state, item.layer + listed.stored.layer_modifier, offset_spokesman = parent)
+		gun_attachment.pixel_x += listed.stored.offset_x
+		gun_attachment.pixel_y += listed.stored.offset_y
+		overlays += gun_attachment

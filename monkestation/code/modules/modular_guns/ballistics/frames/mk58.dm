@@ -12,6 +12,7 @@
 			new /datum/attachment_handler/stock,
 			new /datum/attachment_handler/underbarrel,
 			new /datum/attachment_handler/welrod,
+			new /datum/attachment_handler/barrel,
 		), \
 	)
 	AddComponent(/datum/component/gun_stat_holder,\

@@ -11,10 +11,8 @@
 	RegisterSignal(modular, COMSIG_ITEM_UI_ACTION_CLICK, PROC_REF(on_action_click))
 
 	light_object = new /obj/item/flashlight/seclite(modular)
-	var/datum/action/item_action/toggle_seclight/toggle_action = modular.add_item_action(/datum/action/item_action/toggle_seclight)
-	toggle_action_ref = WEAKREF(toggle_action)
-	light_object.set_light_flags(light_object.light_flags | LIGHT_ATTACHED)
 
+	light_object.set_light_flags(light_object.light_flags | LIGHT_ATTACHED)
 	// We may already exist within in our parent's contents... But if we don't move it over now
 	if(light_object.loc != modular)
 		light_object.forceMove(modular)
@@ -23,6 +21,9 @@
 	if(toggle_action_ref?.resolve())
 		stack_trace("[type] - add_light had an existing toggle action when add_light was called.")
 		QDEL_NULL(toggle_action_ref)
+
+	var/datum/action/item_action/toggle_seclight/toggle_action = modular.add_item_action(/datum/action/item_action/toggle_seclight)
+	toggle_action_ref = WEAKREF(toggle_action)
 	modular.update_item_action_buttons()
 
 /// Signal proc for [COMSIG_ITEM_UI_ACTION_CLICK] that toggles our light on and off if our action button is clicked.

@@ -26,6 +26,9 @@
 	var/attachment_icon = 'monkestation/code/modules/modular_guns/icons/ak.dmi'
 	///do we modify layer at all?
 	var/layer_modifier = 0
+	///how much we offset in y and x
+	var/offset_y = 0
+	var/offset_x = 0
 
 /obj/item/attachment/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
