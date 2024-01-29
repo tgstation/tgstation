@@ -61,13 +61,9 @@
 	. += mutable_appearance(icon, "rec-power-1")
 	. += emissive_appearance(icon, "rec-power-1", src, alpha = src.alpha)
 
-	if(use_power == ACTIVE_POWER_USE)
-		. += mutable_appearance(icon, "rec-active-1")
-		. += emissive_appearance(icon, "rec-active-1", src, alpha = src.alpha)
-		return
-
-	. += mutable_appearance(icon, "rec-active-0")
-	. += emissive_appearance(icon, "rec-active-0", src, alpha = src.alpha)
+	var/is_active = use_power == ACTIVE_POWER_USE
+	. += mutable_appearance(icon, "rec-active-[is_active]")
+	. += emissive_appearance(icon, "rec-active-[is_active]", src, alpha = src.alpha)
 
 /**
  * Clear reference to the connected landmark if it gets destroyed.
