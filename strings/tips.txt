@@ -1,4 +1,4 @@
-@You can wrap portions of your  messages with |, + or _ characters to <i>italicize</i>, <b>embolden</b> or <u>underline</u> them respectively. You can also escape these modifiers by adding backslashes before the mentioned characters.
+@You can <i>italicize</i>, <b>embolden</b> or <u>underline</u> portions of your messages by enclosing them with |, + or _ respectively. You can also avoid this by adding backslashes (they won't show in the message) before these characters.
 ♪ Hey, have you ever tried appending the % character before your messages when speaking in-game? ♫
 A Scientist will pay top dollar for your frogs!
 A thrown glass of water can make a slippery tile, allowing you to slow down your pursuers in a pinch.
