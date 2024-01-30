@@ -1,7 +1,7 @@
 #define STATUE_FILTER "statue_filter"
 #define FILTER_COLOR "#34b347"
 #define RECALL_DURATION 3 SECONDS
-#define MINIMUM_COLOR_VALUE 60
+#define MINIMUM_COLOR_VALUE 20
 
 /obj/item/frog_statue
 	name = "frog statue"
@@ -151,8 +151,8 @@
 		to_chat(user, span_warning("Please choose a valid color."))
 		select_frog_color(user, new_frog)
 		return
-	var/temp_hsv = RGBtoHSV(frog_color)
-	if(ReadHSV(temp_hsv)[3] < MINIMUM_COLOR_VALUE)
+	var/list/hsv_frog = rgb2hsv(frog_color)
+	if(hsv_frog[3] < MINIMUM_COLOR_VALUE)
 		to_chat(user, span_danger("This color is too dark!"))
 		select_frog_color(user, new_frog)
 		return

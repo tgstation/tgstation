@@ -516,10 +516,10 @@
 	if(!greyscale_colors)
 		// Generate a random valid lizard color for our plushie friend
 		var/generated_lizard_color = "#" + random_color()
-		var/temp_hsv = RGBtoHSV(generated_lizard_color)
+		var/list/lizard_hsv = rgb2hsv(generated_lizard_color)
 
 		// If our color is too dark, use the classic green lizard plush color
-		if(ReadHSV(temp_hsv)[3] < ReadHSV("#7F7F7F")[3])
+		if(lizard_hsv[3] < 50)
 			generated_lizard_color = "#66ff33"
 
 		// Set our greyscale colors to the lizard color we made + black eyes

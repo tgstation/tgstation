@@ -24,13 +24,13 @@
 		//Generate random valid colors for paper and ribbon
 		var/generated_base_color = "#" + random_color()
 		var/generated_ribbon_color = "#" + random_color()
-		var/temp_base_hsv = RGBtoHSV(generated_base_color)
-		var/temp_ribbon_hsv = RGBtoHSV(generated_ribbon_color)
+		var/list/base_hsv = rgb2hsv(generated_base_color)
+		var/list/ribbon_hsv = rgb2hsv(generated_ribbon_color)
 
 		//If colors are too dark, set to original colors
-		if(ReadHSV(temp_base_hsv)[3] < ReadHSV("7F7F7F")[3])
+		if(base_hsv[3] < 50)
 			generated_base_color = "#00FF00"
-		if(ReadHSV(temp_ribbon_hsv)[3] < ReadHSV("7F7F7F")[3])
+		if(ribbon_hsv[3] < 50)
 			generated_ribbon_color = "#FF0000"
 
 		//Set layers to these colors, base then ribbon
