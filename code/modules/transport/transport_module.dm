@@ -931,8 +931,6 @@
 		addtimer(CALLBACK(src, PROC_REF(clear_turfs), turfs, iterations), 1)
 
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
-	if(prob(50))
-		do_sparks(2, FALSE, src)
 	for(var/mob/living/passenger in transport_contents)
 		to_chat(passenger, span_userdanger("The tram comes to a sudden, grinding stop!"))
 		var/throw_target = get_edge_target_turf(src, throw_direction)
