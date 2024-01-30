@@ -14,7 +14,6 @@
 #define SMES_INPUTTING 8
 #define SMES_INPUT_ATTEMPT 9
 
-#define SMESEMPTIME 20 SECONDS // the time it takes for the SMES to go back to normal operation when emped
 
 /obj/machinery/power/smes
 	name = "power storage unit"
@@ -227,8 +226,6 @@
 
 /obj/machinery/power/smes/update_overlays()
 	. = ..()
-	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
-
 	if(panel_open)
 		. += "panel"
 		return
@@ -237,50 +234,43 @@
 		return
 
 	var/clevel = chargedisplay()
-	if(!terminal)
-		. += "failing"
-		SSvis_overlays.add_vis_overlay(src, icon, "failing", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "failing", layer, EMISSIVE_PLANE, dir)
-	if(clevel>0)
-		. += "charge[clevel]"
-		SSvis_overlays.add_vis_overlay(src, icon, "charge[clevel]", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "charge[clevel]", layer, EMISSIVE_PLANE, dir)
-	if(is_emped)
-		. += "emp"
-		SSvis_overlays.add_vis_overlay(src, icon, "emp", layer, plane, dir)
-		SSvis_overlays.add_vis_overlay(src, icon, "emp", layer, EMISSIVE_PLANE, dir)
-	else
-		if(inputting)
-			if(clevel == SMES_CLEVEL_5)
-				. += "input-2"
-				SSvis_overlays.add_vis_overlay(src, icon, "input-2", layer, plane, dir)
-				SSvis_overlays.add_vis_overlay(src, icon, "input-2", layer, EMISSIVE_PLANE, dir)
-			else
-				. += "input-1"
-				SSvis_overlays.add_vis_overlay(src, icon, "input-1", layer, plane, dir)
-				SSvis_overlays.add_vis_overlay(src, icon, "input-1", layer, EMISSIVE_PLANE, dir)
-		else if(input_attempt)
-			. += "input-0"
-			SSvis_overlays.add_vis_overlay(src, icon, "input-0", layer, plane, dir)
-			SSvis_overlays.add_vis_overlay(src, icon, "input-0", layer, EMISSIVE_PLANE, dir)
-		else
-			. += "input-off"
-			SSvis_overlays.add_vis_overlay(src, icon, "input-off", layer, plane, dir)
-			SSvis_overlays.add_vis_overlay(src, icon, "input-off", layer, EMISSIVE_PLANE, dir)
 
-		if(outputting)
-			if(clevel == SMES_CLEVEL_5)
-				. += "output2"
-				SSvis_overlays.add_vis_overlay(src, icon, "output2", layer, plane, dir)
-				SSvis_overlays.add_vis_overlay(src, icon, "output2", layer, EMISSIVE_PLANE, dir)
-			else
-				. += "output1"
-				SSvis_overlays.add_vis_overlay(src, icon, "output1", layer, plane, dir)
-				SSvis_overlays.add_vis_overlay(src, icon, "output1", layer, EMISSIVE_PLANE, dir)
+	if(clevel>0)
+		. += mutable_appearance(icon, "charge[clevel]")
+		. += emissive_appearance(icon, "charge[clevel]", src, layer = EMISSIVE_PLANE)
+
+	if(is_emped)
+		. += mutable_appearance(icon, "emp")
+		. += emissive_appearance(icon, "emp", src, layer = EMISSIVE_PLANE)
+		return
+
+	if(inputting)
+		if(clevel == SMES_CLEVEL_5)
+			. += "input-2"
+			. += emissive_appearance(icon, "input-2", src, layer = EMISSIVE_PLANE)
 		else
-			. += "output0"
-			SSvis_overlays.add_vis_overlay(src, icon, "output0", layer, plane, dir)
-			SSvis_overlays.add_vis_overlay(src, icon, "output0", layer, EMISSIVE_PLANE, dir)
+			. += "input-1"
+			. += emissive_appearance(icon, "input-1", src, layer = EMISSIVE_PLANE)
+
+	else if(input_attempt)
+		. += "input-0"
+		. += emissive_appearance(icon, "input-0", src, layer = EMISSIVE_PLANE)
+
+	else
+		. += "input-off"
+		. += emissive_appearance(icon, "input-off", src, layer = EMISSIVE_PLANE)
+
+	if(outputting)
+		if(clevel == SMES_CLEVEL_5)
+			. += "output-2"
+			. += emissive_appearance(icon, "output-2", src, layer = EMISSIVE_PLANE)
+
+		else
+			. += "output-1"
+			. += emissive_appearance(icon, "output-1", src, layer = EMISSIVE_PLANE)
+	else
+		. += "output-0"
+		. += emissive_appearance(icon, "output-0", src, layer = EMISSIVE_PLANE)
 
 
 /obj/machinery/power/smes/proc/chargedisplay()
@@ -458,7 +448,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	emp_timer = addtimer(CALLBACK(src, .proc/emp_end, output_attempt), SMESEMPTIME, TIMER_UNIQUE | TIMER_OVERRIDE)
+	emp_timer = addtimer(CALLBACK(src, PROC_REF(emp_end), output_attempt), 20 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 	is_emped = TRUE
 	input_attempt = rand(0,1)
 	inputting = input_attempt
@@ -488,9 +478,6 @@
 /obj/machinery/power/smes/proc/emp_end() //used to check if SMES was EMPED and reset the overlay state
 	is_emped = FALSE
 	update_icon()
-	log_smes()
-
-
 
 #undef SMESRATE
 
@@ -503,4 +490,3 @@
 #undef SMES_NOT_OUTPUTTING
 #undef SMES_INPUTTING
 #undef SMES_INPUT_ATTEMPT
-#undef SMESEMPTIME
