@@ -1,0 +1,5 @@
+author: "SapphicOverload"
+delete-after: True
+changes:
+  - bugfix: "Mk-II Ripley exosuits are spaceproof again."
+  - bugfix: "Converted mechs now have their lights on if they did before the conversion."
