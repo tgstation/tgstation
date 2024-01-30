@@ -227,7 +227,7 @@ world
 /icon/proc/ColorTone(tone)
 	GrayScale()
 
-	var/list/TONE = ReadRGB(tone)
+	var/list/TONE = rgb2num(tone)
 	var/gray = round(TONE[1]*0.3 + TONE[2]*0.59 + TONE[3]*0.11, 1)
 
 	var/icon/upper = (255-gray) ? new(src) : null
@@ -1544,7 +1544,7 @@ GLOBAL_LIST_EMPTY(transformation_animation_objects)
 	var/list/icon_dimensions = get_icon_dimensions(source.icon)
 	var/width = icon_dimensions["width"]
 	var/height = icon_dimensions["height"]
-	
+
 	if(width > world.icon_size)
 		alert_overlay.pixel_x = -(world.icon_size / 2) * ((width - world.icon_size) / world.icon_size)
 	if(height > world.icon_size)
