@@ -53,5 +53,5 @@
 /datum/component/marionette/proc/on_puller_speech(mob/living/source, message, ignore_spam, forced)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
-	movable_parent.say(message)
+	movable_parent.say(message, forced = "[source]'s marionette")
 	return COMPONENT_CANNOT_SPEAK
