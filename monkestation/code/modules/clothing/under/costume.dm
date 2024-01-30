@@ -133,6 +133,10 @@ BUNNY SUITS
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "playbunny"
+	greyscale_colors = "#39393f#39393f#ffffff#87502e"
+	greyscale_config = /datum/greyscale_config/bunnysuit
+	greyscale_config_worn = /datum/greyscale_config/bunnysuit_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|LEGS
 	alt_covers_chest = TRUE
 

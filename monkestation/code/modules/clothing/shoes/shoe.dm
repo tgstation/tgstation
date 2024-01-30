@@ -47,3 +47,7 @@
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
 	icon_state = "heels"
 	can_be_tied = FALSE
+	greyscale_colors = "#39393f"
+	greyscale_config = /datum/greyscale_config/heels
+	greyscale_config_worn = /datum/greyscale_config/heels_worn
+	flags_1 = IS_PLAYER_COLORABLE_1

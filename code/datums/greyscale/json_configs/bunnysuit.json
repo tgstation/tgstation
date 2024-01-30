@@ -1,0 +1,28 @@
+{
+	"playbunny": [
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_base",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_buttons",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_cuffs",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "playbunny_stockings",
+			"blend_mode": "overlay",
+			"color_ids": [ 4 ]
+		}
+	]
+}

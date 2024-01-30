@@ -201,12 +201,20 @@
 	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
 	icon = 'monkestation/icons/obj/clothing/suits.dmi'
 	icon_state = "tailcoat"
+	greyscale_colors = "#39393f"
+	greyscale_config = /datum/greyscale_config/tailcoat
+	greyscale_config_worn = /datum/greyscale_config/tailcoat_worn
+	flags_1 = IS_PLAYER_COLORABLE_1
+
 
 /obj/item/clothing/suit/jacket/tailcoat/syndicate
 	name = "suspicious tailcoat"
 	desc = "A oddly intimidating coat usually worn by bunny themed assassins. It's reinforced with some extremely flexible lightweight alloy. How much did they pay for this?"
 	icon_state = "tailcoat_syndi"
 	armor_type = /datum/armor/tailcoat_syndi
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /datum/armor/tailcoat_syndi
 	melee = 30
