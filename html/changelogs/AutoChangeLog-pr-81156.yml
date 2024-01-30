@@ -1,0 +1,5 @@
+author: "LT3"
+delete-after: True
+changes:
+  - bugfix: "ID card examine text shows how to set your linked bank account"
+  - bugfix: "ID card withdrawal from an unassigned account will ask if you want to link an account"
