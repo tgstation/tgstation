@@ -867,11 +867,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 /obj/effect/mapping_helpers/dead_body_placer/LateInitialize()
 	var/area/morgue_area = get_area(src)
 	var/list/obj/structure/bodycontainer/morgue/trays = list()
-	for(var/turf/area_turf as anything in morgue_area.get_contained_turfs())
-		var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
-		if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
-			continue
-		trays += morgue_tray
+	for (var/list/zlevel_turfs as anything in morgue_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			var/obj/structure/bodycontainer/morgue/morgue_tray = locate() in area_turf
+			if(isnull(morgue_tray) || !morgue_tray.beeper || morgue_tray.connected.loc != morgue_tray)
+				continue
+			trays += morgue_tray
 
 	var/numtrays = length(trays)
 	if(numtrays == 0)
@@ -959,14 +960,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/list/table_turfs = list()
 	var/list/open_turfs = list()
 	var/turf/dogbed_turf
-	for(var/turf/area_turf as anything in celebration_area.get_contained_turfs())
-		if(locate(/obj/structure/table/reinforced) in area_turf)
-			table_turfs += area_turf
-		if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
-			dogbed_turf = area_turf
-		if(isopenturf(area_turf))
-			new /obj/effect/decal/cleanable/confetti(area_turf)
-			open_turfs += area_turf
+	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			if(locate(/obj/structure/table/reinforced) in area_turf)
+				table_turfs += area_turf
+			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
+				dogbed_turf = area_turf
+			if(isopenturf(area_turf))
+				new /obj/effect/decal/cleanable/confetti(area_turf)
+				open_turfs += area_turf
 
 	if(isnull(dogbed_turf) && map_warning)
 		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")
@@ -1031,11 +1033,12 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	var/area/celebration_area = get_area(src)
 	var/list/table_turfs = list()
 	var/turf/dogbed_turf
-	for(var/turf/area_turf as anything in celebration_area.get_contained_turfs())
-		if(locate(/obj/structure/table/reinforced) in area_turf)
-			table_turfs += area_turf
-		if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
-			dogbed_turf = area_turf
+	for (var/list/zlevel_turfs as anything in celebration_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			if(locate(/obj/structure/table/reinforced) in area_turf)
+				table_turfs += area_turf
+			if(locate(/obj/structure/bed/dogbed/ian) in area_turf)
+				dogbed_turf = area_turf
 
 	if(isnull(dogbed_turf))
 		log_mapping("[src] in [celebration_area] could not find Ian's dogbed.")

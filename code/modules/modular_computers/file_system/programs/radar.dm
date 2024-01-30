@@ -1,3 +1,13 @@
+///The selected target is not trackable
+#define RADAR_NOT_TRACKABLE 0
+///The selected target is trackable
+#define RADAR_TRACKABLE 1
+///The selected target is trackable, even if subtypes would normally consider it untrackable.
+#define RADAR_TRACKABLE_ANYWAY 2
+
+///If the target is something it shouldn't be normally tracking, this is the maximum distance within with it an be tracked.
+#define MAX_RADAR_CIRCUIT_DISTANCE 18
+
 /datum/computer_file/program/radar //generic parent that handles most of the process
 	filename = "genericfinder"
 	filedesc = "debug_finder"
@@ -58,12 +68,13 @@
 	return data
 
 /datum/computer_file/program/radar/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-
+	. = ..()
 	switch(action)
 		if("selecttarget")
 			var/selected_new_ref = params["ref"]
 			if(selected_new_ref in trackable_object_refs())
 				selected = selected_new_ref
+				SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_RADAR_SELECTED, selected)
 			return TRUE
 
 		if("scan")
@@ -133,13 +144,22 @@
  **arg1 is the atom being evaluated.
 */
 /datum/computer_file/program/radar/proc/trackable(atom/movable/signal)
-	if(!signal || !computer)
-		return FALSE
+	SHOULD_CALL_PARENT(TRUE)
+	if(isnull(signal) || isnull(computer))
+		return RADAR_NOT_TRACKABLE
 	var/turf/here = get_turf(computer)
 	var/turf/there = get_turf(signal)
 	if(!here || !there)
-		return FALSE //I was still getting a runtime even after the above check while scanning, so fuck it
-	return (there.z == here.z) || (is_station_level(here.z) && is_station_level(there.z))
+		return RADAR_NOT_TRACKABLE //I was still getting a runtime even after the above check while scanning, so fuck it
+	if(there.z != here.z && (!is_station_level(here.z) || !is_station_level(there.z)))
+		return RADAR_NOT_TRACKABLE
+	var/trackable_signal = SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_RADAR_TRACKABLE, signal, here, there)
+	switch(trackable_signal)
+		if(COMPONENT_RADAR_TRACK_ANYWAY)
+			return RADAR_TRACKABLE_ANYWAY
+		if(COMPONENT_RADAR_DONT_TRACK)
+			return RADAR_NOT_TRACKABLE
+	return RADAR_TRACKABLE
 
 /**
  *
@@ -168,7 +188,10 @@
  *return an atom reference.
 */
 /datum/computer_file/program/radar/proc/find_atom()
-	return
+	SHOULD_CALL_PARENT(TRUE)
+	var/list/atom_container = list(null)
+	SEND_SIGNAL(computer, COMSIG_MODULAR_COMPUTER_RADAR_FIND_ATOM, atom_container)
+	return atom_container[1]
 
 //We use SSfastprocess for the program icon state because it runs faster than process_tick() does.
 /datum/computer_file/program/radar/process()
@@ -221,9 +244,10 @@
 	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	download_access = list(ACCESS_MEDICAL)
 	program_icon = "heartbeat"
+	circuit_comp_type = /obj/item/circuit_component/mod_program/radar/medical
 
 /datum/computer_file/program/radar/lifeline/find_atom()
-	return locate(selected) in GLOB.human_list
+	return ..() || (locate(selected) in GLOB.human_list)
 
 /datum/computer_file/program/radar/lifeline/scan()
 	objects = list()
@@ -243,14 +267,16 @@
 		objects += list(crewinfo)
 
 /datum/computer_file/program/radar/lifeline/trackable(mob/living/carbon/human/humanoid)
+	. = ..()
+	if(. == RADAR_TRACKABLE_ANYWAY)
+		return RADAR_TRACKABLE_ANYWAY
 	if(!humanoid || !istype(humanoid))
-		return FALSE
-	if(..())
-		if (istype(humanoid.w_uniform, /obj/item/clothing/under))
-			var/obj/item/clothing/under/uniform = humanoid.w_uniform
-			if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum
-				return TRUE
-	return FALSE
+		return RADAR_NOT_TRACKABLE
+	if(!istype(humanoid.w_uniform, /obj/item/clothing/under))
+		return RADAR_NOT_TRACKABLE
+	var/obj/item/clothing/under/uniform = humanoid.w_uniform
+	if(uniform.has_sensor && uniform.sensor_mode >= SENSOR_COORDS) // Suit sensors must be on maximum
+		return RADAR_TRACKABLE
 
 ///Tracks all janitor equipment
 /datum/computer_file/program/radar/custodial_locator
@@ -262,9 +288,10 @@
 	program_icon = "broom"
 	size = 2
 	detomatix_resistance = DETOMATIX_RESIST_MINOR
+	circuit_comp_type = /obj/item/circuit_component/mod_program/radar/janitor
 
 /datum/computer_file/program/radar/custodial_locator/find_atom()
-	return locate(selected) in GLOB.janitor_devices
+	return ..() || (locate(selected) in GLOB.janitor_devices)
 
 /datum/computer_file/program/radar/custodial_locator/scan()
 	objects = list()
@@ -306,6 +333,7 @@
 	program_icon = "bomb"
 	arrowstyle = "ntosradarpointerS.png"
 	pointercolor = "red"
+	circuit_comp_type = /obj/item/circuit_component/mod_program/radar/nukie
 
 /datum/computer_file/program/radar/fission360/on_start(mob/living/user)
 	. = ..()
@@ -323,7 +351,7 @@
 	return ..()
 
 /datum/computer_file/program/radar/fission360/find_atom()
-	return SSpoints_of_interest.get_poi_atom_by_ref(selected)
+	return ..() || SSpoints_of_interest.get_poi_atom_by_ref(selected)
 
 /datum/computer_file/program/radar/fission360/scan()
 	objects = list()
@@ -379,3 +407,131 @@
 			span_danger("[computer] vibrates and lets out an ominous alarm. Uh oh."),
 			span_notice("[computer] begins to vibrate rapidly. Wonder what that means..."),
 		)
+
+
+/**
+ * Base circuit for the radar program.
+ * The abstract radar doesn't have this, nor this one is associated to it, so
+ * make sure to specify the associate_program and circuit_comp_type of subtypes,
+ */
+/obj/item/circuit_component/mod_program/radar
+
+	///The target to track
+	var/datum/port/input/target
+	///The selected target, from the app
+	var/datum/port/output/selected_by_app
+	/// The result from the output
+	var/datum/port/output/x_pos
+	var/datum/port/output/y_pos
+
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
+
+/obj/item/circuit_component/mod_program/radar/populate_ports()
+	. = ..()
+	target = add_input_port("Target", PORT_TYPE_ATOM)
+	selected_by_app = add_output_port("Selected From Program", PORT_TYPE_ATOM)
+	x_pos = add_output_port("X", PORT_TYPE_NUMBER)
+	y_pos = add_output_port("Y", PORT_TYPE_NUMBER)
+
+/obj/item/circuit_component/mod_program/radar/register_shell(atom/movable/shell)
+	. = ..()
+	RegisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_RADAR_TRACKABLE, PROC_REF(can_track))
+	RegisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_RADAR_FIND_ATOM, PROC_REF(get_atom))
+	RegisterSignal(associated_program.computer, COMSIG_MODULAR_COMPUTER_RADAR_SELECTED, PROC_REF(on_selected))
+
+/obj/item/circuit_component/mod_program/radar/unregister_shell()
+	UnregisterSignal(associated_program.computer, list(
+		COMSIG_MODULAR_COMPUTER_RADAR_TRACKABLE,
+		COMSIG_MODULAR_COMPUTER_RADAR_FIND_ATOM,
+		COMSIG_MODULAR_COMPUTER_RADAR_SELECTED,
+	))
+	return ..()
+
+/obj/item/circuit_component/mod_program/radar/get_ui_notices()
+	. = ..()
+	. += create_ui_notice("Max range for unsupported entities: [MAX_RADAR_CIRCUIT_DISTANCE] tiles", "orange", FA_ICON_BULLSEYE)
+
+///Set the selected ref of the program to the target (if it exists) and update the x/y pos ports (if trackable) when triggered.
+/obj/item/circuit_component/mod_program/radar/input_received(datum/port/port)
+	var/datum/computer_file/program/radar/radar = associated_program
+	var/atom/radar_atom = radar.find_atom()
+	if(target.value != radar_atom)
+		radar.selected = REF(target.value)
+		SStgui.update_uis(radar.computer)
+	if(radar.trackable(radar_atom))
+		var/turf/turf = get_turf(radar_atom)
+		x_pos.set_output(turf.x)
+		y_pos.set_output(turf.y)
+	else
+		x_pos.set_output(null)
+		y_pos.set_output(null)
+
+/**
+ * Check if we can track the object. When making different definitions of this proc for subtypes, include typical
+ * targets as an exception to this (e.g humans for lifeline) so that even if they're coming from a circuit input
+ * they won't get filtered by the maximum distance, because they're "supported entities".
+ */
+/obj/item/circuit_component/mod_program/radar/proc/can_track(datum/source, atom/signal, signal_turf, computer_turf)
+	SIGNAL_HANDLER
+	if(target.value && get_dist_euclidian(computer_turf, signal_turf) > MAX_RADAR_CIRCUIT_DISTANCE)
+		return COMPONENT_RADAR_DONT_TRACK
+	return COMPONENT_RADAR_TRACK_ANYWAY
+
+///Return the value of the target port.
+/obj/item/circuit_component/mod_program/radar/proc/get_atom(datum/source, list/atom_container)
+	SIGNAL_HANDLER
+	atom_container[1] = target.value
+
+/**
+ * When a target is selected by the app, reset the target port, update the x/pos ports (if trackable)
+ * and set selected_by_app port to the target atom.
+ */
+/obj/item/circuit_component/mod_program/radar/proc/on_selected(datum/source, selected_ref)
+	SIGNAL_HANDLER
+	target.set_value(null)
+	var/datum/computer_file/program/radar/radar = associated_program
+	var/atom/selected_atom = radar.find_atom()
+	selected_by_app.set_output(selected_atom)
+	if(radar.trackable(selected_atom))
+		var/turf/turf = get_turf(radar.selected)
+		x_pos.set_output(turf.x)
+		y_pos.set_output(turf.y)
+	else
+		x_pos.set_output(null)
+		y_pos.set_output(null)
+
+	trigger_output.set_output(COMPONENT_SIGNAL)
+
+
+/obj/item/circuit_component/mod_program/radar/medical
+	associated_program = /datum/computer_file/program/radar/lifeline
+
+/obj/item/circuit_component/mod_program/radar/medical/can_track(datum/source, atom/signal, signal_turf, computer_turf)
+	if(target.value in GLOB.human_list)
+		return NONE
+	return ..()
+
+/obj/item/circuit_component/mod_program/radar/janitor
+	associated_program = /datum/computer_file/program/radar/custodial_locator
+
+/obj/item/circuit_component/mod_program/radar/janitor/can_track(datum/source, atom/signal, signal_turf, computer_turf)
+	if(target.value in GLOB.janitor_devices)
+		return NONE
+	return ..()
+/obj/item/circuit_component/mod_program/radar/nukie
+	associated_program = /datum/computer_file/program/radar/fission360
+
+/obj/item/circuit_component/mod_program/radar/nukie/can_track(datum/source, atom/signal, signal_turf, computer_turf)
+	if(target.value in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb))
+		return NONE
+	if(target.value in SSpoints_of_interest.real_nuclear_disks)
+		return NONE
+	if(target.value == SSshuttle.getShuttle("syndicate"))
+		return NONE
+	return ..()
+
+#undef MAX_RADAR_CIRCUIT_DISTANCE
+
+#undef RADAR_NOT_TRACKABLE
+#undef RADAR_TRACKABLE
+#undef RADAR_TRACKABLE_ANYWAY

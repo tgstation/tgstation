@@ -152,7 +152,7 @@
 	current_bodypart.dismember()
 	return TRUE//on_limb_lost should be called after that
 
-/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, dismembered)
+/mob/living/basic/living_limb_flesh/proc/on_limb_lost(atom/movable/source, mob/living/carbon/old_owner, special, dismembered)
 	SIGNAL_HANDLER
 	UnregisterSignal(source, COMSIG_BODYPART_REMOVED)
 	UnregisterSignal(old_owner, COMSIG_LIVING_ELECTROCUTE_ACT)

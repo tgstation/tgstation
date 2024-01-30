@@ -81,9 +81,13 @@
 	for(var/turf/cordon_turf as anything in cordon_turfs)
 		var/area/misc/cordon/cordon_area = GLOB.areas_by_type[/area/misc/cordon] || new
 		var/area/old_area = cordon_turf.loc
-		old_area.turfs_to_uncontain += cordon_turf
-		cordon_area.contained_turfs += cordon_turf
+
+		LISTASSERTLEN(old_area.turfs_to_uncontain_by_zlevel, cordon_turf.z, list())
+		LISTASSERTLEN(cordon_area.turfs_by_zlevel, cordon_turf.z, list())
+		old_area.turfs_to_uncontain_by_zlevel[cordon_turf.z] += cordon_turf
+		cordon_area.turfs_by_zlevel[cordon_turf.z] += cordon_turf
 		cordon_area.contents += cordon_turf
+
 		// Its no longer unused, but its also not "used"
 		cordon_turf.turf_flags &= ~UNUSED_RESERVATION_TURF
 		cordon_turf.ChangeTurf(/turf/cordon, /turf/cordon)

@@ -13,14 +13,16 @@ SUBSYSTEM_DEF(stock_market)
 	var/list/materials_trend_life = list()
 	/// Associated list of materials alongside their available quantity. This is used to determine how much of a material is available to buy, and how much buying and selling affects the price.
 	var/list/materials_quantity = list()
+	/// A list of all currently active stock market events.
+	var/list/active_events = list()
 	/// HTML string that is used to display the market events to the player.
 	var/news_string = ""
 
 /datum/controller/subsystem/stock_market/Initialize()
 	for(var/datum/material/possible_market as anything in subtypesof(/datum/material)) // I need to make this work like this, but lets hardcode it for now
-		if(initial(possible_market.tradable))
+		if(possible_market.tradable)
 			materials_prices += possible_market
-			materials_prices[possible_market] = initial(possible_market.value_per_unit) * SHEET_MATERIAL_AMOUNT
+			materials_prices[possible_market] = possible_market.value_per_unit * SHEET_MATERIAL_AMOUNT
 
 			materials_trends += possible_market
 			materials_trends[possible_market] = rand(MARKET_TREND_DOWNWARD,MARKET_TREND_UPWARD) //aka -1 to 1
@@ -29,11 +31,14 @@ SUBSYSTEM_DEF(stock_market)
 			materials_trend_life[possible_market] = rand(1,10)
 
 			materials_quantity += possible_market
-			materials_quantity[possible_market] = initial(possible_market.tradable_base_quantity) + (rand(-initial(possible_market.tradable_base_quantity) * 0.5, initial(possible_market.tradable_base_quantity) * 0.5))
+			materials_quantity[possible_market] = possible_market.tradable_base_quantity + (rand(-(possible_market.tradable_base_quantity) * 0.5, possible_market.tradable_base_quantity * 0.5))
 	return SS_INIT_SUCCESS
+
 /datum/controller/subsystem/stock_market/fire(resumed)
 	for(var/datum/material/market as anything in materials_prices)
 		handle_trends_and_price(market)
+	for(var/datum/stock_market_event/event as anything in active_events)
+		event.handle()
 
 /**
  * Handles shifts in the cost of materials, and in what direction the material is most likely to move.
@@ -41,17 +46,16 @@ SUBSYSTEM_DEF(stock_market)
 /datum/controller/subsystem/stock_market/proc/handle_trends_and_price(datum/material/mat)
 	if(prob(MARKET_EVENT_PROBABILITY))
 		handle_market_event(mat)
-		return
 	var/trend = materials_trends[mat]
 	var/trend_life = materials_trend_life[mat]
 
 	var/price_units = materials_prices[mat]
-	var/price_minimum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
-	if(!isnull(initial(mat.minimum_value_override)))
-		price_minimum = round(initial(mat.minimum_value_override) * SHEET_MATERIAL_AMOUNT)
-	var/price_maximum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
-	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
-	var/quantity_baseline = initial(mat.tradable_base_quantity)
+	var/price_minimum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 0.5)
+	if(!isnull(mat.minimum_value_override))
+		price_minimum = round(mat.minimum_value_override * SHEET_MATERIAL_AMOUNT)
+	var/price_maximum = round(mat.value_per_unit * SHEET_MATERIAL_AMOUNT * 3)
+	var/price_baseline = mat.value_per_unit * SHEET_MATERIAL_AMOUNT
+	var/quantity_baseline = mat.tradable_base_quantity
 
 	var/stock_quantity = materials_quantity[mat]
 
@@ -76,7 +80,7 @@ SUBSYSTEM_DEF(stock_market)
 				materials_trends[mat] = MARKET_TREND_DOWNWARD
 			else
 				materials_trends[mat] = MARKET_TREND_STABLE
-		materials_trend_life[mat] = rand(3,10) // Change our trend life for x number of cycles
+		materials_trend_life[mat] = rand(3,10) // Change our trend life for x number of fires of the subsystem
 	else
 		materials_trend_life[mat] -= 1
 
@@ -101,55 +105,7 @@ SUBSYSTEM_DEF(stock_market)
  * Events are also broadcast to the newscaster as a fun little fluff piece. Good way to tell some lore as well, or just make a joke.
  */
 /datum/controller/subsystem/stock_market/proc/handle_market_event(datum/material/mat)
-
-	var/company_name = list( // Pick a random company name from the list, I let copilot make a few up for me which is why some suck
-		"Nakamura Engineering",
-		"Robust Industries, LLC",
-		"MODular Solutions",
-		"SolGov",
-		"Australicus Industrial Mining",
-		"Vey-Medical",
-		"Aussec Armory",
-		"Dreamland Robotics"
-	)
-	var/circumstance
-	var/event = rand(1,3)
-
-	var/price_units = materials_prices[mat]
-	var/price_minimum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
-	if(!isnull(initial(mat.minimum_value_override)))
-		price_minimum = round(initial(mat.minimum_value_override) * SHEET_MATERIAL_AMOUNT)
-	var/price_maximum = round(initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 3)
-	var/price_baseline = initial(mat.value_per_unit) * SHEET_MATERIAL_AMOUNT
-
-	switch(event)
-		if(1) //Reset to stable
-			materials_prices[mat] = price_baseline
-			materials_trends[mat] = MARKET_TREND_STABLE
-			materials_trend_life[mat] = 1
-			circumstance = pick(list(
-				"[pick(company_name)] has been bought out by a private investment firm. As a result, <b>[initial(mat.name)]</b> is now stable at <b>[materials_prices[mat]] cr</b>.",
-				"Due to a corporate restructuring, the largest supplier of <b>[initial(mat.name)]</b> has had the price changed to <b>[materials_prices[mat]] cr</b>.",
-				"<b>[initial(mat.name)]</b> is now under a monopoly by [pick(company_name)]. The price has been changed to <b>[materials_prices[mat]] cr</b> accordingly."
-			))
-		if(2) //Big boost
-			materials_prices[mat] += round(gaussian(price_units * 0.5, price_units * 0.1))
-			materials_prices[mat] = clamp(materials_prices[mat], price_minimum, price_maximum)
-			materials_trends[mat] = MARKET_TREND_UPWARD
-			materials_trend_life[mat] = rand(1,5)
-			circumstance = pick(list(
-				"[pick(company_name)] has just released a new product that uses <b>[initial(mat.name)]</b>! As a result, the price has been raised to <b>[materials_prices[mat]] cr</b>.",
-				"Due to [pick(company_name)] finding a new property of <b>[initial(mat.name)]</b>, its price has been raised to <b>[materials_prices[mat]] cr</b>.",
-				"A study has found that <b>[initial(mat.name)]</b> may run out within the next 100 years. The price has raised to <b>[materials_prices[mat]] cr</b> due to panic."
-			))
-		if(3) //Big drop
-			materials_prices[mat] -= round(gaussian(price_units * 1.5, price_units * 0.1))
-			materials_prices[mat] = clamp(materials_prices[mat], price_minimum, price_maximum)
-			materials_trends[mat] = MARKET_TREND_DOWNWARD
-			materials_trend_life[mat] = rand(1,5)
-			circumstance = pick(list(
-				"[pick(company_name)]'s latest product has seen major controversy, and as a result, the price of <b>[initial(mat.name)]</b> has dropped to <b>[materials_prices[mat]] cr</b>.",
-				"Due to a new competitor, the price of <b>[initial(mat.name)]</b> has dropped to <b>[materials_prices[mat]] cr</b>.",
-				"<b>[initial(mat.name)]</b> has been found to be a carcinogen. The price has dropped to <b>[materials_prices[mat]] cr</b> due to panic."
-			))
-	news_string += circumstance + "<br>" // Add the event to the news_string, formatted for newscasters.
+	var/datum/stock_market_event/event = pick(subtypesof(/datum/stock_market_event))
+	event = new event
+	if(event.start_event(mat))
+		active_events += event

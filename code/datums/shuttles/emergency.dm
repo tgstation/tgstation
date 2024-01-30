@@ -38,7 +38,7 @@
 			var/path = pick_weight(events)
 			events -= path
 			mobile.event_list.Add(new path(mobile))
-	
+
 /datum/map_template/shuttle/emergency/backup
 	suffix = "backup"
 	name = "Backup Shuttle"
@@ -144,7 +144,7 @@
 	suffix = "medisim"
 	name = "Medieval Reality Simulation Dome"
 	description = "A state of the art simulation dome, loaded onto your shuttle! Watch and laugh at how petty humanity used to be before it reached the stars. Guaranteed to be at least 40% historically accurate."
-	prerequisites = "A special holodeck simulation might allow this shuttle to be loaded."
+	prerequisites = "A special holodeck simulation must be loaded before this shuttle can be purchased."
 	admin_notes = "Ghosts can spawn in and fight as knights or archers. The CTF auto restarts, so no admin intervention necessary."
 	credit_cost = 20000
 	occupancy_limit = "30"
@@ -273,6 +273,7 @@
 	admin_notes = "An abomination with no functional medbay, sections missing, and some very fragile windows. Surprisingly airtight. When bought, gives a good influx of money, but can only be bought if the budget is literally 0 credits."
 	movement_force = list("KNOCKDOWN" = 3, "THROW" = 2)
 	occupancy_limit = "30"
+	prerequisites = "This shuttle is only offered for purchase when the station is low on funds."
 
 /datum/map_template/shuttle/emergency/scrapheap/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_SCRAPHEAP]
@@ -283,7 +284,7 @@
 	description = "Looks like this shuttle may have wandered into the darkness between the stars on route to the station. Let's not think too hard about where all the bodies came from."
 	admin_notes = "Contains real cult ruins, mob eyeballs, and inactive constructs. Cult mobs will automatically be sentienced by fun balloon. \
 	Cloning pods in 'medbay' area are showcases and nonfunctional."
-	prerequisites = "Mysterious cult runes may need to be banished before this shuttle can be summoned."
+	prerequisites = "A mysterious cult rune will need to be banished before this shuttle can be summoned."
 	credit_cost = 6667 ///The joke is the number so no defines
 	occupancy_limit = "666"
 
@@ -369,6 +370,7 @@
 	admin_notes = "If the crew can solve the puzzle, they will wake the wabbajack statue. It will likely not end well. There's a reason it's boarded up. Maybe they should have just left it alone."
 	credit_cost = CARGO_CRATE_VALUE * 30
 	occupancy_limit = "30"
+	prerequisites = "This shuttle requires an act of magical polymorphism to occur before it can be purchased."
 
 /datum/map_template/shuttle/emergency/wabbajack/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_WABBAJACK]
@@ -483,7 +485,7 @@
 	name = "Tr%nPo2r& Z3TA"
 	description = "A glitch appears on your monitor, flickering in and out of the options laid before you. \
 	It seems strange and alien..."
-	prerequisites = "You may need a special technology to access the signal."
+	prerequisites = "You will need to research special alien technology to access the signal."
 	admin_notes = "Has alien surgery tools, and a void core that provides unlimited power."
 	credit_cost = CARGO_CRATE_VALUE * 16
 	occupancy_limit = "xxx"

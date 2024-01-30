@@ -612,30 +612,40 @@
 	model_type = list(/obj/item/robot_model/engineering, /obj/item/robot_model/saboteur)
 	model_flags = BORG_MODEL_ENGINEERING
 
-/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/R, user = usr)
+/obj/item/borg/upgrade/inducer/action(mob/living/silicon/robot/silicon_friend, user = usr)
 	. = ..()
 	if(.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in R
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend
 		if(inter_inducer)
+			silicon_friend.balloon_alert(user, "already has one!")
 			return FALSE
-		inter_inducer = new(R.model)
-		R.model.basic_modules += inter_inducer
-		R.model.add_module(inter_inducer, FALSE, TRUE)
-		inter_inducer.cell = R.cell
 
-/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/R, user = usr)
+		inter_inducer = new(silicon_friend.model)
+		silicon_friend.model.basic_modules += inter_inducer
+		silicon_friend.model.add_module(inter_inducer, FALSE, TRUE)
+
+/obj/item/borg/upgrade/inducer/deactivate(mob/living/silicon/robot/silicon_friend, user = usr)
 	. = ..()
-	if (.)
-		var/obj/item/inducer/cyborg/inter_inducer = locate() in R.model
-		if (inter_inducer)
-			R.model.remove_module(inter_inducer, TRUE)
-			inter_inducer.cell = null
+	if(.)
+		var/obj/item/inducer/cyborg/inter_inducer = locate() in silicon_friend.model
+		if(inter_inducer)
+			silicon_friend.model.remove_module(inter_inducer, TRUE)
 
 /obj/item/inducer/cyborg
 	name = "Internal inducer"
 	powertransfer = 1500
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "inducer-engi"
+	cell_type = null
+
+/obj/item/inducer/cyborg/get_cell()
+	var/obj/item/robot_model/possible_model = loc
+	var/mob/living/silicon/robot/silicon_friend = istype(possible_model) ? possible_model.robot : possible_model
+	if(istype(silicon_friend))
+		. = silicon_friend.cell
+
+/obj/item/inducer/cyborg/screwdriver_act(mob/living/user, obj/item/tool)
+	return FALSE
 
 /obj/item/borg/upgrade/pinpointer
 	name = "medical cyborg crew pinpointer"
