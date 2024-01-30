@@ -96,6 +96,7 @@
 	icon_state = "kimono"
 	body_parts_covered = CHEST|GROIN|ARMS
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
+	alternate_worn_layer = ABOVE_SHOES_LAYER
 
 /*
 *	CHRISTMAS CLOTHES
