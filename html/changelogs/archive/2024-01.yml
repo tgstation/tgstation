@@ -741,3 +741,29 @@
   - bugfix: auto lathes don't hog local apc supply when printing items
   rageguy505:
   - bugfix: ' The buttons for flashers on birdshot/tramstation now work'
+2024-01-30:
+  00-Steven:
+  - bugfix: Rootbread soup now uses poached egg (egg reagents in soup pot) instead
+      of raw unpeeled egg (which would break into reagents upon coming into contact
+      with the soup pot) and is thus craftable again.
+  ArcaneMusic:
+  - rscdel: The lathe tax on printing items has been removed from the game for both
+      humans and silicons.
+  Ghommie:
+  - image: Resprited the goldfish and lanternfish as well.
+  Inari-Whitebear:
+  - bugfix: Bone daggers and shivs are now longer electrically conductive
+  Melbert:
+  - bugfix: You can build on some niche tables again, such as the Wabbajack Altar.
+  Profakos:
+  - bugfix: The construction console drone becomes visible again while its in use
+  Rhials:
+  - bugfix: The encrypted bitrunner cache is now impervious to most conventional means
+      of destruction.
+  distributivgesetz:
+  - bugfix: Ambient loops will now refresh when entering a mob.
+  jjpark-kb:
+  - code_imp: added the code that allows the image overlays to work for the circulator
+      (teg)
+  - image: changed circulator's (teg) fast/slow turbine sprite
+  - image: added an anchor, panel, and flow overlay for the circulator (teg)
