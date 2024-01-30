@@ -385,7 +385,8 @@
 		equipment.detach(newmech)
 		equipment.attach(newmech, righthandgun)
 	newmech.dna_lock = markone.dna_lock
-	newmech.mecha_flags = markone.mecha_flags
+	newmech.mecha_flags |= markone.mecha_flags & ~initial(markone.mecha_flags) // transfer any non-inherent flags like PANEL_OPEN and LIGHTS_ON
+	newmech.set_light_on(newmech.mecha_flags & LIGHTS_ON) // in case the lights were on
 	newmech.strafe = markone.strafe
 	//Integ set to the same percentage integ as the old mecha, rounded to be whole number
 	newmech.update_integrity(round((markone.get_integrity() / markone.max_integrity) * newmech.get_integrity()))
