@@ -1,4 +1,0 @@
-author: "00-Steven"
-delete-after: True
-changes:
-  - bugfix: "Rootbread soup now uses poached egg (egg reagents in soup pot) instead of raw unpeeled egg (which would break into reagents upon coming into contact with the soup pot) and is thus craftable again."

@@ -1,6 +1,0 @@
-author: "jjpark-kb"
-delete-after: True
-changes:
-  - code_imp: "added the code that allows the image overlays to work for the circulator (teg)"
-  - image: "changed circulator's (teg) fast/slow turbine sprite"
-  - image: "added an anchor, panel, and flow overlay for the circulator (teg)"
