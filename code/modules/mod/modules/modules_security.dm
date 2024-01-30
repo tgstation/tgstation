@@ -600,7 +600,7 @@
 
 /obj/item/mod/module/quick_cuff
 	name = "MOD restraint assist module"
-	desc = "Enhanced gauntlent grip pads that helps with placing individuals in restraints more quickly. Doesn't look like they'll come off"
+	desc = "Enhanced gauntlent grip pads that help with placing individuals in restraints more quickly. Doesn't look like they'll come off."
 	removable = FALSE
 	complexity = 0
 
