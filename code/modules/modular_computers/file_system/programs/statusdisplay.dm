@@ -100,7 +100,7 @@
 
 /obj/item/circuit_component/mod_program/status
 	associated_program = /datum/computer_file/program/status
-	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL
+	circuit_flags = CIRCUIT_FLAG_INPUT_SIGNAL|CIRCUIT_FLAG_OUTPUT_SIGNAL
 
 	///When the trigger is signaled, this will be the upper text of status displays.
 	var/datum/port/input/upper_text
@@ -108,6 +108,11 @@
 	var/datum/port/input/bottom_text
 	///A list port that, when signaled, will set the status image to one of its values
 	var/datum/port/input/status_display_pics
+
+/obj/item/circuit_component/mod_program/status/populate_ports()
+	. = ..()
+	upper_text = add_input_port("Upper text", PORT_TYPE_STRING)
+	bottom_text = add_input_port("Bottom text", PORT_TYPE_STRING)
 
 /obj/item/circuit_component/mod_program/status/populate_options()
 	status_display_pics = add_option_port("Set Status Display Picture", GLOB.status_display_approved_pictures, trigger = PROC_REF(set_picture))

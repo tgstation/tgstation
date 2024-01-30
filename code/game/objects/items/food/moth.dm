@@ -756,7 +756,7 @@
 		/datum/reagent/consumable/nutriment/vitamin = 5,
 	)
 	tastes = list("crust" = 1, "pesto" = 1, "cheese" = 1)
-	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS | RAW
+	foodtypes = GRAIN | VEGETABLES | DAIRY | NUTS
 	slice_type = /obj/item/food/pizzaslice/mothic_pesto
 	boxtag = "Presto Pesto"
 	crafting_complexity = FOOD_COMPLEXITY_5
