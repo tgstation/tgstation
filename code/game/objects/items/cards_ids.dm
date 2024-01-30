@@ -682,7 +682,7 @@
 	if(loc != user)
 		to_chat(user, span_warning("You must be holding the ID to continue!"))
 		return
-	if(isnull(registered_account) || registered_account.replaceable && !registered_account.account_balance)
+	if(registered_account.replaceable && !registered_account.account_balance)
 		var/choice = tgui_alert(user, "This card's account is unassigned. Would you like to link a bank account?", "Bank Account", list("Link Account", "Leave Unassigned"))
 		if(!choice || QDELETED(user) || QDELETED(src) || !alt_click_can_use_id(user) || loc != user)
 			return
