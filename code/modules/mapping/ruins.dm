@@ -96,11 +96,9 @@
 	switch(mineral_budget_update)
 		if(OREGEN_PRESET_LAVALAND)
 			SSore_generation.ore_vent_minerals = GLOB.ore_vent_minerals_lavaland.Copy()
-		if(OREGEN_PRESET_ICEBOX_UPPER)
-			SSore_generation.ore_vent_minerals = GLOB.ore_vent_minerals_icebox_upper.Copy()
-		if(OREGEN_PRESET_ICEBOX_LOWER)
-			SSore_generation.ore_vent_minerals = GLOB.ore_vent_minerals_icebox_lower.Copy()
-
+		if(OREGEN_PRESET_TRIPLE_Z)
+			SSore_generation.ore_vent_minerals = GLOB.ore_vent_minerals_triple_z.Copy()
+	
 
 	//Set up the starting ruin list
 	for(var/key in ruins)

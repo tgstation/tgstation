@@ -174,13 +174,14 @@
  *
  * The above applies only when spawning in at mapload, otherwise we pick randomly from ore_vent_minerals_lavaland.
  *
- * @params max_minerals How many minerals should be added to this vent? Defaults to MINERAL_TYPE_OPTIONS_RANDOM, which is 4.
+ * @params new_minerals How many minerals should be added to this vent? Defaults to MINERAL_TYPE_OPTIONS_RANDOM, which is 4.
  * @params map_loading Is this vent being spawned in at mapload? If so, we use the ore_generation subsystem's ore_vent_minerals list to pick minerals. Otherwise, we pick randomly from ore_vent_minerals_lavaland.
  */
-/obj/structure/ore_vent/proc/generate_mineral_breakdown(max_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
-	if(max_minerals < 1)
-		CRASH("generate_mineral_breakdown called with max_minerals < 1.")
-	for(var/iterator in 1 to max_minerals)
+/obj/structure/ore_vent/proc/generate_mineral_breakdown(new_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
+	if(new_minerals < 1)
+		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
+	var/starting_minerals = length(mineral_breakdown) // we're going to use this to track how many minerals we've added.
+	while(length(mineral_breakdown) < new_minerals + starting_minerals)
 		if(!SSore_generation.ore_vent_minerals.len && map_loading)
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material
