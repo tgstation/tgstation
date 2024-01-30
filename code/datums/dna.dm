@@ -128,7 +128,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 	else
 		new_dna.species = new species.type
 	new_dna.real_name = real_name
-	new_dna.update_body_height() // monke edit: body height
 	// Mutations aren't gc managed, but they still aren't templates
 	// Let's do a proper copy
 	for(var/datum/mutation/human/mutation in mutations)
@@ -361,10 +360,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 			set_uni_feature_block(blocknumber, construct_block(GLOB.caps_list.Find(features["caps"]), GLOB.caps_list.len))
 		if(DNA_POD_HAIR_BLOCK)
 			set_uni_feature_block(blocknumber, construct_block(GLOB.pod_hair_list.Find(features["pod_hair"]), GLOB.pod_hair_list.len))
-		// monke start: body height
-		if(DNA_BODY_HEIGHT_BLOCK)
-			set_uni_feature_block(blocknumber, construct_block(GLOB.body_heights.Find(features["body_height"]), GLOB.body_heights.len))
-		// monke end
 
 //Please use add_mutation or activate_mutation instead
 /datum/dna/proc/force_give(datum/mutation/human/HM)
@@ -639,8 +634,6 @@ GLOBAL_LIST_INIT(total_uf_len_by_block, populate_total_uf_len_by_block())
 		dna.features["caps"] = GLOB.caps_list[deconstruct_block(get_uni_feature_block(features, DNA_MUSHROOM_CAPS_BLOCK), GLOB.caps_list.len)]
 	if(dna.features["pod_hair"])
 		dna.features["pod_hair"] = GLOB.pod_hair_list[deconstruct_block(get_uni_feature_block(features, DNA_POD_HAIR_BLOCK), GLOB.pod_hair_list.len)]
-	if(dna.features["body_height"])
-		dna.features["body_height"] = GLOB.body_heights[deconstruct_block(get_uni_feature_block(features, DNA_BODY_HEIGHT_BLOCK), GLOB.body_heights.len)]
 
 	for(var/obj/item/organ/external/external_organ in organs)
 		external_organ.mutate_feature(features, src)
