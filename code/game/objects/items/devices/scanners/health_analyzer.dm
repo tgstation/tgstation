@@ -2,10 +2,6 @@
 #define SCANMODE_HEALTH 0
 #define SCANMODE_WOUND 1
 #define SCANMODE_COUNT 2 // Update this to be the number of scan modes if you add more
-#define SCANNER_CONDENSED 0
-#define SCANNER_VERBOSE 1
-// Not updating above count because you're not meant to switch to this mode.
-#define SCANNER_NO_MODE -1
 
 /obj/item/healthanalyzer
 	name = "health analyzer"
@@ -681,9 +677,6 @@
 #undef SCANMODE_HEALTH
 #undef SCANMODE_WOUND
 #undef SCANMODE_COUNT
-#undef SCANNER_CONDENSED
-#undef SCANNER_VERBOSE
-#undef SCANNER_NO_MODE
 
 #undef AID_EMOTION_NEUTRAL
 #undef AID_EMOTION_HAPPY

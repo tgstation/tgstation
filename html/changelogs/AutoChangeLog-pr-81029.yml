@@ -1,5 +1,0 @@
-author: "intercepti0n"
-delete-after: True
-changes:
-  - refactor: "Refactored Ore Processing Unit UI."
-  - bugfix: "Ore Processing Unit UI no longer lags client."

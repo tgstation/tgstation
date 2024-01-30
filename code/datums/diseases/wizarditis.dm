@@ -161,8 +161,10 @@
 	random_spells += sneeze_spacetime
 
 	var/datum/action/cooldown/spell/timestop/sneeze_timestop = new(src)
-	sneeze_timestop.timestop_range = 1 // heh
+	sneeze_timestop.timestop_range = 0 // heh
 	sneeze_timestop.timestop_duration = 5 SECONDS
+	sneeze_timestop.owner_is_immune_to_all_timestop = FALSE
+	sneeze_timestop.owner_is_immune_to_self_timestop = FALSE
 	random_spells += sneeze_timestop
 
 	var/datum/action/cooldown/spell/aoe/repulse/sneeze_repulse = new(src)
