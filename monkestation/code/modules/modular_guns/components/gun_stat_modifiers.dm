@@ -46,3 +46,24 @@ on the parent of other components.
 
 ///this is a shitcode handler until i convert all guns to the stat_holder_system
 /datum/component/gun_stat_holder/proc/redistribute_stats()
+	reset_stats_to_base(parent)
+	var/obj/item/gun/gun = parent
+
+	gun.spread = max(gun.spread - stability, 0)
+	gun.recoil +=(max(100 - stability, 0) * 0.01)
+
+	gun.suppressed_volume *= (loudness * 0.01)
+	gun.fire_sound_volume *= (loudness * 0.01)
+
+	gun.fire_delay *= (firing_speed * 0.01)
+
+	///we do this at the end and addon using unique shit
+	SEND_SIGNAL(gun, COMSIG_ATTACHMENT_STAT_RESET)
+
+
+/datum/component/gun_stat_holder/proc/reset_stats_to_base(obj/item/gun/gun)
+	gun.spread = initial(gun.spread)
+	gun.suppressed_volume = initial(gun.suppressed_volume)
+	gun.recoil = initial(gun.recoil)
+	gun.fire_sound_volume = initial(gun.fire_sound_volume)
+	gun.fire_delay = initial(gun.fire_delay)

@@ -26,6 +26,8 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 	RegisterSignal(parent, COMSIG_ATTACHMENT_ATTACH_ATTEMPT, PROC_REF(attempt_attach))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_attached_overlays))
 	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(check_can_fire))
+	RegisterSignal(parent, COMSIG_ATTACHMENT_STAT_RESET, PROC_REF(apply_per_reset_uniques))
+	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(check_removal))
 
 /datum/component/weapon_attachments/proc/check_can_fire(obj/item/gun/ballistic/source, mob/living/user, atom/target, flag, params)
 	SIGNAL_HANDLER
@@ -64,7 +66,7 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_ATTACHED, attacher)
 
 	var/obj/item/item = parent
-	item.update_overlays()
+	item.update_appearance()
 	attacher.unique_attachment_effects(parent)
 
 /datum/component/weapon_attachments/proc/update_attached_overlays(atom/parent_atom, list/overlays)
@@ -78,3 +80,46 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 		gun_attachment.pixel_x += listed.stored.offset_x
 		gun_attachment.pixel_y += listed.stored.offset_y
 		overlays += gun_attachment
+
+/datum/component/weapon_attachments/proc/apply_per_reset_uniques(obj/item/gun/source)
+	SIGNAL_HANDLER
+	for(var/datum/attachment_handler/listed as anything in (hand_slots + tool_slots))
+		if(!listed.stored)
+			continue
+		listed.stored.unique_attachment_effects_per_reset(parent)
+
+
+/datum/component/weapon_attachments/proc/check_removal(datum/source, obj/item/I, mob/living/user)
+	var/list/removeable_attachments = list()
+	if(I.tool_behaviour == TOOL_WRENCH)
+		for(var/datum/attachment_handler/listed as anything in hand_slots)
+			if(!listed.stored)
+				continue
+			removeable_attachments += listed.stored
+
+	for(var/datum/attachment_handler/listed as anything in tool_slots)
+		if(I.tool_behaviour != listed.tool_required)
+			continue
+		removeable_attachments += listed.stored
+
+	if(!length(removeable_attachments))
+		return
+	try_removal(removeable_attachments, I, user)
+
+/datum/component/weapon_attachments/proc/try_removal(list/removable, obj/item/I, mob/living/user)
+	var/obj/item/item = parent
+	var/obj/item/choice = tgui_input_list(user, "Choose an attachment to remove.", item.name, removable)
+	if(!choice)
+		return
+	if(!do_after(user, 1.5 SECONDS, item))
+		return
+	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_DETACHED, choice)
+
+	for(var/datum/attachment_handler/listed as anything in (hand_slots + tool_slots))
+		if(!listed.stored)
+			continue
+		if(choice != listed.stored)
+			continue
+		listed.stored = null
+	choice.forceMove(get_turf(user))
+	user.balloon_alert(user, "Successfully removed [choice.name].")

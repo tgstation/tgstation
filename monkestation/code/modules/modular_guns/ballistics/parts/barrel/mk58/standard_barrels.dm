@@ -10,6 +10,12 @@
 	name = "mk58 suppressor"
 	offset_x = 16
 
-	noise_multiplier = 0.4
 	ease_of_use = 0.95
 	fire_multipler = 0.85
+
+/obj/item/attachment/barrel/mk58/suppressor/unique_attachment_effects(obj/item/gun/modular)
+	modular.suppressed = TRUE
+
+/obj/item/attachment/barrel/mk58/suppressor/unique_attachment_effects_removal(obj/item/gun/modular)
+	modular.suppressed = FALSE
+

@@ -39,3 +39,5 @@
 
 /obj/item/attachment/proc/unique_attachment_effects_removal(obj/item/gun/modular)
 	return
+
+/obj/item/attachment/proc/unique_attachment_effects_per_reset(obj/item/gun/modular)

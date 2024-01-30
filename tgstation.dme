@@ -6395,6 +6395,7 @@
 #include "monkestation\code\modules\modular_guns\ballistics\parts\underbarrel\_base_underbarrel.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\underbarrel\flashlight\_base_flashlight.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\underbarrel\flashlight\mk58.dm"
+#include "monkestation\code\modules\modular_guns\ballistics\parts\underbarrel\mk58\makeshift.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\welrod\_base_welrod.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\welrod\mk58\standard_welrod.dm"
 #include "monkestation\code\modules\modular_guns\components\attachments.dm"
