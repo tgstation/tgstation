@@ -50,6 +50,7 @@
 	loc.visible_message(span_warning("[src] begins to shake. Stand back!"))
 	used = TRUE
 	addtimer(CALLBACK(src, PROC_REF(expand), user), 5 SECONDS)
+	return TRUE
 
 /obj/item/survivalcapsule/proc/expand(mob/triggerer)
 	if(QDELETED(src))
