@@ -404,6 +404,7 @@
 #include "code\__DEFINES\~monkestation\mobs.dm"
 #include "code\__DEFINES\~monkestation\particles.dm"
 #include "code\__DEFINES\~monkestation\physics.dm"
+#include "code\__DEFINES\~monkestation\projectiles.dm"
 #include "code\__DEFINES\~monkestation\robots.dm"
 #include "code\__DEFINES\~monkestation\smoothing.dm"
 #include "code\__DEFINES\~monkestation\span.dm"

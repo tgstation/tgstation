@@ -25,6 +25,17 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 /datum/component/weapon_attachments/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATTACHMENT_ATTACH_ATTEMPT, PROC_REF(attempt_attach))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(update_attached_overlays))
+	RegisterSignal(parent, COMSIG_GUN_TRY_FIRE, PROC_REF(check_can_fire))
+
+/datum/component/weapon_attachments/proc/check_can_fire(obj/item/gun/ballistic/source, mob/living/user, atom/target, flag, params)
+	SIGNAL_HANDLER
+
+	for(var/datum/attachment_handler/listed as anything in (hand_slots + tool_slots))
+		if(!listed.required_to_fire)
+			continue
+		if(!listed.stored)
+			user.balloon_alert(user, "Missing Essential Attachments!")
+			return COMPONENT_CANCEL_GUN_FIRE
 
 /datum/component/weapon_attachments/proc/attempt_attach(obj/item/gun/source, mob/living/user, atom/target, obj/item/attachment/attacher)
 	if(attacher.attachment_rail != attachment_type)
@@ -51,7 +62,9 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 	attacher.forceMove(parent)
 	slot.stored = attacher
 	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_ATTACHED, attacher)
-	update_attached_overlays()
+
+	var/obj/item/item = parent
+	item.update_overlays()
 	attacher.unique_attachment_effects(parent)
 
 /datum/component/weapon_attachments/proc/update_attached_overlays(atom/parent_atom, list/overlays)

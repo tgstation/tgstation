@@ -5,3 +5,5 @@
 	var/attachment_slot
 	/// the attachment stored
 	var/obj/item/attachment/stored
+	///are we required to fire?
+	var/required_to_fire = TRUE

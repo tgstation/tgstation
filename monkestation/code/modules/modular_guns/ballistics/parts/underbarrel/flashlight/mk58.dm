@@ -5,3 +5,6 @@
 	attachment_rail = GUN_ATTACH_MK_58
 	icon_state = "light"
 	attachment_icon_state = "light"
+
+	ease_of_use = 0.8
+	stability = 0.95

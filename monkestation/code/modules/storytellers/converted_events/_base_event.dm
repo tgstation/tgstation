@@ -220,7 +220,6 @@
 		else
 			candidates |= pick_n_take(possible_candidates)
 
-	var/failed_antags = 0
 	for(var/i in 1 to antag_count)
 		if(!length(candidates))
 			message_admins("A roleset event got fewer antags then its antag_count and may not function correctly.")

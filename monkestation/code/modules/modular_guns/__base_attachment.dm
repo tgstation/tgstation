@@ -15,7 +15,7 @@
 	///misfire multiplier
 	var/misfire_multiplier = 1
 	/// how much more cumbersome this is to use
-	var/burden = 1
+	var/ease_of_use = 1
 	///what gun type we can attach to
 	var/attachment_rail = GUN_ATTACH_AK
 	///what type of attachement are we ie what slot do we go in

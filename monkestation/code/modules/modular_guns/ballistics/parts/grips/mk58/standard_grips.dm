@@ -9,14 +9,26 @@
 	icon_state = "grip_excelsior"
 	attachment_icon_state = "grip_excelsior"
 
+	stability = 1.4
+	ease_of_use = 1.1
+
 /obj/item/attachment/grip/mk_58/black
 	icon_state = "grip_black"
 	attachment_icon_state = "grip_black"
+
+	stability = 1.4
+	ease_of_use = 1.1
 
 /obj/item/attachment/grip/mk_58/rubber
 	icon_state = "grip_rubber"
 	attachment_icon_state = "grip_rubber"
 
+	stability = 1.4
+	ease_of_use = 1.1
+
 /obj/item/attachment/grip/mk_58/serbian
 	icon_state = "grip_serbian"
 	attachment_icon_state = "grip_serbian"
+
+	stability = 1.4
+	ease_of_use = 1.1

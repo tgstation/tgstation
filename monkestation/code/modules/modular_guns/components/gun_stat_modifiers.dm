@@ -30,19 +30,18 @@ on the parent of other components.
 	RegisterSignal(parent, COMSIG_ATTACHMENT_ATTACHED, PROC_REF(handle_stat_gain))
 	RegisterSignal(parent, COMSIG_ATTACHMENT_DETACHED, PROC_REF(handle_stat_loss))
 
-
 /datum/component/gun_stat_holder/proc/handle_stat_gain(atom/source, obj/item/attachment/attached)
 	stability *= attached.stability
 	firing_speed *= attached.fire_multipler
 	loudness *= attached.noise_multiplier
-	ease_of_use *= attached.burden
+	ease_of_use *= attached.ease_of_use
 	redistribute_stats()
 
 /datum/component/gun_stat_holder/proc/handle_stat_loss(atom/source, obj/item/attachment/attached)
 	stability /= attached.stability
 	firing_speed /= attached.fire_multipler
 	loudness /= attached.noise_multiplier
-	ease_of_use /= attached.burden
+	ease_of_use /= attached.ease_of_use
 	redistribute_stats()
 
 ///this is a shitcode handler until i convert all guns to the stat_holder_system

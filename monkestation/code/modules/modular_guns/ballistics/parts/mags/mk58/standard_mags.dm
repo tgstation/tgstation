@@ -5,14 +5,24 @@
 	attachment_rail = GUN_ATTACH_MK_58
 	icon_state = "mag_4.35"
 
-/obj/item/attachment/mag/mk58/mag_435
-	name = "mk58 mag 4.35"
+/obj/item/attachment/mag/mk58/m10mm
+	name = "mk58 10mm mag"
 
 	icon_state = "mag_4.35"
 	attachment_icon_state = "well_pistol"
+	mag_type = /obj/item/ammo_box/magazine/m10mm
 
-/obj/item/attachment/mag/mk58/mag_235
-	name = "mk58 mag 2.35"
+	fire_multipler = 1.2
+	stability = 1.1
+	noise_multiplier = 0.85
+
+/obj/item/attachment/mag/mk58/m50
+	name = "mk58 .50ae mag"
 
 	icon_state = "mag_2.35"
 	attachment_icon_state = "well_pistol"
+	mag_type = /obj/item/ammo_box/magazine/m50
+
+	fire_multipler = 0.5
+	noise_multiplier = 1.3
+	stability = 0.95

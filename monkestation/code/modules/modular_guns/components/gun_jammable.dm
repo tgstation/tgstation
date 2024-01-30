@@ -9,14 +9,17 @@
 	var/jam_time
 	//are we jammed
 	var/jammed = FALSE
+	///the time we spend unjamming
+	var/jam_use_time = 1 SECONDS
 	///our gun jamming cd to prevent spam jammings
 	COOLDOWN_DECLARE(jam_cooldown)
 
 
-/datum/component/gun_jammable/Initialize(jamming_prob = 5, jam_time = 1 SECONDS)
+/datum/component/gun_jammable/Initialize(jamming_prob = 5, jam_time = 1 SECONDS, jam_use_time = 1 SECONDS)
 	. = ..()
 	src.jamming_prob = jamming_prob
 	src.jam_time = jam_time
+	src.jam_use_time = jam_use_time
 
 /datum/component/gun_jammable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATTACHMENT_ATTACHED, PROC_REF(handle_stat_gain))
@@ -38,16 +41,18 @@
 		playsound(source, source.dry_fire_sound, 30, TRUE)
 		return COMPONENT_CANCEL_GUN_FIRE
 
-/datum/component/gun_jammable/proc/try_clear_jam(obj/item/gun/ballistic/source)
-	SIGNAL_HANDLER
-	if(jammed)
+/datum/component/gun_jammable/proc/try_clear_jam(obj/item/gun/ballistic/source, mob/user)
+	if(jammed && do_after(user, jam_use_time, parent))
 		COOLDOWN_START(src, jam_cooldown, jam_time)
+		user.balloon_alert(user, "Gun jam has been cleared!")
 		jammed = FALSE
 
 /datum/component/gun_jammable/proc/handle_stat_gain(atom/source, obj/item/attachment/attached)
 	SIGNAL_HANDLER
 	jamming_prob *= attached.misfire_multiplier
+	jam_use_time /= attached.ease_of_use
 
 /datum/component/gun_jammable/proc/handle_stat_loss(atom/source, obj/item/attachment/attached)
 	SIGNAL_HANDLER
 	jamming_prob /= attached.misfire_multiplier
+	jam_use_time *= attached.ease_of_use
