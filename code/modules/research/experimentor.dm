@@ -156,7 +156,7 @@
 
 		item_data["associatedNodes"] = list()
 		var/list/unlockable_nodes = techweb_item_unlock_check(loaded_item)
-		for(var/node_id as anything in unlockable_nodes)
+		for(var/node_id in unlockable_nodes)
 			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(node_id)
 
 			item_data["associatedNodes"] += list(list(
