@@ -66,6 +66,8 @@
 		return FALSE
 	if(isnull(associated_program))
 		return FALSE
+	if(!associated_program.computer.enabled)
+		return FALSE
 	if(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED || COMPONENT_TRIGGERED_BY(start, port))
 		return TRUE
 	var/obj/item/modular_computer/computer = associated_program.computer
@@ -78,16 +80,16 @@
 
 /obj/item/circuit_component/mod_program/proc/on_start(mob/living/user)
 	SIGNAL_HANDLER
-	running.set_value(TRUE)
+	running.set_output(TRUE)
 
 /obj/item/circuit_component/mod_program/proc/kill_prog(datum/port/input/port)
 	associated_program.kill_program()
 
 /obj/item/circuit_component/mod_program/proc/on_kill(mob/living/user)
 	SIGNAL_HANDLER
-	running.set_value(FALSE)
+	running.set_output(FALSE)
 
 /obj/item/circuit_component/mod_program/get_ui_notices()
 	. = ..()
 	if(!(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED))
-		. += create_ui_notice("Requires program to be running", "purple")
+		. += create_ui_notice("Requires open program for inputs", "purple")

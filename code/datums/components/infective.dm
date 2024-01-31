@@ -161,3 +161,20 @@
 /datum/component/infective/proc/try_infect(mob/living/L, target_zone)
 	for(var/V in diseases)
 		L.ContactContractDisease(V, target_zone)
+
+/datum/component/infective/UnregisterFromParent()
+	. = ..()
+	UnregisterSignal(parent, list(
+		COMSIG_FOOD_EATEN,
+		COMSIG_PILL_CONSUMED,
+		COMSIG_COMPONENT_CLEAN_ACT,
+		COMSIG_MOVABLE_BUMP,
+		COMSIG_MOVABLE_IMPACT_ZONE,
+		COMSIG_ITEM_ATTACK_ZONE,
+		COMSIG_ITEM_ATTACK,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_GLASS_DRANK,
+		COMSIG_ORGAN_IMPLANTED,
+		COMSIG_GIBS_STREAK,
+	))
+	qdel(GetComponent(/datum/component/connect_loc_behalf))
