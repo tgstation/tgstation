@@ -444,7 +444,7 @@
 	#define COMPONENT_SECONDARY_CONTINUE_ATTACK_CHAIN (1<<1)
 	#define COMPONENT_SECONDARY_CALL_NORMAL_ATTACK_CHAIN (1<<2)
 /// From base of [/obj/item/proc/attack_secondary()]: (atom/target, mob/user, params)
-#define COMSIG_ITEM_ATTACK_SECONDARY "item_pre_attack_secondary"
+#define COMSIG_ITEM_ATTACK_SECONDARY "item_attack_secondary"
 ///from base of obj/item/afterattack(): (atom/target, mob/user, proximity_flag, click_parameters)
 #define COMSIG_ITEM_AFTERATTACK "item_afterattack"
 	/// Flag for when /afterattack potentially acts on an item.
@@ -462,8 +462,15 @@
 /// from base of obj/item/failedEmbed()
 #define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
 
+/// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
+#define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"
+	#define COMPONENT_BLOCK_ITEM_DISARM_ATTACK (1<<0)
+
 ///from /obj/item/assembly/proc/pulsed(mob/pulser)
 #define COMSIG_ASSEMBLY_PULSED "assembly_pulsed"
+
+///from /datum/computer_file/program/nt_pay/_pay(), sent to every physical card of a bank account: (computer, money_received)
+#define COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED "id_card_ntpay_money_received"
 
 ///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"

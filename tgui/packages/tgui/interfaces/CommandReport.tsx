@@ -1,4 +1,6 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -152,10 +154,7 @@ const AnnouncementSound = (props) => {
 const ReportText = (props) => {
   const { act, data } = useBackend<Data>();
   const { announce_contents, print_report, command_report_content } = data;
-  const [commandReport, setCommandReport] = useLocalState<string>(
-    'textArea',
-    command_report_content,
-  );
+  const [commandReport, setCommandReport] = useState(command_report_content);
 
   return (
     <Section title="Set report text" textAlign="center">

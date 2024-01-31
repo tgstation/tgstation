@@ -21,11 +21,18 @@
 	gas_connector.set_init_directions()
 	gas_connector.atmos_init()
 	SSair.add_to_rebuild_queue(gas_connector)
+	RegisterSignal(gas_connector, COMSIG_QDELETING, PROC_REF(connector_deleted))
 
 /datum/gas_machine_connector/Destroy()
 	connected_machine = null
 	QDEL_NULL(gas_connector)
 	return ..()
+
+/datum/gas_machine_connector/proc/connector_deleted()
+	SIGNAL_HANDLER
+	gas_connector = null
+	if(!QDELETED(connected_machine))
+		qdel(connected_machine)
 
 /**
  * Register various signals that are required for the proper work of the connector

@@ -31,6 +31,11 @@ SUBSYSTEM_DEF(server_maint)
 		"dead_mob_list" = GLOB.dead_mob_list,
 		"keyloop_list" = GLOB.keyloop_list, //A null here will cause new clients to be unable to move. totally unacceptable
 	)
+	
+	var/datum/tgs_version/tgsversion = world.TgsVersion()
+	if(tgsversion)
+		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
+	
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/server_maint/fire(resumed = FALSE)
@@ -86,9 +91,6 @@ SUBSYSTEM_DEF(server_maint)
 		C?.tgui_panel?.send_roundrestart()
 		if(server) //if you set a server location in config.txt, it sends you there instead of trying to reconnect to the same world address. -- NeoFite
 			C << link("byond://[server]")
-	var/datum/tgs_version/tgsversion = world.TgsVersion()
-	if(tgsversion)
-		SSblackbox.record_feedback("text", "server_tools", 1, tgsversion.raw_parameter)
 
 
 /datum/controller/subsystem/server_maint/proc/UpdateHubStatus()

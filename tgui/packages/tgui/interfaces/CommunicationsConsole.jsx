@@ -1,5 +1,6 @@
 import { sortBy } from 'common/collections';
 import { capitalize } from 'common/string';
+import { useState } from 'react';
 
 import { useBackend, useLocalState } from '../backend';
 import {
@@ -85,7 +86,7 @@ const MessageModal = (props) => {
             width="80vw"
             backgroundColor="black"
             textColor="white"
-            onChange={(_, value) => {
+            onInput={(_, value) => {
               setInput(value.substring(0, maxMessageLength));
             }}
             value={input}
@@ -265,27 +266,15 @@ const PageMain = (props) => {
     shuttleRecallable,
   } = data;
 
-  const [callingShuttle, setCallingShuttle] = useLocalState(
-    'calling_shuttle',
-    false,
-  );
-  const [messagingAssociates, setMessagingAssociates] = useLocalState(
-    'messaging_associates',
-    false,
-  );
-  const [messagingSector, setMessagingSector] = useLocalState(
-    'messaing_sector',
-    null,
-  );
-  const [requestingNukeCodes, setRequestingNukeCodes] = useLocalState(
-    'requesting_nuke_codes',
-    false,
-  );
+  const [callingShuttle, setCallingShuttle] = useState(false);
+  const [messagingAssociates, setMessagingAssociates] = useState(false);
+  const [messagingSector, setMessagingSector] = useState(null);
+  const [requestingNukeCodes, setRequestingNukeCodes] = useState(false);
 
   const [
     [showAlertLevelConfirm, confirmingAlertLevelTick],
     setShowAlertLevelConfirm,
-  ] = useLocalState('showConfirmPrompt', [null, null]);
+  ] = useState([null, null]);
 
   return (
     <Box>

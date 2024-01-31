@@ -2,7 +2,6 @@
 /mob/living/basic/trooper/abductor
 	name = "Abductor Agent"
 	desc = "Mezaflorp?"
-	speed = 1.1
 	faction = list(ROLE_SYNDICATE)
 	loot = list(/obj/effect/mob_spawn/corpse/human/abductor)
 	mob_spawner = /obj/effect/mob_spawn/corpse/human/abductor

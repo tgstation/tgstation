@@ -35,6 +35,10 @@
 #define BB_NEAR_DEATH_SPEECH "near_death_speech"
 ///in crit patient we must alert medbay about
 #define BB_PATIENT_IN_CRIT "patient_in_crit"
+///how much time interval before we clear list
+#define BB_UNREACHABLE_LIST_COOLDOWN "unreachable_list_cooldown"
+///can we clear the list now
+#define	BB_CLEAR_LIST_READY "clear_list_ready"
 
 // cleanbots
 ///key that holds the foaming ability
