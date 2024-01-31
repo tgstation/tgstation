@@ -2300,13 +2300,9 @@
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
 "vw" = (
-/obj/structure/window/bronze,
-/obj/structure/window/bronze{
-	dir = 8
-	},
-/obj/structure/window/bronze{
-	dir = 1
-	},
+/obj/structure/window/bronze/spawner/directional/south,
+/obj/structure/window/bronze/spawner/directional/west,
+/obj/structure/window/bronze/spawner/directional/north,
 /obj/structure/grille,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
@@ -2774,9 +2770,7 @@
 /area/awaymission/museum)
 "zI" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
-/obj/structure/window/bronze{
-	dir = 1
-	},
+/obj/structure/window/bronze/spawner/directional/north,
 /obj/machinery/computer/terminal/museum{
 	pixel_y = -6;
 	content = list("Ratvar was once a powerful entity competing with the likes of Nar-Sie. It resided on a plane known as “Reebee” or the “City of cogs.” Supposedly, it was a clockwork city made of brass in which its cultists could enter once they had realized its power. However, this plane was also Ratvar’s prison from which it yearned to escape. While Reebee is gone, it is assumed that other structures such as temples or engines of the cult's creation still exist although it is unknown if they still have the power once bestowed to them by Ratvar. The fall of Reebe was an event in which Reebe, Ratvar, and all of its cultists were struck down by Nanotrasen. The cult was preparing Reebe for the freeing of Ratvar where the Veil was weak. Outpost 17, a small nanotrasen asteroid mining station was the target. Brave crewmembers managed to slip through the cracks in the veil and into the heart of Reebe with a bluespace artillery beacon in tow. With a desperate plea being sent out to a nearby security outpost, Reebe was obliterated along with the crewmembers of Outpost 17.")
@@ -4811,7 +4805,7 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/structure/table,
 /obj/item/computer_disk{
-	icon_state = "datadisk4";
+	icon_state = "datadisk_hydro";
 	name = "plant data disk"
 	},
 /turf/open/floor/iron/dark,
@@ -5372,13 +5366,9 @@
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
 "ZY" = (
-/obj/structure/window/bronze,
-/obj/structure/window/bronze{
-	dir = 4
-	},
-/obj/structure/window/bronze{
-	dir = 1
-	},
+/obj/structure/window/bronze/spawner/directional/south,
+/obj/structure/window/bronze/spawner/directional/east,
+/obj/structure/window/bronze/spawner/directional/north,
 /obj/structure/grille,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)

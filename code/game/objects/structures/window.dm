@@ -932,6 +932,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/tinted/frosted/spaw
 	icon_state = "clockwork_window-single"
 	glass_type = /obj/item/stack/sheet/bronze
 
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/bronze/spawner, 0)
+
 /obj/structure/window/bronze/unanchored
 	anchored = FALSE
 
