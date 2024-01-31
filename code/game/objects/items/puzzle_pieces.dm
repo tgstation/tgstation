@@ -426,7 +426,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	return REVERSE_DIR(border_dir) == dir
 
 /obj/structure/puzzle_blockade/oneway/try_signal(datum/source)
-	SIGNAL_HANDLER
 	density = FALSE
 	update_appearance(UPDATE_ICON)
 
