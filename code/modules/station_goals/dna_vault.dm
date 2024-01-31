@@ -101,8 +101,8 @@
 		F.parent = src
 		fillers += F
 
-	var/datum/station_goal/dna_vault/dna_vault_goal = locate() in GLOB.station_goals
-	if (!isnull(dna_vault_goal))
+	var/datum/station_goal/dna_vault/dna_vault_goal = SSstation.get_station_goal(/datum/station_goal/dna_vault)
+	if(!isnull(dna_vault_goal))
 		animals_max = dna_vault_goal.animal_count
 		plants_max = dna_vault_goal.plant_count
 		dna_max = dna_vault_goal.human_count
