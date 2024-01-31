@@ -99,60 +99,100 @@
 /datum/action/innate/cult/mastervote/IsAvailable(feedback = FALSE)
 	if(!owner || !owner.mind)
 		return FALSE
-	var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-	if(!C || C.cult_team.cult_vote_called || !ishuman(owner))
+	var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+	if(!mind_cult_datum || mind_cult_datum.cult_team.cult_leader_datum || mind_cult_datum.cult_team.cult_vote_called || !ishuman(owner))
 		return FALSE
 	return ..()
 
 /datum/action/innate/cult/mastervote/Activate()
 	var/choice = tgui_alert(owner, "The mantle of leadership is heavy. Success in this role requires an expert level of communication and experience. Are you sure?",, list("Yes", "No"))
 	if(choice == "Yes" && IsAvailable())
-		var/datum/antagonist/cult/C = owner.mind.has_antag_datum(/datum/antagonist/cult,TRUE)
-		pollCultists(owner,C.cult_team)
+		var/datum/antagonist/cult/mind_cult_datum = owner.mind.has_antag_datum(/datum/antagonist/cult)
+		start_poll_cultists_for_leader(owner, mind_cult_datum.cult_team)
 
-/proc/pollCultists(mob/living/Nominee, datum/team/cult/team) //Cult Master Poll
+///Start the poll for Cult Leaeder.
+/proc/start_poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
 	if(world.time < CULT_POLL_WAIT)
-		to_chat(Nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
+		to_chat(nominee, "It would be premature to select a leader while everyone is still settling in, try again in [DisplayTimeText(CULT_POLL_WAIT-world.time)].")
 		return
-	team.cult_vote_called = TRUE //somebody's trying to be a master, make sure we don't let anyone else try
-	for(var/datum/mind/B in team.members)
-		if(B.current)
-			B.current.update_mob_action_buttons()
-			if(!B.current.incapacitated())
-				SEND_SOUND(B.current, 'sound/hallucinations/im_here1.ogg')
-				to_chat(B.current, span_cultlarge("Acolyte [Nominee] has asserted that [Nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
-	sleep(10 SECONDS)
-	var/list/asked_cultists = list()
-	for(var/datum/mind/B in team.members)
-		if(B.current && B.current != Nominee && !B.current.incapacitated())
-			SEND_SOUND(B.current, 'sound/magic/exit_blood.ogg')
-			asked_cultists += B.current
-	var/list/yes_voters = SSpolling.poll_candidates("[Nominee] seeks to lead your cult, do you support [Nominee.p_them()]?", poll_time = 30 SECONDS, group = asked_cultists, pic_source = Nominee, role_name_text = "cult master")
-	if(QDELETED(Nominee) || Nominee.incapacitated())
+	team.cult_vote_called = TRUE
+	for(var/datum/mind/team_member as anything in team.members)
+		if(!team_member.current)
+			continue
+		team_member.current.update_mob_action_buttons()
+		if(team_member.current.incapacitated())
+			continue
+		SEND_SOUND(team_member.current, 'sound/hallucinations/im_here1.ogg')
+		to_chat(team_member.current, span_cultlarge("Acolyte [nominee] has asserted that [nominee.p_theyre()] worthy of leading the cult. A vote will be called shortly."))
+
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(poll_cultists_for_leader), nominee, team), 10 SECONDS)
+
+///Polls all Cultists on whether the person putting themselves forward should be made the Cult Leader, if they can actually be such.
+/proc/poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
+	if(QDELETED(nominee) || nominee.incapacitated())
 		team.cult_vote_called = FALSE
-		for(var/datum/mind/B in team.members)
-			if(B.current)
-				B.current.update_mob_action_buttons()
-				if(!B.current.incapacitated())
-					to_chat(B.current,span_cultlarge("[Nominee] has died in the process of attempting to win the cult's support!"))
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current,span_cultlarge("[nominee] has died in the process of attempting to start a vote!"))
 		return FALSE
-	if(!Nominee.mind)
+	var/list/mob/living/asked_cultists = list()
+	for(var/datum/mind/team_member as anything in team.members)
+		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated())
+			continue
+		SEND_SOUND(team_member.current, 'sound/magic/exit_blood.ogg')
+		asked_cultists += team_member.current
+
+	var/list/yes_voters = SSpolling.poll_candidates(
+		question = "[nominee] seeks to lead your cult, do you support [nominee.p_them()]?",
+		poll_time = 30 SECONDS,
+		group = asked_cultists,
+		pic_source = nominee,
+		role_name_text = "cult master",
+		custom_response_messages = list(
+			POLL_RESPONSE_SIGNUP = "You have pledged your allegience to [nominee].",
+			POLL_RESPONSE_ALREADY_SIGNED = "You have already pledged your allegience!",
+			POLL_RESPONSE_NOT_SIGNED = "You aren't nominated for this.",
+			POLL_RESPONSE_TOO_LATE_TO_UNREGISTER = "It's too late to unregister yourself, voting has already begun!",
+			POLL_RESPONSE_UNREGISTERED = "You have been removed your pledge to [nominee].",
+		)
+	)
+	if(QDELETED(nominee) || nominee.incapacitated())
 		team.cult_vote_called = FALSE
-		for(var/datum/mind/B in team.members)
-			if(B.current)
-				B.current.update_mob_action_buttons()
-				if(!B.current.incapacitated())
-					to_chat(B.current,span_cultlarge("[Nominee] has gone catatonic in the process of attempting to win the cult's support!"))
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current,span_cultlarge("[nominee] has died in the process of attempting to win the cult's support!"))
+		return FALSE
+	if(!nominee.mind)
+		team.cult_vote_called = FALSE
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current,span_cultlarge("[nominee] has gone catatonic in the process of attempting to win the cult's support!"))
 		return FALSE
 	if(LAZYLEN(yes_voters) <= LAZYLEN(asked_cultists) * 0.5)
 		team.cult_vote_called = FALSE
-		for(var/datum/mind/B in team.members)
-			if(B.current)
-				B.current.update_mob_action_buttons()
-				if(!B.current.incapacitated())
-					to_chat(B.current, span_cultlarge("[Nominee] could not win the cult's support and shall continue to serve as an acolyte."))
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current, span_cultlarge("[nominee] could not win the cult's support and shall continue to serve as an acolyte."))
 		return FALSE
-	var/datum/antagonist/cult/cult_datum = Nominee.mind.has_antag_datum(/datum/antagonist/cult)
+
+	team.cult_vote_called = FALSE
+	var/datum/antagonist/cult/cult_datum = nominee.mind.has_antag_datum(/datum/antagonist/cult)
 	if(!cult_datum.make_cult_leader())
 		CRASH("[cult_datum.owner.current] was supposed to turn into the leader, but they didn't for some reason. This isn't supposed to happen unless an Admin messed with it.")
 	return TRUE

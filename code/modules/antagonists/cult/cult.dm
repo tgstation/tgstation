@@ -200,7 +200,8 @@
 	owner.current.update_mob_action_buttons()
 
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		vote_ability.Remove(cult_mind.current)
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
+		cult_datum.vote_ability.Remove(cult_mind.current)
 		to_chat(cult_mind.current, span_cultlarge("[owner.current] has won the cult's support and is now their master. \
 			Follow [owner.current.p_their()] orders to the best of your ability!"))
 
@@ -234,7 +235,8 @@
 		throwing.Remove(owner.current)
 	owner.current.update_mob_action_buttons()
 	for(var/datum/mind/cult_mind as anything in cult_team.members)
-		vote_ability.Grant(cult_mind.current)
+		var/datum/antagonist/cult/cult_datum = cult_mind.has_antag_datum(/datum/antagonist/cult)
+		cult_datum.vote_ability.Grant(cult_mind.current)
 
 	to_chat(owner.current, span_cultlarge("You have been demoted from being the cult's Master, you are now an acolyte once more!"))
 
