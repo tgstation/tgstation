@@ -295,6 +295,7 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 
 /datum/voice_of_god_command/say_my_name/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
+	var/regex/smartass_regex = regex(@"^say my name[.!]*$")
 	for(var/mob/living/target as anything in listeners)
 		var/to_say = user.name
 		// 1% chance to be a smartass
