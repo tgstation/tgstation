@@ -179,7 +179,11 @@
 			return TRUE
 
 		if("experiment")
-			try_perform_experiment(params["id"])
+			var/reaction = text2num(params["id"])
+			if(isnull(reaction))
+				return
+
+			try_perform_experiment(reaction)
 			return TRUE
 
 /obj/machinery/rnd/experimentor/proc/ejectItem(delete = FALSE)
@@ -213,7 +217,7 @@
 
 	return FAIL
 
-/obj/machinery/rnd/experimentor/proc/try_perform_experiment(reaction_id)
+/obj/machinery/rnd/experimentor/proc/try_perform_experiment(reaction)
 	PRIVATE_PROC(TRUE)
 	if(isnull(stored_research))
 		balloon_alert_to_viewers("not connected to server!")
@@ -224,10 +228,6 @@
 		return
 
 	if(isnull(loaded_item))
-		return
-
-	var/reaction = text2num(reaction_id)
-	if(isnull(reaction))
 		return
 
 	if(reaction != SCANTYPE_DISCOVER)
