@@ -30,10 +30,18 @@
 	if(stat)
 		return FALSE
 
+	if(buckled)
+		stop_feeding()
+		return TRUE
+
 	var/list/choices = list()
 	for(var/mob/living/nearby_mob in view(1,src))
-		if(nearby_mob != src && Adjacent(nearby_mob))
+		if(nearby_mob != src && Adjacent(nearby_mob) && nearby_mob.appears_alive())
 			choices += nearby_mob
+
+	if(length(choices) == 1)
+		start_feeding(choices[1])
+		return TRUE
 
 	var/choice = tgui_input_list(src, "Who do you wish to feed on?", "Slime Feed", sort_names(choices))
 	if(isnull(choice))
