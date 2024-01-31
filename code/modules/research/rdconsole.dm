@@ -236,7 +236,8 @@ Nothing else in the console has ID requirements.
 
 /obj/machinery/computer/rdconsole/ui_static_data(mob/user)
 	. = list(
-		"static_data" = list()
+		"static_data" = list(),
+		"point_types_abbreviations" = SSresearch.point_types,
 	)
 
 	// Build node cache...

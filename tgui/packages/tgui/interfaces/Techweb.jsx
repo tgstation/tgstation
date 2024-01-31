@@ -86,13 +86,6 @@ const useRemappedBackend = () => {
   };
 };
 
-// Utility Functions
-
-const abbreviations = {
-  'General Research': 'Gen. Res.',
-};
-const abbreviateName = (name) => abbreviations[name] ?? name;
-
 // Actual Components
 
 export const Techweb = (props) => {
@@ -492,7 +485,14 @@ const TechNodeDetail = (props) => {
 
 const TechNode = (props) => {
   const { act, data } = useRemappedBackend();
-  const { node_cache, design_cache, experiments, points, nodes } = data;
+  const {
+    node_cache,
+    design_cache,
+    experiments,
+    points = [],
+    nodes,
+    point_types_abbreviations = [],
+  } = data;
   const { node, nodetails, nocontrols } = props;
   const { id, can_unlock, tier } = node;
   const {
@@ -597,7 +597,7 @@ const TechNode = (props) => {
                       : Math.min(1, (points[k.type] || 0) / reqPts)
                   }
                 >
-                  {abbreviateName(k.type)} ({nodeProg}/{reqPts})
+                  {point_types_abbreviations[k.type]} ({nodeProg}/{reqPts})
                 </ProgressBar>
               </Flex.Item>
             );

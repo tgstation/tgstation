@@ -38,8 +38,8 @@ SUBSYSTEM_DEF(research)
 		/obj/item/assembly/signaler/anomaly = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 	)
 	var/list/errored_datums = list()
-	///List of all point types that techwebs will have.
-	var/list/point_types = list(TECHWEB_POINT_TYPE_GENERIC)
+	///Associated list of all point types that techwebs will have and their respective 'abbreviated' name.
+	var/list/point_types = list(TECHWEB_POINT_TYPE_GENERIC = "Gen. Res.")
 	//----------------------------------------------
 	var/list/single_server_income = list(
 		TECHWEB_POINT_TYPE_GENERIC = TECHWEB_SINGLE_SERVER_INCOME,
