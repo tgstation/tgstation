@@ -419,8 +419,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	return ..()
 
 /obj/structure/puzzle_blockade/oneway/CanAllowThrough(atom/movable/mover, border_dir)
-	. = ..()
-	return . && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
+	return ..() && (REVERSE_DIR(border_dir) == dir || get_turf(mover) == get_turf(src))
 
 /obj/structure/puzzle_blockade/oneway/CanAStarPass(border_dir, datum/can_pass_info/pass_info)
 	return REVERSE_DIR(border_dir) == dir
@@ -457,7 +456,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/puzzle_keycardpad, 32)
 	SIGNAL_HANDLER
 	var/openclose
 	for(var/obj/machinery/door/poddoor/door as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/poddoor))
-		if(door.id == id)
-			if(openclose == null)
-				openclose = door.density
-			INVOKE_ASYNC(door, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))
+		if(door.id != id)
+			continue
+		if(isnull(openclose))
+			openclose = door.density
+		INVOKE_ASYNC(door, openclose ? TYPE_PROC_REF(/obj/machinery/door/poddoor, open) : TYPE_PROC_REF(/obj/machinery/door/poddoor, close))

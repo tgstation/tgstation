@@ -1408,20 +1408,19 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 	. = ..()
 	var/atom/movable/buckle_to
 	var/list/mobs = list()
-	for(var/thing as anything in loc)
-		var/atom/movable/possible_buckle = thing
-		if(isnull(buckle_to) && istype(possible_buckle) && possible_buckle.can_buckle)
+	for(var/atom/movable/possible_buckle as anything in loc)
+		if(isnull(buckle_to) && possible_buckle.can_buckle)
 			buckle_to = possible_buckle
 			continue
 
-		if(isliving(thing))
-			mobs += thing
+		if(isliving(possible_buckle))
+			mobs += possible_buckle 
 	
 	if(isnull(buckle_to))
 		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
 		return INITIALIZE_HINT_QDEL
 		
-	for(var/mob/living/mob in mobs)
+	for(var/mob/living/mob as anything in mobs)
 		buckle_to.buckle_mob(mob, force = force_buckle)
 	
 	return INITIALIZE_HINT_QDEL
