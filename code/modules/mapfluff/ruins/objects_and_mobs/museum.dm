@@ -81,7 +81,7 @@
 	. = ..()
 	if(isnull(range))
 		range = world.view
-	var/used_z = target_turf_z ? target_turf_z : z //if target z is not defined, use ours
+	var/used_z = target_turf_z || z //if target z is not defined, use ours
 	var/turf/target = locate(offset ? target_turf_x + x : target_turf_x, offset ? target_turf_y + y : target_turf_y, used_z)
 	AddElement(/datum/element/mirage_border, target, dir, range)
 
