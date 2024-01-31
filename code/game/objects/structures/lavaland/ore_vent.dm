@@ -18,7 +18,7 @@
 	var/tapped = FALSE
 	/// Has this vent been scanned by a mining scanner? Cannot be scanned again. Adds ores to the vent's description.
 	var/discovered = FALSE
-	/// Is this type of vent exempt from the 15 vent limit? Think the free iron/glass vent or boss vents. This also causes it to not roll for random mineral breakdown.
+	/// Is this type of vent exempt from the map's vent budget/limit? Think the free iron/glass vent or boss vents. This also causes it to not roll for random mineral breakdown.
 	var/unique_vent = FALSE
 	/// What icon_state do we use when the ore vent has been tapped?
 	var/icon_state_tapped = "ore_vent_active"
@@ -74,7 +74,8 @@
 	if(mapload)
 		generate_description()
 	register_context()
-	SSore_generation.possible_vents += src
+	if(!unique_vent)
+		SSore_generation.possible_vents += src
 	boulder_icon_state = pick(list(
 		"boulder",
 		"rock",
