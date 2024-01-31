@@ -1418,7 +1418,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_lava)
 			mobs += thing
 	
 	if(isnull(buckle_to))
-		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to"
+		log_mapping("[type] at [x] [y] [z] did not find anything to buckle to")
 		return INITIALIZE_HINT_QDEL
 		
 	for(var/mob/living/mob in mobs)
