@@ -25,7 +25,7 @@
 	color = "#87878715"
 
 /datum/armor/mecha_reticence
-	melee = 25
+	melee = 40
 	bullet = 20
 	laser = 30
 	energy = 15
@@ -36,13 +36,13 @@
 	equip_by_category = list(
 		MECHA_L_ARM = /obj/item/mecha_parts/mecha_equipment/weapon/ballistic/silenced,
 		MECHA_R_ARM = /obj/item/mecha_parts/mecha_equipment/rcd,
-		MECHA_UTILITY = list(),
-		MECHA_POWER = list(),
+		MECHA_UTILITY = list(/obj/item/mecha_parts/mecha_equipment/radio, /obj/item/mecha_parts/mecha_equipment/air_tank/full, /obj/item/mecha_parts/mecha_equipment/thrusters/ion),
+		MECHA_POWER = /obj/item/mecha_parts/mecha_equipment/generator,
 		MECHA_ARMOR = list(),
 	)
 
 /obj/vehicle/sealed/mecha/reticence/loaded/populate_parts()
-	cell = new /obj/item/stock_parts/cell/hyper(src)
+	cell = new /obj/item/stock_parts/cell/bluespace(src)
 	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
 	capacitor = new /obj/item/stock_parts/capacitor/super(src)
 	servo = new /obj/item/stock_parts/servo/pico(src)
