@@ -33,7 +33,7 @@
 		BB_AGGRO_RANGE = 6,
 	)
 
-	ai_movement = null
+	ai_movement = /datum/ai_movement/dumb
 	idle_behavior = null
 	planning_subtrees = list(
 		/datum/ai_planning_subtree/simple_find_target,
