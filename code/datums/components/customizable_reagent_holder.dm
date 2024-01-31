@@ -57,7 +57,7 @@
 
 /datum/component/customizable_reagent_holder/Destroy(force)
 	QDEL_NULL(top_overlay)
-	ingredients.Cut()
+	LAZYCLEARLIST(ingredients)
 	return ..()
 
 
