@@ -1,5 +1,0 @@
-author: "LT3"
-delete-after: True
-changes:
-  - bugfix: "Tram power consumption will no longer will randomly drain APCs"
-  - bugfix: "Tram power moved to area based rectifiers"
