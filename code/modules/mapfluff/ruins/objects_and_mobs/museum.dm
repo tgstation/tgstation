@@ -21,10 +21,6 @@
 
 /obj/effect/replica_spawner/Initialize(mapload)
 	. = ..()
-	INVOKE_ASYNC(src, PROC_REF(create_replica))
-	return INITIALIZE_HINT_QDEL
-
-/obj/effect/replica_spawner/proc/create_replica()
 	var/atom/appearance_object = new target_path
 	var/atom/new_replica = new replica_path(loc)
 
@@ -37,6 +33,7 @@
 	new_replica.desc = "[appearance_object.desc][obvious_replica ? " ..except this one is a replica.": ""]"
 	qdel(appearance_object)
 	qdel(src)
+	return INITIALIZE_HINT_QDEL
 
 /obj/structure/fluff/dnamod
 	name = "DNA Modifier"
