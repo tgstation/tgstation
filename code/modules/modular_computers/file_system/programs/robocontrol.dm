@@ -83,7 +83,7 @@
 
 	return data
 
-/datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui, datum/tgui/ui, datum/ui_state/state)
+/datum/computer_file/program/robocontrol/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	var/mob/current_user = ui.user
 	var/obj/item/card/id/id_card = computer?.computer_id_slot
