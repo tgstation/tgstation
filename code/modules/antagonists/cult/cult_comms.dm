@@ -129,6 +129,16 @@
 
 ///Polls all Cultists on whether the person putting themselves forward should be made the Cult Leader, if they can actually be such.
 /proc/poll_cultists_for_leader(mob/living/nominee, datum/team/cult/team)
+	if(QDELETED(nominee) || nominee.incapacitated())
+		team.cult_vote_called = FALSE
+		for(var/datum/mind/team_member as anything in team.members)
+			if(!team_member.current)
+				continue
+			team_member.current.update_mob_action_buttons()
+			if(team_member.current.incapacitated())
+				continue
+			to_chat(team_member.current,span_cultlarge("[nominee] has died in the process of attempting to start a vote!"))
+		return FALSE
 	var/list/mob/living/asked_cultists = list()
 	for(var/datum/mind/team_member as anything in team.members)
 		if(!team_member.current || team_member.current == nominee || team_member.current.incapacitated())
