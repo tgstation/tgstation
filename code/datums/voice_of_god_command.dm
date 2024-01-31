@@ -296,7 +296,11 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 /datum/voice_of_god_command/say_my_name/execute(list/listeners, mob/living/user, power_multiplier = 1, message)
 	var/iteration = 1
 	for(var/mob/living/target as anything in listeners)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), user.name), 0.5 SECONDS * iteration)
+		var/to_say = user.name
+		// 1% chance to be a smartass
+		if(findtext(lowertext(message), regex(@"^say my name[.!]*$")) && !rand(100))
+			to_say = "My name"
+		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), to_say), 0.5 SECONDS * iteration)
 		iteration++
 
 /// This command forces the listeners to say "Who's there?".
