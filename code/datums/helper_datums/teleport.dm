@@ -65,7 +65,7 @@
 		return FALSE
 
 	if(!forced)
-		if(!check_teleport_valid(teleatom, destination, channel))
+		if(!check_teleport_valid(teleatom, destturf, channel))
 			if(ismob(teleatom))
 				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
@@ -193,6 +193,15 @@
 	var/turf/destination_turf = get_turf(destination)
 
 	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
+		return FALSE
+
+	var/static/list/reserved_level_allowed_areas = zebra_typecacheof(list(
+		/area/shuttle = TRUE,
+		/area/shuttle/transit = FALSE,
+	))
+
+	// prevent unprecise teleports from landing you into a reserved area or another area you shouldn't be in
+	if(is_reserved_level(destination_turf.z) && !reserved_level_allowed_areas[destination_area.type])
 		return FALSE
 
 	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
