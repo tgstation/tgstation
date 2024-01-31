@@ -182,7 +182,7 @@
 		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
 	var/starting_minerals = length(mineral_breakdown) // we're going to use this to track how many minerals we've added.
 	while(length(mineral_breakdown) < new_minerals + starting_minerals)
-		if(!SSore_generation.ore_vent_minerals.len && map_loading)
+		if(!length(SSore_generation.ore_vent_minerals) && map_loading)
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material
 		if(map_loading)
