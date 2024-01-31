@@ -16,8 +16,10 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	///A list of trait roles that should never be able to roll antag
 	var/list/antag_restricted_roles = list()
 
-/datum/controller/subsystem/processing/station/Initialize()
+	/// Assosciative list of station goal type -> goal instance
+	var/list/datum/station_goal/goals_by_type = list()
 
+/datum/controller/subsystem/processing/station/Initialize()
 	//If doing unit tests we don't do none of that trait shit ya know?
 	// Autowiki also wants consistent outputs, for example making sure the vending machine page always reports the normal products
 	#if !defined(UNIT_TESTS) && !defined(AUTOWIKI)
@@ -29,6 +31,45 @@ PROCESSING_SUBSYSTEM_DEF(station)
 	SSparallax.post_station_setup() //Apply station effects that parallax might have
 
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/processing/station/Recover()
+	station_traits = SSstation.station_traits
+	selectable_traits_by_types = SSstation.selectable_traits_by_types
+	announcer = SSstation.announcer
+	antag_protected_roles = SSstation.antag_protected_roles
+	antag_restricted_roles = SSstation.antag_restricted_roles
+	goals_by_type = SSstation.goals_by_type
+	..()
+
+/// This gets called by SSdynamic during initial gamemode setup.
+/// This is done because for a greenshift we want all goals to be generated
+/datum/controller/subsystem/processing/station/proc/generate_station_goals(goal_budget)
+	var/list/possible = subtypesof(/datum/station_goal)
+
+	var/goal_weights = 0
+	var/chosen_goals = list()
+	var/is_planetary = SSmapping.is_planetary()
+	while(possible.len && goal_weights < goal_budget)
+		var/datum/station_goal/picked = pick_n_take(possible)
+		if(picked::requires_space && is_planetary)
+			continue
+
+		goal_weights += initial(picked.weight)
+		chosen_goals += picked
+
+	for(var/chosen in chosen_goals)
+		new chosen()
+
+/// Returns all station goals that are currently active
+/datum/controller/subsystem/processing/station/proc/get_station_goals()
+	var/list/goals = list()
+	for(var/goal_type in goals_by_type)
+		goals += goals_by_type[goal_type]
+	return goals
+
+/// Returns a specific station goal by type
+/datum/controller/subsystem/processing/station/proc/get_station_goal(goal_type)
+	return goals_by_type[goal_type]
 
 ///Rolls for the amount of traits and adds them to the traits list
 /datum/controller/subsystem/processing/station/proc/SetupTraits()
