@@ -1378,7 +1378,7 @@
 "mZ" = (
 /obj/effect/turf_decal/siding/wood,
 /obj/machinery/door/airlock/freezer{
-	req_access = req("bartender")
+	req_access = list("bartender")
 	},
 /turf/open/floor/iron/freezer,
 /area/awaymission/museum)
