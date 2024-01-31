@@ -21,6 +21,8 @@
 
 /obj/effect/replica_spawner/Initialize(mapload)
 	. = ..()
+	if(isnull(target_path))
+		return INITIALIZE_HINT_QDEL //no use to make a replica of null
 	var/atom/appearance_object = new target_path
 	var/atom/new_replica = new replica_path(loc)
 
