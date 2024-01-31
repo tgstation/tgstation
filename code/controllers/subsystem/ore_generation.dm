@@ -45,8 +45,8 @@ SUBSYSTEM_DEF(ore_generation)
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	while(length(ore_vent_minerals) > 0) //Keep looping if there's more to assign
 		for(var/obj/structure/ore_vent/vent as anything in possible_vents)
-			if(length(ore_vent_minerals) <= 0) //But break early if there's none left.
-				break
+			if(length(ore_vent_minerals) <= 0) //But finish early if there's none left.
+				return SS_INIT_SUCCESS
 			if(vent.unique_vent)
 				continue //Ya'll already got your minerals.
 			vent.generate_mineral_breakdown(new_minerals = 1, map_loading = TRUE)
