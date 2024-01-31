@@ -318,7 +318,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	damage_factors = calculate_damage()
 	if(damage == 0) // Clear any in game forced delams if on full health.
 		set_delam(SM_DELAM_PRIO_IN_GAME, SM_DELAM_STRATEGY_PURGE)
-	else if(damage <= explosion_point)
+	else if(!final_countdown)
 		set_delam(SM_DELAM_PRIO_NONE, SM_DELAM_STRATEGY_PURGE) // This one cant clear any forced delams.
 	delamination_strategy.delam_progress(src)
 	if(damage > explosion_point && !final_countdown)
@@ -564,7 +564,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		header = "Meltdown Incoming",
 	)
 
-	var/datum/sm_delam/last_delamination_strategy = delamination_strategy
 	var/list/count_down_messages = delamination_strategy.count_down_messages()
 
 	radio.talk_into(
@@ -587,10 +586,6 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 			)
 
 	for(var/i in delamination_countdown_time to 0 step -10)
-		if(last_delamination_strategy != delamination_strategy)
-			count_down_messages = delamination_strategy.count_down_messages()
-			last_delamination_strategy = delamination_strategy
-
 		var/message
 		var/healed = FALSE
 

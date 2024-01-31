@@ -767,3 +767,24 @@
       (teg)
   - image: changed circulator's (teg) fast/slow turbine sprite
   - image: added an anchor, panel, and flow overlay for the circulator (teg)
+2024-01-31:
+  Jacquerel:
+  - bugfix: Cult pylons will no longer cover up "open space" (or water) with cult
+      floors
+  LT3:
+  - bugfix: ID card examine text shows how to set your linked bank account
+  - bugfix: ID card withdrawal from an unassigned account will ask if you want to
+      link an account
+  - bugfix: Tram power consumption will no longer will randomly drain APCs
+  - bugfix: Tram power moved to area based rectifiers
+  Melbert:
+  - bugfix: Fixed ore vent descriptions looking weird sometimes
+  - bugfix: Fixed being able to scan an ore vent multiple times at once
+  - bugfix: Fixed gaining scan points from scannning an ore vent without finishing
+      the scan
+  SapphicOverload:
+  - bugfix: Mk-II Ripley exosuits are spaceproof again.
+  - bugfix: Converted mechs now have their lights on if they did before the conversion.
+  distributivgesetz:
+  - bugfix: All Within Theoretical Limits should properly unlock now when the crystal
+      comes back from the countdown.
