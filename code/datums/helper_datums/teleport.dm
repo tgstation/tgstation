@@ -65,7 +65,7 @@
 		return FALSE
 
 	if(!forced)
-		if(!check_teleport_valid(teleatom, destturf, channel))
+		if(!check_teleport_valid(teleatom, destturf, channel, original_destination = destination))
 			if(ismob(teleatom))
 				teleatom.balloon_alert(teleatom, "something holds you back!")
 			return FALSE
@@ -185,7 +185,7 @@
 		return pick(turfs)
 
 /// Validates that the teleport being attempted is valid or not
-/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel)
+/proc/check_teleport_valid(atom/teleported_atom, atom/destination, channel, atom/original_destination = null)
 	var/area/origin_area = get_area(teleported_atom)
 	var/turf/origin_turf = get_turf(teleported_atom)
 
@@ -195,13 +195,9 @@
 	if(HAS_TRAIT(teleported_atom, TRAIT_NO_TELEPORT))
 		return FALSE
 
-	var/static/list/reserved_level_allowed_areas = zebra_typecacheof(list(
-		/area/shuttle = TRUE,
-		/area/shuttle/transit = FALSE,
-	))
-
-	// prevent unprecise teleports from landing you into a reserved area or another area you shouldn't be in
-	if(is_reserved_level(destination_turf.z) && !reserved_level_allowed_areas[destination_area.type])
+	// prevent unprecise teleports from landing you outside of the destination's reserved area
+	if(is_reserved_level(destination_turf.z) && istype(original_destination) \
+		&& SSmapping.get_reservation_from_turf(destination_turf) != SSmapping.get_reservation_from_turf(get_turf(original_destination)))
 		return FALSE
 
 	if((origin_area.area_flags & NOTELEPORT) || (destination_area.area_flags & NOTELEPORT))
