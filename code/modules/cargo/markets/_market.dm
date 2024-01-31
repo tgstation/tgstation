@@ -10,6 +10,8 @@
 	var/list/available_items = list()
 	/// Item categories available from this market, only items which are in these categories can be gotten from this market. Automatically assigned, so don't manually adjust.
 	var/list/categories = list()
+	/// flags we want to add to markets
+	var/market_flags = NONE
 
 /// Adds item to the available items and add it's category if it is not in categories yet.
 /datum/market/proc/add_item(datum/market_item/item)
@@ -25,6 +27,13 @@
 
 	available_items[item.category] += item
 	return TRUE
+
+/datum/market/proc/try_process()
+	return
+
+///called before purchase override if you want to potentially stop purchases //monkestation edit - MODULAR_GUNS
+/datum/market/proc/pre_purchase(item, category, method, obj/item/market_uplink/uplink, user)
+	purchase(item, category, method, uplink, user)
 
 /// Handles buying the item, this is mainly for future use and moving the code away from the uplink.
 /datum/market/proc/purchase(item, category, method, obj/item/market_uplink/uplink, user)

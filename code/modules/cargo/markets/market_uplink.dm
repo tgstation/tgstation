@@ -16,7 +16,7 @@
 	///Reference to the currently logged in user's bank account.
 	var/datum/bank_account/current_user
 	/// List of typepaths for "/datum/market"s that this uplink can access.
-	var/list/accessible_markets = list(/datum/market/blackmarket)
+	var/list/accessible_markets = list(/datum/market/blackmarket, /datum/market/blackmarket/auction/guns)
 
 /obj/item/market_uplink/Initialize(mapload)
 	. = ..()
@@ -69,12 +69,19 @@
 	if(viewing_category && market)
 		if(market.available_items[viewing_category])
 			for(var/datum/market_item/I in market.available_items[viewing_category])
+				var/time_left
+				if(istype(I, /datum/market_item/auction))
+					var/datum/market_item/auction/auction_item = I
+					if(auction_item.timer_id)
+						time_left = round(timeleft(auction_item.timer_id) * 0.1, 1)
+
 				data["items"] += list(list(
 					"id" = I.type,
 					"name" = I.name,
 					"cost" = I.price,
 					"amount" = I.stock,
-					"desc" = I.desc || I.name
+					"desc" = I.desc || I.name,
+					"time_left" = time_left,
 				))
 	return data
 
@@ -138,7 +145,7 @@
 				buying = FALSE
 				return
 			var/datum/market/market = SSblackmarket.markets[viewing_market]
-			market.purchase(selected_item, viewing_category, params["method"], src, usr)
+			market.pre_purchase(selected_item, viewing_category, params["method"], src, usr) // monkestation edit - MODULAR_GUNS
 
 			buying = FALSE
 			selected_item = null
@@ -149,7 +156,7 @@
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 	//The original black market uplink
-	accessible_markets = list(/datum/market/blackmarket)
+	accessible_markets = list(/datum/market/blackmarket, /datum/market/blackmarket/auction/guns)
 
 
 /datum/crafting_recipe/blackmarket_uplink

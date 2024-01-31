@@ -42,6 +42,7 @@ on the parent of other components.
 	firing_speed /= attached.fire_multipler
 	loudness /= attached.noise_multiplier
 	ease_of_use /= attached.ease_of_use
+	attached.unique_attachment_effects_removal(parent)
 	redistribute_stats()
 
 ///this is a shitcode handler until i convert all guns to the stat_holder_system

@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(blackmarket)
 	var/list/queued_purchases = list()
 
 /datum/controller/subsystem/blackmarket/Initialize()
-	for(var/market in subtypesof(/datum/market))
+	for(var/market in subtypesof(/datum/market) - /datum/market/blackmarket/auction) //monkestation edit - MODULAR_GUNS
 		markets[market] += new market
 
 	for(var/item in subtypesof(/datum/market_item))
@@ -35,6 +35,11 @@ SUBSYSTEM_DEF(blackmarket)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
+	for(var/datum/market/listed_market in markets) //monkestation edit - MODULAR_GUNS
+		if(!(listed_market.market_flags & MARKET_AUCTION))
+			continue
+		listed_market.try_process()
+
 	while(length(queued_purchases))
 		var/datum/market_purchase/purchase = queued_purchases[1]
 		queued_purchases.Cut(1,2)
