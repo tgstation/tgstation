@@ -236,5 +236,5 @@
 		display_spiders[initial(spider.name)] = option
 	sort_list(display_spiders)
 
-	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38)
+	var/chosen_spider = show_radial_menu(user, egg, display_spiders, radius = 38, require_near = TRUE)
 	return spider_list[chosen_spider]
