@@ -20,8 +20,10 @@
 	var/mech_damage = 45
 
 /datum/action/cooldown/mob_cooldown/fire_breath/Activate(atom/target_atom)
+	disable_cooldown_actions()
 	attack_sequence(target_atom)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE
 
 /// Apply our specific fire breathing shape, in proc form so we can override it in subtypes
