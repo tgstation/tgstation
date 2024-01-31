@@ -220,11 +220,9 @@
 /obj/machinery/rnd/experimentor/proc/try_perform_experiment(reaction)
 	PRIVATE_PROC(TRUE)
 	if(isnull(stored_research))
-		balloon_alert_to_viewers("not connected to server!")
 		return
 
 	if(recentlyExperimented)
-		balloon_alert_to_viewers("used too recently!")
 		return
 
 	if(isnull(loaded_item))
