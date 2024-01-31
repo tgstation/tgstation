@@ -36,7 +36,7 @@
 
 	var/list/choices = list()
 	for(var/mob/living/nearby_mob in view(1,src))
-		if(nearby_mob != src && Adjacent(nearby_mob) && nearby_mob.stat < DEAD)
+		if(nearby_mob != src && Adjacent(nearby_mob) && nearby_mob.appears_alive())
 			choices += nearby_mob
 
 	if(length(choices) == 1)
