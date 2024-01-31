@@ -527,6 +527,7 @@
 			balloon_alert(user, "can't use this ammo!")
 	return FALSE
 
+///Upgrades any attached RCD equipment.
 /obj/vehicle/sealed/mecha/proc/upgrade_rcd(obj/item/rcd_upgrade/rcd_upgrade, mob/user)
 	for(var/obj/item/mecha_parts/mecha_equipment/rcd/rcd_equip in flat_equipment)
 		if(rcd_equip.internal_rcd.install_upgrade(rcd_upgrade, user))

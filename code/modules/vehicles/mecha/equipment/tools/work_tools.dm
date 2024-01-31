@@ -285,7 +285,7 @@
 		stack_trace("Exosuit-mounted RCD had no internal RCD!")
 	..() // do this now because the do_after can take a while
 	var/construction_mode = internal_rcd.mode
-	if(deconstruct_active) // i hate this solution
+	if(deconstruct_active) // deconstruct isn't in the RCD menu so switch it to deconstruct mode and set it back when it's done
 		internal_rcd.mode = RCD_DECONSTRUCT
 	internal_rcd.rcd_create(target, source)
 	internal_rcd.mode = construction_mode
