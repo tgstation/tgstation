@@ -94,19 +94,13 @@
 	SIGNAL_HANDLER
 
 	var/atom/atom_parent = parent
-	var/ingredients_listed = ""
-	for (var/i in 1 to LAZYLEN(ingredients))
-		var/obj/item/ingredient = ingredients[i]
-		var/ending = ", "
-		switch(length(ingredients))
-			if (2)
-				if (i == 1)
-					ending = " and "
-			if (3 to INFINITY)
-				if (i == LAZYLEN(ingredients) - 1)
-					ending = ", and "
-		ingredients_listed += "\a [ingredient.name][ending]"
-	examine_list += "It [LAZYLEN(ingredients) ? "contains [ingredients_listed]making a [custom_adjective()]-sized [initial(atom_parent.name)]" : "does not contain any ingredients"]."
+	var/list/ingredients_listed = list()
+	for(var/obj/item/ingredient as anything in ingredients)
+		ingredients_listed += "\a [ingredient.name]"
+
+	examine_list += "It [LAZYLEN(ingredients) \
+		? "contains [english_list(ingredients_listed)] making a [custom_adjective()]-sized [initial(atom_parent.name)]" \
+		: "does not contain any ingredients"]."
 
 //// Proc that checks if an ingredient is valid or not, returning false if it isnt and true if it is.
 /datum/component/customizable_reagent_holder/proc/valid_ingredient(obj/ingredient)
@@ -292,8 +286,7 @@
 
 	return CONTEXTUAL_SCREENTIP_SET
 
-/// Clear refs if our food goes away
+/// Clear refs if our food "goes away" somehow
 /datum/component/customizable_reagent_holder/proc/food_exited(datum/source, atom/movable/gone)
 	SIGNAL_HANDLER
-	if(gone in ingredients)
-		LAZYREMOVE(ingredients, gone)
+	LAZYREMOVE(ingredients, gone)
