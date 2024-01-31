@@ -215,6 +215,12 @@
 	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
+"cf" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/storage/box/stickers/googly,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "cm" = (
 /obj/machinery/door/airlock/grunge,
 /obj/structure/barricade/wooden/crude,
@@ -293,6 +299,11 @@
 /obj/effect/spawner/random/bureaucracy/pen,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/white,
+/area/awaymission/museum)
+"cN" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "cR" = (
 /obj/structure/broken_flooring/side/always_floorplane{
@@ -541,6 +552,12 @@
 	id = "nothing"
 	},
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"eO" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/spawner/random/entertainment/dice,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "eP" = (
 /turf/open/misc/beach/sand,
@@ -793,6 +810,17 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/wood/large,
 /area/awaymission/museum)
+"hA" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/sofa/bench{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "hC" = (
 /obj/structure/railing{
 	dir = 8
@@ -1040,9 +1068,12 @@
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "jP" = (
-/obj/effect/landmark/observer_start,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 8
+	},
+/obj/structure/table,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "jU" = (
 /obj/effect/landmark/transport/nav_beacon/tram/platform{
@@ -1276,6 +1307,12 @@
 "lZ" = (
 /obj/structure/plaque/static_plaque/golden/commission/cere,
 /turf/closed/indestructible/reinforced,
+/area/awaymission/museum)
+"mg" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/reagent_containers/cup/soda_cans/air,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "mj" = (
 /turf/open/mirage{
@@ -2240,6 +2277,12 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/indestructible/plating,
 /area/awaymission/museum)
+"vh" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/item/reagent_containers/cup/soda_cans/sol_dry,
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "vj" = (
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/structure/table,
@@ -2825,6 +2868,17 @@
 	},
 /turf/open/chasm/true/no_smooth,
 /area/awaymission/museum)
+"Ak" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 8
+	},
+/obj/effect/decal/cleanable/dirt/dust,
+/obj/structure/chair/sofa/bench/right{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Am" = (
 /obj/structure/window/spawner/directional/west,
 /obj/structure/window/spawner/directional/north,
@@ -3158,6 +3212,14 @@
 /area/awaymission/museum)
 "DD" = (
 /turf/open/floor/bluespace,
+/area/awaymission/museum)
+"DI" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue/corner,
+/obj/structure/chair/sofa/bench/right{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "DL" = (
 /obj/structure/railing{
@@ -3529,6 +3591,16 @@
 /obj/item/language_manual/roundstart_species,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/textured_large,
+/area/awaymission/museum)
+"Hj" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "Hk" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -3905,7 +3977,7 @@
 "LC" = (
 /obj/machinery/computer/terminal/museum{
 	dir = 4;
-	content = list("roach")
+	content = list("Mothroach")
 	},
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/effect/turf_decal/siding/dark_blue/corner{
@@ -4112,6 +4184,12 @@
 	dir = 8
 	},
 /turf/open/floor/iron,
+/area/awaymission/museum)
+"Oi" = (
+/obj/structure/table,
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/spawner/random/trash/cigbutt,
+/turf/open/floor/iron/dark,
 /area/awaymission/museum)
 "Ok" = (
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
@@ -4598,6 +4676,16 @@
 /obj/structure/holosign/barrier/engineering,
 /turf/open/misc/grass,
 /area/awaymission/museum/mothroachvoid)
+"Tu" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue/corner{
+	dir = 8
+	},
+/obj/structure/chair/sofa/bench/left{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
 "Tz" = (
 /obj/structure/hedge,
 /obj/effect/turf_decal/siding/wood{
@@ -5226,6 +5314,16 @@
 	},
 /obj/effect/step_trigger/teleporter/offset{
 	teleport_y_offset = 14
+	},
+/turf/open/floor/iron/dark,
+/area/awaymission/museum)
+"Zw" = (
+/obj/effect/turf_decal/tile/neutral/opposingcorners,
+/obj/effect/turf_decal/siding/dark_blue{
+	dir = 4
+	},
+/obj/structure/chair/sofa/bench{
+	dir = 8
 	},
 /turf/open/floor/iron/dark,
 /area/awaymission/museum)
@@ -31401,9 +31499,9 @@ FK
 FK
 FK
 Cc
-Cc
-Cc
-Cc
+eO
+cf
+mg
 Cc
 FK
 lb
@@ -31658,9 +31756,9 @@ MI
 FK
 pF
 Cc
-VS
-hV
-hV
+DI
+Zw
+Hj
 VL
 Un
 qA
@@ -34239,7 +34337,7 @@ WM
 uN
 mQ
 xv
-jP
+qj
 uY
 fy
 Cc
@@ -35256,9 +35354,9 @@ kY
 FK
 pF
 Cc
-WX
-es
-es
+Tu
+hA
+Ak
 es
 Bq
 RC
@@ -35513,9 +35611,9 @@ FK
 FK
 FK
 Cc
-Cc
-Cc
-Cc
+Oi
+cN
+vh
 Cc
 FK
 lb
@@ -39369,7 +39467,7 @@ re
 re
 re
 FK
-WX
+jP
 bV
 Js
 bV
