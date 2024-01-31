@@ -1699,7 +1699,7 @@
 "Gn" = (
 /obj/structure/table,
 /obj/item/plate,
-/obj/item/food/burger/cheese,
+/obj/item/food/burger/royale_with_cheese,
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /obj/machinery/light/small/broken/directional/south,
 /turf/open/indestructible/dark,

@@ -624,7 +624,7 @@
 	venue_value = FOOD_PRICE_NORMAL
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/burger/cheese
+/obj/item/food/burger/royale_with_cheese
 	name = "cheese burger"
 	desc = "This noble burger stands proudly clad in golden cheese."
 	icon_state = "cheeseburger"
@@ -638,7 +638,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/burger/cheese/Initialize(mapload)
+/obj/item/food/burger/royale_with_cheese/Initialize(mapload)
 	. = ..()
 	if(prob(33))
 		icon_state = "cheeseburgeralt"

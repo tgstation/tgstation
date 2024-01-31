@@ -322,14 +322,14 @@
 	result = /obj/item/food/burger/crab
 	category = CAT_BURGER
 
-/datum/crafting_recipe/food/cheeseburger
+/datum/crafting_recipe/food/royale_with_cheese
 	name = "Cheese Burger"
 	reqs = list(
 			/obj/item/food/patty/plain = 1,
 			/obj/item/food/bun = 1,
 			/obj/item/food/cheese/wedge = 1,
 	)
-	result = /obj/item/food/burger/cheese
+	result = /obj/item/food/burger/royale_with_cheese
 	category = CAT_BURGER
 
 /datum/crafting_recipe/food/soylentburger

@@ -72,7 +72,7 @@
 	orderable_objects = list(
 		VENUE_RESTAURANT = list(
 			/obj/item/food/burger/plain = 25,
-			/obj/item/food/burger/cheese = 15,
+			/obj/item/food/burger/royale_with_cheese = 15,
 			/obj/item/food/burger/superbite = 1,
 			/obj/item/food/butter/on_a_stick = 8,
 			/obj/item/food/fries = 10,
