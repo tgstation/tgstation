@@ -714,3 +714,77 @@
   intercepti0n:
   - refactor: 'Refactored Telecommunications Monitoring Console UI: added search bar,
       made UI more compact.'
+2024-01-29:
+  00-Steven:
+  - bugfix: Blobs sitting on APCs no longer break them when already broken, and so
+      no longer spam the power down noise.
+  - bugfix: Jerry Tramstation can get laid again! (Fixed cat breeding.)
+  13spacemen:
+  - refactor: Husk icons are now dynamically generated. See if you can identify what
+      species it was!
+  Ben10Omintrix:
+  - bugfix: fixes a runtime that sometimes happens in ai controllers
+  DaCoolBoss:
+  - spellcheck: typos fixed in the fireproof clothing religious rite
+  Krypandenej:
+  - bugfix: pesto pizza (cooked) is no longer raw, and cilbir is meat instead of fruit
+  LT3:
+  - bugfix: Tramstation external atmos ports are now properly connected
+  Melbert:
+  - bugfix: Wizarditis Timestop now has the desired effect.
+  - admin: Admins can now VV Timestop to make the caster not immune to their own Timestop.
+      If they really wanted.
+  SyncIt21:
+  - bugfix: sets minimum volume of reagent allowed to exist inside anything to 0.01
+      therefore allowing plumbing iv drip small transfer rates to occur without reagents
+      disappearing.
+  - bugfix: auto lathes don't hog local apc supply when printing items
+  rageguy505:
+  - bugfix: ' The buttons for flashers on birdshot/tramstation now work'
+2024-01-30:
+  00-Steven:
+  - bugfix: Rootbread soup now uses poached egg (egg reagents in soup pot) instead
+      of raw unpeeled egg (which would break into reagents upon coming into contact
+      with the soup pot) and is thus craftable again.
+  ArcaneMusic:
+  - rscdel: The lathe tax on printing items has been removed from the game for both
+      humans and silicons.
+  Ghommie:
+  - image: Resprited the goldfish and lanternfish as well.
+  Inari-Whitebear:
+  - bugfix: Bone daggers and shivs are now longer electrically conductive
+  Melbert:
+  - bugfix: You can build on some niche tables again, such as the Wabbajack Altar.
+  Profakos:
+  - bugfix: The construction console drone becomes visible again while its in use
+  Rhials:
+  - bugfix: The encrypted bitrunner cache is now impervious to most conventional means
+      of destruction.
+  distributivgesetz:
+  - bugfix: Ambient loops will now refresh when entering a mob.
+  jjpark-kb:
+  - code_imp: added the code that allows the image overlays to work for the circulator
+      (teg)
+  - image: changed circulator's (teg) fast/slow turbine sprite
+  - image: added an anchor, panel, and flow overlay for the circulator (teg)
+2024-01-31:
+  Jacquerel:
+  - bugfix: Cult pylons will no longer cover up "open space" (or water) with cult
+      floors
+  LT3:
+  - bugfix: ID card examine text shows how to set your linked bank account
+  - bugfix: ID card withdrawal from an unassigned account will ask if you want to
+      link an account
+  - bugfix: Tram power consumption will no longer will randomly drain APCs
+  - bugfix: Tram power moved to area based rectifiers
+  Melbert:
+  - bugfix: Fixed ore vent descriptions looking weird sometimes
+  - bugfix: Fixed being able to scan an ore vent multiple times at once
+  - bugfix: Fixed gaining scan points from scannning an ore vent without finishing
+      the scan
+  SapphicOverload:
+  - bugfix: Mk-II Ripley exosuits are spaceproof again.
+  - bugfix: Converted mechs now have their lights on if they did before the conversion.
+  distributivgesetz:
+  - bugfix: All Within Theoretical Limits should properly unlock now when the crystal
+      comes back from the countdown.

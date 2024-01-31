@@ -10,9 +10,9 @@
 	name = "Unmelting Protection"
 	desc = "Grants fire immunity to any piece of clothing."
 	ritual_length = 12 SECONDS
-	ritual_invocations = list("And so to support the holder of the Ever-Burning candle...",
+	ritual_invocations = list("And so to support the holder of the Ever-Burning candle ...",
 	"... allow this unworthy apparel to serve you ...",
-	"... make it strong enough to burn a thousand time and more ...")
+	"... make it strong enough to burn a thousand times and more ...")
 	invoke_msg = "... Come forth in your new form, and join the unmelting wax of the one true flame!"
 	favor_cost = 1000
 ///the piece of clothing that will be fireproofed, only one per rite

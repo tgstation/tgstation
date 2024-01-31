@@ -975,7 +975,7 @@
 		/datum/reagent/consumable/garlic = 1,
 	)
 	tastes = list("yoghurt" = 1, "garlic" = 1, "lemon" = 1, "egg" = 1, "chilli heat" = 1)
-	foodtypes = DAIRY | VEGETABLES | FRUIT | BREAKFAST
+	foodtypes = DAIRY | VEGETABLES | MEAT | BREAKFAST
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
 

@@ -19967,6 +19967,9 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/transport/power_rectifier{
+	configured_transport_id = "bird_2"
+	},
 /turf/open/floor/iron,
 /area/station/maintenance/department/medical/central)
 "hic" = (
@@ -38174,6 +38177,13 @@
 "nCH" = (
 /turf/closed/wall/r_wall,
 /area/station/security)
+"nCL" = (
+/obj/effect/mapping_helpers/broken_floor,
+/obj/machinery/transport/power_rectifier{
+	configured_transport_id = "bird_2"
+	},
+/turf/open/floor/iron,
+/area/station/maintenance/port/aft)
 "nCR" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/stripes/line,
@@ -39094,6 +39104,12 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/dock)
+"nTy" = (
+/obj/machinery/transport/power_rectifier{
+	configured_transport_id = "bird_1"
+	},
+/turf/open/floor/plating,
+/area/station/security/tram)
 "nTz" = (
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted,
 /obj/machinery/chem_dispenser{
@@ -61345,7 +61361,7 @@
 	dir = 8
 	},
 /obj/machinery/button/flasher{
-	id = "IsolationFlash";
+	id = "IsolationFlash2";
 	pixel_x = 28
 	},
 /obj/effect/decal/cleanable/dirt,
@@ -66085,7 +66101,9 @@
 /turf/open/floor/iron/smooth,
 /area/station/engineering/supermatter/room)
 "wCt" = (
-/obj/machinery/flasher/directional/east,
+/obj/machinery/flasher/directional/east{
+	id = "hopflash"
+	},
 /turf/open/floor/iron/half,
 /area/station/hallway/primary/central/fore)
 "wCx" = (
@@ -86833,7 +86851,7 @@ dwa
 dBr
 eWB
 lzM
-aFR
+nTy
 mnb
 cDt
 xpV
@@ -91469,7 +91487,7 @@ trp
 trp
 trp
 trp
-nFu
+nCL
 xqd
 xul
 trp
