@@ -192,7 +192,7 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	name = "[capitalize(desired_item.name)] Theft"
+	name = "[capitalize(format_text(desired_item.name))] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
 	help = "Steal any [desired_item][desired_item.steal_hint ? ": [desired_item.steal_hint]" : ""]."
 	return TRUE
 
@@ -272,7 +272,7 @@
 	var/obj/machinery/machine = pick(all_possible)
 	var/area/machine_area = get_area(machine)
 	location_type = machine_area.type
-	name ||= "[machine.name] Theft"
+	name ||= "[machine.name] Burglary"
 	help ||= "Steal \a [machine] found in [machine_area]."
 	return TRUE
 

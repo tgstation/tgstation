@@ -24,7 +24,8 @@
 		auto_create_spy_uplink(owner.current)
 	if(spawn_with_objectives)
 		give_random_objectives()
-	return ..()
+	. = ..()
+	SEND_SOUND(owner.current, sound('sound/ambience/antag/spy.ogg'))
 
 /datum/antagonist/spy/ui_static_data(mob/user)
 	var/list/data = ..()
@@ -57,7 +58,7 @@
 		tgui_alert(usr, "No spy uplink!", "Mission Failed")
 		return
 
-	uplink.spy_bounty_handler.force_refresh()
+	uplink.handler.force_refresh()
 	tgui_alert(usr, "Bounties refreshed.", "Mission Success")
 
 /datum/antagonist/spy/proc/admin_create_spy_uplink()
@@ -114,12 +115,12 @@
 		your_mission.explanation_text = pick_list_replacements(SPY_OBJECTIVE_FILE, "objective_body")
 		objectives += your_mission
 
-	if(prob(MARTYR_PROB))
+	if(prob(10))
 		var/datum/objective/martyr/leave_no_trace = new()
 		leave_no_trace.owner = owner
 		objectives += leave_no_trace
 
-	else if(prob(HIJACK_PROB))
+	else if(prob(3)) //3% chance on 90% chance
 		var/datum/objective/hijack/steal_the_shuttle = new()
 		steal_the_shuttle.owner = owner
 		objectives += steal_the_shuttle
@@ -128,6 +129,13 @@
 		var/datum/objective/escape/gtfo = new()
 		gtfo.owner = owner
 		objectives += gtfo
+
+/datum/antagonist/spy/roundend_report()
+	var/list/report = list()
+	report += printplayer(owner)
+	report += "They completed <b>[bounties_claimed]</b> bounties."
+	report += printobjectives(objectives)
+	return report.Join("<br>")
 
 /datum/outfit/spy
 	name = "Spy (Preview only)"
