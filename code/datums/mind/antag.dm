@@ -155,8 +155,9 @@
 		uplink_spawn_location = UPLINK_PDA
 
 	if(uplink_spawn_location != UPLINK_IMPLANT)
-		// Note that this can return a radio uplink even if the player is a mute or a mime
 		uplink_loc = traitor_mob.get_uplink_location(uplink_spawn_location)
+		if(istype(uplink_loc, /obj/item/radio) && cant_speak)
+			uplink_loc = null
 
 	if(isnull(uplink_loc))
 		var/obj/item/implant/uplink/starting/new_implant = new(traitor_mob)

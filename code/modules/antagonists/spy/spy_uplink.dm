@@ -21,20 +21,32 @@
 		handler = new()
 
 /datum/component/spy_uplink/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(block_pda_bombs))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(on_attack_self))
 	RegisterSignal(parent, COMSIG_ITEM_PRE_ATTACK_SECONDARY, PROC_REF(on_pre_attack_secondary))
+	RegisterSignal(parent, COMSIG_TABLET_CHECK_DETONATE, PROC_REF(block_pda_bombs))
 
 /datum/component/spy_uplink/UnregisterFromParent()
 	UnregisterSignal(parent, list(
-		COMSIG_ITEM_PRE_ATTACK_SECONDARY,
+		COMSIG_ATOM_EXAMINE,
 		COMSIG_ITEM_ATTACK_SELF,
+		COMSIG_ITEM_PRE_ATTACK_SECONDARY,
 		COMSIG_TABLET_CHECK_DETONATE,
 	))
 
+/// Checks that the passed mob is the owner of this uplink.
 /datum/component/spy_uplink/proc/is_our_spy(mob/whoever)
 	var/datum/antagonist/spy/spy_datum = spy_ref?.resolve()
 	return spy_datum?.owner.current == whoever
+
+/datum/component/spy_uplink/proc/on_examine(obj/item/source, mob/user, list/examine_list)
+	SIGNAL_HANDLER
+
+	if(!is_our_spy(user))
+		return
+	examine_list += span_notice("You recognize this as your <i>spy uplink</i>.")
+	examine_list += span_notice("- [EXAMINE_HINT("Use it in hand")] to view your bounty list.")
+	examine_list += span_notice("- [EXAMINE_HINT("Right click")] with it on a bounty target to claim it.")
 
 /datum/component/spy_uplink/proc/block_pda_bombs(obj/item/source)
 	SIGNAL_HANDLER
@@ -55,10 +67,9 @@
 		return NONE
 	if(!is_our_spy(user))
 		return NONE
-	if(try_steal(target, user))
-		return COMPONENT_CANCEL_ATTACK_CHAIN
-
-	return NONE
+	if(!try_steal(target, user))
+		return NONE
+	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// Checks if the passed atom is something that can be stolen according to one of the active bounties.
 /// If so, starts the stealing process.
@@ -161,6 +172,11 @@
 	data["time_left"] = timeleft(handler.refresh_timer)
 
 	return data
+
+/datum/component/spy_uplink/ui_state(mob/user)
+	if(isobserver(user) && user.client?.holder)
+		return UI_UPDATE
+	return ..()
 
 /obj/effect/scan_effect
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

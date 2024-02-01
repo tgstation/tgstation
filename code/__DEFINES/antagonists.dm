@@ -382,6 +382,10 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 
 #define FREEDOM_IMPLANT_CHARGES 4
 
+// Spy bounty difficulties
+/// Can easily be accomplished by any job without any specialized tools, people won't really miss these things
 #define SPY_DIFFICULTY_EASY "Easy"
+/// Requires some specialized tools, knowledge, or access to accomplish, may require getting into conflict with the crew
 #define SPY_DIFFICULTY_MEDIUM "Medium"
+/// Very difficult to accomplish, almost guaranteed to require crew conflict
 #define SPY_DIFFICULTY_HARD "Hard"
