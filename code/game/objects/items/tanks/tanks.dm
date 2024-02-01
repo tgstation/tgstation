@@ -394,8 +394,6 @@
 		var/power = (air_contents.volume * (pressure - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE
 		log_atmos("[type] exploded with a power of [power] and a mix of ", air_contents)
 		dyn_explosion(src, power, flash_range = 1.5, ignorecap = FALSE)
-	else
-		release()
 	return ..()
 
 /obj/item/tank/proc/merging_information()
@@ -485,6 +483,9 @@
 	var/igniter_temperature = 0
 	for(var/obj/item/assembly/igniter/firestarter in tank_assembly.assemblies)
 		igniter_temperature = max(igniter_temperature, firestarter.heat)
+
+	if(!igniter_temperature)
+		CRASH("[type] called ignite() without any igniters attached")
 
 	var/datum/gas_mixture/our_mix = return_air()
 	var/temperature_delta = igniter_temperature - our_mix.temperature // keep track of how much energy was added/subtracted, we'll need that later
