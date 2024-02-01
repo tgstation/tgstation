@@ -1,0 +1,6 @@
+author: "SkeletalElite"
+delete-after: True
+changes:
+  - rscadd: "Wearing certain gloves (such as black gloves and combat oriented gloves) allow you to cuff people faster"
+  - balance: "base handcuffing time is now 4 seconds"
+  - balance: "latex gloves now hide your fingerprints"
