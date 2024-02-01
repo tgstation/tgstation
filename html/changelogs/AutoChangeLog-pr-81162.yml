@@ -1,0 +1,4 @@
+author: "SapphicOverload"
+delete-after: True
+changes:
+  - rscadd: "Exosuit-mounted RCDs now have the same functionality as the handheld version."
