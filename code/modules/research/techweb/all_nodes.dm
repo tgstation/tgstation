@@ -1350,7 +1350,7 @@
 	id = "adv_subdermal_implants"
 	display_name = "Advanced Subdermal Implants"
 	description = "Subdermal implants that leverage bluespace research to control their bluespace signature."
-	prereq_ids = list("biotech", "micro_bluespace")
+	prereq_ids = list("subdermal_implants", "micro_bluespace")
 	design_ids = list(
 		"implant_beacon",
 		"implant_bluespace",
