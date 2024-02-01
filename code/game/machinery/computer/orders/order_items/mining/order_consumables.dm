@@ -3,20 +3,20 @@
 
 /datum/orderable_item/consumables/survival_pen
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival
-	cost_per_order = 500
+	cost_per_order = 250
 
 /datum/orderable_item/consumables/luxury_pen
 	item_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
-	cost_per_order = 1000
+	cost_per_order = 750
 
 /datum/orderable_item/consumables/medkit
 	item_path = /obj/item/storage/medkit/brute
-	cost_per_order = 600
+	cost_per_order = 400
 
 /datum/orderable_item/consumables/medkit_fire
 	item_path = /obj/item/storage/medkit/fire
 	desc = "For emergency magmatic burn relief."
-	cost_per_order = 700
+	cost_per_order = 500
 
 /datum/orderable_item/consumables/whiskey
 	item_path = /obj/item/reagent_containers/cup/glass/bottle/whiskey

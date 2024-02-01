@@ -75,3 +75,15 @@
 #define MATERIAL_QUANTITY_RARE 2500
 /// How much quantity of a material stock exists for exotic materials like diamond & bluespace crystals.
 #define MATERIAL_QUANTITY_EXOTIC 500
+
+// The number of ore vents that will spawn boulders with this material.
+/// Is this material going to spawn often in ore vents? (80% of vents on lavaland)
+#define MATERIAL_RARITY_COMMON 12
+/// Is this material going to spawn often in ore vents? (53% of vents on lavaland)
+#define MATERIAL_RARITY_SEMIPRECIOUS 8
+/// Is this material going to spawn uncommonly in ore vents? (33% of vents on lavaland)
+#define MATERIAL_RARITY_PRECIOUS 5
+/// Is this material going to spawn rarely in ore vents? (20% of vents on lavaland)
+#define MATERIAL_RARITY_RARE 3
+/// Is this material only going to spawn once in ore vents? (6% of vents on lavaland)
+#define MATERIAL_RARITY_UNDISCOVERED 1

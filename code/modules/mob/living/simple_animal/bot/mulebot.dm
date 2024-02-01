@@ -815,39 +815,37 @@
 
 	load(AM)
 
-/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/AM)
-	if(load || AM.anchored)
+/mob/living/simple_animal/bot/mulebot/paranormal/load(atom/movable/movable_atom)
+	if(load || movable_atom.anchored)
 		return
 
-	if(!isturf(AM.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
+	if(!isturf(movable_atom.loc)) //To prevent the loading from stuff from someone's inventory or screen icons.
 		return
 
-	if(isobserver(AM))
+	if(isobserver(movable_atom))
 		visible_message(span_warning("A ghostly figure appears on [src]!"))
-		RegisterSignal(AM, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
-		AM.forceMove(src)
+		movable_atom.forceMove(src)
+		RegisterSignal(movable_atom, COMSIG_MOVABLE_MOVED, PROC_REF(ghostmoved))
 
 	else if(!wires.is_cut(WIRE_LOADCHECK))
 		buzz(SIGH)
 		return // if not hacked, only allow ghosts to be loaded
 
-	else if(isobj(AM))
-		var/obj/O = AM
-		if(O.has_buckled_mobs() || (locate(/mob) in AM)) //can't load non crates objects with mobs buckled to it or inside it.
+	else if(isobj(movable_atom))
+		if(movable_atom.has_buckled_mobs() || (locate(/mob) in movable_atom)) //can't load non crates objects with mobs buckled to it or inside it.
 			buzz(SIGH)
 			return
 
-		if(istype(O, /obj/structure/closet/crate))
-			var/obj/structure/closet/crate/crate = O
+		if(istype(movable_atom, /obj/structure/closet/crate))
+			var/obj/structure/closet/crate/crate = movable_atom
 			crate.close() //make sure it's closed
 
-		O.forceMove(src)
+		movable_atom.forceMove(src)
 
-	else if(isliving(AM))
-		if(!load_mob(AM)) //buckling is handled in forceMove()
-			return
+	else if(isliving(movable_atom) && !load_mob(movable_atom))
+		return
 
-	load = AM
+	load = movable_atom
 	mode = BOT_IDLE
 	update_appearance()
 

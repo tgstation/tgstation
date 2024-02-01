@@ -14,11 +14,11 @@
 	invisibility = INVISIBILITY_LIGHTING
 
 	/// List of all turfs currently inside this area as nested lists indexed by zlevel.
-	/// Acts as a filtered bersion of area.contents For faster lookup
+	/// Acts as a filtered version of area.contents For faster lookup
 	/// (area.contents is actually a filtered loop over world)
 	/// Semi fragile, but it prevents stupid so I think it's worth it
 	var/list/list/turf/turfs_by_zlevel = list()
-	/// turfs_by_z_level can become MASSIVE lists, so rather then adding/removing from it each time we have a problem turf
+	/// turfs_by_z_level can hold MASSIVE lists, so rather then adding/removing from it each time we have a problem turf
 	/// We should instead store a list of turfs to REMOVE from it, then hook into a getter for it
 	/// There is a risk of this and contained_turfs leaking, so a subsystem will run it down to 0 incrementally if it gets too large
 	/// This uses the same nested list format as turfs_by_zlevel
@@ -247,7 +247,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	for (var/list/zlevel_turfs as anything in turfs_by_zlevel)
 		if (length(zlevel_turfs))
-			zlevel_turf_lists[++zlevel_turf_lists.len] = zlevel_turfs
+			zlevel_turf_lists += list(zlevel_turfs)
 
 	return zlevel_turf_lists
 
@@ -278,20 +278,21 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if (zlevel_to_clean <= length(turfs_by_zlevel) && zlevel_to_clean <= length(turfs_to_uncontain_by_zlevel))
 		turfs_by_zlevel[zlevel_to_clean] -= turfs_to_uncontain_by_zlevel[zlevel_to_clean]
 
-	if (_autoclean) // Removes empty lists from the end of this list
-		var/new_length = length(turfs_to_uncontain_by_zlevel)
-		// Walk backwards thru the list
-		for (var/i in length(turfs_to_uncontain_by_zlevel) to 0 step -1)
-			if (i && length(turfs_to_uncontain_by_zlevel[i]))
-				break // Stop the moment we find a useful list
-			new_length = i
+	if (!_autoclean) // Removes empty lists from the end of this list
+		turfs_to_uncontain_by_zlevel[zlevel_to_clean] = list()
+		return
 
-		if (new_length < length(turfs_to_uncontain_by_zlevel))
-			turfs_to_uncontain_by_zlevel.len = new_length
+	var/new_length = length(turfs_to_uncontain_by_zlevel)
+	// Walk backwards thru the list
+	for (var/i in length(turfs_to_uncontain_by_zlevel) to 0 step -1)
+		if (i && length(turfs_to_uncontain_by_zlevel[i]))
+			break // Stop the moment we find a useful list
+		new_length = i
 
-		if (new_length >= zlevel_to_clean)
-			turfs_to_uncontain_by_zlevel[zlevel_to_clean] = list()
-	else
+	if (new_length < length(turfs_to_uncontain_by_zlevel))
+		turfs_to_uncontain_by_zlevel.len = new_length
+
+	if (new_length >= zlevel_to_clean)
 		turfs_to_uncontain_by_zlevel[zlevel_to_clean] = list()
 
 
@@ -535,8 +536,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 ///Tries to play looping ambience to the mobs.
 /mob/proc/refresh_looping_ambience()
-	SIGNAL_HANDLER
-
 	var/area/my_area = get_area(src)
 
 	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)
@@ -593,7 +592,7 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 	if(outdoors)
 		return FALSE
 	areasize = 0
-	for (var/list/zlevel_turfs as anything in get_zlevel_turf_lists())
+	for(var/list/zlevel_turfs as anything in get_zlevel_turf_lists())
 		for(var/turf/open/thisvarisunused in zlevel_turfs)
 			areasize++
 

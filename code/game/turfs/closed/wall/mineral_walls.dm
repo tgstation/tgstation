@@ -270,11 +270,6 @@
 	base_icon_state = "shuttle_wall"
 	smoothing_flags = SMOOTH_BITMASK
 
-/turf/closed/wall/mineral/titanium/nosmooth
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	smoothing_flags = NONE
-
 /turf/closed/wall/mineral/titanium/overspace
 	icon_state = "map-overspace"
 	smoothing_flags = SMOOTH_BITMASK | SMOOTH_DIAGONAL_CORNERS
@@ -331,11 +326,6 @@
 	icon_state = "map-shuttle_nd"
 	base_icon_state = "plastitanium_wall"
 	smoothing_flags = SMOOTH_BITMASK
-
-/turf/closed/wall/mineral/plastitanium/nosmooth
-	icon = 'icons/turf/shuttle.dmi'
-	icon_state = "wall"
-	smoothing_flags = NONE
 
 /turf/closed/wall/mineral/plastitanium/overspace
 	icon_state = "map-overspace"

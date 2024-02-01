@@ -121,3 +121,19 @@ throw.ogg, throwhard.ogg and throwsoft.ogg (Royalty-Free and Copyright-Free) are
 https://uppbeat.io/sfx/whoosh-swift-cut/7727/23617
 https://uppbeat.io/sfx/whoosh-air-punch/114/1168
 https://uppbeat.io/sfx/throwing-item-swing/9430/25267
+
+rock_break.ogg is taken from Bertsz's Rock Destroy from Freesound.org, CC0:
+https://freesound.org/people/Bertsz/sounds/524312/
+
+sonar-ping.ogg and radar-ping is taken and modified from SamsterBirdies' Sonar Ping from Freesound.org, CC0:
+https://freesound.org/people/SamsterBirdies/sounds/539957/
+
+manual_teleport.ogg is taken from Quetzakol's teleport from Freesound.org, CC0:
+https://freesound.org/people/Quetzakol/sounds/520743/
+
+auto_teleport.ogg is taken from Steaq's A teleportation from Freesound.org, CC0:
+https://freesound.org/people/steaq/sounds/560124/
+
+refinery.ogg, smelter.ogg, and wooping_teleport.ogg are all original works by ArcaneMusic,
+with smelter.ogg using samples from rock_break alongside original sound effects from a warrior electric drill,
+where refinery and wooping_teleport are modifications of that same electric drill recording.

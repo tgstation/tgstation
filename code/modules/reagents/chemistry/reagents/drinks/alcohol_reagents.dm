@@ -420,7 +420,7 @@
 	description = "A sweet and strongly alcoholic drink, made after numerous distillations and years of maturing. Classy as fornication."
 	color = "#AB3C05" // rgb: 171, 60, 5
 	boozepwr = 75
-	taste_description = "angry and irish"
+	taste_description = "smooth and french"
 	ph = 3.5
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	glass_price = DRINK_PRICE_STOCK
@@ -2728,7 +2728,7 @@
 	description = "A drink glorifying Cybersun's enduring business."
 	boozepwr = 20
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_FANTASTIC
 	taste_description = "betrayal"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2737,7 +2737,7 @@
 	description = "A variation on the Long Island Iced Tea, made with yuyake for an alternative flavour that's hard to place."
 	boozepwr = 40
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "an asian twist on the liquor cabinet"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2746,7 +2746,7 @@
 	description = "It's a melon cream soda, except with alcohol- what's not to love? Well... possibly the hangovers."
 	boozepwr = 6
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "creamy melon soda"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2755,7 +2755,7 @@
 	description = "A new take on a classic cocktail, the Kumicho takes the Godfather formula and adds shochu for an Asian twist."
 	boozepwr = 62
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "rice and rye"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2764,7 +2764,7 @@
 	description = "Made in celebration of the Martian Concession, the Red Planet is based on the classic El Presidente, and is as patriotic as it is bright crimson."
 	boozepwr = 45
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "the spirit of freedom"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2773,7 +2773,7 @@
 	description = "Named for Amaterasu, the Shinto Goddess of the Sun, this cocktail embodies radiance- or something like that, anyway."
 	boozepwr = 54 //1 part bitters is a lot
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "sweet nectar of the gods"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2782,7 +2782,7 @@
 	description = "An overly sweet cocktail, made with melon liqueur, melon juice, and champagne (which contains no melon, unfortunately)."
 	boozepwr = 17
 	color = "#FF0C8D"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "MELON"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2791,7 +2791,7 @@
 	description = "Based on the galaxy-famous \"Kyūkyoku no Ninja Pawā Sentai\", the Sentai Quencha is a favourite at anime conventions and weeb bars."
 	boozepwr = 28
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "ultimate ninja power"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2800,7 +2800,7 @@
 	description = "A simple summer drink from Mars, made from a 1:1 mix of rice beer and lemonade."
 	boozepwr = 6
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "bittersweet lemon"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2809,7 +2809,7 @@
 	description = "Sweet, bitter, spicy- that's a great combination."
 	boozepwr = 6
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "spicy pineapple beer"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2827,7 +2827,7 @@
 	description = "A stiff, bitter drink with an odd name and odder recipe."
 	boozepwr = 26
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "bitter raspberry"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2836,7 +2836,7 @@
 	description = "A drink to power your typing hands."
 	boozepwr = 26
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "cyberspace"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2845,7 +2845,7 @@
 	description = "A take on the classic White Russian, subbing out the classics for some tropical flavours."
 	boozepwr = 16
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_GOOD
 	taste_description = "COCONUT"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2854,7 +2854,7 @@
 	description = "Behind this drink's red facade lurks a sharp, complex flavour."
 	boozepwr = 15
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "sunrise over the pacific"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2863,7 +2863,7 @@
 	description = "For when orgeat is in short supply, do as the spacers do- make do and mend."
 	boozepwr = 52
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "spicy nutty rum"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2872,7 +2872,7 @@
 	description = "Coconut rum, coffee liqueur, and espresso- an odd combination, to be sure, but a welcomed one."
 	boozepwr = 20
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "coconut coffee"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
@@ -2881,7 +2881,7 @@
 	description = "Sweet, sharp and coconutty."
 	boozepwr = 30
 	color = "#F54040"
-	quality = DRINK_NICE
+	quality = DRINK_VERYGOOD
 	taste_description = "the aloha state"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 

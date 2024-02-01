@@ -308,6 +308,7 @@ const MECHA_SNOWFLAKE_ID_RADIO = 'radio_snowflake';
 const MECHA_SNOWFLAKE_ID_AIR_TANK = 'air_tank_snowflake';
 const MECHA_SNOWFLAKE_ID_WEAPON_BALLISTIC = 'ballistic_weapon_snowflake';
 const MECHA_SNOWFLAKE_ID_GENERATOR = 'generator_snowflake';
+const MECHA_SNOWFLAKE_ID_ORE_SCANNER = 'orescanner_snowflake';
 const MECHA_SNOWFLAKE_ID_CLAW = 'lawclaw_snowflake';
 
 export const ModuleDetailsExtra = (props: { module: MechModule }) => {
@@ -327,6 +328,8 @@ export const ModuleDetailsExtra = (props: { module: MechModule }) => {
       return <SnowflakeRadio module={module} />;
     case MECHA_SNOWFLAKE_ID_GENERATOR:
       return <SnowflakeGeneraor module={module} />;
+    case MECHA_SNOWFLAKE_ID_ORE_SCANNER:
+      return <SnowflakeOreScanner module={module} />;
     case MECHA_SNOWFLAKE_ID_CLAW:
       return <SnowflakeLawClaw module={module} />;
     default:
@@ -920,6 +923,34 @@ const SnowflakeGeneraor = (props) => {
       {fuel === null
         ? 'None'
         : toFixed(fuel * sheet_material_amount, 0.1) + ' cm³'}
+    </LabeledList.Item>
+  );
+};
+
+const SnowflakeOreScanner = (props) => {
+  const { act, data } = useBackend<MainData>();
+  const { ref } = props.module;
+  const { cooldown } = props.module.snowflake;
+  return (
+    <LabeledList.Item label="Vent Scanner">
+      <NoticeBox info={cooldown <= 0 ? true : false}>
+        {cooldown / 10 > 0 ? 'Recharging...' : 'Ready to scan vents'}
+        <Button
+          my={1}
+          width="100%"
+          icon="satellite-dish"
+          color={cooldown <= 0 ? 'green' : 'transparent'}
+          onClick={() =>
+            act('equip_act', {
+              ref: ref,
+              gear_action: 'area_scan',
+            })
+          }
+          disabled={cooldown <= 0 ? false : true}
+        >
+          Scan all nearby vents
+        </Button>
+      </NoticeBox>
     </LabeledList.Item>
   );
 };

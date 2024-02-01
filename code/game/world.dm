@@ -388,7 +388,7 @@ GLOBAL_VAR(restart_counter)
 		else if(SSticker.current_state == GAME_STATE_SETTING_UP)
 			new_status += "<br>Starting: <b>Now</b>"
 		else if(SSticker.IsRoundInProgress())
-			new_status += "<br>Time: <b>[time2text(((world.time - SSticker.round_start_time)/10), "hh:mm")]</b>"
+			new_status += "<br>Time: <b>[time2text(STATION_TIME_PASSED(), "hh:mm", 0)]</b>"
 			if(SSshuttle?.emergency && SSshuttle?.emergency?.mode != (SHUTTLE_IDLE || SHUTTLE_ENDGAME))
 				new_status += " | Shuttle: <b>[SSshuttle.emergency.getModeStr()] [SSshuttle.emergency.getTimerStr()]</b>"
 		else if(SSticker.current_state == GAME_STATE_FINISHED)
