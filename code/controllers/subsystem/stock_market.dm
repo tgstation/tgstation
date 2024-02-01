@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(stock_market)
 				materials_trends[mat] = MARKET_TREND_DOWNWARD
 			else
 				materials_trends[mat] = MARKET_TREND_STABLE
-		materials_trend_life[mat] = rand(2,6) // Change our trend life for x number of fires of the subsystem
+		materials_trend_life[mat] = rand(3,12) // Change our trend life for x number of fires of the subsystem
 	else
 		materials_trend_life[mat] -= 1
 
