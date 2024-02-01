@@ -88,7 +88,7 @@
 
 /datum/component/tameable/proc/rename_pet(mob/living/animal, mob/living/tamer)
 	var/chosen_name = sanitize_name(tgui_input_text(tamer, "Choose your pet's name!", "Name pet", animal.name, MAX_NAME_LEN), allow_numbers = TRUE)
-	if(isnull(animal))
+	if(QDELETED(animal) || chosen_name == animal.name)
 		return
 	if(!chosen_name)
 		to_chat(tamer, span_warning("Please enter a valid name."))
