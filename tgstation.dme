@@ -3214,7 +3214,6 @@
 #include "code\modules\art\paintings.dm"
 #include "code\modules\art\statues.dm"
 #include "code\modules\assembly\assembly.dm"
-#include "code\modules\assembly\bomb.dm"
 #include "code\modules\assembly\doorcontrol.dm"
 #include "code\modules\assembly\flash.dm"
 #include "code\modules\assembly\health.dm"
