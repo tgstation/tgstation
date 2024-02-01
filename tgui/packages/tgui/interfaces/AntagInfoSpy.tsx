@@ -19,18 +19,17 @@ type Data = {
   objectives: Objective[];
 };
 
-export const AntagInfoSpy = (props, context) => {
-  const { data } = useBackend<Data>(context);
+export const AntagInfoSpy = () => {
+  const { data } = useBackend<Data>();
   const { antag_name, uplink_location, objectives } = data;
   return (
-    <Window width={360} height={420} theme="ntos_darkmode">
+    <Window width={380} height={420} theme="ntos_darkmode">
       <Window.Content
         style={{
           'background-image': 'none',
-        }}>
-        <Section
-          title={`You are the ${antag_name || 'Spy'}.`}
-          textAlign="justify">
+        }}
+      >
+        <Section title={`You are the ${antag_name || 'Spy'}.`}>
           <Stack vertical fill ml={1} mr={1}>
             <Stack.Item fontSize={1.2}>
               You have been equipped with a special uplink device disguised as{' '}

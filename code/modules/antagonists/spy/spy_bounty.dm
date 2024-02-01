@@ -150,8 +150,7 @@
 	return SSblackmarket.markets[/datum/market/blackmarket].add_item(new_item)
 
 /// Steal an item
-/datum/spy_bounty/item
-
+/datum/spy_bounty/objective_item
 	/// Reference to an objective item datum that we want stolen.
 	VAR_FINAL/datum/objective_item/desired_item
 	/// Typecache of objective items that should not be selected.
@@ -160,10 +159,10 @@
 		/datum/objective_item/steal/nukedisc,
 	))
 
-/datum/spy_bounty/item/can_claim(mob/user)
+/datum/spy_bounty/objective_item/can_claim(mob/user)
 	return !(user.mind?.assigned_role.title in desired_item.excludefromjob)
 
-/datum/spy_bounty/item/init_bounty(datum/spy_bounty_handler/handler)
+/datum/spy_bounty/objective_item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
 		if(length(item.special_equipment) || item.difficulty <= 0 || item.difficulty >= 6)
@@ -185,29 +184,31 @@
 					continue
 		valid_possible_items += item
 
-	for(var/datum/spy_bounty/item/existing_bounty in handler.get_all_bounties())
+	for(var/datum/spy_bounty/objective_item/existing_bounty in handler.get_all_bounties())
 		valid_possible_items -= existing_bounty.desired_item
 
 	if(!length(valid_possible_items))
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	name = "[capitalize(format_text(desired_item.name))] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
-	help = "Steal any [desired_item][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
+	var/obj/item/the_item = desired_item.targetitem
+	var/the_item_name = initial(the_item.name)
+	name = "[the_item_name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
+	help = "Steal any [the_item_name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
 	return TRUE
 
-/datum/spy_bounty/item/is_stealable(atom/movable/stealing)
+/datum/spy_bounty/objective_item/is_stealable(atom/movable/stealing)
 	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
 
-/datum/spy_bounty/item/random_easy
+/datum/spy_bounty/objective_item/random_easy
 	difficulty = SPY_DIFFICULTY_EASY
 	weight = 4 // Increased due to there being many easy options
 
-/datum/spy_bounty/item/random_medium
+/datum/spy_bounty/objective_item/random_medium
 	difficulty = SPY_DIFFICULTY_MEDIUM
 	weight = 2 // Increased due to there being many medium options
 
-/datum/spy_bounty/item/random_hard
+/datum/spy_bounty/objective_item/random_hard
 	difficulty = SPY_DIFFICULTY_HARD
 
 /datum/spy_bounty/machine
