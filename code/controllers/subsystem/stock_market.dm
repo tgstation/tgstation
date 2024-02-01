@@ -1,7 +1,7 @@
 
 SUBSYSTEM_DEF(stock_market)
 	name = "Stock Market"
-	wait = 20 SECONDS
+	wait = 5 SECONDS
 	init_order = INIT_ORDER_DEFAULT
 	runlevels = RUNLEVEL_GAME
 

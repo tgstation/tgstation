@@ -131,7 +131,7 @@
 	var/color_string
 	var/sheet_to_buy
 	var/requested_amount
-	var/minimum_value_threshold = 0
+	var/minimum_value_threshold
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
 		switch(SSstock_market.materials_trends[traded_mat])
@@ -166,7 +166,8 @@
 		var/min_value_override = initial(traded_mat.minimum_value_override)
 		if(min_value_override)
 			minimum_value_threshold = min_value_override
-
+		else
+			minimum_value_threshold = round(initial(traded_mat.value_per_unit) * SHEET_MATERIAL_AMOUNT * 0.5)
 
 		//send data
 		material_data += list(list(
@@ -348,8 +349,8 @@
 
 /obj/item/stock_block/Initialize(mapload)
 	. = ..()
-	addtimer(CALLBACK(src, PROC_REF(value_warning)), 2.5 MINUTES, TIMER_DELETE_ME)
-	addtimer(CALLBACK(src, PROC_REF(update_value)), 5 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(value_warning)), 1.5 MINUTES, TIMER_DELETE_ME)
+	addtimer(CALLBACK(src, PROC_REF(update_value)), 3 MINUTES, TIMER_DELETE_ME)
 
 /obj/item/stock_block/examine(mob/user)
 	. = ..()
