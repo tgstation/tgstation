@@ -91,7 +91,7 @@
 
 /obj/item/circuit_component/mod_program/ntnetmonitor/populate_ports()
 	. = ..()
-	target = add_input_port("Target Messenger/Relay", PORT_TYPE_DATUM, order = 0.5)
+	target = add_input_port("Target Messenger/Relay", PORT_TYPE_ATOM)
 	toggle_ids = add_input_port("Toggle IDS Status", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_ids))
 	toggle_relay = add_input_port("Toggle NTnet Relay", PORT_TYPE_SIGNAL, trigger = PROC_REF(toggle_relay))
 	purge_logs = add_input_port("Purge Logs", PORT_TYPE_SIGNAL, trigger = PROC_REF(purge_logs))

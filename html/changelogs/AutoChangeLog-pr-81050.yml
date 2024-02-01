@@ -1,4 +1,0 @@
-author: "Ben10Omintrix"
-delete-after: True
-changes:
-  - refactor: "airlock controllers now use tgui"

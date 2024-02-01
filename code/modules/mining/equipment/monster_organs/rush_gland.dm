@@ -23,7 +23,7 @@
 
 /obj/item/organ/internal/monster_core/rush_gland/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	RegisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED, PROC_REF(trigger_organ_action))
+	RegisterSignal(organ_owner, COMSIG_GOLIATH_TENTACLED_GRABBED, PROC_REF(trigger_organ_action_on_sig))
 
 /obj/item/organ/internal/monster_core/rush_gland/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
@@ -31,6 +31,10 @@
 
 /obj/item/organ/internal/monster_core/rush_gland/on_triggered_internal()
 	owner.apply_status_effect(/datum/status_effect/lobster_rush/extended)
+
+/obj/item/organ/internal/monster_core/rush_gland/proc/trigger_organ_action_on_sig(datum/source)
+	SIGNAL_HANDLER
+	INVOKE_ASYNC(src, PROC_REF(trigger_organ_action))
 
 /**
  * Status effect: Makes you run really fast and ignore speed penalties for a short duration.

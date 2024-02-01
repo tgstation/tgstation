@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - refactor: "Newspapers now use TGUI."
-  - bugfix: "Fixed the newscaster's wanted section showing a non-existent photo."

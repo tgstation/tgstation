@@ -1,7 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - qol: "added more screen tips & examines for ore silo, made UI wider, attach location name to each machine & grey out paused machines to make it more noticeable."
-  - code_imp: "auto docs proc & vars for silo log entry. Fixed return values of all tool acts"
-  - bugfix: "ore silo UI now functions correctly after removing an entry from the UI"
-  - bugfix: "no runtimes when connecting a machine to silo that was previously disconnected via the ore silo UI"

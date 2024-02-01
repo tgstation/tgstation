@@ -27,7 +27,13 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
-	allowed = list(/obj/item/melee/energy/sword/pirate, /obj/item/clothing/glasses/eyepatch, /obj/item/reagent_containers/cup/glass/bottle/rum)
+	allowed = list(
+		/obj/item/melee/energy/sword/pirate,
+		/obj/item/clothing/glasses/eyepatch,
+		/obj/item/reagent_containers/cup/glass/bottle/rum,
+		/obj/item/gun/energy/laser/musket,
+		/obj/item/gun/energy/disabler/smoothbore,
+	)
 	species_exception = list(/datum/species/golem)
 
 /obj/item/clothing/suit/costume/pirate/armored

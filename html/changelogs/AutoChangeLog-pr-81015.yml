@@ -1,5 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "items that contain recursive contents inside them (like foam dart boxes from autolathes) now have their custom materials set to match with its design cost rather than being nullified, meaning they are now recyclable."
-  - code_imp: "all custom materials are now integer values. Improved code for how materials are used in techfab & auto lathe for printing"

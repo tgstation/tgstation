@@ -33,13 +33,13 @@
 	. = ..()
 	var/atom/target = controller.blackboard[target_key]
 	if(QDELETED(target))
-		finish_action(controller, FALSE)
+		finish_action(controller, FALSE, target_key)
 	var/mob/living/living_pawn = controller.pawn
 	var/list/meowing_list = controller.blackboard[meows_key]
 	if(length(meowing_list))
 		living_pawn.say(pick(meowing_list), forced = "ai_controller")
 	living_pawn._pointed(target)
-	finish_action(controller, TRUE)
+	finish_action(controller, TRUE, target_key)
 
 /datum/ai_behavior/beacon_for_food/finish_action(datum/ai_controller/controller, success, target_key)
 	. = ..()
