@@ -93,7 +93,7 @@ export const SpyUplink = () => {
     <Window width={450} height={615} theme="ntos_darkmode">
       <Window.Content
         style={{
-          'background-image': 'none',
+          backgroundImage: 'none',
         }}
       >
         <Section

@@ -26,7 +26,7 @@ export const AntagInfoSpy = () => {
     <Window width={380} height={420} theme="ntos_darkmode">
       <Window.Content
         style={{
-          'background-image': 'none',
+          backgroundImage: 'none',
         }}
       >
         <Section title={`You are the ${antag_name || 'Spy'}.`}>
