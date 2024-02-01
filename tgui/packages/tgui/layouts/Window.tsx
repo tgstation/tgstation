@@ -13,6 +13,7 @@ import { globalStore } from '../backend';
 import { Icon } from '../components';
 import { BoxProps } from '../components/Box';
 import { UI_DISABLED, UI_INTERACTIVE, UI_UPDATE } from '../constants';
+import { useDebug } from '../debug';
 import { toggleKitchenSink } from '../debug/actions';
 import {
   dragStartHandler,
@@ -48,7 +49,8 @@ export const Window = (props: Props) => {
     height,
   } = props;
 
-  const { config, suspended, debug } = useBackend();
+  const { config, suspended } = useBackend();
+  const { debugLayout = false } = useDebug();
   if (suspended) {
     return null;
   }
@@ -79,11 +81,6 @@ export const Window = (props: Props) => {
       logger.log('unmounting');
     };
   }, [width, height]);
-
-  let debugLayout = false;
-  if (debug) {
-    debugLayout = debug.debugLayout;
-  }
 
   const dispatch = globalStore.dispatch;
   const fancy = config.window?.fancy;
