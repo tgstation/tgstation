@@ -398,7 +398,7 @@
 
 	var/policy = get_policy(POLICY_REVIVAL_CLONER) || get_policy(POLICY_REVIVAL)
 	if(policy)
-		to_chat(src, policy)
+		to_chat(occupant, policy)
 
 	mob_occupant.adjustOrganLoss(ORGAN_SLOT_BRAIN, mob_occupant.getCloneLoss())
 
