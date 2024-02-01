@@ -241,7 +241,7 @@
 	reach = 1
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/fwoosh.ogg'
-	damtype = BURN
+	damtype = BRUTE //change to burn when i can make slash wounds with burn damage
 	attack_verb_continuous = list("rips", "claws", "gashes", "tears", "lacerates", "dices", "cuts", "attacks")
 	attack_verb_simple = list("rip", "claw", "gash", "tear", "lacerate", "dice", "cut", "attack" )
 
