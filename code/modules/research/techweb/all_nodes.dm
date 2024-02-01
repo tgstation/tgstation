@@ -1355,7 +1355,7 @@
 		"implant_beacon",
 		"implant_bluespace",
 	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 5000)
+	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
 /datum/techweb_node/cyber_organs
 	id = "cyber_organs"
