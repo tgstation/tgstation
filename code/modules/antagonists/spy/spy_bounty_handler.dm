@@ -46,7 +46,7 @@
 	for(var/datum/spy_bounty/bounty as anything in subtypesof(/datum/spy_bounty))
 		var/weight = initial(bounty.weight)
 		var/difficulty = initial(bounty.difficulty)
-		if(weight <= 0 !islist(bounty_types[difficulty]))
+		if(weight <= 0 || !islist(bounty_types[difficulty]))
 			continue
 		bounty_types[difficulty][bounty] = weight
 
