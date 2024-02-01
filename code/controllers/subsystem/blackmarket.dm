@@ -35,7 +35,8 @@ SUBSYSTEM_DEF(blackmarket)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/blackmarket/fire(resumed)
-	for(var/datum/market/listed_market in markets) //monkestation edit - MODULAR_GUNS
+	for(var/market in markets) //monkestation edit - MODULAR_GUNS
+		var/datum/market/listed_market = markets[market]
 		if(!(listed_market.market_flags & MARKET_AUCTION))
 			continue
 		listed_market.try_process()
