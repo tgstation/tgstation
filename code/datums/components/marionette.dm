@@ -52,9 +52,18 @@
 ///Called when the person grabbing us speaks, we lower their volume to 1 tile and speak what they said through us.
 /datum/component/marionette/proc/on_puller_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER
-	var/message = speech_args[SPEECH_MESSAGE]
+
+	if(HAS_TRAIT(grabber, TRAIT_SIGN_LANG))
+		return
+
 	var/atom/movable/movable_parent = parent
-	movable_parent.say(message, forced = "[source]'s marionette")
+	movable_parent.say(
+		message = speech_args[SPEECH_MESSAGE],
+		spans = speech_args[SPEECH_SPANS],
+		language = speech_args[SPEECH_LANGUAGE],
+		forced = "[source]'s marionette",
+		saymode = speech_args[SPEECH_SAYMODE],
+	)
 	speech_args[SPEECH_RANGE] = WHISPER_RANGE
 
 ///Called when our puller is somehow deleted, we simply clear the reference to them.
