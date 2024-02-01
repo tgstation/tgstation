@@ -298,8 +298,8 @@ GLOBAL_LIST_INIT(voice_of_god_commands, init_voice_of_god_commands())
 	var/regex/smartass_regex = regex(@"^say my name[.!]*$")
 	for(var/mob/living/target as anything in listeners)
 		var/to_say = user.name
-		// 0.01% chance to be a smartass
-		if(findtext(lowertext(message), smartass_regex) && prob(0.01))
+		// 0.1% chance to be a smartass
+		if(findtext(lowertext(message), smartass_regex) && prob(0.1))
 			to_say = "My name"
 		addtimer(CALLBACK(target, TYPE_PROC_REF(/atom/movable, say), to_say), 0.5 SECONDS * iteration)
 		iteration++
