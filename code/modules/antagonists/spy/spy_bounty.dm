@@ -17,12 +17,15 @@
 	/// IE: "Steal the captain's ID. It was last seen in the captain's office."
 	var/help
 	/// Difficult of the bounty, one of [SPY_DIFFICULTY_EASY], [SPY_DIFFICULTY_MEDIUM], [SPY_DIFFICULTY_HARD].
+	/// Must be set to one of the possible bounties to be picked.
 	var/difficulty = "unset"
 	/// How long of a do-after must be completed by the Spy to turn in the bounty.
 	var/theft_time = 2 SECONDS
 	/// Probability that the stolen item will be sent to the black market instead of destroyed.
 	/// Guaranteed if the item is indestructible.
 	var/black_market_prob = 50
+	/// Weight that the bounty will be selected.
+	var/weight = 1
 
 	/// Whether the bounty's been fully initialized. If this is not set, the bounty will be rerolled.
 	VAR_FINAL/initalized = FALSE
@@ -70,7 +73,7 @@
 
 	if(!length(loot_pool))
 		reward_item = /datum/uplink_item/bundles_tc/telecrystal
-		return // melbert todo : add some junk items for when we run out of items (for campbell)
+		return // future todo : add some junk items for when we run out of items
 
 	reward_item = pick(loot_pool)
 	if(prob(80))
@@ -127,7 +130,7 @@
 	var/datum/market_item/new_item = new()
 	new_item.item = thing
 	new_item.name = "Stolen [thing.name]"
-	new_item.desc = "A [thing.name], stolen from somewhere on the station."
+	new_item.desc = "A [thing.name], stolen from somewhere on the station. Whoever owned it probably wouldn't be happy to see it here."
 	new_item.category = "Fenced Goods"
 	new_item.stock = 1
 	new_item.availability_prob = 100
@@ -148,7 +151,6 @@
 
 /// Steal an item
 /datum/spy_bounty/item
-	difficulty = SPY_DIFFICULTY_EASY
 
 	/// Reference to an objective item datum that we want stolen.
 	VAR_FINAL/datum/objective_item/desired_item
@@ -190,21 +192,25 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	name = "Steal [desired_item]"
+	name = "[desired_item] Theft"
 	help = desired_item.steal_hint || "Steal [desired_item]."
 	return TRUE
 
 /datum/spy_bounty/item/is_stealable(atom/movable/stealing)
 	return istype(stealing, desired_item.targetitem) && desired_item.check_special_completion(stealing)
 
-/datum/spy_bounty/item/medium
-	difficulty = SPY_DIFFICULTY_MEDIUM
+/datum/spy_bounty/item/random_easy
+	difficulty = SPY_DIFFICULTY_EASY
+	weight = 4 // Increased due to there being many easy options
 
-/datum/spy_bounty/item/hard
+/datum/spy_bounty/item/random_medium
+	difficulty = SPY_DIFFICULTY_MEDIUM
+	weight = 2 // Increased due to there being many medium options
+
+/datum/spy_bounty/item/random_hard
 	difficulty = SPY_DIFFICULTY_HARD
 
 /datum/spy_bounty/machine
-	difficulty = SPY_DIFFICULTY_MEDIUM
 	theft_time = 10 SECONDS
 
 	/// What machine (typepath) we want to steal.
@@ -213,8 +219,6 @@
 	/// Can be pre-set for subtypes. If set, requires the machine to be in the location_type.
 	/// If not set, picks a random machine from all areas it can currently be found in.
 	var/area/location_type
-	/// Help text to describe what machine we want to steal.
-	var/find_machine_help
 
 /datum/spy_bounty/machine/send_to_black_market(obj/machinery/thing)
 	if(!istype(thing.circuit, /obj/item/circuitboard))
@@ -268,48 +272,60 @@
 	var/obj/machinery/machine = pick(all_possible)
 	var/area/machine_area = get_area(machine)
 	location_type = machine_area.type
-	name ||= "Steal [machine_area]'s [machine.name]"
-	help ||= "Steal [machine], found in [machine_area]."
+	name ||= "[machine.name] Theft"
+	help ||= "Steal [machine] found in [machine_area]."
 	return TRUE
 
 /datum/spy_bounty/machine/is_stealable(atom/movable/stealing)
 	if(!istype(stealing, target_type))
 		return FALSE
-
 	if(!istype(get_area(stealing), location_type))
 		return FALSE
-
 	return TRUE
 
+/datum/spy_bounty/machine/random_easy
+	difficulty = SPY_DIFFICULTY_EASY
+	weight = 2 // Increased due to there being many easy options
 
-/datum/spy_bounty/machine/random_medium
-	difficulty = SPY_DIFFICULTY_MEDIUM
-
-/datum/spy_bounty/machine/random_medium/init_bounty(datum/spy_bounty_handler/handler)
+/datum/spy_bounty/machine/random_easy/init_bounty(datum/spy_bounty_handler/handler)
 	target_type = pick(
-		/obj/machinery/computer/bank_machine,
-		/obj/machinery/computer/crew,
-		/obj/machinery/computer/security,
+		/obj/machinery/computer/operating,
+		/obj/machinery/fax, // Completely random wild card
+		/obj/machinery/recharge_station,
+		/obj/machinery/microwave,
 	)
 	return ..()
 
-/datum/spy_bounty/machine/chem
+/datum/spy_bounty/machine/random_medium
 	difficulty = SPY_DIFFICULTY_MEDIUM
-	target_type = /obj/machinery/chem_dispenser
-	location_type = /area/station/medical/pharmacy
-	help = "Steal one of the chemical dispensers found in the Pharmacy."
+	weight = 4 // Increased due to there being many medium options
 
-/datum/spy_bounty/machine/ai_upload
+/datum/spy_bounty/machine/random_medium/init_bounty(datum/spy_bounty_handler/handler)
+	target_type = pick(
+		/obj/machinery/chem_dispenser,
+		/obj/machinery/computer/bank_machine,
+		/obj/machinery/computer/crew,
+		/obj/machinery/computer/prisoner/management,
+		/obj/machinery/computer/rdconsole,
+		/obj/machinery/computer/security, // Requires breaking into a sec checkpoint, but not too hard, many are never visited
+		/obj/machinery/dna_scannernew,
+		/obj/machinery/mecha_part_fabricator,
+	)
+	return ..()
+
+/datum/spy_bounty/machine/random_hard
 	difficulty = SPY_DIFFICULTY_HARD
-	target_type = /obj/machinery/computer/upload
-	location_type = /area/station/ai_monitored/turret_protected/ai_upload
-	help = "Steal the station's primary AI upload terminal."
 
-/datum/spy_bounty/machine/comms_console
-	difficulty = SPY_DIFFICULTY_HARD
-	target_type = /obj/machinery/computer/communications
+/datum/spy_bounty/machine/random_hard/init_bounty(datum/spy_bounty_handler/handler)
+	target_type = pick(
+		/obj/machinery/computer/accounting,
+		/obj/machinery/computer/communications,
+		/obj/machinery/computer/upload,
+		/obj/machinery/modular_computer/preset/id,
+	)
+	return ..()
 
-/datum/spy_bounty/machine/comms_console/can_claim(mob/user)
+/datum/spy_bounty/machine/random_hard/can_claim(mob/user) // These would all be too easy with command level access
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 
 /// Subtype for a bounty that targets a specific crew member
@@ -325,8 +341,12 @@
 /datum/spy_bounty/targets_person/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/mob/possible_targets = list()
 	for(var/datum/mind/crew_mind as anything in get_crewmember_minds())
-		if(is_valid_crewmember(crew_mind.current))
-			possible_targets += crew_mind.current
+		// Ideally we want it to be a player, but we don't care if they DC after being selected
+		if(isnull(crew_mind.current?.client))
+			continue
+		if(!is_valid_crewmember(crew_mind.current))
+			continue
+		possible_targets += crew_mind.current
 
 	for(var/datum/spy_bounty/targets_person/existing_bounty in handler.get_all_bounties())
 		possible_targets -= existing_bounty.target_ref.resolve()
@@ -398,7 +418,7 @@
 /datum/spy_bounty/targets_person/some_item/target_found(mob/crewmember)
 	var/obj/item/desired_thing = find_desired_thing(crewmember)
 	target_original_desired_ref = WEAKREF(desired_thing)
-	name = "Steal [crewmember.real_name]'s [desired_thing.name]"
+	name = "[crewmember.real_name]'s [desired_thing.name]"
 	help = "Steal [desired_thing] from [crewmember.real_name]. \
 		You can accomplish this via brute force, or by scanning them with your uplink while they are incapacitated."
 	return TRUE
@@ -433,20 +453,13 @@
 /datum/spy_bounty/targets_person/some_item/heirloom
 	desired_type = /obj/item
 
-/datum/spy_bounty/targets_person/some_item/heirloom/is_valid_crewmember(mob/living/carbon/human/crewmember)
-	return ..() && crewmember.has_quirk(/datum/quirk/item_quirk/family_heirloom)
-
-/datum/spy_bounty/targets_person/some_item/heirloom/find_desired_thing(mob/living/carbon/human/crewmember)
+/datum/spy_bounty/targets_person/some_item/heirloom/find_desired_thing(mob/living/crewmember)
 	var/datum/quirk/item_quirk/family_heirloom/quirk = crewmember.get_quirk(/datum/quirk/item_quirk/family_heirloom)
-	return quirk.heirloom?.resolve()
+	return quirk?.heirloom?.resolve()
 
 /datum/spy_bounty/targets_person/some_item/heirloom/target_found(mob/crewmember)
-	var/obj/item/desired_thing = find_desired_thing(crewmember)
-	target_original_desired_ref = WEAKREF(desired_thing)
-	name = "Steal [crewmember.real_name]'s heirloom [desired_thing.name]"
-	help = "Steal [desired_thing] from [crewmember.real_name]. \
-		You can accomplish this via brute force, or by scanning them with your uplink while they are incapacitated."
-	return TRUE
+	. = ..()
+	name = "[crewmember.real_name]'s heirloom"
 
 // Steal a limb or organ off someone
 /datum/spy_bounty/targets_person/some_item/limb_or_organ
@@ -476,8 +489,6 @@
 	black_market_prob = 0
 	/// What typepath of bot we want to steal.
 	var/mob/living/simple_animal/bot/bot_type
-	/// Help text to describe what bot we want to steal.
-	var/find_bot_help
 	/// Weakref to the bot we want to steal.
 	VAR_FINAL/datum/weakref/target_bot_ref
 
@@ -487,7 +498,7 @@
 			return FALSE
 
 	var/list/mob/living/possible_bots = list()
-	for(var/mob/living/simple_animal/bot/bot as anything in GLOB.bots_list)
+	for(var/mob/living/bot as anything in GLOB.bots_list)
 		if(!is_station_level(bot.z))
 			continue
 		if(!istype(bot, bot_type))
@@ -499,8 +510,8 @@
 
 	var/mob/living/picked = pick(possible_bots)
 	target_bot_ref = WEAKREF(picked)
-	name ||= "Abduct [picked.name]"
-	help ||= "Steal the station robot assistant [picked.name]."
+	name ||= "[picked.name] Abduction"
+	help ||= "Abduct the station's robot assistant [picked.name]."
 	return TRUE
 
 /datum/spy_bounty/some_bot/is_stealable(atom/movable/stealing)
@@ -509,22 +520,28 @@
 /datum/spy_bounty/some_bot/beepsky
 	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
 	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/officer
-	help = "Steal Officer Beepsky, commonly found patrolling the station."
+	help = "Abduct Officer Beepsky, commonly found patrolling the station."
 
 /datum/spy_bounty/some_bot/ofitser
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/ofitser
-	help = "Steal Prison Ofitser, commonly found guarding the Gulag."
+	help = "Abduct Prison Ofitser, commonly found guarding the Gulag."
 
 /datum/spy_bounty/some_bot/armsky
 	difficulty = SPY_DIFFICULTY_HARD
 	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/armsky
-	help = "Steal Sergeant-At-Armsky, commonly found guarding the station's Armory."
+	help = "Abduct Sergeant-At-Armsky, commonly found guarding the station's Armory."
+
+/datum/spy_bounty/some_bot/pingsky
+	difficulty = SPY_DIFFICULTY_HARD
+	bot_type = /mob/living/simple_animal/bot/secbot/pingsky
+	help = "Abduct Officer Pingsky, commonly found protecting the station's AI."
+
 
 /datum/spy_bounty/some_bot/scrubbs
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/basic/bot/cleanbot/medbay
-	help = "Steal Scrubbs MD, commonly found mopping up blood in Medbay."
+	help = "Abduct Scrubbs MD, commonly found mopping up blood in Medbay."
 
 /datum/spy_bounty/some_bot/scrubbs/can_claim(mob/user)
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)

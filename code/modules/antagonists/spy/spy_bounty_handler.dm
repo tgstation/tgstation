@@ -26,7 +26,7 @@
 		SPY_DIFFICULTY_HARD = list(),
 	)
 
-	/// Assoc list of all possible bounties for each difficulty.
+	/// Assoc list of all possible bounties for each difficulty, weighted.
 	/// This is static, no bounty types are removed from this list.
 	VAR_PRIVATE/list/list/bounty_types = list(
 		SPY_DIFFICULTY_EASY = list(),
@@ -44,10 +44,11 @@
 
 /datum/spy_bounty_handler/New()
 	for(var/datum/spy_bounty/bounty as anything in subtypesof(/datum/spy_bounty))
+		var/weight = initial(bounty.weight)
 		var/difficulty = initial(bounty.difficulty)
-		if(!islist(bounty_types[difficulty]))
+		if(weight <= 0 !islist(bounty_types[difficulty]))
 			continue
-		bounty_types[difficulty] += bounty
+		bounty_types[difficulty][bounty] = weight
 
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
 		if(isnull(item.item) || item.item == DUMMY_UPLINK_ITEM)
@@ -91,7 +92,7 @@
 		var/amount_to_give = bounties_to_give[difficulty]
 		var/failed_attempts = 8
 		while(amount_to_give > 0 && failed_attempts > 0)
-			var/picked_bounty = pick(pool)
+			var/picked_bounty = pick_weight(pool)
 			var/datum/spy_bounty/bounty = new picked_bounty(src)
 			if(bounty.initalized)
 				amount_to_give -= 1
