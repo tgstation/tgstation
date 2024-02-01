@@ -193,7 +193,7 @@
 
 	desired_item = pick(valid_possible_items)
 	name = "[capitalize(format_text(desired_item.name))] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
-	help = "Steal any [desired_item][desired_item.steal_hint ? ": [desired_item.steal_hint]" : ""]."
+	help = "Steal any [desired_item][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
 	return TRUE
 
 /datum/spy_bounty/item/is_stealable(atom/movable/stealing)
