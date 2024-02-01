@@ -95,10 +95,9 @@
 
 	switch(mineral_budget_update) //If we use more map configurations, add another case
 		if(OREGEN_PRESET_LAVALAND)
-			SSore_generation.ore_vent_minerals = GLOB.ore_vent_minerals_lavaland.Copy()
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_lavaland)
 		if(OREGEN_PRESET_TRIPLE_Z)
-			SSore_generation.ore_vent_minerals = GLOB.ore_vent_minerals_triple_z.Copy()
-	
+			SSore_generation.ore_vent_minerals = expand_weights(GLOB.ore_vent_minerals_triple_z)
 
 	//Set up the starting ruin list
 	for(var/key in ruins)

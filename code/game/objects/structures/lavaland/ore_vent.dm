@@ -180,22 +180,24 @@
  */
 /obj/structure/ore_vent/proc/generate_mineral_breakdown(new_minerals = MINERAL_TYPE_OPTIONS_RANDOM, map_loading = FALSE)
 	if(new_minerals < 1)
-		to_chat(world, "CRASH, PAIN")
 		CRASH("generate_mineral_breakdown called with new_minerals < 1.")
 	var/starting_minerals = length(mineral_breakdown) // we're going to use this to track how many minerals we've added.
 	while(length(mineral_breakdown) < new_minerals + starting_minerals)
-		to_chat(world, "We are trying to go from [length(mineral_breakdown)] to [new_minerals + starting_minerals] minerals. Global list size: [length(SSore_generation.ore_vent_minerals)]")
 		if(!length(SSore_generation.ore_vent_minerals) && map_loading && !SSore_generation.initialized)
-			to_chat(world, "CRASH, PAIN. List size: [length(SSore_generation.ore_vent_minerals)]")
 			CRASH("No minerals left to pick from! We may have spawned too many ore vents in init, or added too many ores to the existing vents.")
 		var/datum/material/material
 		if(map_loading)
 			material = pick_weight(SSore_generation.ore_vent_minerals)
-		if(is_type_in_list(mineral_breakdown, material))
-			to_chat(world, "Bouncing...")
-			continue
+		var/mat_failsafe = FALSE
+		if(mineral_breakdown[material])
+			if(!length(difflist(first = SSore_generation.ore_vent_minerals, second = mineral_breakdown, skiprep = 1)))
+				material = pick_weight(GLOB.ore_vent_minerals_lavaland)
+				SSore_generation.ore_vent_minerals -= pick(SSore_generation.ore_vent_minerals) // Just remove SOMETHING in the event of a failsafe.
+				to_chat(world, "failsafe active")
+				mat_failsafe = TRUE
+			if(!mat_failsafe)
+				continue
 		if(map_loading)
-			to_chat(world, "Success.")
 			SSore_generation.ore_vent_minerals[material] -= 1 //We remove 1 from the ore vent's mineral breakdown weight, so that it can't be picked again.
 			if(SSore_generation.ore_vent_minerals[material] <= 0)
 				SSore_generation.ore_vent_minerals -= material
