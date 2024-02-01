@@ -131,8 +131,7 @@
 /obj/item/tank/Destroy()
 	STOP_PROCESSING(SSobj, src)
 	air_contents = null
-	if(tank_assembly)
-		QDEL_NULL(tank_assembly)
+	QDEL_NULL(tank_assembly)
 	return ..()
 
 /obj/item/tank/update_overlays()
@@ -173,7 +172,7 @@
 	. += span_notice("It feels [descriptive].")
 
 	if(tank_assembly)
-		. += span_warning("There is some kind of device <b>rigged</b> to the tank!")
+		. += span_warning("There is some kind of device [EXAMINE_HINT("rigged")] to the tank!")
 
 /obj/item/tank/deconstruct(disassembled = TRUE)
 	var/atom/location = loc
@@ -198,28 +197,28 @@
 	if(istype(attacking_item, /obj/item/assembly_holder))
 		if(tank_assembly)
 			balloon_alert(user, "something already attached!")
-			return TRUE
+			return ..()
 		bomb_assemble(attacking_item, user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/tank/wrench_act(mob/living/user, obj/item/tool)
 	if(tank_assembly)
 		tool.play_tool_sound(src)
 		bomb_disassemble(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/tank/welder_act(mob/living/user, obj/item/tool)
 	if(bomb_status)
 		balloon_alert(user, "already welded!")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	if(tool.use_tool(src, user, 0, volume=40))
 		bomb_status = TRUE
 		balloon_alert(user, "bomb armed")
 		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [air_contents.temperature] Pressure: [air_contents.return_pressure()]")
 		add_fingerprint(user)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 /obj/item/tank/ui_state(mob/user)
@@ -404,7 +403,7 @@
 	return list(TANK_RESULTS_REACTION = reaction_info, TANK_RESULTS_MISC = explosion_info)
 
 /obj/item/tank/on_found(mob/finder) //for mousetraps
-	..()
+	. = ..()
 	if(tank_assembly)
 		tank_assembly.on_found(finder)
 
@@ -418,7 +417,6 @@
 	. = ..()
 	if(tank_assembly)
 		tank_assembly.setDir(dir)
-		tank_assembly.Move()
 
 /obj/item/tank/dropped()
 	. = ..()
@@ -451,7 +449,10 @@
 		balloon_alert(user, "it's stuck!")
 		return
 
-	user.transferItemToLoc(assembly, src)
+	if(!user.transferItemToLoc(assembly, src))
+		balloon_alert(user, "it's stuck!")
+		return
+
 	tank_assembly = assembly //Tell the tank about its assembly part
 	assembly.master = src //Tell the assembly about its new owner
 	assembly.on_attach()
