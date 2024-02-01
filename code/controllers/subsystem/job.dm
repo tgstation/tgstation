@@ -213,6 +213,11 @@ SUBSYSTEM_DEF(job)
 		return FALSE
 
 	JobDebug("Player: [player] is now Rank: [job.title], JCP:[job.current_positions], JPL:[latejoin ? job.total_positions : job.spawn_positions]")
+//monkestation edit start
+	if(player.temp_assignment)
+		player.temp_assignment.current_positions--
+	player.temp_assignment = null
+//monkestation edit end
 	player.mind.set_assigned_role(job)
 	unassigned -= player
 	job.current_positions++
@@ -241,16 +246,20 @@ SUBSYSTEM_DEF(job)
 		if(check_job_eligibility(player, job, "FOC", add_job_to_log = FALSE) != JOB_AVAILABLE)
 			continue
 
-		// They have the job enabled, at this priority level, with no restrictions applying to them.
+//monkestation edit start
+		if(!assignable_by_job[job.type])
+			assignable_by_job[job.type] = list("[JP_LOW]" = list(), "[JP_MEDIUM]" = list(), "[JP_HIGH]" = list())
+		assignable_by_job[job.type]["[player_job_level]"] |= player
+//monkestation edit end
 		JobDebug("FOC pass, Player: [player], Level: [job_priority_level_to_string(level)]")
 		candidates += player
 	return candidates
 
 
-/datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player)
+/datum/controller/subsystem/job/proc/GiveRandomJob(mob/dead/new_player/player, roundstart = FALSE, list/restricted_jobs = list()) //monkestation edit: adds roundstart and restricted_jobs
 	JobDebug("GRJ Giving random job, Player: [player]")
 	. = FALSE
-	for(var/datum/job/job as anything in shuffle(joinable_occupations))
+	for(var/datum/job/job as anything in shuffle(joinable_occupations - restricted_jobs)) //monkestation edit: adds - restricted_jobs
 		if(QDELETED(player))
 			JobDebug("GRJ player is deleted, aborting")
 			break
@@ -271,9 +280,15 @@ SUBSYSTEM_DEF(job)
 		if(check_job_eligibility(player, job, "GRJ", add_job_to_log = TRUE) != JOB_AVAILABLE)
 			continue
 
-		if(AssignRole(player, job, do_eligibility_checks = FALSE))
-			JobDebug("GRJ Random job given, Player: [player], Job: [job]")
-			return TRUE
+//monkestation edit start
+		if(roundstart)
+			if(handle_temp_assignments(player, job))
+				return TRUE
+		else
+//monkestation edit end
+			if(AssignRole(player, job, do_eligibility_checks = FALSE))
+				JobDebug("GRJ Random job given, Player: [player], Job: [job]")
+				return TRUE
 
 		JobDebug("GRJ Player eligible but AssignRole failed, Player: [player], Job: [job]")
 
@@ -308,8 +323,14 @@ SUBSYSTEM_DEF(job)
 				continue
 			var/mob/dead/new_player/candidate = pick(candidates)
 			// Eligibility checks done as part of FindOccupationCandidates.
-			if(AssignRole(candidate, job, do_eligibility_checks = FALSE))
+//monkestation removal start
+//			if(AssignRole(candidate, job, do_eligibility_checks = FALSE))
+//				return TRUE
+//monkestation removal end
+//monkestation edit start
+			if(handle_temp_assignments(candidate, job))
 				return TRUE
+//monkestation edit end
 	return FALSE
 
 
@@ -331,7 +352,8 @@ SUBSYSTEM_DEF(job)
 			continue
 		var/mob/dead/new_player/candidate = pick(candidates)
 		// Eligibility checks done as part of FindOccupationCandidates
-		AssignRole(candidate, job, do_eligibility_checks = FALSE)
+//		AssignRole(candidate, job, do_eligibility_checks = FALSE) //monkestation removal
+		handle_temp_assignments(candidate, job) //monkestation edit
 
 /// Attempts to fill out all available AI positions.
 /datum/controller/subsystem/job/proc/fill_ai_positions()
@@ -346,8 +368,14 @@ SUBSYSTEM_DEF(job)
 			if(candidates.len)
 				var/mob/dead/new_player/candidate = pick(candidates)
 				// Eligibility checks done as part of FindOccupationCandidates
-				if(AssignRole(candidate, GetJobType(/datum/job/ai), do_eligibility_checks = FALSE))
+//monkestation removal start
+//				if(AssignRole(candidate, GetJobType(/datum/job/ai), do_eligibility_checks = FALSE))
+//					break
+//monkestation removal end
+//monkestation edit start
+				if(handle_temp_assignments(candidate, GetJobType(/datum/job/ai)))
 					break
+//monkestation edit end
 
 
 /** Proc DivideOccupations
@@ -398,7 +426,8 @@ SUBSYSTEM_DEF(job)
 	for(var/mob/dead/new_player/player in overflow_candidates)
 		JobDebug("AC1 pass, Player: [player]")
 		// Eligibility checks done as part of FindOccupationCandidates
-		AssignRole(player, GetJobType(overflow_role), do_eligibility_checks = FALSE)
+//		AssignRole(player, GetJobType(overflow_role), do_eligibility_checks = FALSE) //monkestation removal
+		handle_temp_assignments(player, GetJobType(overflow_role)) //monkestation edit
 		overflow_candidates -= player
 	JobDebug("DO, AC1 end")
 
@@ -455,7 +484,8 @@ SUBSYSTEM_DEF(job)
 					continue
 
 				JobDebug("DO pass, Player: [player], Level:[level], Job:[job.title]")
-				AssignRole(player, job, do_eligibility_checks = FALSE)
+//				AssignRole(player, job, do_eligibility_checks = FALSE) //monkestation removal
+				handle_temp_assignments(player, job) //monkestation edit
 				unassigned -= player
 				break
 
@@ -468,7 +498,8 @@ SUBSYSTEM_DEF(job)
 		HandleUnassigned(player)
 	JobDebug("DO, Ending handle unassigned.")
 
-	JobDebug("DO, Handle unrejectable unassigned")
+//monkestation removal start: we handle selecting antags after this
+/*	JobDebug("DO, Handle unrejectable unassigned")
 	//Mop up people who can't leave.
 	for(var/mob/dead/new_player/player in unassigned) //Players that wanted to back out but couldn't because they're antags (can you feel the edge case?)
 		if(!GiveRandomJob(player))
@@ -476,8 +507,10 @@ SUBSYSTEM_DEF(job)
 				JobDebug("DO, Forced antagonist could not be assigned any random job or the overflow role. DivideOccupations failed.")
 				JobDebug("---------------------------------------------------")
 				return FALSE //Living on the edge, the forced antagonist couldn't be assigned to overflow role (bans, client age) - just reroll
-	JobDebug("DO, Ending handle unrejectable unassigned")
+	JobDebug("DO, Ending handle unrejectable unassigned")*/
+//monkestation removal end
 
+	handle_final_setup() //monkestation edit
 	JobDebug("All divide occupations tasks completed.")
 	JobDebug("---------------------------------------------------")
 
@@ -499,11 +532,12 @@ SUBSYSTEM_DEF(job)
 				RejectPlayer(player)
 				return
 
-			if(!AssignRole(player, overflow_role_datum, do_eligibility_checks = FALSE))
+//			if(!AssignRole(player, overflow_role_datum, do_eligibility_checks = FALSE)) //monkestation removal
+			if(!handle_temp_assignments(player, overflow_role_datum)) //monkestation edit
 				RejectPlayer(player)
 				return
 		if (BERANDOMJOB)
-			if(!GiveRandomJob(player))
+			if(!GiveRandomJob(player, TRUE)) //monkestation edit: adds second arg
 				RejectPlayer(player)
 				return
 		if (RETURNTOLOBBY)

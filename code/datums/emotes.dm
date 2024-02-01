@@ -95,7 +95,6 @@
 	if(!msg)
 		return
 
-	add_event_to_buffer(user, data = msg, log_key = "EMOTE", voluntary = intentional)
 	user.log_message(msg, LOG_EMOTE)
 	var/dchatmsg = "<b>[user]</b> [msg]"
 

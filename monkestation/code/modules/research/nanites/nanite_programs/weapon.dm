@@ -174,7 +174,7 @@
 	directive = brainwash(host_mob, sent_directive, nanites.cloud_id ? "nanites in cloud [nanites.cloud_id]" : "nanites")
 	log_game("A mind control nanite program brainwashed [key_name(host_mob)] with the objective '[sent_directive]'.")
 	host_mob.log_message("has been brainwashed with the objective '[sent_directive]' triggered by a mind control nanite program.", LOG_ATTACK)
-	addtimer(CALLBACK(src, PROC_REF(end_brainwashing)), 1 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(end_brainwashing)), 5 MINUTES)
 
 /datum/nanite_program/comm/mind_control/proc/end_brainwashing()
 	unbrainwash(host_mob, directive)

@@ -105,6 +105,8 @@
 	for(var/key in default_choices)
 		choices[key] = 0
 
+	list_clear_nulls(choices) // monke edit: ensure no nulls end up in a vote
+
 	return TRUE
 
 /**

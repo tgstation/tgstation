@@ -83,7 +83,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 	if(use_donor)
 		if(donator_token)
 			donator_token = FALSE
-			add_event_to_buffer(owner,  data = "used donator token [owner.prefs.token_month].", log_key = "META")
+			logger.Log(LOG_CATEGORY_META, "[owner], used donator token on [owner.prefs.token_month].")
 			owner.prefs.token_month = text2num(time2text(world.time, "MM"))
 			owner.prefs.save_preferences()
 			return
@@ -118,7 +118,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to play as [in_queue] has been approved.")
-	add_event_to_buffer(owner,  data = "antag token for [in_queue] approved.", log_key = "META")
+	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been approved")
 	spend_antag_token(in_queued_tier, queued_donor)
 	if(!owner.mob.mind)
 		owner.mob.mind_initialize()
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to play as [in_queue] has been denied.")
-	add_event_to_buffer(owner,  data = "antag token for [in_queue] denied.", log_key = "META")
+	logger.Log(LOG_CATEGORY_META, "[owner]'s antag token for [in_queue] has been denied.")
 	in_queue = null
 	in_queued_tier = null
 	queued_donor = FALSE
@@ -158,7 +158,7 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to trigger [queued_token_event] has been approved.")
-	add_event_to_buffer(owner,  data = "event tokens for [queued_token_event] approved.", log_key = "META")
+	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been approved.")
 	adjust_event_tokens(-queued_token_event.token_cost)
 	SStwitch.add_to_queue(initial(queued_token_event.id_tag))
 	queued_token_event = null
@@ -168,5 +168,5 @@ GLOBAL_LIST_INIT(patreon_etoken_values, list(
 		return
 
 	to_chat(owner, "Your request to trigger [queued_token_event] has been denied.")
-	add_event_to_buffer(owner,  data = "event tokens for [queued_token_event] denied.", log_key = "META")
+	logger.Log(LOG_CATEGORY_META, "[owner]'s event token for [queued_token_event] has been denied.")
 	queued_token_event = null

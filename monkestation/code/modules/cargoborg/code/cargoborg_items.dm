@@ -220,7 +220,6 @@
 		extracted_item.forceMove(extraction_turf)
 		visible_message(span_notice("[src.loc] unloads [extracted_item] from [src]."))
 		log_silicon("[user] unloaded [extracted_item] onto [extraction_turf] ([AREACOORD(extraction_turf)]).")
-		add_event_to_buffer(user, extracted_item, "unloaded [extracted_item] onto [extraction_turf] ([AREACOORD(extraction_turf)]).", "SILICON")
 		in_use = FALSE
 		return
 
@@ -277,7 +276,6 @@
 		lifting_up.forceMove(src)
 		var/turf/lifting_up_from = get_turf(lifting_up.loc)
 		log_silicon("[user] loaded [lifting_up] (Contains mobs: [contains_mobs]) into [src] at ([AREACOORD(lifting_up_from)]).")
-		add_event_to_buffer(user, lifting_up, "loaded [lifting_up] (Contains mobs: [contains_mobs]) into [src] at ([AREACOORD(lifting_up_from)]).", "SILICON")
 		visible_message(span_notice("[src.loc] loads [lifting_up] into [src]'s cargo hold."))
 		in_use = FALSE
 

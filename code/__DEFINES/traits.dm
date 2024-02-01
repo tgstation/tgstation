@@ -165,6 +165,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ILLITERATE "illiterate"
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
+/// Softspoken. Always whisper.
+#define TRAIT_SOFTSPOKEN "softspoken"
 /// Gibs on death and slips like ice.
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
@@ -765,6 +767,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CAT				"cat"
 #define TRAIT_HIDDEN_IMAGE		"generic-hidden-image"
 #define TRAIT_HIDDEN_CLOWN		"clown_disbelief"
+#define TRAIT_MINING_CALLOUTS	"miner_callouts"
 
 /// Gives you the Shifty Eyes quirk, rarely making people who examine you think you examined them back even when you didn't
 #define TRAIT_SHIFTY_EYES "shifty_eyes"

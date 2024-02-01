@@ -683,10 +683,6 @@
 		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
 		and have sacrificed [our_heretic.total_sacrifices] people ([our_heretic.high_value_sacrifices] of which were high value)")
 
-	add_event_to_buffer(user, data = "gained knowledge of their final ritual at [worldtime2text()]. \
-		They have [length(our_heretic.researched_knowledge)] knowledge nodes researched, totalling [total_points] points \
-		and have sacrificed [our_heretic.total_sacrifices] people ([our_heretic.high_value_sacrifices] of which were high value)", log_key = "HERETIC")
-
 /datum/heretic_knowledge/ultimate/can_be_invoked(datum/antagonist/heretic/invoker)
 	if(invoker.ascended)
 		return FALSE
@@ -731,7 +727,6 @@
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [worldtime2text()].")
-	add_event_to_buffer(user, data = "completed their final ritual at [worldtime2text()].", log_key = "HERETIC")
 	return TRUE
 
 /datum/heretic_knowledge/ultimate/cleanup_atoms(list/selected_atoms)

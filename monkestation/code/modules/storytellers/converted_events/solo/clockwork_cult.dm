@@ -16,13 +16,13 @@
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
 	)
-	maximum_antags = 3
 	enemy_roles = list(
 		JOB_CAPTAIN,
 		JOB_DETECTIVE,
 		JOB_HEAD_OF_SECURITY,
 		JOB_SECURITY_OFFICER,
 		JOB_WARDEN,
+		JOB_CHAPLAIN,
 	)
 	required_enemies = 5
 	base_antags = 4
@@ -32,7 +32,7 @@
 	roundstart = TRUE
 	earliest_start = 0 SECONDS
 	weight = 4
-	max_occurrences = 3
+	max_occurrences = 1
 
 /datum/round_event/antagonist/solo/clockcult
 	end_when = 60000

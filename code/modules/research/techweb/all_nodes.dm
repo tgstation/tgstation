@@ -2247,6 +2247,7 @@
 			continue
 		boost_item_paths |= item.item //allows deconning to unlock.
 
+	boost_item_paths |= /obj/item/malf_upgrade // MONKESTATION ADDITION -- The malf upgrade disk can now be used to get illegal technology
 
 ////////////////////////B.E.P.I.S. Locked Techs////////////////////////
 /datum/techweb_node/light_apps

@@ -58,6 +58,7 @@
 
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/content_barfer)
+	AddElement(/datum/element/prevent_attacking_of_types, GLOB.typecache_general_bad_hostile_attack_targets, "this tastes awful!") // MONKESTATION ADDITION
 
 	disguise_ability = new(src)
 	disguise_ability.Grant(src)

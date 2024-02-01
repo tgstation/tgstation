@@ -37,7 +37,7 @@
 
 /client/proc/open_lootbox()
 	message_admins("[ckey] opened a lootbox!")
-	add_event_to_buffer(src,  data = "has opened a lootbox!", log_key =  "META")
+	logger.Log(LOG_CATEGORY_META, "[src] has opened a lootbox!", list("currency_left" = prefs.metacoins))
 	log_game("[ckey] opened a lootbox!")
 	if(!mob)
 		return

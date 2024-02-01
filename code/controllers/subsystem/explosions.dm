@@ -372,14 +372,12 @@ SUBSYSTEM_DEF(explosions)
 	if(!silent)
 		shake_the_room(epicenter, orig_max_distance, far_dist, devastation_range, heavy_impact_range)
 
-	if(heavy_impact_range > 1)
-		var/datum/effect_system/explosion/E
-		if(smoke)
-			E = new /datum/effect_system/explosion/smoke
-		else
-			E = new
-		E.set_up(epicenter)
-		E.start()
+	if(devastation_range > 0)
+		new /obj/effect/temp_visual/explosion(epicenter, max_range, COLOR_WHITE, FALSE, TRUE)
+	else if(heavy_impact_range > 0)
+		new /obj/effect/temp_visual/explosion(epicenter, max_range, COLOR_WHITE, FALSE, FALSE)
+	else if(light_impact_range > 0)
+		new /obj/effect/temp_visual/explosion(epicenter, max_range, COLOR_WHITE, TRUE, FALSE)
 
 	//flash mobs
 	if(flash_range)

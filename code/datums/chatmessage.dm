@@ -299,8 +299,10 @@
 		return
 
 	// Display visual above source
-	if(runechat_flags & EMOTE_MESSAGE)
+	if(CHECK_BITFIELD(runechat_flags, EMOTE_MESSAGE))
 		new /datum/chatmessage(raw_message, speaker, src, message_language, list("emote", "italics"))
+	else if(CHECK_BITFIELD(runechat_flags, LOOC_MESSAGE))
+		new /datum/chatmessage(raw_message, speaker, src, message_language, list("looc", "italics"))
 	else
 		new /datum/chatmessage(raw_message, speaker, src, message_language, spans)
 

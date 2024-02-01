@@ -51,7 +51,6 @@
 		src.med_hud_set_status()
 
 		log_virus("[key_name(src)] was infected by virus: [D.admin_details()] at [loc_name(loc)]")
-		add_event_to_buffer(src,  data = "was infected by virus: [D.admin_details()] at [loc_name(loc)] Full Log: [D.log]", log_key = "VIRUS")
 
 		D.AddToGoggleView(src)
 	return TRUE

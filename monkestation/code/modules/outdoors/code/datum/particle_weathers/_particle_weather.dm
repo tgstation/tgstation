@@ -294,6 +294,9 @@ GLOBAL_LIST_EMPTY(siren_objects)
 	return TRUE
 
 /datum/particle_weather/proc/process_mob_effect(mob/living/L, delta_time)
+	if(!islist(messaged_mobs))
+		messaged_mobs = list()
+	messaged_mobs |= L
 	if(can_weather(L) && running)
 		weather_sound_effect(L)
 		if(can_weather_effect(L))

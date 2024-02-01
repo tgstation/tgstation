@@ -10,3 +10,6 @@
 #define TRAIT_NO_SLAB_INVOKE "no_slab_invoke"
 /// Indicates that they've inhaled helium.
 #define TRAIT_HELIUM "helium"
+
+/// Station trait for when the clown has bridge access *shudders*
+#define STATION_TRAIT_CLOWN_BRIDGE "clown_bridge"

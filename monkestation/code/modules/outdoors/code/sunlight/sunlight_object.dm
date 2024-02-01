@@ -191,7 +191,7 @@ Sunlight System
 		UnregisterSignal(SSdcs, COMSIG_GLOB_WEATHER_EFFECT)
 		if(!outdoor_effect.weatherproof)
 			turf_flags |= TURF_WEATHER
-			//RegisterSignal(SSdcs, COMSIG_GLOB_WEATHER_EFFECT, .proc/apply_weather_effect)
+			//RegisterSignal(SSdcs, COMSIG_GLOB_WEATHER_EFFECT, PROC_REF(apply_weather_effect))
 
 /* runs up the Z stack for this turf, returns a assoc (SKYVISIBLE, WEATHERPROOF)*/
 /* pass recursion_started=TRUE when we are checking our ceiling's stats */

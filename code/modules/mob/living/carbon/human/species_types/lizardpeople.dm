@@ -3,6 +3,7 @@
 	name = "\improper Lizardperson"
 	plural_form = "Lizardfolk"
 	id = SPECIES_LIZARD
+	visual_gender = FALSE
 	species_traits = list(
 		MUTCOLORS,
 		MUTCOLORS_SECONDARY,

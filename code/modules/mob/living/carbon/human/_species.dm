@@ -1,4 +1,6 @@
 GLOBAL_LIST_EMPTY(roundstart_races)
+///List of all roundstart languages by path
+GLOBAL_LIST_EMPTY(roundstart_languages)
 
 /// An assoc list of species types to their features (from get_features())
 GLOBAL_LIST_EMPTY(features_by_species)
@@ -23,6 +25,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	///Whether or not the race has sexual characteristics (biological genders). At the moment this is only FALSE for skeletons and shadows
 	var/sexes = TRUE
+	///does our chosen bodytype have visual difference
+	var/visual_gender =TRUE
 	///A bitfield of "bodytypes", updated by /datum/obj/item/bodypart/proc/synchronize_bodytypes()
 	var/bodytype = BODYTYPE_HUMANOID | BODYTYPE_ORGANIC
 	///Clothing offsets. If a species has a different body than other species, you can offset clothing so they look less weird.
@@ -78,7 +82,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	///flags for inventory slots the race can't equip stuff to. Golems cannot wear jumpsuits, for example.
 	var/no_equip_flags
 	///What languages this species can understand and say. Use a [language holder datum][/datum/language_holder] in this var.
-	var/species_language_holder = /datum/language_holder
+	var/datum/language_holder/species_language_holder = /datum/language_holder
 	/**
 	  * Visible CURRENT bodyparts that are unique to a species.
 	  * DO NOT USE THIS AS A LIST OF ALL POSSIBLE BODYPARTS AS IT WILL FUCK
@@ -273,23 +277,28 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	RETURN_TYPE(/list)
 
 	if (!GLOB.roundstart_races.len)
-		GLOB.roundstart_races = generate_selectable_species()
+		GLOB.roundstart_races = generate_selectable_species_and_languages()
 
 	return GLOB.roundstart_races
-
 /**
  * Generates species available to choose in character setup at roundstart
  *
  * This proc generates which species are available to pick from in character setup.
  * If there are no available roundstart species, defaults to human.
  */
-/proc/generate_selectable_species()
+/proc/generate_selectable_species_and_languages()
 	var/list/selectable_species = list()
 
 	for(var/species_type in subtypesof(/datum/species))
 		var/datum/species/species = new species_type
 		if(species.check_roundstart_eligible())
 			selectable_species += species.id
+			var/datum/language_holder/temp_holder = new species.species_language_holder
+			for(var/datum/language/spoken_languages as anything in temp_holder.understood_languages)
+				if(spoken_languages in GLOB.roundstart_languages)
+					continue
+				GLOB.roundstart_languages += spoken_languages
+			qdel(temp_holder)
 			qdel(species)
 
 	if(!selectable_species.len)
@@ -301,7 +310,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * Checks if a species is eligible to be picked at roundstart.
  *
  * Checks the config to see if this species is allowed to be picked in the character setup menu.
- * Used by [/proc/generate_selectable_species].
+ * Used by [/proc/generate_selectable_species_and_languages].
  */
 /datum/species/proc/check_roundstart_eligible()
 	if(id in (CONFIG_GET(keyed_list/roundstart_races)))

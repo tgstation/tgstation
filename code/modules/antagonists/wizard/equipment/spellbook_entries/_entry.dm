@@ -99,7 +99,6 @@
 
 		if(log_buy)
 			log_spellbook("[key_name(user)] improved their knowledge of [initial(existing.name)] to level [existing.spell_level] for [cost] points")
-			add_event_to_buffer(user, data = "improved their knowledge of [initial(existing.name)] to level [existing.spell_level] for [cost] points", log_key = "WIZARD")
 			SSblackbox.record_feedback("nested tally", "wizard_spell_improved", 1, list("[name]", "[existing.spell_level]"))
 			log_purchase(user.key)
 		return existing
@@ -111,7 +110,6 @@
 
 	if(log_buy)
 		log_spellbook("[key_name(user)] learned [new_spell] for [cost] points")
-		add_event_to_buffer(user, data = "learned [new_spell] for [cost] points", log_key = "WIZARD")
 		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 		log_purchase(user.key)
 	return new_spell
@@ -178,7 +176,6 @@
 		qdel(to_refund)
 		name = initial(name)
 		log_spellbook("[key_name(user)] refunded [src] for [amount_to_refund] points")
-		add_event_to_buffer(user, data = "refunded [src] for [amount_to_refund] points", log_key = "WIZARD")
 		return amount_to_refund
 
 	return -1
@@ -206,7 +203,6 @@
 	var/atom/spawned_path = new item_path(user.loc)
 	if(log_buy)
 		log_spellbook("[key_name(user)] bought [src] for [cost] points")
-		add_event_to_buffer(user, data = "bought [src] for [cost] points", log_key = "WIZARD")
 		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 		log_purchase(user.key)
 	try_equip_item(user, spawned_path)
@@ -227,7 +223,6 @@
 /datum/spellbook_entry/summon/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy = TRUE)
 	if(log_buy)
 		log_spellbook("[key_name(user)] cast [src] for [cost] points")
-		add_event_to_buffer(user, data = "cast [src] for [cost] points", log_key = "WIZARD")
 		SSblackbox.record_feedback("tally", "wizard_spell_learned", 1, name)
 		log_purchase(user.key)
 	return TRUE

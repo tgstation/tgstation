@@ -34,12 +34,18 @@
 /obj/item/organ/external/tail/Remove(mob/living/carbon/organ_owner, special, moving)
 	if(wag_flags & WAG_WAGGING)
 		wag(FALSE)
+
+	return ..()
+
+/obj/item/organ/external/tail/on_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
+
 	UnregisterSignal(organ_owner, COMSIG_ORGAN_WAG_TAIL)
 
 	if(type in organ_owner.dna.species.external_organs)
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
+
 
 /obj/item/organ/external/tail/proc/wag(mob/user, start = TRUE, stop_after = 0)
 	if(!(wag_flags & WAG_ABLE))
@@ -52,6 +58,9 @@
 	else
 		stop_wag()
 	owner.update_body_parts()
+	if(ishuman(owner))
+		var/mob/living/carbon/human/human = owner
+		human.update_mutant_bodyparts()
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 /obj/item/organ/external/tail/proc/start_wag()
@@ -131,18 +140,16 @@
 		paired_spines = null
 
 /obj/item/organ/external/tail/lizard/start_wag()
-	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = TRUE
+	return ..()
 
 /obj/item/organ/external/tail/lizard/stop_wag()
-	. = ..()
-
 	if(paired_spines)
 		var/datum/bodypart_overlay/mutant/spines/accessory = paired_spines.bodypart_overlay
 		accessory.wagging = FALSE
+	return ..()
 
 ///Lizard tail bodypart overlay datum
 /datum/bodypart_overlay/mutant/tail/lizard

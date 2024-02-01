@@ -2,21 +2,21 @@
 	name = "Stable Rear"
 	desc = "Your rear is far more robust than average, falling off less often than usual."
 	value = 2
-	icon = "face-sad-cry"
+	icon = FA_ICON_FACE_SAD_CRY
 	//All effects are handled directly in butts.dm
 
 /datum/quirk/loud_ass
 	name = "Loud Ass"
 	desc = "For some ungodly reason, your ass is twice as loud as normal."
 	value = 2
-	icon = "volume-high"
+	icon = FA_ICON_VOLUME_HIGH
 	//All effects are handled directly in butts.dm
 
 /datum/quirk/dummy_thick
 	name = "Dummy Thicc"
 	desc = "Hm...Colonel, I'm trying to sneak around, but I'm dummy thicc and the clap of my ass cheeks keep alerting the guards..."
 	value = 3	//Why are we still here? Just to suffer?
-	icon = "bullhorn"
+	icon = FA_ICON_VOLUME_UP
 
 /datum/quirk/dummy_thick/post_add()
 	. = ..()
@@ -93,7 +93,7 @@
 /datum/quirk/voracious
 	name = "Voracious"
 	desc = "Nothing gets between you and your food. You eat faster and can binge on junk food! Being fat suits you just fine. Also allows you to have an additional food buff."
-	icon = "drumstick-bite"
+	icon = FA_ICON_DRUMSTICK_BITE
 	value = 6
 	mob_trait = TRAIT_VORACIOUS
 	gain_text = span_notice("You feel HONGRY.")

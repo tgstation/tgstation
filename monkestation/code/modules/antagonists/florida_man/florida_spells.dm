@@ -67,13 +67,13 @@
 		return
 	var/mob/living/carbon/human/floridan = cast_on
 	playsound(floridan, 'sound/voice/human/wilhelm_scream.ogg', 50, TRUE)
-	floridan.visible_message("<span class='warning'>[floridan] howls in rage as he begins to charge!</span>", "<span class='notice'>You feel the strength of Florida wash over you, push through those doors!</span>")
+	floridan.visible_message(span_warning("[floridan] howls in rage as he begins to charge!"), span_notice("You feel the strength of Florida wash over you, push through those doors!"))
 	floridan.move_force = MOVE_FORCE_OVERPOWERING
-	addtimer(CALLBACK(src, .proc/end_florida_doorbuster),5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(end_florida_doorbuster)),5 SECONDS)
 
 /datum/action/cooldown/spell/florida_doorbuster/proc/end_florida_doorbuster()
 	if(!ishuman(usr))
 		return
 	var/mob/living/carbon/human/floridan = usr
 	floridan.move_force = MOVE_FORCE_NORMAL
-	floridan.visible_message("<span class='warning'>[floridan] seems to be calmer.</span>", "<span class='warning'>You feel weaker as the strength of Florida leaves you.</span>")
+	floridan.visible_message(span_warning("[floridan] seems to be calmer."), span_warning("You feel weaker as the strength of Florida leaves you."))

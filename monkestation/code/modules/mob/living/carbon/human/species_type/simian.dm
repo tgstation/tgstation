@@ -19,10 +19,7 @@
 
 	use_skintones = FALSE
 
-	inherent_biotypes = list(
-		MOB_ORGANIC,
-		MOB_HUMANOID
-		)
+	inherent_biotypes = MOB_ORGANIC | MOB_HUMANOID
 
 	mutanttongue = /obj/item/organ/internal/tongue/monkey
 	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | MIRROR_MAGIC | RACE_SWAP | ERT_SPAWN

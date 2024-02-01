@@ -20,6 +20,9 @@
 	layer = bitflag_to_layer(layer)
 	. = get_image_inner(layer, limb)
 
+/datum/bodypart_overlay/proc/get_extended_overlay(layer, obj/item/bodypart/limb)
+	return
+
 ///Generate the image. Needs to be overriden
 /datum/bodypart_overlay/proc/get_image(layer, obj/item/bodypart/limb)
 	CRASH("Get image needs to be overridden")

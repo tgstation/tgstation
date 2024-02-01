@@ -136,7 +136,6 @@
 	uplink_handler.telecrystals += amt
 	telecrystals.use(amt)
 	log_uplink("[key_name(user)] loaded [amt] telecrystals into [parent]'s uplink")
-	add_event_to_buffer(user, data = "loaded [amt] telecrystals into [parent]'s uplink", log_key = "UPLINK")
 
 /datum/component/uplink/proc/OnAttackBy(datum/source, obj/item/item, mob/user)
 	SIGNAL_HANDLER

@@ -171,7 +171,6 @@
 		return
 	objective.forced = force
 	log_traitor("[key_name(owner)] has received a potential objective: [objective.to_debug_string()] | Forced: [force]")
-	add_event_to_buffer(owner, data = "has received a potential objective: [objective.to_debug_string()] | Forced: [force]", log_key = "TRAITOR")
 
 	objective.original_progression = objective.progression_reward
 	objective.update_progression_reward()

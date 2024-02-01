@@ -29,7 +29,11 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		list("Prosthetic Limb", "Quadruple Amputee", "Body Purist"),
 		list("Quadruple Amputee", "Paraplegic"),
 		list("Quadruple Amputee", "Frail"),
-		list("Gigantism", "Dwarfism")
+		list("Gigantism", "Dwarfism"),
+		list("Social Anxiety", "Mute"),
+		list("Mute", "Soft-Spoken"),
+		list("Stormtrooper Aim", "Big Hands"),
+		list("Bilingual", "Foreigner"),
 	)
 
 /datum/controller/subsystem/processing/quirks/Initialize()
@@ -65,7 +69,7 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 
 /datum/controller/subsystem/processing/quirks/proc/AssignQuirks(mob/living/user, client/applied_client)
 	var/badquirk = FALSE
-	for(var/quirk_name in applied_client.prefs.all_quirks)
+	for(var/quirk_name in applied_client?.prefs?.all_quirks)
 		var/datum/quirk/quirk_type = quirks[quirk_name]
 		if(ispath(quirk_type))
 			if(user.add_quirk(quirk_type, override_client = applied_client))

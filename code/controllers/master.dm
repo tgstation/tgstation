@@ -7,19 +7,8 @@
  *
  **/
 
-//Init the debugger datum first so we can debug Master
-//You might wonder why not just create the debugger datum global in its own file, since its loaded way earlier than this DM file
-//Well for whatever reason then the Master gets created first and then the debugger when doing that
-//So thats why this code lives here now, until someone finds out how Byond inits globals
-GLOBAL_REAL(Debugger, /datum/debugger) = new
-//This is the ABSOLUTE ONLY THING that should init globally like this
-//2019 update: the failsafe,config and Global controllers also do it
-GLOBAL_REAL(Master, /datum/controller/master) = new
-
-//THIS IS THE INIT ORDER
-//Master -> SSPreInit -> GLOB -> world -> config -> SSInit -> Failsafe
-//GOT IT MEMORIZED?
-
+// See initialization order in /code/game/world.dm
+GLOBAL_REAL(Master, /datum/controller/master)
 /datum/controller/master
 	name = "Master"
 
@@ -88,7 +77,7 @@ GLOBAL_REAL(Master, /datum/controller/master) = new
 
 	if(!random_seed)
 		#ifdef UNIT_TESTS
-		random_seed = 29051994
+		random_seed = 29051994 // How about 22475?
 		#else
 		random_seed = rand(1, 1e9)
 		#endif

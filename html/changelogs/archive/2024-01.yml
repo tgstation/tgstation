@@ -245,3 +245,47 @@
   - bugfix: changed pipes from hiddin layer to visible layer
   - bugfix: changed pipes from /purple to purple/visible (Delta)
   - bugfix: made multilayer manifold visible (ICE/Meta)
+2024-01-16:
+  DexeeXI:
+  - rscadd: Cryo signs
+  - bugfix: other sign fixed
+  Iamgoofball:
+  - balance: Light Footed now makes stepping on glass Knockdown instead of Paralyze
+  - code_imp: Fixes some single letter variable usage in caltrop.dm
+  NicoDeLuna:
+  - rscadd: ' Constable Uniform in Security Wardrobe'
+  san7890, thegrb93, whataboutism-alos:
+  - bugfix: Carbons with tails (felinids, lizards) who have that tail removed will
+      now have that tail actually look like it came from the person in question, rather
+      than just be a grey thing of sadness.
+  - bugfix: Lizard tail wagging graphics
+  - rscadd: Sprited and implemented a short lizard tail
+2024-01-17:
+  Absolucy:
+  - rscadd: Adds a specific preference to enable/disable AI VOX (text-to-speech) announcements.
+  - balance: The Brand Intelligence event is now isolated to a single part of the
+      station, and will not spread outside of said department. Public areas such as
+      hallways and service (i.e bar, kitchen) are the most likely to be affected by
+      such an uprising, though.
+  - bugfix: Ghost players now have their quirks and actual name applied to them, including
+      their ID.
+  - rscadd: Adds a new (negative) station trait, where the clown spawns with bridge
+      access! Honk!
+  - bugfix: Storyteller votes actually work again.
+  - qol: Poly is much less likely to speak as often if wearing a common, command,
+      or loudmode headset.
+  krimelizard:
+  - sound: Adds *bark for Anime quirk users. Clowns will always get a squeaky bark.
+  nednaZ:
+  - rscadd: Adds "Miner Training" as a Neutral Quirk
+2024-01-18:
+  KnigTheThrasher:
+  - rscadd: You can "*weh" as a lizard now
+2024-01-19:
+  Absolucy:
+  - image: Added and fixed icons for all quriks.
+  Chubbygummibear, Absolucy:
+  - bugfix: popup screen locs will work on clients >1614. Security cameras, spyglass,
+      and character previews will work again.
+  lmenvs:
+  - bugfix: Simians now have their appropriate biotype (They're no longer undead)

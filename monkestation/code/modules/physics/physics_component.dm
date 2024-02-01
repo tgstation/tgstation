@@ -98,15 +98,16 @@
 )
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
-	src.physics_flags = physics_flags
-	src.angle = angle
+
 	src.horizontal_velocity = horizontal_velocity
 	src.vertical_velocity = vertical_velocity
 	src.horizontal_friction = horizontal_friction
 	src.vertical_friction = vertical_friction
+	src.z_floor = z_floor
+	src.physics_flags = physics_flags
+	src.angle = angle
 	src.horizontal_conservation_of_momentum = horizontal_conservation_of_momentum
 	src.vertical_conservation_of_momentum = vertical_conservation_of_momentum
-	src.z_floor = z_floor
 	src.visual_angle_velocity = visual_angle_velocity
 	src.visual_angle_friction = visual_angle_friction
 	src.spin_speed = spin_speed
@@ -282,6 +283,7 @@
 	incidence = GET_ANGLE_OF_INCIDENCE(face_angle, source.visual_angle + 180)
 	new_angle = SIMPLIFY_DEGREES(face_angle + incidence)
 	source.set_visual_angle(new_angle)
+	bumped_atom.hitby(source, FALSE)
 
 /// Stops movement for pesky items when they get picked up, as that essentially invalidates this component
 /datum/component/movable_physics/proc/on_item_pickup(obj/item/source)

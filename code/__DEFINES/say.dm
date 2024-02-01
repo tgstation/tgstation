@@ -104,3 +104,4 @@
 
 //Used in visible_message_flags, audible_message_flags and runechat_flags
 #define EMOTE_MESSAGE (1<<0)
+#define LOOC_MESSAGE (1<<1) //monke: looc

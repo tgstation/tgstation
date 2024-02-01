@@ -113,6 +113,17 @@
 	. = ..()
 	tag = "mob_[next_mob_id++]"
 
+/mob/serialize_list(list/options, list/semvers)
+	. = ..()
+
+	.["tag"] = tag
+	.["name"] = name
+	.["ckey"] = ckey
+	.["key"] = key
+
+	SET_SERIALIZATION_SEMVER(semvers, "1.0.0")
+	return .
+
 /**
  * set every hud image in the given category active so other people with the given hud can see it.
  * Arguments:

@@ -37,6 +37,7 @@
 	mind.active = TRUE
 	mind.transfer_to(operative)
 	mind.add_antag_datum(/datum/antagonist/traitor/contractor)
+	operative.fully_heal() //this is a lag issue so this is the best I got
 
 	message_admins("[ADMIN_LOOKUPFLW(operative)] has been made into a [src] by an event.")
 	log_game("[key_name(operative)] was spawned as a [src] by an event.")

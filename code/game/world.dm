@@ -8,6 +8,81 @@
 GLOBAL_VAR(restart_counter)
 
 /**
+ * WORLD INITIALIZATION
+ * THIS IS THE INIT ORDER:
+ *
+ * BYOND =>
+ * - (secret init native) =>
+ *   - world.Genesis() =>
+ *     - world.init_byond_tracy()
+ *     - (Start native profiling)
+ *     - world.init_debugger()
+ *     - Master =>
+ *       - config *unloaded
+ *       - (all subsystems) PreInit()
+ *       - GLOB =>
+ *         - make_datum_reference_lists()
+ *   - (/static variable inits, reverse declaration order)
+ * - (all pre-mapped atoms) /atom/New()
+ * - world.New() =>
+ *   - config.Load()
+ *   - world.InitTgs() =>
+ *     - TgsNew() *may sleep
+ *     - GLOB.rev_data.load_tgs_info()
+ *   - world.ConfigLoaded() =>
+ *     - SSdbcore.InitializeRound()
+ *     - world.SetupLogs()
+ *     - load_admins()
+ *     - ...
+ *   - Master.Initialize() =>
+ *     - (all subsystems) Initialize()
+ *     - Master.StartProcessing() =>
+ *       - Master.Loop() =>
+ *         - Failsafe
+ *   - world.RunUnattendedFunctions()
+ *
+ * Now listen up because I want to make something clear:
+ * If something is not in this list it should almost definitely be handled by a subsystem Initialize()ing
+ * If whatever it is that needs doing doesn't fit in a subsystem you probably aren't trying hard enough tbhfam
+ *
+ * GOT IT MEMORIZED?
+ * - Dominion/Cyberboss
+ */
+
+/**
+ * THIS !!!SINGLE!!! PROC IS WHERE ANY FORM OF INIITIALIZATION THAT CAN'T BE PERFORMED IN MASTER/NEW() IS DONE
+ * NOWHERE THE FUCK ELSE
+ * I DON'T CARE HOW MANY LAYERS OF DEBUG/PROFILE/TRACE WE HAVE, YOU JUST HAVE TO DEAL WITH THIS PROC EXISTING
+ * I'M NOT EVEN GOING TO TELL YOU WHERE IT'S CALLED FROM BECAUSE I'M DECLARING THAT FORBIDDEN KNOWLEDGE
+ * SO HELP ME GOD IF I FIND ABSTRACTION LAYERS OVER THIS!
+ */
+/world/proc/Genesis(tracy_initialized = FALSE)
+	RETURN_TYPE(/datum/controller/master)
+
+#ifdef USE_BYOND_TRACY
+#warn USE_BYOND_TRACY is enabled
+	if(!tracy_initialized)
+		init_byond_tracy()
+		Genesis(tracy_initialized = TRUE)
+		return
+#endif
+
+	Profile(PROFILE_RESTART)
+	Profile(PROFILE_RESTART, type = "sendmaps")
+
+	// Write everything to this log file until we get to SetupLogs() later
+	_initialize_log_files("data/logs/config_error.[GUID()].log")
+
+	// Init the debugger first so we can debug Master
+	init_debugger()
+
+	// Create the logger
+	logger = new
+
+	// THAT'S IT, WE'RE DONE, THE. FUCKING. END.
+	Master = new
+
+/**
  * World creation
  *
  * Here is where a round itself is actually begun and setup.
@@ -34,58 +109,56 @@ GLOBAL_VAR(restart_counter)
  * All atoms in both compiled and uncompiled maps are initialized()
  */
 /world/New()
-#ifdef USE_BYOND_TRACY
-	#warn USE_BYOND_TRACY is enabled
-	init_byond_tracy()
-#endif
-
 	log_world("World loaded at [time_stamp()]!")
 
-	make_datum_references_lists() //initialises global lists for referencing frequently used datums (so that we only ever do it once)
+	// From a really fucking old commit (91d7150)
+	// I wanted to move it but I think this needs to be after /world/New is called but before any sleeps?
+	// - Dominion/Cyberboss
+	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
 
-	GLOB.config_error_log = GLOB.world_manifest_log = GLOB.world_pda_log = GLOB.world_job_debug_log = GLOB.sql_error_log = GLOB.world_href_log = GLOB.world_runtime_log = GLOB.world_attack_log = GLOB.world_game_log = GLOB.world_econ_log = GLOB.world_shuttle_log = "data/logs/config_error.[GUID()].log" //temporary file used to record errors with loading config, moved to log directory once logging is set bl
-	#ifdef REFERENCE_DOING_IT_LIVE
-	GLOB.harddel_log = GLOB.world_game_log
-	#endif
-
-	GLOB.revdata = new
-
+	// First possible sleep()
 	InitTgs()
 	SSmetrics.world_init_time = REALTIMEOFDAY
 	config.Load(params[OVERRIDE_CONFIG_DIRECTORY_PARAMETER])
 
-	load_admins()
-	load_mentors()
-
-	//SetupLogs depends on the RoundID, so lets check
-	//DB schema and set RoundID if we can
-	SSdbcore.CheckSchemaVersion()
-	SSdbcore.SetRoundID()
-	SetupLogs()
-	load_poll_data()
-
-#ifndef USE_CUSTOM_ERROR_HANDLER
-	world.log = file("[GLOB.log_directory]/dd.log")
-#else
-	if (TgsAvailable())
-		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
-#endif
-
-	LoadVerbs(/datum/verbs/menu)
-	if(CONFIG_GET(flag/usewhitelist))
-		load_whitelist()
-
-	GLOB.timezoneOffset = text2num(time2text(0,"hh")) * 36000
-
-	if(fexists(RESTART_COUNTER_PATH))
-		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
-		fdel(RESTART_COUNTER_PATH)
+	ConfigLoaded()
 
 	if(NO_INIT_PARAMETER in params)
 		return
 
 	Master.Initialize(10, FALSE, TRUE)
 
+	RunUnattendedFunctions()
+
+/// Initializes TGS and loads the returned revising info into GLOB.revdata
+/world/proc/InitTgs()
+	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
+	GLOB.revdata.load_tgs_info()
+
+/// Runs after config is loaded but before Master is initialized
+/world/proc/ConfigLoaded()
+	// Everything in here is prioritized in a very specific way.
+	// If you need to add to it, ask yourself hard if what your adding is in the right spot
+	// (i.e. basically nothing should be added before load_admins() in here)
+
+	// Try to set round ID
+	SSdbcore.InitializeRound()
+
+	SetupLogs()
+
+	load_admins()
+	load_mentors()
+
+	load_poll_data()
+
+	LoadVerbs(/datum/verbs/menu)
+
+	if(fexists(RESTART_COUNTER_PATH))
+		GLOB.restart_counter = text2num(trim(file2text(RESTART_COUNTER_PATH)))
+		fdel(RESTART_COUNTER_PATH)
+
+/// Runs after the call to Master.Initialize, but before the delay kicks in. Used to turn the world execution into some single function then exit
+/world/proc/RunUnattendedFunctions()
 	#ifdef UNIT_TESTS
 	HandleTestRun()
 	#endif
@@ -93,10 +166,6 @@ GLOBAL_VAR(restart_counter)
 	#ifdef AUTOWIKI
 	setup_autowiki()
 	#endif
-
-/world/proc/InitTgs()
-	TgsNew(new /datum/tgs_event_handler/impl, TGS_SECURITY_TRUSTED)
-	GLOB.revdata.load_tgs_info()
 
 /world/proc/HandleTestRun()
 	//trigger things to run the whole process
@@ -111,6 +180,14 @@ GLOBAL_VAR(restart_counter)
 #endif
 	SSticker.OnRoundstart(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(_addtimer), cb, 10 SECONDS))
 
+/// Returns a list of data about the world state, don't clutter
+/world/proc/get_world_state_for_logging()
+	var/data = list()
+	data["tick_usage"] = world.tick_usage
+	data["tick_lag"] = world.tick_lag
+	data["time"] = world.time
+	data["timestamp"] = logger.unix_timestamp_string()
+	return data
 
 /world/proc/SetupLogs()
 	var/override_dir = params[OVERRIDE_LOG_DIRECTORY_PARAMETER]
@@ -134,68 +211,10 @@ GLOBAL_VAR(restart_counter)
 		GLOB.picture_logging_prefix = "O_[override_dir]_"
 		GLOB.picture_log_directory = "data/picture_logs/[override_dir]"
 
-	GLOB.logger.init_logging()
-	GLOB.demo_log = "[GLOB.log_directory]/demo.log"
-	GLOB.dynamic_log = "[GLOB.log_directory]/dynamic.log"
-	GLOB.filter_log = "[GLOB.log_directory]/filters.log"
-	GLOB.lua_log = "[GLOB.log_directory]/lua.log"
-	GLOB.query_debug_log = "[GLOB.log_directory]/query_debug.log"
-	GLOB.signals_log = "[GLOB.log_directory]/signals.log"
-	GLOB.sql_error_log = "[GLOB.log_directory]/sql.log"
-	GLOB.tgui_log = "[GLOB.log_directory]/tgui.log"
-	GLOB.world_asset_log = "[GLOB.log_directory]/asset.log"
-	GLOB.world_attack_log = "[GLOB.log_directory]/attack.log"
-	GLOB.world_cloning_log = "[GLOB.log_directory]/cloning.log"
-	GLOB.world_econ_log = "[GLOB.log_directory]/econ.log"
-	GLOB.world_game_log = "[GLOB.log_directory]/game.log"
-	GLOB.world_href_log = "[GLOB.log_directory]/hrefs.log"
-	GLOB.world_job_debug_log = "[GLOB.log_directory]/job_debug.log"
-	GLOB.world_manifest_log = "[GLOB.log_directory]/manifest.log"
-	GLOB.world_map_error_log = "[GLOB.log_directory]/map_errors.log"
-	GLOB.world_mecha_log = "[GLOB.log_directory]/mecha.log"
-	GLOB.world_mob_tag_log = "[GLOB.log_directory]/mob_tags.log"
-	GLOB.world_qdel_log = "[GLOB.log_directory]/qdel.log"
-	GLOB.world_paper_log = "[GLOB.log_directory]/paper.log"
-	GLOB.world_pda_log = "[GLOB.log_directory]/pda.log"
-	GLOB.world_runtime_log = "[GLOB.log_directory]/runtime.log"
-	GLOB.world_shuttle_log = "[GLOB.log_directory]/shuttle.log"
-	GLOB.world_silicon_log = "[GLOB.log_directory]/silicon.log"
-	GLOB.world_speech_indicators_log = "[GLOB.log_directory]/speech_indicators.log"
-	GLOB.world_suspicious_login_log = "[GLOB.log_directory]/suspicious_logins.log"
-	GLOB.world_telecomms_log = "[GLOB.log_directory]/telecomms.log"
-	GLOB.world_tool_log = "[GLOB.log_directory]/tools.log"
-	GLOB.world_uplink_log = "[GLOB.log_directory]/uplink.log"
-	GLOB.world_virus_log = "[GLOB.log_directory]/virus.log"
-
-#ifdef UNIT_TESTS
-	GLOB.test_log = "[GLOB.log_directory]/tests.log"
-	start_log(GLOB.test_log)
-#endif
-
-#ifdef REFERENCE_DOING_IT_LIVE
-	GLOB.harddel_log = "[GLOB.log_directory]/harddels.log"
-	start_log(GLOB.harddel_log)
-#endif
-	start_log(GLOB.tgui_log)
-	start_log(GLOB.world_attack_log)
-	start_log(GLOB.world_econ_log)
-	start_log(GLOB.world_game_log)
-	start_log(GLOB.world_href_log)
-	start_log(GLOB.world_job_debug_log)
-	start_log(GLOB.world_manifest_log)
-	start_log(GLOB.world_mob_tag_log)
-	start_log(GLOB.world_qdel_log)
-	start_log(GLOB.world_runtime_log)
-	start_log(GLOB.world_shuttle_log)
-	start_log(GLOB.world_telecomms_log)
-	start_log(GLOB.world_uplink_log)
-	start_log(GLOB.world_pda_log)
+	logger.init_logging()
 
 	var/latest_changelog = file("[global.config.directory]/../html/changelogs/archive/" + time2text(world.timeofday, "YYYY-MM") + ".yml")
 	GLOB.changelog_hash = fexists(latest_changelog) ? md5(latest_changelog) : 0 //for telling if the changelog has changed recently
-	if(fexists(GLOB.config_error_log))
-		fcopy(GLOB.config_error_log, "[GLOB.log_directory]/config_error.log")
-		fdel(GLOB.config_error_log)
 
 	if(GLOB.round_id)
 		log_game("Round ID: [GLOB.round_id]")
@@ -204,6 +223,13 @@ GLOBAL_VAR(restart_counter)
 	// but those are both private, so let's put the commit info in the runtime
 	// log which is ultimately public.
 	log_runtime(GLOB.revdata.get_log_message())
+
+#ifndef USE_CUSTOM_ERROR_HANDLER
+	world.log = file("[GLOB.log_directory]/dd.log")
+#else
+	if (TgsAvailable()) // why
+		world.log = file("[GLOB.log_directory]/dd.log") //not all runtimes trigger world/Error, so this is the only way to ensure we can see all of them.
+#endif
 
 /world/Topic(T, addr, master, key)
 	TGS_TOPIC //redirect to server tools if necessary
@@ -444,10 +470,15 @@ GLOBAL_VAR(restart_counter)
 		else
 			CRASH("Unsupported platform: [system_type]")
 
-	var/init_result = LIBCALL(library, "init")()
+	var/init_result = LIBCALL(library, "init")("block")
 	if (init_result != "0")
 		CRASH("Error initializing byond-tracy: [init_result]")
 
+/world/proc/init_debugger()
+	var/dll = GetConfig("env", "AUXTOOLS_DEBUG_DLL")
+	if (dll)
+		LIBCALL(dll, "auxtools_init")()
+		enable_debugging()
 
 /world/Profile(command, type, format)
 	if((command & PROFILE_STOP) || !global.config?.loaded || !CONFIG_GET(flag/forbid_all_profiling))

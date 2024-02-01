@@ -49,3 +49,9 @@
 	desc = "A plush of a hotdog. ~Handcrafted lovingly for Spinnermaster."
 	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
 	icon_state = "hotdog"
+
+/obj/item/toy/plush/jackfrost
+	name = "jack frost plush"
+	desc = "A plush of Jack Frost. ~Handcrafted lovingly for tonymcsp"
+	icon = 'monkestation/code/modules/donator/icons/obj/plushes.dmi'
+	icon_state = "jack_frost"

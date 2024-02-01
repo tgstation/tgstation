@@ -135,8 +135,6 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	new/datum/stack_recipe("window sill", /obj/structure/window_sill, 1, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 
 	new/datum/stack_recipe("remote chemical tank", /obj/structure/chemical_tank, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("remote smoke machine", /obj/structure/chemical_tank/smoke, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
-	new/datum/stack_recipe("remote liquid pump",/obj/structure/chemical_tank/liquid, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote injector",/obj/structure/chemical_tank/injector, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote patcher",/obj/structure/chemical_tank/patcher, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	new/datum/stack_recipe("remote factory output", /obj/structure/chemical_tank/factory, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \

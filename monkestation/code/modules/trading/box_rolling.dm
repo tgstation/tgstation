@@ -84,8 +84,7 @@
 	maptext_y += 60
 	if(user.client)
 		message_admins("[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
-		add_event_to_buffer(user,  data = "opened a lootbox and recieved [rolled_item.name]!", log_key = "META")
-		log_game("[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!")
+		logger.Log(LOG_CATEGORY_META, "[user.client.ckey] opened a lootbox and recieved [rolled_item.name]!", list("currency_left" = user.client.prefs.metacoins))
 	preview.filters += filter(type = "drop_shadow", x = 0, y = 0, size= 5, offset = 0, color = "#F0CA85")
 	if(type_string == "Unusual")
 		to_chat(world, span_boldannounce("[user] has unboxed an [rolled_item.name]!"))

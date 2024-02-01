@@ -9,7 +9,6 @@
 	msg = copytext_char(sanitize(msg), 1, MAX_MESSAGE_LEN)
 	if(!msg)
 		return
-	add_event_to_buffer(src, data = msg, log_key = "PRAYER")
 	log_prayer("[src.key]/([src.name]): [msg]")
 	if(usr.client)
 		if(usr.client.prefs.muted & MUTE_PRAY)

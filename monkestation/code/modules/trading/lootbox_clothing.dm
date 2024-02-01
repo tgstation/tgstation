@@ -14,6 +14,7 @@
 	var/add_element = TRUE
 
 /obj/item/clothing/head/soft/fishing_hat/lootbox
+	name = "fishing hat"
 	add_element = FALSE
 
 //versions of clothing with low armor to get given by lootboxes
@@ -54,6 +55,10 @@
 	set_armor(/datum/armor/lootbox_clothing)
 
 /obj/item/clothing/head/cowboy/white/lootbox/Initialize(mapload)
+	. = ..()
+	set_armor(/datum/armor/lootbox_clothing)
+
+/obj/item/clothing/head/guardmanhelmet/lootbox/Initialize(mapload)
 	. = ..()
 	set_armor(/datum/armor/lootbox_clothing)
 

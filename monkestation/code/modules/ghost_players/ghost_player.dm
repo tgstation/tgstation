@@ -5,6 +5,8 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	set name = "Toggle Centcomm Spawning"
 	set desc= "Toggles whether dead players can respawn in the centcomm area"
 
+	if(!check_rights(R_FUN))
+		return
 	GLOB.disable_ghost_spawning = !GLOB.disable_ghost_spawning
 
 /mob/living/carbon/human/ghost
@@ -35,17 +37,15 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 	. = ..()
 	var/datum/action/cooldown/mob_cooldown/return_to_ghost/created_ability = new /datum/action/cooldown/mob_cooldown/return_to_ghost(src)
 	created_ability.Grant(src)
-	equipOutfit(/datum/outfit/job/assistant)
-	regenerate_icons()
 
 /mob/living/carbon/human/ghost/Destroy()
-	. = ..()
 	if(dueling && linked_button)
 		addtimer(CALLBACK(linked_button, TYPE_PROC_REF(/obj/structure/fight_button, end_duel), src), 3 SECONDS)
 
 	if(linked_button)
 		linked_button.remove_user(src)
 		linked_button = null
+	return ..()
 
 /mob/living/carbon/human/ghost/Life(seconds_per_tick, times_fired)
 	if(stat > SOFT_CRIT)
@@ -131,11 +131,14 @@ GLOBAL_VAR_INIT(disable_ghost_spawning, FALSE)
 		if(brain)
 			brain.temporary_sleep = TRUE
 
+	var/client/our_client = client || GLOB.directory[ckey]
 	var/mob/living/carbon/human/ghost/new_existance = new(key, mind, can_reenter_corpse, brain)
-	client?.prefs.safe_transfer_prefs_to(new_existance, TRUE, FALSE)
+	our_client?.prefs.safe_transfer_prefs_to(new_existance, TRUE, FALSE)
 	new_existance.move_to_ghostspawn()
 	new_existance.key = key
-	client?.init_verbs()
+	new_existance.equipOutfit(/datum/outfit/job/assistant)
+	SSquirks.AssignQuirks(new_existance, our_client)
+	our_client?.init_verbs()
 	qdel(src)
 	return TRUE
 

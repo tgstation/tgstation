@@ -23,6 +23,17 @@
 	draw_color = "#[random_color()]"
 	imprint_on_next_insertion = FALSE
 
+/datum/bodypart_overlay/mutant/get_extended_overlay(layer, obj/item/bodypart/limb)
+	layer = bitflag_to_layer(layer)
+	var/passed_color = sprite_datum.color_src ? draw_color : null
+	var/mob/living/carbon/human/owner = limb.owner
+	if(!owner)
+		return
+	var/datum/species/owner_species = owner.dna.species
+
+	return owner_species.return_accessory_layer(-layer, sprite_datum, owner, passed_color)
+
+
 ///Grab a random sprite
 /datum/bodypart_overlay/mutant/proc/randomize_sprite()
 	sprite_datum = get_random_appearance()

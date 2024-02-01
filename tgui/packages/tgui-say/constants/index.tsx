@@ -4,6 +4,7 @@ export const CHANNELS = [
   'Radio',
   'Me',
   'OOC',
+  'LOOC', // monke: looc
   'Admin',
   'Mentor',
 ] as const;

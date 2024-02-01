@@ -105,6 +105,12 @@
 	var/obj/item/stock_parts/cell/C = A.get_cell()
 	var/obj/O
 	var/coefficient = 1
+	if(istype(A, /obj/structure/chemical_manufacturer))
+		to_chat(user, span_alert("Error: unable to interface with device."))
+		return FALSE
+	if(istype(A, /obj/item/integrated_circuit/chemical))
+		to_chat(user, span_alert("Error: unable to interface with device."))
+		return FALSE
 	if(istype(A, /obj/item/gun/energy))
 		to_chat(user, span_alert("Error: unable to interface with device."))
 		return FALSE

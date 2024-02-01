@@ -71,7 +71,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	if(!(prefs.chat_toggles & CHAT_OOC))
 		to_chat(src, span_danger("You have OOC muted."))
 		return
-	add_event_to_buffer(mob, data = raw_msg, log_key = "OOC")
 	mob.log_talk(raw_msg, LOG_OOC)
 
 	var/keyname = key

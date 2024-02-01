@@ -1,6 +1,6 @@
 /datum/admins/proc/paintings_manager()
 	set name = "Paintings Manager"
-	set category = "Admin"
+	set category = "Admin.Logging"
 
 	if(!check_rights(R_ADMIN))
 		return

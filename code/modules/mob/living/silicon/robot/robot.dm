@@ -81,7 +81,6 @@
 	logevent("System brought online.")
 
 	log_silicon("New cyborg [key_name(src)] created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"]")
-	add_event_to_buffer(src, data ="created with [connected_ai ? "master AI: [key_name(connected_ai)]" : "no master AI"].", log_key = "SILICON")
 	log_current_laws()
 
 	alert_control = new(src, list(ALARM_ATMOS, ALARM_FIRE, ALARM_POWER, ALARM_CAMERA, ALARM_BURGLAR, ALARM_MOTION), list(z))
@@ -403,7 +402,6 @@
 
 	log_combat(usr, src, "detonated cyborg")
 	log_silicon("CYBORG: [key_name(src)] has been detonated by [key_name(usr)].")
-	add_event_to_buffer(src, data ="has been detonated by [key_name(usr)].", log_key = "SILICON")
 	if(connected_ai)
 		to_chat(connected_ai, "<br><br>[span_alert("ALERT - Cyborg detonation detected: [name]")]<br>")
 
@@ -421,7 +419,6 @@
 	set_lockcharge(FALSE)
 	scrambledcodes = TRUE
 	log_silicon("CYBORG: [key_name(src)] has been unlinked from an AI.")
-	add_event_to_buffer(src, data ="has been unlinked from an AI.", log_key = "SILICON")
 	//Disconnect it's camera so it's not so easily tracked.
 	if(!QDELETED(builtInCamera))
 		QDEL_NULL(builtInCamera)
@@ -738,7 +735,6 @@
 		update_transform()
 	logevent("Chassis model has been reset.")
 	log_silicon("CYBORG: [key_name(src)] has reset their cyborg model.")
-	add_event_to_buffer(src, data ="has reset their cyborg model.", log_key = "SILICON")
 	model.transform_to(/obj/item/robot_model)
 
 	// Remove upgrades.

@@ -242,7 +242,6 @@
 	cyborg.diag_hud_set_aishell()
 	cyborg.update_icons()
 	log_silicon("CYBORG: [key_name(cyborg)] has transformed into the [new_model] model.")
-	add_event_to_buffer(cyborg, data ="has transformed into the [new_model] model.", log_key = "SILICON")
 
 	INVOKE_ASYNC(new_model, PROC_REF(do_transform_animation))
 	qdel(src)

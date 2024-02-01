@@ -2,14 +2,14 @@
 /client/proc/getserverlogs()
 	set name = "Get Server Logs"
 	set desc = "View/retrieve logfiles."
-	set category = "Admin"
+	set category = "Admin.Logging"
 
 	browseserverlogs()
 
 /client/proc/getcurrentlogs()
 	set name = "Get Current Logs"
 	set desc = "View/retrieve logfiles for the current round."
-	set category = "Admin"
+	set category = "Admin.Logging"
 
 	browseserverlogs(current=TRUE)
 

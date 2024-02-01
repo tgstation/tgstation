@@ -110,7 +110,6 @@
 		new_borg.lawsync()
 		new_borg.lawupdate = TRUE
 		log_silicon("[key_name(new_borg)] resynced to [key_name(master_ai)]")
-		add_event_to_buffer(new_borg, master_ai, "resynced to [key_name(master_ai)]", "SILICON")
 	addtimer(CALLBACK(src, PROC_REF(unlock_new_robot), new_borg), 5 SECONDS)
 
 /obj/machinery/transformer/proc/unlock_new_robot(mob/living/silicon/robot/new_borg)

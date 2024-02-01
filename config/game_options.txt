@@ -15,6 +15,10 @@ REVIVAL_BRAIN_LIFE -1
 ## Comment this out if you want OOC to be automatically disabled during the round, it will be enabled during the lobby and after the round end results.
 OOC_DURING_ROUND
 
+## LOOC
+## Comment this out to disable LOOC
+LOOC_ENABLED
+
 ## EMOJI ###
 ## Comment this out if you want to disable emojis
 EMOJIS

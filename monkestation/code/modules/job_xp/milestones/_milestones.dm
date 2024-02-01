@@ -4,30 +4,29 @@
 	var/list/in_round_milestones
 
 
-/datum/job_milestone/proc/check_milestones(level, client/user)
+/datum/job_milestone/proc/check_milestones(level, client/user, force = FALSE)
 	if(!length(milestones) && !length(in_round_milestones))
 		return
 	if(!milestones[num2text(level)] && !in_round_milestones[num2text(level)])
 		return
 
 	if(milestones[num2text(level)])
-		var/datum/milestone_type = milestones[level]
+		var/datum/milestone_type = milestones[num2text(level)]
 
 		//handles adding loadout items
-		if(istype(milestone_type, /datum/loadout_item))
+		if(ispath(milestone_type, /datum/loadout_item))
 			var/datum/loadout_item/listed_loadout = milestone_type
-			for(var/path in user.prefs.job_rewards_claimed[key_id])
-				if(path == initial(milestone_type))
-					return
-
-			user.prefs.job_rewards_claimed[key_id] |= initial(milestone_type)
+			if(!force)
+				for(var/path in user.prefs.job_rewards_claimed[key_id])
+					if(path == initial(milestone_type))
+						return
 			if(!user.prefs.inventory[initial(listed_loadout.item_path)])
 				user.prefs.inventory += initial(listed_loadout.item_path)
 				var/datum/db_query/query_add_gear_purchase = SSdbcore.NewQuery({"
 					INSERT INTO [format_table_name("metacoin_item_purchases")] (`ckey`, `item_id`, `amount`) VALUES (:ckey, :item_id, :amount)"},
 					list("ckey" = user.ckey, "item_id" = initial(listed_loadout.item_path), "amount" = 1))
 				if(!query_add_gear_purchase.Execute())
-					to_chat(user, "Failed to add level up reward contact coders")
+					to_chat(user, "Failed to add level up reward to the database, contact coders.")
 					qdel(query_add_gear_purchase)
 					return FALSE
 				qdel(query_add_gear_purchase)
@@ -37,10 +36,14 @@
 					UPDATE [format_table_name("metacoin_item_purchases")] SET amount = :amount WHERE ckey = :ckey AND item_id = :item_id"},
 					list("ckey" = user.ckey, "item_id" = initial(listed_loadout.item_path), "amount" = 1))
 				if(!query_add_gear_purchase.Execute())
-					to_chat(user, "Failed to add level up reward contact coders")
+					to_chat(user, "Failed to add level up reward to the database, contact coders.")
 					qdel(query_add_gear_purchase)
 					return FALSE
 				qdel(query_add_gear_purchase)
+
+		if(!user.prefs.job_rewards_claimed[key_id])
+			user.prefs.job_rewards_claimed[key_id] = list()
+		user.prefs.job_rewards_claimed[key_id] |= milestone_type
 		user.prefs.save_preferences()
 
 	if(in_round_milestones[num2text(level)])
@@ -48,7 +51,7 @@
 		var/obj/item/milestone_item = new temp
 		if(!islist(user.prefs.job_rewards_per_round[key_id]))
 			user.prefs.job_rewards_per_round[key_id] = list()
-		user.prefs.job_rewards_per_round[key_id] += milestone_item.type
+		user.prefs.job_rewards_per_round[key_id] += "[milestone_item.type]" //Path2String
 		user.prefs.save_preferences()
 		qdel(milestone_item)
 
@@ -94,3 +97,22 @@
 	if(ishuman(mob))
 		var/mob/living/carbon/human/human_mob = mob
 		human_mob.put_in_hands(new_item)
+
+/client/verb/reload_job_rewards()
+	set category = "IC"
+	set name = "Reload Job Rewards"
+	set desc = "Refresh job rewards you have for the current job (Use this if you suspect something is missing or broken)."
+
+	if(!isliving(mob))
+		to_chat(src, "For this to work you need to be living.")
+		return
+
+	var/datum/mind/listed_mob = mob.mind
+	var/job_string = listed_mob.assigned_role.title
+
+	for(var/datum/job_milestone/subtype as anything in subtypesof(/datum/job_milestone))
+		if(!(initial(subtype.key_id) == job_string) || !isnum(prefs.job_level_list[job_string]))
+			continue
+		var/datum/job_milestone/subtype_created = new subtype
+		for(var/level in 1 to prefs.job_level_list[job_string])
+			subtype_created.check_milestones(level, mob.client, force = TRUE)

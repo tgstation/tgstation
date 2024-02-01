@@ -294,6 +294,8 @@ GLOBAL_LIST_INIT(bananium_recipes, list ( \
 GLOBAL_LIST_INIT(titanium_recipes, list ( \
 	new/datum/stack_recipe("titanium tile", /obj/item/stack/tile/mineral/titanium, 1, 4, 20, check_density = FALSE, category = CAT_TILES), \
 	new/datum/stack_recipe("shuttle seat", /obj/structure/chair/comfy/shuttle, 2, one_per_turf = TRUE, on_solid_ground = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote smoke machine", /obj/structure/chemical_tank/smoke, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
+	new/datum/stack_recipe("remote liquid pump",/obj/structure/chemical_tank/liquid, 10, time = 2 SECONDS, check_density = TRUE, category = CAT_FURNITURE), \
 	))
 
 /obj/item/stack/sheet/mineral/titanium/get_main_recipes()

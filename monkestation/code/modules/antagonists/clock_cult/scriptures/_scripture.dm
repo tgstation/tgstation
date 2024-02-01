@@ -168,7 +168,7 @@ GLOBAL_LIST_EMPTY(clock_scriptures_by_type)
 		to_chat(invoker, span_brass("You need [invokers_required] servants to channel [name]!"))
 		return FALSE
 
-	if(invoker.has_reagent(/datum/reagent/water/holywater))
+	if(invoker.reagents && invoker.has_reagent(/datum/reagent/water/holywater))
 		to_chat(invoker, span_brass("The holy water inside you is blocking your ability to invoke!"))
 		return FALSE
 

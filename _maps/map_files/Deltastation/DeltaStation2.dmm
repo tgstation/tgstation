@@ -534,6 +534,18 @@
 /obj/effect/spawner/random/structure/closet_maintenance,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"afL" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/aft)
 "afQ" = (
 /obj/structure/closet/secure_closet/brig{
 	name = "Prisoner Locker"
@@ -3548,6 +3560,10 @@
 	},
 /obj/machinery/door/airlock{
 	name = "Locker Room"
+	},
+/obj/structure/sign/directions/dorms/directional/east{
+	pixel_x = 0;
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
@@ -11942,14 +11958,6 @@
 /obj/item/storage/secure/safe/directional/east,
 /turf/open/floor/iron/grimy,
 /area/station/command/heads_quarters/captain/private)
-"cNz" = (
-/obj/structure/sign/directions/dorms{
-	dir = 4;
-	pixel_x = 32;
-	pixel_y = 1
-	},
-/turf/closed/wall,
-/area/station/commons/toilet/locker)
 "cNH" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -26705,6 +26713,10 @@
 	c_tag = "Central Hallway - Aft Starboard";
 	name = "hallway camera"
 	},
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = 32
+	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
 "gur" = (
@@ -29087,9 +29099,9 @@
 "gYS" = (
 /obj/effect/turf_decal/tile/neutral/anticorner/contrasted,
 /obj/item/radio/intercom/directional/east,
-/obj/structure/sign/directions/dorms{
-	pixel_x = 32;
-	pixel_y = -8
+/obj/structure/sign/directions/dorms/directional/south{
+	pixel_y = -8;
+	pixel_x = 32
 	},
 /turf/open/floor/iron,
 /area/station/commons/locker)
@@ -41466,6 +41478,14 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/command/bridge)
+"jZb" = (
+/obj/effect/turf_decal/tile/neutral,
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/secondary/exit)
 "jZf" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/effect/landmark/event_spawn,
@@ -50543,6 +50563,16 @@
 	},
 /obj/structure/railing{
 	dir = 1
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/aft)
+"mlX" = (
+/obj/effect/turf_decal/tile/purple{
+	dir = 8
+	},
+/obj/structure/sign/directions/cryo/directional/east{
+	pixel_x = 0;
+	pixel_y = -32
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/aft)
@@ -59862,6 +59892,10 @@
 /obj/effect/turf_decal/stripes/line,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
+	},
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = 32
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
@@ -77732,9 +77766,9 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/structure/sign/directions/dorms{
-	pixel_x = 32;
-	pixel_y = -8
+/obj/structure/sign/directions/dorms/directional/south{
+	pixel_y = -8;
+	pixel_x = 32
 	},
 /obj/structure/sign/directions/supply{
 	dir = 1;
@@ -82859,6 +82893,18 @@
 /obj/effect/spawner/random/engineering/canister,
 /turf/open/floor/iron,
 /area/station/maintenance/starboard/aft)
+"ufK" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/neutral{
+	dir = 4
+	},
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = 32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "ufO" = (
 /obj/machinery/light/small/directional/east,
 /obj/structure/closet/firecloset,
@@ -84874,6 +84920,16 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/hydroponics)
+"uGj" = (
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/structure/sign/directions/cryo/directional/south{
+	pixel_y = 0;
+	pixel_x = -32
+	},
+/turf/open/floor/iron,
+/area/station/hallway/primary/central/fore)
 "uGl" = (
 /obj/effect/turf_decal/tile/red{
 	dir = 8
@@ -134291,7 +134347,7 @@ erS
 nXY
 hFl
 nXY
-nXY
+afL
 nXY
 sxD
 nXY
@@ -135584,7 +135640,7 @@ pUR
 hPs
 avR
 whK
-rcW
+mlX
 oJy
 dWE
 ciF
@@ -143010,7 +143066,7 @@ lSl
 lSl
 lSl
 cpr
-lSl
+uGj
 rTe
 lSl
 lSl
@@ -143516,7 +143572,7 @@ edB
 hZs
 qzY
 irs
-qzY
+ufK
 qzY
 edB
 vPp
@@ -143572,7 +143628,7 @@ tIV
 iFp
 tIV
 tIV
-tIV
+jZb
 mhW
 cxK
 pYp
@@ -146884,7 +146940,7 @@ iVq
 nMd
 crR
 szQ
-cNz
+iYi
 uqq
 dCT
 ggc

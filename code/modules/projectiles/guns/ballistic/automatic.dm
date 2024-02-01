@@ -11,6 +11,7 @@
 	suppressed_sound = 'sound/weapons/gun/smg/shot_suppressed.ogg'
 	var/select = 1 ///fire selector position. 1 = semi, 2 = burst. anything past that can vary between guns.
 	var/selector_switch_icon = FALSE ///if it has an icon for a selector switch indicating current firemode.
+	gun_flags = GUN_SMOKE_PARTICLES
 
 /obj/item/gun/ballistic/automatic/update_overlays()
 	. = ..()

@@ -102,7 +102,7 @@
 	if(!H.blood_volume)
 		H.blood_volume += 5
 		H.adjustBruteLoss(5)
-		to_chat(H, "<span class='danger'>You feel empty!</span>")
+		to_chat(H, span_danger("You feel empty!"))
 	if(H.nutrition >= NUTRITION_LEVEL_WELL_FED && H.blood_volume <= 672)
 		if(H.nutrition >= NUTRITION_LEVEL_ALMOST_FULL)
 			H.adjust_nutrition(-5)
@@ -113,12 +113,12 @@
 		if(H.nutrition <= NUTRITION_LEVEL_STARVING)
 			H.blood_volume -= 8
 			if(prob(5))
-				to_chat(H, "<span class='info'>You're starving! Get some food!</span>")
+				to_chat(H, span_info("You're starving! Get some food!"))
 		else
 			if(prob(35))
 				H.blood_volume -= 2
 				if(prob(5))
-					to_chat(H, "<span class='danger'>You're feeling pretty hungry...</span>")
+					to_chat(H, span_danger("You're feeling pretty hungry..."))
 	var/atmos_sealed = FALSE
 	if(H.wear_suit && H.head && isclothing(H.wear_suit) && isclothing(H.head))
 		var/obj/item/clothing/CS = H.wear_suit
@@ -126,8 +126,8 @@
 		if(CS.clothing_flags & CH.clothing_flags & STOPSPRESSUREDAMAGE)
 			atmos_sealed = TRUE
 	if(H.w_uniform && H.head)
-		var/obj/item/clothing/CH = H.head
-		if ((CH.clothing_flags & STOPSPRESSUREDAMAGE))
+		var/obj/item/clothing/head_clothing = H.head
+		if(istype(head_clothing) && (head_clothing.clothing_flags & STOPSPRESSUREDAMAGE))
 			atmos_sealed = TRUE
 	if(!atmos_sealed)
 		var/datum/gas_mixture/environment = H.loc.return_air()

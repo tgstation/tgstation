@@ -11,6 +11,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin/implant/pindicate
 	bolt_type = BOLT_TYPE_NO_BOLT
+	gun_flags = GUN_SMOKE_PARTICLES
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/unrestricted
 	pin = /obj/item/firing_pin
@@ -27,6 +28,7 @@
 	icon_state = "mecha_grenadelnchr"
 	mag_type = /obj/item/ammo_box/magazine/internal/cylinder/grenademulti
 	pin = /obj/item/firing_pin
+	gun_flags = GUN_SMOKE_PARTICLES
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/cyborg/attack_self()
 	return
@@ -41,6 +43,7 @@
 	fire_delay = 0
 	actions_types = list()
 	casing_ejector = FALSE
+	gun_flags = GUN_SMOKE_PARTICLES
 
 /obj/item/gun/ballistic/rocketlauncher
 	name = "\improper PML-9"
@@ -64,6 +67,7 @@
 	tac_reloads = FALSE
 	/// Do we shit flames behind us when we fire?
 	var/backblast = TRUE
+	gun_flags = GUN_SMOKE_PARTICLES
 
 /obj/item/gun/ballistic/rocketlauncher/Initialize(mapload)
 	. = ..()

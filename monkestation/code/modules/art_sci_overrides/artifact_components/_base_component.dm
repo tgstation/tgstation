@@ -182,7 +182,7 @@
 		holder.visible_message(span_notice("[holder] [activation_message]"))
 	active = TRUE
 	holder.add_overlay(act_effect)
-	add_event_to_buffer(parent,  data = "has been activated!", log_key = "ARTIFACT")
+	logger.Log(LOG_CATEGORY_ARTIFACT, "[parent] has been activated")
 	effect_activate(silent)
 	return TRUE
 
@@ -195,7 +195,7 @@
 		holder.visible_message(span_notice("[holder] [deactivation_message]"))
 	active = FALSE
 	holder.cut_overlay(act_effect)
-	add_event_to_buffer(parent,  data = "has been deactivated!", log_key = "ARTIFACT")
+	logger.Log(LOG_CATEGORY_ARTIFACT, "[parent] has been deactivated")
 	effect_deactivate(silent)
 
 /datum/component/artifact/proc/process_stimuli(stimuli, stimuli_value, triggers_faults = TRUE)
