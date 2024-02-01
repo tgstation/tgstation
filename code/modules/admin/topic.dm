@@ -361,19 +361,6 @@
 		var/target = href_list["showmessageckeylinkless"]
 		browse_messages(target_ckey = target, linkless = 1)
 
-	else if(href_list["messageread"])
-		if(!isnum(href_list["message_id"]))
-			return
-		var/rounded_message_id = round(href_list["message_id"], 1)
-		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
-			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
-			list("id" = rounded_message_id, "player_key" = usr.ckey)
-		)
-		if(!query_message_read.warn_execute())
-			qdel(query_message_read)
-			return
-		qdel(query_message_read)
-
 	else if(href_list["messageedits"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -1363,7 +1350,6 @@
 				return
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
-		GLOB.station_goals += G
 		modify_goals()
 
 	else if(href_list["change_lag_switch"])

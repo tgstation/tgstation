@@ -403,9 +403,9 @@
 	dir = 4;
 	name = "Old Mining Turret";
 	lethal_projectile = /obj/projectile/kinetic/miner;
-	lethal_projectile_sound = 'sound/weapons/kenetic_accel.ogg';
+	lethal_projectile_sound = 'sound/weapons/kinetic_accel.ogg';
 	stun_projectile = /obj/projectile/kinetic/miner;
-	stun_projectile_sound = 'sound/weapons/kenetic_accel.ogg'
+	stun_projectile_sound = 'sound/weapons/kinetic_accel.ogg'
 	},
 /turf/closed/wall/mineral/titanium,
 /area/shuttle/abandoned/bar)

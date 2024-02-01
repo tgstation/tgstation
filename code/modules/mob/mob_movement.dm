@@ -348,6 +348,8 @@
 /mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, force_drop = FALSE)
 	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)
 
+	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, force_drop)
+
 //bodypart selection verbs - Cyberboss
 //7: mouth 8: head  9: eyes
 //4: r-arm 5: chest 6: l-arm

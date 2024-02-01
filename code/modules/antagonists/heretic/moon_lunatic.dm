@@ -18,8 +18,10 @@
 	src.ascended_heretic = heretic_master
 	src.ascended_body = heretic_body
 
-	var/datum/objective/lunatic_obj = new()
-	lunatic_obj.explanation_text = "Assist your master [heretic_master]."
+	var/datum/objective/lunatic/lunatic_obj = new()
+	lunatic_obj.master = heretic_master
+	lunatic_obj.update_explanation_text()
+	objectives += lunatic_obj
 
 	to_chat(owner, span_boldnotice("Ruin the lie, save the truth through obeying [heretic_master] the ringleader!"))
 
@@ -47,3 +49,10 @@
 	description = "THE TRUTH REVEALED, THE LIE SLAIN."
 	mood_change = 10
 
+/datum/objective/lunatic
+	explanation_text = "Assist your ringleader. If you are seeing this, scroll up in chat for who that is and report this"
+	var/datum/mind/master
+
+/datum/objective/lunatic/update_explanation_text()
+	. = ..()
+	explanation_text = "Assist your ringleader [master]"

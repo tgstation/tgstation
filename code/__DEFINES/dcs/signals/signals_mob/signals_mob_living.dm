@@ -228,6 +228,15 @@
 #define COMSIG_LIVING_CHECK_BLOCK "living_check_block"
 	#define SUCCESSFUL_BLOCK (1<<0)
 
+///Hit by successful disarm attack (mob/living/attacker, zone_targeted, item/weapon)
+#define COMSIG_LIVING_DISARM_HIT "living_disarm_hit"
+///Before a living mob is shoved, sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target)
+#define COMSIG_LIVING_DISARM_PRESHOVE "living_disarm_preshove"
+	#define COMSIG_LIVING_ACT_SOLID (1<<0) //Tells disarm code to act as if the mob was shoved into something solid, even we we're not
+///When a living mob is disarmed, this is sent to the turf we're trying to shove onto (mob/living/shover, mob/living/target, shove_blocked)
+#define COMSIG_LIVING_DISARM_COLLIDE "living_disarm_collision"
+	#define COMSIG_LIVING_SHOVE_HANDLED (1<<0)
+
 /// Sent on a mob from /datum/component/mob_chain when component is attached with it as the "front" : (mob/living/basic/tail)
 #define COMSIG_MOB_GAINED_CHAIN_TAIL "living_gained_chain_tail"
 /// Sent on a mob from /datum/component/mob_chain when component is detached from it as the "front" : (mob/living/basic/tail)
@@ -240,5 +249,9 @@
 
 /// Sent from a mob to their loc when starting to remove cuffs on itself
 #define COMSIG_MOB_REMOVING_CUFFS "living_removing_cuffs"
-/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
-#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+	/// Sent as a reply to above from any atom that wishs to stop self-cuff removal
+	#define COMSIG_MOB_BLOCK_CUFF_REMOVAL (1<<0)
+
+/// Sent to a mob grabbing another mob: (mob/living/grabbing)
+#define COMSIG_LIVING_GRAB "living_grab"
+	// Return COMPONENT_CANCEL_ATTACK_CHAIN / COMPONENT_SKIP_ATTACK_CHAIN to stop the grab

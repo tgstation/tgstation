@@ -1,0 +1,5 @@
+author: "ZephyrTFA"
+delete-after: True
+changes:
+  - bugfix: "lathes now respect always-powered areas"
+  - balance: "lathes now use power as they print instead of all at once"

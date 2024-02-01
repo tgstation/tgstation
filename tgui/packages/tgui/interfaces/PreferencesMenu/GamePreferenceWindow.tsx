@@ -1,6 +1,7 @@
 import { exhaustiveCheck } from 'common/exhaustive';
+import { useState } from 'react';
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { Stack } from '../../components';
 import { Window } from '../../layouts';
 import { GamePreferencesSelectedPage, PreferencesMenuData } from './data';
@@ -13,8 +14,7 @@ export const GamePreferenceWindow = (props: {
 }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
 
-  const [currentPage, setCurrentPage] = useLocalState(
-    'currentPage',
+  const [currentPage, setCurrentPage] = useState(
     props.startingPage ?? GamePreferencesSelectedPage.Settings,
   );
 

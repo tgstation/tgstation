@@ -63,8 +63,9 @@
 
 				if(cached_my_atom)
 					if(reaction.required_container)
-						if(reaction.required_container_accepts_subtypes && !istype(cached_my_atom, reaction.required_container))
-							continue
+						if(reaction.required_container_accepts_subtypes)
+							if(!istype(cached_my_atom, reaction.required_container))
+								continue
 						else if(cached_my_atom.type != reaction.required_container)
 							continue
 

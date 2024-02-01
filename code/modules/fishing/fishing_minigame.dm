@@ -156,8 +156,12 @@
 			trait.minigame_mod(rod, user, src)
 	/// Enable special parameters
 	if(rod.line)
+		completion_gain += 1 // Any fishing line will provide a small boost by default
 		if(rod.line.fishing_line_traits & FISHING_LINE_BOUNCY)
 			completion_loss -= 2
+		if(rod.line.fishing_line_traits & FISHING_LINE_STIFF)
+			completion_loss += 1
+			completion_gain -= 1
 	if(rod.hook)
 		if(rod.hook.fishing_hook_traits & FISHING_HOOK_WEIGHTED)
 			bait_bounce_mult = 0.1

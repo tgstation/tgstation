@@ -29,18 +29,15 @@
 		qdel(src)
 
 /obj/item/implant/freedom/get_data()
-	var/dat = {"
-		<b>Implant Specifications:</b><BR>
-		<b>Name:</b> Freedom Beacon<BR>
-		<b>Life:</b> Optimum [initial(uses)] uses<BR>
-		<b>Important Notes:</b> <font color='red'>Illegal</font><BR>
-		<HR>
-		<b>Implant Details:</b> <BR>
-		<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-		mechanisms. These signals will release any bindings on both the arms and legs.<BR>
-		<b>Disclaimer:</b> Heavy-duty restraints such as straightjackets are deemed "too complex" to release from.
-	"}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Freedom Beacon<BR> \
+		<b>Life:</b> Optimum [initial(uses)] uses<BR> \
+		<b>Important Notes:</b> <font color='red'>Illegal</font><BR> \
+		<HR> \
+		<b>Implant Details:</b> <BR> \
+		<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking \
+		mechanisms. These signals will release any bindings on both the arms and legs.<BR> \
+		<b>Disclaimer:</b> Heavy-duty restraints such as straightjackets are deemed \"too complex\" to release from."
 
 /obj/item/implanter/freedom
 	name = "implanter (freedom)"

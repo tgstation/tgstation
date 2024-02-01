@@ -234,7 +234,7 @@
 			target.Knockdown(3 SECONDS)
 			target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 2, 10 SECONDS)
 			if(ishuman(target) && ishuman(user))
-				INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
+				INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
 				human_sacker.setGrabState(GRAB_PASSIVE)
 
 		if(50 to INFINITY) // absolutely BODIED
@@ -260,7 +260,7 @@
 				target.Knockdown(3 SECONDS)
 				target.adjust_staggered_up_to(STAGGERED_SLOWDOWN_LENGTH * 3, 10 SECONDS)
 				if(ishuman(target) && ishuman(user))
-					INVOKE_ASYNC(human_sacker.dna.species, TYPE_PROC_REF(/datum/species, grab), human_sacker, human_target)
+					INVOKE_ASYNC(human_sacker, TYPE_PROC_REF(/mob/living, grab), human_sacker, human_target)
 					human_sacker.setGrabState(GRAB_AGGRESSIVE)
 
 /**
@@ -400,7 +400,7 @@
 			defense_mod += 2
 		if(tackle_target.mob_negates_gravity())
 			defense_mod += 1
-		if(tackle_target.is_shove_knockdown_blocked()) // riot armor and such
+		if(HAS_TRAIT(tackle_target, TRAIT_SHOVE_KNOCKDOWN_BLOCKED)) // riot armor and such
 			defense_mod += 5
 
 		var/obj/item/organ/external/tail/lizard/el_tail = tackle_target.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -451,7 +451,7 @@
 			attack_mod += 15
 			human_sacker.adjustStaminaLoss(100) //AHAHAHAHAHAHAHAHA
 
-		if(human_sacker.is_shove_knockdown_blocked()) // tackling with riot specialized armor, like riot armor, is effective but tiring
+		if(HAS_TRAIT(human_sacker, TRAIT_SHOVE_KNOCKDOWN_BLOCKED)) // tackling with riot specialized armor, like riot armor, is effective but tiring
 			attack_mod += 2
 			human_sacker.adjustStaminaLoss(20)
 

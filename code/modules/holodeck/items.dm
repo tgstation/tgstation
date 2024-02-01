@@ -119,11 +119,12 @@
 
 	var/numbuttons = 0
 	var/numready = 0
-	for(var/turf/area_turf as anything in currentarea.get_contained_turfs())
-		for(var/obj/machinery/readybutton/button in area_turf)
-			numbuttons++
-			if(button.ready)
-				numready++
+	for (var/list/zlevel_turfs as anything in currentarea.get_zlevel_turf_lists())
+		for (var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/readybutton/button in area_turf)
+				numbuttons++
+				if(button.ready)
+					numready++
 
 	if(numbuttons == numready)
 		begin_event()
@@ -136,13 +137,14 @@
 
 	eventstarted = TRUE
 
-	for(var/turf/area_turf as anything in currentarea.get_contained_turfs())
-		for(var/obj/structure/window/barrier in area_turf)
-			if((barrier.obj_flags & NO_DECONSTRUCTION) || (barrier.flags_1 & HOLOGRAM_1))// Just in case: only holo-windows
-				qdel(barrier)
+	for (var/list/zlevel_turfs as anything in currentarea.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/structure/window/barrier in area_turf)
+				if((barrier.obj_flags & NO_DECONSTRUCTION) || (barrier.flags_1 & HOLOGRAM_1))// Just in case: only holo-windows
+					qdel(barrier)
 
-		for(var/mob/contestant in area_turf)
-			to_chat(contestant, span_userdanger("FIGHT!"))
+			for(var/mob/contestant in area_turf)
+				to_chat(contestant, span_userdanger("FIGHT!"))
 
 /obj/machinery/conveyor/holodeck
 

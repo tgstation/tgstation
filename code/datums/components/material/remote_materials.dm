@@ -74,8 +74,8 @@ handles linking back and forth.
 	if (silo)
 		silo.ore_connected_machines -= src
 		silo.holds -= src
-		silo.updateUsrDialog()
 		silo = null
+		UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	mat_container = null
 	return ..()
 
@@ -135,6 +135,7 @@ handles linking back and forth.
 	silo.ore_connected_machines -= src
 	silo = null
 	mat_container = null
+	UnregisterSignal(parent, COMSIG_ATOM_ATTACKBY)
 	if (allow_standalone)
 		_MakeLocal()
 
@@ -170,7 +171,6 @@ handles linking back and forth.
 		if (silo)
 			silo.ore_connected_machines -= src
 			silo.holds -= src
-			silo.updateUsrDialog()
 		else if (mat_container)
 			//transfer all mats to silo. whatever cannot be transfered is dumped out as sheets
 			if(mat_container.total_amount())
@@ -183,12 +183,11 @@ handles linking back and forth.
 			qdel(mat_container)
 		silo = new_silo
 		silo.ore_connected_machines += src
-		silo.updateUsrDialog()
 		mat_container = new_container
 		if(!(mat_container_flags & MATCONTAINER_NO_INSERT))
 			RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, TYPE_PROC_REF(/datum/component/remote_materials, SiloAttackBy))
 		to_chat(user, span_notice("You connect [parent] to [silo] from the multitool's buffer."))
-		return ITEM_INTERACT_BLOCKING
+		return ITEM_INTERACT_SUCCESS
 
 /**
  * Checks if the param silo is in the same level as this components parent i.e. connected machine, rcd, etc

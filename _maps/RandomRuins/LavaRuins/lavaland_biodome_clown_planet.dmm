@@ -333,7 +333,7 @@
 /area/ruin/powered/clownplanet)
 "bZ" = (
 /obj/machinery/door/airlock/bananium,
-/turf/open/indestructible/honk,
+/turf/open/floor/carpet,
 /area/ruin/powered/clownplanet)
 "ca" = (
 /obj/item/bikehorn,
