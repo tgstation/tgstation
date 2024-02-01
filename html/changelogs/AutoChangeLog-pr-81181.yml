@@ -1,4 +1,0 @@
-author: "intercepti0n"
-delete-after: True
-changes:
-  - bugfix: "fixed ore vent's well being drawn over ash storm."

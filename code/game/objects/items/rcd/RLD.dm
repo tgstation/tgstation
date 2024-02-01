@@ -73,7 +73,7 @@
 			if(new_choice == null)
 				return
 
-			var/list/new_rgb = ReadRGB(new_choice)
+			var/list/new_rgb = rgb2num(new_choice)
 			for(var/option in original_options)
 				if(option == "Color Pick" || option == "Deconstruct" || option == "Silo Link")
 					continue

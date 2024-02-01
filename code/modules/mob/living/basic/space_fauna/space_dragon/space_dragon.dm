@@ -1,5 +1,5 @@
 /// You can't make a dragon darker than this, it'd be hard to see
-#define REJECT_DARK_COLOUR_THRESHOLD 50
+#define REJECT_DARK_COLOUR_THRESHOLD 20
 /// Any interactions executed by the space dragon
 #define DOAFTER_SOURCE_SPACE_DRAGON_INTERACTION "space dragon interaction"
 
@@ -100,8 +100,8 @@
 		to_chat(src, span_warning("Not a valid colour, please try again."))
 		select_colour()
 		return
-	var/temp_hsv = RGBtoHSV(chosen_colour)
-	if(ReadHSV(temp_hsv)[3] < REJECT_DARK_COLOUR_THRESHOLD)
+	var/list/skin_hsv = rgb2hsv(chosen_colour)
+	if(skin_hsv[3] < REJECT_DARK_COLOUR_THRESHOLD)
 		to_chat(src, span_danger("Invalid colour. Your colour is not bright enough."))
 		select_colour()
 		return

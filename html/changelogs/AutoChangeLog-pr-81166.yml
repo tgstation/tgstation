@@ -1,6 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Slimes using Feed while buckled now stops feeding."
-  - bugfix: "Slimes are no longer prompted to feed off of dead people."
-  - bugfix: "Slimes that can only feed onto one person now immediately feeds off of them."

@@ -1,4 +1,0 @@
-author: "K4rlox"
-delete-after: True
-changes:
-  - bugfix: "makes the experiment chamber in syndicate lavaland base no longer explode when testing grenades"
