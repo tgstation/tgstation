@@ -116,6 +116,10 @@
 #define BB_ORE_TARGET "BB_ore_target"
 /// which ore types we will not eat
 #define BB_ORE_IGNORE_TYPES "BB_ore_ignore_types"
+/// key that holds the boulder we will break
+#define BB_BOULDER_TARGET "BB_boulder_target"
+/// key that holds the ore_vent we will harvest boulders from
+#define BB_VENT_TARGET "BB_vent_target"
 
 // minebot keys
 /// key that stores our toggle light ability

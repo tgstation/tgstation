@@ -58,9 +58,10 @@ Chilling extracts:
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	user.visible_message(span_notice("[src] shatters, and a healing aura fills the room briefly."))
-	for(var/turf/area_turf as anything in user_area.get_contained_turfs())
-		for(var/mob/living/carbon/nearby in area_turf)
-			nearby.reagents?.add_reagent(/datum/reagent/medicine/regen_jelly,10)
+	for (var/list/zlevel_turfs as anything in user_area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/mob/living/carbon/nearby in area_turf)
+				nearby.reagents?.add_reagent(/datum/reagent/medicine/regen_jelly,10)
 	..()
 
 /obj/item/slimecross/chilling/blue
@@ -108,7 +109,7 @@ Chilling extracts:
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	var/filtered = FALSE
-	for(var/turf/open/T in A.get_contained_turfs())
+	for(var/turf/open/T in A.get_turfs_from_all_zlevels())
 		var/datum/gas_mixture/G = T.air
 		if(istype(G))
 			G.assert_gas(/datum/gas/plasma)
@@ -336,7 +337,8 @@ Chilling extracts:
 		to_chat(user, span_warning("[src] can't affect such a large area."))
 		return
 	user.visible_message(span_warning("[src] reflects an array of dazzling colors and light, energy rushing to nearby doors!"))
-	for(var/turf/area_turf as anything in area.get_contained_turfs())
-		for(var/obj/machinery/door/airlock/door in area_turf)
-			new /obj/effect/forcefield/slimewall/rainbow(door.loc)
+	for (var/list/zlevel_turfs as anything in area.get_zlevel_turf_lists())
+		for(var/turf/area_turf as anything in zlevel_turfs)
+			for(var/obj/machinery/door/airlock/door in area_turf)
+				new /obj/effect/forcefield/slimewall/rainbow(door.loc)
 	return ..()

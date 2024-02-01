@@ -161,10 +161,7 @@
 		Anyone overtop the wall will be throw aside (or upwards) and sustain damage."
 	gain_text = "Images of foreign and ominous structures began to dance in my mind. Covered head to toe in thick rust, \
 		they no longer looked man made. Or perhaps they never were in the first place."
-	next_knowledge = list(
-		/datum/heretic_knowledge/spell/area_conversion,
-		/datum/heretic_knowledge/rifle,
-	)
+	next_knowledge = list(/datum/heretic_knowledge/spell/area_conversion)
 	spell_to_add = /datum/action/cooldown/spell/pointed/rust_construction
 	cost = 1
 	route = PATH_RUST
@@ -179,6 +176,7 @@
 		/datum/heretic_knowledge/reroll_targets,
 		/datum/heretic_knowledge/curse/corrosion,
 		/datum/heretic_knowledge/crucible,
+		/datum/heretic_knowledge/rifle,
 	)
 	spell_to_add = /datum/action/cooldown/spell/aoe/rust_conversion
 	cost = 1

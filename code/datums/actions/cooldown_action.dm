@@ -177,7 +177,7 @@
 /// Starts a cooldown time for other abilities that share a cooldown with this. Has some niche usage with more complicated attack ai!
 /// Will use default cooldown time if an override is not specified
 /datum/action/cooldown/proc/StartCooldownOthers(override_cooldown_time)
-	if(!length(owner.actions))
+	if(!length(owner?.actions))
 		return // Possible if they have an action they don't control
 	for(var/datum/action/cooldown/shared_ability in owner.actions - src)
 		if(!(shared_cooldown & shared_ability.shared_cooldown))
@@ -186,6 +186,31 @@
 			shared_ability.StartCooldownSelf(override_cooldown_time)
 		else
 			shared_ability.StartCooldownSelf(cooldown_time)
+
+/// Resets the cooldown of this ability
+/datum/action/cooldown/proc/ResetCooldown()
+	next_use_time = world.time
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables this cooldown action
+/datum/action/cooldown/proc/enable()
+	action_disabled = FALSE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Disables this cooldown action
+/datum/action/cooldown/proc/disable()
+	action_disabled = TRUE
+	build_all_button_icons(UPDATE_BUTTON_STATUS)
+
+/// Re-enables all cooldown actions
+/datum/action/cooldown/proc/enable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.enable()
+
+/// Disables all cooldown actions
+/datum/action/cooldown/proc/disable_cooldown_actions()
+	for(var/datum/action/cooldown/cd_action in owner.actions)
+		cd_action.disable()
 
 /datum/action/cooldown/Trigger(trigger_flags, atom/target)
 	. = ..()

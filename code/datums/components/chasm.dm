@@ -32,6 +32,7 @@
 		/obj/singularity,
 		/obj/structure/lattice,
 		/obj/structure/stone_tile,
+		/obj/structure/ore_vent,
 	))
 
 /datum/component/chasm/Initialize(turf/target, mapload)

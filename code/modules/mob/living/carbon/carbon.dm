@@ -5,11 +5,6 @@
 	register_context()
 
 	GLOB.carbon_list += src
-	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_PRESHOVE = PROC_REF(disarm_precollide),
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(disarm_collision),
-	)
-	AddElement(/datum/element/connect_loc, loc_connections)
 	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
 
 /mob/living/carbon/Destroy()
@@ -65,6 +60,9 @@
 			take_bodypart_damage(5 + 5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
 		else if(!iscarbon(hit_atom) && extra_speed)
 			take_bodypart_damage(5 * extra_speed, check_armor = TRUE, wound_bonus = extra_speed * 5)
+		visible_message(span_danger("[src] crashes into [hit_atom][extra_speed ? " really hard" : ""]!"),\
+			span_userdanger("You violently crash into [hit_atom][extra_speed ? " extra hard" : ""]!"))
+		log_combat(hit_atom, src, "crashes ")
 		oof_noise = TRUE
 
 	if(iscarbon(hit_atom) && hit_atom != src)
@@ -1373,24 +1371,6 @@
 /mob/living/carbon/proc/attach_rot()
 	if(mob_biotypes & (MOB_ORGANIC|MOB_UNDEAD))
 		AddComponent(/datum/component/rot, 6 MINUTES, 10 MINUTES, 1)
-
-/mob/living/carbon/proc/disarm_precollide(datum/source, mob/living/carbon/shover, mob/living/carbon/target)
-	SIGNAL_HANDLER
-	if(can_be_shoved_into)
-		return COMSIG_CARBON_ACT_SOLID
-
-/mob/living/carbon/proc/disarm_collision(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
-	SIGNAL_HANDLER
-	if(src == target || LAZYFIND(target.buckled_mobs, src) || !can_be_shoved_into)
-		return
-	target.Knockdown(SHOVE_KNOCKDOWN_HUMAN)
-	if(!is_shove_knockdown_blocked())
-		Knockdown(SHOVE_KNOCKDOWN_COLLATERAL)
-	target.visible_message(span_danger("[shover] shoves [target.name] into [name]!"),
-		span_userdanger("You're shoved into [name] by [shover]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name] into [name]!"))
-	log_combat(shover, target, "shoved", addition = "into [name]")
-	return COMSIG_CARBON_SHOVE_HANDLED
 
 /**
  * This proc is used to determine whether or not the mob can handle touching an acid affected object.

@@ -5,7 +5,8 @@
 			"salutes",
 			"nods in appreciation towards",
 			"fist bumps",
-		)
+		),
+		BB_UNREACHABLE_LIST_COOLDOWN = 45 SECONDS,
 	)
 
 	ai_movement = /datum/ai_movement/jps/bot
@@ -53,10 +54,12 @@
 		clear_blackboard_key(key)
 
 ///set the target if we can reach them
-/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, distance = 10)
+/datum/ai_controller/basic_controller/bot/proc/set_if_can_reach(key, target, distance = 10, bypass_add_to_blacklist = FALSE)
 	if(can_reach_target(target, distance))
 		set_blackboard_key(key, target)
 		return TRUE
+	if(!bypass_add_to_blacklist)
+		set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
 	return FALSE
 
 /datum/ai_controller/basic_controller/bot/proc/can_reach_target(target, distance = 10)
@@ -69,34 +72,16 @@
 		return FALSE
 	return TRUE
 
-///check if the target is too far away, and delete them if so and add them to the unreachables list
-/datum/ai_controller/basic_controller/bot/proc/reachable_key(key, distance = 10, bypass_add_to_blacklist = FALSE)
-	var/datum/target = blackboard[key]
-	if(QDELETED(target))
-		return FALSE
-	var/datum/last_attempt = blackboard[BB_LAST_ATTEMPTED_PATHING]
-	if(last_attempt != target)
-		current_pathing_attempts = 0
-		set_blackboard_key(BB_LAST_ATTEMPTED_PATHING, target)
-	else
-		current_pathing_attempts++
-	if(current_pathing_attempts >= max_pathing_attempts || !can_reach_target(target, distance))
-		clear_blackboard_key(key)
-		clear_blackboard_key(BB_LAST_ATTEMPTED_PATHING)
-		if(!bypass_add_to_blacklist)
-			set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(target), TRUE)
-		return FALSE
-	return TRUE
-
 /// subtree to manage our list of unreachables, we reset it every 15 seconds
 /datum/ai_planning_subtree/manage_unreachable_list
 
 /datum/ai_planning_subtree/manage_unreachable_list/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
+	if(isnull(controller.blackboard[BB_UNREACHABLE_LIST_COOLDOWN]) || controller.blackboard[BB_CLEAR_LIST_READY] > world.time)
+		return
 	controller.queue_behavior(/datum/ai_behavior/manage_unreachable_list, BB_TEMPORARY_IGNORE_LIST)
 
 /datum/ai_behavior/manage_unreachable_list
 	behavior_flags = AI_BEHAVIOR_CAN_PLAN_DURING_EXECUTION
-	action_cooldown = 45 SECONDS
 
 /datum/ai_behavior/manage_unreachable_list/perform(seconds_per_tick, datum/ai_controller/controller, list_key)
 	. = ..()
@@ -104,8 +89,13 @@
 		controller.clear_blackboard_key(list_key)
 	finish_action(controller, TRUE)
 
+/datum/ai_behavior/manage_unreachable_list/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	controller.set_blackboard_key(BB_CLEAR_LIST_READY, controller.blackboard[BB_UNREACHABLE_LIST_COOLDOWN] + world.time)
 
 /datum/ai_planning_subtree/find_patrol_beacon
+	///travel towards beacon behavior
+	var/travel_behavior = /datum/ai_behavior/travel_towards/beacon
 
 /datum/ai_planning_subtree/find_patrol_beacon/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn
@@ -114,7 +104,7 @@
 
 	if(controller.blackboard_key_exists(BB_BEACON_TARGET))
 		bot_pawn.update_bot_mode(new_mode = BOT_PATROL)
-		controller.queue_behavior(/datum/ai_behavior/travel_towards/beacon, BB_BEACON_TARGET)
+		controller.queue_behavior(travel_behavior, BB_BEACON_TARGET)
 		return
 
 	if(controller.blackboard_key_exists(BB_PREVIOUS_BEACON_TARGET))
@@ -132,9 +122,9 @@
 	var/atom/final_target
 	var/atom/previous_target = controller.blackboard[BB_PREVIOUS_BEACON_TARGET]
 	for(var/obj/machinery/navbeacon/beacon as anything in GLOB.navbeacons["[bot_pawn.z]"])
-		if(beacon == previous_target)
-			continue
 		var/dist = get_dist(bot_pawn, beacon)
+		if(beacon == previous_target || dist <= 1)
+			continue
 		if(dist > closest_distance)
 			continue
 		closest_distance = dist
@@ -170,6 +160,7 @@
 
 /datum/ai_behavior/travel_towards/beacon
 	clear_target = TRUE
+	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
 
 /datum/ai_behavior/travel_towards/beacon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/atom/target = controller.blackboard[target_key]
@@ -188,6 +179,7 @@
 
 /datum/ai_behavior/travel_towards/bot_summon
 	clear_target = TRUE
+	new_movement_type = /datum/ai_movement/jps/bot/travel_to_beacon
 
 /datum/ai_behavior/travel_towards/bot_summon/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	var/mob/living/basic/bot/bot_pawn = controller.pawn

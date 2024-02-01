@@ -1,4 +1,0 @@
-author: "Sightld2"
-delete-after: True
-changes:
-  - bugfix: "Cyborgs no longer think they're hitting themselves when stunned with a stun baton"

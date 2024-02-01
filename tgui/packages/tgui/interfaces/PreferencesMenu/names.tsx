@@ -1,6 +1,6 @@
 import { binaryInsertWith, sortBy } from 'common/collections';
+import { useState } from 'react';
 
-import { useLocalState } from '../../backend';
 import {
   Box,
   Button,
@@ -31,9 +31,9 @@ export const MultiNameInput = (props: {
   handleUpdateName: (nameType: string, value: string) => void;
   names: Record<string, string>;
 }) => {
-  const [currentlyEditingName, setCurrentlyEditingName] = useLocalState<
+  const [currentlyEditingName, setCurrentlyEditingName] = useState<
     string | null
-  >('currentlyEditingName', null);
+  >(null);
 
   return (
     <ServerPreferencesFetcher
@@ -158,9 +158,9 @@ export const NameInput = (props: {
   name: string;
   openMultiNameInput: () => void;
 }) => {
-  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useLocalState<
-    string | null
-  >('lastNameBeforeEdit', null);
+  const [lastNameBeforeEdit, setLastNameBeforeEdit] = useState<string | null>(
+    null,
+  );
   const editing = lastNameBeforeEdit === props.name;
 
   const updateName = (e, value) => {
