@@ -7,17 +7,20 @@
 	/// Timer between when all bounties are refreshed.
 	var/refresh_time = 10 MINUTES
 	/// timerID of the active refresh timer.
-	var/refresh_timer // melbert todo : admin button to force refresh
+	var/refresh_timer
+	/// Number of times we have refreshed bounties
+	var/num_refreshes = 0
 
 	/// Assoc list that dictates how much of each bounty difficulty to give out at once.
-	var/list/bounties_to_give = list(
+	/// Modified by the number of times we have refreshed bounties.
+	VAR_PRIVATE/list/base_bounties_to_give = list(
 		SPY_DIFFICULTY_EASY = 4,
 		SPY_DIFFICULTY_MEDIUM = 2,
 		SPY_DIFFICULTY_HARD = 2,
 	)
 
 	/// Assoc list of all active bounties.
-	var/list/list/bounties = list(
+	VAR_PRIVATE/list/list/bounties = list(
 		SPY_DIFFICULTY_EASY = list(),
 		SPY_DIFFICULTY_MEDIUM = list(),
 		SPY_DIFFICULTY_HARD = list(),
@@ -25,7 +28,7 @@
 
 	/// Assoc list of all possible bounties for each difficulty.
 	/// This is static, no bounty types are removed from this list.
-	var/list/list/bounty_types = list(
+	VAR_PRIVATE/list/list/bounty_types = list(
 		SPY_DIFFICULTY_EASY = list(),
 		SPY_DIFFICULTY_MEDIUM = list(),
 		SPY_DIFFICULTY_HARD = list(),
@@ -60,15 +63,7 @@
 		if(item.cost >= SPY_UPPER_COST_THRESHOLD)
 			possible_uplink_items[SPY_DIFFICULTY_HARD] += item
 
-	// For the first bounty set, replace all hard bounties with medium ones
-	var/hard_bounties_to_skip = bounties_to_give[SPY_DIFFICULTY_HARD]
-	bounties_to_give[SPY_DIFFICULTY_HARD] = 0
-	bounties_to_give[SPY_DIFFICULTY_MEDIUM] += hard_bounties_to_skip
-
 	refresh_bounty_list()
-
-	bounties_to_give[SPY_DIFFICULTY_HARD] += hard_bounties_to_skip
-	bounties_to_give[SPY_DIFFICULTY_MEDIUM] -= hard_bounties_to_skip
 
 /// Helper that returns a list of all active bounties in a single list, regardless of difficulty.
 /datum/spy_bounty_handler/proc/get_all_bounties() as /list
@@ -82,6 +77,12 @@
 /// Then recursively calls itself via a timer.
 /datum/spy_bounty_handler/proc/refresh_bounty_list()
 	PRIVATE_PROC(TRUE)
+
+	var/list/bounties_to_give = base_bounties_to_give.Copy()
+
+	if(num_refreshes < base_bounties_to_give[SPY_DIFFICULTY_HARD])
+		bounties_to_give[SPY_DIFFICULTY_HARD] = num_refreshes
+		bounties_to_give[SPY_DIFFICULTY_MEDIUM] += (base_bounties_to_give[SPY_DIFFICULTY_HARD] - num_refreshes)
 
 	for(var/difficulty in bounties)
 		QDEL_LIST(bounties[difficulty])
@@ -100,4 +101,13 @@
 				failed_attempts -= 1
 				qdel(bounty)
 
+	num_refreshes += 1
 	refresh_timer = addtimer(CALLBACK(src, PROC_REF(refresh_bounty_list)), refresh_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
+
+/// Forces a refresh of the bounty list.
+/// Counts towards [num_refreshes].
+/datum/spy_bounty_handler/proc/force_refresh()
+	if(refresh_timer)
+		deltimer(refresh_timer)
+
+	refresh_bounty_list()

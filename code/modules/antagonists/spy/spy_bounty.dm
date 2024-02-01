@@ -84,7 +84,7 @@
  * Returning FALSE simply means that the passed movable is not valid for this bounty.
  */
 /datum/spy_bounty/proc/is_stealable(atom/movable/stealing)
-	SHOULD_BE_PURE(TRUE)
+	// SHOULD_BE_PURE(TRUE)
 	return FALSE
 
 /**
@@ -405,19 +405,33 @@
 
 /// Finds the desired item type in the target crewmember.
 /datum/spy_bounty/targets_person/some_item/proc/find_desired_thing(mob/living/carbon/human/crewmember)
-	return (locate(desired_type) in crewmember) || (locate(desired_type) in crewmember.back)
+	return locate(desired_type) in crewmember.get_all_gear()
 
 // Steal someone's ID card
 /datum/spy_bounty/targets_person/some_item/id
-	desired_type = /obj/item/card/id/advanced // melbert todo : should have logic to ensure it gets their actual ID
+	desired_type = /obj/item/card/id/advanced
+
+/datum/spy_bounty/targets_person/some_item/id/find_desired_thing(mob/living/carbon/human/crewmember)
+	for(var/obj/item/card/id/advanced/id in crewmember.get_all_gear())
+		if(id.registered_account?.account_id == crewmember.account_id)
+			return id
+
+	return null
 
 // Steal someone's PDA
 /datum/spy_bounty/targets_person/some_item/pda
-	desired_type = /obj/item/modular_computer/pda // melbert todo : should have logic to ensure it gets their actual PDA
+	desired_type = /obj/item/modular_computer/pda
+
+/datum/spy_bounty/targets_person/some_item/pda/find_desired_thing(mob/living/carbon/human/crewmember)
+	for(var/obj/item/modular_computer/pda/pda in crewmember.get_all_gear())
+		if(pda.saved_identification == crewmember.real_name)
+			return pda
+
+	return null
 
 // Steal someone's heirloom
 /datum/spy_bounty/targets_person/some_item/heirloom
-	desired_type = /obj/item // melbert todo : prevent spies from getting their own heirloom
+	desired_type = /obj/item
 
 /datum/spy_bounty/targets_person/some_item/heirloom/is_valid_crewmember(mob/living/carbon/human/crewmember)
 	return ..() && crewmember.has_quirk(/datum/quirk/item_quirk/family_heirloom)
@@ -498,6 +512,11 @@
 	help = "Steal Officer Beepsky, commonly found patrolling the station."
 
 /datum/spy_bounty/some_bot/ofitser
+	difficulty = SPY_DIFFICULTY_EASY
+	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/ofitser
+	help = "Steal Prison Ofitser, commonly found guarding the Gulag."
+
+/datum/spy_bounty/some_bot/armsky
 	difficulty = SPY_DIFFICULTY_HARD
 	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/armsky
 	help = "Steal Sergeant-At-Armsky, commonly found guarding the station's Armory."
