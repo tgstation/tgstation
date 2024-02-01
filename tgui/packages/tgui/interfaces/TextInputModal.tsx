@@ -1,9 +1,11 @@
-import { Loader } from './common/Loader';
-import { InputButtons } from './common/InputButtons';
-import { useBackend, useLocalState } from '../backend';
-import { KEY_ENTER, KEY_ESCAPE } from '../../common/keycodes';
+import { KEY } from 'common/keys';
+import { KeyboardEvent, useState } from 'react';
+
+import { useBackend } from '../backend';
 import { Box, Section, Stack, TextArea } from '../components';
 import { Window } from '../layouts';
+import { InputButtons } from './common/InputButtons';
+import { Loader } from './common/Loader';
 
 type TextInputData = {
   large_buttons: boolean;
@@ -30,11 +32,12 @@ export const TextInputModal = (props) => {
     max_length,
     message = '',
     multiline,
-    placeholder,
+    placeholder = '',
     timeout,
     title,
   } = data;
-  const [input, setInput] = useLocalState<string>('input', placeholder || '');
+
+  const [input, setInput] = useState(placeholder || '');
   const onType = (value: string) => {
     if (value === input) {
       return;
@@ -58,11 +61,13 @@ export const TextInputModal = (props) => {
       {timeout && <Loader value={timeout} />}
       <Window.Content
         onKeyDown={(event) => {
-          const keyCode = window.event ? event.which : event.keyCode;
-          if (keyCode === KEY_ENTER && (!visualMultiline || !event.shiftKey)) {
+          if (
+            event.key === KEY.Enter &&
+            (!visualMultiline || !event.shiftKey)
+          ) {
             act('submit', { entry: input });
           }
-          if (keyCode === KEY_ESCAPE) {
+          if (event.key === KEY.Escape) {
             act('cancel');
           }
         }}
@@ -89,7 +94,10 @@ export const TextInputModal = (props) => {
 };
 
 /** Gets the user input and invalidates if there's a constraint. */
-const InputArea = (props) => {
+const InputArea = (props: {
+  input: string;
+  onType: (value: string) => void;
+}) => {
   const { act, data } = useBackend<TextInputData>();
   const { max_length, multiline } = data;
   const { input, onType } = props;
@@ -103,13 +111,14 @@ const InputArea = (props) => {
       height={multiline || input.length >= 30 ? '100%' : '1.8rem'}
       maxLength={max_length}
       onEscape={() => act('cancel')}
-      onEnter={(event) => {
+      onEnter={(event: KeyboardEvent<HTMLTextAreaElement>) => {
         if (visualMultiline && event.shiftKey) {
           return;
         }
         event.preventDefault();
         act('submit', { entry: input });
       }}
+      onChange={(_, value) => onType(value)}
       onInput={(_, value) => onType(value)}
       placeholder="Type something..."
       value={input}

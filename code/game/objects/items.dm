@@ -772,10 +772,12 @@
 /obj/item/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	if(QDELETED(hit_atom))
 		return
-	if(SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum) & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
+	if(SEND_SIGNAL(src, COMSIG_MOVABLE_PRE_IMPACT, hit_atom, throwingdatum) & COMPONENT_MOVABLE_IMPACT_NEVERMIND)
 		return
 	if(SEND_SIGNAL(hit_atom, COMSIG_ATOM_PREHITBY, src, throwingdatum) & COMSIG_HIT_PREVENTED)
 		return
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_IMPACT, hit_atom, throwingdatum)
 	if(get_temperature() && isliving(hit_atom))
 		var/mob/living/L = hit_atom
 		L.ignite_mob()
@@ -1067,7 +1069,7 @@
 			skill_modifier = user.mind.get_skill_modifier(/datum/skill/mining, SKILL_SPEED_MODIFIER)
 
 			if(user.mind.get_skill_level(/datum/skill/mining) >= SKILL_LEVEL_JOURNEYMAN && prob(user.mind.get_skill_modifier(/datum/skill/mining, SKILL_PROBS_MODIFIER))) // we check if the skill level is greater than Journeyman and then we check for the probality for that specific level.
-				mineral_scan_pulse(get_turf(user), SKILL_LEVEL_JOURNEYMAN - 2) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
+				mineral_scan_pulse(get_turf(user), SKILL_LEVEL_JOURNEYMAN - 2, scanner = src) //SKILL_LEVEL_JOURNEYMAN = 3 So to get range of 1+ we have to subtract 2 from it,.
 
 	delay *= toolspeed * skill_modifier
 
@@ -1634,3 +1636,6 @@
 	if (!isnull(tool_behaviour))
 		return list(tool_behaviour)
 	return null
+
+/obj/item/animate_atom_living(mob/living/owner)
+	new /mob/living/simple_animal/hostile/mimic/copy(drop_location(), src, owner)

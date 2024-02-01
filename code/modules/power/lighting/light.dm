@@ -5,7 +5,6 @@
 	icon_state = "tube"
 	desc = "A lighting fixture."
 	layer = WALL_OBJ_LAYER
-	plane = GAME_PLANE_UPPER
 	max_integrity = 100
 	use_power = ACTIVE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
@@ -73,7 +72,9 @@
 	///The minimum value for the light's power in low power mode
 	var/bulb_low_power_pow_min = 0.5
 	///The Light range to use when working in fire alarm status
-	var/fire_brightness = 4
+	var/fire_brightness = 9
+	///The Light power to use when working in fire alarm status
+	var/fire_power = 0.5
 	///The Light colour to use when working in fire alarm status
 	var/fire_colour = COLOR_FIRE_LIGHT_RED
 
@@ -223,6 +224,7 @@
 		var/area/local_area = get_room_area()
 		if (local_area?.fire)
 			color_set = fire_colour
+			power_set = fire_power
 			brightness_set = fire_brightness
 		else if (nightshift_enabled)
 			brightness_set = nightshift_brightness
@@ -716,7 +718,7 @@
 	light_type = /obj/item/light/bulb
 	fitting = "bulb"
 	nightshift_brightness = 3
-	fire_brightness = 2
+	fire_brightness = 4.5
 
 /obj/machinery/light/floor/get_light_offset()
 	return list(0, 0)

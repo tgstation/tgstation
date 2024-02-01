@@ -4,20 +4,19 @@ import {
   Button,
   Flex,
   Icon,
+  LabeledList,
   Modal,
+  NoticeBox,
   RoundGauge,
   Section,
   Slider,
   Stack,
-  NoticeBox,
   Tabs,
-  LabeledList,
 } from '../components';
 import { Window } from '../layouts';
 import { GasmixParser } from './common/GasmixParser';
 
 export const TankCompressor = (props) => {
-  const { act, data } = useBackend();
   return (
     <Window title="Tank Compressor" width={650} height={550}>
       <Window.Content>
@@ -31,6 +30,7 @@ const TankCompressorContent = (props) => {
   const { act, data } = useBackend();
   const { disk, storage } = data;
   const [currentTab, changeTab] = useSharedState('compressorTab', 1);
+
   return (
     <Stack vertical fill>
       {currentTab === 1 && <TankCompressorControls />}
@@ -69,7 +69,7 @@ const TankCompressorContent = (props) => {
 
 const AlertBoxes = (props) => {
   const { text_content, icon_name, icon_break, color, active } = props;
-  const { act, data } = useBackend();
+
   return (
     <Box
       bold
@@ -107,6 +107,7 @@ const TankCompressorControls = (props) => {
   } = data;
   const pressure = tankPresent ? tankPressure : lastPressure;
   const usingLastData = !!(lastPressure && !tankPresent);
+
   return (
     <>
       <Stack.Item>
@@ -273,83 +274,83 @@ const TankCompressorRecords = (props) => {
         <NoticeBox>No Records</NoticeBox>
       </Stack.Item>
     );
-  } else {
-    return (
-      <Stack.Item grow>
-        <Stack fill>
-          <Stack.Item mr={2}>
-            <Tabs vertical>
-              {records.map((record) => (
-                <Tabs.Tab
-                  icon="file"
-                  key={record.name}
-                  selected={record.ref === activeRecordRef}
-                  onClick={() => setActiveRecordRef(record.ref)}
-                >
-                  {record.name}
-                </Tabs.Tab>
-              ))}
-            </Tabs>
-          </Stack.Item>
-          {activeRecord ? (
-            <Stack.Item grow>
-              <Section
-                title={activeRecord.name}
-                buttons={[
-                  <Button.Confirm
-                    key="delete"
-                    icon="trash"
-                    content="Delete"
-                    color="bad"
-                    onClick={() => {
-                      act('delete_record', {
-                        ref: activeRecord.ref,
-                      });
-                    }}
-                  />,
-                  <Button
-                    key="save"
-                    icon="floppy-disk"
-                    content="Save"
-                    disabled={!disk}
-                    tooltip="Save the record selected to an inserted data disk."
-                    tooltipPosition="bottom"
-                    onClick={() => {
-                      act('save_record', {
-                        ref: activeRecord.ref,
-                      });
-                    }}
-                  />,
-                ]}
-              >
-                <LabeledList>
-                  <LabeledList.Item label="Timestamp">
-                    {activeRecord.timestamp}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Source">
-                    {activeRecord.source}
-                  </LabeledList.Item>
-                  <LabeledList.Item label="Detected Gas">
-                    <LabeledList>
-                      {Object.keys(activeRecord.gases).map((gas_name) => (
-                        <LabeledList.Item label={gas_name} key={gas_name}>
-                          {(activeRecord.gases[gas_name]
-                            ? activeRecord.gases[gas_name].toFixed(2)
-                            : '-') + ' moles'}
-                        </LabeledList.Item>
-                      ))}
-                    </LabeledList>
-                  </LabeledList.Item>
-                </LabeledList>
-              </Section>
-            </Stack.Item>
-          ) : (
-            <Stack.Item grow={1} basis={0}>
-              <NoticeBox>No Record Selected</NoticeBox>
-            </Stack.Item>
-          )}
-        </Stack>
-      </Stack.Item>
-    );
   }
+
+  return (
+    <Stack.Item grow>
+      <Stack fill>
+        <Stack.Item mr={2}>
+          <Tabs vertical>
+            {records.map((record) => (
+              <Tabs.Tab
+                icon="file"
+                key={record.name}
+                selected={record.ref === activeRecordRef}
+                onClick={() => setActiveRecordRef(record.ref)}
+              >
+                {record.name}
+              </Tabs.Tab>
+            ))}
+          </Tabs>
+        </Stack.Item>
+        {activeRecord ? (
+          <Stack.Item grow>
+            <Section
+              title={activeRecord.name}
+              buttons={[
+                <Button.Confirm
+                  key="delete"
+                  icon="trash"
+                  content="Delete"
+                  color="bad"
+                  onClick={() => {
+                    act('delete_record', {
+                      ref: activeRecord.ref,
+                    });
+                  }}
+                />,
+                <Button
+                  key="save"
+                  icon="floppy-disk"
+                  content="Save"
+                  disabled={!disk}
+                  tooltip="Save the record selected to an inserted data disk."
+                  tooltipPosition="bottom"
+                  onClick={() => {
+                    act('save_record', {
+                      ref: activeRecord.ref,
+                    });
+                  }}
+                />,
+              ]}
+            >
+              <LabeledList>
+                <LabeledList.Item label="Timestamp">
+                  {activeRecord.timestamp}
+                </LabeledList.Item>
+                <LabeledList.Item label="Source">
+                  {activeRecord.source}
+                </LabeledList.Item>
+                <LabeledList.Item label="Detected Gas">
+                  <LabeledList>
+                    {Object.keys(activeRecord.gases).map((gas_name) => (
+                      <LabeledList.Item label={gas_name} key={gas_name}>
+                        {(activeRecord.gases[gas_name]
+                          ? activeRecord.gases[gas_name].toFixed(2)
+                          : '-') + ' moles'}
+                      </LabeledList.Item>
+                    ))}
+                  </LabeledList>
+                </LabeledList.Item>
+              </LabeledList>
+            </Section>
+          </Stack.Item>
+        ) : (
+          <Stack.Item grow={1} basis={0}>
+            <NoticeBox>No Record Selected</NoticeBox>
+          </Stack.Item>
+        )}
+      </Stack>
+    </Stack.Item>
+  );
 };

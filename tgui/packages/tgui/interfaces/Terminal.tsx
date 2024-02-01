@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { NoticeBox, Section } from '../components';
+import { Box, NoticeBox } from '../components';
 import { Window } from '../layouts';
 
 type Data = {
@@ -18,7 +18,7 @@ export const Terminal = (props) => {
         <NoticeBox textAlign="left">{uppertext}</NoticeBox>
         {messages.map((message) => {
           return (
-            <Section
+            <Box
               key={message.key}
               dangerouslySetInnerHTML={{ __html: message }}
             />

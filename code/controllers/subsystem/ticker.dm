@@ -226,7 +226,6 @@ SUBSYSTEM_DEF(ticker)
 		return TRUE
 	return FALSE
 
-
 /datum/controller/subsystem/ticker/proc/setup()
 	to_chat(world, span_boldannounce("Starting game..."))
 	var/init_start = world.timeofday
@@ -236,6 +235,7 @@ SUBSYSTEM_DEF(ticker)
 	var/can_continue = FALSE
 	can_continue = SSdynamic.pre_setup() //Choose antagonists
 	CHECK_TICK
+	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_PRE_JOBS_ASSIGNED, src)
 	can_continue = can_continue && SSjob.DivideOccupations() //Distribute jobs
 	CHECK_TICK
 

@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {
   antag_name: string;

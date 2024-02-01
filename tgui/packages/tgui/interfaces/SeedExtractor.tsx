@@ -1,18 +1,20 @@
+import { sortBy } from 'common/collections';
+import { flow } from 'common/fp';
 import { classes } from 'common/react';
 import { createSearch } from 'common/string';
-import { flow } from 'common/fp';
-import { sortBy } from 'common/collections';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
-  Input,
-  Tooltip,
   Box,
-  ProgressBar,
   Button,
+  Icon,
+  Input,
+  NoticeBox,
+  ProgressBar,
   Section,
   Table,
-  NoticeBox,
-  Icon,
+  Tooltip,
 } from '../components';
 import { Window } from '../layouts';
 
@@ -59,9 +61,9 @@ type SeedExtractorData = {
 
 export const SeedExtractor = (props) => {
   const { act, data } = useBackend<SeedExtractorData>();
-  const [searchText, setSearchText] = useLocalState('searchText', '');
-  const [sortField, setSortField] = useLocalState('sortField', 'name');
-  const [action, toggleAction] = useLocalState('action', true);
+  const [searchText, setSearchText] = useState('');
+  const [sortField, setSortField] = useState('name');
+  const [action, toggleAction] = useState(true);
   const search = createSearch(searchText, (item: SeedData) => item.name);
   const seeds_filtered =
     searchText.length > 0 ? data.seeds.filter(search) : data.seeds;
@@ -69,6 +71,7 @@ export const SeedExtractor = (props) => {
     sortBy((item: SeedData) => item[sortField as keyof SeedData]),
   ])(seeds_filtered || []);
   sortField !== 'name' && seeds.reverse();
+
   return (
     <Window width={800} height={500}>
       <Window.Content scrollable>

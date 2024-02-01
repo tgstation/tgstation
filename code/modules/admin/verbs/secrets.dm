@@ -405,7 +405,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 				var/list/candidates = list()
 
 				if (prefs["offerghosts"]["value"] == "Yes")
-					candidates = poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), ROLE_TRAITOR)
+					candidates = SSpolling.poll_ghost_candidates(replacetext(prefs["ghostpoll"]["value"], "%TYPE%", initial(pathToSpawn.name)), check_jobban = ROLE_TRAITOR, pic_source = pathToSpawn, role_name_text = "portal storm")
 
 				if (prefs["playersonly"]["value"] == "Yes" && length(candidates) < prefs["minplayers"]["value"])
 					message_admins("Not enough players signed up to create a portal storm, the minimum was [prefs["minplayers"]["value"]] and the number of signups [length(candidates)]")
@@ -565,7 +565,7 @@ GLOBAL_DATUM(everyone_a_traitor, /datum/everyone_is_a_traitor_controller)
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = poll_ghost_candidates("Do you wish to be considered for a Nanotrasen emergency response drone?", "Drone")
+			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a Nanotrasen emergency response drone?", check_jobban = ROLE_DRONE, pic_source = /mob/living/basic/drone/classic, role_name_text = "nanotrasen emergency response drone")
 
 			if(length(candidates) == 0)
 				return FALSE

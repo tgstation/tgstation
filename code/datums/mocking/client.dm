@@ -39,7 +39,7 @@
 	GLOB.directory[ckey] = src
 #endif
 
-/datum/client_interface/Destroy(force, ...)
+/datum/client_interface/Destroy(force)
 	GLOB.directory -= ckey
 	return ..()
 

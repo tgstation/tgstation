@@ -1,4 +1,0 @@
-author: "Higgin"
-delete-after: True
-changes:
-  - bugfix: "Healing viruses now no longer self-cure for reasons they're not supposed to and do for those that they are."

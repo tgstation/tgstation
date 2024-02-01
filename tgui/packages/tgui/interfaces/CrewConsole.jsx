@@ -1,6 +1,7 @@
 import { sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
-import { Box, Button, Section, Table, Icon } from '../components';
+import { Box, Button, Icon, Section, Table } from '../components';
 import { COLORS } from '../constants';
 import { Window } from '../layouts';
 

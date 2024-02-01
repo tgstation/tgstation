@@ -1,5 +1,5 @@
 import { BooleanLike } from 'common/react';
-import { FakeTerminal } from '../components/FakeTerminal';
+
 import { useBackend } from '../backend';
 import {
   Box,
@@ -12,6 +12,7 @@ import {
   NoticeBox,
   Section,
 } from '../components';
+import { FakeTerminal } from '../components/FakeTerminal';
 import { NtosWindow } from '../layouts';
 
 const CONTRACT_STATUS_INACTIVE = 1;

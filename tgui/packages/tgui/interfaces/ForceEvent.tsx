@@ -1,7 +1,8 @@
 import { paginate } from 'common/collections';
 import { BooleanLike } from 'common/react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Stack, Button, Icon, Input, Section, Tabs } from '../components';
+import { Button, Icon, Input, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 const CATEGORY_PAGE_ITEMS = 4;
@@ -93,7 +94,7 @@ export const PanelOptions = (props) => {
         <Input
           autoFocus
           fluid
-          onInput={(e) => setSearchQuery(e.target.value)}
+          onInput={(e, value) => setSearchQuery(value)}
           placeholder="Search..."
           value={searchQuery}
         />

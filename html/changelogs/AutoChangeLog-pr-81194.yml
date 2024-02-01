@@ -1,0 +1,4 @@
+author: "zxaber"
+delete-after: True
+changes:
+  - balance: "Mech wire panels are now blocked when the mech is occupied. I guess it was moved to be behind the seat."

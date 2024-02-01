@@ -310,35 +310,6 @@
 	json_config = 'code/datums/greyscale/json_configs/tape_piece_spikes_worn.json'
 
 //
-// BUCKETS
-//
-
-/datum/greyscale_config/buckets
-	name = "Buckets"
-	icon_file = 'icons/obj/service/janitor.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
-
-/datum/greyscale_config/buckets_worn
-	name = "Buckets Worn"
-	icon_file = 'icons/mob/clothing/head/utility.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
-
-/datum/greyscale_config/buckets_inhands_left
-	name = "Buckets Inhands Left"
-	icon_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
-
-/datum/greyscale_config/buckets_inhands_right
-	name = "Buckets Inhands Right"
-	icon_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets.json'
-
-/datum/greyscale_config/buckets_cleanbot
-	name = "Buckets - Cleanbot"
-	icon_file = 'icons/mob/silicon/aibots.dmi'
-	json_config = 'code/datums/greyscale/json_configs/buckets_bot.json'
-
-//
 // MISC
 //
 

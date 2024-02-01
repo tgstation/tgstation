@@ -42,7 +42,6 @@
 	buckle_lying = 0
 	buckle_prevents_pull = TRUE
 	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
 	/// The sound the guillotine makes when it successfully cuts off a head
 	var/drop_sound = 'sound/weapons/guillotine.ogg'
 	/// The current state of the blade

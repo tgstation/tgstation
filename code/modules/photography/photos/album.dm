@@ -9,6 +9,7 @@
 	inhand_icon_state = "album"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
+	storage_type = /datum/storage/photo_album
 	resistance_flags = FLAMMABLE
 	w_class = WEIGHT_CLASS_SMALL
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -16,13 +17,11 @@
 
 /obj/item/storage/photo_album/Initialize(mapload)
 	. = ..()
-	atom_storage.set_holdable(list(/obj/item/photo))
-	atom_storage.max_total_storage = 42
-	atom_storage.max_slots = 21
-	LAZYADD(SSpersistence.photo_albums, src)
+	if (!SSpersistence.initialized)
+		LAZYADD(SSpersistence.queued_photo_albums, src)
 
 /obj/item/storage/photo_album/Destroy()
-	LAZYREMOVE(SSpersistence.photo_albums, src)
+	LAZYREMOVE(SSpersistence.queued_photo_albums, src)
 	return ..()
 
 /obj/item/storage/photo_album/proc/get_picture_id_list()
@@ -41,9 +40,9 @@
 
 //Manual loading, DO NOT USE FOR HARDCODED/MAPPED IN ALBUMS. This is for if an album needs to be loaded mid-round from an ID.
 /obj/item/storage/photo_album/proc/persistence_load()
-	var/list/data = SSpersistence.get_photo_albums()
-	if(data[persistence_id])
-		populate_from_id_list(data[persistence_id])
+	var/list/data = SSpersistence.photo_albums_database.get_key(persistence_id)
+	if (!isnull(data))
+		populate_from_id_list(data)
 
 /obj/item/storage/photo_album/proc/populate_from_id_list(list/ids)
 	var/list/current_ids = get_picture_id_list()
@@ -54,6 +53,27 @@
 		if(istype(P))
 			if(!atom_storage?.attempt_insert(P, override = TRUE))
 				qdel(P)
+
+/datum/storage/photo_album
+	max_total_storage = 42
+	max_slots = 21
+
+/datum/storage/photo_album/New(atom/parent, max_slots, max_specific_storage, max_total_storage, numerical_stacking, allow_quick_gather, allow_quick_empty, collection_mode, attack_hand_interact)
+	. = ..()
+	set_holdable(list(/obj/item/photo))
+
+/datum/storage/photo_album/proc/save_everything()
+	var/obj/item/storage/photo_album/album = parent.resolve()
+	ASSERT(istype(album))
+	SSpersistence.photo_albums_database.set_key(album.persistence_id, album.get_picture_id_list())
+
+/datum/storage/photo_album/handle_enter(datum/source, obj/item/arrived)
+	. = ..()
+	save_everything()
+
+/datum/storage/photo_album/handle_exit(datum/source, obj/item/gone)
+	. = ..()
+	save_everything()
 
 /obj/item/storage/photo_album/hos
 	name = "photo album (Head of Security)"

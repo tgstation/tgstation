@@ -1,8 +1,9 @@
-import { classes } from 'common/react';
+import { KEY_ENTER, KEY_ESCAPE } from 'common/keycodes';
 import { clamp } from 'common/math';
+import { classes } from 'common/react';
 import { Component, createRef } from 'react';
+
 import { Box } from './Box';
-import { KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
 
 const DEFAULT_MIN = 0;
 const DEFAULT_MAX = 10000;

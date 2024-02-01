@@ -2,6 +2,7 @@
 /datum/ai_behavior/resist/perform(seconds_per_tick, datum/ai_controller/controller)
 	. = ..()
 	var/mob/living/living_pawn = controller.pawn
+	living_pawn.ai_controller.set_blackboard_key(BB_RESISTING, TRUE)
 	living_pawn.execute_resist()
 	finish_action(controller, TRUE)
 
@@ -67,6 +68,8 @@
 /datum/ai_behavior/break_spine/finish_action(datum/ai_controller/controller, succeeded, target_key)
 	if(succeeded)
 		var/mob/living/bane = controller.pawn
+		if(QDELETED(bane)) // pawn can be null at this point
+			return ..()
 		bane.stop_pulling()
 		controller.clear_blackboard_key(target_key)
 	return ..()
@@ -282,8 +285,6 @@
 /datum/ai_behavior/follow/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.clear_blackboard_key(BB_FOLLOW_TARGET)
-
-
 
 /datum/ai_behavior/perform_emote
 

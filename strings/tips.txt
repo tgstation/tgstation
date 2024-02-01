@@ -252,6 +252,7 @@ When hacking doors, cutting and mending a "test light wire" will restore power t
 When in doubt about technical issues, clear your cache (byond launcher > cogwheel > preferences > game prefs), update your BYOND, and relog.
 When placing floor tiles in space, you don't need to place down lattice if there is a piece of plating nearby.
 Where the space map levels connect is randomized every round, but are otherwise kept consistent within rounds. Remember that they are not necessarily bidirectional!
+Working out improves your fitness which increases your size and faster times to fireman carry. Remember that a quality diet and sleep are essential!
 You can catch thrown items by toggling on your throw mode with an empty hand active.
 You can change the control scheme by pressing tab. One is WASD, the other is the arrow keys. Keep in mind that hotkeys are also changed with this.
 You can cheat games by baking dice in microwaves to make them loaded. Cards can be seen with x-ray vision or be marked with either a pen or crayon to gain an edge.
@@ -270,3 +271,4 @@ You can use a machine in the vault to deposit cash or rob Cargo's department fun
 You can use an upgraded microwave to charge your PDA!
 You'll quickly lose your interest in the game if you play to win and kill. If you find yourself doing this, take a step back and talk to people - it's a much better experience!
 Some areas of the station use simple nautical directions to indicate their respective locations, like Fore (Front of the ship), Aft (Back), Port (Left side), Starboard (Right), Quarter and Bow (Either sides of Aft and Fore, respectively). You can review these terms on the Notepad App of your PDA.
+Modular computers are compatible with integrated circuits, but most of the program-dependent circuits require them to be open/backgrounded to work. To install circuits on stationary consoles, you need to toggle interaction with the frame with right-click first.

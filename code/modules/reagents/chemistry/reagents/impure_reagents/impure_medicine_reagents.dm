@@ -131,17 +131,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	tox_damage = 0
 
 //libital
-//Impure
+//Inverse:
 //Simply reduces your alcohol tolerance, kinda simular to prohol
-/datum/reagent/impurity/libitoil
+/datum/reagent/inverse/libitoil
 	name = "Libitoil"
 	description = "Temporarilly interferes a patient's ability to process alcohol."
 	chemical_flags = REAGENT_DONOTSPLIT
 	ph = 13.5
-	liver_damage = 0.1
 	addiction_types = list(/datum/addiction/medicine = 4)
+	tox_damage = 0
 
-/datum/reagent/impurity/libitoil/on_mob_add(mob/living/affected_mob, amount)
+/datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	. = ..()
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * delta_time)
+
+/datum/reagent/inverse/libitoil/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	var/mob/living/carbon/consumer = affected_mob
 	if(!consumer)
@@ -151,21 +155,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/internal/liver/this_liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
-/datum/reagent/impurity/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+/datum/reagent/inverse/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/internal/liver))
 		return
 	var/obj/item/organ/internal/liver/this_liver = organ
 	this_liver.alcohol_tolerance *= 2
 
-/datum/reagent/impurity/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+/datum/reagent/inverse/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/internal/liver))
 		return
 	var/obj/item/organ/internal/liver/this_liver = organ
 	this_liver.alcohol_tolerance /= 2
 
-/datum/reagent/impurity/libitoil/on_mob_delete(mob/living/affected_mob)
+/datum/reagent/inverse/libitoil/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	var/mob/living/carbon/consumer = affected_mob
 	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
@@ -205,18 +209,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
 
 //Lenturi
-//impure
-/datum/reagent/impurity/lentslurri //Okay maybe I should outsource names for these
+//inverse
+/datum/reagent/inverse/lentslurri //Okay maybe I should outsource names for these
 	name = "Lentslurri"//This is a really bad name please replace
-	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong."
+	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong, this will cause the patient to move slowly."
 	addiction_types = list(/datum/addiction/medicine = 8)
-	liver_damage = 0
+	tox_damage = 0
 
-/datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/affected_mob)
+/datum/reagent/inverse/lentslurri/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 
-/datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+/datum/reagent/inverse/lentslurri/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 
@@ -250,24 +254,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	resetting_probability += (5*((current_cycle-1)/10) * seconds_per_tick) // 10 iterations = >51% to itch
 
 //Aiuri
-//impure
-/datum/reagent/impurity/aiuri
+//inverse
+/datum/reagent/inverse/aiuri
 	name = "Aivime"
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
 	addiction_types = list(/datum/addiction/medicine = 1.5)
-	liver_damage = 0.1
-	/// blurriness at the start of taking the med
-	var/amount_of_blur_applied = 0 SECONDS
+	///The amount of blur applied per second. Given the average on_life interval is 2 seconds, that'd be 2.5s.
+	var/amount_of_blur_applied = 1.25 SECONDS
+	tox_damage = 0
 
-/datum/reagent/impurity/aiuri/on_mob_add(mob/living/affected_mob, amount)
+/datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	owner.adjustOrganLoss(ORGAN_SLOT_EYES, 0.1 * REM * delta_time)
+	owner.adjust_eye_blur(amount_of_blur_applied * delta_time)
 	. = ..()
-	amount_of_blur_applied = creation_purity * (volume / metabolization_rate) * 2 SECONDS
-	affected_mob.adjust_eye_blur(amount_of_blur_applied)
-
-/datum/reagent/impurity/aiuri/on_mob_delete(mob/living/affected_mob, amount)
-	. = ..()
-	affected_mob.adjust_eye_blur(-amount_of_blur_applied)
+	return TRUE
 
 //Hercuri
 //inverse

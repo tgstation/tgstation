@@ -22,11 +22,7 @@
 
 /obj/machinery/component_printer/Initialize(mapload)
 	. = ..()
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/component_printer/LateInitialize()
 	. = ..()
@@ -323,11 +319,7 @@
 /obj/machinery/module_duplicator/Initialize(mapload)
 	. = ..()
 
-	materials = AddComponent( \
-		/datum/component/remote_materials, \
-		mapload, \
-		mat_container_flags = BREAKDOWN_FLAGS_LATHE, \
-	)
+	materials = AddComponent(/datum/component/remote_materials, mapload)
 
 /obj/machinery/module_duplicator/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -164,6 +164,16 @@
 	return attacking_item.attack_atom(src, user, params)
 
 /mob/living/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	// Surgery and such happens very high up in the interaction chain, before parent call
+	var/attempt_tending = item_tending(user, tool, modifiers)
+	if(attempt_tending & ITEM_INTERACT_ANY_BLOCKER)
+		return attempt_tending
+
+	return ..() | attempt_tending
+
+/// Handles any use of using a surgical tool or item on a mob to tend to them.
+/// The sole reason this is a separate proc is so carbons can tend wounds AFTER the check for surgery.
+/mob/living/proc/item_tending(mob/living/user, obj/item/tool, list/modifiers)
 	for(var/datum/surgery/operation as anything in surgeries)
 		if(IS_IN_INVALID_SURGICAL_POSITION(src, operation))
 			continue
@@ -172,7 +182,7 @@
 		if(operation.next_step(user, modifiers))
 			return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /mob/living/attackby(obj/item/attacking_item, mob/living/user, params)
 	if(..())

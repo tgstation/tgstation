@@ -74,6 +74,8 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/secure = FALSE
 	var/can_install_electronics = TRUE
 
+	var/is_maploaded = FALSE
+
 	var/contents_initialized = FALSE
 	/// is this closet locked by an exclusive id, i.e. your own personal locker
 	var/datum/weakref/id_card = null
@@ -83,6 +85,14 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/card_reader_installed = FALSE
 	/// access types for card reader
 	var/list/access_choices = TRUE
+
+	/// Whether this closet is sealed or not. If sealed, it'll have its own internal air
+	var/sealed = FALSE
+
+	/// Internal gas for this closet.
+	var/datum/gas_mixture/internal_air
+	/// Volume of the internal air
+	var/air_volume = TANK_STANDARD_VOLUME * 3
 
 /datum/armor/structure_closet
 	melee = 20
@@ -129,12 +139,13 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		add_to_roundstart_list()
 
 	// if closed, any item at the crate's loc is put in the contents
-	if (mapload && !opened)
-		. = INITIALIZE_HINT_LATELOAD
+	if (mapload)
+		is_maploaded = TRUE
+	. = INITIALIZE_HINT_LATELOAD
 
 	populate_contents_immediate()
 	var/static/list/loc_connections = list(
-		COMSIG_CARBON_DISARM_COLLIDE = PROC_REF(locker_carbon),
+		COMSIG_LIVING_DISARM_COLLIDE = PROC_REF(locker_living),
 		COMSIG_ATOM_MAGICALLY_UNLOCKED = PROC_REF(on_magic_unlock),
 	)
 	AddElement(/datum/element/connect_loc, loc_connections)
@@ -148,8 +159,22 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/LateInitialize()
 	. = ..()
-	if(!opened)
+	if(!opened && is_maploaded)
 		take_contents()
+
+	if(sealed)
+		var/datum/gas_mixture/external_air = loc.return_air()
+		if(external_air && is_maploaded)
+			internal_air = external_air.copy()
+		else
+			internal_air = new()
+		START_PROCESSING(SSobj, src)
+
+/obj/structure/closet/return_air()
+	if(sealed)
+		return internal_air
+	else
+		return ..()
 
 //USE THIS TO FILL IT, NOT INITIALIZE OR NEW
 /obj/structure/closet/proc/PopulateContents()
@@ -162,9 +187,24 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 /obj/structure/closet/Destroy()
 	id_card = null
+	QDEL_NULL(internal_air)
 	QDEL_NULL(door_obj)
 	GLOB.roundstart_station_closets -= src
 	return ..()
+
+/obj/structure/closet/process(seconds_per_tick)
+	if(!sealed)
+		return PROCESS_KILL
+	process_internal_air(seconds_per_tick)
+
+/obj/structure/closet/proc/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		if(current_exposed_air.equalize(internal_air))
+			var/turf/location = get_turf(src)
+			location.air_update_turf()
 
 /obj/structure/closet/update_appearance(updates=ALL)
 	. = ..()
@@ -293,7 +333,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(anchorable && !anchored)
 		. += span_notice("It can be [EXAMINE_HINT("bolted")] to the ground.")
 	if(anchored)
-		. += span_notice("Its [EXAMINE_HINT("bolted")] to the ground.")
+		. += span_notice("It's [anchorable ? EXAMINE_HINT("bolted") : "attached firmly"] to the ground.")
 	if(length(paint_jobs))
 		. += span_notice("It can be [EXAMINE_HINT("painted")] another texture.")
 	if(HAS_TRAIT(user, TRAIT_SKITTISH) && divable)
@@ -325,6 +365,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(istype(held_item) && held_item.tool_behaviour == TOOL_WELDER)
 		if(opened)
 			context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+			screentip_change = TRUE
 		else
 			if(!welded && can_weld_shut)
 				context[SCREENTIP_CONTEXT_LMB] = "Weld"
@@ -333,7 +374,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 				context[SCREENTIP_CONTEXT_LMB] = "Unweld"
 				screentip_change = TRUE
 
-	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH)
+	if(istype(held_item) && held_item.tool_behaviour == TOOL_WRENCH && anchorable)
 		context[SCREENTIP_CONTEXT_RMB] = anchored ? "Unanchor" : "Anchor"
 		screentip_change = TRUE
 
@@ -1119,11 +1160,11 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 /obj/structure/closet/return_temperature()
 	return
 
-/obj/structure/closet/proc/locker_carbon(datum/source, mob/living/carbon/shover, mob/living/carbon/target, shove_blocked)
+/obj/structure/closet/proc/locker_living(datum/source, mob/living/shover, mob/living/target, shove_flags, obj/item/weapon)
 	SIGNAL_HANDLER
 	if(!opened && (locked || welded)) //Yes this could be less code, no I don't care
 		return
-	if(!opened && !shove_blocked)
+	if(!opened && ((shove_flags & SHOVE_KNOCKDOWN_BLOCKED) || !(shove_flags & SHOVE_BLOCKED)))
 		return
 	var/was_opened = opened
 	if(!toggle())
@@ -1133,18 +1174,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	else
 		target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
 	update_icon()
-	if(target == shover)
-		target.visible_message(span_danger("[target.name] shoves [target.p_them()]self into [src]!"),
-			null,
-			span_hear("You hear shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-		to_chat(shover, span_notice("You shove yourself into [src]!"))
-	else
-		target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
-			span_userdanger("You're shoved into [src] by [shover.name]!"),
-			span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
-		to_chat(src, span_danger("You shove [target.name] into [src]!"))
-	log_combat(shover, target, "shoved", "into [src] (locker/crate)")
-	return COMSIG_CARBON_SHOVE_HANDLED
+	target.visible_message(span_danger("[shover.name] shoves [target.name] into [src]!"),
+		span_userdanger("You're shoved into [src] by [shover.name]!"),
+		span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, shover)
+	to_chat(src, span_danger("You shove [target.name] into [src]!"))
+	log_combat(shover, target, "shoved", "into [src] (locker/crate)[weapon ? " with [weapon]" : ""]")
+	return COMSIG_LIVING_SHOVE_HANDLED
 
 /// Signal proc for [COMSIG_ATOM_MAGICALLY_UNLOCKED]. Unlock and open up when we get knock casted.
 /obj/structure/closet/proc/on_magic_unlock(datum/source, datum/action/cooldown/spell/aoe/knock/spell, atom/caster)

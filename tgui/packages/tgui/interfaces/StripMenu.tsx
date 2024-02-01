@@ -1,8 +1,9 @@
 import { range } from 'common/collections';
 import { BooleanLike } from 'common/react';
+
 import { resolveAsset } from '../assets';
 import { useBackend } from '../backend';
-import { Box, Button, Icon, Stack } from '../components';
+import { Box, Button, Icon, Image, Stack } from '../components';
 import { Window } from '../layouts';
 
 const ROWS = 5;
@@ -295,8 +296,7 @@ export const StripMenu = (props) => {
                     }
 
                     content = (
-                      <Box
-                        as="img"
+                      <Image
                         src={`data:image/jpeg;base64,${item.icon}`}
                         height="100%"
                         width="100%"
@@ -359,12 +359,11 @@ export const StripMenu = (props) => {
                             position: 'relative',
                             width: '100%',
                             height: '100%',
-                            padding: 0,
+                            padding: '0',
                           }}
                         >
                           {slot.image && (
-                            <Box
-                              as="img"
+                            <Image
                               className="centered-image"
                               src={resolveAsset(slot.image)}
                               opacity={0.7}
@@ -387,9 +386,9 @@ export const StripMenu = (props) => {
                             style={{
                               background: 'rgba(0, 0, 0, 0.6)',
                               position: 'absolute',
-                              bottom: 0,
-                              right: 0,
-                              zIndex: 2,
+                              bottom: '0',
+                              right: '0',
+                              zIndex: '2',
                             }}
                           >
                             <Icon name={alternateAction.icon} />

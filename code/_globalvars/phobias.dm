@@ -65,6 +65,7 @@ GLOBAL_LIST_INIT(phobia_mobs, list(
 		/mob/living/basic/chicken,
 		/mob/living/basic/parrot,
 		/mob/living/basic/pet/penguin,
+		/mob/living/simple_animal/hostile/retaliate/goose,
 	)),
 	"carps" = typecacheof(list(
 		/mob/living/basic/carp,
@@ -430,6 +431,10 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/organ/external/tail/lizard,
 		/obj/item/reagent_containers/cup/glass/bottle/lizardwine,
 		/obj/item/toy/plush/lizard_plushie,
+	)),
+	"ocky icky" = typecacheof(list(
+		/obj/item/banhammer,
+		/obj/item/toy/plush/awakenedplushie,
 	)),
 	"robots" = typecacheof(list(
 		/obj/item/ai_module,

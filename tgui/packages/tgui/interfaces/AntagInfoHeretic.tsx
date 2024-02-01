@@ -1,10 +1,13 @@
-import { useBackend, useLocalState } from '../backend';
-import { Section, Stack, Box, Tabs, Button, BlockQuote } from '../components';
-import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { BlockQuote, Box, Button, Section, Stack, Tabs } from '../components';
+import { CssColor } from '../constants';
+import { Window } from '../layouts';
 import {
-  ObjectivePrintout,
   Objective,
+  ObjectivePrintout,
   ReplaceObjectivesButton,
 } from './common/Objectives';
 
@@ -40,7 +43,7 @@ type Knowledge = {
   cost: number;
   disabled: boolean;
   hereticPath: string;
-  color: string;
+  color: CssColor;
 };
 
 type KnowledgeInfo = {
@@ -307,7 +310,7 @@ export const AntagInfoHeretic = (props) => {
   const { data } = useBackend<Info>();
   const { ascended } = data;
 
-  const [currentTab, setTab] = useLocalState('currentTab', 0);
+  const [currentTab, setTab] = useState(0);
 
   return (
     <Window width={675} height={635}>

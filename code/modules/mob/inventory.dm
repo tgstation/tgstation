@@ -485,6 +485,19 @@
 
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_quick_equip)))
 
+/// Safely drop everything, without deconstructing the mob
+/mob/proc/drop_everything(del_on_drop, force, del_if_nodrop)
+	. = list()
+	for(var/obj/item/item in src)
+		if(!dropItemToGround(item, force))
+			if(del_if_nodrop && !(item.item_flags & ABSTRACT))
+				qdel(item)
+		if(del_on_drop)
+			qdel(item)
+		//Anything thats not deleted and isn't in the mob, so everything that is succesfully dropped to the ground, is returned
+		if(!QDELETED(item) && !(item in src))
+			. += item
+
 ///proc extender of [/mob/verb/quick_equip] used to make the verb queuable if the server is overloaded
 /mob/proc/execute_quick_equip()
 	var/obj/item/I = get_active_held_item()
@@ -504,8 +517,6 @@
 
 /mob/proc/getBeltSlot()
 	return ITEM_SLOT_BELT
-
-
 
 //Inventory.dm is -kind of- an ok place for this I guess
 

@@ -1,4 +1,8 @@
-import { useBackend, useLocalState } from '../backend';
+import { round, toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   AnimatedNumber,
   Box,
@@ -8,8 +12,6 @@ import {
   Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { round, toFixed } from 'common/math';
-import { BooleanLike } from 'common/react';
 
 type Reagent = {
   name: string;
@@ -27,14 +29,11 @@ export type MixingData = {
 export const ChemMixingChamber = (props) => {
   const { act, data } = useBackend<MixingData>();
 
-  const [reagentName, setReagentName] = useLocalState('reagentName', '');
-  const [reagentQuantity, setReagentQuantity] = useLocalState(
-    'reagentQuantity',
-    1,
-  );
+  const [reagentQuantity, setReagentQuantity] = useState(1);
 
   const { emptying, temperature, targetTemp, isReacting } = data;
   const reagents = data.reagents || [];
+
   return (
     <Window width={290} height={400}>
       <Window.Content>

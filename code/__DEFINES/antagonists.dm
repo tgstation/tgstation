@@ -84,6 +84,7 @@
 #define PATH_BLADE "Blade Path"
 #define PATH_COSMIC "Cosmic Path"
 #define PATH_LOCK "Lock Path"
+#define PATH_MOON "Moon Path"
 
 /// Defines are used in /proc/has_living_heart() to report if the heretic has no heart period, no living heart, or has a living heart.
 #define HERETIC_NO_HEART_ORGAN -1
@@ -225,8 +226,10 @@ GLOBAL_LIST_INIT(ai_employers, list(
 #define IS_HERETIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic))
 /// Check if the given mob is a heretic monster.
 #define IS_HERETIC_MONSTER(mob) (mob.mind?.has_antag_datum(/datum/antagonist/heretic_monster))
-/// Checks if the given mob is either a heretic or a heretic monster.
-#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob))
+/// Check if the given mob is a  lunatic
+#define IS_LUNATIC(mob) (mob.mind?.has_antag_datum(/datum/antagonist/lunatic))
+/// Checks if the given mob is either a heretic, heretic monster or a lunatic.
+#define IS_HERETIC_OR_MONSTER(mob) (IS_HERETIC(mob) || IS_HERETIC_MONSTER(mob) || IS_LUNATIC(mob))
 
 /// Checks if the given mob is a wizard
 #define IS_WIZARD(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/wizard))
@@ -338,6 +341,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 #define ANTAG_GROUP_FUGITIVES "Escaped Fugitives"
 #define ANTAG_GROUP_HUNTERS "Bounty Hunters"
 #define ANTAG_GROUP_PARADOX "Spacetime Aberrations"
+#define ANTAG_GROUP_CREW "Deviant Crew"
 
 
 // This flag disables certain checks that presume antagonist datums mean 'baddie'.

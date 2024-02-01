@@ -63,7 +63,7 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/atmospherics/components/unary/thermomachine/is_connectable()
-	if(!anchored || panel_open)
+	if(!anchored)
 		return FALSE
 	. = ..()
 
@@ -78,7 +78,6 @@
 	if(check_pipe_on_turf())
 		set_anchored(FALSE)
 		set_panel_open(TRUE)
-		change_pipe_connection(TRUE)
 		icon_state = "thermo-open"
 		balloon_alert(user, "the port is already in use!")
 
@@ -208,14 +207,14 @@
 		balloon_alert(user, "anchor!")
 		return ITEM_INTERACT_SUCCESS
 	if(default_deconstruction_screwdriver(user, "thermo-open", "thermo-0", tool))
-		change_pipe_connection(panel_open)
+		update_appearance()
 		return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/atmospherics/components/unary/thermomachine/wrench_act(mob/living/user, obj/item/tool)
 	return default_change_direction_wrench(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/crowbar_act(mob/living/user, obj/item/tool)
-	return default_deconstruction_crowbar(tool)
+	return crowbar_deconstruction_act(user, tool)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act(mob/living/user, obj/item/multitool/multitool)
 	if(!panel_open)
@@ -225,13 +224,6 @@
 	to_chat(user, span_notice("You change the circuitboard to layer [piping_layer]."))
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
-
-/obj/machinery/atmospherics/components/unary/thermomachine/default_change_direction_wrench(mob/user, obj/item/I)
-	if(!..())
-		return FALSE
-	set_init_directions()
-	update_appearance()
-	return TRUE
 
 /obj/machinery/atmospherics/components/unary/thermomachine/multitool_act_secondary(mob/living/user, obj/item/tool)
 	if(!panel_open)
@@ -257,6 +249,7 @@
 		visible_message(span_warning("A pipe is hogging the port, remove the obstruction or change the machine piping layer."))
 		return ITEM_INTERACT_SUCCESS
 	if(default_unfasten_wrench(user, tool))
+		change_pipe_connection(!anchored)
 		return ITEM_INTERACT_SUCCESS
 	return
 

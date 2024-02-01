@@ -484,6 +484,7 @@
 	contents_tag = "coffee cartridge"
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	spawn_type = /obj/item/coffee_cartridge
+	spawn_count = 1
 
 /obj/item/storage/fancy/coffee_cart_rack/Initialize(mapload)
 	. = ..()

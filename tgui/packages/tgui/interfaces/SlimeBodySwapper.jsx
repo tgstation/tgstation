@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, LabeledList, Button, Box } from '../components';
+import { Box, Button, LabeledList, Section } from '../components';
 import { Window } from '../layouts';
 
 const statusMap = {

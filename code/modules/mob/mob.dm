@@ -861,18 +861,6 @@
 	set hidden = TRUE
 	set category = null
 	return
-/**
- * Topic call back for any mob
- *
- * * Unset machines if "mach_close" sent
- * * refresh the inventory of machines in range if "refresh" sent
- * * handles the strip panel equip and unequip as well if "item" sent
- */
-/mob/Topic(href, href_list)
-	if(href_list["mach_close"])
-		var/t1 = "window=[href_list["mach_close"]]"
-		unset_machine()
-		src << browse(null, t1)
 
 /**
  * Controls if a mouse drop succeeds (return null if it doesnt)
@@ -1338,10 +1326,6 @@
 			to_chat(src, span_warning("You can't write with the [writing_instrument]!"))
 		return FALSE
 
-	if(HAS_MIND_TRAIT(src, TRAIT_MIMING) && !istype(writing_instrument, /obj/item/toy/crayon/mime))
-		to_chat(src, span_warning("Your vow of silence is preventing you from talking with text."))
-		return FALSE
-
 	if(!is_literate())
 		to_chat(src, span_warning("You try to write, but don't know how to spell anything!"))
 		return FALSE
@@ -1555,10 +1539,6 @@
 
 /mob/vv_edit_var(var_name, var_value)
 	switch(var_name)
-		if(NAMEOF(src, control_object))
-			var/obj/O = var_value
-			if(!istype(O) || (O.obj_flags & DANGEROUS_POSSESSION))
-				return FALSE
 		if(NAMEOF(src, machine))
 			set_machine(var_value)
 			. = TRUE

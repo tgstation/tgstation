@@ -1,5 +1,4 @@
 import { useBackend } from '../backend';
-import { UserDetails } from './Vending';
 import {
   BlockQuote,
   Box,
@@ -13,6 +12,7 @@ import {
 } from '../components';
 import { formatMoney } from '../format';
 import { Window } from '../layouts';
+import { UserDetails } from './Vending';
 
 type Data = {
   accountName: string;

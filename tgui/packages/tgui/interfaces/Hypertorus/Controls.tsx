@@ -1,3 +1,5 @@
+import { BooleanLike } from 'common/react';
+import { useBackend } from 'tgui/backend';
 import {
   Box,
   Button,
@@ -9,11 +11,9 @@ import {
   Section,
   Tooltip,
 } from 'tgui/components';
-import { HelpDummy, HoverHelp } from './helpers';
 
-import { BooleanLike } from 'common/react';
 import { HypertorusFilter } from '.';
-import { useBackend } from 'tgui/backend';
+import { HelpDummy, HoverHelp } from './helpers';
 
 type ComboProps = {
   color?: string | BooleanLike;

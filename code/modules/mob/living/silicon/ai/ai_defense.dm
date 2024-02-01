@@ -10,9 +10,6 @@
 
 	return ..()
 
-/mob/living/silicon/ai/attack_slime(mob/living/simple_animal/slime/user, list/modifiers)
-	return //immune to slimes
-
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
 		adjustBruteLoss(60)
@@ -147,8 +144,7 @@
 		user.electrocute_act(120, src)
 		opened = FALSE
 		return ITEM_INTERACT_SUCCESS
-	balloon_alert(user, "disconnected neural network")
 	to_chat(src, span_danger("You feel incredibly confused and disorientated."))
-	if(!ai_mob_to_structure())
-		return ITEM_INTERACT_SUCCESS
+	var/atom/ai_structure = ai_mob_to_structure()
+	ai_structure.balloon_alert(user, "disconnected neural network")
 	return ITEM_INTERACT_SUCCESS

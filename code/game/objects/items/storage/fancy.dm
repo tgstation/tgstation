@@ -156,6 +156,16 @@
 	atom_storage.set_holdable(list(/obj/item/food/egg))
 
 /*
+ * Fertile Egg Box
+ */
+
+/obj/item/storage/fancy/egg_box/fertile
+	name = "fertile egg box"
+	desc = "Only one thing here is fertile, and it's not the eggs."
+	spawn_type = /obj/item/food/egg/fertile
+	spawn_count = 6
+
+/*
  * Candle Box
  */
 
@@ -213,7 +223,7 @@
 	balloon_alert(user, "ooh, free coupon")
 	var/obj/item/coupon/attached_coupon = new
 	user.put_in_hands(attached_coupon)
-	attached_coupon.generate(rigged_omen)
+	attached_coupon.generate(rigged_omen ? COUPON_OMEN : null)
 	attached_coupon = null
 	spawn_coupon = FALSE
 	name = "discarded cigarette packet"
@@ -506,7 +516,7 @@
 	spawn_type = /obj/item/food/pickle
 	spawn_count = 10
 	contents_tag = "pickle"
-	foldable_result = null
+	foldable_result = /obj/item/reagent_containers/cup/beaker/large
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	open_status = FANCY_CONTAINER_ALWAYS_OPEN
 	has_open_closed_states = FALSE

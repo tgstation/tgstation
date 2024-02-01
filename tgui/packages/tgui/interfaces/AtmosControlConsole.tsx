@@ -1,10 +1,12 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Dropdown,
   LabeledList,
   NumberInput,
-  Dropdown,
   Section,
   Stack,
 } from '../components';
@@ -32,7 +34,7 @@ export const AtmosControlConsole = (props) => {
     control: boolean;
   }>();
   const chambers = data.chambers || [];
-  const [chamberId, setChamberId] = useLocalState('chamberId', chambers[0]?.id);
+  const [chamberId, setChamberId] = useState(chambers[0]?.id);
   const selectedChamber =
     chambers.length === 1
       ? chambers[0]

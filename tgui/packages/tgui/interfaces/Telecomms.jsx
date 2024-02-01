@@ -1,14 +1,14 @@
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   Input,
+  LabeledControls,
   LabeledList,
-  Section,
-  Table,
   NoticeBox,
   NumberInput,
-  LabeledControls,
-  Box,
+  Section,
+  Table,
 } from '../components';
 import { RADIO_CHANNELS } from '../constants';
 import { Window } from '../layouts';

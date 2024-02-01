@@ -1,6 +1,6 @@
 import { useBackend, useLocalState } from '../../backend';
-import { logger } from '../../logging';
 import { Box, Button, Divider } from '../../components';
+import { logger } from '../../logging';
 import { ListMapper } from './ListMapper';
 
 export const Log = (props) => {

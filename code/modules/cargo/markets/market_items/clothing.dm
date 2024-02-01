@@ -68,3 +68,14 @@
 	price_max = CARGO_CRATE_VALUE * 15
 	stock_max = 1
 	availability_prob = 40
+
+/datum/market_item/clothing/anti_sec_pin
+	name = "Subversive Pin"
+	desc = "Exclusive and fashionable red pin from a limited run, proclaiming your allegiance to enemies of the Nanotrasen corporation. \
+		Contains an RFID chip which interferes with common scanning equipment, to ensure that they know you are serious. Share them with your friends!"
+	item = /obj/item/clothing/accessory/anti_sec_pin
+
+	price_min = CARGO_CRATE_VALUE * 0.5
+	price_max = CARGO_CRATE_VALUE * 1.5
+	stock_max = 5
+	availability_prob = 70

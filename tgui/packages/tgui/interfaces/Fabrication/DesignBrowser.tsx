@@ -1,10 +1,11 @@
 import { sortBy } from 'common/collections';
 import { classes } from 'common/react';
 import { ReactNode } from 'react';
+
 import { useSharedState } from '../../backend';
-import { Stack, Section, Icon, Dimmer } from '../../components';
+import { Dimmer, Icon, Section, Stack, VirtualList } from '../../components';
+import { SearchBar } from '../common/SearchBar';
 import { Design, MaterialMap } from './Types';
-import { SearchBar } from './SearchBar';
 
 /**
  * A function that does nothing.
@@ -261,32 +262,34 @@ export const DesignBrowser = <T extends Design = Design>(
             <Stack.Item>
               <Section>
                 <SearchBar
-                  searchText={searchText}
-                  onSearchTextChanged={setSearchText}
-                  hint={'Search all designs...'}
+                  query={searchText}
+                  onSearch={setSearchText}
+                  placeholder={'Search all designs...'}
                 />
               </Section>
             </Stack.Item>
             <Stack.Item grow>
               <Section fill style={{ overflow: 'auto' }}>
                 {searchText.length > 0 ? (
-                  sortBy((design: T) => design.name)(
-                    Object.values(root.descendants),
-                  )
-                    .filter((design) =>
-                      design.name
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase()),
+                  <VirtualList>
+                    {sortBy((design: T) => design.name)(
+                      Object.values(root.descendants),
                     )
-                    .map((design) =>
-                      buildRecipeElement(
-                        design,
-                        availableMaterials || {},
-                        onPrintDesign || NOOP,
-                      ),
-                    )
+                      .filter((design) =>
+                        design.name
+                          .toLowerCase()
+                          .includes(searchText.toLowerCase()),
+                      )
+                      .map((design) =>
+                        buildRecipeElement(
+                          design,
+                          availableMaterials || {},
+                          onPrintDesign || NOOP,
+                        ),
+                      )}
+                  </VirtualList>
                 ) : selectedCategory === ALL_CATEGORY ? (
-                  <>
+                  <VirtualList>
                     {sortBy((design: T) => design.name)(
                       Object.values(root.descendants),
                     ).map((design) =>
@@ -296,7 +299,7 @@ export const DesignBrowser = <T extends Design = Design>(
                         onPrintDesign || NOOP,
                       ),
                     )}
-                  </>
+                  </VirtualList>
                 ) : (
                   root.subcategories[selectedCategory] && (
                     <CategoryView
@@ -458,7 +461,7 @@ const CategoryView = <T extends Design = Design>(
   depth ??= 0;
 
   const body = (
-    <>
+    <VirtualList>
       {sortBy((design: T) => design.name)(category.children).map((design) =>
         buildRecipeElement(
           design,
@@ -478,7 +481,7 @@ const CategoryView = <T extends Design = Design>(
             key={category.title}
           />
         ))}
-    </>
+    </VirtualList>
   );
 
   if (depth === 0 || category.children.length === 0) {
@@ -488,7 +491,7 @@ const CategoryView = <T extends Design = Design>(
   return (
     <Section
       title={category.title}
-      id={category.anchorKey}
+      key={category.anchorKey}
       buttons={categoryButtons && categoryButtons(category)}
     >
       {body}

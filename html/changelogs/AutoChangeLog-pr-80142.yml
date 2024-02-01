@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - qol: "Add RMB hotkey and screentip UI to tracking beacons to toggle them on/off."

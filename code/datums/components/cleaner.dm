@@ -29,7 +29,7 @@
 	src.pre_clean_callback = pre_clean_callback
 	src.on_cleaned_callback = on_cleaned_callback
 
-/datum/component/cleaner/Destroy(force, silent)
+/datum/component/cleaner/Destroy(force)
 	pre_clean_callback = null
 	on_cleaned_callback = null
 	return ..()

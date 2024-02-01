@@ -95,7 +95,7 @@ export const applyMiddleware = (
     return (reducer, ...args): Store => {
       const store = createStoreFunction(reducer, ...args);
 
-      let dispatch: Dispatch = () => {
+      let dispatch: Dispatch = (action, ...args) => {
         throw new Error(
           'Dispatching while constructing your middleware is not allowed.',
         );

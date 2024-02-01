@@ -1,6 +1,8 @@
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
 import { BlockQuote, Button, Dropdown, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
@@ -52,9 +54,10 @@ export const SparringContract = (props) => {
     no_chaplains,
     stakes_holy_match,
   } = data;
-  const [weapon, setWeapon] = useLocalState('weapon', set_weapon);
-  const [area, setArea] = useLocalState('area', set_area);
-  const [stakes, setStakes] = useLocalState('stakes', set_stakes);
+  const [weapon, setWeapon] = useState(set_weapon);
+  const [area, setArea] = useState(set_area);
+  const [stakes, setStakes] = useState(set_stakes);
+
   return (
     <Window width={420} height={380}>
       <Window.Content>
@@ -142,7 +145,7 @@ export const SparringContract = (props) => {
               </Stack>
             </Stack.Item>
             <Stack.Item grow>
-              <Stack grow textAlign="center">
+              <Stack textAlign="center">
                 <Stack.Item fontSize={left_sign !== 'none' && '14px'} grow>
                   {(left_sign === 'none' && (
                     <Button

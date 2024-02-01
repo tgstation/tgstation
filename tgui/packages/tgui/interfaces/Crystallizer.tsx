@@ -1,3 +1,7 @@
+import { toFixed } from 'common/math';
+import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -6,12 +10,8 @@ import {
   ProgressBar,
   Section,
 } from '../components';
-
-import { BooleanLike } from 'common/react';
-import { Window } from '../layouts';
 import { getGasColor } from '../constants';
-import { toFixed } from 'common/math';
-import { useBackend } from '../backend';
+import { Window } from '../layouts';
 
 type Data = {
   on: BooleanLike;

@@ -57,8 +57,11 @@
 
 /datum/mood_event/exercise
 	description = "Working out releases those endorphins!"
-	mood_change = 2
-	timeout = 5 MINUTES
+	mood_change = 1
+
+/datum/mood_event/exercise/add_effects(fitness_level)
+	mood_change = fitness_level // the more fit you are, the more you like to work out
+	return ..()
 
 /datum/mood_event/pet_animal
 	description = "Animals are adorable! I can't stop petting them!"
@@ -181,12 +184,6 @@
 	description = "That work of art was so great it made me believe in the goodness of humanity. Says a lot in a place like this."
 	mood_change = 6
 	timeout = 5 MINUTES
-
-/datum/mood_event/pet_borg
-	description = "I just love my robotic friends!"
-	mood_change = 3
-	timeout = 5 MINUTES
-	required_job = list(/datum/job/research_director, /datum/job/scientist, /datum/job/roboticist, /datum/job/geneticist)
 
 /datum/mood_event/bottle_flip
 	description = "The bottle landing like that was satisfying."
@@ -369,6 +366,11 @@
 	description = "Slam dunk! Boom, shakalaka!"
 	mood_change = 2
 	timeout = 5 MINUTES
+
+/datum/mood_event/moon_smile
+	description = "THE MOON SHOWS ME THE TRUTH AND ITS SMILE IS FACED TOWARDS ME!!!"
+	mood_change = 10
+	timeout = 2 MINUTES
 
 ///Wizard cheesy grand finale - what the wizard gets
 /datum/mood_event/madness_elation

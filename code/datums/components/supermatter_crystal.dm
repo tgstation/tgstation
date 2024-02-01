@@ -28,7 +28,7 @@
 	src.tool_act_callback = tool_act_callback
 	src.consume_callback = consume_callback
 
-/datum/component/supermatter_crystal/Destroy(force, silent)
+/datum/component/supermatter_crystal/Destroy(force)
 	tool_act_callback = null
 	consume_callback = null
 	return ..()
@@ -345,7 +345,7 @@
 			near_mob.show_message(span_hear("An unearthly ringing fills your ears, and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 	consume_returns(matter_increase, damage_increase)
 	var/obj/machinery/power/supermatter_crystal/our_crystal = parent
-	if(istype(parent))
+	if(istype(our_crystal))
 		our_crystal.log_activation(who = consumed_object)
 
 /datum/component/supermatter_crystal/proc/consume_returns(matter_increase = 0, damage_increase = 0)

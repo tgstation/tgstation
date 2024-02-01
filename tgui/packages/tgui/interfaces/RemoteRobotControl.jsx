@@ -1,6 +1,7 @@
 import { decodeHtmlEntities } from 'common/string';
+
 import { useBackend } from '../backend';
-import { Box, Button, NoticeBox, Section, LabeledList } from '../components';
+import { Box, Button, LabeledList, NoticeBox, Section } from '../components';
 import { Window } from '../layouts';
 
 export const RemoteRobotControl = (props) => {

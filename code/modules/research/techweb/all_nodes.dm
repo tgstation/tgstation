@@ -853,7 +853,7 @@
 	design_ids = list(
 		"assembly_shell",
 		"bot_shell",
-		"comp_mod_action",
+		"comp_equip_action",
 		"controller_shell",
 		"dispenser_shell",
 		"door_shell",
@@ -875,7 +875,6 @@
 		"bci_implanter",
 		"bci_shell",
 		"comp_bar_overlay",
-		"comp_bci_action",
 		"comp_counter_overlay",
 		"comp_install_detector",
 		"comp_object_overlay",
@@ -1114,6 +1113,7 @@
 		"holosignrestaurant",
 		"holosignbar",
 		"inducer",
+		"inducerengi",
 		"tray_goggles",
 		"holopad",
 		"vendatray",
@@ -1471,6 +1471,9 @@
 		"superresonator",
 		"triggermod",
 		"mining_scanner",
+		"brm",
+		"b_smelter",
+		"b_refinery",
 	)//e a r l y    g a  m e)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 
@@ -2011,7 +2014,7 @@
 		"mech_proj_armor",
 	)
 	required_experiments = list(/datum/experiment/scanning/random/mecha_damage_scan)
-	discount_experiments = list(/datum/experiment/scanning/random/mecha_destroyed_scan = 5000)
+	discount_experiments = list(/datum/experiment/scanning/random/mecha_equipped_scan = 5000)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
 
 /datum/techweb_node/mech_scattershot
@@ -2409,18 +2412,6 @@
 		"mod_joint_torsion",
 		"mod_recycler",
 		"mod_shooting",
-	)
-	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
-	hidden = TRUE
-	experimental = TRUE
-
-/datum/techweb_node/advanced_plastic_surgery
-	id = "plastic_surgery"
-	display_name = "Advanced Plastic Surgery"
-	description = "A Procedure long lost due to licensing problems now once again available."
-	prereq_ids = list("base")
-	design_ids = list(
-		"surgery_advanced_plastic_surgery"
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 2500)
 	hidden = TRUE

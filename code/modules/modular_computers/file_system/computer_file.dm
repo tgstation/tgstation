@@ -52,6 +52,7 @@
 ///Called post-installation of an application in a computer, after 'computer' var is set.
 /datum/computer_file/proc/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing)
 	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
 	computer_installing.stored_files.Add(src)
 
 /**

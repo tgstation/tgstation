@@ -1,16 +1,17 @@
-import { Window } from '../layouts';
+import { sortBy } from 'common/collections';
+
 import { useBackend } from '../backend';
 import {
-  Section,
   Box,
   Button,
   Flex,
   Icon,
   LabeledList,
+  Section,
   Table,
   Tooltip,
 } from '../components';
-import { sortBy } from 'common/collections';
+import { Window } from '../layouts';
 
 const ExperimentStages = (props) => {
   return (

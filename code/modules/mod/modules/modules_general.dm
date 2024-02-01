@@ -866,7 +866,7 @@
 		insert_trash(new_atom)
 
 /obj/item/mod/module/recycler/proc/insert_trash(obj/item/item)
-	var/retrieved = container.insert_item(item, multiplier = efficiency, breakdown_flags = BREAKDOWN_FLAGS_RECYCLER)
+	var/retrieved = container.insert_item(item, multiplier = efficiency)
 	if(retrieved == MATERIAL_INSERT_ITEM_NO_MATS) //even if it doesn't have any material to give, trash is trash.
 		qdel(item)
 	playsound(src, SFX_RUSTLE, 50, TRUE, -5)

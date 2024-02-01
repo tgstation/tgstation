@@ -30,7 +30,16 @@
 /obj/item/organ/internal/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
-	apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
+
+	if(owner)
+		if(owner.bodytemperature > T0C)
+			var/air_temperature_factor = min((owner.bodytemperature - T0C) / 20, 1)
+			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
+	else
+		var/datum/gas_mixture/exposed_air = return_air()
+		if(exposed_air && exposed_air.temperature > T0C)
+			var/air_temperature_factor = min((exposed_air.temperature - T0C) / 20, 1)
+			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
 /// Called once every life tick on every organ in a carbon's body
 /// NOTE: THIS IS VERY HOT. Be careful what you put in here

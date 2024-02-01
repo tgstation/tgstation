@@ -17,9 +17,10 @@
 /// The virtual domain - side of the bitrunning crate. Deliver to the send location.
 /obj/structure/closet/crate/secure/bitrunning/encrypted
 	name = "encrypted cache"
-	desc = "Needs decrypted at the safehouse to be opened."
+	desc = "Needs to be decrypted at the safehouse to be opened."
 	locked = TRUE
 	damage_deflection = 30
+	resistance_flags =  INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 
 /obj/structure/closet/crate/secure/bitrunning/encrypted/can_unlock(mob/living/user, obj/item/card/id/player_id, obj/item/card/id/registered_id)
 	return FALSE

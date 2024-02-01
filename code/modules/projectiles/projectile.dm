@@ -14,7 +14,6 @@
 	generic_canpass = FALSE
 	blocks_emissive = EMISSIVE_BLOCK_GENERIC
 	layer = MOB_LAYER
-	plane = GAME_PLANE_FOV_HIDDEN
 	//The sound this plays on impact.
 	var/hitsound = 'sound/weapons/pierce.ogg'
 	var/hitsound_wall = ""
@@ -793,9 +792,7 @@
 		set_angle(get_angle(src, target))
 	original_angle = Angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.Turn(Angle)
 	trajectory_ignore_forcemove = TRUE
 	forceMove(starting)
 	trajectory_ignore_forcemove = FALSE
@@ -812,11 +809,9 @@
 	pixel_move(pixel_speed_multiplier, FALSE) //move it now!
 
 /obj/projectile/proc/set_angle(new_angle) //wrapper for overrides.
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 	if(fired && hitscan && isloc(loc) && (loc != last_angle_set_hitscan_store))
@@ -828,11 +823,9 @@
 
 /// Same as set_angle, but the reflection continues from the center of the object that reflects it instead of the side
 /obj/projectile/proc/set_angle_centered(new_angle)
-	Angle = new_angle
 	if(!nondirectional_sprite)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
+		transform = transform.TurnTo(Angle, new_angle)
+	Angle = new_angle
 	if(trajectory)
 		trajectory.set_angle(new_angle)
 
@@ -910,10 +903,6 @@
 	if(!loc || !trajectory)
 		return
 	last_projectile_move = world.time
-	if(!nondirectional_sprite && !hitscanning)
-		var/matrix/matrix = new
-		matrix.Turn(Angle)
-		transform = matrix
 	if(homing)
 		process_homing()
 	var/forcemoved = FALSE

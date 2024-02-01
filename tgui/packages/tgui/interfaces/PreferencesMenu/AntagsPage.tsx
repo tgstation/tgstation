@@ -1,6 +1,8 @@
 import { binaryInsertWith } from 'common/collections';
 import { classes } from 'common/react';
-import { useBackend, useLocalState } from '../../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../../backend';
 import {
   Box,
   Button,
@@ -46,8 +48,7 @@ const AntagSelection = (props: { antagonists: Antagonist[]; name: string }) => {
   const { act, data } = useBackend<PreferencesMenuData>();
   const className = 'PreferencesMenu__Antags__antagSelection';
 
-  const [predictedState, setPredictedState] = useLocalState(
-    'AntagSelection_predictedState',
+  const [predictedState, setPredictedState] = useState(
     new Set(data.selected_antags),
   );
 

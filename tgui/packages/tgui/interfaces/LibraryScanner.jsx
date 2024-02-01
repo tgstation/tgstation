@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Stack, NoticeBox, Section } from '../components';
+import { Button, NoticeBox, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const LibraryScanner = (props) => {

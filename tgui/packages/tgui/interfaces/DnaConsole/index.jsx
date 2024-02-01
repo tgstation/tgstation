@@ -9,10 +9,6 @@ import {
   Stack,
 } from '../../components';
 import { Window } from '../../layouts';
-import { DnaConsoleEnzymes } from './DnaConsoleEnzymes';
-import { DnaConsoleSequencer } from './DnaConsoleSequencer';
-import { DnaConsoleStorage } from './DnaConsoleStorage';
-import { DnaScanner } from './DnaScanner';
 import {
   CONSOLE_MODE_ENZYMES,
   CONSOLE_MODE_FEATURES,
@@ -20,6 +16,10 @@ import {
   CONSOLE_MODE_STORAGE,
   STORAGE_MODE_CONSOLE,
 } from './constants';
+import { DnaConsoleEnzymes } from './DnaConsoleEnzymes';
+import { DnaConsoleSequencer } from './DnaConsoleSequencer';
+import { DnaConsoleStorage } from './DnaConsoleStorage';
+import { DnaScanner } from './DnaScanner';
 
 export const DnaConsole = (props) => {
   const { data } = useBackend();

@@ -1,5 +1,5 @@
 import { useBackend, useSharedState } from '../../backend';
-import { Flex, Input, Section, Button } from '../../components';
+import { Button, Flex, Input, Section } from '../../components';
 
 type Data = {
   upperText: string;

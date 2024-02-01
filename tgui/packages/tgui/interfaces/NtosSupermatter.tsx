@@ -1,15 +1,18 @@
-import { useBackend, useLocalState } from '../backend';
+import { useState } from 'react';
+
+import { useBackend } from '../backend';
+import { Button, ProgressBar, Section, Table } from '../components';
 import { NtosWindow } from '../layouts';
 import { SupermatterContent, SupermatterData } from './Supermatter';
-import { Button, ProgressBar, Section, Table } from '../components';
 
 type NtosSupermatterData = SupermatterData & { focus_uid?: number };
 
 export const NtosSupermatter = (props) => {
   const { act, data } = useBackend<NtosSupermatterData>();
   const { sm_data, gas_metadata, focus_uid } = data;
-  const [activeUID, setActiveUID] = useLocalState('activeUID', 0);
+  const [activeUID, setActiveUID] = useState(0);
   const activeSM = sm_data.find((sm) => sm.uid === activeUID);
+
   return (
     <NtosWindow height={400} width={700}>
       <NtosWindow.Content>

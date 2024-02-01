@@ -142,7 +142,7 @@
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			if(toxin.affected_organ_flags && !(organ_flags & toxin.affected_organ_flags)) //this particular toxin does not affect this type of organ
 				continue
-			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
+			var/amount = toxin.volume
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 

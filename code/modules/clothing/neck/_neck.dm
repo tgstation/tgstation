@@ -81,10 +81,10 @@
 	var/tie_timer_actual = tie_timer
 	// Mirrors give you a boost to your tying speed. I realize this stacks and I think that's hilarious.
 	for(var/obj/structure/mirror/reflection in view(2, user))
-		tie_timer_actual /= 1.25
+		tie_timer_actual *= 0.8
 	// Heads of staff are experts at tying their ties.
-	if(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
-		tie_timer_actual /= 2
+	if(HAS_TRAIT(user, TRAIT_FAST_TYING))
+		tie_timer_actual *= 0.5
 	// Tie/Untie our tie
 	if(!do_after(user, tie_timer_actual))
 		to_chat(user, span_notice("Your fingers fumble away from [src] as your concentration breaks."))

@@ -1,5 +1,5 @@
+import { Button, Dropdown, Input, NumberInput, Stack } from '../../components';
 import { BasicInput } from './BasicInput';
-import { NumberInput, Button, Stack, Input, Dropdown } from '../../components';
 import { OPTION_DROPDOWN_LARGE_CHAR_AMOUNT } from './constants';
 
 export const FUNDAMENTAL_DATA_TYPES = {

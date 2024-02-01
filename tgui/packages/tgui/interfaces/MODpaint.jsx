@@ -1,15 +1,16 @@
+import { capitalize } from 'common/string';
+
 import { useBackend } from '../backend';
 import {
   Box,
-  Stack,
-  Section,
-  ByondUi,
-  Slider,
-  Flex,
   Button,
+  ByondUi,
+  Flex,
+  Section,
+  Slider,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
-import { capitalize } from 'common/string';
 
 const colorToMatrix = (param) => {
   switch (param) {

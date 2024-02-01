@@ -1,17 +1,18 @@
+import { deepMerge } from 'common/collections';
+import { Color } from 'common/color';
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
-  StyleableSection,
   Icon,
-  Stack,
   NoticeBox,
+  Stack,
+  StyleableSection,
 } from '../components';
 import { Window } from '../layouts';
-import { Color } from 'common/color';
 import { JOB2ICON } from './common/JobToIcon';
-import { deepMerge } from 'common/collections';
-import { BooleanLike } from 'common/react';
 
 type Job = {
   unavailable_reason: string | null;
@@ -133,7 +134,7 @@ export const JobSelection = (props) => {
           }
           titleStyle={{ minHeight: '3.4em' }}
         >
-          <Box wrap="wrap" style={{ columns: '20em' }}>
+          <Box style={{ columns: '20em' }}>
             {Object.entries(departments).map((departmentEntry) => {
               const departmentName = departmentEntry[0];
               const entry = departmentEntry[1];

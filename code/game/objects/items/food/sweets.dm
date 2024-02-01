@@ -232,7 +232,6 @@
 	metabolization_amount = REAGENTS_METABOLISM
 
 /obj/item/food/bubblegum/bubblegum/process()
-	. = ..()
 	if(iscarbon(loc))
 		hallucinate(loc)
 

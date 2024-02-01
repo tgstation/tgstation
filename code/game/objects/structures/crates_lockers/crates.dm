@@ -229,22 +229,25 @@
 	icon_state = "freezer"
 	base_icon_state = "freezer"
 	paint_jobs = null
+	sealed = TRUE
+	/// The rate at which the internal air mixture cools
+	var/cooling_rate_per_second = 4
+	/// Minimum temperature of the internal air mixture
+	var/minimum_temperature = T0C - 60
 
-/obj/structure/closet/crate/freezer/before_open(mob/living/user, force)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	toggle_organ_decay(src)
-	return TRUE
-
-/obj/structure/closet/crate/freezer/after_close(mob/living/user)
-	. = ..()
-	toggle_organ_decay(src)
-
-/obj/structure/closet/crate/freezer/Destroy()
-	toggle_organ_decay(src)
-	return ..()
+/obj/structure/closet/crate/freezer/process_internal_air(seconds_per_tick)
+	if(opened)
+		var/datum/gas_mixture/current_exposed_air = loc.return_air()
+		if(!current_exposed_air)
+			return
+		// The internal air won't cool down the external air when the freezer is opened.
+		internal_air.temperature = max(current_exposed_air.temperature, internal_air.temperature)
+		return ..()
+	else
+		if(internal_air.temperature <= minimum_temperature)
+			return
+		var/temperature_decrease_this_tick = min(cooling_rate_per_second * seconds_per_tick, internal_air.temperature - minimum_temperature)
+		internal_air.temperature -= temperature_decrease_this_tick
 
 /obj/structure/closet/crate/freezer/blood
 	name = "blood freezer"

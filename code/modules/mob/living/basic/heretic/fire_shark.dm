@@ -26,7 +26,7 @@
 	. = ..()
 	AddElement(/datum/element/death_gases, /datum/gas/plasma, 40)
 	AddElement(/datum/element/simple_flying)
-	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 2)
+	AddElement(/datum/element/venomous, /datum/reagent/phlogiston, 2, injection_flags = INJECT_CHECK_PENETRATE_THICK)
 	AddComponent(/datum/component/swarming)
 	AddComponent(/datum/component/regenerator, outline_colour = COLOR_DARK_RED)
 	ADD_TRAIT(src, TRAIT_SPACEWALK, INNATE_TRAIT)

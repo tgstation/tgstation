@@ -4,80 +4,118 @@
  * @license MIT
  */
 
-import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
-import { ReactNode, RefObject, createRef, useEffect } from 'react';
-import { addScrollableNode, removeScrollableNode } from '../events';
 import { canRender, classes } from 'common/react';
+import { forwardRef, ReactNode, RefObject, useEffect, useRef } from 'react';
 
-export type SectionProps = Partial<{
+import { addScrollableNode, removeScrollableNode } from '../events';
+import { BoxProps, computeBoxClassName, computeBoxProps } from './Box';
+
+type Props = Partial<{
+  /** Buttons to render aside the section title. */
   buttons: ReactNode;
+  /** If true, fills all available vertical space. */
   fill: boolean;
+  /** If true, removes all section padding. */
   fitted: boolean;
+  /** Shows or hides the scrollbar. */
   scrollable: boolean;
+  /** Shows or hides the horizontal scrollbar. */
   scrollableHorizontal: boolean;
+  /** Title of the section. */
   title: ReactNode;
-  /** @member Allows external control of scrolling. */
-  scrollableRef: RefObject<HTMLDivElement>;
   /** @member Callback function for the `scroll` event */
   onScroll: ((this: GlobalEventHandlers, ev: Event) => any) | null;
 }> &
   BoxProps;
 
-export const Section = (props: SectionProps) => {
-  const {
-    className,
-    title,
-    buttons,
-    fill,
-    fitted,
-    scrollable,
-    scrollableHorizontal,
-    children,
-    onScroll,
-    ...rest
-  } = props;
+/**
+ * ## Section
+ * Section is a surface that displays content and actions on a single topic.
+ *
+ * They should be easy to scan for relevant and actionable information.
+ * Elements, like text and images, should be placed in them in a way that
+ * clearly indicates hierarchy.
+ *
+ * Sections can now be nested, and will automatically font size of the
+ * header according to their nesting level. Previously this was done via `level`
+ * prop, but now it is automatically calculated.
+ *
+ * Section can also be titled to clearly define its purpose.
+ *
+ * ```tsx
+ * <Section title="Cargo">Here you can order supply crates.</Section>
+ * ```
+ *
+ * If you want to have a button on the right side of an section title
+ * (for example, to perform some sort of action), there is a way to do that:
+ *
+ * ```tsx
+ * <Section title="Cargo" buttons={<Button>Send shuttle</Button>}>
+ *   Here you can order supply crates.
+ * </Section>
+ * ```
+ */
+export const Section = forwardRef(
+  (props: Props, forwardedRef: RefObject<HTMLDivElement>) => {
+    const {
+      buttons,
+      children,
+      className,
+      fill,
+      fitted,
+      onScroll,
+      scrollable,
+      scrollableHorizontal,
+      title,
+      ...rest
+    } = props;
 
-  const scrollableRef = props.scrollableRef || createRef();
-  const hasTitle = canRender(title) || canRender(buttons);
+    const contentRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (scrollable || scrollableHorizontal) {
-      addScrollableNode(scrollableRef.current as HTMLElement);
-      if (onScroll && scrollableRef.current) {
-        scrollableRef.current.onscroll = onScroll;
-      }
-    }
-    return () => {
-      if (scrollable || scrollableHorizontal) {
-        removeScrollableNode(scrollableRef.current as HTMLElement);
-      }
-    };
-  }, []);
+    const hasTitle = canRender(title) || canRender(buttons);
 
-  return (
-    <div
-      className={classes([
-        'Section',
-        fill && 'Section--fill',
-        fitted && 'Section--fitted',
-        scrollable && 'Section--scrollable',
-        scrollableHorizontal && 'Section--scrollableHorizontal',
-        className,
-        computeBoxClassName(rest),
-      ])}
-      {...computeBoxProps(rest)}
-    >
-      {hasTitle && (
-        <div className="Section__title">
-          <span className="Section__titleText">{title}</span>
-          <div className="Section__buttons">{buttons}</div>
-        </div>
-      )}
-      <div className="Section__rest">
-        <div onScroll={onScroll as any} className="Section__content">
-          {children}
+    /** We want to be able to scroll on hover, but using focus will steal it from inputs */
+    useEffect(() => {
+      if (!contentRef.current) return;
+      if (!scrollable && !scrollableHorizontal) return;
+
+      addScrollableNode(contentRef.current);
+
+      return () => {
+        removeScrollableNode(contentRef.current!);
+      };
+    }, []);
+
+    return (
+      <div
+        className={classes([
+          'Section',
+          fill && 'Section--fill',
+          fitted && 'Section--fitted',
+          scrollable && 'Section--scrollable',
+          scrollableHorizontal && 'Section--scrollableHorizontal',
+          className,
+          computeBoxClassName(rest),
+        ])}
+        {...computeBoxProps(rest)}
+        ref={forwardedRef}
+      >
+        {hasTitle && (
+          <div className="Section__title">
+            <span className="Section__titleText">{title}</span>
+            <div className="Section__buttons">{buttons}</div>
+          </div>
+        )}
+        <div className="Section__rest">
+          <div
+            className="Section__content"
+            onScroll={onScroll}
+            ref={contentRef}
+          >
+            {children}
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  },
+);

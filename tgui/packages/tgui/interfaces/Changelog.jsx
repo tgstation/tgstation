@@ -1,6 +1,10 @@
 import { classes } from 'common/react';
-import { useBackend } from '../backend';
+import dateformat from 'dateformat';
+import yaml from 'js-yaml';
 import { Component, Fragment } from 'react';
+
+import { resolveAsset } from '../assets';
+import { useBackend } from '../backend';
 import {
   Box,
   Button,
@@ -11,9 +15,6 @@ import {
   Table,
 } from '../components';
 import { Window } from '../layouts';
-import { resolveAsset } from '../assets';
-import dateformat from 'dateformat';
-import yaml from 'js-yaml';
 
 const icons = {
   add: { icon: 'check-circle', color: 'green' },

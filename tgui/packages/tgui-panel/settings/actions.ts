@@ -5,6 +5,7 @@
  */
 
 import { createAction } from 'common/redux';
+
 import { createHighlightSetting } from './model';
 
 export const updateSettings = createAction('settings/update');

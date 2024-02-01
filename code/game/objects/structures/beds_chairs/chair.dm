@@ -109,10 +109,8 @@
 /obj/structure/chair/proc/handle_layer()
 	if(has_buckled_mobs() && dir == NORTH)
 		layer = ABOVE_MOB_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE_UPPER_FOV_HIDDEN)
 	else
 		layer = OBJ_LAYER
-		SET_PLANE_IMPLICIT(src, GAME_PLANE)
 
 /obj/structure/chair/post_buckle_mob(mob/living/M)
 	. = ..()
@@ -179,7 +177,6 @@
 /obj/structure/chair/comfy/proc/gen_armrest()
 	armrest = GetArmrest()
 	armrest.layer = ABOVE_MOB_LAYER
-	SET_PLANE_EXPLICIT(armrest, GAME_PLANE_UPPER, src)
 	update_armrest()
 
 /obj/structure/chair/comfy/proc/GetArmrest()
@@ -490,7 +487,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	icon_state = null
 	buildstacktype = null
 	item_chair = null
-	obj_flags = NO_DECONSTRUCTION
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	alpha = 0
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)

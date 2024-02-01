@@ -1,4 +1,0 @@
-author: "WarlockD"
-delete-after: True
-changes:
-  - bugfix: "The air_alarm_circuit to gets the environment from the proper turf.\n:cl:"

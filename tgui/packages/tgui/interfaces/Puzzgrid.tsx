@@ -115,7 +115,7 @@ export const Puzzgrid = (props) => {
               textShadow: '1px 1px 1px #222',
               fontSize: '30px',
               position: 'absolute',
-              top: 0,
+              top: '0',
               left: '10px',
             }}
           >
@@ -133,7 +133,7 @@ export const Puzzgrid = (props) => {
               fontSize: '15px',
               pointerEvents: 'none',
               position: 'absolute',
-              top: 0,
+              top: '0',
               right: '10px',
             }}
           >

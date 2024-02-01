@@ -1,4 +1,5 @@
 import { toTitleCase } from 'common/string';
+
 import { useBackend } from '../backend';
 import { Box, Button, LabeledList, Section, Table } from '../components';
 import { Window } from '../layouts';

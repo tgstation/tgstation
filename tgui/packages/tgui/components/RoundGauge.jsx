@@ -6,6 +6,7 @@
 
 import { clamp01, keyOfMatchingRange, scale } from 'common/math';
 import { classes } from 'common/react';
+
 import { AnimatedNumber } from './AnimatedNumber';
 import { Box, computeBoxClassName, computeBoxProps } from './Box';
 

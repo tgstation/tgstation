@@ -5,10 +5,11 @@
  */
 
 import { useDispatch, useSelector } from 'tgui/backend';
-import { Box, Tabs, Flex, Button } from 'tgui/components';
-import { changeChatPage, addChatPage } from './actions';
-import { selectChatPages, selectCurrentChatPage } from './selectors';
+import { Box, Button, Flex, Tabs } from 'tgui/components';
+
 import { openChatSettings } from '../settings/actions';
+import { addChatPage, changeChatPage } from './actions';
+import { selectChatPages, selectCurrentChatPage } from './selectors';
 
 const UnreadCountWidget = ({ value }) => (
   <Box

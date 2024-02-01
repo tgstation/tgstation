@@ -1,8 +1,9 @@
 import { sortBy } from 'common/collections';
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
+
 import { useBackend } from '../backend';
 import { Box, Button, Section } from '../components';
 import { Window } from '../layouts';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type DispensableReagent = {
   title: string;
@@ -11,10 +12,14 @@ type DispensableReagent = {
   pH: number;
 };
 
+type TransferableBeaker = Beaker & {
+  transferAmounts: number[];
+};
+
 type Data = {
   amount: number;
   chemicals: DispensableReagent[];
-  beaker: Beaker;
+  beaker: TransferableBeaker;
 };
 
 export const PortableChemMixer = (props) => {
@@ -34,13 +39,14 @@ export const PortableChemMixer = (props) => {
               key={amount}
               icon="plus"
               selected={amount === data.amount}
-              content={amount}
               onClick={() =>
                 act('amount', {
                   target: amount,
                 })
               }
-            />
+            >
+              {amount}
+            </Button>
           ))}
         >
           <Box>
@@ -50,14 +56,15 @@ export const PortableChemMixer = (props) => {
                 icon="tint"
                 fluid
                 lineHeight={1.75}
-                content={`(${chemical.volume}) ${chemical.title}`}
                 tooltip={'pH: ' + chemical.pH}
                 onClick={() =>
                   act('dispense', {
                     reagent: chemical.id,
                   })
                 }
-              />
+              >
+                {`(${chemical.volume}) ${chemical.title}`}
+              </Button>
             ))}
           </Box>
         </Section>
@@ -67,9 +74,10 @@ export const PortableChemMixer = (props) => {
             <Button
               key={amount}
               icon="minus"
-              content={amount}
               onClick={() => act('remove', { amount })}
-            />
+            >
+              {amount}
+            </Button>
           ))}
         >
           <BeakerDisplay beaker={beaker} showpH />

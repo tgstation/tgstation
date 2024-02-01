@@ -1,4 +1,5 @@
-import { Window } from '../layouts';
+import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
   Button,
@@ -11,9 +12,9 @@ import {
   Table,
   Tooltip,
 } from '../components';
-import { BooleanLike } from 'common/react';
-import { LoadingScreen } from './common/LoadingToolbox';
 import { TableCell, TableRow } from '../components/Table';
+import { Window } from '../layouts';
+import { LoadingScreen } from './common/LoadingToolbox';
 
 type Data =
   | {
@@ -102,7 +103,7 @@ const AccessView = (props) => {
   const { act, data } = useBackend<Data>();
 
   if (!isConnected(data)) {
-    return <NoticeBox error>No server connected!</NoticeBox>;
+    return <NoticeBox danger>No server connected!</NoticeBox>;
   }
 
   const {

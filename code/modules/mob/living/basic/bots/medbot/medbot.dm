@@ -25,6 +25,7 @@
 
 	additional_access = /datum/id_trim/job/paramedic
 	announcement_type = /datum/action/cooldown/bot_announcement/medbot
+	path_image_color = "#d9d9f4"
 
 	///anouncements when we find a target to heal
 	var/static/list/wait_announcements = list(
@@ -146,8 +147,10 @@
 	)
 
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
-		return
+		return INITIALIZE_HINT_LATELOAD
+
 	skin = "advanced"
 	update_appearance(UPDATE_OVERLAYS)
 	damage_type_healer = HEAL_ALL_DAMAGE
@@ -253,12 +256,6 @@
 	flick("medibot_spark", src)
 	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
-
-/mob/living/basic/bot/medbot/explode()
-	var/atom/our_loc = drop_location()
-	drop_part(medkit_type, our_loc)
-	drop_part(health_analyzer, our_loc)
-	return ..()
 
 /mob/living/basic/bot/medbot/examine()
 	. = ..()
@@ -396,6 +393,7 @@
 	health = 40
 	maxHealth = 40
 	maints_access_required = list(ACCESS_SYNDICATE)
+	bot_mode_flags = parent_type::bot_mode_flags & ~BOT_MODE_REMOTE_ENABLED
 	radio_key = /obj/item/encryptionkey/syndicate
 	radio_channel = RADIO_CHANNEL_SYNDICATE
 	damage_type_healer = HEAL_ALL_DAMAGE

@@ -1,17 +1,18 @@
 import { BooleanLike } from 'common/react';
-import { formatPower } from '../format';
+
 import { useBackend } from '../backend';
 import {
   Box,
   Button,
+  Chart,
+  Icon,
   LabeledList,
   NumberInput,
   ProgressBar,
-  Chart,
   Section,
   Stack,
-  Icon,
 } from '../components';
+import { formatPower } from '../format';
 import { Window } from '../layouts';
 
 type Data = {

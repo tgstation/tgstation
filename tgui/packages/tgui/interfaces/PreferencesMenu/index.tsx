@@ -1,11 +1,12 @@
 import { exhaustiveCheck } from 'common/exhaustive';
+
 import { useBackend } from '../../backend';
+import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
 import {
   GamePreferencesSelectedPage,
   PreferencesMenuData,
   Window,
 } from './data';
-import { CharacterPreferenceWindow } from './CharacterPreferenceWindow';
 import { GamePreferenceWindow } from './GamePreferenceWindow';
 
 export const PreferencesMenu = (props) => {

@@ -1,5 +1,5 @@
 import { useBackend } from '../../backend';
-import { Section, Stack, Button, Box, Icon, Dimmer } from '../../components';
+import { Box, Button, Dimmer, Icon, Section, Stack } from '../../components';
 import { MainData } from './data';
 
 export const InternalDamageToDamagedDesc = {

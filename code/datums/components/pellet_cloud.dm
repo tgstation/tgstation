@@ -69,7 +69,7 @@
 	else if(isgrenade(parent) || islandmine(parent) || issupplypod(parent))
 		radius = magnitude
 
-/datum/component/pellet_cloud/Destroy(force, silent)
+/datum/component/pellet_cloud/Destroy(force)
 	purple_hearts = null
 	pellets = null
 	targets_hit = null

@@ -1,5 +1,7 @@
+import { sortBy } from 'common/collections';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
 import {
   BlockQuote,
   Button,
@@ -11,7 +13,7 @@ import {
   Stack,
   Tabs,
 } from '../components';
-import { sortBy } from 'common/collections';
+import { Window } from '../layouts';
 
 type Data = {
   records: WarrantRecord[];
@@ -143,7 +145,7 @@ const CitationManager = (props) => {
 
   const { crew_ref } = foundRecord;
 
-  const [paying, setPaying] = useLocalState('citationAmount', 5);
+  const [paying, setPaying] = useState(5);
 
   return (
     <Collapsible

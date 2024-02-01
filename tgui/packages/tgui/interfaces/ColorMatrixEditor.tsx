@@ -1,12 +1,13 @@
-import { useBackend } from '../backend';
 import { toFixed } from 'common/math';
+
+import { useBackend } from '../backend';
 import {
   Box,
-  Stack,
-  Section,
+  Button,
   ByondUi,
   NumberInput,
-  Button,
+  Section,
+  Stack,
 } from '../components';
 import { Window } from '../layouts';
 

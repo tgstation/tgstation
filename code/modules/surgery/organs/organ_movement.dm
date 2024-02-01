@@ -30,7 +30,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	mob_remove(organ_owner, special, movement_flags)
-	bodypart_remove(null, organ_owner, movement_flags)
+	bodypart_remove(limb_owner = organ_owner, movement_flags = movement_flags)
 
 /*
  * Insert the organ into the select mob.
@@ -118,6 +118,7 @@
 
 	item_flags |= ABSTRACT
 	ADD_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
+	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 
 /*
  * Remove the organ from the select mob.
@@ -185,7 +186,7 @@
 /obj/item/organ/proc/bodypart_remove(obj/item/bodypart/limb, mob/living/carbon/limb_owner, movement_flags)
 	SHOULD_CALL_PARENT(TRUE)
 
-	if(limb_owner)
+	if(!isnull(limb_owner))
 		limb = limb_owner.get_bodypart(deprecise_zone(zone))
 
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED) //DONT MOVE THIS!!!! we moves the organ right after, so we unregister before we move them physically
@@ -208,6 +209,7 @@
 
 	item_flags &= ~ABSTRACT
 	REMOVE_TRAIT(src, TRAIT_NODROP, ORGAN_INSIDE_BODY_TRAIT)
+	interaction_flags_item |= INTERACT_ITEM_ATTACK_HAND_PICKUP
 
 /// In space station videogame, nothing is sacred. If somehow an organ is removed unexpectedly, handle it properly
 /obj/item/organ/proc/forced_removal()
@@ -216,7 +218,7 @@
 	if(owner)
 		Remove(owner)
 	else if(bodypart_owner)
-		bodypart_remove(limb_owner = owner)
+		bodypart_remove(bodypart_owner)
 	else
 		stack_trace("Force removed an already removed organ!")
 

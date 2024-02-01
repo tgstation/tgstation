@@ -1,5 +1,5 @@
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Modal, Input, Section, Stack } from '../../components';
+import { Button, Input, Modal, Section, Stack } from '../../components';
 
 export const StateSelectModal = (props) => {
   const { act, data } = useBackend();

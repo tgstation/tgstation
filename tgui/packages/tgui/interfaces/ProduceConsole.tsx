@@ -1,5 +1,7 @@
 import { BooleanLike } from 'common/react';
 import { capitalize, createSearch } from 'common/string';
+import { useState } from 'react';
+
 import { useBackend, useLocalState } from '../backend';
 import {
   Box,
@@ -7,6 +9,7 @@ import {
   Dimmer,
   Divider,
   Icon,
+  Image,
   Input,
   NumberInput,
   Section,
@@ -64,12 +67,9 @@ const findAmount = (item_amts, name) => {
 const ShoppingTab = (props) => {
   const { data, act } = useBackend<Data>();
   const { credit_type, order_categories, order_datums, item_amts } = data;
-  const [shopCategory, setShopCategory] = useLocalState(
-    'shopCategory',
-    order_categories[0],
-  );
+  const [shopCategory, setShopCategory] = useState(order_categories[0]);
   const [condensed] = useLocalState('condensed', false);
-  const [searchItem, setSearchItem] = useLocalState('searchItem', '');
+  const [searchItem, setSearchItem] = useState('');
   const search = createSearch<OrderDatum>(
     searchItem,
     (order_datums) => order_datums.name,
@@ -127,8 +127,7 @@ const ShoppingTab = (props) => {
                   />{' '}
                   {!condensed && (
                     <Stack.Item>
-                      <Box
-                        as="img"
+                      <Image
                         src={`data:image/jpeg;base64,${item.product_icon}`}
                         height="34px"
                         width="34px"
@@ -149,7 +148,7 @@ const ShoppingTab = (props) => {
                     />
                     <br />
                   </Stack.Item>
-                  <Stack.Item mt={-1.5} Align="right">
+                  <Stack.Item mt={-1.5} align="right">
                     <Box fontSize="10px" color="label">
                       {item.cost + credit_type + ' per order.'}
                     </Box>
@@ -331,9 +330,10 @@ const OrderSent = (props) => {
 export const ProduceConsole = (props) => {
   const { data } = useBackend<Data>();
   const { credit_type, points, off_cooldown, order_categories } = data;
-  const [tabIndex, setTabIndex] = useLocalState('tab-index', 1);
+  const [tabIndex, setTabIndex] = useState(1);
   const [condensed, setCondensed] = useLocalState('condensed', false);
   const TabComponent = TAB2NAME[tabIndex - 1].component();
+
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>
       <Window.Content>

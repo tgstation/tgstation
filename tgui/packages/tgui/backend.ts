@@ -13,6 +13,7 @@
 
 import { perf } from 'common/perf';
 import { createAction } from 'common/redux';
+
 import { setupDrag } from './drag';
 import { globalEvents } from './events';
 import { focusMap } from './focus';
@@ -316,6 +317,7 @@ type StateWithSetter<T> = [T, (nextState: T) => void];
  * @param context React context.
  * @param key Key which uniquely identifies this state in Redux store.
  * @param initialState Initializes your global variable with this value.
+ * @deprecated Use useState and useEffect when you can. Pass the state as a prop.
  */
 export const useLocalState = <T>(
   key: string,

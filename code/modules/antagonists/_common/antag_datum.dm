@@ -293,7 +293,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/replace_banned_player()
 	set waitfor = FALSE
 
-	var/list/mob/dead/observer/candidates = poll_candidates_for_mob("Do you want to play as a [name]?", "[name]", job_rank, 5 SECONDS, owner.current)
+	var/list/mob/dead/observer/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to play as a [name]?", check_jobban = "[name]", role = job_rank, poll_time = 5 SECONDS, target_mob = owner.current, pic_source = owner.current, role_name_text = name)
 	if(LAZYLEN(candidates))
 		var/mob/dead/observer/C = pick(candidates)
 		to_chat(owner, "Your mob has been taken over by a ghost! Appeal your job ban if you want to avoid this in the future!")

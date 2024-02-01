@@ -1,11 +1,12 @@
 import { BooleanLike } from 'common/react';
+
 import { useBackend } from '../backend';
 import {
   Button,
   Flex,
   Knob,
-  NumberInput,
   LabeledControls,
+  NumberInput,
   Section,
 } from '../components';
 import { Window } from '../layouts';

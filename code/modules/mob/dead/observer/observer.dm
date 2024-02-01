@@ -151,6 +151,7 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 
 	SSpoints_of_interest.make_point_of_interest(src)
 	ADD_TRAIT(src, TRAIT_HEAR_THROUGH_DARKNESS, ref(src))
+	ADD_TRAIT(src, TRAIT_SECURITY_HUD, ref(src))
 
 /mob/dead/observer/get_photo_description(obj/item/camera/camera)
 	if(!invisibility || camera.see_ghosts)
@@ -171,10 +172,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 		mind.current.med_hud_set_status()
 
 	GLOB.ghost_images_default -= ghostimage_default
-	QDEL_NULL(ghostimage_default)
+	ghostimage_default = null
 
 	GLOB.ghost_images_simple -= ghostimage_simple
-	QDEL_NULL(ghostimage_simple)
+	ghostimage_simple = null
 
 	updateallghostimages()
 
@@ -244,24 +245,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
  * I'll make this proc global and move it to its own file in a future update. |- Ricotez - UPDATE: They never did :(
  */
 /mob/proc/brighten_color(input_color)
-	if(input_color[1] == "#")
-		input_color = copytext(input_color, 2) // Removing the # at the beginning.
-	var/r_val
-	var/b_val
-	var/g_val
-	var/color_format = length(input_color)
-	if(color_format != length_char(input_color))
-		return 0
-	if(color_format == 3)
-		r_val = hex2num(copytext(input_color, 1, 2)) * 16
-		g_val = hex2num(copytext(input_color, 2, 3)) * 16
-		b_val = hex2num(copytext(input_color, 3, 4)) * 16
-	else if(color_format == 6)
-		r_val = hex2num(copytext(input_color, 1, 3))
-		g_val = hex2num(copytext(input_color, 3, 5))
-		b_val = hex2num(copytext(input_color, 5, 7))
-	else
-		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
+	var/list/read_color = rgb2num(input_color)
+	var/r_val = read_color[1]
+	var/b_val = read_color[2]
+	var/g_val = read_color[3]
 
 	r_val += (255 - r_val) * 0.4
 	if(r_val > 255)
@@ -711,10 +698,7 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 		return
 	client.crew_manifest_delay = world.time + (1 SECONDS)
 
-	if(!GLOB.crew_manifest_tgui)
-		GLOB.crew_manifest_tgui = new /datum/crew_manifest(src)
-
-	GLOB.crew_manifest_tgui.ui_interact(src)
+	GLOB.manifest.ui_interact(src)
 
 //this is called when a ghost is drag clicked to something.
 /mob/dead/observer/MouseDrop(atom/over)

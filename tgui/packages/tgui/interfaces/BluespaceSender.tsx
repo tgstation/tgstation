@@ -3,15 +3,16 @@ import { flow } from 'common/fp';
 import { toFixed } from 'common/math';
 import { BooleanLike } from 'common/react';
 import { multiline } from 'common/string';
+
 import { useBackend } from '../backend';
 import {
+  Box,
   Button,
   Divider,
+  LabeledList,
   NumberInput,
   ProgressBar,
   Section,
-  Box,
-  LabeledList,
   Stack,
 } from '../components';
 import { getGasColor } from '../constants';
