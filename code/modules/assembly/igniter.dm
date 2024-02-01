@@ -54,10 +54,10 @@
 	add_fingerprint(user)
 
 /obj/item/assembly/igniter/multitool_act(mob/living/user, obj/item/tool)
-	var/new_heat_setting = tgui_input_number(user, "Set new temperature:", "[capitalize(name)]", heat, max(ROOM_TEMP, initial(heat)))
+	var/new_heat_setting = tgui_input_number(user, "Set new temperature", "[capitalize(name)]", heat, max(ROOM_TEMP, initial(heat)))
 	if(new_heat_setting)
 		heat = clamp(new_heat_setting, min(ROOM_TEMP, initial(heat)), max(ROOM_TEMP, initial(heat)))
-		balloon_alert(user, "[name] set to [heat] K")
+		balloon_alert(user, "set to [heat] K")
 		return TRUE
 	return ..()
 

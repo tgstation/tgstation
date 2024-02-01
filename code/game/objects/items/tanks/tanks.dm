@@ -197,7 +197,7 @@
 	add_fingerprint(user)
 	if(istype(attacking_item, /obj/item/assembly_holder))
 		if(tank_assembly)
-			balloon_alert(user, "something is already attached!")
+			balloon_alert(user, "something already attached!")
 			return TRUE
 		bomb_assemble(attacking_item, user)
 		return TRUE
@@ -216,9 +216,8 @@
 		return TRUE
 	if(tool.use_tool(src, user, 0, volume=40))
 		bomb_status = TRUE
-		balloon_alert(user, "bomb is now armed")
+		balloon_alert(user, "bomb armed")
 		log_bomber(user, "welded a single tank bomb,", src, "| Temp: [air_contents.temperature] Pressure: [air_contents.return_pressure()]")
-		to_chat(user, span_notice("A pressure hole has been bored to [src]'s valve. \The [src] can now be ignited."))
 		add_fingerprint(user)
 		return TRUE
 	return ..()
@@ -432,13 +431,7 @@
 /obj/item/tank/receive_signal() //This is mainly called by the sensor through sense() to the holder, and from the holder to here.
 	audible_message(span_warning("[icon2html(src, hearers(src))] *beep* *beep* *beep*"))
 	playsound(src, 'sound/machines/triple_beep.ogg', ASSEMBLY_BEEP_VOLUME, TRUE)
-	sleep(1 SECONDS)
-	if(QDELETED(src))
-		return
-	if(bomb_status)
-		ignite() //if its not a dud, boom (or not boom if you made shitty mix) the ignite proc is below, in this file
-	else
-		release()
+	addtimer(CALLBACK(src, PROC_REF(ignite)), 1 SECONDS)
 
 /// Attaches an assembly holder to the tank to create a bomb.
 /obj/item/tank/proc/bomb_assemble(obj/item/assembly_holder/assembly, mob/living/user)
@@ -446,16 +439,17 @@
 	var/igniter_count = 0
 	for(var/obj/item/assembly/attached_assembly as anything in assembly.assemblies)
 		if(isigniter(attached_assembly))
-			igniter_count += 1
+			igniter_count++
+
 	if(LAZYLEN(assembly.assemblies) == igniter_count)
 		return
 
 	if((src in user.get_equipped_items(include_pockets = TRUE, include_accessories = TRUE)) && !user.canUnEquip(src))
-		to_chat(user, span_warning("[src] is stuck to you!"))
+		balloon_alert(user, "it's stuck!")
 		return
 
 	if(!user.canUnEquip(assembly))
-		to_chat(user, span_warning("[assembly] is stuck to your hand!"))
+		balloon_alert(user, "it's stuck!")
 		return
 
 	user.transferItemToLoc(assembly, src)
@@ -464,8 +458,7 @@
 	assembly.on_attach()
 
 	balloon_alert(user, "bomb assembled")
-	update_icon(UPDATE_OVERLAYS)
-	return
+	update_appearance(UPDATE_OVERLAYS)
 
 /// Detaches an assembly holder from the tank, disarming the bomb
 /obj/item/tank/proc/bomb_disassemble(mob/user)
@@ -476,10 +469,14 @@
 	user.put_in_hands(tank_assembly)
 	tank_assembly.master = null
 	tank_assembly = null
-	update_icon(UPDATE_OVERLAYS)
+	update_appearance(UPDATE_OVERLAYS)
 
 /// Ignites the contents of the tank. Called when receiving a signal if the tank is welded and has an igniter attached.
 /obj/item/tank/proc/ignite()
+	if(!bomb_status) // if it isn't welded, release the gases instead
+		release()
+		return
+
 	var/igniter_temperature = 0
 	for(var/obj/item/assembly/igniter/firestarter in tank_assembly.assemblies)
 		igniter_temperature = max(igniter_temperature, firestarter.heat)
