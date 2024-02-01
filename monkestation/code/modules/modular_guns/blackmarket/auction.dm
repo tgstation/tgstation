@@ -47,18 +47,6 @@
 
 	if(world.time >= queued_items[queued_items[1]])
 		current_auction = queued_items[1]
-		current_auction.bidders += list(list(
-			"name" = "Test Name",
-			"amount" = current_auction.current_price,
-		))
-		current_auction.bidders += list(list(
-			"name" = "Test Name 2",
-			"amount" = current_auction.current_price - 23,
-		))
-		current_auction.bidders += list(list(
-			"name" = "Test Name 3",
-			"amount" = current_auction.current_price - 42,
-		))
 		queued_items[queued_items[1]] = 0
 		queued_items -= current_auction
 		COOLDOWN_START(src, current_auction_time, AUCTION_TIME)
@@ -96,7 +84,11 @@
 
 	current_auction.uplink = uplink
 	current_auction.user = user
-	current_auction.top_bidder = "Testing Player"
+	if(ishuman(user))
+		var/mob/living/carbon/human/human = user
+		current_auction.top_bidder = "Anonymous [human.dna.species.name]"
+	else
+		current_auction.top_bidder = "Anonymous Creature"
 	current_auction.current_price = bid_amount
 	current_auction.price = bid_amount
 
