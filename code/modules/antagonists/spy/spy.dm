@@ -139,11 +139,13 @@
 
 /datum/outfit/spy
 	name = "Spy (Preview only)"
-
-	uniform = /obj/item/clothing/under/color/black
+	// Balaclava sprite is ass, otherwise I would use it for this
+	uniform = /obj/item/clothing/under/suit/black
 	gloves = /obj/item/clothing/gloves/color/black
-	mask = /obj/item/clothing/mask/balaclava
 	shoes = /obj/item/clothing/shoes/jackboots
+	head = /obj/item/clothing/head/fedora
+	suit = /obj/item/clothing/suit/jacket/trenchcoat
+	glasses = /obj/item/clothing/glasses/osi
 
 /datum/action/backup_uplink
 	name = "Create Uplink"
