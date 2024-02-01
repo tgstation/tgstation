@@ -1,0 +1,4 @@
+author: "00-Steven"
+delete-after: True
+changes:
+  - bugfix: "Robotic voicebox actually lets you speak any language again (as long as you know it)."
