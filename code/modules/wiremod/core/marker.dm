@@ -57,6 +57,8 @@
 	else
 		visible_items = target.get_equipped_items()
 
+	visible_items -= src // the multitool cannot mark itself.
+
 	if(!length(visible_items))
 		mark_target(target)
 		return
@@ -77,7 +79,7 @@
 		item_choice.image = item_appearance
 		selectable_targets[REF(item)] = item_choice
 
-	var/picked_ref = show_radial_menu(user, src, selectable_targets, custom_check = CALLBACK(PROC_REF(check_menu), user, target), tooltips = TRUE)
+	var/picked_ref = show_radial_menu(user, src, selectable_targets, radius = 38, custom_check = CALLBACK(src, PROC_REF(check_menu), user, target), tooltips = TRUE)
 	if(!picked_ref)
 		return
 
@@ -88,7 +90,7 @@
 		balloon_alert(user, "cannot mark entity")
 
 /obj/item/multitool/circuit/proc/check_menu(mob/user, mob/living/target)
-	return marked_atom && user.is_holding(src) && user.Adjacent(target)
+	return !marked_atom && user.is_holding(src) && user.Adjacent(target)
 
 /obj/item/multitool/circuit/update_overlays()
 	. = ..()
