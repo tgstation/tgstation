@@ -1,3 +1,8 @@
+#define MACHINE_VIEW 0
+#define LOGS_VIEW 1
+
+#define ENTRIES_PER_PAGE 30
+
 /obj/machinery/ore_silo
 	name = "ore silo"
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
@@ -7,6 +12,11 @@
 	circuit = /obj/item/circuitboard/machine/ore_silo
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	processing_flags = NONE
+
+	/// Currently selected UI tab, possible values are: `MACHINE_VIEW` or `1` and `LOGS_VIEW` or `0`.
+	var/current_view = MACHINE_VIEW
+	/// Currently opened log page, range is between `1` and `INFINITY`.
+	var/current_page = 1
 
 	/// List of all connected components that are on hold from accessing materials.
 	var/list/holds = list()
@@ -128,31 +138,43 @@
 
 	data["materials"] =  materials.ui_data()
 
-	data["machines"] = list()
-	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
-		var/atom/parent = remote.parent
-		data["machines"] += list(
-			list(
-				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
-				"name" = parent.name,
-				"onHold" = !!holds[remote],
-				"location" = get_area_name(parent, TRUE)
-				)
-		)
+	data["view"] = current_view
 
-	data["logs"] = list()
-	for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
-		data["logs"] += list(
-			list(
-				"rawMaterials" = entry.get_raw_materials(""),
-				"machineName" = entry.machine_name,
-				"areaName" = entry.area_name,
-				"action" = entry.action,
-				"amount" = entry.amount,
-				"time" = entry.timestamp,
-				"noun" = entry.noun
-			)
-		)
+	switch(current_view)
+		if(MACHINE_VIEW)
+			data["machines"] = list()
+			for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
+				var/atom/parent = remote.parent
+				data["machines"] += list(
+					list(
+						"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
+						"name" = parent.name,
+						"onHold" = !!holds[remote],
+						"location" = get_area_name(parent, TRUE),
+					)
+				)
+
+		if(LOGS_VIEW)
+			var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
+			var/logs_length = length(logs)
+
+			data["lastPage"] = ceil(logs_length / ENTRIES_PER_PAGE)
+			data["currentPage"] = current_page
+
+			data["logs"] = list()
+			for(var/index in (current_page - 1) * ENTRIES_PER_PAGE + 1 to min(current_page * ENTRIES_PER_PAGE, logs_length))
+				var/datum/ore_silo_log/entry = logs[index]
+				data["logs"] += list(
+					list(
+						"rawMaterials" = entry.get_raw_materials(""),
+						"machineName" = entry.machine_name,
+						"areaName" = entry.area_name,
+						"action" = entry.action,
+						"amount" = entry.amount,
+						"time" = entry.timestamp,
+						"noun" = entry.noun,
+					)
+				)
 
 	return data
 
@@ -162,6 +184,22 @@
 		return
 
 	switch(action)
+		if("machinery")
+			current_view = MACHINE_VIEW
+			return TRUE
+
+		if("logs")
+			current_view = LOGS_VIEW
+			return TRUE
+
+		if("page")
+			var/page = text2num(params["id"])
+			if(isnull(page))
+				return
+
+			current_page = max(page, 1)
+			return TRUE
+
 		if("remove")
 			var/index = params["id"]
 			if(isnull(index))
@@ -306,3 +344,8 @@
 		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
 	return msg.Join()
+
+#undef ENTRIES_PER_PAGE
+
+#undef LOGS_VIEW
+#undef MACHINE_VIEW

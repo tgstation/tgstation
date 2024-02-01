@@ -1,10 +1,10 @@
 import { classes } from 'common/react';
 import { capitalize } from 'common/string';
-import { useState } from 'react';
 
 import { useBackend } from '../backend';
 import {
   Box,
+  Button,
   Icon,
   Image,
   LabeledList,
@@ -35,18 +35,25 @@ type Log = {
   noun: string;
 };
 
-type OreSiloData = {
+enum View {
+  Machines,
+  Logs,
+}
+
+type Data = {
   SHEET_MATERIAL_AMOUNT: number;
   materials: Material[];
-  machines: Machine[];
-  logs: Log[];
+  machines?: Machine[];
+  currentPage: number;
+  lastPage: number;
+  logs?: Log[];
+  view: View;
 };
 
 export const OreSilo = (props: any) => {
-  const { act, data } = useBackend<OreSiloData>();
-  const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
-
-  const [currentTab, setCurrentTab] = useState(0);
+  const { act, data } = useBackend<Data>();
+  const { SHEET_MATERIAL_AMOUNT, machines, currentPage, lastPage, logs, view } =
+    data;
 
   return (
     <Window title="Ore Silo" width={620} height={600}>
@@ -56,47 +63,35 @@ export const OreSilo = (props: any) => {
             <Tabs fluid>
               <Tabs.Tab
                 icon="plug"
-                selected={currentTab === 0}
-                onClick={() => setCurrentTab(0)}
+                selected={view === View.Machines}
+                onClick={() => act('machinery')}
               >
                 Connections
               </Tabs.Tab>
               <Tabs.Tab
                 icon="book-bookmark"
-                selected={currentTab === 1}
-                onClick={() => setCurrentTab(1)}
+                selected={view === View.Logs}
+                onClick={() => act('logs')}
               >
                 Logs
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {currentTab === 0 ? (
-              !!machines && machines.length > 0 ? (
-                <Section fill scrollable>
-                  {machines.map((machine, index) => (
-                    <MachineDisplay
-                      key={index}
-                      machine={machine}
-                      onPause={() => act('hold', { id: index + 1 })}
-                      onRemove={() => act('remove', { id: index + 1 })}
-                    />
-                  ))}
-                </Section>
-              ) : (
-                <NoticeBox>No machines connected!</NoticeBox>
-              )
+            {view === View.Machines ? (
+              <MachineList
+                machines={machines!}
+                onPause={(index) => act('hold', { id: index })}
+                onRemove={(index) => act('remove', { id: index })}
+              />
             ) : null}
-            {currentTab === 1 ? (
-              !!logs && logs.length > 0 ? (
-                <Box pr={1} height="100%" overflowY="scroll">
-                  {logs.map((log, index) => (
-                    <LogEntry key={index} log={log} />
-                  ))}
-                </Box>
-              ) : (
-                <NoticeBox>No log entries currently present!</NoticeBox>
-              )
+            {view === View.Logs ? (
+              <LogsList
+                logs={logs!}
+                lastPage={lastPage!}
+                currentPage={currentPage!}
+                onFlip={(index) => act('page', { id: index })}
+              />
             ) : null}
           </Stack.Item>
           <Stack.Item>
@@ -116,6 +111,31 @@ export const OreSilo = (props: any) => {
   );
 };
 
+type MachineListProps = {
+  machines: Machine[];
+  onPause: (index: number) => void;
+  onRemove: (index: number) => void;
+};
+
+const MachineList = (props: MachineListProps) => {
+  const { machines, onPause, onRemove } = props;
+
+  return machines.length > 0 ? (
+    <Section fill scrollable>
+      {machines.map((machine, index) => (
+        <MachineDisplay
+          key={index}
+          machine={machine}
+          onPause={() => onPause(index + 1)}
+          onRemove={() => onRemove(index + 1)}
+        />
+      ))}
+    </Section>
+  ) : (
+    <NoticeBox>No machines connected!</NoticeBox>
+  );
+};
+
 type MachineProps = {
   machine: Machine;
   onPause: () => void;
@@ -130,7 +150,7 @@ const MachineDisplay = (props: MachineProps) => {
   if (index >= 0) {
     machineName = machineName.substring(0, index);
   }
-  machineName = `${machineName.trimEnd()}(${machine.location})`;
+  machineName = `${machineName.trimEnd()} (${machine.location})`;
 
   return (
     <Box className="FabricatorRecipe">
@@ -187,6 +207,54 @@ const MachineDisplay = (props: MachineProps) => {
         </Box>
       </Tooltip>
     </Box>
+  );
+};
+
+type LogsListProps = {
+  logs: Log[];
+  lastPage: number;
+  currentPage: number;
+  onFlip: (index: number) => void;
+};
+
+const LogsList = (props: LogsListProps) => {
+  const { logs, lastPage, currentPage, onFlip } = props;
+
+  return logs.length > 0 ? (
+    <Stack fill vertical>
+      <Stack.Item grow>
+        <Box pr={1} height="100%" overflowY="scroll">
+          {logs.map((log, index) => (
+            <LogEntry key={index} log={log} />
+          ))}
+        </Box>
+      </Stack.Item>
+      <Stack.Item>
+        <Stack>
+          <Stack.Item>
+            <Button
+              icon="backward-step"
+              disabled={currentPage - 1 < 1}
+              onClick={() => onFlip(currentPage - 1)}
+            />
+          </Stack.Item>
+          <Stack.Item grow>
+            <Box bold textAlign="center">
+              {`${currentPage} / ${lastPage}`}
+            </Box>
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="forward-step"
+              disabled={currentPage + 1 > lastPage}
+              onClick={() => onFlip(currentPage + 1)}
+            />
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+    </Stack>
+  ) : (
+    <NoticeBox>No log entries currently present!</NoticeBox>
   );
 };
 
