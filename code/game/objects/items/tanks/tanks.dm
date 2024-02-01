@@ -197,7 +197,7 @@
 	if(istype(attacking_item, /obj/item/assembly_holder))
 		if(tank_assembly)
 			balloon_alert(user, "something already attached!")
-			return ..()
+			return ITEM_INTERACT_BLOCKING
 		bomb_assemble(attacking_item, user)
 		return ITEM_INTERACT_SUCCESS
 	return ..()
@@ -212,7 +212,7 @@
 /obj/item/tank/welder_act(mob/living/user, obj/item/tool)
 	if(bomb_status)
 		balloon_alert(user, "already welded!")
-		return ITEM_INTERACT_SUCCESS
+		return ITEM_INTERACT_BLOCKING
 	if(tool.use_tool(src, user, 0, volume=40))
 		bomb_status = TRUE
 		balloon_alert(user, "bomb armed")

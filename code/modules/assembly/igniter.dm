@@ -58,7 +58,7 @@
 	if(new_heat_setting)
 		heat = clamp(new_heat_setting, min(ROOM_TEMP, initial(heat)), max(ROOM_TEMP, initial(heat)))
 		balloon_alert(user, "set to [heat]K")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 	return ..()
 
 //For the Condenser, which functions like the igniter but makes things colder.
