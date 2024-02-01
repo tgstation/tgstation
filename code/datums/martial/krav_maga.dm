@@ -158,6 +158,7 @@
 
 /obj/item/clothing/gloves/krav_maga
 	var/datum/martial_art/krav_maga/style = new
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 
 /obj/item/clothing/gloves/krav_maga/equipped(mob/user, slot)
 	. = ..()
