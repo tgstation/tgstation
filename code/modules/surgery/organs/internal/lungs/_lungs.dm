@@ -47,7 +47,7 @@
 	var/safe_plasma_min = 0
 	///How much breath partial pressure is a safe amount of plasma. 0 means that we are immune to plasma.
 	var/safe_plasma_max = 0.05
-	var/n2o_detect_min = .1 //Minimum n2o for effects
+	var/n2o_detect_min = 0.1 //Minimum n2o for effects
 	var/n2o_para_min = 1 //Sleeping agent
 	var/n2o_sleep_min = 5 //Sleeping agent
 	var/BZ_trip_balls_min = 1 //BZ gas
