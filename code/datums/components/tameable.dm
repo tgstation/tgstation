@@ -94,4 +94,4 @@
 		to_chat(tamer, span_warning("Please enter a valid name."))
 		rename_pet(animal, tamer)
 		return
-	animal.fully_replace_character_name(name, chosen_name)
+	animal.fully_replace_character_name(animal.name, chosen_name)
