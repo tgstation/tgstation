@@ -15,14 +15,16 @@
 	var/spawn_with_objectives = TRUE
 	/// Tracks number of bounties claimed, for roundend
 	var/bounties_claimed = 0
+	/// Weakref to our spy uplink
+	/// Only exists for the sole purpose of letting admins see it
+	var/datum/weakref/uplink_weakref
 
 /datum/antagonist/spy/on_gain()
-	. = ..()
 	if(!uplink_created)
 		auto_create_spy_uplink(owner.current)
 	if(spawn_with_objectives)
 		give_random_objectives()
-		update_static_data(owner.current)
+	return ..()
 
 /datum/antagonist/spy/ui_static_data(mob/user)
 	var/list/data = ..()
@@ -39,9 +41,24 @@
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
 
+	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
+	if(isnull(uplink))
+		tgui_alert(usr, "No spy uplink!", "Mission Failed")
+		return
+
+	uplink.ui_interact(usr)
+
 /datum/antagonist/spy/proc/refresh_bounties()
 	if(!check_rights(R_ADMIN|R_DEBUG))
 		return
+
+	var/datum/component/spy_uplink/uplink = uplink_weakref?.resolve()
+	if(isnull(uplink))
+		tgui_alert(usr, "No spy uplink!", "Mission Failed")
+		return
+
+	uplink.spy_bounty_handler.force_refresh()
+	tgui_alert(usr, "Bounties refreshed.", "Mission Success")
 
 /datum/antagonist/spy/proc/admin_create_spy_uplink()
 	if(!check_rights(R_ADMIN|R_DEBUG))
@@ -69,9 +86,11 @@
 	return TRUE
 
 /datum/antagonist/spy/proc/create_spy_uplink(mob/living/carbon/spy, obj/item/spy_uplink)
-	if(!spy_uplink.AddComponent(/datum/component/spy_uplink, src))
+	var/datum/component/spy_uplink/uplink = spy_uplink.AddComponent(/datum/component/spy_uplink, src)
+	if(!uplink)
 		return FALSE
 
+	uplink_weakref = WEAKREF(uplink)
 	uplink_created = TRUE
 
 	if(istype(spy_uplink, /obj/item/modular_computer/pda))

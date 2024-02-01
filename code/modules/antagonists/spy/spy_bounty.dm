@@ -192,8 +192,8 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	name = "[desired_item] Theft"
-	help = desired_item.steal_hint || "Steal [desired_item]."
+	name = "[capitalize(desired_item.name)] Theft"
+	help = "Steal any [desired_item][desired_item.steal_hint ? ": [desired_item.steal_hint]" : ""]."
 	return TRUE
 
 /datum/spy_bounty/item/is_stealable(atom/movable/stealing)
@@ -273,7 +273,7 @@
 	var/area/machine_area = get_area(machine)
 	location_type = machine_area.type
 	name ||= "[machine.name] Theft"
-	help ||= "Steal [machine] found in [machine_area]."
+	help ||= "Steal \a [machine] found in [machine_area]."
 	return TRUE
 
 /datum/spy_bounty/machine/is_stealable(atom/movable/stealing)
@@ -438,6 +438,10 @@
 
 	return null
 
+/datum/spy_bounty/targets_person/some_item/id/target_found(mob/crewmember)
+	. = ..()
+	name = "[crewmember.real_name]'s ID Card"
+
 // Steal someone's PDA
 /datum/spy_bounty/targets_person/some_item/pda
 	desired_type = /obj/item/modular_computer/pda
@@ -448,6 +452,10 @@
 			return pda
 
 	return null
+
+/datum/spy_bounty/targets_person/some_item/pda/target_found(mob/crewmember)
+	. = ..()
+	name = "[crewmember.real_name]'s PDA"
 
 // Steal someone's heirloom
 /datum/spy_bounty/targets_person/some_item/heirloom

@@ -59,11 +59,6 @@
 	desc = "A SecHUD implant. Shows you the ID of people you're looking at. It's also stealthy!"
 	item = /obj/item/autosurgeon/syndicate/contraband_sechud
 
-/obj/item/autosurgeon/syndicate/contraband_sechud
-	desc = "Contains a contraband SecHUD implant, undetectable by health scanners."
-	uses = 1
-	starting_organ = /obj/item/organ/internal/cyberimp/eyes/hud/security/syndicate
-
 /datum/uplink_item/spy_unique/rifle_prime
 	name = "Bolt-Action Rifle"
 	desc = "A bolt-action rifle, with a scope. Won't jam, either."
@@ -87,3 +82,9 @@
 	desc = "A really sharp Katana. Did I mention it's sharp?"
 	item = /obj/item/katana
 	cost = 16 // dualsaber-tier
+
+/datum/uplink_item/spy_unique/medkit_lite
+	name = "Syndicate First Medic Kit"
+	desc = "A syndicate tactical combat medkit, but only stocked enough to do basic first aid."
+	item = /obj/item/storage/medkit/tactical_lite
+	purchasable_from = UPLINK_SPY

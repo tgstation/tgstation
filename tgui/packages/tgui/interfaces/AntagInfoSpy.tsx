@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import { Section, Stack } from '../components';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { Window } from '../layouts';
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 const greenText = {
   fontWeight: 'italics',
@@ -40,7 +40,7 @@ export const AntagInfoSpy = (props, context) => {
             <Stack.Item>
               <span style={greenText}>
                 <b>Use it in hand</b> to access your uplink, and{' '}
-                <b>right click</b> on bounty objects to steal them.
+                <b>right click</b> on bounty targets to steal them.
               </span>
             </Stack.Item>
             <Stack.Divider />

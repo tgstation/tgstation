@@ -1,7 +1,8 @@
-import { useBackend } from '../backend';
-import { Window } from '../layouts';
 import { BooleanLike } from 'common/react';
+
+import { useBackend } from '../backend';
 import { BlockQuote, Box, Dimmer, Icon, Section, Stack } from '../components';
+import { Window } from '../layouts';
 
 type Bounty = {
   name: string;
@@ -30,8 +31,8 @@ const BountyDimmer = (props: { text: string; color: string }) => {
         <Stack.Item>
           <Icon name="user-secret" size={2} color={props.color} />
         </Stack.Item>
-        <Stack.Item align={'center'}>
-          <i>{props.text}</i>
+        <Stack.Item align={'center'} italic>
+          {props.text}
         </Stack.Item>
       </Stack>
     </Dimmer>
@@ -52,18 +53,19 @@ const BountyDisplay = (props: { bounty: Bounty }) => {
       )}
       <Stack vertical ml={1}>
         <Stack.Item>
-          <Box color={difficulty_to_color[bounty.difficulty.toLowerCase()]}>
-            {bounty.name}.
+          <Box
+            style={{
+              textTransform: 'capitalize',
+            }}
+            color={difficulty_to_color[bounty.difficulty.toLowerCase()]}
+          >
+            {bounty.name}
           </Box>
         </Stack.Item>
         <Stack.Item>
-          <BlockQuote>
-            <i>{bounty.help}</i>
-          </BlockQuote>
+          <BlockQuote italic>{bounty.help}</BlockQuote>
         </Stack.Item>
-        <Stack.Item>
-          <i>Reward: {bounty.reward}</i>
-        </Stack.Item>
+        <Stack.Item italic>Reward: {bounty.reward}</Stack.Item>
       </Stack>
     </Section>
   );
