@@ -3,12 +3,12 @@
 	name = "\improper reticence"
 	icon_state = "reticence"
 	base_icon_state = "reticence"
-	movedelay = 2
-	max_integrity = 100
+	movedelay = 1
+	max_integrity = 120
 	armor_type = /datum/armor/mecha_reticence
 	max_temperature = 15000
 	force = 30
-	destruction_sleep_duration = 40
+	destruction_sleep_duration = 1
 	exit_delay = 40
 	wreckage = /obj/structure/mecha_wreckage/reticence
 	accesses = list(ACCESS_MECH_SCIENCE, ACCESS_THEATRE)
@@ -26,9 +26,9 @@
 
 /datum/armor/mecha_reticence
 	melee = 40
-	bullet = 20
-	laser = 30
-	energy = 15
+	bullet = 40
+	laser = 50
+	energy = 20
 	fire = 100
 	acid = 100
 
