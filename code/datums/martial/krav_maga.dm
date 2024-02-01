@@ -217,7 +217,7 @@
 //Krav Maga Gloves
 
 /obj/item/clothing/gloves/krav_maga
-  clothing_traits = list(TRAIT_FAST_CUFFING)
+	clothing_traits = list(TRAIT_FAST_CUFFING)
 	var/datum/martial_art/krav_maga/style
 
 /obj/item/clothing/gloves/krav_maga/Initialize(mapload)
