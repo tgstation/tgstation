@@ -62,9 +62,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible/layer4,
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/engineering)
-"aL" = (
-/turf/closed/wall/mineral/plastitanium/explosive,
-/area/ruin/syndicate_lava_base/testlab)
 "aM" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -5700,7 +5697,7 @@ pa
 pa
 ae
 ae
-aL
+ae
 ae
 ae
 ae
@@ -5999,7 +5996,7 @@ ab
 ab
 as
 as
-as
+PW
 dI
 NE
 ew

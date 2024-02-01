@@ -100,16 +100,15 @@
 		if(traitor_data.uplink_handler.contractor_hub.current_contract == src)
 			traitor_data.uplink_handler.contractor_hub.current_contract = null
 
-	if(iscarbon(person_sent))
-		for(var/obj/item/person_contents in person_sent.gather_belongings())
-			if(ishuman(person_sent))
-				var/mob/living/carbon/human/human_sent = person_sent
-				if(person_contents == human_sent.w_uniform)
-					continue //So all they're left with are shoes and uniform.
-				if(person_contents == human_sent.shoes)
-					continue
-			person_sent.transferItemToLoc(person_contents)
-			victim_belongings.Add(WEAKREF(person_contents))
+	for(var/obj/item/person_contents as anything in person_sent.gather_belongings())
+		if(ishuman(person_sent))
+			var/mob/living/carbon/human/human_sent = person_sent
+			if(person_contents == human_sent.w_uniform)
+				continue //So all they're left with are shoes and uniform.
+			if(person_contents == human_sent.shoes)
+				continue
+		person_sent.transferItemToLoc(person_contents)
+		victim_belongings.Add(WEAKREF(person_contents))
 
 	var/obj/structure/closet/supplypod/extractionpod/pod = source
 	// Handle the pod returning

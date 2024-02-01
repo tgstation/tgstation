@@ -131,7 +131,7 @@
 	var/color_string
 	var/sheet_to_buy
 	var/requested_amount
-	var/minimum_value_threshold
+	var/minimum_value_threshold = 0
 	for(var/datum/material/traded_mat as anything in SSstock_market.materials_prices)
 		//convert trend into text
 		switch(SSstock_market.materials_trends[traded_mat])
