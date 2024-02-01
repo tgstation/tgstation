@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "Jukebox has been refactored. Jukebox music now updates as the player moves, mutes when the player is deafened, and overall sounds wayyy better. You can also now toggle song repeat on jukeboxes."

@@ -1,4 +1,0 @@
-author: "Donglesplonge"
-delete-after: True
-changes:
-  - bugfix: "the top and top righthand doors of northstars cargo mail sorting room now use any supply general, mining, and bitden access, and the top righthand door no longer says its mining decontamination and uses the proper mail sorting room airlock instead."
