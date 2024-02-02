@@ -138,17 +138,10 @@
 	return report.Join("<br>")
 
 /datum/antagonist/spy/get_preview_icon()
-	var/mob/living/carbon/human/consistent/dummy = new()
+	var/mob/living/carbon/human/dummy/consistent/dummy = new()
 	dummy.set_haircolor(COLOR_SILVER, update = FALSE)
-	dummy.set_facial_haircolor(COLOR_SILVER, update = FALSE)
 	dummy.set_hairstyle("CIA", update = FALSE)
-	dummy.set_facial_hairstyle("Moustache (Handlebar 2)", update = FALSE)
-	dummy.update_body(TRUE)
-
-	var/icon/spycon = finish_preview_icon(render_preview_outfit(preview_outfit, dummy))
-	qdel(dummy)
-
-	return spycon
+	return finish_preview_icon(render_preview_outfit(preview_outfit, dummy))
 
 /datum/outfit/spy
 	name = "Spy (Preview only)"
