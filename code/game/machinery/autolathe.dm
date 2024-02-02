@@ -7,6 +7,7 @@
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.5
 	circuit = /obj/item/circuitboard/machine/autolathe
 	layer = BELOW_OBJ_LAYER
+	processing_flags = NONE
 
 	///Is the autolathe hacked via wiring
 	var/hacked = FALSE
