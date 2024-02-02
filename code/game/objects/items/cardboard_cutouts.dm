@@ -19,6 +19,8 @@
 	. = ..()
 	if(starting_cutout)
 		return INITIALIZE_HINT_LATELOAD
+	if(!pushed_over)
+		AddComponentSource(REF(src), datum/component/tactical)
 
 /obj/item/cardboard_cutout/LateInitialize()
 	ASSERT(!isnull(starting_cutout))
@@ -33,6 +35,8 @@
 	ASSERT(!isnull(cutout), "No cutout found with name [starting_cutout]")
 
 	cutout.apply(src)
+	if(!pushed_over)
+		AddComponentSource(REF(src), datum/component/tactical)
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/item/cardboard_cutout/attack_hand(mob/living/user, list/modifiers)
@@ -48,6 +52,7 @@
 	icon_state = "cutout_pushed_over"
 	remove_atom_colour(FIXED_COLOUR_PRIORITY)
 	pushed_over = TRUE
+	RemoveComponentSource(REF(src), datum/component/tactical)
 
 /obj/item/cardboard_cutout/attack_self(mob/living/user)
 	if(!pushed_over)
@@ -57,6 +62,7 @@
 	icon = initial(icon)
 	icon_state = initial(icon_state) //This resets a cutout to its blank state - this is intentional to allow for resetting
 	pushed_over = FALSE
+	AddComponentSource(REF(src), datum/component/tactical)
 
 /obj/item/cardboard_cutout/attackby(obj/item/I, mob/living/user, params)
 	if(istype(I, /obj/item/toy/crayon))
@@ -192,6 +198,7 @@
 	cutouts.appearance = applied_appearance
 	cutouts.name = get_name()
 	cutouts.desc = applied_desc
+	SEND_SIGNAL(cutouts, COMSIG_CARDBOARD_CUTOUT_APPLY_APPEARANCE, src)
 
 /datum/cardboard_cutout/assistant
 	name = "Assistant"
