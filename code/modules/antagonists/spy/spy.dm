@@ -137,6 +137,19 @@
 	report += printobjectives(objectives)
 	return report.Join("<br>")
 
+/datum/antagonist/spy/get_preview_icon()
+	var/mob/living/carbon/human/consistent/dummy = new()
+	dummy.set_haircolor(COLOR_SILVER, update = FALSE)
+	dummy.set_facial_haircolor(COLOR_SILVER, update = FALSE)
+	dummy.set_hairstyle("CIA", update = FALSE)
+	dummy.set_facial_hairstyle("Moustache (Handlebar 2)", update = FALSE)
+	dummy.update_body(TRUE)
+
+	var/icon/spycon = finish_preview_icon(render_preview_outfit(preview_outfit, dummy))
+	qdel(dummy)
+
+	return spycon
+
 /datum/outfit/spy
 	name = "Spy (Preview only)"
 	// Balaclava sprite is ass, otherwise I would use it for this
@@ -146,6 +159,7 @@
 	head = /obj/item/clothing/head/fedora
 	suit = /obj/item/clothing/suit/jacket/trenchcoat
 	glasses = /obj/item/clothing/glasses/osi
+	ears = /obj/item/radio/headset
 
 /datum/action/backup_uplink
 	name = "Create Uplink"
