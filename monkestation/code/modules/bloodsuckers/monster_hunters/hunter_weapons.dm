@@ -238,10 +238,10 @@
 	wound_bonus = 25
 	bare_wound_bonus = 35
 	demolition_mod = 1.5 //ripping through doors and windows should be a little easier with a claw shouldnt it?
-	reach = 1
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/weapons/fwoosh.ogg'
-	damtype = BRUTE //change to burn when i can make slash wounds with burn damage
+	damtype = BURN //why can i not make things do wounds i want
+
 	attack_verb_continuous = list("rips", "claws", "gashes", "tears", "lacerates", "dices", "cuts", "attacks")
 	attack_verb_simple = list("rip", "claw", "gash", "tear", "lacerate", "dice", "cut", "attack" )
 
