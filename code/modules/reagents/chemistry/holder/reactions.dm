@@ -301,27 +301,30 @@
 	var/list/cached_required_reagents = selected_reaction.required_reagents
 	var/list/cached_results = selected_reaction.results
 	var/datum/cached_my_atom = my_atom
+
+	//find how much ration of products to create
 	var/multiplier = INFINITY
 	for(var/reagent in cached_required_reagents)
-		multiplier = round(min(multiplier, get_reagent_amount(reagent) / cached_required_reagents[reagent]))
-
+		multiplier = min(multiplier, get_reagent_amount(reagent) / cached_required_reagents[reagent])
+	multiplier = round(multiplier)
 	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
 		return FALSE
-	var/sum_purity = 0
-	for(var/_reagent in cached_required_reagents)//this is not an object
-		var/datum/reagent/reagent = has_reagent(_reagent)
-		if (!reagent)
+
+	//remove the required reagents
+	for(var/datum/reagent/_reagent as anything in cached_required_reagents)//this is not an object
+		if (!has_reagent(_reagent))
 			continue
-		sum_purity += reagent.purity
 		remove_reagent(_reagent, (multiplier * cached_required_reagents[_reagent]))
-	sum_purity /= cached_required_reagents.len
 
-	for(var/product in selected_reaction.results)
-		multiplier = max(multiplier, 1) //this shouldn't happen ...
-		var/yield = (cached_results[product]*multiplier)*sum_purity
+	//add the result reagents whose yield depend on the average purity
+	var/yield
+	var/average_purity = get_average_purity()
+	for(var/datum/reagent/product as anything in selected_reaction.results)
+		yield = cached_results[product] * multiplier * average_purity
 		SSblackbox.record_feedback("tally", "chemical_reaction", yield, product)
-		add_reagent(product, yield, null, chem_temp, sum_purity)
+		add_reagent(product, yield, null, chem_temp, average_purity)
 
+	//play sounds on the target atom
 	var/list/seen = viewers(4, get_turf(my_atom))
 	var/iconhtml = icon2html(cached_my_atom, seen)
 	if(cached_my_atom)
@@ -331,6 +334,7 @@
 
 			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
 
+		//use slime extract
 		if(istype(cached_my_atom, /obj/item/slime_extract))
 			var/obj/item/slime_extract/extract = my_atom
 			extract.extract_uses--
@@ -339,4 +343,5 @@
 				extract.name = "used slime extract"
 				extract.desc = "This extract has been used up."
 
+	//finish the reaction
 	selected_reaction.on_reaction(src, null, multiplier)

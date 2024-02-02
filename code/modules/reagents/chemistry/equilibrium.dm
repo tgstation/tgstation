@@ -316,7 +316,7 @@
 	purity = delta_ph
 
 	//Then adjust purity of result with beaker reagent purity.
-	purity *= average_purity()
+	purity *= holder.get_average_purity()
 
 	//Then adjust it from the input modifier
 	purity *= purity_modifier
@@ -399,23 +399,3 @@
 	//i.e. we have created all the reagents needed for this reaction
 	if(total_step_added >= step_target_vol)
 		to_delete = TRUE
-
-/*
-* Calculates the total sum normalised purity of ALL reagents in a holder
-* Currently calculates it irrespective of required reagents at the start, but this should be changed if this is powergamed to required reagents
-* It's not currently because overly_impure affects all reagents
-*/
-/datum/equilibrium/proc/average_purity()
-	PRIVATE_PROC(TRUE)
-
-	var/list/cached_reagents = holder.reagent_list
-
-	var/num_of_reagents = cached_reagents.len
-	if(!num_of_reagents)//I've never seen it get here with 0, but in case - it gets here when it blows up from overheat
-		stack_trace("No reactants found mid reaction for [reaction.type]. Beaker: [holder.my_atom]")
-		return 0 //we exploded and cleared reagents - but lets not kill the process
-
-	var/cached_purity
-	for(var/datum/reagent/reagent as anything in cached_reagents)
-		cached_purity += reagent.purity
-	return cached_purity / num_of_reagents
