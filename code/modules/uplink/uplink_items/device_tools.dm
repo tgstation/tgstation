@@ -134,7 +134,7 @@
 /datum/uplink_item/device_tools/failsafe
 	name = "Failsafe Uplink Code"
 	desc = "When entered the uplink will self-destruct immediately."
-	item = DUMMY_UPLINK_ITEM
+	item = ABSTRACT_UPLINK_ITEM
 	cost = 1
 	surplus = 0
 	restricted = TRUE

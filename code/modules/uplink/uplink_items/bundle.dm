@@ -11,7 +11,7 @@
 /datum/uplink_item/bundles_tc/random
 	name = "Random Item"
 	desc = "Picking this will purchase a random item. Useful if you have some TC to spare or if you haven't decided on a strategy yet."
-	item = DUMMY_UPLINK_ITEM
+	item = ABSTRACT_UPLINK_ITEM
 	cost = 0
 	cost_override_string = "Varies"
 	purchasable_from = ~UPLINK_SPY

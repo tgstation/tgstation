@@ -28,7 +28,7 @@
 /datum/uplink_item/role_restricted/bureaucratic_error
 	name = "Organic Capital Disturbance Virus"
 	desc = "Randomizes job positions presented to new hires. May lead to too many/too few security officers and/or clowns. Single use."
-	item = DUMMY_UPLINK_ITEM
+	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
 	limited_stock = 1
 	cost = 2

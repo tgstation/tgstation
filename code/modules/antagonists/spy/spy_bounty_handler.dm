@@ -51,7 +51,7 @@
 		bounty_types[difficulty][bounty] = weight
 
 	for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)
-		if(isnull(item.item) || item.item == DUMMY_UPLINK_ITEM)
+		if(isnull(item.item) || item.item == ABSTRACT_UPLINK_ITEM)
 			continue
 		if(!(item.purchasable_from & UPLINK_SPY))
 			continue

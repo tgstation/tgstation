@@ -36,7 +36,7 @@
 	name = "Contract Reroll"
 	desc = "Request a reroll of your current contract list. Will generate a new target, \
 		payment, and dropoff for the contracts you currently have available."
-	item = DUMMY_UPLINK_ITEM
+	item = ABSTRACT_UPLINK_ITEM
 	limited_stock = 2
 	cost = 0
 

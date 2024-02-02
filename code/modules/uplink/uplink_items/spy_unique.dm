@@ -8,7 +8,7 @@
 	surplus = FALSE
 	purchasable_from = UPLINK_SPY
 	// Cost doesn't really matter since it's free, but it determines which loot pool it falls into.
-	// By default, these fall into easy-medium spy bounty loot pool.atom
+	// By default, these fall into easy-medium spy bounty loot pool
 	cost = SPY_LOWER_COST_THRESHOLD
 
 /datum/uplink_item/spy_unique/syndie_bowman
@@ -81,10 +81,9 @@
 	name = "Katana"
 	desc = "A really sharp Katana. Did I mention it's sharp?"
 	item = /obj/item/katana
-	cost = 16 // dualsaber-tier
+	cost = /datum/uplink_item/dangerous/doublesword::cost
 
 /datum/uplink_item/spy_unique/medkit_lite
 	name = "Syndicate First Medic Kit"
 	desc = "A syndicate tactical combat medkit, but only stocked enough to do basic first aid."
 	item = /obj/item/storage/medkit/tactical_lite
-	purchasable_from = UPLINK_SPY
