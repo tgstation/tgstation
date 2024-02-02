@@ -34,8 +34,9 @@
 
 /datum/antagonist/spy/get_admin_commands()
 	. = ..()
-	.["See All Bounties"] = CALLBACK(src, PROC_REF(see_bounties))
-	.["Refresh Bounties"] = CALLBACK(src, PROC_REF(refresh_bounties))
+	// I wanted to put this in check-antagonists but it's less conducive to that
+	.["See All Bounties (For all spies)"] = CALLBACK(src, PROC_REF(see_bounties))
+	.["Refresh Bounties (For all spies)"] = CALLBACK(src, PROC_REF(refresh_bounties))
 	.["Give Spy Uplink"] = CALLBACK(src, PROC_REF(admin_create_spy_uplink))
 
 /datum/antagonist/spy/proc/see_bounties()

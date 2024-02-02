@@ -291,7 +291,7 @@
 /datum/spy_bounty/machine/random/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/options = random_options.Copy()
 	for(var/datum/spy_bounty/machine/existing_bounty in handler.get_all_bounties())
-		options -= other_bounty.target_type
+		options -= existing_bounty.target_type
 
 	if(!length(options))
 		return FALSE
@@ -303,7 +303,6 @@
 	difficulty = SPY_DIFFICULTY_EASY
 	weight = 2 // Increased due to there being many easy options
 	random_options = list(
-		/obj/machinery/chem_dis
 		/obj/machinery/computer/operating,
 		/obj/machinery/fax, // Completely random, wild card
 		/obj/machinery/hydroponics,
