@@ -562,7 +562,7 @@
 		var/mean_size = (size + partner.size)/2
 		var/mean_weight = (weight + partner.weight)/2
 		new_fish.randomize_size_and_weight(mean_size, mean_weight, 0.3, TRUE)
-		COOLDOWN_START(partner, breeding_wait, breeding_timeout)
+		COOLDOWN_START(partner, breeding_wait, partner.breeding_timeout)
 	else //Make a close of this fish.
 		new_fish.update_size_and_weight(size, weight, TRUE)
 		new_fish.progenitors = initial(name)

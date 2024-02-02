@@ -67,7 +67,7 @@
 	num_fillets = 2
 	fish_traits = list(/datum/fish_trait/dummy)
 	stable_population = INFINITY
-	breeding_timeout = 0
+	breeding_timeout = -1 //forces the cooldowns to be always less than the world time.
 
 /obj/item/fish/testdummy/two
 	fish_traits = list(/datum/fish_trait/dummy/two)
