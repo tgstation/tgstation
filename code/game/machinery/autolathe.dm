@@ -52,22 +52,27 @@
 
 /obj/machinery/autolathe/examine(mob/user)
 	. = ..()
-	if(in_range(user, src) || isobserver(user))
-		. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
-		if(drop_direction)
-			. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
-			. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
-		else
-			. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
+	if(!in_range(user, src) && !isobserver(user))
+		return
 
-		. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
-		if(panel_open)
-			. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
+	. += span_notice("The status display reads: Storing up to <b>[materials.max_amount]</b> material units.<br>Material consumption at <b>[creation_efficiency*100]%</b>.")
+	if(drop_direction)
+		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
+		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
+	else
+		. += span_notice("[EXAMINE_HINT("Drag")] towards a direction (while next to it) to change drop direction.")
+
+	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
+	if(panel_open)
+		. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
 
 /obj/machinery/autolathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
-	if(isnull(held_item) && drop_direction)
+	if(drop_direction)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset"
 		return CONTEXTUAL_SCREENTIP_SET
+
+	if(isnull(held_item))
+		return NONE
 
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] Panel"
