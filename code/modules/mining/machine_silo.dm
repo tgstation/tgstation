@@ -1,8 +1,6 @@
 #define MACHINE_VIEW 0
 #define LOGS_VIEW 1
 
-#define ENTRIES_PER_PAGE 30
-
 /obj/machinery/ore_silo
 	name = "ore silo"
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
@@ -15,8 +13,6 @@
 
 	/// Currently selected UI tab, possible values are: `MACHINE_VIEW` or `1` and `LOGS_VIEW` or `0`.
 	var/current_view = MACHINE_VIEW
-	/// Currently opened log page, range is between `1` and `INFINITY`.
-	var/current_page = 1
 
 	/// List of all connected components that are on hold from accessing materials.
 	var/list/holds = list()
@@ -155,15 +151,8 @@
 				)
 
 		if(LOGS_VIEW)
-			var/list/datum/ore_silo_log/logs = GLOB.silo_access_logs[REF(src)]
-			var/logs_length = length(logs)
-
-			data["lastPage"] = ceil(logs_length / ENTRIES_PER_PAGE)
-			data["currentPage"] = current_page
-
 			data["logs"] = list()
-			for(var/index in (current_page - 1) * ENTRIES_PER_PAGE + 1 to min(current_page * ENTRIES_PER_PAGE, logs_length))
-				var/datum/ore_silo_log/entry = logs[index]
+			for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
 				data["logs"] += list(
 					list(
 						"rawMaterials" = entry.get_raw_materials(""),
@@ -190,14 +179,6 @@
 
 		if("logs")
 			current_view = LOGS_VIEW
-			return TRUE
-
-		if("page")
-			var/page = text2num(params["id"])
-			if(isnull(page))
-				return
-
-			current_page = max(page, 1)
 			return TRUE
 
 		if("remove")
@@ -344,8 +325,6 @@
 		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
 	return msg.Join()
-
-#undef ENTRIES_PER_PAGE
 
 #undef LOGS_VIEW
 #undef MACHINE_VIEW

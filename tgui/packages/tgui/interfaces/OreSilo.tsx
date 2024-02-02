@@ -4,7 +4,6 @@ import { capitalize } from 'common/string';
 import { useBackend } from '../backend';
 import {
   Box,
-  Button,
   Icon,
   Image,
   LabeledList,
@@ -13,6 +12,7 @@ import {
   Stack,
   Tabs,
   Tooltip,
+  VirtualList,
 } from '../components';
 import { Window } from '../layouts';
 import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
@@ -44,16 +44,13 @@ type Data = {
   SHEET_MATERIAL_AMOUNT: number;
   materials: Material[];
   machines?: Machine[];
-  currentPage: number;
-  lastPage: number;
   logs?: Log[];
   view: View;
 };
 
 export const OreSilo = (props: any) => {
   const { act, data } = useBackend<Data>();
-  const { SHEET_MATERIAL_AMOUNT, machines, currentPage, lastPage, logs, view } =
-    data;
+  const { SHEET_MATERIAL_AMOUNT, machines, logs, view } = data;
 
   return (
     <Window title="Ore Silo" width={620} height={600}>
@@ -85,14 +82,7 @@ export const OreSilo = (props: any) => {
                 onRemove={(index) => act('remove', { id: index })}
               />
             ) : null}
-            {view === View.Logs ? (
-              <LogsList
-                logs={logs!}
-                lastPage={lastPage!}
-                currentPage={currentPage!}
-                onFlip={(index) => act('page', { id: index })}
-              />
-            ) : null}
+            {view === View.Logs ? <LogsList logs={logs!} /> : null}
           </Stack.Item>
           <Stack.Item>
             <Section fill>
@@ -212,47 +202,19 @@ const MachineDisplay = (props: MachineProps) => {
 
 type LogsListProps = {
   logs: Log[];
-  lastPage: number;
-  currentPage: number;
-  onFlip: (index: number) => void;
 };
 
 const LogsList = (props: LogsListProps) => {
-  const { logs, lastPage, currentPage, onFlip } = props;
+  const { logs } = props;
 
   return logs.length > 0 ? (
-    <Stack fill vertical>
-      <Stack.Item grow>
-        <Box pr={1} height="100%" overflowY="scroll">
-          {logs.map((log, index) => (
-            <LogEntry key={index} log={log} />
-          ))}
-        </Box>
-      </Stack.Item>
-      <Stack.Item>
-        <Stack>
-          <Stack.Item>
-            <Button
-              icon="backward-step"
-              disabled={currentPage - 1 < 1}
-              onClick={() => onFlip(currentPage - 1)}
-            />
-          </Stack.Item>
-          <Stack.Item grow>
-            <Box bold textAlign="center">
-              {`${currentPage} / ${lastPage}`}
-            </Box>
-          </Stack.Item>
-          <Stack.Item>
-            <Button
-              icon="forward-step"
-              disabled={currentPage + 1 > lastPage}
-              onClick={() => onFlip(currentPage + 1)}
-            />
-          </Stack.Item>
-        </Stack>
-      </Stack.Item>
-    </Stack>
+    <Box pr={1} height="100%" overflowY="scroll">
+      <VirtualList>
+        {logs.map((log, index) => (
+          <LogEntry key={index} log={log} />
+        ))}
+      </VirtualList>
+    </Box>
   ) : (
     <NoticeBox>No log entries currently present!</NoticeBox>
   );
