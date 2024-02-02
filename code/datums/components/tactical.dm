@@ -37,12 +37,12 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
-		RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED), PROC_REF(on_rival_tactical_unmodified))
+		RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED), PROC_REF(on_rival_tactical_unmodified), overriden = TRUE)
 		return
 
 	if(allowed_slot && !(slot & allowed_slot))
 		if(current_slot)
-			unmodify()
+			unmodify(source, user)
 		return
 
 	if(current_slot) //If the current slot is set, this means the icon was updated or the item changed z-levels.
@@ -73,6 +73,7 @@
 		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED))
 		return
 
+	user.remove_alt_appearance("sneaking_mission")
 	current_slot = null
 	UnregisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED)
 
@@ -90,4 +91,5 @@
 	SIGNAL_HANDLER
 	var/obj/item/item = parent
 	var/mob/holder = item.loc
+	UnregisterSignal(holder, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED))
 	modify(item, holder, holder.get_slot_by_item(item))
