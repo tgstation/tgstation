@@ -452,7 +452,7 @@
 
 /obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
 	. = ..()
-	. += span_notice("Alt-click to [using_custom_drinks?"disable":"enable"] custom drink naming")
+	. += span_notice("Alt-click to [using_custom_drinks ? "disable" : "enable"] custom drink naming")
 	if(using_custom_drinks)
 		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
 		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
