@@ -477,6 +477,21 @@
 		release()
 		return
 
+	// check to make sure it's not already exploding before exploding it
+	if(igniting)
+		CRASH("ignite() called multiple times on [type]")
+	igniting = TRUE
+
+	var/datum/gas_mixture/our_mix = return_air()
+	our_mix.assert_gases(/datum/gas/plasma, /datum/gas/oxygen)
+	var/fuel_moles = our_mix.gases[/datum/gas/plasma][MOLES] + our_mix.gases[/datum/gas/oxygen][MOLES]/6
+	our_mix.garbage_collect()
+	var/datum/gas_mixture/bomb_mixture = our_mix.copy()
+	var/strength = 1
+
+	var/turf/ground_zero = get_turf(loc)
+
+	/// Used to determine what the temperature of the hotspot when it isn't able to explode
 	var/igniter_temperature = 0
 	for(var/obj/item/assembly/igniter/firestarter in tank_assembly.assemblies)
 		igniter_temperature = max(igniter_temperature, firestarter.heat)
@@ -484,36 +499,46 @@
 	if(!igniter_temperature)
 		CRASH("[type] called ignite() without any igniters attached")
 
-	var/datum/gas_mixture/our_mix = return_air()
-	var/temperature_delta = igniter_temperature - our_mix.temperature // keep track of how much energy was added/subtracted, we'll need that later
+	if(bomb_mixture.temperature > (T0C + 400))
+		strength = (fuel_moles/15)
 
-	// now set the temperature to the igniter's temperature and react, condensers can be used to cool the gas which might be useful for something
-	our_mix.temperature = igniter_temperature
-	our_mix.react(src)
+		if(strength >= 2)
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*3,1), flash_range = round(strength*4,1), explosion_cause = src)
+		else if(strength >= 1)
+			explosion(ground_zero, devastation_range = round(strength,1), heavy_impact_range = round(strength*2,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else if(strength >= 0.5)
+			explosion(ground_zero, heavy_impact_range = 1, light_impact_range = 2, flash_range = 4, explosion_cause = src)
+		else if(strength >= 0.2)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
 
-	// then set the temperature back by the amount added/removed, so it only gets the temperature change from the reaction
-	our_mix.temperature -= temperature_delta
+	else if(bomb_mixture.temperature > (T0C + 250))
+		strength = (fuel_moles/20)
 
-	// release the contents if it wasn't enough to explode, and ignite it
-	if(our_mix.return_pressure() < TANK_FRAGMENT_PRESSURE)
-		release()
-		var/turf/burned_turf = get_turf(src)
-		burned_turf.hotspot_expose(igniter_temperature)
-		return
+		if(strength >= 1)
+			explosion(ground_zero, heavy_impact_range = round(strength,1), light_impact_range = round(strength*2,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else if(strength >= 0.5)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = 1, flash_range = 2, explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
 
-	// check to make sure it's not already exploding before exploding it
-	if(igniting)
-		CRASH("ignite() called multiple times on [type]")
-	igniting = TRUE
+	else if(bomb_mixture.temperature > (T0C + 100))
+		strength = (fuel_moles/25)
 
-	// calculate an explosion size - this formula is logarithmic and has much worse diminishing returns than standard dynamic explosions to prevent maxcaps without relying on a hard cap
-	var/power = log(ASSEMBLY_BOMB_BASE, ((ASSEMBLY_BOMB_COEFFICIENT * our_mix.volume * (our_mix.return_pressure() - TANK_FRAGMENT_PRESSURE)) / TANK_FRAGMENT_SCALE) + 1)
+		if(strength >= 1)
+			explosion(ground_zero, devastation_range = -1, light_impact_range = round(strength,1), flash_range = round(strength*3,1), explosion_cause = src)
+		else
+			ground_zero.assume_air(bomb_mixture)
+			ground_zero.hotspot_expose(igniter_temperature, 125)
 
-	// and finally, the big kaboom
-	log_atmos("[type] exploded with a range of [power] and a mix of ", air_contents)
-	explosion(src, round(power * 0.25), round(power * 0.5), round(power * 0.75), round(power), round(power), ignorecap = FALSE)
-	if(!QDELETED(src)) // delete if it didn't get destroyed by the explosion
-		qdel(src)
+	else
+		ground_zero.assume_air(bomb_mixture)
+		ground_zero.hotspot_expose(igniter_temperature, 125)
+
+	qdel(src)
 
 /// Releases air stored in the tank. Called when signaled without being welded, or when ignited without enough pressure to explode.
 /obj/item/tank/proc/release()
