@@ -49,7 +49,7 @@
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/examine(mob/user)
 	. = ..()
-	if HAS_TRAIT(src, TRAIT_WAS_RENAMED)
+	if(HAS_TRAIT(src, TRAIT_WAS_RENAMED))
 		. += span_notice("This glass has been given a custom name. It can be removed by washing it.")
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/proc/on_cleaned(obj/source_component, obj/source)
