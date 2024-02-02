@@ -470,8 +470,6 @@
 	var/mob/living/sender
 	if(isliving(source))
 		sender = source
-	else if(is_ic_filtered_for_pdas(message) || is_soft_ic_filtered_for_pdas(message))
-		return FALSE
 	message = sanitize_pda_message(message, sender)
 	if(!message)
 		return FALSE
@@ -571,8 +569,8 @@
 	var/mob/sender
 	if(ismob(source))
 		sender = source
-	if(sender && !sender.can_perform_action(computer, ALLOW_RESTING))
-		return FALSE
+		if(!sender.can_perform_action(computer, ALLOW_RESTING))
+			return FALSE
 
 	if(!COOLDOWN_FINISHED(src, last_text))
 		return FALSE

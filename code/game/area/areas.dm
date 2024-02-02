@@ -536,8 +536,6 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 ///Tries to play looping ambience to the mobs.
 /mob/proc/refresh_looping_ambience()
-	SIGNAL_HANDLER
-
 	var/area/my_area = get_area(src)
 
 	if(!(client?.prefs.read_preference(/datum/preference/toggle/sound_ship_ambience)) || !my_area.ambient_buzz)

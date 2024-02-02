@@ -19,7 +19,6 @@ import { MaterialAccessBar } from './Fabrication/MaterialAccessBar';
 import { Material } from './Fabrication/Types';
 
 type Machine = {
-  ref: string;
   name: string;
   icon: string;
   onHold: boolean;
@@ -43,14 +42,14 @@ type OreSiloData = {
   logs: Log[];
 };
 
-export const OreSilo = (props: any, context: any) => {
+export const OreSilo = (props: any) => {
   const { act, data } = useBackend<OreSiloData>();
   const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
 
   const [currentTab, setCurrentTab] = useState(0);
 
   return (
-    <Window title="Ore Silo" width={380} height={600}>
+    <Window title="Ore Silo" width={620} height={600}>
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item>
@@ -77,12 +76,10 @@ export const OreSilo = (props: any, context: any) => {
                 <Section fill scrollable>
                   {machines.map((machine, index) => (
                     <MachineDisplay
-                      key={machine.name}
+                      key={index}
                       machine={machine}
-                      onPause={(machine) => act('hold', { ref: machine.ref })}
-                      onRemove={(machine) =>
-                        act('remove', { ref: machine.ref })
-                      }
+                      onPause={() => act('hold', { id: index + 1 })}
+                      onRemove={() => act('remove', { id: index + 1 })}
                     />
                   ))}
                 </Section>
@@ -121,16 +118,32 @@ export const OreSilo = (props: any, context: any) => {
 
 type MachineProps = {
   machine: Machine;
-  onPause: (machine: Machine) => void;
-  onRemove: (machine: Machine) => void;
+  onPause: () => void;
+  onRemove: () => void;
 };
 
 const MachineDisplay = (props: MachineProps) => {
   const { machine, onPause, onRemove } = props;
 
+  let machineName = machine.name;
+  const index = machineName.indexOf('('); // some techfabs have their location attached to their name
+  if (index >= 0) {
+    machineName = machineName.substring(0, index);
+  }
+  machineName = `${machineName.trimEnd()}(${machine.location})`;
+
   return (
     <Box className="FabricatorRecipe">
-      <Box className="FabricatorRecipe__Title">
+      <Box
+        className={
+          machine.onHold
+            ? classes([
+                'FabricatorRecipe__Title',
+                'FabricatorRecipe__Title--disabled',
+              ])
+            : 'FabricatorRecipe__Title'
+        }
+      >
         <Box className="FabricatorRecipe__Icon">
           <Image
             width={'32px'}
@@ -138,7 +151,7 @@ const MachineDisplay = (props: MachineProps) => {
             src={`data:image/jpeg;base64,${machine.icon}`}
           />
         </Box>
-        <Box className="FabricatorRecipe__Label">{machine.name}</Box>
+        <Box className="FabricatorRecipe__Label">{machineName}</Box>
       </Box>
 
       <Tooltip
@@ -154,7 +167,7 @@ const MachineDisplay = (props: MachineProps) => {
             'FabricatorRecipe__Button--icon',
           ])}
           onClick={(_) => {
-            onPause(machine);
+            onPause();
           }}
         >
           <Icon name={machine.onHold ? 'circle-play' : 'circle-pause'} />
@@ -167,7 +180,7 @@ const MachineDisplay = (props: MachineProps) => {
             'FabricatorRecipe__Button--icon',
           ])}
           onClick={(_) => {
-            onRemove(machine);
+            onRemove();
           }}
         >
           <Icon name="trash-can" />

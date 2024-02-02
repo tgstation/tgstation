@@ -54,7 +54,7 @@
 /turf/open/floor/oldshuttle,
 /area/ruin/powered/shuttle/medium_4)
 "r" = (
-/obj/machinery/power/generator,
+/obj/machinery/power/thermoelectric_generator,
 /turf/open/floor/oldshuttle,
 /area/ruin/powered/shuttle/medium_4)
 "s" = (

@@ -1,0 +1,58 @@
+2024-02-01:
+  Donglesplonge:
+  - bugfix: the top and top righthand doors of northstars cargo mail sorting room
+      now use any supply general, mining, and bitden access, and the top righthand
+      door no longer says its mining decontamination and uses the proper mail sorting
+      room airlock instead.
+  JohnFulpWillard:
+  - balance: Pirate suits can now hold the laser musket and smoothbore disabler.
+  - bugfix: Cultists can now vote for a Cult leader again.
+  - bugfix: Slimes using Feed while buckled now stops feeding.
+  - bugfix: Slimes are no longer prompted to feed off of dead people.
+  - bugfix: Slimes that can only feed onto one person now immediately feeds off of
+      them.
+  K4rlox:
+  - bugfix: makes the experiment chamber in syndicate lavaland base no longer explode
+      when testing grenades
+  Melbert:
+  - refactor: Jukebox has been refactored. Jukebox music now updates as the player
+      moves, mutes when the player is deafened, and overall sounds wayyy better. You
+      can also now toggle song repeat on jukeboxes.
+  ZephyrTFA:
+  - bugfix: Meteor Satellites no longer erroneously count every piece of paper as
+      a protected turf.
+  - bugfix: As a result the station goal is slightly more difficult
+  intercepti0n:
+  - bugfix: fixed ore vent's well being drawn over ash storm.
+  sylvia-from-fulp-station:
+  - rscadd: '[IceBox] Botany now has a service accessible bio generator'
+  - qol: '[IceBox] Kitchen and service hall rearranged'
+2024-02-02:
+  00-Steven:
+  - bugfix: Robotic voicebox actually lets you speak any language again (as long as
+      you know it).
+  Melbert:
+  - bugfix: Fixed examining modular PCs
+  - refactor: Big martial arts refactor, they should now overall act a ton more consistent.
+      Also technically any mob can do martial arts. Let me know if something is funky.
+  - bugfix: Robocontrol app maybe works better now.
+  Momo8289:
+  - rscadd: There's now a small chance to be a smartass when affected by Voice of
+      God
+  SapphicOverload:
+  - rscadd: Exosuit-mounted RCDs now have the same functionality as the handheld version.
+  SkeletalElite:
+  - rscadd: Wearing certain gloves (such as black gloves and combat oriented gloves)
+      allow you to cuff people faster
+  - balance: base handcuffing time is now 4 seconds
+  - balance: latex gloves now hide your fingerprints
+  ZephyrTFA:
+  - bugfix: lathes now respect always-powered areas
+  - balance: lathes now use power as they print instead of all at once
+  distributivgesetz:
+  - bugfix: Teleportations will no longer exceed reservation bounds.
+  intercepti0n:
+  - refactor: refactored experimentor UI to TGUI.
+  zxaber:
+  - balance: Mech wire panels are now blocked when the mech is occupied. I guess it
+      was moved to be behind the seat.
