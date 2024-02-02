@@ -426,6 +426,7 @@
 // itself), in Chemistry-Recipes.dm (for the reaction that changes the components into the drink), and here (for the drinking glass
 // icon states.
 
+
 /obj/item/reagent_containers/cup/glass/shaker
 	name = "shaker"
 	desc = "A metal shaker to mix drinks in."
@@ -452,14 +453,16 @@
 /obj/item/reagent_containers/cup/glass/shaker/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to [using_custom_drinks?"disable":"enable"] custom drink naming")
-	. += span_notice("Custom name: [custom_drink_name]")
-	. += span_notice("Custom desc: [custom_drink_desc]")
+	if(using_custom_drinks)
+		. += span_notice("Drinks poured from this shaker will have the following name: [custom_drink_name]")
+		. += span_notice("Drinks poured from this shaker will have the following description: [custom_drink_desc]")
 
 /obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
 	. = ..()
 	using_custom_drinks = !using_custom_drinks
 
 	if(!using_custom_drinks)
+		disable_custom_drinks()
 		balloon_alert(user, "custom drinks disabled!")
 		return
 
@@ -478,7 +481,25 @@
 	custom_drink_name = new_name
 	custom_drink_desc = new_desc
 
+	enable_custom_drinks()
 	balloon_alert(user, "now pouring custom drinks!")
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/enable_custom_drinks()
+	RegisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, PROC_REF(handle_transfer))
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/disable_custom_drinks()
+	UnregisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO)
+
+/obj/item/reagent_containers/cup/glass/shaker/proc/handle_transfer(atom/origin, atom/target)
+	SIGNAL_HANDLER
+	// Should only work on drinking/shot glasses
+	if(!istype(target, /obj/item/reagent_containers/cup/glass/drinkingglass))
+		return
+
+	var/obj/item/reagent_containers/cup/glass/drinkingglass/target_glass = target
+	target_glass.name = custom_drink_name
+	target_glass.desc = custom_drink_desc
+	ADD_TRAIT(target_glass, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
 
 /obj/item/reagent_containers/cup/glass/flask
 	name = "flask"
