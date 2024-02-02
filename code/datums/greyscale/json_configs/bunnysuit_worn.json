@@ -33,7 +33,7 @@
 	"playbunny_d": [
 		{
 			"type": "icon_state",
-			"icon_state": "playbunny_base",
+			"icon_state": "playbunny_base_d",
 			"blend_mode": "overlay",
 			"color_ids": [ 1 ]
 		},
