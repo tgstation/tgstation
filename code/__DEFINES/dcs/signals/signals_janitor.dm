@@ -15,6 +15,3 @@
 #define COMSIG_TURF_IS_WET "check_turf_wet"
 ///(max_strength, immediate, duration_decrease = INFINITY): Returns bool.
 #define COMSIG_TURF_MAKE_DRY "make_turf_try"
-
-/// Sent to an object when it has been cleaned by /datum/component/cleaner
-#define COMSIG_OBJECT_CLEANED "object_cleaned"

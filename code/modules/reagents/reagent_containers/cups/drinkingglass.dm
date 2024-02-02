@@ -30,11 +30,7 @@
 		CALLBACK(src, PROC_REF(on_cup_reset)), \
 		base_container_type = base_container_type, \
 	)
-	RegisterSignal(src, COMSIG_OBJECT_CLEANED, PROC_REF(on_cleaned))
-
-/obj/item/reagent_containers/cup/glass/drinkingglass/Destroy(force)
-	. = ..()
-	UnregisterSignal(src, COMSIG_OBJECT_CLEANED)
+	RegisterSignal(src, COMSIG_COMPONENT_CLEAN_ACT, PROC_REF(on_cleaned))
 
 /obj/item/reagent_containers/cup/glass/drinkingglass/on_reagent_change(datum/reagents/holder, ...)
 	. = ..()

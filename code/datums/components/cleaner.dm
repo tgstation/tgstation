@@ -130,8 +130,6 @@
 				user.mind?.adjust_experience(/datum/skill/cleaning, round(CLEAN_SKILL_GENERIC_WASH_XP))
 
 	on_cleaned_callback?.Invoke(source, target, user, clean_succeeded)
-	if(clean_succeeded)
-		SEND_SIGNAL(target, COMSIG_OBJECT_CLEANED, source)
 	//remove the cleaning overlay
 	target.cut_overlay(low_bubble)
 	target.cut_overlay(high_bubble)
