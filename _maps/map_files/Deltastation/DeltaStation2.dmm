@@ -17092,6 +17092,10 @@
 /obj/effect/turf_decal/bot/left,
 /turf/open/floor/iron,
 /area/station/maintenance/department/electrical)
+"edM" = (
+/obj/machinery/egg_incubator,
+/turf/open/floor/iron,
+/area/station/service/hydroponics)
 "edS" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/firealarm/directional/south,
@@ -128639,7 +128643,7 @@ nzA
 cVt
 ogZ
 jTB
-ogZ
+edM
 bWL
 vZQ
 auZ
