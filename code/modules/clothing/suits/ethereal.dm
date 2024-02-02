@@ -32,7 +32,7 @@
 			return
 		if(slot_flags & ITEM_SLOT_OCLOTHING)
 			slot_flags = ITEM_SLOT_NECK
-			set_armor(/datum/armor/none)
+			set_armor(/datum/armor/none) //Don't think they have armor, but I am not taking any chances
 			user.visible_message(span_notice("[user] adjusts their [src] for ceremonial use."), span_notice("You adjust your [src] for ceremonial use."))
 		else
 			slot_flags = initial(slot_flags)
