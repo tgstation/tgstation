@@ -16,8 +16,8 @@
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(unmodify))
 	RegisterSignals(parent, list(COMSIG_ATOM_UPDATED_ICON, COMSIG_CARDBOARD_CUTOUT_APPLY_APPEARANCE), PROC_REF(tactical_update))
 	var/obj/item/item = parent
-	if(ismob(master.loc))
-		var/mob/holder = master.loc
+	if(ismob(item.loc))
+		var/mob/holder = item.loc
 		modify(item, holder, holder.get_slot_by_item(item))
 
 /datum/component/tactical/UnregisterFromParent()
@@ -37,7 +37,7 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
-		RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLT_CAMOUFLAGED), PROC_REF(on_rival_tactical_unmodified))
+		RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED), PROC_REF(on_rival_tactical_unmodified))
 		return
 
 	if(allowed_slot && !(slot & allowed_slot))
@@ -64,7 +64,7 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
-		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLT_CAMOUFLAGED))
+		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED))
 		return
 
 	var/obj/item/master = parent
@@ -88,4 +88,6 @@
 ///Basically, when another item with the tactical component is removed, ours takes over.
 /datum/component/tactical/proc/on_rival_tactical_unmodified(datum/source, trait)
 	SIGNAL_HANDLER
+	var/obj/item/item = parent
+	var/mob/holder = item.loc
 	modify(item, holder, holder.get_slot_by_item(item))
