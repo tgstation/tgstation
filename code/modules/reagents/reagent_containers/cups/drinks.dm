@@ -463,7 +463,7 @@
 
 	if(!using_custom_drinks)
 		disable_custom_drinks()
-		balloon_alert(user, "custom drinks disabled!")
+		balloon_alert(user, "custom drinks disabled")
 		return
 
 	var/new_name = reject_bad_text(tgui_input_text(user, "Drink name", "Set drink name", custom_drink_name, 45, FALSE), 64)
@@ -482,7 +482,7 @@
 	custom_drink_desc = new_desc
 
 	enable_custom_drinks()
-	balloon_alert(user, "now pouring custom drinks!")
+	balloon_alert(user, "now pouring custom drinks")
 
 /obj/item/reagent_containers/cup/glass/shaker/proc/enable_custom_drinks()
 	RegisterSignal(src, COMSIG_REAGENTS_CUP_TRANSFER_TO, PROC_REF(handle_transfer))
