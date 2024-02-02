@@ -66,7 +66,7 @@
 	/// If TRUE, we can click on items with the storage object to pick them up and insert them.
 	var/allow_quick_gather = FALSE
 	/// The mode for collection when allow_quick_gather is enabled. See [code/__DEFINES/storage.dm]
-	var/collection_mode = COLLECT_ONE
+	var/collection_mode = COLLECT_EVERYTHING
 
 	/// If TRUE, we can use-in-hand the storage object to dump all of its contents.
 	var/allow_quick_empty = FALSE
