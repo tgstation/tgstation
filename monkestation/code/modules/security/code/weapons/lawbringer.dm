@@ -34,7 +34,7 @@
 	 /obj/item/ammo_casing/energy/lawbringer/tideshot, \
 	 /obj/item/ammo_casing/energy/lawbringer/ion )
 	pin = /obj/item/firing_pin/lawbringer
-	ammo_x_offset = 4
+	ammo_x_offset = 3
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	can_select = FALSE
@@ -380,7 +380,7 @@
 /obj/item/ammo_casing/energy/lawbringer/execute
 	projectile_type = /obj/projectile/lawbringer/execute
 	select_name = "execute"
-	fire_sound = 'sound/weapons/gun/pistol/shot_suppressed.ogg'
+	fire_sound = 'sound/weapons/gun/revolver/shot.ogg'
 	e_cost = 300 //10%, 10 shots
 	harmful = TRUE
 
