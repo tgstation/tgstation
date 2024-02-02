@@ -63,15 +63,15 @@
 /datum/component/tactical/proc/unmodify(obj/item/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
-		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED))
-		return
-
 	var/obj/item/master = parent
 	if(!user)
 		if(!ismob(master.loc))
 			return
 		user = master.loc
+
+	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
+		UnregisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED))
+		return
 
 	current_slot = null
 	UnregisterSignal(parent, COMSIG_MOVABLE_Z_CHANGED)
