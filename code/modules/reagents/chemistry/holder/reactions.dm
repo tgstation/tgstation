@@ -304,17 +304,15 @@
 
 	//find how much ration of products to create
 	var/multiplier = INFINITY
-	for(var/reagent in cached_required_reagents)
-		multiplier = min(multiplier, get_reagent_amount(reagent) / cached_required_reagents[reagent])
+	for(var/datum/reagent/requirement as anything in cached_required_reagents)
+		multiplier = min(multiplier, get_reagent_amount(requirement) / cached_required_reagents[requirement])
 	multiplier = round(multiplier)
 	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
 		return FALSE
 
 	//remove the required reagents
-	for(var/datum/reagent/_reagent as anything in cached_required_reagents)//this is not an object
-		if (!has_reagent(_reagent))
-			continue
-		remove_reagent(_reagent, (multiplier * cached_required_reagents[_reagent]))
+	for(var/datum/reagent/requirement as anything in cached_required_reagents)//this is not an object
+		remove_reagent(requirement, cached_required_reagents[requirement] * multiplier)
 
 	//add the result reagents whose yield depend on the average purity
 	var/yield
@@ -331,7 +329,6 @@
 		if(!ismob(cached_my_atom)) // No bubbling mobs
 			if(selected_reaction.mix_sound)
 				playsound(get_turf(cached_my_atom), selected_reaction.mix_sound, 80, TRUE)
-
 			my_atom.audible_message(span_notice("[iconhtml] [selected_reaction.mix_message]"))
 
 		//use slime extract
