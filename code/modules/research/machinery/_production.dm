@@ -10,7 +10,7 @@
 	/// The material storage used by this fabricator.
 	var/datum/component/remote_materials/materials
 
-	/// Which departments forego the lathe tax when using this lathe.
+	/// Which departments are allowed to process this design
 	var/allowed_department_flags = ALL
 
 	/// What's flick()'d on print.
@@ -237,99 +237,65 @@
 	print_quantity = clamp(print_quantity, 1, 50)
 	var/coefficient = build_efficiency(design.build_path)
 
-	var/list/materials_per_item = list()
-	for(var/material in design.materials)
-		materials_per_item[material] = design.materials[material] * coefficient
-
 	// check if sufficient materials are available.
-	// don't pass coefficient here, as we already multiplied the design's materials by it for use with custom materials.
-	if(!materials.mat_container.has_materials(materials_per_item, multiplier = print_quantity))
+	if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 		say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
 		return FALSE
 
 	//use power
-	var/power = active_power_usage
+	var/total_charge = 0
 	for(var/material in design.materials)
-		power += round(design.materials[material] * print_quantity / 35)
-	power = min(active_power_usage, power)
-	use_power(power)
-
-	// Charge the lathe tax at least once per ten items.
-	var/total_cost = LATHE_TAX * max(round(print_quantity / 10), 1)
-	if(!charges_tax)
-		total_cost = 0
-	if(isliving(user))
-		var/mob/living/living_user = user
-		var/obj/item/card/id/card = living_user.get_idcard(TRUE)
-
-		if(!card && istype(user.pulling, /obj/item/card/id))
-			card = user.pulling
-
-		if(card && card.registered_account)
-			var/datum/bank_account/our_acc = card.registered_account
-			if(our_acc.account_job.departments_bitflags & allowed_department_flags)
-				total_cost = 0 // We are not charging crew for printing their own supplies and equipment.
-
-	if(total_cost)
-		if(iscyborg(user))
-			var/mob/living/silicon/robot/borg = user
-			if(!borg.cell)
-				return FALSE
-			borg.cell.use(SILICON_LATHE_TAX)
-
-		else if(attempt_charge(src, user, total_cost) & COMPONENT_OBJ_CANCEL_CHARGE)
-			say("Insufficient funds to complete prototype. Please present a holochip or valid ID card.")
-			return FALSE
+		total_charge += round(design.materials[material] * coefficient * print_quantity / 35)
+	var/charge_per_item = total_charge / print_quantity
 
 	if(production_animation)
 		flick(production_animation, src)
 
 	var/total_time = (design.construction_time * design.lathe_time_factor * print_quantity) ** 0.8
 	var/time_per_item = total_time / print_quantity
-	start_making(design, print_quantity, user, time_per_item, materials_per_item)
+	start_making(design, print_quantity, time_per_item, coefficient, charge_per_item)
 
 	return TRUE
 
 /// Begins the act of making the given design the given number of items
 /// Does not check or use materials/power/etc
-/obj/machinery/rnd/production/proc/start_making(datum/design/design, build_count, mob/user, build_time_per_item, list/materials_per_item)
+/obj/machinery/rnd/production/proc/start_making(datum/design/design, build_count, build_time_per_item, build_efficiency, charge_per_item)
 	PROTECTED_PROC(TRUE)
 
 	busy = TRUE
 	update_static_data_for_all_viewers()
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item, build_time_per_item, build_count), build_time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, build_efficiency, build_time_per_item, charge_per_item, build_count), build_time_per_item)
 
 /// Callback for start_making, actually makes the item
 /// Called using timers started by start_making
-/obj/machinery/rnd/production/proc/do_make_item(datum/design/design, list/materials_per_item, time_per_item, items_remaining)
+/obj/machinery/rnd/production/proc/do_make_item(datum/design/design, build_efficiency, time_per_item, charge_per_item, items_remaining)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
 		finalize_build()
 		return
 
-	if(!is_operational)
+	if(!directly_use_power(charge_per_item))
 		say("Unable to continue production, power failure.")
 		finalize_build()
 		return
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
-	if(!materials.mat_container.has_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1))
+	var/list/design_materials = design.materials
+	if(!materials.mat_container.has_materials(design_materials, build_efficiency, is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		return
-	materials.use_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1, action = "built", name = "[design.name]")
+	materials.use_materials(design_materials, build_efficiency, is_stack ? items_remaining : 1, "built", "[design.name]")
 
 	var/atom/movable/created
 	if(is_stack)
 		created = new design.build_path(get_turf(src), items_remaining)
 	else
 		created = new design.build_path(get_turf(src))
-		created.set_custom_materials(materials_per_item.Copy())
+		split_materials_uniformly(design_materials, build_efficiency, created)
 
 	created.pixel_x = created.base_pixel_x + rand(-6, 6)
 	created.pixel_y = created.base_pixel_y + rand(-6, 6)
-	for(var/atom/movable/content in created)
-		content.set_custom_materials(list()) // no
 
 	if(is_stack)
 		items_remaining = 0
@@ -339,7 +305,7 @@
 	if(!items_remaining)
 		finalize_build()
 		return
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item, time_per_item, items_remaining), time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, build_efficiency, time_per_item, items_remaining), time_per_item)
 
 /// Resets the busy flag
 /// Called at the end of do_make_item's timer loop

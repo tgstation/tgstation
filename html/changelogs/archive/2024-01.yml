@@ -617,3 +617,174 @@
   vinylspiders:
   - bugfix: fixes features not updating when changing character slots
   - bugfix: fixes a spurious CI failure from do_charge() signal overrides
+2024-01-25:
+  ArcaneMusic:
+  - refactor: Stock market events are now their own objects, and are handled by the
+      stock market individually.
+  - bugfix: The smelter and refinery now properly hold mining points, only taking
+      a small amount out of net gained points.
+  FernandoJ8:
+  - bugfix: the blur effects for hallucinogenic withdrawal and psychic projection
+      are now properly centered on the screen
+  LT3:
+  - bugfix: You can no longer interact with medical beds while incapacitated
+  SyncIt21:
+  - bugfix: fixes runtime when mineral scanning, passes right argument for scanner
+      in golem eyes
+2024-01-26:
+  13spacemen:
+  - bugfix: The hub time should be accurate for servers with different timezones
+  Ben10Omintrix:
+  - refactor: airlock controllers now use tgui
+  Ghommie:
+  - bugfix: Fixed the messenger circuit not sending messages.
+  - bugfix: Added several ports to modpc circuits that were missing or needing them.
+  - bugfix: Fixes ever-expanding ports whenever circuits are re-inserted in a modular
+      computer.
+  Isratosh:
+  - bugfix: Kidnapping traitor objective now properly returns the victim to the station
+      with their items
+  - bugfix: Missing fire alarms added to several rooms on Birdshot
+  JohnFulpWillard:
+  - bugfix: The library console's category search box now displays the category being
+      searched.
+  - refactor: Newspapers now use TGUI.
+  - bugfix: Fixed the newscaster's wanted section showing a non-existent photo.
+  JohnFulpWillard, Unit2E teaching me the TEG:
+  - bugfix: The TEG now works again (still unobtainable by regular means though).
+  - bugfix: the TEG and its circulators can now be rotated counterclockwise again.
+  - refactor: The TEG now uses a TGUI interface rather than the old HTML one.
+  LT3:
+  - bugfix: Fixed alignment of RPG titles
+  LemonInTheDark:
+  - bugfix: Icebox will no longer spawn a fuck ton of plasma after gibonite blows.
+      YW besties
+  Melbert:
+  - bugfix: Click CD applies to looking up and down correctly.
+  - bugfix: Fixed AIs who shunt to APCs causing their laws to be deleted.
+  - bugfix: You can no longer neck snap anyone with martial arts assuming you've got
+      someone in a tight grip.
+  SyncIt21:
+  - bugfix: items that contain recursive contents inside them (like foam dart boxes
+      from autolathes) now have their custom materials set to match with its design
+      cost rather than being nullified, meaning they are now recyclable.
+  - code_imp: all custom materials are now integer values. Improved code for how materials
+      are used in techfab & auto lathe for printing
+  - qol: added more screen tips & examines for ore silo, made UI wider, attach location
+      name to each machine & grey out paused machines to make it more noticeable.
+  - code_imp: auto docs proc & vars for silo log entry. Fixed return values of all
+      tool acts
+  - bugfix: ore silo UI now functions correctly after removing an entry from the UI
+  - bugfix: no runtimes when connecting a machine to silo that was previously disconnected
+      via the ore silo UI
+  - refactor: chemical reaction tester in runtime station has been remastered from
+      ground up.
+  intercepti0n:
+  - refactor: Refactored Ore Processing Unit UI.
+  - bugfix: Ore Processing Unit UI no longer lags client.
+2024-01-27:
+  00-Steven:
+  - bugfix: Cats can be swabbed for feliform cells again.
+  - sound: Cats have had their mastery of silent walking revoked, and have their pitter-pattering
+      footsteps back again.
+  Melbert:
+  - bugfix: Rush Gland now triggers correctly on being grabbed by a Goliath
+  Whoneedspacee:
+  - refactor: Legions abilities have been changed into actions that can be added to
+      any mob.
+  vinylspiders:
+  - bugfix: fixes a hard del with decals
+2024-01-28:
+  00-Steven:
+  - spellcheck: You no longer fail to find "a anything" when swabbing something for
+      cytology that doesn't have swabbing results.
+  - bugfix: Removed kitten omniscience. (They stop pointing at you now.)
+  Ghommie:
+  - image: Added an icon to the "My Watchlist Status is Not Important" achievement.
+  LT3:
+  - bugfix: Emergency shuttle console now only works while on the emergency shuttle
+  SyncIt21:
+  - spellcheck: shortened description for the PCM and capitalized some text for its
+      examines.
+  - code_imp: adds sanity checks and removed deprecated `content` tag from PCM UI.
+      Stops hologram items from being inserted.
+  VladinXXV:
+  - bugfix: Oppenheimer, the nukie medbot, has been reprogrammed to use Airplane Mode
+      as a factory default. The station AI is no longer immediately aware of his presence!
+  intercepti0n:
+  - refactor: 'Refactored Telecommunications Monitoring Console UI: added search bar,
+      made UI more compact.'
+2024-01-29:
+  00-Steven:
+  - bugfix: Blobs sitting on APCs no longer break them when already broken, and so
+      no longer spam the power down noise.
+  - bugfix: Jerry Tramstation can get laid again! (Fixed cat breeding.)
+  13spacemen:
+  - refactor: Husk icons are now dynamically generated. See if you can identify what
+      species it was!
+  Ben10Omintrix:
+  - bugfix: fixes a runtime that sometimes happens in ai controllers
+  DaCoolBoss:
+  - spellcheck: typos fixed in the fireproof clothing religious rite
+  Krypandenej:
+  - bugfix: pesto pizza (cooked) is no longer raw, and cilbir is meat instead of fruit
+  LT3:
+  - bugfix: Tramstation external atmos ports are now properly connected
+  Melbert:
+  - bugfix: Wizarditis Timestop now has the desired effect.
+  - admin: Admins can now VV Timestop to make the caster not immune to their own Timestop.
+      If they really wanted.
+  SyncIt21:
+  - bugfix: sets minimum volume of reagent allowed to exist inside anything to 0.01
+      therefore allowing plumbing iv drip small transfer rates to occur without reagents
+      disappearing.
+  - bugfix: auto lathes don't hog local apc supply when printing items
+  rageguy505:
+  - bugfix: ' The buttons for flashers on birdshot/tramstation now work'
+2024-01-30:
+  00-Steven:
+  - bugfix: Rootbread soup now uses poached egg (egg reagents in soup pot) instead
+      of raw unpeeled egg (which would break into reagents upon coming into contact
+      with the soup pot) and is thus craftable again.
+  ArcaneMusic:
+  - rscdel: The lathe tax on printing items has been removed from the game for both
+      humans and silicons.
+  Ghommie:
+  - image: Resprited the goldfish and lanternfish as well.
+  Inari-Whitebear:
+  - bugfix: Bone daggers and shivs are now longer electrically conductive
+  Melbert:
+  - bugfix: You can build on some niche tables again, such as the Wabbajack Altar.
+  Profakos:
+  - bugfix: The construction console drone becomes visible again while its in use
+  Rhials:
+  - bugfix: The encrypted bitrunner cache is now impervious to most conventional means
+      of destruction.
+  distributivgesetz:
+  - bugfix: Ambient loops will now refresh when entering a mob.
+  jjpark-kb:
+  - code_imp: added the code that allows the image overlays to work for the circulator
+      (teg)
+  - image: changed circulator's (teg) fast/slow turbine sprite
+  - image: added an anchor, panel, and flow overlay for the circulator (teg)
+2024-01-31:
+  Jacquerel:
+  - bugfix: Cult pylons will no longer cover up "open space" (or water) with cult
+      floors
+  LT3:
+  - bugfix: ID card examine text shows how to set your linked bank account
+  - bugfix: ID card withdrawal from an unassigned account will ask if you want to
+      link an account
+  - bugfix: Tram power consumption will no longer will randomly drain APCs
+  - bugfix: Tram power moved to area based rectifiers
+  Melbert:
+  - bugfix: Fixed ore vent descriptions looking weird sometimes
+  - bugfix: Fixed being able to scan an ore vent multiple times at once
+  - bugfix: Fixed gaining scan points from scannning an ore vent without finishing
+      the scan
+  SapphicOverload:
+  - bugfix: Mk-II Ripley exosuits are spaceproof again.
+  - bugfix: Converted mechs now have their lights on if they did before the conversion.
+  distributivgesetz:
+  - bugfix: All Within Theoretical Limits should properly unlock now when the crystal
+      comes back from the countdown.

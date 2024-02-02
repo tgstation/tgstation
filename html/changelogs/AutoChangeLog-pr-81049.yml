@@ -1,4 +1,0 @@
-author: "SyncIt21"
-delete-after: True
-changes:
-  - bugfix: "fixes runtime when mineral scanning, passes right argument for scanner in golem eyes"
