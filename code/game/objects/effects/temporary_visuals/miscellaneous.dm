@@ -598,3 +598,15 @@
 /// Remove the image from the modsuit wearer's screen
 /obj/effect/temp_visual/sonar_ping/proc/remove_mind(mob/living/looker)
 	looker?.client?.images -= modsuit_image
+
+/obj/effect/temp_visual/block //color is white by default, set to whatever is needed
+	name = "blocking glow"
+	icon_state = "block"
+	duration = 6.7
+
+/obj/effect/temp_visual/block/Initialize(mapload, set_color)
+	if(set_color)
+		add_atom_colour(set_color, FIXED_COLOUR_PRIORITY)
+	. = ..()
+	pixel_x = rand(-12, 12)
+	pixel_y = rand(-9, 0)
