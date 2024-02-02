@@ -459,9 +459,11 @@
 
 /obj/item/reagent_containers/cup/glass/shaker/AltClick(mob/user)
 	. = ..()
-	using_custom_drinks = !using_custom_drinks
+	if(!in_range(src, user) || user.stat != CONSCIOUS)
+		return
 
-	if(!using_custom_drinks)
+	if(using_custom_drinks)
+		using_custom_drinks = FALSE
 		disable_custom_drinks()
 		balloon_alert(user, "custom drinks disabled")
 		return
@@ -472,12 +474,19 @@
 		using_custom_drinks = FALSE
 		return
 
+	if(!in_range(src, user) || user.stat != CONSCIOUS)
+		return
+
 	var/new_desc = reject_bad_text(tgui_input_text(user, "Drink description", "Set drink description", custom_drink_desc, 64, TRUE), 128)
 	if(!new_desc)
 		balloon_alert(user, "invalid drink description!")
 		using_custom_drinks = FALSE
 		return
 
+	if(!in_range(src, user) || user.stat != CONSCIOUS)
+		return
+
+	using_custom_drinks = TRUE
 	custom_drink_name = new_name
 	custom_drink_desc = new_desc
 
