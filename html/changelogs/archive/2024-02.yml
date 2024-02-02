@@ -27,3 +27,32 @@
   sylvia-from-fulp-station:
   - rscadd: '[IceBox] Botany now has a service accessible bio generator'
   - qol: '[IceBox] Kitchen and service hall rearranged'
+2024-02-02:
+  00-Steven:
+  - bugfix: Robotic voicebox actually lets you speak any language again (as long as
+      you know it).
+  Melbert:
+  - bugfix: Fixed examining modular PCs
+  - refactor: Big martial arts refactor, they should now overall act a ton more consistent.
+      Also technically any mob can do martial arts. Let me know if something is funky.
+  - bugfix: Robocontrol app maybe works better now.
+  Momo8289:
+  - rscadd: There's now a small chance to be a smartass when affected by Voice of
+      God
+  SapphicOverload:
+  - rscadd: Exosuit-mounted RCDs now have the same functionality as the handheld version.
+  SkeletalElite:
+  - rscadd: Wearing certain gloves (such as black gloves and combat oriented gloves)
+      allow you to cuff people faster
+  - balance: base handcuffing time is now 4 seconds
+  - balance: latex gloves now hide your fingerprints
+  ZephyrTFA:
+  - bugfix: lathes now respect always-powered areas
+  - balance: lathes now use power as they print instead of all at once
+  distributivgesetz:
+  - bugfix: Teleportations will no longer exceed reservation bounds.
+  intercepti0n:
+  - refactor: refactored experimentor UI to TGUI.
+  zxaber:
+  - balance: Mech wire panels are now blocked when the mech is occupied. I guess it
+      was moved to be behind the seat.
