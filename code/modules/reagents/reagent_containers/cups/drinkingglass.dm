@@ -59,9 +59,9 @@
 
 	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, SHAKER_LABEL_TRAIT)
 	REMOVE_TRAIT(src, TRAIT_WAS_RENAMED, PEN_LABEL_TRAIT)
-
 	name = initial(name)
 	desc = initial(desc)
+	update_appearance(UPDATE_NAME | UPDATE_DESC)
 
 //Shot glasses!//
 //  This lets us add shots in here instead of lumping them in with drinks because >logic  //
