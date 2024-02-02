@@ -365,6 +365,26 @@
  * Uses numpad keys 1-9
  */
 
+///Hidden verb to cycle through head zone with repeated presses, head - eyes - mouth.
+/client/verb/body_toggle_head()
+	set name = "body-toggle-head"
+	set hidden = TRUE
+
+	if(!check_has_body_select())
+		return
+
+	var/next_in_line
+	switch(mob.zone_selected)
+		if(BODY_ZONE_HEAD)
+			next_in_line = BODY_ZONE_PRECISE_EYES
+		if(BODY_ZONE_PRECISE_EYES)
+			next_in_line = BODY_ZONE_PRECISE_MOUTH
+		else
+			next_in_line = BODY_ZONE_HEAD
+
+	var/atom/movable/screen/zone_sel/selector = mob.hud_used.zone_select
+	selector.set_selected_zone(next_in_line, mob)
+
 ///Hidden verb to target the head, bound to 8
 /client/verb/body_head()
 	set name = "body-head"

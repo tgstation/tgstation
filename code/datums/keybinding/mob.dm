@@ -78,6 +78,8 @@
 
 	var/original = user.mob.zone_selected
 	switch(keybind_signal)
+		if(COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN)
+			user.body_toggle_head()
 		if(COMSIG_KB_MOB_TARGETHEAD_DOWN)
 			user.body_head()
 		if(COMSIG_KB_MOB_TARGETEYES_DOWN)
@@ -100,6 +102,13 @@
 			stack_trace("Target keybind pressed but not implemented! '[keybind_signal]'")
 			return FALSE
 	user.mob.log_manual_zone_selected_update("keybind", old_target = original)
+
+/datum/keybinding/mob/target/head_cycle
+	hotkey_keys = list("Unbound")
+	name = "target_head_cycle"
+	full_name = "Target: Cycle Head"
+	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
+	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
 
 /datum/keybinding/mob/target/head
 	hotkey_keys = list("Numpad8")
