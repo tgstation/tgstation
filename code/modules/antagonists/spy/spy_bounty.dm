@@ -55,6 +55,7 @@
 
 /// Check if the passed mob can claim this bounty.
 /datum/spy_bounty/proc/can_claim(mob/user)
+	SHOULD_BE_PURE(TRUE)
 	return TRUE
 
 /**
@@ -284,25 +285,36 @@
 		return FALSE
 	return TRUE
 
-/datum/spy_bounty/machine/random_easy
-	difficulty = SPY_DIFFICULTY_EASY
-	weight = 2 // Increased due to there being many easy options
+/datum/spy_bounty/machine/random
+	var/list/random_options = list()
 
-/datum/spy_bounty/machine/random_easy/init_bounty(datum/spy_bounty_handler/handler)
-	target_type = pick(
-		/obj/machinery/computer/operating,
-		/obj/machinery/fax, // Completely random wild card
-		/obj/machinery/recharge_station,
-		/obj/machinery/microwave,
-	)
+/datum/spy_bounty/machine/random/init_bounty(datum/spy_bounty_handler/handler)
+	var/list/options = random_options.Copy()
+	for(var/datum/spy_bounty/machine/existing_bounty in handler.get_all_bounties())
+		options -= other_bounty.target_type
+
+	if(!length(options))
+		return FALSE
+
+	target_type = pick(options)
 	return ..()
 
-/datum/spy_bounty/machine/random_medium
+/datum/spy_bounty/machine/random/easy
+	difficulty = SPY_DIFFICULTY_EASY
+	weight = 2 // Increased due to there being many easy options
+	random_options = list(
+		/obj/machinery/chem_dis
+		/obj/machinery/computer/operating,
+		/obj/machinery/fax, // Completely random, wild card
+		/obj/machinery/hydroponics,
+		/obj/machinery/microwave,
+		/obj/machinery/recharge_station,
+	)
+
+/datum/spy_bounty/machine/random/medium
 	difficulty = SPY_DIFFICULTY_MEDIUM
 	weight = 4 // Increased due to there being many medium options
-
-/datum/spy_bounty/machine/random_medium/init_bounty(datum/spy_bounty_handler/handler)
-	target_type = pick(
+	random_options = list(
 		/obj/machinery/chem_dispenser,
 		/obj/machinery/computer/bank_machine,
 		/obj/machinery/computer/crew,
@@ -312,21 +324,17 @@
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/mecha_part_fabricator,
 	)
-	return ..()
 
-/datum/spy_bounty/machine/random_hard
+/datum/spy_bounty/machine/random/hard
 	difficulty = SPY_DIFFICULTY_HARD
-
-/datum/spy_bounty/machine/random_hard/init_bounty(datum/spy_bounty_handler/handler)
-	target_type = pick(
+	random_options = list(
 		/obj/machinery/computer/accounting,
 		/obj/machinery/computer/communications,
 		/obj/machinery/computer/upload,
 		/obj/machinery/modular_computer/preset/id,
 	)
-	return ..()
 
-/datum/spy_bounty/machine/random_hard/can_claim(mob/user) // These would all be too easy with command level access
+/datum/spy_bounty/machine/random/hard/can_claim(mob/user) // These would all be too easy with command level access
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_COMMAND)
 
 /// Subtype for a bounty that targets a specific crew member
@@ -503,12 +511,15 @@
 
 /datum/spy_bounty/some_bot/init_bounty(datum/spy_bounty_handler/handler)
 	for(var/datum/spy_bounty/some_bot/existing_bounty in handler.get_all_bounties())
-		if(ispath(bot_type, initial(existing_bounty.bot_type.parent_type))) // ensures we don't get two similar bounties.
+		var/mob/living/simple_animal/bot/existing_bot_type = existing_bounty.bot_type
+		// ensures we don't get two similar bounties.
+		// may occasionally cast a wider net than we'd desire, but it's not that bad.
+		if(ispath(bot_type, initial(existing_bot_type.parent_type)))
 			return FALSE
 
 	var/list/mob/living/possible_bots = list()
 	for(var/mob/living/bot as anything in GLOB.bots_list)
-		if(!is_station_level(bot.z))
+		if(!is_station_level(bot.z) && !is_mining_level(bot.z))
 			continue
 		if(!istype(bot, bot_type))
 			continue
@@ -545,7 +556,6 @@
 	difficulty = SPY_DIFFICULTY_HARD
 	bot_type = /mob/living/simple_animal/bot/secbot/pingsky
 	help = "Abduct Officer Pingsky, commonly found protecting the station's AI."
-
 
 /datum/spy_bounty/some_bot/scrubbs
 	difficulty = SPY_DIFFICULTY_EASY
