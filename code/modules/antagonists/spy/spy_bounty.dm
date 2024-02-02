@@ -108,7 +108,7 @@
 	// Add some pizzazz
 	animate(stealing, time = 0.5 SECONDS, transform = matrix(stealing.transform).Scale(0.01), easing = CUBIC_EASING)
 
-	if((stealing.resistance_flags & INDESTRUCTIBLE) || prob(black_market_prob))
+	if(isitem(stealing) && ((stealing.resistance_flags & INDESTRUCTIBLE) || prob(black_market_prob)))
 		addtimer(CALLBACK(src, PROC_REF(send_to_black_market), stealing), 0.5 SECONDS)
 	else
 		QDEL_IN(stealing, 0.5 SECONDS)
@@ -192,8 +192,10 @@
 		return FALSE
 
 	desired_item = pick(valid_possible_items)
-	var/obj/item/the_item = desired_item.targetitem
-	var/the_item_name = initial(the_item.name)
+	// We need to do some snowflake for items that do exist vs generic items
+	var/list/obj/item/existing_items = GLOB.steal_item_handler.objectives_by_path[desired_item.targetitem]
+	var/obj/item/the_item = length(existing_items) ? pick(existing_items) : desired_item.targetitem
+	var/the_item_name = istype(the_item) ? the_item.name : initial(the_item.name)
 	name = "[the_item_name] [difficulty == SPY_DIFFICULTY_HARD ? "Grand ":""]Theft"
 	help = "Steal any [the_item_name][desired_item.steal_hint ? ": [desired_item.steal_hint]" : "."]"
 	return TRUE
@@ -286,6 +288,7 @@
 	return TRUE
 
 /datum/spy_bounty/machine/random
+	/// List of all machines we can randomly draw from
 	var/list/random_options = list()
 
 /datum/spy_bounty/machine/random/init_bounty(datum/spy_bounty_handler/handler)
@@ -319,6 +322,7 @@
 		/obj/machinery/computer/crew,
 		/obj/machinery/computer/prisoner/management,
 		/obj/machinery/computer/rdconsole,
+		/obj/machinery/computer/scan_consolenew,
 		/obj/machinery/computer/security, // Requires breaking into a sec checkpoint, but not too hard, many are never visited
 		/obj/machinery/dna_scannernew,
 		/obj/machinery/mecha_part_fabricator,
@@ -414,7 +418,7 @@
 	if(IS_WEAKREF_OF(stealing, target_original_desired_ref))
 		return ..()
 
-	ASSERT(ishuman(stealing), "steal some item bounty called clean_up_stolen_item with something that isn't a human and isn't the original item.")
+	ASSERT(ishuman(stealing), "[type] called clean_up_stolen_item with something that isn't a human and isn't the original item.")
 
 	do_sparks(2, FALSE, stealing)
 	var/mob/living/carbon/human/stolen_from = stealing
