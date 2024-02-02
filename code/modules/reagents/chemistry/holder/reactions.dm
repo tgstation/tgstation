@@ -306,8 +306,8 @@
 	var/multiplier = INFINITY
 	for(var/datum/reagent/requirement as anything in cached_required_reagents)
 		multiplier = min(multiplier, get_reagent_amount(requirement) / cached_required_reagents[requirement])
-	multiplier = round(multiplier)
-	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handlier catches a misflagged reaction
+	multiplier = round(multiplier, CHEMICAL_QUANTISATION_LEVEL)
+	if(!multiplier)//Incase we're missing reagents - usually from on_reaction being called in an equlibrium when the results.len == 0 handler catches a misflagged reaction
 		return FALSE
 
 	//remove the required reagents
