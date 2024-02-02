@@ -2,7 +2,11 @@
 /datum/component/tameable
 	///If true, this atom can only be domesticated by one person
 	var/unique
-	///What the mob eats, typically used for taming or animal husbandry.
+	/**
+	 * What the mob eats, typically used for taming or animal husbandry.
+	 * This is also an assoc list. The assoc value will be the multiplier
+	 * of the tame_chance when using that type of food.
+	 */
 	var/list/food_types
 	///Starting success chance for taming.
 	var/tame_chance
@@ -18,6 +22,9 @@
 		return COMPONENT_INCOMPATIBLE
 
 	if(food_types)
+		for(var/item in food_types)
+			if(!food_types[item])
+				food_types[item] = 1
 		src.food_types = food_types
 	if(tame_chance)
 		src.tame_chance = tame_chance
@@ -38,7 +45,8 @@
 
 /datum/component/tameable/proc/try_tame(datum/source, obj/item/food, mob/living/attacker, params)
 	SIGNAL_HANDLER
-	if(!is_type_in_list(food, food_types))
+	var/chance_mult = is_type_in_list(food, food_types, zebra = TRUE)
+	if(!chance_mult)
 		return
 	if(isliving(source))
 		var/mob/living/potentially_dead_horse = source
@@ -49,7 +57,7 @@
 	var/atom/atom_parent = source
 	var/inform_tamer = FALSE
 	atom_parent.balloon_alert(attacker, "fed")
-	var/modified_tame_chance = current_tame_chance
+	var/modified_tame_chance = current_tame_chance * chance_mult
 	if(HAS_TRAIT(attacker, TRAIT_SETTLER))
 		modified_tame_chance += 50
 		inform_tamer = TRUE

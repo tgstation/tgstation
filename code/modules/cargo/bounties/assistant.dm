@@ -274,7 +274,7 @@
 	if(isnull(choosable_fishes))
 		choosable_fishes = list()
 		for(var/obj/item/fish/prototype as anything in subtypesof(/obj/item/fish))
-			if(initial(prototype.experisci_scannable) && initial(prototype.show_in_catalog))
+			if(!(initial(prototype.flags_1) & HOLOGRAM_1) && initial(prototype.show_in_catalog))
 				choosable_fishes += prototype
 
 	var/list/fishes_copylist = choosable_fishes.Copy()

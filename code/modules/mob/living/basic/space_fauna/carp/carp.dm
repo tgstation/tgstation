@@ -98,7 +98,8 @@
 		on_tamed(tamer, feedback = FALSE)
 		befriend(tamer)
 	else
-		AddComponent(/datum/component/tameable, food_types = list(/obj/item/food/meat), tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
+		var/static/list/liked_food = list(/obj/item/food/meat = 1, /obj/item/food/roe = 4)
+		AddComponent(/datum/component/tameable, food_types = liked_food, tame_chance = 10, bonus_tame_chance = 5, after_tame = CALLBACK(src, PROC_REF(on_tamed)))
 
 	teleport = new(src)
 	teleport.Grant(src)

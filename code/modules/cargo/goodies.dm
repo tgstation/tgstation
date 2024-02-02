@@ -221,7 +221,7 @@
 
 /datum/supply_pack/goody/fishing_toolbox
 	name = "Fishing toolbox"
-	desc = "Complete toolbox set for your fishing adventure. Advanced hooks and lines sold separetely."
+	desc = "Complete toolbox set for your fishing adventure. Contains a valuable tip. Advanced hooks and lines sold separetely."
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/storage/toolbox/fishing)
 
@@ -260,6 +260,12 @@
 	desc = "A single analyzer to monitor fish's status and traits with, in case you don't have the technology to print one."
 	cost = PAYCHECK_CREW * 2.5
 	contains = list(/obj/item/fish_analyzer)
+
+/datum/supply_pack/imports/naturalbait
+	name = "Freshness Jars full of Natural Bait"
+	desc = "Homemade in the Spinward Sector."
+	cost = PAYCHECK_CREW * 6
+	contains = list(/obj/item/storage/pill_bottle/naturalbait)
 
 /datum/supply_pack/goody/fish_catalog
 	name = "Fishing Catalog"

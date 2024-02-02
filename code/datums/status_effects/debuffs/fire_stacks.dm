@@ -286,7 +286,10 @@
 	stack_modifier = -1
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
-	adjust_stacks(-0.5 * seconds_between_ticks)
+	var/multiplier = 1
+	if(HAS_TRAIT(owner, TRAIT_QUICK_DRY))
+		multiplier = 4
+	adjust_stacks(-0.5 * multiplier * seconds_between_ticks)
 	if(stacks <= 0)
 		qdel(src)
 

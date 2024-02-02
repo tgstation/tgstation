@@ -122,6 +122,22 @@
 	result = /obj/item/food/fish_poke
 	category = CAT_SEAFOOD
 
+/datum/crafting_recipe/food/roe
+	name = "Roe"
+	tool_behaviors =  list(TOOL_KNIFE)
+	tool_paths = list(/obj/item/reagent_containers/cup/bowl)
+	reqs = list(
+		/obj/item/food/skein = 1,
+		/datum/reagent/consumable/salt = 2,
+		/datum/reagent/water = 20,
+	)
+	result = /obj/item/food/roe
+	category = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/roe/on_craft_completion(mob/user, atom/result)
+	result.reagents?.remove_reagent(/datum/reagent/water, 20) //remove the rinse water.
+	return ..()
+
 /datum/crafting_recipe/food/futomaki_sushi_roll
 	name ="Futomaki sushi roll"
 	reqs = list(
@@ -144,4 +160,18 @@
 		/obj/item/food/grown/cucumber = 1,
 	)
 	result = /obj/item/food/philadelphia_sushi_roll
+	category = CAT_SEAFOOD
+
+/datum/crafting_recipe/food/roe_sushi_roll
+	name = "roe-filled sushi roll"
+	reqs = list(
+		/obj/item/food/seaweedsheet = 1,
+		/obj/item/food/boiledrice = 1,
+		/obj/item/food/roe = 1,
+		/obj/item/food/fishmeat = 1,
+		/obj/item/food/grown/cucumber = 1,
+		/datum/reagent/consumable/ethanol/sake = 5,
+		/datum/reagent/consumable/soysauce = 5,
+	)
+	result = /obj/item/food/roe_sushi_roll
 	category = CAT_SEAFOOD

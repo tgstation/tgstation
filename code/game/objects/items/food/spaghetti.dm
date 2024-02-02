@@ -74,6 +74,24 @@
 	)
 	tastes = list("nostalgia" = 1, "happiness" = 1)
 
+/obj/item/food/spaghetti/bottarga
+	name = "pasta bottarga"
+	desc = "A simple yet refined dish, seasoned with garlic, oil and grated bottarga."
+	icon_state = "pasta_bottarga"
+	bite_consumption = 4
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 6,
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/nutriment/fat = 1,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5,
+		/datum/reagent/consumable/salt = 3,
+		/datum/reagent/consumable/garlic = 3,
+	)
+	tastes = list("pasta" = 1, "seafood" = 1)
+	foodtypes = GRAIN | SEAFOOD
+	crafting_complexity = FOOD_COMPLEXITY_4
+	crafted_food_buff = /datum/status_effect/food/trait/quick_dry
+
 /obj/item/food/spaghetti/copypasta
 	name = "copypasta"
 	desc = "You probably shouldn't try this, you always hear people talking about how bad it is..."

@@ -164,3 +164,10 @@
 	reward = CARGO_CRATE_VALUE * 10
 	required_count = 7
 	wanted_types = list(/obj/item/food/pickle = TRUE)
+
+/datum/bounty/item/chef/bottarga
+	name = "Bottarga"
+	description = "We're having some special guests tonight. Could you please ship us some bottarga? Ya know, fish eggs, dried."
+	reward = CARGO_CRATE_VALUE * 20
+	required_count = 3
+	wanted_types = list(/obj/item/food/bottarga = TRUE)

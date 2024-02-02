@@ -204,7 +204,6 @@
 	// Can hold fishing rod despite the size
 	var/static/list/exception_cache = typecacheof(
 		/obj/item/fishing_rod,
-		/obj/item/fishing_line,
 	)
 	atom_storage.exception_hold = exception_cache
 
@@ -213,6 +212,7 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
 
 /obj/item/storage/toolbox/fishing/small
 	name = "compact fishing toolbox"
@@ -229,6 +229,7 @@
 	new /obj/item/fishing_rod/unslotted(src)
 	new /obj/item/fishing_hook(src)
 	new /obj/item/fishing_line(src)
+	new /obj/item/paper/paperslip/fishing_tip(src)
 
 /obj/item/storage/box/fishing_hooks
 	name = "fishing hook set"
@@ -238,6 +239,8 @@
 	new /obj/item/fishing_hook/magnet(src)
 	new /obj/item/fishing_hook/shiny(src)
 	new /obj/item/fishing_hook/weighted(src)
+	if(prob(50))
+		new /obj/item/paper/paperslip/fishing_tip(src)
 
 /obj/item/storage/box/fishing_lines
 	name = "fishing line set"
@@ -247,6 +250,18 @@
 	new /obj/item/fishing_line/bouncy(src)
 	new /obj/item/fishing_line/reinforced(src)
 	new /obj/item/fishing_line/cloaked(src)
+	if(prob(50))
+		new /obj/item/paper/paperslip/fishing_tip(src)
+
+///Used to give the average player info about fishing stuff that'd often go fly the radar.
+/obj/item/paper/paperslip/fishing_tip
+	name = "fishing tip"
+	desc = "A slip of paper with a pearl of wisdom about fishing inside it, though you wish it were an actual pearl."
+
+/obj/item/paper/paperslip/fortune/Initialize(mapload)
+	default_raw_text = pick(GLOB.fishing_tips)
+	return ..()
+
 
 #undef MAGNET_HOOK_BONUS_MULTIPLIER
 #undef RESCUE_HOOK_FISH_MULTIPLIER

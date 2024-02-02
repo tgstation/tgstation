@@ -99,6 +99,79 @@
 /obj/item/food/fishmeat/octopus/make_grillable()
 	AddComponent(/datum/component/grillable, /obj/item/food/grilled_octopus, rand(15 SECONDS, 25 SECONDS), TRUE, TRUE)
 
+/obj/item/food/roe_pouch
+	name = "roe pouch"
+	icon = 'icons/obj/food/egg.dmi'
+	icon_state = "roe_pouch"
+	desc = "The egg sacs of a fish or other sealife. You could dry it to make bottarga."
+	foodtypes = SEAFOOD | RAW | GORE
+	tastes = list("fish" = 2, "brine" = 1, "slime" = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/nutriment/fat = 0.5,
+	)
+
+/obj/item/food/roe_pouch/Initialize(mapload, roe_amount = 3)
+	for(var/reagent in food_reagents)
+		food_reagents[reagent] *= roe_amount
+	. = ..()
+	AddElement(/datum/element/dryable, /obj/item/food/bottarga)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/skein, roe_amount, screentip_verb = "Slice")
+
+/obj/item/food/skein
+	name = "egg skein"
+	icon = 'icons/obj/food/egg.dmi'
+	icon_state = "skein"
+	desc = "Eggs from some fish, still held together by membrane."
+	foodtypes = SEAFOOD | RAW
+	crafting_complexity = FOOD_COMPLEXITY_1
+	tastes = list("fish" = 1, "brine" = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/salt = 1,
+		/datum/reagent/consumable/nutriment/fat = 0.5,
+	)
+	crafted_food_buff = /datum/status_effect/food/fire_stack_decay
+
+/obj/item/food/skein/make_processable()
+	AddComponent(/datum/component/slapcrafting,\
+		slapcraft_recipes = list(/datum/crafting_recipe/food/roe)\
+	)
+
+/obj/item/food/roe
+	name = "roe"
+	icon = 'icons/obj/food/egg.dmi'
+	icon_state = "roe"
+	desc = "Fish eggs, cured with salt. Usually cooked as an ingredient, or served raw as a delicacy."
+	foodtypes = SEAFOOD //If this actually had the RAW flag, it'd make humie tummies upset, so no.
+	crafting_complexity = FOOD_COMPLEXITY_3
+	tastes = list("fish" = 2, "brine" = 1, "slight butteriness" = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 2,
+		/datum/reagent/consumable/salt = 3,
+		/datum/reagent/consumable/nutriment/fat = 0.5,
+	)
+
+/obj/item/food/roe/Initialize(mapload)
+	. = ..()
+	ADD_TRAIT(src, TRAIT_GOOD_QUALITY_BAIT, INNATE_TRAIT)
+
+/obj/item/food/bottarga
+	name = "bottarga"
+	icon = 'icons/obj/food/egg.dmi'
+	icon_state = "bottarga"
+	desc = "Salted, dried fish egg sacs, normally grated as condiment. Historically, drying would take a few weeks, but that shouldn't be an issue now."
+	foodtypes = SEAFOOD
+	crafting_complexity = FOOD_COMPLEXITY_2
+	tastes = list("fish" = 3, "bitterness" = 1)
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 6,
+		/datum/reagent/consumable/salt = 3,
+		/datum/reagent/consumable/nutriment/fat = 2,
+	)
+	crafted_food_buff = /datum/status_effect/food/trait/quick_dry
+
 /obj/item/food/fishfingers
 	name = "fish fingers"
 	desc = "A finger of fish."
@@ -1225,3 +1298,41 @@
 	foodtypes = VEGETABLES | SEAFOOD | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_3
+
+/obj/item/food/roe_sushi_roll
+	name = "roe-filled sushi roll"
+	desc = "A Futomaki, made of cucumber, fish and roe marinated in sake and soy sauce. Don't ask the chef whether it's Ikura, Tobiko or Uni, he probably doesn't know either."
+	icon_state = "roe_sushi_roll"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 12,
+		/datum/reagent/consumable/nutriment/protein = 12,
+		/datum/reagent/consumable/nutriment/vitamin = 8,
+		/datum/reagent/consumable/ethanol/sake = 5,
+		/datum/reagent/consumable/soysauce = 5,
+		/datum/reagent/consumable/salt = 3,
+	)
+	tastes = list("boiled_rice" = 4, "fish" = 6, "umami" = 3, "dried seaweed" = 2, "cucumber" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
+	crafted_food_buff = /datum/status_effect/food/fire_stack_decay
+
+/obj/item/food/roe_sushi_roll/make_processable()
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/roe_sushi_slice, 4, screentip_verb = "Chop")
+
+/obj/item/food/roe_sushi_slice
+	name = "roe-filled sushi slice"
+	desc = "A slice of Futomaki, made of cucumber, fish and roe marinated in sake and soy sauce. Don't ask the chef whether it's Ikura, Tobiko or Uni, he probably doesn't know either."
+	icon_state = "roe_sushi_slice"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 3,
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/ethanol/sake = 1.5,
+		/datum/reagent/consumable/soysauce = 1.5,
+	)
+	tastes = list("boiled_rice" = 4, "fish" = 6, "umami" = 3, "dried seaweed" = 2, "cucumber" = 2)
+	foodtypes = VEGETABLES | SEAFOOD
+	w_class = WEIGHT_CLASS_SMALL
+	crafting_complexity = FOOD_COMPLEXITY_4
+	crafted_food_buff = /datum/status_effect/food/fire_stack_decay

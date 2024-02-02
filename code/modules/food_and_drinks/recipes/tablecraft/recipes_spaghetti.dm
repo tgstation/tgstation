@@ -12,6 +12,17 @@
 	result = /obj/item/food/spaghetti/pastatomato
 	category = CAT_SPAGHETTI
 
+/datum/crafting_recipe/food/pasta_bottarga
+	name = "Pasta Bottarga"
+	reqs = list(
+		/obj/item/food/spaghetti/boiledspaghetti = 1,
+		/obj/item/food/bottarga = 1,
+		/obj/item/food/grown/garlic = 1,
+		/datum/reagent/consumable/nutriment/fat/oil/olive = 5,
+	)
+	result = /obj/item/food/spaghetti/bottarga
+	category = CAT_SPAGHETTI
+
 /datum/crafting_recipe/food/copypasta
 	name = "Copypasta"
 	reqs = list(

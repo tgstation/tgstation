@@ -1311,8 +1311,8 @@
 	metabolization_rate = 0.1 * REAGENTS_METABOLISM
 	toxpwr = 0
 	taste_mult = 0
-	chemical_flags = REAGENT_NO_RANDOM_RECIPE
-	var/list/traits_not_applied = list(
+
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED	var/list/traits_not_applied = list(
 		TRAIT_PARALYSIS_L_ARM = BODY_ZONE_L_ARM,
 		TRAIT_PARALYSIS_R_ARM = BODY_ZONE_R_ARM,
 		TRAIT_PARALYSIS_L_LEG = BODY_ZONE_L_LEG,

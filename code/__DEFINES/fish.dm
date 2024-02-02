@@ -116,10 +116,10 @@
 ///The number of fillets is multiplied by the fish' size and divided by this.
 #define FISH_FILLET_NUMBER_SIZE_DIVISOR 30
 
-///The breeding timeout for newly instantiated fish is multiplied by this.
-#define NEW_FISH_BREEDING_TIMEOUT_MULT 2
-///The last feeding timestamp of newly instantiated fish is multiplied by this: ergo, they spawn 50% hungry.
-#define NEW_FISH_LAST_FEEDING_MULT 0.5
+///The default breeding cooldown of newly spawned fish is multiplied by this.
+#define NEW_FISH_BREEDING_TIMEOUT_MULT 1.5
+///The last feeding timestamp of newly instantiated fish is multiplied by this.
+#define NEW_FISH_LAST_FEEDING_MULT 0.65
 
 #define MIN_AQUARIUM_TEMP T0C
 #define MAX_AQUARIUM_TEMP (T0C + 100)

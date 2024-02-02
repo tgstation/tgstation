@@ -392,6 +392,9 @@
 		if(HAS_TRAIT(src, TRAIT_BADTOUCH))
 			to_chat(helper, span_warning("[src] looks visibly upset as you hug [p_them()]."))
 
+		if(HAS_TRAIT(helper, TRAIT_QUICK_DRY))
+			adjust_wet_stacks(-4)
+
 	SEND_SIGNAL(src, COMSIG_CARBON_HELP_ACT, helper)
 	SEND_SIGNAL(helper, COMSIG_CARBON_HELPED, src)
 

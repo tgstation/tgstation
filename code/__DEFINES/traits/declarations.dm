@@ -103,6 +103,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_AIRLOCK_SHOCKIMMUNE "airlock_shock_immunity"
 /// Is this atom being actively shocked? Used to prevent repeated shocks.
 #define TRAIT_BEING_SHOCKED "shocked"
+/// This will make wet stacks go away 4 times faster, and also dry people hugged by us.
+#define TRAIT_QUICK_DRY "quick_dry"
 #define TRAIT_STABLEHEART "stable_heart"
 /// Prevents you from leaving your corpse
 #define TRAIT_CORPSELOCKED "corpselocked"

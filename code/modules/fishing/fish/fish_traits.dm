@@ -1,4 +1,24 @@
+///A global list of fish traits by their paths, which are singleton.
 GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list()))
+/**
+ * A nested list of fish types and traits and traits that they can spontaneously manifest with a 0 to 100 chance.
+ * e.g. list(/obj/item/fish = list(/datum/fish_trait = 100), etc...)
+ */
+GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
+
+/proc/populate_spontaneous_fish_traits()
+	var/list/list = list()
+	for(var/trait_path as anything in GLOB.fish_traits)
+		var/datum/fish_trait/trait = GLOB.fish_traits[trait_path]
+		if(isnull(trait.spontaneous_manifest_types))
+			continue
+		var/list/trait_typecache = zebra_typecacheof(trait.spontaneous_manifest_types) - /obj/item/fish
+		for(var/fish_type in trait_typecache)
+			var/trait_prob = trait_typecache[fish_type]
+			if(!trait_prob)
+				continue
+			LAZYSET(list[fish_type], trait_path, trait_typecache[fish_type])
+	return list
 
 /datum/fish_trait
 	var/name = "Unnamed Trait"
@@ -10,8 +30,8 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	var/inheritability = 100
 	/// Same as above, but for when only one has it.
 	var/diff_traits_inheritability = 50
-	/// fishes of types within this list are granted to have this trait, no matter the probability
-	var/list/guaranteed_inheritance_types
+	/// A list of fishes for which this trait can spontaneously manifest instead of being inherited, along with probabilities.
+	var/list/spontaneous_manifest_types
 	/// Depending on the value, fish with trait will be reported as more or less difficult in the catalog.
 	var/added_difficulty = 0
 
@@ -100,7 +120,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/heavy
 	name = "Heavy"
-	catalog_description = "This fish tends to stay near the waterbed.";
+	catalog_description = "This fish tends to stay near the waterbed."
 
 /datum/fish_trait/heavy/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.fish_idle_velocity -= 10
@@ -165,6 +185,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Necrophage"
 	catalog_description = "This fish will eat carcasses of dead fish when hungry."
 	incompatible_traits = list(/datum/fish_trait/vegan)
+	spontaneous_manifest_types = list(/obj/item/fish = 3)
 
 /datum/fish_trait/necrophage/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(eat_dead_fishes))
@@ -197,6 +218,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Mateless"
 	catalog_description = "This fish cannot reproduce with other fishes."
 	incompatible_traits = list(/datum/fish_trait/crossbreeder)
+	spontaneous_manifest_types = list(/obj/item/fish = 1)
 
 /datum/fish_trait/no_mating/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_NO_MATING, FISH_TRAIT_DATUM)
@@ -205,7 +227,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 15
 	name = "Self-Revival"
 	catalog_description = "This fish shows a peculiar ability of reviving itself a minute or two after death."
-	guaranteed_inheritance_types = list(/obj/item/fish/boned, /obj/item/fish/mastodon)
+	spontaneous_manifest_types = list(/obj/item/fish/boned = 100, /obj/item/fish/mastodon = 100)
 
 /datum/fish_trait/revival/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_STATUS_CHANGED, PROC_REF(check_status))
@@ -262,13 +284,13 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 
 /datum/fish_trait/toxic
 	name = "Toxic"
-	catalog_description = "This fish contains toxins in its liver. Feeding it to predatory fishes or people is not reccomended."
+	catalog_description = "This fish contains toxins in its liver. letting other fishes or people eat it is not reccomended."
 	diff_traits_inheritability = 25
 
 /datum/fish_trait/toxic/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_ATOM_PROCESSED, PROC_REF(add_toxin))
 	RegisterSignal(fish, COMSIG_FISH_EATEN_BY_OTHER_FISH, PROC_REF(on_eaten))
-	LAZYSET(fish.grind_results, /datum/reagent/toxin/tetrodotoxin, 0.5)
+	LAZYSET(fish.grind_results, /datum/reagent/toxin/tetrodotoxin, 2.5)
 
 /datum/fish_trait/toxic/proc/add_toxin(obj/item/fish/source, mob/living/user, obj/item/process_item, list/results)
 	var/amount = source.grind_results[ /datum/reagent/toxin/tetrodotoxin] / length(results)
@@ -294,6 +316,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Toxin Immunity"
 	catalog_description = "This fish has developed an ample-spected immunity to toxins."
 	diff_traits_inheritability = 40
+	spontaneous_manifest_types = list(/obj/item/fish = 4)
 
 /datum/fish_trait/toxin_immunity/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_TOXIN_IMMUNE, FISH_TRAIT_DATUM)
@@ -304,25 +327,39 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	inheritability = 80
 	diff_traits_inheritability = 20
 	incompatible_traits = list(/datum/fish_trait/no_mating)
+	spontaneous_manifest_types = list(
+		/obj/item/fish = 3,
+		/obj/item/fish/sludgefish = 0,
+		/obj/item/fish/sludgefish/purple = 3,
+	)
 
 /datum/fish_trait/crossbreeder/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_CROSSBREEDER, FISH_TRAIT_DATUM)
 
-/datum/fish_trait/aggressive
-	name = "Aggressive"
+/datum/fish_trait/territorial
+	name = "Territorial"
 	inheritability = 80
 	diff_traits_inheritability = 40
-	catalog_description = "This fish is agressively territorial, and may attack fish that come close to it."
+	catalog_description = "This fish is territorial, and will start attacking if there're too many fishes in the acquarium."
+	spontaneous_manifest_types = list(
+		/obj/item/fish = 6,
+		/obj/item/fish/plasmatetra = 0,
+		/obj/item/fish/needlefish = 0,
+		/obj/item/fish/armorfish = 0,
+	)
 
 /datum/fish_trait/aggressive/apply_to_fish(obj/item/fish/fish)
 	RegisterSignal(fish, COMSIG_FISH_LIFE, PROC_REF(try_attack_fish))
 
 /datum/fish_trait/aggressive/proc/try_attack_fish(obj/item/fish/source, seconds_per_tick)
 	SIGNAL_HANDLER
-	if(!isaquarium(source.loc) || !SPT_PROB(1, seconds_per_tick))
+	if(!isaquarium(source.loc) || !SPT_PROB(2, seconds_per_tick))
 		return
 	var/obj/structure/aquarium/aquarium = source.loc
-	for(var/obj/item/fish/victim in aquarium.get_fishes(TRUE, source))
+	var/list/fishes = aquarium.get_fishes(TRUE, source)
+	if(length(fishes) <= 3) //If there're up to 3 fishes other than source in the aquarium, we chill.
+		return
+	for(var/obj/item/fish/victim as anything in aquarium.get_fishes(TRUE, source))
 		if(victim.status != FISH_ALIVE)
 			continue
 		aquarium.visible_message(span_warning("[source] violently [pick("whips", "bites", "attacks", "slams")] [victim]"))
@@ -334,7 +371,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Lubed"
 	inheritability = 90
 	diff_traits_inheritability = 45
-	guaranteed_inheritance_types = list(/obj/item/fish/clownfish/lube)
+	spontaneous_manifest_types = list(/obj/item/fish/clownfish/lube = 100)
 	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's reccomended not to step on it."
 	added_difficulty = 5
 
@@ -350,6 +387,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	inheritability = 80
 	diff_traits_inheritability = 40
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
+	spontaneous_manifest_types = list(/obj/item/fish = 1, /obj/item/fish/chasm_crab = 4)
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_AMPHIBIOUS, FISH_TRAIT_DATUM)
@@ -362,6 +400,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	diff_traits_inheritability = 25
 	catalog_description = "This fish is capable of substaining itself by producing its own sources of energy (food)."
 	incompatible_traits = list(/datum/fish_trait/predator, /datum/fish_trait/necrophage)
+	spontaneous_manifest_types = list(/obj/item/fish = 1)
 
 /datum/fish_trait/antigrav/apply_to_fish(obj/item/fish/fish)
 	ADD_TRAIT(fish, TRAIT_FISH_NO_HUNGER, FISH_TRAIT_DATUM)
@@ -370,7 +409,7 @@ GLOBAL_LIST_INIT(fish_traits, init_subtypes_w_path_keys(/datum/fish_trait, list(
 	name = "Anti-Gravity"
 	inheritability = 75
 	diff_traits_inheritability = 25
-	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward outside after being caught."
+	catalog_description = "This fish will invert the gravity of the bait at random. May fall upward after being caught."
 	added_difficulty = 15
 
 /datum/fish_trait/antigrav/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)

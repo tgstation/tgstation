@@ -23,7 +23,7 @@
 	average_size = 30
 	average_weight = 500
 	stable_population = 3
-	fish_traits = list(/datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/territorial)
 	required_temperature_min = MIN_AQUARIUM_TEMP+22
 	required_temperature_max = MIN_AQUARIUM_TEMP+30
 
@@ -199,6 +199,9 @@
 	required_temperature_min = MIN_AQUARIUM_TEMP+24
 	required_temperature_max = MIN_AQUARIUM_TEMP+32
 
+/obj/item/fish/gunner_jellyfish/spawn_roe()
+	return
+
 /obj/item/fish/needlefish
 	name = "needlefish"
 	desc = "A tiny, transparent fish which resides in large schools in the oceans of Tizira. A common food for other, larger fish."
@@ -264,13 +267,6 @@
 	required_temperature_max = MIN_AQUARIUM_TEMP+15
 	evolution_types = list(/datum/fish_evolution/chasm_chrab)
 	compatible_types = list(/obj/item/fish/chasm_crab)
-
-/obj/item/storage/box/fish_debug
-	name = "box full of fish"
-
-/obj/item/storage/box/fish_debug/PopulateContents()
-	for(var/fish_type in subtypesof(/obj/item/fish))
-		new fish_type(src)
 
 /obj/item/fish/donkfish
 	name = "donk co. company patent donkfish"
@@ -375,6 +371,9 @@
 	)
 	required_temperature_min = MIN_AQUARIUM_TEMP+20
 
+/obj/item/fish/slimefish/spawn_roe()
+	return
+
 /obj/item/fish/boned
 	name = "unmarine bonemass"
 	desc = "What one could mistake for fish remains, is in reality a species that chose to discard its weak flesh a long time ago. A living fossil, in its most literal sense."
@@ -396,6 +395,9 @@
 	average_weight = 2000
 	death_text = "%SRC stops moving." //It's dead... or is it?
 	evolution_types = list(/datum/fish_evolution/mastodon)
+
+/obj/item/fish/boned/spawn_roe()
+	return
 
 /obj/item/fish/mastodon
 	name = "unmarine mastodon"
@@ -423,12 +425,16 @@
 	average_size = 180
 	average_weight = 5000
 	death_text = "%SRC stops moving."
-	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/aggressive)
+	fish_traits = list(/datum/fish_trait/heavy, /datum/fish_trait/amphibious, /datum/fish_trait/revival, /datum/fish_trait/carnivore, /datum/fish_trait/predator, /datum/fish_trait/territorial)
+
+/obj/item/fish/boned/spawn_roe()
+	return
 
 /obj/item/fish/holo
 	name = "holographic goldfish"
 	desc = "A holographic representation of a common goldfish, slowly flickering out, removed from its holo-habitat."
 	icon_state = "goldfish"
+	flags_1 = HOLOGRAM_1
 	show_in_catalog = FALSE
 	random_case_rarity = FISH_RARITY_NOPE
 	sprite_width = 8
@@ -441,7 +447,6 @@
 	fillet_type = null
 	death_text = "%SRC gently disappears."
 	fish_traits = list(/datum/fish_trait/no_mating) //just to be sure, these shouldn't reproduce
-	experisci_scannable = FALSE
 
 /obj/item/fish/holo/Initialize(mapload)
 	. = ..()
@@ -527,6 +532,9 @@
 	grind_results = list(/datum/reagent/bluespace = 10, /datum/reagent/consumable/liquidgibs = 5)
 	fillet_type = null
 	fish_traits = list(/datum/fish_trait/antigrav, /datum/fish_trait/mixotroph)
+
+/obj/item/fish/starfish/spawn_roe()
+	return
 
 /obj/item/fish/starfish/Initialize(mapload)
 	. = ..()

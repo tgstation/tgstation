@@ -216,7 +216,7 @@
 				if(90 to 100)
 					hunger_string = span_alert(hunger_string)
 			render_list += "<span class='info ml-1'>Hunger: [hunger_string]</span>\n"
-		var/time_left = round(max(fish.breeding_wait - world.time, 0)/10)
+		var/time_left = round(max(COOLDOWN_TIMELEFT(fish, breeding_wait), 0)/10)
 		render_list += "<span class='info ml-1'>Time until it can breed: [time_left] seconds</span>"
 
 	to_chat(user, examine_block(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)
