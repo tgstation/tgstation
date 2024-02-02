@@ -37,7 +37,7 @@
 	SIGNAL_HANDLER
 
 	if(HAS_TRAIT_NOT_FROM(user, TRAIT_TACTICALLY_CAMOUFLAGED, REF(src)))
-		RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED), PROC_REF(on_rival_tactical_unmodified), overriden = TRUE)
+		RegisterSignal(user, SIGNAL_REMOVETRAIT(TRAIT_TACTICALLY_CAMOUFLAGED), PROC_REF(on_rival_tactical_unmodified), override = TRUE)
 		return
 
 	if(allowed_slot && !(slot & allowed_slot))
