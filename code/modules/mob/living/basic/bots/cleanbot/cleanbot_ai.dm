@@ -75,10 +75,10 @@
 	var/list/found = typecache_filter_list(oview(search_range, controller.pawn), locate_paths)
 	var/list/ignore_list = controller.blackboard[BB_TEMPORARY_IGNORE_LIST]
 	for(var/atom/found_item in found)
-		if(LAZYACCESS(ignore_list, REF(found_item)))
-			continue
 		if(QDELETED(controller.pawn))
 			break
+		if(LAZYACCESS(ignore_list, REF(found_item)))
+			continue
 		var/list/path = get_path_to(controller.pawn, found_item, max_distance = BOT_CLEAN_PATH_LIMIT, access = controller.get_access())
 		if(!length(path))
 			controller.set_blackboard_key_assoc_lazylist(BB_TEMPORARY_IGNORE_LIST, REF(found_item), TRUE)
