@@ -58,18 +58,26 @@
 
 	var/turf/deploy_location = get_turf(src)
 	var/status = template.check_deploy(deploy_location)
-	var/width = template.width
-	var/height = template.height
 	switch(status)
 		if(SHELTER_DEPLOY_BAD_AREA)
 			loc.visible_message(span_warning("[src] will not function in this area."))
 		if(SHELTER_DEPLOY_BAD_TURFS, SHELTER_DEPLOY_ANCHORED_OBJECTS, SHELTER_DEPLOY_OUTSIDE_MAP)
-			loc.visible_message(span_warning("[src] doesn't have room to deploy! You need to clear a [width]x[height] area!"))
+			loc.visible_message(span_warning("[src] doesn't have room to deploy! You need to clear a [template.width]x[template.height] area!"))
 
 	if(status != SHELTER_DEPLOY_ALLOWED)
 		used = FALSE
 		return
 
+	yote_nearby(deploy_location)
+	template.load(deploy_location, centered = TRUE)
+	trigger_admin_alert(triggerer, deploy_location)
+	playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
+	new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
+	qdel(src)
+
+/obj/item/survivalcapsule/proc/yote_nearby(turf/deploy_location)
+	var/width = template.width
+	var/height = template.height
 	var/base_x_throw_distance = ceil(width / 2)
 	var/base_y_throw_distance = ceil(height / 2)
 	for(var/mob/living/did_not_stand_back in range(loc, "[width]x[height]"))
@@ -94,12 +102,6 @@
 			speed = 3,
 			force = MOVE_FORCE_VERY_STRONG,
 		)
-
-	template.load(deploy_location, centered = TRUE)
-	trigger_admin_alert(triggerer, deploy_location)
-	playsound(src, 'sound/effects/phasein.ogg', 100, TRUE)
-	new /obj/effect/particle_effect/fluid/smoke(get_turf(src))
-	qdel(src)
 
 /obj/item/survivalcapsule/proc/trigger_admin_alert(mob/triggerer, turf/trigger_loc)
 	//only report capsules away from the mining/lavaland level
