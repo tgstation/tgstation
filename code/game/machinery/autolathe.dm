@@ -67,7 +67,7 @@
 /obj/machinery/autolathe/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	if(isnull(held_item) && drop_direction)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Reset"
-		return NONE
+		return CONTEXTUAL_SCREENTIP_SET
 
 	if(held_item.tool_behaviour == TOOL_SCREWDRIVER)
 		context[SCREENTIP_CONTEXT_RMB] = "[panel_open ? "Close" : "Open"] Panel"
@@ -238,7 +238,7 @@
 	build_count = clamp(build_count, 1, 50)
 
 	var/list/materials_needed = list()
-	for(var/material as anything in design.materials)
+	for(var/material in design.materials)
 		var/amount_needed = design.materials[material]
 		if(istext(material)) // category
 			var/list/choices = list()
