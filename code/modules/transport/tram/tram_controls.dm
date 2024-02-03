@@ -9,6 +9,8 @@
 	density = FALSE
 	max_integrity = 400
 	integrity_failure = 0.1
+	power_channel = AREA_USAGE_ENVIRON
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
 	armor_type = /datum/armor/transport_machinery
 	circuit = /obj/item/circuitboard/computer/tram_controls
 	light_color = COLOR_BLUE_LIGHT
@@ -63,6 +65,9 @@
 	var/datum/transport_controller/linear/tram/tram = transport_ref?.resolve()
 	if(tram)
 		RegisterSignal(SStransport, COMSIG_TRANSPORT_ACTIVE, PROC_REF(update_display))
+
+/obj/machinery/computer/tram_controls/update_current_power_usage()
+	return // We get power from area rectifiers
 
 /**
  * Finds the tram from the console
