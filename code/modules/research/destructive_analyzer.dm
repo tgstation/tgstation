@@ -17,13 +17,13 @@
 /obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 
-	var/screentip_set = NONE
+	var/screentip_set = FALSE
 	if(loaded_item)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove Item"
-		screentip_set = CONTEXTUAL_SCREENTIP_SET
+		screentip_set = TRUE
 	else if(!isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert Item"
-		screentip_set = CONTEXTUAL_SCREENTIP_SET
+		screentip_set = TRUE
 
 	if(screentip_set)
 		. = CONTEXTUAL_SCREENTIP_SET
