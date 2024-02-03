@@ -130,7 +130,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawne
 	base_state = "windoor"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/left, 0)
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/survival_pod/right, 0)
 
 //Table
 /obj/structure/table/survival_pod
