@@ -221,5 +221,5 @@
 
 /obj/machinery/door/window/survival_pod{dir = 1} : /obj/machinery/door/window/survival_pod/left/directional/north{@OLD;dir=@SKIP}
 /obj/machinery/door/window/survival_pod{dir = @UNSET} : /obj/machinery/door/window/survival_pod/left/directional/south{@OLD;dir=@SKIP}
-/obj/machinery/door/window/survival_pod{dir = 1} : /obj/machinery/door/window/survival_pod/left/directional/east{@OLD;dir=@SKIP}
-/obj/machinery/door/window/survival_pod{dir = 1} : /obj/machinery/door/window/survival_pod/left/directional/west{@OLD;dir=@SKIP}
+/obj/machinery/door/window/survival_pod{dir = 4} : /obj/machinery/door/window/survival_pod/left/directional/east{@OLD;dir=@SKIP}
+/obj/machinery/door/window/survival_pod{dir = 8} : /obj/machinery/door/window/survival_pod/left/directional/west{@OLD;dir=@SKIP}
