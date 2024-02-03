@@ -42,8 +42,6 @@
 		return
 
 	circuit_removed(gone)
-	state -= 1
-	update_appearance(UPDATE_ICON_STATE)
 
 /obj/structure/frame/Destroy()
 	QDEL_NULL(circuit)
@@ -56,11 +54,11 @@
 /// Checks if the frame can be disassembled, and if so, begins the process
 /obj/structure/frame/proc/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time = 8 SECONDS)
 	if(state != FRAME_STATE_EMPTY)
-		return FALSE
+		return NONE
 	if(obj_flags & NO_DECONSTRUCTION)
-		return FALSE
-	if(!tool.tool_start_check(user, amount = 1))
-		return FALSE
+		return NONE
+	if(!tool.tool_start_check(user, amount = (tool.tool_behaviour == TOOL_WELDER ? 1 : 0)))
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "disassembling...")
 	user.visible_message(
@@ -68,20 +66,20 @@
 		span_notice("You start to disassemble [src]..."),
 		span_hear("You hear banging and clanking."),
 	)
-	if(!tool.use_tool(src, user, disassemble_time, amount = 1, volume = 50) || state != FRAME_STATE_EMPTY)
-		return FALSE
+	if(!tool.use_tool(src, user, disassemble_time, amount = (tool.tool_behaviour == TOOL_WELDER ? 1 : 0), volume = 50) || state != FRAME_STATE_EMPTY)
+		return ITEM_INTERACT_BLOCKING
 
 	var/turf/decon_turf = get_turf(src)
 	deconstruct(TRUE)
 	for(var/obj/item/stack/leftover in decon_turf)
 		leftover.add_fingerprint(user)
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/frame/screwdriver_act(mob/living/user, obj/item/tool)
-	return try_dissassemble(user, tool, disassemble_time = 8 SECONDS) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	return try_dissassemble(user, tool, disassemble_time = 8 SECONDS)
 
 /obj/structure/frame/welder_act(mob/living/user, obj/item/tool)
-	return try_dissassemble(user, tool, disassemble_time = 2 SECONDS) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
+	return try_dissassemble(user, tool, disassemble_time = 2 SECONDS)
 
 /**
  * Attempt to finalize the construction of the frame into a machine
@@ -116,14 +114,14 @@
  * * by_hand - is the player installing the board by hand or from the RPED.
  * Used to decide how to transfer the board into the frame
  */
-/obj/structure/frame/proc/install_board(obj/item/circuitboard/board, mob/user, by_hand = FALSE)
+/obj/structure/frame/proc/install_board(mob/living/user, obj/item/circuitboard/board, by_hand = FALSE)
 	if(by_hand && !user.transferItemToLoc(board, src))
 		return FALSE
 	else if(!board.forceMove(src))
 		return FALSE
 
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-	to_chat(user, span_notice("You place [board] inside the frame."))
+	balloon_alert(user, "circuit installed")
 	circuit = board
 	if(by_hand)
 		circuit.add_fingerprint(user)
@@ -170,6 +168,14 @@
 
 	return FALSE
 
+/**
+ * Attempt to install necessary parts from the contents of an RPED
+ *
+ * Arguments
+ * * user - the player
+ * * replacer - the RPED being used
+ * * no_sound - if true, no sound will be played
+ */
 /obj/structure/frame/proc/install_parts_from_part_replacer(mob/living/user, obj/item/storage/part_replacer/replacer, no_sound = FALSE)
 	return FALSE
 
@@ -255,7 +261,7 @@
 		amt += req_components[path]
 	return amt
 
-/obj/structure/frame/machine/try_dissassemble(mob/living/user, obj/item/tool)
+/obj/structure/frame/machine/try_dissassemble(mob/living/user, obj/item/tool, disassemble_time)
 	if(anchored)
 		balloon_alert(user, "must be unsecured first!")
 		return FALSE
@@ -263,10 +269,10 @@
 
 /obj/structure/frame/machine/install_board(mob/living/user, obj/item/circuitboard/machine/board, by_hand = TRUE)
 	if(!board.build_path)
-		to_chat(user, span_warning("This circuitboard seems to be broken."))
+		balloon_alert("invalid board!")
 		return FALSE
 	if(!anchored && board.needs_anchored)
-		to_chat(user, span_warning("[src] needs to be secured first!"))
+		balloon_alert("frame must be anchored!")
 		return FALSE
 
 	return ..()
@@ -285,14 +291,6 @@
 	state = FRAME_STATE_WIRED
 	update_appearance(UPDATE_ICON_STATE)
 
-/**
- * Attempt to install necessary parts from the contents of an RPED
- *
- * Arguments
- * * user - the player
- * * replacer - the RPED being used
- * * no_sound - if true, no sound will be played
- */
 /obj/structure/frame/machine/install_parts_from_part_replacer(mob/living/user, obj/item/storage/part_replacer/replacer, no_sound = FALSE)
 	if(!length(replacer.contents) || !get_req_components_amt())
 		return FALSE
@@ -475,7 +473,7 @@
 					return ITEM_INTERACT_BLOCKING
 
 				balloon_alert(user, "adding cables...")
-				if(!tool.use_tool(src, user, 20, volume=50, amount=5) || state != FRAME_STATE_EMPTY)
+				if(!tool.use_tool(src, user, 2 SECONDS, volume = 50, amount = 5) || state != FRAME_STATE_EMPTY)
 					return ITEM_INTERACT_BLOCKING
 
 				state = FRAME_STATE_WIRED
@@ -524,7 +522,7 @@
 		return NONE
 
 	balloon_alert(user, "removing cables...")
-	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50, amount = 5) || state != FRAME_STATE_WIRED)
+	if(!tool.use_tool(src, user, 2 SECONDS, volume = 50) || state != FRAME_STATE_WIRED)
 		return ITEM_INTERACT_BLOCKING
 
 	state = FRAME_STATE_EMPTY
@@ -537,9 +535,10 @@
 		return NONE
 
 	tool.play_tool_sound(src)
-	var/list/leftover_components = components.Copy()
+	var/list/leftover_components = components.Copy() - circuit
 	dump_contents()
 	balloon_alert(user, "circuit board[length(leftover_components) ? " and components" : ""] removed")
+	// Circuit exited handles updating state
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/frame/machine/Exited(atom/movable/gone, direction)
