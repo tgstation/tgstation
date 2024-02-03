@@ -216,3 +216,10 @@
 /obj/machinery/door/window/elevator/right/directional/west{dir = 1} : /obj/machinery/door/window/elevator/right/directional/north{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/right/directional/west{dir = 2} : /obj/machinery/door/window/elevator/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/right/directional/west{dir = 4} : /obj/machinery/door/window/elevator/right/directional/east{@OLD;dir=@SKIP}
+
+# Survival Pod Doors
+
+/obj/machinery/door/window/survival_pod{dir = 1} : /obj/machinery/door/window/survival_pod/left/directional/north{@OLD;dir=@SKIP}
+/obj/machinery/door/window/survival_pod{dir = @UNSET} : /obj/machinery/door/window/survival_pod/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/survival_pod{dir = 1} : /obj/machinery/door/window/survival_pod/left/directional/east{@OLD;dir=@SKIP}
+/obj/machinery/door/window/survival_pod{dir = 1} : /obj/machinery/door/window/survival_pod/left/directional/west{@OLD;dir=@SKIP}
