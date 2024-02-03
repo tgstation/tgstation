@@ -216,6 +216,7 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 
+
 /datum/armor/tailcoat_syndi
 	melee = 30
 	bullet = 20
@@ -225,5 +226,17 @@
 	bomb = 15
 	acid = 50
 	wound = 5
+
+/obj/item/clothing/suit/jacket/tailcoat/syndicate/Initialize(mapload)
+	. = ..()
+	allowed += list(
+		/obj/item/ammo_box,
+		/obj/item/ammo_casing,
+		/obj/item/gun/ballistic,
+		/obj/item/gun/energy,
+		/obj/item/restraints/handcuffs,
+		/obj/item/knife/combat,
+		/obj/item/melee/baton,
+	)
 
 //End of Bunny Costume Jackets
