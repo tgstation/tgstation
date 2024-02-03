@@ -16,6 +16,7 @@
 #define INFINITE_RESKIN (1<<12) // We can reskin this item infinitely
 #define CONDUCTS_ELECTRICITY (1<<13) //! Can this object conduct electricity?
 #define NO_DECONSTRUCTION (1<<14) //! Prevent deconstruction of this object.
+#define UNWRENCH_BYPASS (1<<15) //! Can this object be unwrenched to move it around?
 
 // If you add new ones, be sure to add them to /obj/Initialize as well for complete mapping support
 
