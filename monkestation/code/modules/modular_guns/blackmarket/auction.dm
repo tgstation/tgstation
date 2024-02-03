@@ -14,13 +14,14 @@
 	COOLDOWN_DECLARE(current_auction_time)
 
 /datum/market/auction/add_item(datum/market_item/auction/item)
-	if(!istype(item))
-		return FALSE
 	if(!prob(initial(item.availability_prob)))
 		return FALSE
 
 	if(ispath(item))
 		item = new item()
+
+	if(!istype(item))
+		return FALSE
 
 	if(!length(available_items))
 		available_items = list()
