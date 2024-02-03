@@ -6490,6 +6490,7 @@
 #include "monkestation\code\modules\random_rooms\bars\tram_bar_modules.dm"
 #include "monkestation\code\modules\reagents\_reagents.dm"
 #include "monkestation\code\modules\reagents\containers.dm"
+#include "monkestation\code\modules\reagents\misc.dm"
 #include "monkestation\code\modules\reagents\reagent_containers.dm"
 #include "monkestation\code\modules\reagents\reagents.dm"
 #include "monkestation\code\modules\reagents\fun\austrialium.dm"
