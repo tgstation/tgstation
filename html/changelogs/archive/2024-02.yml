@@ -56,3 +56,10 @@
   zxaber:
   - balance: Mech wire panels are now blocked when the mech is occupied. I guess it
       was moved to be behind the seat.
+2024-02-03:
+  Justavidya:
+  - image: modified the cherry cupcake and blue-cherry cupcake sprites
+  Rhials:
+  - qol: Spider eggs will now close their spawn menu when you move away from them.
+  Whoneedspacee:
+  - bugfix: Ash drake's fire breath attack has proper cooldowns again
