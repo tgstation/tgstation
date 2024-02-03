@@ -7,4 +7,5 @@
 #define SHIPPING_METHOD_TELEPORT "Teleport"
 // Throws the item from somewhere at the station.
 #define SHIPPING_METHOD_LAUNCH "Launch"
-
+/// item appears at your feet used by auctions
+#define SHIPPING_METHOD_AT_FEET "Feet"

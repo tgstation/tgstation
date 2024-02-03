@@ -8,7 +8,7 @@
 
 /obj/item/attachment/barrel/mk58/suppressor
 	name = "mk58 suppressor"
-	offset_x = 16
+	offset_x = 15
 
 	ease_of_use = 0.95
 	fire_multipler = 0.85

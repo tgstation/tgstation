@@ -5,6 +5,7 @@
 	spread = 100 // this is horrible unassembled
 	mag_display = FALSE // needs some shitcode ig cause we have multiple types
 	spawnwithmagazine = FALSE
+	pinless = TRUE //for now until we do other shit
 
 	var/mag_icon_state = "mag_32.25 Caseless"
 

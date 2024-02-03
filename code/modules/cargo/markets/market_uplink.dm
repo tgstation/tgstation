@@ -16,7 +16,7 @@
 	///Reference to the currently logged in user's bank account.
 	var/datum/bank_account/current_user
 	/// List of typepaths for "/datum/market"s that this uplink can access.
-	var/list/accessible_markets = list(/datum/market/blackmarket, /datum/market/blackmarket/auction/guns)
+	var/list/accessible_markets = list(/datum/market/blackmarket, /datum/market/auction/guns)
 	///our current_bid
 	var/current_bid = 0
 
@@ -71,7 +71,7 @@
 	data["current_bid"] = current_bid
 	if(viewing_category && market)
 		if(market.market_flags & MARKET_AUCTION)
-			var/datum/market/blackmarket/auction/market_auction = market
+			var/datum/market/auction/market_auction = market
 			data["auction"] = TRUE
 			for(var/datum/market_item/auction/item in market_auction.queued_items)
 				data["queued_items"] += list(list(
@@ -174,7 +174,7 @@
 				return
 			current_bid = params["bid"]
 		if("bid")
-			var/datum/market/blackmarket/auction/market = SSblackmarket.markets[viewing_market]
+			var/datum/market/auction/market = SSblackmarket.markets[viewing_market]
 			if(!istype(market))
 				return
 			selected_item = market.current_auction.type
@@ -188,7 +188,7 @@
 	icon = 'icons/obj/blackmarket.dmi'
 	icon_state = "uplink"
 	//The original black market uplink
-	accessible_markets = list(/datum/market/blackmarket, /datum/market/blackmarket/auction/guns)
+	accessible_markets = list(/datum/market/blackmarket, /datum/market/auction/guns)
 
 
 /datum/crafting_recipe/blackmarket_uplink

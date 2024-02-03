@@ -32,3 +32,11 @@
 
 	stability = 1.4
 	ease_of_use = 1.1
+
+/obj/item/attachment/grip/mk_58/colorable
+	icon_state = "grip_colorable"
+	attachment_icon_state = "grip_colorable"
+	attachment_flags = ATTACHMENT_COLORABLE
+
+	stability = 1.4
+	ease_of_use = 1.1

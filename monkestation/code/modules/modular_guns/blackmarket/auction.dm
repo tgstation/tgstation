@@ -1,6 +1,6 @@
 #define AUCTION_TIME 5 MINUTES
 
-/datum/market/blackmarket/auction
+/datum/market/auction
 	name = "Black Market Auction"
 	market_flags = MARKET_AUCTION
 	categories = list("Auction")
@@ -13,7 +13,9 @@
 	///how much time is left of our auction checked with COOLDOWN_TIME_LEFT
 	COOLDOWN_DECLARE(current_auction_time)
 
-/datum/market/blackmarket/auction/add_item(datum/market_item/item)
+/datum/market/auction/add_item(datum/market_item/auction/item)
+	if(!istype(item))
+		return FALSE
 	if(!prob(initial(item.availability_prob)))
 		return FALSE
 
@@ -25,24 +27,25 @@
 		categories |= "Auction"
 
 	available_items += item
+	available_items[item] = item.auction_weight
 	return TRUE
 
-/datum/market/blackmarket/auction/try_process()
+/datum/market/auction/try_process()
 	if(!length(queued_items))
-		var/datum/market_item/auction/first_item = pick(available_items)
+		var/datum/market_item/auction/first_item = pick_weight(available_items)
 		var/datum/market_item/auction/created_item = new first_item.type
 		queued_items += created_item
 		queued_items[created_item] = world.time + rand(3 MINUTES, 5.5 MINUTES) + AUCTION_TIME
 
 	if(length(queued_items) < queue_length) // we are missing a new auction
-		var/datum/market_item/auction/listed_item = pick(available_items)
+		var/datum/market_item/auction/listed_item = pick_weight(available_items)
 		var/datum/market_item/auction/new_item = new listed_item.type
 		var/initial_time = queued_items[queued_items[length(queued_items)]]
 		queued_items += new_item
 		queued_items[new_item] = initial_time + rand(3 MINUTES, 5.5 MINUTES) + AUCTION_TIME
 
 	if(COOLDOWN_FINISHED(src, current_auction_time) && current_auction)
-		grab_purchase_info(current_auction, current_auction.category, SHIPPING_METHOD_TELEPORT)
+		grab_purchase_info(current_auction, current_auction.category, SHIPPING_METHOD_AT_FEET)
 		current_auction = null
 
 	if(world.time >= queued_items[queued_items[1]])
@@ -52,7 +55,7 @@
 		COOLDOWN_START(src, current_auction_time, AUCTION_TIME)
 
 
-/datum/market/blackmarket/auction/pre_purchase(item, category, method, obj/item/market_uplink/uplink, user, bid_amount)
+/datum/market/auction/pre_purchase(item, category, method, obj/item/market_uplink/uplink, user, bid_amount)
 	if(item != current_auction.type)
 		return FALSE
 
@@ -93,15 +96,15 @@
 	current_auction.price = bid_amount
 
 
-/datum/market/blackmarket/auction/proc/grab_purchase_info(datum/market_item/auction/item, category, method)
+/datum/market/auction/proc/grab_purchase_info(datum/market_item/auction/item, category, method)
 	purchase(item.type, category, method, item.uplink, item.user)
 
 
-/datum/market/blackmarket/auction/guns
+/datum/market/auction/guns
 	name = "Back Alley Guns"
 
 /datum/market_item/auction
-	markets = list(/datum/market/blackmarket/auction)
+	markets = list(/datum/market/auction)
 	///the user whos currently bid on it
 	var/mob/user
 	///the current price we have
@@ -112,3 +115,5 @@
 	var/list/bidders = list()
 	///the name of our top bidder as a string
 	var/top_bidder
+	///the weight this item has to appear high = more likely to be picked
+	var/auction_weight = 10

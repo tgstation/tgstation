@@ -1,5 +1,5 @@
 /datum/market_item/auction/gun_part
-	markets = list(/datum/market/blackmarket/auction/guns)
+	markets = list(/datum/market/auction/guns)
 	stock_max = 1
 	availability_prob = 100
 	category = "Gun Part"
@@ -11,3 +11,21 @@
 
 	price_min = CARGO_CRATE_VALUE * 2.5
 	price_max = CARGO_CRATE_VALUE * 5
+
+/datum/market_item/auction/gun_part/cirno
+	name = "MK 58 Cirno keychain"
+	desc = "Cirno in keychain form"
+	item = /obj/item/attachment/keychain/mk_58/cirno
+
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 3
+	auction_weight = 3
+
+/datum/market_item/auction/gun_part/mk58_switch
+	name = "MK 58 Illegal Switch"
+	desc = "Super Illegal."
+	item = /obj/item/attachment/underbarrel/mk_58/makeshift/illegal_switch
+
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 6
+	auction_weight = 1

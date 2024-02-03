@@ -10,3 +10,7 @@
 #define ATTACHMENT_TYPE_SIGHT "attach_sight"
 #define ATTACHMENT_TYPE_UNDERBARREL "attach_underbarrel"
 #define ATTACHMENT_TYPE_WELROD "attach_welrod"
+#define ATTACHMENT_TYPE_FRAME "attach_frame"
+#define ATTACHMENT_TYPE_KEYCHAIN "attach_keychain?"
+
+#define ATTACHMENT_COLORABLE (1<<0)

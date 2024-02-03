@@ -13,6 +13,10 @@
 			new /datum/attachment_handler/underbarrel,
 			new /datum/attachment_handler/welrod,
 			new /datum/attachment_handler/barrel,
+			new /datum/attachment_handler/keychain,
+		), \
+		tool_slots = list(
+			new /datum/attachment_handler/frame/screw,
 		), \
 	)
 	AddComponent(/datum/component/gun_stat_holder,\

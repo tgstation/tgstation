@@ -60,7 +60,17 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 			continue
 		attach_to(attacher, listed)
 
-/datum/component/weapon_attachments/proc/attach_to(obj/item/attachment/attacher, datum/attachment_handler/slot, tool_requirement)
+	for(var/datum/attachment_handler/listed as anything in tool_slots)
+		if((listed.attachment_slot != attacher.attachment_type) || listed.stored)
+			continue
+		if(!(listed.tool_required in get_surrounding_tools(user)))
+			to_chat(user, span_notice("You need a [listed.tool_required] in order to attach [attacher]"))
+			continue
+		if(!do_after(user, 1.5 SECONDS, parent))
+			continue
+		attach_to(attacher, listed)
+
+/datum/component/weapon_attachments/proc/attach_to(obj/item/attachment/attacher, datum/attachment_handler/slot)
 	attacher.forceMove(parent)
 	slot.stored = attacher
 	SEND_SIGNAL(parent, COMSIG_ATTACHMENT_ATTACHED, attacher)
@@ -75,10 +85,13 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 	for(var/datum/attachment_handler/listed as anything in (hand_slots + tool_slots))
 		if(!listed.stored)
 			continue
-
+		if(listed.stored.attachment_flags & ATTACHMENT_COLORABLE && !listed.stored.attachment_color)
+			continue
 		var/mutable_appearance/gun_attachment =  mutable_appearance(listed.stored.attachment_icon, listed.stored.attachment_icon_state, item.layer + listed.stored.layer_modifier, offset_spokesman = parent)
 		gun_attachment.pixel_x += listed.stored.offset_x
 		gun_attachment.pixel_y += listed.stored.offset_y
+		gun_attachment.color = listed.stored.attachment_color
+
 		overlays += gun_attachment
 
 /datum/component/weapon_attachments/proc/apply_per_reset_uniques(obj/item/gun/source)
@@ -123,3 +136,27 @@ GROUP, TOOL, ITEM for reading whereas hand is just GROUP, ITEM. Prioritizes hand
 		listed.stored = null
 	choice.forceMove(get_turf(user))
 	user.balloon_alert(user, "Successfully removed [choice.name].")
+
+
+
+///this is literally all to handle tools around us for shit
+
+
+/datum/component/weapon_attachments/proc/get_environment(atom/a, list/blacklist = null, radius_range = 1)
+	. = list()
+
+	if(!isturf(a.loc))
+		return
+
+	for(var/atom/movable/AM in range(radius_range, a))
+		if((AM.flags_1 & HOLOGRAM_1) || (blacklist && (AM.type in blacklist)))
+			continue
+		. += AM
+
+/datum/component/weapon_attachments/proc/get_surrounding_tools(atom/a, list/blacklist=null)
+	. = list()
+	for(var/obj/object in get_environment(a, blacklist))
+		if(isitem(object))
+			var/obj/item/item = object
+			if(item.tool_behaviour)
+				. += item.tool_behaviour

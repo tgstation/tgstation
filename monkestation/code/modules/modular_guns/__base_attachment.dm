@@ -29,6 +29,10 @@
 	///how much we offset in y and x
 	var/offset_y = 0
 	var/offset_x = 0
+	///special flags like colorable
+	var/attachment_flags = NONE
+	///the color of our attachment in hex
+	var/attachment_color
 
 /obj/item/attachment/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
 	. = ..()
@@ -41,3 +45,12 @@
 	return
 
 /obj/item/attachment/proc/unique_attachment_effects_per_reset(obj/item/gun/modular)
+
+/obj/item/attachment/AltClick(mob/user)
+	. = ..()
+	if(attachment_flags & ATTACHMENT_COLORABLE)
+		var/new_choice = input(user,"","Choose Color",attachment_color) as color
+		if(new_choice == null)
+			return
+		attachment_color = new_choice
+		color = new_choice
