@@ -159,11 +159,10 @@
 /area/centcom/basketball)
 "ly" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
 	icon_state = "right";
-	name = "Shooting Range";
-	dir = 4
+	name = "Shooting Range"
 	},
 /obj/item/gun/ballistic/rifle/boltaction{
 	pixel_y = 10
@@ -691,11 +690,10 @@
 /area/centcom/basketball)
 "ZM" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
 	icon_state = "right";
-	name = "Shooting Range";
-	dir = 4
+	name = "Shooting Range"
 	},
 /obj/item/gun/ballistic/rifle/boltaction{
 	pixel_y = 5

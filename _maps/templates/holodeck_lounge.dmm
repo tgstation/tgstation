@@ -18,9 +18,8 @@
 	},
 /area/template_noop)
 "c" = (
-/obj/machinery/door/window{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right";
 	layer = 3
 	},

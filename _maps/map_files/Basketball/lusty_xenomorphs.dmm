@@ -52,8 +52,7 @@
 /turf/open/floor/iron/white,
 /area/centcom/basketball)
 "dM" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 8;
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,
@@ -234,9 +233,8 @@
 /area/centcom/basketball)
 "rU" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/east{
 	base_state = "right";
-	dir = 4;
 	icon_state = "right";
 	name = "Containment Pen"
 	},
@@ -315,9 +313,8 @@
 /area/centcom/basketball)
 "AI" = (
 /obj/effect/turf_decal/delivery,
-/obj/machinery/door/window/left/directional/north{
+/obj/machinery/door/window/left/directional/west{
 	base_state = "right";
-	dir = 8;
 	icon_state = "right";
 	name = "Containment Pen"
 	},
@@ -389,8 +386,7 @@
 /turf/open/floor/engine,
 /area/centcom/basketball)
 "Gi" = (
-/obj/machinery/door/window/brigdoor{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/left/directional/east{
 	name = "Containment Pen"
 	},
 /turf/open/floor/iron/white,

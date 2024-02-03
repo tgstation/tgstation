@@ -713,7 +713,7 @@
 /turf/open/floor/plastic,
 /area/shuttle/abandoned/crew)
 "dh" = (
-/obj/machinery/door/window/brigdoor{
+/obj/machinery/door/window/brigdoor/left/directional/south{
 	name = "Captain's Quarters"
 	},
 /obj/effect/turf_decal/stripes/white/line{
