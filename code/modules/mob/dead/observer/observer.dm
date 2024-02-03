@@ -248,7 +248,6 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 	var/lum = read_color[3]
 
 	// Clamp so it still has color, can't get too bright/desaturated
-
 	sat -= 15
 	if(sat < 30)
 		sat = min(read_color[2], 30)
