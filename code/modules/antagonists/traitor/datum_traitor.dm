@@ -57,7 +57,7 @@
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
-	uplink_flag_given = UPLINK_TRAITORS | UPLINK_INFILTRATORS
+	uplink_flag_given = UPLINK_INFILTRATORS
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
