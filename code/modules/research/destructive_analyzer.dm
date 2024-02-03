@@ -14,16 +14,19 @@
 	base_icon_state = "d_analyzer"
 	circuit = /obj/item/circuitboard/machine/destructive_analyzer
 
-/obj/machinery/rnd/destructive_analyzer/Initialize(mapload)
-	. = ..()
-	register_context()
-
 /obj/machinery/rnd/destructive_analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	var/screentip_set = NONE
 	if(loaded_item)
 		context[SCREENTIP_CONTEXT_ALT_LMB] = "Remove Item"
+		screentip_set = CONTEXTUAL_SCREENTIP_SET
 	else if(!isnull(held_item))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert Item"
-	return CONTEXTUAL_SCREENTIP_SET
+		screentip_set = CONTEXTUAL_SCREENTIP_SET
+
+	if(screentip_set)
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/rnd/destructive_analyzer/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.combat_mode)

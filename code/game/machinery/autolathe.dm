@@ -55,6 +55,7 @@
 	if(!in_range(user, src) && !isobserver(user))
 		return
 
+	. += span_notice("Material usage cost at <b>[creation_efficiency * 100]%</b>")
 	if(drop_direction)
 		. += span_notice("Currently configured to drop printed objects <b>[dir2text(drop_direction)]</b>.")
 		. += span_notice("[EXAMINE_HINT("Alt-click")] to reset.")
@@ -96,7 +97,7 @@
 
 	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-	directly_use_power(round(amount2sheet(amount_inserted) * active_power_usage * 0.005))
+	directly_use_power(round(amount2sheet(amount_inserted) * active_power_usage * 0.0025))
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
