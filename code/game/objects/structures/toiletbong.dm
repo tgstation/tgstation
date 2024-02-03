@@ -89,7 +89,7 @@
 	return TRUE
 
 /obj/structure/toiletbong/AltClick(mob/living/user)
-	if(anchored)
+	if(!can_interact(user) || anchored)
 		return ..()
 	setDir(turn(dir,90))
 	playsound(src, 'sound/items/deconstruct.ogg', 50)
