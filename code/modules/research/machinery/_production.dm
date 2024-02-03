@@ -243,40 +243,39 @@
 		return FALSE
 
 	//use power
-	var/power = active_power_usage
+	var/total_charge = 0
 	for(var/material in design.materials)
-		power += round(design.materials[material] * coefficient * print_quantity / 35)
-	power = min(active_power_usage, power)
-	use_power(power)
+		total_charge += round(design.materials[material] * coefficient * print_quantity / 35)
+	var/charge_per_item = total_charge / print_quantity
 
 	if(production_animation)
 		flick(production_animation, src)
 
 	var/total_time = (design.construction_time * design.lathe_time_factor * print_quantity) ** 0.8
 	var/time_per_item = total_time / print_quantity
-	start_making(design, print_quantity, time_per_item, coefficient)
+	start_making(design, print_quantity, time_per_item, coefficient, charge_per_item)
 
 	return TRUE
 
 /// Begins the act of making the given design the given number of items
 /// Does not check or use materials/power/etc
-/obj/machinery/rnd/production/proc/start_making(datum/design/design, build_count, build_time_per_item, build_efficiency)
+/obj/machinery/rnd/production/proc/start_making(datum/design/design, build_count, build_time_per_item, build_efficiency, charge_per_item)
 	PROTECTED_PROC(TRUE)
 
 	busy = TRUE
 	update_static_data_for_all_viewers()
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, build_efficiency, build_time_per_item, build_count), build_time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, build_efficiency, build_time_per_item, charge_per_item, build_count), build_time_per_item)
 
 /// Callback for start_making, actually makes the item
 /// Called using timers started by start_making
-/obj/machinery/rnd/production/proc/do_make_item(datum/design/design, build_efficiency, time_per_item, items_remaining)
+/obj/machinery/rnd/production/proc/do_make_item(datum/design/design, build_efficiency, time_per_item, charge_per_item, items_remaining)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
 		finalize_build()
 		return
 
-	if(!is_operational)
+	if(!directly_use_power(charge_per_item))
 		say("Unable to continue production, power failure.")
 		finalize_build()
 		return
