@@ -56,6 +56,14 @@
 		COOLDOWN_START(src, current_auction_time, AUCTION_TIME)
 
 
+/datum/market/auction/proc/reroll(obj/item/market_uplink/uplink, user)
+	var/balance = uplink?.current_user.account_balance
+	if(balance < 350)
+		to_chat(user, span_warning("You don't have enough credits in [uplink] to reroll the auction block."))
+		return FALSE
+	uplink.current_user.adjust_money(-350, "Other: Third Party Transaction")
+	auction.queued_items = list()
+
 /datum/market/auction/pre_purchase(item, category, method, obj/item/market_uplink/uplink, user, bid_amount)
 	if(item != current_auction.type)
 		return FALSE

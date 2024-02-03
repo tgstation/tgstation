@@ -264,6 +264,8 @@ const AuctionMarket = (props, context) => {
               </Stack.Item>
               <Stack.Item width="30%" height="100%">
                 <Button
+                  textAlign="center"
+                  fontSize="30px"
                   width="100%"
                   height="100%"
                   content="Bid"
@@ -313,9 +315,12 @@ const AuctionMarket = (props, context) => {
           </Stack.Item>
           <Stack.Item grow={2}>
             <Button
+              textAlign="center"
+              fontSize="16px"
               width="100%"
               height="100%"
-              content="Reroll the Auction Block"
+              content="Reroll the Auction Block 350CR"
+              onClick={() => act('reroll')}
             />
           </Stack.Item>
         </Stack>

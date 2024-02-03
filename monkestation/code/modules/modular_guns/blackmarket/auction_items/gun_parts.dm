@@ -3,6 +3,7 @@
 	stock_max = 1
 	availability_prob = 100
 	category = "Gun Part"
+	auction_weight = 5
 
 /datum/market_item/auction/gun_part/mk58
 	name = "MK 58 Reciever"

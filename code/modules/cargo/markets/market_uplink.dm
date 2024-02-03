@@ -181,6 +181,11 @@
 			if(isnull(selected_item))
 				return
 			market.pre_purchase(selected_item, viewing_category, params["method"], src, usr, current_bid)
+		if("reroll")
+			var/datum/market/auction/market = SSblackmarket.markets[viewing_market]
+			if(!istype(market))
+				return
+			market.reroll(src, usr)
 
 /obj/item/market_uplink/blackmarket
 	name = "\improper Black Market Uplink"
