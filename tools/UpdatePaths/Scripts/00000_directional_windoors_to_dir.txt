@@ -9,7 +9,7 @@
 
 # Left
 
-/obj/machinery/door/window/left/directional/north{dir = @UNSET} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/left/directional/north{dir = 2} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/left/directional/north{dir = 4} : /obj/machinery/door/window/left/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/left/directional/north{dir = 8} : /obj/machinery/door/window/left/directional/west{@OLD;dir=@SKIP}
 
@@ -18,16 +18,16 @@
 /obj/machinery/door/window/left/directional/south{dir = 8} : /obj/machinery/door/window/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/left/directional/east{dir = 1} : /obj/machinery/door/window/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/left/directional/east{dir = @UNSET} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/left/directional/east{dir = 2} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/left/directional/east{dir = 8} : /obj/machinery/door/window/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/left/directional/west{dir = 1} : /obj/machinery/door/window/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/left/directional/west{dir = @UNSET} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/left/directional/west{dir = 2} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/left/directional/west{dir = 4} : /obj/machinery/door/window/left/directional/east{@OLD;dir=@SKIP}
 
 # Right
 
-/obj/machinery/door/window/right/directional/north{dir = @UNSET} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/right/directional/north{dir = 2} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/right/directional/north{dir = 4} : /obj/machinery/door/window/right/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/right/directional/north{dir = 8} : /obj/machinery/door/window/right/directional/west{@OLD;dir=@SKIP}
 
@@ -36,11 +36,11 @@
 /obj/machinery/door/window/right/directional/south{dir = 8} : /obj/machinery/door/window/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/right/directional/east{dir = 1} : /obj/machinery/door/window/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/right/directional/east{dir = @UNSET} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/right/directional/east{dir = 2} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/right/directional/east{dir = 8} : /obj/machinery/door/window/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/right/directional/west{dir = 1} : /obj/machinery/door/window/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/right/directional/west{dir = @UNSET} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/right/directional/west{dir = 2} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/right/directional/west{dir = 4} : /obj/machinery/door/window/right/directional/east{@OLD;dir=@SKIP}
 
 # Brig door
@@ -52,7 +52,7 @@
 
 # Left
 
-/obj/machinery/door/window/brigdoor/left/directional/north{dir = @UNSET} : /obj/machinery/door/window/brigdoor/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/left/directional/north{dir = 2} : /obj/machinery/door/window/brigdoor/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/left/directional/north{dir = 4} : /obj/machinery/door/window/brigdoor/left/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/left/directional/north{dir = 8} : /obj/machinery/door/window/brigdoor/left/directional/west{@OLD;dir=@SKIP}
 
@@ -61,16 +61,16 @@
 /obj/machinery/door/window/brigdoor/left/directional/south{dir = 8} : /obj/machinery/door/window/brigdoor/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/left/directional/east{dir = 1} : /obj/machinery/door/window/brigdoor/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/left/directional/east{dir = @UNSET} : /obj/machinery/door/window/brigdoor/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/left/directional/east{dir = 2} : /obj/machinery/door/window/brigdoor/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/left/directional/east{dir = 8} : /obj/machinery/door/window/brigdoor/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/left/directional/west{dir = 1} : /obj/machinery/door/window/brigdoor/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/left/directional/west{dir = @UNSET} : /obj/machinery/door/window/brigdoor/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/left/directional/west{dir = 2} : /obj/machinery/door/window/brigdoor/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/left/directional/west{dir = 4} : /obj/machinery/door/window/brigdoor/left/directional/east{@OLD;dir=@SKIP}
 
 # Right
 
-/obj/machinery/door/window/brigdoor/right/directional/north{dir = @UNSET} : /obj/machinery/door/window/brigdoor/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/right/directional/north{dir = 2} : /obj/machinery/door/window/brigdoor/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/right/directional/north{dir = 4} : /obj/machinery/door/window/brigdoor/right/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/right/directional/north{dir = 8} : /obj/machinery/door/window/brigdoor/right/directional/west{@OLD;dir=@SKIP}
 
@@ -79,11 +79,11 @@
 /obj/machinery/door/window/brigdoor/right/directional/south{dir = 8} : /obj/machinery/door/window/brigdoor/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/right/directional/east{dir = 1} : /obj/machinery/door/window/brigdoor/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/right/directional/east{dir = @UNSET} : /obj/machinery/door/window/brigdoor/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/right/directional/east{dir = 2} : /obj/machinery/door/window/brigdoor/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/right/directional/east{dir = 8} : /obj/machinery/door/window/brigdoor/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/right/directional/west{dir = 1} : /obj/machinery/door/window/brigdoor/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/right/directional/west{dir = @UNSET} : /obj/machinery/door/window/brigdoor/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/right/directional/west{dir = 2} : /obj/machinery/door/window/brigdoor/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/right/directional/west{dir = 4} : /obj/machinery/door/window/brigdoor/right/directional/east{@OLD;dir=@SKIP}
 
 # Security windoor
@@ -97,7 +97,7 @@
 
 # Left
 
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/north{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/north{dir = 2} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/north{dir = 4} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/north{dir = 8} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/west{@OLD;dir=@SKIP}
 
@@ -106,16 +106,16 @@
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{dir = 8} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/east{dir = 1} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{dir = 2} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/east{dir = 8} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/west{dir = 1} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/cell/left/directional/west{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/west{dir = 2} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/west{dir = 4} : /obj/machinery/door/window/brigdoor/security/cell/left/directional/east{@OLD;dir=@SKIP}
 
 # Right
 
-/obj/machinery/door/window/brigdoor/security/cell/right/directional/north{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/cell/right/directional/north{dir = 2} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/north{dir = 4} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/north{dir = 8} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{@OLD;dir=@SKIP}
 
@@ -124,11 +124,11 @@
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/south{dir = 8} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/east{dir = 1} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/cell/right/directional/east{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/cell/right/directional/east{dir = 2} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/east{dir = 8} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{dir = 1} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/cell/right/directional/west{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/cell/right/directional/west{dir = 2} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/cell/right/directional/west{dir = 4} : /obj/machinery/door/window/brigdoor/security/cell/right/directional/east{@OLD;dir=@SKIP}
 
 # Holding
@@ -140,7 +140,7 @@
 
 # Left
 
-/obj/machinery/door/window/brigdoor/security/holding/left/directional/north{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/holding/left/directional/north{dir = 2} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/left/directional/north{dir = 4} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/left/directional/north{dir = 8} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/west{@OLD;dir=@SKIP}
 
@@ -149,16 +149,16 @@
 /obj/machinery/door/window/brigdoor/security/holding/left/directional/south{dir = 8} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/holding/left/directional/east{dir = 1} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/holding/left/directional/east{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/holding/left/directional/east{dir = 2} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/left/directional/east{dir = 8} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/holding/left/directional/west{dir = 1} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/holding/left/directional/west{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/holding/left/directional/west{dir = 2} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/left/directional/west{dir = 4} : /obj/machinery/door/window/brigdoor/security/holding/left/directional/east{@OLD;dir=@SKIP}
 
 # Right
 
-/obj/machinery/door/window/brigdoor/security/holding/right/directional/north{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/holding/right/directional/north{dir = 2} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/right/directional/north{dir = 4} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/right/directional/north{dir = 8} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/west{@OLD;dir=@SKIP}
 
@@ -167,11 +167,11 @@
 /obj/machinery/door/window/brigdoor/security/holding/right/directional/south{dir = 8} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/holding/right/directional/east{dir = 1} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/holding/right/directional/east{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/holding/right/directional/east{dir = 2} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/right/directional/east{dir = 8} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/brigdoor/security/holding/right/directional/west{dir = 1} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/brigdoor/security/holding/right/directional/west{dir = @UNSET} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/brigdoor/security/holding/right/directional/west{dir = 2} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/brigdoor/security/holding/right/directional/west{dir = 4} : /obj/machinery/door/window/brigdoor/security/holding/right/directional/east{@OLD;dir=@SKIP}
 
 # Elevator
@@ -183,7 +183,7 @@
 
 # Left
 
-/obj/machinery/door/window/elevator/left/directional/north{dir = @UNSET} : /obj/machinery/door/window/elevator/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/elevator/left/directional/north{dir = 2} : /obj/machinery/door/window/elevator/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/left/directional/north{dir = 4} : /obj/machinery/door/window/elevator/left/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/left/directional/north{dir = 8} : /obj/machinery/door/window/elevator/left/directional/west{@OLD;dir=@SKIP}
 
@@ -192,16 +192,16 @@
 /obj/machinery/door/window/elevator/left/directional/south{dir = 8} : /obj/machinery/door/window/elevator/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/elevator/left/directional/east{dir = 1} : /obj/machinery/door/window/elevator/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/elevator/left/directional/east{dir = @UNSET} : /obj/machinery/door/window/elevator/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/elevator/left/directional/east{dir = 2} : /obj/machinery/door/window/elevator/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/left/directional/east{dir = 8} : /obj/machinery/door/window/elevator/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/elevator/left/directional/west{dir = 1} : /obj/machinery/door/window/elevator/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/elevator/left/directional/west{dir = @UNSET} : /obj/machinery/door/window/elevator/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/elevator/left/directional/west{dir = 2} : /obj/machinery/door/window/elevator/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/left/directional/west{dir = 4} : /obj/machinery/door/window/elevator/left/directional/east{@OLD;dir=@SKIP}
 
 # Right
 
-/obj/machinery/door/window/elevator/right/directional/north{dir = @UNSET} : /obj/machinery/door/window/elevator/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/elevator/right/directional/north{dir = 2} : /obj/machinery/door/window/elevator/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/right/directional/north{dir = 4} : /obj/machinery/door/window/elevator/right/directional/east{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/right/directional/north{dir = 8} : /obj/machinery/door/window/elevator/right/directional/west{@OLD;dir=@SKIP}
 
@@ -210,9 +210,9 @@
 /obj/machinery/door/window/elevator/right/directional/south{dir = 8} : /obj/machinery/door/window/elevator/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/elevator/right/directional/east{dir = 1} : /obj/machinery/door/window/elevator/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/elevator/right/directional/east{dir = @UNSET} : /obj/machinery/door/window/elevator/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/elevator/right/directional/east{dir = 2} : /obj/machinery/door/window/elevator/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/right/directional/east{dir = 8} : /obj/machinery/door/window/elevator/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/elevator/right/directional/west{dir = 1} : /obj/machinery/door/window/elevator/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/elevator/right/directional/west{dir = @UNSET} : /obj/machinery/door/window/elevator/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/elevator/right/directional/west{dir = 2} : /obj/machinery/door/window/elevator/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/elevator/right/directional/west{dir = 4} : /obj/machinery/door/window/elevator/right/directional/east{@OLD;dir=@SKIP}
