@@ -6309,6 +6309,7 @@
 #include "monkestation\code\modules\mob\living\basic\ggg\susflash.dm"
 #include "monkestation\code\modules\mob\living\basic\space_fauna\fugu_gland.dm"
 #include "monkestation\code\modules\mob\living\basic\vermin\mouse.dm"
+#include "monkestation\code\modules\mob\living\carbon\carbon_death.dm"
 #include "monkestation\code\modules\mob\living\carbon\carbon_defense.dm"
 #include "monkestation\code\modules\mob\living\carbon\carbon_defines.dm"
 #include "monkestation\code\modules\mob\living\carbon\carbon_update_icons.dm"
