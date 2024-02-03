@@ -3616,6 +3616,7 @@
 #include "code\modules\client\preferences\statpanel.dm"
 #include "code\modules\client\preferences\tgui.dm"
 #include "code\modules\client\preferences\tooltips.dm"
+#include "code\modules\client\preferences\trans_prosthetic.dm"
 #include "code\modules\client\preferences\ui_style.dm"
 #include "code\modules\client\preferences\underwear_color.dm"
 #include "code\modules\client\preferences\uplink_location.dm"

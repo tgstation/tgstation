@@ -15,7 +15,7 @@
 
 /datum/quirk/transhumanist
 	name = "Transhumanist"
-	desc = "You see silicon life as the perfect lifeform and despise organic flesh. You are happier around silicons, but get frustrated when around organics. You seek to replace your fleshy limbs with their silicon counterparts. You start with a robotic limb."
+	desc = "You see silicon life as the perfect lifeform and despise organic flesh. You are happier around silicons, but get frustrated when around organics. You seek to replace your failing flesh with perfect silicon. You start with a robotic augmention."
 	icon = FA_ICON_ROBOT
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES|QUIRK_MOODLET_BASED
 	value = 0
@@ -30,6 +30,7 @@
 	)
 	var/slot_string
 	var/obj/item/bodypart/old_limb
+
 
 /datum/quirk/transhumanist/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(calculate_bodypart_score))
@@ -100,9 +101,12 @@
 		if(-INFINITY to 0)
 			quirk_holder.add_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART, /datum/mood_event/very_organic)
 
+/datum/quirk_constant_data/transhumanist
+	associated_typepath = /datum/quirk/transhumanist
+	customization_options = list(/datum/preference/choiced/trans_prosthetic)
 
 /datum/quirk/transhumanist/add_unique(client/client_source)
-	var/limb_type = GLOB.limb_choice_transhuman[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
+	var/limb_type = GLOB.limb_choice_transhuman[client_source?.prefs?.read_preference(/datum/preference/choiced/trans_prosthetic)]
 	if(isnull(limb_type))  //Client gone or they chose a random prosthetic
 		limb_type = GLOB.limb_choice_transhuman[pick(GLOB.limb_choice_transhuman)]
 
@@ -112,9 +116,10 @@
 	slot_string = "[new_part.plaintext_zone]"
 	old_limb = human_holder.return_and_replace_bodypart(new_part, special = TRUE)
 
+
 /datum/quirk/transhumanist/post_add()
 	if(slot_string)
-		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robot arm. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
 
 /datum/quirk/transhumanist/remove()
 	if(old_limb)
