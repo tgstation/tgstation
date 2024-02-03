@@ -62,7 +62,7 @@
 		to_chat(user, span_warning("You don't have enough credits in [uplink] to reroll the auction block."))
 		return FALSE
 	uplink.current_user.adjust_money(-350, "Other: Third Party Transaction")
-	auction.queued_items = list()
+	queued_items = list()
 
 /datum/market/auction/pre_purchase(item, category, method, obj/item/market_uplink/uplink, user, bid_amount)
 	if(item != current_auction.type)
