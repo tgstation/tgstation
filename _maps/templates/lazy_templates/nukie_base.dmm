@@ -1034,8 +1034,7 @@
 /turf/open/floor/mineral/plastitanium,
 /area/centcom/syndicate_mothership/expansion_chemicalwarfare)
 "lA" = (
-/obj/machinery/door/window/survival_pod{
-	dir = 8;
+/obj/machinery/door/window/survival_pod/left/directional/west{
 	name = "Toilet Door"
 	},
 /obj/structure/window/reinforced/survival_pod/spawner/directional/north{
