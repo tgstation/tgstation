@@ -41,7 +41,7 @@
 	icon_state = "cowboyboots_black"
 
 /obj/item/clothing/shoes/heels
-	name = "black heels"
+	name = "heels"
 	desc = "A both professional and stylish piece of footwear that are difficult to walk in."
 	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
