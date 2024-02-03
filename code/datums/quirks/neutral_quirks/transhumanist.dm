@@ -29,7 +29,7 @@
 		/obj/item/toy/figure/borg,
 	)
 	var/slot_string
-	var/obj/item/bodypart/old_limb
+	var/obj/item/old_part
 
 
 /datum/quirk/transhumanist/add(client/client_source)
@@ -106,26 +106,44 @@
 	customization_options = list(/datum/preference/choiced/trans_prosthetic)
 
 /datum/quirk/transhumanist/add_unique(client/client_source)
-	var/limb_type = GLOB.limb_choice_transhuman[client_source?.prefs?.read_preference(/datum/preference/choiced/trans_prosthetic)]
-	if(isnull(limb_type))  //Client gone or they chose a random prosthetic
-		limb_type = GLOB.limb_choice_transhuman[pick(GLOB.limb_choice_transhuman)]
+	var/part_type = GLOB.part_choice_transhuman[client_source?.prefs?.read_preference(/datum/preference/choiced/trans_prosthetic)]
+	if(isnull(part_type))  //Client gone or they chose a random part
+		part_type = GLOB.part_choice_transhuman[pick(GLOB.part_choice_transhuman)]
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/obj/item/bodypart/new_part = new limb_type()
-
-	slot_string = "[new_part.plaintext_zone]"
-	old_limb = human_holder.return_and_replace_bodypart(new_part, special = TRUE)
-
+	var/obj/item/new_part = new part_type()
+	if(isbodypart(new_part))
+		var/obj/item/bodypart/new_bodypart = new_part
+		slot_string = "[new_bodypart.plaintext_zone]"
+		old_part = human_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
+	else if(isorgan(new_part))
+		var/obj/item/organ/new_organ = new_part
+		old_part = human_holder.get_organ_slot(ORGAN_SLOT_TONGUE)
+		if(new_organ.Insert(human_holder, special = TRUE))
+			old_part.moveToNullspace()
+			STOP_PROCESSING(SSobj, old_part)
+			//since this is the only non-body part option, we don't need to set slot text.
 
 /datum/quirk/transhumanist/post_add()
 	if(slot_string)
-		to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		if(isbodypart(old_part))
+			to_chat(quirk_holder, span_boldannounce("Your [slot_string] has been replaced with a robotic limb. You need to use a welding tool and cables to repair it, instead of sutures and regenerative meshes."))
+		else if (isorgan(old_part))
+			to_chat(quirk_holder, span_boldannounce("You have undergone augmentation to have a synthesized voice. The augment slightly interferes with your sense of taste."))
 
 /datum/quirk/transhumanist/remove()
-	if(old_limb)
+	if(old_part)
 		var/mob/living/carbon/human/human_holder = quirk_holder
-		human_holder.del_and_replace_bodypart(old_limb, special = TRUE)
-		old_limb = null
+		if(isbodypart(old_part))
+			var/obj/item/bodypart/old_bodypart = old_part
+			human_holder.del_and_replace_bodypart(old_bodypart, special = TRUE)
+			old_bodypart = null
+		else if(isorgan(old_part))
+			var/obj/item/organ/old_organ = old_part
+			old_organ.Insert(quirk_holder, special = TRUE)
+			old_organ = null
+		old_part = null
+
 	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_BODYPART)
 	quirk_holder.clear_mood_event(MOOD_CATEGORY_TRANSHUMANIST_PEOPLE)
 
