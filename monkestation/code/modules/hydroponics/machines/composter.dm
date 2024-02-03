@@ -97,7 +97,7 @@
 	// ensure user is next to what we're mouse dropping into
 	if (!Adjacent(usr, over))
 		return
-	// ensure the stuff we're mouse dropping
+	// ensure the stuff we're mouse dropping is ALSO adjacent
 	if(istype(over, /obj/machinery/composters) && Adjacent(src_location, over_location))
 		var/obj/machinery/composters/dropped = over
 		for(var/obj/item/seeds/seed in src_location)
@@ -108,7 +108,7 @@
 	// ensure user is next to what we're mouse dropping into
 	if (!Adjacent(usr, over))
 		return
-	// ensure the stuff we're mouse dropping
+	// ensure the stuff we're mouse dropping is ALSO adjacent
 	if(istype(over, /obj/machinery/composters) && Adjacent(src_location, over_location))
 		var/obj/machinery/composters/dropped = over
 		for(var/obj/item/food/food in src_location)
