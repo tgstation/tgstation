@@ -6516,14 +6516,6 @@
 /turf/open/floor/iron/dark,
 /area/station/service/theater/abandoned)
 "bEf" = (
-/obj/machinery/door/window/left/directional/east{
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
-	layer = 4.1;
-	name = "Secondary AI Core Access";
-	pixel_x = 4;
-	req_access = list("ai_upload")
-	},
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
@@ -6551,14 +6543,6 @@
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
 "bEm" = (
-/obj/machinery/door/window/left/directional/west{
-	base_state = "leftsecure";
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Tertiary AI Core Access";
-	pixel_x = -3;
-	req_access = list("ai_upload")
-	},
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
@@ -7032,9 +7016,7 @@
 	pixel_x = 3;
 	pixel_y = -23
 	},
-/obj/machinery/door/window/left/directional/west{
-	base_state = "leftsecure";
-	icon_state = "leftsecure";
+/obj/machinery/door/window/brigdoor/left/directional/west{
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
@@ -22630,6 +22612,16 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/hallway/secondary/entry)
+"fCd" = (
+/obj/machinery/holopad/secure,
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Tertiary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = 4
+	},
+/turf/open/floor/iron/dark,
+/area/station/ai_monitored/turret_protected/ai)
 "fCf" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "atmoslock";
@@ -38038,9 +38030,7 @@
 	dir = 8;
 	id = "garbage"
 	},
-/obj/machinery/door/window/right/directional/north{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/north{
 	name = "Danger: Conveyor Access";
 	req_access = list("maint_tunnels")
 	},
@@ -39532,9 +39522,7 @@
 /turf/open/floor/iron/large,
 /area/station/security/checkpoint/escape)
 "jMk" = (
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/east{
 	name = "Danger: Conveyor Access";
 	req_access = list("maint_tunnels")
 	},
@@ -58488,12 +58476,10 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
+/obj/effect/turf_decal/delivery,
+/obj/machinery/door/window/right/directional/east{
 	layer = 3
 	},
-/obj/effect/turf_decal/delivery,
 /turf/open/floor/iron,
 /area/station/maintenance/disposal)
 "oGr" = (
@@ -72551,9 +72537,7 @@
 /turf/open/floor/plating,
 /area/station/service/library/abandoned)
 "scX" = (
-/obj/machinery/door/window/left/directional/east{
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
@@ -73851,9 +73835,7 @@
 /obj/structure/cable,
 /obj/structure/table/wood/fancy/blue,
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Core Modules";
 	req_access = list("captain")
 	},
@@ -74789,6 +74771,11 @@
 "sGJ" = (
 /obj/machinery/holopad/secure,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Secondary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "sGQ" = (
@@ -86894,9 +86881,7 @@
 /obj/structure/sign/warning/electric_shock/directional/east,
 /obj/machinery/status_display/ai/directional/north,
 /obj/structure/table/wood/fancy/blue,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Core Modules";
 	req_access = list("captain")
 	},
@@ -106475,7 +106460,7 @@ cQh
 nkb
 eLP
 kXJ
-sGJ
+fCd
 kXJ
 kXJ
 xMX

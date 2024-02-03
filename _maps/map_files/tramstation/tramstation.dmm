@@ -6605,11 +6605,6 @@
 /turf/open/floor/wood/large,
 /area/station/service/barber)
 "bjb" = (
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
-	name = "Brig Infirmary"
-	},
 /obj/effect/turf_decal/trimline/red/filled/corner{
 	dir = 4
 	},
@@ -6617,6 +6612,9 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/window/right/directional/east{
+	name = "Brig Infirmary"
+	},
 /turf/open/floor/iron/white,
 /area/station/security/medical)
 "bje" = (
@@ -17568,10 +17566,7 @@
 	id = "AI";
 	pixel_x = 20
 	},
-/obj/machinery/door/window/left/directional/north{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
@@ -23911,9 +23906,7 @@
 /area/station/command/meeting_room)
 "hyK" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/machinery/door/window/right/directional/west{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Fitness Ring"
 	},
 /turf/open/floor/iron/dark/smooth_corner,
@@ -31240,9 +31233,7 @@
 	name = "Atmospherics Blast Door"
 	},
 /obj/effect/landmark/navigate_destination/atmos,
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Atmospherics Front Desk";
 	req_access = list("atmospherics")
 	},
@@ -39542,9 +39533,7 @@
 /area/station/service/chapel)
 "mVS" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window/right/directional/west{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Fitness Ring"
 	},
 /turf/open/floor/iron/dark/smooth_corner{
@@ -44180,9 +44169,7 @@
 /obj/structure/table/wood,
 /obj/item/folder/blue,
 /obj/item/stamp/head/captain,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "Captain's Desk";
 	req_access = list("captain")
 	},
@@ -55560,8 +55547,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "sFw" = (
-/obj/machinery/door/window/left/directional/north{
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Incoming Mail";
 	req_access = list("shipping")
 	},

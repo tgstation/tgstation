@@ -484,10 +484,7 @@
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cS" = (
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "cV" = (

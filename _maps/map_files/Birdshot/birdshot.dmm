@@ -3437,8 +3437,7 @@
 /area/station/engineering/supermatter/room)
 "bsF" = (
 /obj/structure/cable,
-/obj/machinery/door/window/brigdoor/security/cell/left{
-	dir = 4;
+/obj/machinery/door/window/brigdoor/security/cell/left/directional/east{
 	id = "engicell";
 	name = "Cell Door";
 	req_access = list("security")

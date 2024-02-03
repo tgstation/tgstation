@@ -55882,11 +55882,6 @@
 /obj/machinery/disposal/delivery_chute{
 	dir = 4
 	},
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
-	layer = 3
-	},
 /obj/structure/disposalpipe/trunk{
 	dir = 1
 	},
@@ -55896,6 +55891,9 @@
 /obj/structure/window/spawner/directional/south,
 /obj/structure/window/spawner/directional/north,
 /obj/structure/window/spawner/directional/west,
+/obj/machinery/door/window/right/directional/east{
+	layer = 3
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/disposal)
 "tVt" = (

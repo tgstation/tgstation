@@ -2283,8 +2283,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "aMd" = (
-/obj/machinery/door/window/left/directional/east{
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Incoming Mail";
 	req_access = list("shipping")
 	},
@@ -19449,9 +19448,7 @@
 /obj/item/folder/white,
 /obj/item/pen,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/east{
 	name = "Pharmacy Desk";
 	req_access = list("pharmacy")
 	},
@@ -73202,9 +73199,7 @@
 /obj/structure/desk_bell{
 	pixel_x = 7
 	},
-/obj/machinery/door/window/brigdoor/left/directional/east{
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Head of Personnel's Desk";
 	req_access = list("hop")
 	},
