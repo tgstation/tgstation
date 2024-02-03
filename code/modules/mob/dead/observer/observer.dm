@@ -109,10 +109,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 			var/datum/species/human_species = body_human.dna.species
 			if(human_species.check_head_flags(HEAD_HAIR))
 				hairstyle = body_human.hairstyle
-				hair_color = brighten_color(body_human.hair_color)
+				hair_color = ghostify_color(body_human.hair_color)
 			if(human_species.check_head_flags(HEAD_FACIAL_HAIR))
 				facial_hairstyle = body_human.facial_hairstyle
-				facial_hair_color = brighten_color(body_human.facial_hair_color)
+				facial_hair_color = ghostify_color(body_human.facial_hair_color)
 
 	update_appearance()
 
@@ -239,28 +239,24 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
 				add_overlay(hair_overlay)
 
 /*
- * Increase the brightness of a color by calculating the average distance between the R, G and B values,
- * and maximum brightness, then adding 30% of that average to R, G and B.
- *
- * I'll make this proc global and move it to its own file in a future update. |- Ricotez - UPDATE: They never did :(
+ * Increase the brightness of a color and desaturates it slightly to make it suitable for ghosts
+ * We use HSL for this, makes life SOOO easy
  */
-/mob/proc/brighten_color(input_color)
-	var/list/read_color = rgb2num(input_color)
-	var/r_val = read_color[1]
-	var/b_val = read_color[2]
-	var/g_val = read_color[3]
+/proc/ghostify_color(input_color)
+	var/list/read_color = rgb2num(input_color, COLORSPACE_HSL)
+	var/sat = read_color[2]
+	var/lum = read_color[3]
 
-	r_val += (255 - r_val) * 0.4
-	if(r_val > 255)
-		r_val = 255
-	g_val += (255 - g_val) * 0.4
-	if(g_val > 255)
-		g_val = 255
-	b_val += (255 - b_val) * 0.4
-	if(b_val > 255)
-		b_val = 255
+	// Clamp so it still has color, can't get too bright/desaturated
 
-	return "#" + copytext(rgb(r_val, g_val, b_val), 2)
+	sat -= 15
+	if(sat < 30)
+		sat = min(read_color[2], 30)
+
+	lum += 15
+	if(lum > 80)
+		lum = max(read_color[3], 80)
+	return rgb(read_color[1], sat, lum, space = COLORSPACE_HSL)
 
 /*
 Transfer_mind is there to check if mob is being deleted/not going to have a body.
@@ -849,11 +845,11 @@ This is the proc mobs get to turn into a ghost. Forked from ghostize due to comp
 	var/datum/species/species = new species_type
 	if(species.check_head_flags(HEAD_HAIR))
 		hairstyle = client.prefs.read_preference(/datum/preference/choiced/hairstyle)
-		hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/hair_color))
+		hair_color = ghostify_color(client.prefs.read_preference(/datum/preference/color/hair_color))
 
 	if(species.check_head_flags(HEAD_FACIAL_HAIR))
 		facial_hairstyle = client.prefs.read_preference(/datum/preference/choiced/facial_hairstyle)
-		facial_hair_color = brighten_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
+		facial_hair_color = ghostify_color(client.prefs.read_preference(/datum/preference/color/facial_hair_color))
 
 	qdel(species)
 
