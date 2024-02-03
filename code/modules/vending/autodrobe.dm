@@ -193,7 +193,7 @@
 				/obj/item/clothing/under/rank/civilian/janitor/maid = 1,
 				/obj/item/clothing/accessory/maidapron = 1,
 				/obj/item/clothing/under/costume/playbunny = 2, // MONKESTATION EDIT ADDITION
-				/obj/item/clothing/accessory/bunnytie = 2, // MONKESTATION EDIT ADDITION
+				/obj/item/clothing/neck/tie/bunnytie = 2, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/head/playbunnyears = 2, // MONKESTATION EDIT ADDITION
 				/obj/item/clothing/suit/jacket/tailcoat = 2, // MONKESTATION EDIT ADDITION
 			),

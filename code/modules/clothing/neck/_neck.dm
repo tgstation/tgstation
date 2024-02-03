@@ -35,6 +35,8 @@
 	var/tie_timer = 4 SECONDS
 	/// Is this tie a clip-on, meaning it does not have an untied state?
 	var/clip_on = FALSE
+	//MONKESTATION EDIT Base icon_state name between tied and untied versions.
+	var/tie_type = "tie_greyscale"
 
 /obj/item/clothing/neck/tie/Initialize(mapload)
 	. = ..()
@@ -87,12 +89,12 @@
 		return
 	// Normal strip & equip delay, along with 2 second self equip since you need to squeeze your head through the hole.
 	if(is_tied)
-		icon_state = "tie_greyscale_tied"
+		icon_state = "[tie_type]_tied" //MONKESTATION EDIT
 		strip_delay = 4 SECONDS
 		equip_delay_other = 4 SECONDS
 		equip_delay_self = 2 SECONDS
 	else // Extremely quick strip delay, it's practically a ribbon draped around your neck
-		icon_state = "tie_greyscale_untied"
+		icon_state = "[tie_type]_untied" //MONKESTATION EDIT
 		strip_delay = 1 SECONDS
 		equip_delay_other = 1 SECONDS
 		equip_delay_self = 0

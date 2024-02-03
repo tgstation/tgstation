@@ -1213,12 +1213,12 @@
 
 /datum/greyscale_config/bowtie_collar
 	name = "Bowtie Collar"
-	icon_file = 'monkestation/icons/obj/clothing/accessories.dmi'
+	icon_file = 'monkestation/icons/obj/clothing/necks.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bowtie_collar.json'
 
 /datum/greyscale_config/bowtie_collar_worn
 	name = "Worn Bowtie Collar"
-	icon_file = 'monkestation/icons/mob/clothing/accessories.dmi'
+	icon_file = 'monkestation/icons/mob/clothing/neck.dmi'
 	json_config = 'code/datums/greyscale/json_configs/bowtie_collar_worn.json'
 
 /datum/greyscale_config/heels

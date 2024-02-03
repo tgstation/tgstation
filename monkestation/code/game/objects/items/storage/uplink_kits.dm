@@ -27,7 +27,7 @@
 	generate_items_inside(items_inside, src)
 
 /obj/item/storage/box/syndibunny
-	name = "Syndicate maid outfit"
+	name = "Syndicate bunny Assasin outfit"
 	desc = "A box containing a high tech specialized syndicate... bunny suit?"
 	icon_state = "syndiebox"
 
@@ -36,7 +36,7 @@
 		/obj/item/clothing/head/playbunnyears/syndicate = 1,
 		/obj/item/clothing/under/syndicate/syndibunny = 1,
 		/obj/item/clothing/suit/jacket/tailcoat/syndicate = 1,
-		/obj/item/clothing/accessory/bunnytie/syndicate = 1,
+		/obj/item/clothing/neck/tie/bunnytie/syndicate = 1,
 		/obj/item/clothing/shoes/heels= 1,)
 	generate_items_inside(items_inside, src)
 

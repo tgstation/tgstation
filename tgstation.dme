@@ -6075,6 +6075,7 @@
 #include "monkestation\code\modules\clothing\masks\gasmask.dm"
 #include "monkestation\code\modules\clothing\masks\misc.dm"
 #include "monkestation\code\modules\clothing\neck\cloaks.dm"
+#include "monkestation\code\modules\clothing\neck\neckties.dm"
 #include "monkestation\code\modules\clothing\shoes\clown.dm"
 #include "monkestation\code\modules\clothing\shoes\shoe.dm"
 #include "monkestation\code\modules\clothing\spacesuits\plasmamen.dm"
