@@ -15,7 +15,7 @@
 
 /datum/action/cooldown/slasher/summon_machette/Activate(atom/target)
 	. = ..()
-	if(!stored_machette)
+	if(!stored_machette || QDELETED(stored_machette))
 		stored_machette = new /obj/item/slasher_machette
 		var/datum/antagonist/slasher/slasherdatum = owner.mind.has_antag_datum(/datum/antagonist/slasher)
 		if(!slasherdatum)
@@ -39,6 +39,7 @@
 
 	force = 15 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
+	demolition_mod = 1.25
 
 	tool_behaviour = TOOL_CROWBAR // lets you pry open doors forcibly
 
@@ -51,8 +52,10 @@
 	if(iscarbon(hit_atom))
 		var/mob/living/carbon/hit_carbon = hit_atom
 		hit_carbon.blood_volume -= throwforce
-		hit_carbon.Knockdown(3 SECONDS)
 		playsound(src, 'goon/sounds/impact_sounds/Flesh_Stab_3.ogg', 25, 1)
+	if(isliving(hit_atom))
+		var/mob/living/hit_living = hit_atom
+		hit_living.Knockdown(3 SECONDS)
 
 /obj/item/slasher_machette/attack_hand(mob/user, list/modifiers)
 	if(isliving(user))

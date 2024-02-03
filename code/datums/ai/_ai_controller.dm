@@ -418,6 +418,25 @@ multiple modular subtrees with behaviors
 	post_blackboard_key_set(key)
 
 /**
+ * Helper to force a key to be a certain thing no matter what's already there
+ *
+ * Useful for if you're overriding a list with a new list entirely,
+ * as otherwise it would throw a runtime error from trying to override a list
+ *
+ * Not necessary to use if you aren't dealing with lists, as set_blackboard_key will clear the existing value
+ * in that case already, but may be useful for clarity.
+ *
+ * * key - A blackboard key
+ * * thing - a value to set the blackboard key to.
+ */
+/datum/ai_controller/proc/override_blackboard_key(key, thing)
+	if(blackboard[key] == thing)
+		return
+
+	clear_blackboard_key(key)
+	set_blackboard_key(key, thing)
+
+/**
  * Sets the key at index thing to the passed value
  *
  * Assumes the key value is already a list, if not throws an error.
