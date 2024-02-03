@@ -4,15 +4,20 @@
 	req_access = list(ACCESS_AWAY_SCIENCE)
 
 /obj/machinery/rnd/server/oldstation/Initialize(mapload)
-	register_context()
 	var/datum/techweb/oldstation_web = locate(/datum/techweb/oldstation) in SSresearch.techwebs
 	stored_research = oldstation_web
 	return ..()
 
 /obj/machinery/rnd/server/oldstation/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	var/screentip_set = FALSE
 	if(held_item && istype(held_item, /obj/item/research_notes))
 		context[SCREENTIP_CONTEXT_LMB] = "Generate research points"
-	return CONTEXTUAL_SCREENTIP_SET
+		screentip_set = TRUE
+
+	if(screentip_set)
+		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/rnd/server/oldstation/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/research_notes) && stored_research)
