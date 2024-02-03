@@ -1342,10 +1342,7 @@
 /area/awaymission/caves/bmp_asteroid/level_three)
 "pL" = (
 /obj/structure/window/reinforced/spawner/directional/south,
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right"
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/plating,
 /area/awaymission/caves/research)
 "qD" = (

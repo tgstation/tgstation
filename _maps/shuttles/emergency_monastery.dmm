@@ -507,13 +507,11 @@
 /area/shuttle/escape)
 "ig" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/door/window/right/directional/south{
-	base_state = "left";
-	icon_state = "left";
+/obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/machinery/door/window/left/directional/south{
 	name = "Curator Desk Door";
 	req_access = list("library")
 	},
-/obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "it" = (
@@ -1015,9 +1013,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "oX" = (
-/obj/machinery/door/window/right/directional/north{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/north{
 	name = "Secure Art Exhibit";
 	req_access = list("library")
 	},
@@ -1197,9 +1193,7 @@
 /turf/open/floor/iron/dark,
 /area/shuttle/escape)
 "rL" = (
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Coffin Storage";
 	req_access = list("chapel_office")
 	},

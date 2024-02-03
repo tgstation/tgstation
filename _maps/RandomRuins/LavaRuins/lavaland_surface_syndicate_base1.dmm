@@ -3124,9 +3124,7 @@
 /turf/open/floor/iron,
 /area/ruin/syndicate_lava_base/arrivals)
 "FX" = (
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Bar"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,

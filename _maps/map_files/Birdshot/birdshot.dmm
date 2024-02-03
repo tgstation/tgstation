@@ -5146,15 +5146,6 @@
 	name = "Custom Channel";
 	pixel_x = -10
 	},
-/obj/machinery/door/window/left/directional/east{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
-	layer = 4.1;
-	name = "Secondary AI Core Access";
-	pixel_x = 4;
-	req_access = list("ai_upload")
-	},
 /obj/item/radio/intercom/directional/south{
 	freerange = 1;
 	frequency = 1447;
@@ -5178,6 +5169,11 @@
 	},
 /obj/structure/cable/multilayer/connected,
 /obj/effect/turf_decal/box/red,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Tertiary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "caI" = (
@@ -5191,15 +5187,6 @@
 /turf/open/floor/iron/chapel,
 /area/station/maintenance/starboard/greater)
 "cbi" = (
-/obj/machinery/door/window/left/directional/west{
-	atom_integrity = 300;
-	base_state = "leftsecure";
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Tertiary AI Core Access";
-	pixel_x = -3;
-	req_access = list("ai_upload")
-	},
 /obj/effect/landmark/start/ai/secondary,
 /obj/item/radio/intercom/directional/north{
 	freerange = 1;
@@ -6626,9 +6613,7 @@
 "cDH" = (
 /obj/structure/table/reinforced,
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Outer Window"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/west{
@@ -8614,6 +8599,11 @@
 	pixel_y = 26
 	},
 /obj/structure/cable,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Secondary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "dov" = (
@@ -21117,9 +21107,7 @@
 	name = "Privacy Shutters"
 	},
 /obj/machinery/door/firedoor,
-/obj/machinery/door/window/brigdoor/left/directional/east{
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Head of Personnel's Desk";
 	req_access = list("hop")
 	},
@@ -63952,9 +63940,7 @@
 	name = "justice gas pump"
 	},
 /obj/item/wrench,
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Gas Ports"
 	},
 /turf/open/floor/plating,
@@ -69028,9 +69014,7 @@
 "xrX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	layer = 3.1;
 	name = "Upload Console Window";
 	req_access = list("ai_upload")
@@ -72163,9 +72147,7 @@
 "yha" = (
 /obj/structure/cable,
 /obj/structure/table,
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Core Modules";
 	req_access = list("captain")
 	},

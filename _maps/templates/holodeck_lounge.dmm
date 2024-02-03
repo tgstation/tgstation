@@ -18,11 +18,7 @@
 	},
 /area/template_noop)
 "c" = (
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
-	layer = 3
-	},
+/obj/machinery/door/window/right/directional/east,
 /turf/open/floor/holofloor{
 	dir = 9;
 	icon_state = "wood"

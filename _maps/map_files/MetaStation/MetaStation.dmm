@@ -552,9 +552,7 @@
 	},
 /obj/structure/table/wood/fancy/blue,
 /obj/effect/spawner/random/aimodule/neutral,
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Core Modules";
 	req_access = list("captain")
 	},
@@ -5587,9 +5585,7 @@
 /area/station/security/office)
 "bWS" = (
 /obj/machinery/light/small/directional/west,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "MiniSat Walkway Access"
 	},
 /obj/machinery/camera/directional/west{
@@ -7727,9 +7723,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cQV" = (
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "MiniSat Walkway Access"
 	},
 /obj/structure/window/reinforced/spawner/directional/north,
@@ -13430,9 +13424,7 @@
 /area/station/medical/medbay/central)
 "eVa" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "Reception Window"
 	},
 /obj/item/paper,
@@ -14672,9 +14664,7 @@
 /turf/open/floor/iron/white/smooth_large,
 /area/station/medical/storage)
 "fpd" = (
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "MiniSat Airlock Access"
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -20391,9 +20381,7 @@
 /turf/open/floor/plating/airless,
 /area/station/science/ordnance/bomb)
 "hxW" = (
-/obj/machinery/door/window/left/directional/north{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/north{
 	name = "Gas Ports"
 	},
 /obj/machinery/atmospherics/components/binary/pump{
@@ -20476,6 +20464,11 @@
 	},
 /obj/machinery/holopad/secure,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/right/directional/east{
+	name = "Tertiary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "hza" = (
@@ -22714,13 +22707,11 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "iom" = (
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
-	name = "Infirmary"
-	},
 /obj/effect/turf_decal/trimline/blue/filled/line{
 	dir = 4
+	},
+/obj/machinery/door/window/right/directional/east{
+	name = "Infirmary"
 	},
 /turf/open/floor/iron/white,
 /area/station/security/medical)
@@ -22978,9 +22969,7 @@
 	dir = 8;
 	id = "garbage"
 	},
-/obj/machinery/door/window/right/directional/north{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/north{
 	name = "Danger: Conveyor Access";
 	req_access = list("maint_tunnels")
 	},
@@ -26836,6 +26825,11 @@
 	pixel_y = -26
 	},
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Secondary AI Core Access";
+	req_access = list("ai_upload");
+	pixel_x = -4
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "jEI" = (
@@ -27910,9 +27904,7 @@
 /area/station/service/chapel/office)
 "jVZ" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Outer Window"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/east{
@@ -31902,9 +31894,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Shooting Range"
 	},
 /turf/open/floor/iron,
@@ -32487,9 +32477,7 @@
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
 "lLw" = (
-/obj/machinery/door/window/right/directional/south{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/south{
 	name = "Shower"
 	},
 /obj/machinery/shower/directional/south,
@@ -35598,9 +35586,7 @@
 /area/station/science/xenobiology)
 "mMM" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/left/directional/east{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/east{
 	name = "Outer Window"
 	},
 /obj/machinery/door/window/brigdoor/left/directional/west{
@@ -37622,12 +37608,10 @@
 /area/station/engineering/atmos/pumproom)
 "nwL" = (
 /obj/machinery/computer/upload/ai,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
-	layer = 3.1;
+/obj/machinery/door/window/right/directional/south{
 	name = "Upload Console Window";
-	req_access = list("ai_upload")
+	req_access = list("ai_upload");
+	layer = 3.1
 	},
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/window/reinforced/spawner/directional/east,
@@ -44204,9 +44188,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
 "pQu" = (
-/obj/machinery/door/window/right/directional/east{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/east{
 	name = "Danger: Conveyor Access";
 	req_access = list("maint_tunnels")
 	},
@@ -44958,16 +44940,13 @@
 	pixel_x = 3;
 	pixel_y = -23
 	},
-/obj/machinery/door/window/left/directional/west{
-	atom_integrity = 300;
-	base_state = "leftsecure";
-	icon_state = "leftsecure";
-	name = "Primary AI Core Access";
-	req_access = list("ai_upload")
-	},
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/door/window/brigdoor/left/directional/west{
+	name = "Primary AI Core Access";
+	req_access = list("ai_upload")
+	},
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/turret_protected/ai)
 "qeZ" = (
@@ -51136,9 +51115,7 @@
 /area/station/medical/surgery/theatre)
 "snu" = (
 /obj/structure/table/wood,
-/obj/machinery/door/window/left/directional/south{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/south{
 	name = "Captain's Desk";
 	req_access = list("captain")
 	},
@@ -52448,15 +52425,6 @@
 	listening = 0;
 	name = "Private Channel";
 	pixel_x = 8
-	},
-/obj/machinery/door/window/left/directional/west{
-	atom_integrity = 300;
-	base_state = "leftsecure";
-	icon_state = "leftsecure";
-	layer = 4.1;
-	name = "Tertiary AI Core Access";
-	pixel_x = -3;
-	req_access = list("ai_upload")
 	},
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
@@ -55105,9 +55073,7 @@
 /area/station/medical/virology)
 "tIv" = (
 /obj/structure/table/reinforced,
-/obj/machinery/door/window/brigdoor/left/directional/north{
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/north{
 	name = "Head of Personnel's Desk";
 	req_access = list("hop")
 	},
@@ -55858,10 +55824,7 @@
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
 "tUF" = (
-/obj/machinery/door/window/left/directional/east{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/east{
 	name = "Primary AI Core Access";
 	req_access = list("ai_upload")
 	},
@@ -56702,9 +56665,7 @@
 /area/station/command/heads_quarters/rd)
 "uhW" = (
 /obj/structure/cable,
-/obj/machinery/door/window/left/directional/west{
-	base_state = "right";
-	icon_state = "right";
+/obj/machinery/door/window/right/directional/west{
 	name = "Theater Stage"
 	},
 /turf/open/floor/carpet,
@@ -61621,9 +61582,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/central)
 "vPX" = (
-/obj/machinery/door/window/right/directional/west{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Security Delivery";
 	req_access = list("security")
 	},
@@ -62421,12 +62380,10 @@
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
 "wcL" = (
-/obj/machinery/door/window/right/directional/west{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Library Desk Door";
-	pixel_x = 3;
-	req_access = list("library")
+	req_access = list("library");
+	pixel_x = 3
 	},
 /turf/open/floor/wood,
 /area/station/service/library)
@@ -65528,15 +65485,6 @@
 	name = "Private Channel";
 	pixel_x = -8
 	},
-/obj/machinery/door/window/left/directional/east{
-	atom_integrity = 300;
-	base_state = "rightsecure";
-	icon_state = "rightsecure";
-	layer = 4.1;
-	name = "Secondary AI Core Access";
-	pixel_x = 4;
-	req_access = list("ai_upload")
-	},
 /turf/open/floor/circuit/green,
 /area/station/ai_monitored/turret_protected/ai)
 "xjg" = (
@@ -66512,9 +66460,7 @@
 /turf/open/floor/iron,
 /area/station/science/lab)
 "xAt" = (
-/obj/machinery/door/window/right/directional/west{
-	base_state = "left";
-	icon_state = "left";
+/obj/machinery/door/window/left/directional/west{
 	name = "Fitness Ring"
 	},
 /obj/structure/window/spawner/directional/south,

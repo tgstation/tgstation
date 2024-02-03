@@ -4799,8 +4799,7 @@
 /turf/open/floor/iron/white/textured_large,
 /area/ruin/space/ancientstation/delta/biolab)
 "zm" = (
-/obj/machinery/door/window/brigdoor/left/directional/west{
-	icon_state = "rightsecure";
+/obj/machinery/door/window/brigdoor/right/directional/west{
 	name = "Plasma Canister Storage"
 	},
 /obj/effect/turf_decal/stripes/line{
