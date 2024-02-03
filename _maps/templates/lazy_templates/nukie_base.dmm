@@ -1789,7 +1789,7 @@
 	},
 /area/centcom/syndicate_mothership/control)
 "uN" = (
-/obj/machinery/door/window/survival_pod{
+/obj/machinery/door/window/survival_pod/left/directional/south{
 	name = "Frosted Door"
 	},
 /turf/open/floor/iron/freezer,
@@ -2787,7 +2787,7 @@
 /area/centcom/syndicate_mothership/control)
 "GS" = (
 /obj/effect/turf_decal/siding/thinplating,
-/obj/machinery/door/window/survival_pod{
+/obj/machinery/door/window/survival_pod/left/directional/south{
 	name = "Surgery"
 	},
 /turf/open/floor/mineral/titanium/tiled/blue,
