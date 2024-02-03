@@ -18,7 +18,7 @@
 /obj/machinery/door/window/left/directional/south{dir = 8} : /obj/machinery/door/window/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/left/directional/east{dir = 1} : /obj/machinery/door/window/left/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/left/directional/easth{dir = 2} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/left/directional/east{dir = 2} : /obj/machinery/door/window/left/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/left/directional/east{dir = 8} : /obj/machinery/door/window/left/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/left/directional/west{dir = 1} : /obj/machinery/door/window/left/directional/north{@OLD;dir=@SKIP}
@@ -36,7 +36,7 @@
 /obj/machinery/door/window/right/directional/south{dir = 8} : /obj/machinery/door/window/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/right/directional/east{dir = 1} : /obj/machinery/door/window/right/directional/north{@OLD;dir=@SKIP}
-/obj/machinery/door/window/right/directional/easth{dir = 2} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
+/obj/machinery/door/window/right/directional/east{dir = 2} : /obj/machinery/door/window/right/directional/south{@OLD;dir=@SKIP}
 /obj/machinery/door/window/right/directional/east{dir = 8} : /obj/machinery/door/window/right/directional/west{@OLD;dir=@SKIP}
 
 /obj/machinery/door/window/right/directional/west{dir = 1} : /obj/machinery/door/window/right/directional/north{@OLD;dir=@SKIP}
