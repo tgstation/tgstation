@@ -1472,6 +1472,7 @@
 #include "code\datums\elements\temporary_atom.dm"
 #include "code\datums\elements\tenacious.dm"
 #include "code\datums\elements\tiny_mob_hunter.dm"
+#include "code\datums\elements\toggle_slot_flags.dm"
 #include "code\datums\elements\tool_flash.dm"
 #include "code\datums\elements\turf_transparency.dm"
 #include "code\datums\elements\undertile.dm"
