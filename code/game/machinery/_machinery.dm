@@ -826,27 +826,28 @@
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
 
-	//drop everything inside us. we do this after on_deconstruction() & spawn_frame()
-	//because we want these procs to handle their contents before we dump them
+	if(length(component_parts))
+		for(var/part in component_parts)
+			if(istype(part, /datum/stock_part))
+				var/datum/stock_part/datum_part = part
+				new datum_part.physical_object_type(loc)
+			else
+				var/obj/item/obj_part = part
+				component_parts -= part
+				obj_part.forceMove(loc)
+				if(istype(obj_part, /obj/item/circuitboard/machine))
+					var/obj/item/circuitboard/machine/board = obj_part
+					for(var/component in board.req_components) //loop through all stack components and spawn them
+						if(!ispath(component, /obj/item/stack))
+							continue
+						var/obj/item/stack/stack_path = component
+						new stack_path(loc, board.req_components[component])
+		component_parts.Cut()
+
+	//drop everything inside us. we do this last to give machines a chance
+	//handle their contents before we dump them
 	dump_contents()
 
-	for(var/part in component_parts)
-		if(istype(part, /datum/stock_part))
-			var/datum/stock_part/datum_part = part
-			new datum_part.physical_object_type(loc)
-		else
-			var/obj/item/obj_part = part
-			component_parts -= part
-			obj_part.forceMove(loc)
-			if(istype(obj_part, /obj/item/circuitboard/machine))
-				var/obj/item/circuitboard/machine/board = obj_part
-				for(var/component in board.req_components) //loop through all stack components and spawn them
-					if(!ispath(component, /obj/item/stack))
-						continue
-					var/obj/item/stack/stack_path = component
-					new stack_path(loc, board.req_components[component])
-
-	LAZYCLEARLIST(component_parts)
 	return ..()
 
 /**
@@ -1132,9 +1133,14 @@
 /obj/machinery/proc/on_construction(mob/user)
 	return
 
-//called on deconstruction before the final deletion
+/**
+ * called on deconstruction before the final deletion
+ * Arguments
+ *
+ * * disassembled - if TRUE means we used tools to deconstruct it, FALSE means it got destroyed by other means
+ */
 /obj/machinery/proc/on_deconstruction(disassembled)
-	return
+	PROTECTED_PROC(TRUE)
 
 /obj/machinery/proc/can_be_overridden()
 	. = 1
