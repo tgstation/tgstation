@@ -18450,6 +18450,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/cargo/storage)
+"ftZ" = (
+/obj/effect/spawner/structure/window,
+/turf/open/floor/plating,
+/area/station/hallway/primary/tram/right)
 "fuj" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/engine,
@@ -19224,7 +19228,7 @@
 /turf/open/floor/iron/white,
 /area/station/science/lower)
 "fKO" = (
-/obj/effect/spawner/structure/window/reinforced,
+/obj/effect/spawner/structure/window,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/hop)
 "fKW" = (
@@ -185081,9 +185085,9 @@ bAj
 dJk
 vUE
 vUE
+ftZ
 vUE
-vUE
-vUE
+ftZ
 vUE
 nSI
 tXz
@@ -186108,11 +186112,11 @@ qUB
 hAR
 veA
 lCy
-lCy
-lCy
-nzx
 cFb
-lCy
+kDH
+nzx
+kDH
+cFb
 nSI
 tXz
 tXz
