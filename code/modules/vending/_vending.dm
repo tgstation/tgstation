@@ -19,6 +19,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 
 /// Maximum amount of items in a storage bag that we're transferring items to the vendor from.
 #define MAX_VENDING_INPUT_AMOUNT 30
+#define CREDITS_DUMP_THRESHOLD 50
 /**
  * # vending record datum
  *
@@ -181,6 +182,8 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	var/displayed_currency_name = " cr"
 	///Whether our age check is currently functional
 	var/age_restrictions = TRUE
+	/// How many credits does this vending machine have? 20% of all sales go to this pool, and are given freely when the machine is restocked, or successfully tilted. Lost on deconstruction.
+	var/credits_contained = 0
 	/**
 	  * Is this item on station or not
 	  *
@@ -623,7 +626,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		total += record.amount
 	for(var/datum/data/vending_product/record as anything in coin_records)
 		total += record.amount
-	to_chat(world, "Total stock: [total]")
 	return total
 
 /**
@@ -635,7 +637,6 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		total_max += record.max_amount
 	for(var/datum/data/vending_product/record as anything in coin_records)
 		total_max += record.max_amount
-	to_chat(world, "Total max stock: [total_max]")
 	return total_max
 
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
@@ -682,7 +683,9 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				// instantiate canister if needed
 				var/transferred = restock(canister)
 				if(transferred)
-					to_chat(user, span_notice("You loaded [transferred] items in [src]."))
+					to_chat(user, span_notice("You loaded [transferred] items in [src][credits_contained > 0 ? ", and are rewarded [credits_contained] credits." : "."]"))
+					var/obj/item/holochip/payday = new /obj/item/holochip(src, credits_contained)
+					try_put_in_hand(payday, user)
 				else
 					to_chat(user, span_warning("There's nothing to restock!"))
 			return
@@ -753,6 +756,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				returned_obj_to_dump.forceMove(get_turf(src))
 			record.amount--
 			break
+	deploy_credits()
 
 /**
  * Tilts ontop of the atom supplied, if crit is true some extra shit can happen. See [fall_and_crush] for return values.
@@ -1442,6 +1446,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 		SSblackbox.record_feedback("amount", "vending_spent", price_to_use)
 		SSeconomy.track_purchase(account, price_to_use, name)
 		log_econ("[price_to_use] credits were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
+	credits_contained += round(price_to_use * 0.2)
 	return TRUE
 
 /obj/machinery/vending/process(seconds_per_tick)
@@ -1579,6 +1584,19 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 	if(isliving(hit_atom))
 		tilt(fatty=hit_atom)
 	return ..()
+
+/** Drop credits when the vendor is attacked.*/
+/obj/machinery/vending/proc/deploy_credits()
+	if(credits_contained <= 0)
+		return
+	var/obj/item/holochip/holochip
+	if(credits_contained > CREDITS_DUMP_THRESHOLD)
+		holochip = new /obj/item/holochip(loc, CREDITS_DUMP_THRESHOLD)
+		credits_contained -= CREDITS_DUMP_THRESHOLD
+	else if(credits_contained > 0)
+		holochip = new /obj/item/holochip(loc, round(credits_contained))
+		credits_contained = 0
+	SSblackbox.record_feedback("amount", "vending machine looted", holochip.credits)
 
 /obj/machinery/vending/custom
 	name = "Custom Vendor"
