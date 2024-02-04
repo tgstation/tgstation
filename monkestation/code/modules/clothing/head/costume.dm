@@ -64,8 +64,6 @@ BUNNY EARS
 	worn_icon = 'monkestation/icons/mob/clothing/head_32x48.dmi'
 	icon_state = "playbunny_ears"
 	clothing_flags = LARGE_WORN_ICON
-
-/obj/item/clothing/head/playbunnyears/custom
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/playbunnyears
 	greyscale_config_worn = /datum/greyscale_config/playbunnyears_worn
@@ -95,21 +93,33 @@ BUNNY EARS
 	name = "centcom bunny ears headband"
 	desc = "A pair of very professional bunny ears attached to a headband. The ears themselves came from an endangered species of green rabbits"
 	icon_state = "playbunny_ears_centcom"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/head/playbunnyears/british
 	name = "british bunny ears headband"
 	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
 	icon_state = "playbunny_ears_brit"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/head/playbunnyears/communist
 	name = "really red bunny ears headband"
 	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
 	icon_state = "playbunny_ears_communist"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/head/playbunnyears/usa
 	name = "usa bunny ears headband"
 	desc = "A pair of bunny ears attached to a headband. One of the ears is already crooked."
 	icon_state = "playbunny_ears_usa"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 /*
 END OF BUNNY EARS
 */

@@ -49,8 +49,6 @@
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
 	icon_state = "heels"
 	can_be_tied = FALSE
-
-/obj/item/clothing/shoes/heels/custom
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels_worn
@@ -66,6 +64,9 @@
 	throwforce = 10
 	attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
 	attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/shoes/heels/magician
 	name = "magical heels"
@@ -73,17 +74,29 @@
 	icon_state = "heels_wiz"
 	strip_delay = 2 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/shoes/heels/centcom
 	name = "green heels"
 	desc = "A stylish piece of corporate footwear, its ergonomic design makes it easier to both run and work in than the average pair of heels."
 	icon_state = "heels_centcom"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/shoes/heels/red
 	name = "red heels"
 	icon_state = "heels_red"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 
 /obj/item/clothing/shoes/heels/blue
 	name = "blue heels"
 	icon_state = "heels_blue"
+	greyscale_colors = null
+	greyscale_config = null
+	greyscale_config_worn = null
 //END HEELS

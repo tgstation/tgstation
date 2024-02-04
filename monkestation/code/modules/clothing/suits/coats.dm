@@ -201,18 +201,22 @@
 	worn_icon = 'monkestation/icons/mob/clothing/suit.dmi'
 	icon = 'monkestation/icons/obj/clothing/suits.dmi'
 	icon_state = "tailcoat"
-
-/obj/item/clothing/suit/jacket/tailcoat/custom
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/tailcoat
 	greyscale_config_worn = /datum/greyscale_config/tailcoat_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/suit/jacket/tailcoat/custom
+
 
 /obj/item/clothing/suit/jacket/tailcoat/syndicate
 	name = "suspicious tailcoat"
 	desc = "A oddly intimidating coat usually worn by bunny themed assassins. It's reinforced with some extremely flexible lightweight alloy. How much did they pay for this?"
 	icon_state = "tailcoat_syndi"
 	armor_type = /datum/armor/tailcoat_syndi
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 
 /datum/armor/tailcoat_syndi
@@ -251,20 +255,32 @@
 	desc = "An official coat usually worn by bunny themed executives. The inside is lined with comfortable yet tasteful bunny fluff."
 	icon_state = "tailcoat_centcom"
 	armor_type = /datum/armor/armor_centcom_formal
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/british
 	name = "british flag tailcoat"
 	desc = "Spot of tea anyone?"
 	icon_state = "tailcoat_brit"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/communist
 	name = "really red tailcoat"
 	desc = "A red tailcoat with a star on the back."
 	icon_state = "tailcoat_communist"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 /obj/item/clothing/suit/jacket/tailcoat/usa
 	name = "stars tailcoat"
 	desc = "A blue tailcoat speckled with white stars."
 	icon_state = "tailcoat_stars"
+	greyscale_config = null
+	greyscale_config_worn = null
+	greyscale_colors = null
 
 //End of Bunny Costume Jackets

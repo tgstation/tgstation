@@ -1,13 +1,13 @@
 /datum/outfit/bunny_waiter
 	name = "Bunny Waiter"
-	uniform = /obj/item/clothing/under/costume/playbunny/custom
+	uniform = /obj/item/clothing/under/costume/playbunny
 	back = /obj/item/storage/backpack/satchel
 	box = /obj/item/storage/box/survival
-	suit = /obj/item/clothing/suit/jacket/tailcoat/custom
+	suit = /obj/item/clothing/suit/jacket/tailcoat
 	gloves = /obj/item/clothing/gloves/color/white
-	shoes = /obj/item/clothing/shoes/heels/custom
-	head = /obj/item/clothing/head/playbunnyears/custom
-	neck = /obj/item/clothing/neck/tie/bunnytie/custom/tied
+	shoes = /obj/item/clothing/shoes/heels
+	head = /obj/item/clothing/head/playbunnyears
+	neck = /obj/item/clothing/neck/tie/bunnytie/tied
 	ears = /obj/item/radio/headset/headset_srv
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/job/bartender
@@ -80,7 +80,7 @@
 	box = /obj/item/storage/box/survival
 	suit = /obj/item/clothing/suit/jacket/tailcoat/centcom
 	gloves = /obj/item/clothing/gloves/color/white
-	shoes = /obj/item/clothing/shoes/heels/custom
+	shoes = /obj/item/clothing/shoes/heels/centcom
 	head = /obj/item/clothing/head/playbunnyears/centcom
 	neck = /obj/item/clothing/neck/tie/bunnytie/centcom/tied
 	ears = /obj/item/radio/headset/headset_cent
