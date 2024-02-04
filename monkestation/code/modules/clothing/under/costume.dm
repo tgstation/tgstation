@@ -126,28 +126,50 @@
 /*
 BUNNY SUITS
 */
-
 /obj/item/clothing/under/costume/playbunny
 	name = "bunny suit"
 	desc = "The staple of any bunny themed waiters and the like. It has a little cottonball tail too."
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "playbunny"
+	body_parts_covered = CHEST|GROIN|LEGS
+	alt_covers_chest = TRUE
+
+/obj/item/clothing/under/costume/playbunny/custom
 	greyscale_colors = "#39393f#39393f#ffffff#87502e"
 	greyscale_config = /datum/greyscale_config/bunnysuit
 	greyscale_config_worn = /datum/greyscale_config/bunnysuit_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
-	body_parts_covered = CHEST|GROIN|LEGS
-	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/syndicate/syndibunny //heh
 	name = "blood-red bunny suit"
-	desc = "The staple of any bunny themed syndicate assassins. It has a little cottonball tail too. Are those carbon nanotube stockings?"
+	desc = "The staple of any bunny themed syndicate assassins. Are those carbon nanotube stockings?"
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "syndibunny"
 	body_parts_covered = CHEST|GROIN|LEGS
 
+/obj/item/clothing/under/costume/playbunny/magician
+	name = "magician's bunny suit"
+	desc = "The staple of any bunny themed stage magician."
+	icon_state = "playbunny_wiz"
+
+/obj/item/clothing/under/costume/playbunny/centcom
+	name = "centcom bunnysuit"
+	desc = "A modified Centcom version of a bunny outfit, using Lunarian technology to condense countless amounts of rabbits into a material that is extremely comfortable and light to wear."
+	icon_state = "playbunny_centcom"
+
+/obj/item/clothing/under/costume/playbunny/british
+	name = "british bunny suit"
+	icon_state = "playbunny_brit"
+
+/obj/item/clothing/under/costume/playbunny/communist
+	name = "really red bunny suit"
+	icon_state = "playbunny_communist"
+
+/obj/item/clothing/under/costume/playbunny/usa
+	name = "striped bunny suit"
+	icon_state = "playbunny_usa"
 /*
 END OF BUNNY SUITS
 */

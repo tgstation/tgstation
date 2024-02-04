@@ -40,14 +40,50 @@
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
 	icon_state = "cowboyboots_black"
 
+//START HEELS
+
 /obj/item/clothing/shoes/heels
 	name = "heels"
-	desc = "A both professional and stylish piece of footwear that are difficult to walk in."
+	desc = "A both professional and stylish pair of footwear that are difficult to walk in."
 	icon = 'monkestation/icons/obj/clothing/shoes.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/feet.dmi'
 	icon_state = "heels"
 	can_be_tied = FALSE
+
+/obj/item/clothing/shoes/heels/custom
 	greyscale_colors = "#39393f"
 	greyscale_config = /datum/greyscale_config/heels
 	greyscale_config_worn = /datum/greyscale_config/heels_worn
 	flags_1 = IS_PLAYER_COLORABLE_1
+
+/obj/item/clothing/shoes/heels/syndicate
+	name = "heels"
+	desc = "A both professional and stylish pair of footwear that are shockingly comfortable to walk in. They have have been sharpened to allow them to be used as a rudimentary weapon."
+	icon_state = "heels_syndi"
+	hitsound = 'sound/weapons/bladeslice.ogg'
+	strip_delay = 2 SECONDS
+	force = 5
+	throwforce = 10
+	attack_verb_continuous = list("attacks", "slices", "dices", "slashes", "cuts")
+	attack_verb_simple = list("attack", "slice", "dice", "slash", "cut")
+
+/obj/item/clothing/shoes/heels/magician
+	name = "magical heels"
+	desc = "A pair of heels that seem to magically solve all the problems with walking in heels."
+	icon_state = "heels_wiz"
+	strip_delay = 2 SECONDS
+	resistance_flags = FIRE_PROOF | ACID_PROOF
+
+/obj/item/clothing/shoes/heels/centcom
+	name = "green heels"
+	desc = "A stylish piece of corporate footwear, its ergonomic design makes it easier to both run and work in than the average pair of heels."
+	icon_state = "heels_centcom"
+
+/obj/item/clothing/shoes/heels/red
+	name = "red heels"
+	icon_state = "heels_red"
+
+/obj/item/clothing/shoes/heels/blue
+	name = "blue heels"
+	icon_state = "heels_blue"
+//END HEELS

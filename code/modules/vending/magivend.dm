@@ -13,6 +13,11 @@
 		/obj/item/clothing/suit/wizrobe/red = 1,
 		/obj/item/clothing/head/wizard/yellow = 1,
 		/obj/item/clothing/suit/wizrobe/yellow = 1,
+		/obj/item/clothing/head/wizard/magician = 1, //MONKESTATION ADDITION
+		/obj/item/clothing/suit/wizrobe/magician = 1, //MONKESTATION ADDITION
+		/obj/item/clothing/neck/tie/bunnytie/magician = 1, //MONKESTATION ADDITION
+		/obj/item/clothing/under/costume/playbunny/magician = 1, //MONKESTATION ADDITION
+		/obj/item/clothing/shoes/heels/magician = 1, //MONKESTATION ADDITION
 		/obj/item/clothing/shoes/sandal/magic = 1,
 		/obj/item/staff = 2,
 	)

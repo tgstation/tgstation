@@ -35,7 +35,7 @@
 	var/tie_timer = 4 SECONDS
 	/// Is this tie a clip-on, meaning it does not have an untied state?
 	var/clip_on = FALSE
-	//MONKESTATION EDIT Base icon_state name between tied and untied versions.
+	/// MONKESTATION EDIT Base icon_state name between tied and untied versions.
 	var/tie_type = "tie_greyscale"
 
 /obj/item/clothing/neck/tie/Initialize(mapload)
