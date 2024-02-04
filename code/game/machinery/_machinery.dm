@@ -1141,6 +1141,7 @@
  */
 /obj/machinery/proc/on_deconstruction(disassembled)
 	PROTECTED_PROC(TRUE)
+	return
 
 /obj/machinery/proc/can_be_overridden()
 	. = 1
