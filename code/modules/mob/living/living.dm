@@ -438,27 +438,14 @@
 	passwindow_off(src, TRAIT_MOVE_FLYING)
 
 /// Fly through window panes, smashing them on the way
-/mob/living/proc/flying_window_smash(atom/movable/mover, atom/oldloc, direction)
+/mob/living/proc/flying_window_smash(mob/living/mover, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	var/mob/living/flying_mob = mover
-	var/turf/target_turf = get_turf(flying_mob)
+	var/turf/target_turf = get_turf(mover)
 	for(var/obj/structure/tram/tram_wall in target_turf)
-		tram_wall.deconstruct(disassembled = FALSE)
-		flying_mob.balloon_alert_to_viewers("smashed through!")
-		flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(tram_wall, oldloc))
-		new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
+		tram_wall.smash_and_injure(mover)
 
 	for(var/obj/structure/window/window in target_turf)
-		window.deconstruct(disassembled = FALSE)
-		flying_mob.balloon_alert_to_viewers("smashed through!")
-		flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
-		new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
-
-	for(var/obj/machinery/door/window/windoor in target_turf)
-		windoor.deconstruct(disassembled = FALSE)
-		flying_mob.balloon_alert_to_viewers("smashed through!")
-		flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(windoor, oldloc))
-		new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
+		window.smash_and_injure(mover)
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled)
