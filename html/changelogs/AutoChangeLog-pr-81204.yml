@@ -1,6 +1,0 @@
-author: "Xander3359"
-delete-after: True
-changes:
-  - balance: "Contractor baton costs 7 TC (down from 12 TC)"
-  - balance: "Midroll/Latejoin traitors can no longer buy the baton, they must buy the whole kit"
-  - bugfix: "Midroll/Latejoin traitors no longer have access to roundstart traitor exclusive items"
