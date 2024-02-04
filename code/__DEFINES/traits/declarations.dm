@@ -103,11 +103,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_AIRLOCK_SHOCKIMMUNE "airlock_shock_immunity"
 /// Is this atom being actively shocked? Used to prevent repeated shocks.
 #define TRAIT_BEING_SHOCKED "shocked"
-#define TRAIT_STABLEHEART "stable_heart"
+#define TRAIT_STABLE_HEART "stable_heart"
 /// Prevents you from leaving your corpse
 #define TRAIT_CORPSELOCKED "corpselocked"
-#define TRAIT_STABLELIVER "stable_liver"
-#define TRAIT_STABLEAPPENDIX "stable_appendix"
+#define TRAIT_STABLE_LIVER "stable_liver"
+#define TRAIT_STABLE_APPENDIX "stable_appendix"
 #define TRAIT_VATGROWN "vatgrown"
 #define TRAIT_RESISTHEAT "resist_heat"
 ///For when you've gotten a power from a dna vault

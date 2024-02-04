@@ -162,7 +162,7 @@
 
 
 /obj/item/organ/internal/liver/handle_failing_organs(seconds_per_tick)
-	if(HAS_TRAIT(owner, TRAIT_STABLELIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
+	if(HAS_TRAIT(owner, TRAIT_STABLE_LIVER) || HAS_TRAIT(owner, TRAIT_LIVERLESS_METABOLISM))
 		return
 	return ..()
 

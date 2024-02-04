@@ -719,7 +719,7 @@
 	reagents.end_metabolization(src, keep_liverless = TRUE) //Stops trait-based effects on reagents, to prevent permanent buffs
 	reagents.metabolize(src, seconds_per_tick, times_fired, can_overdose = TRUE, liverless = TRUE)
 
-	if(HAS_TRAIT(src, TRAIT_STABLELIVER) || HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM))
+	if(HAS_TRAIT(src, TRAIT_STABLE_LIVER) || HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM))
 		return
 
 	adjustToxLoss(0.6 * seconds_per_tick, forced = TRUE)
@@ -752,7 +752,7 @@
 	return TRUE
 
 /mob/living/carbon/proc/needs_heart()
-	if(HAS_TRAIT(src, TRAIT_STABLEHEART))
+	if(HAS_TRAIT(src, TRAIT_STABLE_HEART))
 		return FALSE
 	if(dna && dna.species && (HAS_TRAIT(src, TRAIT_NOBLOOD) || isnull(dna.species.mutantheart))) //not all carbons have species!
 		return FALSE

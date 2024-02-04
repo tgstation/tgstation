@@ -49,7 +49,7 @@
 				to_chat(owner, span_notice("You feel stabilized."))
 				return
 
-		if(HAS_TRAIT(owner, TRAIT_STABLEAPPENDIX) && prob(stable_medicine_efficiency))
+		if(HAS_TRAIT(owner, TRAIT_STABLE_APPENDIX) && prob(stable_medicine_efficiency))
 			return
 
 	if(organ_flags & ORGAN_FAILING)
@@ -63,7 +63,7 @@
 		var/disease_type = NORMAL_APPENDICITIS
 		var/severity_type = TRAIT_DISEASELIKE_SEVERITY_MEDIUM
 		var/notification_type = "spontaneous"
-		if(prob(35))
+		if(prob(50))
 			disease_type = EXPLOSIVE_APPENDICITIS
 			severity_type = TRAIT_DISEASELIKE_SEVERITY_HIGH
 			notification_type = "explosive"
@@ -109,9 +109,7 @@
 
 /obj/item/organ/internal/appendix/proc/get_stabilized_status()
 	var/list/holder_list = owner?.reagents.reagent_list
-	if(locate(/datum/reagent/stabilizing_agent) in holder_list)
-		return TRUE
-	return FALSE
+	return locate(/datum/reagent/stabilizing_agent) in holder_list
 
 /obj/item/organ/internal/appendix/proc/bursting(seconds_per_tick)
 	var/mob/living/carbon/organ_owner = owner
@@ -156,13 +154,13 @@
 			inflamation_stage = EXPLOSIVE_MAX_STAGE // nothing happens in 8
 
 /obj/item/organ/internal/appendix/proc/kaboom()
-	sleep(60 SECONDS)
+	stoplag(60 SECONDS)
 	if(get_stabilized_status())
 		inflamation_stage = EXPLOSIVE_MAX_STAGE - 1
 		return to_chat(owner, span_notice("Your chest feels slightly stabilized. It still hurts like hell though.."))
 	playsound(get_turf(src), 'sound/effects/fuse.ogg', 80)
 	owner.visible_message(span_userdanger("A strange sizzling sound emanates from [owner]..."))
-	sleep(5 SECONDS)
+	stoplag(5 SECONDS)
 	explosion(owner, devastation_range = 0, heavy_impact_range = 1, light_impact_range = 2, flame_range = 3, flash_range = 4, explosion_cause = src)
 
 /obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)

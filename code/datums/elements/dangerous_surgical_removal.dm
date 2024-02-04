@@ -7,9 +7,11 @@
 /datum/element/dangerous_surgical_removal
 	element_flags = ELEMENT_BESPOKE
 	argument_hash_start_idx = 2
+	/// The detonation timer for the exploding organ.
 	var/fuse_time = 3 SECONDS
-	/// If not null, can snap handcuffs.
+	/// How strong the explosion is. Usually quite harmless as far as explosions go.
 	var/explosion_strength = 1
+	// If any of these flags are on the organ, it won't prime upon removal.
 	var/flag_blockers = (ORGAN_FAILING|ORGAN_EMP)
 
 /datum/element/dangerous_surgical_removal/Attach(datum/target, fuse_time = 3 SECONDS, explosion_strength = 1, flag_blockers = (ORGAN_FAILING|ORGAN_EMP))
@@ -31,7 +33,7 @@
 	SIGNAL_HANDLER
 	if(source.organ_flags & flag_blockers)
 		return
-	playsound(source, 'sound/effects/fuse.ogg', 45)
+	playsound(source, 'sound/effects/fuse.ogg', vol = 45)
 	var/mutable_appearance/sparks = mutable_appearance('icons/effects/welding_effect.dmi', "welding_sparks", GASFIRE_LAYER, source, ABOVE_LIGHTING_PLANE)
 	source.add_overlay(sparks)
 	LAZYADD(source.update_overlays_on_z, sparks)
@@ -39,10 +41,10 @@
 	animate(source, time = 1, pixel_z = 12, easing = ELASTIC_EASING)
 	animate(time = 1, pixel_z = 0, easing = BOUNCE_EASING)
 	for(var/i in 1 to 32)
-		animate(color = (i % 2) ? "#ffffff": "#ff6739", time = 1, easing = QUAD_EASING)
+		animate(color = (i % 2) ? COLOR_WHITE : COLOR_ORANGE, time = 1, easing = QUAD_EASING)
 
 	ASYNC
 		user.put_in_hands(source, del_on_fail = FALSE, forced = TRUE)
-		sleep(fuse_time)
+		stoplag(fuse_time)
 		explosion(source, devastation_range = 0, heavy_impact_range = round(explosion_strength * 0.5), light_impact_range = explosion_strength, flame_range = explosion_strength * 1.5, flash_range = explosion_strength * 2, explosion_cause = source)
 		qdel(source)

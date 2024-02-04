@@ -116,8 +116,8 @@
 		TRAIT_RESISTLOWPRESSURE,
 		TRAIT_TOXIMMUNE,
 		// INFECTIOUS UNIQUE
-		TRAIT_STABLEHEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
-		TRAIT_STABLELIVER, // Not necessary but for consistency with above
+		TRAIT_STABLE_HEART, // Replacement for noblood. Infectious zombies can bleed but don't need their heart.
+		TRAIT_STABLE_LIVER, // Not necessary but for consistency with above
 	)
 
 	// Infectious zombies have slow legs

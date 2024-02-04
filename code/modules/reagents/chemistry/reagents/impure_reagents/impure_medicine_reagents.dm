@@ -529,7 +529,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		TRAIT_NODEATH,
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
-		TRAIT_STABLEHEART,
+		TRAIT_STABLE_HEART,
 	)
 
 /datum/reagent/inverse/penthrite/on_mob_dead(mob/living/carbon/affected_mob, seconds_per_tick)

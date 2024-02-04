@@ -545,7 +545,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	/// List of traits to add/remove from our subject when we are in their system
 	var/static/list/subject_traits = list(
-		TRAIT_STABLEHEART,
+		TRAIT_STABLE_HEART,
 		TRAIT_NOHARDCRIT,
 		TRAIT_NOSOFTCRIT,
 		TRAIT_NOCRITDAMAGE,
@@ -583,7 +583,7 @@
 			to_chat(affected_mob,span_danger("Your body is trying to give up, but your heart is still beating!"))
 
 	if(affected_mob.health <= (affected_mob.crit_threshold + HEALTH_THRESHOLD_FULLCRIT*(2*normalise_creation_purity()))) //certain death below this threshold
-		REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type) //we have to remove the stable heart trait before we give them a heart attack
+		REMOVE_TRAIT(affected_mob, TRAIT_STABLE_HEART, type) //we have to remove the stable heart trait before we give them a heart attack
 		to_chat(affected_mob,span_danger("You feel something rupturing inside your chest!"))
 		affected_mob.emote("scream")
 		affected_mob.set_heartattack(TRUE)
@@ -598,7 +598,7 @@
 
 /datum/reagent/medicine/c2/penthrite/overdose_process(mob/living/carbon/human/affected_mob, seconds_per_tick, times_fired)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_STABLEHEART, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_STABLE_HEART, type)
 	var/need_mob_update
 	need_mob_update = affected_mob.adjustStaminaLoss(10 * REM * seconds_per_tick, updating_stamina = FALSE, required_biotype = affected_biotype)
 	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, 10 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags)

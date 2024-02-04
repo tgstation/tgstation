@@ -1449,11 +1449,11 @@
 
 /datum/reagent/medicine/higadrite/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
+	ADD_TRAIT(affected_mob, TRAIT_STABLE_LIVER, type)
 
 /datum/reagent/medicine/higadrite/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_STABLELIVER, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_STABLE_LIVER, type)
 
 /datum/reagent/medicine/lamphrite
 	name = "Lamphrite"
@@ -1464,11 +1464,11 @@
 
 /datum/reagent/medicine/lamphrite/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	ADD_TRAIT(affected_mob, TRAIT_STABLEAPPENDIX, type)
+	ADD_TRAIT(affected_mob, TRAIT_STABLE_APPENDIX, type)
 
 /datum/reagent/medicine/lamphrite/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	REMOVE_TRAIT(affected_mob, TRAIT_STABLEAPPENDIX, type)
+	REMOVE_TRAIT(affected_mob, TRAIT_STABLE_APPENDIX, type)
 
 /datum/reagent/medicine/cordiolis_hepatico
 	name = "Cordiolis Hepatico"
@@ -1479,11 +1479,11 @@
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_add(mob/living/affected_mob)
 	. = ..()
-	affected_mob.add_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
+	affected_mob.add_traits(list(TRAIT_STABLE_LIVER, TRAIT_STABLE_HEART), type)
 
 /datum/reagent/medicine/cordiolis_hepatico/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
-	affected_mob.remove_traits(list(TRAIT_STABLELIVER, TRAIT_STABLEHEART), type)
+	affected_mob.remove_traits(list(TRAIT_STABLE_LIVER, TRAIT_STABLE_HEART), type)
 
 /datum/reagent/medicine/muscle_stimulant
 	name = "Muscle Stimulant"
