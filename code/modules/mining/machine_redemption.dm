@@ -14,7 +14,7 @@
 	circuit = /obj/item/circuitboard/machine/ore_redemption
 	needs_item_input = TRUE
 	processing_flags = START_PROCESSING_MANUALLY
-	obj_flags = CAN_BE_HIT | UNWRENCH_BYPASS
+	obj_flags = CAN_BE_HIT
 
 	///Boolean on whether the ORM can claim points without being connected to an ore silo.
 	var/requires_silo = TRUE
@@ -183,15 +183,6 @@
 		// gives 5 seconds for a load of ores to be sucked up by the ORM before it sends out request console notifications. This should be enough time for most deposits that people make
 		console_notify_timer = addtimer(CALLBACK(src, PROC_REF(send_console_message)), 5 SECONDS)
 
-/obj/machinery/mineral/ore_redemption/default_unfasten_wrench(mob/user, obj/item/I)
-	. = ..()
-	if(. != SUCCESSFUL_UNFASTEN)
-		return
-	if(anchored)
-		register_input_turf() // someone just wrenched us down, re-register the turf
-	else
-		unregister_input_turf() // someone just un-wrenched us, unregister the turf
-
 /obj/machinery/mineral/ore_redemption/screwdriver_act(mob/living/user, obj/item/tool)
 	default_deconstruction_screwdriver(user, "ore_redemption-open", "ore_redemption", tool)
 	return ITEM_INTERACT_SUCCESS
@@ -201,7 +192,6 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/wrench_act(mob/living/user, obj/item/tool)
-	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/mineral/ore_redemption/AltClick(mob/living/user)
