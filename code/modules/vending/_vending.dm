@@ -608,6 +608,28 @@
 		else //no category found - dump it into standard stock
 			products[record.product_path] = record.amount
 
+/**
+ * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
+ */
+/obj/machinery/vending/proc/total_loaded_stock()
+	var/total = 0
+	for(var/datum/data/vending_product/record as anything in product_records)
+		total += record.amount
+	for(var/datum/data/vending_product/record as anything in coin_records)
+		total += record.amount
+	return total
+
+/**
+ * Returns the total amount of items in the vending machine based on the product records and premium records, but not contraband
+ */
+/obj/machinery/vending/proc/total_max_stock()
+	var/total_max = 0
+	for(var/datum/data/vending_product/record as anything in product_records)
+		total_max += record.max_amount
+	for(var/datum/data/vending_product/record as anything in coin_records)
+		total_max += record.max_amount
+	return total_max
+
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
 	if(!component_parts)
 		return FALSE
