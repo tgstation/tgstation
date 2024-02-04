@@ -245,24 +245,10 @@ GLOBAL_VAR_INIT(observer_default_invisibility, INVISIBILITY_OBSERVER)
  * I'll make this proc global and move it to its own file in a future update. |- Ricotez - UPDATE: They never did :(
  */
 /mob/proc/brighten_color(input_color)
-	if(input_color[1] == "#")
-		input_color = copytext(input_color, 2) // Removing the # at the beginning.
-	var/r_val
-	var/b_val
-	var/g_val
-	var/color_format = length(input_color)
-	if(color_format != length_char(input_color))
-		return 0
-	if(color_format == 3)
-		r_val = hex2num(copytext(input_color, 1, 2)) * 16
-		g_val = hex2num(copytext(input_color, 2, 3)) * 16
-		b_val = hex2num(copytext(input_color, 3, 4)) * 16
-	else if(color_format == 6)
-		r_val = hex2num(copytext(input_color, 1, 3))
-		g_val = hex2num(copytext(input_color, 3, 5))
-		b_val = hex2num(copytext(input_color, 5, 7))
-	else
-		return 0 //If the color format is not 3 or 6, you're using an unexpected way to represent a color.
+	var/list/read_color = rgb2num(input_color)
+	var/r_val = read_color[1]
+	var/b_val = read_color[2]
+	var/g_val = read_color[3]
 
 	r_val += (255 - r_val) * 0.4
 	if(r_val > 255)
