@@ -36,19 +36,19 @@
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	ammo_type = /obj/item/ammo_casing/caseless/c45_caseless
 	caliber = CALIBER_45
-	max_ammo = 12
+	max_ammo = 18
 
 //Uplink
 /datum/uplink_item/dangerous/whispering_jester_45
 	name = "Whispering-Jester .45 ACP Handgun"
-	desc = "A .45 handgun that is designed by Rayne Corp. The handgun has a built in suppressor. It's magazines contain 12 rounds."
+	desc = "A .45 handgun that is designed by Rayne Corp. The handgun has a built in suppressor. It's magazines contain 18 rounds."
 	item = /obj/item/gun/ballistic/automatic/pistol/whispering_jester_45
-	cost = 9
-	surplus = 20
+	cost = 11
+	surplus = 50
 
 /datum/uplink_item/ammo/whispering_jester_45_magazine
 	name = "Whispering-Jester .45 ACP magazine"
-	desc = "A .45 pistol magazine for the Whispering Jester handgun. Holds 12 Rounds. Chambered with caseless 45 ACP."
+	desc = "A .45 pistol magazine for the Whispering Jester handgun. Holds 18 Rounds. Chambered with caseless 45 ACP."
 	item = /obj/item/ammo_box/magazine/whispering_jester_45_magazine
-	cost = 2
+	cost = 3
 	surplus = 5
