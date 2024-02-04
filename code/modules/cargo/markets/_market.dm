@@ -40,7 +40,7 @@
 	if(!istype(uplink) || !(method in shipping))
 		return FALSE
 
-	for(var/datum/market_item/I in available_items)
+	for(var/datum/market_item/I in available_items[category])
 		if(I.type != item)
 			continue
 		var/price = I.price + shipping[method]

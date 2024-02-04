@@ -105,6 +105,35 @@
 	current_auction.price = bid_amount
 
 
+/// Handles buying the item, this is mainly for future use and moving the code away from the uplink.
+/datum/market/auction/purchase(item, category, method, obj/item/market_uplink/uplink, user)
+	if(!istype(uplink) || !(method in shipping))
+		return FALSE
+
+	for(var/datum/market_item/I in available_items)
+		if(I.type != item)
+			continue
+		var/price = I.price + shipping[method]
+
+		if(!uplink.current_user)///There is no ID card on the user, or the ID card has no account
+			to_chat(user, span_warning("The uplink sparks, as it can't identify an ID card with a bank account on you."))
+			return FALSE
+		var/balance = uplink?.current_user.account_balance
+
+		// I can't get the price of the item and shipping in a clean way to the UI, so I have to do this.
+		if(balance < price)
+			to_chat(user, span_warning("You don't have enough credits in [uplink] for [I] with [method] shipping."))
+			return FALSE
+
+		if(I.buy(uplink, user, method))
+			uplink.current_user.adjust_money(-price, "Other: Third Party Transaction")
+			if(ismob(user))
+				var/mob/m_user = user
+				m_user.playsound_local(get_turf(m_user), 'sound/machines/twobeep_high.ogg', 50, TRUE)
+			return TRUE
+		return FALSE
+
+
 /datum/market/auction/proc/grab_purchase_info(datum/market_item/auction/item, category, method)
 	purchase(item.type, category, method, item.uplink, item.user)
 
