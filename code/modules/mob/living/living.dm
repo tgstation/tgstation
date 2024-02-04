@@ -433,7 +433,7 @@
 	addtimer(CALLBACK(src, PROC_REF(end_window_flight)), duration)
 
 /// Removes pass flags and signal to smash through windows as you fly through the air
-/mob/living/proc/end_window_flight(trait_source)
+/mob/living/proc/end_window_flight()
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
 	passwindow_off(src, TRAIT_MOVE_FLYING)
 
