@@ -131,11 +131,11 @@ BUNNY SUITS
 	desc = "The staple of any bunny themed waiters and the like. It has a little cottonball tail too."
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
-	icon_state = "playbunny"
 	body_parts_covered = CHEST|GROIN|LEGS
 	alt_covers_chest = TRUE
 
 /obj/item/clothing/under/costume/playbunny/custom
+	icon_state = "playbunny"
 	greyscale_colors = "#39393f#39393f#ffffff#87502e"
 	greyscale_config = /datum/greyscale_config/bunnysuit
 	greyscale_config_worn = /datum/greyscale_config/bunnysuit_worn

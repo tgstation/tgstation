@@ -6,7 +6,6 @@
 	desc = "A fancy tie that includes a collar. Looking snazzy."
 	icon = 'monkestation/icons/obj/clothing/necks.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/neck.dmi'
-	icon_state = "bowtie_collar_tied"
 	tie_type = "bowtie_collar"
 	greyscale_config = null
 	greyscale_config_worn = null
@@ -14,6 +13,7 @@
 	alternate_worn_layer = UNDER_SUIT_LAYER
 
 /obj/item/clothing/neck/tie/bunnytie/custom
+	icon_state = "bowtie_collar_tied"
 	greyscale_colors = "#ffffff#39393f"
 	greyscale_config = /datum/greyscale_config/bowtie_collar
 	greyscale_config_worn = /datum/greyscale_config/bowtie_collar_worn
