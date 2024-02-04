@@ -18053,7 +18053,6 @@
 	dir = 5
 	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/landmark/observer_start,
 /turf/open/floor/plating,
 /area/station/hallway/primary/tram/left)
 "fnO" = (
@@ -48149,6 +48148,7 @@
 	id = 2
 	},
 /obj/machinery/transport/destination_sign/indicator/directional/south,
+/obj/effect/landmark/observer_start,
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/center)
 "qch" = (
@@ -48415,7 +48415,6 @@
 "qfQ" = (
 /obj/structure/cable,
 /obj/machinery/power/apc/auto_name/directional/east,
-/obj/machinery/transport/power_rectifier,
 /turf/open/floor/catwalk_floor,
 /area/station/hallway/primary/tram/right)
 "qfS" = (
