@@ -28,6 +28,16 @@
 	if(screentip_set)
 		. = CONTEXTUAL_SCREENTIP_SET
 
+/obj/machinery/rnd/destructive_analyzer/examine(mob/user)
+	. = ..()
+	if(!in_range(user, src) && !isobserver(user))
+		return
+
+	if(loaded_item)
+		. += span_notice("Use [EXAMINE_HINT("LMB")] to remove loaded item inside.")
+	else
+		. += span_notice("An item can be loaded inside via [EXAMINE_HINT("LMB")].")
+
 /obj/machinery/rnd/destructive_analyzer/attackby(obj/item/weapon, mob/living/user, params)
 	if(user.combat_mode)
 		return ..()

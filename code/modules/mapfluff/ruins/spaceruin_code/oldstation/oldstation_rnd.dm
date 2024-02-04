@@ -11,13 +11,17 @@
 /obj/machinery/rnd/server/oldstation/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	var/screentip_set = FALSE
 	if(held_item && istype(held_item, /obj/item/research_notes))
 		context[SCREENTIP_CONTEXT_LMB] = "Generate research points"
-		screentip_set = TRUE
+		return CONTEXTUAL_SCREENTIP_SET
 
-	if(screentip_set)
-		. = CONTEXTUAL_SCREENTIP_SET
+/obj/machinery/rnd/server/oldstation/examine(mob/user)
+	. = ..()
+
+	if(!in_range(user, src) && !isobserver(user))
+		return
+
+	. += span_notice("Insert [EXAMINE_HINT("Research Notes")] to generate points.")
 
 /obj/machinery/rnd/server/oldstation/attackby(obj/item/attacking_item, mob/user, params)
 	if(istype(attacking_item, /obj/item/research_notes) && stored_research)

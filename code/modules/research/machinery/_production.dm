@@ -28,9 +28,11 @@
 		/datum/component/remote_materials, \
 		mapload, \
 		mat_container_signals = list( \
-			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd, AfterMaterialInsert)
+			COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/rnd, local_material_insert)
 		) \
 	)
+
+	RegisterSignal(src, COMSIG_SILO_ITEM_CONSUMED, TYPE_PROC_REF(/obj/machinery/rnd/production, silo_material_insert))
 
 	AddComponent(
 		/datum/component/payment, \
@@ -93,13 +95,14 @@
 	RegisterSignals(
 		stored_research,
 		list(COMSIG_TECHWEB_ADD_DESIGN, COMSIG_TECHWEB_REMOVE_DESIGN),
-		PROC_REF(on_techweb_update)
+		TYPE_PROC_REF(/obj/machinery/rnd/production, on_techweb_update)
 	)
 	update_designs()
 
-
 /// Updates the list of designs this fabricator can print.
 /obj/machinery/rnd/production/proc/update_designs()
+	PROTECTED_PROC(TRUE)
+
 	var/previous_design_count = cached_designs.len
 
 	cached_designs.Cut()
@@ -125,20 +128,53 @@
 	// them together.
 	addtimer(CALLBACK(src, PROC_REF(update_designs)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
-///How local material are processed when inserted
-/obj/machinery/rnd/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
+///When materials are instered via silo link
+/obj/machinery/rnd/proc/silo_material_insert(obj/machinery/rnd/machine, container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted)
 	SIGNAL_HANDLER
 
-	var/stack_name
-	if(istype(item_inserted, /obj/item/stack/ore/bluespace_crystal))
-		stack_name = "bluespace"
-	else
-		var/obj/item/stack/S = item_inserted
-		stack_name = S.name
+	process_item(item_inserted, mats_consumed, amount_inserted)
 
-	directly_use_power(round(amount2sheet(amount_inserted) * active_power_usage * 0.005))
-	add_overlay("protolathe_[stack_name]")
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, cut_overlay), "protolathe_[stack_name]"), 10)
+/**
+ * Consumes power for the item inserted either into silo or local storage.
+ * Arguments
+ *
+ * * obj/item/item_inserted - the item to process
+ * * list/mats_consumed - list of mats consumed
+ * * amount_inserted - amount of material actually processed
+ */
+/obj/machinery/rnd/proc/process_item(obj/item/item_inserted, list/mats_consumed, amount_inserted)
+	PRIVATE_PROC(TRUE)
+
+	if(directly_use_power(round((amount_inserted / SHEET_MATERIAL_AMOUNT) * active_power_usage * 0.00025)))
+		var/mat_name = "iron"
+
+		var/highest_mat = 0
+		for(var/datum/material/mat as anything in mats_consumed)
+			var/present_mat = mats_consumed[mat]
+			if(present_mat > highest_mat)
+				mat_name = initial(mat.name)
+				if(mat_name == "silver" || mat_name == "titanium" || mat_name == "plastic") //these materials have similar appearances so use an common overlay for them
+					mat_name = "shiny"
+				highest_mat = present_mat
+
+		flick_animation(mat_name)
+/**
+ * Plays an visual animation when materials are inserted
+ * Arguments
+ *
+ * * mat_name - the name of the material we are trying to animate on the machine
+ */
+/obj/machinery/rnd/proc/flick_animation(mat_name)
+	PROTECTED_PROC(TRUE)
+	SHOULD_CALL_PARENT(FALSE)
+
+	flick_overlay_view(mutable_appearance('icons/obj/machines/research.dmi', "protolathe_[mat_name]", BELOW_OBJ_LAYER), 1 SECONDS)
+
+///When materials are instered into local storage
+/obj/machinery/rnd/proc/local_material_insert(container, obj/item/item_inserted, last_inserted_id, list/mats_consumed, amount_inserted, atom/context)
+	SIGNAL_HANDLER
+
+	process_item(item_inserted, mats_consumed, amount_inserted)
 
 /obj/machinery/rnd/production/RefreshParts()
 	. = ..()
@@ -285,11 +321,7 @@
 			var/coefficient = build_efficiency(design.build_path)
 
 			//check for materials
-			if(!materials.mat_container)
-				say("No connection to material storage, please contact the quartermaster.")
-				return
-			if(materials.on_hold())
-				say("Mineral access is on hold, please contact the quartermaster.")
+			if(!materials.can_use_resource())
 				return
 			if(!materials.mat_container.has_materials(design.materials, coefficient, print_quantity))
 				say("Not enough materials to complete prototype[print_quantity > 1 ? "s" : ""].")
@@ -338,6 +370,9 @@
 
 	if(!is_operational || !directly_use_power(charge_per_item))
 		say("Unable to continue production, power failure.")
+		finalize_build()
+		return
+	if(!materials.can_use_resource())
 		finalize_build()
 		return
 

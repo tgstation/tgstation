@@ -97,7 +97,7 @@
 
 	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-	directly_use_power(round(amount2sheet(amount_inserted) * active_power_usage * 0.0025))
+	directly_use_power(round((amount_inserted / SHEET_MATERIAL_AMOUNT) * active_power_usage * 0.0025))
 
 /obj/machinery/autolathe/ui_interact(mob/user, datum/tgui/ui)
 	if(!is_operational)
@@ -157,7 +157,6 @@
 			"id" = design.id,
 			"categories" = design.category,
 			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"constructionTime" = -1,
 			"customMaterials" = customMaterials
 		)
 
