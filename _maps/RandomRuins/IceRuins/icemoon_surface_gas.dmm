@@ -85,11 +85,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/machinery/duct,
 /obj/structure/sign/poster/fluff/lizards_gas_power/directional/west,
-/obj/machinery/drone_dispenser/preloaded{
-	dispense_type = /obj/item/fuel_pellet/advanced;
-	name = "fuel pellet dispenser";
-	desc = "A hefty machine that, when supplied with iron and glass, will periodically create an advanced fuel pellet. Does not need to be manually operated."
-	},
 /turf/open/floor/plating,
 /area/ruin/powered/lizard_gas)
 "eM" = (
