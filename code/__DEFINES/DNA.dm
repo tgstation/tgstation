@@ -81,7 +81,6 @@
 #define ANIME 13
 #define MUTCOLORS_SECONDARY 14
 #define SPECIES_FUR 15
-#define NO_PANT 16 //MONKESTATION ADDITION: simillar to NO_UNDERWEAR but you can wear shirts
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define DYNCOLORS 16
@@ -100,6 +99,8 @@
 #define REVIVESBYHEALING 23
 #define NOHUSK 24
 #define NOMOUTH 25
+
+#define NO_PANT 26 //MONKESTATION ADDITION: simillar to NO_UNDERWEAR but you can wear shirts
 
 //organ slots
 #define ORGAN_SLOT_ADAMANTINE_RESONATOR "adamantine_resonator"
