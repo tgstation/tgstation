@@ -427,15 +427,15 @@
 		set_pull_offsets(M, state)
 
 /// Adds pass flags and signal to smash through windows as you fly through the air
-/mob/living/proc/start_window_flight(duration = 1.5 SECONDS, trait_source)
+/mob/living/proc/start_window_flight(duration = 1.5 SECONDS)
 	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(flying_window_smash))
-	passwindow_on(src, trait_source)
-	addtimer(CALLBACK(src, PROC_REF(end_window_flight), trait_source), duration)
+	passwindow_on(src, TRAIT_MOVE_FLYING)
+	addtimer(CALLBACK(src, PROC_REF(end_window_flight)), duration)
 
 /// Removes pass flags and signal to smash through windows as you fly through the air
 /mob/living/proc/end_window_flight(trait_source)
 	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-	passwindow_off(src, trait_source)
+	passwindow_off(src, TRAIT_MOVE_FLYING)
 
 /// Fly through window panes, smashing them on the way
 /mob/living/proc/flying_window_smash(atom/movable/mover, atom/oldloc, direction)
@@ -1384,7 +1384,9 @@
 /mob/living/carbon/alien/update_stamina()
 	return
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, smash_windows = FALSE)
+	if(smash_windows)
+		start_window_flight(1.5 SECONDS)
 	stop_pulling()
 	. = ..()
 
