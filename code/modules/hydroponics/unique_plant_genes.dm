@@ -442,10 +442,10 @@
 
 	if(isbasicmob(spawned_mob))
 		var/mob/living/basic/spawned_basicmob = spawned_mob
-		spawned_basicmob.melee_damage_lower += round(our_seed.potency * mob_melee_multiplier)
-		spawned_basicmob.melee_damage_upper += round(our_seed.potency * mob_melee_multiplier)
+		spawned_basicmob.melee_damage_lower += round(min(our_seed.potency, 100) * mob_melee_multiplier)
+		spawned_basicmob.melee_damage_upper += round(min(our_seed.potency, 100) * mob_melee_multiplier)
 		// basic mob speeds aren't exactly equivalent to simple animal's "move to delay" but this seems balanced enough.
-		var/calculated_speed = initial(spawned_basicmob.speed) - round((our_seed.production * mob_speed_multiplier), 0.01)
+		var/calculated_speed = initial(spawned_basicmob.speed) - round((min(our_seed.production, 25) * mob_speed_multiplier), 0.01)
 		spawned_basicmob.set_varspeed(calculated_speed)
 
 	our_plant.forceMove(our_plant.drop_location())
