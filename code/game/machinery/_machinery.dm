@@ -845,7 +845,7 @@
 		component_parts.Cut()
 
 	//drop everything inside us. we do this last to give machines a chance
-	//handle their contents before we dump them
+	//to handle their contents before we dump them
 	dump_contents()
 
 	return ..()
