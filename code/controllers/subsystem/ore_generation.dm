@@ -49,7 +49,10 @@ SUBSYSTEM_DEF(ore_generation)
 				break
 			if(vent.unique_vent)
 				continue //Ya'll already got your minerals.
-			vent.generate_mineral_breakdown(new_minerals = 1, map_loading = TRUE)
+			if(length(difflist(first = ore_vent_minerals, second = vent.mineral_breakdown, skiprep = 1)))
+				vent.generate_mineral_breakdown(new_minerals = 1, map_loading = TRUE)
+			else
+				continue
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/ore_generation/fire(resumed)
