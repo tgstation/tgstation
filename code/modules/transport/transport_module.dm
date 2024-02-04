@@ -933,6 +933,7 @@
 /obj/structure/transport/linear/tram/proc/estop_throw(throw_direction)
 	for(var/mob/living/passenger in transport_contents)
 		to_chat(passenger, span_userdanger("The tram comes to a sudden, grinding stop!"))
+		if(prob(20)) // once in a while you go through the window
+			passenger.start_window_flight(1.5 SECONDS, VEHICLE_TRAIT)
 		var/throw_target = get_edge_target_turf(src, throw_direction)
-		var/datum/callback/land_slam = new(passenger, TYPE_PROC_REF(/mob/living/, tram_slam_land))
-		passenger.throw_at(throw_target, 400, 4, force = MOVE_FORCE_OVERPOWERING, callback = land_slam)
+		passenger.throw_at(throw_target, 30, 6, force = MOVE_FORCE_OVERPOWERING)

@@ -426,6 +426,39 @@
 
 		set_pull_offsets(M, state)
 
+/// Adds pass flags and signal to smash through windows as you fly through the air
+/mob/living/proc/start_window_flight(duration = 1.5 SECONDS, trait_source)
+	RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(flying_window_smash))
+	passwindow_on(src, trait_source)
+	addtimer(CALLBACK(src, PROC_REF(end_window_flight), trait_source), duration)
+
+/// Removes pass flags and signal to smash through windows as you fly through the air
+/mob/living/proc/end_window_flight(trait_source)
+	UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+	passwindow_off(src, trait_source)
+
+/// Fly through window panes, smashing them on the way
+/mob/living/proc/flying_window_smash(atom/movable/mover, atom/oldloc, direction)
+	SIGNAL_HANDLER
+	var/mob/living/flying_mob = mover
+	for(var/obj/structure/tram/tram_wall in get_turf(flying_mob))
+		tram_wall.deconstruct(disassembled = FALSE)
+		flying_mob.balloon_alert_to_viewers("smashed through!")
+		flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(tram_wall, oldloc))
+		new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
+
+	for(var/obj/structure/window/window in get_turf(flying_mob))
+		window.deconstruct(disassembled = FALSE)
+		flying_mob.balloon_alert_to_viewers("smashed through!")
+		flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(window, oldloc))
+		new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
+
+	for(var/obj/machinery/door/window/windoor in get_turf(flying_mob))
+		windoor.deconstruct(disassembled = FALSE)
+		flying_mob.balloon_alert_to_viewers("smashed through!")
+		flying_mob.apply_damage(damage = rand(5, 15), damagetype = BRUTE, wound_bonus = 15, bare_wound_bonus = 25, sharpness = SHARP_EDGED, attack_direction = get_dir(windoor, oldloc))
+		new /obj/effect/decal/cleanable/glass(get_step(flying_mob, flying_mob.dir))
+
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled)
 		return //don't make them change direction or offset them if they're buckled into something.
