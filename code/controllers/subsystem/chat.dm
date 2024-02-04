@@ -20,16 +20,16 @@ SUBSYSTEM_DEF(chat)
 	var/list/client_to_sequence_number = list()
 
 /datum/controller/subsystem/chat/proc/generate_payload(client/target, message_data)
-	var/sequence = client_to_sequence_number[target.ckey]
-	client_to_sequence_number[target.ckey] += 1
+	var/sequence = client_to_sequence_number[target.ckey]++
 
 	var/datum/chat_payload/payload = new
 	payload.sequence = sequence
 	payload.content = message_data
 
-	if(!(target.ckey in client_to_reliability_history))
-		client_to_reliability_history[target.ckey] = list()
 	var/list/client_history = client_to_reliability_history[target.ckey]
+	if(!islist(client_history))
+		client_history = (client_to_reliability_history[target.ckey] = list())
+	
 	client_history["[sequence]"] = payload
 
 	if(length(client_history) > CHAT_RELIABILITY_HISTORY_SIZE)
