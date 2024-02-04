@@ -301,15 +301,13 @@
 			playsound(src, 'sound/items/welder.ogg', 100, TRUE)
 
 
-/obj/machinery/door/window/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION) && !disassembled)
-		for(var/i in 1 to shards)
-			drop_debris(new /obj/item/shard(src))
-		if(rods)
-			drop_debris(new /obj/item/stack/rods(src, rods))
-		if(cable)
-			drop_debris(new /obj/item/stack/cable_coil(src, cable))
-	qdel(src)
+/obj/machinery/door/window/on_deconstruction(disassembled)
+	for(var/i in 1 to shards)
+		drop_debris(new /obj/item/shard(src))
+	if(rods)
+		drop_debris(new /obj/item/stack/rods(src, rods))
+	if(cable)
+		drop_debris(new /obj/item/stack/cable_coil(src, cable))
 
 /obj/machinery/door/window/proc/drop_debris(obj/item/debris)
 	debris.forceMove(loc)

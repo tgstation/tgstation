@@ -42,11 +42,10 @@
 	QDEL_NULL(beaker)
 	update_appearance()
 
-/obj/machinery/reagentgrinder/deconstruct()
+/obj/machinery/reagentgrinder/on_deconstruction(disassmbled)
 	drop_all_items()
 	beaker?.forceMove(drop_location())
 	beaker = null
-	return ..()
 
 /obj/machinery/reagentgrinder/Destroy()
 	QDEL_NULL(beaker)

@@ -468,16 +468,14 @@
  *
  * Called by wrench_act(), create a pipe fitting and remove the pipe
  */
-/obj/machinery/atmospherics/deconstruct(disassembled = TRUE)
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		if(can_unwrench)
-			var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
-			stored.set_piping_layer(piping_layer)
-			if(!disassembled)
-				stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
-			transfer_fingerprints_to(stored)
-			. = stored
-	..()
+/obj/machinery/atmospherics/on_deconstruction(disassembled = TRUE)
+	if(can_unwrench)
+		var/obj/item/pipe/stored = new construction_type(loc, null, dir, src, pipe_color)
+		stored.set_piping_layer(piping_layer)
+		if(!disassembled)
+			stored.take_damage(stored.max_integrity * 0.5, sound_effect=FALSE)
+		transfer_fingerprints_to(stored)
+		. = stored
 
 /**
  * Getter for piping layer shifted, pipe colored overlays

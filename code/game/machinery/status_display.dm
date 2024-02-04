@@ -72,16 +72,13 @@
 	update_appearance()
 	return TRUE
 
-/obj/machinery/status_display/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
+/obj/machinery/status_display/on_deconstruction(disassembled)
 	if(!disassembled)
 		new /obj/item/stack/sheet/iron(drop_location(), 2)
 		new /obj/item/shard(drop_location())
 		new /obj/item/shard(drop_location())
 	else
 		new /obj/item/wallframe/status_display(drop_location())
-	qdel(src)
 
 /// Immediately change the display to the given picture.
 /obj/machinery/status_display/proc/set_picture(state)

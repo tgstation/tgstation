@@ -198,9 +198,8 @@
 	end_processing()
 
 	clear_components()
-	dump_contents()
-
 	unset_static_power()
+
 	return ..()
 
 /**
@@ -815,13 +814,21 @@
 	deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(obj_flags & NO_DECONSTRUCTION)
+		dump_contents() //drop everything inside us
 		return ..() //Just delete us, no need to call anything else.
 
-	on_deconstruction()
+	on_deconstruction(disassembled)
 	if(!LAZYLEN(component_parts))
+		dump_contents() //drop everything inside us
 		return ..() //we don't have any parts.
 	spawn_frame(disassembled)
+
+	//drop everything inside us. we do this after on_deconstruction() & spawn_frame()
+	//because we want these procs to handle their contents before we dump them
+	dump_contents()
 
 	for(var/part in component_parts)
 		if(istype(part, /datum/stock_part))
@@ -1126,7 +1133,7 @@
 	return
 
 //called on deconstruction before the final deletion
-/obj/machinery/proc/on_deconstruction()
+/obj/machinery/proc/on_deconstruction(disassembled)
 	return
 
 /obj/machinery/proc/can_be_overridden()

@@ -106,13 +106,11 @@
 	if(default_unfasten_wrench(user, I) != CANT_UNFASTEN)
 		return TRUE
 
-/obj/machinery/grill/deconstruct(disassembled = TRUE)
+/obj/machinery/grill/on_deconstruction(disassembled)
 	if(grilled_item)
 		finish_grill()
-	if(!(obj_flags & NO_DECONSTRUCTION))
-		new /obj/item/stack/sheet/iron(loc, 5)
-		new /obj/item/stack/rods(loc, 5)
-	..()
+	new /obj/item/stack/sheet/iron(loc, 5)
+	new /obj/item/stack/rods(loc, 5)
 
 /obj/machinery/grill/attack_ai(mob/user)
 	return

@@ -36,5 +36,5 @@
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/iv_drip/plumbing/deconstruct(disassembled = TRUE)
+/obj/machinery/iv_drip/plumbing/on_deconstruction(disassembled)
 	qdel(src)

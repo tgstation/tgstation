@@ -852,10 +852,7 @@
 	balloon_alert(user, "[panel_open ? "mounting bolts exposed" : "mounting bolts hidden"]")
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
-	if(obj_flags & NO_DECONSTRUCTION)
-		return
-
+/obj/machinery/transport/tram_controller/on_deconstruction(disassembled)
 	var/turf/drop_location = find_obstruction_free_location(1, src)
 
 	if(disassembled)
@@ -863,7 +860,6 @@
 	else
 		new /obj/item/stack/sheet/mineral/titanium(drop_location, 2)
 		new /obj/item/stack/sheet/iron(drop_location, 1)
-	qdel(src)
 
 /**
  * Update the blinky lights based on the controller status, allowing to quickly check without opening up the cabinet.
