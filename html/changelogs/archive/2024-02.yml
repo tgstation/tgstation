@@ -63,3 +63,20 @@
   - qol: Spider eggs will now close their spawn menu when you move away from them.
   Whoneedspacee:
   - bugfix: Ash drake's fire breath attack has proper cooldowns again
+2024-02-04:
+  FernandoJ8:
+  - sound: The Guide to Advanced Mimery book series now only make a very faint noise
+      when turning their pages, in order to match their description
+  LT3:
+  - bugfix: Fixed alt-click validation for tram interactions
+  SapphicOverload:
+  - code_imp: Removes /obj/item/onetankbomb, assembly bombs are now handled by the
+      tank itself.
+  Swiftfeather:
+  - qol: Increased threshold of trace n2o required to make euphoria and giggles happen.
+  Xander3359:
+  - balance: Contractor baton costs 7 TC (down from 12 TC)
+  - balance: Midroll/Latejoin traitors can no longer buy the baton, they must buy
+      the whole kit
+  - bugfix: Midroll/Latejoin traitors no longer have access to roundstart traitor
+      exclusive items
