@@ -107,7 +107,7 @@
 
 /// Handles buying the item, this is mainly for future use and moving the code away from the uplink.
 /datum/market/auction/purchase(item, category, method, obj/item/market_uplink/uplink, user)
-	if(!istype(uplink) || !(method in shipping))
+	if(!istype(uplink))
 		return FALSE
 
 	for(var/datum/market_item/I in available_items)
