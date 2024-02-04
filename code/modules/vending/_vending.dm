@@ -14,6 +14,9 @@
 	premium = list()
 */
 
+/// List of vending machines that players can restock, so only vending machines that are on station or don't have a unique condition.
+GLOBAL_LIST_EMPTY(vending_machines_to_restock)
+
 /// Maximum amount of items in a storage bag that we're transferring items to the vendor from.
 #define MAX_VENDING_INPUT_AMOUNT 30
 /**
@@ -251,6 +254,7 @@
 				onstation = FALSE
 			if(circuit)
 				circuit.onstation = onstation //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+
 		else if(HAS_TRAIT(SSstation, STATION_TRAIT_VENDING_SHORTAGE))
 			for (var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 				/**
@@ -263,6 +267,8 @@
 				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
+	if(onstation)
+		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
 
 /obj/machinery/vending/Destroy()
 	QDEL_NULL(wires)
@@ -617,6 +623,7 @@
 		total += record.amount
 	for(var/datum/data/vending_product/record as anything in coin_records)
 		total += record.amount
+	to_chat(world, "Total stock: [total]")
 	return total
 
 /**
@@ -628,6 +635,7 @@
 		total_max += record.max_amount
 	for(var/datum/data/vending_product/record as anything in coin_records)
 		total_max += record.max_amount
+	to_chat(world, "Total max stock: [total_max]")
 	return total_max
 
 /obj/machinery/vending/crowbar_act(mob/living/user, obj/item/attack_item)
