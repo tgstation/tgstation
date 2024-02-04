@@ -438,14 +438,14 @@
 	passwindow_off(src, TRAIT_MOVE_FLYING)
 
 /// Fly through window panes, smashing them on the way
-/mob/living/proc/flying_window_smash(mob/living/mover, atom/oldloc, direction)
+/mob/living/proc/flying_window_smash(mob/living/flying_mob, atom/oldloc, direction)
 	SIGNAL_HANDLER
-	var/turf/target_turf = get_turf(mover)
+	var/turf/target_turf = get_turf(flying_mob)
 	for(var/obj/structure/tram/tram_wall in target_turf)
-		tram_wall.smash_and_injure(mover)
+		tram_wall.smash_and_injure(flying_mob, oldloc, direction)
 
 	for(var/obj/structure/window/window in target_turf)
-		window.smash_and_injure(mover)
+		window.smash_and_injure(flying_mob, oldloc, direction)
 
 /mob/living/proc/set_pull_offsets(mob/living/M, grab_state = GRAB_PASSIVE)
 	if(M.buckled)
@@ -1372,9 +1372,7 @@
 /mob/living/carbon/alien/update_stamina()
 	return
 
-/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, smash_windows = FALSE)
-	if(smash_windows)
-		start_window_flight(1.5 SECONDS)
+/mob/living/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	stop_pulling()
 	. = ..()
 

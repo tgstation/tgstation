@@ -91,7 +91,7 @@
 	if(living_overlay)
 		. += living_overlay
 
-/mob/living/basic/leaper/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE, smash_windows = FALSE)
+/mob/living/basic/leaper/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, force, gentle = FALSE, quickstart = TRUE)
 	ADD_TRAIT(src, TRAIT_IMMOBILIZED, LEAPING_TRAIT)
 	return ..()
 
