@@ -229,6 +229,7 @@
 	if(!possible_drop_loc.len)
 		to_chat(victim, span_hypnophrase("A million voices echo in your head... \"Seems where you got sent here from won't \
 			be able to handle our pod... if we wanted the occupant to survive. Brace yourself, corporate dog.\""))
+		for(var/turf/possible_drop in contract.dropoff.contents)
 			possible_drop_loc.Add(possible_drop)
 		if(iscarbon(victim))
 			var/mob/living/carbon/carbon_victim = victim
