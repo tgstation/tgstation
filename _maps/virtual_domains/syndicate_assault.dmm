@@ -310,7 +310,9 @@
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "kJ" = (
-/obj/effect/landmark/bitrunning/safehouse_spawn,
+/obj/modular_map_root/safehouse{
+	key = "shuttle_space"
+	},
 /turf/template_noop,
 /area/virtual_domain/safehouse)
 "li" = (
@@ -368,14 +370,6 @@
 "nG" = (
 /obj/machinery/light/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/powered/virtual_domain)
-"nO" = (
-/obj/machinery/mineral/ore_redemption{
-	name = "Syndicate ore redemption machine";
-	ore_multiplier = 4;
-	req_access = list("syndicate")
-	},
-/turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/powered/virtual_domain)
 "nU" = (
 /obj/structure/sign/poster/contraband/syndicate_pistol,
@@ -2738,7 +2732,7 @@ nB
 ru
 eB
 uP
-nO
+uP
 uP
 ru
 nB

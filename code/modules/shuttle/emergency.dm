@@ -88,6 +88,11 @@
 	if(!isliving(usr))
 		return
 
+	var/area/my_area = get_area(src)
+	if(!istype(my_area, /area/shuttle/escape))
+		say("Error - Network connectivity: Console has lost connection to the shuttle.")
+		return
+
 	var/mob/living/user = usr
 	. = FALSE
 
@@ -205,6 +210,10 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		to_chat(user, span_warning("You need your hands free before you can manipulate [src]."))
+		return
+	var/area/my_area = get_area(src)
+	if(!istype(my_area, /area/shuttle/escape))
+		say("Error - Network connectivity: Console has lost connection to the shuttle.")
 		return
 	if(!user?.mind?.get_hijack_speed())
 		to_chat(user, span_warning("You manage to open a user-mode shell on [src], and hundreds of lines of debugging output fly through your vision. It is probably best to leave this alone."))
@@ -736,7 +745,7 @@
 	return INITIALIZE_HINT_QDEL
 
 /obj/docking_port/stationary/random/icemoon
-	target_area = /area/icemoon/surface/outdoors
+	target_area = /area/icemoon/surface/outdoors/unexplored/rivers/no_monsters
 
 //Pod suits/pickaxes
 

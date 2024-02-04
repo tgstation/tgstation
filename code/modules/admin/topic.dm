@@ -69,7 +69,7 @@
 	else if(href_list["gamemode_panel"])
 		if(!check_rights(R_ADMIN))
 			return
-		SSticker.mode.admin_panel()
+		SSdynamic.admin_panel()
 
 	else if(href_list["call_shuttle"])
 		if(!check_rights(R_ADMIN))
@@ -361,19 +361,6 @@
 		var/target = href_list["showmessageckeylinkless"]
 		browse_messages(target_ckey = target, linkless = 1)
 
-	else if(href_list["messageread"])
-		if(!isnum(href_list["message_id"]))
-			return
-		var/rounded_message_id = round(href_list["message_id"], 1)
-		var/datum/db_query/query_message_read = SSdbcore.NewQuery(
-			"UPDATE [format_table_name("messages")] SET type = 'message sent' WHERE targetckey = :player_key AND id = :id",
-			list("id" = rounded_message_id, "player_key" = usr.ckey)
-		)
-		if(!query_message_read.warn_execute())
-			qdel(query_message_read)
-			return
-		qdel(query_message_read)
-
 	else if(href_list["messageedits"])
 		if(!check_rights(R_ADMIN))
 			return
@@ -400,7 +387,7 @@
 	else if(href_list["f_dynamic_roundstart"])
 		if(!check_rights(R_ADMIN))
 			return
-		if(SSticker?.mode)
+		if(SSticker.HasRoundStarted())
 			return tgui_alert(usr, "The game has already started.")
 		var/roundstart_rules = list()
 		for (var/rule in subtypesof(/datum/dynamic_ruleset/roundstart))
@@ -467,7 +454,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker?.mode)
+		if(SSticker.HasRoundStarted())
 			return tgui_alert(usr, "The game has already started.")
 
 		dynamic_mode_options(usr)
@@ -501,7 +488,7 @@
 		if(!check_rights(R_ADMIN))
 			return
 
-		if(SSticker?.mode)
+		if(SSticker.HasRoundStarted())
 			return tgui_alert(usr, "The game has already started.")
 
 		var/new_value = input(usr, "Enter the forced threat level for dynamic mode.", "Forced threat level") as num
@@ -852,7 +839,7 @@
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status: [status]"
 			health_description += "<br>Brute: [lifer.getBruteLoss()] - Burn: [lifer.getFireLoss()] - Toxin: [lifer.getToxLoss()] - Suffocation: [lifer.getOxyLoss()]"
-			health_description += "<br>Clone: [lifer.getCloneLoss()] - Brain: [lifer.get_organ_loss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.getStaminaLoss()]"
+			health_description += "<br>Brain: [lifer.get_organ_loss(ORGAN_SLOT_BRAIN)] - Stamina: [lifer.getStaminaLoss()]"
 		else
 			health_description = "This mob type has no health to speak of."
 
@@ -1363,7 +1350,6 @@
 				return
 			G.report_message = description
 		message_admins("[key_name(usr)] created \"[G.name]\" station goal.")
-		GLOB.station_goals += G
 		modify_goals()
 
 	else if(href_list["change_lag_switch"])

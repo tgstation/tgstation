@@ -131,17 +131,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	tox_damage = 0
 
 //libital
-//Impure
+//Inverse:
 //Simply reduces your alcohol tolerance, kinda simular to prohol
-/datum/reagent/impurity/libitoil
+/datum/reagent/inverse/libitoil
 	name = "Libitoil"
 	description = "Temporarilly interferes a patient's ability to process alcohol."
 	chemical_flags = REAGENT_DONOTSPLIT
 	ph = 13.5
-	liver_damage = 0.1
 	addiction_types = list(/datum/addiction/medicine = 4)
+	tox_damage = 0
 
-/datum/reagent/impurity/libitoil/on_mob_add(mob/living/affected_mob, amount)
+/datum/reagent/inverse/libitoil/on_mob_life(mob/living/carbon/affected_mob, delta_time, times_fired)
+	. = ..()
+	affected_mob.adjustOrganLoss(ORGAN_SLOT_LIVER, 0.1 * REM * delta_time)
+
+/datum/reagent/inverse/libitoil/on_mob_add(mob/living/affected_mob, amount)
 	. = ..()
 	var/mob/living/carbon/consumer = affected_mob
 	if(!consumer)
@@ -151,21 +155,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/obj/item/organ/internal/liver/this_liver = consumer.get_organ_slot(ORGAN_SLOT_LIVER)
 	this_liver.alcohol_tolerance *= 2
 
-/datum/reagent/impurity/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
+/datum/reagent/inverse/libitoil/proc/on_gained_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/internal/liver))
 		return
 	var/obj/item/organ/internal/liver/this_liver = organ
 	this_liver.alcohol_tolerance *= 2
 
-/datum/reagent/impurity/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
+/datum/reagent/inverse/libitoil/proc/on_removed_organ(mob/prev_owner, obj/item/organ/organ)
 	SIGNAL_HANDLER
 	if(!istype(organ, /obj/item/organ/internal/liver))
 		return
 	var/obj/item/organ/internal/liver/this_liver = organ
 	this_liver.alcohol_tolerance /= 2
 
-/datum/reagent/impurity/libitoil/on_mob_delete(mob/living/affected_mob)
+/datum/reagent/inverse/libitoil/on_mob_delete(mob/living/affected_mob)
 	. = ..()
 	var/mob/living/carbon/consumer = affected_mob
 	UnregisterSignal(consumer, COMSIG_CARBON_LOSE_ORGAN)
@@ -205,18 +209,18 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	affected_mob.adjust_nutrition(-5 * REAGENTS_METABOLISM * seconds_per_tick)
 
 //Lenturi
-//impure
-/datum/reagent/impurity/lentslurri //Okay maybe I should outsource names for these
+//inverse
+/datum/reagent/inverse/lentslurri //Okay maybe I should outsource names for these
 	name = "Lentslurri"//This is a really bad name please replace
-	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong."
+	description = "A highly addicitive muscle relaxant that is made when Lenturi reactions go wrong, this will cause the patient to move slowly."
 	addiction_types = list(/datum/addiction/medicine = 8)
-	liver_damage = 0
+	tox_damage = 0
 
-/datum/reagent/impurity/lentslurri/on_mob_metabolize(mob/living/carbon/affected_mob)
+/datum/reagent/inverse/lentslurri/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 
-/datum/reagent/impurity/lentslurri/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+/datum/reagent/inverse/lentslurri/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/lenturi)
 
@@ -250,24 +254,21 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	resetting_probability += (5*((current_cycle-1)/10) * seconds_per_tick) // 10 iterations = >51% to itch
 
 //Aiuri
-//impure
-/datum/reagent/impurity/aiuri
+//inverse
+/datum/reagent/inverse/aiuri
 	name = "Aivime"
 	description = "This reagent is known to interfere with the eyesight of a patient."
 	ph = 3.1
 	addiction_types = list(/datum/addiction/medicine = 1.5)
-	liver_damage = 0.1
-	/// blurriness at the start of taking the med
-	var/amount_of_blur_applied = 0 SECONDS
+	///The amount of blur applied per second. Given the average on_life interval is 2 seconds, that'd be 2.5s.
+	var/amount_of_blur_applied = 1.25 SECONDS
+	tox_damage = 0
 
-/datum/reagent/impurity/aiuri/on_mob_add(mob/living/affected_mob, amount)
+/datum/reagent/inverse/aiuri/on_mob_life(mob/living/carbon/owner, delta_time, times_fired)
+	owner.adjustOrganLoss(ORGAN_SLOT_EYES, 0.1 * REM * delta_time)
+	owner.adjust_eye_blur(amount_of_blur_applied * delta_time)
 	. = ..()
-	amount_of_blur_applied = creation_purity * (volume / metabolization_rate) * 2 SECONDS
-	affected_mob.adjust_eye_blur(amount_of_blur_applied)
-
-/datum/reagent/impurity/aiuri/on_mob_delete(mob/living/affected_mob, amount)
-	. = ..()
-	affected_mob.adjust_eye_blur(-amount_of_blur_applied)
+	return TRUE
 
 //Hercuri
 //inverse
@@ -790,3 +791,154 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 
 	hearing_args[HEARING_RAW_MESSAGE] = "<span class='[randomSpan]'>[hearing_args[HEARING_RAW_MESSAGE]]</span>"
+
+/datum/reagent/inverse/sal_acid
+	name = "Benzoic Acid"
+	description = "Robust fertilizer that provides a decent range of benefits for plant life."
+	taste_description = "flowers"
+	reagent_state = LIQUID
+	color = "#e6c843"
+	ph = 3.4
+	tox_damage = 0
+
+/datum/reagent/inverse/sal_acid/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	mytray.adjust_plant_health(round(volume * 0.5))
+	mytray.myseed?.adjust_production(-round(volume * 0.2))
+	mytray.myseed?.adjust_potency(round(volume * 0.25))
+	mytray.myseed?.adjust_yield(round(volume * 0.2))
+
+/datum/reagent/inverse/oxandrolone
+	name = "Oxymetholone"
+	description = "Anabolic steroid that promotes the growth of muscle during and after exercise."
+	reagent_state = LIQUID
+	color = "#520c23"
+	taste_description = "sweat"
+	metabolization_rate = 0.4 * REM
+	overdose_threshold = 25
+	ph = 12.2
+	tox_damage = 0
+
+/datum/reagent/inverse/oxandrolone/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/high_message = pick("You feel unstoppable.", "Giving it EVERYTHING!!", "You feel ready for anything.", "You feel like doing a thousand jumping jacks!")
+	if(SPT_PROB(2, seconds_per_tick))
+		to_chat(affected_mob, span_notice("[high_message]"))
+
+/datum/reagent/inverse/oxandrolone/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(25, seconds_per_tick))
+		affected_mob.adjust_bodytemperature(30 * TEMPERATURE_DAMAGE_COEFFICIENT * REM * seconds_per_tick)
+		affected_mob.set_jitter_if_lower(3 SECONDS)
+		affected_mob.adjustStaminaLoss(5 * REM * seconds_per_tick)
+	else if(SPT_PROB(5, seconds_per_tick))
+		affected_mob.vomit(VOMIT_CATEGORY_BLOOD, lost_nutrition = 0, distance = 3)
+		affected_mob.Paralyze(3 SECONDS)
+
+/datum/reagent/inverse/salbutamol
+	name = "Bamethan"
+	description = "Blood thinner that drastically increases the chance of receiving bleeding wounds."
+	reagent_state = LIQUID
+	color = "#ecd4d6"
+	taste_description = "paint thinner"
+	ph = 4.5
+	metabolization_rate = 0.08 * REM
+	tox_damage = 0
+
+/datum/reagent/inverse/salbutamol/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	ADD_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
+
+/datum/reagent/inverse/salbutamol/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	REMOVE_TRAIT(affected_mob, TRAIT_EASYBLEED, type)
+
+/datum/reagent/inverse/pen_acid
+	name = "Pendetide"
+	description = "Purges basic toxin healing medications and increases the severity of radiation poisoning."
+	reagent_state = LIQUID
+	color = "#09ff00"
+	ph = 3.7
+	taste_description = "venom"
+	metabolization_rate = 0.25 * REM
+	tox_damage = 0
+
+/datum/reagent/inverse/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	holder.remove_reagent(/datum/reagent/medicine/c2/seiver, 5 * REM * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/potass_iodide, 5 * REM * seconds_per_tick)
+	holder.remove_reagent(/datum/reagent/medicine/c2/multiver, 5 * REM * seconds_per_tick)
+
+	. = ..()
+	if(HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+		affected_mob.set_jitter_if_lower(10 SECONDS)
+		affected_mob.adjust_disgust(3 * REM * seconds_per_tick)
+		if(SPT_PROB(2.5, seconds_per_tick))
+			to_chat(affected_mob, span_warning("A horrible ache spreads in your insides!"))
+			affected_mob.adjust_confusion_up_to(10 SECONDS, 15 SECONDS)
+
+/datum/reagent/inverse/atropine
+	name = "Hyoscyamine"
+	description = "Slowly regenerates all damaged organs, but cannot restore non-functional organs."
+	reagent_state = LIQUID
+	color = "#273333"
+	ph = 13.6
+	metabolization_rate = 0.2 * REM
+	tox_damage = 0
+	overdose_threshold = 40
+
+/datum/reagent/inverse/atropine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/need_mob_update
+	need_mob_update = affected_mob.adjustOrganLoss(ORGAN_SLOT_STOMACH, -1 * REM * seconds_per_tick)
+	need_mob_update += affected_mob.adjustOrganLoss(ORGAN_SLOT_HEART, -1 * REM * seconds_per_tick)
+	if(affected_mob.getToxLoss() <= 25)
+		need_mob_update = affected_mob.adjustToxLoss(-0.5, updating_health = FALSE, required_biotype = affected_biotype)
+	if(need_mob_update)
+		return UPDATE_MOB_HEALTH
+
+/datum/reagent/inverse/atropine/overdose_process(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	var/static/list/possible_organs = list(
+		ORGAN_SLOT_HEART,
+		ORGAN_SLOT_LIVER,
+		ORGAN_SLOT_LUNGS,
+		ORGAN_SLOT_STOMACH,
+		ORGAN_SLOT_EYES,
+		ORGAN_SLOT_EARS,
+		ORGAN_SLOT_BRAIN,
+		ORGAN_SLOT_APPENDIX,
+		ORGAN_SLOT_TONGUE,
+	)
+	affected_mob.adjustOrganLoss(pick(possible_organs) ,2 * seconds_per_tick)
+	affected_mob.reagents.remove_reagent(type, 1 * REM * seconds_per_tick)
+
+/datum/reagent/inverse/ammoniated_mercury
+	name = "Ammoniated Sludge"
+	description = "A ghastly looking mess of mercury by-product. Causes bursts of manic hysteria."
+	reagent_state = LIQUID
+	color = "#353535"
+	ph = 10.2
+	metabolization_rate = 0.4 * REM
+	tox_damage = 0
+
+/datum/reagent/inverse/ammoniated_mercury/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+	. = ..()
+	if(SPT_PROB(7.5, seconds_per_tick))
+		affected_mob.emote("scream")
+		affected_mob.say(pick("AAAAAAAHHHHH!!","OOOOH NOOOOOO!!","GGGUUUUHHHHH!!","AIIIIIEEEEEE!!","HAHAHAHAHAAAAAA!!","OORRRGGGHHH!!","AAAAAAAJJJJJJJJJ!!"), forced = type)
+
+/datum/reagent/inverse/rezadone
+	name = "Inreziniver"
+	description = "Makes the user horribly afraid of all things related to carps."
+	reagent_state = LIQUID
+	color = "#c92eb4"
+	ph = 13.9
+	metabolization_rate = 0.05 * REM
+	tox_damage = 0
+
+/datum/reagent/inverse/rezadone/on_mob_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.gain_trauma(/datum/brain_trauma/mild/phobia/carps, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/reagent/inverse/rezadone/on_mob_end_metabolize(mob/living/carbon/affected_mob)
+	. = ..()
+	affected_mob.cure_trauma_type(/datum/brain_trauma/mild/phobia/carps, resilience = TRAUMA_RESILIENCE_ABSOLUTE)

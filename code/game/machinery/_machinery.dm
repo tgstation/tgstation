@@ -758,11 +758,11 @@
 		return
 	update_last_used(user)
 
-/obj/machinery/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
+/obj/machinery/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
 	if(SEND_SIGNAL(user, COMSIG_TRY_USE_MACHINE, src) & COMPONENT_CANT_USE_MACHINE_TOOLS)
-		return TOOL_ACT_MELEE_CHAIN_BLOCKING
+		return ITEM_INTERACT_ANY_BLOCKER
 	. = ..()
-	if(. & TOOL_ACT_SIGNAL_BLOCKING)
+	if(. & ITEM_INTERACT_BLOCKING)
 		return
 	update_last_used(user)
 
@@ -798,7 +798,7 @@
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
 
 /obj/machinery/proc/default_pry_open(obj/item/crowbar, close_after_pry = FALSE, open_density = FALSE, closed_density = TRUE)
-	. = !(state_open || panel_open || is_operational || (flags_1 & NODECONSTRUCT_1)) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = !(state_open || panel_open || is_operational || (obj_flags & NO_DECONSTRUCTION)) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!.)
 		return
 	crowbar.play_tool_sound(src, 50)
@@ -808,14 +808,14 @@
 		close_machine(density_to_set = closed_density)
 
 /obj/machinery/proc/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel = 0, custom_deconstruct = FALSE)
-	. = (panel_open || ignore_panel) && !(flags_1 & NODECONSTRUCT_1) && crowbar.tool_behaviour == TOOL_CROWBAR
+	. = (panel_open || ignore_panel) && !(obj_flags & NO_DECONSTRUCTION) && crowbar.tool_behaviour == TOOL_CROWBAR
 	if(!. || custom_deconstruct)
 		return
 	crowbar.play_tool_sound(src, 50)
 	deconstruct(TRUE)
 
 /obj/machinery/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return ..() //Just delete us, no need to call anything else.
 
 	on_deconstruction()
@@ -873,7 +873,7 @@
 
 /obj/machinery/atom_break(damage_flag)
 	. = ..()
-	if(!(machine_stat & BROKEN) && !(flags_1 & NODECONSTRUCT_1))
+	if(!(machine_stat & BROKEN) && !(obj_flags & NO_DECONSTRUCTION))
 		set_machine_stat(machine_stat | BROKEN)
 		SEND_SIGNAL(src, COMSIG_MACHINERY_BROKEN, damage_flag)
 		update_appearance()
@@ -920,7 +920,7 @@
 		qdel(atom_part)
 
 /obj/machinery/proc/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	if((flags_1 & NODECONSTRUCT_1) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
+	if((obj_flags & NO_DECONSTRUCTION) || screwdriver.tool_behaviour != TOOL_SCREWDRIVER)
 		return FALSE
 
 	screwdriver.play_tool_sound(src, 50)
@@ -947,7 +947,7 @@
 	if(!istype(replacer_tool))
 		return FALSE
 
-	if((flags_1 & NODECONSTRUCT_1) && !replacer_tool.works_from_distance)
+	if((obj_flags & NO_DECONSTRUCTION) && !replacer_tool.works_from_distance)
 		return FALSE
 
 	var/shouldplaysound = FALSE

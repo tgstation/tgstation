@@ -35,3 +35,8 @@
 	#define FOOTSTEP_OVERRIDEN (1<<0)
 ///from base of datum/thrownthing/finalize(): (turf/turf, atom/movable/thrownthing) when something is thrown and lands on us
 #define COMSIG_TURF_MOVABLE_THROW_LANDED "turf_movable_throw_landed"
+
+///From element/elevation/reset_elevation(): (list/values)
+#define COMSIG_TURF_RESET_ELEVATION "turf_reset_elevation"
+	#define ELEVATION_CURRENT_PIXEL_SHIFT 1
+	#define ELEVATION_MAX_PIXEL_SHIFT 2

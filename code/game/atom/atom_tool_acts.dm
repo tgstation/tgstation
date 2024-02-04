@@ -1,29 +1,51 @@
 /**
- *Tool behavior procedure. Redirects to tool-specific procs by default.
+ * ## Item interaction
  *
- * You can override it to catch all tool interactions, for use in complex deconstruction procs.
+ * Handles non-combat iteractions of a tool on this atom,
+ * such as using a tool on a wall to deconstruct it,
+ * or scanning someone with a health analyzer
  *
- * Must return  parent proc ..() in the end if overridden
+ * This can be overridden to add custom item interactions to this atom
+ *
+ * Do not call this directly
  */
-/atom/proc/tool_act(mob/living/user, obj/item/tool, tool_type, is_right_clicking)
-	var/act_result
-	var/signal_result
+/atom/proc/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
 
 	var/is_left_clicking = !is_right_clicking
-
-	if(is_left_clicking) // Left click first for sensibility
-		var/list/processing_recipes = list() //List of recipes that can be mutated by sending the signal
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes)
-		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
-			return TOOL_ACT_SIGNAL_BLOCKING
-		if(processing_recipes.len)
-			process_recipes(user, tool, processing_recipes)
-		if(QDELETED(tool))
-			return TRUE
+	var/early_sig_return = NONE
+	if(is_left_clicking)
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION, user, tool, modifiers) \
+			| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM, user, src, modifiers)
 	else
-		signal_result = SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, tool)
-		if(signal_result & COMPONENT_BLOCK_TOOL_ATTACK) // The COMSIG_ATOM_TOOL_ACT signal is blocking the act
-			return TOOL_ACT_SIGNAL_BLOCKING
+		early_sig_return = SEND_SIGNAL(src, COMSIG_ATOM_ITEM_INTERACTION_SECONDARY, user, tool, modifiers) \
+			| SEND_SIGNAL(tool, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, user, src, modifiers)
+	if(early_sig_return)
+		return early_sig_return
+
+	var/interact_return = is_left_clicking \
+		? tool.interact_with_atom(src, user) \
+		: tool.interact_with_atom_secondary(src, user)
+	if(interact_return)
+		return interact_return
+
+	var/tool_type = tool.tool_behaviour
+	if(!tool_type) // here on only deals with ... tools
+		return NONE
+
+	var/list/processing_recipes = list()
+	var/signal_result = is_left_clicking \
+		? SEND_SIGNAL(src, COMSIG_ATOM_TOOL_ACT(tool_type), user, tool, processing_recipes) \
+		: SEND_SIGNAL(src, COMSIG_ATOM_SECONDARY_TOOL_ACT(tool_type), user, tool)
+	if(signal_result)
+		return signal_result
+	if(length(processing_recipes))
+		process_recipes(user, tool, processing_recipes)
+	if(QDELETED(tool))
+		return ITEM_INTERACT_SUCCESS // Safe-ish to assume that if we deleted our item something succeeded
+
+	var/act_result = NONE // or FALSE, or null, as some things may return
 
 	switch(tool_type)
 		if(TOOL_CROWBAR)
@@ -40,20 +62,48 @@
 			act_result = is_left_clicking ? welder_act(user, tool) : welder_act_secondary(user, tool)
 		if(TOOL_ANALYZER)
 			act_result = is_left_clicking ? analyzer_act(user, tool) : analyzer_act_secondary(user, tool)
+
 	if(!act_result)
-		return
+		return NONE
 
 	// A tooltype_act has completed successfully
 	if(is_left_clicking)
 		log_tool("[key_name(user)] used [tool] on [src] at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_type), src)
+		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_PRIMARY(tool_type), src)
 	else
 		log_tool("[key_name(user)] used [tool] on [src] (right click) at [AREACOORD(src)]")
-		SEND_SIGNAL(tool,  COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
-	return TOOL_ACT_TOOLTYPE_SUCCESS
+		SEND_SIGNAL(tool, COMSIG_TOOL_ATOM_ACTED_SECONDARY(tool_type), src)
+	return act_result
 
-//! Tool-specific behavior procs.
-///
+/**
+ * Called when this item is being used to interact with an atom,
+ * IE, a mob is clicking on an atom with this item.
+ *
+ * Return an ITEM_INTERACT_ flag in the event the interaction was handled, to cancel further interaction code.
+ * Return NONE to allow default interaction / tool handling.
+ */
+/obj/item/proc/interact_with_atom(atom/interacting_with, mob/living/user)
+	return NONE
+
+/**
+ * Called when this item is being used to interact with an atom WITH RIGHT CLICK,
+ * IE, a mob is right clicking on an atom with this item.
+ *
+ * Default behavior has it run the same code as left click.
+ *
+ * Return an ITEM_INTERACT_ flag in the event the interaction was handled, to cancel further interaction code.
+ * Return NONE to allow default interaction / tool handling.
+ */
+/obj/item/proc/interact_with_atom_secondary(atom/interacting_with, mob/living/user)
+	return interact_with_atom(interacting_with, user)
+
+/*
+ * Tool-specific behavior procs.
+ *
+ * Return an ITEM_INTERACT_ flag to handle the event, or NONE to allow the mob to attack the atom.
+ * Returning TRUE will also cancel attacks. It is equivalent to an ITEM_INTERACT_ flag. (This is legacy behavior, and is not to be relied on)
+ * Returning FALSE or null will also allow the mob to attack the atom. (This is also legacy behavior)
+ */
 
 /// Called on an object when a tool with crowbar capabilities is used to left click an object
 /atom/proc/crowbar_act(mob/living/user, obj/item/tool)

@@ -87,20 +87,21 @@
 	add_team_hud(mob_override || owner.current, /datum/antagonist/nukeop)
 
 /datum/antagonist/nukeop/proc/assign_nuke()
-	if(nuke_team && !nuke_team.tracked_nuke)
-		nuke_team.memorized_code = random_nukecode()
-		var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type(/obj/machinery/nuclearbomb/syndicate)
-		if(nuke)
-			nuke_team.tracked_nuke = nuke
-			if(nuke.r_code == NUKE_CODE_UNSET)
-				nuke.r_code = nuke_team.memorized_code
-			else //Already set by admins/something else?
-				nuke_team.memorized_code = nuke.r_code
-			for(var/obj/machinery/nuclearbomb/beer/beernuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/beer))
-				beernuke.r_code = nuke_team.memorized_code
-		else
-			stack_trace("Syndicate nuke not found during nuke team creation.")
-			nuke_team.memorized_code = null
+	if(!nuke_team || nuke_team.tracked_nuke)
+		return
+	nuke_team.memorized_code = random_nukecode()
+	var/obj/machinery/nuclearbomb/syndicate/nuke = locate() in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/syndicate)
+	if(!nuke)
+		stack_trace("Syndicate nuke not found during nuke team creation.")
+		nuke_team.memorized_code = null
+		return
+	nuke_team.tracked_nuke = nuke
+	if(nuke.r_code == NUKE_CODE_UNSET)
+		nuke.r_code = nuke_team.memorized_code
+	else //Already set by admins/something else?
+		nuke_team.memorized_code = nuke.r_code
+	for(var/obj/machinery/nuclearbomb/beer/beernuke as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/nuclearbomb/beer))
+		beernuke.r_code = nuke_team.memorized_code
 
 /datum/antagonist/nukeop/proc/give_alias()
 	if(nuke_team?.syndicate_name)
@@ -564,12 +565,14 @@
 
 	var/tc_to_spawn = tgui_input_number(admin, "How much TC to spawn with?", "TC", 0, 100)
 
-	var/list/nuke_candidates = poll_ghost_candidates(
+	var/list/nuke_candidates = SSpolling.poll_ghost_candidates(
 		"Do you want to play as an emergency syndicate reinforcement?",
-		ROLE_OPERATIVE,
-		ROLE_OPERATIVE,
-		30 SECONDS,
-		POLL_IGNORE_SYNDICATE,
+		check_jobban = ROLE_OPERATIVE,
+		role = ROLE_OPERATIVE,
+		poll_time = 30 SECONDS,
+		ignore_category = POLL_IGNORE_SYNDICATE,
+		pic_source = /obj/structure/sign/poster/contraband/gorlex_recruitment,
+		role_name_text = "syndicate reinforcement",
 	)
 
 	nuke_candidates -= admin // may be easy to fat-finger say yes. so just don't
@@ -589,7 +592,7 @@
 				break
 
 		var/list/turf/options = list()
-		for(var/turf/open/open_turf in spawn_in?.get_contained_turfs())
+		for(var/turf/open/open_turf in spawn_in?.get_turfs_from_all_zlevels())
 			if(open_turf.is_blocked_turf())
 				continue
 			options += open_turf

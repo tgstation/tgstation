@@ -54,6 +54,7 @@ Difficulty: Hard
 	attack_action_types = list(/datum/action/innate/megafauna_attack/heavy_stomp,
 							   /datum/action/innate/megafauna_attack/teleport,
 							   /datum/action/innate/megafauna_attack/shockwave_scream)
+	summon_line = "GwaHOOOOOOOOOOOOOOOOOOOOO"
 	/// Saves the turf the megafauna was created at (spawns exit portal here)
 	var/turf/starting
 	/// Range for wendigo stomping when it moves
@@ -114,6 +115,10 @@ Difficulty: Hard
 				try_teleport()
 			if(3)
 				shockwave_scream()
+		return
+
+	var/mob/living/living_target = target
+	if(istype(living_target) && living_target.stat == DEAD)
 		return
 
 	if(COOLDOWN_FINISHED(src, scream_cooldown))
@@ -206,8 +211,9 @@ Difficulty: Hard
 	COOLDOWN_START(src, scream_cooldown, scream_cooldown_time)
 	SLEEP_CHECK_DEATH(5, src)
 	playsound(loc, 'sound/magic/demon_dies.ogg', 600, FALSE, 10)
-	animate(src, pixel_z = rand(5, 15), time = 1, loop = 20)
-	animate(pixel_z = 0, time = 1)
+	var/pixel_shift = rand(5, 15)
+	animate(src, pixel_z = pixel_shift, time = 1, loop = 20, flags = ANIMATION_RELATIVE)
+	animate(pixel_z = -pixel_shift, time = 1, flags = ANIMATION_RELATIVE)
 	for(var/mob/living/dizzy_target in get_hearers_in_view(7, src) - src)
 		dizzy_target.set_dizzy_if_lower(12 SECONDS)
 		to_chat(dizzy_target, span_danger("The wendigo screams loudly!"))

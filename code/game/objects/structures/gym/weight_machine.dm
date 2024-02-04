@@ -1,6 +1,6 @@
 #define WORKOUT_XP 5
-#define EXERCISE_STATUS_DURATION 20 SECONDS
-#define SAFE_DRUNK_LEVEL 39 
+#define EXERCISE_STATUS_DURATION 15 SECONDS
+#define SAFE_DRUNK_LEVEL 39
 
 /obj/structure/weightmachine
 	name = "chest press machine"
@@ -21,6 +21,9 @@
 
 	///message when drunk user fails to use the machine
 	var/drunk_message = "You try for a new record and pull through! Through a muscle that is."
+
+	// the total reps you can do before you hit stamcrit based on fitness level
+	var/static/list/total_workout_reps = list(3, 4, 4, 5, 6, 6, 7)
 
 	///List of messages picked when using the machine.
 	var/static/list/more_weight = list(
@@ -127,12 +130,12 @@
 		else
 			user.balloon_alert(user, pick(finished_message))
 
-		user.adjust_nutrition(-3) // feel the burn
-		user.add_mood_event("exercise", /datum/mood_event/exercise)
+		user.adjust_nutrition(-5) // feel the burn
 
-		// remember the real xp gain is from sleeping after working out
-		user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP)
-		user.apply_status_effect(/datum/status_effect/exercised, EXERCISE_STATUS_DURATION)
+		if(iscarbon(user))
+			// remember the real xp gain is from sleeping after working out
+			user.mind.adjust_experience(/datum/skill/fitness, WORKOUT_XP)
+			user.apply_status_effect(/datum/status_effect/exercised, EXERCISE_STATUS_DURATION)
 
 	end_workout()
 
@@ -141,23 +144,32 @@
 	STOP_PROCESSING(SSobj, src)
 	icon_state = initial(icon_state)
 
+/// roughly 8 seconds for 1 workout rep
+#define WORKOUT_LENGTH 8
+
 /obj/structure/weightmachine/process(seconds_per_tick)
 	if(!has_buckled_mobs())
 		end_workout()
 		return FALSE
 	var/mutable_appearance/workout = mutable_appearance(icon, "[base_icon_state]-o", ABOVE_MOB_LAYER)
-	SET_PLANE_EXPLICIT(workout, GAME_PLANE_UPPER, src)
 	flick_overlay_view(workout, 0.8 SECONDS)
 	flick("[base_icon_state]-u", src)
 	var/mob/living/user = buckled_mobs[1]
-	animate(user, pixel_y = pixel_shift_y, time = 4)
+	animate(user, pixel_y = pixel_shift_y, time = WORKOUT_LENGTH * 0.5)
 	playsound(user, 'sound/machines/creak.ogg', 60, TRUE)
-	animate(pixel_y = user.base_pixel_y, time = 4)
+	animate(pixel_y = user.base_pixel_y, time = WORKOUT_LENGTH * 0.5)
 
-	var/stamina_exhaustion = 5 - (user.mind.get_skill_level(/datum/skill/fitness) * 0.5)
+	if(!iscarbon(user) || isnull(user.mind))
+		return TRUE
+	// the amount of workouts you can do before you hit stamcrit
+	var/workout_reps = total_workout_reps[user.mind.get_skill_level(/datum/skill/fitness)]
+	// total stamina drain of 1 workout calculated based on the workout length
+	var/stamina_exhaustion = FLOOR(user.maxHealth / workout_reps / WORKOUT_LENGTH, 0.1)
 	user.adjustStaminaLoss(stamina_exhaustion * seconds_per_tick)
 
 	return TRUE
+
+#undef WORKOUT_LENGTH
 
 /**
  * Weight lifter subtype

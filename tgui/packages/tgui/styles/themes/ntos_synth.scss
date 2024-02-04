@@ -14,17 +14,17 @@ $orange: #ff9900;
 $purple: #463191;
 
 @use '../colors.scss' with (
-   $primary: $pink,
-   $label: $orange,
-   $good: $cyan,
-   // $fg-map-keys: (),
-   // $bg-map-keys: (),
- );
+  $primary: $pink,
+  $label: $orange,
+  $good: $cyan,
+  // $fg-map-keys: (),
+  // $bg-map-keys: (),
+);
 
 @use '../base.scss' with (
-   $color-bg: $purple,
-   $color-bg-grad-spread: 12%,
- );
+  $color-bg: $purple,
+  $color-bg-grad-spread: 12%
+);
 
 .theme-ntos_synth {
   // Atomic classes

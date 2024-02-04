@@ -1,7 +1,7 @@
-import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { useBackend } from '../backend';
 import { Button, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
+import { Beaker, BeakerDisplay } from './common/BeakerDisplay';
 
 type Data = {
   amount: number;
@@ -9,8 +9,8 @@ type Data = {
   beaker: Beaker;
 };
 
-export const ChemDebugSynthesizer = (props, context) => {
-  const { act, data } = useBackend<Data>(context);
+export const ChemDebugSynthesizer = (props) => {
+  const { act, data } = useBackend<Data>();
   const { amount, purity, beaker } = data;
 
   return (
@@ -60,7 +60,8 @@ export const ChemDebugSynthesizer = (props, context) => {
                 onClick={() => act('makecup')}
               />
             )
-          }>
+          }
+        >
           <BeakerDisplay beaker={beaker} showpH />
         </Section>
       </Window.Content>

@@ -37,6 +37,7 @@
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "trashbag"
 	inhand_icon_state = "trashbag"
+	worn_icon_state = "trashbag"
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/custodial_righthand.dmi'
 	storage_type = /datum/storage/trash
@@ -153,6 +154,12 @@
 	if(listeningTo)
 		UnregisterSignal(listeningTo, COMSIG_MOVABLE_MOVED)
 		listeningTo = null
+
+/obj/item/storage/bag/ore/attackby(obj/item/attacking_item, mob/user, params)
+	if(istype(attacking_item, /obj/item/boulder))
+		to_chat(user, span_warning("You can't fit \the [attacking_item] into \the [src]. Perhaps you should break it down first, or find an ore box."))
+		return TRUE
+	return ..()
 
 /obj/item/storage/bag/ore/proc/pickup_ores(mob/living/user)
 	SIGNAL_HANDLER
@@ -344,7 +351,7 @@
 	throwforce = 10
 	throw_speed = 3
 	throw_range = 5
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT*1.5)
 	custom_price = PAYCHECK_CREW * 0.6

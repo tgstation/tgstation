@@ -234,7 +234,6 @@
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/pen/edagger(src) // 2 tc
 			new /obj/item/gun/energy/wormhole_projector/core_inserted(src) // 5 tc easily
-			new /obj/item/gun/energy/decloner/unrestricted(src) // 5 tc at least also
 
 		if(KIT_BEES)
 			new /obj/item/paper/fluff/bee_objectives(src) // 0 tc (motivation)
@@ -571,6 +570,7 @@
 	new /obj/item/card/emag/doorjack (src)
 	new /obj/item/reagent_containers/hypospray/medipen/stimulants (src)
 	new /obj/item/grenade/c4 (src)
+	new /obj/item/mod/module/energy_shield(src)
 
 /// Surplus Ammo Box
 
@@ -682,12 +682,11 @@
 	implant_color = "r"
 
 /obj/item/implant/nuclear_operative/get_data()
-	var/dat = {"<b>Implant Specifications:</b><BR>
-				<b>Name:</b> Suspicious Implant<BR>
-				<b>Life:</b> UNKNOWN <BR>
-				<b>Implant Details:</b> <BR>
-				<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."}
-	return dat
+	return "<b>Implant Specifications:</b><BR> \
+		<b>Name:</b> Suspicious Implant<BR> \
+		<b>Life:</b> UNKNOWN <BR> \
+		<b>Implant Details:</b> <BR> \
+		<b>Function:</b> Strange implant that seems to resist any attempts at scanning it."
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()

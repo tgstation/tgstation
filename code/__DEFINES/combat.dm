@@ -11,8 +11,6 @@
 #define TOX "toxin"
 /// Suffocation.
 #define OXY "oxygen"
-/// Cellular degredation. Rare and difficult to treat.
-#define CLONE "clone"
 /// Exhaustion and nonlethal damage.
 #define STAMINA "stamina"
 /// Brain damage. Should probably be decomissioned and replaced with proper organ damage.
@@ -56,12 +54,11 @@
 #define BRUTELOSS (1<<0)
 #define FIRELOSS (1<<1)
 #define TOXLOSS (1<<2)
-#define CLONELOSS (1<<3)
-#define OXYLOSS (1<<4)
-#define STAMINALOSS (1<<5)
-#define SHAME (1<<6)
-#define MANUAL_SUICIDE (1<<7) //suicide_act will do the actual killing.
-#define MANUAL_SUICIDE_NONLETHAL (1<<8) //when the suicide is conditionally lethal
+#define OXYLOSS (1<<3)
+#define STAMINALOSS (1<<4)
+#define SHAME (1<<5)
+#define MANUAL_SUICIDE (1<<6) //suicide_act will do the actual killing.
+#define MANUAL_SUICIDE_NONLETHAL (1<<7) //when the suicide is conditionally lethal
 
 #define EFFECT_STUN "stun"
 #define EFFECT_KNOCKDOWN "knockdown"
@@ -171,9 +168,9 @@ DEFINE_BITFIELD(status_flags, list(
 #define SHOVE_KNOCKDOWN_TABLE 20
 #define SHOVE_KNOCKDOWN_COLLATERAL 1
 #define SHOVE_CHAIN_PARALYZE 30
-//Shove slowdown
-#define SHOVE_SLOWDOWN_LENGTH 30
-#define SHOVE_SLOWDOWN_STRENGTH 0.85 //multiplier
+//Staggered slowdown, an effect caused by shoving and a few other features, such as tackling
+#define STAGGERED_SLOWDOWN_LENGTH 30
+#define STAGGERED_SLOWDOWN_STRENGTH 0.85 //multiplier
 //Shove disarming item list
 GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 	/obj/item/gun)))
@@ -341,13 +338,13 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 	#define COMPONENT_AUTOFIRE_SHOT_SUCCESS (1<<0)
 
 /// Martial arts attack requested but is not available, allow a check for a regular attack.
-#define MARTIAL_ATTACK_INVALID -1
+#define MARTIAL_ATTACK_INVALID NONE
 
 /// Martial arts attack happened but failed, do not allow a check for a regular attack.
-#define MARTIAL_ATTACK_FAIL FALSE
+#define MARTIAL_ATTACK_FAIL COMPONENT_SKIP_ATTACK
 
 /// Martial arts attack happened and succeeded, do not allow a check for a regular attack.
-#define MARTIAL_ATTACK_SUCCESS TRUE
+#define MARTIAL_ATTACK_SUCCESS COMPONENT_CANCEL_ATTACK_CHAIN
 
 /// IF an object is weak against armor, this is the value that any present armor is multiplied by
 #define ARMOR_WEAKENED_MULTIPLIER 2
@@ -373,3 +370,18 @@ GLOBAL_LIST_INIT(arm_zones, list(BODY_ZONE_L_ARM, BODY_ZONE_R_ARM))
 #define COMBO_STEPS "steps"
 /// The proc the combo calls
 #define COMBO_PROC "proc"
+
+///Checks If the target can be moved at all by shoving them
+#define SHOVE_CAN_MOVE (1<<0)
+///If the target can be shoved into something something with perhaps special interactions.
+#define SHOVE_CAN_HIT_SOMETHING (1<<1)
+///Keeps knockdowns at bay for the target
+#define SHOVE_KNOCKDOWN_BLOCKED (1<<2)
+///If the target can be briefly paralized by shoving them once again after knocking them down.
+#define SHOVE_CAN_KICK_SIDE (1<<3)
+///Whether the staggered status effect can be applied on the target
+#define SHOVE_CAN_STAGGER (1<<4)
+///If the target could move, but didn't because there's an obstacle in the path.
+#define SHOVE_BLOCKED (1<<5)
+///If the obstacle is an object at the border of the turf (so no signal from being sent to the other turf)
+#define SHOVE_DIRECTIONAL_BLOCKED (1<<6)

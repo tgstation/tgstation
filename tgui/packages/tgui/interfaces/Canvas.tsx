@@ -1,8 +1,9 @@
 import { Color } from 'common/color';
-import { multiline, decodeHtmlEntities } from 'common/string';
-import { Component, createRef, RefObject } from 'inferno';
+import { decodeHtmlEntities, multiline } from 'common/string';
+import { Component, createRef, RefObject } from 'react';
+
 import { useBackend } from '../backend';
-import { Tooltip, Icon, Box, Button, Flex } from '../components';
+import { Box, Button, Flex, Icon, Tooltip } from '../components';
 import { Window } from '../layouts';
 
 const LEFT_CLICK = 0;
@@ -123,8 +124,10 @@ class PaintCanvas extends Component<PaintCanvasProps> {
     const y_resolution = this.props.imageHeight || 36;
     const x_scale = Math.round(width / x_resolution);
     const y_scale = Math.round(height / y_resolution);
-    const x = Math.floor(event.offsetX / x_scale);
-    const y = Math.floor(event.offsetY / y_scale);
+
+    const rect = canvas.getBoundingClientRect();
+    const x = Math.floor((event.clientX - rect.left) / x_scale);
+    const y = Math.floor((event.clientY - rect.top) / y_scale);
     return { x, y };
   }
 
@@ -202,11 +205,12 @@ class PaintCanvas extends Component<PaintCanvasProps> {
         width={width}
         height={height}
         {...rest}
-        onMouseDown={this.handleStartDrawing}
-        onMouseMove={this.handleDrawing}
-        onMouseUp={this.handleEndDrawing}
-        onMouseOut={this.handleEndDrawing}
-        onContextMenu={this.handleDropper}>
+        onMouseDown={this.handleStartDrawing as any}
+        onMouseMove={this.handleDrawing as any}
+        onMouseUp={this.handleEndDrawing as any}
+        onMouseOut={this.handleEndDrawing as any}
+        onContextMenu={this.handleDropper as any}
+      >
         Canvas failed to render.
       </canvas>
     );
@@ -240,8 +244,8 @@ type CanvasData = {
   show_grid: boolean;
 };
 
-export const Canvas = (props, context) => {
-  const { act, data } = useBackend<CanvasData>(context);
+export const Canvas = (props) => {
+  const { act, data } = useBackend<CanvasData>();
   const [width, height] = getImageSize(data.grid);
   const scaled_width = width * data.px_per_unit;
   const scaled_height = height * data.px_per_unit;
@@ -256,7 +260,8 @@ export const Canvas = (props, context) => {
         75 +
         (data.show_plaque ? average_plaque_height : 0) +
         (data.editable && data.paint_tool_palette ? palette_height : 0)
-      }>
+      }
+    >
       <Window.Content>
         <Flex align="start" direction="row">
           {!!data.paint_tool_palette && (
@@ -274,7 +279,8 @@ export const Canvas = (props, context) => {
                   or input a new one with Right-Click.
                 `
                     : '')
-                }>
+                }
+              >
                 <Icon name="question-circle" color="blue" size={1.5} m={0.5} />
               </Tooltip>
             </Flex.Item>
@@ -282,11 +288,10 @@ export const Canvas = (props, context) => {
           {!!data.editable && !!data.paint_tool_color && (
             <Flex.Item>
               <Button
-                title="Grid Toggle"
+                tooltip="Grid Toggle"
                 icon="th-large"
                 backgroundColor={data.show_grid ? 'green' : 'red'}
                 onClick={() => act('toggle_grid')}
-                size={1.5}
                 m={0.5}
               />
             </Flex.Item>
@@ -318,20 +323,18 @@ export const Canvas = (props, context) => {
                     key={`${index}`}
                     backgroundColor={element.color}
                     style={{
-                      'width': '24px',
-                      'height': '24px',
-                      'border-style': 'solid',
-                      'border-color': element.is_selected
-                        ? 'lightblue'
-                        : 'black',
-                      'border-width': '2px',
+                      width: '24px',
+                      height: '24px',
+                      borderStyle: 'solid',
+                      borderColor: element.is_selected ? 'lightblue' : 'black',
+                      borderWidth: '2px',
                     }}
                     onClick={() =>
                       act('select_color', {
                         selected_color: element.color,
                       })
                     }
-                    oncontextmenu={(e) => {
+                    onContextMenu={(e) => {
                       e.preventDefault();
                       act('change_palette', {
                         color_index: index + 1,
@@ -358,7 +361,8 @@ export const Canvas = (props, context) => {
                 textColor="black"
                 textAlign="left"
                 backgroundColor="white"
-                style={{ 'border-style': 'inset' }}>
+                style={{ borderStyle: 'inset' }}
+              >
                 <Box mb={1} fontSize="18px" bold>
                   {decodeHtmlEntities(data.name)}
                 </Box>

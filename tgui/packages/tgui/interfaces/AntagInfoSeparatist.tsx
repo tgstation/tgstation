@@ -1,7 +1,7 @@
 import { useBackend } from '../backend';
 import { Icon, Section, Stack } from '../components';
 import { Window } from '../layouts';
-import { ObjectivePrintout, Objective } from './common/Objectives';
+import { Objective, ObjectivePrintout } from './common/Objectives';
 
 type Info = {
   objectives: Objective[];
@@ -9,8 +9,8 @@ type Info = {
   nationColor: string;
 };
 
-export const AntagInfoSeparatist = (props, context) => {
-  const { data } = useBackend<Info>(context);
+export const AntagInfoSeparatist = (props) => {
+  const { data } = useBackend<Info>();
   const { nationColor } = data;
   return (
     <Window width={620} height={450}>
@@ -28,8 +28,8 @@ export const AntagInfoSeparatist = (props, context) => {
   );
 };
 
-const IntroductionObjectives = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const IntroductionObjectives = (props) => {
+  const { data } = useBackend<Info>();
   const { nation, objectives } = data;
   return (
     <Section fill>
@@ -48,8 +48,8 @@ const IntroductionObjectives = (props, context) => {
   );
 };
 
-const FrequentlyAskedQuestions = (props, context) => {
-  const { data } = useBackend<Info>(context);
+const FrequentlyAskedQuestions = (props) => {
+  const { data } = useBackend<Info>();
   const { nation } = data;
   return (
     <Section fill>

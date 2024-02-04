@@ -1,7 +1,7 @@
 /area/station/cargo
 	name = "Quartermasters"
 	icon_state = "quart"
-	airlock_wires = /datum/wires/airlock/service
+	airlock_wires = /datum/wires/airlock/cargo
 	sound_environment = SOUND_AREA_STANDARD_STATION
 
 /area/station/cargo/sorting
@@ -53,3 +53,7 @@
 /area/station/cargo/miningoffice
 	name = "\improper Mining Office"
 	icon_state = "mining"
+
+/area/station/cargo/miningfoundry
+	name = "\improper Mining Foundry"
+	icon_state = "mining_foundry"

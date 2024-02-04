@@ -20,20 +20,20 @@
 	UnregisterSignal(target, COMSIG_FOOD_CONSUMED)
 	REMOVE_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
-/datum/element/dryable/proc/finish_drying(atom/source)
+/datum/element/dryable/proc/finish_drying(atom/source, datum/weakref/drying_user)
 	SIGNAL_HANDLER
 	var/atom/dried_atom = source
 	if(dry_result == dried_atom.type)//if the dried type is the same as our currrent state, don't bother creating a whole new item, just re-color it.
 		var/atom/movable/resulting_atom = dried_atom
 		resulting_atom.add_atom_colour(COLOR_DRIED_TAN, FIXED_COLOUR_PRIORITY)
-		ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT(type))
+		apply_dried_status(resulting_atom, drying_user)
 		resulting_atom.forceMove(source.drop_location())
 		return
 	else if(isstack(source)) //Check if its a sheet
 		var/obj/item/stack/itemstack = dried_atom
 		for(var/i in 1 to itemstack.amount)
 			var/atom/movable/resulting_atom = new dry_result(source.drop_location())
-			ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT(type))
+			apply_dried_status(resulting_atom, drying_user)
 		qdel(source)
 		return
 	else if(istype(source, /obj/item/food) && ispath(dry_result, /obj/item/food))
@@ -41,11 +41,16 @@
 		var/obj/item/food/resulting_food = new dry_result(source.drop_location())
 		resulting_food.reagents.clear_reagents()
 		source_food.reagents.trans_to(resulting_food, source_food.reagents.total_volume)
-		ADD_TRAIT(resulting_food, TRAIT_DRIED, ELEMENT_TRAIT(type))
+		apply_dried_status(resulting_food, drying_user)
 		qdel(source)
 		return
 	else
 		var/atom/movable/resulting_atom = new dry_result(source.drop_location())
-		ADD_TRAIT(resulting_atom, TRAIT_DRIED, ELEMENT_TRAIT(type))
+		apply_dried_status(resulting_atom, drying_user)
 		qdel(source)
 
+/datum/element/dryable/proc/apply_dried_status(atom/target, datum/weakref/drying_user)
+	ADD_TRAIT(target, TRAIT_DRIED, ELEMENT_TRAIT(type))
+	var/datum/mind/user_mind = drying_user?.resolve()
+	if(drying_user && istype(target, /obj/item/food))
+		ADD_TRAIT(target, TRAIT_FOOD_CHEF_MADE, REF(user_mind))

@@ -29,6 +29,8 @@
 	if(turn)
 		data["turn"] = " - Day [turn]"
 
+	if(phase == MAFIA_PHASE_JUDGEMENT)
+		data["person_voted_up_ref"] = REF(on_trial)
 	if(phase == MAFIA_PHASE_SETUP)
 		data["lobbydata"] = list()
 		for(var/key in GLOB.mafia_signup + GLOB.mafia_bad_signup + GLOB.pda_mafia_signup)
@@ -41,8 +43,10 @@
 	data["timeleft"] = next_phase_timer ? timeleft(next_phase_timer) : 0
 
 	var/datum/mafia_role/user_role = get_role_player(user)
+
 	if(user_role)
 		data["user_notes"] = user_role.written_notes
+		data["player_voted_up"] = (user_role == on_trial)
 		var/list/ui_messages = list()
 		for(var/i = user_role.role_messages.len to 1 step -1)
 			ui_messages.Add(list(list(
@@ -56,6 +60,9 @@
 		player_info["name"] = role.body.real_name
 		player_info["ref"] = REF(role)
 		player_info["alive"] = role.game_status == MAFIA_ALIVE
+		player_info["role_revealed"] = FALSE
+		if(role.role_flags & ROLE_REVEALED)
+			player_info["role_revealed"] = role.name
 		player_info["possible_actions"] = list()
 
 		if(user_role) //not observer

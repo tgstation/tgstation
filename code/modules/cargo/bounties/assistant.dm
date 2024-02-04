@@ -215,7 +215,7 @@
 	description = "We need fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
 	reward = CARGO_CRATE_VALUE * 9
 	required_count = 4
-	wanted_types = list(/obj/item/fish = TRUE)
+	wanted_types = list(/obj/item/fish = TRUE, /obj/item/storage/fish_case = TRUE)
 	///the penalty for shipping dead/bought fish, which can subtract up to half the reward in total.
 	var/shipping_penalty
 
@@ -223,11 +223,27 @@
 	..()
 	shipping_penalty = reward * 0.5 / required_count
 
+/datum/bounty/item/assistant/fish/applies_to(obj/shipped)
+	. = ..()
+	if(!.)
+		return
+	var/obj/item/fish/fishie = shipped
+	if(istype(shipped, /obj/item/storage/fish_case))
+		fishie = locate() in shipped
+		if(!fishie || !is_type_in_typecache(fishie, wanted_types))
+			return FALSE
+	return can_ship_fish(fishie)
+
+/datum/bounty/item/assistant/fish/proc/can_ship_fish(obj/item/fish/fishie)
+	return TRUE
+
 /datum/bounty/item/assistant/fish/ship(obj/shipped)
 	. = ..()
 	if(!.)
 		return
 	var/obj/item/fish/fishie = shipped
+	if(istype(shipped, /obj/item/storage/fish_case))
+		fishie = locate() in shipped
 	if(fishie.status == FISH_DEAD || HAS_TRAIT(fishie, TRAIT_FISH_FROM_CASE))
 		reward -= shipping_penalty
 
@@ -243,11 +259,7 @@
 	name = "[fluid_type] Fish"
 	description = "We need [lowertext(fluid_type)] fish to populate our aquariums with. Fishes that are dead or bought from cargo will only be paid half as much."
 
-/datum/bounty/item/assistant/fish/fluid/applies_to(obj/shipped)
-	. = ..()
-	if(!.)
-		return
-	var/obj/item/fish/fishie = shipped
+/datum/bounty/item/assistant/fish/fluid/can_ship_fish(obj/item/fish/fishie)
 	return compatible_fluid_type(fishie.required_fluid_type, fluid_type)
 
 ///A subtype of the fish bounty that requires specific fish types. The higher their rarity, the better the pay.
@@ -255,7 +267,7 @@
 	description = "Our prestigious fish collection is currently lacking a few specific species. Fishes that are dead or bought from cargo will only be paid half as much."
 	reward = CARGO_CRATE_VALUE * 16
 	required_count = 3
-	wanted_types = list()
+	wanted_types = list(/obj/item/storage/fish_case = TRUE)
 
 /datum/bounty/item/assistant/fish/specific/New()
 	var/static/list/choosable_fishes

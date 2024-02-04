@@ -80,6 +80,15 @@
 	name = "Party Hat (Worn)"
 	icon_file = 'icons/mob/clothing/head/costume.dmi'
 
+/datum/greyscale_config/santa_hat
+	name = "Santa Hat"
+	icon_file = 'icons/obj/clothing/head/costume.dmi'
+	json_config = 'code/datums/greyscale/json_configs/santa_hat.json'
+
+/datum/greyscale_config/santa_hat/worn
+	name = "Santa Hat (Worn)"
+	icon_file = 'icons/mob/clothing/head/costume.dmi'
+
 //
 // MASKS
 //

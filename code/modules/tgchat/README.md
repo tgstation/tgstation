@@ -19,11 +19,11 @@ TgChat handles sending messages from the server to the client through the use of
 
 ### Reliability
 
-In the past there have been issues where BYOND will silently and without reason lose a message we sent to the client, to detect this and recover from it seamlessly TgChat also has a baked in reliability layer. This reliability layer is very primitive, and simply keeps track of recieved sequence numbers. Should the client recieve an unexpected sequence number TgChat asks the server to resend any missing packets. 
+In the past there have been issues where BYOND will silently and without reason lose a message we sent to the client, to detect this and recover from it seamlessly TgChat also has a baked in reliability layer. This reliability layer is very primitive, and simply keeps track of received sequence numbers. Should the client receive an unexpected sequence number TgChat asks the server to resend any missing packets. 
 
 ### Ping System
 
-TgChat supports a round trip time ping measurement, which is displayed to the client so they can know how long it takes for their commands and inputs to reach the server. This is done by sending the client a ping request, `ping/soft`, which tells the client to send a ping to the server. When the server recieves said ping it sends a reply, `ping/reply`, to the client with a payload containing the current DateTime which the client can reference against the initial ping request.
+TgChat supports a round trip time ping measurement, which is displayed to the client so they can know how long it takes for their commands and inputs to reach the server. This is done by sending the client a ping request, `ping/soft`, which tells the client to send a ping to the server. When the server receives said ping it sends a reply, `ping/reply`, to the client with a payload containing the current DateTime which the client can reference against the initial ping request.
 
 ### Chat Tabs, Local Storage, and Highlighting
 

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/swcrc",
+  "jsc": {
+    "loose": true,
+    "parser": {
+      "syntax": "typescript",
+      "tsx": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  }
+}

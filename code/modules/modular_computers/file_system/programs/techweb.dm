@@ -4,7 +4,7 @@
 	downloader_category = PROGRAM_CATEGORY_SCIENCE
 	program_open_overlay = "research"
 	extended_desc = "Connect to the internal science server in order to assist in station research efforts."
-	requires_ntnet = TRUE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_REQUIRES_NTNET
 	size = 10
 	tgui_id = "NtosTechweb"
 	program_icon = "atom"
@@ -88,7 +88,8 @@
 		)
 	return data
 
-/datum/computer_file/program/science/ui_act(action, list/params)
+/datum/computer_file/program/science/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	// Check if the console is locked to block any actions occuring
 	if (locked && action != "toggleLock")
 		computer.say("Console is locked, cannot perform further actions.")

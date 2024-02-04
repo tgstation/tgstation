@@ -1,4 +1,0 @@
-author: "Thlumyn"
-delete-after: True
-changes:
-  - bugfix: "healing viruses can no longer have floor virus side effects"

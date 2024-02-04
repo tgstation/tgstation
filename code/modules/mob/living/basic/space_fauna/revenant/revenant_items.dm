@@ -86,7 +86,7 @@
 /// Handles giving the revenant a new client to control it
 /obj/item/ectoplasm/revenant/proc/get_new_user()
 	message_admins("The new revenant's old client either could not be found or is in a new, living mob - grabbing a random candidate instead...")
-	var/list/candidates = poll_candidates_for_mob("Do you want to be [revenant.name] (reforming)?", ROLE_REVENANT, ROLE_REVENANT, 5 SECONDS, revenant)
+	var/list/candidates = SSpolling.poll_ghost_candidates_for_mob("Do you want to be [revenant.name] (reforming)?", check_jobban = ROLE_REVENANT, role = ROLE_REVENANT, poll_time = 5 SECONDS, target_mob = revenant, pic_source = revenant)
 
 	if(!LAZYLEN(candidates))
 		message_admins("No candidates were found for the new revenant.")

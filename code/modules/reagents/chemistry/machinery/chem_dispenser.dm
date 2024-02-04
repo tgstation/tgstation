@@ -93,7 +93,6 @@
 		/datum/reagent/toxin
 	)
 /obj/machinery/chem_dispenser/Initialize(mapload)
-	. = ..()
 	if(dispensable_reagents != null && !dispensable_reagents.len)
 		dispensable_reagents = default_dispensable_reagents
 	if(dispensable_reagents)
@@ -108,6 +107,8 @@
 		emagged_reagents = default_emagged_reagents
 	if(emagged_reagents)
 		emagged_reagents = sort_list(emagged_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
+
+	. = ..() // So that we call RefreshParts() after adjusting the lists
 
 	if(is_operational)
 		begin_processing()
@@ -249,11 +250,11 @@
 		beaker_data["maxVolume"] = beaker.volume
 		beaker_data["transferAmounts"] = beaker.possible_transfer_amounts
 		beaker_data["pH"] = round(beaker.reagents.ph, 0.01)
-		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, 0.01)
+		beaker_data["currentVolume"] = round(beaker.reagents.total_volume, CHEMICAL_VOLUME_ROUNDING)
 		var/list/beakerContents = list()
 		if(length(beaker.reagents.reagent_list))
 			for(var/datum/reagent/reagent in beaker.reagents.reagent_list)
-				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, 0.01))) // list in a list because Byond merges the first list...
+				beakerContents += list(list("name" = reagent.name, "volume" = round(reagent.volume, CHEMICAL_VOLUME_ROUNDING))) // list in a list because Byond merges the first list...
 		beaker_data["contents"] = beakerContents
 	.["beaker"] = beaker_data
 
@@ -383,35 +384,30 @@
 	return null
 
 /obj/machinery/chem_dispenser/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(default_unfasten_wrench(user, tool) == SUCCESSFUL_UNFASTEN)
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_dispenser/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(default_deconstruction_screwdriver(user, icon_state, icon_state, tool))
 		update_appearance()
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/chem_dispenser/crowbar_act(mob/living/user, obj/item/tool)
-	. = ..()
 	if(default_deconstruction_crowbar(tool))
-		return TOOL_ACT_TOOLTYPE_SUCCESS
+		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-/obj/machinery/chem_dispenser/attackby(obj/item/I, mob/living/user, params)
-	if(is_reagent_container(I) && !(I.item_flags & ABSTRACT) && I.is_open_container())
-		var/obj/item/reagent_containers/B = I
-		. = TRUE //no afterattack
-		if(!user.transferItemToLoc(B, src))
-			return
-		replace_beaker(user, B)
-		to_chat(user, span_notice("You add [B] to [src]."))
+/obj/machinery/chem_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers, is_right_clicking)
+	if(is_reagent_container(tool) && !(tool.item_flags & ABSTRACT) && tool.is_open_container())
+		if(!user.transferItemToLoc(tool, src))
+			return ..()
+		replace_beaker(user, tool)
 		ui_interact(user)
-	else if(!user.combat_mode && !istype(I, /obj/item/card/emag))
-		to_chat(user, span_warning("You can't load [I] into [src]!"))
-		return ..()
-	else
-		return ..()
+		return ITEM_INTERACT_SUCCESS
+
+	return ..()
 
 /obj/machinery/chem_dispenser/get_cell()
 	return cell
@@ -579,8 +575,7 @@
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of soft drinks. This model has had its safeties shorted out."
-	obj_flags = CAN_BE_HIT | EMAGGED
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = CAN_BE_HIT | EMAGGED | NO_DECONSTRUCTION
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/fullupgrade
 
 /obj/machinery/chem_dispenser/drinks/fullupgrade/Initialize(mapload)
@@ -640,8 +635,7 @@
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Contains a large reservoir of the good stuff. This model has had its safeties shorted out."
-	obj_flags = CAN_BE_HIT | EMAGGED
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = CAN_BE_HIT | EMAGGED | NO_DECONSTRUCTION
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/drinks/beer/fullupgrade
 
 /obj/machinery/chem_dispenser/drinks/beer/fullupgrade/Initialize(mapload)
@@ -665,7 +659,7 @@
 /obj/machinery/chem_dispenser/mutagensaltpeter
 	name = "botanical chemical dispenser"
 	desc = "Creates and dispenses chemicals useful for botany."
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/mutagensaltpeter
 
 	/// The default list of dispensable reagents available in the mutagensaltpeter chem dispenser
@@ -691,8 +685,7 @@
 
 /obj/machinery/chem_dispenser/fullupgrade //fully ugpraded stock parts, emagged
 	desc = "Creates and dispenses chemicals. This model has had its safeties shorted out."
-	obj_flags = CAN_BE_HIT | EMAGGED
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = CAN_BE_HIT | EMAGGED | NO_DECONSTRUCTION
 	circuit = /obj/item/circuitboard/machine/chem_dispenser/fullupgrade
 
 /obj/machinery/chem_dispenser/fullupgrade/Initialize(mapload)

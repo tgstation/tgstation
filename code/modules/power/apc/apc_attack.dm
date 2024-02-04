@@ -299,6 +299,8 @@
 	return TRUE
 
 /obj/machinery/power/apc/proc/set_broken()
+	if(machine_stat & BROKEN)
+		return
 	if(malfai && operating)
 		malfai.malf_picker.processing_time = clamp(malfai.malf_picker.processing_time - 10,0,1000)
 	operating = FALSE

@@ -1,4 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - bugfix: "When you successfully block a body collision, it does something rather than nothing at all."

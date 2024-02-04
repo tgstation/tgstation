@@ -148,10 +148,9 @@
 /mob/living/carbon/attack_drone_secondary(mob/living/basic/drone/user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-//ATTACK HAND IGNORING PARENT RETURN VALUE
 /mob/living/carbon/attack_hand(mob/living/carbon/human/user, list/modifiers)
-	if(SEND_SIGNAL(src, COMSIG_ATOM_ATTACK_HAND, user, modifiers) & COMPONENT_CANCEL_ATTACK_CHAIN)
-		. = TRUE
+	. = ..()
+
 	for(var/thing in diseases)
 		var/datum/disease/D = thing
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
@@ -162,13 +161,8 @@
 		if(D.spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
 			ContactContractDisease(D)
 
-	for(var/datum/surgery/operations as anything in surgeries)
-		if(user.combat_mode)
-			break
-		if(body_position != LYING_DOWN && (operations.surgery_flags & SURGERY_REQUIRE_RESTING))
-			continue
-		if(operations.next_step(user, modifiers))
-			return TRUE
+	if(.)
+		return TRUE
 
 	for(var/datum/wound/wounds as anything in all_wounds)
 		if(wounds.try_handling(user))
@@ -202,28 +196,6 @@
 			ForceContractDisease(D)
 		return TRUE
 
-
-/mob/living/carbon/attack_slime(mob/living/simple_animal/slime/M, list/modifiers)
-	if(..()) //successful slime attack
-		if(M.powerlevel > 0)
-			var/stunprob = M.powerlevel * 7 + 10  // 17 at level 1, 80 at level 10
-			if(prob(stunprob))
-				M.powerlevel -= 3
-				if(M.powerlevel < 0)
-					M.powerlevel = 0
-
-				visible_message(span_danger("The [M.name] shocks [src]!"), \
-				span_userdanger("The [M.name] shocks you!"))
-
-				do_sparks(5, TRUE, src)
-				var/power = M.powerlevel + rand(0,3)
-				Paralyze(power * 2 SECONDS)
-				set_stutter_if_lower(power * 2 SECONDS)
-				if (prob(stunprob) && M.powerlevel >= 8)
-					adjustFireLoss(M.powerlevel * rand(6,10))
-					updatehealth()
-		return 1
-
 /**
  * Really weird proc that attempts to dismebmer the passed zone if it is at max damage
  * Unless the attacker is an NPC, in which case it disregards the zone and picks a random one
@@ -255,110 +227,6 @@
 			return null
 
 	return dam_zone
-
-/**
- * Attempt to disarm the target mob.
- * Will shove the target mob back, and drop them if they're in front of something dense
- * or another carbon.
-*/
-/mob/living/carbon/proc/disarm(mob/living/carbon/target)
-	do_attack_animation(target, ATTACK_EFFECT_DISARM)
-	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, TRUE, -1)
-	if (ishuman(target))
-		var/mob/living/carbon/human/human_target = target
-		human_target.w_uniform?.add_fingerprint(src)
-
-	SEND_SIGNAL(target, COMSIG_HUMAN_DISARM_HIT, src, zone_selected)
-	var/shove_dir = get_dir(loc, target.loc)
-	var/turf/target_shove_turf = get_step(target.loc, shove_dir)
-	var/shove_blocked = FALSE //Used to check if a shove is blocked so that if it is knockdown logic can be applied
-	var/turf/target_old_turf = target.loc
-
-	//Are we hitting anything? or
-	if(SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_PRESHOVE) & COMSIG_CARBON_ACT_SOLID)
-		shove_blocked = TRUE
-	else
-		target.Move(target_shove_turf, shove_dir)
-		if(get_turf(target) == target_old_turf)
-			shove_blocked = TRUE
-
-	if(!shove_blocked)
-		target.setGrabState(GRAB_PASSIVE)
-
-	if(target.IsKnockdown() && !target.IsParalyzed()) //KICK HIM IN THE NUTS
-		target.Paralyze(SHOVE_CHAIN_PARALYZE)
-		target.visible_message(span_danger("[name] kicks [target.name] onto [target.p_their()] side!"),
-						span_userdanger("You're kicked onto your side by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-		to_chat(src, span_danger("You kick [target.name] onto [target.p_their()] side!"))
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living, SetKnockdown), 0), SHOVE_CHAIN_PARALYZE)
-		log_combat(src, target, "kicks", "onto their side (paralyzing)")
-
-	var/directional_blocked = FALSE
-	var/can_hit_something = (!target.is_shove_knockdown_blocked() && !target.buckled)
-
-	//Directional checks to make sure that we're not shoving through a windoor or something like that
-	if(shove_blocked && can_hit_something && (shove_dir in GLOB.cardinals))
-		var/target_turf = get_turf(target)
-		for(var/obj/obj_content in target_turf)
-			if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == shove_dir && obj_content.density)
-				directional_blocked = TRUE
-				break
-		if(target_turf != target_shove_turf && !directional_blocked) //Make sure that we don't run the exact same check twice on the same tile
-			for(var/obj/obj_content in target_shove_turf)
-				if(obj_content.flags_1 & ON_BORDER_1 && obj_content.dir == REVERSE_DIR(shove_dir) && obj_content.density)
-					directional_blocked = TRUE
-					break
-
-	if(can_hit_something)
-		//Don't hit people through windows, ok?
-		if(!directional_blocked && SEND_SIGNAL(target_shove_turf, COMSIG_CARBON_DISARM_COLLIDE, src, target, shove_blocked) & COMSIG_CARBON_SHOVE_HANDLED)
-			return
-		if(directional_blocked || shove_blocked)
-			target.Knockdown(SHOVE_KNOCKDOWN_SOLID)
-			target.visible_message(span_danger("[name] shoves [target.name], knocking [target.p_them()] down!"),
-				span_userdanger("You're knocked down from a shove by [name]!"), span_hear("You hear aggressive shuffling followed by a loud thud!"), COMBAT_MESSAGE_RANGE, src)
-			to_chat(src, span_danger("You shove [target.name], knocking [target.p_them()] down!"))
-			log_combat(src, target, "shoved", "knocking them down")
-			return
-
-	target.visible_message(span_danger("[name] shoves [target.name]!"),
-		span_userdanger("You're shoved by [name]!"), span_hear("You hear aggressive shuffling!"), COMBAT_MESSAGE_RANGE, src)
-	to_chat(src, span_danger("You shove [target.name]!"))
-
-	//Take their lunch money
-	var/target_held_item = target.get_active_held_item()
-	var/append_message = ""
-	if(!is_type_in_typecache(target_held_item, GLOB.shove_disarming_types)) //It's too expensive we'll get caught
-		target_held_item = null
-
-	if(!target.has_movespeed_modifier(/datum/movespeed_modifier/shove))
-		target.add_movespeed_modifier(/datum/movespeed_modifier/shove)
-		target.emote("sway")
-		if(target_held_item)
-			append_message = "loosening [target.p_their()] grip on [target_held_item]"
-			target.visible_message(span_danger("[target.name]'s grip on \the [target_held_item] loosens!"), //He's already out what are you doing
-				span_warning("Your grip on \the [target_held_item] loosens!"), null, COMBAT_MESSAGE_RANGE)
-		addtimer(CALLBACK(target, TYPE_PROC_REF(/mob/living/carbon, clear_shove_slowdown)), SHOVE_SLOWDOWN_LENGTH)
-
-	else if(target_held_item)
-		target.dropItemToGround(target_held_item)
-		append_message = "causing [target.p_them()] to drop [target_held_item]"
-		target.visible_message(span_danger("[target.name] drops \the [target_held_item]!"),
-			span_warning("You drop \the [target_held_item]!"), null, COMBAT_MESSAGE_RANGE)
-
-	log_combat(src, target, "shoved", append_message)
-
-/mob/living/carbon/proc/is_shove_knockdown_blocked() //If you want to add more things that block shove knockdown, extend this
-	for (var/obj/item/clothing/clothing in get_equipped_items())
-		if(clothing.clothing_flags & BLOCKS_SHOVE_KNOCKDOWN)
-			return TRUE
-	return FALSE
-
-/mob/living/carbon/proc/clear_shove_slowdown()
-	remove_movespeed_modifier(/datum/movespeed_modifier/shove)
-	var/active_item = get_active_held_item()
-	if(is_type_in_typecache(active_item, GLOB.shove_disarming_types))
-		visible_message(span_warning("[name] regains their grip on \the [active_item]!"), span_warning("You regain your grip on \the [active_item]"), null, COMBAT_MESSAGE_RANGE)
 
 /mob/living/carbon/blob_act(obj/structure/blob/B)
 	if (stat == DEAD)
@@ -698,7 +566,7 @@
 		if (!IS_ORGANIC_LIMB(limb))
 			. += (limb.brute_dam * limb.body_damage_coeff) + (limb.burn_dam * limb.body_damage_coeff)
 
-/mob/living/carbon/grabbedby(mob/living/carbon/user, supress_message = FALSE)
+/mob/living/carbon/grabbedby(mob/living/user, supress_message = FALSE)
 	if(user != src)
 		return ..()
 
@@ -832,5 +700,11 @@
 			continue
 		organs -= organ_type
 	GLOB.bioscrambler_valid_organs = organs
+
+/mob/living/carbon/get_shove_flags(mob/living/shover, obj/item/weapon)
+	. = ..()
+	. |= SHOVE_CAN_STAGGER
+	if(IsKnockdown() && !IsParalyzed())
+		. |= SHOVE_CAN_KICK_SIDE
 
 #undef SHAKE_ANIMATION_OFFSET

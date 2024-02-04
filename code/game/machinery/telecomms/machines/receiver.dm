@@ -20,10 +20,10 @@
 	if(!is_freq_listening(signal))
 		return
 
-	// Make a copy of the signal so that other recievers can still recieve this signal
+	// Make a copy of the signal so that other receivers can still receive this signal
 	var/datum/signal/subspace/signal_copy = signal.copy()
 
-	// Signal has been recieved, so remove receiving levels. This list will be used later on to determine broadcasting levels.
+	// Signal has been received, so remove receiving levels. This list will be used later on to determine broadcasting levels.
 	signal_copy.levels = list()
 
 	// Send the signal to a hub if possible, or a bus otherwise.

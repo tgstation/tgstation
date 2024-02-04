@@ -16,7 +16,7 @@
 		buildmode_name = copytext_char("[type]", 20) // / d a t u m / m a p g e n e r a t o r / = 20 characters.
 	initialiseModules()
 
-/datum/map_generator/Destroy(force, ...)
+/datum/map_generator/Destroy(force)
 	. = ..()
 	QDEL_LIST(modules)
 

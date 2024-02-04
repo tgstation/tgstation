@@ -4,7 +4,7 @@
 	downloader_category = PROGRAM_CATEGORY_EQUIPMENT
 	extended_desc = "This program allows the tablet to scan physical objects and display a data output."
 	size = 2
-	usage_flags = PROGRAM_PDA
+	can_run_on_flags = PROGRAM_PDA
 	tgui_id = "NtosPhysScanner"
 	program_icon = "barcode"
 	/// Information from the last scanned person, to display on the app.

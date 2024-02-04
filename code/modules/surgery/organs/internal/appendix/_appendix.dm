@@ -168,12 +168,12 @@
 /obj/item/organ/internal/appendix/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantappendix
 
-/obj/item/organ/internal/appendix/on_remove(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
 	REMOVE_TRAIT(organ_owner, disease_trait, type)
 	organ_owner.med_hud_set_status()
 
-/obj/item/organ/internal/appendix/on_insert(mob/living/carbon/organ_owner)
+/obj/item/organ/internal/appendix/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
 	if(inflamation_stage)
 		ADD_TRAIT(organ_owner, disease_trait, type)

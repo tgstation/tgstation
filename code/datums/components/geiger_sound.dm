@@ -8,7 +8,7 @@
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
-/datum/component/geiger_sound/Destroy(force, silent)
+/datum/component/geiger_sound/Destroy(force)
 	QDEL_NULL(sound)
 
 	if (!isnull(last_parent))

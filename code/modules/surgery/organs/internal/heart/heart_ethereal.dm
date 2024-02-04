@@ -21,7 +21,7 @@
 	add_atom_colour(ethereal_color, FIXED_COLOUR_PRIORITY)
 	update_appearance()
 
-/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, drop_if_replaced = TRUE)
+/obj/item/organ/internal/heart/ethereal/Insert(mob/living/carbon/heart_owner, special = FALSE, movement_flags)
 	. = ..()
 	if(!.)
 		return
@@ -29,7 +29,7 @@
 	RegisterSignal(heart_owner, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(on_owner_fully_heal))
 	RegisterSignal(heart_owner, COMSIG_QDELETING, PROC_REF(owner_deleted))
 
-/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/heart_owner, special = FALSE)
+/obj/item/organ/internal/heart/ethereal/Remove(mob/living/carbon/heart_owner, special, movement_flags)
 	UnregisterSignal(heart_owner, list(COMSIG_MOB_STATCHANGE, COMSIG_LIVING_POST_FULLY_HEAL, COMSIG_QDELETING))
 	REMOVE_TRAIT(heart_owner, TRAIT_CORPSELOCKED, SPECIES_TRAIT)
 	stop_crystalization_process(heart_owner)
@@ -88,12 +88,12 @@
 
 	crystalize_timer_id = addtimer(CALLBACK(src, PROC_REF(crystalize), victim), CRYSTALIZE_PRE_WAIT_TIME, TIMER_STOPPABLE)
 
-	RegisterSignal(victim, COMSIG_HUMAN_DISARM_HIT, PROC_REF(reset_crystalizing))
+	RegisterSignal(victim, COMSIG_LIVING_DISARM_HIT, PROC_REF(reset_crystalizing))
 	RegisterSignal(victim, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine), override = TRUE)
 	RegisterSignal(victim, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(on_take_damage))
 
 ///Ran when disarmed, prevents the ethereal from reviving
-/obj/item/organ/internal/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone)
+/obj/item/organ/internal/heart/ethereal/proc/reset_crystalizing(mob/living/defender, mob/living/attacker, zone, obj/item/weapon)
 	SIGNAL_HANDLER
 	defender.visible_message(
 		span_notice("The crystals on [defender] are gently broken off."),
@@ -120,7 +120,7 @@
 
 ///Stop the crystalization process, unregistering any signals and resetting any variables.
 /obj/item/organ/internal/heart/ethereal/proc/stop_crystalization_process(mob/living/ethereal, succesful = FALSE)
-	UnregisterSignal(ethereal, COMSIG_HUMAN_DISARM_HIT)
+	UnregisterSignal(ethereal, COMSIG_LIVING_DISARM_HIT)
 	UnregisterSignal(ethereal, COMSIG_ATOM_EXAMINE)
 	UnregisterSignal(ethereal, COMSIG_MOB_APPLY_DAMAGE)
 

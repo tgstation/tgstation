@@ -128,6 +128,7 @@
 /datum/transport_controller/linear/tram/Destroy()
 	paired_cabinet = null
 	set_status_code(SYSTEM_FAULT, TRUE)
+	SEND_SIGNAL(SStransport, COMSIG_TRANSPORT_ACTIVE, src, FALSE, controller_status, travel_direction, destination_platform)
 	tram_registration.active = FALSE
 	SSblackbox.record_feedback("amount", "tram_destroyed", 1)
 	SSpersistence.save_tram_history(specific_transport_id)
@@ -528,6 +529,7 @@
 	paired_cabinet = null
 	log_transport("TC: [specific_transport_id] received QDEL from controller cabinet.")
 	set_status_code(SYSTEM_FAULT, TRUE)
+	send_transport_active_signal()
 
 /**
  * Tram malfunction random event. Set comm error, increase tram lethality.
@@ -554,8 +556,8 @@
 	SEND_TRANSPORT_SIGNAL(COMSIG_COMMS_STATUS, src, TRUE)
 	log_transport("TC: [specific_transport_id] ending Tram Malfunction event.")
 
-/datum/transport_controller/linear/tram/proc/register_collision()
-	tram_registration.collisions += 1
+/datum/transport_controller/linear/tram/proc/register_collision(points = 1)
+	tram_registration.collisions += points
 	SEND_TRANSPORT_SIGNAL(COMSIG_TRAM_COLLISION, SSpersistence.tram_hits_this_round)
 
 /datum/transport_controller/linear/tram/proc/power_lost()
@@ -686,8 +688,8 @@
 	integrity_failure = 0.25
 	layer = SIGN_LAYER
 	req_access = list(ACCESS_TCOMMS)
-	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 4.8
-	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 4.8
+	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.25
+	power_channel = AREA_USAGE_ENVIRON
 	var/datum/transport_controller/linear/tram/controller_datum
 	/// If the cover is open
 	var/cover_open = FALSE
@@ -697,7 +699,7 @@
 
 /obj/machinery/transport/tram_controller/hilbert
 	configured_transport_id = HILBERT_LINE_1
-	flags_1 = NODECONSTRUCT_1
+	obj_flags = parent_type::obj_flags | NO_DECONSTRUCTION
 
 /obj/machinery/transport/tram_controller/Initialize(mapload)
 	. = ..()
@@ -741,6 +743,9 @@
 		context[SCREENTIP_CONTEXT_LMB] = "emag controller"
 
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/transport/tram_controller/update_current_power_usage()
+	return // We get power from area rectifiers
 
 /obj/machinery/transport/tram_controller/examine(mob/user)
 	. = ..()
@@ -848,7 +853,7 @@
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/transport/tram_controller/deconstruct(disassembled = TRUE)
-	if(flags_1 & NODECONSTRUCT_1)
+	if(obj_flags & NO_DECONSTRUCTION)
 		return
 
 	var/turf/drop_location = find_obstruction_free_location(1, src)

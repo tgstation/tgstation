@@ -1,9 +1,11 @@
-import { useBackend, useLocalState } from '../backend';
-import { Window } from '../layouts';
-import { Button, Section, Flex, Icon, Box } from '../components';
+import { useState } from 'react';
+
 import { BooleanLike } from '../../common/react';
-import { SearchBar } from './Fabrication/SearchBar';
 import { capitalizeFirst } from '../../common/string';
+import { useBackend } from '../backend';
+import { Box, Button, Flex, Icon, Section } from '../components';
+import { Window } from '../layouts';
+import { SearchBar } from './common/SearchBar';
 
 type Emote = {
   key: string;
@@ -19,63 +21,27 @@ type EmotePanelData = {
   emotes: Emote[];
 };
 
-export const EmotePanelContent = (props, context) => {
-  const { act, data } = useBackend<EmotePanelData>(context);
+export const EmotePanelContent = (props) => {
+  const { act, data } = useBackend<EmotePanelData>();
   const { emotes } = data;
 
-  const [filterVisible, toggleVisualFilter] = useLocalState<boolean>(
-    context,
-    'filterVisible',
-    false
-  );
+  const [filterVisible, toggleVisualFilter] = useState(false);
 
-  const [filterAudible, toggleAudibleFilter] = useLocalState<boolean>(
-    context,
-    'filterAudible',
-    false
-  );
+  const [filterAudible, toggleAudibleFilter] = useState(false);
 
-  const [filterSound, toggleSoundFilter] = useLocalState<boolean>(
-    context,
-    'filterSound',
-    false
-  );
+  const [filterSound, toggleSoundFilter] = useState(false);
 
-  const [filterHands, toggleHandsFilter] = useLocalState<boolean>(
-    context,
-    'filterHands',
-    false
-  );
+  const [filterHands, toggleHandsFilter] = useState(false);
 
-  const [filterUseParams, toggleUseParamsFilter] = useLocalState<boolean>(
-    context,
-    'filterUseParams',
-    false
-  );
+  const [filterUseParams, toggleUseParamsFilter] = useState(false);
 
-  const [useParams, toggleUseParams] = useLocalState<boolean>(
-    context,
-    'useParams',
-    false
-  );
+  const [useParams, toggleUseParams] = useState(false);
 
-  const [searchText, setSearchText] = useLocalState<string>(
-    context,
-    'search_text',
-    ''
-  );
+  const [searchText, setSearchText] = useState<string>('');
 
-  const [showNames, toggleShowNames] = useLocalState<boolean>(
-    context,
-    'showNames',
-    true
-  );
+  const [showNames, toggleShowNames] = useState(true);
 
-  const [showIcons, toggleShowIcons] = useLocalState<boolean>(
-    context,
-    'showIcons',
-    false
-  );
+  const [showIcons, toggleShowIcons] = useState(false);
 
   return (
     <Section>
@@ -129,11 +95,12 @@ export const EmotePanelContent = (props, context) => {
               onClick={() => toggleUseParamsFilter(!filterUseParams)}
             />
           </Flex>
-        }>
+        }
+      >
         <SearchBar
-          searchText={searchText}
-          onSearchTextChanged={setSearchText}
-          hint={'Search all emotes...'}
+          query={searchText}
+          onSearch={setSearchText}
+          placeholder="Search all emotes..."
         />
       </Section>
       <Section
@@ -150,7 +117,8 @@ export const EmotePanelContent = (props, context) => {
               </Button>
               <Button
                 selected={showIcons}
-                onClick={() => toggleShowIcons(!showIcons)}>
+                onClick={() => toggleShowIcons(!showIcons)}
+              >
                 Show Icons
               </Button>
             </Flex.Item>
@@ -158,12 +126,14 @@ export const EmotePanelContent = (props, context) => {
               <Button
                 icon="crosshairs"
                 selected={useParams}
-                onClick={() => toggleUseParams(!useParams)}>
+                onClick={() => toggleUseParams(!useParams)}
+              >
                 Use Params
               </Button>
             </Flex.Item>
           </Flex>
-        }>
+        }
+      >
         <Flex>
           <Flex.Item>
             {emotes
@@ -172,15 +142,17 @@ export const EmotePanelContent = (props, context) => {
                   emote.key &&
                   (searchText.length > 0
                     ? emote.key
-                      .toLowerCase()
-                      .includes(searchText.toLowerCase()) ||
-                    emote.name.toLowerCase().includes(searchText.toLowerCase())
+                        .toLowerCase()
+                        .includes(searchText.toLowerCase()) ||
+                      emote.name
+                        .toLowerCase()
+                        .includes(searchText.toLowerCase())
                     : true) &&
                   (filterVisible ? emote.visible : true) &&
                   (filterAudible ? emote.audible : true) &&
                   (filterSound ? emote.sound : true) &&
                   (filterHands ? emote.hands : true) &&
-                  (filterUseParams ? emote.use_params : true)
+                  (filterUseParams ? emote.use_params : true),
               )
               .sort((a, b) => (a.name > b.name ? 1 : -1))
               .map((emote) => (
@@ -188,9 +160,7 @@ export const EmotePanelContent = (props, context) => {
                   width={showIcons ? 16 : 8}
                   key={emote.name}
                   tooltip={
-                    showIcons ? (
-                      ''
-                    ) : (
+                    showIcons ? undefined : (
                       <EmoteIcons
                         visible={emote.visible}
                         audible={emote.audible}
@@ -206,7 +176,8 @@ export const EmotePanelContent = (props, context) => {
                       emote_key: emote.key,
                       use_params: useParams,
                     })
-                  }>
+                  }
+                >
                   <Box inline width="50%">
                     {showNames
                       ? capitalizeFirst(emote.name.toLowerCase())
@@ -233,7 +204,7 @@ export const EmotePanelContent = (props, context) => {
   );
 };
 
-const EmoteIcons = (props, context) => {
+const EmoteIcons = (props) => {
   const { visible, audible, sound, hands, use_params, margin } = props;
 
   return (
@@ -272,7 +243,7 @@ const EmoteIcons = (props, context) => {
   );
 };
 
-export const EmotePanel = (props, context) => {
+export const EmotePanel = (props) => {
   return (
     <Window width={630} height={500}>
       <Window.Content scrollable>

@@ -519,7 +519,7 @@
 	return pick("Tizira", "Lizard", "Imperial")
 
 /datum/holiday/ianbirthday
-	name = "Ian's Birthday" //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
+	name = IAN_HOLIDAY //github.com/tgstation/tgstation/commit/de7e4f0de0d568cd6e1f0d7bcc3fd34700598acb
 	begin_month = SEPTEMBER
 	begin_day = 9
 	end_day = 10
@@ -842,9 +842,9 @@
 	SSticker.OnRoundstart(CALLBACK(src, PROC_REF(roundstart_celebrate)))
 	GLOB.maintenance_loot += list(
 		list(
-			/obj/item/toy/xmas_cracker = 3,
 			/obj/item/clothing/head/costume/santa = 1,
-			/obj/item/a_gift/anything = 1
+			/obj/item/gift/anything = 1,
+			/obj/item/toy/xmas_cracker = 3,
 		) = maint_holiday_weight,
 	)
 

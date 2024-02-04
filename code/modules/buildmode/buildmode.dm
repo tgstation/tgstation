@@ -135,7 +135,7 @@
 	preview.name = initial(typepath.name)
 
 	// Scale the preview if it's bigger than one tile
-	var/mutable_appearance/preview_overlay = get_small_overlay(new typepath)
+	var/mutable_appearance/preview_overlay = get_small_overlay(new /mutable_appearance(typepath))
 	preview_overlay.appearance_flags |= TILE_BOUND
 	preview_overlay.layer = FLOAT_LAYER
 	preview_overlay.plane = FLOAT_PLANE

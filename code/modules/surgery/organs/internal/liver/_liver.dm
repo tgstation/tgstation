@@ -1,7 +1,7 @@
 #define LIVER_DEFAULT_TOX_TOLERANCE 3 //amount of toxins the liver can filter out
 #define LIVER_DEFAULT_TOX_RESISTANCE 1 //lower values lower how harmful toxins are to the liver
 #define LIVER_FAILURE_STAGE_SECONDS 60 //amount of seconds before liver failure reaches a new stage
-#define MAX_TOXIN_LIVER_DAMAGE 2 //the max damage the liver can recieve per second (~1 min at max damage will destroy liver)
+#define MAX_TOXIN_LIVER_DAMAGE 2 //the max damage the liver can receive per second (~1 min at max damage will destroy liver)
 
 /obj/item/organ/internal/liver
 	name = "liver"
@@ -61,12 +61,12 @@
 	qdel(GetComponent(/datum/component/squeak))
 
 /// Registers COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/internal/liver/on_insert(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/liver/on_mob_insert(mob/living/carbon/organ_owner, special)
 	. = ..()
 	RegisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL, PROC_REF(handle_chemical))
 
 /// Unregisters COMSIG_SPECIES_HANDLE_CHEMICAL from owner
-/obj/item/organ/internal/liver/on_remove(mob/living/carbon/organ_owner, special)
+/obj/item/organ/internal/liver/on_mob_remove(mob/living/carbon/organ_owner, special)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_SPECIES_HANDLE_CHEMICAL)
 
@@ -134,7 +134,7 @@
 		return
 
 	var/obj/belly = owner.get_organ_slot(ORGAN_SLOT_STOMACH)
-	var/list/cached_reagents = owner.reagents.reagent_list
+	var/list/cached_reagents = owner.reagents?.reagent_list
 	var/liver_damage = 0
 	var/provide_pain_message = HAS_NO_TOXIN
 
@@ -142,7 +142,7 @@
 		for(var/datum/reagent/toxin/toxin in cached_reagents)
 			if(toxin.affected_organ_flags && !(organ_flags & toxin.affected_organ_flags)) //this particular toxin does not affect this type of organ
 				continue
-			var/amount = round(toxin.volume, CHEMICAL_QUANTISATION_LEVEL) // this is an optimization
+			var/amount = toxin.volume
 			if(belly)
 				amount += belly.reagents.get_reagent_amount(toxin.type)
 
@@ -152,7 +152,7 @@
 			if(provide_pain_message != HAS_PAINFUL_TOXIN)
 				provide_pain_message = toxin.silent_toxin ? HAS_SILENT_TOXIN : HAS_PAINFUL_TOXIN
 
-	owner.reagents.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
+	owner.reagents?.metabolize(owner, seconds_per_tick, times_fired, can_overdose = TRUE)
 
 	if(liver_damage)
 		apply_organ_damage(min(liver_damage * seconds_per_tick , MAX_TOXIN_LIVER_DAMAGE * seconds_per_tick))

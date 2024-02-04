@@ -14,6 +14,7 @@
 
 #define AVAILABLE_SPRAYCAN_SPACE 8 // enough to fill one radial menu page
 
+#define DRAW_TIME 5 SECONDS
 #define INFINITE_CHARGES -1
 
 /*
@@ -504,11 +505,13 @@
 		audible_message(span_notice("You hear spraying."))
 		playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 
-	var/wait_time = 50
+	var/wait_time = DRAW_TIME
 	if(paint_mode == PAINT_LARGE_HORIZONTAL)
 		wait_time *= 3
+	if(istagger)
+		wait_time *= 0.5
 
-	if(!instant && !do_after(user, 50, target = target))
+	if(!instant && !do_after(user, wait_time, target = target))
 		return
 
 	if(!use_charges(user, cost))
@@ -762,6 +765,30 @@
 		/datum/component/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+	register_context()
+	register_item_context()
+
+/obj/item/toy/crayon/spraycan/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return .
+
+	if(has_cap)
+		context[SCREENTIP_CONTEXT_ALT_LMB] = "Toggle cap"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/toy/crayon/spraycan/add_item_context(datum/source, list/context, atom/target, mob/living/user)
+	. = ..()
+
+	if(!user.can_perform_action(src, NEED_DEXTERITY|NEED_HANDS))
+		return .
+
+	context[SCREENTIP_CONTEXT_LMB] = "Paint"
+	context[SCREENTIP_CONTEXT_RMB] = "Copy color"
+
+	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/toy/crayon/spraycan/isValidSurface(surface)
 	return (isfloorturf(surface) || iswallturf(surface))
@@ -916,7 +943,7 @@
 					part_image.overlays += image(icon = style_list_icons[skin_option], icon_state = "[limb.limb_id]_[limb.aux_zone]")
 				skins += list("[skin_option]" = part_image)
 			var/choice = show_radial_menu(user, src, skins, require_near = TRUE)
-			if(choice && (use_charges(user, 5, requires_full = FALSE) == 5))
+			if(choice && (use_charges(user, 5, requires_full = FALSE)))
 				playsound(user.loc, 'sound/effects/spray.ogg', 5, TRUE, 5)
 				limb.change_appearance(style_list_icons[choice], greyscale = FALSE)
 			return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
@@ -1040,3 +1067,4 @@
 #undef PAINT_LARGE_HORIZONTAL_ICON
 
 #undef INFINITE_CHARGES
+#undef DRAW_TIME

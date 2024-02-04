@@ -29,7 +29,7 @@
 			name = M.name,
 			integrity = round((M.get_integrity() / M.max_integrity) * 100),
 			charge = M.cell ? round(M.cell.percent()) : null,
-			airtank = M.enclosed ? M.return_pressure() : null,
+			airtank = (M.mecha_flags & IS_ENCLOSED) ? M.return_pressure() : null,
 			pilot = M.return_drivers(),
 			location = get_area_name(M, TRUE),
 			emp_recharging = MT.recharging,
@@ -76,7 +76,7 @@
 /obj/item/mecha_parts/mecha_tracking
 	name = "exosuit tracking beacon"
 	desc = "Device used to transmit exosuit data."
-	icon = 'icons/obj/device.dmi'
+	icon = 'icons/obj/devices/new_assemblies.dmi'
 	icon_state = "motion2"
 	w_class = WEIGHT_CLASS_SMALL
 	/// If this beacon allows for AI control. Exists to avoid using istype() on checking
@@ -97,7 +97,7 @@
 	var/answer = {"<b>Name:</b> [chassis.name]<br>
 				<b>Integrity:</b> [round((chassis.get_integrity()/chassis.max_integrity * 100), 0.01)]%<br>
 				<b>Cell Charge:</b> [isnull(cell_charge) ? "Not Found":"[chassis.cell.percent()]%"]<br>
-				<b>Cabin Pressure:</b> [chassis.enclosed ? "[round(chassis.return_pressure(), 0.01)] kPa" : "Not Sealed"]<br>
+				<b>Cabin Pressure:</b> [(chassis.mecha_flags & IS_ENCLOSED) ? "[round(chassis.return_pressure(), 0.01)] kPa" : "Not Sealed"]<br>
 				<b>Pilot:</b> [english_list(chassis.return_drivers(), nothing_text = "None")]<br>
 				<b>Location:</b> [get_area_name(chassis, TRUE) || "Unknown"]"}
 	if(istype(chassis, /obj/vehicle/sealed/mecha/ripley))

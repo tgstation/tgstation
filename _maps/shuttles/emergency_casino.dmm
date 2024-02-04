@@ -1146,7 +1146,7 @@
 "MS" = (
 /obj/structure/mop_bucket,
 /obj/item/mop,
-/mob/living/simple_animal/bot/cleanbot,
+/mob/living/basic/bot/cleanbot,
 /turf/open/floor/mineral/titanium/yellow,
 /area/shuttle/escape)
 "MT" = (
@@ -1262,7 +1262,7 @@
 /turf/open/floor/carpet/green,
 /area/shuttle/escape)
 "PP" = (
-/mob/living/simple_animal/bot/medbot{
+/mob/living/basic/bot/medbot{
 	name = "\improper emergency medibot";
 	pixel_x = -3;
 	pixel_y = 2

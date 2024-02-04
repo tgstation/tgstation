@@ -22,7 +22,7 @@
 	src.boss_track = boss_track
 	src.track_duration = track_duration
 
-/datum/component/boss_music/Destroy(force, silent)
+/datum/component/boss_music/Destroy(force)
 	. = ..()
 	for(var/callback in music_callbacks)
 		deltimer(callback)
@@ -40,7 +40,7 @@
 	UnregisterSignal(parent, COMSIG_HOSTILE_FOUND_TARGET)
 	return ..()
 
-///Handles giving the boss music to a new target the fauna has recieved.
+///Handles giving the boss music to a new target the fauna has received.
 ///Keeps track of them to not repeatedly overwrite its own track.
 /datum/component/boss_music/proc/on_target_found(atom/source, mob/new_target)
 	SIGNAL_HANDLER

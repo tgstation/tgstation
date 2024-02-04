@@ -59,7 +59,7 @@
 	UnregisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE)
 	stop_regenerating()
 
-/datum/component/regenerator/Destroy(force, silent)
+/datum/component/regenerator/Destroy(force)
 	stop_regenerating()
 	. = ..()
 	if(regeneration_start_timer)

@@ -97,7 +97,7 @@
 	/// Datum that holds the canpass info of this pathing attempt. This is what CanAstarPass sees
 	var/datum/can_pass_info/pass_info
 
-/datum/pathfind/Destroy(force, ...)
+/datum/pathfind/Destroy(force)
 	. = ..()
 	SSpathfinder.active_pathing -= src
 	SSpathfinder.currentrun -= src

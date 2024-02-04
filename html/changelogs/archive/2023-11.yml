@@ -853,3 +853,299 @@
       once friendly. Being rather large dogs, they also have access to most of the
       pet commands you'd expect, such as fetching things, and violently mauling people
       their owners point at.
+2023-11-21:
+  00-Steven:
+  - balance: signers no longer suffer from social anxiety's speech changes when they
+      go non-verbal. Other effects are maintained.
+  DaCoolBoss:
+  - bugfix: Removed a duplicate grille from the abandoned mime outpost space ruin,
+      and replaced the 'energy weapon lenses' with spent revolver rounds.
+  EuSouAFazer:
+  - bugfix: Meta's recycler works again
+  Hatterhat:
+  - balance: The SC/FISHER disruptor pistol is now more likely to show up in black
+      market uplinks.
+  - balance: The SC/FISHER now has more range (21 tiles up from 14), and is usable
+      by pacifists.
+  Melbert:
+  - bugfix: Atrocinating mobs will now behave more as you'd expect. Meaning they don't
+      slip on wet patches, can't trigger bear traps / landmines / mouse traps, ignore
+      conveyors, and can walk over tables and railings.
+  - bugfix: Floating mobs are unaffected by conveyor belts, acid (on the ground),
+      glass tables
+  - bugfix: Floating mobs won't squish stuff like roaches anymore
+  - bugfix: Fixes bear traps triggering on floating / flying mobs
+  OrionTheFox:
+  - qol: Allergy Dogtags (and any other dogtags, really) are now Tiny items and can
+      fit into wallets.
+  Thlumyn:
+  - bugfix: healing viruses can no longer have floor virus side effects
+  YesterdaysPromise:
+  - image: 'Following now have unique item sprites: syndicate war declaration radio,
+      curator and chief beacon''s, chaplain beacon.'
+  - image: 'Following now have unique inhand sprites: radio, export scanner, walkie-talkie,
+      syndicate war declaration radio, curator and chief beacon''s, chaplain beacon.'
+  dieamond13:
+  - bugfix: adds back one way exits to Tramstation science's entrance
+  necromanceranne:
+  - bugfix: When you successfully block a body collision, it does something rather
+      than nothing at all.
+  - rscadd: The battle against Maint Khan's forces rages on in the periphery stations
+      of the Spinward Sector. And with it, a new breed of unarmed warrior has emerged;
+      the cybernetic martial artist. Nanotrasen, rather than quell the minor maintenance
+      civil war brewing in their sector, have chosen to exploit this conflict to push
+      their weapons and cybernetics research to new heights!
+  - rscadd: Advanced cybernetic arms can be printed at the Robotics exofabricator
+      once researched. They are unlocked by researching the Advanced Robotics Research
+      node.
+  - rscadd: Advanced cybernetic arms are more durable than standard limbs, and also
+      have higher unarmed potential.
+  - balance: Strongarm implants now utilize the attacking limb's unarmed potential
+      to determine damage and potential armor penetration. It also does additional
+      stamina damage (1.5x punch damage)
+  - balance: Surplus prosthetic limbs contribute more of their carried damage to overall
+      health (AKA they make you actively more vulnerable to damage), and deal less
+      damage with unarmed attacks. Take Quadruple Amputee at your own risk.
+2023-11-22:
+  Bumtickley00:
+  - balance: The CMO's hypospray now holds 60u, and can be set to inject smaller amounts
+      of reagents
+  Ghommie:
+  - spellcheck: Examining a human mob as an observer displays "Quirks", not "Traits"
+  Jane:
+  - rscadd: Bargonia Bar Sign for Cargo Bar Enjoyers
+  JohnFulpWillard:
+  - bugfix: '[Icebox] Atmos techs have access to the Engineering front desk windoor.'
+  - qol: '[Icebox] Security''s lower floor is not as easily cut off from the powernet
+      anymore.'
+  LT3:
+  - bugfix: Cursed/bad luck omen will now stick with the player for more than 1 incident
+  MTandi:
+  - bugfix: Emag overlay on lockers fixed
+  - image: New locker sprites
+  - image: Added new lockers
+  Xackii:
+  - bugfix: Androids cannot have overdose effect by any chems.
+  dieamond13:
+  - bugfix: removes a duplicate bookcase in icebox permabrig library
+  lizardqueenlexi:
+  - bugfix: Skillsoft's skillchip stations are now ADA-compliant (Astronauts with
+      Disabilities Act). Paraplegic characters can now implant themselves with skillchips,
+      the same as anyone else.
+  - bugfix: Heads impaled on spears now render in the correct place on the tip, instead
+      of halfway down the shaft.
+  - bugfix: Blind personnel are no longer able to magically see heads impaled on spears
+      from a distance.
+2023-11-23:
+  OrionTheFox:
+  - qol: Allergy Dogtags (and any other dogtags, really) are now actually whitelisted
+      to fit into wallets.
+  SyncIt21:
+  - bugfix: autolathe does not diminish materials from custom material items like
+      toolboxes when printing them in bulk. Also does not gray out that item in the
+      UI
+  - bugfix: autloathe correctly updates UI after inserting items into it
+  Y0SH1M4S73R:
+  - rscadd: Certain types of pens now function like you expect they would when inserted
+      into a foam dart
+  - qol: Examining a foam dart closely will show you how to modify it, or what it
+      is modified with
+  aaaa1023:
+  - qol: adds pixel perfect 4x, 4.5x, and 5x
+  necromanceranne:
+  - balance: Judo Joe, archnemesis of Maint Khan, has begun re-airing his midnight
+      infomercials shilling his extremely expensive Tackle Supreme Judo Karate Training
+      video tapes. Unable to pass up a 'bargain', Nanotrasen has purchased these tapes
+      en masse. Tackling techniques have started to improve, as well as Nanotrasen's
+      tackling instructional algorithms within tackle gloves.
+  - balance: The outcomes for tackling are more equalized. It isn't as feast or famine,
+      and should be somewhat more controllable without becoming too severe.
+  - rscadd: Blocking successfully against a tackle will force the tackle to be a neutral
+      outcome.
+  - rscadd: Unarmed effectiveness from arms now contributes to attacking with and
+      defending from tackles.
+  - rscadd: Those who refuse to use firearms (like Sleeping Carp users and insane
+      unholy berzerkers) are better at tackling others.
+  - rscadd: Riot specialized armor, and not just riot armor, now contributes meaningfully
+      to tackling effectiveness.
+  - balance: MK.1 Swat Suits, the ones that come in SWAT crates, now functions similarly
+      to riot armor.
+  - rscadd: Settlers from the outer rims have noticed they aren't very good at protecting
+      themselves against Judo Joe's clearly discriminatory tackling techniques.
+  - rscadd: Security lockers come with gripper gloves, security vendors now sell them
+      as standard items, and the HoS' garment bag now has a pair of gorilla gloves.
+      Gripper gloves have a positive skill bonus to tackling.
+  - rscadd: Being insane also makes you INSANELY good at tackling but also INSANELY
+      likely to eat shit on a whiff. DO OR DIE, BITCH.
+  - refactor: Shoving slowdown and all its implementations now use a status effect,
+      Staggered.
+  vinylspiders:
+  - bugfix: fullupgrade chem dispensers will now spawn with all their chems
+2023-11-24:
+  Autisem:
+  - rscadd: Cyborg inducer for engineering borgs
+  - balance: The borg RPED can hold as many part as the BSRPED now
+  - balance: Cyborg chargers now draw from the power net as cell chargers do
+  Jacquerel:
+  - rscadd: A new skill chip can be found in maintenance or purchased from the vendor,
+      allowing you to experience food in new and exciting ways.
+  - rscadd: Abductors also have access to this incredible power, simply using their
+      genius level brains.
+  JohnFulpWillard:
+  - qol: Mafia panel no longer shows vote buttons if you're on stand, shows the roles
+      of revealed players, and list out who is on the stand, if any.
+  SyncIt21:
+  - bugfix: RCD can build directional windows on top of existing grills & without
+      them.
+  - code_imp: removes & merges `expose_multiple()` proc into `expose()` proc inside
+      reagent holder
+  - code_imp: removes `conditonal_update()` proc & `on_update()` proc inside reagent
+      holder and reagent
+  - refactor: Reagent code has been trimmed and split into multiple files. report
+      bugs on github
+  TwistedSilicon:
+  - bugfix: Window damage overlays have been fixed.
+  Xander3359:
+  - admin: Remove "Make AI" from VV dropdown
+  dieamond13:
+  - qol: gives roundstart prisoners a key memory of what their crime is
+  jjpark-kb:
+  - bugfix: gutlunches now produce miner salve instead of milk, as well as the other
+      reagents if fed the correct ore
+2023-11-25:
+  MTandi:
+  - image: SM shard sprite updated
+  Rhials:
+  - qol: Gives Cargo areas its own wire layout, instead of having it use the same
+      wires as Service areas.
+  Time-Green:
+  - rscadd: Adds an arctangent2 component to circuitry!
+2023-11-26:
+  DaydreamIQ:
+  - qol: Mothuchi's pizzeria has been improved slightly! Order yourself a fresh mothic
+      pizza today!
+  Majkl-J:
+  - code_imp: HUDs no longer use their own trait variable
+  Momo8289:
+  - bugfix: MOD quick carry modules now give the correct carry speed bonus
+  Profakos:
+  - refactor: Slimes's colour, core type and mutation list is now held in a slime
+      type datum
+  - code_imp: Slime's variables have been documented, and renamed a bit to add clarity.
+      Please report bugs that might stem from renaming.
+  - bugfix: Slimes are not longer prevented from attacking pacifist humans.
+  - qol: Slime scans now display the actual amount of genetic instability, instead
+      of hiding it if a slime doesn't mutate further, or tweaking it if it might mutate
+      back into itself. This will make it easier to parse which slime to breed further
+      to get a rainbow slime.
+  Rhials:
+  - code_imp: Bitrunning/Bitrunning Den areas are now cargo area subtypes, rather
+      than station area subtypes.
+  - qol: The area preceding Metastation Cargo's front door is now denoted as being
+      the "cargo lobby".
+  SuperNovaa41:
+  - bugfix: Fixes cyborged heretics seeing influences.
+  Time-Green:
+  - bugfix: Fixes nebula killing everyone when forced by an admin on icebox
+  Y0SH1M4S73R:
+  - bugfix: Rebar crossbow bolts are now reuseable again, without risking crashing
+      clients when fired at point-blank range.
+  - qol: Bitrunning glitches will not show up in the roundend report unless they escape
+      the virtual domain.
+  vinylspiders:
+  - bugfix: fixes a runtime in footstep code that would prevent the fov effect from
+      playing to nearby mobs
+2023-11-27:
+  DaCoolBoss:
+  - qol: Oculine now tastes bitter, and not like toxin.
+  LemonInTheDark:
+  - server: Minimum compile version has been bumped to 515. clients still support
+      514 but we're gonna start using 515 restricted features for serverside now.
+  Profakos:
+  - bugfix: You can once again repaint robotic limbs to use alternate skins
+  SyncIt21:
+  - code_imp: removes unused proc `generate_possible_reactions()` from reagent holder
+  san7890:
+  - bugfix: Poly should now remember phrases between shifts.
+  wesoda25:
+  - bugfix: the dismemberment moodlet will now properly clear for ethereals who regrew
+      a limb in their resurrection crystals
+2023-11-28:
+  FeudeyTF:
+  - code_imp: Removed currency value for free products
+  Kylerace:
+  - code_imp: verb callbacks will no longer execute if the original client disconnected
+  Rhials:
+  - qol: Bar signs can now be purchased from cargo. Neat!
+  - qol: Bar signs can now be deconstructed with a screwdriver and wrench.
+  - qol: Bar signs can now be smashed to pieces, rather than just disabled.
+  Y0SH1M4S73R:
+  - bugfix: People exposed to romerol while alive will once again revive as zombies
+      on death.
+  san7890:
+  - bugfix: Ranged Guardians (Holoparasites/Power Miners/etc.) can no longer use ranged
+      attacks in scouting (incorporeal) mode.
+  vinylspiders:
+  - bugfix: fixes an overlay lighting hard del
+  - bugfix: flashlights placed inside of backpacks and other storage items that were
+      on the floor will no longer allow light to shine through
+  - bugfix: fixed a null client runtime in advanced camera console
+  - bugfix: fixed a runtime in handle_dead_metabolism()
+2023-11-29:
+  Ghommie:
+  - rscadd: Standing on structures such as crates, tables and bed will now look like
+      it.
+  Higgin:
+  - code_imp: Made ARDS death check respect maxHealth.
+  Iajret:
+  - bugfix: You can now destructively analyze syndicate and abductor items. It works
+      this time, I promise!
+  LT3:
+  - bugfix: Getting beheaded by the tram increments the scoreboard
+  - bugfix: 'Disease outbreak: classic spawned from the admin secrets panel no longer
+      fails to start'
+  - bugfix: Disease outbreak provides a message about why it fails to start
+  MGO:
+  - rscadd: Introduces new inverse reagents for Salicylic Acid, Oxandrolone, Salbutamol,
+      Pentetic Acid, Atropine, Ammoniated Mercury and Rezadone!
+  MTandi:
+  - bugfix: fixed chemical closet door not rendering when open
+  Momo8289:
+  - bugfix: The quick carry module should now correctly apply the appropriate traits
+  Mothblocks:
+  - image: Premade cleanbots are now always blue.
+  Rhials:
+  - bugfix: Renames a bar door from "Kitchen" to "Bar" on Metastation.
+  SyncIt21:
+  - bugfix: you no longer get an empty crate when ordering bluespace crystals from
+      the galactic material market.
+  Thlumyn:
+  - bugfix: bitrunning den shows up on the camera console now.
+  WarlockD:
+  - bugfix: All drones now can craft again
+  - rscadd: Non-Shy drones can now strip people of their things
+  - bugfix: Centered the "pull" button properly over the drop button
+  itseasytosee:
+  - bugfix: staggered targets now have the correct chance for escaping grapples.
+  - spellcheck: changed attack verb for punching a grappled target
+  san7890:
+  - bugfix: During the "Cursed Items" wizard event, you should only have smoke spawn
+      on you if you actually had a cursed item equipped to you.
+  vinylspiders:
+  - bugfix: fixed remaining footstep runtimes
+2023-11-30:
+  Ben10Omintrix:
+  - refactor: cats are now basic pets. please report any bugs.
+  - rscadd: the cake cat and bread cat can now help the chef around in the kitchen
+  GoldenAlpharex:
+  - bugfix: The Radioactive Nebula station trait will now respect its upper intensity
+      cap set at one hour and forty minutes, no longer scaling past that, as was initially
+      intended.
+  Mothblocks:
+  - rscadd: Instead of teaming up random people together, blood brothers will now
+      start out with one player and let them convert a single other person over to
+      blood brother using a flash.
+  SuperNovaa41:
+  - bugfix: Cyber cops are now equipped with the correct outfit.
+  timothymtorres:
+  - bugfix: Fix bitrunning triggering claustrophobia

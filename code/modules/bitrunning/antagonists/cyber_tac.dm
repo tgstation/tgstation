@@ -11,7 +11,7 @@
 		stack_trace("humans only for this position")
 		return
 
-	convert_agent(owner.current)
+	convert_agent(owner.current, /datum/outfit/cyber_police/tactical)
 
 /datum/outfit/cyber_police/tactical
 	name = ROLE_CYBER_TAC
@@ -45,6 +45,7 @@
 		/obj/item/mod/module/jetpack/advanced,
 		/obj/item/mod/module/jump_jet,
 	)
+	starting_frequency = null
 
 /datum/armor/mod_theme_glitch
 	melee = 15

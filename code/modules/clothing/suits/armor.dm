@@ -198,6 +198,33 @@
 	desc = "A red jacket with silver rank pips and body armor strapped on top."
 	icon_state = "warden_jacket"
 
+/obj/item/clothing/suit/armor/vest/secjacket
+	name = "security jacket"
+	desc = "A red jacket in red Security colors. It has hi-vis stripes all over it."
+	icon_state = "secjacket"
+	inhand_icon_state = "armor"
+	armor_type = /datum/armor/armor_secjacket
+	body_parts_covered = CHEST|GROIN|ARMS
+	cold_protection = CHEST|GROIN|ARMS|HANDS
+	heat_protection = CHEST|GROIN|ARMS|HANDS
+	resistance_flags = FLAMMABLE
+	dog_fashion = null
+
+/obj/item/clothing/suit/armor/vest/secjacket/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+	. = ..()
+	if(!isinhands)
+		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha)
+
+/datum/armor/armor_secjacket //Gotta compensate those extra covered limbs
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 35
+	bomb = 20
+	fire = 30
+	acid = 30
+	wound = 5
+
 /obj/item/clothing/suit/armor/vest/leather
 	name = "security overcoat"
 	desc = "Lightly armored leather overcoat meant as casual wear for high-ranking officers. Bears the crest of Nanotrasen Security."
@@ -253,9 +280,9 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	armor_type = /datum/armor/armor_riot
-	clothing_flags = BLOCKS_SHOVE_KNOCKDOWN
 	strip_delay = 80
 	equip_delay_other = 60
+	clothing_traits = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -345,7 +372,8 @@
 
 /obj/item/clothing/suit/armor/swat
 	name = "MK.I SWAT Suit"
-	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. It has a minor slowdown, but offers decent protection."
+	desc = "A tactical suit first developed in a joint effort by the defunct IS-ERI and Nanotrasen in 2321 for military operations. \
+		It has a minor slowdown, but offers decent protection and helps the wearer resist shoving in close quarters."
 	icon_state = "heavy"
 	inhand_icon_state = "swat_suit"
 	armor_type = /datum/armor/armor_swat
@@ -358,6 +386,8 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
+	clothing_traits = list(TRAIT_SHOVE_KNOCKDOWN_BLOCKED)
+
 
 //All of the armor below is mostly unused
 

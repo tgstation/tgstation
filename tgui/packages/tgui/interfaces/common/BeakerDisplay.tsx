@@ -1,6 +1,12 @@
-import { BooleanLike } from 'common/react';
-import { AnimatedNumber, Box, Button, LabeledList } from '../../components';
+import { BooleanLike } from '../../../common/react';
 import { useBackend } from '../../backend';
+import {
+  AnimatedNumber,
+  Box,
+  Button,
+  LabeledList,
+  Section,
+} from '../../components';
 
 type BeakerReagent = {
   name: string;
@@ -9,7 +15,6 @@ type BeakerReagent = {
 
 export type Beaker = {
   maxVolume: number;
-  transferAmounts: number[];
   pH: number;
   currentVolume: number;
   contents: BeakerReagent[];
@@ -22,8 +27,8 @@ type BeakerProps = {
   showpH?: BooleanLike;
 };
 
-export const BeakerDisplay = (props: BeakerProps, context) => {
-  const { act } = useBackend(context);
+export const BeakerDisplay = (props: BeakerProps) => {
+  const { act } = useBackend();
   const { beaker, replace_contents, title_label, showpH } = props;
   const beakerContents = replace_contents || beaker?.contents || [];
 
@@ -33,9 +38,12 @@ export const BeakerDisplay = (props: BeakerProps, context) => {
         label="Beaker"
         buttons={
           !!beaker && (
-            <Button icon="eject" content="Eject" onClick={() => act('eject')} />
+            <Button icon="eject" onClick={() => act('eject')}>
+              Eject
+            </Button>
           )
-        }>
+        }
+      >
         {title_label ||
           (!!beaker && (
             <>
@@ -63,5 +71,45 @@ export const BeakerDisplay = (props: BeakerProps, context) => {
         )}
       </LabeledList.Item>
     </LabeledList>
+  );
+};
+
+export const BeakerSectionDisplay = (props: BeakerProps) => {
+  const { act } = useBackend();
+  const { beaker, replace_contents, title_label, showpH } = props;
+  const beakerContents = replace_contents || beaker?.contents || [];
+
+  return (
+    <Section
+      title={title_label || 'Beaker'}
+      buttons={
+        !!beaker && (
+          <>
+            <Box inline color="label" mr={2}>
+              {beaker.currentVolume} / {beaker.maxVolume} units
+            </Box>
+            <Button icon="eject" onClick={() => act('eject')}>
+              Eject
+            </Button>
+          </>
+        )
+      }
+    >
+      <Box color="label">
+        {(!beaker && 'N/A') || (beakerContents.length === 0 && 'Nothing')}
+      </Box>
+      {beakerContents.map((chemical) => (
+        <Box key={chemical.name} color="label">
+          <AnimatedNumber initial={0} value={chemical.volume} /> units of{' '}
+          {chemical.name}
+        </Box>
+      ))}
+      {beakerContents.length > 0 && !!showpH && (
+        <Box>
+          pH:
+          <AnimatedNumber value={beaker.pH} />
+        </Box>
+      )}
+    </Section>
   );
 };

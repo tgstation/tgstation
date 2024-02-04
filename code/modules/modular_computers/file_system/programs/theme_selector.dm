@@ -5,9 +5,7 @@
 	program_open_overlay = "generic"
 	undeletable = TRUE
 	size = 0
-	header_program = TRUE
-	available_on_ntnet = TRUE
-	requires_ntnet = FALSE
+	program_flags = PROGRAM_ON_NTNET_STORE | PROGRAM_HEADER
 	tgui_id = "NtosThemeConfigure"
 	program_icon = "paint-roller"
 
@@ -25,6 +23,7 @@
 	return data
 
 /datum/computer_file/program/themeify/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
 	switch(action)
 		if("PRG_change_theme")
 			var/selected_theme = params["selected_theme"]

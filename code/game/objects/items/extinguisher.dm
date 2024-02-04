@@ -6,7 +6,7 @@
 	worn_icon_state = "fire_extinguisher"
 	inhand_icon_state = "fire_extinguisher"
 	hitsound = 'sound/weapons/smash.ogg'
-	flags_1 = CONDUCT_1
+	obj_flags = CONDUCTS_ELECTRICITY
 	throwforce = 10
 	w_class = WEIGHT_CLASS_NORMAL
 	throw_speed = 2
@@ -62,7 +62,7 @@
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null //it is much lighter, after all.
-	flags_1 = null //doesn't CONDUCT_1
+	obj_flags = NONE //doesn't conduct electricity
 	throwforce = 2
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
@@ -81,7 +81,7 @@
 	worn_icon_state = "miniFE"
 	inhand_icon_state = "miniFE"
 	hitsound = null	//it is much lighter, after all.
-	flags_1 = null //doesn't CONDUCT_1
+	obj_flags = NONE //doesn't conduct electricity
 	throwforce = 1
 	w_class = WEIGHT_CLASS_SMALL
 	force = 3
