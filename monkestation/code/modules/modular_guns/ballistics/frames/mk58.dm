@@ -14,6 +14,7 @@
 			new /datum/attachment_handler/welrod,
 			new /datum/attachment_handler/barrel,
 			new /datum/attachment_handler/keychain,
+			new /datum/attachment_handler/sight,
 		), \
 		tool_slots = list(
 			new /datum/attachment_handler/frame/screw,
