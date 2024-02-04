@@ -44,6 +44,7 @@ SUBSYSTEM_DEF(ore_generation)
 /datum/controller/subsystem/ore_generation/Initialize()
 	//Basically, we're going to round robin through the list of ore vents and assign a mineral to them until complete.
 	while(length(ore_vent_minerals) > 0) //Keep looping if there's more to assign
+		var/stallbreaker = 0
 		for(var/obj/structure/ore_vent/vent as anything in possible_vents)
 			if(length(ore_vent_minerals) <= 0) //But break early if there's none left.
 				break
@@ -52,6 +53,9 @@ SUBSYSTEM_DEF(ore_generation)
 			if(length(difflist(first = ore_vent_minerals, second = vent.mineral_breakdown, skiprep = 1)))
 				vent.generate_mineral_breakdown(new_minerals = 1, map_loading = TRUE)
 			else
+				stallbreaker++
+				if(stallbreaker >= length(possible_vents))
+					break //We're stuck in a loop, break out.
 				continue
 	return SS_INIT_SUCCESS
 
