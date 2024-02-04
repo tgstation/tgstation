@@ -789,7 +789,6 @@
 	new /obj/item/clothing/under/chameleon(src)
 	new /obj/item/clothing/mask/chameleon(src)
 	new /obj/item/card/id/advanced/chameleon(src)
-	new /obj/item/computer_disk/syndicate/camera_app(src)
 	new /obj/item/clothing/glasses/thermal/syndi(src)
 	new /obj/item/storage/toolbox/syndicate(src)
 	new /obj/item/jammer(src)
