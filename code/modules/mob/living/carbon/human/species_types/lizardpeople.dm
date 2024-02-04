@@ -9,6 +9,7 @@
 		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
+		NO_PANT, //MONKESTATION ADDITION
 	)
 	inherent_traits = list(
 		TRAIT_CAN_USE_FLIGHT_POTION,
@@ -129,6 +130,7 @@ Lizard subspecies: ASHWALKERS
 		MUTCOLORS_SECONDARY,
 		EYECOLOR,
 		LIPS,
+		NO_UNDERWEAR, //MONKESTATION ADDITION: no more flesh clothes lol
 	)
 	inherent_traits = list(
 		//TRAIT_LITERATE,

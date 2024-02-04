@@ -81,6 +81,7 @@
 #define ANIME 13
 #define MUTCOLORS_SECONDARY 14
 #define SPECIES_FUR 15
+#define NO_PANT 16 //MONKESTATION ADDITION: simillar to NO_UNDERWEAR but you can wear shirts
 
 /// Use this if you want to change the race's color without the player being able to pick their own color. AKA special color shifting
 #define DYNCOLORS 16
