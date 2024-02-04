@@ -90,7 +90,7 @@
 	l_hand = /obj/item/storage/bag/tray
 	undershirt = "Nude"
 
-/datum/outfit/centcom/bunny_waiter/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/centcom/centcom_bunny/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
