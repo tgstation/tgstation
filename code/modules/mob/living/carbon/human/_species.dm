@@ -759,7 +759,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	//Underwear, Undershirts & Socks
 	if(!(NO_UNDERWEAR in species_traits))
-		if(!(NO_PANT in species_traits)) //MONKESTATION EDIT START: added NO_PANT to underwear
+ //MONKESTATION EDIT START: added NO_PANT to underwear
+
+		if(!(NO_PANT in species_traits))
 			if(species_human.underwear)
 				var/datum/sprite_accessory/underwear/underwear = GLOB.underwear_list[species_human.underwear]
 				var/mutable_appearance/underwear_overlay
@@ -771,8 +773,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 					if(!underwear.use_static)
 						underwear_overlay.color = species_human.underwear_color
 					underwear_overlay.pixel_y += height_offset
-					standing += underwear_overlay	//MONKESTATION EDIT END
+					standing += underwear_overlay
 
+//MONKESTATION EDIT END
 		if(species_human.undershirt)
 			var/datum/sprite_accessory/undershirt/undershirt = GLOB.undershirt_list[species_human.undershirt]
 			if(undershirt)
