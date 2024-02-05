@@ -725,8 +725,6 @@
 			chameleon_action.hidden = FALSE
 			actions += chameleon_action
 			chameleon_action.Grant(user)
-			actions += tongue_action
-			tongue_action.Grant(user)
 			log_game("[key_name(user)] has removed the disguise lock on the chameleon mask ([name]) with [W]")
 			return
 		else
@@ -734,7 +732,6 @@
 			actions -= chameleon_action
 			chameleon_action.Remove(user)
 			log_game("[key_name(user)] has locked the disguise of the chameleon mask ([name]) with [W]")
-			tongue_action.Remove(user)
 			return
 	return ..()
 // MONKESTATION ADDITION END
