@@ -464,11 +464,11 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 				tgui_alert(usr,"The game hasn't started yet!")
 				return
 			if(GLOB.everyone_an_antag)
-				var/are_we_antagstacking = tgui_alert(usr, "The everyone is antag secret has already been triggered. Do you want to stack antags???", "Are you sure about this?", list("Confirm", "Abort"))
+				var/are_we_antagstacking = tgui_alert(usr, "The everyone is antag secret has already been triggered. Do you want to stack antags?", "DANGER ZONE. Are you sure about this?", list("Confirm", "Abort"))
 				if(are_we_antagstacking != "Confirm")
 					return
 
-			var/chosen_antag = tgui_input_list(usr, "Choose antag", "Chose antag", list("Traitor", "Changeling", "Heretic", "Ninja", "Wizad", "Nightmare"))
+			var/chosen_antag = tgui_input_list(usr, "Choose antag", "Chose antag", list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_HERETIC, ROLE_CULTIST, ROLE_NINJA, ROLE_WIZARD, ROLE_NIGHTMARE))
 			if(!chosen_antag)
 				return
 			var/objective = tgui_input_text(usr, "Enter an objective", "Objective")
@@ -673,32 +673,41 @@ GLOBAL_DATUM(everyone_an_antag, /datum/everyone_is_an_antag_controller)
 		return
 	if(ishuman(player))
 		switch(chosen_antag)
-			if("Traitor")
+			if(ROLE_TRAITOR)
 				var/datum/antagonist/traitor/antag_datum = new(give_objectives = FALSE)
 				assign_admin_objective(player, antag_datum)
 				player.mind.add_antag_datum(antag_datum)
 				var/datum/uplink_handler/uplink = antag_datum.uplink_handler
 				uplink.has_progression = FALSE
 				uplink.has_objectives = FALSE
-			if("Changeling")
+			if(ROLE_CHANGELING)
 				var/datum/antagonist/changeling/antag_datum = new
 				assign_admin_objective(player, antag_datum)
 				player.mind.add_antag_datum(antag_datum)
-			if("Heretic")
+			if(ROLE_HERETIC)
 				var/datum/antagonist/heretic/antag_datum = new
 				assign_admin_objective(player, antag_datum)
 				player.mind.add_antag_datum(antag_datum)
-			if("Ninja")
+			if(ROLE_CULTIST)
+				var/datum/antagonist/cult/antag_datum = new
+				assign_admin_objective(player, antag_datum)
+				player.mind.add_antag_datum(antag_datum)
+			if(ROLE_NINJA)
 				var/datum/antagonist/ninja/antag_datum = new
 				assign_admin_objective(player, antag_datum)
 				for(var/obj/item/item_to_drop in player)
-					player.dropItemToGround(item_to_drop, FALSE)
+					if(!istype(item_to_drop, /obj/item/implant)) //avoid removing implanted uplinks
+						player.dropItemToGround(item_to_drop, FALSE)
 				player.mind.add_antag_datum(antag_datum)
-			if("Wizad")
+			if(ROLE_WIZARD)
 				var/datum/antagonist/wizard/antag_datum = new
+				antag_datum.move_to_lair = FALSE
 				assign_admin_objective(player, antag_datum)
+				for(var/obj/item/item_to_drop in player) //avoid deleting player's items
+					if(!istype(item_to_drop, /obj/item/implant))
+						player.dropItemToGround(item_to_drop, FALSE)
 				player.mind.add_antag_datum(antag_datum)
-			if("Nightmare")
+			if(ROLE_NIGHTMARE)
 				var/datum/antagonist/nightmare/antag_datum = new
 				assign_admin_objective(player, antag_datum)
 				player.mind.add_antag_datum(antag_datum)
