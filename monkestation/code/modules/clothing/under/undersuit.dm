@@ -54,12 +54,14 @@
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "shrine_priestess"
 
-/obj/item/clothing/under/syndicate/skirt/maid
+obj/item/clothing/under/syndicate/skirt/maid
 	name = "tactical maid outfit"
 	desc = "A 'tactical' turtleneck fashioned to the likeness of a maid outfit. Why the Syndicate has these, you'll never know."
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	icon_state = "syndimaid"
+	can_adjust = FALSE
+
 /obj/item/clothing/under/rank/civilian/janitor
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
@@ -75,6 +77,7 @@
 	icon_state = "wonka"
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
 	worn_icon_state = "wonka"
+	can_adjust = FALSE
 
 /obj/item/clothing/under/guardmanuniform
 	name = "guardman's uniform"
@@ -82,3 +85,4 @@
 	icon = 'monkestation/icons/obj/clothing/uniforms.dmi'
 	icon_state = "guardman_uniform"
 	worn_icon = 'monkestation/icons/mob/clothing/uniform.dmi'
+	can_adjust = FALSE
