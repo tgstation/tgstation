@@ -517,6 +517,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			if(!isnull(trick_name))
 				pet.ai_controller.set_blackboard_key(BB_TRICK_NAME, trick_name)
 			pet.ai_controller.override_blackboard_key(BB_TRICK_SEQUENCE, trick_sequence)
+			playsound(computer.loc, 'sound/items/orbie_level_up.ogg', 50)
 
 	return TRUE
 
@@ -537,7 +538,6 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 		return
 	announce_global_updates(message = "has found a chocolate at [selected_area.name]")
 	selected_area = null
-	playsound(computer.loc, 'sound/machines/ping.ogg', 30, FALSE)
 	var/obj/item/food/virtual_chocolate/chocolate = new(get_turf(computer))
 	chocolate.AddElement(/datum/element/temporary_atom, life_time = 30 SECONDS) //we cant maintain its existence for too long!
 
