@@ -188,11 +188,9 @@
 		return
 	build_count = clamp(build_count, 1, 50)
 
-	var/is_stack_recipe = ispath(design.build_path, /obj/item/stack)
-	var/list/materials_per_item = list()
-	var/material_cost_coefficient = is_stack_recipe ? 1 : creation_efficiency
+	var/list/materials_needed = list()
 	for(var/datum/material/material as anything in design.materials)
-		var/amount_needed = design.materials[material] * material_cost_coefficient
+		var/amount_needed = design.materials[material]
 		if(istext(material)) // category
 			var/list/choices = list()
 			for(var/datum/material/valid_candidate as anything in SSmaterials.materials_by_category[material])
@@ -215,55 +213,55 @@
 		if(isnull(material))
 			stack_trace("got passed an invalid material id: [material]")
 			return
-		materials_per_item[material] = amount_needed
+		materials_needed[material] = amount_needed
 
-	// don't pass the coefficient of creation here, we already modify it for use with setting the custom_materials
-	if(!materials.has_materials(materials_per_item, multiplier = build_count))
+	var/material_cost_coefficient = ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency
+	if(!materials.has_materials(materials_needed, material_cost_coefficient, build_count))
 		say("Not enough materials to begin production.")
 		return
 
-	var/power_use_amount = 0
-	for(var/material_used in materials_per_item)
-		power_use_amount += materials_per_item[material_used] * 0.2 * build_count
-	if(!directly_use_power(power_use_amount))
-		say("Not enough power in local network to begin production.")
-		return
+	//use power
+	var/total_charge = 0
+	for(var/material in design.materials)
+		total_charge += round(design.materials[material] * material_cost_coefficient * build_count)
+	var/charge_per_item = total_charge / build_count
 
 	var/total_time = (design.construction_time * design.lathe_time_factor * build_count) ** 0.8
 	var/time_per_item = total_time / build_count
-	start_making(design, build_count, ui.user, time_per_item, materials_per_item)
+	start_making(design, build_count, time_per_item, material_cost_coefficient, charge_per_item)
 	return TRUE
 
 /// Begins the act of making the given design the given number of items
 /// Does not check or use materials/power/etc
-/obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, mob/user, build_time_per_item, list/materials_per_item)
+/obj/machinery/autolathe/proc/start_making(datum/design/design, build_count, build_time_per_item, material_cost_coefficient, charge_per_item)
 	PROTECTED_PROC(TRUE)
 
 	busy = TRUE
 	icon_state = "autolathe_n"
 	update_static_data_for_all_viewers()
 
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item, build_time_per_item, build_count), build_time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, material_cost_coefficient, build_time_per_item, charge_per_item, build_count), build_time_per_item)
 
 /// Callback for start_making, actually makes the item
 /// Called using timers started by start_making
-/obj/machinery/autolathe/proc/do_make_item(datum/design/design, list/materials_per_item, time_per_item, items_remaining)
+/obj/machinery/autolathe/proc/do_make_item(datum/design/design, material_cost_coefficient, time_per_item, charge_per_item, items_remaining)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
 		finalize_build()
 		return
 
-	if(!is_operational)
+	if(!directly_use_power(charge_per_item))
 		say("Unable to continue production, power failure.")
 		finalize_build()
 		return
 
+	var/list/design_materials = design.materials
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
-	if(!materials.has_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1))
+	if(!materials.has_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		return
-	materials.use_materials(materials_per_item, multiplier = is_stack ? items_remaining : 1)
+	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1)
 
 	var/turf/target = get_step(src, drop_direction)
 	if(isclosedturf(target))
@@ -274,12 +272,10 @@
 		created = new design.build_path(target, items_remaining)
 	else
 		created = new design.build_path(target)
-		created.set_custom_materials(materials_per_item.Copy())
+		split_materials_uniformly(design_materials, material_cost_coefficient, created)
 
 	created.pixel_x = created.base_pixel_x + rand(-6, 6)
 	created.pixel_y = created.base_pixel_y + rand(-6, 6)
-	for(var/atom/movable/content in created)
-		content.set_custom_materials(list()) // no
 	created.forceMove(target)
 
 	if(is_stack)
@@ -290,7 +286,7 @@
 	if(!items_remaining)
 		finalize_build()
 		return
-	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, materials_per_item, time_per_item, items_remaining), time_per_item)
+	addtimer(CALLBACK(src, PROC_REF(do_make_item), design, material_cost_coefficient, time_per_item, items_remaining), time_per_item)
 
 /// Resets the icon state and busy flag
 /// Called at the end of do_make_item's timer loop
@@ -355,7 +351,7 @@
 
 	flick("autolathe_[item_inserted.has_material_type(/datum/material/glass) ? "r" : "o"]", src)
 
-	use_power(min(active_power_usage * 0.25, amount_inserted / 100))
+	use_power(min(active_power_usage * 0.25, amount_inserted / SHEET_MATERIAL_AMOUNT))
 
 	update_static_data_for_all_viewers()
 

@@ -415,6 +415,7 @@ export const SearchAndDisplay = (props) => {
             </Stack.Item>
             <Stack.Item>
               <Dropdown
+                width="120px"
                 options={search_categories}
                 selected={category}
                 onSelected={(value) =>

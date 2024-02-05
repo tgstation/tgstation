@@ -34,7 +34,7 @@
 	///if TRUE, this traitor will always get hijacking as their final objective
 	var/is_hijacker = FALSE
 
-	///the name of the antag flavor this traitor has.
+	///the name of the antag flavor this traitor has, set in Traitor's setup if not preset.
 	var/employer
 
 	///assoc list of strings set up after employer is given
@@ -57,7 +57,7 @@
 	// There will still be a timelock on uplink items
 	name = "\improper Infiltrator"
 	give_secondary_objectives = FALSE
-	uplink_flag_given = UPLINK_TRAITORS | UPLINK_INFILTRATORS
+	uplink_flag_given = UPLINK_INFILTRATORS
 
 /datum/antagonist/traitor/infiltrator/sleeper_agent
 	name = "\improper Syndicate Sleeper Agent"
@@ -188,22 +188,23 @@
 	return ..()
 
 /datum/antagonist/traitor/proc/pick_employer()
-	var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
-	var/list/possible_employers = list()
+	if(!employer)
+		var/faction = prob(75) ? FLAVOR_FACTION_SYNDICATE : FLAVOR_FACTION_NANOTRASEN
+		var/list/possible_employers = list()
 
-	possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
+		possible_employers.Add(GLOB.syndicate_employers, GLOB.nanotrasen_employers)
 
-	if(istype(ending_objective, /datum/objective/hijack))
-		possible_employers -= GLOB.normal_employers
-	else //escape or martyrdom
-		possible_employers -= GLOB.hijack_employers
+		if(istype(ending_objective, /datum/objective/hijack))
+			possible_employers -= GLOB.normal_employers
+		else //escape or martyrdom
+			possible_employers -= GLOB.hijack_employers
 
-	switch(faction)
-		if(FLAVOR_FACTION_SYNDICATE)
-			possible_employers -= GLOB.nanotrasen_employers
-		if(FLAVOR_FACTION_NANOTRASEN)
-			possible_employers -= GLOB.syndicate_employers
-	employer = pick(possible_employers)
+		switch(faction)
+			if(FLAVOR_FACTION_SYNDICATE)
+				possible_employers -= GLOB.nanotrasen_employers
+			if(FLAVOR_FACTION_NANOTRASEN)
+				possible_employers -= GLOB.syndicate_employers
+		employer = pick(possible_employers)
 	traitor_flavor = strings(TRAITOR_FLAVOR_FILE, employer)
 
 /// Generates a complete set of traitor objectives up to the traitor objective limit, including non-generic objectives such as martyr and hijack.
@@ -308,6 +309,7 @@
 	data["allies"] = traitor_flavor["allies"]
 	data["goal"] = traitor_flavor["goal"]
 	data["has_uplink"] = uplink ? TRUE : FALSE
+	data["given_uplink"] = give_uplink
 	if(uplink)
 		data["uplink_intro"] = traitor_flavor["uplink"]
 		data["uplink_unlock_info"] = uplink.unlock_text

@@ -5791,9 +5791,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/shuttle/sbc_starfury)
-"ZF" = (
-/turf/closed/wall/mineral/plastitanium/nosmooth,
-/area/shuttle/sbc_starfury)
 "ZK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -5974,7 +5971,7 @@ cH
 ow
 ae
 ae
-ZF
+ac
 aa
 aa
 aa
@@ -6110,7 +6107,7 @@ cH
 Zl
 ae
 ae
-ZF
+ac
 aa
 aa
 aa
@@ -8014,7 +8011,7 @@ cH
 vC
 ae
 ae
-ZF
+ac
 aa
 aa
 aa
@@ -8150,7 +8147,7 @@ cH
 xI
 ae
 ae
-ZF
+ac
 aa
 aa
 aa
