@@ -382,15 +382,13 @@
 				render_list += "<span class='info ml-1'>Blood level: [blood_percent]%, [carbontarget.blood_volume] cl, type: [blood_type]</span>\n"
 
 	// Blood Alcohol Content
-	if(isliving(target))
-		var/mob/living/living_target = target
-		var/datum/status_effect/inebriated/inebriation = living_target.has_status_effect(/datum/status_effect/inebriated)
-		if(!isnull(inebriation))
-			var/blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
-			if(blood_alcohol_content >= 0.24)
-				render_list += "<span class='alert ml-1'>Blood alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span>\n"
-			else
-				render_list += "<span class='info ml-1'>Blood alcohol content: [blood_alcohol_content]%</span>\n"
+	var/datum/status_effect/inebriated/inebriation = target.has_status_effect(/datum/status_effect/inebriated)
+	if(!isnull(inebriation))
+		var/blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+		if(blood_alcohol_content >= 0.24)
+			render_list += "<span class='alert ml-1'>Blood alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span>\n"
+		else
+			render_list += "<span class='info ml-1'>Blood alcohol content: [blood_alcohol_content]%</span>\n"
 
 	// Cybernetics
 	if(iscarbon(target))
