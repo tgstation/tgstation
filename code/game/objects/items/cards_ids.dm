@@ -1349,6 +1349,24 @@
 	/// Weak ref to the ID card we're currently attempting to steal access from.
 	var/datum/weakref/theft_target
 
+// MONKESTATION ADDITION START
+/obj/item/card/id/advanced/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
 	. = ..()
 
@@ -1535,6 +1553,10 @@
 			return TRUE
 
 /obj/item/card/id/advanced/chameleon/attack_self(mob/user)
+	// MONKESTATION ADDITION START
+	if(chameleon_action.hidden)
+		return ..()
+	// MONKESTATION ADDITION END
 	if(isliving(user) && user.mind)
 		var/popup_input = tgui_input_list(user, "Choose Action", "Agent ID", list("Show", "Forge/Reset", "Change Account ID"))
 		if(user.incapacitated())

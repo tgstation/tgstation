@@ -145,7 +145,14 @@
 
 	var/emp_timer
 
+	var/hidden = FALSE // MONKESTATION ADDITION
+
 /datum/action/item_action/chameleon/change/Grant(mob/M)
+	// MONKESTATION ADDITION START
+	if(hidden)
+		Remove(M)
+		return
+	// MONKESTATION ADDITION END
 	if(M && (owner != M))
 		if(!M.chameleon_item_actions)
 			M.chameleon_item_actions = list(src)
@@ -392,6 +399,24 @@
 	fire = 50
 	acid = 50
 
+// MONKESTATION ADDITION START
+/obj/item/clothing/under/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon jumpsuit ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon jumpsuit ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/clothing/under/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -434,6 +459,24 @@
 	fire = 50
 	acid = 50
 
+// MONKESTATION ADDITION START
+/obj/item/clothing/suit/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon suit ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon suit ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/clothing/suit/chameleon/Initialize(mapload)
 	. = ..()
 	allowed = GLOB.security_vest_allowed //should at least act like a vest
@@ -474,6 +517,24 @@
 	laser = 10
 	fire = 50
 	acid = 50
+
+// MONKESTATION ADDITION START
+/obj/item/clothing/glasses/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon glasses ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon glasses ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
 
 /obj/item/clothing/glasses/chameleon/Initialize(mapload)
 	. = ..()
@@ -517,6 +578,24 @@
 	fire = 50
 	acid = 50
 
+// MONKESTATION ADDITION START
+/obj/item/clothing/gloves/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon gloves ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon gloves ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/clothing/gloves/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -557,6 +636,24 @@
 	laser = 5
 	fire = 50
 	acid = 50
+
+// MONKESTATION ADDITION START
+/obj/item/clothing/head/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon hat ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon hat ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
 
 /obj/item/clothing/head/chameleon/Initialize(mapload)
 	. = ..()
@@ -621,6 +718,27 @@
 	fire = 50
 	acid = 50
 
+// MONKESTATION ADDITION START
+/obj/item/clothing/mask/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			actions += tongue_action
+			tongue_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon mask ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon mask ([name]) with [W]")
+			tongue_action.Remove(user)
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/clothing/mask/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -645,6 +763,10 @@
 	chameleon_action.emp_randomise(INFINITY)
 
 /obj/item/clothing/mask/chameleon/attack_self(mob/user)
+	// MONKESTATION ADDITION START
+	if(chameleon_action.hidden)
+		return ..()
+	// MONKESTATION ADDITION END
 	voice_change = !voice_change
 	to_chat(user, span_notice("The voice changer is now [voice_change ? "on" : "off"]!"))
 
@@ -688,6 +810,24 @@
 	fire = 50
 	acid = 50
 
+// MONKESTATION ADDITION START
+/obj/item/clothing/shoes/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon shoes ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon shoes ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/clothing/shoes/chameleon/Initialize(mapload)
 	. = ..()
 
@@ -722,6 +862,24 @@
 	name = "backpack"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+// MONKESTATION ADDITION START
+/obj/item/storage/backpack/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon backpack ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon backpack ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/storage/backpack/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -748,6 +906,24 @@
 	name = "toolbelt"
 	desc = "Holds tools."
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+// MONKESTATION ADDITION START
+/obj/item/storage/belt/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon belt ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon belt ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
 
 /obj/item/storage/belt/chameleon/Initialize(mapload)
 	. = ..()
@@ -778,6 +954,24 @@
 	name = "radio headset"
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+// MONKESTATION ADDITION START
+/obj/item/radio/headset/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon headset ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon headset ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/radio/headset/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -803,6 +997,24 @@
 /obj/item/modular_computer/pda/chameleon
 	name = "tablet"
 	var/datum/action/item_action/chameleon/change/tablet/chameleon_action
+
+// MONKESTATION ADDITION START
+/obj/item/modular_computer/pda/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon PDA ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon PDA ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
 
 /obj/item/modular_computer/pda/chameleon/Initialize(mapload)
 	. = ..()
@@ -830,6 +1042,24 @@
 /obj/item/stamp/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
 
+// MONKESTATION ADDITION START
+/obj/item/stamp/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon stamp ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon stamp ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
+
 /obj/item/stamp/chameleon/Initialize(mapload)
 	. = ..()
 	chameleon_action = new(src)
@@ -856,6 +1086,24 @@
 
 /obj/item/clothing/neck/chameleon
 	var/datum/action/item_action/chameleon/change/chameleon_action
+
+// MONKESTATION ADDITION START
+/obj/item/clothing/neck/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon necktie ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon necktie ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
 
 /datum/armor/neck_chameleon
 	fire = 50
@@ -897,6 +1145,24 @@
 
 	/// The badmin mode. Makes your projectiles act like the real deal.
 	var/real_hits = FALSE
+
+// MONKESTATION ADDITION START
+/obj/item/gun/energy/laser/chameleon/attackby(obj/item/W, mob/user, params)
+	if(W.tool_behaviour == TOOL_MULTITOOL)
+		if(chameleon_action.hidden)
+			chameleon_action.hidden = FALSE
+			actions += chameleon_action
+			chameleon_action.Grant(user)
+			log_game("[key_name(user)] has removed the disguise lock on the chameleon necktie ([name]) with [W]")
+			return
+		else
+			chameleon_action.hidden = TRUE
+			actions -= chameleon_action
+			chameleon_action.Remove(user)
+			log_game("[key_name(user)] has locked the disguise of the chameleon necktie ([name]) with [W]")
+			return
+	return ..()
+// MONKESTATION ADDITION END
 
 /obj/item/gun/energy/laser/chameleon/Initialize(mapload)
 	. = ..()
