@@ -10,9 +10,9 @@
 	)
 
 /datum/surgery/lipoplasty/can_start(mob/user, mob/living/carbon/target)
-	if(HAS_TRAIT(target, TRAIT_FAT) && target.nutrition >= NUTRITION_LEVEL_WELL_FED)
-		return TRUE
-	return FALSE
+	if(!HAS_TRAIT(target, TRAIT_FAT) || target.nutrition >= NUTRITION_LEVEL_WELL_FED)
+		return FALSE
+	return ..()
 
 
 //cut fat
@@ -24,6 +24,10 @@
 		/obj/item/hatchet = 35,
 		/obj/item/knife/butcher = 25)
 	time = 64
+	preop_sound = list(
+		/obj/item/circular_saw = 'sound/surgery/saw.ogg',
+		/obj/item = 'sound/surgery/scalpel1.ogg',
+	)
 
 /datum/surgery_step/cut_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	user.visible_message(span_notice("[user] begins to cut away [target]'s excess fat."), span_notice("You begin to cut away [target]'s excess fat..."))
@@ -55,6 +59,8 @@
 		TOOL_SCREWDRIVER = 45,
 		TOOL_WIRECUTTER = 35)
 	time = 32
+	preop_sound = 'sound/surgery/retractor1.ogg'
+	success_sound = 'sound/surgery/retractor2.ogg'
 
 /datum/surgery_step/remove_fat/preop(mob/user, mob/living/carbon/target, target_zone, obj/item/tool, datum/surgery/surgery)
 	display_results(
