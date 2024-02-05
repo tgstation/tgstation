@@ -1355,18 +1355,17 @@
 /obj/item/card/id/advanced/chameleon/attackby(obj/item/W, mob/user, params)
 	if(W.tool_behaviour != TOOL_MULTITOOL)
 		return ..()
+
 	if(chameleon_card_action.hidden)
 		chameleon_card_action.hidden = FALSE
 		actions += chameleon_card_action
 		chameleon_card_action.Grant(user)
 		log_game("[key_name(user)] has removed the disguise lock on the agent ID ([name]) with [W]")
-		return ..()
 	else
 		chameleon_card_action.hidden = TRUE
 		actions -= chameleon_card_action
 		chameleon_card_action.Remove(user)
 		log_game("[key_name(user)] has locked the disguise of the agent ID ([name]) with [W]")
-		return ..()
 // MONKESTATION ADDITION END
 
 /obj/item/card/id/advanced/chameleon/Initialize(mapload)
