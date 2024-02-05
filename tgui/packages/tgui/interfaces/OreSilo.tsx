@@ -1,5 +1,6 @@
 import { classes } from 'common/react';
 import { capitalize } from 'common/string';
+import { useState } from 'react';
 
 import { useBackend } from '../backend';
 import {
@@ -35,7 +36,7 @@ type Log = {
   noun: string;
 };
 
-enum View {
+enum Tab {
   Machines,
   Logs,
 }
@@ -43,14 +44,15 @@ enum View {
 type Data = {
   SHEET_MATERIAL_AMOUNT: number;
   materials: Material[];
-  machines?: Machine[];
-  logs?: Log[];
-  view: View;
+  machines: Machine[];
+  logs: Log[];
 };
 
 export const OreSilo = (props: any) => {
   const { act, data } = useBackend<Data>();
-  const { SHEET_MATERIAL_AMOUNT, machines, logs, view } = data;
+  const { SHEET_MATERIAL_AMOUNT, machines, logs } = data;
+
+  const [currentTab, setCurrentTab] = useState<Tab>(Tab.Logs);
 
   return (
     <Window title="Ore Silo" width={620} height={600}>
@@ -60,29 +62,29 @@ export const OreSilo = (props: any) => {
             <Tabs fluid>
               <Tabs.Tab
                 icon="plug"
-                selected={view === View.Machines}
-                onClick={() => act('machinery')}
+                selected={currentTab === Tab.Machines}
+                onClick={() => setCurrentTab(Tab.Machines)}
               >
                 Connections
               </Tabs.Tab>
               <Tabs.Tab
                 icon="book-bookmark"
-                selected={view === View.Logs}
-                onClick={() => act('logs')}
+                selected={currentTab === Tab.Logs}
+                onClick={() => setCurrentTab(Tab.Logs)}
               >
                 Logs
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>
-            {view === View.Machines ? (
+            {currentTab === Tab.Machines ? (
               <MachineList
                 machines={machines!}
                 onPause={(index) => act('hold', { id: index })}
                 onRemove={(index) => act('remove', { id: index })}
               />
             ) : null}
-            {view === View.Logs ? <LogsList logs={logs!} /> : null}
+            {currentTab === Tab.Logs ? <LogsList logs={logs!} /> : null}
           </Stack.Item>
           <Stack.Item>
             <Section fill>

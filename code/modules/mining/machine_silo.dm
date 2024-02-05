@@ -1,6 +1,3 @@
-#define MACHINE_VIEW 0
-#define LOGS_VIEW 1
-
 /obj/machinery/ore_silo
 	name = "ore silo"
 	desc = "An all-in-one bluespace storage and transmission system for the station's mineral distribution needs."
@@ -10,9 +7,6 @@
 	circuit = /obj/item/circuitboard/machine/ore_silo
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN|INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_OPEN_SILICON
 	processing_flags = NONE
-
-	/// Currently selected UI tab, possible values are: `MACHINE_VIEW` or `1` and `LOGS_VIEW` or `0`.
-	var/current_view = MACHINE_VIEW
 
 	/// List of all connected components that are on hold from accessing materials.
 	var/list/holds = list()
@@ -134,36 +128,31 @@
 
 	data["materials"] =  materials.ui_data()
 
-	data["view"] = current_view
+	data["machines"] = list()
+	for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
+		var/atom/parent = remote.parent
+		data["machines"] += list(
+			list(
+				"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
+				"name" = parent.name,
+				"onHold" = !!holds[remote],
+				"location" = get_area_name(parent, TRUE),
+			)
+		)
 
-	switch(current_view)
-		if(MACHINE_VIEW)
-			data["machines"] = list()
-			for(var/datum/component/remote_materials/remote as anything in ore_connected_machines)
-				var/atom/parent = remote.parent
-				data["machines"] += list(
-					list(
-						"icon" = icon2base64(icon(initial(parent.icon), initial(parent.icon_state), frame = 1)),
-						"name" = parent.name,
-						"onHold" = !!holds[remote],
-						"location" = get_area_name(parent, TRUE),
-					)
-				)
-
-		if(LOGS_VIEW)
-			data["logs"] = list()
-			for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
-				data["logs"] += list(
-					list(
-						"rawMaterials" = entry.get_raw_materials(""),
-						"machineName" = entry.machine_name,
-						"areaName" = entry.area_name,
-						"action" = entry.action,
-						"amount" = entry.amount,
-						"time" = entry.timestamp,
-						"noun" = entry.noun,
-					)
-				)
+	data["logs"] = list()
+	for(var/datum/ore_silo_log/entry as anything in GLOB.silo_access_logs[REF(src)])
+		data["logs"] += list(
+			list(
+				"rawMaterials" = entry.get_raw_materials(""),
+				"machineName" = entry.machine_name,
+				"areaName" = entry.area_name,
+				"action" = entry.action,
+				"amount" = entry.amount,
+				"time" = entry.timestamp,
+				"noun" = entry.noun,
+			)
+		)
 
 	return data
 
@@ -173,14 +162,6 @@
 		return
 
 	switch(action)
-		if("machinery")
-			current_view = MACHINE_VIEW
-			return TRUE
-
-		if("logs")
-			current_view = LOGS_VIEW
-			return TRUE
-
 		if("remove")
 			var/index = params["id"]
 			if(isnull(index))
@@ -325,6 +306,3 @@
 		separator = ", "
 		msg += "[amount < 0 ? "-" : "+"][val] [M.name]"
 	return msg.Join()
-
-#undef LOGS_VIEW
-#undef MACHINE_VIEW
