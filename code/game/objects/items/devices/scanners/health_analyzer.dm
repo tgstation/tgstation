@@ -3,6 +3,9 @@
 #define SCANMODE_WOUND 1
 #define SCANMODE_COUNT 2 // Update this to be the number of scan modes if you add more
 
+// Conversion between internal drunk power and common blood alcohol content
+#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003
+
 /obj/item/healthanalyzer
 	name = "health analyzer"
 	icon = 'icons/obj/devices/scanner.dmi'
@@ -372,11 +375,22 @@
 				var/datum/reagent/R = GLOB.chemical_reagents_list[blood_id]
 				blood_type = R ? R.name : blood_id
 			if(carbontarget.blood_volume <= BLOOD_VOLUME_SAFE && carbontarget.blood_volume > BLOOD_VOLUME_OKAY)
-				render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent] %, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
+				render_list += "<span class='alert ml-1'>Blood level: LOW [blood_percent]%, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
 			else if(carbontarget.blood_volume <= BLOOD_VOLUME_OKAY)
-				render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent] %</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
+				render_list += "<span class='alert ml-1'>Blood level: <b>CRITICAL [blood_percent]%</b>, [carbontarget.blood_volume] cl,</span> [span_info("type: [blood_type]")]\n"
 			else
-				render_list += "<span class='info ml-1'>Blood level: [blood_percent] %, [carbontarget.blood_volume] cl, type: [blood_type]</span>\n"
+				render_list += "<span class='info ml-1'>Blood level: [blood_percent]%, [carbontarget.blood_volume] cl, type: [blood_type]</span>\n"
+
+	// Blood Alcohol Content
+	if(isliving(target))
+		var/mob/living/living_target = target
+		var/datum/status_effect/inebriated/inebriation = living_target.has_status_effect(/datum/status_effect/inebriated)
+		if(!isnull(inebriation))
+			var/blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+			if(blood_alcohol_content >= 0.24)
+				render_list += "<span class='alert ml-1'>Blood alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span>\n"
+			else
+				render_list += "<span class='info ml-1'>Blood alcohol content: [blood_alcohol_content]%</span>\n"
 
 	// Cybernetics
 	if(iscarbon(target))
@@ -683,3 +697,5 @@
 #undef AID_EMOTION_WARN
 #undef AID_EMOTION_ANGRY
 #undef AID_EMOTION_SAD
+
+#undef DRUNK_POWER_TO_BLOOD_ALCOHOL
