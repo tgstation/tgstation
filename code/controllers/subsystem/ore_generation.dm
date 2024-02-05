@@ -55,7 +55,7 @@ SUBSYSTEM_DEF(ore_generation)
 			else
 				stallbreaker++
 				if(stallbreaker >= length(possible_vents))
-					return SS_INIT_SUCCESS //We're stuck in a loop, break out.
+					return SS_INIT_SUCCESS //We've done all we can here.
 				continue
 	return SS_INIT_SUCCESS
 
