@@ -32,7 +32,7 @@
 	category = CAT_GUNPARTS
 
 /datum/crafting_recipe/mk58_welrod
-	name = "MK58 Welrod".
+	name = "MK58 Welrod"
 	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/attachment/welrod/mk_58
 	reqs = list(

@@ -15,7 +15,8 @@
 
 /obj/item/attachment/barrel/mk58/suppressor/unique_attachment_effects(obj/item/gun/modular)
 	modular.suppressed = TRUE
+	modular.w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/attachment/barrel/mk58/suppressor/unique_attachment_effects_removal(obj/item/gun/modular)
 	modular.suppressed = FALSE
-
+	modular.w_class = initial(modular.w_class)
