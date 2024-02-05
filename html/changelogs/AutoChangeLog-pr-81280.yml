@@ -1,0 +1,4 @@
+author: "Jacquerel"
+delete-after: True
+changes:
+  - rscadd: "Mothic Fleet Rations now no longer get dirty or decompose if left on the floor, due to their wrappers."
