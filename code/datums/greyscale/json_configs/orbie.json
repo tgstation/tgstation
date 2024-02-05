@@ -1,0 +1,20 @@
+{
+	"orbie": [
+		{
+			"type": "icon_state",
+			"icon_state": "orbie",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "orbie_eye_overlay",
+			"blend_mode": "overlay"
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "orbie_flame_overlay",
+			"blend_mode": "overlay"
+		}
+	]
+}
