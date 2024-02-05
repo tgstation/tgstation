@@ -38,9 +38,9 @@
 	for(var/obj/machinery/vending/vendor in GLOB.vending_machines_to_restock)
 		var/stock = vendor.total_loaded_stock()
 		var/max_stock = vendor.total_max_stock()
-		if(max_stock == 0)
+		if(max_stock == 0 || (stock == max_stock))
 			continue
-		vending_list += list(list("name" = vendor.name, "location" = get_area_name(vendor), "credits" = vendor.credits_contained), "percentage" = (stock / max_stock) * 100, "id" = id_increment)
+		vending_list += list(list("name" = vendor.name, "location" = get_area_name(vendor), "credits" = vendor.credits_contained, "percentage" = (stock / max_stock) * 100, "id" = id_increment))
 		id_increment++
 	to_chat(world, "list length is [vending_list.len]")
 	data["vending_list"] = vending_list

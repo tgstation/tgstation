@@ -270,7 +270,7 @@ GLOBAL_LIST_EMPTY(vending_machines_to_restock)
 				INVOKE_ASYNC(src, PROC_REF(tilt), loc)
 	else if(circuit && (circuit.onstation != onstation)) //check if they're not the same to minimize the amount of edited values.
 		onstation = circuit.onstation //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
-	if(onstation)
+	if(onstation && !onstation_override)
 		GLOB.vending_machines_to_restock += src //We need to keep track of the final onstation vending machines so we can keep them restocked.
 
 /obj/machinery/vending/Destroy()

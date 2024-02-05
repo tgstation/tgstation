@@ -5882,7 +5882,7 @@
 #include "code\modules\vending\toys.dm"
 #include "code\modules\vending\wardrobes.dm"
 #include "code\modules\vending\youtool.dm"
-#include "code\modules\vending\vendor_tracking\vendor_tracker.dm"
+#include "code\modules\vending\restock_tracking\restock_tracker.dm"
 #include "code\modules\visuals\render_steps.dm"
 #include "code\modules\wiremod\components\abstract\assoc_list_variable.dm"
 #include "code\modules\wiremod\components\abstract\compare.dm"
