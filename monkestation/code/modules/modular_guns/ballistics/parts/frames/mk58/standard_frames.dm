@@ -29,7 +29,6 @@
 	ease_of_use = 1.4
 	misfire_multiplier = 0.6
 
-
 /obj/item/attachment/frame/mk_58/colorable
 	icon_state = "frame_colorable"
 	attachment_icon_state = "frame_colorable"

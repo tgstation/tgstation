@@ -6415,6 +6415,7 @@
 #include "monkestation\code\modules\modular_guns\components\ghetto.dm"
 #include "monkestation\code\modules\modular_guns\components\gun_jammable.dm"
 #include "monkestation\code\modules\modular_guns\components\gun_stat_modifiers.dm"
+#include "monkestation\code\modules\modular_guns\crafting\part_recipes.dm"
 #include "monkestation\code\modules\modular_guns\makeshift_effects\__base_effect.dm"
 #include "monkestation\code\modules\ocean_content\department_consoles\engineering.dm"
 #include "monkestation\code\modules\ocean_content\fluff\barrier.dm"

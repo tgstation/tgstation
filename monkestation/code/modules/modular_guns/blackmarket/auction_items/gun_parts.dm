@@ -30,3 +30,12 @@
 	price_min = CARGO_CRATE_VALUE * 3
 	price_max = CARGO_CRATE_VALUE * 6
 	auction_weight = 1
+
+/datum/market_item/auction/gun_part/mk58_suppressor
+	name = "MK 58 Suppressor"
+	desc = "Super Illegal."
+	item = /obj/item/attachment/barrel/mk58/suppressor
+
+	price_min = CARGO_CRATE_VALUE * 2.5
+	price_max = CARGO_CRATE_VALUE * 7
+	auction_weight = 3
