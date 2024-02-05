@@ -1,6 +1,8 @@
 /datum/outfit/bunny_waiter
 	name = "Bunny Waiter"
 	uniform = /obj/item/clothing/under/costume/playbunny
+	back = /obj/item/storage/backpack/satchel
+	box = /obj/item/storage/box/survival
 	suit = /obj/item/clothing/suit/jacket/tailcoat
 	gloves = /obj/item/clothing/gloves/color/white
 	shoes = /obj/item/clothing/shoes/heels
