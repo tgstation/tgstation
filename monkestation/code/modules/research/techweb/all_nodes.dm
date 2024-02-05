@@ -207,5 +207,3 @@
 	design_ids = list("linked_surgery")
 	boost_item_paths = list(/obj/item/organ/internal/cyberimp/brain/linked_surgery)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = 10000)
-	hidden = TRUE
-	experimental = TRUE
