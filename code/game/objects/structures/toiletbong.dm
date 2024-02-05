@@ -11,11 +11,9 @@
 
 /obj/structure/toiletbong/Initialize(mapload)
 	. = ..()
-	create_storage()
+	create_storage(max_total_storage = 100, max_slots = 12, canhold = /obj/item/food)
 	atom_storage.attack_hand_interact = FALSE
-	atom_storage.set_holdable(list(/obj/item/food/))
-	atom_storage.max_total_storage = 100
-	atom_storage.max_slots = 12
+
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "toiletbong_overlay")
 	START_PROCESSING(SSobj, src)
 
