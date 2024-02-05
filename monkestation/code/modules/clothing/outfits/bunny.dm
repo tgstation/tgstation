@@ -1,8 +1,6 @@
 /datum/outfit/bunny_waiter
 	name = "Bunny Waiter"
 	uniform = /obj/item/clothing/under/costume/playbunny
-	back = /obj/item/storage/backpack/satchel
-	box = /obj/item/storage/box/survival
 	suit = /obj/item/clothing/suit/jacket/tailcoat
 	gloves = /obj/item/clothing/gloves/color/white
 	shoes = /obj/item/clothing/shoes/heels
@@ -16,7 +14,7 @@
 	l_hand = /obj/item/storage/bag/tray
 	undershirt = "Nude"
 
-/datum/outfit/centcom/bunny_waiter/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
+/datum/outfit/bunny_waiter/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	if(visualsOnly)
 		return
 
@@ -74,7 +72,7 @@
 	undershirt = "Nude"
 
 /datum/outfit/centcom/centcom_bunny
-	name = "CentCom Bunny Waiter"
+	name = "Bunny Waiter (CentCom)"
 	uniform = /obj/item/clothing/under/costume/playbunny/centcom
 	back = /obj/item/storage/backpack/satchel/leather
 	box = /obj/item/storage/box/survival
