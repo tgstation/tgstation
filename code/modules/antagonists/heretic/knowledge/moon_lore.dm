@@ -133,7 +133,7 @@
 		/datum/heretic_knowledge/unfathomable_curio,
 		/datum/heretic_knowledge/curse/paralysis,
 		/datum/heretic_knowledge/painting,
-		)
+	)
 	required_atoms = list(
 		/obj/item/organ/internal/eyes = 1,
 		/obj/item/organ/internal/heart = 1,
