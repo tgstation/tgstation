@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Tinacusiate should break less, and break less things"
+  - bugfix: "Speaking to a Sign Languager with Tinacusiate in your system doesn't mess with their text, because they're not speaking."
