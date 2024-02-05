@@ -20,7 +20,7 @@
 	var/charge_cost = 200
 	var/cooldown_check = 0
 	/// cooldown between attacks
-	var/cooldown = 4 SECONDS // same as baton
+	var/cooldown = 2.5 SECONDS // same as baton
 
 /obj/item/borg/stun/attack(mob/living/attacked_mob, mob/living/user)
 	if(cooldown_check > world.time)
