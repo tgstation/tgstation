@@ -1,0 +1,4 @@
+author: "Higgin"
+delete-after: True
+changes:
+  - qol: "portable air pumps, scrubbers, heaters, canisters, liquid tanks, and racks are now climbable."
