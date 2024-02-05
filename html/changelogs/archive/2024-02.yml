@@ -80,3 +80,6 @@
       the whole kit
   - bugfix: Midroll/Latejoin traitors no longer have access to roundstart traitor
       exclusive items
+2024-02-05:
+  Xander3359:
+  - bugfix: burning a bible no longer gives you INFINITY curses
