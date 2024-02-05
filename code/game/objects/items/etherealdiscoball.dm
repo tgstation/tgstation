@@ -31,6 +31,9 @@
 
 /obj/structure/etherealball/attack_hand(mob/living/carbon/human/user, list/modifiers)
 	. = ..()
+	if(!can_interact(user))
+		return
+
 	if(TurnedOn)
 		TurnOff()
 		to_chat(user, span_notice("You turn the disco ball off!"))
