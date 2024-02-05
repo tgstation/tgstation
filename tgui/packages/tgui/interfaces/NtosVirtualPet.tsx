@@ -88,7 +88,7 @@ export const NtosVirtualPet = (props) => {
   const [tab, setTab] = useState(Tab.Stats);
 
   return (
-    <NtosWindow width={370} height={570}>
+    <NtosWindow width={375} height={570}>
       <NtosWindow.Content scrollable>
         <Tabs>
           <Tabs.Tab

@@ -136,6 +136,7 @@
 	radial_icon = 'icons/mob/simple/pets.dmi'
 	radial_icon_state = "orbie_lights_action"
 	speech_commands = list("photo", "picture", "image")
+	command_feedback = "Readys camera mode"
 	pet_ability_key = BB_PHOTO_ABILITY
 	targeting_strategy_key = BB_TARGETING_STRATEGY
 
