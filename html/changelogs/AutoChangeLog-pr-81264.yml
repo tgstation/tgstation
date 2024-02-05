@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "you may not toggle health assemblies from any range, even while crit"
