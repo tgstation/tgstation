@@ -26,7 +26,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/cardboard = 10,
 		/obj/item/stack/sticky_tape = 2,
-		/obj/item/stack/sheet/mineral/iron = 2,
+		/obj/item/stack/sheet/iron = 2,
 	)
 	time = 5 SECONDS
 	category = CAT_GUNPARTS
@@ -36,7 +36,7 @@
 	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/attachment/welrod/mk_58
 	reqs = list(
-		/obj/item/stack/sheet/mineral/iron = 6,
+		/obj/item/stack/sheet/iron = 6,
 	)
 	time = 7.5 SECONDS
 	category = CAT_GUNPARTS
@@ -47,7 +47,7 @@
 	reqs = list(
 		/obj/item/stack/sheet/cardboard = 8,
 		/obj/item/stack/sticky_tape = 2,
-		/obj/item/stack/sheet/mineral/iron = 2,
+		/obj/item/stack/sheet/iron = 2,
 	)
 	time = 5 SECONDS
 	category = CAT_GUNPARTS
@@ -68,7 +68,7 @@
 	result = /obj/item/attachment/frame/mk_58/colorable
 	reqs = list(
 		/obj/item/stack/sheet/plastic = 6,
-		/obj/item/stack/sheet/mineral/iron = 12,
+		/obj/item/stack/sheet/iron = 12,
 	)
 	time = 5 SECONDS
 	category = CAT_GUNPARTS
@@ -78,7 +78,7 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
 	result = /obj/item/attachment/mag/mk58/m10mm
 	reqs = list(
-		/obj/item/stack/sheet/mineral/iron = 5,
+		/obj/item/stack/sheet/iron = 5,
 	)
 	time = 4 SECONDS
 	category = CAT_GUNPARTS
@@ -88,7 +88,7 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_WRENCH)
 	result = /obj/item/attachment/mag/mk58/m50
 	reqs = list(
-		/obj/item/stack/sheet/mineral/iron = 5,
+		/obj/item/stack/sheet/iron = 5,
 	)
 	time = 4 SECONDS
 	category = CAT_GUNPARTS
@@ -98,7 +98,7 @@
 	tool_behaviors = list(TOOL_WELDER)
 	result = /obj/item/attachment/mag/mk58/m50
 	reqs = list(
-		/obj/item/stack/sheet/mineral/iron = 2,
+		/obj/item/stack/sheet/iron = 2,
 		/obj/item/flashlight/seclite = 1,
 	)
 	time = 4 SECONDS

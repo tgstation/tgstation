@@ -6375,6 +6375,7 @@
 #include "monkestation\code\modules\modular_guns\ballistics\parts\barrel\_base_barrels.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\barrel\mk58\standard_barrels.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\frames\_base_frame.dm"
+#include "monkestation\code\modules\modular_guns\ballistics\parts\frames\mk58\makeshift.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\frames\mk58\standard_frames.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\grips\_base_grips.dm"
 #include "monkestation\code\modules\modular_guns\ballistics\parts\grips\ak\makeshift.dm"
