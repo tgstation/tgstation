@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "When placing an item into storage (such as backpacks), all nearby mobs now get a message, rather than just the first mob."
+  - bugfix: "TGC decks of cards should act a bit less odd when looking inside."
+  - refactor: "Refactored a bit of storage, cleaned up a fair bit of its code. Let me know if you notice anything funky about storage (like backpacks)."
