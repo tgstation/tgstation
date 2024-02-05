@@ -86,6 +86,8 @@
 	for(var/datum/surgery/surgery as anything in GLOB.surgeries_list)
 		if(!surgery.possible_locs.Find(user.zone_selected))
 			continue
+		if(!is_type_in_list(target, surgery.target_mobtypes))
+			continue
 
 		if(isnull(affecting))
 			if(surgery.surgery_flags & SURGERY_REQUIRE_LIMB)
@@ -101,8 +103,6 @@
 		if(IS_IN_INVALID_SURGICAL_POSITION(target, surgery))
 			continue
 		if(!surgery.can_start(user, target))
-			continue
-		if(!is_type_in_list(target, surgery.target_mobtypes))
 			continue
 
 		available_surgeries += surgery
