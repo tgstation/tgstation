@@ -63,8 +63,8 @@
 		flashed.balloon_alert(source, "[flashed.p_their()] mind is vacant!")
 		return
 
-	for(var/datum/objective/assassinate/assassinate_objective as anything in source.mind.get_all_objectives())
-		if(flashed == assassinate_objective.target.current)
+	for(var/datum/objective/brother_objective in source.mind.get_all_objectives())
+		if(flashed == brother_objective.target.current)
 			flashed.balloon_alert(source, "that's your target!")
 			return
 
