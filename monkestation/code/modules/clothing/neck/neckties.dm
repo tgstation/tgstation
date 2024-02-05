@@ -42,6 +42,7 @@
 	greyscale_config = null
 	greyscale_config_worn = null
 	greyscale_colors = null
+	custom_price = null
 
 /obj/item/clothing/neck/tie/bunnytie/magician/tied
 	is_tied = TRUE
