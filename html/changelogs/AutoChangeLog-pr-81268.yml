@@ -1,0 +1,4 @@
+author: "mc-oofert"
+delete-after: True
+changes:
+  - bugfix: "you may no longer altclick ethereal disco balls while unconscious to anchor/unanchor"
