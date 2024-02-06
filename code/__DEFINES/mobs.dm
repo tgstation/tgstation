@@ -689,39 +689,41 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 /// Total number of layers for mob overlays
 /// KEEP THIS UP-TO-DATE OR SHIT WILL BREAK
 /// Also consider updating layers_to_offset
-#define TOTAL_LAYERS 34
+#define TOTAL_LAYERS 35
 /// Mutations layer - Tk headglows, cold resistance glow, etc
-#define MUTATIONS_LAYER 34
+#define MUTATIONS_LAYER 35
 /// Mutantrace features (tail when looking south) that must appear behind the body parts
-#define BODY_BEHIND_LAYER 33
+#define BODY_BEHIND_LAYER 34
 /// Layer for bodyparts that should appear behind every other bodypart - Mostly, legs when facing WEST or EAST
-#define BODYPARTS_LOW_LAYER 32
+#define BODYPARTS_LOW_LAYER 33
 /// Layer for most bodyparts, appears above BODYPARTS_LOW_LAYER and below BODYPARTS_HIGH_LAYER
-#define BODYPARTS_LAYER 31
+#define BODYPARTS_LAYER 32
 /// Mutantrace features (snout, body markings) that must appear above the body parts
-#define BODY_ADJ_LAYER 30
+#define BODY_ADJ_LAYER 31
 /// Underwear, undershirts, socks, eyes, lips(makeup)
-#define BODY_LAYER 29
+#define BODY_LAYER 30
 /// Mutations that should appear above body, body_adj and bodyparts layer (e.g. laser eyes)
-#define FRONT_MUTATIONS_LAYER 28
+#define FRONT_MUTATIONS_LAYER 29
 /// Damage indicators (cuts and burns)
-#define DAMAGE_LAYER 27
+#define DAMAGE_LAYER 28
 /// Jumpsuit clothing layer
-#define UNIFORM_LAYER 26
+#define UNIFORM_LAYER 27
 /// ID card layer
-#define ID_LAYER 25
+#define ID_LAYER 26
 /// ID card layer (might be deprecated)
-#define ID_CARD_LAYER 24
+#define ID_CARD_LAYER 25
 /// Layer for bodyparts that should appear above every other bodypart - Currently only used for hands
-#define BODYPARTS_HIGH_LAYER 23
+#define BODYPARTS_HIGH_LAYER 24
 /// Gloves layer
-#define GLOVES_LAYER 22
+#define GLOVES_LAYER 23
 /// Shoes layer
-#define SHOES_LAYER 21
+#define SHOES_LAYER 22
 /// Layer for masks that are worn below ears and eyes (like Balaclavas) (layers below hair, use flagsinv=HIDEHAIR as needed)
-#define LOW_FACEMASK_LAYER 20
+#define LOW_FACEMASK_LAYER 21
 /// Ears layer (Spessmen have ears? Wow)
-#define EARS_LAYER 19
+#define EARS_LAYER 20
+/// Layer for neck apperal that should appear below the suit slot (like neckties)
+#define LOW_NECK_LAYER 19
 /// Suit layer (armor, coats, etc.)
 #define SUIT_LAYER 18
 /// Glasses layer
@@ -730,7 +732,7 @@ GLOBAL_LIST_INIT(human_heights_to_offsets, list(
 #define BELT_LAYER 16 //Possible make this an overlay of somethign required to wear a belt?
 /// Suit storage layer (tucking a gun or baton underneath your armor)
 #define SUIT_STORE_LAYER 15
-/// Neck layer (for wearing ties and bedsheets)
+/// Neck layer (for wearing capes and bedsheets)
 #define NECK_LAYER 14
 /// Back layer (for backpacks and equipment on your back)
 #define BACK_LAYER 13

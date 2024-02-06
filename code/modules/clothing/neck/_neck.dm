@@ -44,6 +44,7 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "tie_greyscale_tied"
 	inhand_icon_state = "" //no inhands
+	alternate_worn_layer = LOW_NECK_LAYER // So that it renders below suit jackets, MODsuits, etc
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW
 	greyscale_config = /datum/greyscale_config/ties
