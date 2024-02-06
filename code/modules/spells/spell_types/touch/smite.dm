@@ -59,7 +59,6 @@
 	inhand_icon_state = "disintegrate"
 
 /obj/item/melee/touch_attack/smite/suicide_act(mob/living/user)
-	// Mostly copy-pasted from /obj/item/grenade/c4/suicide_act(mob/living/user) because I doubt we'd need "thing explodes on suicide_act" to be generalized
 	message_admins("[ADMIN_LOOKUPFLW(user)] suicided with [src] at [ADMIN_VERBOSEJMP(user)]")
 	user.log_message("suicided with [src].", LOG_ATTACK)
 	log_game("[key_name(user)] suicided with [src] at [AREACOORD(user)]")
