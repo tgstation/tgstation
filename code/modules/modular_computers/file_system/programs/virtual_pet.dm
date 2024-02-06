@@ -517,7 +517,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 			if(!isnull(trick_name))
 				pet.ai_controller.set_blackboard_key(BB_TRICK_NAME, trick_name)
 			pet.ai_controller.override_blackboard_key(BB_TRICK_SEQUENCE, trick_sequence)
-			playsound(computer.loc, 'sound/items/orbie_level_up.ogg', 50)
+			playsound(computer.loc, 'sound/items/orbie_trick_learned.ogg', 50)
 
 	return TRUE
 
