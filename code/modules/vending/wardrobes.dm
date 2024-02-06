@@ -305,10 +305,14 @@
 		/obj/item/clothing/under/rank/civilian/bartender = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/purple = 2,
 		/obj/item/clothing/under/rank/civilian/bartender/skirt = 2,
+		/obj/item/clothing/under/costume/playbunny = 2, // MONKESTATION EDIT ADDITION
+		/obj/item/clothing/neck/tie/bunnytie = 2, // MONKESTATION EDIT ADDITION
 		/obj/item/clothing/accessory/waistcoat = 2,
 		/obj/item/clothing/suit/apron/purple_bartender = 2,
 		/obj/item/clothing/head/soft/black = 2,
+		/obj/item/clothing/head/playbunnyears = 2, // MONKESTATION EDIT ADDITION
 		/obj/item/clothing/shoes/sneakers/black = 2,
+		/obj/item/clothing/shoes/heels = 2, // MONKESTATION EDIT ADDITION
 		/obj/item/reagent_containers/cup/rag = 2,
 		/obj/item/storage/box/beanbag = 1,
 		/obj/item/clothing/suit/armor/vest/alt = 1,
@@ -321,6 +325,7 @@
 	)
 	premium = list(
 		/obj/item/storage/box/dishdrive = 1,
+		/obj/item/clothing/suit/jacket/tailcoat/bartender = 2, // MONKESTATION EDIT ADDITION
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
 	payment_department = ACCOUNT_SRV
