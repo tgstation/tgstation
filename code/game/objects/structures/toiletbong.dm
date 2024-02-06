@@ -13,12 +13,11 @@
 	. = ..()
 	create_storage()
 	AddComponent(/datum/component/simple_rotation, AfterRotation = CALLBACK(src, PROC_REF(AfterRotation)))
+	create_storage(max_total_storage = 100, max_slots = 12, canhold = /obj/item/food)
 	atom_storage.attack_hand_interact = FALSE
-	atom_storage.set_holdable(list(/obj/item/food/))
-	atom_storage.max_total_storage = 100
-	atom_storage.max_slots = 12
 	atom_storage.rustle_sound = FALSE
 	atom_storage.animated = FALSE
+
 	weed_overlay = mutable_appearance('icons/obj/watercloset.dmi', "toiletbong_overlay")
 	START_PROCESSING(SSobj, src)
 
