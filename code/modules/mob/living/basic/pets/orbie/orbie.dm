@@ -56,7 +56,7 @@
 	RegisterSignal(src, COMSIG_MOB_CLICKON, PROC_REF(on_click))
 	RegisterSignal(src, COMSIG_ATOM_UPDATE_LIGHT_ON, PROC_REF(on_lights))
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(food_types))
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 /mob/living/basic/orbie/proc/on_click(mob/living/basic/source, atom/target, params)
 	SIGNAL_HANDLER
@@ -73,11 +73,11 @@
 /mob/living/basic/orbie/proc/on_lights(datum/source)
 	SIGNAL_HANDLER
 
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 /mob/living/basic/orbie/proc/toggle_happy_state()
 	happy_state = !happy_state
-	update_appearance(UPDATE_OVERLAYS)
+	update_appearance()
 
 /mob/living/basic/orbie/proc/on_pulled(datum/source) //i need move resist at 0, but i also dont want him to be pulled
 	SIGNAL_HANDLER
