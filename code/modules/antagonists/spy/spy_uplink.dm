@@ -84,6 +84,7 @@
 		if(DOING_INTERACTION(spy, REF(src)))
 			spy.balloon_alert(spy, "already scanning!") // Only shown if they're trying to scan two valid targets
 		else
+			SEND_SIGNAL(stealing, COMSIG_MOVABLE_SPY_STEALING, spy, bounty)
 			INVOKE_ASYNC(src, PROC_REF(start_stealing), stealing, spy, bounty)
 		return TRUE
 
@@ -142,20 +143,45 @@
 		to_chat(spy, span_warning("Your uplinks blinks red: [stealing] seems stuck to your hand!"))
 		return FALSE
 
-	bounty.clean_up_stolen_item(stealing, spy)
+	handler.all_claimed_bounty_types[stealing.type] += 1
+	handler.claimed_bounties_from_last_pool[stealing.type] = TRUE
+
+	bounty.clean_up_stolen_item(stealing, spy, handler)
 	bounty.claimed = TRUE
 
 	var/obj/item/reward = new bounty.reward_item.item(spy.loc)
+	// Ensures all rewarded guns have normal firing pins, rather than Syndie ones
+	if(isgun(reward))
+		replace_pin(reward)
+	else if(istype(reward, /obj/item/storage/toolbox/guncase))
+		for(var/gun in reward)
+			replace_pin(gun)
+
 	spy.put_in_hands(reward)
 	to_chat(spy, span_notice("Bounty complete! You have been rewarded with \a [reward].\
 		[reward.loc == spy ? "" : " <i>Find it at your feet.</i>"]"))
 
 	playsound(parent, 'sound/machines/wewewew.ogg', 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
+	log_spy("[key_name(spy)] completed the bounty [bounty.name] of difficulty [bounty.difficulty] for \a [reward].")
+	// SSblackbox.record_feedback("nested tally", "spy_bounty", 1, list("[stealing.type]", "[bounty.type]", "[bounty.difficulty]", "[bounty.reward_item.type]"))
+	// uncomment before merge, laugh if this is here when you read it
+
 	var/datum/antagonist/spy/spy_datum = spy_ref?.resolve()
-	spy_datum?.bounties_claimed += 1
+	if(!isnull(spy_datum))
+		// "When" TGUI roundend is finished, a list of all bounties complete and their rewards should be put in a collapsible,
+		// otherwise it's just too much information to display cleanly. (That's why we're only displaying number and rewards)
+		spy_datum.bounties_claimed += 1
+		spy_datum.all_loot += bounty.reward_item.name
 
 	return TRUE
+
+/datum/component/spy_uplink/proc/replace_pin(obj/item/gun/gun_reward)
+	if(!istype(gun_reward.pin, /obj/item/firing_pin/implant/pindicate))
+		return
+
+	QDEL_NULL(gun_reward.pin)
+	gun_reward.pin = new /obj/item/firing_pin(gun_reward)
 
 /datum/component/spy_uplink/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -173,7 +199,7 @@
 
 	return data
 
-/datum/component/spy_uplink/ui_state(mob/user)
+/datum/component/spy_uplink/ui_status(mob/user, datum/ui_state/state)
 	if(isobserver(user) && user.client?.holder)
 		return UI_UPDATE
 	return ..()

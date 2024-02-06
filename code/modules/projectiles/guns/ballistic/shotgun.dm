@@ -97,6 +97,10 @@
 	desc = "An advanced shotgun with two separate magazine tubes. This one shows signs of bounty hunting customization, meaning it likely has a dual rubber shot/fire slug load."
 	alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/fire
 
+/obj/item/gun/ballistic/shotgun/automatic/dual_tube/deadly
+	spawn_magazine_type = /obj/item/ammo_box/magazine/internal/shot/tube/buckshot
+	alt_mag_type = /obj/item/ammo_box/magazine/internal/shot/tube/slug
+
 /obj/item/gun/ballistic/shotgun/automatic/dual_tube/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to pump it.")

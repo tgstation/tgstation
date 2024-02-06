@@ -163,16 +163,38 @@
 /datum/spy_bounty/objective_item/can_claim(mob/user)
 	return !(user.mind?.assigned_role.title in desired_item.excludefromjob)
 
+/// Determines if the passed objective item is a reasonable, valid theft target.
+/datum/spy_bounty/objective_item/proc/is_valid_objective_item(datum/objective_item/item)
+	if(length(item.special_equipment) || item.difficulty <= 0 || item.difficulty >= 6)
+		return FALSE
+	if(is_type_in_typecache(item, blacklisted_item_types))
+		return FALSE
+	if(item.exists_on_map)
+		var/list/all_valid_existing_things = list()
+		for(var/obj/item/existing_thing as anything in GLOB.steal_item_handler.objectives_by_path[item.targetitem])
+			var/turf/thing_turf = get_turf(existing_thing)
+			if(isnull(thing_turf)) // nullspaced likely means it was stolen and is in the black market.
+				continue
+			if(!is_station_level(thing_turf.z) && !is_mining_level(thing_turf.z))
+				continue
+			all_valid_existing_things += existing_thing
+
+		if(!length(all_valid_existing_things))
+			return FALSE
+	return TRUE
+
 /datum/spy_bounty/objective_item/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/valid_possible_items = list()
 	for(var/datum/objective_item/item as anything in GLOB.possible_items)
-		if(length(item.special_equipment) || item.difficulty <= 0 || item.difficulty >= 6)
+		if(is_valid_objective_item(item))
 			continue
-		if(is_type_in_typecache(item, blacklisted_item_types))
+		// Skip bounties we JUST did in the last loot pool
+		if(handler.claimed_bounties_from_last_pool[item.targetitem])
 			continue
-		if(!item.target_exists())
+		// Also % chance to skip stuff we've done in the past
+		if(prob(20 * handler.all_claimed_bounty_types[item.targetitem]))
 			continue
-		// Has some overlap, which is fine
+		// Determine difficulty. Has some overlap between the categories, which is OK
 		switch(difficulty)
 			if(SPY_DIFFICULTY_EASY)
 				if(item.difficulty >= 3)
@@ -183,6 +205,7 @@
 			if(SPY_DIFFICULTY_HARD)
 				if(item.difficulty <= 3)
 					continue
+
 		valid_possible_items += item
 
 	for(var/datum/spy_bounty/objective_item/existing_bounty in handler.get_all_bounties())
@@ -296,6 +319,12 @@
 	for(var/datum/spy_bounty/machine/existing_bounty in handler.get_all_bounties())
 		options -= existing_bounty.target_type
 
+	for(var/remaining_option in options)
+		if(prob(20 * handler.all_claimed_bounty_types[remaining_option]))
+			continue
+		if(handler.claimed_bounties_from_last_pool[remaining_option])
+			continue
+
 	if(!length(options))
 		return FALSE
 
@@ -308,7 +337,7 @@
 	random_options = list(
 		/obj/machinery/computer/operating,
 		/obj/machinery/fax, // Completely random, wild card
-		/obj/machinery/hydroponics,
+		/obj/machinery/hydroponics/constructable,
 		/obj/machinery/microwave,
 		/obj/machinery/recharge_station,
 	)
@@ -353,12 +382,13 @@
 /datum/spy_bounty/targets_person/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/mob/possible_targets = list()
 	for(var/datum/mind/crew_mind as anything in get_crewmember_minds())
+		var/mob/living/real_target = crew_mind.current
 		// Ideally we want it to be a player, but we don't care if they DC after being selected
-		if(isnull(crew_mind.current?.client))
+		if(!istype(real_target) || isnull(GET_CLIENT(real_target)))
 			continue
-		if(!is_valid_crewmember(crew_mind.current))
+		if(!is_valid_crewmember(real_target))
 			continue
-		possible_targets += crew_mind.current
+		possible_targets += real_target
 
 	for(var/datum/spy_bounty/targets_person/existing_bounty in handler.get_all_bounties())
 		possible_targets -= existing_bounty.target_ref.resolve()
@@ -483,6 +513,7 @@
 
 // Steal a limb or organ off someone
 /datum/spy_bounty/targets_person/some_item/limb_or_organ
+	weight = 4 // lots to pick from here
 
 /datum/spy_bounty/targets_person/some_item/limb_or_organ/init_bounty(datum/spy_bounty_handler/handler)
 	desired_type = pick(
@@ -543,27 +574,28 @@
 /datum/spy_bounty/some_bot/beepsky
 	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still
 	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/officer
-	help = "Abduct Officer Beepsky, commonly found patrolling the station."
+	help = "Abduct Officer Beepsky - commonly found patrolling the station. \
+		Watch out, they may not take kindly to being scanned."
 
 /datum/spy_bounty/some_bot/ofitser
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/ofitser
-	help = "Abduct Prison Ofitser, commonly found guarding the Gulag."
+	help = "Abduct Prison Ofitser - commonly found guarding the Gulag."
 
 /datum/spy_bounty/some_bot/armsky
 	difficulty = SPY_DIFFICULTY_HARD
 	bot_type = /mob/living/simple_animal/bot/secbot/beepsky/armsky
-	help = "Abduct Sergeant-At-Armsky, commonly found guarding the station's Armory."
+	help = "Abduct Sergeant-At-Armsky - commonly found guarding the station's Armory."
 
 /datum/spy_bounty/some_bot/pingsky
 	difficulty = SPY_DIFFICULTY_HARD
 	bot_type = /mob/living/simple_animal/bot/secbot/pingsky
-	help = "Abduct Officer Pingsky, commonly found protecting the station's AI."
+	help = "Abduct Officer Pingsky - commonly found protecting the station's AI."
 
 /datum/spy_bounty/some_bot/scrubbs
 	difficulty = SPY_DIFFICULTY_EASY
 	bot_type = /mob/living/basic/bot/cleanbot/medbay
-	help = "Abduct Scrubbs MD, commonly found mopping up blood in Medbay."
+	help = "Abduct Scrubbs, MD - commonly found mopping up blood in Medbay."
 
 /datum/spy_bounty/some_bot/scrubbs/can_claim(mob/user)
 	return !(user.mind?.assigned_role.departments_bitflags & DEPARTMENT_BITFLAG_MEDICAL)

@@ -10,6 +10,10 @@
 	var/refresh_timer
 	/// Number of times we have refreshed bounties
 	var/num_refreshes = 0
+	/// Assoc list of item typepaths stolen in the past to how many times they have been stolen
+	var/list/all_claimed_bounty_types = list()
+	/// Typecache of all typepaths of items stolen in the last pool of bounties.
+	var/list/claimed_bounties_from_last_pool = list()
 
 	/// Assoc list that dictates how much of each bounty difficulty to give out at once.
 	/// Modified by the number of times we have refreshed bounties.
@@ -102,6 +106,7 @@
 				failed_attempts -= 1
 				qdel(bounty)
 
+	claimed_bounties_from_last_pool.Cut()
 	num_refreshes += 1
 	refresh_timer = addtimer(CALLBACK(src, PROC_REF(refresh_bounty_list)), refresh_time, TIMER_UNIQUE|TIMER_OVERRIDE|TIMER_STOPPABLE)
 

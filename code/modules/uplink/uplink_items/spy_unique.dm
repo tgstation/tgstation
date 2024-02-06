@@ -68,7 +68,7 @@
 /datum/uplink_item/spy_unique/cycler_shotgun
 	name = "Cycler Shotgun"
 	desc = "A cycler shotgun. It's a shotgun that cycles between two barrels."
-	item = /obj/item/gun/ballistic/shotgun/automatic/dual_tube
+	item = /obj/item/gun/ballistic/shotgun/automatic/dual_tube/deadly
 	cost = SPY_UPPER_COST_THRESHOLD
 
 /datum/uplink_item/spy_unique/bulldog_shotgun
@@ -77,11 +77,45 @@
 	item = /obj/item/gun/ballistic/shotgun/bulldog/unrestricted
 	cost = SPY_UPPER_COST_THRESHOLD
 
+/datum/uplink_item/spy_unique/ansem_pistol
+	name = "Ansem Pistol"
+	desc = "A pistol that's really good at making people sleep."
+	item = /obj/item/gun/ballistic/automatic/pistol/clandestine
+	cost = SPY_UPPER_COST_THRESHOLD
+
+/datum/uplink_item/spy_unique/rocket_launcher
+	name = "Rocket Launcher"
+	desc = "A rocket launcher. I would recommend against jumping with it."
+	item = /obj/item/gun/ballistic/rocketlauncher
+	cost = SPY_UPPER_COST_THRESHOLD - 1 // It's a meme item
+
+/datum/uplink_item/spy_unique/shotgun_ammo
+	name = "Box of Buckshot"
+	desc = "A box of buckshot rounds for a shotgun. For when you don't want to miss."
+	item = /obj/item/storage/box/lethalshot
+	cost = 1
+
+/datum/uplink_item/spy_unique/shotgun_ammo/breacher_slug
+	name = "Box of Breacher Slugs"
+	desc = "A box of breacher slugs for a shotgun. For making a good first impression."
+	item = /obj/item/storage/box/breacherslug
+
+/datum/uplink_item/spy_unique/shotgun_ammo/slugs
+	name = "Box of Slugs"
+	desc = "A box of slugs for a shotgun. For big game hunting."
+	item = /obj/item/storage/box/slugs
+
+/datum/uplink_item/spy_unique/stealth_belt
+	name = "Stealth Belt"
+	desc = "A stealth belt that lets you sneak behind enemy lines."
+	item = /obj/item/shadowcloak/weaker
+	cost = SPY_UPPER_COST_THRESHOLD
+
 /datum/uplink_item/spy_unique/katana
 	name = "Katana"
 	desc = "A really sharp Katana. Did I mention it's sharp?"
 	item = /obj/item/katana
-	cost = /datum/uplink_item/dangerous/doublesword::cost
+	cost = /datum/uplink_item/dangerous/doublesword::cost // Puts it in the same pool as Desword
 
 /datum/uplink_item/spy_unique/medkit_lite
 	name = "Syndicate First Medic Kit"

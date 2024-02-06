@@ -2,6 +2,7 @@
 	name = "\improper Spy"
 	roundend_category = "spies"
 	antagpanel_category = "Spy"
+	antag_hud_name = "spy"
 	job_rank = ROLE_SPY
 	antag_moodlet = /datum/mood_event/focused
 	hijack_speed = 1
@@ -15,6 +16,8 @@
 	var/spawn_with_objectives = TRUE
 	/// Tracks number of bounties claimed, for roundend
 	var/bounties_claimed = 0
+	/// Tracks all loot items the spy has claimed, for roundend
+	var/list/all_loot = list()
 	/// Weakref to our spy uplink
 	/// Only exists for the sole purpose of letting admins see it
 	var/datum/weakref/uplink_weakref
@@ -26,6 +29,26 @@
 		give_random_objectives()
 	. = ..()
 	SEND_SOUND(owner.current, sound('sound/ambience/antag/spy.ogg'))
+
+
+/datum/antagonist/spy/apply_innate_effects(mob/living/mob_override)
+	var/mob/living/spy = mob_override || owner.current
+	RegisterSignal(spy, COMSIG_MOB_TRIED_ACCESS, PROC_REF(allow_syndie_use))
+
+/datum/antagonist/spy/remove_innate_effects(mob/living/mob_override)
+	var/mob/living/spy = mob_override || owner.current
+	UnregisterSignal(spy, COMSIG_MOB_TRIED_ACCESS)
+
+/// Special signal handler to allow Spies to access Syndie access items without necessitating a Syndie ID or the Syndie faction
+/datum/antagonist/spy/proc/allow_syndie_use(datum/source, obj/what)
+	SIGNAL_HANDLER
+
+	if(!isitem(what))
+		return NONE
+	if(ACCESS_SYNDICATE in what.req_access | what.req_one_access)
+		return ACCESS_ALLOWED
+
+	return NONE
 
 /datum/antagonist/spy/ui_static_data(mob/user)
 	var/list/data = ..()
@@ -131,10 +154,16 @@
 		gtfo.owner = owner
 		objectives += gtfo
 
+/datum/antagonist/spy/antag_panel_data()
+	return "Bounties Claimed: [bounties_claimed]"
+
 /datum/antagonist/spy/roundend_report()
 	var/list/report = list()
 	report += printplayer(owner)
 	report += "They completed <b>[bounties_claimed]</b> bounties."
+	if(bounties_claimed > 0)
+		report += "They received the following rewards: [english_list(all_loot)]"
+	report += "<br>"
 	report += printobjectives(objectives)
 	return report.Join("<br>")
 

@@ -718,9 +718,10 @@ GLOBAL_VAR_INIT(revolutionary_win, FALSE)
 		JOB_CYBORG,
 	)
 	required_candidates = 1
-	weight = 4
+	weight = 5
 	cost = 8
 	scaling_cost = 8
+	antag_cap = list("denominator" = 15, "offset" = 1) // should be a GOOD CHUNK.
 	requirements = list(8, 8, 8, 8, 8, 8, 8, 8, 8, 8)
 
 /datum/dynamic_ruleset/roundstart/spies/pre_execute(population)
