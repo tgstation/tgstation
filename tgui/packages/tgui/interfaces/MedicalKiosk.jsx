@@ -188,6 +188,7 @@ const MedicalKioskScanResults2 = (props) => {
     bleed_status,
     blood_levels,
     blood_status,
+    blood_alcohol,
   } = data;
   return (
     <Section title="Symptom Based Checkup">
@@ -213,6 +214,19 @@ const MedicalKioskScanResults2 = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Blood Information">
           {blood_status}
+        </LabeledList.Item>
+        <LabeledList.Item label="Blood Alcohol">
+          <ProgressBar
+            value={blood_alcohol}
+            minValue={0}
+            maxValue={0.3}
+            ranges={{
+              blue: [-Infinity, 0.24],
+              bad: [0.24, Infinity],
+            }}
+          >
+            <AnimatedNumber value={blood_alcohol} />
+          </ProgressBar>
         </LabeledList.Item>
       </LabeledList>
     </Section>

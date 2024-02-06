@@ -3,9 +3,6 @@
 #define SCANMODE_WOUND 1
 #define SCANMODE_COUNT 2 // Update this to be the number of scan modes if you add more
 
-// Conversion between internal drunk power and common blood alcohol content
-#define DRUNK_POWER_TO_BLOOD_ALCOHOL 0.003
-
 /obj/item/healthanalyzer
 	name = "health analyzer"
 	icon = 'icons/obj/devices/scanner.dmi'
@@ -382,9 +379,8 @@
 				render_list += "<span class='info ml-1'>Blood level: [blood_percent]%, [carbontarget.blood_volume] cl, type: [blood_type]</span>\n"
 
 	// Blood Alcohol Content
-	var/datum/status_effect/inebriated/inebriation = target.has_status_effect(/datum/status_effect/inebriated)
-	if(!isnull(inebriation))
-		var/blood_alcohol_content = round(inebriation.drunk_value * DRUNK_POWER_TO_BLOOD_ALCOHOL, 0.01)
+	var/blood_alcohol_content = target.get_blood_alcohol_content()
+	if(blood_alcohol_content)
 		if(blood_alcohol_content >= 0.24)
 			render_list += "<span class='alert ml-1'>Blood alcohol content: <b>CRITICAL [blood_alcohol_content]%</b></span>\n"
 		else
@@ -695,5 +691,3 @@
 #undef AID_EMOTION_WARN
 #undef AID_EMOTION_ANGRY
 #undef AID_EMOTION_SAD
-
-#undef DRUNK_POWER_TO_BLOOD_ALCOHOL
