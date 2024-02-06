@@ -53958,13 +53958,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
-"qpR" = (
-/obj/item/paper{
-	default_raw_text = "Please leave on-site equipment alone as they are on loan from Nanotrasen Mining Co and need returned soon.";
-	name = "NOTICE"
-	},
-/turf/open/space/openspace,
-/area/space)
 "qpW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -177384,7 +177377,7 @@ jhd
 jhd
 jhd
 jhd
-qpR
+vXM
 jhd
 jhd
 jhd
