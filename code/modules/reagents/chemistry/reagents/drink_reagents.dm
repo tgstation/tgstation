@@ -421,9 +421,38 @@
 	affected_mob.AdjustSleeping(-20 * REM * seconds_per_tick)
 	if(affected_mob.getToxLoss() && SPT_PROB(10, seconds_per_tick))
 		affected_mob.adjustToxLoss(-1, FALSE, required_biotype = affected_biotype)
+	var/to_chatted = FALSE
+	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
+		if(SPT_PROB(10, seconds_per_tick))
+			var/helped = iter_wound.tea_life_process()
+			if(!to_chatted && helped)
+				to_chat(affected_mob, span_notice("A calm, relaxed feeling suffuses you. Your wounds feel a little healthier."))
+			to_chatted = TRUE
 	affected_mob.adjust_bodytemperature(20 * REM * TEMPERATURE_DAMAGE_COEFFICIENT * seconds_per_tick, 0, affected_mob.get_body_temp_normal())
 	..()
 	. = TRUE
+
+// Different handling, different name.
+// Returns FALSE by default so broken bones and 'loss' wounds don't give a false message
+/datum/wound/proc/tea_life_process()
+	return FALSE
+
+// Slowly increase (gauzed) clot rate
+/datum/wound/pierce/bleed/tea_life_process()
+	gauzed_clot_rate += 0.1
+	return TRUE
+
+// Slowly increase clot rate
+/datum/wound/slash/flesh/tea_life_process()
+	clot_rate += 0.2
+	return TRUE
+
+// There's a designated burn process, but I felt this would be better for consistency with the rest of the reagent's procs
+/datum/wound/burn/flesh/tea_life_process()
+	// Sanitizes and heals, but with a limit
+	flesh_healing = (flesh_healing > 0.1) ? flesh_healing : flesh_healing + 0.02
+	infestation_rate = max(infestation_rate - 0.005, 0)
+	return TRUE
 
 /datum/reagent/consumable/lemonade
 	name = "Lemonade"

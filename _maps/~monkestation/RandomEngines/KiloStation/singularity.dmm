@@ -417,6 +417,7 @@
 /obj/machinery/light/blacklight/directional/north,
 /obj/structure/cable,
 /obj/structure/window/plasma,
+/obj/machinery/camera/emp_proof/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "En" = (
@@ -458,11 +459,8 @@
 /obj/structure/lattice/catwalk,
 /obj/structure/cable/layer1,
 /obj/structure/cable,
-/obj/machinery/camera/emp_proof/directional/west{
-	c_tag = "Singularity Engine #4"
-	},
 /turf/open/space/basic,
-/area/station/engineering/supermatter/room)
+/area/space)
 "Hs" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/iron,

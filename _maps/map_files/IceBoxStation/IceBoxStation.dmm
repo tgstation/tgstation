@@ -2574,8 +2574,24 @@
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance/office)
 "aSH" = (
-/obj/machinery/flasher/portable,
 /obj/effect/turf_decal/tile/red/half/contrasted,
+/obj/structure/rack,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 6
+	},
+/obj/item/gun/ballistic/automatic/pistol/paco/no_mag{
+	pixel_y = 0
+	},
 /turf/open/floor/iron/dark/textured,
 /area/station/ai_monitored/security/armory/upper)
 "aSS" = (
@@ -38555,6 +38571,10 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"mwJ" = (
+/obj/machinery/flasher/portable,
+/turf/open/floor/glass/reinforced,
+/area/station/ai_monitored/security/armory/upper)
 "mwK" = (
 /obj/machinery/atmospherics/pipe/smart/manifold/purple/visible{
 	dir = 4
@@ -232425,7 +232445,7 @@ stt
 qum
 diC
 aSH
-lyG
+mwJ
 rUb
 hYu
 feJ

@@ -78,9 +78,6 @@
 	return TRUE
 
 /obj/item/gun/syringe/attackby(obj/item/A, mob/user, params, show_msg = TRUE)
-	if(istype(A, /obj/item/reagent_containers/syringe/bluespace))
-		balloon_alert(user, "[A.name] is too big!")
-		return TRUE
 	if(istype(A, /obj/item/reagent_containers/syringe))
 		if(syringes.len < max_syringes)
 			if(!user.transferItemToLoc(A, src))

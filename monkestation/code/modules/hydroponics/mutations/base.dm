@@ -189,7 +189,7 @@
 	created_seed = /obj/item/seeds/sunflower/moonflower
 	required_endurance = list(30, 70)
 
-/datum/hydroponics/plant_mutation/nova_floor
+/datum/hydroponics/plant_mutation/nova_flower
 	mutates_from = list(/obj/item/seeds/sunflower)
 	created_product = /obj/item/grown/novaflower
 	created_seed = /obj/item/seeds/sunflower/novaflower

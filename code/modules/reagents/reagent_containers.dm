@@ -146,7 +146,7 @@
 /obj/item/reagent_containers/pre_attack_secondary(atom/target, mob/living/user, params)
 	if(HAS_TRAIT(target, TRAIT_DO_NOT_SPLASH))
 		return ..()
-	if(!(user.istate & ISTATE_HARM))
+	if(!(user.istate & ISTATE_HARM) && istype(user.client?.imode, /datum/interaction_mode/combat_mode))
 		return ..()
 	if (try_splash(user, target))
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
