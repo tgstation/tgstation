@@ -44752,6 +44752,17 @@
 	},
 /obj/machinery/status_display/ai/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/structure/rack,
+/obj/item/gun/ballistic/automatic/pistol/paco,
+/obj/item/gun/ballistic/automatic/pistol/paco,
+/obj/item/gun/ballistic/automatic/pistol/paco,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
+/obj/item/ammo_box/magazine/m35,
 /turf/open/floor/iron/dark,
 /area/station/ai_monitored/security/armory)
 "noI" = (
