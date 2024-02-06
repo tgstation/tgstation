@@ -521,8 +521,6 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 	return TRUE
 
-
-
 /datum/computer_file/program/virtual_pet/proc/generate_petfeed_area()
 	if(!COOLDOWN_FINISHED(src, area_reroll))
 		return

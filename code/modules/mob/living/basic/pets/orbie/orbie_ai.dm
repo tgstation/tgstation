@@ -16,7 +16,6 @@
 		/datum/ai_planning_subtree/basic_melee_attack_subtree,
 		/datum/ai_planning_subtree/relay_pda_message,
 		/datum/ai_planning_subtree/pet_planning,
-		/datum/ai_planning_subtree/follow_sound,
 	)
 
 /datum/ai_controller/basic_controller/orbie/TryPossessPawn(atom/new_pawn)
