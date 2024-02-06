@@ -2,7 +2,7 @@
 
 /datum/market/auction
 	name = "Black Market Auction"
-	market_flags = MARKET_AUCTION
+	market_flags = (MARKET_PROCESS | MARKET_AUCTION)
 	categories = list("Auction")
 	///list of all items and when they start in world time
 	var/list/queued_items = list()
