@@ -13439,6 +13439,13 @@
 /obj/machinery/duct,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
+"dgZ" = (
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/closed/wall,
+/area/station/service/library/printer)
 "dhk" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
@@ -17325,9 +17332,6 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "ehg" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/newscaster/directional/west,
 /obj/structure/table/wood,
 /obj/item/clipboard,
@@ -18836,9 +18840,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/structure/sign/painting/library_private{
 	pixel_y = -32
-	},
-/obj/structure/disposalpipe/segment{
-	dir = 4
 	},
 /obj/machinery/modular_computer/console/preset/curator{
 	dir = 1
@@ -44192,6 +44193,10 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
 "kHp" = (
@@ -47972,6 +47977,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
 "lDV" = (
@@ -52119,6 +52128,9 @@
 /obj/effect/turf_decal/bot_white,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 8
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
 "mEx" = (
@@ -56873,6 +56885,21 @@
 /obj/item/device/cassette_tape/friday{
 	pixel_y = 2;
 	pixel_x = 9
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/printer)
@@ -66189,6 +66216,10 @@
 	dir = 8
 	},
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
 "qaF" = (
@@ -68364,9 +68395,6 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay)
 "qEj" = (
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/light/small/directional/south,
 /obj/structure/table/wood,
 /obj/item/paper_bin{
@@ -82902,9 +82930,6 @@
 /area/station/commons/toilet/locker)
 "ufz" = (
 /obj/machinery/firealarm/directional/south,
-/obj/structure/disposalpipe/segment{
-	dir = 9
-	},
 /obj/effect/turf_decal/bot_white,
 /obj/structure/filingcabinet,
 /turf/open/floor/iron/dark,
@@ -92724,7 +92749,9 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/east,
 /obj/structure/cable,
-/obj/structure/disposalpipe/segment,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library/printer)
 "wwP" = (
@@ -93073,9 +93100,6 @@
 /area/station/maintenance/starboard/aft)
 "wAZ" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/disposalpipe/segment{
-	dir = 4
-	},
 /obj/structure/table/wood,
 /obj/item/taperecorder,
 /obj/item/camera,
@@ -146975,7 +146999,7 @@ dLH
 dfZ
 dfZ
 fcx
-dfZ
+dgZ
 dfZ
 khZ
 nHY

@@ -19551,12 +19551,6 @@
 "ffa" = (
 /obj/machinery/vending/wallmed/directional/west,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/toy/plush/pkplush{
-	pixel_x = -3
-	},
-/obj/item/toy/plush/rouny{
-	dir = 4
-	},
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /turf/open/floor/iron/white,
 /area/station/asteroid)
@@ -23397,9 +23391,6 @@
 "gvS" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/item/kirbyplants/random,
-/obj/structure/sign/poster/contraband/ambrosia_vulgaris{
-	pixel_x = 32
-	},
 /obj/machinery/light/warm{
 	dir = 4
 	},
@@ -32787,7 +32778,6 @@
 /obj/structure/sign/poster/contraband/kudzu{
 	pixel_x = -32
 	},
-/obj/item/seeds/cocaleaf,
 /obj/machinery/light/warm,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/central)
@@ -33469,9 +33459,14 @@
 /area/station/maintenance/central/lesser)
 "jJt" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/kirbyplants/random,
-/obj/item/seeds/kudzu,
-/turf/open/floor/iron/smooth,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4;
+	invisibility = 101
+	},
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/central)
 "jJv" = (
 /turf/open/floor/circuit,
@@ -39810,17 +39805,15 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "lLW" = (
-/obj/item/toy/plush/moth{
-	name = "Delivers-The-Pizza"
-	},
-/obj/item/clothing/head/soft/red{
-	pixel_x = -4;
-	pixel_y = 9
-	},
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/white,
-/area/station/asteroid)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 5
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/central)
 "lMd" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -44075,7 +44068,6 @@
 /turf/open/floor/plating,
 /area/station/security/execution/transfer)
 "neX" = (
-/obj/item/kirbyplants/random,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
 /obj/effect/turf_decal/tile/blue/fourcorners,
@@ -49772,15 +49764,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/brig)
-"pac" = (
-/obj/item/pizzabox/margherita{
-	pixel_y = 27
-	},
-/obj/structure/dresser,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/white,
-/area/station/asteroid)
 "pal" = (
 /obj/structure/disposalpipe/segment{
 	dir = 10
@@ -51804,7 +51787,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/mapping_helpers/airlock/access/all/engineering,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "pFw" = (
@@ -53976,13 +53959,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "qpR" = (
-/obj/structure/filingcabinet/chestdrawer{
-	pixel_y = 2
+/obj/item/paper{
+	default_raw_text = "Please leave on-site equipment alone as they are on loan from Nanotrasen Mining Co and need returned soon.";
+	name = "NOTICE"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/tile/blue/opposingcorners,
-/turf/open/floor/iron/white,
-/area/station/asteroid)
+/turf/open/space/openspace,
+/area/space)
 "qpW" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -55990,9 +55972,9 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/clothing/under/syndicate,
-/obj/item/clothing/under/syndicate,
 /obj/item/clothing/under/misc/syndicate_souvenir,
+/obj/item/clothing/under/syndicate/tacticool,
+/obj/item/clothing/under/syndicate/tacticool,
 /turf/open/floor/iron/grimy,
 /area/ruin/powered/clownplanet)
 "qVH" = (
@@ -60439,7 +60421,6 @@
 /turf/open/floor/iron,
 /area/station/hallway/primary/tram/right)
 "srX" = (
-/obj/structure/closet/wardrobe/pjs,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron,
 /area/station/asteroid)
@@ -66873,6 +66854,21 @@
 /obj/item/device/cassette_tape/friday{
 	pixel_y = 2;
 	pixel_x = 9
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
+	},
+/obj/item/device/cassette_tape/random{
+	pixel_y = 8
 	},
 /turf/open/floor/iron/vaporwave,
 /area/station/service/library/upper)
@@ -124036,7 +124032,7 @@ mbJ
 aaa
 qxm
 hGg
-jJt
+iqy
 jys
 qxm
 aaa
@@ -128136,7 +128132,7 @@ qxm
 bjI
 fsM
 fsM
-fsM
+lLW
 oys
 oys
 oys
@@ -128393,7 +128389,7 @@ qxm
 qxm
 qxm
 qxm
-qoO
+jJt
 gDw
 gDw
 gDw
@@ -177388,7 +177384,7 @@ jhd
 jhd
 jhd
 jhd
-jhd
+qpR
 jhd
 jhd
 jhd
@@ -180848,7 +180844,7 @@ whz
 kSi
 whz
 ffa
-qpR
+rXK
 ugt
 kOL
 vrJ
@@ -181618,8 +181614,8 @@ ebw
 whz
 qdj
 whz
-lLW
-pac
+rXK
+rXK
 ugt
 ugt
 ugt
