@@ -1187,6 +1187,7 @@
 		"crewconsole",
 		"idcard",
 		"libraryconsole",
+		"barcode_scanner",
 		"mining",
 		"rdcamera",
 		"seccamera",
