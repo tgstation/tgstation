@@ -221,8 +221,8 @@ const MedicalKioskScanResults2 = (props) => {
             minValue={0}
             maxValue={0.3}
             ranges={{
-              blue: [-Infinity, 0.24],
-              bad: [0.24, Infinity],
+              blue: [-Infinity, 0.23],
+              bad: [0.23, Infinity],
             }}
           >
             <AnimatedNumber value={blood_alcohol} />
